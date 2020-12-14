@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
+    "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="fr">
+    <head>
+        <meta name="generator" content=
+              "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+        <meta name="keywords" content="MERG supports JMRI help support">
+        <title>JMRI Hardware Support - MERG Main Support</title>
+        <meta name="author" content="Andrew Crosland Oct 2020 ">
+        <!--translated on 2020-12-14" -->
+        <!--#include virtual="/Style.shtml" -->
+    </head>
+
+    <body>
+        <!--#include virtual="/Header.shtml" -->
+        <div id="mBody">
+            <!--#include virtual="Sidebar.shtml" -->
+            <div id="mainContent">
+
+                <h1>Support mat&#233;riel de JMRI : Page principale d'assistance du MERG</h1>
+                <ul class="snav">
+                    <li><a href="#introduction">Introduction</a></li>
+                    <li><a href="#connecting">Connexion du mat&#233;riel du MERG</a></li>
+                    <li><a href="#dcc">DCC sur CBUS</a></li>
+                    <li><a href="#thirdparty">Soutien compl&#233;mentaire</a></li>
+                </ul>
+
+                <img src="https://www.merg.org.uk/merg_images/merg_logo.png" align=
+                     "right" alt="MERG logo" height="48" width="102">
+
+                <h2><a name="introduction" id="introduction">Introduction</a><</h2>
+                <div>
+                    <p>Le mat&#233;riel du MERG (Model Electronic Railway Group) soutenu par JMRI est actuellement
+                        centr&#233;e sur la gamme CBUS&trade; kits con&#231;us par et pour les membres du MERG.</p>
+                    <p>Cette page est destin&#233;e &#224; aider les utilisateurs de mat&#233;riel MERG et JMRI &#224; configurer leur syst&#232;me.</p>
+                    <p>Pour un aper&#231;u du CBUS, voir le document s&#233;par&#233; <a href="../can/cbus/index.shtml"> sujet d'aide CBUS
+                        </a>.</p>
+                </div>
+                
+                <h2><a name="connecting" id="connecting">Connexiong</a><</h2>
+                <div>
+                    <h3>Etapes typiques d'une premi&#232;re connexion</h3>
+                    <p> Lancer JMRI et cr&#233;er une nouvelle connexion syst&#232;me pour le MERG en tant que Fabricant Syst&#232;me.</p>
+                    <p> L'approche g&#233;n&#233;rale de JMRI est de prendre en charge autant de combinaisons de mat&#233;riel que possible. 
+                        En soutenant le plus grand nombre possible de personnes et leurs d&#233;sirs en mati&#232;re de mat&#233;riel, nous pouvons cr&#233;er
+                        une communaut&#233; croissante de d&#233;veloppeurs, donc plus de code. Dans ce contexte, JMRI 
+                        est con&#231;u pour utiliser le plus grand nombre possible de types d'adaptateurs CAN. 
+                        Peu de PC disposent actuellement d'un port s&#233;rie RS232, mais il est toujours pris en charge.</p>
+                    <p>Choisissez la <a href="Details.shtml">Connexion syst&#232;me </a> appropri&#233;e &#224; votre mat&#233;riel.
+                    <p>Sauvegarder / Red&#233;marrer JMRI</p>
+                    <p>Si vous utilisez le DCC sur la connexion MERG, v&#233;rifiez que les pr&#233;f&#233;rences JMRI > Valeurs par d&#233;faut 
+                        sont r&#233;gl&#233;s correctement, voir <a href="#dcc">DCC sur CBUS</a>.</p>
+                    <p>Un nouvel &#233;l&#233;ment de menu MERG appara&#238;t dans la fenêtre PanelPro ou DecoderPro, contenant les outils MERG.
+                        <br>Aide > Aide de la fenêtre affichera les informations pertinentes dans les outils et toute fenêtre JMRI.</p>
+                    <p>Les &#233;v&#233;nements de test peuvent être envoy&#233;s depuis le
+                        <a href="../../../package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Envoyer l'outil Trame CAN</a>.  
+                        <br>.
+                        D&#233;finissez l'&#233;v&#233;nement du test, par exemple les paquets de trame "+1" et / ou "-2" (sans les guillemets), 
+                        attendre 500 msec et cliquer sur D&#233;marrer l'Envoi pour g&#233;n&#233;rer un trafic r&#233;gulier sur le r&#233;seau CBUS.
+                        <br>
+                        V&#233;rifiez que ces &#233;v&#233;nements sont effectivement envoy&#233;s sur le r&#233;seau CBUS en utilisant un module tel qu'un CANACT.</p>
+                    <p>Utiliser un module producteur externe pour tester la connectivit&#233; des &#233;v&#233;nements de r&#233;ception, 
+                    en confirmant qu'ils apparaissent dans la <a href="../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console CBUS</a>.</p>
+                    <p>La <a href="../../../package/apps/SystemConsole.shtml">Console syst&#232;me JMRI</a>
+                        est un bon outil pour diagnostiquer les probl&#232;mes lors de l'installation et du fonctionnement. </p>
+                </div>
+
+                <h2><a name="dcc" id="dcc">DCC sur CBUS avec du mat&#233;riel MERG</a></h2>
+                <div>
+                    <img src="images/connection/merg-jmri-cbus-preferences-defaults-500x215.png"
+                         width="500" height= "215" alt= "JMRI MERG CONNECTION DCC DEFAULT PREFERENCES" align=
+                         "right">
+                    <p>Il n'est pas n&#233;cessaire d'avoir une centrale DCC pour utiliser du mat&#233;riel MERG avec JMRI. De nombreux r&#233;seaux DC utilisent 
+                       le Mat&#233;riel MERG pour le r&#233;glage des itin&#233;raires, la signalisation et l'occupation des voies.</p>
+                    <p>Si vous utilisez le DCC, JMRI enverra et recevra les paquets DCC sur le r&#233;seau CBUS
+                        et peut être surveill&#233; dans la console CBUS</p>
+                    <p>Les sessions Loco sont mieux vues avec le 
+                        <a href="../../../package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml"> 
+                          Moniteur de Centrale  CBUS </a>, qui affiche les sessions sous forme de tableau.</p>
+                    <p>Il existe &#233;galement un certain nombre de centrale DC qui ont &#233;t&#233; con&#231;ues par des membres du MERG
+                       et qui utilisent le protocole CBUS standard pour demander et contr&#244;ler les sessions de loco.</p>
+
+                    <h3>R&#233;gulateurs</h3>
+                    <p>Tous les programmes de la suite JMRI (y compris le serveur JMRI WiThrottle)
+                        partagent en interne le même cr&#233;neau de poste de commande pour une adresse de locomotive donn&#233;e,
+                        de sorte que l'ensemble de JMRI appara&#238;t au poste de commande comme un seul CANCAB pour une seule adresse.</p>
+
+                    <p>JMRI (via le gestionnaire de n&#339;ud CBUS) peut dire si une station de commande est disponible, ce qui 
+                        supporte la fonction de Subtiliser ou de partager du CBUS (par exemple, support&#233; avec CANCMD v4 +).</p>
+
+                    <p>Les fonctions Subtiliser / Partager sont destin&#233;es aux cas o&#250; des papillons d&#233;j&#224; utilis&#233;s sont demand&#233;s 
+                        par quelque chose d'ext&#233;rieur &#224; la JMRI.</p>
+
+                    <p>Quand une application JMRI demande une loco (qui est d&#233;j&#224; dans une session CBUS), 
+                        JMRI v&#233;rifiera les principaux <a 
+                            href="../../tools/throttle/ThrottlesPreferencesPane.shtml">Pr&#233;f&#233;rences Throttles</a>.</p>
+
+                    <p>Si Subtilisation  Silencieuse ou Partage Silencieux a &#233;t&#233; s&#233;lectionn&#233;, ce sera l'action par d&#233;faut.</p>
+
+                    <p>Si aucune des deux n'a &#233;t&#233; coch&#233;e et que vous utilisez l'e r&#233;gulateur principal de JMRI, il vous sera demand&#233;
+                        si vous voulez Subtilise, Partager ou annuler.</p>
+
+                    <img src="images/web/cbus-throttle-steal-share-dialogue-322x128.png"
+                         width="322" height="128" alt="JMRI CBUS Steal Share Dialogue">
+
+                    <p>Si vous utilisez un script d'automatisation et qu'aucune option n'est coch&#233;e, le syst&#232;me essaiera un Partage sur la session.</p>
+
+                    <p>La centrale peut d&#233;sactiver ou activer la subtilisation/partage &#224; tout moment, 
+                        donc même si vous avez une option pr&#233;f&#233;r&#233;e, un script d'automatisation peut tenter d'utiliser
+                        l'option non pr&#233;f&#233;r&#233;e pour obtenir la session.</p>
+
+                    <h4>Subtilisation des R&#233;gulateurs de JMRI</h4>
+
+                    <p>Quand une session R&#233;gulateur a &#233;t&#233; subtilis&#233;e / annul&#233;e en dehors de JMRI, 
+                        toute fenêtre de r&#233;gulateur de l'IRMJ ouverte pour cette locomotive
+                        cessera d'accepter les commandes, c'est-&#224;-dire que le curseur  et les touches de fonction seront gris&#233;es.</p>
+
+                    <p>Si le partage silencieux est activ&#233; dans les pr&#233;f&#233;rences du r&#233;gulateur, 
+                        et le partage est disponible sur la centrale,
+                        apr&#232;s un court d&#233;lai,  JMRI tentera de partager le r&#233;gulateur.</p>
+
+                    <p>Pour la plupart des utilisateurs, le partage silencieux permet &#224; la plupart des r&#233;seau de fonctionner avec un minimum de tracas.</p>
+
+                    <p>Si Subtilisation  Silencieuse est activ&#233; dans les pr&#233;f&#233;rences du r&#233;gulateur, 
+                        et que subtiliser est disponible sur la centrale
+                        apr&#232;s un court d&#233;lai,  JMRI tentera de reprendre le contr&#244;le du r&#233;gulateur.</p>
+
+                    <p>Attention &#224; la cr&#233;ation de boucles de Subtilisation si plus d'un CAB est capable d'effectuer une auto-Subtilisation !
+                        Si vous constatez que cela se produit, d&#233;sactivez l'option Subtilisationl Silencieuse pour arrêter la boucle. </p>
+
+                    <p>Si aucune des deux options n'est activ&#233;e, ou si le subtilisation / partage n'est pas possible, une notification sera affich&#233;e:</p>
+
+                    <img src="images/web/cbus-throttle-stolen-dialogue-278x138.png"
+                         width="278" height="138" alt="JMRI CBUS Stolen Throttle Dialogue">
+
+                    <p>Cocher la case avant de fermer le menu contextuel supprimera les notifications de Subtilisation de locomotives pour
+                        le reste de la session JMRI, pour toutes les sessions de loco.</p>
+
+                    <p>Les informations pertinentes peuvent être consult&#233;es dans le journal principal de la console JMRI.</p>
+
+                    <p>Notez que toutes les applications JMRI ne disposent pas actuellement d'une m&#233;thode pour traiter un r&#233;gulateur subtilis&#233;.</p>
+
+                    <h4>Distribution / Lib&#233;ration</h4>
+                    <p>La distribution est disponible selon le micrologiciel de la centralee (par exemple, support&#233; par CANCMD v4 +)</p>
+                    <p>Notez que la disponibilit&#233; de l'envoi pour une seule adresse de locomotive peut changer, 
+                        cela sera refl&#233;t&#233; par la disponibilit&#233; des boutons dans le r&#233;gulateur JMRI principal.</p>
+
+                    <h3>Couplage</h3>
+                    <p>Le syst&#232;me MERG permet de r&#233;gler les couplages avanc&#233;s &#224; l'aide de CANCMD et CANCAB.</p>
+
+                    <p>Bien que le protocole CBUS et le CANCMD prennent en charge le Couplage Avanc&#233;, 
+                        cette mesure n'a pas encore &#233;t&#233; mise en &#339;uvre au sein de JMRI.
+
+                    <p><a href="../../../html/tools/consisttool/ConsistTool.shtml" 
+                          title="JMRI Consistant">Couplage JMRI</a> 
+                        : Couplage Avanc&#233;,(Decoder Assisted Consist) n'est actuellement pas pris en charge,
+                        d'o&#250; le r&#233;glage sur Interne dans les pr&#233;f&#233;rences de CBUS.</p>
+
+                    <p>L'adresse primaire est toutefois prise en charge.
+
+                    <h3>Connexion d'une centrale MERG DCC (CANCMD , CANCSB etc.)</h3>
+
+
+                    <p>Au d&#233;marrage de JMRI, le gestionnaire de n&#339;ud CBUS peut rechercher les centrales.</p>
+                    <p>Si une centrale r&#233;pond, elle sera ajout&#233;e &#224; la table des n&#339;uds. </p>
+
+                    <p>Une centrale trouv&#233;e au d&#233;marrage activera &#233;galement la mesure du courant tracrtion, 
+                        disponible &#224; partir du PanelPro principal > Outils > Courant Traction.
+                        <br>Il &#233;coute l'&#233;v&#233;nement &#233;tendu 1 &#224; partir de n'importe quel num&#233;ro de n&#339;ud pour lequel la centrale 0 est d&#233;finie.</p>
+                    <p>La fr&#233;quence et les autres param&#232;tres de cette op&#233;ration sont dans les variables du n&#339;ud de la centrale.</p>
+
+                    <p>S'assurer que les principales <a href="../../../package/apps/TabbedPreferences.shtml#Defaults"
+                                              > valeurs par d&#233;faut Pr&#233;f&#233;rences JMRI </a> sont fix&#233;es &#224; votre connexion MERG pour 
+                        les R&#233;gulateurs, Commande d'Alimentation, Centrale, Programmateur en voie de programmation et programmateur en mode exploitation.</p>
+
+                    <p>Vous pouvez utiliser une centrale DCC existante, 
+                        ou disposer d'une centrale DCC s&#233;par&#233;e pour voie de programmation 
+                        (par exemple a <a href="../../../html/hardware/sprog/SPROG.shtml">SPROG</a>) en d&#233;finissant ces options.</p>
+
+                    <p>Il n'est pas n&#233;cessaire de configurer les &#233;v&#233;nements pour connecter une centrale CANCMD du MERG DCC.</p>
+
+                    <p>DCC Les d&#233;codeurs accessoires peuvent être contr&#244;l&#233;s par CBUS et un CANCMD 
+                        en cr&#233;ant des aiguillages avec des commandes RDCCx Opscode explicites, 
+                        see <a href="../../../html/hardware/can/cbus/Names.shtml#hex">D&#233;nomination des &#233;v&#233;nements hexad&#233;cimaux du BUS</a>.
+                        <br>
+                        Cette question est &#233;galement abord&#233;e dans la documentation <a href="#thirdparty">CBUS WIKI</a> .</p>
+
+                    <h3>Programmation des CV</h3>
+                    <img src="images/web/merg-dcc-decoders-355x398.png"
+                         width="355" height="398" alt="JMRI MERG DCC Decoders" align= "right">
+                    <p>Programmez les CV de d&#233;codeurs en utilisant DecoderPro</p>
+
+                    <p>CANCMD supporte enti&#232;rement la programmation des CV de la DCC.</p>
+
+                    <p>Il existe des d&#233;finitions dans DecoderPro pour le MERG CANACC5 et d'autres d&#233;codeurs MERG DCC.</p>
+
+                </div>
+                
+                <h2><a id="thirdparty" name="thirdparty">Soutien compl&#233;mentaire</a></h2>
+                <div>
+                    <ul>
+                        <li><a href="https://www.merg.org.uk/merg_resources/cbus.php"
+                               > Introduction MERG &#224; CBUS</a>.</li>
+
+                        <li><a href="https://www.merg.org.uk/merg_wiki/doku.php?id=software:start#cbus"
+                               > CBUS Wiki</a> h&#233;berg&#233; sur le site public du MERG Model Electronic Ralway Group,
+                               avec sp&#233;cification compl&#232;te du protocole.</li>
+
+                        <li><a href="https://www.merg.org.uk/merg_resources/cbus-dcc.php"
+                               > Page d'aide du MERG-DCC.</a></li>
+        
+                        <li><a href="https://www.merg.org.uk/kits.php#sect35"
+                               > Kits MERG pour CBUS</a>.</li>
+
+                        <li><a href="https://groups.io/g/jmriusers/">Groupe utilisateurs JMRI</a><</li>
+
+                        <li><a href="https://www.merg.org.uk/forum/">MERG Forum</a> (membres seulement)</li>
+
+                        <li>Pour une journalisation suppl&#233;mentaire pendant le d&#233;bogage, localisez et modifiez le fichier default.lcf 
+                            dans la racine de l'installation de JMRI, voir le mod&#232;le &#224; la fin du fichier.
+                            <br> Enregistrement g&#233;n&#233;ral du CBUS - log4j.cat&#233;gorie.jmri.jmrix.can.cbus=DEBUG
+                            <br> Enregistrement des connexions - log4j.category.jmri.jmrix.can.adapters.gridconnect=DEBUG
+                            <br>La journalisation suppl&#233;mentaire appara&#238;tra dans la console JMRI, ainsi que les journaux d'erreurs JMRI.
+                        </li>
+
+                        <li><a href="https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+merg"
+                               >https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+merg</a> 
+                            Questions actuelles connues (ouvertes) relatives au MERG par les d&#233;veloppeurs du JMRI sur Github.</li>
+
+                        <li><a href="https://github.com/MERG-DEV">https://github.com/MERG-DEV</a>
+                            D&#233;veloppement CBUS des membres du MERG sur Github - Une grande partie est sous licence GNU General Public License v3.0.</li>
+
+                        <li><a href="https://github.com/phillipsnj/mergCbusServer">https://github.com/phillipsnj/mergCbusServer</a> 
+                            mergCbusServer - permet d'&#233;tablir plusieurs connexions r&#233;seau &#224; un MERG CANUSB4 en utilisant 
+                            <a href="https://nodejs.org">Node.js</a> , Licence MIT .</li>
+
+
+
+                        <li><a href="https://github.com/amaurial/mergCanBus">https://github.com/amaurial/mergCanBus</a>
+                            Mise en &#339;uvre du CBUS pour Arduino. (+ voir les autres projets CBUS Github d'Amauria)</li>
+
+                        <li><a href="http://www.oscale.net/?q=en/cbus">http://www.oscale.net/?q=en/cbus</a>
+                            CBUS sur un Arduino utilisant les boucliers du CAN BUS - Voir les liens de t&#233;l&#233;chargement en bas (en anglais + allemand)</li>
+
+                        <li><a href="https://www.npmjs.com/search?q=keywords:MERG">https://www.npmjs.com/search?q=keywords:MERG</a>
+                            node.js modules pour cr&#233;er un module CBUS + Class pour cr&#233;er un module CBUS connect&#233; via ethernet.</li>
+
+                        <li><a href="http://www.rickdavis.co.uk/rail/control-cbus.php">http://www.rickdavis.co.uk/rail/control-cbus.php</a>
+                            Plus de 70 modules CBUS con&#231;us par le MERG sont install&#233;s sur le Middle Earth Model Railway, qui utilise JMRI.
+                    </ul>
+                </div>
+
+                <h2></h2>
+                <p>CBUS&trade; est une marque d&#233;pos&#233;e du Dr Michael Bolton</p
+
+
+                <p></p>
+
+                <!--#include virtual="/Footer.shtml" -->
+            </div><!-- closes #mainContent-->
+        </div><!-- closes #mBody-->
+    </body>
+</html>
