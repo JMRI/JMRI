@@ -846,12 +846,12 @@ public class TrackSegment extends LayoutTrack {
             double startAdjDEG = tsv.getStartAdj();
             double tmpAngleDEG = tsv.getTmpAngle();
 
-            log.warn(String.format("Arc2D(%.0f, %.0f, %.0f, %.0f, %.0f, %.0f, Arc2D.OPEN); centre: {%.0f, %.0f}",
-                    tsv.getCX(), tsv.getCY(), tsv.getCW(), tsv.getCH(), startAdjDEG, tmpAngleDEG, centre.getX(), centre.getY()));
-
-            if (getName().equals("T3")) {
-                log.error("T3!");
-            }
+//            log.warn(String.format("Arc2D(%.0f, %.0f, %.0f, %.0f, %.0f, %.0f, Arc2D.OPEN); centre: {%.0f, %.0f}",
+//                    tsv.getCX(), tsv.getCY(), tsv.getCW(), tsv.getCH(), startAdjDEG, tmpAngleDEG, centre.getX(), centre.getY()));
+//
+//            if (getName().equals("T3")) {
+//                log.error("T3!");
+//            }
 
             double distance = 2 * radius * Math.PI * tmpAngleDEG / 360;
             if (distanceOnTrack < distance) {  // it's on this track
@@ -860,15 +860,17 @@ public class TrackSegment extends LayoutTrack {
 
                 double angle1DEG = MathUtil.computeAngleDEG(p1, centre) - 90;
                 double angle2DEG = MathUtil.computeAngleDEG(p2, centre) - 90;
-                double angleDeltaDEG = angle2DEG - angle1DEG;
+                double angle3DEG = MathUtil.computeAngleDEG(tsv.getCentreSeg(), centre) - 90;
+                double angleDeltaDEG = MathUtil.wrapPM360(2 * (angle3DEG - angle1DEG));
 
-                
-                if ((Math.abs(angleDeltaDEG) - Math.abs(tmpAngleDEG)) >= 1) {
-                    angleDeltaDEG -= Math.signum(angleDeltaDEG) * 360;
-                }
-                log.warn(String.format("    p1: {%.0f, %.0f} a1: %.0f", p1.getX(), p1.getY(), angle1DEG));
-                log.warn(String.format("    p2: {%.0f, %.0f} a2: %.0f", p2.getX(), p2.getY(), angle2DEG));
-                log.warn(String.format("    angleDelta: %.0f", angleDeltaDEG));
+//                angleDeltaDEG = Math.signum(angle2DEG - angle3DEG) * Math.abs(angleDeltaDEG);
+//                if ((Math.abs(angleDeltaDEG) - Math.abs(tmpAngleDEG)) >= 1) {
+//                    angleDeltaDEG -= Math.signum(angleDeltaDEG) * 360;
+//                }
+
+//                log.warn(String.format("    p1: {%.0f, %.0f} a1: %.0f", p1.getX(), p1.getY(), angle1DEG));
+//                log.warn(String.format("    p2: {%.0f, %.0f} a2: %.0f", p2.getX(), p2.getY(), angle2DEG));
+//                log.warn(String.format("    angleDelta: %.0f", angleDeltaDEG));
                 //log.warn(String.format("startAdjDEG: %.0f, tmpAngleDEG: %.0f", startAdjDEG, tmpAngleDEG));
                 double ratio = distanceOnTrack / distance;
 //                boolean isFlipped = tsv.isFlip();
@@ -877,7 +879,7 @@ public class TrackSegment extends LayoutTrack {
 //                Point2D p2p = MathUtil.add(centre, MathUtil.rotateDEG(delta, startAdjDEG + tmpAngleDEG));
 
                 double angleDEG = 0;
-                if (getConnect1().equals(navigator.getLastTrack())){
+                if (getConnect1().equals(navigator.getLastTrack())) {
                     // entering from this end...
                     angleDEG = angle1DEG;
                     angleDeltaDEG = MathUtil.lerp(0, angleDeltaDEG, ratio);
