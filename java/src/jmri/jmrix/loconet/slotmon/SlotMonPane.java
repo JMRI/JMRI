@@ -250,6 +250,9 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
                 // default filter is IN-USE and regular systems slot
                 // the default is whatever the person last closed it with
                 jmri.jmrix.loconet.LocoNetSlot slot =  entry.getModel().getSlot(entry.getIdentifier());
+                if (slot == null ) {
+                    log.info("AAAAA");
+                }
                 boolean include = false;
                 if (!include && showUnusedCheckBox.isSelected() && !slot.isSystemSlot()) {
                     include = true;
@@ -289,5 +292,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
                     jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
         }
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SlotMonPane.class);
 
 }

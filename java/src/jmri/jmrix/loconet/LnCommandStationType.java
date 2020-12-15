@@ -47,7 +47,14 @@ public enum LnCommandStationType {
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
             CommandStationFracType.CLOCK13BIT,
-            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),new SlotMapEntry(1,120,SlotType.LOCO),new SlotMapEntry(121,127,SlotType.SYSTEM)) 
+            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
+                    new SlotMapEntry(1,120,SlotType.LOCO),
+                    new SlotMapEntry(121,127,SlotType.SYSTEM),
+                    new SlotMapEntry(128,247,SlotType.UNKNOWN),
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),   // potential stat slots
+                    new SlotMapEntry(257,375,SlotType.UNKNOWN),
+                    new SlotMapEntry(376,384,SlotType.SYSTEM),
+                    new SlotMapEntry(385,432,SlotType.UNKNOWN)) 
             ),
     COMMAND_STATION_DCS240("DCS240 (Advanced Command Station)",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -57,7 +64,14 @@ public enum LnCommandStationType {
             MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
             LocoResetSupport.SUPPORTS_LOCO_RESET_FUNCTION,
             CommandStationFracType.CLOCK13BIT,
-            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),new SlotMapEntry(1,120,SlotType.LOCO),new SlotMapEntry(121,127,SlotType.SYSTEM)) 
+            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
+                    new SlotMapEntry(1,120,SlotType.LOCO),
+                    new SlotMapEntry(121,127,SlotType.SYSTEM),
+                    new SlotMapEntry(128,247,SlotType.LOCO),
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),  
+                    new SlotMapEntry(257,375,SlotType.LOCO),
+                    new SlotMapEntry(376,384,SlotType.SYSTEM),
+                    new SlotMapEntry(385,432,SlotType.LOCO)) 
             ),
     COMMAND_STATION_DCS210("DCS210 (Evolution Command Station)",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -67,7 +81,15 @@ public enum LnCommandStationType {
             MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
             LocoResetSupport.SUPPORTS_LOCO_RESET_FUNCTION,
             CommandStationFracType.CLOCK15BIT,
-            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),new SlotMapEntry(1,120,SlotType.LOCO),new SlotMapEntry(121,127,SlotType.SYSTEM)) 
+            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
+                    new SlotMapEntry(1,100,SlotType.LOCO),
+                    new SlotMapEntry(101,120,SlotType.UNKNOWN),
+                    new SlotMapEntry(121,127,SlotType.SYSTEM),
+                    new SlotMapEntry(128,247,SlotType.UNKNOWN),
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),   
+                    new SlotMapEntry(257,375,SlotType.UNKNOWN),
+                    new SlotMapEntry(376,384,SlotType.SYSTEM),
+                    new SlotMapEntry(385,432,SlotType.UNKNOWN)) 
             ),
     COMMAND_STATION_DCS200("DCS200",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -77,7 +99,14 @@ public enum LnCommandStationType {
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
             CommandStationFracType.CLOCK13BIT,
-            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),new SlotMapEntry(1,120,SlotType.LOCO),new SlotMapEntry(121,127,SlotType.SYSTEM))
+            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
+                    new SlotMapEntry(1,120,SlotType.LOCO),
+                    new SlotMapEntry(121,127,SlotType.SYSTEM),
+                    new SlotMapEntry(128,247,SlotType.UNKNOWN),
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),   
+                    new SlotMapEntry(257,375,SlotType.UNKNOWN),
+                    new SlotMapEntry(376,384,SlotType.SYSTEM),
+                    new SlotMapEntry(385,432,SlotType.UNKNOWN))
             ),
     COMMAND_STATION_DCS050("DCS50 (Zephyr)",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -87,7 +116,15 @@ public enum LnCommandStationType {
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
             CommandStationFracType.CLOCK13BIT,
-            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),new SlotMapEntry(1,120,SlotType.LOCO),new SlotMapEntry(121,127,SlotType.SYSTEM))
+            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
+                    new SlotMapEntry(1,12,SlotType.LOCO),
+                    new SlotMapEntry(13,120,SlotType.UNKNOWN),
+                    new SlotMapEntry(121,127,SlotType.SYSTEM),
+                    new SlotMapEntry(128,247,SlotType.UNKNOWN),
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),   
+                    new SlotMapEntry(257,375,SlotType.UNKNOWN),
+                    new SlotMapEntry(376,384,SlotType.SYSTEM),
+                    new SlotMapEntry(385,432,SlotType.UNKNOWN))
             ),
     COMMAND_STATION_DCS051("DCS51 (Zephyr Xtra)",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -97,7 +134,15 @@ public enum LnCommandStationType {
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
             CommandStationFracType.CLOCK13BIT,
-            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),new SlotMapEntry(1,120,SlotType.LOCO),new SlotMapEntry(121,127,SlotType.SYSTEM))
+            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
+                    new SlotMapEntry(1,19,SlotType.LOCO),
+                    new SlotMapEntry(20,120,SlotType.UNKNOWN),
+                    new SlotMapEntry(121,127,SlotType.SYSTEM),
+                    new SlotMapEntry(128,247,SlotType.UNKNOWN),
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),   
+                    new SlotMapEntry(257,375,SlotType.UNKNOWN),
+                    new SlotMapEntry(376,384,SlotType.SYSTEM),
+                    new SlotMapEntry(385,432,SlotType.UNKNOWN))
             ),
     COMMAND_STATION_DCS052("DCS52 (Zephyr Express)", // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -107,7 +152,15 @@ public enum LnCommandStationType {
             MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
             LocoResetSupport.SUPPORTS_LOCO_RESET_FUNCTION,
             CommandStationFracType.CLOCK15BIT,
-            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),new SlotMapEntry(1,120,SlotType.LOCO),new SlotMapEntry(121,127,SlotType.SYSTEM))
+            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
+                    new SlotMapEntry(1,20,SlotType.LOCO),
+                    new SlotMapEntry(21,120,SlotType.UNKNOWN),
+                    new SlotMapEntry(121,127,SlotType.SYSTEM),
+                    new SlotMapEntry(128,247,SlotType.UNKNOWN),
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),   
+                    new SlotMapEntry(257,375,SlotType.UNKNOWN),
+                    new SlotMapEntry(376,384,SlotType.SYSTEM),
+                    new SlotMapEntry(385,432,SlotType.UNKNOWN))
             ),
     COMMAND_STATION_DB150("DB150 (Empire Builder)", // NOI18N
             ReadsFromServiceModeTrack.NO_SVC_MODE_READS,
@@ -117,7 +170,14 @@ public enum LnCommandStationType {
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
             CommandStationFracType.CLOCK13BIT,
-            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),new SlotMapEntry(1,120,SlotType.LOCO),new SlotMapEntry(121,127,SlotType.SYSTEM))
+            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
+                    new SlotMapEntry(1,120,SlotType.LOCO),
+                    new SlotMapEntry(121,127,SlotType.SYSTEM),
+                    new SlotMapEntry(128,247,SlotType.UNKNOWN),
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),   
+                    new SlotMapEntry(257,375,SlotType.UNKNOWN),
+                    new SlotMapEntry(376,384,SlotType.SYSTEM),
+                    new SlotMapEntry(385,432,SlotType.UNKNOWN))
             ),
     // the following command stations are assumed to not support "OPC_IDLE"
     COMMAND_STATION_LBPS("LocoBuffer (PS)",  // NOI18N
@@ -128,7 +188,14 @@ public enum LnCommandStationType {
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
             CommandStationFracType.CLOCK13BIT,
-            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),new SlotMapEntry(1,120,SlotType.LOCO),new SlotMapEntry(121,127,SlotType.SYSTEM))
+            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
+                    new SlotMapEntry(1,120,SlotType.LOCO),
+                    new SlotMapEntry(121,127,SlotType.SYSTEM),
+                    new SlotMapEntry(128,247,SlotType.UNKNOWN),
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),   
+                    new SlotMapEntry(257,375,SlotType.UNKNOWN),
+                    new SlotMapEntry(376,384,SlotType.SYSTEM),
+                    new SlotMapEntry(385,432,SlotType.UNKNOWN))
             ),
     COMMAND_STATION_MM("Mix-Master",  // NOI18N
             ReadsFromServiceModeTrack.NO_SVC_MODE_READS,
@@ -138,7 +205,14 @@ public enum LnCommandStationType {
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
             CommandStationFracType.CLOCK13BIT,
-            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),new SlotMapEntry(1,120,SlotType.LOCO),new SlotMapEntry(121,127,SlotType.SYSTEM))
+            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
+                    new SlotMapEntry(1,120,SlotType.LOCO),
+                    new SlotMapEntry(121,127,SlotType.SYSTEM),
+                    new SlotMapEntry(128,247,SlotType.UNKNOWN),
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),   
+                    new SlotMapEntry(257,375,SlotType.UNKNOWN),
+                    new SlotMapEntry(376,384,SlotType.SYSTEM),
+                    new SlotMapEntry(385,432,SlotType.UNKNOWN))
             ),
     COMMAND_STATION_IBX_TYPE_1("Intellibox-I",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -148,7 +222,14 @@ public enum LnCommandStationType {
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
             CommandStationFracType.CLOCK13BIT,
-            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),new SlotMapEntry(1,120,SlotType.LOCO),new SlotMapEntry(121,127,SlotType.SYSTEM))
+            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
+                    new SlotMapEntry(1,120,SlotType.LOCO),
+                    new SlotMapEntry(121,127,SlotType.SYSTEM),
+                    new SlotMapEntry(128,247,SlotType.UNKNOWN),
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),   
+                    new SlotMapEntry(257,375,SlotType.UNKNOWN),
+                    new SlotMapEntry(376,384,SlotType.SYSTEM),
+                    new SlotMapEntry(385,432,SlotType.UNKNOWN))
             ),
     COMMAND_STATION_IBX_TYPE_2("Intellibox-II",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -158,7 +239,14 @@ public enum LnCommandStationType {
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
             CommandStationFracType.CLOCK13BIT,
-            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),new SlotMapEntry(1,120,SlotType.LOCO),new SlotMapEntry(121,127,SlotType.SYSTEM))
+            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
+                    new SlotMapEntry(1,120,SlotType.LOCO),
+                    new SlotMapEntry(121,127,SlotType.SYSTEM),
+                    new SlotMapEntry(128,247,SlotType.UNKNOWN),
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),   
+                    new SlotMapEntry(257,375,SlotType.UNKNOWN),
+                    new SlotMapEntry(376,384,SlotType.SYSTEM),
+                    new SlotMapEntry(385,432,SlotType.UNKNOWN))
             ),
     // the following command stations are known to not support "OPC_IDLE"
     COMMAND_STATION_PR3_ALONE("PR3 standalone programmer",  // NOI18N
@@ -169,7 +257,10 @@ public enum LnCommandStationType {
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
             CommandStationFracType.CLOCK13BIT,
-            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),new SlotMapEntry(1,120,SlotType.LOCO),new SlotMapEntry(121,127,SlotType.SYSTEM))
+            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
+                    new SlotMapEntry(1,120,SlotType.UNKNOWN),
+                    new SlotMapEntry(121,127,SlotType.SYSTEM),
+                    new SlotMapEntry(128,432,SlotType.UNKNOWN))
             ),
     COMMAND_STATION_PR2_ALONE("PR2 standalone programmer",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -179,7 +270,10 @@ public enum LnCommandStationType {
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
             CommandStationFracType.CLOCK13BIT,
-            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),new SlotMapEntry(1,120,SlotType.LOCO),new SlotMapEntry(121,127,SlotType.SYSTEM))
+            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
+                    new SlotMapEntry(1,120,SlotType.UNKNOWN),
+                    new SlotMapEntry(121,127,SlotType.SYSTEM),
+                    new SlotMapEntry(128,432,SlotType.UNKNOWN))
             ),
     COMMAND_STATION_STANDALONE("Stand-alone LocoNet",  // NOI18N
             ReadsFromServiceModeTrack.NO_SVC_MODE_READS,
@@ -189,7 +283,10 @@ public enum LnCommandStationType {
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
             CommandStationFracType.CLOCK13BIT,
-            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),new SlotMapEntry(1,120,SlotType.LOCO),new SlotMapEntry(121,127,SlotType.SYSTEM))
+            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
+                    new SlotMapEntry(1,120,SlotType.UNKNOWN),
+                    new SlotMapEntry(121,127,SlotType.SYSTEM),
+                    new SlotMapEntry(128,432,SlotType.UNKNOWN))
             ),
     COMMAND_STATION_PR4_ALONE("PR4 standalone programmer",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -199,7 +296,10 @@ public enum LnCommandStationType {
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
             CommandStationFracType.CLOCK13BIT,
-            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),new SlotMapEntry(1,120,SlotType.LOCO),new SlotMapEntry(121,127,SlotType.SYSTEM))
+            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
+                    new SlotMapEntry(1,120,SlotType.UNKNOWN),
+                    new SlotMapEntry(121,127,SlotType.SYSTEM),
+                    new SlotMapEntry(128,432,SlotType.UNKNOWN))
             ),
     COMMAND_STATION_USB_DCS240_ALONE("DCS240 USB interface as standalone programmer", // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -209,7 +309,10 @@ public enum LnCommandStationType {
             MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
             CommandStationFracType.CLOCK15BIT,
-            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),new SlotMapEntry(1,120,SlotType.LOCO),new SlotMapEntry(121,127,SlotType.SYSTEM))
+            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
+                    new SlotMapEntry(1,120,SlotType.UNKNOWN),
+                    new SlotMapEntry(121,127,SlotType.SYSTEM),
+                    new SlotMapEntry(128,432,SlotType.UNKNOWN))
             ),
     COMMAND_STATION_USB_DCS52_ALONE("DCS52 USB interface as standalone programmer",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -219,7 +322,10 @@ public enum LnCommandStationType {
             MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
             LocoResetSupport.NO_LOCO_RESET_SUPPORT,
             CommandStationFracType.CLOCK15BIT,
-            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),new SlotMapEntry(1,120,SlotType.LOCO),new SlotMapEntry(121,127,SlotType.SYSTEM))
+            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
+                    new SlotMapEntry(1,120,SlotType.UNKNOWN),
+                    new SlotMapEntry(121,127,SlotType.SYSTEM),
+                    new SlotMapEntry(128,432,SlotType.UNKNOWN))
             );
     // Note that the convention is that the first word (space-separated token) of the name is the
     // name of a configuration file for loconet.cmdstnconfig

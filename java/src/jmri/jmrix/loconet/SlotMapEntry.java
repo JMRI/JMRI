@@ -15,6 +15,7 @@ public class SlotMapEntry {
     }
     
     public enum SlotType {
+        UNKNOWN,
         SYSTEM,
         LOCO
     }

@@ -43,7 +43,7 @@ public class LocoNetSlot {
      * @param slotNum  slot number to be assigned to the new LocoNetSlot object
      */
     public LocoNetSlot(int slotNum) {
-        LocoNetSlot(slotNum, LnConstants.LOCONETPROTOCOL_UNKNOWN);
+        this(slotNum, LnConstants.LOCONETPROTOCOL_UNKNOWN);
     }
 
     /**
@@ -54,11 +54,10 @@ public class LocoNetSlot {
      * @param inLoconetProtocol - can be 0 = unknown, 1 = version 1.1, 2 = Expandedslot
      */
     public LocoNetSlot(int slotNum, int inLoconetProtocol) {
-        slot = slotNum;
-        loconetProtocol = inLoconetProtocol;
-        if ((slot == 0) || (slot > 120 && slot < 128)
-                || (slot > 247 && slot < 257)
-                || (slot > 375 && slot < 385)) {
+        this(slotNum, inLoconetProtocol, SlotType.LOCO);
+        if ((slotNum == 0) || (slotNum > 120 && slot < 128)
+                || (slotNum > 247 && slotNum < 257)
+                || (slotNum > 375 && slotNum < 385)) {
             slotType = SlotType.SYSTEM;
         } else {
             slotType = SlotType.LOCO;
