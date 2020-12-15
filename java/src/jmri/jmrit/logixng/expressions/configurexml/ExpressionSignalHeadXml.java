@@ -40,7 +40,7 @@ public class ExpressionSignalHeadXml extends jmri.managers.configurexml.Abstract
         
         element.addContent(new Element("queryType").addContent(p.getQueryType().name()));
         
-        element.addContent(new Element("apperance").addContent(Integer.toString(p.getAppearance())));
+        element.addContent(new Element("appearance").addContent(Integer.toString(p.getAppearance())));
 /*        
         int apperance = p.getAppearance();
         String apperanceKey = "";
@@ -72,7 +72,7 @@ public class ExpressionSignalHeadXml extends jmri.managers.configurexml.Abstract
             h.setQueryType(ExpressionSignalHead.QueryType.valueOf(queryType.getTextTrim()));
         }
         
-        Element apperanceElement = shared.getChild("apperance");
+        Element apperanceElement = shared.getChild("appearance");
         if (apperanceElement != null) {
             try {
                 int apperance = Integer.parseInt(apperanceElement.getTextTrim());

@@ -49,7 +49,7 @@
 
               <xs:element name="stateAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
 
-              <xs:element name="sensorState" minOccurs="1" maxOccurs="1">
+              <xs:element name="sensorState" minOccurs="0" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
                     <xs:enumeration value="Inactive"/>
