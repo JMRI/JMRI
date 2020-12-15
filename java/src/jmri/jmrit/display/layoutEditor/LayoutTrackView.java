@@ -1,9 +1,9 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.geom.*;
+import java.util.List;
 import java.util.*;
 
 import javax.annotation.CheckForNull;
@@ -29,7 +29,7 @@ import jmri.util.*;
  * <li>Hidden status
  * </ul>
  *
- * @author Bob Jacobsen  Copyright (c) 2020
+ * @author Bob Jacobsen Copyright (c) 2020
  *
  */
 abstract public class LayoutTrackView {
@@ -48,8 +48,8 @@ abstract public class LayoutTrackView {
     /**
      * constructor method
      *
-     * @param track the track to view
-     * @param c display location
+     * @param track        the track to view
+     * @param c            display location
      * @param layoutEditor for reference to tools
      */
     public LayoutTrackView(@Nonnull LayoutTrack track, @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
@@ -63,6 +63,7 @@ abstract public class LayoutTrackView {
     final protected LayoutEditor layoutEditor;
 
     // Accessor Methods
+
     @Nonnull
     final public String getId() {  // temporary Id vs name; is one for the View?
         return layoutTrack.getId();
@@ -230,6 +231,33 @@ abstract public class LayoutTrackView {
     // TODO: replace with abstract declaration (above)
     final protected void drawHidden(Graphics2D g2) {
         // nothing to do here... move along...
+    }
+
+    /**
+     * draw the text for this layout track
+     * @param g
+     * note: currently can't override (final); change this if you need to
+     */
+    final protected void drawLayoutTrackText(Graphics2D g) {
+        // get the center coordinates
+        int x = (int) center.getX(), y = (int) center.getY();
+
+        // get the name of this track
+        String name = getName();
+
+        // get the FontMetrics
+        FontMetrics metrics = g.getFontMetrics(g.getFont());
+
+        // determine the X coordinate for the text
+        x -= metrics.stringWidth(name) / 2;
+
+        // determine the Y coordinate for the text
+        y += metrics.getHeight() / 2;
+
+        // (note we add the ascent, as in java 2d 0 is top of the screen)
+        //y += (int) metrics.getAscent();
+
+        g.drawString(name, x, y);
     }
 
     /**

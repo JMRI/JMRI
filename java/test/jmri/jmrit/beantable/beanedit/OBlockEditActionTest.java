@@ -1,23 +1,15 @@
 package jmri.jmrit.beantable.beanedit;
 
-import jmri.InstanceManager;
+import java.awt.event.ActionEvent;
 
-import jmri.jmrit.beantable.oblock.TableFrames;
-import jmri.jmrit.logix.OBlock;
-import jmri.jmrit.logix.OBlockManager;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
-import jmri.util.ThreadingUtil;
-import jmri.util.gui.GuiLafPreferencesManager;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.netbeans.jemmy.QueueTool;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
+import jmri.InstanceManager;
+import jmri.util.JUnitUtil;
+import jmri.util.gui.GuiLafPreferencesManager;
 
 /**
  *
@@ -27,7 +19,7 @@ public class OBlockEditActionTest {
 
     @Test
     public void testCTor() {
-        OBlockEditAction obea = new OBlockEditAction(new ActionEvent(this,1,null));
+        OBlockEditAction obea = new OBlockEditAction(new ActionEvent(this,ActionEvent.ACTION_PERFORMED,null));
         Assert.assertNotNull("exists", obea);
     }
 

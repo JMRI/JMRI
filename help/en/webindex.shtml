@@ -220,12 +220,6 @@
 
   
 <li>
-<a href="package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Send Frame / Event Tool </a>
-<ul></ul>
-</li>
-
-  
-<li>
 <a href="package/jmri/jmrix/can/cbus/swing/eventrequestmonitor/CbusEventRequestTablePane.shtml">Event Capture Tool </a>
 <ul></ul>
 </li>
@@ -233,6 +227,12 @@
   
 <li>
 <a href="package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml">Event Table Tool </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/bootloader/CbusBootloaderPane.shtml">Firmware update </a>
 <ul></ul>
 </li>
 
@@ -257,12 +257,6 @@
   
 <li>
 <a href="package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml">Simulator </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrix/can/cbus/swing/bootloader/CbusBootloaderPane.shtml">Firmware update </a>
 <ul></ul>
 </li>
 
@@ -1369,10 +1363,10 @@
 <ul></ul>
 </li>
 
-
+ 
 <li>
-  <a href="package/jmri/jmrit/beantable/OBlockTable.shtml">OBlock (tabbed interface) </a>
-  <ul></ul>
+<a href="package/jmri/jmrit/beantable/OBlockTable.shtml">OBlock (using tabbed interface) </a>
+<ul></ul>
 </li>
 
  
@@ -1796,7 +1790,7 @@
 </li>
  
 <li>
-<a href="package/jmri/jmrit/logix/SCWarrant.html">SC Warrant (Signal Controlled) </a>
+<a href="package/jmri/jmrit/logix/SCWarrant.shtml">SC Warrant (Signal Controlled) </a>
 <ul></ul>
 </li>
 
@@ -2058,7 +2052,7 @@
 <ul>
   
 <li>
-<a href="package/jmri/jmrix/sprog/update/SprogVersionFrame.shtml">SPROG Version </a>
+<a href="package/jmri/jmrix/sprog/console/SprogConsoleFrame.shtml">Console </a>
 <ul></ul>
 </li>
 
@@ -2076,7 +2070,7 @@
 
   
 <li>
-<a href="package/jmri/jmrix/sprog/console/SprogConsoleFrame.shtml">Console </a>
+<a href="package/jmri/jmrix/sprog/update/SprogVersionFrame.shtml">SPROG Version </a>
 <ul></ul>
 </li>
 
@@ -2507,6 +2501,12 @@
  
 <li>
 <a href="html/apps/index.shtml#addapp">XTrackCAD/Reader </a>
+<ul></ul>
+</li>
+
+ 
+<li>
+<a href="html/scripts/yaat/YAAT.shtml">YAAT - YetAnotherAutoTrain.py </a>
 <ul></ul>
 </li>
 

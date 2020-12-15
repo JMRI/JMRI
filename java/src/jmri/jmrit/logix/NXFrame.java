@@ -134,11 +134,11 @@ public class NXFrame extends WarrantRoute {
         float prefMaxThrottle = WarrantPreferences.getDefault().getThrottleScale() ;
         _maxThrottleBox.setText(NumberFormat.getNumberInstance().format(prefMaxThrottle));
         
-        float prefNormalScale = 0.0F;
-        try {
-            prefNormalScale = WarrantPreferences.getDefault().getSpeedNameValue("Normal");
-        } catch (Exception e) {
-            log.warn("Warrants Aspect Speed table does not contain speed name 'Normal'", e);
+        float prefNormalScale = 0.0f;
+        WarrantPreferences wp = WarrantPreferences.getDefault();
+        if (wp == null) {
+            log.warn("WarrantPreferences.getDefault() == null. (why?) Seems to happen from time to time");
+            prefNormalScale = 100.0f;
         }
         _maxSpeedBox.setText(NumberFormat.getNumberInstance().format(prefNormalScale));
         
@@ -237,7 +237,7 @@ public class NXFrame extends WarrantRoute {
 
     private void maxThrottleEventAction() {
         boolean isForward = _forward.isSelected();
-        RosterSpeedProfile profile = _speedUtil.getSpeedProfile();
+        RosterSpeedProfile profile = _speedUtil.getMergeProfile();
         if (profile != null) {
             NumberFormat formatter = NumberFormat.getNumberInstance(); 
             float num = 0;
@@ -267,7 +267,7 @@ public class NXFrame extends WarrantRoute {
 
         _maxSpeedBox.addActionListener((ActionEvent evt)-> {
             boolean isForward = _forward.isSelected();
-            RosterSpeedProfile profile = _speedUtil.getSpeedProfile();
+            RosterSpeedProfile profile = _speedUtil.getMergeProfile();
             if (profile != null) {
                 NumberFormat formatter = NumberFormat.getNumberInstance(); 
                 float num = 0;
@@ -442,7 +442,7 @@ public class NXFrame extends WarrantRoute {
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         String property = e.getPropertyName();
-        log.debug("propertyChange \"{}\" old= {} new= {} source= {}",property,
+        log.trace("propertyChange \"{}\" old= {} new= {} source= {}",property,
                                             e.getOldValue(),e.getNewValue(),
                                             e.getSource().getClass().getName());
         if (property.equals("DnDrop")) {
@@ -608,7 +608,10 @@ public class NXFrame extends WarrantRoute {
         }
         _maxThrottle = maxSpeed;
 
-        setAddress();
+        String msg = setAddress();
+        if (msg != null) {
+            return msg;
+        }
 
         int time = (Integer)_timeIncre.getValue();
         _speedUtil.setRampTimeIncrement(time);
@@ -954,7 +957,7 @@ public class NXFrame extends WarrantRoute {
         // distance in block where down ramp is started
         blkDistance += remMaxSpeedDist;
         // time to start down ramp
-        speedTime = _speedUtil.getTimeForDistance(curThrottle, remMaxSpeedDist) + timeInterval;
+        speedTime = _speedUtil.getTimeForDistance(curThrottle, remMaxSpeedDist);
 
         if (log.isDebugEnabled()) {
             log.debug("Begin Ramp Down at block \"{}\" blockLen={}, at distance= {} curDistance = {} remTotal= {} curThrottle= {} ({})",
