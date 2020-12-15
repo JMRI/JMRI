@@ -47,7 +47,7 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
                 "   ? E%n" +
                 "      Sensor '' is Active%n" +
                 "   ! A1%n" +
-                "      Set turnout '' to Thrown%n" +
+                "      Set turnout '' to state Thrown%n" +
                 "   ! A2%n" +
                 "      Socket not connected%n");
     }
@@ -62,7 +62,7 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
                 "            ? E%n" +
                 "               Sensor '' is Active%n" +
                 "            ! A1%n" +
-                "               Set turnout '' to Thrown%n" +
+                "               Set turnout '' to state Thrown%n" +
                 "            ! A2%n" +
                 "               Socket not connected%n");
     }

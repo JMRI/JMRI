@@ -515,7 +515,7 @@ public class LogixNGTest {
         
 //        System.err.format("%s%n", conditionalNG.getChild(0).getConnectedSocket().getLongDescription());
         Assert.assertTrue("conditionalng child is correct",
-                "Set turnout '' to Thrown"
+                "Set turnout '' to state Thrown"
                         .equals(conditionalNG.getChild(0).getConnectedSocket().getLongDescription()));
         Assert.assertTrue("conditionalng is correct", conditionalNG == digitalActionBean.getConditionalNG());
         Assert.assertTrue("logixlng is correct", logixNG == digitalActionBean.getLogixNG());

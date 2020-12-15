@@ -3,13 +3,7 @@ package jmri.jmrit.logixng.actions;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Light;
-import jmri.LightManager;
-import jmri.NamedBean;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitAppender;
@@ -70,7 +64,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Set light IL1 to On%n");
+        return String.format("Set light IL1 to state On%n");
     }
     
     @Override
@@ -79,7 +73,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Set light IL1 to On%n");
+                "         Set light IL1 to state On%n");
     }
     
     @Override
@@ -103,19 +97,19 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         action2 = new ActionLight("IQDA321", null);
         Assert.assertNotNull("object exists", action2);
         Assert.assertNull("Username matches", action2.getUserName());
-        Assert.assertEquals("String matches", "Set light '' to On", action2.getLongDescription());
+        Assert.assertEquals("String matches", "Set light '' to state On", action2.getLongDescription());
         
         action2 = new ActionLight("IQDA321", "My light");
         Assert.assertNotNull("object exists", action2);
         Assert.assertEquals("Username matches", "My light", action2.getUserName());
-        Assert.assertEquals("String matches", "Set light '' to On", action2.getLongDescription());
+        Assert.assertEquals("String matches", "Set light '' to state On", action2.getLongDescription());
         
         action2 = new ActionLight("IQDA321", null);
         action2.setLight(light);
         Assert.assertTrue("light is correct", light == action2.getLight().getBean());
         Assert.assertNotNull("object exists", action2);
         Assert.assertNull("Username matches", action2.getUserName());
-        Assert.assertEquals("String matches", "Set light IL1 to On", action2.getLongDescription());
+        Assert.assertEquals("String matches", "Set light IL1 to state On", action2.getLongDescription());
         
         Light l = InstanceManager.getDefault(LightManager.class).provide("IL1");
         action2 = new ActionLight("IQDA321", "My light");
@@ -123,7 +117,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue("light is correct", l == action2.getLight().getBean());
         Assert.assertNotNull("object exists", action2);
         Assert.assertEquals("Username matches", "My light", action2.getUserName());
-        Assert.assertEquals("String matches", "Set light IL1 to On", action2.getLongDescription());
+        Assert.assertEquals("String matches", "Set light IL1 to state On", action2.getLongDescription());
         
         boolean thrown = false;
         try {
@@ -228,6 +222,221 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
+    public void testIndirectAddressing() throws JmriException {
+        
+        Memory m1 = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
+        m1.setValue("IL102");
+        
+        Assert.assertTrue(conditionalNG.isActive());
+        Light t1 = InstanceManager.getDefault(LightManager.class).provide("IL101");
+        Light t2 = InstanceManager.getDefault(LightManager.class).provide("IL102");
+        Light t3 = InstanceManager.getDefault(LightManager.class).provide("IL103");
+        Light t4 = InstanceManager.getDefault(LightManager.class).provide("IL104");
+        Light t5 = InstanceManager.getDefault(LightManager.class).provide("IL105");
+        
+        actionLight.setBeanState(ActionLight.LightState.On);
+        actionLight.setLight(t1.getSystemName());
+        actionLight.setReference("{IM1}");    // Points to "IL102"
+        actionLight.setLocalVariable("myLight");
+        actionLight.setFormula("\"IL10\" + str(index)");
+        _baseMaleSocket.addLocalVariable("refLight", SymbolTable.InitialValueType.String, "IL103");
+        _baseMaleSocket.addLocalVariable("myLight", SymbolTable.InitialValueType.String, "IL104");
+        _baseMaleSocket.addLocalVariable("index", SymbolTable.InitialValueType.Integer, "5");
+        
+        // Test direct addressing
+        actionLight.setAddressing(NamedBeanAddressing.Direct);
+        t1.setState(Light.OFF);
+        t2.setState(Light.OFF);
+        t3.setState(Light.OFF);
+        t4.setState(Light.OFF);
+        t5.setState(Light.OFF);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct light should be thrown
+        Assert.assertEquals(Light.ON, t1.getCommandedState());
+        Assert.assertEquals(Light.OFF, t2.getCommandedState());
+        Assert.assertEquals(Light.OFF, t3.getCommandedState());
+        Assert.assertEquals(Light.OFF, t4.getCommandedState());
+        Assert.assertEquals(Light.OFF, t5.getCommandedState());
+        
+        // Test reference by memory addressing
+        actionLight.setAddressing(NamedBeanAddressing.Reference);
+        t1.setState(Light.OFF);
+        t2.setState(Light.OFF);
+        t3.setState(Light.OFF);
+        t4.setState(Light.OFF);
+        t5.setState(Light.OFF);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct light should be thrown
+        Assert.assertEquals(Light.OFF, t1.getCommandedState());
+        Assert.assertEquals(Light.ON, t2.getCommandedState());
+        Assert.assertEquals(Light.OFF, t3.getCommandedState());
+        Assert.assertEquals(Light.OFF, t4.getCommandedState());
+        Assert.assertEquals(Light.OFF, t5.getCommandedState());
+        
+        // Test reference by local variable addressing
+        actionLight.setReference("{refLight}");    // Points to "IL103"
+        actionLight.setAddressing(NamedBeanAddressing.Reference);
+        t1.setState(Light.OFF);
+        t2.setState(Light.OFF);
+        t3.setState(Light.OFF);
+        t4.setState(Light.OFF);
+        t5.setState(Light.OFF);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct light should be thrown
+        Assert.assertEquals(Light.OFF, t1.getCommandedState());
+        Assert.assertEquals(Light.OFF, t2.getCommandedState());
+        Assert.assertEquals(Light.ON, t3.getCommandedState());
+        Assert.assertEquals(Light.OFF, t4.getCommandedState());
+        Assert.assertEquals(Light.OFF, t5.getCommandedState());
+        
+        // Test local variable addressing
+        actionLight.setAddressing(NamedBeanAddressing.LocalVariable);
+        t1.setState(Light.OFF);
+        t2.setState(Light.OFF);
+        t3.setState(Light.OFF);
+        t4.setState(Light.OFF);
+        t5.setState(Light.OFF);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct light should be thrown
+        Assert.assertEquals(Light.OFF, t1.getCommandedState());
+        Assert.assertEquals(Light.OFF, t2.getCommandedState());
+        Assert.assertEquals(Light.OFF, t3.getCommandedState());
+        Assert.assertEquals(Light.ON, t4.getCommandedState());
+        Assert.assertEquals(Light.OFF, t5.getCommandedState());
+        
+        // Test formula addressing
+        actionLight.setAddressing(NamedBeanAddressing.Formula);
+        t1.setState(Light.OFF);
+        t2.setState(Light.OFF);
+        t3.setState(Light.OFF);
+        t4.setState(Light.OFF);
+        t5.setState(Light.OFF);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct light should be thrown
+        Assert.assertEquals(Light.OFF, t1.getCommandedState());
+        Assert.assertEquals(Light.OFF, t2.getCommandedState());
+        Assert.assertEquals(Light.OFF, t3.getCommandedState());
+        Assert.assertEquals(Light.OFF, t4.getCommandedState());
+        Assert.assertEquals(Light.ON, t5.getCommandedState());
+    }
+    
+    @Test
+    public void testIndirectStateAddressing() throws JmriException {
+        
+        Memory m1 = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
+        m1.setValue("IL102");
+        
+        Assert.assertTrue(conditionalNG.isActive());
+        
+        
+        // Test direct addressing
+        actionLight.setStateAddressing(NamedBeanAddressing.Direct);
+        // Test Off
+        light.setState(Light.ON);
+        actionLight.setBeanState(ActionLight.LightState.Off);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct light should be thrown
+        Assert.assertEquals(Light.OFF, light.getCommandedState());
+        // Test On
+        light.setState(Light.OFF);
+        actionLight.setBeanState(ActionLight.LightState.On);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct light should be thrown
+        Assert.assertEquals(Light.ON, light.getCommandedState());
+        
+        
+        // Test reference by memory addressing
+        actionLight.setStateAddressing(NamedBeanAddressing.Reference);
+        actionLight.setStateReference("{IM1}");
+        // Test Off
+        m1.setValue("Off");
+        light.setState(Light.ON);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct light should be thrown
+        Assert.assertEquals(Light.OFF, light.getCommandedState());
+        // Test On
+        m1.setValue("On");
+        light.setState(Light.OFF);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct light should be thrown
+        Assert.assertEquals(Light.ON, light.getCommandedState());
+        
+        
+        // Test reference by local variable addressing
+        actionLight.setStateAddressing(NamedBeanAddressing.Reference);
+        actionLight.setStateReference("{refVariable}");
+        // Test Off
+        _baseMaleSocket.clearLocalVariables();
+        _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "Off");
+        light.setState(Light.ON);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct light should be thrown
+        Assert.assertEquals(Light.OFF, light.getCommandedState());
+        // Test On
+        _baseMaleSocket.clearLocalVariables();
+        _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "On");
+        light.setState(Light.OFF);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct light should be thrown
+        Assert.assertEquals(Light.ON, light.getCommandedState());
+        
+        
+        // Test local variable addressing
+        actionLight.setStateAddressing(NamedBeanAddressing.Reference);
+        actionLight.setStateLocalVariable("myVariable");
+        // Test Off
+        _baseMaleSocket.clearLocalVariables();
+        _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "Off");
+        light.setState(Light.ON);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct light should be thrown
+        Assert.assertEquals(Light.OFF, light.getCommandedState());
+        // Test On
+        _baseMaleSocket.clearLocalVariables();
+        _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "On");
+        light.setState(Light.OFF);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct light should be thrown
+        Assert.assertEquals(Light.ON, light.getCommandedState());
+        
+        
+        // Test formula addressing
+        actionLight.setStateAddressing(NamedBeanAddressing.Formula);
+        actionLight.setStateFormula("refVariable + myVariable");
+        // Test Off
+        _baseMaleSocket.clearLocalVariables();
+        _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "O");
+        _baseMaleSocket.addLocalVariable("myVariable", SymbolTable.InitialValueType.String, "ff");
+        light.setState(Light.ON);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct light should be thrown
+        Assert.assertEquals(Light.OFF, light.getCommandedState());
+        // Test On
+        _baseMaleSocket.clearLocalVariables();
+        _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "O");
+        _baseMaleSocket.addLocalVariable("myVariable", SymbolTable.InitialValueType.String, "n");
+        light.setState(Light.OFF);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct light should be thrown
+        Assert.assertEquals(Light.ON, light.getCommandedState());
+    }
+    
+    @Test
     public void testVetoableChange() throws PropertyVetoException {
         // Get the action and set the light
 //        Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
@@ -287,7 +496,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testLongDescription() {
-        Assert.assertEquals("String matches", "Set light IL1 to On", _base.getLongDescription());
+        Assert.assertEquals("String matches", "Set light IL1 to state On", _base.getLongDescription());
     }
     
     @Test

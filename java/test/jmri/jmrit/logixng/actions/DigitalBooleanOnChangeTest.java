@@ -53,7 +53,7 @@ public class DigitalBooleanOnChangeTest extends AbstractDigitalBooleanActionTest
         return String.format(
                 "On change to true%n" +
                 "   ! A%n" +
-                "      Set turnout '' to Thrown%n");
+                "      Set turnout '' to state Thrown%n");
     }
     
     @Override
@@ -68,7 +68,7 @@ public class DigitalBooleanOnChangeTest extends AbstractDigitalBooleanActionTest
                 "            !b A%n" +
                 "               On change to true%n" +
                 "                  ! A%n" +
-                "                     Set turnout '' to Thrown%n");
+                "                     Set turnout '' to state Thrown%n");
     }
     
     @Override
