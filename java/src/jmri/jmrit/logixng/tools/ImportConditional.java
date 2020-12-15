@@ -699,15 +699,15 @@ public class ImportConditional {
                 
                 switch (ca.getActionData()) {
                     case jmri.Route.TOGGLE:
-                        action.setSensorState(ActionSensor.SensorState.Toggle);
+                        action.setBeanState(ActionSensor.SensorState.Toggle);
                         break;
                         
                     case Sensor.INACTIVE:
-                        action.setSensorState(ActionSensor.SensorState.Inactive);
+                        action.setBeanState(ActionSensor.SensorState.Inactive);
                         break;
                         
                     case Sensor.ACTIVE:
-                        action.setSensorState(ActionSensor.SensorState.Active);
+                        action.setBeanState(ActionSensor.SensorState.Active);
                         break;
                         
                     default:
@@ -798,15 +798,15 @@ public class ImportConditional {
                 
                 switch (ca.getActionData()) {
                     case jmri.Route.TOGGLE:
-                        action.setLightState(ActionLight.LightState.Toggle);
+                        action.setBeanState(ActionLight.LightState.Toggle);
                         break;
                         
                     case Light.OFF:
-                        action.setLightState(ActionLight.LightState.Off);
+                        action.setBeanState(ActionLight.LightState.Off);
                         break;
                         
                     case Light.ON:
-                        action.setLightState(ActionLight.LightState.On);
+                        action.setBeanState(ActionLight.LightState.On);
                         break;
                         
                     default:

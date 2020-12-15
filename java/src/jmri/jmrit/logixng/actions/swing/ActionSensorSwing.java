@@ -46,7 +46,7 @@ public class ActionSensorSwing extends AbstractDigitalActionSwing {
             if (action.getSensor() != null) {
                 sensorBeanPanel.setDefaultNamedBean(action.getSensor().getBean());
             }
-            stateComboBox.setSelectedItem(action.getSensorState());
+            stateComboBox.setSelectedItem(action.getBeanState());
         }
         
         panel.add(new JLabel(Bundle.getMessage("BeanNameSensor")));
@@ -84,7 +84,7 @@ public class ActionSensorSwing extends AbstractDigitalActionSwing {
                     action.setSensor(handle);
                 }
             }
-            action.setSensorState((SensorState)stateComboBox.getSelectedItem());
+            action.setBeanState((SensorState)stateComboBox.getSelectedItem());
         } catch (JmriException ex) {
             log.error("Cannot get NamedBeanHandle for sensor", ex);
         }
@@ -106,7 +106,7 @@ public class ActionSensorSwing extends AbstractDigitalActionSwing {
                                 .getNamedBeanHandle(sensor.getDisplayName(), sensor);
                 action.setSensor(handle);
             }
-            action.setSensorState((SensorState)stateComboBox.getSelectedItem());
+            action.setBeanState((SensorState)stateComboBox.getSelectedItem());
         } catch (JmriException ex) {
             log.error("Cannot get NamedBeanHandle for sensor", ex);
         }

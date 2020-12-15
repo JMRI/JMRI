@@ -63,7 +63,7 @@ public class ActionSensorSwingTest extends SwingConfiguratorInterfaceTestBase {
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
         Assert.assertEquals("IS1", action.getSensor().getBean().getSystemName());
-        Assert.assertEquals(ActionSensor.SensorState.Inactive, action.getSensorState());
+        Assert.assertEquals(ActionSensor.SensorState.Inactive, action.getBeanState());
     }
 
     @Test
@@ -88,7 +88,7 @@ public class ActionSensorSwingTest extends SwingConfiguratorInterfaceTestBase {
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
         Assert.assertEquals("IS99", action.getSensor().getBean().getSystemName());
-        Assert.assertEquals(ActionSensor.SensorState.Active, action.getSensorState());
+        Assert.assertEquals(ActionSensor.SensorState.Active, action.getBeanState());
     }
     
     // The minimal setup for log4J

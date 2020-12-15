@@ -5,7 +5,6 @@ import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.*;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
@@ -43,7 +42,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     }
     
     @Override
-    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws ParserException {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
@@ -52,6 +51,14 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         copy.setComment(getComment());
         if (_turnoutHandle != null) copy.setTurnout(_turnoutHandle);
         copy.setBeanState(_turnoutState);
+        copy.setAddressing(_addressing);
+        copy.setFormula(_formula);
+        copy.setLocalVariable(_localVariable);
+        copy.setReference(_reference);
+        copy.setStateAddressing(_stateAddressing);
+        copy.setStateFormula(_stateFormula);
+        copy.setStateLocalVariable(_stateLocalVariable);
+        copy.setStateReference(_stateReference);
         return manager.registerAction(copy);
     }
     
@@ -307,7 +314,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
                 }
             } else {
                 if (_turnoutState == TurnoutState.Toggle) {
-                    if ("Toggle".equals(name)) {
+                    if (turnout.getCommandedState() == Turnout.CLOSED) {
                         turnout.setCommandedState(Turnout.THROWN);
                     } else {
                         turnout.setCommandedState(Turnout.CLOSED);

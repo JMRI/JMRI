@@ -205,21 +205,21 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue("sensor is active",sensor.getCommandedState() == Sensor.ACTIVE);
         
         // Test to set sensor to inactive
-        actionSensor.setSensorState(ActionSensor.SensorState.Inactive);
+        actionSensor.setBeanState(ActionSensor.SensorState.Inactive);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the sensor should be active
         Assert.assertTrue("sensor is active",sensor.getCommandedState() == Sensor.INACTIVE);
         
         // Test to set sensor to toggle
-        actionSensor.setSensorState(ActionSensor.SensorState.Toggle);
+        actionSensor.setBeanState(ActionSensor.SensorState.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the sensor should be active
         Assert.assertTrue("sensor is active",sensor.getCommandedState() == Sensor.ACTIVE);
         
         // Test to set sensor to toggle
-        actionSensor.setSensorState(ActionSensor.SensorState.Toggle);
+        actionSensor.setBeanState(ActionSensor.SensorState.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the sensor should be active
@@ -326,7 +326,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         conditionalNG.setRunOnGUIDelayed(false);
         actionSensor = new ActionSensor(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         actionSensor.setSensor(sensor);
-        actionSensor.setSensorState(ActionSensor.SensorState.Active);
+        actionSensor.setBeanState(ActionSensor.SensorState.Active);
         MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionSensor);
         conditionalNG.getChild(0).connect(socket);
         

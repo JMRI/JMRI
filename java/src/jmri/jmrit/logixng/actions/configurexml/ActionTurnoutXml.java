@@ -41,11 +41,16 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
             element.addContent(new Element("turnout").addContent(turnout.getName()));
         }
         
-        element.addContent(new Element("turnoutState").addContent(p.getBeanState().name()));
         element.addContent(new Element("addressing").addContent(p.getTurnoutAddressing().name()));
         element.addContent(new Element("reference").addContent(p.getReference()));
         element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
         element.addContent(new Element("formula").addContent(p.getFormula()));
+        
+        element.addContent(new Element("stateAddressing").addContent(p.getStateAddressing().name()));
+        element.addContent(new Element("turnoutState").addContent(p.getBeanState().name()));
+        element.addContent(new Element("stateReference").addContent(p.getStateReference()));
+        element.addContent(new Element("stateLocalVariable").addContent(p.getStateLocalVariable()));
+        element.addContent(new Element("stateFormula").addContent(p.getStateFormula()));
 
         return element;
     }
@@ -65,26 +70,41 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
             else h.removeTurnout();
         }
         
-        Element turnoutState = shared.getChild("turnoutState");
-        if (turnoutState != null) {
-            h.setBeanState(ActionTurnout.TurnoutState.valueOf(turnoutState.getTextTrim()));
-        }
-        
         try {
-            Element addressing = shared.getChild("addressing");
-            if (addressing != null) {
-                h.setAddressing(NamedBeanAddressing.valueOf(addressing.getTextTrim()));
+            Element elem = shared.getChild("addressing");
+            if (elem != null) {
+                h.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }
             
-            if (shared.getChild("reference") != null) {
-                h.setReference(shared.getChild("reference").getTextTrim());
+            elem = shared.getChild("reference");
+            if (elem != null) h.setReference(elem.getTextTrim());
+            
+            elem = shared.getChild("localVariable");
+            if (elem != null) h.setLocalVariable(elem.getTextTrim());
+            
+            elem = shared.getChild("formula");
+            if (elem != null) h.setFormula(elem.getTextTrim());
+            
+            
+            elem = shared.getChild("stateAddressing");
+            if (elem != null) {
+                h.setStateAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }
-            if (shared.getChild("localVariable") != null) {
-                h.setLocalVariable(shared.getChild("localVariable").getTextTrim());
+            
+            Element turnoutState = shared.getChild("turnoutState");
+            if (turnoutState != null) {
+                h.setBeanState(ActionTurnout.TurnoutState.valueOf(turnoutState.getTextTrim()));
             }
-            if (shared.getChild("formula") != null) {
-                h.setFormula(shared.getChild("formula").getTextTrim());
-            }
+            
+            elem = shared.getChild("stateReference");
+            if (elem != null) h.setStateReference(elem.getTextTrim());
+            
+            elem = shared.getChild("stateLocalVariable");
+            if (elem != null) h.setStateLocalVariable(elem.getTextTrim());
+            
+            elem = shared.getChild("stateFormula");
+            if (elem != null) h.setStateFormula(elem.getTextTrim());
+            
         } catch (ParserException e) {
             throw new JmriConfigureXmlException(e);
         }

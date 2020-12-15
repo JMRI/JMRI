@@ -206,21 +206,21 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue("light is on",light.getCommandedState() == Light.ON);
         
         // Test to set light to off
-        actionLight.setLightState(ActionLight.LightState.Off);
+        actionLight.setBeanState(ActionLight.LightState.Off);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the light should be on
         Assert.assertTrue("light is on",light.getCommandedState() == Light.OFF);
         
         // Test to set light to toggle
-        actionLight.setLightState(ActionLight.LightState.Toggle);
+        actionLight.setBeanState(ActionLight.LightState.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the light should be on
         Assert.assertTrue("light is on",light.getCommandedState() == Light.ON);
         
         // Test to set light to toggle
-        actionLight.setLightState(ActionLight.LightState.Toggle);
+        actionLight.setBeanState(ActionLight.LightState.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the light should be on
@@ -327,7 +327,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         conditionalNG.setEnabled(true);
         actionLight = new ActionLight(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         actionLight.setLight(light);
-        actionLight.setLightState(ActionLight.LightState.On);
+        actionLight.setBeanState(ActionLight.LightState.On);
         MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionLight);
         conditionalNG.getChild(0).connect(socket);
         

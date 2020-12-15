@@ -63,7 +63,7 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
         Assert.assertEquals("IL1", action.getLight().getBean().getSystemName());
-        Assert.assertEquals(ActionLight.LightState.Off, action.getLightState());
+        Assert.assertEquals(ActionLight.LightState.Off, action.getBeanState());
     }
 
     @Test
@@ -87,7 +87,7 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
         Assert.assertEquals("IL99", action.getLight().getBean().getSystemName());
-        Assert.assertEquals(ActionLight.LightState.On, action.getLightState());
+        Assert.assertEquals(ActionLight.LightState.On, action.getBeanState());
     }
     
     // The minimal setup for log4J

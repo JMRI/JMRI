@@ -46,7 +46,7 @@ public class ActionLightSwing extends AbstractDigitalActionSwing {
             if (action.getLight() != null) {
                 lightBeanPanel.setDefaultNamedBean(action.getLight().getBean());
             }
-            stateComboBox.setSelectedItem(action.getLightState());
+            stateComboBox.setSelectedItem(action.getBeanState());
         }
         
         panel.add(new JLabel(Bundle.getMessage("BeanNameLight")));
@@ -78,7 +78,7 @@ public class ActionLightSwing extends AbstractDigitalActionSwing {
                     action.setLight(handle);
                 }
             }
-            action.setLightState((LightState)stateComboBox.getSelectedItem());
+            action.setBeanState((LightState)stateComboBox.getSelectedItem());
         } catch (JmriException ex) {
             log.error("Cannot get NamedBeanHandle for light", ex);
         }
@@ -100,7 +100,7 @@ public class ActionLightSwing extends AbstractDigitalActionSwing {
                                 .getNamedBeanHandle(light.getDisplayName(), light);
                 action.setLight(handle);
             }
-            action.setLightState((LightState)stateComboBox.getSelectedItem());
+            action.setBeanState((LightState)stateComboBox.getSelectedItem());
         } catch (JmriException ex) {
             log.error("Cannot get NamedBeanHandle for light", ex);
         }
