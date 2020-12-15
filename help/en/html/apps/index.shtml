@@ -82,11 +82,16 @@
      
       <h2>JMRI Features and Tools</h2>
 
-<p>JMRI software consists of a large library of functions divided into (1) a
-  system specific part, with many subparts, each of which communicates with one
-  supported hardware system, like C/MRI, in a system specific way, and (2) a
-  system-independent part where most of the features of JMRI are implemented.
-  So, for example, if the user does something (perhaps setting a route) to
+<p>JMRI software consists of a large library of functions divided into</p>
+
+<ul>
+  <li>a system-specific part, with many subparts, each of which communicates with one
+  supported hardware system, like C/MRI, in a system specific way, and</li>
+  <li>a system-independent part where most of the features of JMRI are implemented.</li>
+ </ul>
+ 
+ 
+ <p>So, for example, if the user does something (perhaps setting a route) to
   cause JMRI to throw a Turnout (track switch), that user action will occur in
   the system-independent part of the software, and then JMRI will send out the
   actual command via the system-dependent part appropriate to the hardware
