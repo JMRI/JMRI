@@ -98,9 +98,13 @@ public class SpeedUtil {
         }
         if (id == null || id.isEmpty()) {
             _rosterEntry = null;
+            _mergeProfile = null;
+            _sessionProfile = null;
             return;
         }
         if (!id.equals(_rosterId)) {
+            _mergeProfile = null;
+            _sessionProfile = null;
             RosterEntry re = Roster.getDefault().getEntryForId(id);
             if (re != null) {
                 _rosterEntry = re;
@@ -501,7 +505,11 @@ public class SpeedUtil {
         if (log.isTraceEnabled()) log.debug("User's Ramp increment modified to {} ({} speed steps)",
                 _rampThrottleIncrement, Math.round(_rampThrottleIncrement/stepIncrement));
     }
-    
+
+    protected DccThrottle getThrottle() {
+        return _throttle;
+    }
+
     // return true if the speed named 'speed2' is strictly greater than that of 'speed1'
     protected boolean secondGreaterThanFirst(String speed1, String speed2) {
         if (speed2 == null) {
@@ -553,9 +561,6 @@ public class SpeedUtil {
                 float trackSpeed = getTrackSpeed(throttleSpeed);
                 if (signalSpeed < trackSpeed) {
                     throttleSpeed = getThrottleSettingForSpeed(signalSpeed);
-                    if (throttleSpeed <= 0.0f) {
-                        return signalSpeed * _signalSpeedMap.getLayoutScale() / (SCALE_FACTOR *_signalSpeedMap.getDefaultThrottleFactor());
-                    }
                 }
                 break;
 
@@ -565,9 +570,6 @@ public class SpeedUtil {
                 trackSpeed = getTrackSpeed(throttleSpeed);
                 if (signalSpeed < trackSpeed) {
                     throttleSpeed = getThrottleSettingForSpeed(signalSpeed);
-                    if (throttleSpeed <= 0.0f) {
-                        return signalSpeed * _signalSpeedMap.getLayoutScale() / (SCALE_FACTOR *_signalSpeedMap.getDefaultThrottleFactor());
-                    }
                 }
                 break;
             default:
@@ -597,6 +599,9 @@ public class SpeedUtil {
         // Note SpeedProfile uses millimeters per second.
         float speed = speedProfile.getSpeed(throttleSetting, _isForward) / 1000;            
         if (speed <= 0.0f) {
+            speed = speedProfile.getSpeed(throttleSetting, !_isForward) / 1000;
+        }
+        if (speed <= 0.0f) {
             float factor = _signalSpeedMap.getDefaultThrottleFactor() * SCALE_FACTOR / _signalSpeedMap.getLayoutScale();
             speed = throttleSetting * factor;
         }
@@ -612,7 +617,11 @@ public class SpeedUtil {
      */
     protected float getThrottleSettingForSpeed(float trackSpeed) {
         RosterSpeedProfile speedProfile = getMergeProfile();
-        return speedProfile.getThrottleSetting(trackSpeed * 1000, _isForward);
+        float throttleSpeed = speedProfile.getThrottleSetting(trackSpeed * 1000, _isForward);
+        if (throttleSpeed <= 0.0f) {
+            throttleSpeed =  trackSpeed * _signalSpeedMap.getLayoutScale() / (SCALE_FACTOR *_signalSpeedMap.getDefaultThrottleFactor());
+        }
+        return throttleSpeed;
     }
 
     /**
