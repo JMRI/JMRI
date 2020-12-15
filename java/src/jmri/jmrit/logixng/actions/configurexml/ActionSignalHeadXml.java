@@ -114,7 +114,7 @@ public class ActionSignalHeadXml extends jmri.managers.configurexml.AbstractName
             if (elem != null) h.setOperationFormula(elem.getTextTrim());
             
             
-            elem = shared.getChild("apperanceAddressing");
+            elem = shared.getChild("appearanceAddressing");
             if (elem != null) {
                 h.setAppearanceAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }
@@ -129,13 +129,13 @@ public class ActionSignalHeadXml extends jmri.managers.configurexml.AbstractName
                 }
             }
             
-            elem = shared.getChild("apperanceReference");
+            elem = shared.getChild("appearanceReference");
             if (elem != null) h.setAppearanceReference(elem.getTextTrim());
             
-            elem = shared.getChild("apperanceLocalVariable");
+            elem = shared.getChild("appearanceLocalVariable");
             if (elem != null) h.setAppearanceLocalVariable(elem.getTextTrim());
             
-            elem = shared.getChild("apperanceFormula");
+            elem = shared.getChild("appearanceFormula");
             if (elem != null) h.setAppearanceFormula(elem.getTextTrim());
             
         } catch (ParserException e) {

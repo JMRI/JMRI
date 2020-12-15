@@ -320,7 +320,7 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
                         light.setCommandedState(Light.OFF);
                     }
                 } else {
-                    light.setCommandedState(_lightHandle.getBean().getStateFromName(name));
+                    light.setCommandedState(LightState.valueOf(name)._id);
                 }
             }
         });

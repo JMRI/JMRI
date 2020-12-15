@@ -320,7 +320,7 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
                         sensor.setCommandedState(Sensor.INACTIVE);
                     }
                 } else {
-                    sensor.setCommandedState(_sensorHandle.getBean().getStateFromName(name));
+                    sensor.setCommandedState(SensorState.valueOf(name)._id);
                 }
             }
         });

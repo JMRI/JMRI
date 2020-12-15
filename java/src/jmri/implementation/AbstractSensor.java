@@ -32,18 +32,6 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         return Bundle.getMessage("BeanNameSensor");
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public int getStateFromName(String name) {
-        switch (name) {
-            case "On": return DigitalIO.ON;
-            case "Off": return DigitalIO.OFF;
-            case "Inactive": return Sensor.INACTIVE;
-            case "Active": return Sensor.ACTIVE;
-            default: return super.getStateFromName(name);
-        }
-    }
-
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
     //  public void firePropertyChange(String propertyName,

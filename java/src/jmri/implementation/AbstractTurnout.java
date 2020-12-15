@@ -59,18 +59,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     private final String closedText = InstanceManager.turnoutManagerInstance().getClosedText();
     private final String thrownText = InstanceManager.turnoutManagerInstance().getThrownText();
 
-    /** {@inheritDoc} */
-    @Override
-    public int getStateFromName(String name) {
-        switch (name) {
-            case "On": return DigitalIO.ON;
-            case "Off": return DigitalIO.OFF;
-            case "Closed": return Turnout.CLOSED;
-            case "Thrown": return Turnout.THROWN;
-            default: return super.getStateFromName(name);
-        }
-    }
-
     /**
      * Handle a request to change state, typically by sending a message to the
      * layout in some child class. Public version (used by TurnoutOperator)

@@ -320,7 +320,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
                         turnout.setCommandedState(Turnout.CLOSED);
                     }
                 } else {
-                    turnout.setCommandedState(_turnoutHandle.getBean().getStateFromName(name));
+                    turnout.setCommandedState(TurnoutState.valueOf(name)._id);
                 }
             }
         });

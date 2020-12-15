@@ -48,14 +48,6 @@ public abstract class AbstractLightTestBase {
     }
 
     @Test
-    public void testGetState() {
-        Assert.assertEquals(NamedBean.UNKNOWN, t.getStateFromName("Unknown"));
-        Assert.assertEquals(NamedBean.INCONSISTENT, t.getStateFromName("Inconsistent"));
-        Assert.assertEquals(Light.ON, t.getStateFromName("On"));
-        Assert.assertEquals(Light.OFF, t.getStateFromName("Off"));
-    }
-
-    @Test
     public void testAddListener() {
         t.addPropertyChangeListener(new Listen());
         listenerResult = false;

@@ -73,16 +73,6 @@ public abstract class AbstractTurnoutTestBase {
     }
 
     @Test
-    public void testGetState() {
-        Assert.assertEquals(NamedBean.UNKNOWN, t.getStateFromName("Unknown"));
-        Assert.assertEquals(NamedBean.INCONSISTENT, t.getStateFromName("Inconsistent"));
-        Assert.assertEquals(DigitalIO.ON, t.getStateFromName("On"));
-        Assert.assertEquals(DigitalIO.OFF, t.getStateFromName("Off"));
-        Assert.assertEquals(Turnout.CLOSED, t.getStateFromName("Closed"));
-        Assert.assertEquals(Turnout.THROWN, t.getStateFromName("Thrown"));
-    }
-
-    @Test
     public void testAddListener() {
         t.addPropertyChangeListener(new Listen());
         listenerResult = false;
