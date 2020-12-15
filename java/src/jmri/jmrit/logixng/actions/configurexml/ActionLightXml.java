@@ -41,7 +41,7 @@ public class ActionLightXml extends jmri.managers.configurexml.AbstractNamedBean
             element.addContent(new Element("light").addContent(light.getName()));
         }
         
-        element.addContent(new Element("addressing").addContent(p.getLightAddressing().name()));
+        element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
         element.addContent(new Element("reference").addContent(p.getReference()));
         element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
         element.addContent(new Element("formula").addContent(p.getFormula()));

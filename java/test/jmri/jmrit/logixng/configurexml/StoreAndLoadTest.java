@@ -325,6 +325,136 @@ public class StoreAndLoadTest {
         actionManySocket.getChild(index++).connect(maleSocket);
         
         
+        ActionSignalHead actionSignalHead = new ActionSignalHead(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionSignalHead);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        actionSignalHead = new ActionSignalHead(digitalActionManager.getAutoSystemName(), null);
+        actionSignalHead.setComment("A comment");
+        actionSignalHead.setSignalHead("IH1");
+        actionSignalHead.setAppearance(SignalHead.FLASHGREEN);
+        actionSignalHead.setAddressing(NamedBeanAddressing.Direct);
+        actionSignalHead.setFormula("\"IT\"+index");
+        actionSignalHead.setLocalVariable("index");
+        actionSignalHead.setReference("{IM1}");
+        actionSignalHead.setAppearanceAddressing(NamedBeanAddressing.LocalVariable);
+        actionSignalHead.setAppearanceFormula("\"IT\"+index2");
+        actionSignalHead.setAppearanceLocalVariable("index2");
+        actionSignalHead.setAppearanceReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(actionSignalHead);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        actionSignalHead = new ActionSignalHead(digitalActionManager.getAutoSystemName(), null);
+        actionSignalHead.setComment("A comment");
+        actionSignalHead.setSignalHead("IH1");
+        actionSignalHead.setAppearance(SignalHead.FLASHLUNAR);
+        actionSignalHead.setAddressing(NamedBeanAddressing.LocalVariable);
+        actionSignalHead.setFormula("\"IT\"+index");
+        actionSignalHead.setLocalVariable("index");
+        actionSignalHead.setReference("{IM1}");
+        actionSignalHead.setAppearanceAddressing(NamedBeanAddressing.Formula);
+        actionSignalHead.setAppearanceFormula("\"IT\"+index2");
+        actionSignalHead.setAppearanceLocalVariable("index2");
+        actionSignalHead.setAppearanceReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(actionSignalHead);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        actionSignalHead = new ActionSignalHead(digitalActionManager.getAutoSystemName(), null);
+        actionSignalHead.setComment("A comment");
+        actionSignalHead.setSignalHead("IH1");
+        actionSignalHead.setAppearance(SignalHead.FLASHRED);
+        actionSignalHead.setAddressing(NamedBeanAddressing.Formula);
+        actionSignalHead.setFormula("\"IT\"+index");
+        actionSignalHead.setLocalVariable("index");
+        actionSignalHead.setReference("{IM1}");
+        actionSignalHead.setAppearanceAddressing(NamedBeanAddressing.Reference);
+        actionSignalHead.setAppearanceFormula("\"IT\"+index2");
+        actionSignalHead.setAppearanceLocalVariable("index2");
+        actionSignalHead.setAppearanceReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(actionSignalHead);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        actionSignalHead = new ActionSignalHead(digitalActionManager.getAutoSystemName(), null);
+        actionSignalHead.setComment("A comment");
+        actionSignalHead.setSignalHead("IH1");
+        actionSignalHead.setAppearance(SignalHead.FLASHYELLOW);
+        actionSignalHead.setAddressing(NamedBeanAddressing.Reference);
+        actionSignalHead.setFormula("\"IT\"+index");
+        actionSignalHead.setLocalVariable("index");
+        actionSignalHead.setReference("{IM1}");
+        actionSignalHead.setAppearanceAddressing(NamedBeanAddressing.Direct);
+        actionSignalHead.setAppearanceFormula("\"IT\"+index2");
+        actionSignalHead.setAppearanceLocalVariable("index2");
+        actionSignalHead.setAppearanceReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(actionSignalHead);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        
+        ActionSignalMast actionSignalMast = new ActionSignalMast(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionSignalMast);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        actionSignalMast = new ActionSignalMast(digitalActionManager.getAutoSystemName(), null);
+        actionSignalMast.setComment("A comment");
+        actionSignalMast.setSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
+        actionSignalMast.setAspect("Medium Approach Slow");
+        actionSignalMast.setAddressing(NamedBeanAddressing.Direct);
+        actionSignalMast.setFormula("\"IT\"+index");
+        actionSignalMast.setLocalVariable("index");
+        actionSignalMast.setReference("{IM1}");
+        actionSignalMast.setAspectAddressing(NamedBeanAddressing.LocalVariable);
+        actionSignalMast.setAspectFormula("\"IT\"+index2");
+        actionSignalMast.setAspectLocalVariable("index2");
+        actionSignalMast.setAspectReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(actionSignalMast);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        actionSignalMast = new ActionSignalMast(digitalActionManager.getAutoSystemName(), null);
+        actionSignalMast.setComment("A comment");
+        actionSignalMast.setSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
+        actionSignalMast.setAspect("Medium Approach Slow");
+        actionSignalMast.setAddressing(NamedBeanAddressing.LocalVariable);
+        actionSignalMast.setFormula("\"IT\"+index");
+        actionSignalMast.setLocalVariable("index");
+        actionSignalMast.setReference("{IM1}");
+        actionSignalMast.setAspectAddressing(NamedBeanAddressing.Formula);
+        actionSignalMast.setAspectFormula("\"IT\"+index2");
+        actionSignalMast.setAspectLocalVariable("index2");
+        actionSignalMast.setAspectReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(actionSignalMast);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        actionSignalMast = new ActionSignalMast(digitalActionManager.getAutoSystemName(), null);
+        actionSignalMast.setComment("A comment");
+        actionSignalMast.setSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
+        actionSignalMast.setAspect("Medium Approach Slow");
+        actionSignalMast.setAddressing(NamedBeanAddressing.Formula);
+        actionSignalMast.setFormula("\"IT\"+index");
+        actionSignalMast.setLocalVariable("index");
+        actionSignalMast.setReference("{IM1}");
+        actionSignalMast.setAspectAddressing(NamedBeanAddressing.Reference);
+        actionSignalMast.setAspectFormula("\"IT\"+index2");
+        actionSignalMast.setAspectLocalVariable("index2");
+        actionSignalMast.setAspectReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(actionSignalMast);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        actionSignalMast = new ActionSignalMast(digitalActionManager.getAutoSystemName(), null);
+        actionSignalMast.setComment("A comment");
+        actionSignalMast.setSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
+        actionSignalMast.setAspect("Medium Approach Slow");
+        actionSignalMast.setAddressing(NamedBeanAddressing.Reference);
+        actionSignalMast.setFormula("\"IT\"+index");
+        actionSignalMast.setLocalVariable("index");
+        actionSignalMast.setReference("{IM1}");
+        actionSignalMast.setAspectAddressing(NamedBeanAddressing.Direct);
+        actionSignalMast.setAspectFormula("\"IT\"+index2");
+        actionSignalMast.setAspectLocalVariable("index2");
+        actionSignalMast.setAspectReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(actionSignalMast);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        
         ActionThrottle actionThrottle = new ActionThrottle(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionThrottle);
         actionManySocket.getChild(index++).connect(maleSocket);

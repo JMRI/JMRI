@@ -102,7 +102,7 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
         parseFormula();
     }
     
-    public NamedBeanAddressing getSensorAddressing() {
+    public NamedBeanAddressing getAddressing() {
         return _addressing;
     }
     
@@ -147,7 +147,7 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
     
     public void setStateAddressing(NamedBeanAddressing addressing) throws ParserException {
         _stateAddressing = addressing;
-        parseFormula();
+        parseStateFormula();
     }
     
     public NamedBeanAddressing getStateAddressing() {
@@ -231,7 +231,7 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
         return true;
     }
     
-    public String getNewState(@Nonnull Sensor t) throws JmriException {
+    private String getNewState() throws JmriException {
         
         switch (_stateAddressing) {
             case Reference:
@@ -299,7 +299,7 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
         }
         
         String name = (_stateAddressing != NamedBeanAddressing.Direct)
-                ? getNewState(sensor) : null;
+                ? getNewState() : null;
         
         ThreadingUtil.runOnLayout(() -> {
             if ((_stateAddressing == NamedBeanAddressing.Direct)) {

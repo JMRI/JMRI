@@ -1,17 +1,19 @@
 package jmri.jmrit.logixng.actions;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.ReferenceUtil;
+import jmri.jmrit.logixng.util.parser.*;
+import jmri.jmrit.logixng.util.parser.ExpressionNode;
+import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
+import jmri.util.TypeConversionUtil;
 
 /**
  * Evaluates the state of a SignalMast.
@@ -21,10 +23,27 @@ import jmri.jmrit.logixng.*;
 public class ActionSignalMast extends AbstractDigitalAction
         implements VetoableChangeListener {
 
+    private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
     private NamedBeanHandle<SignalMast> _signalMastHandle;
+    private String _reference = "";
+    private String _localVariable = "";
+    private String _formula = "";
+    private ExpressionNode _expressionNode;
+    
+    private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
     private OperationType _operationType = OperationType.Aspect;
+    private String _operationReference = "";
+    private String _operationLocalVariable = "";
+    private String _operationFormula = "";
+    private ExpressionNode _operationExpressionNode;
+    
+    private NamedBeanAddressing _aspectAddressing = NamedBeanAddressing.Direct;
     private String _signalMastAspect = "";
-
+    private String _aspectReference = "";
+    private String _aspectLocalVariable = "";
+    private String _aspectFormula = "";
+    private ExpressionNode _aspectExpressionNode;
+    
     public ActionSignalMast(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
@@ -39,8 +58,20 @@ public class ActionSignalMast extends AbstractDigitalAction
         ActionSignalMast copy = new ActionSignalMast(sysName, userName);
         copy.setComment(getComment());
         if (_signalMastHandle != null) copy.setSignalMast(_signalMastHandle);
-        copy.setOperationType(_operationType);
         copy.setAspect(_signalMastAspect);
+        copy.setAddressing(_addressing);
+        copy.setFormula(_formula);
+        copy.setLocalVariable(_localVariable);
+        copy.setReference(_reference);
+        copy.setOperationAddressing(_operationAddressing);
+        copy.setOperationType(_operationType);
+        copy.setOperationFormula(_operationFormula);
+        copy.setOperationLocalVariable(_operationLocalVariable);
+        copy.setOperationReference(_operationReference);
+        copy.setAspectAddressing(_aspectAddressing);
+        copy.setAspectFormula(_aspectFormula);
+        copy.setAspectLocalVariable(_aspectLocalVariable);
+        copy.setAspectReference(_aspectReference);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
@@ -79,6 +110,119 @@ public class ActionSignalMast extends AbstractDigitalAction
         return _signalMastHandle;
     }
     
+    public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
+        _addressing = addressing;
+        parseFormula();
+    }
+    
+    public NamedBeanAddressing getAddressing() {
+        return _addressing;
+    }
+    
+    public void setReference(@Nonnull String reference) {
+        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
+            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
+        }
+        _reference = reference;
+    }
+    
+    public String getReference() {
+        return _reference;
+    }
+    
+    public void setLocalVariable(@Nonnull String localVariable) {
+        _localVariable = localVariable;
+    }
+    
+    public String getLocalVariable() {
+        return _localVariable;
+    }
+    
+    public void setFormula(@Nonnull String formula) throws ParserException {
+        _formula = formula;
+        parseFormula();
+    }
+    
+    public String getFormula() {
+        return _formula;
+    }
+    
+    private void parseFormula() throws ParserException {
+        if (_addressing == NamedBeanAddressing.Formula) {
+            Map<String, Variable> variables = new HashMap<>();
+            
+            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
+            _expressionNode = parser.parseExpression(_formula);
+        } else {
+            _expressionNode = null;
+        }
+    }
+    
+    public void setOperationAddressing(NamedBeanAddressing addressing) throws ParserException {
+        _operationAddressing = addressing;
+        parseOperationFormula();
+    }
+    
+    public NamedBeanAddressing getOperationAddressing() {
+        return _operationAddressing;
+    }
+    
+    public void setOperationType(OperationType operationType) {
+        _operationType = operationType;
+    }
+    
+    public OperationType getOperationType() {
+        return _operationType;
+    }
+    
+    public void setOperationReference(@Nonnull String reference) {
+        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
+            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
+        }
+        _operationReference = reference;
+    }
+    
+    public String getOperationReference() {
+        return _operationReference;
+    }
+    
+    public void setOperationLocalVariable(@Nonnull String localVariable) {
+        _operationLocalVariable = localVariable;
+    }
+    
+    public String getOperationLocalVariable() {
+        return _operationLocalVariable;
+    }
+    
+    public void setOperationFormula(@Nonnull String formula) throws ParserException {
+        _operationFormula = formula;
+        parseOperationFormula();
+    }
+    
+    public String getOperationFormula() {
+        return _operationFormula;
+    }
+    
+    private void parseOperationFormula() throws ParserException {
+        if (_operationAddressing == NamedBeanAddressing.Formula) {
+            Map<String, Variable> variables = new HashMap<>();
+            
+            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
+            _operationExpressionNode = parser.parseExpression(_operationFormula);
+        } else {
+            _operationExpressionNode = null;
+        }
+    }
+    
+    public void setAspectAddressing(NamedBeanAddressing addressing) throws ParserException {
+        _aspectAddressing = addressing;
+        parseStateFormula();
+    }
+    
+    public NamedBeanAddressing getAspectAddressing() {
+        return _aspectAddressing;
+    }
+    
     public void setAspect(String aspect) {
         if (aspect == null) _signalMastAspect = "";
         else _signalMastAspect = aspect;
@@ -88,14 +232,45 @@ public class ActionSignalMast extends AbstractDigitalAction
         return _signalMastAspect;
     }
     
-    public void setOperationType(OperationType state) {
-        _operationType = state;
+    public void setAspectReference(@Nonnull String reference) {
+        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
+            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
+        }
+        _aspectReference = reference;
     }
     
-    public OperationType getOperationType() {
-        return _operationType;
+    public String getAspectReference() {
+        return _aspectReference;
     }
-
+    
+    public void setAspectLocalVariable(@Nonnull String localVariable) {
+        _aspectLocalVariable = localVariable;
+    }
+    
+    public String getAspectLocalVariable() {
+        return _aspectLocalVariable;
+    }
+    
+    public void setAspectFormula(@Nonnull String formula) throws ParserException {
+        _aspectFormula = formula;
+        parseStateFormula();
+    }
+    
+    public String getAspectFormula() {
+        return _aspectFormula;
+    }
+    
+    private void parseStateFormula() throws ParserException {
+        if (_aspectAddressing == NamedBeanAddressing.Formula) {
+            Map<String, Variable> variables = new HashMap<>();
+            
+            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
+            _aspectExpressionNode = parser.parseExpression(_aspectFormula);
+        } else {
+            _aspectExpressionNode = null;
+        }
+    }
+    
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
@@ -126,34 +301,134 @@ public class ActionSignalMast extends AbstractDigitalAction
         return true;
     }
     
+    private String getNewAspect() throws JmriException {
+        
+        switch (_aspectAddressing) {
+            case Direct:
+                return _signalMastAspect;
+                
+            case Reference:
+                return ReferenceUtil.getReference(_aspectReference);
+                
+            case LocalVariable:
+                SymbolTable symbolTable =
+                        InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
+                return TypeConversionUtil
+                        .convertToString(symbolTable.getValue(_aspectLocalVariable), false);
+                
+            case Formula:
+                return _aspectExpressionNode != null
+                        ? TypeConversionUtil.convertToString(_aspectExpressionNode.calculate(), false)
+                        : null;
+                
+            default:
+                throw new IllegalArgumentException("invalid _aspectAddressing state: " + _aspectAddressing.name());
+        }
+    }
+    
+    public OperationType getOperation() throws JmriException {
+        
+        String oper = "";
+        try {
+            switch (_operationAddressing) {
+                case Direct:
+                    return _operationType;
+                    
+                case Reference:
+                    oper = ReferenceUtil.getReference(_operationReference);
+                    return OperationType.valueOf(oper);
+                    
+                case LocalVariable:
+                    SymbolTable symbolTable =
+                            InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
+                    oper = TypeConversionUtil
+                            .convertToString(symbolTable.getValue(_operationLocalVariable), false);
+                    return OperationType.valueOf(oper);
+                    
+                case Formula:
+                    if (_aspectExpressionNode != null) {
+                        oper = TypeConversionUtil.convertToString(_operationExpressionNode.calculate(), false);
+                        return OperationType.valueOf(oper);
+                    } else {
+                        return null;
+                    }
+                default:
+                    throw new IllegalArgumentException("invalid _addressing state: " + _operationAddressing.name());
+            }
+        } catch (IllegalArgumentException e) {
+            throw new JmriException("Unknown operation: "+oper, e);
+        }
+    }
+    
     /** {@inheritDoc} */
     @Override
-    public void execute() {
-        if (_signalMastHandle == null) return;
+    public void execute() throws JmriException {
+        SignalMast signalMast;
+        
+//        System.out.format("ActionSensor.execute: %s%n", getLongDescription());
+        
+        switch (_addressing) {
+            case Direct:
+                signalMast = _signalMastHandle != null ? _signalMastHandle.getBean() : null;
+                break;
+                
+            case Reference:
+                String ref = ReferenceUtil.getReference(_reference);
+                signalMast = InstanceManager.getDefault(SignalMastManager.class)
+                        .getNamedBean(ref);
+                break;
+                
+            case LocalVariable:
+                SymbolTable symbolTable =
+                        InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
+                signalMast = InstanceManager.getDefault(SignalMastManager.class)
+                        .getNamedBean(TypeConversionUtil
+                                .convertToString(symbolTable.getValue(_localVariable), false));
+                break;
+                
+            case Formula:
+                signalMast = _expressionNode != null ?
+                        InstanceManager.getDefault(SignalMastManager.class)
+                                .getNamedBean(TypeConversionUtil
+                                        .convertToString(_expressionNode.calculate(), false))
+                        : null;
+                break;
+                
+            default:
+                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
+        }
+        
+//        System.out.format("ActionSensor.execute: sensor: %s%n", sensor);
+        
+        if (signalMast == null) {
+            log.error("signalMast is null");
+            return;
+        }
         
         switch (_operationType) {
             case Aspect:
-                if (! "".equals(_signalMastAspect)) {
-                    _signalMastHandle.getBean().setAspect(_signalMastAspect);
+                String newAspect = getNewAspect();
+                if (! "".equals(newAspect)) {
+                    signalMast.setAspect(newAspect);
                 }
                 break;
             case Lit:
-                _signalMastHandle.getBean().setLit(true);
+                signalMast.setLit(true);
                 break;
             case NotLit:
-                _signalMastHandle.getBean().setLit(false);
+                signalMast.setLit(false);
                 break;
             case Held:
-                _signalMastHandle.getBean().setHeld(true);
+                signalMast.setHeld(true);
                 break;
             case NotHeld:
-                _signalMastHandle.getBean().setHeld(false);
+                signalMast.setHeld(false);
                 break;
             case PermissiveSmlDisabled:
-                _signalMastHandle.getBean().setPermissiveSmlDisabled(true);
+                signalMast.setPermissiveSmlDisabled(true);
                 break;
             case PermissiveSmlNotDisabled:
-                _signalMastHandle.getBean().setPermissiveSmlDisabled(false);
+                signalMast.setPermissiveSmlDisabled(false);
                 break;
             default:
                 throw new RuntimeException("Unknown enum: "+_operationType.name());
@@ -177,16 +452,87 @@ public class ActionSignalMast extends AbstractDigitalAction
 
     @Override
     public String getLongDescription(Locale locale) {
-        String turnoutName;
-        if (_signalMastHandle != null) {
-            turnoutName = _signalMastHandle.getBean().getDisplayName();
-        } else {
-            turnoutName = Bundle.getMessage(locale, "BeanNotSelected");
+        String namedBean;
+        String operation;
+        String aspect;
+        
+        switch (_addressing) {
+            case Direct:
+                String sensorName;
+                if (_signalMastHandle != null) {
+                    sensorName = _signalMastHandle.getBean().getDisplayName();
+                } else {
+                    sensorName = Bundle.getMessage(locale, "BeanNotSelected");
+                }
+                namedBean = Bundle.getMessage(locale, "AddressByDirect", sensorName);
+                break;
+                
+            case Reference:
+                namedBean = Bundle.getMessage(locale, "AddressByReference", _reference);
+                break;
+                
+            case LocalVariable:
+                namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
+                break;
+                
+            case Formula:
+                namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
+                break;
+                
+            default:
+                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
-        if (_operationType == OperationType.Aspect) {
-            return Bundle.getMessage(locale, "SignalMast_LongAspect", turnoutName, _signalMastAspect.isEmpty() ? "''" : _signalMastAspect);
+        
+        switch (_operationAddressing) {
+            case Direct:
+                operation = Bundle.getMessage(locale, "AddressByDirect", _operationType._text);
+                break;
+                
+            case Reference:
+                operation = Bundle.getMessage(locale, "AddressByReference", _operationReference);
+                break;
+                
+            case LocalVariable:
+                operation = Bundle.getMessage(locale, "AddressByLocalVariable", _operationLocalVariable);
+                break;
+                
+            case Formula:
+                operation = Bundle.getMessage(locale, "AddressByFormula", _operationFormula);
+                break;
+                
+            default:
+                throw new IllegalArgumentException("invalid _operationAddressing state: " + _operationAddressing.name());
+        }
+        
+        switch (_aspectAddressing) {
+            case Direct:
+                aspect = Bundle.getMessage(locale, "AddressByDirect", _signalMastAspect.isEmpty() ? "''" : _signalMastAspect);
+                break;
+                
+            case Reference:
+                aspect = Bundle.getMessage(locale, "AddressByReference", _aspectReference);
+                break;
+                
+            case LocalVariable:
+                aspect = Bundle.getMessage(locale, "AddressByLocalVariable", _aspectLocalVariable);
+                break;
+                
+            case Formula:
+                aspect = Bundle.getMessage(locale, "AddressByFormula", _aspectFormula);
+                break;
+                
+            default:
+                throw new IllegalArgumentException("invalid _stateAddressing state: " + _aspectAddressing.name());
+        }
+        
+        if (_operationAddressing == NamedBeanAddressing.Direct) {
+            if (_operationType == OperationType.Aspect) {
+                return Bundle.getMessage(locale, "SignalMast_LongAspect", namedBean, aspect);
+            } else {
+                return Bundle.getMessage(locale, "SignalMast_Long", namedBean, operation);
+            }
         } else {
-            return Bundle.getMessage(locale, "SignalMast_Long", turnoutName, _operationType._text);
+            return Bundle.getMessage(locale, "SignalMast_LongUnknownOper", namedBean, operation, aspect);
         }
     }
     

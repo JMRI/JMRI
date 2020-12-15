@@ -1,8 +1,12 @@
 package jmri.jmrit.logixng.actions.configurexml;
 
 import jmri.*;
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.actions.ActionSignalHead;
+import jmri.jmrit.logixng.actions.ActionSignalMast;
+import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
 
@@ -38,22 +42,28 @@ public class ActionSignalHeadXml extends jmri.managers.configurexml.AbstractName
             element.addContent(new Element("signalHead").addContent(signalHead.getName()));
         }
         
-        element.addContent(new Element("operationType").addContent(p.getOperationType().name()));
+        element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
+        element.addContent(new Element("reference").addContent(p.getReference()));
+        element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
+        element.addContent(new Element("formula").addContent(p.getFormula()));
         
-        element.addContent(new Element("apperance").addContent(Integer.toString(p.getAppearance())));
-/*        
-        int apperance = p.getAppearance();
-        String apperanceKey = "";
-        if (p.getSignalHead() != null) {
-            apperanceKey = p.getSignalHead().getBean().getAppearanceKey(apperance);
-        }
-        element.addContent(new Element("apperanceKey").addContent(apperanceKey));
-*/
+        element.addContent(new Element("operationAddressing").addContent(p.getOperationAddressing().name()));
+        element.addContent(new Element("operationType").addContent(p.getOperationType().name()));
+        element.addContent(new Element("operationReference").addContent(p.getOperationReference()));
+        element.addContent(new Element("operationLocalVariable").addContent(p.getOperationLocalVariable()));
+        element.addContent(new Element("operationFormula").addContent(p.getOperationFormula()));
+        
+        element.addContent(new Element("appearanceAddressing").addContent(p.getAppearanceAddressing().name()));
+        element.addContent(new Element("appearance").addContent(Integer.toString(p.getAppearance())));
+        element.addContent(new Element("appearanceReference").addContent(p.getAppearanceReference()));
+        element.addContent(new Element("appearanceLocalVariable").addContent(p.getAppearanceLocalVariable()));
+        element.addContent(new Element("appearanceFormula").addContent(p.getAppearanceFormula()));
+        
         return element;
     }
     
     @Override
-    public boolean load(Element shared, Element perNode) {
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         ActionSignalHead h = new ActionSignalHead(sys, uname);
@@ -67,29 +77,71 @@ public class ActionSignalHeadXml extends jmri.managers.configurexml.AbstractName
             else h.removeSignalHead();
         }
 
-        Element queryType = shared.getChild("operationType");
-        if (queryType != null) {
-            h.setOperationType(ActionSignalHead.OperationType.valueOf(queryType.getTextTrim()));
+        
+        try {
+            Element elem = shared.getChild("addressing");
+            if (elem != null) {
+                h.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+            }
+            
+            elem = shared.getChild("reference");
+            if (elem != null) h.setReference(elem.getTextTrim());
+            
+            elem = shared.getChild("localVariable");
+            if (elem != null) h.setLocalVariable(elem.getTextTrim());
+            
+            elem = shared.getChild("formula");
+            if (elem != null) h.setFormula(elem.getTextTrim());
+            
+            
+            elem = shared.getChild("operationAddressing");
+            if (elem != null) {
+                h.setOperationAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+            }
+            
+            Element queryType = shared.getChild("operationType");
+            if (queryType != null) {
+                h.setOperationType(ActionSignalHead.OperationType.valueOf(queryType.getTextTrim()));
+            }
+            
+            elem = shared.getChild("operationReference");
+            if (elem != null) h.setOperationReference(elem.getTextTrim());
+            
+            elem = shared.getChild("operationLocalVariable");
+            if (elem != null) h.setOperationLocalVariable(elem.getTextTrim());
+            
+            elem = shared.getChild("operationFormula");
+            if (elem != null) h.setOperationFormula(elem.getTextTrim());
+            
+            
+            elem = shared.getChild("apperanceAddressing");
+            if (elem != null) {
+                h.setAppearanceAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+            }
+            
+            Element apperanceElement = shared.getChild("appearance");
+            if (apperanceElement != null) {
+                try {
+                    int apperance = Integer.parseInt(apperanceElement.getTextTrim());
+                    h.setAppearance(apperance);
+                } catch (NumberFormatException e) {
+                    log.error("cannot parse apperance: " + apperanceElement.getTextTrim(), e);
+                }
+            }
+            
+            elem = shared.getChild("apperanceReference");
+            if (elem != null) h.setAppearanceReference(elem.getTextTrim());
+            
+            elem = shared.getChild("apperanceLocalVariable");
+            if (elem != null) h.setAppearanceLocalVariable(elem.getTextTrim());
+            
+            elem = shared.getChild("apperanceFormula");
+            if (elem != null) h.setAppearanceFormula(elem.getTextTrim());
+            
+        } catch (ParserException e) {
+            throw new JmriConfigureXmlException(e);
         }
         
-        Element apperanceElement = shared.getChild("apperance");
-        if (apperanceElement != null) {
-            try {
-                int apperance = Integer.parseInt(apperanceElement.getTextTrim());
-                h.setAppearance(apperance);
-            } catch (NumberFormatException e) {
-                log.error("cannot parse apperance: " + apperanceElement.getTextTrim(), e);
-            }
-        }
-/*
-        Element apperanceKeyElement = shared.getChild("apperanceKey");
-        if (apperanceKeyElement != null) {
-            String apperanceKey = apperanceKeyElement.getTextTrim();
-            if (!apperanceKey.isEmpty() && (signalHead != null)) {
-                h.setAppearance(signalHead.getApperance(apperanceKey));
-            }
-        }
-*/
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }

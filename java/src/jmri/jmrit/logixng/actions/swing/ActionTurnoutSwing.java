@@ -112,12 +112,12 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
         
         
         if (action != null) {
-            switch (action.getTurnoutAddressing()) {
+            switch (action.getAddressing()) {
                 case Direct: _tabbedPaneTurnout.setSelectedComponent(_panelTurnoutDirect); break;
                 case Reference: _tabbedPaneTurnout.setSelectedComponent(_panelTurnoutReference); break;
                 case LocalVariable: _tabbedPaneTurnout.setSelectedComponent(_panelTurnoutLocalVariable); break;
                 case Formula: _tabbedPaneTurnout.setSelectedComponent(_panelTurnoutFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getTurnoutAddressing().name());
+                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
             }
             if (action.getTurnout() != null) {
                 turnoutBeanPanel.setDefaultNamedBean(action.getTurnout().getBean());
@@ -131,7 +131,7 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
                 case Reference: _tabbedPaneTurnoutState.setSelectedComponent(_panelTurnoutStateReference); break;
                 case LocalVariable: _tabbedPaneTurnoutState.setSelectedComponent(_panelTurnoutStateLocalVariable); break;
                 case Formula: _tabbedPaneTurnoutState.setSelectedComponent(_panelTurnoutStateFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getTurnoutAddressing().name());
+                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
             }
             stateComboBox.setSelectedItem(action.getState());
             _turnoutStateReferenceTextField.setText(action.getStateReference());

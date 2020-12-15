@@ -102,7 +102,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         parseFormula();
     }
     
-    public NamedBeanAddressing getTurnoutAddressing() {
+    public NamedBeanAddressing getAddressing() {
         return _addressing;
     }
     
@@ -147,7 +147,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     
     public void setStateAddressing(NamedBeanAddressing addressing) throws ParserException {
         _stateAddressing = addressing;
-        parseFormula();
+        parseStateFormula();
     }
     
     public NamedBeanAddressing getStateAddressing() {
@@ -231,7 +231,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         return true;
     }
     
-    public String getNewState(@Nonnull Turnout t) throws JmriException {
+    private String getNewState() throws JmriException {
         
         switch (_stateAddressing) {
             case Reference:
@@ -299,7 +299,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         }
         
         String name = (_stateAddressing != NamedBeanAddressing.Direct)
-                ? getNewState(turnout) : null;
+                ? getNewState() : null;
         
         ThreadingUtil.runOnLayout(() -> {
             if ((_stateAddressing == NamedBeanAddressing.Direct)) {

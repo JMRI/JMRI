@@ -102,7 +102,7 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
         parseFormula();
     }
     
-    public NamedBeanAddressing getLightAddressing() {
+    public NamedBeanAddressing getAddressing() {
         return _addressing;
     }
     
@@ -147,7 +147,7 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
     
     public void setStateAddressing(NamedBeanAddressing addressing) throws ParserException {
         _stateAddressing = addressing;
-        parseFormula();
+        parseStateFormula();
     }
     
     public NamedBeanAddressing getStateAddressing() {
@@ -231,7 +231,7 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
         return true;
     }
     
-    public String getNewState(@Nonnull Light t) throws JmriException {
+    private String getNewState() throws JmriException {
         
         switch (_stateAddressing) {
             case Reference:
@@ -299,7 +299,7 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
         }
         
         String name = (_stateAddressing != NamedBeanAddressing.Direct)
-                ? getNewState(light) : null;
+                ? getNewState() : null;
         
         ThreadingUtil.runOnLayout(() -> {
             if ((_stateAddressing == NamedBeanAddressing.Direct)) {

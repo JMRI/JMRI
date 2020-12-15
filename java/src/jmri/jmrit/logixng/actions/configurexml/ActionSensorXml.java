@@ -41,7 +41,7 @@ public class ActionSensorXml extends jmri.managers.configurexml.AbstractNamedBea
             element.addContent(new Element("sensor").addContent(sensor.getName()));
         }
         
-        element.addContent(new Element("addressing").addContent(p.getSensorAddressing().name()));
+        element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
         element.addContent(new Element("reference").addContent(p.getReference()));
         element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
         element.addContent(new Element("formula").addContent(p.getFormula()));
