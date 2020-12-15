@@ -529,8 +529,13 @@ public class Track extends PropertyChangeSupport {
             carLength = car.getKernel().getTotalLength();
         }
         int trackLength = getLength();
+     
         // is the car or kernel too long for the track?
-        if (trackLength < carLength) {
+        if (trackLength < carLength && getPool() == null) {
+            return false;
+        }
+        // is track part of a pool?
+        if (getPool() != null && getPool().getTotalLengthTracks() < carLength) {
             return false;
         }
         // ignore reservation factor unless car is departing staging
