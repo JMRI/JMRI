@@ -1,7 +1,9 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR" "http://www.w3.org/TR/html4/strict.dtd">
 <!--  $Id$ -->
 
-<!-- UpDated by Blorec Herv&#233; le 2016-08-08-->  
+<!-- UpDated by Blorec Herv&#233; le 2020-12-15-->  
 
 <html lang="fr">
 <head>
@@ -38,6 +40,10 @@
 Cette page explique comment les objets JMRI sont nomm&#233;s, comment ces noms sont utilis&#233;s
 pour r&#233;f&#233;rencer les objets (mat&#233;riel et logiciel), et comment les noms lisibles par 
 l'utilisateur sont utilis&#233;s..
+ span class="since">Depuis JMRI 4.7.4</span>
+        <b>&#192; partir de mars 2017, les noms utilisateur ne peuvent pas avoir d'espace devant ou derri&#232;re.  
+        S'il y a des espaces, ils seront "rogn&#233;s".</b>
+
 
 <h2>Qu'est-ce qu'un nom?</h2>
 
@@ -55,28 +61,15 @@ code doit comprendre, par exemple, quelque chose qui signifie "LocoNet Aiguillag
 <LI>Nous imaginons que les configurations sont stock&#233;es dans des fichiers XML,
 sous une forme symbolique. Les noms sont un moyen pratique de relier des objets
 et des r&#233;f&#233;rences d'objets dans ce genre de configuration.
-</OL>
+ </ol><a name="type" id="type"></a>
 
-<a name="type">
 <H2>&#201;l&#233;ments avec des noms</h2></a>
-Il y a un certain nombre de choses qui peuvent avoir besoin des noms:
-<UL>
-<LI>Aspects pour les signaux
-<LI>Cantons (segment de voies)
-<LI>Feu de signalisation
-<LI>Lumi&#232;res(un type de sortie)
-<LI>M&#233;moires
-<LI>Sorties
-<LI>Alimentation districts et Alimentation sous-districts
-<LI>Itin&#233;raires
-<LI>Entr&#233;e Capteurs
-<LI>Aiguillages
-<LI>logiX
-</UL>
-
-Certains d'entre eux sont associ&#233;s &#224; un p&#233;riph&#233;rique mat&#233;riel sp&#233;cifique, par exemple un aiguillage particulier
-. D'autres sont plus virtuels, par exemple, un itin&#233;raire, qui est une s&#233;rie d'information de commandes
- au sein du programme.
+Il y a un certain nombre de choses qui peuvent avoir besoin des noms tel que
+Aiguillages, capteurs et autres &#233;l&#233;ments de r&#233;seaut.
+      Certains d'entre eux sont associ&#233;s &#224; un mat&#233;riel sp&#233;cifique
+      par exemple, un aiguillage particulier. D'autres sont plus virtuels,
+      par exemple, un itin&#233;raire, qui est une collecte d'informations de commande
+      dans le cadre du programme. Une liste des types nomm&#233;s suit ci-dessous.</p>
 
 <h2>Noms Syst&#232;me et Utilisateur</h2>
 
@@ -94,31 +87,54 @@ ou "aiguillage 32 " ou "fil vert du contr&#244;leur" ou autre chose.
 Dans le m&#234;me temps, nous avons besoin d'un nom raccourci, un identifiant vraiment unique,
 pour nous parler des objets sp&#233;cifiques. &#231;a ne doit pas &#234;tre commode, mais
 nous devons avoir une caract&#233;ristiqu claire de nom pour l'objet et retour. Par exemple,
-nous avons besoin d'une mani&#232;re tr&#232;s sp&#233;cifique pour identifier les "Aiguillage LocoNet 23. Nous appelons ceci
-"noms de syst&#232;me". Le Code JMRI caract&#233;risera ceux-ci vers et depuis toutes les informations
-dont le mat&#233;riel peut avoir besoin.
+nous avons besoin d'une mani&#232;re tr&#232;s sp&#233;cifique pour identifier les "Aiguillage LocoNet 23. 
+Nous appelons ceci "noms de syst&#232;me". Le Code JMRI caract&#233;risera ceux-ci vers et depuis 
+toutes les informationsdont le mat&#233;riel peut avoir besoin.
 
 <H2>Format du Nom Syst&#232;me</h2>
 
 Un nom syst&#232;me est form&#233; d'un pr&#233;fix court repr&#233;sentant le mat&#233;riel du syst&#232;me,
 suivie d'une seule lettre Majuscule indiquant le type,
 suivi par une cha&#238;ne syst&#232;me type et sp&#233;cifique.
-La cha&#238;ne est cens&#233;e &#234;tre li&#233;e &#224; l'adressage mat&#233;riel, mais
-c'est par ailleurs sans contrainte.
-<P>
-Exemples:
-<UL>
-<LI>LT23 - <u>L</u>oconet <u>T</u>urnout <u>23</u>. ( Aiguillage Loconet n&#176;23 )
-<LI>CS12 <LI> - Les <u>12</u> <u>C</u>/IRM <u>S</u>Ensor .( Capteur C/MRI n&#176;12 )
-</ul>
+<ul>
+        <li>Le pr&#233;fixe de connexion est une simple lettre majuscule ou minuscule, &#233;ventuellement suivie d'un
+	    ou plusieurs chiffres. Par cons&#233;quent, "S", "s", "S2" et "s2" sont tous des exemples de 
+	    diff&#233;rents -- noms de connexion.  Les caract&#232;res sp&#233;ciaux ne sont pas autoris&#233;s. 
+	    Ce formulaire simple permet nous de toujours trouver le pr&#233;fixe de connexion et la lettre type m&#234;me 
+	    si nous ne connaissons pas la liste compl&#232;te des les syst&#232;mes mat&#233;riels concern&#233;s.   
+	    Les valeurs par d&#233;faut des diff&#233;rents syst&#232;mes mat&#233;riels sont indiqu&#233;es 
+	    <a href="#hardware"> ci-dessous.</a>
+        <li>La lettre type d&#233;finit le type d'objet mod&#232;le-rail, 
+            comme (T)Aiguillage ou (S)Capteur, voir <a href="#types">ci-dessous</a>.
+        <li>La cha&#238;ne de suffixe est li&#233;e au mat&#233;riel pour le syst&#232;me mat&#233;riel 
+        sp&#233;cifique, mais n'est pas contraint par ailleurs.
+            Certains sont de simples num&#233;ros, comme l'adresse d'un appareil. D'autres sont sont 
+            des cha&#238;nes beaucoup plus compliqu&#233;es &#224; porter l'information.
+      </ul>
 
-Notez qu'il n'y a aucune hypoth&#232;se de mod&#232;le pour les noms, ils ne sont pas
- affecter de fa&#231;on monotone, ils ne sont pas limit&#233;s &#224; un seul syst&#232;me.
+	<p>Exemples:</p>
+
+      Note : Ces valeurs supposent les valeurs par d&#233;faut des lettres du pr&#233;fixe de connexion,
+      mais ils auraient certainement pu &#234;tre d&#233;finis diff&#233;remment, notamment en utilisant 
+      des minuscules et des chiffres.
+      
+      <ul>
+        <li>LT23 - <u>L</u>ocoNet <u>T</u> aiguillage <u>23</u>.</li>
+        <li>L2T23 - <u>T</u> aiguillage <u>23</u> sur la deuxi&#232;me connexion <u>L</u>ocoNet.</li>
+
+        <li>CS2012 -  <u>C</u>/MRI <u>S</u> capteur
+            (ligne d'entr&#233;e) adress&#233;e comme 2012, ce qui signifie que la 12&#232;me broche sur  
+            sur le n&#339;ud avec l'adresse 2.</li>
+      </ul>
+      
+      Notez dans ces exemples le mod&#232;le du suffixe pour certains mat&#233;riels.  Cependant, il n'y a pas de 
+supposition que ceux-ci sont assign&#233;s par ordre num&#233;rique, c'est-&#224;-dire que vous pourriez avoir CS1001,
+ CS1021, CS3044, comme ainsi que LS1001, cS1001, etc. comme vos seuls capteurs d&#233;finis. 
 
 <a name="hardware" id="hardware"></a>
-<h3>Pr&#233;fix Mat&#233;riel</h3>
-&#192; l'origine, le "pr&#233;fix mat&#233;riel" &#233;tait une simple lettre majuscule 
-identifiant un simple syst&#232;me de connexion: L pour Loconet, N pour NCE, etc.
+<h3>Pr&#233;fix Connexion</h3>
+&#192; l'origine, le "pr&#233;fix mat&#233;riel" ( maintenant appel&#233; pr&#233;fix connexion)&#233;tait 
+une simple lettre majuscule identifiant un simple syst&#232;me de connexion: L pour Loconet, N pour NCE, etc.
 Les lettres par d&#233;faut pour ceux-ci sont list&#233;es ci-dessous.
 Ceci est encore de loin l'utilisation la plus courante; La plupart des r&#233;seaux miniatures ont une simple
 connexion, et utilise juste la lettre par d&#233;faut.
@@ -131,88 +147,226 @@ associ&#233;e avec un syst&#232;me de connexion dans les pr&#233;f&#233;rences p
 lettre majuscule. Vous pouvez appeler votre connexion NCE &quot;P&quot; si vous 
 le voulez. Si vous avez en avez deux, vous pouvez en appelez un &quot;X&quot; et 
 l'autre &quot;Y&quot;. Vous pouvez aussi utiliser une lettre majuscule suivie 
-par des digits, ex: &quot;N1&quot; et &quot;N2&quot;.
+par des digits, ex: &quot;N1&quot; et &quot;n2&quot;.
 
 <h4>Lettres Syst&#232;me par D&#233;faut</h4>
 Notez que certaines d'entre elles sont des espaces r&#233;serv&#233;s, et n'ont pas de mise en &#339;uvre sous-jacente.
 ( Liens avec les pages JMRI pour plus d'informations )
 <ul>
-<LI>A CTI <a href="../../hardware/acela/index.shtml">Acela</a>
-<LI>B Direct DCC control
-<LI>C <a href="../../hardware/cmri/CMRI.shtml">C/MRI serial</a>
-<LI>D <a href="../../hardware/SRCP/index.shtml">SRCP</a>
-<LI>E <a href="../../hardware/easydcc/EasyDCC.shtml">EasyDCC</a>
-<LI>F <a href="../../hardware/rfid/index.shtml">RFID tag readers</a>
-<LI>G ProTrak <a href="../../hardware/grapevine/index.shtml">Grapevine</a>
-<LI>H
-<LI>I Internal, ex: objets non connect&#233;s au mat&#233;riel.
-<LI>J
-<LI>K <a href="../../hardware/maple/index.shtml">Maple Systems</a>
-<LI>L <a href="../../hardware/loconet/Digitrax.shtml">LocoNet</a>
-<LI>M Bus de contr&#244;le du r&#233;seau ferroviaire y compris
-      <a href="../../hardware/openlcb/index.shtml">OpenLCB</a> et
-      <a href="../../hardware/can/cbus/index.shtml">MERG CBUS</a>.		
-		Utilis&#233; aussi pour la mise en &#339;uvre maitre/esclave <a href="../../hardware/modbus/index.shtml">Modbus</a>. 
-<LI>N <a href="../../hardware/nce/NCE.shtml">NCE</a> (also <a href="../../hardware/nce/Wangrow.shtml">Wangrow</a> currently)
-<LI>O <a href="../../hardware/oaktree/OakTree.shtml">Oak Tree Systems</a>
-<LI>P <a href="../../hardware/powerline/index.shtml">Powerline transmission</a>, e.g. X10 and Insteon
-<LI>Q <a href="../../hardware/qsi/index.shtml">QSI programmer interface</a>
-<LI>R <a href="../../hardware/rps/index.shtml">RPS system</a>
-<LI>S <a href="../../hardware/sprog/SPROG.shtml">SPROG</a>
-<LI>T <a href="../../hardware/tmcc/index.shtml">Lionel TMCC</a>
-<li>U <a href="../../hardware/ecos/index.shtml">ESU ECoS</a>
-<LI>V TracTronics <a href="../../hardware/secsi/index.shtml">SECSI</a>
-<LI>W (reserved for Wangrow, but that's currently still combined with NCE)
-<LI>X <a href="../../hardware/XPressNet/index.shtml">XpressNet</a>
-<LI>Z <a href="../../hardware/zimo/Zimo.shtml">Zimo MX-1</a>
-</ul>
+
+<p>A noter &#233;galement que certaines mises en &#339;uvre plus anciennes ont utilis&#233; 
+      les formats qui ne r&#233;pondent pas &#224; la norme actuelle, avec  les
+       <u> lettres</u> de connexion telles que
+      "DX", "DCCPP", "DP", "MR", "MC", "PI", "TM".
+      Ceux-ci 
+      <a href="../../setup/MigrateSystemPrefixes.shtml">doivent &#234;tre migr&#233;s</a>,
+      et nous avons un 
+      <a href="../../setup/MigrateSystemPrefixes.shtml">processus en place pour faire cela</a>.
+
+      <ul>
+        <li><strong>A</strong> CTI <a href=
+        "../../hardware/acela/index.shtml">Acela</a>,
+        Compteur de vitesse Bachrus
+        </li>
+
+        <li><strong>B</strong> Contr&#244;le direct du DCC</li>
+
+        <li><strong>C</strong> <a href="../../hardware/cmri/CMRI.shtml">C/MRI
+        serie</a></li>
+
+        <li><strong>D</strong> <a href=
+        "../../hardware/SRCP/index.shtml">SRCP</a>,
+        <br>Anyma DX512
+        <br><a href="../../hardware/dccpp/index.shtml">DCC++</a> (pr&#233;c&#233;demment &#233;crit DCCpp)
+        <br><a href="../../hardware/dcc4pc/index.shtml">DCC4PC</a>
+        </li>
+        
+        <li><strong>E</strong> <a href=
+        "../../hardware/easydcc/EasyDCC.shtml">EasyDCC</a></li>
+
+        <li><strong>F</strong> <a href="../../hardware/rfid/index.shtml"> lecteurs balise RFID
+       </a></li>
+
+        <li><strong>G</strong> ProTrak <a href=
+        "../../hardware/grapevine/index.shtml">Grapevine</a></li>
+
+        <li>H</li>
+
+        <li><strong>I</strong> Interne, par exemple les objets sans
+        mat&#233;riel</li>
+
+        <li><strong>J</strong> Connexions r&#233;seau JMRI</li>
+
+        <li><strong>K</strong> <a href="../../hardware/maple/index.shtml">Maple
+        Syst&#232;mes</a></li>
+
+        <li><strong>L</strong> <a href=
+        "../../hardware/loconet/Digitrax.shtml">LocoNet</a></li>
+
+        <li><strong>M</strong> Bus de Contr&#244;le de r&#233;seau ferroviaire, y compris
+        <a href="../../hardware/openlcb/index.shtml">OpenLCB</a>
+        and <a href="../../hardware/can/cbus/index.shtml">CBUS&trade;</a>
+        <br><a href="../../hardware/mrc/index.shtml">Model Rectifier Corp (MRC)</a>
+        <br><a href="../../hardware/marklin/index.shtml">Marklin CS2</a>
+        </li>
+
+        <li><strong>N</strong> <a href="../../hardware/nce/NCE.shtml">NCE</a> (aussi
+        <a href="../../hardware/nce/Wangrow.shtml">Wangrow</a>
+        actuellement)</li>
+
+        <li><strong>O</strong> <a href="../../hardware/oaktree/OakTree.shtml">Ch&#234;ne
+        Syst&#232;mes Oaktree</a></li>
+
+        <li><strong>P</strong> <a href=
+        "../../mat&#233;riel/courant porteur/index.shtml">Powerline (Transmission par Courant porteur)
+       </a>, par exemple X10 et Insteon,
+        <br>Raspberry Pi 
+        </li>
+
+        <li><strong>Q</strong> <a href="../../hardware/qsi/index.shtml">
+        interface de programmation QSI</a></li>
+
+        <li><strong>R</strong> <a href="../../hardware/rps/index.shtml">RPS
+        syst&#232;me</a></li>
+
+        <li><strong>S</strong> <a href=
+        "../../hardware/sprog/SPROG.shtml">SPROG</a></li>
+
+        <li><strong>T</strong> <a href="../../hardware/tmcc/index.shtml">Lionel TMCC</a>, 
+        <br><a href="../../hardware/tams/index.shtml">TAMS</a>
+        </li>
+        
+        <li><strong>U</strong> <a href="../../hardware/ecos/index.shtml">ESU
+        ECoS</a></li>
+
+        <li><strong>V</strong> TracTronics <a href=
+        "../../hardware/secsi/index.shtml">SECSI</a></li>
+
+        <li><strong>W</strong> (r&#233;serv&#233; &#224; Wangrow, mais qui est actuellement encore
+        combin&#233; avec les RCE)</li>
+
+        <li><strong>X</strong> <a href=
+        "../../mat&#233;riel/XPressNet/index.shtml">XpressNet</a>
+        utilis&#233; par un certain nombre de connexions Lenz, Atlas, Hornby et autres
+        </li>
+
+        <li><strong>Z</strong> <a href="../../hardware/zimo/Zimo.shtml">ZimoMX-1</a>,
+            IEEE802.15.4 et les connexions Z21
+        </li>
+      </ul>
+
+
+
+
+
 
 <a name="types" id="types"></a>
 <H3>Lettres Type P&#233;riph&#233;riques</h3>
-Notez que certains d'entre eux sont des espaces r&#233;serv&#233;s, et n'ont de mise en &#339;uvre sous-jacente. Aussi,
-il n'y a aucune garantie que tout syst&#232;me de mat&#233;riel donn&#233; ne sera jamais mis en &#339;uvre pour chacun d'eux.
+Notez que certains d'entre eux sont des espaces r&#233;serv&#233;s, et n'ont 
+de mise en &#339;uvre sous-jacente. Aussi, il n'y a aucune garantie que 
+tout syst&#232;me de mat&#233;riel donn&#233; ne sera jamais mis en &#339;uvre pour chacun d'eux.
 
+<!-- liste des lettres en usage de l'ex&#233;cution de "grep -A5 -r 'public char typeLetter' java/src | grep return" -->
 <ul>
 
-<li>A Audio - un objet logiciel interne qui contient des informations sur un &#233;chantillon  son
+ <li><strong>A</strong> Audio - un objet logiciel interne qui contient des informations sur un &#233;chantillon  son
 pour &#234;tre plac&#233; &#224; une position sp&#233;cifique dans l'espace 3D
 
-<li>B Bloc(Canton) - un objet logiciel qui permet de suivre le contenu d'un canton sp&#233;cifique
-de la voie
+ <li><strong>B</strong> Bloc(Canton) - un objet logiciel qui permet de suivre le contenu d'un canton 
+sp&#233;cifique de la voie. Les noms  syst&#232;mes de Canton commencent g&#233;n&#233;ralement, mais 
+pas toujours, par IB.</li>
 
-<li>D iDentit&#233; -Un objet logiciel qui contient des informations sur une plaque d'identit&#233; qui est, g&#233;n&#233;ralement, attach&#233; &#224; un morceau de mat&#233;riel roulant. Ces objets ne sont pas sp&#233;cifiques au syst&#232;me, mais sont des objets internes, donc ont des noms commen&#231;ant par l'ID. Le mat&#233;riel sous-jacent va utiliser des objets Reporter pour communiquer avec JMRI quand un objet identit&#233; sp&#233;cifique a &#233;t&#233; vu
+ <li><strong>C</strong> String (chaine) - Une cha&#238;ne de caract&#232;res, comme un texte ou un nom de fichier.</li>
 
-<LI>F M&#226;t Signalisation (F n'est pas particuli&#232;rement mn&#233;monique, peut-&#234;tre qu'un m&#226;t &#224; deux feux
-ressemble &#224; un F vue de c&#244;t&#233;? Toutes les bonnes lettres ont &#233;t&#233; prises)
+<li><strong>D</strong> iDentit&#233; -Un objet logiciel qui contient des informations sur une plaque d'identit&#233;
+ qui est, g&#233;n&#233;ralement, attach&#233; &#224; un morceau de mat&#233;riel roulant. Ces objets ne sont pas 
+ sp&#233;cifiques au syst&#232;me, mais sont des objets internes, donc ont des noms commen&#231;ant par l'ID. 
+ Le mat&#233;riel sous-jacent va utiliser des objets Reporter pour communiquer avec JMRI quand un objet 
+ identit&#233; sp&#233;cifique a &#233;t&#233; vu
 
-<LI> H Feu de signalisation   - Une partie d'un signal (qui peut avoir plusieurs feux).
-&#201;galement interpr&#233;t&#233; pour inclure des indicateurs sur les panneaux de commandes qui
-agissent pour afficher les aspects des signaux
+<li><strong>F</strong>  syst&#232;me de signalisation - d&#233;finit les aspects qui peuvent &#234;tre utilis&#233;s
+ par des m&#226;ts de signalisation mettant en &#339;uvre ce syst&#232;me</li>
 
+<li><strong>F</strong> m&#226;t de signalisation (Un m&#226;t de signalisation contient des groupes de
+  signaux et F viennent avant G et H)</li>
 
-<LI>M M&#233;moire - Pour l'instant, cela n'a pas vraiment d'&#233;quivalent dans le mat&#233;riel de r&#233;seau,
-mais est utilis&#233; comme un endroit pour stocker temporairement des informations et un affichage sur panneaux, etc.
+ <li><strong>G</strong> groupe de signaux - Ensemble de signaux d'un m&#226;t principal.
+        Pour les nouveaux &#233;l&#233;ments, il est recommand&#233; d'utiliser IG au d&#233;part ; l'exemple
+        de nom est "IG12". Pour des raisons historiques, les groupes n'&#233;taient pas tenus d'avoir
+        un syst&#232;me de pr&#233;fixe ou de lettre &#224; taper jusqu'&#224; pr&#233;sent ;
+        <span class="since">Depuis JMRI 4.13.4</span>l'utilisation d'une seule lettre
+        dans le nom syst&#232;me n'est plus compatible avec la validation du nom syst&#232;me.
+  
+  <li><strong>H</strong> Feu  - Une partie d'un signal (qui peut avoir
+        plusieurs feu). Interpr&#233;t&#233; &#233;galement pour inclure des indicateurs sur
+        les panneaux de cocommande qui agissent pour afficher les aspects du signal
+        .
+        Les noms des syst&#232;mes SignalHead commencent le plus souvent, mais pas toujours, par IH.</li>
+     
+    <li><strong>L</strong> Lumi&#232;re - une autre forme de sortie, utilis&#233;e par exemple pour contr&#244;ler
+       des lumi&#232;res sur un r&#233;seau</li> 
+     
+<li><strong>M</strong> M&#233;moire - Pour l'instant, cela n'a pas vraiment d'&#233;quivalent dans le
+ mat&#233;riel de r&#233;seau, mais est utilis&#233; comme un endroit pour stocker temporairement des 
+ informations et un affichage sur panneaux, etc. 
+  Les noms syst&#232;mes de m&#233;moire commencent g&#233;n&#233;ralement, mais pas toujours, par IM.</li>
 
-<LI>L Light (Lumi&#232;re) -une autre forme de sortie, par exemple, utilis&#233; pour les voyants de contr&#244;le sur un r&#233;seau 
+<li><strong>N</strong> eNtr&#233;e/sortie points de destination</li>
 
-<LI> P - Gestionnaire d'alimentation du r&#233;seau, &#224; savoir, district, sous - district; tous les syst&#232;mes ne font pas de distinction entre ceux-ci, de sorte que la lettre type d'appareil ne le fait pas non plus.. Par exemple, la partie du syst&#232;me sp&#233;cifique pourrait &#234;tre B pour la puissance du r&#233;seau principale, par exemple LPB ou S42 pour 2 canaux sous-district sur la carte 4, par exemple LPS42.
+  <li><strong>O</strong> rOutes (Itin&#233;raires) - un outil permettant de d&#233;finir plusieurs &#233;tats 
+  d'Aiguillages &#224; la fois.
+        Avant la version 4.19.2, la lettre "R" &#233;tait partag&#233;e entre les Rapports
+        et Itin&#233;raires.</li>
 
-<LI> R Rapports - un m&#233;canisme d'usage g&#233;n&#233;ral pour la communication d'informations complexes
+<li><strong>P</strong> - Gestionnaire d'alimentation du r&#233;seau, &#224; savoir, district, sous - district; 
+tous les syst&#232;mes ne font pas de distinction entre ceux-ci, de sorte que la lettre type d'appareil ne 
+le fait pas non plus.. Par exemple, la partie du syst&#232;me sp&#233;cifique pourrait &#234;tre B pour 
+la puissance du r&#233;seau principale, par exemple LPB ou S42 pour 2 canaux sous-district sur la carte 4, 
+par exemple LPS42.
+
+<li><strong>R</strong> Rapports - un m&#233;canisme d'usage g&#233;n&#233;ral pour la communication 
+d'informations complexes
 du r&#233;seau, par exemple, identification locomotive depuis certains mat&#233;riels, Transpondeur,
 Num&#233;ros des &#233;tiquettes RFID, etc.
 
-<LI>S Sensor (Capteurs) - en g&#233;n&#233;ral les capteurs d'entr&#233;e ont un but qui est g&#233;n&#233;ralement
-d'&#234;tre ACTIF ou INACTIF. C'est le plus couramment utilis&#233; pour le remplissage des 
+<li><strong>S</strong> Sensor (Capteurs) - en g&#233;n&#233;ral les capteurs d'entr&#233;e ont un but 
+qui est g&#233;n&#233;ralement
+d'&#234;tre ACTIF ou INACTIF. C'est le plus couramment utilis&#233; pour les 
 d&#233;tecteurs de cantons.
 
-<LI> T Turnout (Aiguillage) - en fait une sortie &#224; usage g&#233;n&#233;ral sur le r&#233;seau
-<LI> X Logix - un ensemble d'&#233;quations logiques utilis&#233;es pour commander le r&#233;seau 
+<li><strong>T</strong>T urnout (Aiguillage) - en fait une sortie &#224; usage g&#233;n&#233;ral sur le r&#233;seau
+
+<li><strong>V</strong> Valeur analogique - Un &#233;l&#233;ment qui peut avoir un nombre entier
+        ou une valeur flottante. Par exemple, un indicateur de courant. La lettre V est
+        pour Variable.</li>
+
+ <li><strong>W</strong> Warrant (bulletin) - une collecte d'informations suffisante
+		pour faire circuler un train automatis&#233;.</li>
+
+<li><strong>X</strong>  Logix - un ensemble d'&#233;quations logiques utilis&#233;es pour commander le r&#233;seau ;
+ Les noms syst&#232;me Logix commencent g&#233;n&#233;ralement, mais pas toujours, par IX
 </ul>
 
-<a name="systeminfo">
-<h3>Info-sp&#233;cifiques Syst&#232;me</H3></a>
-Chaque syst&#232;me mat&#233;riel diff&#233;rent peut sp&#233;cifier la "chaine " qui suit le syst&#232;me et la lettre type.
-G&#233;n&#233;ralement sp&#233;cifique, ce sont de petits nombres, mais leur signification exacte est tr&#232;s sp&#233;cifique au syst&#232;me.
+ <li><strong>Y</strong> sections - contient une carte du r&#233;seau de voies.
+        Les noms syst&#232;mes de sections commencent g&#233;n&#233;ralement, mais pas toujours, par IY.</li>
+
+<li><strong>Z</strong> transit - un groupe de sections repr&#233;sentant un
+		cheminement &#224; travers un trac&#233;.
+        Les noms syst&#232;mes de transit commencent g&#233;n&#233;ralement, mais pas toujours, par IZ.</li>
+
+<a name="systeminfo" id="systeminfo"></a>
+      <h3>Suffixe sp&#233;cifique au syst&#232;me</h3>
+      <p> Les objets "internes" peuvent &#233;galement &#234;tre adress&#233;s et manipul&#233;s,
+        mais ils n'ont pas une correspondance stricte avec certains
+       mat&#233;riel sur le r&#233;seau. Par exemple, si une feu de signalisation est
+        mis en &#339;uvre sous la forme de trois produits diff&#233;rents, LT1, LT2 et LT3, 
+        l'objet feu  pourrait &#234;tre appel&#233; IH3. 
+  
+   <a name="special" id="special"></a></p>      
+Chaque syst&#232;me mat&#233;riel diff&#233;rent peut sp&#233;cifier la "chaine " 
+qui suit le syst&#232;me et la lettre type.
+G&#233;n&#233;ralement sp&#233;cifique, ce sont de petits nombres, mais 
+leur signification exacte est tr&#232;s sp&#233;cifique au syst&#232;me.
 Pour plus d'informations, s'il vous pla&#238;t voir les pages sp&#233;cifiques pour 
 
 <UL>
@@ -220,21 +374,488 @@ Pour plus d'informations, s'il vous pla&#238;t voir les pages sp&#233;cifiques p
 <LI><A HREF="../../hardware/loconet/Addressing.shtml">Digitrax LocoNet</a>
 <LI><A HREF="../../hardware/grapevine/Names.shtml">Grapevine</a>
 <LI><A HREF="../../hardware/XPressNet/XNetAddressing.shtml ">Lenz XPressNet</a>
+ <li><a href=
+               "../../hardware/can/cbus/Names.shtml">CBUS</a></li>
 <LI><A HREF="../../hardware/nce/NCE.shtml#names">NCE</a>
 <LI><A HREF="../../hardware/powerline/Names.shtml">Powerline adapters, e.g, X10, Insteon</a>
 </UL>
-( Si vous constatez un oubli, SVP 
+( Si vous constatez un oubli dans le sommaire suivant, SVP 
 <a href="getgitcode.shtml#propose">Ajoutez une r&#233;f&#233;rence</a>)
-</UL>
-<P>
-Les objets "internes" peuvent &#233;galement &#234;tre adress&#233;s et manipul&#233;s, mais ils n'ont pas de stricte
-correspondance avec certains mat&#233;riels sur le r&#233;seau. Par exemple, si un feu de signalisation
-est mise en &#339;uvre sur trois sorties diff&#233;rentes, LT1, LT2 et LT3, l'objet feu de signalisation
-pourrait &#234;tre appel&#233; IH3.
 
+ <a name="entrysummary" id="entrysummary"></a>
+      <h4>Ajouter un &#233;l&#233;ment au tableau - R&#233;sum&#233; du format d'entr&#233;e</h4>
+      
+      <p>Lorsque vous ajoutez un &#233;l&#233;ment &#224; l'un des tableaux, il suffit souvent 
+      d'entrer les chiffres (le suffixe) et JMRI construira
+      le nom complet du syst&#232;me.<br>
+      Voici un r&#233;sum&#233; des options par connexion, r&#233;parties par
+        sorties (par exemple, les aiguillages) et entr&#233;es (par exemple, les capteurs):</p>
+    <div style="overflow-x:auto ;">
+      <table>
+        <tbody><tr>
+		<th>Connexion</th>
+          <th>E/S/</th>
+          <th>Entr&#233;e</th>
+          <th>signification</th>
+          <th>Nom Syst&#233;me</th>
+          <th>masque</th>
+          <th>Equivalent</th>
+          <th>Minimum</th>
+          <th>Maximum</th>
+        </tr>
+        <tr>
+          <td>C/MRI</td>
+          <td>e/s</td>
+          <td>1003</td>
+          <td>N&#339;ud 1, Entr&#233;e 3</td>
+          <td>CS1003</td>
+          <td>n digits (n&#339;ud) + 3 digit (pin)</td>
+          <td>1:3</td>
+          <td>n&#339;ud: 1; pin: 1</td>
+          <td>n&#339;ud: 127; pin: 999</td>
+        </tr>
+        <tr>
+          <td>C/MRI</td>
+          <td>s</td>
+          <td>3</td>
+          <td>N&#339;ud 0, Sortie 3</td>
+          <td>CT3</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>999</td>
+        </tr>
+        <tr>
+          <td>C/MRI</td>
+          <td>e/s</td>
+          <td>4003</td>
+          <td>N&#339;ud 4, Sortie 3</td>
+          <td>CT4003</td>
+          <td>n digits (n&#339;ud) + 3 digit (pin)</td>
+          <td>4:3</td>
+          <td>n&#339;ud: 1; pin: 1</td>
+          <td>n&#339;ud: 127; pin: 999</td>
+        </tr>
+        <tr>
+          <td>C/MRI</td>
+          <td>e/s</td>
+          <td>4:3</td>
+          <td>N&#339;ud 4, Sortie 3</td>
+          <td>CT4:3</td>
+          <td> </td>
+          <td>4003</td>
+          <td>0:1</td>
+          <td>127:999</td>
+        </tr>
+        <tr>
+          <td>C/MRI</td>
+          <td>e/s</td>
+          <td>4B3</td>
+          <td>N&#339;ud 4, Sortie 3</td>
+          <td>CT4B3</td>
+          <td> </td>
+          <td>4003</td>
+          <td>0B1</td>
+          <td>127B999</td>
+        </tr>
+        <tr>
+          <td>DCC++</td>
+          <td>e</td>
+          <td>4:3</td>
+          <td>(converts to 50)</td>
+          <td>DT50</td>
+          <td>n&#339;ud : pin</td>
+          <td> </td>
+          <td>0</td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>DCC++</td>
+          <td>s</td>
+          <td>12</td>
+          <td>ID dans la table interne DCC++</td>
+          <td>DT1212</td>
+          <td>entier</td>
+          <td> </td>
+          <td>0</td>
+          <td>32767</td>
+        </tr>
+        <tr>
+          <td>DigiXbee</td>
+          <td>i</td>
+          <td>4:3</td>
+          <td>ModuleAddress:Pin</td>
+          <td>ZS4:3</td>
+          <td>int : int</td>
+          <td> </td>
+          <td>pin: 0</td>
+          <td>pin: 7</td>
+        </tr>
+        <tr>
+          <td>DigiXbee</td>
+          <td>o</td>
+          <td>4:3</td>
+          <td>ModuleAddress:Pin</td>
+          <td>ZS4:3</td>
+          <td>int : int</td>
+          <td> </td>
+          <td>pin: 0</td>
+          <td>pin: 7</td>
+        </tr>
+        <tr>
+          <td>DigiXbee</td>
+          <td>o (Aiguillages)</td>
+          <td>4:3:4</td>
+          <td>ModuleAddress:Pin1:Pin2</td>
+          <td>ZT4:3:4</td>
+          <td>int : int : int</td>
+          <td> </td>
+          <td>pin: 0</td>
+          <td>pin: 7</td>
+        </tr>
+        <tr>
+          <td>Grapevine</td>
+          <td>i</td>
+          <td>22016</td>
+          <td>Capteur n&#339;ud 22, pin 16</td>
+          <td>GS 22 016</td>
+          <td>n digits (n&#339;ud) + 3 digit (pin)</td>
+          <td> </td>
+          <td>n&#339;ud: 1; pin: 001</td>
+          <td>n&#339;ud: 127; pin: 016</td>
+        </tr>
+        <tr>
+          <td>Grapevine</td>
+          <td>i</td>
+          <td>22p16</td>
+          <td>p = entr&#233;e parall&#232;le </td>
+          <td>GS 22 p16</td>
+          <td>int + p + int (pin)</td>
+          <td> </td>
+          <td>p1</td>
+          <td>p16</td>
+        </tr>
+        <tr>
+          <td>Grapevine</td>
+          <td>i</td>
+          <td>22a3</td>
+          <td>a = ASD capteur d'occupation</td>
+          <td>GS 22 a3</td>
+          <td>int + a + int (pin)</td>
+          <td>22103</td>
+          <td>a1</td>
+          <td>a24</td>
+        </tr>
+        <tr>
+          <td>Grapevine</td>
+          <td>i</td>
+          <td>22103</td>
+          <td>a = ASD capteur d'occupation</td>
+          <td>GS 22023</td>
+          <td>int + a + int (pin)</td>
+          <td>22a3</td>
+          <td>101</td>
+          <td>124</td>
+        </tr>
+        <tr>
+          <td>Grapevine</td>
+          <td>i</td>
+          <td>22s3</td>
+          <td>s = ancien type de capteur d'occupation s&#233;rie</td>
+          <td>GS 22 s3</td>
+          <td>int + s + int (pin)</td>
+          <td>22023</td>
+          <td>s1</td>
+          <td>s16</td>
+        </tr>
+        <tr>
+          <td>Grapevine</td>
+          <td>i</td>
+          <td>22023</td>
+          <td>s = ancien type de capteur d'occupation s&#233;rie</td>
+          <td>GS 22 s3</td>
+          <td>int + s + int (pin)</td>
+          <td>22a3</td>
+          <td>021</td>
+          <td>036</td>
+        </tr>
+        <tr>
+          <td>Grapevine</td>
+          <td>i</td>
+          <td>22m3</td>
+          <td>m = ASD capteur de mouvement</td>
+          <td>GS 22 m3</td>
+          <td>int + m + int (pin)</td>
+          <td>22203</td>
+          <td>1</td>
+          <td>24</td>
+        </tr>
+        <tr>
+          <td>Grapevine</td>
+          <td>i</td>
+          <td>22203</td>
+          <td>m = ASD capteur de mouvement</td>
+          <td>GS 22 203</td>
+          <td> </td>
+          <td>22m3</td>
+          <td>201</td>
+          <td>224</td>
+        </tr>
+        <tr>
+          <td>Grapevine</td>
+          <td>o</td>
+          <td>22103</td>
+          <td>sortie, carte/rang&#233;e 1, connecteur 3</td>
+          <td>GT 22 103</td>
+          <td> </td>
+          <td> </td>
+          <td>101/201/301/401</td>
+          <td>124/224/324/424</td>	
+			
+		 <tr>
+          <td>Interne</td>
+          <td>e/s</td>
+          <td>une cha&#238;ne</td>
+          <td>quel que soit le sens que l'utilisateur veut donner;<br>voir 
+            <a href="#convention">ci-dessus</a>
+            pour les cas sp&#233;ciaux</td>
+          <td>ITune cha&#238;ne</td>
+          <td> </td>
+          <td> </td>
+          <td> </td>
+          <td> </td>
+        </tr>	
+			
+		 <tr>
+          <td>LocoNet</td>
+          <td>i</td>
+          <td>34</td>
+          <td>Capteur 34</td>
+          <td>LS34</td>
+          <td>entier</td>
+          <td>N/A</td>
+          <td>1</td>
+          <td>4096</td>
+        </tr>
+        <tr>
+          <td>LocoNet</td>
+          <td>o</td>
+          <td>34</td>
+          <td>Aiguillage 34</td>
+          <td>LT34</td>
+          <td>entier</td>
+          <td>N/A</td>
+          <td>1</td>
+          <td>4096</td>
+        </tr>
+        <tr>
+          <td>Maple</td>
+          <td>e</td>
+          <td>2010</td>
+          <td>N&#339;ud 2 Entr&#233;e bit 10</td>
+          <td>KS2010</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>1000</td>
+        </tr>
+        <tr>
+          <td>Maple</td>
+          <td>s</td>
+          <td>1016</td>
+          <td>N&#339;ud 1 Sortie (Aiguillage) 16</td>
+          <td>KT1016</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>8000</td>
+        </tr>
+        <tr>
+          <td>CBUS</td>
+          <td>es</td>
+          <td>18</td>
+          <td>Ev&#233;nement 18 On; 18 Off</td>
+          <td>MT+18</td>
+          <td>Entier</td>
+          <td>+18;-18</td>
+          <td>01</td>
+          <td>65535</td>
+        </tr>
+        <tr>
+          <td>CBUS</td>
+          <td>es</td>
+          <td>+N2E18;-N2E18;</td>
+          <td>n&#339;ud 2 Ev&#233;nement  18; Ev&#233;nement On Event = Actif; Ev&#233;nement Off = Inactif</td>
+          <td>MS+N2E18;-N2E18</td>
+          <td></td>
+          <td> </td>
+          <td>N&#339;ud 1 Ev&#233;nement 1</td>
+          <td>N&#339;ud 65535 Ev&#233;nement 65535 </td>
 
-<a name="special">
-<H2>Convention de D&#233;signation pour un usage automatique</h2></a>
+        </tr>
+        <tr>
+          <td>CBUS</td>
+          <td>e</td>
+          <td>200018M07</td>
+          <td>&#233;couter pour Ev&#232;nements 18 .. 1F</td>
+          <td>MS200018M07</td>
+          <td>+ M + masque hex</td>
+          <td>N/A</td>
+          <td> </td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>CBUS</td>
+          <td>es</td>
+          <td>X9000020012;X91FFFFFFFE</td>
+          <td>Trame hex message CAN. Actif; Inactif
+          <br>N2 E18 actif; N65535 E65534 inactif
+          </td>
+          <td>MSX9000020012;X91FFFFFFFE</td>
+          <td>hex ; hex</td>
+          <td>N/A</td>
+          <td colspan="2">D&#233;pend du Opscode</td>
+        </tr>
+        <tr>
+          <td>CBUS</td>
+          <td>es</td>
+          <td>+18;+21</td>
+          <td>&#201;venementt 18 On; 21 On</td>
+          <td>MT18;21</td>
+          <td>entier ; entier</td>
+          <td>+18;+21</td>
+          <td>1;1</td>
+          <td>65535;65535</td>
+        </tr>
+        <tr>
+          <td>CBUS</td>
+          <td>es</td>
+          <td>+18;-21</td>
+          <td>&#201;venement 18 On; 21 Off</td>
+          <td>ML+18;-21</td>
+          <td>idem sign&#233;</td>
+          <td>N/A</td>
+          <td>1;1</td>
+          <td>65535,65535</td>
+        </tr>
+        <tr>
+          <td>CBUS</td>
+          <td>es</td>
+          <td>200018</td>
+          <td>N&#339;ud 2 ev&#233;nement 18; &#201;venement On= Actif; &#201;venemen Off  = Inactif</td>
+          <td>MS+200018</td>
+          <td>node + (5 digits)</td>
+          <td>N2E18</td>
+          <td>100001</td>
+          <td>6553565535</td>
+        </tr>
+        <tr>
+          <td>NCE</td>
+          <td>e</td>
+          <td>4:3</td>
+          <td>AIU Cab 4, pin 3</td>
+          <td>NS50</td>
+          <td> </td>
+          <td> </td>
+          <td>cab: 1; pin: 1</td>
+          <td>cab: 63; pin: 14</td>
+        </tr>
+        <tr>
+          <td>NCE</td>
+          <td>e</td>
+          <td>50</td>
+          <td>AIU Cab 4, pin 3</td>
+          <td>NS50</td>
+          <td> </td>
+          <td> </td>
+          <td>cab: 1; pin: 1</td>
+          <td>cab: 63; pin: 14</td>
+        </tr>
+        <tr>
+          <td>NCE</td>
+          <td>s</td>
+          <td>16</td>
+          <td>Sortie (Aiguillage) 16</td>
+          <td>NT16</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>2044</td>
+        </tr>
+        <tr>
+          <td>TMCC (Lionel)</td>
+          <td>s</td>
+          <td>16</td>
+          <td>Sortie (Aiguillage) 16</td>
+          <td>NT16</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>99</td>
+        </tr>
+        <tr>
+          <td>X10</td>
+          <td>o</td>
+          <td>A3</td>
+          <td>Code maison A + num code &#233;quipement</td>
+          <td>PTA3</td>
+          <td>caps letter + num</td>
+          <td> </td>
+          <td>code maison: A; &#233;quipement: 1</td>
+          <td>code maison: P; &#233;quipement: 16</td>
+        </tr>
+        <tr>
+          <td>X10 Insteon</td>
+          <td>s</td>
+          <td>01.2A.B4</td>
+          <td>Lumi&#232;re (module) PL01.2A.B4</td>
+          <td>PL01.2A.B4</td>
+          <td>3 x 2 caract</td>
+          <td> </td>
+          <td>nont document&#233;</td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>XpressNet</td>
+          <td>e</td>
+          <td>3</td>
+          <td>module r&#233;trosign. 1, entr&#233;e 3</td>
+          <td>XS3</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>1024</td>
+        </tr>
+        <tr>
+          <td>XpressNet</td>
+          <td>i</td>
+          <td>99:3</td>
+          <td>module r&#233;trosign. 99, entr&#233;e 3</td>
+          <td>XS787</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>1024</td>
+        </tr>
+        <tr>
+          <td>XpressNet</td>
+          <td>s</td>
+          <td>3</td>
+          <td>Aiguillage 3</td>
+          <td>XT3</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>1024</td>
+        </tr>
+        </tbody></table>
+    </div>	
+	<!-- ce tableau est maintenu sur le site help/fr/html/doc/Technical/Names.shtml sur la base des informations du
+      Hardware help pages by Egbert Broerse @silverailscolo July 2017 -->		
+	
+
+	<a name="special">
+<H2>Convention de D&#233;signation pour un Usage Automatique</h2></a>
 
 Certaines constructions de niveau sup&#233;rieur cr&#233;ent leurs propres &#233;l&#233;ments. Par exemple, un
 "Groupe Capteur"
@@ -242,312 +863,216 @@ C'est vraiment juste une collection d'Itin&#233;raires
 qui impl&#233;mente la logique de groupe capteur, il n'y a pas d'objet sp&#233;cifique dans le
 programme qui met en &#339;uvre le groupe de capteurs. Au lieu de cela, lorsque l'utilisateur
 cr&#233;e un groupe capteur "mon groupe", une s&#233;rie d'itin&#233;raires avec des noms de syst&#232;me, comme:
-<code> <pre>
+<pre style="font-family: monospace;">
 CAPTEUR GROUPE: mon groupe: LS1
 CAPTEUR GROUPE: mon groupe: LS2
-</pre> </code>
+</pre>
 sont cr&#233;&#233;s qui met en &#339;uvre le groupe. L'outil de groupe capteurs sait o&#249; regarder
 pour les itin&#233;raire de ce nom.
 
 <P>
 Pour ce faire, deux r&#232;gles informelles sont utilis&#233;es:
 <UL>
-<LI>Les utilisateurs ne devront pas utiliser les  caract&#232;res :, ASCII 0x3A),
-&quot; (double quote, ASCII 0x22),
-ni 
-$ (dollar sign, ASCII 0x24 ) dans les noms de syst&#232;me ou utilisateur.
-Les outils automatiques doivent utiliser au moins un de ceux-ci afin de s'assurer qu'ils n'entrent pas en collision
-avec un nom choisi par l'utilisateur.
-<LI> Les outils qui utilisent cette m&#233;thode ont leur nom d'outil au d&#233;but de tous les noms de syst&#232;me
-qu'ils cr&#233;ent, comme "SENSOR GROUP" a &#233;t&#233; utilis&#233;e ci-dessus.
+<LI>Les utilisateurs ne devront pas utiliser les  caract&#232;res <code>:</code>,
+(colonne ASCII 0x3A), <code>"</code>(double quote, ASCII 0x22),nor <code>$</code> 
+(dollar sign, ASCII 0x24) dans les noms syst&#232;me ou utilisateur.
+Les outils automatiques doivent utiliser au moins un de ceux-ci afin de 
+s'assurer qu'ils n'entrent pas en collision avec un nom choisi par l'utilisateur.
+
+<LI> Les outils qui utilisent cette m&#233;thode ont leur nom d'outil 
+au d&#233;but de tous les noms syst&#232;me qu'ils cr&#233;ent, comme 
+"SENSOR GROUP" a &#233;t&#233; utilis&#233;e ci-dessus.
 </UL>
 <P>
 La liste des outils travaillant de cette mani&#232;re:
-<UL>
-<LI> CAPTEUR GROUPE - jmri.jmrit.sensorgroup
-<LI> USS CTC - jmri.jmrit.ussctc
-<LI>Feux de Signalisation - particulari&#232;rement <a href="http://www.jmri.org/JavaDoc/doc/jmri/implementation/SE8cSignalHead.html">SE8C </a>
-</UL>
 
-        <li>- Les <u>12</u> <u>C</u>/IRM <u>S</u>Ensor .</li>
-      </ul>Notez qu'il n'y a aucune hypoth&egrave;se de
-      mod&egrave;le pour les noms, ils ne sont pas affecter de
-      fa&ccedil;on monotone, ils ne sont pas limit&eacute;s
-      &agrave; un seul syst&egrave;me. <a name="hardware" id=
-      "hardware"></a>
-
-      <h3>Mat&eacute;riel, lettres syst&egrave;me</h3>Notez que
-      certaines d'entre elles sont des espaces
-      r&eacute;serv&eacute;s, et n'ont pas de mise en oeuvre
-      sous-jacente. (les liens vont vers des pages JMRI avec plus
-      d'informations))
-
-<LI>La convention nom syst&#232;me ne fournit pas un moyen facile d'identifier plus d'
-un adaptateur d'un type donn&#233;. Par exemple, si vous &#234;tes connect&#233; &#224; plus 
-d'un LocoNet, ou &#224; plus d'une station de commande d'un n'importe quel type, 
-vous pouvez soit donner au second une lettre s&#233;par&#233;e ( L, puis M ) 
-ou vous pouvez identifier le second avec une annotation (l, pui L2 ).
-C'est un peu ambigu, mais il y a des partisans des deux approches. 
-
-<LI> De m&#234;me, il n'y a aucune disposition pour un seul programme pour faire face &#224; plus 
-d'un r&#233;seau. Si c'est n&#233;cessaire, nous devons comprendre 
-ce que le programme tente de faire
-
-        <li>C <a href="../../hardware/cmri/CMRI.shtml">C/IRM
-        s&eacute;rie</a></li>
-
-        <li>D <a href=
-        "../../hardware/SRCP/index.shtml">SRCP</a></li>
-
-        <li>E <a href=
-        "../../hardware/easydcc/EasyDCC.shtml">EasyDCC</a></li>
-
-        <li>F <a href="../../hardware/rfid/index.shtml">RFID tag
-        readers</a></li>
-
-        <li>G ProTrak <a href=
-        "../../hardware/grapevine/index.shtml">Grapevine</a></li>
-
-        <li>H</li>
-
-        <li>I Interne par exemple, objets sans mat&eacute;riel
-        associ&eacute;</li>
-
-        <li>J</li>
-
-        <li>K <a href=
-        "../../hardware/maple/index.shtml">Syst&egrave;mes
-        Maple</a></li>
-
-        <li>L <a href=
-        "../../hardware/loconet/Digitrax.shtml">LocoNet</a></li>
-
-        <li>M Bus de commandes du r&eacute;seau de mod&egrave;le de
-        chemin de fer, dont le premier est <a href=
-        "../../hardware/can/cbus/index.shtml">MERG CBUS</a></li>
-
-        <li>N <a href="../../hardware/nce/NCE.shtml">RCE</a>
-        (&eacute;galement <a href=
-        "../../mat%C3%A9riel/nce/Wangrow.shtml">Wangrow</a> en ce
-        moment)</li>
-
-        <li>O <a href="../../hardware/oaktree/OakTree.shtml">Oak
-        Tree Systems</a></li>
-
-        <li>P <a href=
-        "../../hardware/powerline/index.shtml">transmission
-        CPL</a>, par exemple X10 et INSTEON</li>
-
-        <li>Q <a href="../../hardware/qsi/index.shtml">QSI
-        interface de programmation</a></li>
-
-        <li>R <a href=
-        "../../hardware/rps/index.shtml">syst&egrave;me
-        RPS</a></li>
-
-        <li>S <a href=
-        "../../hardware/sprog/SPROG.shtml">Sprog</a></li>
-
-        <li>T <a href="../../hardware/tmcc/index.shtml">Lionel
-        TMCC</a></li>
-
-        <li>U <a href="../../hardware/ecos/index.shtml">ESU
-        ECoS</a></li>
-
-        <li>V TracTronics <a href=
-        "../../hardware/secsi/index.shtml">SECSI</a></li>
-
-        <li>W (r&eacute;serv&eacute; pour Wangrow, mais qui est
-        actuellement toujours combin&eacute; avec des NCE)</li>
-
-        <li>X <a href=
-        "../../hardware/XPressNet/index.shtml">XpressNet</a></li>
-
-        <li>Z <a href="../../hardware/zimo/Zimo.shtml">Zimo
-        MX-1</a></li>
-      </ul><a name="types" id="types"></a>
-
-      <h3>Lettres type de p&eacute;riph&eacute;rique</h3>Notez que
-      certains d'entre eux sont des espaces r&eacute;serv&eacute;s,
-      et n'ont pas de mise en oeuvre sous-jacente. En outre, il n'y
-      a aucune garantie que tout syst&egrave;me mat&eacute;riel
-      donn&eacute; ne les mettra jamais en oeuvre.
+      
 
       <ul>
-        <li>A Audio - un objet logiciel interne qui contient des
-        informations sur un &eacute;chantillon son pour &ecirc;tre
-        plac&eacute; &agrave; une position sp&eacute;cifique dans
-        l'espace 3D</li>
+        <li>Logix - auto-g&#233;n&#233;r&#233; 
+            <a href="https://jmri.org/JavaDoc/doc/jmri/Logix.html">Logix</a> 
+            les noms syst&#232;mes sont de la forme IX:AUTO:0001</li>
+        <li>GROUPES DE CAPTEURS - <a href=
+        "http://www.jmri.org/JavaDoc/doc/jmri/jmrit/sensorgroup/package-summary.html">
+        jmri.jmrit.sensorgroup</a></li>
 
-        <li>B Bloc(Canton) - un objet logiciel qui permet de suivre
-        le contenu d'un canton sp&eacute;cifique de la voie</li>
+        <li>SignalHeads - en particulier le <a href=
+        "http://www.jmri.org/JavaDoc/doc/jmri/implementation/SE8cSignalHead.html">
+        T&#234;te de signal SE8C</a></li>
 
-        <li>D iDentit&eacute; -Un objet logiciel qui contient des
-        informations sur une plaque d'identit&eacute; qui est,
-        g&eacute;n&eacute;ralement, attach&eacute; &agrave; un
-        morceau de mat&eacute;riel roulant. Ces objets ne sont pas
-        sp&eacute;cifiques au syst&egrave;me, mais sont des objets
-        internes, donc ont des noms commen&ccedil;ant par l'ID. Le
-        mat&eacute;riel sous-jacent va utiliser des objets Reporter
-        pour communiquer avec JMRI quand un objet identit&eacute;
-        sp&eacute;cifique a &eacute;t&eacute; vu</li>
+        <li>USS CTC - <a href=
+        "http://www.jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/package-summary.html">
+        jmri.jmrit.ussctc</a></li>
 
-        <li>F M&acirc;t Signal (F n'est pas particuli&egrave;rement
-        mn&eacute;monique, peut-&ecirc;tre qu'un m&acirc;t &agrave;
-        deux t&ecirc;tes ressemble &agrave; un F sur le
-        c&ocirc;t&eacute;? Toutes les bonnes lettres ont
-        &eacute;t&eacute; prises)</li>
-
-        <li>H T&ecirc;te signal - Une partie d'un signal (qui peut
-        avoir plusieurs t&ecirc;tes). &Eacute;galement
-        interpr&eacute;t&eacute; pour inclure des indicateurs sur
-        les panneaux de contr&ocirc;le qui agissent pour afficher
-        les aspects des signaux</li>
-
-        <li>M M&eacute;moire - Pour l'instant, cela n'a pas
-        vraiment d'&eacute;quivalent dans le mat&eacute;riel de
-        r&eacute;seau, mais est utilis&eacute; comme un endroit
-        pour stocker temporairement des informations et un
-        affichage sur panneaux, etc.</li>
-
-        <li>L Light (Lumi&egrave;re) -une autre forme de sortie,
-        par exemple, utilis&eacute; pour voyants de contr&ocirc;le
-        sur un r&eacute;seau</li>
-
-        <li>P - Gestionnaire d'alimentation par exemple du
-        r&eacute;seau, &agrave; savoir, district, sous - district;
-        tous les syst&egrave;mes ne font pas de distinction entre
-        ceux-ci, de sorte que la lettre type d'appareil ne le fait
-        pas non plus.. Par exemple, la partie du syst&egrave;me
-        sp&eacute;cifique pourrait &ecirc;tre B pour la puissance
-        du r&eacute;seau principale, par exemple LPB ou S42 pour 2
-        canaux sous-district sur la carte 4, par exemple
-        LPS42.</li>
-
-        <li>R Rapports - un m&eacute;canisme d'usage
-        g&eacute;n&eacute;ral pour communication d'informations
-        complexes du r&eacute;seau, par exemple, identification
-        locomotive depuis certains mat&eacute;riels, Transpondeur,
-        Num&eacute;ros des &eacute;tiquettes RFID, etc.</li>
-
-        <li>S Sensor (Capteurs) - en g&eacute;n&eacute;ral les
-        capteurs d'entr&eacute;e ont un but qui est
-        g&eacute;n&eacute;ralement d'&ecirc;tre ACTIF ou INACTIF.
-        C'est le plus couramment utilis&eacute; pour le remplissage
-        des d&eacute;tecteurs de cantons.</li>
-
-        <li>T Turnout (Aiguillage) - en fait une sortie &agrave;
-        usage g&eacute;n&eacute;ral sur le r&eacute;seau</li>
-
-        <li>X Logix - un ensemble d'&eacute;quations logiques
-        utilis&eacute;es pour contr&ocirc;ler le r&eacute;seau</li>
-      </ul><a name="systeminfo" id="systeminfo"></a>
-
-      <h3>Info-sp&eacute;cifiques Syst&egrave;me</h3>Chaque
-      syst&egrave;me mat&eacute;riel diff&eacute;rent peut
-      sp&eacute;cifier la "chaine " qui suit le syst&egrave;me et
-      la lettre type. G&eacute;n&eacute;ralement sp&eacute;cifique,
-      ce sont de petits nombres, mais leur signification exacte est
-      tr&egrave;s sp&eacute;cifique au syst&egrave;me. Pour plus
-      d'informations, s'il vous pla&icirc;t voir les pages
-      sp&eacute;cifiques pour
-
-      <ul>
-        <li><a href=
-        "../../hardware/cmri/CMRI.shtml#numbers">C/MRI</a></li>
-
-        <li><a href=
-        "../../hardware/loconet/Addressing.shtml">Digitrax
-        LocoNet</a></li>
-
-        <li><a href=
-        "../../hardware/grapevine/Names.shtml">Grapevine</a></li>
-
-        <li><a href=
-        "../../hardware/XPressNet/XNetAddressing.shtml">Lenz
-        XPressNet</a></li>
-
-        <li><a href=
-        "../../hardware/nce/NCE.shtml#names">NCE</a></li>
-
-        <li><a href=
-        "../../hardware/powerline/Names.shtml">Powerline adapters,
-        e.g, X10</a></li>
-      </ul>
-
-      <p>Les objets "internes" peuvent &eacute;galement &ecirc;tre
-      adress&eacute;s et manipul&eacute;s, mais ils n'ont pas de
-      stricte correspondance avec certains mat&eacute;riels sur le
-      r&eacute;seau. Par exemple, si une t&ecirc;te signal est mise
-      en oeuvre sur trois sorties diff&eacute;rentes, LT1, LT2 et
-      LT3, l'objet t&ecirc;te de signal pourrait &ecirc;tre
-      appel&eacute; IH3. <a name="special" id="special"></a></p>
-
-      <h2>Convention de D&eacute;signation pour un usage
-      automatique</h2>Certaines constructions de niveau
-      sup&eacute;rieur cr&eacute;ent leurs propres
-      &eacute;l&eacute;ments. Par exemple, un "Groupe Capteur"
-      C'est vraiment juste une collection d'Itin&eacute;raires qui
-      impl&eacute;mente la logique de groupe capteur, il n'y a pas
-      d'objet sp&eacute;cifique dans le programme qui met en oeuvre
-      le groupe de capteurs. Au lieu de cela, lorsque l'utilisateur
-      cr&eacute;e un groupe capteur "mon groupe", une s&eacute;rie
-      d'itin&eacute;raires avec des noms de syst&egrave;me, comme:
-      <pre>
-<code>CAPTEUR GROUPE: mon groupe: LS1
-CAPTEUR GROUPE: mon groupe: LS2
-</code>
-</pre>sont cr&eacute;&eacute;s qui met en oeuvre le groupe. L'outil
-de groupe capteurs sait regarder pour les itin&eacute;raire de ce
-nom.
-
-      <p>Pour ce faire, deux r&egrave;gles informelles sont
-      utilis&eacute;es:</p>
-
-      <ul>
-        <li>Les utilisateurs ne devront pas utiliser les
-        caract&egrave;res ":" ou "$" dans les noms de
-        syst&egrave;me ou utilisateur. Les outils automatiques
-        doivent utiliser au moins un de ceux-ci afin de s'assurer
-        qu'ils n'entrent pas en collision avec un nom choisi par
-        l'utilisateur.</li>
-
-        <li>Les outils qui utilisent cette m&eacute;thode ont leur
-        nom d'outil au d&eacute;but de tous les noms de
-        syst&egrave;me qu'ils cr&eacute;ent, comme "SENSOR GROUP" a
-        &eacute;t&eacute; utilis&eacute;e ci-dessus.</li>
-      </ul>
-
-      <p>La liste des outils travaillant de cette
-      mani&egrave;re:</p>
-
-      <ul>
-        <li>CAPTEUR GROUPE - jmri.jmrit.sensorgroup</li>
-
-        <li>USS CTC - jmri.jmrit.ussctc T</li>
       </ul>
 
       <h2>Notes</h2>
 
       <ul>
-        <li>Certains appareils ne sont pas vraiment nomm&eacute;s.
-        Le programmateur DCC est le premier exemple, mais il peut y
-        en avoir d'autres.</li>
+        <li>Certains appareils ne sont pas vraiment nomm&#233;s, car il n'y a pas encore d'id&#233;e de 
+        plus d'un. Le programmateur DCC en est le premier exemple, mais il peut y en avoir d'autres.</li>
 
-        <li>La convention nom syst&egrave;me ne fournit pas un
-        moyen facile d'identifier plus d' un adaptateur d'un type
-        donn&eacute;. Par exemple, si vous &ecirc;tes
-        connect&eacute; &agrave; plus d'un LocoNet, ou &agrave;
-        plus d'une station de commande d'un seul type, qui
-        alimentent des parties distinctes d'un r&eacute;seau
-        unique, comment adressez-vous ceci?</li>
 
-        <li>De m&ecirc;me, il n'y a aucune disposition pour un seul
-        programme pour faire face &agrave; plus d'un r&eacute;seau.
-        Si c'est n&eacute;cessaire, nous devons comprendre ce que
-        le programme tente de faire</li>
+        <li><a href="https://jmri.org/JavaDoc/doc/jmri/Conditional.html">Conditions</a>
+        sont un cas particulier.  Bien qu'ils aient des choses appel&#233;es
+        "System Names" et "User Names", ils n'ob&#233;issent pas vraiment &#224; la les conventions ici.  Voir les 
+        <a href="https://jmri.org/JavaDoc/doc/jmri/ConditionalManager.html">ConditionalManager Javadoc</a>
+        pour plus d'informations.</li>
+        
+        <li>La convention de d&#233;nomination du syst&#232;me ne pr&#233;voit pas de
+        moyen d'identifier plus d'un adaptateur d'un type donn&#233;. Par exemple
+        si vous &#234;tes connect&#233; &#224; plus d'un LocoNet, ou plus d'une centrale  de n'importe quel type, vous pouvez soit donner &#224;
+        la seconde une lettre s&#233;par&#233;e (L, puis M) ou vous pouvez
+        identifier le 2e avec un modificateur (L, puis L2). C'est un
+        un peu ambigu&#235;, mais il y a des partisans des deux approches
+        Nous les mettons donc tous deux &#224; disposition.
+
+        <li>Il n'est pas pr&#233;vu de programme unique pour traiter
+        plus d'un r&#233;seau. Si cela est n&#233;cessaire, nous devrons
+        comprendre ce que le programme tente de faire.</li>
+      </ul>
+      
+      <a name="programmeurs" id="programmeurs"></a>
+      <h2>Pour les programmeurs</h2>
+      
+      <h3>Forme normalis&#233;e des noms, et comment travailler avec elle</h3>
+      
+          Apr&#232;s de longues et multiples discussions, nous avons d&#233;cid&#233; que les noms utilisateur 
+          doit &#234;tre conserv&#233; sous une forme "normale" qui impose certaines restrictions.
+          Pour les noms d'utilisateur, les espace avant et arri&#232;re (espaces, tabulations) 
+          ne sont pas autoris&#233;s.
+          
+          <p>
+          Le code permettant de s'assurer que les noms sont sous une forme normale 
+          a &#233;t&#233; localis&#233; en une seule routine pour les noms utilisateur :
+          <br>
+<pre style="font-family : monospace ;">
+          Cha&#238;ne nomutilisateur = NamedBean.normalizeUserName(input) ;
+</pre><br>
+          Veuillez utiliser cela, et seulement cela, lors de la cr&#233;ation d'un nom d'utilisateur
+          de l'apport humain ou d'une autre source. Ne pas explicitement
+          appelez <code>Cordon#&#224;Haut()</code>, <code>Cordon#&#224;Bande()</code>
+          ou toute autre op&#233;ration de formatage ; il n'est pas possible de les r&#233;partir dans le code.
+          
+        <p>
+          Parce que les noms syst&#232;mes peuvent varier d'un type &#224; l'autre 
+          et de gestionnaire &#224; gestionnaire, il existe deux m&#233;thodes d'int&#233;r&#234;t 
+          sp&#233;cifiques aux gestionnaires :  <code>manager.validateSystemNameFormat(input, locale)</code>
+          et <code>manager.makeSystemName(input)</code>.
+          Comme la plupart des NamedBeans sont cr&#233;&#233;s par les gestionnaires, et 
+          connaissent l'ensemble des NamedBeans, c'est le bon endroit pour
+          les mettre.  Mais cela signifie qu'un NameBean individuel, c'est-&#224;-dire 
+          <code>jmri.jmrix.internal.InternalTurnout</code>, le constructeur ne peut pas
+          y acc&#233;der.Si l'un de ces constructeurs d&#233;couvre qu'il ne peut pas analyser un 
+          argument de nom de syst&#232;me fourni parce qu'il n'est pas valide, il doit lancer 
+          un <code>NamedBean.BadSystemNameException</code>. Le constructeur ne doit en aucun 
+          cas transformer le nom syst&#232;me qui lui a &#233;t&#233; donn&#233;. Si l'un de ces constructeurs 
+          d&#233;couvre qu'il ne peut pas analyser un argument de nom de syst&#232;me fourni parce qu'il
+           n'est pas valide, il doit lancer un <code>NamedBean.BadSystemNameException</code>. 
+           Le constructeur ne doit en aucun cas transformer le nom du syst&#232;me qui lui a &#233;t&#233; 
+           donn&#233;. Il doit l'utiliser tel quel ou, s'il ne le peut pas, lancer l'exception.
+        <p>
+          Pour plus d'informations, voir le Javadoc pour
+         <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBean.html#normalizeUserName-java.lang.String-">normalizeUserName</a>, 
+            <a href="https://jmri.org/JavaDoc/doc/jmri/Manager.html#validateSystemName-java.lang.String-">valider le format du nom du syst&#232;me</a>,
+            <a href="https://jmri.org/JavaDoc/doc/jmri/Manager.html#makeSystemName-java.lang.String-">makeSystemName</a>,
+            <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBean.BadUserNameException.html">BadUserNameException</a>,
+            et
+            <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBean.BadSystemNameException.html">BadSystemNameException</a>.         
+        <p>
+        En g&#233;n&#233;ral, il est pr&#233;f&#233;rable d'utiliser une m&#233;thode de saisie qui g&#232;re d&#233;j&#224; tout cela.  Deux m&#233;thodes sont disponibles
+        maintenant :
+        <ul>
+        <li> Format JComboBox :
+            <a href="images/ComboBox.png"><img src="images/ComboBox.png" align="right" height="50" width="75" alt="combobox"></a>
+            
+<pre style="font-family : monospace ;">
+        import jmri.swing.NamedBeanComboBox ;
+
+        // le premier argument est le gestionnaire, le 2&#232;me est un "bean" &#224; s&#233;lectionner ou &#224; annuler
+        // le troisi&#232;me d&#233;termine l'affichage des" beans"
+        selectComboBox = new <a href="https://jmri.org/JavaDoc/doc/jmri/swing/NamedBeanComboBox.html">NamedBeanComboBox</a>(InstanceManager.getDefault(SensorManager.class), 
+                                                    currentSensor, 
+                                                    <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBean.DisplayOptions.html">NamedBean.DisplayOptions</a>.DISPLAYNAME)
+        
+        // pour obtenir l'article s&#233;lectionn&#233; :
+        selectComboBox.getSelectedItem()
+</pre>
+
+        <li>Format de la table :
+            <a href="images/TableSelector.png"><img src="images/TableSelector.png" align="right" height="119" width="175" alt="table selector"></a>
+<pre style="font-family : monospace ;">
+
+        import jmri.jmrit.picker.* ;
+        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickListModel.html">PickListModel</a> tableModel = <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickListModel.html">PickListModel</a>.sensorPickModelInstance() ; // ou un autre type
+        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickSinglePane.html">PickSinglePane</a> panel = new <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickSinglePane.html">PickSinglePane</a>(tableModel) ;
+            
+        // pour obtenir l'&#233;l&#233;ment s&#233;lectionn&#233; en tant que NamedBeanHandle&lt;T&gt ;
+        panel.getSelectedBeanHandle() ;
+
+        // vous pouvez &#233;couter une valeur s&#233;lectionn&#233;e en h&#233;ritant de ListSelectionListener 
+        // et en s'enregistrant aupr&#232;s de panel.getTable().getSelectionModel().addListSelectionListener(this)
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            System.out.println(" S&#233;lectionn&#233; : "+panel.getSelectedBeanHandle()) ;
+        }
+</pre>
+        Cela permet &#224; l'utilisateur de s&#233;lectionner soit le nom syst&#232;me, soit le nom de l'utilisateur (non-blanc) dans une rang&#233;e,
+        qui devient alors le nom pr&#233;f&#233;r&#233; pour le 
+        <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>.
+        Pour plus d'informations sur
+        <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>,
+        y compris la mani&#232;re de les obtenir de la 
+        <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBeanHandleManager.html">NamedBeanHandleManager</a>
+        voir la page sur
+        <a href="Patterns.shtml">page des motifs de code</a>.
+
+        </ul>
+
+      <h3>Comparaisons de noms de syst&#232;mes</h3>
+      
+        Les noms des syst&#232;mes sont compar&#233;s et tri&#233;s &#224; plusieurs endroits : sous forme d'&#233;tiquettes pour les lignes des tableaux, 
+        dans les bo&#238;tes de s&#233;lection et les listes, etc.  Nous avons deux <code>java.util.Comparator&lt;&gt;</code>
+        pour y faire face :
+        <ul>
+            <li><code>NamedBeanComparator</code> - une comparaison sur les NamedBeans eux-m&#234;mes
+            <li><code>SystemNameComparator</code> - une comparaison sur Strings (d&#233;pr&#233;ci&#233;)
+        </ul>
+        Veuillez utiliser l'un de ces syst&#232;mes chaque fois que vous avez besoin de comparer ou de trier par noms de syst&#232;mes afin de garder la complexit&#233; en un seul endroit.
+        <p>
+        Tous deux trient d'abord par pr&#233;fixe de connexion au syst&#232;me, pour regrouper tous les objets d'un m&#234;me syst&#232;me.
+        S'il y a des objets de plusieurs types, la lettre du type est ensuite plac&#233;e dans l'ordre alphab&#233;tique.
+        Enfin, le suffixe sp&#233;cifique au syst&#232;me est tri&#233;.
+        <p>
+        <code>NamedBeanComparator</code> est la m&#233;thode standard qui va de l'avant comme elle peut 
+        faire un tri par type de la partie suffixe des noms : 
+        Il sait ce que les suffixes C/MRI dans "CT2003" et "C2B2" signifient et peut en tenir compte.
+  <p>
+        Comme il fonctionne avec des valeurs de type String, <code>SystemNameComparator</code> ne pouvait faire qu'un classement par d&#233;faut du suffixe sp&#233;cifique au syst&#232;me ; il ne pouvait rien faire qui
+        utilise toute information sur la signification sp&#233;cifique au syst&#232;me de cette cha&#238;ne. Elle
+        utilise un tri alphanum&#233;rique par morceaux.
+        Comme il s'agit d'une comparaison sur les objets NamedBean r&#233;els, <code>NamedBeanComparator</code>
+        peut faire des comparaisons plus pr&#233;cises.
+        <p>
+        De m&#234;me, si vous avez cr&#233;&#233; un syst&#232;me dont le suffixe contient des informations complexes,
+        veuillez demander &#224; vos sous-classes <code>NamedBean</code> de mettre en place un syst&#232;me sp&#233;cifique
+        version de la
+        <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBean.html#compareSystemNameSuffix-java.lang.String-java.lang.String-jmri.NamedBean-">compareSystemNameSuffix()</a>
+        dans <code>NamedBean</code>.
+        Pour un exemple, voir le bas de jmri.jmrix.cmri.serial.SerialTurnout
+        et jmri.jmrix.cmri.serial.SerialTurnoutTest.
+      
+        <h2></h2>
+        <p>CBUS&trade; est une marque d&#233;pos&#233;e du Dr Michael Bolton</p>
+        <p></p>
+
+
       </ul><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
 </html>
+
+    
+
+.
