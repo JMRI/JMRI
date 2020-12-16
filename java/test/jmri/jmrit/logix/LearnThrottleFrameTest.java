@@ -15,8 +15,6 @@ import org.junit.jupiter.api.*;
  */
 public class LearnThrottleFrameTest {
 
-    private WarrantFrame wf;
-
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
