@@ -486,7 +486,7 @@ public class Path implements Comparable<Path> {
         if (log.isTraceEnabled()) log.trace("   returns {} ({})", dirs[octant], decodeDirection(dirs[octant]));
         
         return dirs[octant];
-    }   // computeOctagonalDirection
+    }   // computeDirection
 
     /**
      * Get the reverse octagonal direction.

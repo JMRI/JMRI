@@ -852,11 +852,23 @@ public class TrackSegment extends LayoutTrack {
 //            if (getName().equals("T3")) {
 //                log.error("T3!");
 //            }
-
             double distance = 2 * radius * Math.PI * tmpAngleDEG / 360;
             if (distanceOnTrack < distance) {  // it's on this track
                 Point2D p1 = models.getCoords(getConnect1(), getType1());
                 Point2D p2 = models.getCoords(getConnect2(), getType2());
+                if (!tsv.isCircle()) {
+                    centre = MathUtil.midPoint(p1, p2);
+                    Point2D centreSeg = tsv.getCentreSeg();
+//                    log.warn(String.format("centre: {%.0f, %.0f}, centreSeg: {%.0f, %.0f}.",
+//                            centre.getX(), centre.getY(),
+//                            centreSeg.getX(), centreSeg.getY()
+//                    ));
+
+                    double newX = (centre.getX() < centreSeg.getX()) ? Math.min(p1.getX(), p2.getX()) : Math.max(p1.getX(), p2.getX());
+                    double newY = (centre.getY() < centreSeg.getY()) ? Math.min(p1.getY(), p2.getY()) : Math.max(p1.getY(), p2.getY());
+                    centre = new Point2D.Double(newX, newY);
+//                    log.debug("WTF?");
+                }
 
                 double angle1DEG = MathUtil.computeAngleDEG(p1, centre) - 90;
                 double angle2DEG = MathUtil.computeAngleDEG(p2, centre) - 90;
@@ -867,7 +879,6 @@ public class TrackSegment extends LayoutTrack {
 //                if ((Math.abs(angleDeltaDEG) - Math.abs(tmpAngleDEG)) >= 1) {
 //                    angleDeltaDEG -= Math.signum(angleDeltaDEG) * 360;
 //                }
-
 //                log.warn(String.format("    p1: {%.0f, %.0f} a1: %.0f", p1.getX(), p1.getY(), angle1DEG));
 //                log.warn(String.format("    p2: {%.0f, %.0f} a2: %.0f", p2.getX(), p2.getY(), angle2DEG));
 //                log.warn(String.format("    angleDelta: %.0f", angleDeltaDEG));
@@ -898,7 +909,7 @@ public class TrackSegment extends LayoutTrack {
                 // Compute location
                 delta = MathUtil.rotateDEG(delta, newAngleDeg);
                 if (!tsv.isCircle()) {
-                    delta = MathUtil.multiply(delta, radius2D.getX() / ratio, radius2D.getY() / ratio);
+                    delta = MathUtil.multiply(delta, radius2D.getX() / radius, radius2D.getY() / radius);
                 }
                 navigator.setLocation(MathUtil.add(centre, delta));
                 navigator.setDirectionDEG(newAngleDeg + dirDeltaDEG);
@@ -956,12 +967,12 @@ public class TrackSegment extends LayoutTrack {
                     i.next();
                 }   // while (!i.isDone() && nextSegmentFlag)
                 if (nextSegmentFlag) {  // this should NEVER happen
-                    log.error("Bezier overflow!");
+                    log.error("Navigate Bezier overflow!");
                 }
                 //navigator.setDistance(bezierDistance - distanceOnTrack);
                 navigator.setDistance(0);
                 navigator.setDistanceOnTrack(distanceOnTrack);
-            } else {
+            } else {    // it's not on this track
                 navigator.setDistance(distanceOnTrack - distance);
                 navigator.setDistanceOnTrack(0);
                 result = true;

@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.awt.geom.*;
 import java.text.MessageFormat;
 import java.util.*;
 
@@ -7,13 +8,15 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
+import static jmri.jmrit.display.layoutEditor.LayoutTurnoutView.INCONSISTENT;
+import static jmri.jmrit.display.layoutEditor.LayoutTurnoutView.UNKNOWN;
 import jmri.jmrit.signalling.SignallingGuiTools;
+import jmri.util.MathUtil;
 
 /**
- * LayoutTurnout is the abstract base for classes representing various types of turnout on the layout.
- * A LayoutTurnout is an
- * extension of the standard Turnout object with drawing and connectivity
- * information added.
+ * LayoutTurnout is the abstract base for classes representing various types of
+ * turnout on the layout. A LayoutTurnout is an extension of the standard
+ * Turnout object with drawing and connectivity information added.
  * <p>
  * Specific forms are represented: right-hand, left-hand, wye, double crossover,
  * right-handed single crossover, and left-handed single crossover. Note that
@@ -58,9 +61,9 @@ import jmri.jmrit.signalling.SignallingGuiTools;
  *              XX
  *             //\\
  *        D ==**==**== C
- * </pre>
- * (The {@link LayoutSlip} track objects follow a different pattern. They put A-D in
- * different places and have AD and BC as the normal-continuance parallel paths)
+ * </pre> (The {@link LayoutSlip} track objects follow a different pattern. They
+ * put A-D in different places and have AD and BC as the normal-continuance
+ * parallel paths)
  * <p>
  * A LayoutTurnout carries Block information. For right-handed, left-handed, and
  * wye turnouts, the entire turnout is in one block, however, a block border may
@@ -94,20 +97,19 @@ import jmri.jmrit.signalling.SignallingGuiTools;
  * Signal Head names are saved here to keep track of where signals are.
  * LayoutTurnout only serves as a storage place for signal head names. The names
  * are placed here by tools, e.g., Set Signals at Turnout, and Set Signals at
- * Double Crossover. Each connection point can have up to three SignalHeads and one SignalMast.
+ * Double Crossover. Each connection point can have up to three SignalHeads and
+ * one SignalMast.
  * <p>
- * A LayoutWye may be linked to another LayoutTurnout to form a turnout
- * pair.
- *<br>
- * Throat-To-Throat Turnouts - Two turnouts connected closely at their
- * throats, so closely that signals are not appropriate at the their throats.
- * This is the situation when two RH, LH, or WYE turnouts are used to model a
- * double slip.
- *<br>
- * 3-Way Turnout - Two turnouts modeling a 3-way turnout, where the
- * throat of the second turnout is closely connected to the continuing track of
- * the first turnout. The throat will have three heads, or one head. A link is
- * required to be able to correctly interpret the use of signal heads.
+ * A LayoutWye may be linked to another LayoutTurnout to form a turnout pair.
+ * <br>
+ * Throat-To-Throat Turnouts - Two turnouts connected closely at their throats,
+ * so closely that signals are not appropriate at the their throats. This is the
+ * situation when two RH, LH, or WYE turnouts are used to model a double slip.
+ * <br>
+ * 3-Way Turnout - Two turnouts modeling a 3-way turnout, where the throat of
+ * the second turnout is closely connected to the continuing track of the first
+ * turnout. The throat will have three heads, or one head. A link is required to
+ * be able to correctly interpret the use of signal heads.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
  * @author George Warner Copyright (c) 2017-2019
@@ -134,10 +136,11 @@ abstract public class LayoutTurnout extends LayoutTrack {
 
     /**
      * Main constructor method.
-     * @param id Layout Turnout ID.
-     * @param t type, e.g. LH_TURNOUT, WYE_TURNOUT
+     *
+     * @param id     Layout Turnout ID.
+     * @param t      type, e.g. LH_TURNOUT, WYE_TURNOUT
      * @param models main layout editor.
-     * @param v version.
+     * @param v      version.
      */
     public LayoutTurnout(@Nonnull String id, TurnoutType t,
             @Nonnull LayoutEditor models,
@@ -305,8 +308,10 @@ abstract public class LayoutTurnout extends LayoutTrack {
 
     // persistent instances variables (saved between sessions)
     // these should be the system or user name of an existing physical turnout
-    @Nonnull private String turnoutName = ""; // "" means none, never null
-    @Nonnull private String secondTurnoutName = ""; // "" means none, never null
+    @Nonnull
+    private String turnoutName = ""; // "" means none, never null
+    @Nonnull
+    private String secondTurnoutName = ""; // "" means none, never null
     private boolean secondTurnoutInverted = false;
 
     // default is package protected
@@ -362,7 +367,8 @@ abstract public class LayoutTurnout extends LayoutTrack {
 
     private int version = 1;
 
-    @Nonnull public String linkedTurnoutName = ""; // name of the linked Turnout (as entered in tool); "" means none, never null
+    @Nonnull
+    public String linkedTurnoutName = ""; // name of the linked Turnout (as entered in tool); "" means none, never null
     public LinkType linkType = LinkType.NO_LINK;
 
     private final boolean useBlockSpeed = false;
@@ -379,6 +385,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
 
     /**
      * Get the Version.
+     *
      * @return turnout version.
      */
     public int getVersion() {
@@ -1175,10 +1182,11 @@ abstract public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * Perhaps confusingly, this returns an actual Turnout reference
-     * or null for the turnout associated with this is LayoutTurnout.
-     * This is different from {@link #setTurnout(String)}, which
-     * takes a name (system or user) or an empty string.
+     * Perhaps confusingly, this returns an actual Turnout reference or null for
+     * the turnout associated with this is LayoutTurnout. This is different from
+     * {@link #setTurnout(String)}, which takes a name (system or user) or an
+     * empty string.
+     *
      * @return Null if no Turnout set
      */
     // @CheckForNull temporary - want to restore once better handled
@@ -1206,10 +1214,11 @@ abstract public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * Perhaps confusingly, this takes a Turnout name (system or user)
-     * to locate and set the turnout associated with this is LayoutTurnout.
-     * This is different from {@link #getTurnout()}, which returns an
-     * actual Turnout reference or null.
+     * Perhaps confusingly, this takes a Turnout name (system or user) to locate
+     * and set the turnout associated with this is LayoutTurnout. This is
+     * different from {@link #getTurnout()}, which returns an actual Turnout
+     * reference or null.
+     *
      * @param tName provide empty string for none; never null
      */
     public void setTurnout(@Nonnull String tName) {
@@ -1268,7 +1277,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         String oldSecondTurnoutName = secondTurnoutName;
         secondTurnoutName = tName;
         Turnout turnout = null;
-        if (! tName.isEmpty()) {
+        if (!tName.isEmpty()) {
             turnout = InstanceManager.turnoutManagerInstance().getTurnout(secondTurnoutName);
         }
         if (turnout != null) {
@@ -1525,9 +1534,9 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-
     /**
      * Set up Layout Block(s) for this Turnout.
+     *
      * @param newLayoutBlock the new layout block.
      */
     protected void setLayoutBlock(LayoutBlock newLayoutBlock) {
@@ -2376,6 +2385,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
 
     /**
      * "active" means that the object is still displayed, and should be stored.
+     *
      * @return true if active, else false.
      */
     public boolean isActive() {
@@ -2658,7 +2668,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
                     // the points on the TurnoutView itself. Change to
                     // direction from connections.
                     //lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsB()));
-                    lc.setDirection( models.computeDirectionAB(this) );
+                    lc.setDirection(models.computeDirectionAB(this));
 
                     log.trace("getLayoutConnectivity lbA != lbB");
                     log.trace("   Block boundary  ('{}'<->'{}') found at {}", lbA, lbB, this);
@@ -2675,7 +2685,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
                     // the points on the TurnoutView itself. Change to
                     // direction from connections.
                     //lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsC()));
-                    lc.setDirection( models.computeDirectionAC(this) );
+                    lc.setDirection(models.computeDirectionAC(this));
 
                     log.trace("getLayoutConnectivity lbA != lbC");
                     log.trace("   Block boundary  ('{}'<->'{}') found at {}", lbA, lbC, this);
@@ -2692,7 +2702,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
                     // the points on the TurnoutView itself. Change to
                     // direction from connections.
                     //lc.setDirection(Path.computeDirection(getCoordsC(), getCoordsD()));
-                    lc.setDirection( models.computeDirectionCD(this) );
+                    lc.setDirection(models.computeDirectionCD(this));
 
                     log.trace("getLayoutConnectivity lbC != lbD");
                     log.trace("   Block boundary  ('{}'<->'{}') found at {}", lbC, lbD, this);
@@ -2709,7 +2719,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
                     // the points on the TurnoutView itself. Change to
                     // direction from connections.
                     //lc.setDirection(Path.computeDirection(getCoordsB(), getCoordsD()));
-                    lc.setDirection( models.computeDirectionBD(this) );
+                    lc.setDirection(models.computeDirectionBD(this));
 
                     log.trace("getLayoutConnectivity lbB != lbD");
                     log.trace("   Block boundary  ('{}'<->'{}') found at {}", lbB, lbD, this);
@@ -2884,5 +2894,134 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnout.class);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean navigate(@Nonnull LENavigator navigator) {
+        boolean result = false;
+
+        LayoutTurnoutView ltv = models.getLayoutTurnoutView(this);
+        double distanceOnTrack = navigator.getDistance() + navigator.getDistanceOnTrack();
+
+        Point2D pM = ltv.getCoordsCenter();
+        Point2D pA = ltv.getCoordsA();
+        Point2D pB = ltv.getCoordsB();
+        Point2D pC = ltv.getCoordsC();
+        Point2D pD = ltv.getCoordsD();
+
+        int state = UNKNOWN;
+        if (models.isAnimating()) {
+            state = getState();
+        }
+        if ((state != Turnout.CLOSED) && (state != Turnout.THROWN)) {
+            return super.navigate(navigator);   // call super to STOP
+        }
+
+        LayoutTrack nextLayoutTrack = null;
+        //TurnoutType type = getTurnoutType();
+        switch (type) {
+            case RH_TURNOUT:
+            case LH_TURNOUT:
+            case WYE_TURNOUT: {
+                Point2D pStart = null, pEnd = null;
+                if (connectA.equals(navigator.getLastTrack())) {
+                    pStart = pA;
+                    if (state == Turnout.CLOSED) {
+                        pEnd = pB;
+                        nextLayoutTrack = connectB;
+                    } else if (state == Turnout.THROWN) {
+                        pEnd = pC;
+                        nextLayoutTrack = connectC;
+                    }
+                } else if (connectB.equals(navigator.getLastTrack())) {
+                    if (state == Turnout.CLOSED) {
+                        pStart = pB;
+                        pEnd = pA;
+                        nextLayoutTrack = connectA;
+                    }
+                } else if (connectC.equals(navigator.getLastTrack())) {
+                    if (state == Turnout.THROWN) {
+                        pStart = pC;
+                        pEnd = pA;
+                        nextLayoutTrack = connectA;
+                    }
+                } else {    // OOPS! we're lost!
+                    result = super.navigate(navigator);   // call super to STOP
+                }
+                if (pStart != null) {
+                    double distanceStart = MathUtil.distance(pStart, pM);
+                    if (distanceOnTrack < distanceStart) {  // it's on startleg
+                        double ratio = distanceOnTrack / distanceStart;
+                        Point2D loc = MathUtil.lerp(pStart, pM, ratio);
+                        navigator.setLocation(loc);
+                        navigator.setDirectionRAD((Math.PI / 2) - MathUtil.computeAngleRAD(pM, pStart));
+                        navigator.setDistance(0);
+                    } else // it's not on startleg
+                    if (pEnd != null) {
+                        double distanceEnd = MathUtil.distance(pM, pEnd);
+                        if ((distanceOnTrack - distanceStart) < distanceEnd) {  // it's on end leg
+                            double ratio = (distanceOnTrack - distanceStart) / distanceEnd;
+                            Point2D loc = MathUtil.lerp(pM, pEnd, ratio);
+                            navigator.setLocation(loc);
+                            navigator.setDirectionRAD((Math.PI / 2) - MathUtil.computeAngleRAD(pEnd, pM));
+                            navigator.setDistance(0);
+                        } else {    // it's not on end leg / this track
+                            navigator.setDistance(distanceOnTrack - (distanceStart + distanceEnd));
+                            distanceOnTrack = 0;
+                            result = true;
+                        }
+                    } else {    // OOPS! we're lost!
+                        result = super.navigate(navigator);   // call super to STOP
+                    }
+                } else {    // OOPS! we're lost!
+                    result = super.navigate(navigator);   // call super to STOP
+                }
+                break;
+            }
+
+            case DOUBLE_XOVER: {
+                result = super.navigate(navigator);   // call super to STOP
+                break;
+            }
+            case RH_XOVER: {
+                result = super.navigate(navigator);   // call super to STOP
+                break;
+            }
+            case LH_XOVER: {
+                result = super.navigate(navigator);   // call super to STOP
+                break;
+            }
+            case SINGLE_SLIP: {
+                result = super.navigate(navigator);   // call super to STOP
+                break;
+            }
+            case DOUBLE_SLIP: {
+                result = super.navigate(navigator);   // call super to STOP
+                break;
+            }
+            default: { // OOPS! we're lost!
+                result = super.navigate(navigator);   // call super to STOP
+                break;
+            }
+        }
+        navigator.setDistanceOnTrack(distanceOnTrack);
+
+        if (result) {   // not on this track
+            // go to next track
+            if (nextLayoutTrack != null) {
+                navigator.setLayoutTrack(nextLayoutTrack);
+                navigator.setHitPointType(HitPointType.TRACK);
+            } else {    // OOPS! we're lost!
+                result = super.navigate(navigator);   // call super to STOP
+            }
+            if (result) {
+                navigator.setLastTrack(this);
+            }
+        }
+        return result;
+    } // navigate
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnout.class
+    );
 }
