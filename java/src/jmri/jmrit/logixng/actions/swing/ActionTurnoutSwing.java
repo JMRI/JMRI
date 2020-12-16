@@ -35,7 +35,6 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
     private JTextField _turnoutFormulaTextField;
     
     private JTabbedPane _tabbedPaneTurnoutState;
-//    private BeanSelectCreatePanel<Turnout> turnoutStateBeanPanel;
     private JComboBox<TurnoutState> stateComboBox;
     private JPanel _panelTurnoutStateDirect;
     private JPanel _panelTurnoutStateReference;
@@ -95,7 +94,6 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
             stateComboBox.addItem(e);
         }
         
-//        turnoutStateBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(TurnoutManager.class), null);
         _panelTurnoutStateDirect.add(stateComboBox);
         
         _turnoutStateReferenceTextField = new JTextField();
@@ -133,7 +131,7 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
                 case Formula: _tabbedPaneTurnoutState.setSelectedComponent(_panelTurnoutStateFormula); break;
                 default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
             }
-            stateComboBox.setSelectedItem(action.getState());
+            stateComboBox.setSelectedItem(action.getBeanState());
             _turnoutStateReferenceTextField.setText(action.getStateReference());
             _turnoutStateLocalVariableTextField.setText(action.getStateLocalVariable());
             _turnoutStateFormulaTextField.setText(action.getStateFormula());
