@@ -1,10 +1,6 @@
 package jmri.jmrit.logix;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.Throttle;
-import jmri.jmrit.throttle.FunctionListener;
 
 /**
  * A JInternalFrame that contains buttons for each decoder function.
