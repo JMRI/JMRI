@@ -12,7 +12,7 @@ import jmri.Throttle;
  *
  * @author Pete Cressman Copyright 2020
  */
-public class LearnControlPanel extends jmri.jmrit.throttle.ControlPanel implements java.beans.PropertyChangeListener {
+public class LearnControlPanel extends jmri.jmrit.throttle.ControlPanel {
 
     private LearnThrottleFrame _throttleFrame;
 
@@ -40,6 +40,5 @@ public class LearnControlPanel extends jmri.jmrit.throttle.ControlPanel implemen
         super.propertyChange(e);
     }
 
-    // initialize logging
     private static final Logger log = LoggerFactory.getLogger(LearnControlPanel.class);
 }

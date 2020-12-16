@@ -11,7 +11,7 @@ import jmri.jmrit.throttle.FunctionListener;
  *
  * @author Pete Cressman Copyright 2020
  */
-public class LearnFunctionPanel extends jmri.jmrit.throttle.FunctionPanel implements FunctionListener, java.beans.PropertyChangeListener {
+public class LearnFunctionPanel extends jmri.jmrit.throttle.FunctionPanel {
 
     private final LearnThrottleFrame _throttleFrame;
 
@@ -40,5 +40,5 @@ public class LearnFunctionPanel extends jmri.jmrit.throttle.FunctionPanel implem
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LearnFunctionPanel.class);
+//    private final static Logger log = LoggerFactory.getLogger(LearnFunctionPanel.class);
 }
