@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.21.2ish+heap+20200926T2211Z+R4de08d1 on Sun Sep 27 08:12:40 AEST 2020-->
-  <decoderIndex version="1020">
+  <!--Written by JMRI version 4.21.3ish+jake+20201212T0753Z+Rf14d4538c5 on Fri Dec 11 23:53:54 PST 2020-->
+  <decoderIndex version="1022">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -11854,6 +11854,34 @@
           </output>
         </model>
       </family>
+      <family name="NMRA-DCC/Motorola" mfg="Kuehn Ing." file="Kuehn_T65.xml">
+        <model model="T65" numOuts="6" numFns="14" maxInputVolts="24V" maxMotorCurrent="1.1A" maxTotalCurrent="1.4A" lowVersionID="35">
+          <output name="1" label="Front|Light">
+            <label xml:lang="de">Ausgang|A</label>
+            <label xml:lang="cs">Přední|Světlo</label>
+          </output>
+          <output name="2" label="Rear|Light">
+            <label xml:lang="de">Ausgang|B</label>
+            <label xml:lang="cs">Zadní|Světlo</label>
+          </output>
+          <output name="3" label="Output|C">
+            <label xml:lang="de">Ausgang|C</label>
+            <label xml:lang="cs">Výstup|C</label>
+          </output>
+          <output name="4" label="Output|D">
+            <label xml:lang="de">Ausgang|D</label>
+            <label xml:lang="cs">Výstup|D</label>
+          </output>
+          <output name="5" label="Output|E">
+            <label xml:lang="de">Ausgang|E</label>
+            <label xml:lang="cs">Výstup|E</label>
+          </output>
+          <output name="6" label="Output|F">
+            <label xml:lang="de">Ausgang|F</label>
+            <label xml:lang="cs">Výstup|F</label>
+          </output>
+        </model>
+      </family>
       <family name="ZTC WhisperDrive" mfg="Kuehn Ing." lowVersionID="0" highVersionID="255" file="Kuehn_ZTC217.xml">
         <model model="ZTC217" numOuts="2">
           <output name="1" label="White">
@@ -15213,6 +15241,18 @@
           <functionlabel num="10" lockable="true">Lights</functionlabel>
         </functionlabels>
       </family>
+      <family name="Rolling Stock Lighting" mfg="North Coast Engineering" file="NCE_Caboose.xml">
+        <model model="Athearn Genesis Caboose" numOuts="6" formFactor="HO" />
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">not used</functionlabel>
+          <functionlabel num="2" lockable="true">not used</functionlabel>
+          <functionlabel num="3" lockable="true">FWD Sec Marker</functionlabel>
+          <functionlabel num="4" lockable="true">REV Sec Marker</functionlabel>
+          <functionlabel num="5" lockable="true">Interior</functionlabel>
+          <functionlabel num="6" lockable="true">AUX Lights</functionlabel>
+        </functionlabels>
+      </family>
       <family name="Non silent drive directional Lights" mfg="North Coast Engineering" lowVersionID="21" highVersionID="21" file="NCE_D102EU.xml">
         <model model="D102EU" numOuts="2" numFns="2" />
         <model model="DA102EU" numOuts="5" numFns="5" />
@@ -15741,7 +15781,7 @@
           <!--LocoBooster v4 and up support Opcode2 on ports 1-6 -->
         </model>
         <model model="HDL LocoBooster v5" productID="005" />
-        <!--<model model="HDL LocoRCD v2.0" productID="200"/> TODO edit copy of 211-->
+        <model model="HDL LocoRCD v2.0" productID="200" />
         <model model="HDL LocoRCD2 v2.10" productID="210" />
         <model model="HDL LocoRCD2 v2.11" productID="211" />
         <model model="Original LocoIO" productID="135" />
@@ -35363,10 +35403,6 @@
         <model model="73500" />
         <model model="73510" />
       </family>
-      <family name="Mini-Function Decoder" mfg="Uhlenbrock Elektronik" file="Uhlenbrock_73900.xml">
-        <model model="73800" productID="73800" maxTotalCurrent="0.6A" />
-        <model model="73900" productID="73900" maxTotalCurrent="0.6A" />
-      </family>
       <family name="IntelliDrive2" mfg="Uhlenbrock Elektronik" comment="Decoders not sorted (necessarily) in numerical order" file="Uhlenbrock_73xx5.xml">
         <!-- to be checked by hardware owner -->
         <model model="73105" numOuts="4" numFns="14" maxMotorCurrent="0.8A" formFactor="N" connector="Next18" productID="73105" comment="IntelliDrive2 Mini-Lokdecoder and RailCom(R) (Plus)">
@@ -35614,6 +35650,50 @@
           <output name="9" label="   A7      " maxcurrent="1 A" connection="other" />
           <output name="10" label="   A8      " maxcurrent="1 A" connection="other" />
           <size length="58.5" width="28" height="12" units="mm" />
+        </model>
+      </family>
+      <family name="Multi-Protocol Function Decoder" mfg="Uhlenbrock Elektronik" file="Uhlenbrock_7x900.xml">
+        <model model="73800" productID="73800" numOuts="4" formFactor="N" connector="Wires" maxTotalCurrent="0.6A">
+          <output name="1" label=". A1 ." connection="solder" maxcurrent="400 mA" />
+          <output name="2" label=". A2 ." connection="solder" maxcurrent="400 mA" />
+          <output name="3" label=". A3 ." connection="solder" maxcurrent="400 mA" />
+          <output name="4" label=". A4 ." connection="solder" maxcurrent="400 mA" />
+          <size length="11" width="8" height="2.4" units="mm" />
+        </model>
+        <model model="73900" productID="73900" numOuts="4" formFactor="N" connector="Wires" maxTotalCurrent="0.6A">
+          <output name="1" label=". A1 ." connection="solder" maxcurrent="600 mA" />
+          <output name="2" label=". A2 ." connection="solder" maxcurrent="600 mA" />
+          <output name="3" label=". A3 ." connection="solder" maxcurrent="600 mA" />
+          <output name="4" label=". A4 ." connection="solder" maxcurrent="600 mA" />
+          <size length="10.8" width="7.5" height="2.4" units="mm" />
+        </model>
+        <model model="76900" productID="76900 v1" numOuts="4" formFactor="N" connector="Wires" maxTotalCurrent="1.2A">
+          <output name="1" label=". A1 ." connection="solder" maxcurrent="1000 mA" />
+          <output name="2" label=". A2 ." connection="solder" maxcurrent="1000 mA" />
+          <output name="3" label=". A3 ." connection="solder" maxcurrent="1000 mA" />
+          <output name="4" label=". A4 ." connection="solder" maxcurrent="1000 mA" />
+          <size length="10.8" width="8" height="2.4" units="mm" />
+        </model>
+        <model model="76900V7" productID="76900 v7" numOuts="8" numFns="15" formFactor="HO" connector="Wires" maxTotalCurrent="1.0A">
+          <output name="1" label=". A1 ." connection="solder" maxcurrent="650 mA" />
+          <output name="2" label=". A2 ." connection="solder" maxcurrent="650 mA" />
+          <output name="3" label=". A3 ." connection="solder" maxcurrent="650 mA" />
+          <output name="4" label=". A4 ." connection="solder" maxcurrent="650 mA" />
+          <output name="5" label=". A5 ." connection="solder" maxcurrent="50 mA" />
+          <output name="6" label=". A6 ." connection="solder" maxcurrent="50 mA" />
+          <output name="7" label=". A7 ." connection="solder" maxcurrent="50 mA" />
+          <output name="8" label=". A8 ." connection="solder" maxcurrent="50 mA" />
+        </model>
+        <model model="PIKO56126" productID="Piko 56126" numOuts="8" numFns="15" formFactor="HO" connector="Wires" comment="Piko Multi-protocol function decoder">
+          <output name="1" label=". A1 ." connection="solder" maxcurrent="650 mA" />
+          <output name="2" label=". A2 ." connection="solder" maxcurrent="650 mA" />
+          <output name="3" label=". A3 ." connection="solder" maxcurrent="650 mA" />
+          <output name="4" label=". A4 ." connection="solder" maxcurrent="650 mA" />
+          <output name="5" label=". A5 ." connection="solder" maxcurrent="50 mA" />
+          <output name="6" label=". A6 ." connection="solder" maxcurrent="50 mA" />
+          <output name="7" label=". A7 ." connection="solder" maxcurrent="50 mA" />
+          <output name="8" label=". A8 ." connection="solder" maxcurrent="50 mA" />
+          <size length="22" width="12.5" height="2.5" units="mm" />
         </model>
       </family>
       <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero" file="Umelec_ATL2051.xml">
@@ -41000,7 +41080,7 @@
         </model>
       </family>
       <family name="Zimo Unified software (version 37+)" mfg="Zimo" file="Zimo_Unified_software_v37_MX617.xml">
-        <model model="MX617 version 37+" replacementModel="MX617 version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="6" numFns="14" productID="197">
+        <model model="MX617 version 37+" replacementModel="MX617 version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="6" numFns="14" productID="177,197">
           <output name="1" label="Front Light">
             <label xml:lang="de">Lvor</label>
           </output>
@@ -41021,7 +41101,7 @@
           </output>
           <size length="13" width="9" height="2.5" units="mm" />
         </model>
-        <model model="MX617F version 37+" replacementModel="MX617F version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="6" numFns="14" productID="197">
+        <model model="MX617F version 37+" replacementModel="MX617F version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="6" numFns="14" productID="177,197">
           <output name="1" label="Front Light">
             <label xml:lang="de">Lvor</label>
           </output>
@@ -41042,7 +41122,7 @@
           </output>
           <size length="13" width="9" height="2.5" units="mm" />
         </model>
-        <model model="MX617N version 37+" replacementModel="MX617N version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="6" numFns="14" productID="197">
+        <model model="MX617N version 37+" replacementModel="MX617N version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="6" numFns="14" productID="177,197">
           <output name="1" label="Front Light">
             <label xml:lang="de">Lvor</label>
           </output>
@@ -41063,7 +41143,7 @@
           </output>
           <size length="13" width="9" height="2.5" units="mm" />
         </model>
-        <model model="MX617R version 37+" replacementModel="MX617R version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="6" numFns="14" productID="197">
+        <model model="MX617R version 37+" replacementModel="MX617R version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="6" numFns="14" productID="177,197">
           <output name="1" label="Front Light">
             <label xml:lang="de">Lvor</label>
           </output>

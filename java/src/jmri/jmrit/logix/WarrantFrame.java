@@ -99,7 +99,7 @@ public class WarrantFrame extends WarrantRoute {
         // w is registered
         _saveWarrant = w;
         // temp unregistered version until editing is saved.
-        _warrant = new Warrant(Bundle.getMessage("editing", w.getSystemName()), Bundle.getMessage("editing", w.getUserName()));
+        _warrant = new Warrant(w.getSystemName(), w.getUserName());
         setup(_saveWarrant);
         init();
     }
@@ -232,7 +232,7 @@ public class WarrantFrame extends WarrantRoute {
         });
 
         makeMenus();
-        setTitle(_warrant.getDisplayName());
+        setTitle(Bundle.getMessage("editing", _warrant.getDisplayName()));
         setContentPane(contentPane);
         setLocation(0, 100);
         setVisible(true);

@@ -20,7 +20,7 @@ import jmri.util.JmriJFrame;
 /**
  * Basis for ConditionalEditFrame and ConditionalCopyFrame.
  * Holds the common features.
- * 
+ *
  * @author Pete Cressman Copyright (C) 2020
  */
 public class ConditionalFrame extends JmriJFrame {
@@ -42,7 +42,7 @@ public class ConditionalFrame extends JmriJFrame {
     static final int STRUT = 10;
 
     // ------------------------------------------------------------------
-    
+
     ConditionalFrame(String title, Conditional conditional, ConditionalList parent) {
         super(title, false, false);
         _parent = parent;
@@ -104,7 +104,9 @@ public class ConditionalFrame extends JmriJFrame {
         log.debug("updateConditionalPressed");
         for (int i = 0; i < _variableList.size(); i++) {
             if (_variableList.get(i).getType() == Conditional.Type.NONE) {
-                _variableList.remove(i);
+                if (!_variableList.get(i).getName().equals("IX:RTXINITIALIZER")) {  // The IX:RTXINITIALIZER keyword has a type of NONE
+                    _variableList.remove(i);
+                }
             }
         }
         for (int i = 0; i < _actionList.size(); i++) {
@@ -166,7 +168,7 @@ public class ConditionalFrame extends JmriJFrame {
                 } else {
                     NamedBean bean  = action.getBean();
                     if (bean != null &&
-                        (name.equals(bean.getSystemName()) || 
+                        (name.equals(bean.getSystemName()) ||
                                 name.equals(bean.getUserName()))) {
                         actionName = action.getDeviceName();
                    }
@@ -196,7 +198,7 @@ public class ConditionalFrame extends JmriJFrame {
                 } else {
                     NamedBean bean  = var.getBean();
                     if (bean != null &&
-                        (name.equals(bean.getSystemName()) || 
+                        (name.equals(bean.getSystemName()) ||
                                 name.equals(bean.getUserName()))) {
                         varName = var.getName();
                    }
