@@ -15,6 +15,7 @@ import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.jmrix.loconet.SlotMapEntry.SlotType;
 import jmri.swing.JmriJTablePersistenceManager;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -250,10 +251,10 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
                 // default filter is IN-USE and regular systems slot
                 // the default is whatever the person last closed it with
                 jmri.jmrix.loconet.LocoNetSlot slot =  entry.getModel().getSlot(entry.getIdentifier());
-                if (slot == null ) {
-                    log.info("AAAAA");
-                }
                 boolean include = false;
+                if (slot.getSlotType() == SlotType.UNKNOWN) {
+                    return include;        // dont ever show unknown
+                }
                 if (!include && showUnusedCheckBox.isSelected() && !slot.isSystemSlot()) {
                     include = true;
                 }
