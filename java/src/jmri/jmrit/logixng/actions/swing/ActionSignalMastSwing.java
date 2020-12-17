@@ -171,7 +171,7 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
                 case Formula: _tabbedPaneOperationType.setSelectedComponent(_panelOperationTypeFormula); break;
                 default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
             }
-//DANIEL FEL!!!            operationComboBox.setSelectedItem(action.getOperation());
+            operationComboBox.setSelectedItem(action.getOperationAddressing());
             _signalMastOperationReferenceTextField.setText(action.getOperationReference());
             _signalMastOperationLocalVariableTextField.setText(action.getOperationLocalVariable());
             _signalMastOperationFormulaTextField.setText(action.getOperationFormula());

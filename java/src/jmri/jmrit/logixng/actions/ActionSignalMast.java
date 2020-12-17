@@ -326,7 +326,7 @@ public class ActionSignalMast extends AbstractDigitalAction
         }
     }
     
-    public OperationType getOperation() throws JmriException {
+    private OperationType getOperation() throws JmriException {
         
         String oper = "";
         try {
@@ -405,7 +405,7 @@ public class ActionSignalMast extends AbstractDigitalAction
             return;
         }
         
-        switch (_operationType) {
+        switch (getOperation()) {
             case Aspect:
                 String newAspect = getNewAspect();
                 if (! "".equals(newAspect)) {

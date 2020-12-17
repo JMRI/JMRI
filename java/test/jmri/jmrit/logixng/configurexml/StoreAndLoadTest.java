@@ -337,7 +337,7 @@ public class StoreAndLoadTest {
         actionSignalHead.setFormula("\"IT\"+index");
         actionSignalHead.setLocalVariable("index");
         actionSignalHead.setReference("{IM1}");
-        actionSignalHead.setAppearanceAddressing(NamedBeanAddressing.LocalVariable);
+        actionSignalHead.setOnlyAppearanceAddressing(false);
         actionSignalHead.setAppearanceFormula("\"IT\"+index2");
         actionSignalHead.setAppearanceLocalVariable("index2");
         actionSignalHead.setAppearanceReference("{IM2}");
@@ -352,7 +352,7 @@ public class StoreAndLoadTest {
         actionSignalHead.setFormula("\"IT\"+index");
         actionSignalHead.setLocalVariable("index");
         actionSignalHead.setReference("{IM1}");
-        actionSignalHead.setAppearanceAddressing(NamedBeanAddressing.Formula);
+        actionSignalHead.setOnlyAppearanceAddressing(false);
         actionSignalHead.setAppearanceFormula("\"IT\"+index2");
         actionSignalHead.setAppearanceLocalVariable("index2");
         actionSignalHead.setAppearanceReference("{IM2}");
@@ -367,7 +367,7 @@ public class StoreAndLoadTest {
         actionSignalHead.setFormula("\"IT\"+index");
         actionSignalHead.setLocalVariable("index");
         actionSignalHead.setReference("{IM1}");
-        actionSignalHead.setAppearanceAddressing(NamedBeanAddressing.Reference);
+        actionSignalHead.setOnlyAppearanceAddressing(false);
         actionSignalHead.setAppearanceFormula("\"IT\"+index2");
         actionSignalHead.setAppearanceLocalVariable("index2");
         actionSignalHead.setAppearanceReference("{IM2}");
@@ -382,7 +382,7 @@ public class StoreAndLoadTest {
         actionSignalHead.setFormula("\"IT\"+index");
         actionSignalHead.setLocalVariable("index");
         actionSignalHead.setReference("{IM1}");
-        actionSignalHead.setAppearanceAddressing(NamedBeanAddressing.Direct);
+        actionSignalHead.setOnlyAppearanceAddressing(false);
         actionSignalHead.setAppearanceFormula("\"IT\"+index2");
         actionSignalHead.setAppearanceLocalVariable("index2");
         actionSignalHead.setAppearanceReference("{IM2}");

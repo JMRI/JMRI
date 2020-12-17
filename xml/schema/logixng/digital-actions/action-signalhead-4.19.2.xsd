@@ -49,6 +49,7 @@
               <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
 
 
+              <xs:element name="onlyAppearanceAddressing" type="yesNoType" minOccurs="0" maxOccurs="1" />
               <xs:element name="operationAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
 
               <xs:element name="operationType" minOccurs="0" maxOccurs="1">
@@ -68,7 +69,6 @@
               <xs:element name="operationFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
 
 
-              <xs:element name="appearanceAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
               <xs:element name="appearance" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
               <xs:element name="appearanceReference" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="appearanceLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
