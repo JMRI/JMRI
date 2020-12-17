@@ -453,7 +453,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         
         Assert.assertTrue("Is connected", conditionalNG.getChild(0).isConnected());
         Assert.assertEquals("Num childs are correct", 3, conditionalNG.getChild(0).getConnectedSocket().getChildCount());
-        Assert.assertEquals("Expression is correct", "Set turnout IT1 to Thrown",
+        Assert.assertEquals("Expression is correct", "Set turnout IT1 to state Thrown",
                 conditionalNG.getChild(0).getConnectedSocket().getChild(1).getConnectedSocket().getLongDescription());
         
         
