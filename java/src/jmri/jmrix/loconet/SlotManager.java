@@ -85,7 +85,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.UNKNOWN));
         
-        loadSlots();
+        loadSlots(true);
         
         // listen to the LocoNet
         tc.addLocoNetListener(~0, this);
@@ -94,12 +94,19 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     /**
      * Initialize the slots array.
+     * @param initilize if true a new slot is created else it is just updated with type
+     *                  and protocol
      */
-    protected void loadSlots() {
+    protected void loadSlots(boolean initialize) {
         // initialize slot array
         for (SlotMapEntry item : slotMap) {
             for (int slotIx = item.getFrom(); slotIx <= item.getTo() ; slotIx++) {
-                _slots[slotIx] = new LocoNetSlot(slotIx,getLoconetProtocol(),item.getSlotType());
+                if (initialize) {
+                    _slots[slotIx] = new LocoNetSlot( slotIx,getLoconetProtocol(),item.getSlotType());
+                }
+                else {
+                    _slots[slotIx].setSlotType(item.getSlotType());
+                }
             }
         }
     }
@@ -1024,7 +1031,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         mProgEndSequence = value.getProgPowersOff();
         slotMap = commandStationType.getSlotMap();
         
-        loadSlots();
+        loadSlots(false);
 
         // We will scan the slot table every 0.3 s for in-use slots that are stale
         final int slotScanDelay = 300; // Must be short enough that 128 can be scanned in 90 seconds, see checkStaleSlots()

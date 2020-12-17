@@ -1,5 +1,9 @@
 package jmri.jmrix.loconet.slotmon;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -454,7 +458,10 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case CONSCOLUMN:
                 return new JTextField(4).getPreferredSize().width;
             case DIRCOLUMN:
-                return new JLabel(Bundle.getMessage("DirectionCol")).getPreferredSize().width;
+                List<Integer> widths = Arrays.asList( new JLabel(Bundle.getMessage("DirectionCol")).getPreferredSize().width,
+                         new JLabel(Bundle.getMessage("DirColForward")).getPreferredSize().width,
+                         new JLabel(Bundle.getMessage("DirColReverse")).getPreferredSize().width);
+                return Collections.max(widths);
             case DISPCOLUMN:
                 return new JButton(Bundle.getMessage("ButtonRelease")).getPreferredSize().width;
             case THROTCOLUMN:
@@ -488,7 +495,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case F26COLUMN:
             case F27COLUMN:
             case F28COLUMN:
-                return new JLabel("       ").getPreferredSize().width; // to show checkboxes
+                return new JLabel("F28").getPreferredSize().width; // to show checkboxes
             default:
                 return new JLabel(" <unknown> ").getPreferredSize().width; // NOI18N
         }

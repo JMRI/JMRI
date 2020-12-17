@@ -60,9 +60,10 @@ public class UhlenbrockSlotManager extends SlotManager {
     // private final int NUM_SLOTS = 128;
     /**
      * Provide Uhlenbrock-specific slot implementation
+     * @param initialize - not used by Uhlenbrock
      */
     @Override
-    protected void loadSlots() {
+    protected void loadSlots(boolean initialize) {
         // initialize slot array
         // TODO does UhlenBrock support extended slots?
         for (int i = 0; i < getNumSlots(); i++) {

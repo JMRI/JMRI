@@ -121,12 +121,28 @@ public class LocoNetSlot {
         return slot;
     }  // cannot modify the slot number once created
 
-/***
- *
- * @return true if this is a systems slot else false
- */
+    /**
+     * Set the Slot Type
+     * @param value enum for slottype
+     */
+    public void setSlotType(SlotType value) {
+        slotType = value;
+    }
+
+    /***
+     *
+     * @return true if this is a systems slot else false
+     */
     public boolean isSystemSlot() {
-         return slotType == SlotType.SYSTEM;
+        return slotType == SlotType.SYSTEM;
+    }
+
+    /***
+     *
+     * @return true if this is a systems slot else false
+     */
+    public SlotType getSlotType() {
+         return slotType;
      }
 
     /**
