@@ -13199,25 +13199,25 @@ final public class LayoutEditorTools {
             setLogicSlip(a1SlipHead, (TrackSegment) layoutSlip.getConnectC(), a2SlipHead,
                     (TrackSegment) layoutSlip.getConnectD(), setupA1SlipLogic.isSelected(),
                     setupA2SlipLogic.isSelected(), layoutSlip, layoutSlip.getTurnout(),
-                    layoutSlip.getTurnoutB(), LayoutTurnout.STATE_AC, LayoutTurnout.STATE_AD, 0);
+                    layoutSlip.getTurnoutB(), LayoutSlip.STATE_AC, LayoutSlip.STATE_AD, 0);
         }
         if (setupB1SlipLogic.isSelected() || setupB2SlipLogic.isSelected()) {
             setLogicSlip(b1SlipHead, (TrackSegment) layoutSlip.getConnectD(), b2SlipHead,
                     (TrackSegment) layoutSlip.getConnectC(), setupB1SlipLogic.isSelected(),
                     setupB2SlipLogic.isSelected(), layoutSlip, layoutSlip.getTurnout(),
-                    layoutSlip.getTurnoutB(), LayoutTurnout.STATE_BD, LayoutTurnout.STATE_BC, 2);
+                    layoutSlip.getTurnoutB(), LayoutSlip.STATE_BD, LayoutSlip.STATE_BC, 2);
         }
         if (setupC1SlipLogic.isSelected() || setupC2SlipLogic.isSelected()) {
             setLogicSlip(c1SlipHead, (TrackSegment) layoutSlip.getConnectA(), c2SlipHead,
                     (TrackSegment) layoutSlip.getConnectB(), setupC1SlipLogic.isSelected(),
                     setupC2SlipLogic.isSelected(), layoutSlip, layoutSlip.getTurnoutB(),
-                    layoutSlip.getTurnout(), LayoutTurnout.STATE_AC, LayoutTurnout.STATE_BC, 4);
+                    layoutSlip.getTurnout(), LayoutSlip.STATE_AC, LayoutSlip.STATE_BC, 4);
         }
         if (setupD1SlipLogic.isSelected() || setupD2SlipLogic.isSelected()) {
             setLogicSlip(d1SlipHead, (TrackSegment) layoutSlip.getConnectB(), d2SlipHead,
                     (TrackSegment) layoutSlip.getConnectA(), setupD1SlipLogic.isSelected(),
                     setupD2SlipLogic.isSelected(), layoutSlip, layoutSlip.getTurnoutB(),
-                    layoutSlip.getTurnout(), LayoutTurnout.STATE_BD, LayoutTurnout.STATE_AD, 6);
+                    layoutSlip.getTurnout(), LayoutSlip.STATE_BD, LayoutSlip.STATE_AD, 6);
         }
         //finish up
         setSignalsAtSlipOpenFlag = false;

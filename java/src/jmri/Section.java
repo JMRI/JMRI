@@ -1310,7 +1310,7 @@ public class Section extends AbstractNamedBean {
                 int dir = EntryPoint.UNKNOWN;
                 Block tBlock = null;
                 TrackNode tn = new TrackNode(t, HitPointType.SLIP_A, (TrackSegment) t.getConnectA(),
-                        false, LayoutTurnout.STATE_AC);
+                        false, LayoutSlip.STATE_AC);
                 while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                     tn = cUtil.getNextNode(tn, 0);
                     tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
@@ -1325,7 +1325,7 @@ public class Section extends AbstractNamedBean {
                     }
                 } else {
                     tn = new TrackNode(t, HitPointType.SLIP_C, (TrackSegment) t.getConnectC(),
-                            false, LayoutTurnout.STATE_AC);
+                            false, LayoutSlip.STATE_AC);
                     while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                         tn = cUtil.getNextNode(tn, 0);
                         tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
@@ -1383,7 +1383,7 @@ public class Section extends AbstractNamedBean {
                 int dir = EntryPoint.UNKNOWN;
                 Block tBlock = null;
                 TrackNode tn = new TrackNode(t, HitPointType.SLIP_D, (TrackSegment) t.getConnectD(),
-                        false, LayoutTurnout.STATE_BD);
+                        false, LayoutSlip.STATE_BD);
                 while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                     tn = cUtil.getNextNode(tn, 0);
                     tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
@@ -1398,7 +1398,7 @@ public class Section extends AbstractNamedBean {
                     }
                 } else {
                     tn = new TrackNode(t, HitPointType.TURNOUT_B, (TrackSegment) t.getConnectB(),
-                            false, LayoutTurnout.STATE_BD);
+                            false, LayoutSlip.STATE_BD);
                     while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                         tn = cUtil.getNextNode(tn, 0);
                         tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());

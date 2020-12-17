@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.awt.geom.Point2D;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.Map.Entry;
@@ -9,6 +10,9 @@ import javax.annotation.Nonnull;
 import javax.swing.JComboBox;
 
 import jmri.*;
+import static jmri.jmrit.display.layoutEditor.LayoutTurnout.UNKNOWN;
+import static jmri.jmrit.display.layoutEditor.LayoutTurnoutView.STATE_AD;
+import jmri.util.MathUtil;
 
 /**
  * A LayoutSlip is a crossing of two straight tracks designed in such a way as
@@ -48,12 +52,12 @@ abstract public class LayoutSlip extends LayoutTurnout {
 
     /**
      * Constructor method.
-     * 
-     * @param id slip ID.
+     *
+     * @param id     slip ID.
      * @param models the layout editor.
-     * @param type slip type, SINGLE_SLIP or DOUBLE_SLIP.
+     * @param type   slip type, SINGLE_SLIP or DOUBLE_SLIP.
      */
-    public LayoutSlip(String id, 
+    public LayoutSlip(String id,
             LayoutEditor models, TurnoutType type) {
         super(id, models, type);
 
@@ -70,6 +74,11 @@ abstract public class LayoutSlip extends LayoutTurnout {
     }
 
     public int currentState = UNKNOWN;
+
+    public static final int STATE_AC = 0x02;
+    public static final int STATE_BD = 0x04;
+    public static final int STATE_AD = 0x06;
+    public static final int STATE_BC = 0x08;
 
     private String turnoutBName = "";
     private NamedBeanHandle<Turnout> namedTurnoutB = null;
@@ -239,6 +248,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
     /**
      * Toggle slip states if clicked on, physical turnout exists, and not
      * disabled.
+     *
      * @param selectedPointType the selected hit point type.
      */
     public void toggleState(HitPointType selectedPointType) {
@@ -394,7 +404,6 @@ abstract public class LayoutSlip extends LayoutTurnout {
             mTurnoutListener = null;
         }
     }
-
 
     @Override
     public void updateBlockInfo() {
@@ -565,7 +574,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
      *
      * @return true if either turnout is inconsistent.
      */
-    boolean isTurnoutInconsistent() {
+    public boolean isTurnoutInconsistent() {
         Turnout tA = getTurnout();
         if (tA != null && tA.getKnownState() == INCONSISTENT) {
             return true;
@@ -858,10 +867,10 @@ abstract public class LayoutSlip extends LayoutTurnout {
         List<LayoutConnectivity> results = new ArrayList<>();
 
         log.trace("Start in LayoutSlip.getLayoutConnectivity for {}", getName());
-        
+
         LayoutConnectivity lc = null;
         LayoutBlock lbA = getLayoutBlock(), lbB = getLayoutBlockB(), lbC = getLayoutBlockC(), lbD = getLayoutBlockD();
-        
+
         log.trace("    type: {}", type);
         log.trace("     lbA: {}", lbA);
         log.trace("     lbB: {}", lbB);
@@ -875,15 +884,15 @@ abstract public class LayoutSlip extends LayoutTurnout {
                 lc = new LayoutConnectivity(lbA, lbC);
                 lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AC);
 
-                // The following line needs to change, because it uses location of 
-                // the points on the SlipView itself. Switch to 
+                // The following line needs to change, because it uses location of
+                // the points on the SlipView itself. Switch to
                 // direction from connections
                 //lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsC()));
-                lc.setDirection( models.computeDirectionAC(this) );
-                
+                lc.setDirection(models.computeDirectionAC(this));
+
                 log.trace("getLayoutConnectivity lbA != lbC");
                 log.trace("  Block boundary  ('{}'<->'{}') found at {}", lbA, lbC, this);
-                
+
                 results.add(lc);
             }
             if (lbB != lbD) {
@@ -892,15 +901,15 @@ abstract public class LayoutSlip extends LayoutTurnout {
                 lc = new LayoutConnectivity(lbB, lbD);
                 lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_BD);
 
-                // The following line needs to change, because it uses location of 
-                // the points on the SlipView itself. Switch to 
+                // The following line needs to change, because it uses location of
+                // the points on the SlipView itself. Switch to
                 // direction from connections
                 //lc.setDirection(Path.computeDirection(getCoordsB(), getCoordsD()));
-                lc.setDirection( models.computeDirectionBD(this) );
-                
+                lc.setDirection(models.computeDirectionBD(this));
+
                 log.trace("getLayoutConnectivity lbA != lbC");
                 log.trace("  Block boundary  ('{}'<->'{}') found at {}", lbB, lbD, this);
-                
+
                 results.add(lc);
             }
             if (lbA != lbD) {
@@ -909,15 +918,15 @@ abstract public class LayoutSlip extends LayoutTurnout {
                 lc = new LayoutConnectivity(lbA, lbD);
                 lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AD);
 
-                // The following line needs to change, because it uses location of 
-                // the points on the SlipView itself. Switch to 
+                // The following line needs to change, because it uses location of
+                // the points on the SlipView itself. Switch to
                 // direction from connections
                 //lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsD()));
-                lc.setDirection( models.computeDirectionAD(this) );
-                
+                lc.setDirection(models.computeDirectionAD(this));
+
                 log.trace("getLayoutConnectivity lbA != lbC");
                 log.trace("  Block boundary  ('{}'<->'{}') found at {}", lbA, lbD, this);
-                
+
                 results.add(lc);
             }
             if ((type == TurnoutType.DOUBLE_SLIP) && (lbB != lbC)) {
@@ -925,16 +934,16 @@ abstract public class LayoutSlip extends LayoutTurnout {
                 log.debug("Block boundary  ('{}'<->'{}') found at {}", lbB, lbC, this);
                 lc = new LayoutConnectivity(lbB, lbC);
                 lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_BC);
-                
-                // The following line needs to change, because it uses location of 
-                // the points on the SlipView itself. Switch to 
+
+                // The following line needs to change, because it uses location of
+                // the points on the SlipView itself. Switch to
                 // direction from connections
                 //lc.setDirection(Path.computeDirection(getCoordsB(), getCoordsC()));
-                lc.setDirection( models.computeDirectionBC(this) );
-                
+                lc.setDirection(models.computeDirectionBC(this));
+
                 log.trace("getLayoutConnectivity lbA != lbC");
                 log.trace("  Block boundary  ('{}'<->'{}') found at {}", lbB, lbC, this);
-                
+
                 results.add(lc);
             }
         }
@@ -973,6 +982,99 @@ abstract public class LayoutSlip extends LayoutTurnout {
     // NOTE: LayoutSlip uses the checkForNonContiguousBlocks
     //      and collectContiguousTracksNamesInBlockNamed methods
     //      inherited from LayoutTurnout
-    //
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean navigate(@Nonnull LENavigator navigator) {
+        boolean result = true;  // assume success (optimist!)
+
+        LayoutTurnoutView ltv = models.getLayoutTurnoutView(this);
+        double distanceOnTrack = navigator.getDistance() + navigator.getDistanceOnTrack();
+
+        Point2D pA = ltv.getCoordsA();
+        Point2D pB = ltv.getCoordsB();
+        Point2D pC = ltv.getCoordsC();
+        Point2D pD = ltv.getCoordsD();
+
+        LayoutTrack nextLayoutTrack = null;
+
+        List<Point2D> points = new ArrayList<>();
+
+        // thirds
+        double third = 1.0 / 3.0;
+        Point2D pACT = MathUtil.lerp(pA, pC, third);
+        Point2D pBDT = MathUtil.lerp(pB, pD, third);
+        Point2D pCAT = MathUtil.lerp(pC, pA, third);
+        Point2D pDBT = MathUtil.lerp(pD, pB, third);
+
+        int slipState = getSlipState();
+
+        if (connectA.equals(navigator.getLastTrack())) {
+            if (slipState == STATE_AC) {
+                points.add(pA);
+                points.add(pC);
+                nextLayoutTrack = connectC;
+            } else if (slipState == STATE_AD) {
+                points.add(pA);
+                points.add(pACT);
+                points.add(pDBT);
+                points.add(pD);
+                nextLayoutTrack = connectD;
+            } else {    // OOPS! we're lost!
+                result = navigateStop(navigator);
+            }
+        } else if (connectB.equals(navigator.getLastTrack())) {
+            if (slipState == STATE_BD) {
+                points.add(pB);
+                points.add(pD);
+                nextLayoutTrack = connectD;
+            } else if (slipState == STATE_BC) {
+                points.add(pB);
+                points.add(pBDT);
+                points.add(pCAT);
+                points.add(pC);
+                nextLayoutTrack = connectC;
+            } else {    // OOPS! we're lost!
+                result = navigateStop(navigator);
+            }
+        } else if (connectC.equals(navigator.getLastTrack())) {
+            if (slipState == STATE_AC) {
+                points.add(pC);
+                points.add(pA);
+                nextLayoutTrack = connectA;
+            } else if (slipState == STATE_BC) {
+                points.add(pC);
+                points.add(pCAT);
+                points.add(pBDT);
+                points.add(pB);
+                nextLayoutTrack = connectB;
+            } else {    // OOPS! we're lost!
+                result = navigateStop(navigator);
+            }
+        } else if (connectD.equals(navigator.getLastTrack())) {
+            if (slipState == STATE_BD) {
+                points.add(pD);
+                points.add(pB);
+                nextLayoutTrack = connectB;
+            } else if (slipState == STATE_AD) {
+                points.add(pD);
+                points.add(pDBT);
+                points.add(pACT);
+                points.add(pA);
+                nextLayoutTrack = connectA;
+            } else {    // OOPS! we're lost!
+                result = navigateStop(navigator);
+            }
+        } else {    // OOPS! we're lost!
+            result = navigateStop(navigator);
+        }
+
+        if (result) {
+            result = navigate(navigator, points, nextLayoutTrack);
+        }
+        return result;
+    } // navigate
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlip.class);
 }

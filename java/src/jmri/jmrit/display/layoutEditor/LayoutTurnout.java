@@ -286,10 +286,6 @@ abstract public class LayoutTurnout extends LayoutTrack {
     // operational instance variables (not saved between sessions)
     public static final int UNKNOWN = Turnout.UNKNOWN;
     public static final int INCONSISTENT = Turnout.INCONSISTENT;
-    public static final int STATE_AC = 0x02;
-    public static final int STATE_BD = 0x04;
-    public static final int STATE_AD = 0x06;
-    public static final int STATE_BC = 0x08;
 
     // program default turnout size parameters
     public static final double turnoutBXDefault = 20.0;  // RH, LH, WYE
@@ -2915,7 +2911,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
             state = getState();
         }
         if ((state != Turnout.CLOSED) && (state != Turnout.THROWN)) {
-            return super.navigate(navigator);   // call super to STOP
+            result = navigateStop(navigator);
         }
 
         LayoutTrack nextLayoutTrack = null;
@@ -2947,7 +2943,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
                         nextLayoutTrack = connectA;
                     }
                 } else {    // OOPS! we're lost!
-                    result = super.navigate(navigator);   // call super to STOP
+                    result = navigateStop(navigator);
                 }
                 if (pStart != null) {
                     double distanceStart = MathUtil.distance(pStart, pM);
@@ -2972,36 +2968,93 @@ abstract public class LayoutTurnout extends LayoutTrack {
                             result = true;
                         }
                     } else {    // OOPS! we're lost!
-                        result = super.navigate(navigator);   // call super to STOP
+                        result = navigateStop(navigator);
                     }
                 } else {    // OOPS! we're lost!
-                    result = super.navigate(navigator);   // call super to STOP
+                    result = navigateStop(navigator);
                 }
                 break;
             }
 
+            case RH_XOVER:
+            case LH_XOVER:
             case DOUBLE_XOVER: {
-                result = super.navigate(navigator);   // call super to STOP
-                break;
+                List<Point2D> points = new ArrayList<>();
+
+                // middles
+                Point2D pABM = MathUtil.midPoint(pA, pB);
+                Point2D pAM = pABM, pBM = pABM;
+
+                Point2D pCDM = MathUtil.midPoint(pC, pD);
+                Point2D pCM = pCDM, pDM = pCDM;
+
+                if (type == TurnoutType.DOUBLE_XOVER) {
+                    pAM = MathUtil.lerp(pA, pABM, 5.0 / 8.0);
+                    pBM = MathUtil.lerp(pB, pABM, 5.0 / 8.0);
+                    pCM = MathUtil.lerp(pC, pCDM, 5.0 / 8.0);
+                    pDM = MathUtil.lerp(pD, pCDM, 5.0 / 8.0);
+                }
+
+                if (connectA.equals(navigator.getLastTrack())) {
+                    if (state == Turnout.CLOSED) {
+                        points.add(pA);
+                        points.add(pB);
+                        nextLayoutTrack = connectB;
+                    } else if ((type != TurnoutType.LH_XOVER) && (state == Turnout.THROWN)) {
+                        points.add(pA);
+                        points.add(pAM);
+                        points.add(pCM);
+                        points.add(pC);
+                        nextLayoutTrack = connectC;
+                    }
+                } else if (connectB.equals(navigator.getLastTrack())) {
+                    if (state == Turnout.CLOSED) {
+                        points.add(pB);
+                        points.add(pA);
+                        nextLayoutTrack = connectA;
+                    } else if ((type != TurnoutType.RH_XOVER) && (state == Turnout.THROWN)) {
+                        points.add(pB);
+                        points.add(pBM);
+                        points.add(pDM);
+                        points.add(pD);
+                        nextLayoutTrack = connectD;
+                    }
+                } else if (connectC.equals(navigator.getLastTrack())) {
+                    if (state == Turnout.CLOSED) {
+                        points.add(pC);
+                        points.add(pD);
+                        nextLayoutTrack = connectD;
+                    } else if ((type != TurnoutType.LH_XOVER) && (state == Turnout.THROWN)) {
+                        points.add(pC);
+                        points.add(pCM);
+                        points.add(pAM);
+                        points.add(pA);
+                        nextLayoutTrack = connectA;
+                    }
+                } else if (connectD.equals(navigator.getLastTrack())) {
+                    if (state == Turnout.CLOSED) {
+                        points.add(pD);
+                        points.add(pC);
+                        nextLayoutTrack = connectC;
+                    } else if ((type != TurnoutType.RH_XOVER) && (state == Turnout.THROWN)) {
+                        points.add(pD);
+                        points.add(pDM);
+                        points.add(pBM);
+                        points.add(pB);
+                        nextLayoutTrack = connectB;
+                    }
+                } else {    // OOPS! we're lost!
+                    result = navigateStop(navigator);
+                }
+                return navigate(navigator, points, nextLayoutTrack);
             }
-            case RH_XOVER: {
-                result = super.navigate(navigator);   // call super to STOP
-                break;
-            }
-            case LH_XOVER: {
-                result = super.navigate(navigator);   // call super to STOP
-                break;
-            }
-            case SINGLE_SLIP: {
-                result = super.navigate(navigator);   // call super to STOP
-                break;
-            }
+            case SINGLE_SLIP:
             case DOUBLE_SLIP: {
-                result = super.navigate(navigator);   // call super to STOP
+                log.warn("{}.navigate(...); slips should be being handled by LayoutSlip sub-class", getName());
                 break;
             }
             default: { // OOPS! we're lost!
-                result = super.navigate(navigator);   // call super to STOP
+                result = navigateStop(navigator);
                 break;
             }
         }
@@ -3013,7 +3066,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
                 navigator.setLayoutTrack(nextLayoutTrack);
                 navigator.setHitPointType(HitPointType.TRACK);
             } else {    // OOPS! we're lost!
-                result = super.navigate(navigator);   // call super to STOP
+                result = navigateStop(navigator);
             }
             if (result) {
                 navigator.setLastTrack(this);

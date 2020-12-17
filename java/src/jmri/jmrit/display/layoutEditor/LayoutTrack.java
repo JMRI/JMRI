@@ -1,33 +1,38 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.awt.geom.Point2D;
 import java.util.*;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import jmri.JmriException;
 import jmri.Turnout;
+import jmri.util.MathUtil;
 
 /**
  * Abstract base class for all layout track objects (PositionablePoint,
  * TrackSegment, LayoutTurnout, LayoutSlip, LevelXing and LayoutTurntable)
  * <p>
- * This is the connectivity/topology information for the layout; the
- * display information, including screen geometry, is held in {@link LayoutTrackView} subclasses.
+ * This is the connectivity/topology information for the layout; the display
+ * information, including screen geometry, is held in {@link LayoutTrackView}
+ * subclasses.
  * <ul>
- *   <li>One or more connections, consisting of a LayoutTrack name and {@link HitPointType}
- *   <li>Mainline status
- *   <li>Associated
- *      <ul>
- *          <li>Blocks
- *          <li>Signal heads and masts
- *          <li>Sensors
- *          <li>Turnout controls
- *      </ul>
+ * <li>One or more connections, consisting of a LayoutTrack name and
+ * {@link HitPointType}
+ * <li>Mainline status
+ * <li>Associated
+ * <ul>
+ * <li>Blocks
+ * <li>Signal heads and masts
+ * <li>Sensors
+ * <li>Turnout controls
+ * </ul>
  * </ul>
  *
  * @author Dave Duchamp Copyright (C) 2009
  * @author George Warner Copyright (c) 2017-2020
- * @author Bob Jacobsen Copyright (c)  2020
+ * @author Bob Jacobsen Copyright (c) 2020
  */
 abstract public class LayoutTrack {
 
@@ -36,7 +41,8 @@ abstract public class LayoutTrack {
 
     /**
      * Constructor method.
-     * @param ident track ID.
+     *
+     * @param ident  track ID.
      * @param models main layout editor.
      */
     // public LayoutTrack(@Nonnull String ident, @Nonnull LayoutModels models) { // preferred
@@ -47,6 +53,7 @@ abstract public class LayoutTrack {
 
     /**
      * Get the track ID.
+     *
      * @return track ident.
      */
     @Nonnull
@@ -164,11 +171,11 @@ abstract public class LayoutTrack {
      *
      * @return the list of available connections
      */
-     // note: used by LayoutEditorChecks.setupCheckUnConnectedTracksMenu()
-     //
-     // This could have just returned a boolean but I thought a list might be
-     // more useful (eventually... not currently being used; we just check to see
-     // if it's not empty.)
+    // note: used by LayoutEditorChecks.setupCheckUnConnectedTracksMenu()
+    //
+    // This could have just returned a boolean but I thought a list might be
+    // more useful (eventually... not currently being used; we just check to see
+    // if it's not empty.)
     @Nonnull
     abstract public List<HitPointType> checkForFreeConnections();
 
@@ -177,8 +184,8 @@ abstract public class LayoutTrack {
      *
      * @return true if all appropriate blocks have been assigned
      */
-     // note: used by LayoutEditorChecks.setupCheckUnBlockedTracksMenu()
-     //
+    // note: used by LayoutEditorChecks.setupCheckUnBlockedTracksMenu()
+    //
     abstract public boolean checkForUnAssignedBlocks();
 
     /**
@@ -196,8 +203,8 @@ abstract public class LayoutTrack {
      * @param blockNamesToTrackNameSetMaps hashmap of key:block names to lists
      *                                     of track name sets for those blocks
      */
-     // note: used by LayoutEditorChecks.setupCheckNonContiguousBlocksMenu()
-     //
+    // note: used by LayoutEditorChecks.setupCheckNonContiguousBlocksMenu()
+    //
     abstract public void checkForNonContiguousBlocks(
             @Nonnull HashMap<String, List<Set<String>>> blockNamesToTrackNameSetMaps);
 
@@ -222,17 +229,69 @@ abstract public class LayoutTrack {
     /**
      * navigate
      *
-     * @param navInfo is the info we're navigating from
+     * @param navigator is the info we're navigating from
      * @return true to continue navigating
      *
-     * note: this is the base implementation;
-     * unimplemented methods in subclasses will fall thru to here and STOP
-     * You also allows you to call super.navigate to stop intentionally.
+     * note: this is the base implementation; unimplemented methods in
+     * subclasses will fall thru to here and STOP. 
      */
-    public boolean navigate(@Nonnull LENavigator navInfo) {
-        navInfo.setSpeed(0.0);
-        navInfo.setDistance(0.0);
+    public boolean navigate(@Nonnull LENavigator navigator) {
+        return navigateStop(navigator);
+    }
+
+    /**
+     * 
+     * @param navigator is the info we're navigating from
+     * @return false to stop navigating
+     */
+    public boolean navigateStop(@Nonnull LENavigator navigator) {
+        navigator.setSpeed(0.0);
+        navigator.setDistance(0.0);
         return false;
+    }
+
+    protected boolean navigate(@Nonnull LENavigator navigator, List<Point2D> points, @Nullable LayoutTrack nextLayoutTrack) {
+        boolean result = false;
+        double distanceOnTrack = navigator.getDistance() + navigator.getDistanceOnTrack();
+
+        boolean nextLegFlag = true;
+        Point2D lastPoint = null;
+        double trackDistance = 0;
+        for (Point2D p : points) {
+            if (lastPoint != null) {
+                double distance = MathUtil.distance(lastPoint, p);
+                trackDistance += distance;
+                if (distanceOnTrack < trackDistance) {  // it's on this leg
+                    navigator.setLocation(MathUtil.lerp(p, lastPoint, (trackDistance - distanceOnTrack) / distance));
+                    navigator.setDirectionRAD((Math.PI / 2) - MathUtil.computeAngleRAD(p, lastPoint));
+                    nextLegFlag = false;
+                    break;
+                }
+            }
+            lastPoint = p;
+        }
+        if (nextLegFlag) {  // it's not on this track
+            navigator.setDistance(distanceOnTrack - trackDistance);
+            distanceOnTrack = 0;
+            result = true;
+        } else {            // it's on this track
+            navigator.setDistance(0);
+        }
+        navigator.setDistanceOnTrack(distanceOnTrack);
+
+        if (result) {   // not on this track
+            // go to next track
+            if (nextLayoutTrack != null) {
+                navigator.setLayoutTrack(nextLayoutTrack);
+                navigator.setHitPointType(HitPointType.TRACK);
+            } else {    // OOPS! we're lost!
+                result = navigateStop(navigator);
+            }
+            if (result) {
+                navigator.setLastTrack(this);
+            }
+        }
+        return result;
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTrack.class);

@@ -840,7 +840,7 @@ public class TrackSegment extends LayoutTrack {
             double radius = (radius2D.getX() + radius2D.getY()) / 2;
             Point2D centre = tsv.getCentre();
             /*
-             * Note: Angles go CCW from south to east to north to west, etc. 
+             * Note: Angles go CCW from south to east to north to west, etc.
              * For JMRI angles subtract from 90 to get east, south, west, north
              */
             double startAdjDEG = tsv.getStartAdj();
@@ -900,7 +900,7 @@ public class TrackSegment extends LayoutTrack {
                     angleDEG = angle2DEG;
                     angleDeltaDEG = MathUtil.lerp(0, -angleDeltaDEG, ratio);
                 } else {    // OOPS! we're lost!
-                    result = super.navigate(navigator);   // call super to STOP
+                    result = navigateStop(navigator);
                     angleDeltaDEG = 0;
                 }
                 double dirDeltaDEG = Math.signum(angleDeltaDEG) * -90;
@@ -924,34 +924,21 @@ public class TrackSegment extends LayoutTrack {
             Point2D[] points = tsv.getBezierPoints();
             double distance = MathUtil.drawBezier(null, points);
             if (distanceOnTrack < distance) {  // it's on this track
+                LayoutTrack nextLayoutTrack = connect2;
                 // if entering from the other end...
                 if (connect2.equals(navigator.getLastTrack())) {
                     points = MathUtil.reverse(points);  //..reverse the points
+                    nextLayoutTrack = connect1;         // and change the next LayoutTrack
                 }
                 GeneralPath path = MathUtil.getBezierPath(points);
                 PathIterator i = path.getPathIterator(null);
-                float[] data = new float[6];
-
-                Point2D p1 = MathUtil.zeroPoint2D, p2;
-                boolean nextSegmentFlag = true;
-                double bezierDistance = 0;
-                while (!i.isDone() && nextSegmentFlag) {
+                List<Point2D> pathPoints = new ArrayList<>();
+                while (!i.isDone()) {
+                    float[] data = new float[6];
                     switch (i.currentSegment(data)) {
-                        case PathIterator.SEG_MOVETO: {
-                            p1 = new Point2D.Double(data[0], data[1]);
-                            break;
-                        }
+                        case PathIterator.SEG_MOVETO:
                         case PathIterator.SEG_LINETO: {
-                            p2 = new Point2D.Double(data[0], data[1]);
-                            distance = MathUtil.distance(p1, p2);
-                            bezierDistance += distance;
-                            //log.warn(String.format("#   Bezier d:%.1f, bd:%.1f, dot:%.1f", distance, bezierDistance, distanceOnTrack));
-                            if (distanceOnTrack < bezierDistance) {  // it's on this segment
-                                navigator.setLocation(MathUtil.lerp(p2, p1, (bezierDistance - distanceOnTrack) / distance));
-                                navigator.setDirectionRAD((Math.PI / 2) - MathUtil.computeAngleRAD(p2, p1));
-                                nextSegmentFlag = false;
-                            }
-                            p1 = p2;
+                            pathPoints.add(new Point2D.Double(data[0], data[1]));
                             break;
                         }
                         default:
@@ -960,18 +947,13 @@ public class TrackSegment extends LayoutTrack {
                         case PathIterator.SEG_CUBICTO:
                         case PathIterator.SEG_CLOSE: {
                             // OOPS! we're lost!
-                            result = super.navigate(navigator);   // call super to STOP
+                            result = navigateStop(navigator);
                             break;
                         }
                     }
                     i.next();
-                }   // while (!i.isDone() && nextSegmentFlag)
-                if (nextSegmentFlag) {  // this should NEVER happen
-                    log.error("Navigate Bezier overflow!");
-                }
-                //navigator.setDistance(bezierDistance - distanceOnTrack);
-                navigator.setDistance(0);
-                navigator.setDistanceOnTrack(distanceOnTrack);
+                }   // while (!i.isDone())
+                return navigate(navigator, pathPoints, nextLayoutTrack);
             } else {    // it's not on this track
                 navigator.setDistance(distanceOnTrack - distance);
                 navigator.setDistanceOnTrack(0);
@@ -989,7 +971,7 @@ public class TrackSegment extends LayoutTrack {
                     p1 = p2;
                     p2 = temp;
                 } else {    // OOPS! we're lost!
-                    result = super.navigate(navigator);   // call super to STOP
+                    result = navigateStop(navigator);
                 }
                 double ratio = distanceOnTrack / distance;
                 Point2D loc = MathUtil.lerp(p1, p2, ratio);
@@ -1013,7 +995,7 @@ public class TrackSegment extends LayoutTrack {
                 navigator.setLayoutTrack(connect1);
                 navigator.setHitPointType(type1);
             } else {    // OOPS! we're lost!
-                result = super.navigate(navigator);   // call super to STOP
+                result = navigateStop(navigator);
             }
             if (result) {
                 navigator.setLastTrack(this);

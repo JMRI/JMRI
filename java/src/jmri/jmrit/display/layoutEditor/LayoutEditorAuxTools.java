@@ -311,14 +311,14 @@ final public class LayoutEditorAuxTools {
                         if (lc.getConnectedType() == HitPointType.SLIP_C) {
                             Turnout lszto = lsz.getTurnout();
                             if (lszto != null) {
-                                bs = new BeanSetting(lszto, lsz.getTurnoutName(), lsz.getTurnoutState(LayoutTurnout.STATE_AC));
+                                bs = new BeanSetting(lszto, lsz.getTurnoutName(), lsz.getTurnoutState(LayoutSlip.STATE_AC));
                                 p.addSetting(bs);
                             } else {
                                 log.error("No assigned turnout (D): LTO = {}, blk = {}", lsz.getName(), lsz.getLayoutBlock().getDisplayName());  // NOI18N
                             }
                             Turnout lsztob = lsz.getTurnoutB();
                             if (lsztob != null) {
-                                bs = new BeanSetting(lsztob, lsz.getTurnoutBName(), lsz.getTurnoutBState(LayoutTurnout.STATE_AC));
+                                bs = new BeanSetting(lsztob, lsz.getTurnoutBName(), lsz.getTurnoutBState(LayoutSlip.STATE_AC));
                                 p.addSetting(bs);
                             } else {
                                 log.error("No assigned turnoutB (E): LTO = {}, blk = {}", lsz.getName(), lsz.getLayoutBlock().getDisplayName());  // NOI18N
@@ -326,7 +326,7 @@ final public class LayoutEditorAuxTools {
                         } else if (lc.getConnectedType() == HitPointType.SLIP_B) {
                             Turnout lszto = lsz.getTurnout();
                             if (lszto != null) {
-                                bs = new BeanSetting(lszto, lsz.getTurnoutName(), lsz.getTurnoutState(LayoutTurnout.STATE_BD));
+                                bs = new BeanSetting(lszto, lsz.getTurnoutName(), lsz.getTurnoutState(LayoutSlip.STATE_BD));
                                 p.addSetting(bs);
                             } else {
                                 log.error("No assigned turnout (F): LTO = {}, blk = {}", lsz.getName(), lsz.getLayoutBlock().getDisplayName());  // NOI18N
@@ -334,7 +334,7 @@ final public class LayoutEditorAuxTools {
 
                             Turnout lsztob = lsz.getTurnoutB();
                             if (lsztob != null) {
-                                bs = new BeanSetting(lsztob, lsz.getTurnoutBName(), lsz.getTurnoutBState(LayoutTurnout.STATE_BD));
+                                bs = new BeanSetting(lsztob, lsz.getTurnoutBName(), lsz.getTurnoutBState(LayoutSlip.STATE_BD));
                                 p.addSetting(bs);
                             } else {
                                 log.error("No assigned turnoutB (G): LTO = {}, blk = {}", lsz.getName(), lsz.getLayoutBlock().getDisplayName());  // NOI18N
@@ -793,13 +793,13 @@ final public class LayoutEditorAuxTools {
                 } else if (ls.getSlipType() == LayoutSlip.TurnoutType.SINGLE_SLIP) {
                     if (typeCurConnection == HitPointType.SLIP_C) {
                         if (ls.getTurnout() != null) {
-                            bs = new BeanSetting(ls.getTurnout(), ls.getTurnoutName(), ls.getTurnoutState(LayoutTurnout.STATE_AC));
+                            bs = new BeanSetting(ls.getTurnout(), ls.getTurnoutName(), ls.getTurnoutState(LayoutSlip.STATE_AC));
                             p.addSetting(bs);
                         } else {
                             log.error("No assigned turnout (X): LTO = {}, blk = {}", ls.getName(), ls.getLayoutBlock().getDisplayName());  // NOI18N
                         }
                         if (ls.getTurnoutB() != null) {
-                            bs = new BeanSetting(ls.getTurnoutB(), ls.getTurnoutBName(), ls.getTurnoutBState(LayoutTurnout.STATE_AC));
+                            bs = new BeanSetting(ls.getTurnoutB(), ls.getTurnoutBName(), ls.getTurnoutBState(LayoutSlip.STATE_AC));
                             p.addSetting(bs);
                         } else {
                             log.error("No assigned turnoutB (Y): LTO = {}, blk = {}", ls.getName(), ls.getLayoutBlock().getDisplayName());  // NOI18N
@@ -809,14 +809,14 @@ final public class LayoutEditorAuxTools {
                         typeCurConnection = HitPointType.TRACK;
                     } else if (typeCurConnection == HitPointType.SLIP_B) {
                         if (ls.getTurnout() != null) {
-                            bs = new BeanSetting(ls.getTurnout(), ls.getTurnoutName(), ls.getTurnoutState(LayoutTurnout.STATE_BD));
+                            bs = new BeanSetting(ls.getTurnout(), ls.getTurnoutName(), ls.getTurnoutState(LayoutSlip.STATE_BD));
                             p.addSetting(bs);
                         } else {
                             log.error("No assigned turnout (Z): LTO = {}, blk = {}", ls.getName(), ls.getLayoutBlock().getDisplayName());  // NOI18N
                         }
 
                         if (ls.getTurnoutB() != null) {
-                            bs = new BeanSetting(ls.getTurnoutB(), ls.getTurnoutBName(), ls.getTurnoutBState(LayoutTurnout.STATE_BD));
+                            bs = new BeanSetting(ls.getTurnoutB(), ls.getTurnoutBName(), ls.getTurnoutBState(LayoutSlip.STATE_BD));
                             p.addSetting(bs);
                         } else {
                             log.error("No assigned turnoutB (1): LTO = {}, blk = {}", ls.getName(), ls.getLayoutBlock().getDisplayName());  // NOI18N

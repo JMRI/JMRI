@@ -1325,10 +1325,10 @@ public class PositionablePointView extends LayoutTrackView {
 
         if (getType() == PointType.END_BUMPER) {
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
-            popup.add(new AbstractAction(Bundle.getMessage("Navigate")) {
+            popup.add(new AbstractAction(Bundle.getMessage("AddNavigator")) {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    new LENavigator(layoutEditor, null, positionablePoint, HitPointType.POS_POINT, 2 * 16.0);
+                    new LENavigator(layoutEditor, null, positionablePoint, HitPointType.POS_POINT, 4.5 * 16.0);
                 }
             });
         }

@@ -218,7 +218,7 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
         g2.draw(new Line2D.Double(A, MathUtil.oneThirdPoint(A, C)));
         g2.draw(new Line2D.Double(C, MathUtil.oneThirdPoint(C, A)));
 
-        if (state == LayoutTurnout.STATE_AC || state == LayoutTurnout.STATE_BD || state == LayoutTurnout.UNKNOWN) {
+        if (state == LayoutSlip.STATE_AC || state == LayoutSlip.STATE_BD || state == LayoutTurnout.UNKNOWN) {
             g2.draw(new Line2D.Double(A, MathUtil.oneThirdPoint(A, D)));
             g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, A)));
 
@@ -245,16 +245,16 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
         g2.draw(new Line2D.Double(A, MathUtil.oneThirdPoint(A, D)));
         g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, A)));
 
-        if (state == LayoutTurnout.STATE_AD) {
+        if (state == LayoutSlip.STATE_AD) {
             g2.setColor(Color.red);
             g2.draw(new Line2D.Double(A, D));
-        } else if (state == LayoutTurnout.STATE_AC) {
+        } else if (state == LayoutSlip.STATE_AC) {
             g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, D)));
             g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, B)));
 
             g2.setColor(Color.red);
             g2.draw(new Line2D.Double(A, C));
-        } else if (state == LayoutTurnout.STATE_BD) {
+        } else if (state == LayoutSlip.STATE_BD) {
             g2.setColor(Color.red);
             g2.draw(new Line2D.Double(B, D));
         } else {
@@ -265,23 +265,23 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
 
     // DOUBLE_SLIP implementation
     protected void drawSlipStatePart2B(Graphics2D g2, int state, Point2D A, Point2D B, Point2D C, Point2D D) {
-        if (state == LayoutTurnout.STATE_AC) {
+        if (state == LayoutSlip.STATE_AC) {
             g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, D)));
             g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, B)));
 
             g2.setColor(Color.red);
             g2.draw(new Line2D.Double(A, C));
-        } else if (state == LayoutTurnout.STATE_BD) {
+        } else if (state == LayoutSlip.STATE_BD) {
             g2.setColor(Color.red);
             g2.draw(new Line2D.Double(B, D));
-        } else if (state == LayoutTurnout.STATE_AD) {
+        } else if (state == LayoutSlip.STATE_AD) {
             g2.draw(new Line2D.Double(B, MathUtil.oneThirdPoint(B, C)));
 
             g2.draw(new Line2D.Double(C, MathUtil.oneThirdPoint(C, B)));
 
             g2.setColor(Color.red);
             g2.draw(new Line2D.Double(A, D));
-        } else if (state == LayoutTurnout.STATE_BC) {
+        } else if (state == LayoutSlip.STATE_BC) {
             g2.draw(new Line2D.Double(A, MathUtil.oneThirdPoint(A, D)));
 
             g2.draw(new Line2D.Double(D, MathUtil.oneThirdPoint(D, A)));
@@ -324,27 +324,27 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
         int turnBState;
         switch (testState) {
             default:
-            case LayoutTurnout.STATE_AC: {
-                testState = LayoutTurnout.STATE_AD;
+            case LayoutSlip.STATE_AC: {
+                testState = LayoutSlip.STATE_AD;
                 break;
             }
 
-            case LayoutTurnout.STATE_BD: {
+            case LayoutSlip.STATE_BD: {
                 if (layoutSlip.getSlipType() == LayoutTurnout.TurnoutType.SINGLE_SLIP) {
-                    testState = LayoutTurnout.STATE_AC;
+                    testState = LayoutSlip.STATE_AC;
                 } else {
-                    testState = LayoutTurnout.STATE_BC;
+                    testState = LayoutSlip.STATE_BC;
                 }
                 break;
             }
 
-            case LayoutTurnout.STATE_AD: {
-                testState = LayoutTurnout.STATE_BD;
+            case LayoutSlip.STATE_AD: {
+                testState = LayoutSlip.STATE_BD;
                 break;
             }
 
-            case LayoutTurnout.STATE_BC: {
-                testState = LayoutTurnout.STATE_AC;
+            case LayoutSlip.STATE_BC: {
+                testState = LayoutSlip.STATE_AC;
                 break;
             }
         }

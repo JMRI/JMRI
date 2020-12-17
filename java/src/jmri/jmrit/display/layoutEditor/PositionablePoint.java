@@ -1261,8 +1261,8 @@ public class PositionablePoint extends LayoutTrack {
                 } else if (getConnect2().equals(navigator.getLastTrack())) {
                     navigator.setLayoutTrack(getConnect1());
                     navigator.setHitPointType(HitPointType.POS_POINT);
-                } else {
-                    result = super.navigate(navigator);   // call super to STOP
+                } else {    // OOPS! we're lost!
+                    result = navigateStop(navigator);
                     break;
                 }
                 navigator.setLastTrack(this);
@@ -1274,8 +1274,8 @@ public class PositionablePoint extends LayoutTrack {
                     navigator.setLayoutTrack(getConnect1());
                     navigator.setHitPointType(HitPointType.POS_POINT);
                     navigator.setLastTrack(this);
-                } else {
-                    result = super.navigate(navigator);   // call super to STOP
+                } else {    // OOPS! we're lost!
+                    result = navigateStop(navigator);
                 }
                 break;
             }
@@ -1289,14 +1289,14 @@ public class PositionablePoint extends LayoutTrack {
                         navigator.setLayoutEditor(getLinkedEditor());
                         navigator.setLayoutTrack(c2);
                         navigator.setHitPointType(HitPointType.POS_POINT);
-                    } else {
-                        result = super.navigate(navigator);   // call super to STOP
+                    } else {    // OOPS! we're lost!
+                        result = navigateStop(navigator);
                     }
                 } else if (getConnect2().equals(navigator.getLastTrack())) {
                     navigator.setLayoutTrack(getConnect1());
                     navigator.setHitPointType(HitPointType.POS_POINT);
-                } else {
-                    result = super.navigate(navigator);   // call super to STOP
+                } else {    // OOPS! we're lost!
+                    result = navigateStop(navigator);
                     break;
                 }
                 navigator.setLastTrack(this);
