@@ -1,3 +1,36 @@
+###############################################################################
+#
+# class OptionDialog
+# Some Swing dialogs
+# 
+# class NewTrainMaster *
+# Sets up a tran in a section
+#
+# class StopMaster *
+# Turns the dispatch system off
+#
+# class OffActionMaster *
+# allows actions when buttons are turned off
+# a) toggles the Setupdispatch SetupRoute buttons
+#
+# class ResetButtonMaster *
+# if a button is turned on, this class turns off all the others.  
+# allows only one station button to be active at a time
+#
+# class MoveTrain
+# Calls dispatcher to move train from one station to another
+# diven engine and start and end positions
+#
+# class DispatchMaster *
+# monitors the station buttons, and dependent on the mode one is in
+# Setup dispatch, setup route, run route
+# calls the appropriate action
+#
+# class RunDispatchMaster
+# starts the classes marked with * above in threads so they can do their work
+# also starts class scheduler and class simulation which are in different files
+# 
+###############################################################################
 import java
 import jmri
 import re
@@ -7,31 +40,89 @@ import imp
 import copy
 import org 
 
-from javax.swing import JOptionPane, JFrame, JLabel, JButton, JTextField, JFileChooser, JMenu, JMenuItem, JMenuBar,JComboBox,JDialog
-# #include the create graph code
-# my_dir = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateGraph.py')
-# execfile(my_dir)
+from javax.swing import JOptionPane, JFrame, JLabel, JButton, JTextField, JFileChooser, JMenu, JMenuItem, JMenuBar,JComboBox,JDialog,JList
+
 import sys
+
+# include the graphcs library
 my_path_to_jars = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/jars/jgrapht.jar')
 sys.path.append(my_path_to_jars) # add the jar to your path
 from org.jgrapht.alg import DijkstraShortestPath
 from org.jgrapht.graph import DefaultEdge
 from org.jgrapht.graph import DirectedMultigraph
 
-logLevel = 4
-trains = {}
-instanceList=[]
-g = None
+#############################################################################################
+#
+# Set some global variables
+#
+
+logLevel = 0          # for debugging
+trains = {}           # dictionary of trains shared over classes
+instanceList=[]       # instance list of threads shared over classes
+g = None              # graph shared over classes
 
 time_to_stop_in_station = 10000   # time to stop in station in stopping mode(msec)
 
+#############################################################################################
+# the file was split up to avoid errors
+# so now include the split files
+
+# FileMoveTrain has to go before CreateScheduler
+FileMoveTrain = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/MoveTrain.py')
+execfile(FileMoveTrain) 
+
+CreateScheduler = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/Scheduler.py')
+execfile(CreateScheduler)
+
+CreateSimulation = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/Simulation.py')
+execfile(CreateSimulation)
+
+#############################################################################################
 
 #class OptionDialog( java.lang.Runnable ) :
 class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
     #
-
+    
+    def List(self, title, list_items):
+        list = JList(list_items)
+        list.setSelectedIndex(0)
+        i = []
+        print "len i", len(i)
+        while len(i) == 0:
+            JOptionPane.showMessageDialog(None, list, title, JOptionPane.PLAIN_MESSAGE)
+            i = list.getSelectedIndices()
+        index = i[0]
+        return list_items[index]
+    #called  
+        # list_items = ("Bruce", "Darrell", "Tony", "Debbie", "Karen")
+        # ans = OptionDialog().List(list_items)
+        # print ans
         
+    #list and option buttons
+    def ListOptions(self, list_items, title, options):
+        list = JList(list_items)
+        list.setSelectedIndex(0)
+        s = JOptionPane.showOptionDialog(None,
+        list,
+        title,
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.PLAIN_MESSAGE,
+        None,
+        options,
+        options[1])
+        index = list.getSelectedIndices()[0]
+        return [list_items[index], options[s]]
+        
+        # call using
+        # list_items = ["list1","list2"]
+        # options = ["opt1", "opt2", "opt3"]
+        # title = "title"
+        # result = OptionDialog().ListOptions(list_items, title, options) 
+        # print "result= " ,result[0], "list = ",result[1]
+        # result = opt2 list = list1   
+    
     def variable_combo_box(self, options, default, msg, title = None, type = JOptionPane.QUESTION_MESSAGE):
+    
     
         result = JOptionPane.showInputDialog(
             None,                                   # parentComponent
@@ -71,6 +162,22 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
         options,
         options[1])
         return s 
+        
+    def customQuestionMessage2str(self, msg, title, opt1, opt2):
+        options = [opt1, opt2]
+        s = JOptionPane.showOptionDialog(None,
+        msg,
+        title,
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE,
+        None,
+        options,
+        options[1])
+        if s == JOptionPane.YES_OPTION:
+            s1 = opt1
+        else:
+            s1 = opt2
+        return s1 
 
     def customMessage(self, msg, title, opt1):
         options = [opt1]
@@ -125,7 +232,7 @@ class modifiableJComboBox:
     def return_val(self):
         return self.ans
         
-            
+           
             
 #        
 # instanceList.append(RunDispatch())        
@@ -185,19 +292,19 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
                     msg = self.get_all_trains_msg()
                     title = None
                     opt1 = "Select train on next optionbox1"
+                    
                     OptionDialog().customMessage(msg, title, opt1)
                     msg = "Select the train in " + station_block_name
                     trains_to_choose = self.get_non_allocated_trains() 
-                    new_train_name = modifiableJComboBox(trains_to_choose,msg).return_val()
-                    if new_train_name not in trains_allocated:
-                        trains_allocated.append(new_train_name)
-                
-                    #new_train_flag = self.new_train_thread_required(new_train_name)
-                    
-                    #if new_train_flag == True :
-                        #self.create_new_train_thread(new_train_name)
-                    self.add_to_train_list_and_set_new_train_location(new_train_name, station_block_name)
-                    self.set_blockcontents(station_block_name, new_train_name)
+                    if trains_to_choose == []:
+                        OptionDialog().displayMessage("no more trains with speed profiles \nto select")
+                    else:
+                        new_train_name = OptionDialog().List(msg, trains_to_choose)
+                        #new_train_name = modifiableJComboBox(trains_to_choose,msg).return_val()
+                        if new_train_name not in trains_allocated:
+                            trains_allocated.append(new_train_name)
+                        self.add_to_train_list_and_set_new_train_location(new_train_name, station_block_name)
+                        self.set_blockcontents(station_block_name, new_train_name)
             else:
                 #allow operator to verify the train
                 # all_trains = self.get_all_roster_entries_with_speed_profile()
@@ -277,11 +384,11 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
     def reset_allocation(self):
         global trains_allocated
         if trains_allocated == []:
-            print ("a")
+            if self.logLevel > 0: print ("a")
             msg = "Nothing to reset"
             OptionDialog().displayMessage(msg)
         else:
-            print ("b")
+            if self.logLevel > 0: print ("b")
             msg = "Select train to modify"
             train_name_to_remove = modifiableJComboBox(trains_allocated,msg).return_val()
             trains_allocated.remove(train_name_to_remove)
@@ -333,7 +440,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
                     break
         train["edge"] = edge
         train["penultimate_block_name"] = edge.getItem("penultimate_block_name")
-        print 
+        if self.logLevel > 0: print 
         
         # 3) set direction so can check direction of transit
         
@@ -356,12 +463,16 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         default = "forward"
         if in_siding:
             msg = "In block: " + block_name + "\n" +'What way is train facing\nout of junction?'
+            #msg = 'What way is train facing\nout of junction?'
         else:
             msg = "In block: " + block_name + "\n" +'What way is train facing\ntowards highlighted block?'
+            #msg = 'What way is train facing\ntowards highlighted block?'
         title = "Set Train Facing Direction"
         type = JOptionPane.QUESTION_MESSAGE
-    
-        result = OptionDialog().variable_combo_box(options, default, msg, title, type)
+        result = OptionDialog().customQuestionMessage2str(msg, title, "forward", "reverse")
+
+        #result = OptionDialog().variable_combo_box(options, default, msg, title, type)
+        #new_train_name = OptionDialog().List(msg, options)
         
         if result == "forward":
             train_direction = "reverse"
@@ -386,7 +497,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
                     trains_in_sections_allocated.append([station_block_name, block_value, "allocated"])
                 else:
                     trains_in_sections_allocated.append([station_block_name, block_value, "other"])
-        print str(trains_in_sections_allocated)
+        if self.logLevel > 0: print str(trains_in_sections_allocated)
         return trains_in_sections_allocated
                 
         
@@ -462,6 +573,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         value =  block.getValue()
         return value
         
+        
     def set_blockcontents(self, block_name, value):
         block = blocks.getBlock(block_name)
         value =  block.setValue(value)
@@ -475,7 +587,9 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
             OptionDialog().displayMessage(' Sensor in block {} not found'.format(station_block_name))
             return
         currentState = True if station_sensor.getKnownState() == ACTIVE else False
-        return currentState         
+        return currentState 
+
+       
             
 class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
     
@@ -497,7 +611,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         global timebase
         self.waitSensorActive(self.stop_master_sensor)
         #stop all threads
-        print "instancelist", instanceList
+        if self.logLevel > 0: print "instancelist", instanceList
         for thread in instanceList:
             if thread is not None:
                 if thread.isRunning():
@@ -510,11 +624,11 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         self.new_train_sensor.setKnownState(INACTIVE)
         try:
             #stop the scheduler timebase listener
-            print "removing listener"
+            if self.logLevel > 0: print "removing listener"
             timebase.removeMinuteChangeListener(TimeListener())
             return False
         except NameError:
-            print "Name error"
+            if self.logLevel > 0: print "Name error"
             return False
         else:
             return False
@@ -526,7 +640,7 @@ class OffActionMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     button_sensors_to_watch = []
     def __init__(self):
-        self.logLevel = 1
+        self.logLevel = 0
         
     def init(self):
         if self.logLevel > 0: print 'Create OffActionMaster Thread'
@@ -534,34 +648,34 @@ class OffActionMaster(jmri.jmrit.automat.AbstractAutomaton):
         self.get_route_dispatch_buttons()
         
         self.button_sensors_to_watch = self.run_stop_sensors 
-        print "button to watch" , str(self.button_sensors_to_watch)
+        if self.logLevel > 0: print "button to watch" , str(self.button_sensors_to_watch)
         #wait for one to go inactive
         button_sensors_to_watch_JavaList = java.util.Arrays.asList(self.button_sensors_to_watch)      
         self.waitSensorState(button_sensors_to_watch_JavaList, INACTIVE)
         
-        print "button went inactive"
+        if self.logLevel > 0: print "button went inactive"
         sensor_that_went_inactive = [sensor for sensor in self.button_sensors_to_watch if sensor.getKnownState() == INACTIVE][0]
-        print "sensor_that_went_inactive" , sensor_that_went_inactive
-        #start_sensor = sensors.getSensor("StartDispatcherSensor")
-        start_sensor = sensors.getSensor("IS96004")
+        if self.logLevel > 0: print "sensor_that_went_inactive" , sensor_that_went_inactive
+        start_sensor = sensors.getSensor("startDispatcherSensor")
+        #start_sensor = sensors.getSensor("IS96004")
         stop_sensor =  sensors.getSensor("stopMasterSensor")
-        print "start_sensor" , start_sensor
-        print "stop_sensor" , stop_sensor
+        if self.logLevel > 0: print "start_sensor" , start_sensor
+        if self.logLevel > 0: print "stop_sensor" , stop_sensor
         if sensor_that_went_inactive in self.run_stop_sensors:
-            print "run stop sensor went inactive"
+            if self.logLevel > 0: print "run stop sensor went inactive"
 
             if sensor_that_went_inactive == start_sensor:
                 self.sensor_to_look_for = stop_sensor
-                print "start sensor went inactive"
-                print "setting stop sensor active"
+                if self.logLevel > 0: print "start sensor went inactive"
+                if self.logLevel > 0: print "setting stop sensor active"
                 stop_sensor.setKnownState(ACTIVE)
                 # self.waitMsec(5000)
-                # print "setting start sensor active"
+                # if self.logLevel > 0: print "setting start sensor active"
                 # start_sensor.setKnownState(ACTICE)
             elif sensor_that_went_inactive == stop_sensor:
                 self.sensor_to_look_for = start_sensor
-                print "stop sensor went inactive"
-                print "setting start sensor active"
+                if self.logLevel > 0: print "stop sensor went inactive"
+                if self.logLevel > 0: print "setting start sensor active"
                 start_sensor.setKnownState(ACTIVE)
                 # self.waitMsec(5000)
                 # start_sensor.setKnownState(ACTICE)
@@ -571,17 +685,16 @@ class OffActionMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def setup(self):
         if self.logLevel > 0: print "starting OffActionMaster setup"
-        print "QWERTYUIO"
         #get dictionary of buttons self.button_dict
         #self.get_route_dispatch_buttons()
 
         return True
         
     def handle(self):
-        print "started handle"
+        if self.logLevel > 0: print "started handle"
         #for pairs of buttons, if one goes off the other is set on
         self.button_sensors_to_watch = self.run_sensor_to_look_for
-        print "button to watch" , str(self.button_sensors_to_watch)
+        if self.logLevel > 0: print "button to watch" , str(self.button_sensors_to_watch)
         #wait for one to go active
         button_sensors_to_watch_JavaList = java.util.Arrays.asList(self.button_sensors_to_watch)      
         self.waitSensorState(button_sensors_to_watch_JavaList, INACTIVE)
@@ -590,26 +703,26 @@ class OffActionMaster(jmri.jmrit.automat.AbstractAutomaton):
         sensor_that_went_inactive = [sensor for sensor in self.button_sensors_to_watch if sensor.getKnownState() == INACTIVE][0]
         
         if sensor_that_went_inactive in self.run_stop_sensors:
-            print "run stop sensor went inactive"
-            #start_sensor = sensors.getSensor("StartDispatcherSensor")
-            start_sensor = sensors.getSensor("IS96004")
+            if self.logLevel > 0: print "run stop sensor went inactive"
+            start_sensor = sensors.getSensor("startDispatcherSensor")
+            #start_sensor = sensors.getSensor("IS96004")
             stop_sensor =  sensors.getSensor("stopMasterSensor")
             if sensor_that_went_inactive == start_sensor:
                 self.sensor_to_look_for = stop_sensor
-                print "start sensor went inactive"
-                print "setting stop sensor active"
+                if self.logLevel > 0: print "start sensor went inactive"
+                if self.logLevel > 0: print "setting stop sensor active"
                 stop_sensor.setKnownState(ACTIVE)
                 # self.waitMsec(5000)
-                # print "setting start sensor active"
+                # if self.logLevel > 0: print "setting start sensor active"
                 # start_sensor.setKnownState(ACTICE)
             elif sensor_that_went_inactive == stop_sensor:
                 self.sensor_to_look_for = start_sensor
-                print "stop sensor went inactive"
-                print "setting start sensor active"
+                if self.logLevel > 0: print "stop sensor went inactive"
+                if self.logLevel > 0: print "setting start sensor active"
                 start_sensor.setKnownState(ACTIVE)
                 
         # if sensor_that_went_inactive in self.route_dispatch_sensors: 
-            # print "run route dispatch sensor went inactive"
+            # if self.logLevel > 0: print "run route dispatch sensor went inactive"
             # route_sensor = sensors.getSensor("setDispatchSensor")
             # dispatch_sensor =  sensors.getSensor("setRouteSensor")
             # if sensor_that_went_inactive == route_sensor:
@@ -617,7 +730,7 @@ class OffActionMaster(jmri.jmrit.automat.AbstractAutomaton):
             # else:
                 # route_sensor.setKnownState(INACTIVE)
                 
-        print "end handle"
+        if self.logLevel > 0: print "end handle"
         #self.waitMsec(20000)
         return False
     def get_route_dispatch_buttons(self):
@@ -710,7 +823,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         if self.sensor_active_old != None:
             self.button_sensors_to_watch.remove(self.sensor_active_old) 
         if self.sensor_active_route_dispatch_old != None:
-            print "self.sensor_active_route_dispatch_old" , self.sensor_active_route_dispatch_old
+            if self.logLevel > 0: print "self.sensor_active_route_dispatch_old" , self.sensor_active_route_dispatch_old
             self.button_sensors_to_watch.remove(self.sensor_active_route_dispatch_old)
             
         self.waitMsec(2000)
@@ -739,10 +852,13 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             OptionDialog().displayMessage(msg)
             #show the trains setup
             self.show_trains_setup()
-        else:
+        elif sensor_changed == sensors.getSensor("setRouteSensor"):
             sensors.getSensor("setDispatchSensor").setKnownState(INACTIVE)
             msg = "Press section buttons to set route \nThe route may be used to schedule a train"
             OptionDialog().displayMessage(msg)
+        elif sensor_changed == sensors.getSensor("runRouteSensor"):  
+            self.run_route()
+            sensors.getSensor("runRouteSensor").setKnownState(INACTIVE)
             
     def show_trains_setup(self):
         pass
@@ -754,7 +870,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             # self.button_dict[button_sensor] = self.check_sensor_state(button_sensor)
             
     def get_route_dispatch_buttons(self):
-        self.route_dispatch_sensors = [sensors.getSensor(sensorName) for sensorName in ["setDispatchSensor","setRouteSensor"]]
+        self.route_dispatch_sensors = [sensors.getSensor(sensorName) for sensorName in ["setDispatchSensor","setRouteSensor","runRouteSensor"]]
         self.route_dispatch_states = [self.check_sensor_state(rd_sensor) for rd_sensor in self.route_dispatch_sensors]
             
     def check_sensor_state(self, sensor):
@@ -791,581 +907,138 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                 # if self.logLevel > 0: print 'Not', button_dict_old_value, button_dict_value
                 # sensor, val = button_dict_value
         
-    
-        
-        
-        return False
-        
-   
-
-
-class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
-
-    global trains_dispatched
-
-    def __init__(self, station_from_name, station_to_name, train_name, graph):
-        self.logLevel = 0
-        self.station_from_name = station_from_name 
-        self.station_to_name = station_to_name
-        self.train_name = train_name 
-        self.graph = graph
-
-    def setup(self):
-        return True
-
-    def handle(self):
-        #move between stations in the thread
-        if self.logLevel > 0: print"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-        if self.logLevel > 0: print "move between stations in the thread"
-        if self.logLevel > 0: print"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-        self.move_between_stations(self.station_from_name, self.station_to_name, self.train_name, self.graph)
-        return False
-
-    def move_between_stations(self, station_from_name, station_to_name, train_name, graph):
-        if self.logLevel > 0: print "Moving from " + station_from_name + " to " + station_to_name
-        #need to look up the required transit in the graph
-        StateVertex_start = station_from_name
-        StateVertex_end = station_to_name
-        # for e in graph.edgeSet():
-            # print (graph.getEdgeSource(e) + " --> " + graph.getEdgeTarget(e))
-        print "calling shortest path", StateVertex_start, StateVertex_end
-        paths = DijkstraShortestPath.findPathBetween(graph, StateVertex_start, StateVertex_end)
-        print "returned from shortest path"
-        #if self.logLevel > 0: print paths
-        print "in move_between_stations trains = ", trains, "train_name = ", train_name
-        train = trains[train_name]
-        if self.logLevel > 0: print "train" , train
-        penultimate_block_name = train["penultimate_block_name"]
-        if self.logLevel > 0: print "penultimate_block_name" , penultimate_block_name
-        previous_edge = train["edge"]
-        previous_direction = train["direction"]
-        
-        trains_dispatched.append(str(train_name))
-        
-        for e in paths:
+    def run_route(self):
+        list_items = ("Run Route", "Run Route / Station Combo", "Cancel")
+        title = "choose option"
+        result = OptionDialog().List(title, list_items)
+        if result == "Run Route":
+            RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
+            list_items = RouteManager.getRoutesByNameList()
+            title = "choose route"
+            routeName = str(OptionDialog().List(title, list_items))
+            print "routeName", routeName
+            route = RouteManager.getRouteByName(routeName)
             
-            # need to check whether: 
-            #   last block of previous edge and current first block 
-            #   are the same
+            list_items = self.get_list_of_engines_to_move()
+                    # msg = "trains_to_choose" + str(trains_to_choose)
+            if list_items == []:
+                return
+            title = "what train do you want to move?"
+            engine = OptionDialog().List(title, list_items)
+            station_from = self.get_position_of_train(engine)
             
-            # if the same the tranist must change direction
-            #
-            current_edge = e
-            neighbor_name = e.getItem("neighbor_name")
-            if self.logLevel > 0: print train
-            if self.logLevel > 0: print "neighbor_name = ", neighbor_name
-            if self.logLevel > 0: print "penultimate_block_name" , penultimate_block_name
-            
-            if penultimate_block_name == neighbor_name:
-                transit_instruction = "change"
-            else:
-                transit_instruction = "same"
-            if self.logLevel > 0: print "transit_instruction=",transit_instruction
-            
-            if transit_instruction == "change":
-                if previous_direction == "forward":
-                    transit_direction = "reverse"
-                else:
-                    transit_direction = "forward"
-            else:
-                transit_direction = previous_direction
+            list_items = ["stop at end of route", "return to start position", "return to start position and repeat", "cancel"]
+            title = "What do you want to do"
+            option = OptionDialog().List(title, list_items)
+            repeat = False
+
+            if option == "stop at end of route":
+                station_to = None
+                repeat = False
+            elif option == "return to start position":
+                station_to = station_from
+                repeat = False
+            elif option == "return to start position and repeat":
+                station_to = station_from
+                repeat = True
+            print "station_from",    station_from, "station_to",station_to, "repeat",repeat
+            run_train = RunRoute(route, g.g_express, station_from, station_to, repeat)
+            run_train.setName("running_route_" + routeName)
+            run_train.start()
+
+        
+    def get_list_of_engines_to_move(self):
+        global trains_allocated
+        global trains_dispatched 
+        
+        #find what train we want to move
+        #select only from available trains  %%%%todo%%%%%
+        all_trains = self.get_all_roster_entries_with_speed_profile()
+        #trains to choose from are the allocated - dispatched
+        trains_to_choose = copy.copy(trains_allocated)
+        if self.logLevel > 0: print "trains_dispatchedx", trains_dispatched
+        if self.logLevel > 0: print "trains_allocated",trains_allocated
+        if self.logLevel > 0: print "trains_to_choose",trains_to_choose
+        if trains_dispatched != []:
+            for train in trains_dispatched:
+                if self.logLevel > 0: print "removing" ,train
+                trains_to_choose.remove(train)
+                if self.logLevel > 0: print "trains_to_choose",trains_to_choose
                 
-            if self.logLevel > 0: print "transit_direction",transit_direction
-                
-            result = self.move(e, transit_direction, train_name)
-            if self.logLevel > 0: print "returned from self.move, result = ", result
-            if result == False:
-                trains_dispatched.remove(str(train_name))
-                break
-            #store the current edge for next move
-            train["edge"] = e
-            train["penultimate_block_name"] = e.getItem("penultimate_block_name")
-            train["direction"] = transit_direction
-        print "transit finished, removing train from dispatch list"
-        if str(train_name) in trains_dispatched:    
-            trains_dispatched.remove(str(train_name))
-        print "trains_dispatched", trains_dispatched
-
-    def move(self, e, direction, train):
-        if self.logLevel > 0: print e, "Target", e.getTarget()
-        if self.logLevel > 0: print e, "Source", e.getSource()
-        to_name = e.getTarget()
-        from_name = e.getSource()
-        sensor_move_name = "MoveInProgress"+to_name.replace(" ","_")
+        # JOptionPane.showMessageDialog(None,msg)
+        if trains_to_choose == []:
+            str_trains_dispatched= (' '.join(trains_dispatched))
+            msg = "There are no trains available for dispatch\nTrains dispatched are:\n"+str_trains_dispatched+"\nOK (yes) RESET (no)"
+            title = ""
+            result = JOptionPane.showConfirmDialog(None, msg, title, JOptionPane.YES_NO_OPTION)
+            if result == JOptionPane.NO_OPTION:
+                trains_dispatched = []                      
+            #sensor_changed.setKnownState(INACTIVE)
+        # else:
+            # msg = "select train you want to move"
+            # train_to_move = modifiableJComboBox(trains_to_choose,msg).return_val()
+            # title = "choose train to move"
+            # engine = OptionDialog().MultipleBox(title, list_items)
+            # station_from =     #location of engine
+        return trains_to_choose
         
-        self.set_sensor(sensor_move_name, "active")
-        speech_reqd = self.speech_required_flag()
-        self.announce( from_name, to_name, speech_reqd)
-        result = self.call_dispatch(e, direction, train)
-        if result == True:
-            if self.logLevel > 0: print ("Wait for sensor " + sensor_move_name + " to become inactive")
-            self.wait_sensor(sensor_move_name,"inactive")
-            #
-            if self.logLevel > 0: print ("+++++ sensor " + sensor_move_name + " inactive")
-            self.waitMsec(time_to_stop_in_station)
-        else:
-            self.set_sensor(sensor_move_name, "inactive")
-        return result
+    def get_position_of_train(self, train_to_move):
+        ## Check the pressed button
+        for station_block_name in g.station_block_list:
+            if self.logLevel > 0: print "station_block_name", station_block_name
+            
+            #get a True if the block block_value has the train name in it
+            block_value_state = self.check_train_in_block(station_block_name, train_to_move)
+            if self.logLevel > 0: print "block_value_state= ",block_value_state
+            
+            #get a True if the block is occupied
+            block_occupied_state = self.check_sensor_state_given_block_name(station_block_name)
+            if self.logLevel > 0: print "block_occupied_state= ",block_occupied_state
+            if self.logLevel > 0: print ("station block name {} : {}". format(station_block_name, str(block_occupied_state)))
+            
+            # # do not attempt to move to where you are
+            # button_pressed_in_occupied_station = (button_station_name == station_block_name)
+            
+            #check if the block is occupied and has the required train in it  
+            if block_value_state == True and block_occupied_state == True:
+                # and button_pressed_in_occupied_station == False:
+                return station_block_name
+        return None
         
-    def speech_required_flag(self):
-        self.sound_sensor = sensors.getSensor("soundSensor")
-        if self.sound_sensor is None:
-            OptionDialog().displayMessage("No sound Sensor set up")
-            return None
-        sound_state = self.sound_sensor.getKnownState()
-        if self.logLevel > 0: print sound_state,ACTIVE
-        if sound_state == ACTIVE:
-            sound_flag = True
-        else:
-            sound_flag = False
-        return sound_flag
-
-    def call_dispatch(self, e, direction, train):
-        if self.logLevel > 0: print ("in dispatch")
-        to_name = e.getTarget()
-        from_name = e.getSource()
-        if self.logLevel > 0: print ("incall_dispatch: move from " + from_name + " to " + to_name)
+    def get_blockcontents(self, block_name):
+        block = blocks.getBlock(block_name)
+        value =  block.getValue()
+        return value        
         
-        if direction == "forward":
-            filename = self.get_filename(e, "fwd")
-            #filename1 = "From " + from_name + " To " + to_name
-        else:
-            filename = self.get_filename(e, "rvs")
-            #filename1 = "From " + from_name + " To " + to_name + " reverse"
-        #filename = filename.replace(" ","_")
-        
-        if self.logLevel > 0: print "filename = ", filename, "direction = " , direction
-        result = self.doDispatch(filename, "ROSTER", train)
-        if self.logLevel > 0: print "result", result        
-        return result
-
-    def get_filename(self, e, suffix):
-    
-        # suffix is "fwd" or "rvs"
-        # graph is g.g_express
-        # e is edge
-        
-        from_station_name = g.g_express.getEdgeSource(e)
-        to_station_name = g.g_express.getEdgeTarget(e)
-        neighbor_name = e.getItem("neighbor_name")
-        index = e.getItem("index")
-        
-        filename = "From " + str(from_station_name) + " To " + str(to_station_name) + " Via " + str(neighbor_name) + " " + str(index) 
-        filename = filename.replace(" ", "_")
-        # filename_fwd = filename + "_fwd.xml"
-        # filename_rvs = filename + "_rvs.xml"
-        filename = filename + "_" + suffix + ".xml"
-
-        return filename    
-        
-    #    Dispatch (<filename.xml>, [USER | ROSTER | OPERATIONS >,<dccAddress, RosterEntryName or Operations>
-        
-    def doDispatch_old(self, traininfoFileName, type, value):
-        DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
-        #try: 
-        print "traininfoFileName",traininfoFileName
-        result = DF.loadTrainFromTrainInfo(traininfoFileName, type, value)
-        if result == -1:
-            if self.logLevel > 0: print "result from dispatcher frame" , result
-            return False  #No train allocated
-        else:
-            if self.logLevel > 0: print "result from dispatcher frame" , result
+    def check_train_in_block(self, block_name, train_name):
+        mem_val = self.get_blockcontents(block_name)
+        if train_name == mem_val:
             return True
-        # except:
-            # if self.logLevel > 0: print ("FAILURE tried to run dispatcher with file {} type {} value {}".format(traininfoFileName,  type, value))
-            # pass
-            # return False
-            
-    def doDispatchxxxx(self, traininfoFileName, type, train):
-        print "1"
-        info = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(traininfoFileName)
-        print "2"
-        DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
-        print "3"
-        DF.setVisible(True)
-        print "4"
-        atf = DF.getActiveTrainFrame()
-        re = None
-        event = None
-        block = None
-        #atFrame.showActivateFrame(None)
-        atf.initiateTrain(event,re, block)
-        #atf.showActivateFrame(None)
-        print "6"
-        atf.trainInfoToDialog(info)
-        print "7"
-        #self.waitMsec(5000)
-        robot = java.awt.Robot()
-        KeyEvent = java.awt.event.KeyEvent
-        robot.keyPress(KeyEvent.VK_SHIFT)
-        robot.keyPress(KeyEvent.VK_TAB)
-        robot.keyRelease(KeyEvent.VK_TAB)
-        robot.keyRelease(KeyEvent.VK_SHIFT)
-        #self.waitMsec(5000)
-        #atf.addNewTrain(None)
-        robot.keyPress(KeyEvent.VK_SPACE)
-        robot.keyRelease(KeyEvent.VK_SPACE)
-        #atf.addNewTrainButton.doClick()
-        print "8"
-        DF.newTrainDone(null);
-        return True
-            
-    def doDispatch(self, traininfoFileName, type, train):
-        info = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(traininfoFileName)
-        DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
-        roster = 0x01
-        tSource = roster
-        initiateFrame = None
-        at = DF.createActiveTrain(info.transitName, info.trainName, tSource, info.startBlockName,
-                info.startBlockSeq, info.destinationBlockName, info.destinationBlockSeq, info.autoRun, info.dccAddress, info.priority,
-                info.resetWhenDone, info.reverseAtEnd,  True, DF, info.allocationMethod)
-        if (at == None):
-            return  # error message sent by createActiveTrain
-        if info.trainFromRoster == True:    
-            #if (info.tSource == ActiveTrain.ROSTER):
-            RosterEntry = jmri.jmrit.roster.Roster.getDefault().getEntryForId(train)
-            if (RosterEntry != None):
-                at.setRosterEntry(RosterEntry)
-                at.setDccAddress(RosterEntry.getDccAddress())
-            else:
-                print("Roster Entry '{}' not found, could not create ActiveTrain '{}'",
-                        trainNameToUse, info.getTrainName())
-                return False  
-        at.setStarted()                
-        at.setAllocateMethod(info.allocationMethod)
-        at.setDelayedStart(info.delayedStart)
-        at.setDelayedRestart(info.delayedRestart)
-        at.setDepartureTimeHr(info.departureTimeHr)
-        at.setDepartureTimeMin(info.departureTimeMin)
-        at.setRestartDelay(info.restartDelayMin)
-        at.setDelaySensor(info.delaySensorName)
-        at.setResetStartSensor(info.resetStartSensor)
-        if ((DF.isFastClockTimeGE(info.departureTimeHr, info.departureTimeMin) and info.delayedStart != at.SENSORDELAY)
-                or info.delayedStart == at.NODELAY):
-            at.setStarted()
-        at.setRestartSensor(info.restartSensorName)
-        at.setResetRestartSensor(info.resetRestartSensor)
-        at.setTrainType(info.trainType)
-        at.setTerminateWhenDone(info.terminateWhenDone)
+        else:
+            return False
 
-        aat = jmri.jmrit.dispatcher.AutoActiveTrain(at)
-        if aat == None:
-            JOptionPane.showMessageDialog(self.frame,'Could not create Auto Active Train','Active Train',JOptionPane.PLAIN_MESSAGE)
+    def check_sensor_state_given_block_name(self, station_block_name):
+        #if self.logLevel > 0: print("station block name {}".format(station_block_name))
+        layoutBlock = layoutblocks.getLayoutBlock(station_block_name)
+        station_sensor = layoutBlock.getOccupancySensor() 
+        if station_sensor is None:
+            OptionDialog().displayMessage(' Sensor in block {} not found'.format(station_block_name))
             return
-        aat.setSpeedFactor(info.speedFactor);
-        aat.setMaxSpeed(info.maxSpeed);
-
-        RAMP_NONE = 0x00;  # No ramping - set speed immediately
-        RAMP_FAST = 0x01;     # Fast ramping
-        RAMP_MEDIUM = 0x02;  # Medium ramping
-        RAMP_MED_SLOW = 0x03;  # Medium/slow ramping
-        RAMP_SLOW = 0x04;  # Slow ramping
-        aat.setRampRate(aat.getRampRateFromName(info.getRampRate()))
-        aat.setResistanceWheels(info.resistanceWheels);
-        aat.setRunInReverse(info.runInReverse);
-        aat.setSoundDecoder(info.soundDecoder);
-        aat.setMaxTrainLength(info.maxTrainLength);
-        aat.setStopBySpeedProfile(info.stopBySpeedProfile);
-        aat.setStopBySpeedProfileAdjust(info.stopBySpeedProfileAdjust);
-        aat.setUseSpeedProfile(info.useSpeedProfile);
-        if (not aat.initialize()):
-            JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                    "Error27", at.getTrainName()), Bundle.getMessage("MessageTitle"),
-                    JOptionPane.INFORMATION_MESSAGE)
-        DF.getAutoTrainsFrame().addAutoActiveTrain(aat)
-        DF.allocateNewActiveTrain(at)
-        # initiateFrame.setVisible(false)
-        # initiateFrame.dispose()  # prevent this window from being listed in the Window menu.
-        # initiateFrame = null
-        DF.newTrainDone(at)
-        #DF = None
-
-        return True
-    
-   
-    def set_sensor(self, sensorName, sensorState):
-        sensor = sensors.getSensor(sensorName)
-        if sensor is None:
-            self.displayMessage('{} - Sensor {} not found'.format(self.threadName, sensorName))
-            return
-        if sensorState == 'active':
-            newState = ACTIVE
-        elif sensorState == 'inactive':
-            if self.logLevel > 0: print "set_sensor ", sensorName, 'inactive'
-            newState = INACTIVE
-        else:
-            self.displayMessage('{} - Sensor state, {}, is not valid'.format(self.threadName, sensorState))
-        sensor.setKnownState(newState)    
-        return
-        
-    def wait_sensor(self, sensorName, sensorState):
-        sensor = sensors.getSensor(sensorName)
-        if sensor is None:
-            self.displayMessage('{} - Sensor {} not found'.format(self.threadName, sensorName))
-            return
-        if sensorState == 'active':
-            self.waitSensorActive(sensor)
-        elif sensorState == 'inactive':
-            self.waitSensorInactive(sensor)
-        else:
-            self.displayMessage('{} - Sensor state, {}, is not valid'.format(self.threadName, sensorState))
-
-
-    def load_and_run_TrainInfo(self, traininfoFileName):
-
-        # get train frame
-        
-        # load traininfo
-        
-        # with robot activate new train
-
-        TrainInfo = jmri.jmrit.dispatcher.TrainInfo(traininfoFileName)
-        
-        self.load_standard_items(e, TrainInfo)
-        
-        #set reverse flag
-        TrainInfo.setRunInReverse(False)
-        
-        jmri.jmrit.dispatcher.TrainInfoFile().writeTrainInfo(TrainInfo, filename)            
+        currentState = True if station_sensor.getKnownState() == ACTIVE else False
+        return currentState              
             
-    ##
-    # Loads a train into the Dispatcher from a traininfo file, overriding
-    # trainlength to allow train to stop near buffer
-    #
-    # @param traininfoFileName  the file name of a traininfo file.
-    # @param overRideType  "NONE", "USER", "ROSTER" or "OPERATIONS"
-    # @param overRideValue  "" , dccAddress, RosterEntryName or Operations
-    #            trainname.
-    # @param overRideMaxTrainLen
-    # @return 0 good, -1 create failure, -2 -3 file errors, -9 bother.
-    #
-    
-    def loadTrainFromTrainInfo(self, traininfoFileName, overRideType, overRideValue, overRideMaxTrainLen = None):
-        #read xml data from selected filename and move it into trainfo
-        print "got here a"
-        #DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
-        log = org.slf4j.LoggerFactory.getLogger(jmri.jmrit.dispatcher.DispatcherFrame)
-        try:
-            #maybe called from jthon protect our selves
-            print "got here a1"
-            tif = jmri.jmrit.dispatcher.TrainInfoFile()
-            print "got here b",tif
-            TrainInfo = None
-            print "got here b11",traininfoFileName
-            TrainInfo = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(traininfoFileName)
-            print "got here b22",TrainInfo
-            print dir(TrainInfo)
-            count = 0
-            for method in dir(TrainInfo):
-                # the comma at the end of the print, makes it printing 
-                # in the same line, 4 times (count)
-                print "| {0: <20}".format(method),
-                count += 1
-                if count == 4:
-                    count = 0
-                    print
-            #object_methods = [method_name for method_name in dir(TrainInfo) if callable(getattr(object, method_name))]
-            #print object_methods
-            tn = TrainInfo.getTrainName()
-            print "got here b3"
-            try:
-                print "got here b1",traininfoFileName
-                TrainInfo = tif.readTrainInfo(traininfoFileName)
-                print "got here b2"
-                tn = TrainInfo.getTrainName()
-                print "got here b3"
-            except java.io.IOException as ioe :
-                print "got here b3"
-                log.error("IO Exception when reading train info file {}: {}", traininfoFileName, ioe)
-                return -2
-            except org.jdom2.JDOMException as jde :
-                log.error("JDOM Exception when reading train info file {}: {}", traininfoFileName, jde)
-                return -3
-            except Exception:
-                print "got here x"
-            print "got here c"
-            return self.loadTrainFromTrainInfo2(TrainInfo, overRideType, overRideValue, overRideMaxTrainLen)
-        except java.lang.RuntimeException as ex:
-            log.error("Unexpected, uncaught exception loading traininfofile [{}]", traininfoFileName, ex)
-            return -9
+    def get_all_roster_entries_with_speed_profile(self):
+        roster_entries_with_speed_profile = []
+        r = jmri.jmrit.roster.Roster.getDefault()
+        for roster_entry in jmri.jmrit.roster.Roster.getAllEntries(r):
+            if self.logLevel > 0: print "roster_entry.getSpeedProfile()",roster_entry,roster_entry.getSpeedProfile()
+            if roster_entry.getSpeedProfile() != None:
+                roster_entries_with_speed_profile.append(roster_entry.getId())
+                if self.logLevel > 0: print "roster_entry.getId()",roster_entry.getId()
+        return roster_entries_with_speed_profile        
 
-    #
-    # Loads a train into the Dispatcher
-    #
-    # @param info  a completed TrainInfo class.
-    # @param overRideType  "NONE", "USER", "ROSTER" or "OPERATIONS"
-    # @param overRideValue  "" , dccAddress, RosterEntryName or Operations
-    # @param overRideMaxTrainLen length of train
-    #            trainname.
-    # @return 0 good, -1 failure
-     
-    def loadTrainFromTrainInfo2(self, info, overRideType, overRideValue, overRideMaxTrainLen = None):
-        print "got here 1"
-        #log.debug("loading train:{}, startblockname:{}, destinationBlockName:{}", info.getTrainName(),
-        #        info.getStartBlockName(), info.getDestinationBlockName())
-        #print ("loading train:{}, startblockname:{}, destinationBlockName:{}", info.getTrainName(),
-        #        info.getStartBlockName(), info.getDestinationBlockName())
-        print info
-        print  info.getTrainName()
-        print  info.getStartBlockName()
-        print  info.getDestinationBlockName()
-        # # create a new Active Train
-        print "got here 2"
-        #set updefaults from traininfo
-        tSource = jmri.jmrit.dispatcher.ActiveTrain.ROSTER
-        if info.getTrainFromTrains():
-            tSource = jmri.jmrit.dispatcher.ActiveTrain.OPERATIONS
-        elif info.getTrainFromUser():
-            tSource = jmri.jmrit.dispatcher.ActiveTrain.USER
-        print "got here 3"
-        dccAddressToUse = info.getDccAddress()
-        trainNameToUse = info.getTrainName()
-        
-        OVERRIDETYPE_NONE = "NONE"
-        OVERRIDETYPE_USER = "USER"
-        OVERRIDETYPE_DCCADDRESS = "DCCADDRESS"
-        OVERRIDETYPE_OPERATIONS = "OPERATIONS"
-        OVERRIDETYPE_ROSTER = "ROSTER"
 
-        ##process override
-        if overRideType == "" or overRideType == OVERRIDETYPE_NONE:
-            pass
-        elif overRideType == OVERRIDETYPE_USER or overRideType == OVERRIDETYPE_DCCADDRESS:
-            tSource = jmri.jmrit.dispatcher.ActiveTrain.USER
-            dccAddressToUse = overRideValue
-            trainNameToUse = overRideValue
-        elif overRideType == OVERRIDETYPE_OPERATIONS:    
-            tSource = jmri.jmrit.dispatcher.ActiveTrain.OPERATIONS
-            trainNameToUse = overRideValue
-        elif overRideType == OVERRIDETYPE_ROSTER:    
-            tSource = jmri.jmrit.dispatcher.ActiveTrain.ROSTER
-            trainNameToUse = overRideValue
-        else:
-            # just leave as in traininfo
-            pass
-        print "got here 4"
-        # create active train
-        DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
-        at = DF.createActiveTrain(info.getTransitId(), trainNameToUse, tSource,
-                info.getStartBlockId(), info.getStartBlockSeq(), info.getDestinationBlockId(),
-                info.getDestinationBlockSeq(),
-                info.getAutoRun(), dccAddressToUse, info.getPriority(),
-                info.getResetWhenDone(), info.getReverseAtEnd(), True, None, info.getAllocationMethod())
-        print "got here 5"        
-        if (at != None):
-            print "got here 6a"  
-            if (tSource == jmri.jmrit.dispatcher.ActiveTrain.ROSTER):
-                print "got here 6aaz"
-                RosterEntry = jmri.jmrit.roster.Roster.getDefault().getEntryForId(trainNameToUse)
-                print "got here 6ab"
-                if (RosterEntry != None):
-                    print "got here 6b" 
-                    at.setRosterEntry(RosterEntry)
-                    at.setDccAddress(RosterEntry.getDccAddress())
-                else:
-                    log.warn("Roster Entry '{}' not found, could not create ActiveTrain '{}'",
-                            trainNameToUse, info.getTrainName())
-                    return -1
-            print "got here 6"
-            at.setAllocateMethod(info.getAllocationMethod())
-            at.setDelayedStart(info.getDelayedStart())              #this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
-            at.setDepartureTimeHr(info.getDepartureTimeHr())        # hour of day (fast-clock) to start this train
-            at.setDepartureTimeMin(info.getDepartureTimeMin())      #minute of hour to start this train
-            at.setDelayedRestart(info.getDelayedRestart())          #this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
-            at.setRestartDelay(info.getRestartDelayMin())           #this is number of minutes to delay between runs
-            at.setDelaySensor(info.getDelaySensor())
-            at.setResetStartSensor(info.getResetStartSensor())
-            if ((DF.isFastClockTimeGE(at.getDepartureTimeHr(), at.getDepartureTimeMin()) and
-                    info.getDelayedStart() != jmri.jmrit.dispatcher.ActiveTrain.SENSORDELAY) or
-                    info.getDelayedStart() == jmri.jmrit.dispatcher.ActiveTrain.NODELAY):
-                at.setStarted()
-            at.setRestartSensor(info.getRestartSensor())
-            at.setResetRestartSensor(info.getResetRestartSensor())
-            at.setTrainType(info.getTrainType())
-            at.setTerminateWhenDone(info.getTerminateWhenDone())
-            if (info.getAutoRun()):
-                # aat = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.AutoActiveTrain.AutoActiveTrain)
-                # #aat = jmri.jmrit.dispatcher.AutoActiveTrain.AutoActiveTrain(at)
-                aat = jmri.jmrit.dispatcher.AutoActiveTrain(at)
-                aat.setSpeedFactor(info.getSpeedFactor())
-                aat.setMaxSpeed(info.getMaxSpeed())
-                aat.setRampRate(aat.getRampRateFromName(info.getRampRate()))
-                aat.setResistanceWheels(info.getResistanceWheels())
-                aat.setRunInReverse(info.getRunInReverse())
-                aat.setSoundDecoder(info.getSoundDecoder())
-                if overRideMaxTrainLen == None:
-                    aat.setMaxTrainLength(info.getMaxTrainLength())
-                else:
-                    aat.setMaxTrainLength(overRideMaxTrainLen)
-                aat.setStopBySpeedProfile(info.getStopBySpeedProfile())
-                aat.setStopBySpeedProfileAdjust(info.getStopBySpeedProfileAdjust())
-                aat.setUseSpeedProfile(info.getUseSpeedProfile())
-                if (not aat.initialize()):
-                    log.error("ERROR initializing autorunning for train {}", at.getTrainName())
-                    JOptionPane.showMessageDialog(dispatcherFrame, jmri.jmrit.dispatcher.Bundle.getMessage(
-                            "Error27", at.getTrainName()), jmri.jmrit.dispatcher.Bundle.getMessage("MessageTitle"),
-                            JOptionPane.INFORMATION_MESSAGE)
-                    return -1
-                DF.getAutoTrainsFrame().addAutoActiveTrain(aat)
-            DF.allocateNewActiveTrain(at)
-            DF.newTrainDone(at)
-
-        else:
-            log.warn("failed to create Active Train '{}'", info.getTrainName())
-            return -1
-        return 0
-            
-    ## ***********************************************************************************
-    
-    ## sound routines
-    
-    ## ***********************************************************************************            
-        
-            
-    # use external "nircmd" command to "speak" some text  (I prefer this voice to eSpeak)
-    def speak(self,msg) :
-        #if self.logLevel > 0: print("about to speak",msg)
-        #java.lang.Runtime.getRuntime().exec('Z:\\ConfigProfiles\\jython\\sound2\\nircmd speak text "' + msg +'"')    
-        my_dir = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/programs')
-        if self.logLevel > 0: print "nircmd" + my_dir+'/nircmd'
-        java.lang.Runtime.getRuntime().exec(my_dir+'/nircmd speak text "' + msg +'"')
-        return
-        
-    def announce(self, fromblockname, toblockname, speak_on): 
-
-        from_station = self.get_station_name(fromblockname)
-        to_station = self.get_station_name(toblockname)
-
-        if speak_on == True:
-            self.speak("The train in "+ from_station + " is due to depart to " + to_station)
-            
-    def get_station_name(self, block_name):
-        BlockManager = jmri.InstanceManager.getDefault(jmri.BlockManager)
-        block = BlockManager.getBlock(block_name)
-        comment = block.getComment()
-        # % is the delimeter for block name
-        delimeter = '"'
-        if delimeter in comment:
-            station_name = self.get_substring_between_delimeters(comment, delimeter)
-        else:
-            station_name = block_name
-        return station_name
-        
-    def get_substring_between_delimeters(self, comment, delimeter):
-        start = delimeter
-        end = delimeter
-        s = comment
-        substring = s[s.find(start)+len(start):s.rfind(end)]
-        return substring
-        
-        
-    def bell(self, bell_on = "True"):
-        if bell_on == "True":
-            snd = jmri.jmrit.Sound("resources/sounds/Bell.wav")
-            snd.play()
-
-            
-              
+          
 
 class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
     
@@ -1373,7 +1046,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
     button_dict = {}
     
     def __init__(self):
-        self.logLevel = 1
+        self.logLevel = 0
         global trains_dispatched
         trains_dispatched = []
         #initialise all block_value variables
@@ -1433,18 +1106,21 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         
         #if SchedulerSensor2 button is pressed then set up route, otherwise attempt to dispatch train
         if self.logLevel > 0: print "!!!!!!!!!!!!!!!!!!!!!!!!"
+        setup_dispatch_sensor = sensors.getSensor("setDispatchSensor") 
         set_route_sensor = sensors.getSensor("setRouteSensor")
+        run_route_sensor = sensors.getSensor("runRouteSensor")
         if self.logLevel > 0: print "set_route_sensor.getKnownState()",set_route_sensor.getKnownState(), ACTIVE
         if set_route_sensor.getKnownState() == ACTIVE:
             if self.logLevel > 0: print ("set_route")
             test = self.set_route(sensor_changed, button_sensor_name, button_station_name)
-            print "test = " , test
+            if self.logLevel > 0: print "test = " , test
             if test == False:
                 self.button_sensors_to_watch = copy.copy(self.button_sensors)
                 sensor_changed.setKnownState(INACTIVE)
-        else:
+        elif setup_dispatch_sensor.getKnownState() == ACTIVE:
             if self.logLevel > 0: print ("dispatch_train")
             self.dispatch_train(sensor_changed, button_sensor_name, button_station_name)
+        #if run_route_sensor is active - do nothing from here
             
         if self.logLevel > 0: print "end handle"                    
         return True 
@@ -1476,7 +1152,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         route = RouteManager.newRoute("temp_name")
         
         LocationManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
-        #print "button_station_name", button_station_name
+        #if self.logLevel > 0: print "button_station_name", button_station_name
         location = LocationManager.newLocation(button_station_name)
         first_station = button_station_name
         last_station = first_station
@@ -1601,7 +1277,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                         result = OptionDialog().variable_combo_box( options, default, msg, title, JOptionPane.QUESTION_MESSAGE)
                     if self.logLevel > 0: print "result = ",result    
                     if result == "express":
-                        print "moving express"                                          
+                        if self.logLevel > 0: print "moving express"                                          
                         if g == None:
                             if self.logLevel > 0: print "G IS NONE"
                         #graph = self.mark_occupied_blocks(g.g_express)
@@ -1762,10 +1438,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         
 # End of class StopMaster
 
-CreateScheduler = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/Scheduler.py')
-execfile(CreateScheduler)
-CreateSimulation = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/Simulation.py')
-execfile(CreateSimulation)
+
 
 
 class RunDispatcherMaster():
@@ -1825,10 +1498,11 @@ class RunDispatcherMaster():
             off_action_master.setName('Off-Action Master')
             off_action_master.start() 
         else:
-            print("Off-Action Master not started")
+            if self.logLevel > 0: print("Off-Action Master not started")
             
         #set default valus of buttons
         sensors.getSensor("Express").setKnownState(ACTIVE)
+        sensors.getSensor("simulateSensor").setKnownState(INACTIVE)
             
             
 if __name__ == '__builtin__':

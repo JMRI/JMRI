@@ -387,19 +387,14 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             #self.transit_dict[e] = transit 
             e.setItem(transit=transit)
             
-            #add action to indicate that the transit has ended
+            #turn on the "transit in progress" sensor in case it has been turned off by another transit
             transit_section_list = transit.getTransitSectionList()
             last_section = transit_section_list[-1]
             transit_action = None
             to_station_name = g.g_express.getEdgeTarget(e)
             sensor_name = self.sensor_name(to_station_name)
-            transit_action=self.transit_action_turn_off(sensor_name)
-            last_section.addAction(transit_action)
             transit_action=self.transit_action_turn_on(sensor_name)
-            last_section.addAction(transit_action)
-            transit_action=self.transit_action_turn_off_delay(sensor_name, 30000)  # delay 30 secs before turning off sensor. This is a failsafe if/when the sensor fails to turnoff whenthe train stops
-            last_section.addAction(transit_action)
-            
+            last_section.addAction(transit_action)           
         except jmri.JmriException as ex:
             if self.loglevel > 0: print(ex),
             if self.loglevel > 0: print "could not create transit", signal_mast_list

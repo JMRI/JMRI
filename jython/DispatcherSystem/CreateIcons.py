@@ -1,3 +1,9 @@
+# Script to automatically Generate Icons on Panel for automation purposes
+#
+# Author: Bill Fitch, copyright 2020
+# Part of the JMRI distribution
+
+
 #from elementtree.ElementTree import ElementTree
 from xml.etree.ElementTree import ElementTree
 from xml.etree.ElementTree import Element

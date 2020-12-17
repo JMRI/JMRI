@@ -1,3 +1,7 @@
+# Script to automatically Simulate Dispatched trains
+#
+# Author: Bill Fitch, copyright 2020
+# Part of the JMRI distribution
 
 trains_being_simulated = java.util.concurrent.CopyOnWriteArrayList()    # list of trains actively being simulated
 auto_trains_list = java.util.concurrent.CopyOnWriteArrayList()

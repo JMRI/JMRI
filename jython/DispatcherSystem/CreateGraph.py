@@ -126,7 +126,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                             if self.loglevel > 0: print "got here 4a"
                             #add an edge for all paths to form the espress train graph
                             path_name = [str(x.getUserName()) for x in path]
-                            edge = le()     # l = LabelledEdge() set up outside CreateGraph.py
+                            edge = le()     # le = LabelledEdge() set up outside CreateGraph.py
                             if self.loglevel > 0: print edge.to_string()
                             if self.loglevel > 0: print "adding edge ", station_block_name, destination
                             if self.loglevel > 0: print edge.to_string()

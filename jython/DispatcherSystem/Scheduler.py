@@ -56,7 +56,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         if self.scheduler_master_sensor.getKnownState() == ACTIVE:   # pause processing if we turn the sensor off
         
             if self.logLevel > 0: print("checking valid operations trains")
-            print "train_scheduler_setup",self.train_scheduler_setup
+            if self.logLevel > 0: print "train_scheduler_setup",self.train_scheduler_setup
             if self.train_scheduler_setup == False:
                 self.setup_train_scheduler()
                 self.train_scheduler_setup = True         
@@ -80,7 +80,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         if self.scheduler_show_clock_sensor.getKnownState() == ACTIVE:
             #if self.showing_clock == False:
             self.show_analog_clock()
-            tListener.cancel()
+            #tListener.cancel()
             self.scheduler_show_clock_sensor.setKnownState(INACTIVE)
                 #self.showing_clock = True
             
@@ -104,28 +104,31 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
     
         global trains_to_be_scheduled
         global scheduled
+        global timebase
+        print "************************************run trains******************"
         if self.logLevel > 0: print "run trains started: loop: scheduled trains", trains_to_be_scheduled
         for train in trains_to_be_scheduled:
             if scheduled[train] == False:
                 if self.logLevel > 0: print "train",train,"scheduled[train]",scheduled[train]
-                run_train_dict[train] = RunTrain(train, g.g_express)
-                if self.logLevel > 0: print "********1calling thread schedule_" + train.getName()
-                #instanceList.append(run_train_dict[train])
-                if self.logLevel > 0: print "********2calling thread schedule_" + train.getName()
+                if "stopping" in train.getDescription():
+                    run_train_dict[train] = RunTrain(train, g.g_stopping)
+                else:
+                    run_train_dict[train] = RunTrain(train, g.g_express)
                 run_train_dict[train].setName("schedule_" + train.getName())
-                if self.logLevel > 0: print "********3calling thread schedule_" + train.getName()
                 run_train_dict[train].start()
-                #instanceList.append (run_train_dict[train])
                 scheduled[train] = True
+                if self.logLevel > 0: print "scheduled train ", train
         if self.logLevel > 0: print "!!!!!!!!!!!!!!!!!!!!!run_trains finished"
-        if self.logLevel > 0: print "scheduled trainsafter ", trains_to_be_scheduled
-        self.waitMsec(1000)   
+        if self.logLevel > 0: print "trains_to_be_scheduled ", trains_to_be_scheduled
+        print "timebase.getRate()",timebase.getRate()
+        noMsec = int(60000/timebase.getRate())
+        self.waitMsec(noMsec)  ##every fast minute 
         return True
 
     def setup_train_scheduler(self):
         global tListener
         global timebase
-        print "Setting up Time Scheduler"
+        if self.logLevel > 0: print "Setting up Time Scheduler"
         # timebase = jmri.InstanceManager.getDefault(jmri.Timebase)
         # time = timebase.getTime()
         # if self.logLevel > 0: print "time = " , time
@@ -200,7 +203,7 @@ class TimeListener(java.beans.PropertyChangeListener):
         
 
     def propertyChange(self, event):         
-        if self.logLevel > 0: print "TimeListener: change",event.propertyName, "from", event.oldValue, self.prev_time, "to", event.newValue
+        if self.logLevel > 0: print "TimeListener: change",event.propertyName, "from", event.oldValue, "to", event.newValue
         self.process_operations_trains(event)
         # if self.scheduler_master_sensor.getKnownState() == ACTIVE:
             # self.process_operations_trains(event)
@@ -217,7 +220,7 @@ class TimeListener(java.beans.PropertyChangeListener):
         if self.logLevel > 1: print "TimeListener: process_operations_trains"
         TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
         train_list = TrainManager.getTrainsByTimeList()
-        print "train_list",train_list
+        if self.logLevel > 0: print "train_list",train_list
         #if self.logLevel > 1: print "prev_time", self.prev_time, "curr_time", self.curr_time
         for train in train_list:
             if self.logLevel > 1: print "*******************"
@@ -227,45 +230,47 @@ class TimeListener(java.beans.PropertyChangeListener):
         if event == None:
             if self.logLevel > 0: print "event is none , returning"
             return
-
-
-        trains_to_start = [train for train in train_list if self.prev_time < train.getDepartTimeMinutes() <= self.curr_time]
+        
+        trains_to_start = [train for train in train_list 
+            if (self.prev_time < train.getDepartTimeMinutes() <= self.curr_time) and
+                "skip" not in train.getDescription()]    #if skip in description of scheduled Train do not run the train
+                
         if self.logLevel > 0: print "trains to start " , trains_to_start
         #self.run_trains(trains_to_start)
         global trains_to_be_scheduled
         trains_to_be_scheduled += trains_to_start
+        if self.logLevel > 0: print "trains_to_be_scheduled", trains_to_be_scheduled
         global scheduled
         for t in trains_to_start:
             scheduled[t] = False 
             
-        print "End of process_operations_trains", "trains_to_be_scheduled",trains_to_be_scheduled,"scheduled",scheduled
-        
-
+        if self.logLevel > 0: print "End of process_operations_trains", "trains_to_be_scheduled",trains_to_be_scheduled,"scheduled",scheduled       
         
 class RunTrain(MoveTrain):
 
     def __init__(self, train, graph):
+        self.logLevel = 1
         if train == None:
-            print "RunTrain: train == None"
+            if self.logLevel > 0: print "RunTrain: train == None"
         else:
-            print "RunTrain: train =", train
+            if self.logLevel > 0: print "RunTrain: train =", train
             self.logLevel = 1
             if self.logLevel > 0: print "RunTrain"
             global trains_to_be_scheduled
             if self.logLevel > 0: print "trains_to_be_scheduled", trains_to_be_scheduled
-            self.logLevel = 1
+            self.logLevel = 0
             self.graph = graph
             self.train = train
-            
-            
-        
         
     def handle(self):    # Need to overload handle
         self.run_train()
-        return False
-        
-        
+        if "repeat" in self.train.getDescription():
+            return True
+        else:
+            return False
+
     def run_train(self):
+        print "************************************run train******************"
         if self.logLevel > 0:  "!     start run_train"
         route = self.train.getRoute()
         if route == None:
@@ -279,61 +284,115 @@ class RunTrain(MoveTrain):
             if self.logLevel > 0:  print "!     self.train: ", self.train, "station_list: ", station_list, "station", station
             station_to = station.getName()  #convert from operations:location to string
             if station_from != None:
-                if self.logLevel > 0:  "!     moving from", station_from, "to", station_to
-                #self.move_between_stations(station_from, station_to)
-                #make this a thread, so we can wait for it, without stopping everything       ##don't need to make this a thread!!
-                
+                if self.logLevel > 0:  print "!     moving from", station_from, "to", station_to               
                 self.station_from_name = station_from 
                 self.station_to_name = station_to
                 start_block = blocks.getBlock(station_from)
-                # if self.logLevel > 0:  "start block", start_block.getUserName()
-                # #check there is a train in the block, and has been registered
                 train_to_move = start_block.getValue()
                 self.train_name = train_to_move
-                print "calling move_between_stations","station_from",station_from,"station_to",station_to,"train_to_move",train_to_move
+                if self.logLevel > 0: print "calling move_between_stations","station_from",station_from,"station_to",station_to,"train_to_move",train_to_move
+                
+                doNotRun = False
+                repeat = False
+                print "train_to_move", train_to_move
                 if train_to_move != None:
+                    print "************************************moving train******************",train_to_move
                     self.move_between_stations(station_from, station_to, train_to_move, self.graph)
-                    repeat = True
                 else:
                     msg = "No train in block for scheduled train starting from " + station_from
                     title = "Scheduling Error"
-                    opt1 = "Do not schedule train"
-                    opt2 = "keep scheduling train"
+                    opt1 = "Not scheduling train"
                     print "No train in block for scheduled train starting from " + station_from
-                    reply = OptionDialog().customQuestionMessage2(msg, title, opt1, opt2)
-                    if reply == JOptionPane.YES_OPTION:
-                        scheduled[self.train] = True
-                        repeat = False
-                    else:
-                        repeat = True
-                        
-
-                # #wait for train to reach destination
-                # destination_block = blocks.getBlock(station_to)
-                # destination_sensor = destination_block.getSensor()
-                
-                # # train_in_dest_block = False
-                # #while train_in_dest_block == False:
-                # if self.logLevel > 0: print "!     waiting for train to reach dest  Waiting for ", destination_sensor.getUserName()
-                # self.waitSensorState(destination_sensor, ACTIVE)
-                # if self.logLevel > 0: print "!     a train reached dest"
-                
-                # if destination_block.getValue() == train.getName():
-                    # train_in_dest_block = True
-                    # if self.logLevel > 0: print "!     train was correct one"
-                # else:
-                    # if self.logLevel > 0: print "!     train was not correct one"
-                #self.waitMsec(5000)      #time to wait in station before calling next leg of schedule
-                #if self.logevel > 0: print "fred"
+                    OptionDialog().customMessage(msg, title, opt1)
+                    doNotRun = True
+                    break
                     
             station_from = station_to
                
         #remove train from train list
-        if repeat == False:
+        if "repeat" in self.train.getDescription(): 
+            repeat = True
+        if repeat == False or doNotRun == True:
             global trains_to_be_scheduled
             trains_to_be_scheduled.remove(self.train)
             self.waitMsec(4000)
         else:
             self.waitMsec(4000)
+        if self.logLevel > 0:  "!     finished run_train"
+        
+
+class RunRoute(MoveTrain):
+
+    def __init__(self, route, graph, station_from, station_to, repeat):
+        #note station_to and station_from are strings, while elements of route are locations
+        self.logLevel = 1
+        if route == None:
+            if self.logLevel > 0: print "RunRoute: route == None"
+        else:
+            if self.logLevel > 0: print "RunRoute: route =", route
+            self.graph = graph
+            self.route = route
+            self.station_from = station_from
+            self.station_to = station_to
+            self.repeat = repeat           
+        
+    def handle(self):    # Need to overload handle
+        self.run_route()
+        if self.repeat == True:
+            return True
+        else:
+            return False
+
+    def run_route(self):
+        print "************************************run train******************"
+        if self.logLevel > 0:  "!     start run_route"
+        station_list_locations = self.route.getLocationsBySequenceList()
+        #convert station_list to strings
+        station_list = [location.getName() for location in station_list_locations]
+        print "station_list before", station_list, "self.station_from",self.station_from,"self.station_to",self.station_to,"station_list[0]",station_list[0]
+        if self.station_from == None:                       #ensure route starts at station_from
+            pass
+        elif self.station_from != station_list[0]:
+            station_list.insert(0,self.station_from)
+        print "station_list",station_list
+        if self.station_to == None:                         #ensure route ends at station_to
+            pass
+        elif self.station_to != station_list[-1]:
+            
+            station_list.append(self.station_to)
+        print "station_list",station_list
+        if self.repeat == True:                             #ensure route end at start point if repeating
+            if self.station_to != self.station_from:
+                station_list.append(self.station_to)
+        print "station_list after", station_list        
+        station_from = None
+        for station in station_list:
+            station_to = station  # both now strings
+            if station_from != None:
+                if self.logLevel > 0:  print "!     moving from", station_from, "to", station_to               
+                self.station_from_name = station_from 
+                self.station_to_name = station_to
+                start_block = blocks.getBlock(station_from)
+                train_to_move = start_block.getValue()
+                self.train_name = train_to_move
+                if self.logLevel > 0: print "calling move_between_stations","station_from",station_from,"station_to",station_to,"train_to_move",train_to_move
+                
+                doNotRun = False
+                repeat = False
+                print "train_to_move", train_to_move
+                if train_to_move != None:
+                    print "************************************moving train******************",train_to_move
+                    self.move_between_stations(station_from, station_to, train_to_move, self.graph)
+                else:
+                    msg = "No train in block for scheduled train starting from " + station_from
+                    title = "Scheduling Error"
+                    opt1 = "Not scheduling train"
+                    print "No train in block for scheduled train starting from " + station_from
+                    OptionDialog().customMessage(msg, title, opt1)
+                    doNotRun = True
+                    break
+                    
+            station_from = station_to
+        self.waitMsec(4000)
         if self.logLevel > 0:  "!     finished run_train"
         
