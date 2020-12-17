@@ -149,7 +149,7 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
             contentPane.add(rayScrollPane, BorderLayout.CENTER);
         }
 
-        editLayoutTurntableBlockNameComboBox.setSelectedIndex(0);
+        editLayoutTurntableBlockNameComboBox.setSelectedIndex(-1);
         LayoutBlock lb = layoutTurntable.getLayoutBlock();
         if (lb != null) {
             Block blk = lb.getBlock();
