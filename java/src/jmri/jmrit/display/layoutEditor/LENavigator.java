@@ -5,11 +5,12 @@
  */
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.geom.*;
+import java.util.*;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.*;
 
 import jmri.util.MathUtil;
 
@@ -24,11 +25,16 @@ public class LENavigator {
     private LayoutTrack lastTrack;      // the layout track we were on previously
     private LayoutTrack layoutTrack;    // which layout track we're on
     private HitPointType hitPointType;  // the hitpoint we entered from
+    private double acceleration;        // how fast to accelerate per second
     private double speed;               // how far to travel per second
+    private double maxSpeed;            // top speed
     private double distance;            // how far to travel this frame
     private double distanceOnTrack;     // how far we've traveled on this track
     private Point2D location;           // where we are (in (x1 zoom) screen coordinates)
     private double directionRAD;        // directionRAD we're headed (in radians)
+
+    private LENavigator previous;
+    private LENavigator next;
 
     /**
      * Constructor method.
@@ -54,11 +60,14 @@ public class LENavigator {
         this.layoutTrack = layoutTrack;
         this.hitPointType = hitPointType;
         //
-        this.speed = speed;
+        this.maxSpeed = speed;
         this.distance = 0.0;
         this.distanceOnTrack = 0.0;
         this.location = layoutEditor.getCoords(layoutTrack, hitPointType);
         this.directionRAD = 0.0;
+
+        this.previous = null;
+        this.next = null;
 
         layoutEditor.addNavigator(this);
     }
@@ -106,12 +115,28 @@ public class LENavigator {
         this.hitPointType = hitPointType;
     }
 
+    public double getAcceleration() {
+        return acceleration;
+    }
+
+    public void setAcceleration(double acceleration) {
+        this.acceleration = acceleration;
+    }
+
     public double getSpeed() {
         return speed;
     }
 
     public void setSpeed(double speed) {
         this.speed = speed;
+    }
+
+    public double getMaxSpeed() {
+        return maxSpeed;
+    }
+
+    public void setMaxSpeed(double maxSpeed) {
+        this.maxSpeed = maxSpeed;
     }
 
     public double getDistance() {
@@ -154,6 +179,22 @@ public class LENavigator {
         this.directionRAD = directionRAD;
     }
 
+    public LENavigator getPrevious() {
+        return previous;
+    }
+
+    public void setPrevious(LENavigator previous) {
+        this.previous = previous;
+    }
+
+    public LENavigator getNext() {
+        return next;
+    }
+
+    public void setNext(LENavigator next) {
+        this.next = next;
+    }
+
     /*
      * public methods
      */
@@ -183,18 +224,34 @@ public class LENavigator {
 //        g2.translate(location.getX(), location.getY());
 //        g2.rotate(directionRAD);
         //g2.translate(-location.getX(), -location.getY());
-        g2.setColor(Color.red);
-        Point2D p1 = MathUtil.add(location, new Point2D.Double(+16.0, 0.0));
-        Point2D p2 = MathUtil.add(location, new Point2D.Double(-16.0, +8.0));
-        Point2D p3 = MathUtil.add(location, new Point2D.Double(-16.0, -8.0));
+        List<Point2D> points = new ArrayList<>();
+        if (getPrevious() == null) {
+            points.add(MathUtil.add(location, new Point2D.Double(+16.0, -8.0)));
+            points.add(MathUtil.add(location, new Point2D.Double(+24.0, +0.0)));
+            points.add(MathUtil.add(location, new Point2D.Double(+16.0, +8.0)));
+            points.add(MathUtil.add(location, new Point2D.Double(-16.0, +8.0)));
+            points.add(MathUtil.add(location, new Point2D.Double(-16.0, -8.0)));
+        } else {
+            points.add(MathUtil.add(location, new Point2D.Double(+16.0, -8.0)));
+            points.add(MathUtil.add(location, new Point2D.Double(+16.0, +8.0)));
+            points.add(MathUtil.add(location, new Point2D.Double(-16.0, +8.0)));
+            points.add(MathUtil.add(location, new Point2D.Double(-16.0, -8.0)));
+        }
+        GeneralPath path = new GeneralPath();
+        for (Point2D p : points) {
+            p.setLocation(MathUtil.rotateRAD(p, location, directionRAD));
+            if (path.getCurrentPoint() == null) {   // if this is the 1st point
+                path.moveTo(p.getX(), p.getY());
+            } else {
+                path.lineTo(p.getX(), p.getY());
+            }
+        }
+        path.closePath();
 
-        p1 = MathUtil.rotateRAD(p1, location, directionRAD);
-        p2 = MathUtil.rotateRAD(p2, location, directionRAD);
-        p3 = MathUtil.rotateRAD(p3, location, directionRAD);
-
-        g2.draw(new Line2D.Double(p1.getX(), p1.getY(), p2.getX(), p2.getY()));
-        g2.draw(new Line2D.Double(p2.getX(), p2.getY(), p3.getX(), p3.getY()));
-        g2.draw(new Line2D.Double(p3.getX(), p3.getY(), p1.getX(), p1.getY()));
+        g2.setColor(Color.yellow);
+        g2.fill(path);
+        g2.setColor(Color.black);
+        g2.draw(path);
 
         // Restore original transform
 //        g2.setTransform(saveAT);

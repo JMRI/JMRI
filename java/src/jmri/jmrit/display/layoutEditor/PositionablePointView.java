@@ -1328,7 +1328,14 @@ public class PositionablePointView extends LayoutTrackView {
             popup.add(new AbstractAction(Bundle.getMessage("AddNavigator")) {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    new LENavigator(layoutEditor, null, positionablePoint, HitPointType.POS_POINT, 4.5 * 16.0);
+                    LENavigator prevNav = new LENavigator(layoutEditor, null, positionablePoint, HitPointType.POS_POINT, 4.5 * 16.0);
+                    prevNav.setAcceleration(4);
+                    for (int i = 0; i < 5; i++) {
+                        LENavigator carNav = new LENavigator(layoutEditor, null, positionablePoint, HitPointType.POS_POINT, 0);
+                        prevNav.setNext(carNav);
+                        carNav.setPrevious(prevNav);
+                        prevNav = carNav;
+                    }
                 }
             });
         }

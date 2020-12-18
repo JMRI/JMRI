@@ -8667,13 +8667,29 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 long nowTime = System.currentTimeMillis();
                 long deltaTime = nowTime - navStartTime;
                 for (LENavigator navigator : navigators) {
-                    if (navigator.getSpeed() >= 1.0) {
+                    if (Math.abs(navigator.getMaxSpeed()) >= 1.0) {
+                        if (navigator.getSpeed() < navigator.getMaxSpeed()) {
+                            navigator.setSpeed(navigator.getSpeed() + (navigator.getAcceleration() * deltaTime / 1000.0));
+                        } else if (navigator.getSpeed() > navigator.getMaxSpeed()) {
+                            navigator.setSpeed(navigator.getSpeed() - (navigator.getAcceleration() * deltaTime / 1000.0));
+                        }
                         navigator.setDistance(navigator.getDistance() + (navigator.getSpeed() * deltaTime / 1000.0));
                         if (navigator.getDistance() > 0.0) {
                             navigator.navigate();
-                            Point2D w = navigator.getLocation();
                             repaint();
+                            //Point2D w = navigator.getLocation();
                             //repaint(0, (int) w.getX(), (int) w.getY(), 20, 20);
+                        }
+                    } else {
+                        LENavigator previous = navigator.getPrevious();
+                        if (previous != null) {
+                            double distance = MathUtil.distance(navigator.getLocation(), previous.getLocation());
+                            double gap = 36;    //TODO: fix this: hard-coded (for now)
+                            if (distance > gap) {
+                                navigator.setDistance((distance - gap));
+                                navigator.navigate();
+                                repaint();
+                            }
                         }
                     }
                 }
