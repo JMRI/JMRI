@@ -1769,13 +1769,15 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                     break;
                 }
                 for (int slot = item.getFrom(); slot < (item.getTo() + 1) && !abort; slot++) {
-                    sendReadSlot(slot);
-                    try {
-                        Thread.sleep(this.interval);
-                    } catch (Exception ex) {
-                        // just abort
-                        abort = true;
-                        break;
+                    if (item.getSlotType() != SlotType.UNKNOWN) {
+                        sendReadSlot(slot);
+                        try {
+                            Thread.sleep(this.interval);
+                        } catch (Exception ex) {
+                            // just abort
+                            abort = true;
+                            break;
+                        }
                     }
                 }
             }
