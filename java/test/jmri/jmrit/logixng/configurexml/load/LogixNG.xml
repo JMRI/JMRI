@@ -73,7 +73,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="4:49 AM">
+    <memory value="6:45 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -109,7 +109,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Thu Dec 17 04:48:50 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Dec 18 06:45:05 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <logixngs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <logixng enabled="no">
       <systemName>IQ:AUTO:0001</systemName>
@@ -4204,15 +4204,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <localVariable>index</localVariable>
       <formula>"IT"+index</formula>
       <onlyAppearanceAddressing>no</onlyAppearanceAddressing>
-      <operationAddressing>Direct</operationAddressing>
+      <operationAddressing>LocalVariable</operationAddressing>
       <operationType>Appearance</operationType>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <operationReference>{IM2}</operationReference>
+      <operationLocalVariable>index2</operationLocalVariable>
+      <operationFormula>"IT"+index2</operationFormula>
       <appearance>32</appearance>
-      <appearanceReference>{IM2}</appearanceReference>
-      <appearanceLocalVariable>index2</appearanceLocalVariable>
-      <appearanceFormula>"IT"+index2</appearanceFormula>
+      <appearanceReference>{IM3}</appearanceReference>
+      <appearanceLocalVariable>index3</appearanceLocalVariable>
+      <appearanceFormula>"IT"+index3</appearanceFormula>
       <maleSocket>
         <localVariable>
           <name>A1</name>
@@ -4265,15 +4265,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <localVariable>index</localVariable>
       <formula>"IT"+index</formula>
       <onlyAppearanceAddressing>no</onlyAppearanceAddressing>
-      <operationAddressing>Direct</operationAddressing>
+      <operationAddressing>Formula</operationAddressing>
       <operationType>Appearance</operationType>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <operationReference>{IM2}</operationReference>
+      <operationLocalVariable>index2</operationLocalVariable>
+      <operationFormula>"IT"+index2</operationFormula>
       <appearance>128</appearance>
-      <appearanceReference>{IM2}</appearanceReference>
-      <appearanceLocalVariable>index2</appearanceLocalVariable>
-      <appearanceFormula>"IT"+index2</appearanceFormula>
+      <appearanceReference>{IM3}</appearanceReference>
+      <appearanceLocalVariable>index3</appearanceLocalVariable>
+      <appearanceFormula>"IT"+index3</appearanceFormula>
       <maleSocket>
         <localVariable>
           <name>A1</name>
@@ -4326,15 +4326,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <localVariable>index</localVariable>
       <formula>"IT"+index</formula>
       <onlyAppearanceAddressing>no</onlyAppearanceAddressing>
-      <operationAddressing>Direct</operationAddressing>
+      <operationAddressing>Reference</operationAddressing>
       <operationType>Appearance</operationType>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <operationReference>{IM2}</operationReference>
+      <operationLocalVariable>index2</operationLocalVariable>
+      <operationFormula>"IT"+index2</operationFormula>
       <appearance>2</appearance>
-      <appearanceReference>{IM2}</appearanceReference>
-      <appearanceLocalVariable>index2</appearanceLocalVariable>
-      <appearanceFormula>"IT"+index2</appearanceFormula>
+      <appearanceReference>{IM3}</appearanceReference>
+      <appearanceLocalVariable>index3</appearanceLocalVariable>
+      <appearanceFormula>"IT"+index3</appearanceFormula>
       <maleSocket>
         <localVariable>
           <name>A1</name>
@@ -4389,13 +4389,13 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <onlyAppearanceAddressing>no</onlyAppearanceAddressing>
       <operationAddressing>Direct</operationAddressing>
       <operationType>Appearance</operationType>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <operationReference>{IM2}</operationReference>
+      <operationLocalVariable>index2</operationLocalVariable>
+      <operationFormula>"IT"+index2</operationFormula>
       <appearance>8</appearance>
-      <appearanceReference>{IM2}</appearanceReference>
-      <appearanceLocalVariable>index2</appearanceLocalVariable>
-      <appearanceFormula>"IT"+index2</appearanceFormula>
+      <appearanceReference>{IM3}</appearanceReference>
+      <appearanceLocalVariable>index3</appearanceLocalVariable>
+      <appearanceFormula>"IT"+index3</appearanceFormula>
       <maleSocket>
         <localVariable>
           <name>A1</name>
@@ -6935,9 +6935,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Thu Dec 17 04:49:02 CET 2020</date>
+      <date>Fri Dec 18 06:45:18 CET 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.21.4ish+daniel+2020-12-17T03:48:33Z+RUNKNOWN on Thu Dec 17 04:49:02 CET 2020-->
+  <!--Written by JMRI version 4.21.4ish+daniel+2020-12-18T05:43:40Z+RUNKNOWN on Fri Dec 18 06:45:18 CET 2020-->
 </layout-config>

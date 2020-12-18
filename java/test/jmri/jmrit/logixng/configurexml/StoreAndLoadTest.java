@@ -338,9 +338,13 @@ public class StoreAndLoadTest {
         actionSignalHead.setLocalVariable("index");
         actionSignalHead.setReference("{IM1}");
         actionSignalHead.setOnlyAppearanceAddressing(false);
-        actionSignalHead.setAppearanceFormula("\"IT\"+index2");
-        actionSignalHead.setAppearanceLocalVariable("index2");
-        actionSignalHead.setAppearanceReference("{IM2}");
+        actionSignalHead.setOperationAndAppearanceAddressing(NamedBeanAddressing.LocalVariable);
+        actionSignalHead.setOperationFormula("\"IT\"+index2");
+        actionSignalHead.setOperationLocalVariable("index2");
+        actionSignalHead.setOperationReference("{IM2}");
+        actionSignalHead.setAppearanceFormula("\"IT\"+index3");
+        actionSignalHead.setAppearanceLocalVariable("index3");
+        actionSignalHead.setAppearanceReference("{IM3}");
         maleSocket = digitalActionManager.registerAction(actionSignalHead);
         actionManySocket.getChild(index++).connect(maleSocket);
         
@@ -353,9 +357,13 @@ public class StoreAndLoadTest {
         actionSignalHead.setLocalVariable("index");
         actionSignalHead.setReference("{IM1}");
         actionSignalHead.setOnlyAppearanceAddressing(false);
-        actionSignalHead.setAppearanceFormula("\"IT\"+index2");
-        actionSignalHead.setAppearanceLocalVariable("index2");
-        actionSignalHead.setAppearanceReference("{IM2}");
+        actionSignalHead.setOperationAndAppearanceAddressing(NamedBeanAddressing.Formula);
+        actionSignalHead.setOperationFormula("\"IT\"+index2");
+        actionSignalHead.setOperationLocalVariable("index2");
+        actionSignalHead.setOperationReference("{IM2}");
+        actionSignalHead.setAppearanceFormula("\"IT\"+index3");
+        actionSignalHead.setAppearanceLocalVariable("index3");
+        actionSignalHead.setAppearanceReference("{IM3}");
         maleSocket = digitalActionManager.registerAction(actionSignalHead);
         actionManySocket.getChild(index++).connect(maleSocket);
         
@@ -368,9 +376,13 @@ public class StoreAndLoadTest {
         actionSignalHead.setLocalVariable("index");
         actionSignalHead.setReference("{IM1}");
         actionSignalHead.setOnlyAppearanceAddressing(false);
-        actionSignalHead.setAppearanceFormula("\"IT\"+index2");
-        actionSignalHead.setAppearanceLocalVariable("index2");
-        actionSignalHead.setAppearanceReference("{IM2}");
+        actionSignalHead.setOperationAndAppearanceAddressing(NamedBeanAddressing.Reference);
+        actionSignalHead.setOperationFormula("\"IT\"+index2");
+        actionSignalHead.setOperationLocalVariable("index2");
+        actionSignalHead.setOperationReference("{IM2}");
+        actionSignalHead.setAppearanceFormula("\"IT\"+index3");
+        actionSignalHead.setAppearanceLocalVariable("index3");
+        actionSignalHead.setAppearanceReference("{IM3}");
         maleSocket = digitalActionManager.registerAction(actionSignalHead);
         actionManySocket.getChild(index++).connect(maleSocket);
         
@@ -383,9 +395,13 @@ public class StoreAndLoadTest {
         actionSignalHead.setLocalVariable("index");
         actionSignalHead.setReference("{IM1}");
         actionSignalHead.setOnlyAppearanceAddressing(false);
-        actionSignalHead.setAppearanceFormula("\"IT\"+index2");
-        actionSignalHead.setAppearanceLocalVariable("index2");
-        actionSignalHead.setAppearanceReference("{IM2}");
+        actionSignalHead.setOperationAndAppearanceAddressing(NamedBeanAddressing.Direct);
+        actionSignalHead.setOperationFormula("\"IT\"+index2");
+        actionSignalHead.setOperationLocalVariable("index2");
+        actionSignalHead.setOperationReference("{IM2}");
+        actionSignalHead.setAppearanceFormula("\"IT\"+index3");
+        actionSignalHead.setAppearanceLocalVariable("index3");
+        actionSignalHead.setAppearanceReference("{IM3}");
         maleSocket = digitalActionManager.registerAction(actionSignalHead);
         actionManySocket.getChild(index++).connect(maleSocket);
         
