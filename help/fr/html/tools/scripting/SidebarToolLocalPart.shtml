@@ -1,0 +1,28 @@
+<!-- SidebarToolLocalPart.shtml -->
+<!-- This is the local part sidebar definition for html/tools/scripting pages -->
+
+		<dt><h3><a href="index.shtml">Scripting</a></h3><</dt>
+		<dd>Information sur la r&#233;daction de scripts pour contr&#244;ler JMRI plus en d&#233;tail :
+		    <ul>
+		    <li><a href="Start.shtml">D&#233;marrage</a>D&#233;marrage
+		    <li><a href="Python.shtml">Le langage Python/Jython</a>
+		    <li><a href="ex_set_turnouts.shtml">Exemple : R&#233;glage des Aiguillages</a>
+		    <li><a href="Examples.shtml">Exemples (Liens)</a>
+		    <li><a href="HowTo.shtml">Script JMRI  &quot;Comment...&quot;</a>
+			<li><a href="WhatWhere.shtml">Script JMRI &quot;Quoi...O&#250;&quot;</a>
+			<li><a href="Jynstruments.shtml">Jynstruments pour modifier l'interface graphique </a>
+            <li><a href="AppleScript.shtml">Open Scripting (for Mac)</a>
+		    </ul>
+		</dd>
+
+		<dt><h3><a href="Python.shtml">Python et Jython (Informations g&#233;n&#233;rales)</a></h3></dt>
+		<dd>Les scripts JMRI sont en Jython, une version de Python, un langage informatique g&#233;n&#233;ral tr&#232;s r&#233;pandu
+		    <ul>
+		    <li><a href="Python.shtml">Le langage Python/Jython</a>
+			<li><a href="http://www.python.org" target="_blank">Page d'accueil Python</a>
+		    <li><a href="http://wiki.python.org/moin/BeginnersGuide/NonProgrammers" target="_blank">Tutoriel Python pour les non-programmeurs</a>
+		    <li><a href="http://wiki.python.org/moin/BeginnersGuide/Programmers" target="_blank">Tutoriel Python pour les programmeurs</a>
+		    </ul>
+		</dd>
+
+<!-- /SidebarToolLocalPart.shtml -->
