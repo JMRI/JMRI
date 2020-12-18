@@ -134,23 +134,23 @@ public final class DCCppConstants {
 
     // Reply Regexes
     public static final String THROTTLE_REPLY_REGEX =      "\\s*T\\s*(\\d+)\\s+([-]*\\d+)\\s+([1,0]).*";
-    public static final String TURNOUT_REPLY_REGEX =       "\\s*H\\s*(\\d+)\\s+([1,0]).*";
+    public static final String TURNOUT_REPLY_REGEX =       "\\s*H\\s*(\\d+)\\s+([1,0])\\s*";
     public static final String TURNOUT_DEF_REPLY_REGEX =   "\\s*H\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+([0|1]).*";
 //    public static final String LIST_TURNOUTS_REPLY_REGEX = "\\s*H\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+([1,0]).*";
 //  public static final String LIST_SENSORS_REPLY_REGEX =    "\\s*Q\\s*(\\d+)\\s+(\\d+)\\s+([0,1]).*";
-    public static final String PROGRAM_REPLY_REGEX =       "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+([-]*\\d+).*";
-    public static final String PROGRAM_BIT_REPLY_REGEX =   "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+(\\d+)\\s+(\\d+).*";
+    public static final String PROGRAM_REPLY_REGEX =       "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+([-]*\\d+)\\s*";
+    public static final String PROGRAM_BIT_REPLY_REGEX =   "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*";
     public static final String MAXNUMSLOTS_REPLY_REGEX =   "\\s*#\\s*(\\d+).*";
     public static final String CURRENT_REPLY_REGEX =       "\\s*a\\s*(\\d+).*";
     public static final String CURRENT_REPLY_NAMED_REGEX = "\\s*a\\s*(\\w*?[a-zA-Z])\\s*(\\d+).*";
-    public static final String TRACK_POWER_REPLY_REGEX =       "\\s*p\\s*([0,1]).*";
+    public static final String TRACK_POWER_REPLY_REGEX =       "\\s*p\\s*([0,1])\\s*";
     public static final String TRACK_POWER_REPLY_NAMED_REGEX = "\\s*p\\s*(\\d+)\\s+(\\w+).*";
-    public static final String SENSOR_REPLY_REGEX =          "\\s*[Qq]\\s*(\\d+).*";
+    public static final String SENSOR_REPLY_REGEX =          "\\s*[Qq]\\s*(\\d+)\\s*";
     public static final String SENSOR_DEF_REPLY_REGEX =      "\\s*Q\\s*(\\d+)\\s+(\\d+)\\s+([0|1]).*";
-    public static final String SENSOR_ACTIVE_REPLY_REGEX =   "\\s*Q\\s*(\\d+).*";
-    public static final String SENSOR_INACTIVE_REPLY_REGEX = "\\s*q\\s*(\\d+).*";
+    public static final String SENSOR_ACTIVE_REPLY_REGEX =   "\\s*Q\\s*(\\d+)\\s*";
+    public static final String SENSOR_INACTIVE_REPLY_REGEX = "\\s*q\\s*(\\d+)\\s*";
 //    public static final String BROKEN_SENSOR_REPLY_REGEX = "\\s*(\\d+).*";
-    public static final String OUTPUT_REPLY_REGEX =       "\\s*Y\\s*(\\d+)\\s+(\\d+).*"; // <Y ID STATE>
+    public static final String OUTPUT_REPLY_REGEX =       "\\s*Y\\s*(\\d+)\\s+(\\d+)\\s*"; // <Y ID STATE>
     public static final String OUTPUT_LIST_REPLY_REGEX =  "\\s*Y\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+).*"; // <Y ID PIN IFLAG STATE>
     public static final String MADC_FAIL_REPLY_REGEX =    "\\s*X.*";
     public static final String MADC_SUCCESS_REPLY_REGEX = "\\s*O.*";
