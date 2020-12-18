@@ -41,8 +41,14 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
     private JPanel _panelOperationTypeReference;
     private JPanel _panelOperationTypeLocalVariable;
     private JPanel _panelOperationTypeFormula;
+    
+    private JCheckBox _signalHeadOperationReferenceAppearanceCheckBox;
     private JTextField _signalHeadOperationReferenceTextField;
+    private JTextField _signalHeadOperationReferenceAppearanceTextField;
+    
+    private JCheckBox _signalHeadOperationLocalVariableAppearanceCheckBox;
     private JTextField _signalHeadOperationLocalVariableTextField;
+    private JTextField _signalHeadOperationLocalVariableAppearanceTextField;
     
     private JCheckBox _signalHeadOperationFormulaAppearanceCheckBox;
     private JTextField _signalHeadOperationFormulaTextField;
@@ -168,19 +174,72 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
         _panelOperationTypeDirect.add(_operationComboBox);
         _panelOperationTypeDirect.add(_signalHeadAppearanceComboBox);
         
+        
+        _signalHeadOperationReferenceAppearanceCheckBox = new JCheckBox("Set appearance only");
         _signalHeadOperationReferenceTextField = new JTextField();
         _signalHeadOperationReferenceTextField.setColumns(30);
-        _panelOperationTypeReference.add(_signalHeadOperationReferenceTextField);
+        _signalHeadOperationReferenceAppearanceTextField = new JTextField();
+        _signalHeadOperationReferenceAppearanceTextField.setColumns(30);
         
+        _signalHeadOperationReferenceAppearanceCheckBox.addChangeListener((ChangeEvent e) -> {
+            if (_signalHeadOperationReferenceAppearanceCheckBox.isSelected()) {
+                _signalHeadOperationReferenceTextField.setEnabled(false);
+            } else {
+                _signalHeadOperationReferenceTextField.setEnabled(true);
+            }
+        });
+        
+        if (action != null) {
+            _signalHeadOperationReferenceAppearanceCheckBox.setSelected(action.getOnlyAppearanceAddressing());
+        }
+        if (_signalHeadOperationReferenceAppearanceCheckBox.isSelected()) {
+            _signalHeadOperationReferenceTextField.setEnabled(false);
+        } else {
+            _signalHeadOperationReferenceTextField.setEnabled(true);
+        }
+        
+        setupIndirectAppearancePanel(
+            _panelOperationTypeReference,
+            _signalHeadOperationReferenceAppearanceCheckBox,
+            _signalHeadOperationReferenceTextField,
+            _signalHeadOperationReferenceAppearanceTextField);
+        
+        
+        _signalHeadOperationLocalVariableAppearanceCheckBox = new JCheckBox("Set appearance only");
         _signalHeadOperationLocalVariableTextField = new JTextField();
         _signalHeadOperationLocalVariableTextField.setColumns(30);
-        _panelOperationTypeLocalVariable.add(_signalHeadOperationLocalVariableTextField);
+        _signalHeadOperationLocalVariableAppearanceTextField = new JTextField();
+        _signalHeadOperationLocalVariableAppearanceTextField.setColumns(30);
+        
+        _signalHeadOperationLocalVariableAppearanceCheckBox.addChangeListener((ChangeEvent e) -> {
+            if (_signalHeadOperationLocalVariableAppearanceCheckBox.isSelected()) {
+                _signalHeadOperationLocalVariableTextField.setEnabled(false);
+            } else {
+                _signalHeadOperationLocalVariableTextField.setEnabled(true);
+            }
+        });
+        
+        if (action != null) {
+            _signalHeadOperationLocalVariableAppearanceCheckBox.setSelected(action.getOnlyAppearanceAddressing());
+        }
+        if (_signalHeadOperationLocalVariableAppearanceCheckBox.isSelected()) {
+            _signalHeadOperationLocalVariableTextField.setEnabled(false);
+        } else {
+            _signalHeadOperationLocalVariableTextField.setEnabled(true);
+        }
+        
+        setupIndirectAppearancePanel(
+            _panelOperationTypeLocalVariable,
+            _signalHeadOperationLocalVariableAppearanceCheckBox,
+            _signalHeadOperationLocalVariableTextField,
+            _signalHeadOperationLocalVariableAppearanceTextField);
+        
         
         _signalHeadOperationFormulaAppearanceCheckBox = new JCheckBox("Set appearance only");
         _signalHeadOperationFormulaTextField = new JTextField();
-        _signalHeadOperationFormulaTextField.setColumns(20);
+        _signalHeadOperationFormulaTextField.setColumns(30);
         _signalHeadOperationFormulaAppearanceTextField = new JTextField();
-        _signalHeadOperationFormulaAppearanceTextField.setColumns(20);
+        _signalHeadOperationFormulaAppearanceTextField.setColumns(30);
         
         _signalHeadOperationFormulaAppearanceCheckBox.addChangeListener((ChangeEvent e) -> {
             if (_signalHeadOperationFormulaAppearanceCheckBox.isSelected()) {
@@ -229,9 +288,15 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
                 default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
             }
             _operationComboBox.setSelectedItem(action.getOperationAndAppearanceAddressing());
+            
             _signalHeadOperationReferenceTextField.setText(action.getOperationReference());
+            _signalHeadOperationReferenceAppearanceTextField.setText(action.getAppearanceReference());
+            
             _signalHeadOperationLocalVariableTextField.setText(action.getOperationLocalVariable());
+            _signalHeadOperationLocalVariableAppearanceTextField.setText(action.getAppearanceLocalVariable());
+            
             _signalHeadOperationFormulaTextField.setText(action.getOperationFormula());
+            _signalHeadOperationFormulaAppearanceTextField.setText(action.getAppearanceFormula());
             
             SignalHead sh = null;
             if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeDirect) {
@@ -442,15 +507,20 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
                             .getItemAt(_signalHeadAppearanceComboBox.getSelectedIndex())._state);
                 }
             } else if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeReference) {
+                action.setOnlyAppearanceAddressing(_signalHeadOperationReferenceAppearanceCheckBox.isSelected());
                 action.setOperationAndAppearanceAddressing(NamedBeanAddressing.Reference);
                 action.setOperationReference(_signalHeadOperationReferenceTextField.getText());
+                action.setAppearanceReference(_signalHeadOperationReferenceAppearanceTextField.getText());
             } else if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeLocalVariable) {
+                action.setOnlyAppearanceAddressing(_signalHeadOperationLocalVariableAppearanceCheckBox.isSelected());
                 action.setOperationAndAppearanceAddressing(NamedBeanAddressing.LocalVariable);
                 action.setOperationLocalVariable(_signalHeadOperationLocalVariableTextField.getText());
+                action.setAppearanceLocalVariable(_signalHeadOperationLocalVariableAppearanceTextField.getText());
             } else if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeFormula) {
                 action.setOnlyAppearanceAddressing(_signalHeadOperationFormulaAppearanceCheckBox.isSelected());
                 action.setOperationAndAppearanceAddressing(NamedBeanAddressing.Formula);
                 action.setOperationFormula(_signalHeadOperationFormulaTextField.getText());
+                action.setAppearanceFormula(_signalHeadOperationFormulaAppearanceTextField.getText());
             } else {
                 throw new IllegalArgumentException("_tabbedPaneOperationType has unknown selection");
             }
