@@ -222,10 +222,12 @@
     
     <p class="im">
     <img src="images/rs485chain.jpg" alt="RS485 Daisy Chain" align="right" height="211" width="396">
-    JMRI only permits a single CMRI connection to be configured for your layout. If your arduino
-    is connected via a USB cable, that means only a single arduino.  However, you can connect an
-    RS-485 cable (two wire) to the USB port and connect multiple arduinos in a "daisy chain" (each
-    arduino connected to the next and finally a connection to the computer), as shown in this diagram:
+    Although JMRI permits more than one CMRI connection to be configured for a layout, it is often 
+    convenient to connect multiple arduinos on a single CMRInet connection. This eliminates the need to have
+    individual USB cables going from each arduino to separate USB ports on your computer.  Instead, multiple
+    arduinos can be connected via an RS-485 adapter to an RS-485 two wire cable in a "daisy chain" (each arduino
+    connected to the next), ending in an RS-485-to-USB adapter to connect to the JMRI computer as shown in
+    this diagram:
     </p>
     
     <p>
