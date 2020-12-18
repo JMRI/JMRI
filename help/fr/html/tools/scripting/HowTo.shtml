@@ -1,0 +1,693 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+<!--translated on 2020-12-17 -->
+  <title>JMRI: Scripting "How To..."</title>
+    <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+    <!-- /Style -->
+</head>
+
+<body id="HowToTopOfPage">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
+      <!-- Page Body -->
+
+      <h1>jmri : Sc&#233;nario "Comment..."</h1>
+ 	  <!-- Page r&#233;organis&#233;e par Jerry Grochow 2018-11-29 -->
+
+      <p class="subtitle">Des conseils et des exemples sur la fa&#231;on d'effectuer des op&#233;rations de base dans les scripts</p>.
+      
+      <p>NOTE SUR LES EXEMPLES DE CODE : Le langage Python fournit des moyens alternatifs d'adresser des objets et des m&#233;thodes ;  
+       Les exemples peuvent utiliser l'une ou l'autre syntaxe, comme : </p>
+		
+		<pre>
+      m = memories.provideMemory("IMXXX")
+      m.value = "Tout".
+        </pre>
+        <pre>
+      memories.provideMemory("IMYYY").setValue("Anything else")
+ 		</pre>
+      
+      <p> Aucun op&#233;rateur d'affectation (=) n'est n&#233;cessaire dans le deuxi&#232;me exemple car la m&#233;thode "set" fait ce travail. Utilisez la syntaxe que vous pr&#233;f&#233;rez, 
+		bien que la coh&#233;rence soit une bonne pratique.</p>
+	  
+      <ul>
+	  <li><a href="#running">Comment puis-je lancer un script sauvegard&#233; ?
+      <li><a href="#varnaming">Comment dois-je nommer les variables dans les scripts JMRI ?
+	  <li><a href="#objets">Comment r&#233;f&#233;rencer des objets JMRI existants ou en cr&#233;er de nouveaux (capteurs, m&#233;moires, etc.) dans un script ?
+      <li><a href="#chars">Comment utiliser les caract&#232;res non ISO 8859-1 dans les objets et aspects utilisateur ?
+	  <li><a href="#slotmon"> Comment puis-je imprimer les donn&#233;es du moniteur de connexion ?
+      <li>En attendant que les choses changent : 
+        <ul>
+          <li><a href="#priority">Comment puis-je limiter la priorit&#233; d'un script ?
+          <li><a href="#several">Comment puis-je attendre que quelque chose change dans mon r&#233;seau ?
+          <li><a href="#multturnouts">Comment puis-je "&#233;couter" un Aiguillage ou un Capteur ?
+        </ul></li>
+      <li> Faire des choses utiles dans les sc&#233;narios :
+        <ul>
+          <li><a href="#timestamp">Comment puis-je horodater un message de sortie dans mon script ?
+          <li><a href="#sound">Comment faire jouer un son &#224; un script ?
+          <li><a href="#runwarrant">Comment puis-je lancer un bulletint dans un script ?
+          <li><a href="#setroute">Comment puis-je d&#233;finir un itin&#233;raire &#224; partir d'un script ?
+        </ul></li>
+      <li>Communiquer avec d'autres fen&#234;tres, scripts, panneaux, fichiers :
+        <ul>
+          <li><a href="#panelload">Comment puis-je charger un fichier de pannneau &#224; partir d'un script ?
+          <li><a href="#windows">Comment puis-je acc&#233;der aux fen&#234;tres de l'application JMRI ?
+          <li><a href="#invoke">Comment puis-je invoquer un autre fichier de script &#224; partir d'un script ?
+          <li><a href="#communicate">Comment puis-je communiquer entre les scripts ?
+          <li><a href="#preferences">Comment puis-je trouver un fichier dans le r&#233;pertoire des pr&#233;f&#233;rences ?
+        </ul></li>  
+      </ul>
+      
+	  <p>Voir la page <a href="Examples.shtml">exemples</a> pour de nombreux exemples de scripts. Aussi,
+        la <a href="Start.shtml">page d'introduction</a> montre quelques
+        des commandes de base.</p>
+	  <p>Voir aussi <a href="Python.shtml">Langage Python/Jython</a> pour une FAQ g&#233;n&#233;rale sur le langage.</p>
+	  <p>Voir aussi <a href="WhatWhere.shtml">Jython Scripting "Quoi... O&#250;"</a> pour d'autres informations int&#233;ressantes.</p>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	 
+     
+    <h2><a id="running">Comment puis-je lancer un script sauvegard&#233; ?</a></h2>
+	  
+	  <div class="para">
+	  
+	  <p>Depuis l'&#233;cran principal de PanelPro, cliquez sur "Panneaux" dans le menu du haut. Ou, &#224; partir de l'&#233;cran principal de DecoderPro,
+	  cliquez sur "Actions" dans le menu du haut. S&#233;lectionnez "Ex&#233;cuter le script..." dans le menu d&#233;roulant.
+
+      <p>Le r&#233;pertoire configur&#233; dans les Pr&#233;f&#233;rences (que vous pouvez modifier) appara&#238;tra et vous pourrez s&#233;lectionner un script &#224; ex&#233;cuter.  
+	  Vous pouvez &#233;galement naviguer vers tout autre r&#233;pertoire contenant des scripts stock&#233;s.  Sur les PC, les fichiers de script Jython ont
+	  un suffixe ".py" signifiant Python.]</p>
+      
+        <p><a href="#HowToTopOfPage">[Aller en haut de la page]</a></p>
+      </div>
+      
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
+	<h2><a id="varnaming">Comment dois-je nommer les variables dans les scripts JMRI ?</a></h2>
+
+      <div class="para">
+      
+        <p>R&#233;ponse courte : vous pouvez les nommer comme vous le souhaitez!</p>
+		
+		<p>Dans de nombreux dossiers de l'&#233;chantillon, les taux de participation sont indiqu&#233;s par
+        des noms comme "to12", des signaux par des noms comme "si21", et
+        capteurs par des noms comme "bo45". Ces conventions sont issues de
+        comment un code plus ancien a &#233;t&#233; &#233;crit, et ils peuvent rendre le code
+        plus clair. Mais ils ne sont en aucun cas obligatoires ; le programme
+        ne se soucie pas de ce que vous appelez des variables.</p>
+
+        <p> Par exemple, "self.to12" est juste le nom d'une variable.
+        Vous pouvez l'appeler comme vous voulez, par exemple
+        self.MyBigFatNameForTheLeftTurnout</p>
+
+        <p>La partie "self" la rend compl&#232;tement locale ; "self" d&#233;signe
+        "un objet de la classe particuli&#232;re que je d&#233;finis comme &#233;tant 
+        maintenant". Vous pouvez &#233;galement d&#233;finir une variable globale, mais
+        ce n'est pas recommand&#233;. Si vous avez plusieurs scripts
+        en cours (et vous pouvez en avoir autant que vous le souhaitez ; nous
+        recommande de placer chaque feu de signal dans une feu s&#233;par&#233;e),
+        les variables peuvent &#234;tre confondues si vous utilisez la m&#234;me variable
+        pour signifier des choses trop diff&#233;rentes. Utiliser le "self" de cette mani&#232;re
+        on s'assure que cela ne se produise pas.</p>
+
+        <p>Notez que lesaiguillages, etc, ont des "Noms Syst&#232;me" qui
+        ressemblent &#224; "LT12". Vous les verrez de temps en temps, mais c'est
+        quelque chose de diff&#233;rent des noms de variables dans un fichier de script
+       .</p>
+     
+    <p><a href="#HowToTopOfPage">[Aller en haut de la page]</a></p>     
+      </div>
+
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  	  
+	<h2><a id="objects"> Comment r&#233;f&#233;rencer des objets JMRI existants ou en cr&#233;er de nouveaux (capteurs, m&#233;moires, etc.) dans un script ?</a></h2>
+		<!-- Section cr&#233;&#233;e par Jerry Grochow le 2018-10-18, ajout d'infos &#224; partir de posts sur jmriusers@groups.io par Cliff Anderson le 2019-04-23
+        et Dave Sand le 2019-09-05 -->
+		
+	  <div class="para">
+		
+      <p>Tous les objets d'entr&#233;e et de sortie JMRI sont &#233;num&#233;r&#233;s dans <a href="../../../../../../help/fr/html/tools/index.shtml">
+      Les outils communs</a>, tels que les capteurs, les m&#233;moires, les lumi&#232;res, les signaux, les rapports, etc. sont accessibles ou de nouveaux peuvent &#234;tre cr&#233;&#233;s 
+      dans un sc&#233;nario. Une simple ligne de code tap&#233;e dans la fen&#234;tre d'entr&#233;e du script suffit pour cr&#233;er un objet:</p>
+		
+		<pre>
+    a=memories.provideMemory("IM" + "XXX")
+    b=sensors.provideSensor("IS" + "XXX")
+		</pre>
+		
+      <p>L'utilisation de la m&#233;thode "fournir" pour un type sp&#233;cifique d'entr&#233;e ou de sortie cr&#233;e un nouvel objet
+      avec le nom du syst&#232;me sp&#233;cifi&#233; (IMXXX ou ISXXX dans ces exemples) ou trouve une r&#233;f&#233;rence &#224; un
+      objet. Ces lignes peuvent &#233;galement &#234;tre incluses dans des scripts qui sont sauvegard&#233;s puis ex&#233;cut&#233;s.</p>
+      
+      <p>En revanche, la m&#233;thode "get" permet de trouver un objet existant mais pas d'en cr&#233;er un nouveau.
+      Si votre objectif est de trouver uniquement des objets existants, vous pouvez utiliser un code comme le suivant, o&#250; SomeSensorName
+      est une variable avec soit un nom syst&#232;me, soit un nom utilisateur (voir ci-dessous):</p>
+      
+       <pre>
+    c = sensors.getSensor(SomeSensorName)
+    if c is None:
+       print SomeSensorName," does not exist"
+      </pre>
+        
+      <p>Une fois qu'une r&#233;f&#233;rence est &#233;tablie, les variables d'un objet peuvent &#234;tre d&#233;finies &#224; l'aide d'instructions telles que:</p>
+		
+		<pre>
+    a.userName = "Ma m&#233;moire 1"
+    b.userName = "My Sensor 1 at East Yard"
+    a.value = "Quelque chose que je veux sauver"
+    b.&#233;tat = ACTIF
+		</pre>
+		
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
+
+	<h2><a id="chars">Comment utiliser les caract&#232;res non ISO 8859-1 dans les objets et aspects utilisateur ?</a></h2>
+		
+        <p>Les noms d'utilisateur des objets et des aspects des signaux de JMRI peuvent inclure des caract&#232;res non ISO&nbsp;8859-1
+				 Vous devez les d&#233;coder correctement pour utiliser ces noms dans les scripts jython.
+		Toutes les cha&#238;nes de caract&#232;res qui contiennent des caract&#232;res non ISO&nbsp;8859-1 doivent &#234;tre d&#233;cod&#233;es
+		par la m&#233;thode <b>.decode ("UTF-8")</b>.
+		
+		<p>Exemple : Signal &#233;loign&#233; du signal d'entr&#233;e des Chemins de fer tch&#233;coslovaques 
+		<a href="../../../../../xml/signals/CSD-1962-zakladni/appearance-entry_distant.xml">JMRI "&#268;SD 1962 z&#225;kladn&#237 ; n&#225;v&#283;stidla : P&#345;edv&#283;sti" Tableau d'apparence</a>
+		selon les r&#232;gles s'appelle <b>P&#345;L</b>. 
+		Le m&#226;t de signalisation affichera deux aspects :  Libre &ndash ; <b>Volno</b> et  
+		Attention &ndash ; <b>V&#253;straha</b>.</p>
+		
+		<p>Dans le tableau des m&#226;ts de signalisation se trouve un m&#226;t de signalisation distant avec l'adresse DCC 100 de LocoNet
+		avec le nom du syst&#232;me <b>LF$dsm:CSD-1962-zakladni:entry_distant(100)</b>.</p>
+		
+		<p>Dans le sc&#233;nario, le m&#226;t de signalisation et ses aspects fonctionneront comme suit:</p>
+		
+		<p>Entr&#233;e de script de la fen&#234;tre:</p>
+		
+		<pre>
+    mastDistantUserName = "P&#345;L".decode("UTF-8")
+    aspectClear = "Volno"
+    aspectCaution = "V&#253;straha".decode("UTF-8")
+    
+    mastDistant = masts.getSignalMast(mastDistantUserName)
+    print "System Name:    ", mastDistant.getSystemName()
+    print "User Name:      ", mastDistant.getUserName()
+    
+    print "aspect default: ", mastDistant.getAspect()
+    
+    mastDistant.setAspect(aspectClear)
+    print "aspect Clear:   ", mastDistant.getAspect()
+    
+    mastDistant.setAspect(aspectCaution)
+    print "aspect Caution: ", mastDistant.getAspect()
+		</pre>
+		
+		
+		<p>Sortie du script de la fen&#234;tre:</p>
+		
+		<pre>
+    System Name:     LF$dsm:CSD-1962-zakladni:entry_distant(100)
+    User Name:       P&#345;L
+    aspect default:  None
+    aspect Clear:    Volno
+    aspect Caution:  V&#253;straha
+		</pre>
+		
+		
+            <p><a href="#HowToTopOfPage">[Aller en haut de la page]</a></p>
+		</div>
+        
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
+    <h2><a id="slotmon">Comment puis-je imprimer les donn&#233;es du moniteur de cr&#233;neaux ?</a></h2>
+	  
+	  <div class="para">
+	  <!-- Section cr&#233;&#233;e par Jerry Grochow 2019-10-14 d'apr&#232;s un post de Bob Jacobsen &#224; jmriusers@groups.io 2019-10-09 -->
+      
+	  <p>La table des cr&#233;neaux permet de suivre les locomotives et couplage en un syst&#232;me contr&#244;l&#233; par JMRI.  Pour imprimer le contenu, 
+      extraire les donn&#233;es ligne par ligne et les envoyer &#224; l'imprimante.  Voici un exemple utilisant la table des slots de LocoNet:</p>
+
+
+
+      <pre>
+    myLocoNetConnection = jmri.InstanceManager.getList(jmri.jmrix.loconet.LocoNetSystemConnectionMemo).get(0) ;
+    slotManager = myLocoNetConnection.getSlotManager()
+     for i in range(0, 127):
+       print slotManager.slot(i).slotStatus
+      </pre>
+   
+      <p>SystemConnectionMemo est disponible pour de nombreux types de syst&#232;mes de communication DCC.  Voir 
+      <a href="https://www.jmri.org/JavaDoc/doc/jmri/jmrix/SystemConnectionMemo.html" target="_blank">
+      JavaDocs </a>pour plus d'informations.</p>
+   
+      <p><a href="#HowToTopOfPage">[Aller en haut de la page]</a></p>
+      </div>
+      
+
+        
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	 	
+           
+    <h2><a id="priority">Comment puis-je limiter la priorit&#233; d'un script ?</a></h2>
+
+      <div class="para">
+      
+        <p>Si le script fait une boucle qui est cens&#233;e mettre &#224; jour
+        quelque chose, il ne peut pas &#234;tre &#233;crit pour fonctionner en continu ou bien
+        il ne fera que consommer autant de temps d'ordinateur que possible.
+        Il devrait plut&#244;t attendre.
+
+        <p>La meilleure chose &#224; faire est d'attendre que quelque chose change.
+        Par exemple, si votre script examine certains capteurs pour d&#233;cider
+        quoi faire, attendre qu'un de ces capteurs change (voir
+        <a href="#multturnouts">ci-dessous</a> et les exemples de scripts pour les exemples)</p>
+
+        <p>Le plus simple, mais moins efficace, est d'attendre une
+        peu de temps avant de v&#233;rifier &#224; nouveau. Par exemple</p>
+        
+    <pre>
+    waitMsec(1000)
+    </pre> 
+    
+        fait attendre un automate ou un script Siglet pendant 1000 millisecondes (une seconde) avant de continuer.
+
+        <p>Pour un simple script, quelque chose qui n'utilise pas la
+        class d'automate ou Siglet, vous pouvez faire une pause en faisant</p>
+     
+     <pre>
+     from time import sleep
+    sleep(10)
+    </pre>
+
+      <p>La premi&#232;re ligne d&#233;finit la routine de la " pause", et il suffit de le
+      faire une fois. La deuxi&#232;me ligne attends alors pendant 10 secondes. Notez que
+      la pr&#233;cision de cette m&#233;thode n'est pas aussi bonne que l'utilisation d'une des
+      classes sp&#233;ciales.</p>
+
+          <p><a href="#HowToTopOfPage">[Aller en haut de la page]</a></p>
+      </div>
+	    
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
+    <h2><a id="plusieurs">Comment puis-je attendre que quelque chose change dans mon r&#233;seau ?</a></h2>
+
+      <div class="para">
+        <p>Si votre script est bas&#233; sur un Siglet ou <a href=
+        "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html" target="_blank">
+        AbstractAutomaton</a> classe (par exemple si vous &#233;crivez un
+        routine "handle"" - <a href="WhatWhere.shtml#siglet-automaton" target="_blank">voir la page O&#250;t...Quand pour plus d'informations sur ces classes</a>), 
+        il y a une  routine g&#233;n&#233;rale "<a href=
+        "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html#waitChange-jmri.NamedBean:A-" target="_blank">waitChange</a>"
+        qui attend que l'un des nombreux capteurs change
+        avant de vous le renvoyer. Notez que plusieurs peuvent changer
+        en m&#234;me temps, vous ne pouvez donc pas supposer qu'un seul a une
+        une valeur diff&#233;rente ! Et vous devrez alors v&#233;rifier si
+        ils sont devenus un &#233;tat particulier. Il est &#233;crit :</p>
+        
+     <pre>
+    self.waitChange ([self.sensorA, self.sensorB, self.sensorC])
+    </pre>
+    
+        o&#250; vous avez pr&#233;alablement d&#233;fini chacune de ces choses "self.sensorA" via une ligne comme
+
+    <pre>
+    self.sensorA = sensors.provideSensor("21")
+    </pre>
+
+      Vous pouvez alors v&#233;rifier les diff&#233;rentes combinaisons comme :
+       <pre>
+   if self.sensorA.knownState == ACTIVE :
+        print "The plane! The plane!"
+   elif self.sensorB.knownState == INACTIVE :
+        print "Would you believe a really fast bird?"
+   else
+        print "Nothing to see here, move along..."
+    </pre>
+    Vous pouvez &#233;galement attendre les changements d'objets de types multiples :
+    <pre>
+    self.waitChange([self.sensorA, self.turnoutB, self.signalC])
+    </pre>
+
+    Enfin, vous pouvez pr&#233;ciser le d&#233;lai maximum d'attente avant de poursuivre m&#234;me si rien n'a chang&#233; :
+    <pre>
+    self.waitChange ([self.sensorA, self.sensorB, self.sensorC], 5000)
+    </pre>
+    
+    attendra un maximum de 5000 millisecondes, par exemple 5 secondes. Si rien n'a chang&#233;,
+    le sc&#233;nario se poursuivra de toute fa&#231;on.
+      
+          <p><a href="#HowToTopOfPage">[Aller en haut de la page]</a></p>
+      </div>
+
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
+    <h2><a id="multturnouts">Comment puis-je "&#233;couter" un Turnout ou un capteur ?</a></h2>
+
+      <div class="para">
+      
+        <p>Les objetsJMRI (aiguillages, capteurs, etc.) peuvent avoir des "auditeurs".
+        qui leur sont attach&#233;s. Ceux-ci sont ensuite notifi&#233;s lorsque le statut
+        de l'objet change. Si vous utilisez les class Automate ou
+         Siglet, vous n'avez pas besoin d'utiliser cette capacit&#233; ;
+        ces classes g&#232;rent toutes les cr&#233;ations et les enregistrements 
+        des auditeurs.Mais si vous voulez faire quelque chose de sp&#233;cial, vous pouvez 
+         utiliser cette capacit&#233;.</p>
+
+        <p>Une seule routine peut &#233;couter un ou plusieurs Aiguillage,
+        Capteur, etc.</p>
+
+        <p>Si vous conservez une r&#233;f&#233;rence &#224; votre &#233;couteur objet , vous
+        peut l'attacher &#224; plus d'un objet:</p>
+        
+     <pre>
+    m = MyListener()
+    turnouts.provideTurnout("12").addPropertyChangeListener(m)
+    turnouts.provideTurnout("13").addPropertyChangeListener(m)
+    turnouts.provideTurnout("14").addPropertyChangeListener(m)
+    </pre>
+
+        <p>Mais comment l'auditeur sait-il ce qui a chang&#233; ?
+
+        <p>Une routine d'&#233;coute ressemble &#224; ceci:</p>
+        
+     <pre>
+class MyListener(java.beans.PropertyChangeListener):
+  def propertyChange(self, event):
+    print "change",event.propertyName
+    print "from", event.oldValue, "to", event.newValue
+    print "source systemName", event.source.systemName
+    print "source userName", event.source.userName
+    </pre>
+
+
+        <p>Quand l'auditeur est appel&#233;, on lui donne un objet
+        (appel&#233; &#233;v&#233;nement ci-dessus) qui contient le nom du mat&#233;riel
+        qui a chang&#233;, plus les anciennes et les nouvelles valeurs de ce
+        mat&#233;riel.</p>
+
+        <p> Vous pouvez &#233;galement obtenir une r&#233;f&#233;rence &#224; l'objet original qui
+        chang&#233; via "nom", puis faites ce que vous voulez par
+        ceci. Dans l'exemple ci-dessus, vous pouvez r&#233;cup&#233;rer le
+        systemName, userName (ou m&#234;me d'autres types de statut).</p>
+
+    <p><a href="#HowToTopOfPage">[Aller en haut de la page]</a></p>
+    </div>
+
+      
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	 	
+      
+    <h2><a id="timestamp">Comment puis-je horodater un message de sortie dans mon script ?</a></h2>
+    <!-- De Dave Sand 11/21/2018 -->
+      <div class="para">
+        
+        <p>Importez la biblioth&#232;que "time" et ensuite c'est facile:</p>
+        
+    <pre>
+     import time
+    .
+    .
+    .
+    print time.strftime("%Y-%m-%d %H:%M:%S"), "Votre message ou les variables ici".
+     </pre>        
+    
+    <p><a href="#HowToTopOfPage">[Aller en haut de la page]</a></p>
+
+    </div>
+    
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
+    <h2><a id="sound">Comment puis-je obtenir un script pour jouer un son ?</a></h2>
+		
+        <div class="para">
+        
+		<p>Le
+        Le fichier jython/SampleSound.py montre comment faire jouer un son dans
+        un sc&#233;nario. En bref, vous chargez un son dans une variable ("snd"
+        dans ce cas), puis appelez "play()" pour le faire jouer une fois, etc. </p>
+
+        <p>Notez que si plus d'un son est jou&#233; &#224; la fois,
+        le programme les combine du mieux qu'il peut. En g&#233;n&#233;ral, il
+        fait un assez bon travail.</p>
+
+        <p>Vous pouvez combiner l'appel play() avec d'autres logiques pour jouer
+        un son quand un capteur change, etc. Ron McKinnon a fourni
+        un exemple de cette d&#233;marche. Il joue une cloche de passage &#224; niveau
+        lorsque le capteur est actif.
+        
+    <pre>
+# Il &#233;coute les changements apport&#233;s &#224; un capteur,
+# et joue ensuite un fichier son lorsque le capteur est actif
+
+import jarray
+import jmri
+
+
+# cr&#233;er l'objet sonore en chargeant un fichier
+snd = jmri.jmrit.Sound("resources/sounds/Crossing.wav")
+
+classe SensndExemple(jmri.jmrit.automat.Siglet) :
+
+        # Modifiez ceci pour d&#233;finir tous vos aiguillages, capteurs et 
+        # feux de signalisation.
+        def defineIO(self):
+                
+                # get the sensor 
+                self.Sen1Sensor = sensors.provideSensor("473")
+                                
+                 # Register the inputs so setOutput will be called when needed.
+                 self.setInputs(jarray.array([self.Sen1Sensor], jmri.NamedBean))
+
+                return
+                
+        # setOutput est appel&#233; lorsqu'une des entr&#233;es change, et est
+        # responsable du r&#233;glage de la sortie correcte
+        #
+        # Modifiez ceci pour faire votre calcul.
+        def setOutput(self) :
+                                
+                if self.Sen1Sensor.knownState==ACTIVE:
+                        snd.play()
+
+                return
+        
+# d&#233;finition de la fin de la classe
+
+# en d&#233;marrer un
+SensndExemple().start()
+    </pre>
+
+    <p><a href="#HowToTopOfPage">[Aller en haut de la page]</a></p>
+
+    </div>
+    
+    
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+  <h2><a id="runwarrant">Comment puis-je lancer un bulletin &#224; partir d'un script ?</a></h2>
+  	  <!-- Section cr&#233;&#233;e par Jerry Grochow 2019-10-14 sur la base d'un post de Dave Sand &#224; jmriusers@groups.io 2019-07-11 -->
+
+  <div class="para">
+  
+    <p>Un bulletin dans le JMRI est un ensemble d'informations suffisantes pour faire fonctionner un train automatis&#233;.  
+    Voir <a href="../../../../../help/en/package/jmri/jmrit/logix/Warrant.shtml" target="_blank">
+    la section sur la mise en place des bulletinss ici. </a> Obtenez une r&#233;f&#233;rence au bulletin que vous voulez et ex&#233;cutez-le
+    en ex&#233;cutant ("warrants " est une r&#233;f&#233;rence de gestionnaire pr&#233;d&#233;finie dans jython/jmri_bindings.py):</p>
+
+    <pre>
+    w = warrants.getWarrant("train 1")
+    w.runWarrant(jmri.jmrit.logix.Warrant.MODE_RUN)
+    </pre>  
+
+    <p><a href="#HowToTopOfPage">[Aller en haut de la page]</a></p>  
+  </div>
+
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+  <h2><a id="setroute">Comment puis-je d&#233;finir un itin&#233;raire dans un script ?</a></h2>
+  	  <!-- Section cr&#233;&#233;e par Jerry Grochow 2019-10-14 sur la base d'un post de Bob Jacobson &#224; jmriusers@groups.io 2019-01-23 -->
+
+  <div class="para">
+  
+    <p>Les routes sont des ensembles d'aiguillages et/ou de capteurs dont les &#233;tats peuvent &#234;tre r&#233;gl&#233;s d'un seul coup.  
+    Voir <a href="../../../../../help/fr/html/tools/Routes.shtml" target="_blank">
+    la section sur les itin&#233;raires ici.</a> Obtenez une r&#233;f&#233;rence &#224; l'itin&#233;raire que vous voulez et faites-le
+    en ex&#233;cutant:</p>
+
+    <pre>
+    r = routes.getRoute("MyRouteName")
+    r.setRoute()
+        </pre>  
+
+    <p><a href="#HowToTopOfPage">[Aller en haut de la page]</a></p>  
+  </div>
+
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	 	
+    
+    <h2><a id="panelload">Comment puis-je charger un fichier de panneau &#224; partir d'un script ?</a></h2>
+
+      <div class="para">
+    
+    <pre>
+    jmri.InstanceManager.getDefault(jmri.ConfigureManager).load(java.io.File("nomdefichier.xml"))
+    </pre>
+      
+      <p>qui cherche "nom de fichier.xml" dans le programme JMRI
+      qui n'est pas un bon endroit pour conserver vos fichiers.
+      (Ils ont tendance &#224; se perdre ou &#224; s'ab&#238;mer lors de la mise &#224; jour de JMRI). Voir
+      la prochaine question pour une solution &#224; ce probl&#232;me.</p>
+      
+      </div>
+      
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
+    <h2><a id="windows">Comment puis-je acc&#233;der aux fen&#234;tres de l'application JMRI ?</a></h2>
+
+      <div class="para">
+      
+        <p>Vos sc&#233;narios peuvent changer 
+        les propri&#233;t&#233;s de toutes les fen&#234;tres principales de JMRI. Elles sont toutes des objets jmri.util.JmriJFrame, ils ont donc tous les diff&#233;rents
+        m&#233;thodes d'un Swing JFrame. Par exemple, ce code
+        snippet</p>
+
+        <pre>
+    window = jmri.util.JmriJFrame.getFrameList() [1]
+    window.setLocation(java.awt.Point(0,0))
+        </pre>
+
+        <p> localise la fen&#234;tre principale de l'application, et d&#233;finit son emplacement
+        dans le coin sup&#233;rieur gauche de l'&#233;cran.</p>
+
+        <p>L' <code>jmri.util.JmriJFrame.getFrameList()</code>
+        appel de la premi&#232;re ligne renvoie une liste des
+        fen&#234;tres. L'&#233;l&#233;ment [0] de cette liste est l'&#233;l&#233;ment original
+        et l'&#233;l&#233;ment [1] est la fen&#234;tre principale ; apr&#232;s
+        , ce sont les diff&#233;rentes fen&#234;tres dans l'ordre dans lequel elles sont
+        cr&#233;&#233;es. Pour en trouver une en particulier, vous pouvez l'indexer dans
+        la liste en v&#233;rifiant, par exemple, le titre de la fen&#234;tre avec le
+        <code>getTitle()</code> method.</p>
+      
+    <p><a href="#HowToTopOfPage">[Aller en haut de la page]</a></p>
+      </div>
+
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
+    <h2><a id="invoke">Comment puis-je invoquer un autre fichier de script &#224; partir d'un script ?</a></h2>
+
+      <div class="para">
+      
+    <pre>
+    execfile("nomdefichier.py")
+    </pre>
+    
+      <p>Il cherchera le fr&#233;pertoire de haut niveau dans JMRI  
+      qui pourrait maintenant &#234;tre ce que vous voulez. Si vous
+      voulezt que JMRI recherche le fichier dans les scripts par d&#233;faut
+      (que vous pouvez d&#233;finir dans les pr&#233;f&#233;rences), utilisez la
+      forme l&#233;g&#232;rement plus complexe:</p>
+
+    <pre>
+    execfile(jmri.util.FileUtil.getExternalFilename("scripts:filename.py"))
+    </pre>
+
+      <p>L'appel &#224; jmri.util.FileUtil.getExternalFilename(..) traduit
+      la cha&#238;ne utilisant les pr&#233;fixes standards de JMRI. Les "scripts" :".
+      indique &#224; JMRI de chercher dans le r&#233;pertoire des scripts par d&#233;faut. Vous
+      pouvez &#233;galement utiliser d'autres pr&#233;fixes, voir la <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html#getExternalFilename(java.lang.String)" target="_blank">
+      documentation</a>.</p>
+
+    <p><a href="#HowToTopOfPage">[Aller en haut de la page]</a></p>      
+      </div>
+
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
+    <h2><a id="communicate">Comment puis-je communiquer entre les scripts ?</a></h2>
+
+      <div class="para">
+        <p>Tous les scripts s'ex&#233;cutent dans le m&#234;me espace de noms par d&#233;faut, ce qui signifie
+        qu'une variable comme "x" se r&#233;f&#232;re au m&#234;me endroit dans tous
+        les sc&#233;narios. Cela vous permet de d&#233;finir une proc&#233;dure, pour
+        par exemple, dans un script, et l'utiliser ailleurs. Par exemple,
+        si un fichier "definitions.py" contenait:</p>
+        
+    <pre>
+    def printStatus() :
+        print "x est", x
+        print "y est", y
+        print "z est", z
+        print
+
+    x = 0
+    y = 0
+    z = 0
+    </pre>
+
+       <p>Une fois que ce fichier a &#233;t&#233; ex&#233;cut&#233;, tout script ult&#233;rieur peut invoquer
+       la routine <code>printStatus()</code> dans l'espace de noms global
+       chaque fois que n&#233;cessaire.</p>
+      
+        <p>Vous pouvez &#233;galement partager des variables, ce qui permet &#224; deux routines de
+        partager l'information. Dans l'exemple ci-dessus, le
+        <code>x</code>, <code>y</code>, et <code>z</code>
+        Les variables sont accessibles &#224; tous. Cela peut conduire &#224;
+       des bogues obscurs si deux routines diff&#233;rentes utilisent une variable
+        du m&#234;me nom, sans se rendre compte qu'ils partagent
+       les donn&#233;es entre elles. Mettre votre code dans des "classes" est une
+        moyen d'&#233;viter cela.</p>
+
+
+      <p>Notez que les scripts import&#233;s dans un autre script en utilisant
+      <code>import</code> les d&#233;clarations ne sont pas dans le m&#234;me espace de noms
+      comme d'autres scripts et ne partagent pas de variables ou de routines. À l'adresse suivante :
+      partager les variables de l'espace de noms par d&#233;faut avec un 
+script import&#233;, vous devez ajouter explicitement la variable partag&#233;e:</p>
+      
+      
+    <pre>
+    import myImport
+    myImport.x = x # mettre x &#224; la disposition de myImport
+    </pre>
+
+    <p><a href="#HowToTopOfPage">[Aller en haut de la page]</a></p>    
+    </div>
+	
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
+     <h2><a id="preferences">Comment puis-je trouver un fichier dans le r&#233;pertoire des pr&#233;f&#233;rences ?</a></h2>
+	  
+      <div class="para">
+      
+	  <p>Vous pouvez toujours sp&#233;cifier le chemin complet
+     d'un fichier, par exemple <code>C:\Documents et
+      Fichiers\mine\JMRI\nomdufichier.xml</code> ou
+      <code>/Users/mine/.jmri/filename.xml</code>. Ce n'est pas tr&#232;s
+      portable d'un ordinateur &#224; l'autre, et peut devenir une source de difficult&#233;
+      difficult&#233; pour rester coh&#233;rent .</p>
+
+      <p>JMRI fournit une routine pour convertir les noms "portables" en
+     des noms que votre ordinateur reconna&#238;tra:</p>
+  
+     <pre>
+     fullname = jmri.util.FileUtil.getExternalFilename("preference:filename.xml")
+    </pre>
+    
+      <p>Le "<code>pr&#233;f&#233;rence:</code>" signifie qu'il faut chercher ce fichier
+      commen&#231;ant dans le r&#233;pertoire des pr&#233;f&#233;rences sur l'ordinateur actuel . Les autres choix sont "program :" et "home :", voir la
+      <a href=
+      "https://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html#getExternalFilename(java.lang.String)" target="_blank">
+      documentation</a>.</p>
+
+      <p><a href="#HowToTopOfPage">[Aller en haut de la page]</a></p>
+      </div>
+      
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
+        <!--#include virtual="/Footer.shtml" -->
+      </div><!-- closes #mainContent-->
+    </div><!-- closes #mBody-->
+</body>
+</html>
+
+   
+
+
