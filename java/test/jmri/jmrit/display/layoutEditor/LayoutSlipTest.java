@@ -138,35 +138,35 @@ public class LayoutSlipTest {
 
         Assert.assertTrue("Single slip state unknown", lts.getSlipState() == LayoutTurnout.UNKNOWN);
         lts.toggleState(HitPointType.SLIP_LEFT);
-        Assert.assertTrue("Single slip state STATE_AC", lts.getSlipState() == LayoutTurnout.STATE_AC);
+        Assert.assertTrue("Single slip state STATE_AC", lts.getSlipState() == LayoutSlip.STATE_AC);
         lts.toggleState(HitPointType.SLIP_LEFT);
-        Assert.assertTrue("Single slip state STATE_BD", lts.getSlipState() == LayoutTurnout.STATE_BD);
+        Assert.assertTrue("Single slip state STATE_BD", lts.getSlipState() == LayoutSlip.STATE_BD);
         lts.toggleState(HitPointType.SLIP_LEFT);
-        Assert.assertTrue("Single slip state STATE_AD", lts.getSlipState() == LayoutTurnout.STATE_AD);
+        Assert.assertTrue("Single slip state STATE_AD", lts.getSlipState() == LayoutSlip.STATE_AD);
         lts.toggleState(HitPointType.SLIP_RIGHT);
-        Assert.assertTrue("Single slip state STATE_AC", lts.getSlipState() == LayoutTurnout.STATE_AC);
+        Assert.assertTrue("Single slip state STATE_AC", lts.getSlipState() == LayoutSlip.STATE_AC);
         lts.toggleState(HitPointType.SLIP_LEFT);
-        Assert.assertTrue("Single slip state STATE_BD", lts.getSlipState() == LayoutTurnout.STATE_BD);
+        Assert.assertTrue("Single slip state STATE_BD", lts.getSlipState() == LayoutSlip.STATE_BD);
         lts.toggleState(HitPointType.SLIP_RIGHT);
-        Assert.assertTrue("Single slip state STATE_AC", lts.getSlipState() == LayoutTurnout.STATE_AC);
+        Assert.assertTrue("Single slip state STATE_AC", lts.getSlipState() == LayoutSlip.STATE_AC);
 
         Assert.assertTrue("Double slip state unknown", ltd.getSlipState() == LayoutTurnout.UNKNOWN);
         ltd.toggleState(HitPointType.SLIP_LEFT);
-        Assert.assertTrue("Double slip state STATE_AC", ltd.getSlipState() == LayoutTurnout.STATE_AC);
+        Assert.assertTrue("Double slip state STATE_AC", ltd.getSlipState() == LayoutSlip.STATE_AC);
         ltd.toggleState(HitPointType.SLIP_LEFT);
-        Assert.assertTrue("Double slip state STATE_BC", ltd.getSlipState() == LayoutTurnout.STATE_BC);
+        Assert.assertTrue("Double slip state STATE_BC", ltd.getSlipState() == LayoutSlip.STATE_BC);
         ltd.toggleState(HitPointType.SLIP_LEFT);
-        Assert.assertTrue("Double slip state STATE_AC", ltd.getSlipState() == LayoutTurnout.STATE_AC);
+        Assert.assertTrue("Double slip state STATE_AC", ltd.getSlipState() == LayoutSlip.STATE_AC);
         ltd.toggleState(HitPointType.SLIP_RIGHT);
-        Assert.assertTrue("Double slip state STATE_AD", ltd.getSlipState() == LayoutTurnout.STATE_AD);
+        Assert.assertTrue("Double slip state STATE_AD", ltd.getSlipState() == LayoutSlip.STATE_AD);
         ltd.toggleState(HitPointType.SLIP_RIGHT);
-        Assert.assertTrue("Double slip state STATE_AC", ltd.getSlipState() == LayoutTurnout.STATE_AC);
+        Assert.assertTrue("Double slip state STATE_AC", ltd.getSlipState() == LayoutSlip.STATE_AC);
         ltd.toggleState(HitPointType.SLIP_RIGHT);
-        Assert.assertTrue("Double slip state STATE_AD", ltd.getSlipState() == LayoutTurnout.STATE_AD);
+        Assert.assertTrue("Double slip state STATE_AD", ltd.getSlipState() == LayoutSlip.STATE_AD);
         ltd.toggleState(HitPointType.SLIP_LEFT);
-        Assert.assertTrue("Double slip state STATE_BD", ltd.getSlipState() == LayoutTurnout.STATE_BD);
+        Assert.assertTrue("Double slip state STATE_BD", ltd.getSlipState() == LayoutSlip.STATE_BD);
         ltd.toggleState(HitPointType.SLIP_RIGHT);
-        Assert.assertTrue("Double slip state STATE_BC", ltd.getSlipState() == LayoutTurnout.STATE_BC);
+        Assert.assertTrue("Double slip state STATE_BC", ltd.getSlipState() == LayoutSlip.STATE_BC);
     }
 
     @Test

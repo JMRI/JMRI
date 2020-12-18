@@ -846,9 +846,9 @@ public class TrackSegment extends LayoutTrack {
             double startAdjDEG = tsv.getStartAdj();
             double tmpAngleDEG = tsv.getTmpAngle();
 
-//            log.warn(String.format("Arc2D(%.0f, %.0f, %.0f, %.0f, %.0f, %.0f, Arc2D.OPEN); centre: {%.0f, %.0f}",
-//                    tsv.getCX(), tsv.getCY(), tsv.getCW(), tsv.getCH(), startAdjDEG, tmpAngleDEG, centre.getX(), centre.getY()));
-//
+            log.info(String.format("Arc2D(%.0f, %.0f, %.0f, %.0f, %.0f, %.0f, Arc2D.OPEN); centre: {%.0f, %.0f}",
+                    tsv.getCX(), tsv.getCY(), tsv.getCW(), tsv.getCH(), startAdjDEG, tmpAngleDEG, centre.getX(), centre.getY()));
+
 //            if (getName().equals("T3")) {
 //                log.error("T3!");
 //            }
@@ -943,6 +943,7 @@ public class TrackSegment extends LayoutTrack {
                         }
                         default:
                             log.error("Unknown path segment type: {}.", i.currentSegment(data));
+                            //$FALL-THROUGH$
                         case PathIterator.SEG_QUADTO:
                         case PathIterator.SEG_CUBICTO:
                         case PathIterator.SEG_CLOSE: {
