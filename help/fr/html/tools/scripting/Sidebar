@@ -1,29 +1,31 @@
-<!-- SidebarToolLocalPart.shtml -->
-<!-- This is the local part sidebar definition for html/tools/scripting pages -->
+<!-- Sidebar.shtml -->
+<!-- Barre lat&#233;rale commune pour les pages html/tools/[sous-r&#233;pertoire], imite le html/tools/Sidebar.shtml -->
+<!-- NOTE : le sous-r&#233;pertoire DOIT avoir un SidebarToolLocalPart.shtml -->
 
-		<dt><h3><a href="index.shtml">Scripting</a></h3><</dt>
-		<dd>Information sur la r&#233;daction de scripts pour contr&#244;ler JMRI plus en d&#233;tail :
-		    <ul>
-		    <li><a href="Start.shtml">D&#233;marrage</a>D&#233;marrage
-		    <li><a href="Python.shtml">Le langage Python/Jython</a>
-		    <li><a href="ex_set_turnouts.shtml">Exemple : R&#233;glage des Aiguillages</a>
-		    <li><a href="Examples.shtml">Exemples (Liens)</a>
-		    <li><a href="HowTo.shtml">Script JMRI  &quot;Comment...&quot;</a>
-			<li><a href="WhatWhere.shtml">Script JMRI &quot;Quoi...O&#250;&quot;</a>
-			<li><a href="Jynstruments.shtml">Jynstruments pour modifier l'interface graphique </a>
-            <li><a href="AppleScript.shtml">Open Scripting (for Mac)</a>
-		    </ul>
-		</dd>
+<hr class="hide">
+    
+    <div id="side"> <!-- Bloc de texte sur le côt&#233; gauche de la page -->
+        <div style="text-align : center">JMRI&reg ; is...</div>
+        <dl>
 
-		<dt><h3><a href="Python.shtml">Python et Jython (Informations g&#233;n&#233;rales)</a></h3></dt>
-		<dd>Les scripts JMRI sont en Jython, une version de Python, un langage informatique g&#233;n&#233;ral tr&#232;s r&#233;pandu
-		    <ul>
-		    <li><a href="Python.shtml">Le langage Python/Jython</a>
-			<li><a href="http://www.python.org" target="_blank">Page d'accueil Python</a>
-		    <li><a href="http://wiki.python.org/moin/BeginnersGuide/NonProgrammers" target="_blank">Tutoriel Python pour les non-programmeurs</a>
-		    <li><a href="http://wiki.python.org/moin/BeginnersGuide/Programmers" target="_blank">Tutoriel Python pour les programmeurs</a>
-		    </ul>
-		</dd>
+           <!-- Pour inclure des informations sp&#233;cifiques &#224; ce sous-r&#233;pertoire dans la barre lat&#233;rale... -->
+           <!--#include virtual="SidebarToolLocalPart.shtml" --> 
+           
+           <!--#include virtual="../../../parts/SidebarTools.shtml" -->
 
-<!-- /SidebarToolLocalPart.shtml -->
+           <!--#include virtual="../../../parts/SidebarLayoutAutomation.shtml" -->
+             
+           <dt><h3 style="padding-left : 1em ;"><a href="../../hardware/">Mat&#233;riel support&#233;</a></h3></dt>
+           <dd>JMRI prend en charge un large &#233;ventail de syst&#232;mes DCC, decentrale et de protocoles.</dd>    
+           <!-- Si un jour nous voulons montrer la liste compl&#232;te, utilisez #include virtual="../../../parts/SidebarSupportedHardware.shtml" -->    
+
+           <!--#include virtual="../../../parts/SidebarApplications.shtml" -->
+
+         </dl>
+
+         <!--#include virtual="../../../parts/SidebarTail.shtml" -->  
+          
+        </div>
+ 
+ <!-- /Sidebar.shtml -->
 				
