@@ -47,17 +47,22 @@ public class ActionSignalHeadXml extends jmri.managers.configurexml.AbstractName
         element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
         element.addContent(new Element("formula").addContent(p.getFormula()));
         
-        element.addContent(new Element("onlyAppearanceAddressing").addContent(p.getOnlyAppearanceAddressing() ? "yes" : "no"));
-        element.addContent(new Element("operationAddressing").addContent(p.getOperationAndAppearanceAddressing().name()));
+        element.addContent(new Element("operationAddressing").addContent(p.getOperationAddressing().name()));
         element.addContent(new Element("operationType").addContent(p.getOperationType().name()));
         element.addContent(new Element("operationReference").addContent(p.getOperationReference()));
         element.addContent(new Element("operationLocalVariable").addContent(p.getOperationLocalVariable()));
         element.addContent(new Element("operationFormula").addContent(p.getOperationFormula()));
         
+        element.addContent(new Element("appearanceAddressing").addContent(p.getAppearanceAddressing().name()));
         element.addContent(new Element("appearance").addContent(Integer.toString(p.getAppearance())));
         element.addContent(new Element("appearanceReference").addContent(p.getAppearanceReference()));
         element.addContent(new Element("appearanceLocalVariable").addContent(p.getAppearanceLocalVariable()));
         element.addContent(new Element("appearanceFormula").addContent(p.getAppearanceFormula()));
+        
+        signalHead = p.getExampleSignalHead();
+        if (signalHead != null) {
+            element.addContent(new Element("exampleSignalHead").addContent(signalHead.getName()));
+        }
         
         return element;
     }
@@ -76,7 +81,6 @@ public class ActionSignalHeadXml extends jmri.managers.configurexml.AbstractName
             if (signalHead != null) h.setSignalHead(signalHead);
             else h.removeSignalHead();
         }
-
         
         try {
             Element elem = shared.getChild("addressing");
@@ -94,16 +98,9 @@ public class ActionSignalHeadXml extends jmri.managers.configurexml.AbstractName
             if (elem != null) h.setFormula(elem.getTextTrim());
             
             
-            elem = shared.getChild("onlyAppearanceAddressing");
-            if (elem != null) {
-                h.setOnlyAppearanceAddressing("yes".equals(elem.getTextTrim()));
-            } else {
-                h.setOnlyAppearanceAddressing(false);
-            }
-            
             elem = shared.getChild("operationAddressing");
             if (elem != null) {
-                h.setOperationAndAppearanceAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+                h.setOperationAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }
             
             Element queryType = shared.getChild("operationType");
@@ -120,6 +117,11 @@ public class ActionSignalHeadXml extends jmri.managers.configurexml.AbstractName
             elem = shared.getChild("operationFormula");
             if (elem != null) h.setOperationFormula(elem.getTextTrim());
             
+            
+            elem = shared.getChild("appearanceAddressing");
+            if (elem != null) {
+                h.setAppearanceAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+            }
             
             Element apperanceElement = shared.getChild("appearance");
             if (apperanceElement != null) {
@@ -142,6 +144,13 @@ public class ActionSignalHeadXml extends jmri.managers.configurexml.AbstractName
             
         } catch (ParserException e) {
             throw new JmriConfigureXmlException(e);
+        }
+        
+        signalHeadName = shared.getChild("exampleSignalHead");
+        if (signalHeadName != null) {
+            SignalHead signalHead = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalHeadName.getTextTrim());
+            if (signalHead != null) h.setExampleSignalHead(signalHead);
+            else h.removeSignalHead();
         }
         
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);

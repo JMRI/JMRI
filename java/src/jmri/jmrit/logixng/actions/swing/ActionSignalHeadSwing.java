@@ -25,6 +25,7 @@ import jmri.util.swing.BeanSelectCreatePanel;
  */
 public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
 
+    public static final int NUM_COLUMNS_TEXT_FIELDS = 20;
     private JTabbedPane _tabbedPaneSignalHead;
     private BeanSelectCreatePanel<SignalHead> _signalHeadBeanPanel;
     private JPanel _panelSignalHeadDirect;
@@ -36,25 +37,26 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
     private JTextField _signalHeadFormulaTextField;
     
     private JTabbedPane _tabbedPaneOperationType;
-    private JComboBox<ActionSignalHead.OperationType> _operationComboBox;
     private JPanel _panelOperationTypeDirect;
     private JPanel _panelOperationTypeReference;
     private JPanel _panelOperationTypeLocalVariable;
     private JPanel _panelOperationTypeFormula;
     
-    private JCheckBox _signalHeadOperationReferenceAppearanceCheckBox;
+    private JComboBox<ActionSignalHead.OperationType> _operationComboBox;
     private JTextField _signalHeadOperationReferenceTextField;
-    private JTextField _signalHeadOperationReferenceAppearanceTextField;
-    
-    private JCheckBox _signalHeadOperationLocalVariableAppearanceCheckBox;
     private JTextField _signalHeadOperationLocalVariableTextField;
-    private JTextField _signalHeadOperationLocalVariableAppearanceTextField;
-    
-    private JCheckBox _signalHeadOperationFormulaAppearanceCheckBox;
     private JTextField _signalHeadOperationFormulaTextField;
-    private JTextField _signalHeadOperationFormulaAppearanceTextField;
+    
+    private JTabbedPane _tabbedPaneAppearanceType;
+    private JPanel _panelAppearanceTypeDirect;
+    private JPanel _panelAppearanceTypeReference;
+    private JPanel _panelAppearanceTypeLocalVariable;
+    private JPanel _panelAppearanceTypeFormula;
     
     private JComboBox<SignalHeadAppearance> _signalHeadAppearanceComboBox;
+    private JTextField _signalHeadAppearanceReferenceTextField;
+    private JTextField _signalHeadAppearanceLocalVariableTextField;
+    private JTextField _signalHeadAppearanceFormulaTextField;
     
     private BeanSelectCreatePanel<SignalHead> _exampleSignalHeadBeanPanel;
     
@@ -118,6 +120,8 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
         
         JPanel actionPanel = new JPanel();
         
+        
+        // Set up tabbed pane for selecting the signal head
         _tabbedPaneSignalHead = new JTabbedPane();
         _panelSignalHeadDirect = new javax.swing.JPanel();
         _panelSignalHeadReference = new javax.swing.JPanel();
@@ -137,23 +141,28 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
         _panelSignalHeadDirect.add(_signalHeadBeanPanel);
         
         _signalHeadReferenceTextField = new JTextField();
-        _signalHeadReferenceTextField.setColumns(30);
+        _signalHeadReferenceTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
         _panelSignalHeadReference.add(_signalHeadReferenceTextField);
         
         _signalHeadLocalVariableTextField = new JTextField();
-        _signalHeadLocalVariableTextField.setColumns(30);
+        _signalHeadLocalVariableTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
         _panelSignalHeadLocalVariable.add(_signalHeadLocalVariableTextField);
         
         _signalHeadFormulaTextField = new JTextField();
-        _signalHeadFormulaTextField.setColumns(30);
+        _signalHeadFormulaTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
         _panelSignalHeadFormula.add(_signalHeadFormulaTextField);
         
         
+        // Set up the tabbed pane for selecting the operation
         _tabbedPaneOperationType = new JTabbedPane();
         _panelOperationTypeDirect = new javax.swing.JPanel();
+        _panelOperationTypeDirect.setLayout(new BoxLayout(_panelOperationTypeDirect, BoxLayout.Y_AXIS));
         _panelOperationTypeReference = new javax.swing.JPanel();
+        _panelOperationTypeReference.setLayout(new BoxLayout(_panelOperationTypeReference, BoxLayout.Y_AXIS));
         _panelOperationTypeLocalVariable = new javax.swing.JPanel();
+        _panelOperationTypeLocalVariable.setLayout(new BoxLayout(_panelOperationTypeLocalVariable, BoxLayout.Y_AXIS));
         _panelOperationTypeFormula = new javax.swing.JPanel();
+        _panelOperationTypeFormula.setLayout(new BoxLayout(_panelOperationTypeFormula, BoxLayout.Y_AXIS));
         
         _tabbedPaneOperationType.addTab(NamedBeanAddressing.Direct.toString(), _panelOperationTypeDirect);
         _tabbedPaneOperationType.addTab(NamedBeanAddressing.Reference.toString(), _panelOperationTypeReference);
@@ -168,101 +177,70 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
         for (ActionSignalHead.OperationType e : ActionSignalHead.OperationType.values()) {
             _operationComboBox.addItem(e);
         }
+        _operationComboBox.addActionListener(e -> {
+            if (_operationComboBox.getSelectedItem() == ActionSignalHead.OperationType.Appearance) {
+                setEnableOperationComboBox(true);
+            } else {
+                setEnableOperationComboBox(false);
+            }
+        });
+        _panelOperationTypeDirect.add(new JLabel(Bundle.getMessage("SignalHeadOperation")));
+        _panelOperationTypeDirect.add(_operationComboBox);
+        
+        _signalHeadOperationReferenceTextField = new JTextField();
+        _signalHeadOperationReferenceTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
+        _panelOperationTypeReference.add(new JLabel(Bundle.getMessage("SignalHeadOperation")));
+        _panelOperationTypeReference.add(_signalHeadOperationReferenceTextField);
+        
+        _signalHeadOperationLocalVariableTextField = new JTextField();
+        _signalHeadOperationLocalVariableTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
+        _panelOperationTypeLocalVariable.add(new JLabel(Bundle.getMessage("SignalHeadOperation")));
+        _panelOperationTypeLocalVariable.add(_signalHeadOperationLocalVariableTextField);
+        
+        _signalHeadOperationFormulaTextField = new JTextField();
+        _signalHeadOperationFormulaTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
+        _panelOperationTypeFormula.add(new JLabel(Bundle.getMessage("SignalHeadOperation")));
+        _panelOperationTypeFormula.add(_signalHeadOperationFormulaTextField);
+        
+        
+        // Set up the tabbed pane for selecting the appearance
+        _tabbedPaneAppearanceType = new JTabbedPane();
+        _panelAppearanceTypeDirect = new javax.swing.JPanel();
+        _panelAppearanceTypeDirect.setLayout(new BoxLayout(_panelAppearanceTypeDirect, BoxLayout.Y_AXIS));
+        _panelAppearanceTypeReference = new javax.swing.JPanel();
+        _panelAppearanceTypeReference.setLayout(new BoxLayout(_panelAppearanceTypeReference, BoxLayout.Y_AXIS));
+        _panelAppearanceTypeLocalVariable = new javax.swing.JPanel();
+        _panelAppearanceTypeLocalVariable.setLayout(new BoxLayout(_panelAppearanceTypeLocalVariable, BoxLayout.Y_AXIS));
+        _panelAppearanceTypeFormula = new javax.swing.JPanel();
+        _panelAppearanceTypeFormula.setLayout(new BoxLayout(_panelAppearanceTypeFormula, BoxLayout.Y_AXIS));
+        
+        _tabbedPaneAppearanceType.addTab(NamedBeanAddressing.Direct.toString(), _panelAppearanceTypeDirect);
+        _tabbedPaneAppearanceType.addTab(NamedBeanAddressing.Reference.toString(), _panelAppearanceTypeReference);
+        _tabbedPaneAppearanceType.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelAppearanceTypeLocalVariable);
+        _tabbedPaneAppearanceType.addTab(NamedBeanAddressing.Formula.toString(), _panelAppearanceTypeFormula);
+        
+        _tabbedPaneAppearanceType.addChangeListener((ChangeEvent e) -> {
+            enableDisableExampleSignalHeadBeanPanel();
+        });
         
         _signalHeadAppearanceComboBox = new JComboBox<>();
+        _panelAppearanceTypeDirect.add(new JLabel(Bundle.getMessage("SignalHeadAppearance")));
+        _panelAppearanceTypeDirect.add(_signalHeadAppearanceComboBox);
         
-        _panelOperationTypeDirect.add(_operationComboBox);
-        _panelOperationTypeDirect.add(_signalHeadAppearanceComboBox);
+        _signalHeadAppearanceReferenceTextField = new JTextField();
+        _signalHeadAppearanceReferenceTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
+        _panelAppearanceTypeReference.add(new JLabel(Bundle.getMessage("SignalHeadAppearance")));
+        _panelAppearanceTypeReference.add(_signalHeadAppearanceReferenceTextField);
         
+        _signalHeadAppearanceLocalVariableTextField = new JTextField();
+        _signalHeadAppearanceLocalVariableTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
+        _panelAppearanceTypeLocalVariable.add(new JLabel(Bundle.getMessage("SignalHeadAppearance")));
+        _panelAppearanceTypeLocalVariable.add(_signalHeadAppearanceLocalVariableTextField);
         
-        _signalHeadOperationReferenceAppearanceCheckBox = new JCheckBox("Set appearance only");
-        _signalHeadOperationReferenceTextField = new JTextField();
-        _signalHeadOperationReferenceTextField.setColumns(30);
-        _signalHeadOperationReferenceAppearanceTextField = new JTextField();
-        _signalHeadOperationReferenceAppearanceTextField.setColumns(30);
-        
-        _signalHeadOperationReferenceAppearanceCheckBox.addChangeListener((ChangeEvent e) -> {
-            if (_signalHeadOperationReferenceAppearanceCheckBox.isSelected()) {
-                _signalHeadOperationReferenceTextField.setEnabled(false);
-            } else {
-                _signalHeadOperationReferenceTextField.setEnabled(true);
-            }
-        });
-        
-        if (action != null) {
-            _signalHeadOperationReferenceAppearanceCheckBox.setSelected(action.getOnlyAppearanceAddressing());
-        }
-        if (_signalHeadOperationReferenceAppearanceCheckBox.isSelected()) {
-            _signalHeadOperationReferenceTextField.setEnabled(false);
-        } else {
-            _signalHeadOperationReferenceTextField.setEnabled(true);
-        }
-        
-        setupIndirectAppearancePanel(
-            _panelOperationTypeReference,
-            _signalHeadOperationReferenceAppearanceCheckBox,
-            _signalHeadOperationReferenceTextField,
-            _signalHeadOperationReferenceAppearanceTextField);
-        
-        
-        _signalHeadOperationLocalVariableAppearanceCheckBox = new JCheckBox("Set appearance only");
-        _signalHeadOperationLocalVariableTextField = new JTextField();
-        _signalHeadOperationLocalVariableTextField.setColumns(30);
-        _signalHeadOperationLocalVariableAppearanceTextField = new JTextField();
-        _signalHeadOperationLocalVariableAppearanceTextField.setColumns(30);
-        
-        _signalHeadOperationLocalVariableAppearanceCheckBox.addChangeListener((ChangeEvent e) -> {
-            if (_signalHeadOperationLocalVariableAppearanceCheckBox.isSelected()) {
-                _signalHeadOperationLocalVariableTextField.setEnabled(false);
-            } else {
-                _signalHeadOperationLocalVariableTextField.setEnabled(true);
-            }
-        });
-        
-        if (action != null) {
-            _signalHeadOperationLocalVariableAppearanceCheckBox.setSelected(action.getOnlyAppearanceAddressing());
-        }
-        if (_signalHeadOperationLocalVariableAppearanceCheckBox.isSelected()) {
-            _signalHeadOperationLocalVariableTextField.setEnabled(false);
-        } else {
-            _signalHeadOperationLocalVariableTextField.setEnabled(true);
-        }
-        
-        setupIndirectAppearancePanel(
-            _panelOperationTypeLocalVariable,
-            _signalHeadOperationLocalVariableAppearanceCheckBox,
-            _signalHeadOperationLocalVariableTextField,
-            _signalHeadOperationLocalVariableAppearanceTextField);
-        
-        
-        _signalHeadOperationFormulaAppearanceCheckBox = new JCheckBox("Set appearance only");
-        _signalHeadOperationFormulaTextField = new JTextField();
-        _signalHeadOperationFormulaTextField.setColumns(30);
-        _signalHeadOperationFormulaAppearanceTextField = new JTextField();
-        _signalHeadOperationFormulaAppearanceTextField.setColumns(30);
-        
-        _signalHeadOperationFormulaAppearanceCheckBox.addChangeListener((ChangeEvent e) -> {
-            if (_signalHeadOperationFormulaAppearanceCheckBox.isSelected()) {
-                _signalHeadOperationFormulaTextField.setEnabled(false);
-            } else {
-                _signalHeadOperationFormulaTextField.setEnabled(true);
-            }
-        });
-        
-        if (action != null) {
-            _signalHeadOperationFormulaAppearanceCheckBox.setSelected(action.getOnlyAppearanceAddressing());
-        }
-        if (_signalHeadOperationFormulaAppearanceCheckBox.isSelected()) {
-            _signalHeadOperationFormulaTextField.setEnabled(false);
-        } else {
-            _signalHeadOperationFormulaTextField.setEnabled(true);
-        }
-        
-        setupIndirectAppearancePanel(
-            _panelOperationTypeFormula,
-            _signalHeadOperationFormulaAppearanceCheckBox,
-            _signalHeadOperationFormulaTextField,
-            _signalHeadOperationFormulaAppearanceTextField);
+        _signalHeadAppearanceFormulaTextField = new JTextField();
+        _signalHeadAppearanceFormulaTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
+        _panelAppearanceTypeFormula.add(new JLabel(Bundle.getMessage("SignalHeadAppearance")));
+        _panelAppearanceTypeFormula.add(_signalHeadAppearanceFormulaTextField);
         
         
         if (action != null) {
@@ -276,36 +254,50 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
             if (action.getSignalHead() != null) {
                 _signalHeadBeanPanel.setDefaultNamedBean(action.getSignalHead().getBean());
             }
+            if (action.getExampleSignalHead() != null) {
+                _exampleSignalHeadBeanPanel.setDefaultNamedBean(action.getExampleSignalHead().getBean());
+            }
             _signalHeadReferenceTextField.setText(action.getReference());
             _signalHeadLocalVariableTextField.setText(action.getLocalVariable());
             _signalHeadFormulaTextField.setText(action.getFormula());
             
-            switch (action.getOperationAndAppearanceAddressing()) {
+            
+            switch (action.getOperationAddressing()) {
                 case Direct: _tabbedPaneOperationType.setSelectedComponent(_panelOperationTypeDirect); break;
                 case Reference: _tabbedPaneOperationType.setSelectedComponent(_panelOperationTypeReference); break;
                 case LocalVariable: _tabbedPaneOperationType.setSelectedComponent(_panelOperationTypeLocalVariable); break;
                 case Formula: _tabbedPaneOperationType.setSelectedComponent(_panelOperationTypeFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
+                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getOperationAddressing().name());
             }
-            _operationComboBox.setSelectedItem(action.getOperationAndAppearanceAddressing());
-            
+            _operationComboBox.setSelectedItem(action.getOperationType());
             _signalHeadOperationReferenceTextField.setText(action.getOperationReference());
-            _signalHeadOperationReferenceAppearanceTextField.setText(action.getAppearanceReference());
-            
             _signalHeadOperationLocalVariableTextField.setText(action.getOperationLocalVariable());
-            _signalHeadOperationLocalVariableAppearanceTextField.setText(action.getAppearanceLocalVariable());
-            
             _signalHeadOperationFormulaTextField.setText(action.getOperationFormula());
-            _signalHeadOperationFormulaAppearanceTextField.setText(action.getAppearanceFormula());
+            
+            if (action.getOperationType() == ActionSignalHead.OperationType.Appearance) {
+                setEnableOperationComboBox(true);
+            } else {
+                setEnableOperationComboBox(false);
+            }
+            
+            
+            switch (action.getAppearanceAddressing()) {
+                case Direct: _tabbedPaneAppearanceType.setSelectedComponent(_panelAppearanceTypeDirect); break;
+                case Reference: _tabbedPaneAppearanceType.setSelectedComponent(_panelAppearanceTypeReference); break;
+                case LocalVariable: _tabbedPaneAppearanceType.setSelectedComponent(_panelAppearanceTypeLocalVariable); break;
+                case Formula: _tabbedPaneAppearanceType.setSelectedComponent(_panelAppearanceTypeFormula); break;
+                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAppearanceAddressing().name());
+            }
+            _signalHeadAppearanceReferenceTextField.setText(action.getAppearanceReference());
+            _signalHeadAppearanceLocalVariableTextField.setText(action.getAppearanceLocalVariable());
+            _signalHeadAppearanceFormulaTextField.setText(action.getAppearanceFormula());
             
             SignalHead sh = null;
-            if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeDirect) {
-                if ((_tabbedPaneSignalHead.getSelectedComponent() == _panelSignalHeadDirect)
-                        && (action.getSignalHead() != null)) {
-                    sh = action.getSignalHead().getBean();
-                } else if (action.getExampleSignalHead() != null) {
-                    sh = action.getExampleSignalHead().getBean();
-                }
+            if ((_tabbedPaneSignalHead.getSelectedComponent() == _panelSignalHeadDirect)
+                    && (action.getSignalHead() != null)) {
+                sh = action.getSignalHead().getBean();
+            } else if (action.getExampleSignalHead() != null) {
+                sh = action.getExampleSignalHead().getBean();
             }
             
             if (sh != null) {
@@ -322,7 +314,9 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
         
         JComponent[] components = new JComponent[]{
             _tabbedPaneSignalHead,
-            _tabbedPaneOperationType};
+            _tabbedPaneOperationType,
+            _tabbedPaneAppearanceType
+        };
         
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(Bundle.getMessage("SetSignalHead"), components);
         
@@ -345,38 +339,17 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
         panel.add(examplePanel);
     }
     
-    private void setupIndirectAppearancePanel(
-            JPanel panel,
-            JCheckBox setAppearanceCheckBox,
-            JTextField operationTextField,
-            JTextField appearanceTextField) {
-        
-        panel.setLayout(new java.awt.GridBagLayout());
-        java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
-        c.gridwidth = 1;
-        c.gridheight = 1;
-        c.gridx = 0;
-        c.gridy = 1;
-        c.anchor = java.awt.GridBagConstraints.EAST;
-        panel.add(new JLabel("Operation"), c);
-        c.gridy = 2;
-        c.anchor = java.awt.GridBagConstraints.EAST;
-        panel.add(new JLabel("Appearance"), c);
-        c.gridx = 1;
-        c.gridy = 0;
-        c.anchor = java.awt.GridBagConstraints.WEST;
-        c.weightx = 1.0;
-        c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
-        panel.add(setAppearanceCheckBox, c);
-        c.gridy = 1;
-        panel.add(operationTextField, c);
-        c.gridy = 2;
-        panel.add(appearanceTextField, c);
+    private void setEnableOperationComboBox(boolean enable) {
+        _tabbedPaneAppearanceType.setEnabled(enable);
+        _signalHeadAppearanceComboBox.setEnabled(enable);
+        _signalHeadAppearanceReferenceTextField.setEnabled(enable);
+        _signalHeadAppearanceLocalVariableTextField.setEnabled(enable);
+        _signalHeadAppearanceFormulaTextField.setEnabled(enable);
     }
     
     private void enableDisableExampleSignalHeadBeanPanel() {
         if ((_tabbedPaneSignalHead.getSelectedComponent() != _panelSignalHeadDirect)
-                && (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeDirect)) {
+                && (_tabbedPaneAppearanceType.getSelectedComponent() == _panelAppearanceTypeDirect)) {
             _exampleSignalHeadBeanPanel.setEnabled(true);
         } else {
             _exampleSignalHeadBeanPanel.setEnabled(false);
@@ -478,10 +451,32 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
                                     .getNamedBeanHandle(signalHead.getDisplayName(), signalHead);
                     action.setSignalHead(handle);
                 }
+            } else {
+                action.removeSignalHead();
             }
         } catch (JmriException ex) {
             log.error("Cannot get NamedBeanHandle for signalHead", ex);
         }
+        
+        try {
+            if (!_exampleSignalHeadBeanPanel.isEmpty()
+                    && (_tabbedPaneSignalHead.getSelectedComponent() != _panelSignalHeadDirect)
+                    && (_tabbedPaneAppearanceType.getSelectedComponent() == _panelAppearanceTypeDirect)) {
+                
+                SignalHead signalHead = _exampleSignalHeadBeanPanel.getNamedBean();
+                if (signalHead != null) {
+                    NamedBeanHandle<SignalHead> handle
+                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                    .getNamedBeanHandle(signalHead.getDisplayName(), signalHead);
+                    action.setExampleSignalHead(handle);
+                }
+            } else {
+                action.removeExampleSignalHead();
+            }
+        } catch (JmriException ex) {
+            log.error("Cannot get NamedBeanHandle for signalHead", ex);
+        }
+        
         try {
             if (_tabbedPaneSignalHead.getSelectedComponent() == _panelSignalHeadDirect) {
                 action.setAddressing(NamedBeanAddressing.Direct);
@@ -499,30 +494,39 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
             }
             
             if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeDirect) {
-                action.setOperationAndAppearanceAddressing(NamedBeanAddressing.Direct);
+                action.setOperationAddressing(NamedBeanAddressing.Direct);
                 action.setOperationType((ActionSignalHead.OperationType)_operationComboBox.getSelectedItem());
+            } else if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeReference) {
+                action.setOperationAddressing(NamedBeanAddressing.Reference);
+                action.setOperationReference(_signalHeadOperationReferenceTextField.getText());
+            } else if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeLocalVariable) {
+                action.setOperationAddressing(NamedBeanAddressing.LocalVariable);
+                action.setOperationLocalVariable(_signalHeadOperationLocalVariableTextField.getText());
+            } else if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeFormula) {
+                action.setOperationAddressing(NamedBeanAddressing.Formula);
+                action.setOperationFormula(_signalHeadOperationFormulaTextField.getText());
+            } else {
+                throw new IllegalArgumentException("_tabbedPaneOperationType has unknown selection");
+            }
+            
+            if (_tabbedPaneAppearanceType.getSelectedComponent() == _panelAppearanceTypeDirect) {
+                action.setAppearanceAddressing(NamedBeanAddressing.Direct);
                 
                 if (_signalHeadAppearanceComboBox.getItemCount() > 0) {
                     action.setAppearance(_signalHeadAppearanceComboBox
                             .getItemAt(_signalHeadAppearanceComboBox.getSelectedIndex())._state);
                 }
-            } else if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeReference) {
-                action.setOnlyAppearanceAddressing(_signalHeadOperationReferenceAppearanceCheckBox.isSelected());
-                action.setOperationAndAppearanceAddressing(NamedBeanAddressing.Reference);
-                action.setOperationReference(_signalHeadOperationReferenceTextField.getText());
-                action.setAppearanceReference(_signalHeadOperationReferenceAppearanceTextField.getText());
-            } else if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeLocalVariable) {
-                action.setOnlyAppearanceAddressing(_signalHeadOperationLocalVariableAppearanceCheckBox.isSelected());
-                action.setOperationAndAppearanceAddressing(NamedBeanAddressing.LocalVariable);
-                action.setOperationLocalVariable(_signalHeadOperationLocalVariableTextField.getText());
-                action.setAppearanceLocalVariable(_signalHeadOperationLocalVariableAppearanceTextField.getText());
-            } else if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeFormula) {
-                action.setOnlyAppearanceAddressing(_signalHeadOperationFormulaAppearanceCheckBox.isSelected());
-                action.setOperationAndAppearanceAddressing(NamedBeanAddressing.Formula);
-                action.setOperationFormula(_signalHeadOperationFormulaTextField.getText());
-                action.setAppearanceFormula(_signalHeadOperationFormulaAppearanceTextField.getText());
+            } else if (_tabbedPaneAppearanceType.getSelectedComponent() == _panelAppearanceTypeReference) {
+                action.setAppearanceAddressing(NamedBeanAddressing.Reference);
+                action.setAppearanceReference(_signalHeadAppearanceReferenceTextField.getText());
+            } else if (_tabbedPaneAppearanceType.getSelectedComponent() == _panelAppearanceTypeLocalVariable) {
+                action.setAppearanceAddressing(NamedBeanAddressing.LocalVariable);
+                action.setAppearanceLocalVariable(_signalHeadAppearanceLocalVariableTextField.getText());
+            } else if (_tabbedPaneAppearanceType.getSelectedComponent() == _panelAppearanceTypeFormula) {
+                action.setAppearanceAddressing(NamedBeanAddressing.Formula);
+                action.setAppearanceFormula(_signalHeadAppearanceFormulaTextField.getText());
             } else {
-                throw new IllegalArgumentException("_tabbedPaneOperationType has unknown selection");
+                throw new IllegalArgumentException("_tabbedPaneAppearanceType has unknown selection");
             }
         } catch (ParserException e) {
             throw new RuntimeException("ParserException: "+e.getMessage(), e);

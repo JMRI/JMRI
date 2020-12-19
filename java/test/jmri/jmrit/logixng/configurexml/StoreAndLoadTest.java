@@ -65,6 +65,8 @@ public class StoreAndLoadTest {
         
         InstanceManager.getDefault(SignalHeadManager.class)
                 .register(new VirtualSignalHead("IH1"));
+        InstanceManager.getDefault(SignalHeadManager.class)
+                .register(new VirtualSignalHead("IH2"));
         
         // The signal head IH1 created above is also used here in signal mast IF$shsm:AAR-1946:CPL(IH1)
         InstanceManager.getDefault(SignalMastManager.class)
@@ -332,35 +334,36 @@ public class StoreAndLoadTest {
         actionSignalHead = new ActionSignalHead(digitalActionManager.getAutoSystemName(), null);
         actionSignalHead.setComment("A comment");
         actionSignalHead.setSignalHead("IH1");
-        actionSignalHead.setAppearance(SignalHead.FLASHGREEN);
         actionSignalHead.setAddressing(NamedBeanAddressing.Direct);
         actionSignalHead.setFormula("\"IT\"+index");
         actionSignalHead.setLocalVariable("index");
         actionSignalHead.setReference("{IM1}");
-        actionSignalHead.setOnlyAppearanceAddressing(false);
-        actionSignalHead.setOperationAndAppearanceAddressing(NamedBeanAddressing.LocalVariable);
+        actionSignalHead.setOperationAddressing(NamedBeanAddressing.LocalVariable);
         actionSignalHead.setOperationFormula("\"IT\"+index2");
         actionSignalHead.setOperationLocalVariable("index2");
         actionSignalHead.setOperationReference("{IM2}");
+        actionSignalHead.setAppearanceAddressing(NamedBeanAddressing.Formula);
+        actionSignalHead.setAppearance(SignalHead.FLASHGREEN);
         actionSignalHead.setAppearanceFormula("\"IT\"+index3");
         actionSignalHead.setAppearanceLocalVariable("index3");
         actionSignalHead.setAppearanceReference("{IM3}");
+        actionSignalHead.setExampleSignalHead("IH2");
         maleSocket = digitalActionManager.registerAction(actionSignalHead);
         actionManySocket.getChild(index++).connect(maleSocket);
         
         actionSignalHead = new ActionSignalHead(digitalActionManager.getAutoSystemName(), null);
         actionSignalHead.setComment("A comment");
         actionSignalHead.setSignalHead("IH1");
-        actionSignalHead.setAppearance(SignalHead.FLASHLUNAR);
         actionSignalHead.setAddressing(NamedBeanAddressing.LocalVariable);
         actionSignalHead.setFormula("\"IT\"+index");
         actionSignalHead.setLocalVariable("index");
         actionSignalHead.setReference("{IM1}");
-        actionSignalHead.setOnlyAppearanceAddressing(false);
-        actionSignalHead.setOperationAndAppearanceAddressing(NamedBeanAddressing.Formula);
+        actionSignalHead.setOperationAddressing(NamedBeanAddressing.Formula);
         actionSignalHead.setOperationFormula("\"IT\"+index2");
         actionSignalHead.setOperationLocalVariable("index2");
         actionSignalHead.setOperationReference("{IM2}");
+        actionSignalHead.setAppearanceAddressing(NamedBeanAddressing.Reference);
+        actionSignalHead.setAppearance(SignalHead.FLASHLUNAR);
         actionSignalHead.setAppearanceFormula("\"IT\"+index3");
         actionSignalHead.setAppearanceLocalVariable("index3");
         actionSignalHead.setAppearanceReference("{IM3}");
@@ -370,16 +373,16 @@ public class StoreAndLoadTest {
         actionSignalHead = new ActionSignalHead(digitalActionManager.getAutoSystemName(), null);
         actionSignalHead.setComment("A comment");
         actionSignalHead.setSignalHead("IH1");
-        actionSignalHead.setAppearance(SignalHead.FLASHRED);
         actionSignalHead.setAddressing(NamedBeanAddressing.Formula);
         actionSignalHead.setFormula("\"IT\"+index");
         actionSignalHead.setLocalVariable("index");
         actionSignalHead.setReference("{IM1}");
-        actionSignalHead.setOnlyAppearanceAddressing(false);
-        actionSignalHead.setOperationAndAppearanceAddressing(NamedBeanAddressing.Reference);
+        actionSignalHead.setOperationAddressing(NamedBeanAddressing.Reference);
         actionSignalHead.setOperationFormula("\"IT\"+index2");
         actionSignalHead.setOperationLocalVariable("index2");
         actionSignalHead.setOperationReference("{IM2}");
+        actionSignalHead.setAppearanceAddressing(NamedBeanAddressing.Direct);
+        actionSignalHead.setAppearance(SignalHead.FLASHRED);
         actionSignalHead.setAppearanceFormula("\"IT\"+index3");
         actionSignalHead.setAppearanceLocalVariable("index3");
         actionSignalHead.setAppearanceReference("{IM3}");
@@ -389,16 +392,16 @@ public class StoreAndLoadTest {
         actionSignalHead = new ActionSignalHead(digitalActionManager.getAutoSystemName(), null);
         actionSignalHead.setComment("A comment");
         actionSignalHead.setSignalHead("IH1");
-        actionSignalHead.setAppearance(SignalHead.FLASHYELLOW);
         actionSignalHead.setAddressing(NamedBeanAddressing.Reference);
         actionSignalHead.setFormula("\"IT\"+index");
         actionSignalHead.setLocalVariable("index");
         actionSignalHead.setReference("{IM1}");
-        actionSignalHead.setOnlyAppearanceAddressing(false);
-        actionSignalHead.setOperationAndAppearanceAddressing(NamedBeanAddressing.Direct);
+        actionSignalHead.setOperationAddressing(NamedBeanAddressing.Direct);
         actionSignalHead.setOperationFormula("\"IT\"+index2");
         actionSignalHead.setOperationLocalVariable("index2");
         actionSignalHead.setOperationReference("{IM2}");
+        actionSignalHead.setAppearanceAddressing(NamedBeanAddressing.LocalVariable);
+        actionSignalHead.setAppearance(SignalHead.FLASHYELLOW);
         actionSignalHead.setAppearanceFormula("\"IT\"+index3");
         actionSignalHead.setAppearanceLocalVariable("index3");
         actionSignalHead.setAppearanceReference("{IM3}");
