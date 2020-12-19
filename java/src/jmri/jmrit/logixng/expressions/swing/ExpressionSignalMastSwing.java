@@ -233,7 +233,7 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
             _signalMastQueryFormulaTextField.setText(expression.getQueryFormula());
             
             if ((expression.getQueryType() == ExpressionSignalMast.QueryType.Aspect)
-                    || (expression.getQueryType() == ExpressionSignalMast.QueryType.Aspect)) {
+                    || (expression.getQueryType() == ExpressionSignalMast.QueryType.NotAspect)) {
                 setEnableQueryComboBox(true);
             } else {
                 setEnableQueryComboBox(false);
