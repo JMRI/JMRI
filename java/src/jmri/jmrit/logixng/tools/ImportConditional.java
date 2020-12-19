@@ -2,11 +2,11 @@ package jmri.jmrit.logixng.tools;
 
 import jmri.jmrit.logixng.expressions.ExpressionConditional;
 import jmri.jmrit.logixng.expressions.ExpressionEntryExit;
-import jmri.jmrit.logixng.expressions.ExpressionSignalMast_old;
+import jmri.jmrit.logixng.expressions.ExpressionSignalMast;
 import jmri.jmrit.logixng.expressions.ExpressionLight;
 import jmri.jmrit.logixng.expressions.ExpressionClock;
 import jmri.jmrit.logixng.expressions.ExpressionWarrant;
-import jmri.jmrit.logixng.expressions.ExpressionSignalHead_old;
+import jmri.jmrit.logixng.expressions.ExpressionSignalHead;
 import jmri.jmrit.logixng.expressions.ExpressionOBlock;
 import jmri.jmrit.logixng.expressions.Or;
 import jmri.jmrit.logixng.expressions.ExpressionMemory;
@@ -466,15 +466,15 @@ public class ImportConditional {
     
     
     private DigitalExpressionBean getSignalHeadExpression(@Nonnull ConditionalVariable cv, SignalHead s) throws JmriException {
-        ExpressionSignalHead_old expression =
-                new ExpressionSignalHead_old(InstanceManager.getDefault(DigitalExpressionManager.class)
+        ExpressionSignalHead expression =
+                new ExpressionSignalHead(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
         
         expression.setSignalHead(s);
         
-        ExpressionSignalHead_old.QueryType appearence =
-                cv.isNegated() ? ExpressionSignalHead_old.QueryType.NotAppearance
-                : ExpressionSignalHead_old.QueryType.Appearance;
+        ExpressionSignalHead.QueryType appearence =
+                cv.isNegated() ? ExpressionSignalHead.QueryType.NotAppearance
+                : ExpressionSignalHead.QueryType.Appearance;
         
         switch (cv.getType()) {
             case SIGNAL_HEAD_RED:
@@ -514,10 +514,10 @@ public class ImportConditional {
                 expression.setAppearance(SignalHead.FLASHLUNAR);
                 break;
             case SIGNAL_HEAD_LIT:
-                expression.setQueryType(cv.isNegated() ? ExpressionSignalHead_old.QueryType.NotLit : ExpressionSignalHead_old.QueryType.Lit);
+                expression.setQueryType(cv.isNegated() ? ExpressionSignalHead.QueryType.NotLit : ExpressionSignalHead.QueryType.Lit);
                 break;
             case SIGNAL_HEAD_HELD:
-                expression.setQueryType(cv.isNegated() ? ExpressionSignalHead_old.QueryType.NotHeld : ExpressionSignalHead_old.QueryType.Held);
+                expression.setQueryType(cv.isNegated() ? ExpressionSignalHead.QueryType.NotHeld : ExpressionSignalHead.QueryType.Held);
                 break;
             default:
                 throw new InvalidConditionalVariableException(
@@ -531,15 +531,15 @@ public class ImportConditional {
     
     
     private DigitalExpressionBean getSignalMastExpression(@Nonnull ConditionalVariable cv, SignalMast sm) throws JmriException {
-        ExpressionSignalMast_old expression =
-                new ExpressionSignalMast_old(InstanceManager.getDefault(DigitalExpressionManager.class)
+        ExpressionSignalMast expression =
+                new ExpressionSignalMast(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
         
         expression.setSignalMast(sm);
         
-        ExpressionSignalMast_old.QueryType aspect =
-                cv.isNegated() ? ExpressionSignalMast_old.QueryType.NotAspect
-                : ExpressionSignalMast_old.QueryType.Aspect;
+        ExpressionSignalMast.QueryType aspect =
+                cv.isNegated() ? ExpressionSignalMast.QueryType.NotAspect
+                : ExpressionSignalMast.QueryType.Aspect;
         
         switch (cv.getType()) {
             case SIGNAL_MAST_ASPECT_EQUALS:
@@ -547,10 +547,10 @@ public class ImportConditional {
                 expression.setAspect(cv.getDataString());
                 break;
             case SIGNAL_MAST_LIT:
-                expression.setQueryType(cv.isNegated() ? ExpressionSignalMast_old.QueryType.NotLit : ExpressionSignalMast_old.QueryType.Lit);
+                expression.setQueryType(cv.isNegated() ? ExpressionSignalMast.QueryType.NotLit : ExpressionSignalMast.QueryType.Lit);
                 break;
             case SIGNAL_MAST_HELD:
-                expression.setQueryType(cv.isNegated() ? ExpressionSignalMast_old.QueryType.NotHeld : ExpressionSignalMast_old.QueryType.Held);
+                expression.setQueryType(cv.isNegated() ? ExpressionSignalMast.QueryType.NotHeld : ExpressionSignalMast.QueryType.Held);
                 break;
             default:
                 throw new InvalidConditionalVariableException(
