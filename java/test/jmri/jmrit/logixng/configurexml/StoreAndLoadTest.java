@@ -965,58 +965,58 @@ public class StoreAndLoadTest {
         and.getChild(index++).connect(maleSocket);
         
         
-        ExpressionSignalHead expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
+        ExpressionSignalHead_old expressionSignalHead = new ExpressionSignalHead_old(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
         and.getChild(index++).connect(maleSocket);
         
-        expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalHead = new ExpressionSignalHead_old(digitalExpressionManager.getAutoSystemName(), null);
         expressionSignalHead.setComment("A comment");
         expressionSignalHead.setSignalHead("IH1");
-        expressionSignalHead.setQueryType(ExpressionSignalHead.QueryType.Lit);
+        expressionSignalHead.setQueryType(ExpressionSignalHead_old.QueryType.Lit);
         expressionSignalHead.setAppearance(SignalHead.FLASHLUNAR);
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
         and.getChild(index++).connect(maleSocket);
         
-        expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalHead = new ExpressionSignalHead_old(digitalExpressionManager.getAutoSystemName(), null);
         expressionSignalHead.setComment("A comment");
         expressionSignalHead.setSignalHead("IH1");
-        expressionSignalHead.setQueryType(ExpressionSignalHead.QueryType.Appearance);
+        expressionSignalHead.setQueryType(ExpressionSignalHead_old.QueryType.Appearance);
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
         and.getChild(index++).connect(maleSocket);
         
-        expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalHead = new ExpressionSignalHead_old(digitalExpressionManager.getAutoSystemName(), null);
         expressionSignalHead.setComment("A comment");
         expressionSignalHead.setSignalHead("IH1");
-        expressionSignalHead.setQueryType(ExpressionSignalHead.QueryType.Appearance);
+        expressionSignalHead.setQueryType(ExpressionSignalHead_old.QueryType.Appearance);
         expressionSignalHead.setAppearance(SignalHead.FLASHYELLOW);
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
         and.getChild(index++).connect(maleSocket);
         
         
-        ExpressionSignalMast expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
+        ExpressionSignalMast_old expressionSignalMast = new ExpressionSignalMast_old(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
         and.getChild(index++).connect(maleSocket);
         
-        expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalMast = new ExpressionSignalMast_old(digitalExpressionManager.getAutoSystemName(), null);
         expressionSignalMast.setComment("A comment");
         expressionSignalMast.setSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
-        expressionSignalMast.setQueryType(ExpressionSignalMast.QueryType.Lit);
+        expressionSignalMast.setQueryType(ExpressionSignalMast_old.QueryType.Lit);
         expressionSignalMast.setAspect("Medium Approach Slow");
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
         and.getChild(index++).connect(maleSocket);
         
-        expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalMast = new ExpressionSignalMast_old(digitalExpressionManager.getAutoSystemName(), null);
         expressionSignalMast.setComment("A comment");
         expressionSignalMast.setSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
-        expressionSignalMast.setQueryType(ExpressionSignalMast.QueryType.Aspect);
+        expressionSignalMast.setQueryType(ExpressionSignalMast_old.QueryType.Aspect);
         expressionSignalMast.setAspect("");
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
         and.getChild(index++).connect(maleSocket);
         
-        expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalMast = new ExpressionSignalMast_old(digitalExpressionManager.getAutoSystemName(), null);
         expressionSignalMast.setComment("A comment");
         expressionSignalMast.setSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
-        expressionSignalMast.setQueryType(ExpressionSignalMast.QueryType.Aspect);
+        expressionSignalMast.setQueryType(ExpressionSignalMast_old.QueryType.Aspect);
         expressionSignalMast.setAspect("Medium Approach Slow");
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
         and.getChild(index++).connect(maleSocket);

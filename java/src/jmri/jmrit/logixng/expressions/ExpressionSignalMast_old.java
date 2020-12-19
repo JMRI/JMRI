@@ -18,14 +18,14 @@ import jmri.jmrit.logixng.*;
  * 
  * @author Daniel Bergqvist Copyright 2020
  */
-public class ExpressionSignalMast extends AbstractDigitalExpression
+public class ExpressionSignalMast_old extends AbstractDigitalExpression
         implements PropertyChangeListener, VetoableChangeListener {
 
     private NamedBeanHandle<SignalMast> _signalMastHandle;
     private QueryType _queryType = QueryType.Aspect;
     private String _signalMastAspect = "";
 
-    public ExpressionSignalMast(String sys, String user)
+    public ExpressionSignalMast_old(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
@@ -36,7 +36,7 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
-        ExpressionSignalMast copy = new ExpressionSignalMast(sysName, userName);
+        ExpressionSignalMast_old copy = new ExpressionSignalMast_old(sysName, userName);
         copy.setComment(getComment());
         if (_signalMastHandle != null) copy.setSignalMast(_signalMastHandle);
         copy.setQueryType(_queryType);
@@ -310,6 +310,6 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSignalMast.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSignalMast_old.class);
     
 }

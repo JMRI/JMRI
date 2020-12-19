@@ -2,7 +2,7 @@ package jmri.jmrit.logixng.expressions.configurexml;
 
 import jmri.*;
 import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.expressions.ExpressionSignalHead;
+import jmri.jmrit.logixng.expressions.ExpressionSignalHead_old;
 
 import org.jdom2.Element;
 
@@ -25,7 +25,7 @@ public class ExpressionSignalHeadXml extends jmri.managers.configurexml.Abstract
      */
     @Override
     public Element store(Object o) {
-        ExpressionSignalHead p = (ExpressionSignalHead) o;
+        ExpressionSignalHead_old p = (ExpressionSignalHead_old) o;
 
         Element element = new Element("expression-signalhead");
         element.setAttribute("class", this.getClass().getName());
@@ -56,7 +56,7 @@ public class ExpressionSignalHeadXml extends jmri.managers.configurexml.Abstract
     public boolean load(Element shared, Element perNode) {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        ExpressionSignalHead h = new ExpressionSignalHead(sys, uname);
+        ExpressionSignalHead_old h = new ExpressionSignalHead_old(sys, uname);
 
         loadCommon(h, shared);
 
@@ -69,7 +69,7 @@ public class ExpressionSignalHeadXml extends jmri.managers.configurexml.Abstract
 
         Element queryType = shared.getChild("queryType");
         if (queryType != null) {
-            h.setQueryType(ExpressionSignalHead.QueryType.valueOf(queryType.getTextTrim()));
+            h.setQueryType(ExpressionSignalHead_old.QueryType.valueOf(queryType.getTextTrim()));
         }
         
         Element apperanceElement = shared.getChild("appearance");

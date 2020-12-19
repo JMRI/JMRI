@@ -8,7 +8,7 @@ import javax.swing.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.expressions.ExpressionSignalHead;
+import jmri.jmrit.logixng.expressions.ExpressionSignalHead_old;
 import jmri.util.swing.BeanSelectCreatePanel;
 
 /**
@@ -17,16 +17,16 @@ import jmri.util.swing.BeanSelectCreatePanel;
 public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
 
     private BeanSelectCreatePanel<SignalHead> signalHeadBeanPanel;
-    private JComboBox<ExpressionSignalHead.QueryType> queryTypeComboBox;
+    private JComboBox<ExpressionSignalHead_old.QueryType> queryTypeComboBox;
     private JComboBox<SignalHeadState> signalHeadStateComboBox;
     
     
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
-        if ((object != null) && !(object instanceof ExpressionSignalHead)) {
+        if ((object != null) && !(object instanceof ExpressionSignalHead_old)) {
             throw new IllegalArgumentException("object must be an ExpressionSignalHead but is a: "+object.getClass().getName());
         }
-        ExpressionSignalHead expression = (ExpressionSignalHead)object;
+        ExpressionSignalHead_old expression = (ExpressionSignalHead_old)object;
         
         panel = new JPanel();
         signalHeadBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(SignalHeadManager.class), null);
@@ -34,7 +34,7 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
         signalHeadStateComboBox = new JComboBox<>();
         
         queryTypeComboBox = new JComboBox<>();
-        for (ExpressionSignalHead.QueryType e : ExpressionSignalHead.QueryType.values()) {
+        for (ExpressionSignalHead_old.QueryType e : ExpressionSignalHead_old.QueryType.values()) {
             queryTypeComboBox.addItem(e);
         }
         
@@ -72,7 +72,7 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
-        ExpressionSignalHead expression = new ExpressionSignalHead(systemName, userName);
+        ExpressionSignalHead_old expression = new ExpressionSignalHead_old(systemName, userName);
         updateObject(expression);
         return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
     }
@@ -80,10 +80,10 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
-        if (! (object instanceof ExpressionSignalHead)) {
+        if (! (object instanceof ExpressionSignalHead_old)) {
             throw new IllegalArgumentException("object must be an ExpressionSignalHead but is a: "+object.getClass().getName());
         }
-        ExpressionSignalHead expression = (ExpressionSignalHead)object;
+        ExpressionSignalHead_old expression = (ExpressionSignalHead_old)object;
         if (!signalHeadBeanPanel.isEmpty()) {
             try {
                 SignalHead signalHead = signalHeadBeanPanel.getNamedBean();

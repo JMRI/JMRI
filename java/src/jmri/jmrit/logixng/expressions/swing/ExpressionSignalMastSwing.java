@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.expressions.ExpressionSignalMast;
+import jmri.jmrit.logixng.expressions.ExpressionSignalMast_old;
 import jmri.util.swing.BeanSelectCreatePanel;
 
 /**
@@ -19,16 +19,16 @@ import jmri.util.swing.BeanSelectCreatePanel;
 public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
 
     private BeanSelectCreatePanel<SignalMast> signalMastBeanPanel;
-    private JComboBox<ExpressionSignalMast.QueryType> queryTypeComboBox;
+    private JComboBox<ExpressionSignalMast_old.QueryType> queryTypeComboBox;
     private JComboBox<String> signalMastAspectComboBox;
     
     
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
-        if ((object != null) && !(object instanceof ExpressionSignalMast)) {
+        if ((object != null) && !(object instanceof ExpressionSignalMast_old)) {
             throw new IllegalArgumentException("object must be an ExpressionSignalMast but is a: "+object.getClass().getName());
         }
-        ExpressionSignalMast expression = (ExpressionSignalMast)object;
+        ExpressionSignalMast_old expression = (ExpressionSignalMast_old)object;
         
         panel = new JPanel();
         signalMastBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(SignalMastManager.class), null);
@@ -36,7 +36,7 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
         signalMastAspectComboBox = new JComboBox<>();
         
         queryTypeComboBox = new JComboBox<>();
-        for (ExpressionSignalMast.QueryType e : ExpressionSignalMast.QueryType.values()) {
+        for (ExpressionSignalMast_old.QueryType e : ExpressionSignalMast_old.QueryType.values()) {
             queryTypeComboBox.addItem(e);
         }
         
@@ -70,7 +70,7 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
-        ExpressionSignalMast expression = new ExpressionSignalMast(systemName, userName);
+        ExpressionSignalMast_old expression = new ExpressionSignalMast_old(systemName, userName);
         updateObject(expression);
         return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
     }
@@ -78,10 +78,10 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
-        if (! (object instanceof ExpressionSignalMast)) {
+        if (! (object instanceof ExpressionSignalMast_old)) {
             throw new IllegalArgumentException("object must be an ExpressionSignalMast but is a: "+object.getClass().getName());
         }
-        ExpressionSignalMast expression = (ExpressionSignalMast)object;
+        ExpressionSignalMast_old expression = (ExpressionSignalMast_old)object;
         if (!signalMastBeanPanel.isEmpty()) {
             try {
                 SignalMast signalMast = signalMastBeanPanel.getNamedBean();
