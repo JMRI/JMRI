@@ -965,6 +965,177 @@ public class StoreAndLoadTest {
         and.getChild(index++).connect(maleSocket);
         
         
+        ExpressionSignalHead expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalHead.setComment("A comment");
+        expressionSignalHead.setSignalHead("IH1");
+        expressionSignalHead.setAddressing(NamedBeanAddressing.Direct);
+        expressionSignalHead.setFormula("\"IT\"+index");
+        expressionSignalHead.setLocalVariable("index");
+        expressionSignalHead.setReference("{IM1}");
+        expressionSignalHead.setQueryAddressing(NamedBeanAddressing.LocalVariable);
+        expressionSignalHead.setQueryFormula("\"IT\"+index2");
+        expressionSignalHead.setQueryLocalVariable("index2");
+        expressionSignalHead.setQueryReference("{IM2}");
+        expressionSignalHead.setAppearanceAddressing(NamedBeanAddressing.Formula);
+        expressionSignalHead.setAppearance(SignalHead.FLASHGREEN);
+        expressionSignalHead.setAppearanceFormula("\"IT\"+index3");
+        expressionSignalHead.setAppearanceLocalVariable("index3");
+        expressionSignalHead.setAppearanceReference("{IM3}");
+        expressionSignalHead.setExampleSignalHead("IH2");
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalHead.setComment("A comment");
+        expressionSignalHead.setSignalHead("IH1");
+        expressionSignalHead.setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionSignalHead.setFormula("\"IT\"+index");
+        expressionSignalHead.setLocalVariable("index");
+        expressionSignalHead.setReference("{IM1}");
+        expressionSignalHead.setQueryAddressing(NamedBeanAddressing.Formula);
+        expressionSignalHead.setQueryFormula("\"IT\"+index2");
+        expressionSignalHead.setQueryLocalVariable("index2");
+        expressionSignalHead.setQueryReference("{IM2}");
+        expressionSignalHead.setAppearanceAddressing(NamedBeanAddressing.Reference);
+        expressionSignalHead.setAppearance(SignalHead.FLASHLUNAR);
+        expressionSignalHead.setAppearanceFormula("\"IT\"+index3");
+        expressionSignalHead.setAppearanceLocalVariable("index3");
+        expressionSignalHead.setAppearanceReference("{IM3}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalHead.setComment("A comment");
+        expressionSignalHead.setSignalHead("IH1");
+        expressionSignalHead.setAddressing(NamedBeanAddressing.Formula);
+        expressionSignalHead.setFormula("\"IT\"+index");
+        expressionSignalHead.setLocalVariable("index");
+        expressionSignalHead.setReference("{IM1}");
+        expressionSignalHead.setQueryAddressing(NamedBeanAddressing.Reference);
+        expressionSignalHead.setQueryFormula("\"IT\"+index2");
+        expressionSignalHead.setQueryLocalVariable("index2");
+        expressionSignalHead.setQueryReference("{IM2}");
+        expressionSignalHead.setAppearanceAddressing(NamedBeanAddressing.Direct);
+        expressionSignalHead.setAppearance(SignalHead.FLASHRED);
+        expressionSignalHead.setAppearanceFormula("\"IT\"+index3");
+        expressionSignalHead.setAppearanceLocalVariable("index3");
+        expressionSignalHead.setAppearanceReference("{IM3}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalHead.setComment("A comment");
+        expressionSignalHead.setSignalHead("IH1");
+        expressionSignalHead.setAddressing(NamedBeanAddressing.Reference);
+        expressionSignalHead.setFormula("\"IT\"+index");
+        expressionSignalHead.setLocalVariable("index");
+        expressionSignalHead.setReference("{IM1}");
+        expressionSignalHead.setQueryAddressing(NamedBeanAddressing.Direct);
+        expressionSignalHead.setQueryFormula("\"IT\"+index2");
+        expressionSignalHead.setQueryLocalVariable("index2");
+        expressionSignalHead.setQueryReference("{IM2}");
+        expressionSignalHead.setAppearanceAddressing(NamedBeanAddressing.LocalVariable);
+        expressionSignalHead.setAppearance(SignalHead.FLASHYELLOW);
+        expressionSignalHead.setAppearanceFormula("\"IT\"+index3");
+        expressionSignalHead.setAppearanceLocalVariable("index3");
+        expressionSignalHead.setAppearanceReference("{IM3}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
+        and.getChild(index++).connect(maleSocket);
+        
+        
+        ExpressionSignalMast expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalMast.setComment("A comment");
+        expressionSignalMast.setSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
+        expressionSignalMast.setAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setFormula("\"IT\"+index");
+        expressionSignalMast.setLocalVariable("index");
+        expressionSignalMast.setReference("{IM1}");
+        expressionSignalMast.setQueryAddressing(NamedBeanAddressing.LocalVariable);
+        expressionSignalMast.setQueryFormula("\"IT\"+index2");
+        expressionSignalMast.setQueryLocalVariable("index2");
+        expressionSignalMast.setQueryReference("{IM2}");
+        expressionSignalMast.setAspectAddressing(NamedBeanAddressing.Formula);
+        expressionSignalMast.setAspect("Medium Approach Slow");
+        expressionSignalMast.setAspectFormula("\"IT\"+index3");
+        expressionSignalMast.setAspectLocalVariable("index3");
+        expressionSignalMast.setAspectReference("{IM3}");
+        expressionSignalMast.setExampleSignalMast("IH2");
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalMast.setComment("A comment");
+        expressionSignalMast.setSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
+        expressionSignalMast.setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionSignalMast.setFormula("\"IT\"+index");
+        expressionSignalMast.setLocalVariable("index");
+        expressionSignalMast.setReference("{IM1}");
+        expressionSignalMast.setQueryAddressing(NamedBeanAddressing.Formula);
+        expressionSignalMast.setQueryFormula("\"IT\"+index2");
+        expressionSignalMast.setQueryLocalVariable("index2");
+        expressionSignalMast.setQueryReference("{IM2}");
+        expressionSignalMast.setAspectAddressing(NamedBeanAddressing.Reference);
+        expressionSignalMast.setAspect("Medium Approach");
+        expressionSignalMast.setAspectFormula("\"IT\"+index3");
+        expressionSignalMast.setAspectLocalVariable("index3");
+        expressionSignalMast.setAspectReference("{IM3}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalMast.setComment("A comment");
+        expressionSignalMast.setSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
+        expressionSignalMast.setAddressing(NamedBeanAddressing.Formula);
+        expressionSignalMast.setFormula("\"IT\"+index");
+        expressionSignalMast.setLocalVariable("index");
+        expressionSignalMast.setReference("{IM1}");
+        expressionSignalMast.setQueryAddressing(NamedBeanAddressing.Reference);
+        expressionSignalMast.setQueryFormula("\"IT\"+index2");
+        expressionSignalMast.setQueryLocalVariable("index2");
+        expressionSignalMast.setQueryReference("{IM2}");
+        expressionSignalMast.setAspectAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setAspect("Approach");
+        expressionSignalMast.setAspectFormula("\"IT\"+index3");
+        expressionSignalMast.setAspectLocalVariable("index3");
+        expressionSignalMast.setAspectReference("{IM3}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalMast.setComment("A comment");
+        expressionSignalMast.setSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
+        expressionSignalMast.setAddressing(NamedBeanAddressing.Reference);
+        expressionSignalMast.setFormula("\"IT\"+index");
+        expressionSignalMast.setLocalVariable("index");
+        expressionSignalMast.setReference("{IM1}");
+        expressionSignalMast.setQueryAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setQueryFormula("\"IT\"+index2");
+        expressionSignalMast.setQueryLocalVariable("index2");
+        expressionSignalMast.setQueryReference("{IM2}");
+        expressionSignalMast.setAspectAddressing(NamedBeanAddressing.LocalVariable);
+        expressionSignalMast.setAspect("Medium Approach Slow");
+        expressionSignalMast.setAspectFormula("\"IT\"+index3");
+        expressionSignalMast.setAspectLocalVariable("index3");
+        expressionSignalMast.setAspectReference("{IM3}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
+        and.getChild(index++).connect(maleSocket);
+        
+        
+        
+        
+        
+        
+        
+        
+/*        
         ExpressionSignalHead_old expressionSignalHead = new ExpressionSignalHead_old(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
         and.getChild(index++).connect(maleSocket);
@@ -1020,7 +1191,7 @@ public class StoreAndLoadTest {
         expressionSignalMast.setAspect("Medium Approach Slow");
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
         and.getChild(index++).connect(maleSocket);
-        
+*/        
         
         ExpressionTurnout expressionTurnout = new ExpressionTurnout(digitalExpressionManager.getAutoSystemName(), null);
         expressionTurnout.setTriggerOnChange(false);
