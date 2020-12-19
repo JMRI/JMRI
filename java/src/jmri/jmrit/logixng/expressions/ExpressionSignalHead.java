@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.expressions;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.*;
@@ -21,7 +22,7 @@ import jmri.util.TypeConversionUtil;
  * @author Daniel Bergqvist Copyright 2020
  */
 public class ExpressionSignalHead extends AbstractDigitalExpression
-        implements VetoableChangeListener {
+        implements PropertyChangeListener, VetoableChangeListener {
 
     private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
     private NamedBeanHandle<SignalHead> _signalHeadHandle;
@@ -645,11 +646,65 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
+        if (!_listenersAreRegistered && (_signalHeadHandle != null)) {
+            
+            switch (_queryType) {
+                case Appearance:
+                case NotAppearance:
+                    _signalHeadHandle.getBean().addPropertyChangeListener("Appearance", this);
+                    break;
+                    
+                case Lit:
+                case NotLit:
+                    _signalHeadHandle.getBean().addPropertyChangeListener("Lit", this);
+                    break;
+                    
+                case Held:
+                case NotHeld:
+                    _signalHeadHandle.getBean().addPropertyChangeListener("Held", this);
+                    break;
+                    
+                default:
+                    throw new RuntimeException("Unknown enum: "+_queryType.name());
+            }
+            _listenersAreRegistered = true;
+        }
     }
     
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
+        if (_listenersAreRegistered) {
+            
+            switch (_queryType) {
+                case Appearance:
+                case NotAppearance:
+                    _signalHeadHandle.getBean().removePropertyChangeListener("Appearance", this);
+                    break;
+                    
+                case Lit:
+                case NotLit:
+                    _signalHeadHandle.getBean().removePropertyChangeListener("Lit", this);
+                    break;
+                    
+                case Held:
+                case NotHeld:
+                    _signalHeadHandle.getBean().removePropertyChangeListener("Held", this);
+                    break;
+                    
+                default:
+                    throw new RuntimeException("Unknown enum: "+_queryType.name());
+            }
+            _listenersAreRegistered = false;
+        }
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (getTriggerOnChange()) {
+            getConditionalNG().execute();
+        }
     }
     
     /** {@inheritDoc} */

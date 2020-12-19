@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.expressions;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.*;
@@ -21,7 +22,7 @@ import jmri.util.TypeConversionUtil;
  * @author Daniel Bergqvist Copyright 2020
  */
 public class ExpressionSignalMast extends AbstractDigitalExpression
-        implements VetoableChangeListener {
+        implements PropertyChangeListener, VetoableChangeListener {
 
     private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
     private NamedBeanHandle<SignalMast> _signalMastHandle;
@@ -634,11 +635,75 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
+        if (!_listenersAreRegistered && (_signalMastHandle != null)) {
+            
+            switch (_queryType) {
+                case Aspect:
+                case NotAspect:
+                    _signalMastHandle.getBean().addPropertyChangeListener("Aspect", this);
+                    break;
+                    
+                case Lit:
+                case NotLit:
+                    _signalMastHandle.getBean().addPropertyChangeListener("Lit", this);
+                    break;
+                    
+                case Held:
+                case NotHeld:
+                    _signalMastHandle.getBean().addPropertyChangeListener("Held", this);
+                    break;
+                    
+                case IsPermissiveSmlDisabled:
+                case IsPermissiveSmlNotDisabled:
+                    _signalMastHandle.getBean().removePropertyChangeListener("PermissiveSmlDisabled", this);
+                    break;
+                    
+                default:
+                    throw new RuntimeException("Unknown enum: "+_queryType.name());
+            }
+            _listenersAreRegistered = true;
+        }
     }
     
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
+        if (_listenersAreRegistered) {
+            
+            switch (_queryType) {
+                case Aspect:
+                case NotAspect:
+                    _signalMastHandle.getBean().removePropertyChangeListener("Aspect", this);
+                    break;
+                    
+                case Lit:
+                case NotLit:
+                    _signalMastHandle.getBean().removePropertyChangeListener("Lit", this);
+                    break;
+                    
+                case Held:
+                case NotHeld:
+                    _signalMastHandle.getBean().removePropertyChangeListener("Held", this);
+                    break;
+                    
+                case IsPermissiveSmlDisabled:
+                case IsPermissiveSmlNotDisabled:
+                    _signalMastHandle.getBean().removePropertyChangeListener("PermissiveSmlDisabled", this);
+                    break;
+                    
+                default:
+                    throw new RuntimeException("Unknown enum: "+_queryType.name());
+            }
+            _listenersAreRegistered = false;
+        }
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (getTriggerOnChange()) {
+            getConditionalNG().execute();
+        }
     }
     
     /** {@inheritDoc} */
