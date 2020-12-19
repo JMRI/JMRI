@@ -1621,15 +1621,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         LocoNetMessage m = new LocoNetMessage(4);
         m.setOpCode(LnConstants.OPC_RQ_SL_DATA);
         m.setElement(1, slot & 0x7F);
-        // Slots greater than 127 are always expanded
-        if (slot > 127) {
-            m.setElement(2, (slot / 128 ) & 0b00000111 | 0x40 );
-        // Unknown or protocal one are always short
-        // System slots less than 128 are always short slot requests
-        } else if (loconetProtocol != LnConstants.LOCONETPROTOCOL_TWO || _slots[slot].isSystemSlot()) {
-            m.setElement(2, 0);
-        // all else expanded
-        } else {
+        if (loconetProtocol == LnConstants.LOCONETPROTOCOL_TWO || slot > 127 ) {
             m.setElement(2, (slot / 128 ) & 0b00000111 | 0x40 );
         }
         tc.sendLocoNetMessage(m);
