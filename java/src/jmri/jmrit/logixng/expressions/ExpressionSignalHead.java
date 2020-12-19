@@ -458,8 +458,6 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
         
-//        System.out.format("ExpressionSignalHead.execute: sensor: %s%n", sensor);
-        
         if (signalHead == null) {
             log.error("signalHead is null");
             return false;
@@ -497,36 +495,6 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
                 break;
             default:
                 throw new RuntimeException("Unknown enum: "+_queryType.name());
-            
-            
-/*            
-            case Appearance:
-                int newAppearance = getNewAppearance();
-                if (newAppearance != -1) {
-                    signalHead.setAppearance(newAppearance);
-                }
-                break;
-            case Lit:
-                signalHead.setLit(true);
-                break;
-            case NotLit:
-                signalHead.setLit(false);
-                break;
-            case Held:
-                signalHead.setHeld(true);
-                break;
-            case NotHeld:
-                signalHead.setHeld(false);
-                break;
-//            case PermissiveSmlDisabled:
-//                signalHead.setPermissiveSmlDisabled(true);
-//                break;
-//            case PermissiveSmlNotDisabled:
-//                signalHead.setPermissiveSmlDisabled(false);
-//                break;
-            default:
-                throw new RuntimeException("Unknown enum: "+_queryType.name());
-*/                
         }
         
         return result;
