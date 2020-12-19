@@ -4,41 +4,41 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.NamedBeanAddressing;
-import jmri.jmrit.logixng.actions.ActionSignalHead;
+import jmri.jmrit.logixng.actions.ActionSignalMast;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
 
 /**
- * Handle XML configuration for ActionSignalHeadXml objects.
+ * Handle XML configuration for ActionLightXml objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
  * @author Daniel Bergqvist Copyright (C) 2019
  */
-public class ActionSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
+public class ActionSignalMastXml_Old extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
-    public ActionSignalHeadXml() {
+    public ActionSignalMastXml_Old() {
     }
     
     /**
-     * Default implementation for storing the contents of a SE8cSignalHead
+     * Default implementation for storing the contents of a SE8cSignalMast
      *
-     * @param o Object to store, of type TripleLightSignalHead
+     * @param o Object to store, of type TripleLightSignalMast
      * @return Element containing the complete info
      */
     @Override
     public Element store(Object o) {
-        ActionSignalHead p = (ActionSignalHead) o;
+        ActionSignalMast p = (ActionSignalMast) o;
 
-        Element element = new Element("action-signalhead");
+        Element element = new Element("action-signalmast");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
 
-        NamedBeanHandle<SignalHead> signalHead = p.getSignalHead();
-        if (signalHead != null) {
-            element.addContent(new Element("signalHead").addContent(signalHead.getName()));
+        NamedBeanHandle<SignalMast> signalMast = p.getSignalMast();
+        if (signalMast != null) {
+            element.addContent(new Element("signalMast").addContent(signalMast.getName()));
         }
         
         element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
@@ -52,17 +52,12 @@ public class ActionSignalHeadXml extends jmri.managers.configurexml.AbstractName
         element.addContent(new Element("operationLocalVariable").addContent(p.getOperationLocalVariable()));
         element.addContent(new Element("operationFormula").addContent(p.getOperationFormula()));
         
-        element.addContent(new Element("appearanceAddressing").addContent(p.getAppearanceAddressing().name()));
-        element.addContent(new Element("appearance").addContent(Integer.toString(p.getAppearance())));
-        element.addContent(new Element("appearanceReference").addContent(p.getAppearanceReference()));
-        element.addContent(new Element("appearanceLocalVariable").addContent(p.getAppearanceLocalVariable()));
-        element.addContent(new Element("appearanceFormula").addContent(p.getAppearanceFormula()));
-        
-        signalHead = p.getExampleSignalHead();
-        if (signalHead != null) {
-            element.addContent(new Element("exampleSignalHead").addContent(signalHead.getName()));
-        }
-        
+        element.addContent(new Element("aspectAddressing").addContent(p.getAspectAddressing().name()));
+        element.addContent(new Element("aspect").addContent(p.getAspect()));
+        element.addContent(new Element("aspectReference").addContent(p.getAspectReference()));
+        element.addContent(new Element("aspectLocalVariable").addContent(p.getAspectLocalVariable()));
+        element.addContent(new Element("aspectFormula").addContent(p.getAspectFormula()));
+
         return element;
     }
     
@@ -70,17 +65,18 @@ public class ActionSignalHeadXml extends jmri.managers.configurexml.AbstractName
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        ActionSignalHead h = new ActionSignalHead(sys, uname);
+        ActionSignalMast h = new ActionSignalMast(sys, uname);
 
         loadCommon(h, shared);
 
-        Element signalHeadName = shared.getChild("signalHead");
-        if (signalHeadName != null) {
-            SignalHead signalHead = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalHeadName.getTextTrim());
-            if (signalHead != null) h.setSignalHead(signalHead);
-            else h.removeSignalHead();
+        Element signalMastName = shared.getChild("signalMast");
+        if (signalMastName != null) {
+            SignalMast signalMast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(signalMastName.getTextTrim());
+            if (signalMast != null) h.setSignalMast(signalMast);
+            else h.removeSignalMast();
         }
-        
+
+
         try {
             Element elem = shared.getChild("addressing");
             if (elem != null) {
@@ -104,7 +100,7 @@ public class ActionSignalHeadXml extends jmri.managers.configurexml.AbstractName
             
             Element queryType = shared.getChild("operationType");
             if (queryType != null) {
-                h.setOperationType(ActionSignalHead.OperationType.valueOf(queryType.getTextTrim()));
+                h.setOperationType(ActionSignalMast.OperationType.valueOf(queryType.getTextTrim()));
             }
             
             elem = shared.getChild("operationReference");
@@ -117,44 +113,32 @@ public class ActionSignalHeadXml extends jmri.managers.configurexml.AbstractName
             if (elem != null) h.setOperationFormula(elem.getTextTrim());
             
             
-            elem = shared.getChild("appearanceAddressing");
+            elem = shared.getChild("aspectAddressing");
             if (elem != null) {
-                h.setAppearanceAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+                h.setAspectAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }
             
-            Element appearanceElement = shared.getChild("appearance");
-            if (appearanceElement != null) {
-                try {
-                    int appearance = Integer.parseInt(appearanceElement.getTextTrim());
-                    h.setAppearance(appearance);
-                } catch (NumberFormatException e) {
-                    log.error("cannot parse apperance: " + appearanceElement.getTextTrim(), e);
-                }
+            Element apperanceElement = shared.getChild("aspect");
+            if (apperanceElement != null) {
+                h.setAspect(apperanceElement.getTextTrim());
             }
             
-            elem = shared.getChild("appearanceReference");
-            if (elem != null) h.setAppearanceReference(elem.getTextTrim());
+            elem = shared.getChild("aspectReference");
+            if (elem != null) h.setAspectReference(elem.getTextTrim());
             
-            elem = shared.getChild("appearanceLocalVariable");
-            if (elem != null) h.setAppearanceLocalVariable(elem.getTextTrim());
+            elem = shared.getChild("aspectLocalVariable");
+            if (elem != null) h.setAspectLocalVariable(elem.getTextTrim());
             
-            elem = shared.getChild("appearanceFormula");
-            if (elem != null) h.setAppearanceFormula(elem.getTextTrim());
+            elem = shared.getChild("aspectFormula");
+            if (elem != null) h.setAspectFormula(elem.getTextTrim());
             
         } catch (ParserException e) {
             throw new JmriConfigureXmlException(e);
         }
-        
-        signalHeadName = shared.getChild("exampleSignalHead");
-        if (signalHeadName != null) {
-            SignalHead signalHead = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalHeadName.getTextTrim());
-            if (signalHead != null) h.setExampleSignalHead(signalHead);
-            else h.removeSignalHead();
-        }
-        
+
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSignalHeadXml.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLightXml.class);
 }

@@ -73,7 +73,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="12:48 AM">
+    <memory value="6:06 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -83,6 +83,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
       <systemName>IH1</systemName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IH2</systemName>
     </signalhead>
   </signalheads>
   <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
@@ -109,7 +112,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sat Dec 19 00:48:43 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sat Dec 19 06:06:02 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <logixngs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <logixng enabled="no">
       <systemName>IQ:AUTO:0001</systemName>
@@ -4213,6 +4216,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <appearanceReference>{IM3}</appearanceReference>
       <appearanceLocalVariable>index3</appearanceLocalVariable>
       <appearanceFormula>"IT"+index3</appearanceFormula>
+      <exampleSignalHead>IH2</exampleSignalHead>
       <maleSocket>
         <localVariable>
           <name>A1</name>
@@ -4506,16 +4510,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <reference>{IM1}</reference>
       <localVariable>index</localVariable>
       <formula>"IT"+index</formula>
-      <operationAddressing>Direct</operationAddressing>
+      <operationAddressing>LocalVariable</operationAddressing>
       <operationType>Aspect</operationType>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
-      <aspectAddressing>LocalVariable</aspectAddressing>
+      <operationReference>{IM2}</operationReference>
+      <operationLocalVariable>index2</operationLocalVariable>
+      <operationFormula>"IT"+index2</operationFormula>
+      <aspectAddressing>Formula</aspectAddressing>
       <aspect>Medium Approach Slow</aspect>
-      <aspectReference>{IM2}</aspectReference>
-      <aspectLocalVariable>index2</aspectLocalVariable>
-      <aspectFormula>"IT"+index2</aspectFormula>
+      <aspectReference>{IM3}</aspectReference>
+      <aspectLocalVariable>index3</aspectLocalVariable>
+      <aspectFormula>"IT"+index3</aspectFormula>
       <maleSocket>
         <localVariable>
           <name>A1</name>
@@ -4567,16 +4571,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <reference>{IM1}</reference>
       <localVariable>index</localVariable>
       <formula>"IT"+index</formula>
-      <operationAddressing>Direct</operationAddressing>
+      <operationAddressing>Formula</operationAddressing>
       <operationType>Aspect</operationType>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
-      <aspectAddressing>Formula</aspectAddressing>
-      <aspect>Medium Approach Slow</aspect>
-      <aspectReference>{IM2}</aspectReference>
-      <aspectLocalVariable>index2</aspectLocalVariable>
-      <aspectFormula>"IT"+index2</aspectFormula>
+      <operationReference>{IM2}</operationReference>
+      <operationLocalVariable>index2</operationLocalVariable>
+      <operationFormula>"IT"+index2</operationFormula>
+      <aspectAddressing>Reference</aspectAddressing>
+      <aspect>Medium Approach</aspect>
+      <aspectReference>{IM3}</aspectReference>
+      <aspectLocalVariable>index3</aspectLocalVariable>
+      <aspectFormula>"IT"+index3</aspectFormula>
       <maleSocket>
         <localVariable>
           <name>A1</name>
@@ -4628,16 +4632,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <reference>{IM1}</reference>
       <localVariable>index</localVariable>
       <formula>"IT"+index</formula>
-      <operationAddressing>Direct</operationAddressing>
+      <operationAddressing>Reference</operationAddressing>
       <operationType>Aspect</operationType>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
-      <aspectAddressing>Reference</aspectAddressing>
-      <aspect>Medium Approach Slow</aspect>
-      <aspectReference>{IM2}</aspectReference>
-      <aspectLocalVariable>index2</aspectLocalVariable>
-      <aspectFormula>"IT"+index2</aspectFormula>
+      <operationReference>{IM2}</operationReference>
+      <operationLocalVariable>index2</operationLocalVariable>
+      <operationFormula>"IT"+index2</operationFormula>
+      <aspectAddressing>Direct</aspectAddressing>
+      <aspect>Approach</aspect>
+      <aspectReference>{IM3}</aspectReference>
+      <aspectLocalVariable>index3</aspectLocalVariable>
+      <aspectFormula>"IT"+index3</aspectFormula>
       <maleSocket>
         <localVariable>
           <name>A1</name>
@@ -4691,14 +4695,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <formula>"IT"+index</formula>
       <operationAddressing>Direct</operationAddressing>
       <operationType>Aspect</operationType>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
-      <aspectAddressing>Direct</aspectAddressing>
+      <operationReference>{IM2}</operationReference>
+      <operationLocalVariable>index2</operationLocalVariable>
+      <operationFormula>"IT"+index2</operationFormula>
+      <aspectAddressing>LocalVariable</aspectAddressing>
       <aspect>Medium Approach Slow</aspect>
-      <aspectReference>{IM2}</aspectReference>
-      <aspectLocalVariable>index2</aspectLocalVariable>
-      <aspectFormula>"IT"+index2</aspectFormula>
+      <aspectReference>{IM3}</aspectReference>
+      <aspectLocalVariable>index3</aspectLocalVariable>
+      <aspectFormula>"IT"+index3</aspectFormula>
       <maleSocket>
         <localVariable>
           <name>A1</name>
@@ -6935,9 +6939,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Sat Dec 19 00:48:59 CET 2020</date>
+      <date>Sat Dec 19 06:06:15 CET 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.21.4ish+daniel+2020-12-18T23:43:40Z+RUNKNOWN on Sat Dec 19 00:48:59 CET 2020-->
+  <!--Written by JMRI version 4.21.4ish+daniel+2020-12-19T05:02:45Z+RUNKNOWN on Sat Dec 19 06:06:15 CET 2020-->
 </layout-config>

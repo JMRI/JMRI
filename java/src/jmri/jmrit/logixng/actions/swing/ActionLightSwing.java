@@ -141,7 +141,8 @@ public class ActionLightSwing extends AbstractDigitalActionSwing {
             _tabbedPaneLight,
             _tabbedPaneLightState};
         
-        List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(Bundle.getMessage("SetLight"), components);
+        List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
+                Bundle.getMessage("ActionLight_Components"), components);
         
         for (JComponent c : componentList) panel.add(c);
     }

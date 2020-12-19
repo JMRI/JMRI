@@ -10,7 +10,7 @@ import jmri.jmrit.logixng.util.parser.ParserException;
 import org.jdom2.Element;
 
 /**
- * Handle XML configuration for ActionLightXml objects.
+ * Handle XML configuration for ActionSignalMastXml objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
  * @author Daniel Bergqvist Copyright (C) 2019
@@ -57,7 +57,12 @@ public class ActionSignalMastXml extends jmri.managers.configurexml.AbstractName
         element.addContent(new Element("aspectReference").addContent(p.getAspectReference()));
         element.addContent(new Element("aspectLocalVariable").addContent(p.getAspectLocalVariable()));
         element.addContent(new Element("aspectFormula").addContent(p.getAspectFormula()));
-
+        
+        signalMast = p.getExampleSignalMast();
+        if (signalMast != null) {
+            element.addContent(new Element("exampleSignalMast").addContent(signalMast.getName()));
+        }
+        
         return element;
     }
     
@@ -75,8 +80,7 @@ public class ActionSignalMastXml extends jmri.managers.configurexml.AbstractName
             if (signalMast != null) h.setSignalMast(signalMast);
             else h.removeSignalMast();
         }
-
-
+        
         try {
             Element elem = shared.getChild("addressing");
             if (elem != null) {
@@ -118,9 +122,13 @@ public class ActionSignalMastXml extends jmri.managers.configurexml.AbstractName
                 h.setAspectAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }
             
-            Element apperanceElement = shared.getChild("aspect");
-            if (apperanceElement != null) {
-                h.setAspect(apperanceElement.getTextTrim());
+            Element aspectElement = shared.getChild("aspect");
+            if (aspectElement != null) {
+                try {
+                    h.setAspect(aspectElement.getTextTrim());
+                } catch (NumberFormatException e) {
+                    log.error("cannot parse aspect: " + aspectElement.getTextTrim(), e);
+                }
             }
             
             elem = shared.getChild("aspectReference");
@@ -135,10 +143,17 @@ public class ActionSignalMastXml extends jmri.managers.configurexml.AbstractName
         } catch (ParserException e) {
             throw new JmriConfigureXmlException(e);
         }
-
+        
+        signalMastName = shared.getChild("exampleSignalMast");
+        if (signalMastName != null) {
+            SignalMast signalMast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(signalMastName.getTextTrim());
+            if (signalMast != null) h.setExampleSignalMast(signalMast);
+            else h.removeSignalMast();
+        }
+        
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLightXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSignalMastXml.class);
 }

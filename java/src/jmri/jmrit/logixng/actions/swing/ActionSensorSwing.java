@@ -14,7 +14,6 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionSensor;
-import jmri.jmrit.logixng.actions.ActionSensor.SensorState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectCreatePanel;
@@ -35,7 +34,7 @@ public class ActionSensorSwing extends AbstractDigitalActionSwing {
     private JTextField _sensorFormulaTextField;
     
     private JTabbedPane _tabbedPaneSensorState;
-    private JComboBox<ActionSensor.SensorState> stateComboBox;
+    private JComboBox<ActionSensor.SensorState> _stateComboBox;
     private JPanel _panelSensorStateDirect;
     private JPanel _panelSensorStateReference;
     private JPanel _panelSensorStateLocalVariable;
@@ -89,12 +88,12 @@ public class ActionSensorSwing extends AbstractDigitalActionSwing {
         _tabbedPaneSensorState.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelSensorStateLocalVariable);
         _tabbedPaneSensorState.addTab(NamedBeanAddressing.Formula.toString(), _panelSensorStateFormula);
         
-        stateComboBox = new JComboBox<>();
+        _stateComboBox = new JComboBox<>();
         for (ActionSensor.SensorState e : ActionSensor.SensorState.values()) {
-            stateComboBox.addItem(e);
+            _stateComboBox.addItem(e);
         }
         
-        _panelSensorStateDirect.add(stateComboBox);
+        _panelSensorStateDirect.add(_stateComboBox);
         
         _sensorStateReferenceTextField = new JTextField();
         _sensorStateReferenceTextField.setColumns(30);
@@ -131,7 +130,7 @@ public class ActionSensorSwing extends AbstractDigitalActionSwing {
                 case Formula: _tabbedPaneSensorState.setSelectedComponent(_panelSensorStateFormula); break;
                 default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
             }
-            stateComboBox.setSelectedItem(action.getBeanState());
+            _stateComboBox.setSelectedItem(action.getBeanState());
             _sensorStateReferenceTextField.setText(action.getStateReference());
             _sensorStateLocalVariableTextField.setText(action.getStateLocalVariable());
             _sensorStateFormulaTextField.setText(action.getStateFormula());
@@ -141,7 +140,8 @@ public class ActionSensorSwing extends AbstractDigitalActionSwing {
             _tabbedPaneSensor,
             _tabbedPaneSensorState};
         
-        List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(Bundle.getMessage("SetSensor"), components);
+        List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
+                Bundle.getMessage("ActionSensor_Components"), components);
         
         for (JComponent c : componentList) panel.add(c);
     }
@@ -241,7 +241,7 @@ public class ActionSensorSwing extends AbstractDigitalActionSwing {
             
             if (_tabbedPaneSensorState.getSelectedComponent() == _panelSensorStateDirect) {
                 action.setStateAddressing(NamedBeanAddressing.Direct);
-                action.setBeanState((ActionSensor.SensorState)stateComboBox.getSelectedItem());
+                action.setBeanState((ActionSensor.SensorState)_stateComboBox.getSelectedItem());
             } else if (_tabbedPaneSensorState.getSelectedComponent() == _panelSensorStateReference) {
                 action.setStateAddressing(NamedBeanAddressing.Reference);
                 action.setStateReference(_sensorStateReferenceTextField.getText());

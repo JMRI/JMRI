@@ -26,6 +26,7 @@ import jmri.util.swing.BeanSelectCreatePanel;
 public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
 
     public static final int NUM_COLUMNS_TEXT_FIELDS = 20;
+    
     private JTabbedPane _tabbedPaneSignalHead;
     private BeanSelectCreatePanel<SignalHead> _signalHeadBeanPanel;
     private JPanel _panelSignalHeadDirect;
@@ -140,22 +141,22 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
                 setEnableOperationComboBox(false);
             }
         });
-        _panelOperationTypeDirect.add(new JLabel(Bundle.getMessage("SignalHeadOperation")));
+        _panelOperationTypeDirect.add(new JLabel(Bundle.getMessage("ActionSignalHead_Operation")));
         _panelOperationTypeDirect.add(_operationComboBox);
         
         _signalHeadOperationReferenceTextField = new JTextField();
         _signalHeadOperationReferenceTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
-        _panelOperationTypeReference.add(new JLabel(Bundle.getMessage("SignalHeadOperation")));
+        _panelOperationTypeReference.add(new JLabel(Bundle.getMessage("ActionSignalHead_Operation")));
         _panelOperationTypeReference.add(_signalHeadOperationReferenceTextField);
         
         _signalHeadOperationLocalVariableTextField = new JTextField();
         _signalHeadOperationLocalVariableTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
-        _panelOperationTypeLocalVariable.add(new JLabel(Bundle.getMessage("SignalHeadOperation")));
+        _panelOperationTypeLocalVariable.add(new JLabel(Bundle.getMessage("ActionSignalHead_Operation")));
         _panelOperationTypeLocalVariable.add(_signalHeadOperationLocalVariableTextField);
         
         _signalHeadOperationFormulaTextField = new JTextField();
         _signalHeadOperationFormulaTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
-        _panelOperationTypeFormula.add(new JLabel(Bundle.getMessage("SignalHeadOperation")));
+        _panelOperationTypeFormula.add(new JLabel(Bundle.getMessage("ActionSignalHead_Operation")));
         _panelOperationTypeFormula.add(_signalHeadOperationFormulaTextField);
         
         
@@ -180,22 +181,22 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
         });
         
         _signalHeadAppearanceComboBox = new JComboBox<>();
-        _panelAppearanceTypeDirect.add(new JLabel(Bundle.getMessage("SignalHeadAppearance")));
+        _panelAppearanceTypeDirect.add(new JLabel(Bundle.getMessage("ActionSignalHead_Appearance")));
         _panelAppearanceTypeDirect.add(_signalHeadAppearanceComboBox);
         
         _signalHeadAppearanceReferenceTextField = new JTextField();
         _signalHeadAppearanceReferenceTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
-        _panelAppearanceTypeReference.add(new JLabel(Bundle.getMessage("SignalHeadAppearance")));
+        _panelAppearanceTypeReference.add(new JLabel(Bundle.getMessage("ActionSignalHead_Appearance")));
         _panelAppearanceTypeReference.add(_signalHeadAppearanceReferenceTextField);
         
         _signalHeadAppearanceLocalVariableTextField = new JTextField();
         _signalHeadAppearanceLocalVariableTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
-        _panelAppearanceTypeLocalVariable.add(new JLabel(Bundle.getMessage("SignalHeadAppearance")));
+        _panelAppearanceTypeLocalVariable.add(new JLabel(Bundle.getMessage("ActionSignalHead_Appearance")));
         _panelAppearanceTypeLocalVariable.add(_signalHeadAppearanceLocalVariableTextField);
         
         _signalHeadAppearanceFormulaTextField = new JTextField();
         _signalHeadAppearanceFormulaTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
-        _panelAppearanceTypeFormula.add(new JLabel(Bundle.getMessage("SignalHeadAppearance")));
+        _panelAppearanceTypeFormula.add(new JLabel(Bundle.getMessage("ActionSignalHead_Appearance")));
         _panelAppearanceTypeFormula.add(_signalHeadAppearanceFormulaTextField);
         
         
@@ -274,7 +275,8 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
             _tabbedPaneAppearanceType
         };
         
-        List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(Bundle.getMessage("SetSignalHead"), components);
+        List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
+                Bundle.getMessage("ActionSignalHead_Components"), components);
         
         for (JComponent c : componentList) actionPanel.add(c);
         panel.add(actionPanel);
@@ -289,7 +291,7 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
         
         enableDisableExampleSignalHeadBeanPanel();
         
-        examplePanel.add(new JLabel(Bundle.getMessage("SignalHeadExampleBean")));
+        examplePanel.add(new JLabel(Bundle.getMessage("ActionSignalHead_ExampleBean")));
         examplePanel.add(innerExamplePanel);
         
         panel.add(examplePanel);

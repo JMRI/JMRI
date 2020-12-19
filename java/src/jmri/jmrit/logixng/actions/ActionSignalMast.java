@@ -44,6 +44,9 @@ public class ActionSignalMast extends AbstractDigitalAction
     private String _aspectFormula = "";
     private ExpressionNode _aspectExpressionNode;
     
+    private NamedBeanHandle<SignalMast> _exampleSignalMastHandle;
+    
+    
     public ActionSignalMast(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
@@ -72,6 +75,7 @@ public class ActionSignalMast extends AbstractDigitalAction
         copy.setAspectFormula(_aspectFormula);
         copy.setAspectLocalVariable(_aspectLocalVariable);
         copy.setAspectReference(_aspectReference);
+        copy.setExampleSignalMast(_exampleSignalMastHandle);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
@@ -108,6 +112,41 @@ public class ActionSignalMast extends AbstractDigitalAction
     
     public NamedBeanHandle<SignalMast> getSignalMast() {
         return _signalMastHandle;
+    }
+    
+    public void setExampleSignalMast(@Nonnull String signalMastName) {
+        assertListenersAreNotRegistered(log, "setExampleSignalMast");
+        SignalMast signalMast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(signalMastName);
+        if (signalMast != null) {
+            setExampleSignalMast(signalMast);
+        } else {
+            removeExampleSignalMast();
+            log.error("signalMast \"{}\" is not found", signalMastName);
+        }
+    }
+    
+    public void setExampleSignalMast(@Nonnull NamedBeanHandle<SignalMast> handle) {
+        assertListenersAreNotRegistered(log, "setExampleSignalMast");
+        _exampleSignalMastHandle = handle;
+        InstanceManager.getDefault(SignalMastManager.class).addVetoableChangeListener(this);
+    }
+    
+    public void setExampleSignalMast(@Nonnull SignalMast signalMast) {
+        assertListenersAreNotRegistered(log, "setExampleSignalMast");
+        setExampleSignalMast(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                .getNamedBeanHandle(signalMast.getDisplayName(), signalMast));
+    }
+    
+    public void removeExampleSignalMast() {
+        assertListenersAreNotRegistered(log, "removeExampleSignalMast");
+        if (_exampleSignalMastHandle != null) {
+            InstanceManager.getDefault(SignalMastManager.class).removeVetoableChangeListener(this);
+            _exampleSignalMastHandle = null;
+        }
+    }
+    
+    public NamedBeanHandle<SignalMast> getExampleSignalMast() {
+        return _exampleSignalMastHandle;
     }
     
     public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
@@ -216,7 +255,7 @@ public class ActionSignalMast extends AbstractDigitalAction
     
     public void setAspectAddressing(NamedBeanAddressing addressing) throws ParserException {
         _aspectAddressing = addressing;
-        parseStateFormula();
+        parseAspectFormula();
     }
     
     public NamedBeanAddressing getAspectAddressing() {
@@ -253,14 +292,14 @@ public class ActionSignalMast extends AbstractDigitalAction
     
     public void setAspectFormula(@Nonnull String formula) throws ParserException {
         _aspectFormula = formula;
-        parseStateFormula();
+        parseAspectFormula();
     }
     
     public String getAspectFormula() {
         return _aspectFormula;
     }
     
-    private void parseStateFormula() throws ParserException {
+    private void parseAspectFormula() throws ParserException {
         if (_aspectAddressing == NamedBeanAddressing.Formula) {
             Map<String, Variable> variables = new HashMap<>();
             
@@ -275,15 +314,26 @@ public class ActionSignalMast extends AbstractDigitalAction
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof SignalMast) {
-                if (evt.getOldValue().equals(getSignalMast().getBean())) {
+                if ((_signalMastHandle != null)
+                        && (evt.getOldValue().equals(_signalMastHandle.getBean()))) {
+                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new PropertyVetoException(Bundle.getMessage("SignalMast_SignalMastInUseSignalMastActionVeto", getDisplayName()), e); // NOI18N
+                }
+                if ((_exampleSignalMastHandle != null)
+                        && (evt.getOldValue().equals(_exampleSignalMastHandle.getBean()))) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
                     throw new PropertyVetoException(Bundle.getMessage("SignalMast_SignalMastInUseSignalMastActionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof SignalMast) {
-                if (evt.getOldValue().equals(getSignalMast().getBean())) {
+                if ((_signalMastHandle != null)
+                        && (evt.getOldValue().equals(_signalMastHandle.getBean()))) {
                     removeSignalMast();
+                }
+                if ((_exampleSignalMastHandle != null)
+                        && (evt.getOldValue().equals(_exampleSignalMastHandle.getBean()))) {
+                    removeExampleSignalMast();
                 }
             }
         }
@@ -319,7 +369,7 @@ public class ActionSignalMast extends AbstractDigitalAction
             case Formula:
                 return _aspectExpressionNode != null
                         ? TypeConversionUtil.convertToString(_aspectExpressionNode.calculate(), false)
-                        : null;
+                        : "";
                 
             default:
                 throw new IllegalArgumentException("invalid _aspectAddressing state: " + _aspectAddressing.name());
@@ -365,7 +415,7 @@ public class ActionSignalMast extends AbstractDigitalAction
     public void execute() throws JmriException {
         SignalMast signalMast;
         
-//        System.out.format("ActionSensor.execute: %s%n", getLongDescription());
+//        System.out.format("ActionSignalMast.execute: %s%n", getLongDescription());
         
         switch (_addressing) {
             case Direct:
@@ -398,17 +448,19 @@ public class ActionSignalMast extends AbstractDigitalAction
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
         
-//        System.out.format("ActionSensor.execute: sensor: %s%n", sensor);
+//        System.out.format("ActionSignalMast.execute: sensor: %s%n", sensor);
         
         if (signalMast == null) {
             log.error("signalMast is null");
             return;
         }
         
-        switch (getOperation()) {
+        OperationType operation = getOperation();
+        
+        switch (operation) {
             case Aspect:
                 String newAspect = getNewAspect();
-                if (! "".equals(newAspect)) {
+                if (!newAspect.isEmpty()) {
                     signalMast.setAspect(newAspect);
                 }
                 break;
@@ -449,7 +501,7 @@ public class ActionSignalMast extends AbstractDigitalAction
     public String getShortDescription(Locale locale) {
         return Bundle.getMessage(locale, "SignalMast_Short");
     }
-
+    
     @Override
     public String getLongDescription(Locale locale) {
         String namedBean;
@@ -487,26 +539,26 @@ public class ActionSignalMast extends AbstractDigitalAction
             case Direct:
                 operation = Bundle.getMessage(locale, "AddressByDirect", _operationType._text);
                 break;
-                
+
             case Reference:
                 operation = Bundle.getMessage(locale, "AddressByReference", _operationReference);
                 break;
-                
+
             case LocalVariable:
                 operation = Bundle.getMessage(locale, "AddressByLocalVariable", _operationLocalVariable);
                 break;
-                
+
             case Formula:
                 operation = Bundle.getMessage(locale, "AddressByFormula", _operationFormula);
                 break;
-                
+
             default:
                 throw new IllegalArgumentException("invalid _operationAddressing state: " + _operationAddressing.name());
         }
         
         switch (_aspectAddressing) {
             case Direct:
-                aspect = Bundle.getMessage(locale, "AddressByDirect", _signalMastAspect.isEmpty() ? "''" : _signalMastAspect);
+                aspect = Bundle.getMessage(locale, "AddressByDirect", _signalMastAspect);
                 break;
                 
             case Reference:

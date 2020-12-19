@@ -206,8 +206,8 @@ public class ActionSignalHead extends AbstractDigitalAction
         return _operationAddressing;
     }
     
-    public void setOperationType(OperationType state) {
-        _operationType = state;
+    public void setOperationType(OperationType operationType) {
+        _operationType = operationType;
     }
     
     public OperationType getOperationType() {
@@ -255,7 +255,7 @@ public class ActionSignalHead extends AbstractDigitalAction
     
     public void setAppearanceAddressing(NamedBeanAddressing addressing) throws ParserException {
         _appearanceAddressing = addressing;
-        parseOperationFormula();
+        parseAppearanceFormula();
     }
     
     public NamedBeanAddressing getAppearanceAddressing() {
@@ -291,14 +291,14 @@ public class ActionSignalHead extends AbstractDigitalAction
     
     public void setAppearanceFormula(@Nonnull String formula) throws ParserException {
         _appearanceFormula = formula;
-        parseStateFormula();
+        parseAppearanceFormula();
     }
     
     public String getAppearanceFormula() {
         return _appearanceFormula;
     }
     
-    private void parseStateFormula() throws ParserException {
+    private void parseAppearanceFormula() throws ParserException {
         if (_appearanceAddressing == NamedBeanAddressing.Formula) {
             Map<String, Variable> variables = new HashMap<>();
             
@@ -426,7 +426,7 @@ public class ActionSignalHead extends AbstractDigitalAction
     public void execute() throws JmriException {
         SignalHead signalHead;
         
-//        System.out.format("ActionSensor.execute: %s%n", getLongDescription());
+//        System.out.format("ActionSignalHead.execute: %s%n", getLongDescription());
         
         switch (_addressing) {
             case Direct:
@@ -459,7 +459,7 @@ public class ActionSignalHead extends AbstractDigitalAction
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
         
-//        System.out.format("ActionSensor.execute: sensor: %s%n", sensor);
+//        System.out.format("ActionSignalHead.execute: sensor: %s%n", sensor);
         
         if (signalHead == null) {
             log.error("signalHead is null");

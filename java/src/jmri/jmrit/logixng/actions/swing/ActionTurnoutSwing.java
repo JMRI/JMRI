@@ -141,7 +141,8 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
             _tabbedPaneTurnout,
             _tabbedPaneTurnoutState};
         
-        List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(Bundle.getMessage("SetTurnout"), components);
+        List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
+                Bundle.getMessage("ActionTurnout_Components"), components);
         
         for (JComponent c : componentList) panel.add(c);
     }
