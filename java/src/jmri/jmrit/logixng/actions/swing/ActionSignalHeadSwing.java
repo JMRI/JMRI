@@ -63,50 +63,6 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
     
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
-/*        
-        if ((object != null) && !(object instanceof ActionSignalHead)) {
-            throw new IllegalArgumentException("object must be an ActionSignalHead but is a: "+object.getClass().getName());
-        }
-        ActionSignalHead action = (ActionSignalHead)object;
-        
-        panel = new JPanel();
-        signalHeadBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(SignalHeadManager.class), null);
-        
-        signalHeadStateComboBox = new JComboBox<>();
-        
-        queryTypeComboBox = new JComboBox<>();
-        for (ActionSignalHead.OperationType e : ActionSignalHead.OperationType.values()) {
-            queryTypeComboBox.addItem(e);
-        }
-        
-        if (action != null) {
-            if (action.getSignalHead() != null) {
-                signalHeadBeanPanel.setDefaultNamedBean(action.getSignalHead().getBean());
-            }
-            queryTypeComboBox.setSelectedItem(action.getOperationType());
-        }
-        
-        if ((action != null) && (action.getSignalHead() != null)) {
-            SignalHead sh = action.getSignalHead().getBean();
-            
-            int[] states = sh.getValidStates();
-            for (int s : states) {
-                OperationType shs = new OperationType();
-                shs._state = s;
-                shs._name = sh.getAppearanceName(s);
-                signalHeadStateComboBox.addItem(shs);
-                if (action.getAppearance() == s) signalHeadStateComboBox.setSelectedItem(shs);
-            }
-        }
-        panel.add(new JLabel(Bundle.getMessage("BeanNameSignalHead")));
-        panel.add(signalHeadBeanPanel);
-        panel.add(queryTypeComboBox);
-        panel.add(signalHeadStateComboBox);
-*/        
-        
-        
-        
-        
         ActionSignalHead action = (ActionSignalHead)object;
         
         panel = new JPanel();
@@ -410,34 +366,6 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
-/*        
-        if (! (object instanceof ActionSignalHead)) {
-            throw new IllegalArgumentException("object must be an ActionSignalHead but is a: "+object.getClass().getName());
-        }
-        ActionSignalHead action = (ActionSignalHead)object;
-        if (!signalHeadBeanPanel.isEmpty()) {
-            try {
-                SignalHead signalHead = signalHeadBeanPanel.getNamedBean();
-                if (signalHead != null) {
-                    NamedBeanHandle<SignalHead> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(signalHead.getDisplayName(), signalHead);
-                    action.setSignalHead(handle);
-                }
-            } catch (JmriException ex) {
-                log.error("Cannot get NamedBeanHandle for signalHead", ex);
-            }
-        }
-        
-        action.setOperationType(queryTypeComboBox.getItemAt(queryTypeComboBox.getSelectedIndex()));
-        if (signalHeadOperationComboBox.getItemCount() > 0) {
-            action.setAppearance(signalHeadOperationComboBox.getItemAt(signalHeadOperationComboBox.getSelectedIndex())._state);
-        }
-*/        
-        
-        
-        
-        
         if (! (object instanceof ActionSignalHead)) {
             throw new IllegalArgumentException("object must be an ActionSignalHead but is a: "+object.getClass().getName());
         }
