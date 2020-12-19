@@ -447,8 +447,6 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
         
-//        System.out.format("ExpressionSignalMast.execute: sensor: %s%n", sensor);
-        
         if (signalMast == null) {
             log.error("signalMast is null");
             return false;
@@ -461,12 +459,12 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
         switch (query) {
             case Aspect:
                 if (_signalMastHandle.getBean().getAspect() != null) {
-                    result = _signalMastAspect.equals(_signalMastHandle.getBean().getAspect());
+                    result = getNewAspect().equals(_signalMastHandle.getBean().getAspect());
                 }
                 break;
             case NotAspect:
                 if (_signalMastHandle.getBean().getAspect() != null) {
-                    result = ! _signalMastAspect.equals(_signalMastHandle.getBean().getAspect());
+                    result = ! getNewAspect().equals(_signalMastHandle.getBean().getAspect());
                 }
                 break;
             case Lit:
@@ -489,37 +487,6 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
                 break;
             default:
                 throw new RuntimeException("Unknown enum: "+_queryType.name());
-            
-            
-            
-/*            
-            case Aspect:
-                String newAspect = getNewAspect();
-                if (!newAspect.isEmpty()) {
-                    signalMast.setAspect(newAspect);
-                }
-                break;
-            case Lit:
-                result = _signalMastHandle.getBean().getLit();
-                break;
-            case NotLit:
-                signalMast.setLit(false);
-                break;
-            case Held:
-                signalMast.setHeld(true);
-                break;
-            case NotHeld:
-                signalMast.setHeld(false);
-                break;
-            case PermissiveSmlDisabled:
-                signalMast.setPermissiveSmlDisabled(true);
-                break;
-            case PermissiveSmlNotDisabled:
-                signalMast.setPermissiveSmlDisabled(false);
-                break;
-            default:
-                throw new RuntimeException("Unknown enum: "+_queryType.name());
-*/                
         }
         
         return result;
