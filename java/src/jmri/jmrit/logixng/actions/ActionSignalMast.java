@@ -451,7 +451,7 @@ public class ActionSignalMast extends AbstractDigitalAction
 //        System.out.format("ActionSignalMast.execute: sensor: %s%n", sensor);
         
         if (signalMast == null) {
-            log.error("signalMast is null");
+//            log.error("signalMast is null");
             return;
         }
         

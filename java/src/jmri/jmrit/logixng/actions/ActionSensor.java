@@ -294,7 +294,7 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
 //        System.out.format("ActionSensor.execute: sensor: %s%n", sensor);
         
         if (sensor == null) {
-            log.error("sensor is null");
+//            log.error("sensor is null");
             return;
         }
         

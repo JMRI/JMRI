@@ -462,7 +462,7 @@ public class ActionSignalHead extends AbstractDigitalAction
 //        System.out.format("ActionSignalHead.execute: sensor: %s%n", sensor);
         
         if (signalHead == null) {
-            log.error("signalHead is null");
+//            log.error("signalHead is null");
             return;
         }
         

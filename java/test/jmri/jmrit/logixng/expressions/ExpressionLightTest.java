@@ -193,11 +193,11 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         Assert.assertTrue("Light '' is On".equals(expressionLight.getLongDescription()));
         expressionLight.setLight(light);
         expressionLight.set_Is_IsNot(Is_IsNot_Enum.Is);
-        expressionLight.setLightState(ExpressionLight.LightState.Off);
+        expressionLight.setBeanState(ExpressionLight.LightState.Off);
         Assert.assertTrue("Light IL1 is Off".equals(expressionLight.getLongDescription()));
         expressionLight.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         Assert.assertTrue("Light IL1 is not Off".equals(expressionLight.getLongDescription()));
-        expressionLight.setLightState(ExpressionLight.LightState.Other);
+        expressionLight.setBeanState(ExpressionLight.LightState.Other);
         Assert.assertTrue("Light IL1 is not Other".equals(expressionLight.getLongDescription()));
     }
     

@@ -327,10 +327,10 @@ public class ImportConditional {
         
         switch (cv.getType()) {
             case SENSOR_ACTIVE:
-                expression.setSensorState(ExpressionSensor.SensorState.Active);
+                expression.setBeanState(ExpressionSensor.SensorState.Active);
                 break;
             case SENSOR_INACTIVE:
-                expression.setSensorState(ExpressionSensor.SensorState.Inactive);
+                expression.setBeanState(ExpressionSensor.SensorState.Inactive);
                 break;
             default:
                 throw new InvalidConditionalVariableException(
@@ -352,10 +352,10 @@ public class ImportConditional {
         
         switch (cv.getType()) {
             case TURNOUT_CLOSED:
-                expression.setTurnoutState(ExpressionTurnout.TurnoutState.Closed);
+                expression.setBeanState(ExpressionTurnout.TurnoutState.Closed);
                 break;
             case TURNOUT_THROWN:
-                expression.setTurnoutState(ExpressionTurnout.TurnoutState.Thrown);
+                expression.setBeanState(ExpressionTurnout.TurnoutState.Thrown);
                 break;
             default:
                 throw new InvalidConditionalVariableException(
@@ -449,10 +449,10 @@ public class ImportConditional {
         
         switch (cv.getType()) {
             case LIGHT_ON:
-                expression.setLightState(ExpressionLight.LightState.On);
+                expression.setBeanState(ExpressionLight.LightState.On);
                 break;
             case LIGHT_OFF:
-                expression.setLightState(ExpressionLight.LightState.Off);
+                expression.setBeanState(ExpressionLight.LightState.Off);
                 break;
             default:
                 throw new InvalidConditionalVariableException(

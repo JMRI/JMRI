@@ -841,7 +841,7 @@ public class StoreAndLoadTest {
         
         
         ExpressionLight expressionLight = new ExpressionLight(digitalExpressionManager.getAutoSystemName(), null);
-        expressionLight.setLightState(ExpressionLight.LightState.On);
+        expressionLight.setBeanState(ExpressionLight.LightState.On);
         expressionLight.set_Is_IsNot(Is_IsNot_Enum.Is);
         maleSocket = digitalExpressionManager.registerExpression(expressionLight);
         and.getChild(index++).connect(maleSocket);
@@ -849,7 +849,7 @@ public class StoreAndLoadTest {
         expressionLight = new ExpressionLight(digitalExpressionManager.getAutoSystemName(), null);
         expressionLight.setComment("A comment");
         expressionLight.setLight(light1);
-        expressionLight.setLightState(ExpressionLight.LightState.Off);
+        expressionLight.setBeanState(ExpressionLight.LightState.Off);
         expressionLight.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         maleSocket = digitalExpressionManager.registerExpression(expressionLight);
         and.getChild(index++).connect(maleSocket);
@@ -951,7 +951,7 @@ public class StoreAndLoadTest {
         
         
         ExpressionSensor expressionSensor = new ExpressionSensor(digitalExpressionManager.getAutoSystemName(), null);
-        expressionSensor.setSensorState(ExpressionSensor.SensorState.Active);
+        expressionSensor.setBeanState(ExpressionSensor.SensorState.Active);
         expressionSensor.set_Is_IsNot(Is_IsNot_Enum.Is);
         maleSocket = digitalExpressionManager.registerExpression(expressionSensor);
         and.getChild(index++).connect(maleSocket);
@@ -959,7 +959,7 @@ public class StoreAndLoadTest {
         expressionSensor = new ExpressionSensor(digitalExpressionManager.getAutoSystemName(), null);
         expressionSensor.setComment("A comment");
         expressionSensor.setSensor(sensor1);
-        expressionSensor.setSensorState(ExpressionSensor.SensorState.Inactive);
+        expressionSensor.setBeanState(ExpressionSensor.SensorState.Inactive);
         expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         maleSocket = digitalExpressionManager.registerExpression(expressionSensor);
         and.getChild(index++).connect(maleSocket);
@@ -1195,7 +1195,7 @@ public class StoreAndLoadTest {
         
         ExpressionTurnout expressionTurnout = new ExpressionTurnout(digitalExpressionManager.getAutoSystemName(), null);
         expressionTurnout.setTriggerOnChange(false);
-        expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.Thrown);
+        expressionTurnout.setBeanState(ExpressionTurnout.TurnoutState.Thrown);
         expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.Is);
         maleSocket = digitalExpressionManager.registerExpression(expressionTurnout);
         and.getChild(index++).connect(maleSocket);
@@ -1204,7 +1204,7 @@ public class StoreAndLoadTest {
         expressionTurnout.setComment("A comment");
         expressionTurnout.setTurnout(turnout1);
         expressionTurnout.setTriggerOnChange(true);
-        expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.Closed);
+        expressionTurnout.setBeanState(ExpressionTurnout.TurnoutState.Closed);
         expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         maleSocket = digitalExpressionManager.registerExpression(expressionTurnout);
         and.getChild(index++).connect(maleSocket);

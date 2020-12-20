@@ -294,7 +294,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
 //        System.out.format("ActionTurnout.execute: turnout: %s%n", turnout);
         
         if (turnout == null) {
-            log.error("turnout is null");
+//            log.error("turnout is null");
             return;
         }
         

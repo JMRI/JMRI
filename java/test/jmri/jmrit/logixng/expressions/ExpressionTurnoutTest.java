@@ -193,11 +193,11 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         Assert.assertTrue("Turnout '' is Thrown".equals(expressionTurnout.getLongDescription()));
         expressionTurnout.setTurnout(turnout);
         expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.Is);
-        expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.Closed);
+        expressionTurnout.setBeanState(ExpressionTurnout.TurnoutState.Closed);
         Assert.assertTrue("Turnout IT1 is Closed".equals(expressionTurnout.getLongDescription()));
         expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         Assert.assertTrue("Turnout IT1 is not Closed".equals(expressionTurnout.getLongDescription()));
-        expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.Other);
+        expressionTurnout.setBeanState(ExpressionTurnout.TurnoutState.Other);
         Assert.assertTrue("Turnout IT1 is not Other".equals(expressionTurnout.getLongDescription()));
     }
     
@@ -212,7 +212,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         
         expressionTurnout.setTurnout(turnout);
         expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.Is);
-        expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.Thrown);
+        expressionTurnout.setBeanState(ExpressionTurnout.TurnoutState.Thrown);
         
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());

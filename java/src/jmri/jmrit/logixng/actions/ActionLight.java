@@ -294,7 +294,7 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
 //        System.out.format("ActionLight.execute: light: %s%n", light);
         
         if (light == null) {
-            log.error("light is null");
+//            log.error("light is null");
             return;
         }
         

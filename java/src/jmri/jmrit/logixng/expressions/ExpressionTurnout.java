@@ -1,35 +1,47 @@
 package jmri.jmrit.logixng.expressions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
-import java.util.Locale;
-import java.util.Map;
-import javax.annotation.CheckForNull;
+import java.beans.*;
+import java.util.*;
+
 import javax.annotation.Nonnull;
+
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.ReferenceUtil;
+import jmri.jmrit.logixng.util.parser.*;
+import jmri.jmrit.logixng.util.parser.ExpressionNode;
+import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
+import jmri.util.TypeConversionUtil;
 
 /**
- * Evaluates the state of a Turnout.
+ * This expression sets the state of a turnout.
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
 public class ExpressionTurnout extends AbstractDigitalExpression
         implements PropertyChangeListener, VetoableChangeListener {
 
+    private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
     private NamedBeanHandle<Turnout> _turnoutHandle;
+    private String _reference = "";
+    private String _localVariable = "";
+    private String _formula = "";
+    private ExpressionNode _expressionNode;
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
+    private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private TurnoutState _turnoutState = TurnoutState.Thrown;
-
+    private String _stateReference = "";
+    private String _stateLocalVariable = "";
+    private String _stateFormula = "";
+    private ExpressionNode _stateExpressionNode;
+    
     public ExpressionTurnout(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
     
     @Override
-    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws ParserException {
         DigitalExpressionManager manager = InstanceManager.getDefault(DigitalExpressionManager.class);
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
@@ -37,9 +49,17 @@ public class ExpressionTurnout extends AbstractDigitalExpression
         ExpressionTurnout copy = new ExpressionTurnout(sysName, userName);
         copy.setComment(getComment());
         if (_turnoutHandle != null) copy.setTurnout(_turnoutHandle);
+        copy.setBeanState(_turnoutState);
+        copy.setAddressing(_addressing);
+        copy.setFormula(_formula);
+        copy.setLocalVariable(_localVariable);
+        copy.setReference(_reference);
         copy.set_Is_IsNot(_is_IsNot);
-        copy.setTurnoutState(_turnoutState);
-        return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
+        copy.setStateAddressing(_stateAddressing);
+        copy.setStateFormula(_stateFormula);
+        copy.setStateLocalVariable(_stateLocalVariable);
+        copy.setStateReference(_stateReference);
+        return manager.registerExpression(copy);
     }
     
     public void setTurnout(@Nonnull String turnoutName) {
@@ -77,6 +97,54 @@ public class ExpressionTurnout extends AbstractDigitalExpression
         return _turnoutHandle;
     }
     
+    public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
+        _addressing = addressing;
+        parseFormula();
+    }
+    
+    public NamedBeanAddressing getAddressing() {
+        return _addressing;
+    }
+    
+    public void setReference(@Nonnull String reference) {
+        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
+            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
+        }
+        _reference = reference;
+    }
+    
+    public String getReference() {
+        return _reference;
+    }
+    
+    public void setLocalVariable(@Nonnull String localVariable) {
+        _localVariable = localVariable;
+    }
+    
+    public String getLocalVariable() {
+        return _localVariable;
+    }
+    
+    public void setFormula(@Nonnull String formula) throws ParserException {
+        _formula = formula;
+        parseFormula();
+    }
+    
+    public String getFormula() {
+        return _formula;
+    }
+    
+    private void parseFormula() throws ParserException {
+        if (_addressing == NamedBeanAddressing.Formula) {
+            Map<String, Variable> variables = new HashMap<>();
+            
+            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
+            _expressionNode = parser.parseExpression(_formula);
+        } else {
+            _expressionNode = null;
+        }
+    }
+    
     public void set_Is_IsNot(Is_IsNot_Enum is_IsNot) {
         _is_IsNot = is_IsNot;
     }
@@ -85,14 +153,62 @@ public class ExpressionTurnout extends AbstractDigitalExpression
         return _is_IsNot;
     }
     
-    public void setTurnoutState(TurnoutState state) {
+    public void setStateAddressing(NamedBeanAddressing addressing) throws ParserException {
+        _stateAddressing = addressing;
+        parseStateFormula();
+    }
+    
+    public NamedBeanAddressing getStateAddressing() {
+        return _stateAddressing;
+    }
+    
+    public void setBeanState(TurnoutState state) {
         _turnoutState = state;
     }
     
-    public TurnoutState getTurnoutState() {
+    public TurnoutState getBeanState() {
         return _turnoutState;
     }
-
+    
+    public void setStateReference(@Nonnull String reference) {
+        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
+            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
+        }
+        _stateReference = reference;
+    }
+    
+    public String getStateReference() {
+        return _stateReference;
+    }
+    
+    public void setStateLocalVariable(@Nonnull String localVariable) {
+        _stateLocalVariable = localVariable;
+    }
+    
+    public String getStateLocalVariable() {
+        return _stateLocalVariable;
+    }
+    
+    public void setStateFormula(@Nonnull String formula) throws ParserException {
+        _stateFormula = formula;
+        parseStateFormula();
+    }
+    
+    public String getStateFormula() {
+        return _stateFormula;
+    }
+    
+    private void parseStateFormula() throws ParserException {
+        if (_stateAddressing == NamedBeanAddressing.Formula) {
+            Map<String, Variable> variables = new HashMap<>();
+            
+            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
+            _stateExpressionNode = parser.parseExpression(_stateFormula);
+        } else {
+            _stateExpressionNode = null;
+        }
+    }
+    
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
@@ -123,16 +239,89 @@ public class ExpressionTurnout extends AbstractDigitalExpression
         return true;
     }
     
+    private String getNewState() throws JmriException {
+        
+        switch (_stateAddressing) {
+            case Reference:
+                return ReferenceUtil.getReference(_stateReference);
+                
+            case LocalVariable:
+                SymbolTable symbolTable =
+                        InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
+                return TypeConversionUtil
+                        .convertToString(symbolTable.getValue(_stateLocalVariable), false);
+                
+            case Formula:
+                return _stateExpressionNode != null
+                        ? TypeConversionUtil.convertToString(_stateExpressionNode.calculate(), false)
+                        : null;
+                
+            default:
+                throw new IllegalArgumentException("invalid _addressing state: " + _stateAddressing.name());
+        }
+    }
+    
     /** {@inheritDoc} */
     @Override
-    public boolean evaluate() {
-        if (_turnoutHandle == null) return false;
+    public boolean evaluate() throws JmriException {
+        Turnout turnout;
         
-        TurnoutState currentTurnoutState = TurnoutState.get(_turnoutHandle.getBean().getCommandedState());
-        if (_is_IsNot == Is_IsNot_Enum.Is) {
-            return currentTurnoutState == _turnoutState;
+//        System.out.format("ExpressionTurnout.execute: %s%n", getLongDescription());
+        
+        switch (_addressing) {
+            case Direct:
+                turnout = _turnoutHandle != null ? _turnoutHandle.getBean() : null;
+                break;
+                
+            case Reference:
+                String ref = ReferenceUtil.getReference(_reference);
+                turnout = InstanceManager.getDefault(TurnoutManager.class)
+                        .getNamedBean(ref);
+                break;
+                
+            case LocalVariable:
+                SymbolTable symbolTable =
+                        InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
+                turnout = InstanceManager.getDefault(TurnoutManager.class)
+                        .getNamedBean(TypeConversionUtil
+                                .convertToString(symbolTable.getValue(_localVariable), false));
+                break;
+                
+            case Formula:
+                turnout = _expressionNode != null ?
+                        InstanceManager.getDefault(TurnoutManager.class)
+                                .getNamedBean(TypeConversionUtil
+                                        .convertToString(_expressionNode.calculate(), false))
+                        : null;
+                break;
+                
+            default:
+                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
+        }
+        
+//        System.out.format("ExpressionTurnout.execute: turnout: %s%n", turnout);
+        
+        if (turnout == null) {
+//            log.warn("turnout is null");
+            return false;
+        }
+        
+        String name = (_stateAddressing != NamedBeanAddressing.Direct)
+                ? getNewState() : null;
+        
+        TurnoutState checkTurnoutState;
+        
+        if ((_stateAddressing == NamedBeanAddressing.Direct)) {
+            checkTurnoutState = _turnoutState;
         } else {
-            return currentTurnoutState != _turnoutState;
+            checkTurnoutState = TurnoutState.valueOf(name);
+        }
+        
+        TurnoutState currentTurnoutState = TurnoutState.get(turnout.getCommandedState());
+        if (_is_IsNot == Is_IsNot_Enum.Is) {
+            return currentTurnoutState == checkTurnoutState;
+        } else {
+            return currentTurnoutState != checkTurnoutState;
         }
     }
 
@@ -153,13 +342,58 @@ public class ExpressionTurnout extends AbstractDigitalExpression
 
     @Override
     public String getLongDescription(Locale locale) {
-        String turnoutName;
-        if (_turnoutHandle != null) {
-            turnoutName = _turnoutHandle.getBean().getDisplayName();
-        } else {
-            turnoutName = Bundle.getMessage(locale, "BeanNotSelected");
+        String namedBean;
+        String state;
+        
+        switch (_addressing) {
+            case Direct:
+                String turnoutName;
+                if (_turnoutHandle != null) {
+                    turnoutName = _turnoutHandle.getBean().getDisplayName();
+                } else {
+                    turnoutName = Bundle.getMessage(locale, "BeanNotSelected");
+                }
+                namedBean = Bundle.getMessage(locale, "AddressByDirect", turnoutName);
+                break;
+                
+            case Reference:
+                namedBean = Bundle.getMessage(locale, "AddressByReference", _reference);
+                break;
+                
+            case LocalVariable:
+                namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
+                break;
+                
+            case Formula:
+                namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
+                break;
+                
+            default:
+                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
-        return Bundle.getMessage(locale, "Turnout_Long", turnoutName, _is_IsNot.toString(), _turnoutState._text);
+        
+        switch (_stateAddressing) {
+            case Direct:
+                state = Bundle.getMessage(locale, "AddressByDirect", _turnoutState._text);
+                break;
+                
+            case Reference:
+                state = Bundle.getMessage(locale, "AddressByReference", _stateReference);
+                break;
+                
+            case LocalVariable:
+                state = Bundle.getMessage(locale, "AddressByLocalVariable", _stateLocalVariable);
+                break;
+                
+            case Formula:
+                state = Bundle.getMessage(locale, "AddressByFormula", _stateFormula);
+                break;
+                
+            default:
+                throw new IllegalArgumentException("invalid _stateAddressing state: " + _stateAddressing.name());
+        }
+        
+        return Bundle.getMessage(locale, "Turnout_Long", namedBean, _is_IsNot.toString(), state);
     }
     
     /** {@inheritDoc} */
@@ -197,11 +431,8 @@ public class ExpressionTurnout extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
-        // Remove the vetoable listener
-        removeTurnout();
     }
-    
-    
+
     
     public enum TurnoutState {
         Closed(Turnout.CLOSED, InstanceManager.getDefault(TurnoutManager.class).getClosedText()),
@@ -239,7 +470,6 @@ public class ExpressionTurnout extends AbstractDigitalExpression
         }
         
     }
-    
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionTurnout.class);
     

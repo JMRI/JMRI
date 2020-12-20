@@ -69,7 +69,7 @@ public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
         Assert.assertEquals("IL1", expression.getLight().getBean().getSystemName());
-        Assert.assertEquals(ExpressionLight.LightState.Off, expression.getLightState());
+        Assert.assertEquals(ExpressionLight.LightState.Off, expression.getBeanState());
     }
 
     @Test
@@ -99,7 +99,7 @@ public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
         Assert.assertEquals("IL99", expression.getLight().getBean().getSystemName());
-        Assert.assertEquals(ExpressionLight.LightState.On, expression.getLightState());
+        Assert.assertEquals(ExpressionLight.LightState.On, expression.getBeanState());
     }
     
     @Test

@@ -448,7 +448,7 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
         }
         
         if (signalMast == null) {
-            log.error("signalMast is null");
+//            log.error("signalMast is null");
             return false;
         }
         

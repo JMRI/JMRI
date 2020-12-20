@@ -73,7 +73,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="1:33 PM">
+    <memory value="4:44 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -112,7 +112,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sat Dec 19 13:32:57 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun Dec 20 16:44:20 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <logixngs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <logixng enabled="no">
       <systemName>IQ:AUTO:0001</systemName>
@@ -918,8 +918,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </expression-entryexit>
     <expression-light class="jmri.jmrit.logixng.expressions.configurexml.ExpressionLightXml">
       <systemName>IQDE:AUTO:0012</systemName>
+      <addressing>Direct</addressing>
+      <reference />
+      <localVariable />
+      <formula />
       <is_isNot>Is</is_isNot>
+      <stateAddressing>Direct</stateAddressing>
       <lightState>On</lightState>
+      <stateReference />
+      <stateLocalVariable />
+      <stateFormula />
       <maleSocket>
         <localVariable>
           <name>A1</name>
@@ -967,8 +975,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDE:AUTO:0013</systemName>
       <comment>A comment</comment>
       <light>IL1</light>
+      <addressing>Direct</addressing>
+      <reference />
+      <localVariable />
+      <formula />
       <is_isNot>IsNot</is_isNot>
+      <stateAddressing>Direct</stateAddressing>
       <lightState>Off</lightState>
+      <stateReference />
+      <stateLocalVariable />
+      <stateFormula />
       <maleSocket>
         <localVariable>
           <name>A1</name>
@@ -1601,8 +1617,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </expression-script>
     <expression-sensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
       <systemName>IQDE:AUTO:0026</systemName>
+      <addressing>Direct</addressing>
+      <reference />
+      <localVariable />
+      <formula />
       <is_isNot>Is</is_isNot>
+      <stateAddressing>Direct</stateAddressing>
       <sensorState>Active</sensorState>
+      <stateReference />
+      <stateLocalVariable />
+      <stateFormula />
       <maleSocket>
         <localVariable>
           <name>A1</name>
@@ -1650,8 +1674,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDE:AUTO:0027</systemName>
       <comment>A comment</comment>
       <sensor>IS1</sensor>
+      <addressing>Direct</addressing>
+      <reference />
+      <localVariable />
+      <formula />
       <is_isNot>IsNot</is_isNot>
+      <stateAddressing>Direct</stateAddressing>
       <sensorState>Inactive</sensorState>
+      <stateReference />
+      <stateLocalVariable />
+      <stateFormula />
       <maleSocket>
         <localVariable>
           <name>A1</name>
@@ -2304,8 +2336,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </expression-signalmast>
     <expression-turnout class="jmri.jmrit.logixng.expressions.configurexml.ExpressionTurnoutXml">
       <systemName>IQDE:AUTO:0038</systemName>
+      <addressing>Direct</addressing>
+      <reference />
+      <localVariable />
+      <formula />
       <is_isNot>Is</is_isNot>
+      <stateAddressing>Direct</stateAddressing>
       <turnoutState>Thrown</turnoutState>
+      <stateReference />
+      <stateLocalVariable />
+      <stateFormula />
       <maleSocket>
         <localVariable>
           <name>A1</name>
@@ -2353,8 +2393,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDE:AUTO:0039</systemName>
       <comment>A comment</comment>
       <turnout>IT1</turnout>
+      <addressing>Direct</addressing>
+      <reference />
+      <localVariable />
+      <formula />
       <is_isNot>IsNot</is_isNot>
+      <stateAddressing>Direct</stateAddressing>
       <turnoutState>Closed</turnoutState>
+      <stateReference />
+      <stateLocalVariable />
+      <stateFormula />
       <maleSocket>
         <localVariable>
           <name>A1</name>
@@ -7166,9 +7214,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Sat Dec 19 13:33:10 CET 2020</date>
+      <date>Sun Dec 20 16:44:36 CET 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.21.4ish+daniel+2020-12-19T12:32:41Z+RUNKNOWN on Sat Dec 19 13:33:10 CET 2020-->
+  <!--Written by JMRI version 4.21.4ish+daniel+2020-12-20T15:41:05Z+RUNKNOWN on Sun Dec 20 16:44:36 CET 2020-->
 </layout-config>

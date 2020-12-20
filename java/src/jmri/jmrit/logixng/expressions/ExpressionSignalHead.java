@@ -459,7 +459,7 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
         }
         
         if (signalHead == null) {
-            log.error("signalHead is null");
+//            log.error("signalHead is null");
             return false;
         }
         
