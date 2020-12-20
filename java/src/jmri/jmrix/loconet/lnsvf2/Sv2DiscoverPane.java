@@ -34,7 +34,7 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
     protected JLabel statusText1 = new JLabel();
     protected JLabel statusText2 = new JLabel();
     protected JLabel statusText3 = new JLabel();
-    protected JLabel TypeFieldLabel = new JLabel(Bundle.getMessage("LabelType"));
+    protected JLabel typeFieldLabel = new JLabel(Bundle.getMessage("LabelType"));
     protected JTextArea result = new JTextArea(6,30);
     protected String reply;
 
@@ -132,7 +132,7 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
 
         panel3.add(panel31);
         Border panel3Border = BorderFactory.createEtchedBorder();
-        Border panel3Titled = BorderFactory.createTitledBorder(panel3Border, "xxx");
+        Border panel3Titled = BorderFactory.createTitledBorder(panel3Border, "Monitor");
                 //Bundle.getMessage("BoxLabelNotes"));
         panel3.setBorder(panel3Titled);
         return panel3;
@@ -150,7 +150,7 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
         discoverButton.setEnabled(!discoveryRunning);
         panel4.add(discoverButton);
 
-        panel4.add(TypeFieldLabel);
+        panel4.add(typeFieldLabel);
         // entry field (decimal)
         panel4.add(typeField);
 
@@ -166,6 +166,8 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
 
     /**
      * Handle Discover button.
+     *
+     * @param typed true to IdentifyByType, false for general DiscoverQuery
      */
     public void discoverButtonActionPerformed(boolean typed) {
         // provide user feedback
@@ -212,7 +214,7 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
         // format the message text, expect it to provide consistent \n after each line
         String formatted = l.toMonitorString(memo.getSystemPrefix());
         // copy the formatted data
-        reply += formatted + raw + "\n";
+        reply += formatted + " " + raw + "\n";
         // got a LocoNet message, see if it's a Discovery response
         if (LnSv2MessageContents.extractMessageType(l) == LnSv2MessageContents.Sv2Command.SV2_DISCOVER_DEVICE_REPORT) {
             // it's a Discovery message, decode contents

@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<!-- Copyright Bob Jacobsen 2008 -->
+
+<html lang="en">
+<head>
+  <title>JMRI: LocoNet LNCV Programming Pane</title>
+  <meta name="author" content="Egbert Broerse">
+  <meta name="keywords" content="JMRI help send loconet lncv uhlenbrock">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+      <h1>LocoNet LNCV Programming Pane</h1>
+      <p>The "Configure LNCV Modules" tool lets you access and program all connected
+      LocoNet devices that respond to the (Uhlenbrock) LNCV protocol.<br>
+      You find the tool in the LocoNet menu as long as a LocoNet connection is available.</p>
+
+      <p>As the tool is still under development, we advice to use it in combination with the "Show Raw Data"
+        option in the <a href="../locomon/LocoMonFrame.shtml">LocoNet
+          Monitor</a> to check for any additional responses rejected by the LNCV filters.</p>
+
+      <p>Simply click "Open Programming Session" to start a session.</p>
+      <p>To close a session, click "Leave Programming Session".</p>
+      <p>Unless a session is running, LNCV modules will not respond to Read/Write commands.</p>
+
+      <p>LNCV Programming requires entry of an Article (model) number provided in the manufacturer's documentation.<br>
+        Enter the number eg. 5033 in the "Article" field before proceeding.</p>
+      <p>After opening a session, the "Open Module Programming" is active. To close the programming of a
+        module, click the same button, that now reads "Stop Module Programming".</p>
+
+      <p>Responses will be listed in the table (under development).</p>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+  </div>
+</body>
+</html>

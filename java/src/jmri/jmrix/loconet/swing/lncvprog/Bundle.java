@@ -1,10 +1,11 @@
-package jmri.jmrix.loconet.uhlenbrock;
+package jmri.jmrix.loconet.swing.lncvprog;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.util.Locale;
-import javax.annotation.CheckReturnValue;
+
 import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Locale;
 
 @ParametersAreNonnullByDefault
 @CheckReturnValue
@@ -24,7 +25,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrix.loconet.Bundle {
 
     @CheckForNull
-    private static final String name = "jmri.jmrix.loconet.uhlenbrock.LncvBundle"; // NOI18N
+    private static final String name = null; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

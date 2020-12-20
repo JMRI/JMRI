@@ -14,6 +14,8 @@ import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
+import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
+
 import jmri.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1999,6 +2001,12 @@ public class Llnmon {
             return result;
         }
 
+        // check for a specific type - LNCV Programming messages format
+        result = interpretLncvMessage(l);
+        if (result.length() > 0) {
+            return result;
+        }
+
         return "";
     }
 
@@ -2079,6 +2087,30 @@ public class Llnmon {
                 svReply = svmc.toString();
             } catch (IllegalArgumentException e) {
                 // message is not a properly-formatted SV2 message.  Ignore the exception.
+            }
+        }
+        return svReply;
+    }
+
+    private String interpretLncvMessage(LocoNetMessage l) {
+        // (Uhlenbrock message format, reverse analysed 2020)
+        String svReply = "";
+        LncvMessageContents lncvmc = null;
+        try {
+            // assume the message is an LNCV message
+            lncvmc = new LncvMessageContents(l);
+        } catch (IllegalArgumentException e) {
+            // message is not an LNCV message.  Ignore the exception.
+        }
+        if (lncvmc != null) {
+            // the message was indeed an LNCV message
+            try {
+                // get string representation of the message from an
+                // available translation which is best suited to
+                // the currently-active "locale"
+                svReply = lncvmc.toString();
+            } catch (IllegalArgumentException e) {
+                // message is not a properly-formatted LNCV message.  Ignore the exception.
             }
         }
         return svReply;

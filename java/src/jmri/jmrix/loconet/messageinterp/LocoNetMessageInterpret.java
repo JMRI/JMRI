@@ -19,6 +19,7 @@ import jmri.TurnoutManager;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
+import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
 import jmri.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -58,6 +59,9 @@ import org.slf4j.LoggerFactory;
  * Reverse-engineering of device-specific OpSw messages, throttle text message,
  * and throttle semaphore message was provided by B. Milhaupt, used with
  * permission.
+ *
+ * Reverse-engineering of device-specific LNSV messages was provided by K. Drenth,
+ * used with permission.
  *
  * @author Bob Jacobsen Copyright 2001, 2002, 2003
  * @author B. Milhaupt Copyright 2015, 2016, 2018
@@ -1453,6 +1457,7 @@ public class LocoNetMessageInterpret {
         if (result.length() > 0) {
             return result;
         }
+
         result = interpretSV0Message(l);
         if (result.length() > 0) {
             return result;
@@ -1460,6 +1465,21 @@ public class LocoNetMessageInterpret {
 
         // check for a specific type - SV Programming messages format 2
         result = interpretSV2Message(l);
+        if (result.length() > 0) {
+            return result;
+        }
+
+        return "";
+    }
+
+    private static String interpretOpcPeerXfer15(LocoNetMessage l) {
+        /*
+         * see interpretOpcImm15
+         * and jmri.jmrix.loconet.uhlenbrock.LncvMessageContents.java
+         */
+
+        // check for a specific type - Uhlenbrock LNSV Programming messages format
+        String result = interpretLncvMessage(l);
         if (result.length() > 0) {
             return result;
         }
@@ -1547,6 +1567,29 @@ public class LocoNetMessageInterpret {
             }
         }
         return svReply;
+    }
+
+    private static String interpretLncvMessage(LocoNetMessage l) {
+        String lncvReply = "";
+        LncvMessageContents cvmc = null;
+        try {
+            // assume the message is an LNCV message
+            cvmc = new LncvMessageContents(l);
+        } catch (IllegalArgumentException e) {
+            // message is not an LNCV message.  Ignore the exception.
+        }
+        if (cvmc != null) {
+            // the message was indeed an LNCV message
+            try {
+                // get string representation of the message from an
+                // available translation which is best suited to
+                // the currently-active "locale"
+                lncvReply = cvmc.toString();
+            } catch (IllegalArgumentException e) {
+                // message is not a properly-formatted LNCV message.  Ignore the exception.
+            }
+        }
+        return lncvReply;
     }
 
     private static String interpretOpcPeerXfer10(LocoNetMessage l) {
@@ -1740,6 +1783,13 @@ public class LocoNetMessageInterpret {
         switch (l.getElement(1)) {
             case 0x10: { //l.getZElement(1)
                 result = interpretOpcPeerXfer16(l);
+                if (result.length() > 0) {
+                    return result;
+                }
+                break;
+            }
+            case 0x0F: {
+                result = interpretOpcPeerXfer15(l);
                 if (result.length() > 0) {
                     return result;
                 }
@@ -3600,6 +3650,19 @@ public class LocoNetMessageInterpret {
 
     private static String interpretOpcImmPacket(LocoNetMessage l) {
         /*
+         * OPC_IMM_PACKET   0xED
+         */
+        if (l.getElement(1) == 0x0F) { // length = 15
+            // check for a specific type - Uhlenbrock LNSV Programming messages format
+            String result = interpretLncvMessage(l);
+            if (result.length() > 0) {
+                return result;
+            }
+
+            return "";
+        }
+
+        /* Else:
          * OPC_IMM_PACKET   0xED   ;SEND n-byte packet immediate LACK
          *                         ; Follow on message: LACK
          *                         ; <0xED>,<0B>,<7F>,<REPS>,<DHI>,<IM1>,<IM2>,
@@ -3623,6 +3686,7 @@ public class LocoNetMessageInterpret {
          * Decodes for the F9-F28 functions taken from the NMRA standards and
          * coded by Leo Bicknell.
          */
+
         // sendPkt = (sendPktMsg *) msgBuf;
         int val7f = l.getElement(2);
         /* fixed value of 0x7f */

@@ -128,5 +128,4 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
         }
     }
 
-
 }

@@ -13,10 +13,11 @@ import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.LnPortController;
+import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
+import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
 
 /**
  * LnHexFilePort implements a LnPortController via an ASCII-hex input file. See
@@ -354,6 +355,14 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
                 int type = 3055;
                 int serial = 111;
                 return LnSv2MessageContents.createSv2DeviceDiscoveryReply(myId, dest, mf, dev, type, serial);
+            }
+        }
+        if (simReply && LncvMessageContents.isSupportedLncvMessage(m)) {
+            log.debug("generate reply for LNCV Read message");
+            LncvMessageContents c = new LncvMessageContents(m);
+            if (c.getCvNum() >= 0) { // LNCV Read, reply (contents)
+                log.debug("generate LNSV2 Read reply message");
+                return LncvMessageContents.createLncvReadReply(m);
             }
         }
         return null;

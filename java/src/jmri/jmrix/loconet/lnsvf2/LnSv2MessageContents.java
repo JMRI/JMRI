@@ -120,7 +120,7 @@ public class LnSv2MessageContents {
 
         log.debug("interpreting a LocoNet message - may be an SV2 message");  // NOI18N
         if (!isSupportedSv2Message(m)) {
-            log.debug("interpreting a LocoNet message is NOT an SV2 message");   // NOI18N
+            log.debug("interpreting a LocoNet message - is NOT an SV2 message");   // NOI18N
             throw new java.lang.IllegalArgumentException("LocoNet message is not an SV2 message"); // NOI18N
         }
         src = m.getElement(SV2_SRC_ELEMENT_INDEX);
@@ -312,7 +312,7 @@ public class LnSv2MessageContents {
      * @param locale  locale to use for the human-readable string
      * @return String containing a human-readable version of the SV Programming 
      *      Format 2 message, in the language specified by the Locale, if the 
-     *      properties have been translated to that Locale, else in the deafult 
+     *      properties have been translated to that Locale, else in the default
      *      English language.
      */
     public String toString(Locale locale) {
@@ -522,7 +522,7 @@ public class LnSv2MessageContents {
                 break;
 
             default:
-                return Bundle.getMessage(locale, "SV2_UNDEFINED_MESSAGE");
+                return Bundle.getMessage(locale, "SV2_UNDEFINED_MESSAGE") + "\n";
         }
 
         log.debug("interpreted: {}", returnString);  // NOI18N
@@ -581,7 +581,7 @@ public class LnSv2MessageContents {
 
     /**
      *
-     * @return true of the SV2 message is a SV2 Read Four Reply message
+     * @return true if the SV2 message is a SV2 Read Four Reply message
      */
     public boolean isSupportedSv2ReadFourReply() {
         return (sv_cmd == SV_CMD_REPORT_FOUR);
@@ -620,7 +620,7 @@ public class LnSv2MessageContents {
      * @param d3  SV Programming Format 2 third data value (for &lt;D3&gt;)
      * @param d4  SV Programming Format 2 fourth data value (for &lt;D4&gt;)
      * @return LocoNet message for the requested message
-     * @throws IllegalArgumentException of command is not a valid SV Programming Format 2 &lt;SV_CMD&gt; value
+     * @throws IllegalArgumentException if command is not a valid SV Programming Format 2 &lt;SV_CMD&gt; value
      */
     public static LocoNetMessage createSv2Message (int source, int command, 
             int destination, int svNum, int d1, int d2, int d3, int d4) 
@@ -641,7 +641,7 @@ public class LnSv2MessageContents {
         svx1 = svx1 + (((destination & 0x8000) == 0x8000) ? SV2_SV_DST_H_DSTHX7_CHECK_MASK : 0);
         svx1 = svx1 + (((svNum & 0x80) == 0x80) ? SV2_SV_ADRL_SVADRL7_CHECK_MASK : 0);
         svx1 = svx1 + (((svNum & 0x8000) == 0x8000) ? SV2_SV_ADRH_SVADRH7_CHECK_MASK : 0);
-        m.setElement(SV2_SVX1_ELEMENT_INDEX,svx1);
+        m.setElement(SV2_SVX1_ELEMENT_INDEX, svx1);
         
         m.setElement(SV2_SV_DST_L_ELEMENT_INDEX, (destination & 0x7f));
         m.setElement(SV2_SV_DST_H_ELEMENT_INDEX, ((destination >> 8) & 0x7f));
@@ -653,7 +653,7 @@ public class LnSv2MessageContents {
         svx2 = svx2 + (((d2 & 0x80) == 0x80) ? SV2_SV_D2_D2X7_CHECK_MASK : 0);
         svx2 = svx2 + (((d3 & 0x80) == 0x80) ? SV2_SV_D3_D3X7_CHECK_MASK : 0);
         svx2 = svx2 + (((d4 & 0x80) == 0x80) ? SV2_SV_D4_D4X7_CHECK_MASK : 0);
-        m.setElement(SV2_SVX2_ELEMENT_INDEX,svx2);
+        m.setElement(SV2_SVX2_ELEMENT_INDEX, svx2);
         
         m.setElement(SV2_SVD1_ELEMENT_INDEX, (d1 & 0x7f));
         m.setElement(SV2_SVD2_ELEMENT_INDEX, (d2 & 0x7f));
