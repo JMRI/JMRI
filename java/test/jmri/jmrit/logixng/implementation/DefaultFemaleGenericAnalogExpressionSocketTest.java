@@ -33,10 +33,10 @@ public class DefaultFemaleGenericAnalogExpressionSocketTest extends FemaleSocket
         return InstanceManager.getDefault(AnalogExpressionManager.class);
     }
     
-    @Ignore("Different types of beans may be able to connect to a generic socket, which makes this test difficult")
     @Test
     @Override
     public void testSWISystemName() {
+        // Different types of beans may be able to connect to a generic socket, which makes this test impossible
     }
     
     @Test

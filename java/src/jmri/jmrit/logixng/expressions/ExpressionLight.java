@@ -434,11 +434,6 @@ public class ExpressionLight extends AbstractDigitalExpression
     }
 
     
-    // This constant is only used internally in LightState but must be outside
-    // the enum.
-    private static final int TOGGLE_ID = -1;
-    
-    
     public enum LightState {
         Off(Light.OFF, Bundle.getMessage("StateOff")),
         On(Light.ON, Bundle.getMessage("StateOn")),
