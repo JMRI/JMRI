@@ -132,6 +132,7 @@ public class LearnSpeedPanel extends JInternalFrame implements java.beans.Proper
             _throttle = null;
         }
     }
+    
 
     private static final Logger log = LoggerFactory.getLogger(LearnSpeedPanel.class);
 }
