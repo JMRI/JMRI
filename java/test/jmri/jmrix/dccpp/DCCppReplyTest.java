@@ -70,6 +70,12 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals(1, l.getCommTypeInt());
         Assert.assertEquals("192.168.0.1", l.getCommTypeValueString());
 
+        l = DCCppReply.parseDCCppReply("N1: 192.168.0.1 XYZ 123"); //should ignore undefined values
+        Assert.assertTrue(l.isCommTypeReply());
+        Assert.assertEquals('N', l.getOpCodeChar());
+        Assert.assertEquals(1, l.getCommTypeInt());
+        Assert.assertEquals("192.168.0.1", l.getCommTypeValueString());
+
     }
 
     // Test named power districts
@@ -92,9 +98,21 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals('p', l.getOpCodeChar());
         Assert.assertEquals("MAIN", l.getPowerDistrictName());
         Assert.assertEquals("OVERLOAD", l.getPowerDistrictStatus());
+
+        l = DCCppReply.parseDCCppReply("p 1 MAIN XYZ 123"); //should ignore undefined values
+        Assert.assertTrue(l.isNamedPowerReply());
+        Assert.assertEquals('p', l.getOpCodeChar());
+        Assert.assertEquals("MAIN", l.getPowerDistrictName());
+        Assert.assertEquals("ON", l.getPowerDistrictStatus());
+
+        l = DCCppReply.parseDCCppReply("p1 MAIN");
+        Assert.assertTrue(l.isNamedPowerReply());
+        Assert.assertEquals('p', l.getOpCodeChar());
+        Assert.assertEquals("MAIN", l.getPowerDistrictName());
+        Assert.assertEquals("ON", l.getPowerDistrictStatus());
     }
 
-    // Test named power districts
+    // Test named and unnamed current replies
     @Test
     public void testNamedCurrentReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("a MAIN 0");
@@ -121,6 +139,12 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals('a', l.getOpCodeChar());
         Assert.assertEquals("41", l.getCurrentString());
 
+        l = DCCppReply.parseDCCppReply("a   MAIN   410");
+        Assert.assertTrue(l.isCurrentReply());
+        Assert.assertTrue(l.isNamedCurrentReply());
+        Assert.assertEquals('a', l.getOpCodeChar());
+        Assert.assertEquals("410", l.getCurrentString());
+
         l = DCCppReply.parseDCCppReply("a41");
         Assert.assertTrue(l.isCurrentReply());
         Assert.assertFalse(l.isNamedCurrentReply());
@@ -132,6 +156,64 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertFalse(l.isNamedCurrentReply());
         Assert.assertEquals('a', l.getOpCodeChar());
         Assert.assertEquals("41", l.getCurrentString());
+
+        l = DCCppReply.parseDCCppReply("a 1023 512 XYZ 512"); //should ignore undefined values
+        Assert.assertTrue(l.isCurrentReply());
+        Assert.assertFalse(l.isNamedCurrentReply());
+        Assert.assertEquals('a', l.getOpCodeChar());
+        Assert.assertEquals("1023", l.getCurrentString());
+
+        l = DCCppReply.parseDCCppReply("a PROG 1024 512 512 512"); //should ignore undefined values
+        Assert.assertTrue(l.isCurrentReply());
+        Assert.assertTrue(l.isNamedCurrentReply());
+        Assert.assertEquals('a', l.getOpCodeChar());
+        Assert.assertEquals("1024", l.getCurrentString());
+    }
+
+    @Test
+    public void testStatusReplies() {
+        DCCppReply r = DCCppReply.parseDCCppReply(
+                "iDCC-EX V-3.0.0 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36");
+        Assert.assertTrue(r.isStatusReply());
+        Assert.assertTrue(r.matches(DCCppConstants.STATUS_REPLY_DCCEX_REGEX));
+        Assert.assertEquals("3.0.0",   r.getVersion());
+        Assert.assertEquals("9db6d36", r.getBuildString());
+        Assert.assertEquals("DCC-EX",  r.getStationType());
+        
+        r = DCCppReply.parseDCCppReply(
+                "iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
+        Assert.assertTrue(r.isStatusReply());
+        Assert.assertTrue(r.matches(DCCppConstants.STATUS_REPLY_REGEX));
+        Assert.assertEquals("0.0.0", r.getVersion());
+        Assert.assertEquals("23 Feb 2015 09:23:57", r.getBuildString());
+        Assert.assertEquals("DCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD", r.getStationType());
+    }
+
+    @Test
+    public void testVariousReplies() {
+        //Turnout replies
+        DCCppReply r = DCCppReply.parseDCCppReply("H 23 0");
+        Assert.assertTrue(r.isTurnoutReply());
+        Assert.assertFalse(r.isTurnoutDefReply());
+        Assert.assertEquals("CLOSED", r.getTOStateString());
+        Assert.assertEquals("23", r.getTOIDString());
+        Assert.assertEquals(23, r.getTOIDInt());
+        Assert.assertFalse(r.getTOIsThrown());
+        Assert.assertTrue(r.getTOIsClosed());
+        r = DCCppReply.parseDCCppReply("H 23 1");
+        Assert.assertEquals("THROWN", r.getTOStateString());
+        Assert.assertTrue(r.getTOIsThrown());
+        Assert.assertFalse(r.getTOIsClosed());
+
+        //max Num Slots
+        r = DCCppReply.parseDCCppReply("# 50");
+        Assert.assertTrue(r.isMaxNumSlotsReply());
+
+        //Sensor replies
+        r = DCCppReply.parseDCCppReply("Q 1 1 0");
+        Assert.assertTrue(r.isSensorReply());
+        Assert.assertTrue(r.isSensorDefReply());
+//        Assert.assertEquals("Inactive", r.getSensorStateString());
     }
 
     @Test
