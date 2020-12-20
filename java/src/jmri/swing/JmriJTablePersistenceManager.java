@@ -72,9 +72,9 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
     @Override
     public void persist(@Nonnull JTable table, boolean resetState) throws IllegalArgumentException, NullPointerException {
         Objects.requireNonNull(table.getName(), "Table name must be nonnull");
-        if (this.listeners.containsKey(table.getName()) && !this.listeners.get(table.getName()).getTable().equals(table)) {
-            throw new IllegalArgumentException("Table name must be unique");
-        }
+//        if (this.listeners.containsKey(table.getName()) && !this.listeners.get(table.getName()).getTable().equals(table)) {
+//            throw new IllegalArgumentException("Table name must be unique");
+//        }
         if (resetState) {
             this.resetState(table);
         }
