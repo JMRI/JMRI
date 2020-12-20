@@ -443,7 +443,7 @@ public class TreeEditor extends TreeViewer {
             _create.setToolTipText(Bundle.getMessage("CreateButtonHint"));  // NOI18N
             
             if (_addSwingConfiguratorInterface != null) {
-                makeAddEditFrame(true, "AddMessage", femaleSocket, _addSwingConfiguratorInterface, _create);  // NOI18N
+                makeAddEditFrame(true, femaleSocket, _addSwingConfiguratorInterface, _create);  // NOI18N
             }
         }
     }
@@ -510,7 +510,7 @@ public class TreeEditor extends TreeViewer {
             });
             _edit.setToolTipText(Bundle.getMessage("EditButtonHint"));  // NOI18N
             
-            makeAddEditFrame(false, null, femaleSocket, _editSwingConfiguratorInterface, _edit);  // NOI18N
+            makeAddEditFrame(false, femaleSocket, _editSwingConfiguratorInterface, _edit);  // NOI18N
         }
     }
 
@@ -524,7 +524,8 @@ public class TreeEditor extends TreeViewer {
      * @param swingConfiguratorInterface the swing interface to configure this item
      * @param button a button to add to the dialog
      */
-    final protected void makeAddEditFrame(boolean addOrEdit, String messageId,
+    final protected void makeAddEditFrame(
+            boolean addOrEdit,
             FemaleSocket femaleSocket,
             SwingConfiguratorInterface swingConfiguratorInterface,
             JButton button) {
@@ -604,15 +605,6 @@ public class TreeEditor extends TreeViewer {
         // set up message
         JPanel panel3 = new JPanel();
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
-        JPanel panel31 = new JPanel();
-//        panel31.setLayout(new FlowLayout());
-        JPanel panel32 = new JPanel();
-        if (messageId != null) {
-            JLabel message1 = new JLabel(Bundle.getMessage(messageId + "1"));  // NOI18N
-            panel31.add(message1);
-            JLabel message2 = new JLabel(Bundle.getMessage(messageId + "2"));  // NOI18N
-            panel32.add(message2);
-        }
         
         // set up create and cancel buttons
         JPanel panel5 = new JPanel();
@@ -635,8 +627,6 @@ public class TreeEditor extends TreeViewer {
                     SwingTools.getSwingConfiguratorForClass(maleSocketClass);
             panel34 = _swingConfiguratorInterfaceMaleSocket.getConfigPanel(panel5);
         }
-        panel3.add(panel31);
-        panel3.add(panel32);
         panel3.add(panel33);
         panel3.add(panel34);
         contentPanel.add(panel3);
