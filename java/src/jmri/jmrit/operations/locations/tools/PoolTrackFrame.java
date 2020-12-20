@@ -44,6 +44,7 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
     // labels
     JLabel name = new JLabel(Bundle.getMessage("Name"));
     JLabel minimum = new JLabel(Bundle.getMessage("Minimum"));
+    JLabel maximum = new JLabel(Bundle.getMessage("Maximum"));
     JLabel length = new JLabel(Bundle.getMessage("Length"));
 
     // text field
@@ -192,8 +193,9 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         poolStatus.removeAll();
 
         addItemLeft(poolStatus, name, 0, 0);
-        addItem(poolStatus, minimum, 1, 0);
-        addItem(poolStatus, length, 2, 0);
+        addItem(poolStatus, maximum, 1, 0);
+        addItem(poolStatus, minimum, 2, 0);
+        addItem(poolStatus, length, 3, 0);
 
         String poolName = "";
         if (_track.getPool() != null) {
@@ -206,6 +208,9 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
                 Track track = tracks.get(i);
                 JLabel name = new JLabel();
                 name.setText(track.getName());
+                
+                JLabel maximum = new JLabel();
+                maximum.setText(Integer.toString(pool.getMaxLengthTrack(track)));
 
                 JLabel minimum = new JLabel();
                 minimum.setText(Integer.toString(track.getMinimumLength()));
@@ -216,18 +221,19 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
                 totalLength = totalLength + track.getLength();
 
                 addItemLeft(poolStatus, name, 0, i + 1);
-                addItem(poolStatus, minimum, 1, i + 1);
-                addItem(poolStatus, length, 2, i + 1);
+                addItem(poolStatus, maximum, 1, i + 1);
+                addItem(poolStatus, minimum, 2, i + 1);
+                addItem(poolStatus, length, 3, i + 1);
             }
             // Summary
             JLabel total = new JLabel(Bundle.getMessage("Totals"));
             addItem(poolStatus, total, 0, tracks.size() + 1);
             JLabel totalMin = new JLabel();
             totalMin.setText(Integer.toString(totalMinLength));
-            addItem(poolStatus, totalMin, 1, tracks.size() + 1);
+            addItem(poolStatus, totalMin, 2, tracks.size() + 1);
             JLabel totalLen = new JLabel();
             totalLen.setText(Integer.toString(totalLength));
-            addItem(poolStatus, totalLen, 2, tracks.size() + 1);
+            addItem(poolStatus, totalLen, 3, tracks.size() + 1);
         }
         poolStatus.setBorder(BorderFactory.createTitledBorder(MessageFormat.format(Bundle.getMessage("PoolTracks"),
                 new Object[]{poolName})));

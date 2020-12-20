@@ -592,7 +592,7 @@ public class CbusNodeConstants {
     private static Map<Integer, String> createExtra44Map() {
         Map<Integer, String> result = new HashMap<>();
         result.put(1, "no CAN bus, (firmware derived from CANCMD).");
-        result.put(2, "no CAN bus, (firmware derived from CANCMD).");
+        result.put(2, "integrated CANISB (firmware derived from CANCMD).");
         result.put(3, "Isolated CANUSB and CBUS node.");
         result.put(4, "(firmware derived from CANCMD).");
         result.put(5, "System booster");

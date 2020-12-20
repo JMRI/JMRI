@@ -124,7 +124,7 @@ public class EditSignalFrame extends EditFrame {
         _mastName.setToolTipText(Bundle.getMessage("ToolTipMastName", _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)));
         signalPanel.add(panel);
 
-        _lengthPanel = new LengthPanel(_homeBlock, "entranceSpace");
+        _lengthPanel = new LengthPanel(_homeBlock, LengthPanel.ENTRANCE_SPACE);
         _lengthPanel.changeUnits();
         signalPanel.add(_lengthPanel);
 
