@@ -572,10 +572,10 @@ public class ImportConditional {
         
         switch (cv.getType()) {
             case ENTRYEXIT_ACTIVE:
-                expression.setEntryExitState(ExpressionEntryExit.EntryExitState.ACTIVE);
+                expression.setBeanState(ExpressionEntryExit.EntryExitState.Active);
                 break;
             case ENTRYEXIT_INACTIVE:
-                expression.setEntryExitState(ExpressionEntryExit.EntryExitState.INACTIVE);
+                expression.setBeanState(ExpressionEntryExit.EntryExitState.Inactive);
                 break;
             default:
                 throw new InvalidConditionalVariableException(
@@ -641,19 +641,19 @@ public class ImportConditional {
         
         switch (cv.getType()) {
             case ROUTE_FREE:
-                expression.setType(ExpressionWarrant.Type.ROUTE_FREE);
+                expression.setBeanState(ExpressionWarrant.WarrantState.RouteFree);
                 break;
             case ROUTE_OCCUPIED:
-                expression.setType(ExpressionWarrant.Type.ROUTE_OCCUPIED);
+                expression.setBeanState(ExpressionWarrant.WarrantState.RouteOccupied);
                 break;
             case ROUTE_ALLOCATED:
-                expression.setType(ExpressionWarrant.Type.ROUTE_ALLOCATED);
+                expression.setBeanState(ExpressionWarrant.WarrantState.RouteAllocated);
                 break;
             case ROUTE_SET:
-                expression.setType(ExpressionWarrant.Type.ROUTE_SET);
+                expression.setBeanState(ExpressionWarrant.WarrantState.RouteSet);
                 break;
             case TRAIN_RUNNING:
-                expression.setType(ExpressionWarrant.Type.TRAIN_RUNNING);
+                expression.setBeanState(ExpressionWarrant.WarrantState.TrainRunning);
                 break;
             default:
                 throw new InvalidConditionalVariableException(
@@ -679,7 +679,7 @@ public class ImportConditional {
         }
         
         expression.setOBlock(b);
-        expression.setOBlockStatus(oblockStatus);
+        expression.setBeanState(oblockStatus);
         expression.setTriggerOnChange(cv.doTriggerActions());
         
         return expression;

@@ -306,15 +306,12 @@ public class ExpressionLight extends AbstractDigitalExpression
             return false;
         }
         
-        String name = (_stateAddressing != NamedBeanAddressing.Direct)
-                ? getNewState() : null;
-        
         LightState checkLightState;
         
         if ((_stateAddressing == NamedBeanAddressing.Direct)) {
             checkLightState = _lightState;
         } else {
-            checkLightState = LightState.valueOf(name);
+            checkLightState = LightState.valueOf(getNewState());
         }
         
         LightState currentLightState = LightState.get(light.getCommandedState());

@@ -5,6 +5,9 @@ import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.entryexit.PointDetails;
 import jmri.jmrit.entryexit.Source;
+import jmri.util.JUnitAppender;
+
+import org.junit.Test;
 
 /**
  * Test import of Logix to LogixNG.
@@ -61,6 +64,13 @@ public class ImportExpressionEntryExitTest extends ImportExpressionTestBase {
         cv = new ConditionalVariable();
         cv.setName("DP1");
         return cv;
+    }
+    
+    @Override
+    public void tearDown() {
+        JUnitAppender.assertErrorMessage("Signal not found at point");
+        JUnitAppender.assertErrorMessage("Signal not found at point");
+        super.tearDown();
     }
     
     

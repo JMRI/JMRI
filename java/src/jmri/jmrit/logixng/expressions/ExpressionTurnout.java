@@ -306,15 +306,12 @@ public class ExpressionTurnout extends AbstractDigitalExpression
             return false;
         }
         
-        String name = (_stateAddressing != NamedBeanAddressing.Direct)
-                ? getNewState() : null;
-        
         TurnoutState checkTurnoutState;
         
         if ((_stateAddressing == NamedBeanAddressing.Direct)) {
             checkTurnoutState = _turnoutState;
         } else {
-            checkTurnoutState = TurnoutState.valueOf(name);
+            checkTurnoutState = TurnoutState.valueOf(getNewState());
         }
         
         TurnoutState currentTurnoutState = TurnoutState.get(turnout.getCommandedState());

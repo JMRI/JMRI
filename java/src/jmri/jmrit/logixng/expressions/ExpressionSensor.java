@@ -306,15 +306,12 @@ public class ExpressionSensor extends AbstractDigitalExpression
             return false;
         }
         
-        String name = (_stateAddressing != NamedBeanAddressing.Direct)
-                ? getNewState() : null;
-        
         SensorState checkSensorState;
         
         if ((_stateAddressing == NamedBeanAddressing.Direct)) {
             checkSensorState = _sensorState;
         } else {
-            checkSensorState = SensorState.valueOf(name);
+            checkSensorState = SensorState.valueOf(getNewState());
         }
         
         SensorState currentSensorState = SensorState.get(sensor.getCommandedState());

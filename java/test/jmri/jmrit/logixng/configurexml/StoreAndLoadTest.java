@@ -826,23 +826,75 @@ public class StoreAndLoadTest {
         
         
         ExpressionEntryExit expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
-        expressionEntryExit.setEntryExitState(ExpressionEntryExit.EntryExitState.ACTIVE);
-        expressionEntryExit.set_Is_IsNot(Is_IsNot_Enum.Is);
         maleSocket = digitalExpressionManager.registerExpression(expressionEntryExit);
         and.getChild(index++).connect(maleSocket);
         
         expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         expressionEntryExit.setComment("A comment");
         expressionEntryExit.setDestinationPoints("Something");
-        expressionEntryExit.setEntryExitState(ExpressionEntryExit.EntryExitState.INACTIVE);
+        expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Inactive);
+        expressionEntryExit.setAddressing(NamedBeanAddressing.Direct);
+        expressionEntryExit.setFormula("\"IT\"+index");
+        expressionEntryExit.setLocalVariable("index");
+        expressionEntryExit.setReference("{IM1}");
         expressionEntryExit.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        expressionEntryExit.setStateAddressing(NamedBeanAddressing.LocalVariable);
+        expressionEntryExit.setStateFormula("\"IT\"+index2");
+        expressionEntryExit.setStateLocalVariable("index2");
+        expressionEntryExit.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionEntryExit);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
+        expressionEntryExit.setComment("A comment");
+        expressionEntryExit.setDestinationPoints("Something");
+        expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Inactive);
+        expressionEntryExit.setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionEntryExit.setFormula("\"IT\"+index");
+        expressionEntryExit.setLocalVariable("index");
+        expressionEntryExit.setReference("{IM1}");
+        expressionEntryExit.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionEntryExit.setStateAddressing(NamedBeanAddressing.Formula);
+        expressionEntryExit.setStateFormula("\"IT\"+index2");
+        expressionEntryExit.setStateLocalVariable("index2");
+        expressionEntryExit.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionEntryExit);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
+        expressionEntryExit.setComment("A comment");
+        expressionEntryExit.setDestinationPoints("Something");
+        expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Inactive);
+        expressionEntryExit.setAddressing(NamedBeanAddressing.Formula);
+        expressionEntryExit.setFormula("\"IT\"+index");
+        expressionEntryExit.setLocalVariable("index");
+        expressionEntryExit.setReference("{IM1}");
+        expressionEntryExit.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        expressionEntryExit.setStateAddressing(NamedBeanAddressing.Reference);
+        expressionEntryExit.setStateFormula("\"IT\"+index2");
+        expressionEntryExit.setStateLocalVariable("index2");
+        expressionEntryExit.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionEntryExit);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
+        expressionEntryExit.setComment("A comment");
+        expressionEntryExit.setDestinationPoints("Something");
+        expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Inactive);
+        expressionEntryExit.setAddressing(NamedBeanAddressing.Reference);
+        expressionEntryExit.setFormula("\"IT\"+index");
+        expressionEntryExit.setLocalVariable("index");
+        expressionEntryExit.setReference("{IM1}");
+        expressionEntryExit.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionEntryExit.setStateAddressing(NamedBeanAddressing.Direct);
+        expressionEntryExit.setStateFormula("\"IT\"+index2");
+        expressionEntryExit.setStateLocalVariable("index2");
+        expressionEntryExit.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionEntryExit);
         and.getChild(index++).connect(maleSocket);
         
         
         ExpressionLight expressionLight = new ExpressionLight(digitalExpressionManager.getAutoSystemName(), null);
-        expressionLight.setBeanState(ExpressionLight.LightState.On);
-        expressionLight.set_Is_IsNot(Is_IsNot_Enum.Is);
         maleSocket = digitalExpressionManager.registerExpression(expressionLight);
         and.getChild(index++).connect(maleSocket);
         
@@ -850,7 +902,63 @@ public class StoreAndLoadTest {
         expressionLight.setComment("A comment");
         expressionLight.setLight(light1);
         expressionLight.setBeanState(ExpressionLight.LightState.Off);
+        expressionLight.setAddressing(NamedBeanAddressing.Direct);
+        expressionLight.setFormula("\"IT\"+index");
+        expressionLight.setLocalVariable("index");
+        expressionLight.setReference("{IM1}");
         expressionLight.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        expressionLight.setStateAddressing(NamedBeanAddressing.LocalVariable);
+        expressionLight.setStateFormula("\"IT\"+index2");
+        expressionLight.setStateLocalVariable("index2");
+        expressionLight.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionLight);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionLight = new ExpressionLight(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLight.setComment("A comment");
+        expressionLight.setLight(light1);
+        expressionLight.setBeanState(ExpressionLight.LightState.On);
+        expressionLight.setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionLight.setFormula("\"IT\"+index");
+        expressionLight.setLocalVariable("index");
+        expressionLight.setReference("{IM1}");
+        expressionLight.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionLight.setStateAddressing(NamedBeanAddressing.Formula);
+        expressionLight.setStateFormula("\"IT\"+index2");
+        expressionLight.setStateLocalVariable("index2");
+        expressionLight.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionLight);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionLight = new ExpressionLight(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLight.setComment("A comment");
+        expressionLight.setLight(light1);
+        expressionLight.setBeanState(ExpressionLight.LightState.Other);
+        expressionLight.setAddressing(NamedBeanAddressing.Formula);
+        expressionLight.setFormula("\"IT\"+index");
+        expressionLight.setLocalVariable("index");
+        expressionLight.setReference("{IM1}");
+        expressionLight.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        expressionLight.setStateAddressing(NamedBeanAddressing.Reference);
+        expressionLight.setStateFormula("\"IT\"+index2");
+        expressionLight.setStateLocalVariable("index2");
+        expressionLight.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionLight);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionLight = new ExpressionLight(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLight.setComment("A comment");
+        expressionLight.setLight(light1);
+        expressionLight.setBeanState(ExpressionLight.LightState.Off);
+        expressionLight.setAddressing(NamedBeanAddressing.Reference);
+        expressionLight.setFormula("\"IT\"+index");
+        expressionLight.setLocalVariable("index");
+        expressionLight.setReference("{IM1}");
+        expressionLight.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionLight.setStateAddressing(NamedBeanAddressing.Direct);
+        expressionLight.setStateFormula("\"IT\"+index2");
+        expressionLight.setStateLocalVariable("index2");
+        expressionLight.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionLight);
         and.getChild(index++).connect(maleSocket);
         
@@ -909,16 +1017,70 @@ public class StoreAndLoadTest {
         
         
         ExpressionOBlock expressionOBlock = new ExpressionOBlock(digitalExpressionManager.getAutoSystemName(), null);
-        expressionOBlock.setOBlockStatus(OBlock.OBlockStatus.Dark);
-        expressionOBlock.set_Is_IsNot(Is_IsNot_Enum.Is);
         maleSocket = digitalExpressionManager.registerExpression(expressionOBlock);
         and.getChild(index++).connect(maleSocket);
         
         expressionOBlock = new ExpressionOBlock(digitalExpressionManager.getAutoSystemName(), null);
         expressionOBlock.setComment("A comment");
         expressionOBlock.setOBlock("OB99");
-        expressionOBlock.setOBlockStatus(OBlock.OBlockStatus.Occupied);
+        expressionOBlock.setBeanState(OBlock.OBlockStatus.Dark);
+        expressionOBlock.setAddressing(NamedBeanAddressing.Direct);
+        expressionOBlock.setFormula("\"IT\"+index");
+        expressionOBlock.setLocalVariable("index");
+        expressionOBlock.setReference("{IM1}");
         expressionOBlock.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        expressionOBlock.setStateAddressing(NamedBeanAddressing.LocalVariable);
+        expressionOBlock.setStateFormula("\"IT\"+index2");
+        expressionOBlock.setStateLocalVariable("index2");
+        expressionOBlock.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionOBlock);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionOBlock = new ExpressionOBlock(digitalExpressionManager.getAutoSystemName(), null);
+        expressionOBlock.setComment("A comment");
+        expressionOBlock.setOBlock("OB99");
+        expressionOBlock.setBeanState(OBlock.OBlockStatus.Allocated);
+        expressionOBlock.setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionOBlock.setFormula("\"IT\"+index");
+        expressionOBlock.setLocalVariable("index");
+        expressionOBlock.setReference("{IM1}");
+        expressionOBlock.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionOBlock.setStateAddressing(NamedBeanAddressing.Formula);
+        expressionOBlock.setStateFormula("\"IT\"+index2");
+        expressionOBlock.setStateLocalVariable("index2");
+        expressionOBlock.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionOBlock);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionOBlock = new ExpressionOBlock(digitalExpressionManager.getAutoSystemName(), null);
+        expressionOBlock.setComment("A comment");
+        expressionOBlock.setOBlock("OB99");
+        expressionOBlock.setBeanState(OBlock.OBlockStatus.Occupied);
+        expressionOBlock.setAddressing(NamedBeanAddressing.Formula);
+        expressionOBlock.setFormula("\"IT\"+index");
+        expressionOBlock.setLocalVariable("index");
+        expressionOBlock.setReference("{IM1}");
+        expressionOBlock.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        expressionOBlock.setStateAddressing(NamedBeanAddressing.Reference);
+        expressionOBlock.setStateFormula("\"IT\"+index2");
+        expressionOBlock.setStateLocalVariable("index2");
+        expressionOBlock.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionOBlock);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionOBlock = new ExpressionOBlock(digitalExpressionManager.getAutoSystemName(), null);
+        expressionOBlock.setComment("A comment");
+        expressionOBlock.setOBlock("OB99");
+        expressionOBlock.setBeanState(OBlock.OBlockStatus.OutOfService);
+        expressionOBlock.setAddressing(NamedBeanAddressing.Reference);
+        expressionOBlock.setFormula("\"IT\"+index");
+        expressionOBlock.setLocalVariable("index");
+        expressionOBlock.setReference("{IM1}");
+        expressionOBlock.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionOBlock.setStateAddressing(NamedBeanAddressing.Direct);
+        expressionOBlock.setStateFormula("\"IT\"+index2");
+        expressionOBlock.setStateLocalVariable("index2");
+        expressionOBlock.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionOBlock);
         and.getChild(index++).connect(maleSocket);
         
@@ -951,8 +1113,6 @@ public class StoreAndLoadTest {
         
         
         ExpressionSensor expressionSensor = new ExpressionSensor(digitalExpressionManager.getAutoSystemName(), null);
-        expressionSensor.setBeanState(ExpressionSensor.SensorState.Active);
-        expressionSensor.set_Is_IsNot(Is_IsNot_Enum.Is);
         maleSocket = digitalExpressionManager.registerExpression(expressionSensor);
         and.getChild(index++).connect(maleSocket);
         
@@ -960,7 +1120,63 @@ public class StoreAndLoadTest {
         expressionSensor.setComment("A comment");
         expressionSensor.setSensor(sensor1);
         expressionSensor.setBeanState(ExpressionSensor.SensorState.Inactive);
+        expressionSensor.setAddressing(NamedBeanAddressing.Direct);
+        expressionSensor.setFormula("\"IT\"+index");
+        expressionSensor.setLocalVariable("index");
+        expressionSensor.setReference("{IM1}");
         expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        expressionSensor.setStateAddressing(NamedBeanAddressing.LocalVariable);
+        expressionSensor.setStateFormula("\"IT\"+index2");
+        expressionSensor.setStateLocalVariable("index2");
+        expressionSensor.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionSensor);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionSensor = new ExpressionSensor(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSensor.setComment("A comment");
+        expressionSensor.setSensor(sensor1);
+        expressionSensor.setBeanState(ExpressionSensor.SensorState.Inactive);
+        expressionSensor.setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionSensor.setFormula("\"IT\"+index");
+        expressionSensor.setLocalVariable("index");
+        expressionSensor.setReference("{IM1}");
+        expressionSensor.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionSensor.setStateAddressing(NamedBeanAddressing.Formula);
+        expressionSensor.setStateFormula("\"IT\"+index2");
+        expressionSensor.setStateLocalVariable("index2");
+        expressionSensor.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionSensor);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionSensor = new ExpressionSensor(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSensor.setComment("A comment");
+        expressionSensor.setSensor(sensor1);
+        expressionSensor.setBeanState(ExpressionSensor.SensorState.Inactive);
+        expressionSensor.setAddressing(NamedBeanAddressing.Formula);
+        expressionSensor.setFormula("\"IT\"+index");
+        expressionSensor.setLocalVariable("index");
+        expressionSensor.setReference("{IM1}");
+        expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        expressionSensor.setStateAddressing(NamedBeanAddressing.Reference);
+        expressionSensor.setStateFormula("\"IT\"+index2");
+        expressionSensor.setStateLocalVariable("index2");
+        expressionSensor.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionSensor);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionSensor = new ExpressionSensor(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSensor.setComment("A comment");
+        expressionSensor.setSensor(sensor1);
+        expressionSensor.setBeanState(ExpressionSensor.SensorState.Inactive);
+        expressionSensor.setAddressing(NamedBeanAddressing.Reference);
+        expressionSensor.setFormula("\"IT\"+index");
+        expressionSensor.setLocalVariable("index");
+        expressionSensor.setReference("{IM1}");
+        expressionSensor.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionSensor.setStateAddressing(NamedBeanAddressing.Direct);
+        expressionSensor.setStateFormula("\"IT\"+index2");
+        expressionSensor.setStateLocalVariable("index2");
+        expressionSensor.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionSensor);
         and.getChild(index++).connect(maleSocket);
         
@@ -1194,33 +1410,139 @@ public class StoreAndLoadTest {
 */        
         
         ExpressionTurnout expressionTurnout = new ExpressionTurnout(digitalExpressionManager.getAutoSystemName(), null);
-        expressionTurnout.setTriggerOnChange(false);
-        expressionTurnout.setBeanState(ExpressionTurnout.TurnoutState.Thrown);
-        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.Is);
         maleSocket = digitalExpressionManager.registerExpression(expressionTurnout);
         and.getChild(index++).connect(maleSocket);
         
         expressionTurnout = new ExpressionTurnout(digitalExpressionManager.getAutoSystemName(), null);
         expressionTurnout.setComment("A comment");
         expressionTurnout.setTurnout(turnout1);
-        expressionTurnout.setTriggerOnChange(true);
         expressionTurnout.setBeanState(ExpressionTurnout.TurnoutState.Closed);
+        expressionTurnout.setAddressing(NamedBeanAddressing.Direct);
+        expressionTurnout.setFormula("\"IT\"+index");
+        expressionTurnout.setLocalVariable("index");
+        expressionTurnout.setReference("{IM1}");
         expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        expressionTurnout.setStateAddressing(NamedBeanAddressing.LocalVariable);
+        expressionTurnout.setStateFormula("\"IT\"+index2");
+        expressionTurnout.setStateLocalVariable("index2");
+        expressionTurnout.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionTurnout);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionTurnout = new ExpressionTurnout(digitalExpressionManager.getAutoSystemName(), null);
+        expressionTurnout.setComment("A comment");
+        expressionTurnout.setTurnout(turnout1);
+        expressionTurnout.setBeanState(ExpressionTurnout.TurnoutState.Thrown);
+        expressionTurnout.setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionTurnout.setFormula("\"IT\"+index");
+        expressionTurnout.setLocalVariable("index");
+        expressionTurnout.setReference("{IM1}");
+        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionTurnout.setStateAddressing(NamedBeanAddressing.Formula);
+        expressionTurnout.setStateFormula("\"IT\"+index2");
+        expressionTurnout.setStateLocalVariable("index2");
+        expressionTurnout.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionTurnout);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionTurnout = new ExpressionTurnout(digitalExpressionManager.getAutoSystemName(), null);
+        expressionTurnout.setComment("A comment");
+        expressionTurnout.setTurnout(turnout1);
+        expressionTurnout.setBeanState(ExpressionTurnout.TurnoutState.Other);
+        expressionTurnout.setAddressing(NamedBeanAddressing.Formula);
+        expressionTurnout.setFormula("\"IT\"+index");
+        expressionTurnout.setLocalVariable("index");
+        expressionTurnout.setReference("{IM1}");
+        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        expressionTurnout.setStateAddressing(NamedBeanAddressing.Reference);
+        expressionTurnout.setStateFormula("\"IT\"+index2");
+        expressionTurnout.setStateLocalVariable("index2");
+        expressionTurnout.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionTurnout);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionTurnout = new ExpressionTurnout(digitalExpressionManager.getAutoSystemName(), null);
+        expressionTurnout.setComment("A comment");
+        expressionTurnout.setTurnout(turnout1);
+        expressionTurnout.setBeanState(ExpressionTurnout.TurnoutState.Closed);
+        expressionTurnout.setAddressing(NamedBeanAddressing.Reference);
+        expressionTurnout.setFormula("\"IT\"+index");
+        expressionTurnout.setLocalVariable("index");
+        expressionTurnout.setReference("{IM1}");
+        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionTurnout.setStateAddressing(NamedBeanAddressing.Direct);
+        expressionTurnout.setStateFormula("\"IT\"+index2");
+        expressionTurnout.setStateLocalVariable("index2");
+        expressionTurnout.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionTurnout);
         and.getChild(index++).connect(maleSocket);
         
         
         ExpressionWarrant expressionWarrant = new ExpressionWarrant(digitalExpressionManager.getAutoSystemName(), null);
-        expressionWarrant.setType(ExpressionWarrant.Type.ROUTE_FREE);
-        expressionWarrant.set_Is_IsNot(Is_IsNot_Enum.Is);
         maleSocket = digitalExpressionManager.registerExpression(expressionWarrant);
         and.getChild(index++).connect(maleSocket);
         
         expressionWarrant = new ExpressionWarrant(digitalExpressionManager.getAutoSystemName(), null);
         expressionWarrant.setComment("A comment");
         expressionWarrant.setWarrant("Something");
-        expressionWarrant.setType(ExpressionWarrant.Type.ROUTE_SET);
+        expressionWarrant.setBeanState(ExpressionWarrant.WarrantState.RouteAllocated);
+        expressionWarrant.setAddressing(NamedBeanAddressing.Direct);
+        expressionWarrant.setFormula("\"IT\"+index");
+        expressionWarrant.setLocalVariable("index");
+        expressionWarrant.setReference("{IM1}");
         expressionWarrant.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        expressionWarrant.setStateAddressing(NamedBeanAddressing.LocalVariable);
+        expressionWarrant.setStateFormula("\"IT\"+index2");
+        expressionWarrant.setStateLocalVariable("index2");
+        expressionWarrant.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionWarrant);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionWarrant = new ExpressionWarrant(digitalExpressionManager.getAutoSystemName(), null);
+        expressionWarrant.setComment("A comment");
+        expressionWarrant.setWarrant("Something");
+        expressionWarrant.setBeanState(ExpressionWarrant.WarrantState.RouteFree);
+        expressionWarrant.setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionWarrant.setFormula("\"IT\"+index");
+        expressionWarrant.setLocalVariable("index");
+        expressionWarrant.setReference("{IM1}");
+        expressionWarrant.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionWarrant.setStateAddressing(NamedBeanAddressing.Formula);
+        expressionWarrant.setStateFormula("\"IT\"+index2");
+        expressionWarrant.setStateLocalVariable("index2");
+        expressionWarrant.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionWarrant);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionWarrant = new ExpressionWarrant(digitalExpressionManager.getAutoSystemName(), null);
+        expressionWarrant.setComment("A comment");
+        expressionWarrant.setWarrant("Something");
+        expressionWarrant.setBeanState(ExpressionWarrant.WarrantState.RouteOccupied);
+        expressionWarrant.setAddressing(NamedBeanAddressing.Formula);
+        expressionWarrant.setFormula("\"IT\"+index");
+        expressionWarrant.setLocalVariable("index");
+        expressionWarrant.setReference("{IM1}");
+        expressionWarrant.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        expressionWarrant.setStateAddressing(NamedBeanAddressing.Reference);
+        expressionWarrant.setStateFormula("\"IT\"+index2");
+        expressionWarrant.setStateLocalVariable("index2");
+        expressionWarrant.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionWarrant);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionWarrant = new ExpressionWarrant(digitalExpressionManager.getAutoSystemName(), null);
+        expressionWarrant.setComment("A comment");
+        expressionWarrant.setWarrant("Something");
+        expressionWarrant.setBeanState(ExpressionWarrant.WarrantState.RouteSet);
+        expressionWarrant.setAddressing(NamedBeanAddressing.Reference);
+        expressionWarrant.setFormula("\"IT\"+index");
+        expressionWarrant.setLocalVariable("index");
+        expressionWarrant.setReference("{IM1}");
+        expressionWarrant.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionWarrant.setStateAddressing(NamedBeanAddressing.Direct);
+        expressionWarrant.setStateFormula("\"IT\"+index2");
+        expressionWarrant.setStateLocalVariable("index2");
+        expressionWarrant.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionWarrant);
         and.getChild(index++).connect(maleSocket);
         

@@ -42,7 +42,14 @@
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
               <xs:element name="oblock" type="beanNameType" minOccurs="0" maxOccurs="1"/>
 
-              <xs:element name="is_isNot" type="LogixNG_Is_IsNot_Type" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="addressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+              <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
+
+			  <xs:element name="is_isNot" type="LogixNG_Is_IsNot_Type" minOccurs="0" maxOccurs="1"/>
+
+              <xs:element name="stateAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
 
               <xs:element name="oblockStatus" minOccurs="0" maxOccurs="1">
                 <xs:simpleType>
@@ -57,6 +64,10 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
+
+              <xs:element name="stateReference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="stateLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="stateFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
 
               <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 

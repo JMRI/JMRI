@@ -23,7 +23,6 @@ import org.junit.Test;
  */
 public class ImportExpressionWarrantTest {
 
-    Warrant warrant;
     private LogixManager logixManager;
     private Logix logix;
     private Conditional conditional;
@@ -86,7 +85,7 @@ public class ImportExpressionWarrantTest {
         
         
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
-        warrant = new Warrant("IW1", null);
+        InstanceManager.getDefault(WarrantManager.class).register(new Warrant("IW1", null));
         
         logixManager = InstanceManager.getDefault(LogixManager.class);
         ConditionalManager conditionalManager = InstanceManager.getDefault(ConditionalManager.class);

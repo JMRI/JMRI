@@ -222,7 +222,7 @@ public abstract class ImportExpressionTestBase {
     @After
     public void tearDown() {
         // REMOVE THIS LATER!!!
-        JUnitAppender.clearBacklog();
+//        JUnitAppender.clearBacklog();
         
         
         JUnitUtil.deregisterBlockManagerShutdownTask();
