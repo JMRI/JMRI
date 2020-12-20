@@ -52,7 +52,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             memo.getSlotManager().setMode(LnProgrammerManager.LOCONETCSOPSWMODE);
             memo.getSlotManager().writeCV(CV, val, pL); // deal with this via service-mode programmer
         } else if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
-            /**
+            /*
              * CV format is e.g. "113.12" where the first part defines the
              * typeword for the specific board type and the second is the specific bit number
              * Known values:
@@ -64,7 +64,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
              * </ul>
              */
             if (bdOpSwAccessTimer == null) {
-                initiializeBdOpsAccessTimer();
+                initializeBdOpsAccessTimer();
             }
             p = pL;
             doingWrite = true;
@@ -112,7 +112,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             memo.getLnTrafficController().sendLocoNetMessage(m);
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
             if (sv2AccessTimer == null) {
-                initiializeSV2AccessTimer();
+                initializeSV2AccessTimer();
             }
             p = pL;
             // SV2 mode
@@ -144,7 +144,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             memo.getSlotManager().setMode(LnProgrammerManager.LOCONETCSOPSWMODE);
             memo.getSlotManager().readCV(CV, pL); // deal with this via service-mode programmer
         } else if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
-            /**
+            /*
              * CV format is e.g. "113.12" where the first part defines the
              * typeword for the specific board type and the second is the specific bit number
              * Known values:
@@ -156,7 +156,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
              * </ul>
              */
             if (bdOpSwAccessTimer == null) {
-                initiializeBdOpsAccessTimer();
+                initializeBdOpsAccessTimer();
             }
             p = pL;
             doingWrite = false;
@@ -182,8 +182,8 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
 
             log.debug("  Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
-            bdOpSwAccessTimer.start();
 
+            bdOpSwAccessTimer.start();
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
             p = pL;
             doingWrite = false;
@@ -200,7 +200,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             memo.getLnTrafficController().sendLocoNetMessage(m);
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
             if (sv2AccessTimer == null) {
-                initiializeSV2AccessTimer();
+                initializeSV2AccessTimer();
             }
             p = pL;
             // SV2 mode
@@ -318,7 +318,6 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             // check pending activity
             if (p == null) {
                 log.warn("received SV reply message with no reply object: {}", m);
-                return;
             } else {
                 log.debug("returning SV programming reply: {}", m);
                 int code = ProgListener.OK;
@@ -349,7 +348,6 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             // return reply
             if (p == null) {
                 log.error("received SV reply message with no reply object: {}", m);
-                return;
             } else {
                 log.debug("returning SV programming reply: {}", m);
 
@@ -517,6 +515,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public String decodeErrorCode(int i) {
         return memo.getSlotManager().decodeErrorCode(i);
     }
@@ -545,7 +544,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
         return "" + getAddressNumber() + " " + getLongAddress();
     }
 
-    void initiializeBdOpsAccessTimer() {
+    void initializeBdOpsAccessTimer() {
         if (bdOpSwAccessTimer == null) {
             bdOpSwAccessTimer = new javax.swing.Timer(1000, (ActionEvent e) -> {
                 ProgListener temp = p;
@@ -557,7 +556,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
         }
     }
 
-    void initiializeSV2AccessTimer() {
+    void initializeSV2AccessTimer() {
         if (sv2AccessTimer == null) {
             sv2AccessTimer = new javax.swing.Timer(1000, (ActionEvent e) -> {
                 ProgListener temp = p;

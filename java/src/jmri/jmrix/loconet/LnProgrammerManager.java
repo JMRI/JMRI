@@ -64,6 +64,12 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
     public static final ProgrammingMode LOCONETSV2MODE    = new ProgrammingMode("LOCONETSV2MODE", Bundle.getMessage("LOCONETSV2MODE"));
 
     /**
+     * Programming for LocoNet System Variables using version 2 of the protocol.
+     */
+    public static final ProgrammingMode LOCONETLNCVMODE    = new ProgrammingMode("LOCONETLNCVMODE", Bundle.getMessage("LOCONETLNCVMODE"));
+
+
+    /**
      * Programming via LocoNet messages for Digitrax DS*, PM*, BDL*, SE* boards
      */
     static final ProgrammingMode LOCONETBDOPSWMODE = new ProgrammingMode("LOCONETBDOPSWMODE", Bundle.getMessage("LOCONETBDOPSWMODE"));
@@ -83,6 +89,7 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
         ret.add(LOCONETOPSBOARD);
         ret.add(LOCONETSV2MODE);
         ret.add(LOCONETSV1MODE); // they show in the interface in the order listed here
+        ret.add(LOCONETLNCVMODE);
         return ret;
     }
 

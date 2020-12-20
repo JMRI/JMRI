@@ -106,6 +106,7 @@ public class LncvMessageContents {
         dst_l = m.getElement(LNCV_DST_L_ELEMENT_INDEX);
         dst_h = m.getElement(LNCV_DST_H_ELEMENT_INDEX);
         dst = dst_l + (256 * dst_h);
+        log.debug("src={}, dst={}", src, dst); // must use vars for CI
 
         cmd = m.getElement(LNCV_CMD_ELEMENT_INDEX);
 
@@ -202,7 +203,7 @@ public class LncvMessageContents {
 
         // "command_data" identifier must be correct.  Check the rest
         // of the "command_data" identifier
-        if ((m.getElement(LNCV_CMDDATA_ELEMENT_INDEX) != 0x40) && (m.getElement(LNCV_CMDDATA_ELEMENT_INDEX) != 0x00)) {
+        if ((m.getElement(LNCV_CMDDATA_ELEMENT_INDEX) != LNCV_DATA_END) && (m.getElement(LNCV_CMDDATA_ELEMENT_INDEX) != 0x00)) {
             log.debug ("cannot be LNCV message because CMD_DATA not valid");  // NOI18N
             return false;
         }
@@ -278,7 +279,7 @@ public class LncvMessageContents {
                         log.debug("START {}", cmd_data);
                         returnString = Bundle.getMessage(locale, "LNCV_SESS_START_INTERPRETED");
                         break;
-                    } else if (cmd_data == 0x40) {
+                    } else if (cmd_data == LNCV_DATA_END) {
                         log.debug("END {}", cmd_data);
                         returnString = Bundle.getMessage(locale, "LNCV_SESS_END_INTERPRETED");
                         break;
@@ -287,7 +288,7 @@ public class LncvMessageContents {
                         return  Bundle.getMessage(locale, "LNCV_UNDEFINED_MESSAGE") + "\n";
                     }
                 } else {
-                    if (cmd_data == 0x40) {
+                    if (cmd_data == LNCV_DATA_END) {
                         returnString = Bundle.getMessage(locale, "LNCV_MOD_PROG_END_INTERPRETED",
                                 art,
                                 mod);
@@ -476,7 +477,7 @@ public class LncvMessageContents {
                 LNCV_ALL,
                 0x0,
                 0x1,
-                0x40);
+                LNCV_DATA_END);
     }
 
     /**
@@ -501,6 +502,7 @@ public class LncvMessageContents {
      * @return LocoNet message
      */
     public static LocoNetMessage createModProgEndRequest(int articleNum, int moduleAddress) {
+        log.debug("MODPROG_END {} message created", moduleAddress);
         return createLncvMessage(
                 LnConstants.OPC_PEER_XFER,
                 0x1,
@@ -509,7 +511,7 @@ public class LncvMessageContents {
                 articleNum,
                 0x0,
                 moduleAddress,
-                0x0);
+                LNCV_DATA_END);
     }
 
     /**

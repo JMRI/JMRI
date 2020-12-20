@@ -19,12 +19,12 @@ public class Sv2ModulesTableModel extends AbstractTableModel {
    public static final int SERIAL_COLUMN = 2;
    public static final int TYPE_COLUMN = 3;
    public static final int ADDRESS_COLUMN = 4;
-   private final Sv2DiscoverPane parent;
    private final String[] columnNames = {"",
-   Bundle.getMessage("HeadingManufacturer"),
-   Bundle.getMessage("HeadingType"),
-   Bundle.getMessage("HeadingSerial"),
-   Bundle.getMessage("HeadingAddress")};
+           Bundle.getMessage("HeadingManufacturer"),
+           Bundle.getMessage("HeadingType"),
+           Bundle.getMessage("HeadingSerial"),
+           Bundle.getMessage("HeadingAddress")};
+    private final Sv2DiscoverPane parent;
 
     Sv2ModulesTableModel(Sv2DiscoverPane parent) {
         this.parent = parent;

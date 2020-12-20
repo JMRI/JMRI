@@ -8,7 +8,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 /**
- * Table model for the discovered modules table.
+ * Table model for the programmed LNCV values table.
  *
  * @author Egbert Broerse Copyright (C) 2020
  */
@@ -18,16 +18,16 @@ public class LncvProgTableModel extends AbstractTableModel {
     public static final int MODADDR_COLUMN = 2;
     public static final int CV_COLUMN = 3;
     public static final int VALUE_COLUMN = 4;
-
-    private final LncvProgPane parent;
     private final String[] columnNames = {"",
             Bundle.getMessage("HeadingArticle"),
             Bundle.getMessage("HeadingAddress"),
             Bundle.getMessage("HeadingCv"),
             Bundle.getMessage("HeadingValue")};
+    private final LncvProgPane parent;
 
     LncvProgTableModel(LncvProgPane parent) {
         this.parent = parent;
+        log.debug("LNCV TABLE created, parent = {} null", (parent == null ? "" : "not"));
     }
 
     public void initTable(javax.swing.JTable lncvModulesTable) {

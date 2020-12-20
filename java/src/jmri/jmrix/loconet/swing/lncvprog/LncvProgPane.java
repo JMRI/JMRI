@@ -38,8 +38,6 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
 
     protected JPanel tablePanel = null;
     protected JLabel statusText1 = new JLabel();
-    protected JLabel statusText2 = new JLabel();
-    protected JLabel statusText3 = new JLabel();
     protected JLabel articleFieldLabel = new JLabel(Bundle.getMessage("LabelArticleNum"));
     protected JLabel addressFieldLabel = new JLabel(Bundle.getMessage("LabelModuleAddress"));
     protected JLabel cvFieldLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("HeadingCv")));
@@ -52,8 +50,6 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
     protected int val;
     boolean writeConfirmed = false;
 
-    protected JPanel panel2 = new JPanel();
-    protected JPanel panel2a = new JPanel();
     private HashMap<Integer, LncvModule> modules = null;
     private boolean progSessionRunning = false;
     private boolean moduleProgRunning = false;
@@ -160,7 +156,8 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         // Set up buttons
         JPanel panel4 = new JPanel();
         panel4.setLayout(new FlowLayout());
-        progSessionButton.setText(progSessionRunning ? Bundle.getMessage("ButtonLeaveProgSession") : Bundle.getMessage("ButtonStartProgSession"));
+        progSessionButton.setText(progSessionRunning ?
+                Bundle.getMessage("ButtonLeaveProgSession") : Bundle.getMessage("ButtonStartProgSession"));
         progSessionButton.setToolTipText(Bundle.getMessage("TipProgSessionButton"));
         progSessionButton.addActionListener(e -> sessionButtonActionPerformed());
         panel4.add(progSessionButton);
@@ -188,7 +185,8 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         panel4.add(valueField);
 
         moduleProgButton.setEnabled(progSessionRunning);
-        moduleProgButton.setText(moduleProgRunning ? Bundle.getMessage("ButtonModuleProgStop") : Bundle.getMessage("ButtonModuleProgStart"));
+        moduleProgButton.setText(moduleProgRunning ?
+                Bundle.getMessage("ButtonModuleProgStop") : Bundle.getMessage("ButtonModuleProgStart"));
         moduleProgButton.setToolTipText(Bundle.getMessage("TipModuleProgButton"));
         moduleProgButton.addActionListener(e -> modProgButtonActionPerformed());
         panel4.add(moduleProgButton);
@@ -218,7 +216,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
                 cv = Integer.parseInt(cvField.getText()); // decimal to Hex
                 memo.getLnTrafficController().sendLocoNetMessage(LncvMessageContents.createCvReadRequest(art, adr, cv));
             } catch (NumberFormatException e) {
-                log.error("invalid entry must be number");
+                log.error("invalid entry, must be number");
             }
         }
         // stop and inform user
@@ -227,25 +225,24 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
 
     // WriteCV button
     /**
-     * Handle Start/End Module Prog button.
+     * Handle Write button click, assemble LNCV write message
      */
     public void writeButtonActionPerformed() {
-        // TODO assemble LNCV write message
         if (articleField.getText() != null && cvField.getText() != null && valueField.getText() != null) {
             try {
+                writeConfirmed = false;
                 art = Integer.parseInt(articleField.getText());
                 cv = Integer.parseInt(cvField.getText()); // decimal to Hex
                 val = Integer.parseInt(valueField.getText());
                 memo.getLnTrafficController().sendLocoNetMessage(LncvMessageContents.createCvWriteRequest(art, cv, val));
             } catch (NumberFormatException e) {
-                log.error("invalid entry must be number");
+                log.error("invalid entry, must be number");
             }
         }
         // stop and inform user
         //statusText1.setText(Bundle.getMessage("FeedBackWritten"));
 
-        // wait for LACK reply
-        writeConfirmed = false;
+        // wait for LACK reply - writeConfirmed = true;
     }
 
     /**
@@ -298,7 +295,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
                 moduleProgRunning = false;
                 moduleProgButton.setText(Bundle.getMessage("ButtonModuleProgStart"));
             } catch (NumberFormatException e) {
-                log.error("invalid entry must be number");
+                log.error("invalid entry, must be number");
             }
             return;
         }
@@ -310,12 +307,11 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
                 adr = Integer.parseInt(addressField.getText());
                 memo.getLnTrafficController().sendLocoNetMessage(LncvMessageContents.createModProgStartRequest(art, adr));
             } catch (NumberFormatException e) {
-                log.error("invalid entry must be number");
+                log.error("invalid entry, must be number");
             }
         }
         // stop and inform user
         statusText1.setText(Bundle.getMessage("FeedBackEnterArticle"));
-        moduleProgRunning = false;
         //progSessionButton.setEnabled(false);
     }
 
@@ -354,10 +350,12 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
                 mod.setAddress(adr); // trust last used address, to be sure, check against Article number
                 tempMod = adr;
             }
+            String foundMod = "LNCV art:" + section1 + " address:" + tempMod + " cv:" + section2 + " value:" + section3 + "\n";
+            reply += foundMod;
             modules.put(counter++, mod);
-            reply += "LNCV art:" + section1 + " address:" + tempMod + " cv:" + section2 + " value:" + section3 + "\n";
-
-            // TODO query to get module address
+            log.debug("LNCV Added Module {}: {}", counter, foundMod);
+            moduleTable.revalidate();
+            // query to get module address/all CV's/switch to DecoderPro tabs?
             // for each module, ask address
             //        for (module : modules.entrySet()) {
             //            LocoNetMessage q = new createSv2DeviceDiscoveryReply();
@@ -375,11 +373,12 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
      */
     public void sessionFinished(String error){
         if (error != null) {
-             log.error("Node discovery processed finished with error: {}", error);
+             log.error("LNCV process finished with error: {}", error);
              statusText1.setText(Bundle.getMessage("FeedBackDiscoverFail"));
         } else {
-            log.debug("Node discovery process completed successfully.");
-            statusText1.setText(Bundle.getMessage("FeedBackDiscoverSuccess", (modules == null ? 0 : modules.size())));
+            log.debug("LNCV process completed successfully.");
+            statusText1.setText(Bundle.getMessage("FeedBackDiscoverSuccess",
+                    (modules == null ? 0 : modules.size())));
             // reload the node list.
             result.setText(reply);
         }
@@ -396,9 +395,10 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
     }
 
     protected LncvModule getModule(int i) {
-        if (i <= modules.size()) {
+        if ((modules != null) && (i <= modules.size())) {
             return modules.get(i);
         } else {
+            log.debug("getModule({}) failed", i);
             return null;
         }
     }

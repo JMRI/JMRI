@@ -58,6 +58,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     boolean opsSigMode = false;
     boolean oldOpsSigMode = false;
     boolean lnSv2Mode = false;
+    boolean lncvMode = false;
     boolean oldLnSv2Mode = false;
     boolean oldoffsetAddrCheckBox = false;
     transient volatile AddressedProgrammer programmer = null;
@@ -318,14 +319,23 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
                         opsAccyMode = true;
                         opsSigMode = false;
                         lnSv2Mode = false ;
+                        lncvMode = false ;
                     } else if (mode == ProgrammingMode.OPSACCEXTBYTEMODE) {
                         log.debug("OPS SIG was selected in actionPerformed");
                         opsAccyMode = false;
                         opsSigMode = true;
                         lnSv2Mode = false ;
+                        lncvMode = false ;
+                    } else if (mode == LnProgrammerManager.LOCONETLNCVMODE) {
+                        log.debug("OPS LNCV was selected in actionPerformed");
+                        opsAccyMode = false;
+                        opsSigMode = false;
+                        lnSv2Mode = false ;
+                        lncvMode = true ;
                     } else {
                         opsAccyMode = false;
                         opsSigMode = false;
+                        lncvMode = false ;
                         if (mode == LnProgrammerManager.LOCONETSV2MODE) {
                             lnSv2Mode = true ;
                         } else {
@@ -354,11 +364,19 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
                     opsAccyMode = true;
                     opsSigMode = false;
                     lnSv2Mode = false ;
+                    lncvMode = false ;
                 } else if (entry.getKey() == ProgrammingMode.OPSACCEXTBYTEMODE) {
                     log.debug("OPS SIG was selected in setProgrammerFromGui");
                     opsAccyMode = false;
                     opsSigMode = true;
                     lnSv2Mode = false ;
+                    lncvMode = false ;
+                } else if (entry.getKey() == LnProgrammerManager.LOCONETLNCVMODE) {
+                    log.debug("OPS LNCV was selected in setProgrammerFromGui");
+                    opsAccyMode = false;
+                    opsSigMode = false;
+                    lnSv2Mode = false ;
+                    lncvMode = true ;
                 } else {
                     opsAccyMode = false;
                     opsSigMode = false;
@@ -450,6 +468,13 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
             addressLabel.setText(Bundle.getMessage("NodeLabel"));
             lowAddrLimit = 0;
             highAddrLimit = 65535;
+        } else if (lncvMode) {
+            shortAddrButton.setVisible(false);
+            longAddrButton.setVisible(false);
+            offsetAddrCheckBox.setVisible(false);
+            addressLabel.setText(Bundle.getMessage("ModuleLabel"));
+            lowAddrLimit = 0;
+            highAddrLimit = 65535;
         } else {
             shortAddrButton.setText(Bundle.getMessage("ShortAddress"));
             shortAddrButton.setToolTipText(Bundle.getMessage("ToolTipShortAddress"));
@@ -467,8 +492,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
             }
         }
 
-        log.debug(
-                "Setting lowAddrLimit={}, highAddrLimit={}", lowAddrLimit, highAddrLimit);
+        log.debug("Setting lowAddrLimit={}, highAddrLimit={}", lowAddrLimit, highAddrLimit);
         model.setMinimum(lowAddrLimit);
 
         model.setMaximum(highAddrLimit);
