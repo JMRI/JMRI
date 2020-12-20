@@ -700,6 +700,16 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                 return new JTable(model) {
 
                     @Override
+                    public String getToolTipText(MouseEvent e) {
+                        java.awt.Point p = e.getPoint();
+                        int rowIndex = rowAtPoint(p);
+                        int colIndex = columnAtPoint(p);
+                        int realRowIndex = convertRowIndexToModel(rowIndex);
+                        int realColumnIndex = convertColumnIndexToModel(colIndex);
+                        return getCellToolTip(this, realRowIndex, realColumnIndex);
+                    }
+
+                    @Override
                     public TableCellRenderer getCellRenderer(int row, int column) {
                         // Convert the displayed index to the model index, rather than the displayed index
                         int modelColumn = this.convertColumnIndexToModel(column);
@@ -1762,7 +1772,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
             // end of for loop creating rangeBox of Turnouts
         }
-        
+
         // provide successfeedback to uName
         statusBarLabel.setText(statusMessage);
         statusBarLabel.setForeground(Color.gray);

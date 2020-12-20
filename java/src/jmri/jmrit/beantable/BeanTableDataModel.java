@@ -459,12 +459,8 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         MouseListener popupListener = new PopupListener();
         table.addMouseListener(popupListener);
         this.persistTable(table);
-        thistable = table;
 
-        // setup dynamic tooltips for the comment column
-        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-        renderer.setToolTipText("");
-        table.getColumnModel().getColumn(COMMENTCOL).setCellRenderer(renderer);
+        thistable = table;
     }
 
     private JTable thistable;
@@ -652,7 +648,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 int colIndex = columnAtPoint(p);
                 int realRowIndex = convertRowIndexToModel(rowIndex);
                 int realColumnIndex = convertColumnIndexToModel(colIndex);
-                return getCellToolTip(realRowIndex, realColumnIndex);
+                return getCellToolTip(this, realRowIndex, realColumnIndex);
             }
         };
         return this.configureJTable(name, table, sorter);
@@ -938,24 +934,60 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         nBean.setComment(commentField.getText());
    }
 
-    String getCellToolTip(int row, int col) {
-        String tip = "";
-        if (col == COMMENTCOL) {
-            T nBean = getBySystemName(sysNameList.get(row));
-            if (nBean != null) {
-                String comment = nBean.getComment();
-                if (comment != null && !comment.isEmpty()) {
-                    StringBuilder sb = new StringBuilder("<html>");
-                    sb.append(comment.replaceAll(System.getProperty("line.separator"), "<br>"));
-                    sb.append("</html>");
-                    tip = sb.toString();
+    /**
+     * Display the comment text for the current row as a tool tip.  Most of the bean tables
+     * use the standard model with comments in column 3.  The SignalMastLogic table
+     * uses column 4 for the comment field.  TurnoutTableAction has its own getCellToolTip.
+     * @param table The current table.
+     * @param row The current row.
+     * @param col The current column.
+     * @return a formatted tool tip or null if there is none.
+     */
+    String getCellToolTip(JTable table, int row, int col) {
+        String tip = null;
+        if (!table.getName().contains("SignalMastLogic")) {
+            int column = COMMENTCOL;
+            if (table.getName().contains("SignalGroup")) column = 2;
+            if (col == column) {
+                T nBean = getBySystemName(sysNameList.get(row));
+                if (nBean != null) {
+                    tip = formatToolTip(nBean.getComment());
+                }
+            }
+        } else {
+            // SML comments are in column 4
+            if (col == 4) {
+                // The table does not have a "system name"
+                SignalMastManager smm = InstanceManager.getDefault(SignalMastManager.class);
+                SignalMast source = smm.getSignalMast((String) table.getModel().getValueAt(row, 0));
+                SignalMast dest = smm.getSignalMast((String) table.getModel().getValueAt(row, 2));
+                if (source != null) {
+                    SignalMastLogic sml = InstanceManager.getDefault(SignalMastLogicManager.class).getSignalMastLogic(source);
+                    if (sml != null && dest != null) {
+                        tip = formatToolTip(sml.getComment(dest));
+                    }
                 }
             }
         }
         return tip;
     }
 
-
+    /**
+     * Format a comment field as a tool tip string. Multi line comments are supported.
+     * @param comment The comment string.
+     * @return a html formatted string or null if the comment is mepty.
+     */
+    String formatToolTip(String comment) {
+        String tip = null;
+        if (comment != null && !comment.isEmpty()) {
+            StringBuilder sb = new StringBuilder("<html>");
+            sb.append(comment.replaceAll(System.getProperty("line.separator"), "<br>"));
+            sb.append("</html>");
+            tip = sb.toString();
+        }
+        log.info("formatToolTip: c = {}, t = {}", comment, tip);
+        return tip;
+    }
 
     protected void showTableHeaderPopup(MouseEvent e, JTable table) {
         JPopupMenu popupMenu = new JPopupMenu();
