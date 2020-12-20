@@ -985,7 +985,6 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             sb.append("</html>");
             tip = sb.toString();
         }
-        log.info("formatToolTip: c = {}, t = {}", comment, tip);
         return tip;
     }
 
