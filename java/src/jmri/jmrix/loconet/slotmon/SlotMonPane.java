@@ -74,11 +74,12 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
 
         slotModel = new SlotMonDataModel(memo.getSlotManager().getNumSlots(), 39, memo);
         slotTable = new JTable(slotModel);
+        //slotTable.setName(getTitleHelper(this.memo, this.getTitle()));
         slotTable.setName(this.getTitle());
         slotTable.setColumnModel(new XTableColumnModel());
         slotTable.setColumnModel(new XTableColumnModel());
         slotTable.createDefaultColumnsFromModel();
-        XTableColumnModel slotTableColumnModel = (XTableColumnModel)slotTable.getColumnModel();
+        // XTableColumnModel slotTableColumnModel = (XTableColumnModel)slotTable.getColumnModel();
 
         sorter = new TableRowSorter<>(slotModel);
         slotTable.setRowSorter(sorter);
@@ -115,7 +116,18 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
             // unable to persist because Default class provides no mechanism to
             // ensure window is destroyed when closed or that existing window is
             // reused when hidden and user reopens it from menu
-            tpm.persist(slotTable, true);
+            try {
+                tpm.persist(slotTable, true);
+            } catch (IllegalArgumentException ex) {
+                // This happens when the slotmon has been started as an action
+                slotTable.setName(this.getTitle() + ":2");
+                // and try again
+                try {
+                    tpm.persist(slotTable, true);
+                } catch (IllegalArgumentException ex2) {
+                    tpm.persist(slotTable, false);
+                }
+            }
         });
 
         // install a button renderer & editor in the "DISP" column for freeing a slot
@@ -245,7 +257,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
      * Nested class to create one of these using old-style defaults.
      * @deprecated since 4.19.7; use {@link SlotMonPaneAction} instead
      */
-/*    @Deprecated
+    @Deprecated
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
 
         public Default() {
@@ -255,7 +267,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
                     jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
         }
     }
-*/
+
     /*
      * Mouse popup stuff
      */
