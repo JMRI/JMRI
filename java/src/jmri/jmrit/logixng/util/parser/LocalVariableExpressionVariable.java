@@ -26,4 +26,10 @@ public class LocalVariableExpressionVariable implements Variable {
                 .getSymbolTable().getValue(_name);
     }
 
+    @Override
+    public void setValue(Object value) throws JmriException {
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .getSymbolTable().setValue(_name, value);
+    }
+
 }

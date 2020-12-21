@@ -37,6 +37,23 @@ public class ExpressionNodeIdentifier implements ExpressionNode {
     
     /** {@inheritDoc} */
     @Override
+    public boolean canBeAssigned() {
+        // If the identifier is a local variable, assignment is possible. And
+        // we don't know if the identifier is a valid local variable until the
+        // expression is calculated. So we assume that it is.
+        return true;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void assignValue(Object value) throws JmriException {
+        if (_variable != null) {
+            _variable.setValue(value);
+        }
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     public String getDefinitionString() {
         return "Identifier:"+_token.getString();
     }

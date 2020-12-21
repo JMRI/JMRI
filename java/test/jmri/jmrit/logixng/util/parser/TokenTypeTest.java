@@ -3,7 +3,10 @@ package jmri.jmrit.logixng.util.parser;
 import java.util.EnumSet;
 import java.util.ArrayList;
 import java.util.List;
+
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -116,7 +119,6 @@ public class TokenTypeTest {
     
     // Check if 'tokenType' can follow every token type in list and if
     // 'tokenType' can not follow any token type not in list
-//    private boolean canFollow(TokenType tokenType, List<TokenType> canFollow) {
     private boolean checkCanFollow(TokenType tokenType, TokenType[] canFollow) {
         EnumSet<TokenType> canNotFollow = EnumSet.allOf(TokenType.class);
         for (TokenType tt : canFollow) {
@@ -213,7 +215,10 @@ public class TokenTypeTest {
             TokenType.SUBTRACKT, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.MODULO, TokenType.BOOLEAN_NOT,
             TokenType.BINARY_NOT, TokenType.LEFT_PARENTHESIS, TokenType.RIGHT_PARENTHESIS, TokenType.LEFT_SQUARE_BRACKET,
             TokenType.RIGHT_SQUARE_BRACKET, TokenType.LEFT_CURLY_BRACKET, TokenType.RIGHT_CURLY_BRACKET, TokenType.IDENTIFIER,
-            TokenType.INTEGER_NUMBER, TokenType.FLOATING_NUMBER, TokenType.STRING};
+            TokenType.INTEGER_NUMBER, TokenType.FLOATING_NUMBER, TokenType.STRING,
+            TokenType.ASSIGN, TokenType.ASSIGN_ADD, TokenType.ASSIGN_SUBTRACKT, TokenType.ASSIGN_MULTIPLY, TokenType.ASSIGN_DIVIDE,
+            TokenType.ASSIGN_MODULO, TokenType.TERNARY_QUESTION_MARK, TokenType.TERNARY_COLON,
+        };
         Assert.assertTrue("canFollow", checkCanFollow(TokenType.SUBTRACKT, ttArray21));
         TokenType[] ttArray22 = {TokenType.IDENTIFIER, TokenType.INTEGER_NUMBER, TokenType.FLOATING_NUMBER, TokenType.STRING};
         Assert.assertTrue("canFollow", checkCanFollow(TokenType.MULTIPLY, ttArray22));
@@ -232,7 +237,10 @@ public class TokenTypeTest {
             TokenType.SUBTRACKT, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.MODULO, TokenType.BOOLEAN_NOT,
             TokenType.BINARY_NOT, TokenType.LEFT_PARENTHESIS, TokenType.RIGHT_PARENTHESIS, TokenType.LEFT_SQUARE_BRACKET,
             TokenType.RIGHT_SQUARE_BRACKET, TokenType.LEFT_CURLY_BRACKET, TokenType.RIGHT_CURLY_BRACKET, TokenType.IDENTIFIER,
-            TokenType.INTEGER_NUMBER, TokenType.FLOATING_NUMBER, TokenType.STRING};
+            TokenType.INTEGER_NUMBER, TokenType.FLOATING_NUMBER, TokenType.STRING,
+            TokenType.ASSIGN, TokenType.ASSIGN_ADD, TokenType.ASSIGN_SUBTRACKT, TokenType.ASSIGN_MULTIPLY, TokenType.ASSIGN_DIVIDE,
+            TokenType.ASSIGN_MODULO, TokenType.TERNARY_QUESTION_MARK, TokenType.TERNARY_COLON,
+        };
         Assert.assertTrue("canFollow", checkCanFollow(TokenType.LEFT_PARENTHESIS, ttArray27));
         TokenType[] ttArray28 = {TokenType.LEFT_PARENTHESIS, TokenType.RIGHT_PARENTHESIS, TokenType.RIGHT_SQUARE_BRACKET,
             TokenType.RIGHT_CURLY_BRACKET, TokenType.IDENTIFIER, TokenType.INTEGER_NUMBER, TokenType.FLOATING_NUMBER,
@@ -252,7 +260,10 @@ public class TokenTypeTest {
             TokenType.SUBTRACKT, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.MODULO, TokenType.BOOLEAN_NOT,
             TokenType.BINARY_NOT, TokenType.LEFT_PARENTHESIS, TokenType.RIGHT_PARENTHESIS, TokenType.LEFT_SQUARE_BRACKET,
             TokenType.RIGHT_SQUARE_BRACKET, TokenType.LEFT_CURLY_BRACKET, TokenType.RIGHT_CURLY_BRACKET, TokenType.IDENTIFIER,
-            TokenType.INTEGER_NUMBER, TokenType.FLOATING_NUMBER, TokenType.STRING};
+            TokenType.INTEGER_NUMBER, TokenType.FLOATING_NUMBER, TokenType.STRING,
+            TokenType.ASSIGN, TokenType.ASSIGN_ADD, TokenType.ASSIGN_SUBTRACKT, TokenType.ASSIGN_MULTIPLY, TokenType.ASSIGN_DIVIDE,
+            TokenType.ASSIGN_MODULO, TokenType.TERNARY_QUESTION_MARK, TokenType.TERNARY_COLON,
+        };
         Assert.assertTrue("canFollow", checkCanFollow(TokenType.LEFT_CURLY_BRACKET, ttArray31));
         TokenType[] ttArray32 = {TokenType.RIGHT_PARENTHESIS, TokenType.RIGHT_SQUARE_BRACKET, TokenType.LEFT_CURLY_BRACKET,
             TokenType.RIGHT_CURLY_BRACKET, TokenType.IDENTIFIER, TokenType.INTEGER_NUMBER, TokenType.FLOATING_NUMBER,
@@ -264,7 +275,10 @@ public class TokenTypeTest {
             TokenType.GREATER_THAN, TokenType.GREATER_OR_EQUAL, TokenType.SHIFT_LEFT, TokenType.SHIFT_RIGHT, TokenType.ADD,
             TokenType.SUBTRACKT, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.MODULO, TokenType.BOOLEAN_NOT,
             TokenType.BINARY_NOT, TokenType.LEFT_PARENTHESIS, TokenType.RIGHT_PARENTHESIS, TokenType.LEFT_SQUARE_BRACKET,
-            TokenType.RIGHT_SQUARE_BRACKET, TokenType.LEFT_CURLY_BRACKET, TokenType.RIGHT_CURLY_BRACKET};
+            TokenType.RIGHT_SQUARE_BRACKET, TokenType.LEFT_CURLY_BRACKET, TokenType.RIGHT_CURLY_BRACKET,
+            TokenType.ASSIGN, TokenType.ASSIGN_ADD, TokenType.ASSIGN_SUBTRACKT, TokenType.ASSIGN_MULTIPLY, TokenType.ASSIGN_DIVIDE,
+            TokenType.ASSIGN_MODULO, TokenType.TERNARY_QUESTION_MARK, TokenType.TERNARY_COLON,
+        };
         Assert.assertTrue("canFollow", checkCanFollow(TokenType.IDENTIFIER, ttArray33));
         TokenType[] ttArray34 = {TokenType.ERROR, TokenType.SAME_AS_LAST, TokenType.NONE, TokenType.SPACE, TokenType.COMMA,
             TokenType.DOT_DOT, TokenType.BOOLEAN_OR, TokenType.BOOLEAN_AND, TokenType.BINARY_OR, TokenType.BINARY_XOR,
@@ -272,7 +286,10 @@ public class TokenTypeTest {
             TokenType.GREATER_THAN, TokenType.GREATER_OR_EQUAL, TokenType.SHIFT_LEFT, TokenType.SHIFT_RIGHT, TokenType.ADD,
             TokenType.SUBTRACKT, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.MODULO, TokenType.BOOLEAN_NOT,
             TokenType.BINARY_NOT, TokenType.LEFT_PARENTHESIS, TokenType.RIGHT_PARENTHESIS, TokenType.LEFT_SQUARE_BRACKET,
-            TokenType.RIGHT_SQUARE_BRACKET, TokenType.LEFT_CURLY_BRACKET, TokenType.RIGHT_CURLY_BRACKET};
+            TokenType.RIGHT_SQUARE_BRACKET, TokenType.LEFT_CURLY_BRACKET, TokenType.RIGHT_CURLY_BRACKET,
+            TokenType.ASSIGN, TokenType.ASSIGN_ADD, TokenType.ASSIGN_SUBTRACKT, TokenType.ASSIGN_MULTIPLY, TokenType.ASSIGN_DIVIDE,
+            TokenType.ASSIGN_MODULO, TokenType.TERNARY_QUESTION_MARK, TokenType.TERNARY_COLON,
+        };
         Assert.assertTrue("canFollow", checkCanFollow(TokenType.INTEGER_NUMBER, ttArray34));
         TokenType[] ttArray35 = {TokenType.ERROR, TokenType.SAME_AS_LAST, TokenType.NONE, TokenType.SPACE, TokenType.COMMA,
             TokenType.DOT_DOT, TokenType.BOOLEAN_OR, TokenType.BOOLEAN_AND, TokenType.BINARY_OR, TokenType.BINARY_XOR,
@@ -280,7 +297,10 @@ public class TokenTypeTest {
             TokenType.GREATER_THAN, TokenType.GREATER_OR_EQUAL, TokenType.SHIFT_LEFT, TokenType.SHIFT_RIGHT, TokenType.ADD,
             TokenType.SUBTRACKT, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.MODULO, TokenType.BOOLEAN_NOT,
             TokenType.BINARY_NOT, TokenType.LEFT_PARENTHESIS, TokenType.RIGHT_PARENTHESIS, TokenType.LEFT_SQUARE_BRACKET,
-            TokenType.RIGHT_SQUARE_BRACKET, TokenType.LEFT_CURLY_BRACKET, TokenType.RIGHT_CURLY_BRACKET};
+            TokenType.RIGHT_SQUARE_BRACKET, TokenType.LEFT_CURLY_BRACKET, TokenType.RIGHT_CURLY_BRACKET,
+            TokenType.ASSIGN, TokenType.ASSIGN_ADD, TokenType.ASSIGN_SUBTRACKT, TokenType.ASSIGN_MULTIPLY, TokenType.ASSIGN_DIVIDE,
+            TokenType.ASSIGN_MODULO, TokenType.TERNARY_QUESTION_MARK, TokenType.TERNARY_COLON,
+        };
         Assert.assertTrue("canFollow", checkCanFollow(TokenType.FLOATING_NUMBER, ttArray35));
         TokenType[] ttArray36 = {TokenType.ERROR, TokenType.SAME_AS_LAST, TokenType.NONE, TokenType.SPACE, TokenType.COMMA,
             TokenType.DOT_DOT, TokenType.BOOLEAN_OR, TokenType.BOOLEAN_AND, TokenType.BINARY_OR, TokenType.BINARY_XOR,
@@ -288,7 +308,10 @@ public class TokenTypeTest {
             TokenType.GREATER_THAN, TokenType.GREATER_OR_EQUAL, TokenType.SHIFT_LEFT, TokenType.SHIFT_RIGHT, TokenType.ADD,
             TokenType.SUBTRACKT, TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.MODULO, TokenType.BOOLEAN_NOT,
             TokenType.BINARY_NOT, TokenType.LEFT_PARENTHESIS, TokenType.RIGHT_PARENTHESIS, TokenType.LEFT_SQUARE_BRACKET,
-            TokenType.RIGHT_SQUARE_BRACKET, TokenType.LEFT_CURLY_BRACKET, TokenType.RIGHT_CURLY_BRACKET};
+            TokenType.RIGHT_SQUARE_BRACKET, TokenType.LEFT_CURLY_BRACKET, TokenType.RIGHT_CURLY_BRACKET,
+            TokenType.ASSIGN, TokenType.ASSIGN_ADD, TokenType.ASSIGN_SUBTRACKT, TokenType.ASSIGN_MULTIPLY, TokenType.ASSIGN_DIVIDE,
+            TokenType.ASSIGN_MODULO, TokenType.TERNARY_QUESTION_MARK, TokenType.TERNARY_COLON,
+        };
         Assert.assertTrue("canFollow", checkCanFollow(TokenType.STRING, ttArray36));
     }
     

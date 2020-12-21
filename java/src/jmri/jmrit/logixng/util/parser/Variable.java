@@ -11,4 +11,6 @@ public interface Variable {
     
     public Object getValue() throws JmriException;
     
+    public void setValue(Object value) throws JmriException;
+    
 }

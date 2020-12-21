@@ -24,4 +24,10 @@ public class GenericExpressionVariable implements Variable {
         return _socket.evaluateGeneric();
     }
 
+    @Override
+    public void setValue(Object value) throws JmriException {
+        log.error("An expression cannot be assigned a value");
+    }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(GenericExpressionVariable.class);
 }

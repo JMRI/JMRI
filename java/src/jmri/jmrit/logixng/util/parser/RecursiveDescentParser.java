@@ -121,7 +121,8 @@ public class RecursiveDescentParser {
     // The rules below are numbered from the list on this page:
     // https://introcs.cs.princeton.edu/java/11precedence/
     
-//    private final Rule rule1 = new Rule1();
+    private final Rule rule1 = new Rule1();
+    private final Rule rule2 = new Rule2();
     private final Rule rule3 = new Rule3();
     private final Rule rule4 = new Rule4();
     private final Rule rule5 = new Rule5();
@@ -137,30 +138,102 @@ public class RecursiveDescentParser {
     private final Rule rule20 = new Rule20();
     private final Rule21 rule21 = new Rule21();
     
-    private final Rule firstRule = rule3;
+    private final Rule firstRule = rule1;
     
     
-    // List the rule1 in Java. Don't implement this here.
-    // <rule1> ::= <identifier> = <rule2> ||
-    //             <identifier> += <rule2> ||
-    //             <identifier> -= <rule2> ||
-    //             <identifier> *= <rule2> ||
-    //             <identifier> /= <rule2> ||
-    //             <identifier> %= <rule2> ||
-    //             <identifier> &= <rule2> ||
-    //             <identifier> ^= <rule2> ||
-    //             <identifier> |= <rule2> ||
-    //             <identifier> <<= <rule2> ||
-    //             <identifier> >>= <rule2> ||
-    //             <identifier> >>>= <rule2> ||
-    //             <rule2>
+    // Assignment
+    // <rule1> ::= <rule2> ||
+    //             <rule2> = <rule1> ||
+    //             <rule2> += <rule1> ||
+    //             <rule2> -= <rule1> ||
+    //             <rule2> *= <rule1> ||
+    //             <rule2> /= <rule1> ||
+    //             <rule2> %= <rule1> ||
+    //             <rule2> &= <rule1> ||
+    //             <rule2> ^= <rule1> ||
+    //             <rule2> |= <rule1> ||
+    //             <rule2> <<= <rule1> ||
+    //             <rule2> >>= <rule1> ||
+    //             <rule2> >>>= <rule1>
+    private class Rule1 implements Rule {
+
+        @Override
+        public ExpressionNodeAndState parse(State state) throws ParserException {
+            ExpressionNodeAndState leftSide = rule4.parse(state);
+            if (leftSide == null) {
+                return null;
+            }
+            State newState = leftSide._state;
+            if ((newState._token != null)
+                    && (
+                        (newState._token._tokenType == TokenType.ASSIGN)
+                        || (newState._token._tokenType == TokenType.ASSIGN_ADD)
+                        || (newState._token._tokenType == TokenType.ASSIGN_SUBTRACKT)
+                        || (newState._token._tokenType == TokenType.ASSIGN_MULTIPLY)
+                        || (newState._token._tokenType == TokenType.ASSIGN_DIVIDE)
+                        || (newState._token._tokenType == TokenType.ASSIGN_MODULO)
+                    )) {
+                
+                TokenType operatorTokenType = newState._token._tokenType;
+                newState = next(newState);
+                ExpressionNodeAndState rightSide = rule2.parse(newState);
+                
+                ExpressionNode exprNode = new ExpressionNodeAssignmentOperator(operatorTokenType, leftSide._exprNode, rightSide._exprNode);
+                leftSide = new ExpressionNodeAndState(exprNode, rightSide._state);
+            }
+            return leftSide;
+        }
+        
+    }
     
     
-    // Rule2 is ternary. ?: . Should this be implemented?
+    // Rule2 is ternary. <rule3> | <rule3> ? <rule2> : <rule2>
+    private class Rule2 implements Rule {
+
+        @Override
+        public ExpressionNodeAndState parse(State state) throws ParserException {
+            ExpressionNodeAndState leftSide = rule4.parse(state);
+            if (leftSide == null) {
+                return null;
+            }
+            State newState = leftSide._state;
+            if ((newState._token != null)
+                    && ((newState._token._tokenType == TokenType.TERNARY_QUESTION_MARK))) {
+                
+                if (! leftSide._exprNode.canBeAssigned()) {
+                    throw new InvalidSyntaxException(Bundle.getMessage("LeftSideCannotBeAssigned"));
+                }
+                
+//                TokenType operatorTokenType = newState._token._tokenType;
+                newState = next(newState);
+                ExpressionNodeAndState middleSide = rule3.parse(newState);
+                
+//                ExpressionNode exprNode = new ExpressionNodeBooleanOperator(operatorTokenType, leftSide._exprNode, rightSide._exprNode);
+//                leftSide = new ExpressionNodeAndState(exprNode, middleSide._state);
+                newState = middleSide._state;
+                
+                if ((newState._token != null)
+                        && ((newState._token._tokenType == TokenType.TERNARY_COLON))) {
+                    
+//                    TokenType operatorTokenType = newState._token._tokenType;
+                    newState = next(newState);
+                    ExpressionNodeAndState rightRightSide = rule3.parse(newState);
+                    
+                    ExpressionNode exprNode = new ExpressionNodeTernaryOperator(
+                            leftSide._exprNode, middleSide._exprNode, rightRightSide._exprNode);
+                    leftSide = new ExpressionNodeAndState(exprNode, rightRightSide._state);
+                } else {
+                    throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntax"));
+                }
+            }
+            return leftSide;
+        }
+        
+    }
     
     
     // Logical OR
-    // <rule3> ::= <rule4> | <rule3> || <rule4>
+    // <rule3> ::= <rule4> | <rule4> || <rule4>
     private class Rule3 implements Rule {
 
         @Override
@@ -188,7 +261,7 @@ public class RecursiveDescentParser {
     
     
     // Logical AND
-    // <rule4> ::= <rule5> | <rule4> && <rule5>
+    // <rule4> ::= <rule5> | <rule5> && <rule5>
     private class Rule4 implements Rule {
 
         @Override
@@ -216,7 +289,7 @@ public class RecursiveDescentParser {
     
     
     // Bitwise OR
-    // <rule5> ::= <rule6> | <rule5> | <rule6>
+    // <rule5> ::= <rule6> | <rule6> | <rule6>
     private class Rule5 implements Rule {
 
         @Override
@@ -228,7 +301,7 @@ public class RecursiveDescentParser {
     
     
     // Bitwise XOR
-    // <rule6> ::= <rule7> | <rule6> ^ <rule7>
+    // <rule6> ::= <rule7> | <rule7> ^ <rule7>
     private class Rule6 implements Rule {
 
         @Override
@@ -240,7 +313,7 @@ public class RecursiveDescentParser {
     
     
     // Bitwise AND
-    // <rule7> ::= <rule8> | <rule7> & <rule8>
+    // <rule7> ::= <rule8> | <rule8> & <rule8>
     private class Rule7 implements Rule {
 
         @Override
@@ -252,7 +325,7 @@ public class RecursiveDescentParser {
     
     
     // Equality
-    // <rule8> ::= <rule9> | <rule8> == <rule9> | <rule8> != <rule9>
+    // <rule8> ::= <rule9> | <rule9> == <rule9> | <rule9> != <rule9>
     private class Rule8 implements Rule {
 
         @Override
@@ -281,7 +354,7 @@ public class RecursiveDescentParser {
     
     
     // Relational
-    // <rule9> ::= <rule10> | <rule9> < <rule10> | <rule9> <= <rule10> | <rule9> > <rule10> | <rule9> >= <rule10>
+    // <rule9> ::= <rule10> | <rule10> < <rule10> | <rule10> <= <rule10> | <rule10> > <rule10> | <rule10> >= <rule10>
     private class Rule9 implements Rule {
 
         @Override
@@ -312,7 +385,7 @@ public class RecursiveDescentParser {
     
     
     // Shift. Not implemented yet.
-    // <rule10> ::= <rule11> | <rule10> << <rule11> | <rule10> >> <rule11> | <rule10> >>> <rule11>
+    // <rule10> ::= <rule11> | <rule11> << <rule11> | <rule11> >> <rule11> | <rule11> >>> <rule11>
     private class Rule10 implements Rule {
 
         @Override
@@ -324,7 +397,7 @@ public class RecursiveDescentParser {
     
     
     // Additive
-    // <rule11> ::= <rule12> | <rule11> + <rule12> | <rule11> - <rule12>
+    // <rule11> ::= <rule12> | <rule12> + <rule12> | <rule12> - <rule12>
     private class Rule11 implements Rule {
 
         @Override
@@ -353,7 +426,7 @@ public class RecursiveDescentParser {
     
     
     // Multiplicative
-    // <rule12> ::= <rule13> | <rule12> * <rule13> | <rule12> / <rule13> | <rule12> % <rule13>
+    // <rule12> ::= <rule13> | <rule13> * <rule13> | <rule13> / <rule13> | <rule13> % <rule13>
     private class Rule12 implements Rule {
 
         @Override
@@ -386,7 +459,7 @@ public class RecursiveDescentParser {
     
     
     // Unary pre-increment, unary pre-decrement, unary plus, unary minus, unary logical NOT, unary bitwise NOT
-    // <rule14> ::= <rule16> | ! <rule14> | ~ <rule14>
+    // <rule14> ::= <rule16> | ! <rule16> | ~ <rule16>
     private class Rule14 implements Rule {
 
         @Override
@@ -428,7 +501,7 @@ public class RecursiveDescentParser {
     
     
     // Parentheses
-    // <rule16> ::= <rule20> ( <rule3> )
+    // <rule16> ::= <rule20> ( <firstRule> )
     private class Rule16 implements Rule {
 
         @Override
@@ -489,7 +562,7 @@ public class RecursiveDescentParser {
     }
     
     
-    // <rule21> ::= <empty> | <rule3> | <rule21> , <rule3>
+    // <rule21> ::= <empty> | <rule21> | <rule21> , <rule3>
     private class Rule21 {
 
         public ExpressionNodeAndState parse(State state, String identifier) throws ParserException {

@@ -52,6 +52,14 @@ public enum TokenType {
     SPACE(Integer.MIN_VALUE),           // Any space character outside of a string, like space, newline, ...
     COMMA(-2),              // , , used for parameter lists
     DOT_DOT(-1),            // .. , used for intervalls
+    ASSIGN(1),              // =
+    ASSIGN_ADD(1),          // +=
+    ASSIGN_SUBTRACKT(1),    // -=
+    ASSIGN_MULTIPLY(1),     // *=
+    ASSIGN_DIVIDE(1),       // /=
+    ASSIGN_MODULO(1),       // %=
+    TERNARY_QUESTION_MARK(2),   // ?
+    TERNARY_COLON(2),           // :
     BOOLEAN_OR(3),  // ||
     BOOLEAN_AND(4), // &&
     BINARY_OR(5),   // |
@@ -129,7 +137,7 @@ public enum TokenType {
                 || (this == SPACE)) {
             return false;
         }
-    
+        
         if (this.isLeaf()) {
             return !previousTokenType.isLeaf();
         }

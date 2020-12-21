@@ -26,10 +26,15 @@ public class ExpressionNodeIdentifierTest {
             public String getName() {
                 return "abc";
             }
-
+            
             @Override
             public Object getValue() {
                 return "0";
+            }
+            
+            @Override
+            public void setValue(Object value) {
+                throw new UnsupportedOperationException("Not supported");
             }
         });
         ExpressionNodeIdentifier t = new ExpressionNodeIdentifier(token, variables);

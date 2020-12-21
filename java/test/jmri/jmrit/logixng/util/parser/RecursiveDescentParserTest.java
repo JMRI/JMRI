@@ -373,5 +373,10 @@ public class RecursiveDescentParserTest {
         public Object getValue() {
             return _value;
         }
+
+        @Override
+        public void setValue(Object value) {
+            throw new UnsupportedOperationException("Not supported");
+        }
     }
 }

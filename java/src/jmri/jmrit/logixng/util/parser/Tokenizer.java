@@ -210,6 +210,38 @@ public class Tokenizer {
             }
         }
         
+        if (ch == '?') {
+            return TokenType.TERNARY_QUESTION_MARK;
+        }
+        
+        if (ch == ':') {
+            return TokenType.TERNARY_COLON;
+        }
+        
+        if ((ch == '=') && (nextChar != '=')) {
+            return TokenType.ASSIGN;
+        }
+        
+        if (nextChar == '=') {
+            switch (ch) {
+                case '+':
+                    eatNextChar.set(true);
+                    return TokenType.ASSIGN_ADD;
+                case '-':
+                    eatNextChar.set(true);
+                    return TokenType.ASSIGN_SUBTRACKT;
+                case '*':
+                    eatNextChar.set(true);
+                    return TokenType.ASSIGN_MULTIPLY;
+                case '/':
+                    eatNextChar.set(true);
+                    return TokenType.ASSIGN_DIVIDE;
+                case '%':
+                    eatNextChar.set(true);
+                    return TokenType.ASSIGN_MODULO;
+            }
+        }
+        
         if (ch == '<') {
             switch (nextChar) {
                 case '=':
