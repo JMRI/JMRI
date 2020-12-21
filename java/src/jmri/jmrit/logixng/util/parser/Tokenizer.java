@@ -239,6 +239,8 @@ public class Tokenizer {
                 case '%':
                     eatNextChar.set(true);
                     return TokenType.ASSIGN_MODULO;
+                default:
+                    // Do nothing
             }
         }
         
