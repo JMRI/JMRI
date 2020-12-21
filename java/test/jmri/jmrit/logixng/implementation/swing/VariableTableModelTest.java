@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.implementation.swing;
 
+import jmri.jmrit.logixng.tools.swing.LocalVariableTableModel;
+
 import java.io.IOException;
 
 import jmri.util.JUnitUtil;
@@ -15,7 +17,7 @@ public class VariableTableModelTest {
 
     @Test
     public void testCtor() {
-        VariableTableModel obj = new VariableTableModel(null);
+        LocalVariableTableModel obj = new LocalVariableTableModel(null);
         Assert.assertNotNull(obj);
     }
     

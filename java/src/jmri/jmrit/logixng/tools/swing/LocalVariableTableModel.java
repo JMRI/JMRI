@@ -1,4 +1,4 @@
-package jmri.jmrit.logixng.implementation.swing;
+package jmri.jmrit.logixng.tools.swing;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -16,10 +16,10 @@ import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.SymbolTable.VariableData;
 
 /**
- *
- * @author daniel
+ * Table model for local variables
+ * @author Daniel Bergqvist Copyright 2018
  */
-public class VariableTableModel extends AbstractTableModel {
+public class LocalVariableTableModel extends AbstractTableModel {
 
     public static final int COLUMN_NAME = 0;
     public static final int COLUMN_TYPE = 1;
@@ -29,7 +29,7 @@ public class VariableTableModel extends AbstractTableModel {
     private final List<VariableData> _variables = new ArrayList<>();
     
     
-    public VariableTableModel(MaleSocket maleSocket) {
+    public LocalVariableTableModel(MaleSocket maleSocket) {
         if (maleSocket != null) {
             for (VariableData v : maleSocket.getLocalVariables()) {
                 _variables.add(new VariableData(v));
@@ -251,9 +251,9 @@ public class VariableTableModel extends AbstractTableModel {
             implements TableCellEditor, ActionListener {
 
         JTable _table;
-        VariableTableModel _tableModel;
+        LocalVariableTableModel _tableModel;
         
-        public MenuCellEditor(JTable table, VariableTableModel tableModel) {
+        public MenuCellEditor(JTable table, LocalVariableTableModel tableModel) {
             _table = table;
             _tableModel = tableModel;
         }

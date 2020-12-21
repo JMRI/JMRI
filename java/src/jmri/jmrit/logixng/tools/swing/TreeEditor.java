@@ -20,6 +20,7 @@ import javax.swing.tree.*;
 import jmri.*;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.swing.SwingTools;
 
@@ -38,6 +39,7 @@ public class TreeEditor extends TreeViewer {
     private JDialog _selectItemTypeDialog = null;
     private JDialog _addItemDialog = null;
     private JDialog _editConditionalNGDialog = null;
+    private JDialog _editLocalVariablesDialog = null;
     private final JTextField _socketNameTextField = new JTextField(20);
     private final JTextField _systemName = new JTextField(20);
     private final JTextField _addUserName = new JTextField(20);
@@ -65,6 +67,8 @@ public class TreeEditor extends TreeViewer {
     private SwingConfiguratorInterface _addSwingConfiguratorInterface;
     private SwingConfiguratorInterface _editSwingConfiguratorInterface;
     private SwingConfiguratorInterface _swingConfiguratorInterfaceMaleSocket;
+    
+    private LocalVariableTableModel _localVariableTableModel;
     
     private final boolean _enableClipboard;
     
@@ -518,8 +522,6 @@ public class TreeEditor extends TreeViewer {
      * Create or edit action/expression dialog.
      *
      * @param addOrEdit true if add, false if edit
-     * @param messageId part 1 of property key to fetch as user instruction on
-     *                  pane, either 1 or 2 is added to form the whole key
      * @param femaleSocket the female socket to which we want to add something
      * @param swingConfiguratorInterface the swing interface to configure this item
      * @param button a button to add to the dialog
@@ -681,6 +683,122 @@ public class TreeEditor extends TreeViewer {
     }
     
     /**
+     * Respond to the Local Variables menu choice in the popup menu.
+     *
+     * @param femaleSocket the female socket
+     * @param path the path to the item the user has clicked on
+     */
+    final protected void editLocalVariables(FemaleSocket femaleSocket, TreePath path) {
+        // possible change
+        _showReminder = true;
+        // make an Edit Frame
+        if (_editLocalVariablesDialog == null) {
+            MaleSocket maleSocket = femaleSocket.getConnectedSocket();
+            
+            _editSwingConfiguratorInterface = SwingTools.getSwingConfiguratorForClass(femaleSocket.getConnectedSocket().getObject().getClass());
+            _editSwingConfiguratorInterface.setFrame(this);
+            // Edit ConditionalNG
+            _edit = new JButton(Bundle.getMessage("ButtonOK"));  // NOI18N
+            _edit.addActionListener((ActionEvent e) -> {
+                _femaleRootSocket.unregisterListeners();
+                
+                maleSocket.clearLocalVariables();
+                for (SymbolTable.VariableData variableData : _localVariableTableModel.getVariables()) {
+                    maleSocket.addLocalVariable(variableData);
+                }
+                
+                _editLocalVariablesDialog.dispose();
+                _editLocalVariablesDialog = null;
+                for (TreeModelListener l : femaleSocketTreeModel.listeners) {
+                    TreeModelEvent tme = new TreeModelEvent(
+                            femaleSocket,
+                            path.getPath()
+                    );
+                    l.treeNodesChanged(tme);
+                }
+                tree.updateUI();
+                if (_femaleRootSocket.isActive()) _femaleRootSocket.registerListeners();
+            });
+//            _edit.setToolTipText(Bundle.getMessage("EditButtonHint"));  // NOI18N
+            
+//            makeAddEditFrame(false, femaleSocket, _editSwingConfiguratorInterface, _edit);  // NOI18N
+            
+            _editLocalVariablesDialog = new JDialog(
+                    this,
+                    Bundle.getMessage(
+                            "EditLocalVariablesDialogTitle",
+                            femaleSocket.getLongDescription()),
+                    true);
+    //        frame.addHelpMenu(
+    //                "package.jmri.jmrit.logixng.tools.swing.ConditionalNGAddEdit", true);     // NOI18N
+            Container contentPanel = _editLocalVariablesDialog.getContentPane();
+            contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+            
+            JPanel tablePanel = new JPanel();
+            JTable table = new JTable();
+            _localVariableTableModel = new LocalVariableTableModel(maleSocket);
+            table.setModel(_localVariableTableModel);
+            table.setDefaultRenderer(InitialValueType.class,
+                    new LocalVariableTableModel.TypeCellRenderer());
+            table.setDefaultEditor(InitialValueType.class,
+                    new LocalVariableTableModel.TypeCellEditor());
+            table.setDefaultRenderer(LocalVariableTableModel.Menu.class,
+                    new LocalVariableTableModel.MenuCellRenderer());
+            table.setDefaultEditor(LocalVariableTableModel.Menu.class,
+                    new LocalVariableTableModel.MenuCellEditor(table, _localVariableTableModel));
+            _localVariableTableModel.setColumnForMenu(table);
+            JScrollPane scrollpane = new JScrollPane(table);
+            scrollpane.setPreferredSize(new Dimension(400, 200));
+            tablePanel.add(scrollpane, BorderLayout.CENTER);
+            contentPanel.add(tablePanel);
+            
+            // set up create and cancel buttons
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.setLayout(new FlowLayout());
+            
+            // Add local variable
+            JButton add = new JButton(Bundle.getMessage("TableAddVariable"));
+            buttonPanel.add(add);
+            add.addActionListener((ActionEvent e) -> {
+                _localVariableTableModel.add();
+            });
+            
+            // Cancel
+            JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));    // NOI18N
+            buttonPanel.add(cancel);
+            cancel.addActionListener((ActionEvent e) -> {
+                _editLocalVariablesDialog.setVisible(false);
+                _editLocalVariablesDialog.dispose();
+                _editLocalVariablesDialog = null;
+            });
+    //        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
+            cancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
+            
+            buttonPanel.add(_edit);
+            
+            _editLocalVariablesDialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    _editLocalVariablesDialog.setVisible(false);
+                    _editLocalVariablesDialog.dispose();
+                    _editLocalVariablesDialog = null;
+                }
+            });
+            
+            contentPanel.add(buttonPanel);
+            
+            _autoSystemName.addItemListener((ItemEvent e) -> {
+                autoSystemName();
+            });
+    //        addLogixNGFrame.setLocationRelativeTo(component);
+            _editLocalVariablesDialog.pack();
+            _editLocalVariablesDialog.setLocationRelativeTo(null);
+            
+            _editLocalVariablesDialog.setVisible(true);
+        }
+    }
+
+    /**
      * Enable/disable fields for data entry when user selects to have system
      * name automatically generated.
      */
@@ -812,6 +930,7 @@ public class TreeEditor extends TreeViewer {
         private static final String ACTION_COMMAND_PASTE = "paste";
         private static final String ACTION_COMMAND_LOCK = "lock";
         private static final String ACTION_COMMAND_UNLOCK = "unlock";
+        private static final String ACTION_COMMAND_LOCAL_VARIABLES = "local_variables";
 //        private static final String ACTION_COMMAND_EXPAND_TREE = "expandTree";
         
         private final JTree _tree;
@@ -830,6 +949,7 @@ public class TreeEditor extends TreeViewer {
                 = new HashMap<>();
         private JMenuItem menuItemLock;
         private JMenuItem menuItemUnlock;
+        private JMenuItem menuItemLocalVariables;
 //        private JMenuItem menuItemExpandTree;
         
         PopupMenu() {
@@ -887,6 +1007,12 @@ public class TreeEditor extends TreeViewer {
             menuItemUnlock.addActionListener(this);
             menuItemUnlock.setActionCommand(ACTION_COMMAND_UNLOCK);
             add(menuItemUnlock);
+            
+            addSeparator();
+            menuItemLocalVariables = new JMenuItem(Bundle.getMessage("PopupMenuLocalVariables"));
+            menuItemLocalVariables.addActionListener(this);
+            menuItemLocalVariables.setActionCommand(ACTION_COMMAND_LOCAL_VARIABLES);
+            add(menuItemLocalVariables);
 /*            
             addSeparator();
             menuItemExpandTree = new JMenuItem(Bundle.getMessage("PopupMenuExpandTree"));
@@ -969,6 +1095,9 @@ public class TreeEditor extends TreeViewer {
             }
             menuItemLock.setEnabled(false);     // Not implemented yet
             menuItemUnlock.setEnabled(false);   // Not implemented yet
+            
+            menuItemLocalVariables.setEnabled(femaleSocket.isConnected());
+            
             show(_tree, x, y);
         }
 
@@ -1050,6 +1179,11 @@ public class TreeEditor extends TreeViewer {
                     
                 case ACTION_COMMAND_UNLOCK:
                     break;
+                    
+                case ACTION_COMMAND_LOCAL_VARIABLES:
+                    editLocalVariables(_currentFemaleSocket, _currentPath);
+                    break;
+                    
 /*                    
                 case ACTION_COMMAND_EXPAND_TREE:
                     // jtree expand sub tree

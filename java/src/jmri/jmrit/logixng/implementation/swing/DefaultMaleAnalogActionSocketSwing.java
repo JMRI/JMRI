@@ -29,10 +29,6 @@ public class DefaultMaleAnalogActionSocketSwing extends AbstractMaleSocketSwing 
         return true;
     }
     
-    @Override
-    public void disposeSubPanel() {
-    }
-    
     
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OrSwing.class);
     

@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.implementation.swing;
 
+import jmri.jmrit.logixng.tools.swing.LocalVariableTableModel;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -23,7 +25,7 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
     private JPanel panel;
     private JPanel tablePanel;
     private JTable table;
-    private VariableTableModel tableModel;
+    private LocalVariableTableModel tableModel;
     
     /** {@inheritDoc} */
     @Override
@@ -49,9 +51,10 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
         if ((object != null) && (! (object instanceof MaleSocket))) {
             throw new IllegalArgumentException("object is not a MaleSocket: " + object.getClass().getName());
         }
+        panel = new JPanel();
+/*        
         MaleSocket maleSocket = (MaleSocket)object;
         int row = 0;
-        panel = new JPanel();
         panel.setLayout(new java.awt.GridBagLayout());
         java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
         c.gridwidth = 1;
@@ -66,21 +69,22 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
         createTablePanel(maleSocket, buttonPanel);
         c.gridy = row;
         panel.add(tablePanel, c);
+*/        
     }
-    
+/*    
     private void createTablePanel(MaleSocket maleSocket, @Nonnull JPanel buttonPanel) {
         tablePanel = new JPanel();
         table = new JTable();
-        tableModel = new VariableTableModel(maleSocket);
+        tableModel = new LocalVariableTableModel(maleSocket);
         table.setModel(tableModel);
         table.setDefaultRenderer(InitialValueType.class,
-                new VariableTableModel.TypeCellRenderer());
+                new LocalVariableTableModel.TypeCellRenderer());
         table.setDefaultEditor(InitialValueType.class,
-                new VariableTableModel.TypeCellEditor());
-        table.setDefaultRenderer(VariableTableModel.Menu.class,
-                new VariableTableModel.MenuCellRenderer());
-        table.setDefaultEditor(VariableTableModel.Menu.class,
-                new VariableTableModel.MenuCellEditor(table, tableModel));
+                new LocalVariableTableModel.TypeCellEditor());
+        table.setDefaultRenderer(LocalVariableTableModel.Menu.class,
+                new LocalVariableTableModel.MenuCellRenderer());
+        table.setDefaultEditor(LocalVariableTableModel.Menu.class,
+                new LocalVariableTableModel.MenuCellEditor(table, tableModel));
         tableModel.setColumnForMenu(table);
         JScrollPane scrollpane = new JScrollPane(table);
         scrollpane.setPreferredSize(new Dimension(400, 200));
@@ -91,7 +95,7 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
             tableModel.add();
         });
     }
-    
+*/    
     /** {@inheritDoc} */
     @Override
     public final boolean validate(@Nonnull List<String> errorMessages) {
@@ -135,12 +139,13 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
         if (! (object instanceof MaleSocket)) {
             throw new IllegalArgumentException("object is not a MaleSocket: " + object.getClass().getName());
         }
-        
+/*        
         MaleSocket maleSocket = (MaleSocket)object;
         maleSocket.clearLocalVariables();
         for (VariableData variableData : tableModel.getVariables()) {
             maleSocket.addLocalVariable(variableData);
         }
+*/        
     }
     
     /** {@inheritDoc} */
@@ -165,11 +170,11 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
     public final void dispose() {
     }
     
-    /**
+    /*.*
      * Dispose the sub panel and remove all the listeners that this class may
      * have registered.
-     */
+     *./
     public void disposeSubPanel() {
     }
-    
+*/    
 }
