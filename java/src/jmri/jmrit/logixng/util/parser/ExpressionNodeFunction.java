@@ -14,7 +14,7 @@ import jmri.JmriException;
  */
 public class ExpressionNodeFunction implements ExpressionNode {
 
-    private static final Map<String, Function> functions = new HashMap<>();
+    private static final Map<String, Function> _functions = new HashMap<>();
     
     private final String _identifier;
     private final Function _function;
@@ -24,11 +24,11 @@ public class ExpressionNodeFunction implements ExpressionNode {
     static {
         for (FunctionFactory actionFactory : ServiceLoader.load(FunctionFactory.class)) {
             actionFactory.getFunctions().forEach((function) -> {
-                if (functions.containsKey(function.getName())) {
+                if (_functions.containsKey(function.getName())) {
                     throw new RuntimeException("Function " + function.getName() + " is already registered. Class: " + function.getClass().getName());
                 }
 //                System.err.format("Add function %s, %s%n", function.getName(), function.getClass().getName());
-                functions.put(function.getName(), function);
+                _functions.put(function.getName(), function);
             });
         }
     }
@@ -36,7 +36,7 @@ public class ExpressionNodeFunction implements ExpressionNode {
     
     public ExpressionNodeFunction(String identifier, List<ExpressionNode> parameterList) throws FunctionNotExistsException {
         _identifier = identifier;
-        _function = functions.get(identifier);
+        _function = _functions.get(identifier);
         _parameterList = parameterList;
         
         if (_function == null) {
