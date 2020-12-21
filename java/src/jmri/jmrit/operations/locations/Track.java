@@ -535,7 +535,7 @@ public class Track extends PropertyChangeSupport {
             return false;
         }
         // is track part of a pool?
-        if (getPool() != null && getPool().getTotalLengthTracks() < carLength) {
+        if (getPool() != null && getPool().getMaxLengthTrack(this) < carLength) {
             return false;
         }
         // ignore reservation factor unless car is departing staging

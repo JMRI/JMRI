@@ -334,10 +334,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             enableButtons(true);
             // listen for train changes
             _train.addPropertyChangeListener(this);
-            // listen for route changes
+
             Route route = _train.getRoute();
             if (route != null) {
-                route.addPropertyChangeListener(this);
                 if (_train.getTrainDepartsRouteLocation() != null
                         && _train.getTrainDepartsRouteLocation().getLocation() != null
                         && !_train.getTrainDepartsRouteLocation().getLocation().isStaging())
@@ -688,7 +687,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                     _train.setRoute(null);
                 }
                 updateLocationCheckboxes();
-                packFrame();
+                pack();
+                repaint();
             }
         }
     }
@@ -1043,7 +1043,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             _train.removePropertyChangeListener(this);
             Route route = _train.getRoute();
             if (route != null) {
-                route.removePropertyChangeListener(this);
                 for (RouteLocation rl : route.getLocationsBySequenceList()) {
                     Location loc = rl.getLocation();
                     if (loc != null) {
