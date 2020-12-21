@@ -133,7 +133,8 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         // resize columns as requested
         for (int i = 0; i < slotTable.getColumnCount(); i++) {
             int width = slotModel.getPreferredWidth(i);
-            slotTable.getColumnModel().getColumn(i).setPreferredWidth(width);
+            // As auto resize is off preferred width is not used.
+            slotTable.getColumnModel().getColumn(i).setWidth(width);
         }
         slotTable.sizeColumnsToFit(-1);
 

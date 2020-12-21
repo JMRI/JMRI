@@ -495,8 +495,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case F26COLUMN:
             case F27COLUMN:
             case F28COLUMN:
-                log.info("JLABEL[{}]JTEXTFIEL[{}]",new JLabel("F...").getPreferredSize().width,new JTextField("F28").getPreferredSize().width);
-                return new JLabel("F28").getPreferredSize().width +1 ; // to show checkboxes
+                return new JLabel("F28").getPreferredSize().width ; // to show checkboxes
             default:
                 return new JLabel(" <unknown> ").getPreferredSize().width; // NOI18N
         }
