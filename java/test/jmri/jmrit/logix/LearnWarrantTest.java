@@ -93,9 +93,9 @@ public class LearnWarrantTest {
         pressButton(jfo, Bundle.getMessage("Start"));
 
         JUnitUtil.waitFor(() -> (frame._learnThrottle != null), "Found throttle");
-        assertThat(frame._learnThrottle.getThrottle()).withFailMessage("Throttle not found").isNotNull();
+        assertThat(frame._speedUtil.getThrottle()).withFailMessage("Throttle not found").isNotNull();
 
-        Sensor lastSensor = recordtimes(route, frame._learnThrottle.getThrottle());
+        Sensor lastSensor = recordtimes(route, frame._speedUtil.getThrottle());
 
         // After stopping train, wait a bit before pressing stop
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
@@ -231,7 +231,7 @@ public class LearnWarrantTest {
                 sm.deregister(t);
             }
         }
-        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
