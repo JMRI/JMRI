@@ -13,17 +13,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017
+ * @author Pete Cressman Copyright (C) 2020
  */
-public class FunctionPanelTest {
+public class LearnFunctionPanelTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         WarrantFrame wf = new WarrantFrame(new Warrant("IW0", "AllTestWarrant"));
         LearnThrottleFrame ltf = new LearnThrottleFrame(wf);
-        RosterEntry re = new RosterEntry("file here");
-        FunctionPanel t = new FunctionPanel(re, ltf);
+        LearnFunctionPanel t = new LearnFunctionPanel(ltf);
         assertThat(t).withFailMessage("exists").isNotNull();
         JUnitUtil.dispose(ltf);
         JUnitUtil.dispose(wf);
@@ -34,13 +33,11 @@ public class FunctionPanelTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initRosterConfigManager();
+        JUnitUtil.initDebugThrottleManager();
     }
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
-
-    // private final static Logger log = LoggerFactory.getLogger(FunctionPanelTest.class);
 }

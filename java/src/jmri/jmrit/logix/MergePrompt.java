@@ -28,7 +28,6 @@ import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.jmrit.roster.RosterSpeedProfile.SpeedStep;
 import jmri.util.JmriJFrame;
 import jmri.util.table.ButtonEditor;
-import jmri.util.table.ButtonRenderer;
 
 /**
  * Prompts user to select SpeedProfile to write to Roster

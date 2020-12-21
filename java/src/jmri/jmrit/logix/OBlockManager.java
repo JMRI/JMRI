@@ -3,7 +3,6 @@ package jmri.jmrit.logix;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
-import jmri.Block;
 import jmri.InstanceManagerAutoDefault;
 import jmri.ProvidingManager;
 import jmri.managers.AbstractManager;
