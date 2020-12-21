@@ -1,10 +1,10 @@
 package jmri.jmrit.logixng.implementation.swing;
 
-import jmri.jmrit.logixng.tools.swing.LocalVariableTableModel;
+// import jmri.jmrit.logixng.tools.swing.LocalVariableTableModel;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
+// import java.awt.BorderLayout;
+// import java.awt.Dimension;
+// import java.awt.event.ActionEvent;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
@@ -13,8 +13,8 @@ import javax.swing.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.SymbolTable.InitialValueType;
-import jmri.jmrit.logixng.SymbolTable.VariableData;
+// import jmri.jmrit.logixng.SymbolTable.InitialValueType;
+// import jmri.jmrit.logixng.SymbolTable.VariableData;
 import jmri.jmrit.logixng.swing.AbstractSwingConfigurator;
 
 /**
@@ -23,9 +23,9 @@ import jmri.jmrit.logixng.swing.AbstractSwingConfigurator;
 public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator {
 
     private JPanel panel;
-    private JPanel tablePanel;
-    private JTable table;
-    private LocalVariableTableModel tableModel;
+//    private JPanel tablePanel;
+//    private JTable table;
+//    private LocalVariableTableModel tableModel;
     
     /** {@inheritDoc} */
     @Override
