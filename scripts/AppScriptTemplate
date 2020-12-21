@@ -323,13 +323,16 @@ if [ -z "${JAVA_HOME}" ] ; then
             JAVA_HOME=""
         fi
         # Find an installed JRE/JDK location
-        if [[ -z "${JAVA_HOME}" && -x /usr/libexec/java_home ]] ; then
-            # Test for any JDKs of version 1.8 or newer
-            JAVA_HOME=$( /usr/libexec/java_home --version 1.8+ --failfast 2>/dev/null )
-            if [ -n "${JAVA_HOME}" ] ; then
-                JAVACMD="${JAVA_HOME}/bin/java"
+        for jversion in 1.8 9 10 11 12 13 14 15 16 17 ; do
+            if [[ -z "${JAVA_HOME}" && -x /usr/libexec/java_home ]] ; then
+                # Test for any JDKs
+                JAVA_HOME=$( /usr/libexec/java_home --version ${jversion} --failfast 2>/dev/null )
+                if [ -n "${JAVA_HOME}" ] ; then
+                    JAVACMD="${JAVA_HOME}/bin/java"
+                    break
+                fi
             fi
-        fi
+        done
         if [ -z "${JAVA_HOME}" ] ; then
             # JAVA_HOME is still not defined, so prompt to install Java for OS X
             /usr/bin/osascript << EOT
