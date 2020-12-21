@@ -24,8 +24,8 @@ import java.util.HashMap;
 public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements LocoNetListener {
 
     private LocoNetSystemConnectionMemo memo;
-    protected JButton progSessionButton = new JButton();
-    protected JButton moduleProgButton = new JButton();
+    protected JButton allProgButton = new JButton();
+    protected JButton modProgButton = new JButton();
     protected JButton readButton = new JButton(Bundle.getMessage("ButtonRead"));
     protected JButton writeButton = new JButton(Bundle.getMessage("ButtonWrite"));
     protected JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
@@ -43,7 +43,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
     protected JLabel cvFieldLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("HeadingCv")));
     protected JLabel valueFieldLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("HeadingValue")));
     protected JTextArea result = new JTextArea(6,50);
-    protected String reply;
+    protected String reply = "";
     protected int art;
     protected int adr = 1;
     protected int cv = 0;
@@ -51,7 +51,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
     boolean writeConfirmed = false;
 
     private HashMap<Integer, LncvModule> modules = null;
-    private boolean progSessionRunning = false;
+    private boolean allProgRunning = false;
     private boolean moduleProgRunning = false;
 
     /**
@@ -156,11 +156,11 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         // Set up buttons
         JPanel panel4 = new JPanel();
         panel4.setLayout(new FlowLayout());
-        progSessionButton.setText(progSessionRunning ?
-                Bundle.getMessage("ButtonLeaveProgSession") : Bundle.getMessage("ButtonStartProgSession"));
-        progSessionButton.setToolTipText(Bundle.getMessage("TipProgSessionButton"));
-        progSessionButton.addActionListener(e -> sessionButtonActionPerformed());
-        panel4.add(progSessionButton);
+        allProgButton.setText(allProgRunning ?
+                Bundle.getMessage("ButtonStopAllProg") : Bundle.getMessage("ButtonStartAllProg"));
+        allProgButton.setToolTipText(Bundle.getMessage("TipAllProgButton"));
+        allProgButton.addActionListener(e -> allProgButtonActionPerformed());
+        panel4.add(allProgButton);
 
         panel4.add(articleFieldLabel);
         // entry field (decimal)
@@ -184,19 +184,18 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         valueField.setText("1");
         panel4.add(valueField);
 
-        moduleProgButton.setEnabled(progSessionRunning);
-        moduleProgButton.setText(moduleProgRunning ?
-                Bundle.getMessage("ButtonModuleProgStop") : Bundle.getMessage("ButtonModuleProgStart"));
-        moduleProgButton.setToolTipText(Bundle.getMessage("TipModuleProgButton"));
-        moduleProgButton.addActionListener(e -> modProgButtonActionPerformed());
-        panel4.add(moduleProgButton);
+        modProgButton.setText(moduleProgRunning ?
+                Bundle.getMessage("ButtonStopModProg") : Bundle.getMessage("ButtonStartModProg"));
+        modProgButton.setToolTipText(Bundle.getMessage("TipModuleProgButton"));
+        modProgButton.addActionListener(e -> modProgButtonActionPerformed());
+        panel4.add(modProgButton);
 
         panel4.add(readButton);
-        readButton.setEnabled(progSessionRunning);
+        readButton.setEnabled(false);
         readButton.addActionListener(e -> readButtonActionPerformed());
 
         panel4.add(writeButton);
-        writeButton.setEnabled(progSessionRunning);
+        writeButton.setEnabled(false);
         writeButton.addActionListener(e -> writeButtonActionPerformed());
 
         doneButton.addActionListener(e -> doneButtonActionPerformed());
@@ -204,12 +203,95 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         return panel4;
     }
 
-    // READCV button
+    /**
+     * GENERALPROG button.
+     */
+    public void allProgButtonActionPerformed() {
+        // provide user feedback
+        statusText1.setText(Bundle.getMessage("FeedBackStartAllProg"));
+        readButton.setEnabled(!allProgRunning);
+        writeButton.setEnabled(!allProgRunning);
+        if (allProgRunning) {
+            log.debug("Session was running, closing");
+            // send LncvAllProgEnd command on LocoNet
+            memo.getLnTrafficController().sendLocoNetMessage(LncvMessageContents.createAllProgEndCommand());
+            statusText1.setText(Bundle.getMessage("FeedBackStopAllProg"));
+            allProgButton.setText(Bundle.getMessage("ButtonStartAllProg"));
+            allProgRunning = false;
+            // remove listener last to see message sent out
+            memo.getLnTrafficController().removeLocoNetListener(~0, this);
+            return;
+        }
+        // add listener
+        memo.getLnTrafficController().addLocoNetListener(~0, this);
+        // send LncvProgSessionStart command on LocoNet
+        LocoNetMessage m = LncvMessageContents.createAllProgStartCommand();
+        log.debug("message sent, cmd = {}", m.getElement(5));
+        memo.getLnTrafficController().sendLocoNetMessage(m);
+        // stop and inform user
+        statusText1.setText(Bundle.getMessage("FeedBackStartAllProg"));
+        allProgButton.setText(Bundle.getMessage("ButtonStopAllProg"));
+        allProgRunning = true;
+    }
+
+    // MODULEPROG button
     /**
      * Handle Start/End Module Prog button.
      */
-    public void readButtonActionPerformed() {
+    public void modProgButtonActionPerformed() {
+        if (articleField.getText().equals("")) {
+            statusText1.setText(Bundle.getMessage("FeedBackEnterArticle", adr));
+            articleField.setBackground(Color.RED);
+            return;
+        }
+        // provide user feedback
+        articleField.setBackground(Color.WHITE); // reset
+        readButton.setEnabled(!moduleProgRunning);
+        writeButton.setEnabled(!moduleProgRunning);
+        if (moduleProgRunning) { // stop prog
+            try {
+                art = Integer.parseInt(articleField.getText());
+                adr = Integer.parseInt(addressField.getText());
+                memo.getLnTrafficController().sendLocoNetMessage(LncvMessageContents.createModProgEndRequest(art, adr));
+                statusText1.setText(Bundle.getMessage("FeedBackModProgClosed"));
+                modProgButton.setText(Bundle.getMessage("ButtonStartModProg"));
+                moduleProgRunning = false;
+                // remove listener last to see message sent out, no reply expected
+                memo.getLnTrafficController().removeLocoNetListener(~0, this);
+            } catch (NumberFormatException e) {
+                log.error("invalid entry, must be number");
+                statusText1.setText(Bundle.getMessage("FeedBackEnterArticle"));
+            }
+            return;
+        }
+        // add listener
+        memo.getLnTrafficController().addLocoNetListener(~0, this);
         if ((articleField.getText() != null) && (addressField.getText() != null)) {
+            try {
+                art = Integer.parseInt(articleField.getText());
+                adr = Integer.parseInt(addressField.getText());
+                memo.getLnTrafficController().sendLocoNetMessage(LncvMessageContents.createModProgStartRequest(art, adr));
+                statusText1.setText(Bundle.getMessage("FeedBackModProgOpen", adr));
+                modProgButton.setText(Bundle.getMessage("ButtonStopModProg"));
+                moduleProgRunning = true;
+            } catch (NumberFormatException e) {
+                log.error("invalid entry, must be number");
+            }
+        }
+        // stop and inform user
+    }
+
+    // READCV button
+    /**
+     * Handle Read CV button.
+     */
+    public void readButtonActionPerformed() {
+        String sArt = "65535"; // LncvMessageContents.LNCV_ALL;
+        if (moduleProgRunning) {
+            sArt = articleField.getText();
+            articleField.setBackground(Color.WHITE); // reset
+        }
+        if ((sArt != null) && (addressField.getText() != null) && (cvField.getText() != null)) {
             try {
                 art = Integer.parseInt(articleField.getText());
                 adr = Integer.parseInt(addressField.getText()); // used as address for reply
@@ -218,9 +300,13 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
             } catch (NumberFormatException e) {
                 log.error("invalid entry, must be number");
             }
+        } else {
+            statusText1.setText(Bundle.getMessage("FeedBackEnterArticle"));
+            articleField.setBackground(Color.RED);
+            return;
         }
         // stop and inform user
-        //statusText1.setText(Bundle.getMessage("FeedBackEnterArticle"));
+        statusText1.setText(Bundle.getMessage("FeedBackRead"));
     }
 
     // WriteCV button
@@ -228,7 +314,12 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
      * Handle Write button click, assemble LNCV write message
      */
     public void writeButtonActionPerformed() {
-        if (articleField.getText() != null && cvField.getText() != null && valueField.getText() != null) {
+        String sArt = "65535"; // LncvMessageContents.LNCV_ALL;
+        if (moduleProgRunning) {
+            sArt = articleField.getText();
+        }
+        if ((sArt != null) && (cvField.getText() != null) && (valueField.getText() != null)) {
+            articleField.setBackground(Color.WHITE);
             try {
                 writeConfirmed = false;
                 art = Integer.parseInt(articleField.getText());
@@ -238,81 +329,18 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
             } catch (NumberFormatException e) {
                 log.error("invalid entry, must be number");
             }
-        }
-        // stop and inform user
-        //statusText1.setText(Bundle.getMessage("FeedBackWritten"));
-
-        // wait for LACK reply - writeConfirmed = true;
-    }
-
-    /**
-     * Handle Start/End Session button.
-     */
-    public void sessionButtonActionPerformed() {
-        // provide user feedback
-        statusText1.setText(Bundle.getMessage("FeedBackSessionOpen"));
-        moduleProgButton.setEnabled(!progSessionRunning);
-        if (progSessionRunning) {
-            if (!moduleProgRunning) { // stop session (check that moduleProgRun is closed first)
-                progSessionRunning = false;
-                log.debug("Session already running, closing");
-                progSessionButton.setText(Bundle.getMessage("ButtonStartProgSession"));
-                // remove listener
-                memo.getLnTrafficController().removeLocoNetListener(~0, this);
-                // send LncvProgSessionLeave command on LocoNet
-                memo.getLnTrafficController().sendLocoNetMessage(LncvMessageContents.createProgSessionEndCommand());
-            } else {
-                statusText1.setText(Bundle.getMessage("FeedbackStopModProg", Bundle.getMessage("ButtonModuleProgStop")));
-            }
+        } else {
+            statusText1.setText(Bundle.getMessage("FeedBackEnterArticle"));
+            articleField.setBackground(Color.RED);
             return;
         }
-        progSessionRunning = true;
-        progSessionButton.setText(Bundle.getMessage("ButtonLeaveProgSession"));
-        // add listener
-        memo.getLnTrafficController().addLocoNetListener(~0, this);
-        // send LncvProgSessionStart command on LocoNet
-        LocoNetMessage m = LncvMessageContents.createProgSessionStartCommand();
-        log.debug("message sent, cmd = {}", m.getElement(5));
-        memo.getLnTrafficController().sendLocoNetMessage(m);
         // stop and inform user
-        statusText1.setText(Bundle.getMessage("FeedBackEnterType"));
-    }
-
-    // MODULEPROG button
-    /**
-     * Handle Start/End Module Prog button.
-     */
-    public void modProgButtonActionPerformed() {
-        // provide user feedback
-        statusText1.setText(Bundle.getMessage("FeedBackModProgOpen", adr));
-        readButton.setEnabled(!moduleProgRunning);
-        writeButton.setEnabled(!moduleProgRunning);
-        if (moduleProgRunning) { // stop prog
-            try {
-                art = Integer.parseInt(articleField.getText());
-                adr = Integer.parseInt(addressField.getText());
-                memo.getLnTrafficController().sendLocoNetMessage(LncvMessageContents.createModProgEndRequest(art, adr));
-                moduleProgRunning = false;
-                moduleProgButton.setText(Bundle.getMessage("ButtonModuleProgStart"));
-            } catch (NumberFormatException e) {
-                log.error("invalid entry, must be number");
-            }
-            return;
-        }
-        moduleProgRunning = true;
-        moduleProgButton.setText(Bundle.getMessage("ButtonModuleProgStop"));
-        if ((articleField.getText() != null) && (addressField.getText() != null)) {
-            try {
-                art = Integer.parseInt(articleField.getText());
-                adr = Integer.parseInt(addressField.getText());
-                memo.getLnTrafficController().sendLocoNetMessage(LncvMessageContents.createModProgStartRequest(art, adr));
-            } catch (NumberFormatException e) {
-                log.error("invalid entry, must be number");
-            }
-        }
-        // stop and inform user
-        statusText1.setText(Bundle.getMessage("FeedBackEnterArticle"));
-        //progSessionButton.setEnabled(false);
+        statusText1.setText(Bundle.getMessage("FeedBackWritten"));
+        // wait for LACK reply
+        //
+        // if (received) {
+        //      writeConfirmed = true;
+        // }
     }
 
     /**
@@ -324,16 +352,22 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
 
     @Override
     public synchronized void message(LocoNetMessage l) { // receive a LocoNet message and log it
-        // send the raw data, to display if requested
-        String raw = l.toString();
-        // format the message text, expect it to provide consistent \n after each line
-        String formatted = l.toMonitorString(memo.getSystemPrefix());
-        // copy the formatted data
-        reply += formatted + " " + raw + "\n";
-        // got a LocoNet message, see if it's a Discovery response
-        if (LncvMessageContents.extractMessageType(l) == LncvMessageContents.LncvCommand.LNCV_READ_REPLY) {
+        if (LncvMessageContents.isSupportedLncvMessage(l)) {
+            // raw data, to display
+            String raw = l.toString();
+            // format the message text, expect it to provide consistent \n after each line
+            String formatted = l.toMonitorString(memo.getSystemPrefix());
+            // copy the formatted data
+            reply += formatted + " " + raw + "\n";
+        }
+        // got a LocoNet message, see if it's a LNCV response
+        if (l.getElement(1) == 0x6D && l.getElement(2) == 0x7f) {
+            // elem 1 = OPC (matches 0xED), elem 2 =
+            // watch for LACK?
             writeConfirmed = true;
             // feedback
+            reply += "(LNCV) WRITE confirmed.\n";
+            //jmri.jmrix.loconet.messageinterp.Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_ACCEPT");
         }
         if (LncvMessageContents.extractMessageType(l) == LncvMessageContents.LncvCommand.LNCV_READ_REPLY) {
             // it's a LNCV ReadReply message, decode contents
@@ -364,14 +398,14 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         }
 
         if (reply != null) {
-            sessionFinished(null);
+            allProgFinished(null);
         }
     }
 
     /*
-     * Session callback.
+     * AllProg Session callback.
      */
-    public void sessionFinished(String error){
+    public void allProgFinished(String error) {
         if (error != null) {
              log.error("LNCV process finished with error: {}", error);
              statusText1.setText(Bundle.getMessage("FeedBackDiscoverFail"));
@@ -379,7 +413,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
             log.debug("LNCV process completed successfully.");
             statusText1.setText(Bundle.getMessage("FeedBackDiscoverSuccess",
                     (modules == null ? 0 : modules.size())));
-            // reload the node list.
+            // reload the CV? list
             result.setText(reply);
         }
     }

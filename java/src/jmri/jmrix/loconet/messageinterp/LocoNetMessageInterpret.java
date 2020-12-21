@@ -544,7 +544,7 @@ public class LocoNetMessageInterpret {
                 break;
             }
 
-            /**
+            /*
              * ********************************************************************************************
              * OPC_WR_SL_DATA 0xEF ; WRITE SLOT DATA, 10 bytes * ; Follow on
              * message: LACK * ; <0xEF>,<0E>,<SLOT#>,<STAT>,<ADR>,<SPD>,<DIRF>,
@@ -695,8 +695,8 @@ public class LocoNetMessageInterpret {
                 break;
             }
 
-//          TODO: put this back for intelibox cmd station.
-//            it conflicts with loconet speed/dire etc.
+//          TODO: put this back for intellibox cmd station.
+//            it conflicts with loconet speed/dir etc.
             case LnConstants.RE_OPC_IB2_SPECIAL: { // 0xD4
                 result = interpretIb2Special(l);
                 if (result.length() > 0) {
@@ -891,7 +891,7 @@ public class LocoNetMessageInterpret {
     }
 
     private static String interpretOpcPeerXfer20_8(LocoNetMessage l) {
-        /**
+        /*
          * **********************************************************************************
          * IPL-capable device ping - OPC_RE_IPL (Device Ping Operations) * The
          * message bytes as assigned as follows:
@@ -1033,7 +1033,7 @@ public class LocoNetMessageInterpret {
                         && (l.getElement(13) == 0) && (l.getElement(14) == 0)
                         && (l.getElement(15) == 0) && (l.getElement(16) == 0)
                         && (l.getElement(17) == 0) && (l.getElement(18) == 0)) {
-                    /**
+                    /*
                      * **********************************************************************************
                      * IPL capable device query - RE_IPL_IDENTITY_OPERATION
                      * (Device Query) * The message bytes are assigned as
@@ -1054,7 +1054,7 @@ public class LocoNetMessageInterpret {
 
                     return Bundle.getMessage("LN_MSG_IPL_DISCOVER_ALL_DEVICES");
                 } else if (((l.getElement(5) != 0) || (l.getElement(6) != 0))) {
-                    /**
+                    /*
                      * **********************************************************************************
                      * IPL device query by type - RE_IPL_IDENTITY_OPERATION
                      * (Device Query) * The message bytes are assigned as
@@ -1857,7 +1857,6 @@ public class LocoNetMessageInterpret {
                                 Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                         StringUtil.twoHexFromInt(ack1)))+
                                         Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO", l.toString());
-
                 }
             case (LnConstants.OPC_SW_REQ):
                 // response for OPC_SW_REQ
@@ -2534,7 +2533,7 @@ public class LocoNetMessageInterpret {
         boolean expSlotRequ = (l.getElement(2) & 0x40) == 0X40 ? true : false;
         switch (slot) {
          // Slots > 120 & < 128 are all special, but these are the only ones we know to decode.
-         // Extended System Slots 248 thru 251 delt with seperately, not here
+         // Extended System Slots 248 thru 251 dealt with separately, not here
             case LnConstants.FC_SLOT:
                 return Bundle.getMessage("LN_MSG_SLOT_REQ_SLOT_FC_SLOT");
             case LnConstants.CFG_SLOT:
@@ -2774,7 +2773,7 @@ public class LocoNetMessageInterpret {
     }
 
     private static String interpretFastClockSlot(LocoNetMessage l, String mode, int id1, int id2) {
-        /**
+        /*
          * FAST Clock: The system FAST clock and parameters are implemented in
          * Slot#123 <7B>. Use <EF> to write new clock information, Slot read of
          * 0x7B,<BB><7B>.., will return current System clock information, and
@@ -2856,7 +2855,7 @@ public class LocoNetMessageInterpret {
     }
 
     private static String interpretProgSlot(LocoNetMessage l, String mode, int id1, int id2, int command) {
-        /**
+        /*
          * ********************************************************************************************
          * Programmer track: * ================= * The programmer track is
          * accessed as Special slot #124 ( $7C, 0x7C). It is a full *
@@ -2881,7 +2880,7 @@ public class LocoNetMessageInterpret {
          * <B4>,<7F>,<0x40>,<chk> Task accepted blind NO <E7>
          * reply at completion. * * Note that the <7F> code will occur in
          * Operations Mode Read requests if the System is not * configured for
-         * and has no Advanced Acknowlegement detection installed.. Operations
+         * and has no Advanced Acknowledgement detection installed.. Operations
          * Mode * requests can be made and executed whilst a current Service
          * Mode programming task is keeping * the Programming track BUSY. If a
          * Programming request is rejected, delay and resend the * complete

@@ -66,7 +66,6 @@ public class LncvMessageContents {
     //  helpers for decoding CV format 2 messages (no other OCP_PEER_XFER messages with length 0x0F)
     public final static int LNCV_SRC_ELEMENT_MASK = 0x7f;
     public final static int PXCT1_ELEMENT_VALIDITY_CHECK_MASK = 0x70;
-    public final static int PXCT1_ELEMENT_VALIDITY_CHECK_VALUE = 0x10;
     public final static int LNCV_ART_L_ARTL7_CHECK_MASK = 0x01;
     public final static int LNCV_ART_H_ARTH7_CHECK_MASK = 0x02;
     public final static int LNCV_CVN_L_CVNL7_CHECK_MASK = 0x04;
@@ -165,12 +164,18 @@ public class LncvMessageContents {
             }
         
         // <SRC_ELEMENT> must be correct
-        if (m.getElement(LNCV_SRC_ELEMENT_INDEX) != LNCV_CS_SRC_VALUE && m.getElement(LNCV_SRC_ELEMENT_INDEX) != LNCV_LNMODULE_VALUE) {
+        if ((m.getElement(LNCV_SRC_ELEMENT_INDEX) != LNCV_CS_SRC_VALUE) && (m.getElement(LNCV_SRC_ELEMENT_INDEX) != LNCV_LNMODULE_VALUE)) {
             log.debug ("cannot be LNCV message because Source not correct");  // NOI18N
             return false;
         }
 
-        // check the combined value
+        // "command_data" identifier must be correct.
+        if ((m.getElement(LNCV_CMDDATA_ELEMENT_INDEX) != LNCV_DATA_END) && (m.getElement(LNCV_CMDDATA_ELEMENT_INDEX) != LNCV_DATA_START)) {
+            log.debug ("cannot be LNCV message because CMD_DATA not valid");  // NOI18N
+            return false;
+        }
+
+        // check the command element
         if (isSupportedLncvCommand(m.getElement(LNCV_CMD_ELEMENT_INDEX))) {
             log.debug("LocoNet message is a supported LNCV Format message");
             return true;
@@ -189,32 +194,13 @@ public class LncvMessageContents {
      *      else false.
      */
     public static boolean isLnMessageASpecificLncvCommand(LocoNetMessage m, LncvCommand cvCmd) {
-        // must be OPC_PEER_XFER or OPC_IMM_PACKET opcode
-        if ((m.getOpCode() != LnConstants.OPC_PEER_XFER) && (m.getOpCode() != LnConstants.OPC_IMM_PACKET)) {
-            log.debug ("cannot be LNCV message because not OPC_PEER_XFER or OPC_IMM_PACKET");  // NOI18N
+        if (!isSupportedLncvMessage(m)) {
             return false;
         }
-        
-        // length of message must be 0x0F
-        if (m.getElement(1) != LNCV_LENGTH_ELEMENT_VALUE) {
-            log.debug ("cannot be LNCV message because not length 0x0F");  // NOI18N
-            return false;
-            }
-
-        // "command_data" identifier must be correct.  Check the rest
-        // of the "command_data" identifier
-        if ((m.getElement(LNCV_CMDDATA_ELEMENT_INDEX) != LNCV_DATA_END) && (m.getElement(LNCV_CMDDATA_ELEMENT_INDEX) != 0x00)) {
-            log.debug ("cannot be LNCV message because CMD_DATA not valid");  // NOI18N
-            return false;
-        }
-        
-        // check the <LNCV_CMD> value
-        if (isSupportedLncvCommand(m.getElement(LNCV_CMD_ELEMENT_INDEX))) {
-            log.debug("LocoNet message is a supported LNCV Format message");  // NOI18N
-            if (Objects.equals(extractMessageType(m), cvCmd)) {
-                log.debug("LocoNet message is the specified LNCV Format message");  // NOI18N
-                return true;
-            }
+        // compare the <LNCV_CMD> value against cvCmd
+        if (Objects.equals(extractMessageType(m), cvCmd)) {
+            log.debug("LocoNet message is the specified LNCV Format message");  // NOI18N
+            return true;
         }
         log.debug("LocoNet message is not a supported LNCV Format message");  // NOI18N
         return false;
@@ -398,7 +384,7 @@ public class LncvMessageContents {
         svx1 = svx1 + (((moduleNum & 0x80) == 0x80) ? LNCV_MOD_L_MODL7_CHECK_MASK : 0);
         svx1 = svx1 + (((moduleNum & 0x8000) == 0x8000) ? LNCV_MOD_H_MODH7_CHECK_MASK : 0);
         svx1 = svx1 + (((cmdData & 0x80) == 0x80) ? LNCV_CMDDATA_DAT7_CHECK_MASK : 0);
-        //PXCT1_ELEMENT_VALIDITY_CHECK_VALUE; // TODO check bit 7 = 0
+        // confirm bit 7 = 0 ?
         m.setElement(PXCT1_ELEMENT_INDEX, svx1);
 
         m.setElement(LNCV_ART_L_ELEMENT_INDEX, (articleNum & 0x7f));
@@ -413,6 +399,10 @@ public class LncvMessageContents {
 
         log.debug("LocoNet Message ready, cmd = {}", m.getElement(LNCV_CMD_ELEMENT_INDEX));
         return m;
+    }
+
+    public int getCmd() {
+        return cmd;
     }
 
     public int getCvNum() {
@@ -440,7 +430,7 @@ public class LncvMessageContents {
     }
 
     public int getLncvModuleNum() {
-        if ((cmd == LncvCommand.LNCV_READ.cmd)) {
+        if (cmd == LncvCommand.LNCV_READ.cmd) {
             return mod;
         }
         return -1;
@@ -451,7 +441,7 @@ public class LncvMessageContents {
      *
      * @return LocoNet message
      */
-    public static LocoNetMessage createProgSessionStartCommand() {
+    public static LocoNetMessage createAllProgStartCommand() {
         return createLncvMessage(
                 LnConstants.OPC_IMM_PACKET,
                 0x1,
@@ -468,7 +458,7 @@ public class LncvMessageContents {
      *
      * @return LocoNet message
      */
-    public static LocoNetMessage createProgSessionEndCommand() {
+    public static LocoNetMessage createAllProgEndCommand() {
         return createLncvMessage(
                 LnConstants.OPC_PEER_XFER,
                 0x1,
@@ -555,7 +545,8 @@ public class LncvMessageContents {
     }
 
     /**
-     * 
+     * In Hexfile simulation mode, mock a ReadReply message back to the CS.
+     *
      * @param m  the preceding LocoNet message
      * @return  LocoNet message containing the reply, or null if preceding
      *          message isn't a query
@@ -573,20 +564,22 @@ public class LncvMessageContents {
         m.setElement(LNCV_DST_L_ELEMENT_INDEX, 0x49);
         m.setElement(LNCV_DST_H_ELEMENT_INDEX, 0x4B);
         m.setElement(5, LNCV_CMD_READ_REPLY);
-        // HIBITS last
+        // HIBITS handled last
         m.setElement(7, m.getElement(7));
         m.setElement(8, m.getElement(8));
         m.setElement(9, m.getElement(9));
         m.setElement(10, m.getElement(10));
-        m.setElement(11, 0x4); // random cv value_low
-        m.setElement(12, 0x4); // random cv value_hi
+        if (m.getElement(9) != 0 || m.getElement(10) != 0) { // if CV=0, keep cv value as is, it was passed in as the module address
+            m.setElement(11, 0x4); // random cv value_low
+            m.setElement(12, 0x4); // random cv value_hi
+            m.setElement(6, m.getElement(6)^0x30 ); // HIBITS recalculate (only elements 11 and 12 have changed = HIBITS bits 5 & 6)
+        }
         m.setElement(13, 0x0);
 
-        m.setElement(6, m.getElement(6)^0x30 ); // HIBITS recalculate (only elements 11 and 12 have changed = HIBITS bits 5 & 6)
         return m;
     }
 
-    public enum LncvCommand { // commands are combined, only 3 different simple commands
+    public enum LncvCommand { // commands not unique per function, LNCV uses only 3 different simple commands
         //LNCV_SESS_START (LNCV_CMD_READ),//, LNCV_ALL, LNCV_DATA_START), // CMD=0x21, CmdData=0x0
         //LNCV_SESS_END (LNCV_CMD_READ),//, LNCV_ALL, LNCV_DATA_END), // CMD=0x21, CmdData=0x40
         // LNCV_PROG_START = first LNCV_READ

@@ -9,10 +9,7 @@ import java.io.InputStreamReader;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
-import jmri.jmrix.loconet.LocoNetListener;
-import jmri.jmrix.loconet.LocoNetMessage;
-import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-import jmri.jmrix.loconet.LnPortController;
+import jmri.jmrix.loconet.*;
 import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
 import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
 
@@ -337,32 +334,42 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
      * Small set of hardware replies to send in simulator in response to specific messages.
      * Supported types:
      * <ul>
-     *     <li>LNSV rev2 board (@link jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents)</li>
+     *     <li>LN SV rev2 board (@link jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents)</li>
+     *     <li>LNCV board (@link jmri.jmrix.loconet.uhlenbrock.Lncv2MessageContents)</li>
      * </ul>
+     *
      * @param m message heard on connection thread
      * @return fitting reply message
      */
     LocoNetMessage generateReply(LocoNetMessage m) {
-        if (simReply && LnSv2MessageContents.isSupportedSv2Message(m)) {
-            log.debug("generate reply for SV2 message");
-            LnSv2MessageContents c = new LnSv2MessageContents(m);
-            if (c.getDestAddr() == -1) { // Sv2 QueryAll, reply (contents includes no address)
-                log.debug("generate LNSV2 query reply message");
-                int dest = 1; // keep it simple, don't fetch src from m
-                int myId = 44; // just a random value
-                int mf = 129; // Digitrax
-                int dev = 0;
-                int type = 3055;
-                int serial = 111;
-                return LnSv2MessageContents.createSv2DeviceDiscoveryReply(myId, dest, mf, dev, type, serial);
+        if (simReply) {
+            if (LnSv2MessageContents.isSupportedSv2Message(m)) {
+                log.debug("generate reply for SV2 message");
+                LnSv2MessageContents c = new LnSv2MessageContents(m);
+                if (c.getDestAddr() == -1) { // Sv2 QueryAll, reply (content includes no address)
+                    log.debug("generate LNSV2 query reply message");
+                    int dest = 1; // keep it simple, don't fetch src from m
+                    int myId = 44; // a random value
+                    int mf = 129; // Digitrax
+                    int dev = 0;
+                    int type = 3055;
+                    int serial = 111;
+                    return LnSv2MessageContents.createSv2DeviceDiscoveryReply(myId, dest, mf, dev, type, serial);
+                }
             }
-        }
-        if (simReply && LncvMessageContents.isSupportedLncvMessage(m)) {
-            log.debug("generate reply for LNCV Read message");
-            LncvMessageContents c = new LncvMessageContents(m);
-            if (c.getCvNum() >= 0) { // LNCV Read, reply (contents)
-                log.debug("generate LNSV2 Read reply message");
-                return LncvMessageContents.createLncvReadReply(m);
+            if (LncvMessageContents.isSupportedLncvMessage(m)) {
+                log.debug("generate reply for LNCV Read message");
+                LncvMessageContents c = new LncvMessageContents(m);
+                // READ REPLY
+                if (c.getCvNum() >= 0) { // was LNCV Read, reply value (contents)
+                    log.debug("generate LNCV Read reply message");
+                    return LncvMessageContents.createLncvReadReply(m);
+                }
+                // WRITE reply LACK
+                if (c.getCmd() == 0x20) { // was LNCV Write
+                    log.debug("generate LNCV Write reply message");
+                    return new LocoNetMessage(new int[]{LnConstants.OPC_LONG_ACK, 0x6d, 0x7f, 0x1});
+                }
             }
         }
         return null;
