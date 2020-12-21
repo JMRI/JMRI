@@ -69,7 +69,7 @@
 
       <p>Select the "Start Up" tab, click "Add &#9662;", and select
       "Perform action...". In the new selection box that appears,
-      select "Start Web Server". Don't forget to save your
+      select "Start JMRI Web Server". Don't forget to save your
       changes!</p>
 
       <h2>Web Server Preferences</h2>
@@ -96,6 +96,11 @@
             ensure that users of the web site can see the power
             status, but cannot turn off or turn on layout
             power.</dd>
+
+            <dt>Start automatically with application</dt>
+
+            <dd>This will add the action "Start JMRI Web Server"
+            to your Start Up Preferences.</dd>
           </dl>
         </dd>
 
@@ -134,7 +139,7 @@
 
             <dt>Disallowed Frames</dt>
 
-            <dd>A list of windows that will not be displayed in the
+            <dd>A list of windows that will NOT be allowed in the
             browser.</dd>
           </dl>
         </dd>
@@ -144,9 +149,13 @@
 
       <p>JMRI Web Access provides a number of web services.</p>
 
-      <p><em>All links below assume you are currently using a web
+      <p>The example links below assume you are using a web
       browser on the same computer you are running JMRI on and that
-      JMRI is using the default port 12080.</em></p>
+      JMRI is using the default port 12080.<br />
+      To access the web 
+      server from another device on your network,
+      determine the IP address of the JMRI computer and use it 
+      instead of "localhost". Example: "http://192.168.1.7:12080"</p>
 
       <p>JMRI Web Access home page at <a href=
       "http://localhost:12080">http://localhost:12080</a> provides

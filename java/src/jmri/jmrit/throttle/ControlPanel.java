@@ -505,6 +505,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         spinnerPanel.setLayout(new GridBagLayout());
         GridBagConstraints constraints = makeDefaultGridBagConstraints();
 
+        constraints.fill = GridBagConstraints.HORIZONTAL;
         spinnerPanel.add(speedSpinner, constraints);
     }
 

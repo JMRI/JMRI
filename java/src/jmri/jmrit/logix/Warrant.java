@@ -688,7 +688,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * @param speedType name of current speed
      * @return text message
      */
-    private String getSpeedMessage(String speedType) {
+    protected String getSpeedMessage(String speedType) {
         float speed = 0;
         String units;
         SignalSpeedMap speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
@@ -1464,9 +1464,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (_orders==null || _orders.size() == 0) {
             return Bundle.getMessage("noBlockOrders");
         }
+        OBlock startBlock = _orders.get(0).getBlock();
         for (int i = 1; i < _orders.size(); i++) {
             OBlock block = _orders.get(i).getBlock();
-            if ((block.getState() & OBlock.OCCUPIED) != 0) {
+            if ((block.getState() & OBlock.OCCUPIED) != 0 && !startBlock.equals(block)) {
                 return Bundle.getMessage("BlockRougeOccupied", block.getDisplayName());
             }
             Warrant w = block.getWarrant();

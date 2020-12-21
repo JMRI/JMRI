@@ -99,7 +99,7 @@ public class WarrantFrame extends WarrantRoute {
         // w is registered
         _saveWarrant = w;
         // temp unregistered version until editing is saved.
-        _warrant = new Warrant(Bundle.getMessage("editing", w.getSystemName()), Bundle.getMessage("editing", w.getUserName()));
+        _warrant = new Warrant(w.getSystemName(), w.getUserName());
         setup(_saveWarrant);
         init();
     }
@@ -232,7 +232,7 @@ public class WarrantFrame extends WarrantRoute {
         });
 
         makeMenus();
-        setTitle(_warrant.getDisplayName());
+        setTitle(Bundle.getMessage("editing", _warrant.getDisplayName()));
         setContentPane(contentPane);
         setLocation(0, 100);
         setVisible(true);
@@ -388,6 +388,7 @@ public class WarrantFrame extends WarrantRoute {
         edge.add(runPanel);
         panel.add(edge);
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
+        panel.setPreferredSize(panel.getPreferredSize());
         tab2.add(panel);
         
         _isSCWarrant.addActionListener(new ActionListener() {
@@ -663,9 +664,9 @@ public class WarrantFrame extends WarrantRoute {
 
         JPanel tablePanel = new JPanel();
         tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.LINE_AXIS));
+        tablePanel.add(Box.createHorizontalStrut(5));
         _routePanel = makeRouteTablePanel();
         tablePanel.add(_routePanel);
-        tablePanel.add(Box.createHorizontalStrut(5));
         tablePanel.add(makeThrottleTablePanel());
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
@@ -1168,11 +1169,6 @@ public class WarrantFrame extends WarrantRoute {
             setStatusText(msg, Color.black);
             return;
         }
-/*        if (_warrant.commandsHaveTrackSpeeds()) {
-            _warrant.getSpeedUtil().getValidSpeedProfile(this);            
-        } else {
-            setStatusText(Bundle.getMessage("NoTrackSpeeds", _warrant.getDisplayName()), Color.red);
-        }*/
         _warrant.addPropertyChangeListener(this);
         
         msg = _warrant.setRunMode(Warrant.MODE_RUN, _speedUtil.getDccAddress(), null,
@@ -1256,6 +1252,10 @@ public class WarrantFrame extends WarrantRoute {
     protected void setStatusText(String msg, Color c) {
         _statusBox.setForeground(c);
         _statusBox.setText(msg);
+    }
+
+    @Override
+    protected void maxThrottleEventAction() {
     }
 
     /**
@@ -1455,7 +1455,7 @@ public class WarrantFrame extends WarrantRoute {
     private void scrollCommandTable(int row) {
         JScrollBar bar = _throttlePane.getVerticalScrollBar();
         bar.setValue(row * _rowHeight);
-//        bar.setValue(bar.getMaximum());
+        bar.invalidate();
     }
 
     /**
