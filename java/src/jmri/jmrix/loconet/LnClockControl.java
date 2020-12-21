@@ -153,7 +153,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
     public void setCommandStationZeroSecond(int val) {
         commandStationZeroSecond = val;
     }
-    
+
     public int getCommandStationZeroSecond() {
         return commandStationZeroSecond;
     }

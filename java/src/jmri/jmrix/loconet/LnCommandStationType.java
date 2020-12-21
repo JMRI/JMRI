@@ -54,7 +54,7 @@ public enum LnCommandStationType {
                     new SlotMapEntry(248,256,SlotType.SYSTEM),   // potential stat slots
                     new SlotMapEntry(257,375,SlotType.UNKNOWN),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
-                    new SlotMapEntry(385,432,SlotType.UNKNOWN)) 
+                    new SlotMapEntry(385,432,SlotType.UNKNOWN))
             ),
     COMMAND_STATION_DCS240("DCS240 (Advanced Command Station)",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -68,10 +68,10 @@ public enum LnCommandStationType {
                     new SlotMapEntry(1,120,SlotType.LOCO),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
                     new SlotMapEntry(128,247,SlotType.LOCO),
-                    new SlotMapEntry(248,256,SlotType.SYSTEM),  
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),
                     new SlotMapEntry(257,375,SlotType.LOCO),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
-                    new SlotMapEntry(385,432,SlotType.LOCO)) 
+                    new SlotMapEntry(385,432,SlotType.LOCO))
             ),
     COMMAND_STATION_DCS210("DCS210 (Evolution Command Station)",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -86,10 +86,10 @@ public enum LnCommandStationType {
                     new SlotMapEntry(101,120,SlotType.UNKNOWN),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
                     new SlotMapEntry(128,247,SlotType.UNKNOWN),
-                    new SlotMapEntry(248,256,SlotType.SYSTEM),   
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),
                     new SlotMapEntry(257,375,SlotType.UNKNOWN),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
-                    new SlotMapEntry(385,432,SlotType.UNKNOWN)) 
+                    new SlotMapEntry(385,432,SlotType.UNKNOWN))
             ),
     COMMAND_STATION_DCS200("DCS200",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -103,7 +103,7 @@ public enum LnCommandStationType {
                     new SlotMapEntry(1,120,SlotType.LOCO),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
                     new SlotMapEntry(128,247,SlotType.UNKNOWN),
-                    new SlotMapEntry(248,256,SlotType.SYSTEM),   
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),
                     new SlotMapEntry(257,375,SlotType.UNKNOWN),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.UNKNOWN))
@@ -121,7 +121,7 @@ public enum LnCommandStationType {
                     new SlotMapEntry(13,120,SlotType.UNKNOWN),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
                     new SlotMapEntry(128,247,SlotType.UNKNOWN),
-                    new SlotMapEntry(248,256,SlotType.SYSTEM),   
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),
                     new SlotMapEntry(257,375,SlotType.UNKNOWN),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.UNKNOWN))
@@ -139,7 +139,7 @@ public enum LnCommandStationType {
                     new SlotMapEntry(20,120,SlotType.UNKNOWN),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
                     new SlotMapEntry(128,247,SlotType.UNKNOWN),
-                    new SlotMapEntry(248,256,SlotType.SYSTEM),   
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),
                     new SlotMapEntry(257,375,SlotType.UNKNOWN),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.UNKNOWN))
@@ -157,7 +157,7 @@ public enum LnCommandStationType {
                     new SlotMapEntry(21,120,SlotType.UNKNOWN),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
                     new SlotMapEntry(128,247,SlotType.UNKNOWN),
-                    new SlotMapEntry(248,256,SlotType.SYSTEM),   
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),
                     new SlotMapEntry(257,375,SlotType.UNKNOWN),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.UNKNOWN))
@@ -174,7 +174,7 @@ public enum LnCommandStationType {
                     new SlotMapEntry(1,120,SlotType.LOCO),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
                     new SlotMapEntry(128,247,SlotType.UNKNOWN),
-                    new SlotMapEntry(248,256,SlotType.SYSTEM),   
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),
                     new SlotMapEntry(257,375,SlotType.UNKNOWN),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.UNKNOWN))
@@ -192,7 +192,7 @@ public enum LnCommandStationType {
                     new SlotMapEntry(1,120,SlotType.LOCO),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
                     new SlotMapEntry(128,247,SlotType.UNKNOWN),
-                    new SlotMapEntry(248,256,SlotType.SYSTEM),   
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),
                     new SlotMapEntry(257,375,SlotType.UNKNOWN),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.UNKNOWN))
@@ -209,7 +209,7 @@ public enum LnCommandStationType {
                     new SlotMapEntry(1,120,SlotType.LOCO),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
                     new SlotMapEntry(128,247,SlotType.UNKNOWN),
-                    new SlotMapEntry(248,256,SlotType.SYSTEM),   
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),
                     new SlotMapEntry(257,375,SlotType.UNKNOWN),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.UNKNOWN))
@@ -226,7 +226,7 @@ public enum LnCommandStationType {
                     new SlotMapEntry(1,120,SlotType.LOCO),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
                     new SlotMapEntry(128,247,SlotType.UNKNOWN),
-                    new SlotMapEntry(248,256,SlotType.SYSTEM),   
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),
                     new SlotMapEntry(257,375,SlotType.UNKNOWN),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.UNKNOWN))
@@ -243,7 +243,7 @@ public enum LnCommandStationType {
                     new SlotMapEntry(1,120,SlotType.LOCO),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
                     new SlotMapEntry(128,247,SlotType.UNKNOWN),
-                    new SlotMapEntry(248,256,SlotType.SYSTEM),   
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),
                     new SlotMapEntry(257,375,SlotType.UNKNOWN),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.UNKNOWN))
@@ -345,7 +345,6 @@ public enum LnCommandStationType {
         this.supportsLocoReset = supportsLocoReset;
         this.csClockFracType = csClockFracType;
         this.slotMap = slotMap;
-        
     }
 
     final String name;
@@ -528,13 +527,12 @@ public enum LnCommandStationType {
     protected enum LocoResetSupport {
         NO_LOCO_RESET_SUPPORT, SUPPORTS_LOCO_RESET_FUNCTION
     }
-    
+
     public enum CommandStationFracType {
+        CLOCKNONE,
         CLOCK13BIT,
         CLOCK15BIT
     }
-
-
 
     private final static Logger log = LoggerFactory.getLogger(LnCommandStationType.class);
 }

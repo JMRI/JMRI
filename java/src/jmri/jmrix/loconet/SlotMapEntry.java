@@ -7,23 +7,23 @@ package jmri.jmrix.loconet;
  *
  */
 public class SlotMapEntry {
-    
+
     public SlotMapEntry(int from, int to, SlotType type) {
         fromSlot = from;
         toSlot = to;
         slotType = type;
     }
-    
+
     public enum SlotType {
         UNKNOWN,
         SYSTEM,
         LOCO
     }
-    
+
     int fromSlot;
     int toSlot;
     SlotType slotType;
-    
+
     protected int getFrom() {
         return fromSlot;
     }

@@ -43,13 +43,6 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
      * Controls whether not-in-use slots are shown
      */
     protected final JCheckBox showUnusedCheckBox = new JCheckBox();
-    /**
-     * Controls individual statuses to be displayed
-     */
-    protected final JCheckBox showCommonCheckBox = new JCheckBox();
-    protected final JCheckBox showInUseCheckBox = new JCheckBox();
-    protected final JCheckBox showIdleCheckBox = new JCheckBox();
-    protected final JCheckBox showFreeCheckBoxe = new JCheckBox();
    /**
      * Controls whether system slots (0, 121-127) are shown
      */
@@ -69,7 +62,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
     public SlotMonPane() {
         super();
     }
-    
+
     @Override
     public boolean isMultipleInstances() {
         return false;
@@ -96,26 +89,6 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         showUnusedCheckBox.setVisible(true);
         showUnusedCheckBox.setSelected(false);
         showUnusedCheckBox.setToolTipText(Bundle.getMessage("TooltipSlotMonShowUnused"));
-
-        showCommonCheckBox.setText(Bundle.getMessage("TextSlotMonShowCommon"));
-        showCommonCheckBox.setVisible(true);
-        showCommonCheckBox.setSelected(false);
-        showCommonCheckBox.setToolTipText(Bundle.getMessage("TooltipSlotMonShowCommon"));
-
-        showIdleCheckBox.setText(Bundle.getMessage("TextSlotMonShowIdle"));
-        showIdleCheckBox.setVisible(true);
-        showIdleCheckBox.setSelected(false);
-        showIdleCheckBox.setToolTipText(Bundle.getMessage("TooltipSlotMonShowIdle"));
-
-        showFreeCheckBoxe.setText(Bundle.getMessage("TextSlotMonShowFree"));
-        showFreeCheckBoxe.setVisible(true);
-        showFreeCheckBoxe.setSelected(false);
-        showFreeCheckBoxe.setToolTipText(Bundle.getMessage("TooltipSlotMonShowFree"));
-
-        showInUseCheckBox.setText(Bundle.getMessage("TextSlotMonShowInUse"));
-        showInUseCheckBox.setVisible(true);
-        showInUseCheckBox.setSelected(true);
-        showInUseCheckBox.setToolTipText(Bundle.getMessage("TooltipSlotMonShowInUse"));
 
         showSystemCheckBox.setText(Bundle.getMessage("TextSlotMonShowSystem"));
         showSystemCheckBox.setVisible(true);
@@ -163,18 +136,6 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         showSystemCheckBox.addActionListener((ActionEvent e) -> {
             filter();
         });
-        showCommonCheckBox.addActionListener((ActionEvent e) -> {
-            filter();
-        });
-        showInUseCheckBox.addActionListener((ActionEvent e) -> {
-            filter();
-        });
-        showIdleCheckBox.addActionListener((ActionEvent e) -> {
-            filter();
-        });
-        showFreeCheckBoxe.addActionListener((ActionEvent e) -> {
-            filter();
-        });
 
         // add listener object so stop all button functions
         estopAllButton.addActionListener((ActionEvent e) -> {
@@ -184,10 +145,6 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         //Jeffrey 6/29/2013
         clearAllButton.addActionListener((ActionEvent e) -> {
             slotModel.clearAllSlots();
-        });
-
-        refreshAllButton.addActionListener((ActionEvent e) -> {
-            slotModel.refreshSlots();
         });
 
         // adjust model to default settings
@@ -202,14 +159,9 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
 
         pane1.add(refreshAllButton);
         pane1.add(showUnusedCheckBox);
-        pane1.add(showCommonCheckBox);
-        pane1.add(showFreeCheckBoxe);
-        pane1.add(showIdleCheckBox);
-        pane1.add(showInUseCheckBox);
         pane1.add(showSystemCheckBox);
         pane1.add(estopAllButton);
         pane1.add(clearAllButton);
-        pane1.add(refreshAllButton);
 
         add(pane1);
         add(slotScroll);
@@ -278,18 +230,6 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
                     return include;        // dont ever show unknown
                 }
                 if (!include && showUnusedCheckBox.isSelected() && !slot.isSystemSlot()) {
-                    include = true;
-                }
-                if (!include && showInUseCheckBox.isSelected() && slot.slotStatus() == LnConstants.LOCO_IN_USE && !slot.isSystemSlot()) {
-                    include = true;
-                }
-                if (!include && showCommonCheckBox.isSelected() && slot.slotStatus() == LnConstants.LOCO_COMMON && !slot.isSystemSlot()) {
-                    include = true;
-                }
-                if (!include && showIdleCheckBox.isSelected()  && slot.slotStatus() == LnConstants.LOCO_IDLE && !slot.isSystemSlot()) {
-                    include = true;
-                }
-                if (!include && showFreeCheckBoxe.isSelected()  && slot.slotStatus() == LnConstants.LOCO_FREE && !slot.isSystemSlot()) {
                     include = true;
                 }
                 if (!include && showSystemCheckBox.isSelected() && slot.isSystemSlot()) {

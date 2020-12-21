@@ -63,7 +63,7 @@ public class LocoNetSlot {
             slotType = SlotType.LOCO;
         }
     }
-    
+
     /**
      * Create a slot , initialize slotnum, protocol and slot type
      * <p>
@@ -256,13 +256,13 @@ public class LocoNetSlot {
     public boolean isForward() {
         return 0 == (dirf & LnConstants.DIRF_DIR);
     }
-    
+
     private boolean[] getFuncArray() {
         return new boolean[]{isF0(),isF1(),isF2(),isF3(),isF4(),isF5(),isF6(),isF7(),isF8(),
             isF9(),isF10(),isF11(),isF12(),isF13(),isF14(),isF15(),isF16(),isF17(),isF18(),
             isF19(),isF20(),isF21(),isF22(),isF23(),isF24(),isF25(),isF26(),isF27(),isF28()};
     }
-    
+
     /**
      * Return a slot Function state.
      * <p>

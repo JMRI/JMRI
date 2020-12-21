@@ -56,12 +56,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     static public int postProgDelay = 100; // this is public to allow changes via script
 
     public int slotScanInterval = 50; // this is public to allow changes via script and tests
-    
+
     /**
      * a Map of the CS slots.
      */
     public List<SlotMapEntry> slotMap = new ArrayList<SlotMapEntry>();
-    
+
     /**
      * Constructor for a SlotManager on a given TrafficController.
      *
@@ -74,7 +74,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // change timeout values from AbstractProgrammer superclass
         LONG_TIMEOUT = 180000;  // Fleischmann command stations take forever
         SHORT_TIMEOUT = 8000;   // DCS240 reads
-        
+
         // dummy slot map until command station set (if ever)
         slotMap = Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
                     new SlotMapEntry(1,120,SlotType.LOCO),
@@ -84,12 +84,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                     new SlotMapEntry(257,375,SlotType.UNKNOWN),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.UNKNOWN));
-        
+
         loadSlots(true);
-        
+
         // listen to the LocoNet
         tc.addLocoNetListener(~0, this);
-        
+
     }
 
     /**
@@ -852,7 +852,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // sets up delayed slot read to update our effected slots to match the CS
         if (m.getOpCode() == LnConstants.OPC_SLOT_STAT1 &&
                 ((m.getElement(2) & LnConstants.LOCOSTAT_MASK) == LnConstants.LOCO_COMMON ) ) {
-            // Changing a slot to common. Depending on a CS and its OpSw, and throttle speed 
+            // Changing a slot to common. Depending on a CS and its OpSw, and throttle speed
             // it could have its status changed a number of ways.
             sendReadSlotDelayed(i,100);
         } else if (m.getOpCode() == LnConstants.OPC_MOVE_SLOTS) {
@@ -1030,7 +1030,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         mCanRead = value.getCanRead();
         mProgEndSequence = value.getProgPowersOff();
         slotMap = commandStationType.getSlotMap();
-        
+
         loadSlots(false);
 
         // We will scan the slot table every 0.3 s for in-use slots that are stale
@@ -1584,7 +1584,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * <p>
      * This is not invoked by this class, but can be invoked from elsewhere to
      * start the process of scanning all slots to update their contents.
-     * 
+     *
      * @param inputSlotMap array of from to pairs
      * @param interval ms between slt rds
      */
@@ -1607,7 +1607,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         }
         return false;
     }
-    
+
     public void update() {
         update(slotMap, slotScanInterval);
     }
