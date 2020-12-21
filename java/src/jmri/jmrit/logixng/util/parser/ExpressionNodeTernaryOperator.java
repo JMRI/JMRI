@@ -18,9 +18,9 @@ public class ExpressionNodeTernaryOperator implements ExpressionNode {
         _middleSide = middleSide;
         _rightSide = rightSide;
         
-//        if (_rightSide == null) {
-//            throw new IllegalArgumentException("rightSide must not be null");
-//        }
+        if (_leftSide == null) {
+            throw new IllegalArgumentException("leftSide must not be null");
+        }
     }
     
     @Override
