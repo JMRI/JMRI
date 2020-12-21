@@ -18,19 +18,24 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
         _leftSide = leftSide;
         _rightSide = rightSide;
         
-        if (_rightSide == null) {
-            throw new IllegalArgumentException("rightSide must not be null");
+        if (_leftSide == null) {
+            throw new IllegalArgumentException("leftSide must not be null");
+        }
+        
+        if (! _leftSide.canBeAssigned()) {
+            throw new IllegalArgumentException("leftSide must assignable");
         }
         
         // Verify that the token is of the correct type
         switch (_tokenType) {
-            case ADD:
-            case SUBTRACKT:
+            case ASSIGN:
+            case ASSIGN_ADD:
+            case ASSIGN_SUBTRACKT:
                 break;
                 
-            case MULTIPLY:
-            case DIVIDE:
-            case MODULO:
+            case ASSIGN_MULTIPLY:
+            case ASSIGN_DIVIDE:
+            case ASSIGN_MODULO:
                 if (_leftSide == null) {
                     throw new IllegalArgumentException("leftSide must not be null for operators *, / and %");
                 }
@@ -140,6 +145,12 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
     @Override
     public Object calculate() throws JmriException {
         
+        if (_tokenType == TokenType.ASSIGN) {
+            Object value = _rightSide.calculate();
+            _leftSide.assignValue(value);
+            return value;
+        }
+        
         Object left = _leftSide.calculate();
         Object right = _rightSide.calculate();
         
@@ -151,34 +162,40 @@ public class ExpressionNodeAssignmentOperator implements ExpressionNode {
             right = ((Boolean)right) ? 1 : 0;
         }
         
-        if (_tokenType == TokenType.ADD) {
+        Object result;
+        
+        if (_tokenType == TokenType.ASSIGN_ADD) {
             // Add can handle String concatenation
-            return add(left, right);
+            result = add(left, right);
         } else {
             // For the other arithmetic operators, except add, only numbers can
             // be handled. For other types, return 0.
             if (! TypeConversionUtil.isFloatingNumber(left)) {
-                return 0;
-            }
-            if (! TypeConversionUtil.isFloatingNumber(right)) {
-                return 0;
-            }
-            
-            switch (_tokenType) {
-                case SUBTRACKT:
-                    return subtract(left, right);
-                case MULTIPLY:
-                    return multiply(left, right);
-                case DIVIDE:
-                    return divide(left, right);
-                case MODULO:
-                    return modulo(left, right);
-
-                default:
-                    throw new CalculateException("Unknown arithmetic operator: "+_tokenType.name());
+                result = 0;
+            } else if (! TypeConversionUtil.isFloatingNumber(right)) {
+                result = 0;
+            } else {
+                switch (_tokenType) {
+                    case ASSIGN_SUBTRACKT:
+                        result = subtract(left, right);
+                        break;
+                    case ASSIGN_MULTIPLY:
+                        result = multiply(left, right);
+                        break;
+                    case ASSIGN_DIVIDE:
+                        result = divide(left, right);
+                        break;
+                    case ASSIGN_MODULO:
+                        result = modulo(left, right);
+                        break;
+                    default:
+                        throw new CalculateException("Unknown arithmetic operator: "+_tokenType.name());
+                }
             }
         }
         
+        _leftSide.assignValue(result);
+        return result;
     }
     
     

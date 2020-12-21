@@ -78,8 +78,6 @@ public class ExpressionNodeTernaryOperatorTest {
         ExpressionNode expr1 = new ExpressionNodeIntegerNumber(new Token(TokenType.NONE, "1", 0));
         ExpressionNode expr12_34 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "12.34", 0));
         ExpressionNode expr25_46 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "25.46", 0));
-        ExpressionNode expr12 = new ExpressionNodeIntegerNumber(new Token(TokenType.NONE, "12", 0));
-        ExpressionNode expr235 = new ExpressionNodeIntegerNumber(new Token(TokenType.NONE, "235", 0));
         
         Assert.assertEquals("calculate() gives the correct value",
                 12.34,
