@@ -2,22 +2,14 @@ package jmri.jmrix.loconet.slotmon;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
@@ -25,7 +17,6 @@ import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.SlotMapEntry.SlotType;
 import jmri.swing.JmriJTablePersistenceManager;
-import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -64,23 +55,13 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
     }
 
     @Override
-    public boolean isMultipleInstances() {
-        return false;
-    } // only one of these!
-
-    @Override
     public void initComponents(jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
 
         slotModel = new SlotMonDataModel(memo.getSlotManager().getNumSlots(), 39, memo);
         slotTable = new JTable(slotModel);
-        //slotTable.setName(getTitleHelper(this.memo, this.getTitle()));
         slotTable.setName(this.getTitle());
-        slotTable.setColumnModel(new XTableColumnModel());
-        slotTable.setColumnModel(new XTableColumnModel());
-        slotTable.createDefaultColumnsFromModel();
-        // XTableColumnModel slotTableColumnModel = (XTableColumnModel)slotTable.getColumnModel();
-
+        
         sorter = new TableRowSorter<>(slotModel);
         slotTable.setRowSorter(sorter);
         slotScroll = new JScrollPane(slotTable);
@@ -102,8 +83,6 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         // shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         slotTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        addMouseListenerToHeader(slotTable);
-
         // resize columns as requested
         for (int i = 0; i < slotTable.getColumnCount(); i++) {
             int width = slotModel.getPreferredWidth(i);
@@ -115,18 +94,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
             // unable to persist because Default class provides no mechanism to
             // ensure window is destroyed when closed or that existing window is
             // reused when hidden and user reopens it from menu
-            try {
-                tpm.persist(slotTable, true);
-            } catch (IllegalArgumentException ex) {
-                // This happens when the slotmon has been started as an action
-                slotTable.setName(this.getTitle() + ":2");
-                // and try again
-                try {
-                    tpm.persist(slotTable, true);
-                } catch (IllegalArgumentException ex2) {
-                    tpm.persist(slotTable, false);
-                }
-            }
+            //    tpm.persist(slotTable, true);
         });
 
         // install a button renderer & editor in the "DISP" column for freeing a slot
@@ -185,7 +153,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
     }
 
     void setColumnToHoldButton(JTable slotTable, int column) {
-        XTableColumnModel tcm = (XTableColumnModel)slotTable.getColumnModel();
+        TableColumnModel tcm = slotTable.getColumnModel();
         // install the button renderers & editors in this column
         ButtonRenderer buttonRenderer = new ButtonRenderer();
         tcm.getColumn(column).setCellRenderer(buttonRenderer);
@@ -266,106 +234,4 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
                     jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
         }
     }
-
-    /*
-     * Mouse popup stuff
-     */
-
-    /**
-     * Process the column header click
-     * @param e     the evnt data
-     * @param table the JTable
-     */
-    protected void showTableHeaderPopup(MouseEvent e, JTable table) {
-        JPopupMenu popupMenu = new JPopupMenu();
-        XTableColumnModel tcm = (XTableColumnModel) table.getColumnModel();
-        for (int i = 0; i < tcm.getColumnCount(false); i++) {
-            TableColumn tc = tcm.getColumnByModelIndex(i);
-            String columnName = table.getModel().getColumnName(i);
-            if (columnName != null && !columnName.equals("")) {
-                JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(table.getModel().getColumnName(i), tcm.isColumnVisible(tc));
-                menuItem.addActionListener(new HeaderActionListener(tc, tcm));
-                popupMenu.add(menuItem);
-            }
-
-        }
-        popupMenu.show(e.getComponent(), e.getX(), e.getY());
-    }
-
-    /**
-     * Adds the column header pop listener to a JTable using XTableColumnModel
-     * @param table The JTable effected.
-     */
-    protected void addMouseListenerToHeader(JTable table) {
-        MouseListener mouseHeaderListener = new TableHeaderListener(table);
-        table.getTableHeader().addMouseListener(mouseHeaderListener);
-    }
-
-    static protected class HeaderActionListener implements ActionListener {
-
-        TableColumn tc;
-        XTableColumnModel tcm;
-
-        HeaderActionListener(TableColumn tc, XTableColumnModel tcm) {
-            this.tc = tc;
-            this.tcm = tcm;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            JCheckBoxMenuItem check = (JCheckBoxMenuItem) e.getSource();
-            //Do not allow the last column to be hidden
-            if (!check.isSelected() && tcm.getColumnCount(true) == 1) {
-                return;
-            }
-            tcm.setColumnVisible(tc, check.isSelected());
-        }
-    }
-
-    /**
-     * Class to support Columnheader popup menu on XTableColum model.
-     */
-    class TableHeaderListener extends MouseAdapter {
-
-        JTable table;
-
-        TableHeaderListener(JTable tbl) {
-            super();
-            table = tbl;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void mousePressed(MouseEvent e) {
-            if (e.isPopupTrigger()) {
-                showTableHeaderPopup(e, table);
-            }
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            if (e.isPopupTrigger()) {
-                showTableHeaderPopup(e, table);
-            }
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            if (e.isPopupTrigger()) {
-                showTableHeaderPopup(e, table);
-            }
-        }
-    }
-
-
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SlotMonPane.class);
-
 }
