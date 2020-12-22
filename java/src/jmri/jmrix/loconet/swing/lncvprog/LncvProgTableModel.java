@@ -86,7 +86,7 @@ public class LncvProgTableModel extends AbstractTableModel {
                      log.debug("null module r={} c={}", r, c);
                      return "-";
                  }
-                 return parent.getModule(r).getArticle();
+                 return parent.getModule(r).getClassNum();
              case MODADDR_COLUMN:
                  return parent.getModule(r).getAddress();
              case CV_COLUMN:

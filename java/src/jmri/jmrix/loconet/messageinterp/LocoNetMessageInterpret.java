@@ -714,7 +714,7 @@ public class LocoNetMessageInterpret {
                 break;
         } // end switch over opcode type
         return Bundle.getMessage("LN_MSG_UNKNOWN_MESSAGE") +
-                Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO", l.toString());
+                Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString());
     }
 
 
@@ -1856,7 +1856,7 @@ public class LocoNetMessageInterpret {
                         return Bundle.getMessage("LN_MSG_LONG_ACK_SW_ACK_UNKNOWN",
                                 Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                         StringUtil.twoHexFromInt(ack1)))+
-                                        Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO", l.toString());
+                                        Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString());
                 }
             case (LnConstants.OPC_SW_REQ):
                 // response for OPC_SW_REQ
@@ -1881,7 +1881,7 @@ public class LocoNetMessageInterpret {
                         return Bundle.getMessage("LN_MSG_LONG_ACK_WR_SL_UNKNOWN",
                                 Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                         StringUtil.twoHexFromInt(ack1)))+
-                                Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO", l.toString());
+                                Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString());
 
                 }
 
@@ -1905,7 +1905,7 @@ public class LocoNetMessageInterpret {
                         return Bundle.getMessage("LN_MSG_LONG_ACK_MOVE_SL_UNKNOWN",
                                 Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                         StringUtil.twoHexFromInt(ack1)))+
-                                Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO", l.toString());
+                                Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString());
 
                 }
 
@@ -1915,19 +1915,21 @@ public class LocoNetMessageInterpret {
                     return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_REJECT");
                 } else if (ack1 == 0x7f) {
                     return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_ACCEPT");
-                } else if (l.getElement(1) == 0x6D && l.getElement(2) == 0x01) {
+                } else if (ack1 == 0x01) { // (l.getElement(1) == 0x6D) is same as case, same code for LNCV "unsupported CV"
                     return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_UHL_PROG");
-
+                } else if (ack1 == 0x02) { // LNCV Uhlenbrock programming reply
+                    return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_LNCV_READONLY");
+                } else if (ack1 == 0x03) { // LNCV Uhlenbrock programming reply
+                    return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_LNCV_ILLEGALVAL");
                 } else {
                     return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_UNKNOWN",
                             Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                     StringUtil.twoHexFromInt(ack1)))+
-                                Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO", l.toString());
-
+                                Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString());
                 }
 
             case LnConstants.OPC_IMM_PACKET_2:
-                // response for OPC_IMM_PACKET
+                // response for OPC_IMM_PACKET_2
                 return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_LIM_MASTER",
                         ack1, Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                 StringUtil.twoHexFromInt(ack1)));
@@ -3113,7 +3115,7 @@ public class LocoNetMessageInterpret {
                         responseMessage = Bundle.getMessage("LN_MSG_SLOT_PROG_HELPER_RESPONSE_UNDECODED",
                                 Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                         StringUtil.twoHexFromInt(pstat)));
-                        hexMessage = Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO", l.toString());
+                        hexMessage = Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString());
                     }
                 }
             } else {
@@ -3638,7 +3640,7 @@ public class LocoNetMessageInterpret {
             case 0x09:
                 if (l.getElement(4) == 0x00) {
                     return Bundle.getMessage("LN_MSG_UNRECOGNIZED_SIG_STATE_REPORT_MAY_BE_FROM_CML_HW")+
-                                Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO", l.toString());
+                                Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString());
                 }
                 break;
             default:

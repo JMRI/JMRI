@@ -1191,7 +1191,7 @@ public class Llnmon {
         forceHex = false;
         String s = format(l);
         if (forceHex) {
-            s += Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO",
+            s += Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO",
                     l.toString());
         }
         if (showOpCode) {
