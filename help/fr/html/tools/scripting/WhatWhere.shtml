@@ -1,0 +1,336 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="fr">
+	  <!-- translate on 2020-12-22 -->
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="keywords" content="save store jython script, jython naming, jython threads,
+        jython automation, jython siglets, jython AbstractAutomaton">
+  <title>JMRI: "What...Where" of Jython Scripting with JMRI</title>
+    <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+    <!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
+      <!-- Page Body -->
+
+      <h1><a id="WhatWhereTopOfPage" name="WhatWhereTopOfPage">JMRI: "What...Where" of Jython Scripting with JMRI</a></h1>
+ 	  <!-- Page reorganized by Jerry Grochow 2018-11-29 -->
+
+
+      <p class="subtitle">Autres informations int&#233;ressantes sur le
+      Scriptage en JMRI avec Jython</p>
+	  
+      <ul>
+      <li><a href="#storescripts">O&#250; dois-je stocker mes scripts JMRI Jython ?
+      <li><a href="#classes">O&#250; puis-je trouver plus d'informations sur les classes JMRI ?
+      <li><a href="#names">Quelle est la diff&#233;rence entre les NomsSyst&#232;mes et les Noms Utilisateurs ?     
+	  <li><a href="#import">Que signifient les mots "<code>import</code>" et "<code>classe</code>" ?
+      <li><a href="#threads">Pourquoi devrais-je baser mon script sur les classes "Siglet" et "AbstractAutomaton" ?
+      <li><a href="#siglet-automaton">Quelle est la diff&#233;rence entre le "Siglet" et
+      Classes "AbstractAutomaton" ?</a></li>
+	  </ul>
+      
+	  <p>Voir la page <a href="Examples.shtml">exemples</a> pour de nombreux exemples de scripts. Aussi,
+        la <a href="Start.shtml">page d'introduction</a>  montre quelques
+        commandes de base.</p>
+	  <p>Voir aussi <a href="HowTo.shtml">Scriptage JMRI "Comment..."</a></p>
+      <p>Voir aussi <a href="Python.shtml">Langage Jython/Python</a> pour des informations g&#233;n&#233;rales sur le langage.</p>
+	  
+	  
+ <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
+           
+	  <h2><a id="storescripts">O&#250; dois-je stocker mes scripts JMRI Jython ?</a></h2>
+      
+      <div class="para">
+      
+      <p>Vous pouvez utiliser n'importe quel lieu pour vos propres
+      scripts, y compris les emplacements dans une Dropbox (ou autre fichier
+      syst&#232;me de partage) o&#250; ils seront disponibles sur plusieurs ordinateurs. [Instructions d'utilisation
+      Une Dropbox avec divers fichiers JMRI se trouve &#224; <a href="../../setup/Dropbox.shtml" target="_blank">
+      Param&#233;trage de JMRI : Partage de fichiers avec Dropbox</a>.]</p>
+      <p> Cependant, vous ne devez JAMAIS stocker vos propres scripts (ou tout autre 
+      fichier cr&#233;&#233; par l'utilisateur) dans votre emplacement de programme car ils 
+      seront perdus lors d'une mise &#224; jour de JMRI.  Malheureusement, JMRI utilise 
+      actuellement par d&#233;faut l'emplacement des scripts dans le dossier des 
+      exemples de scripts Jython situ&#233; dans votre emplacement de programme JMRI
+      . Pour r&#233;soudre ce probl&#232;me, changez l'emplacement des scripts dans les 
+      pr&#233;f&#233;rences (Pr&#233;f&#233;rences->Emplacemnts) afin que votre emplacement 
+      s'affiche automatiquement.</p>
+
+      <p><a href="#WhatWhereTopOfPage">[Aller en haut de la page]</a></p>
+      </div>
+      
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
+      
+      <h2><a id="classes" name="classes">O&#250; puis-je trouver plus d'informations sur les classes JMRI ?</a></h2>
+
+      <div class="para">
+        La <a href="https://jmri.org/JavaDoc/doc/" target="_blank">
+        pages de documentation Classe</a> inclut un r&#233;sum&#233; automatique
+        des informations sur chaque classe.
+
+        <p>Il y a beaucoup de classes! Pour vous aider &#224; trouver des choses, il
+        pourrait &#234;tre utile d'examiner la <a href=
+        "../../doc/Technical/Patterns.shtml">page structure de JMRI
+        </a>, qui fait partie de la <a href=
+        "../../doc/Technical/index.shtml">
+        documentation technique  JMRI </a>. Notez les r&#233;f&#233;rences sur la cot&#233;
+       .</p>
+        
+        <p>Des informations suppl&#233;mentaires peuvent &#234;tre trouv&#233;es dans les JavaDocs pour des types de classes sp&#233;cifiques, par exemple :
+   
+       <p><a href="https://jmri.org/JavaDoc/doc/index.html?jmri/SensorManager.html" target="_blank">
+        https://jmri.org/JavaDoc/doc/index.html?jmri/SensorManager.html</a><br>
+        <a href="https://jmri.org/JavaDoc/doc/index.html?jmri/TurnoutManager.html" target="_blank">
+        https://jmri.org/JavaDoc/doc/index.html?jmri/TurnoutManager.html</a><br>
+        <a href="https://jmri.org/JavaDoc/doc/index.html?jmri/LightManager.html" target="_blank">
+        https://jmri.org/JavaDoc/doc/index.html?jmri/LightManager.html</a><br>
+        <a href="https://jmri.org/JavaDoc/doc/index.html?jmri/BlockManager.html" target="_blank">
+        https://jmri.org/JavaDoc/doc/index.html?jmri/BlockManager.html</a>
+        </p>
+        
+      <p><a href="#WhatWhereTopOfPage">[Aller en haut de la page]</a></p>
+
+        </div>
+
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  	
+     <h2><a id="names" name="names">Quelle est la diff&#233;rence entre les Noms Syst&#232;me et les Noms Utilisateur ?</a></h2>
+
+      <p>Cliquez pour plus d'informations sur <a href="../../../../../help/fr/html/doc/Technical/Names.shtml">Noms et D&#233;nomination</a>.</p>
+		
+		<p>Les Noms Syst&#232;mes pour les capteurs, les aiguillages, les lumi&#232;res et autres, sont sp&#233;cifiques &#224; la connexion.Pour un capteur LocoNet,
+		le nom commence par "LS" tandis qu'un capteur CMRI commence par "CS" et un capteur interne par "IS". 
+		les m&#233;thodes "provide" v&#233;rifient le pr&#233;fixe de la cha&#238;ne pass&#233;e pour d&#233;terminer si elle correspond &#224; une connexion d&#233;finie
+		ou interne. Si c'est le cas, et que le reste du nom est valide, le capteur est cr&#233;&#233;. Si une concordance n'existe pas, il attribue le pr&#233;fixe de la premi&#232;re connexion dans la liste des connexions actuellement ouvertes.
+		
+		<p>Exemple : Si vos connexions sont LocoNet et CMRI, une demande de type provideSensor sans pr&#233;fixe LS, 
+		CS ou IS, se verra attribuer LS. Si la valeur du nom n'est pas comprise entre un et quatre chiffres (un nom LocoNet 
+		), vous obtenez une mauvaise erreur de format. Les m&#233;moires sont uniquement internes, donc provideMemory utilise "IM" comme 
+		le pr&#233;fixe par d&#233;faut.</p>
+        
+        <p>Du fait que les noms syst&#232;me suivent un format prescrit, il existe une proc&#233;dure permettant de v&#233;rifier si un nom
+        est valable.  Utilisez ce code pour cr&#233;er un capteur avec un nom valide:</p>
+        
+        <!-- Exemple adapt&#233; du post de Randall Wood &#224; jmriusers@groups.io 2019-09-06 -->
+        <pre style="font-family : monospace ;">
+        essayer :
+           sensors.validateSystemNameFormat(MySensorSystemName)
+        sauf jmri.NamedBean.BadSystemNameException :
+           imprimer "Nom non valide : ', MySensorSystemName 
+        </pre>    
+		
+		<p>Les noms utilisateurs sont d&#233;finis apr&#232;s la cr&#233;ation des entr&#233;es et des sorties. Il peut s'agir de n'importe quelle cha&#238;ne de caract&#232;res. 
+		Vous pouvez utiliser le nom utilisateur ou le nom syst&#232;me dans les scripts et Logix. L'utilisation de noms utilisateur est recommand&#233;e,
+		car si vous avez la possibilit&#233; de changer d'objectif &#224;
+		votre syst&#232;me de commande, les noms syst&#232;mes changeront &#233;galement.</p>
+                
+                
+  <h3>Obtention de noms d'utilisateurs &#224; partir d'objets</h3>
+                
+    <p>Si un objet renvoy&#233; par une requ&#234;te est un NamedBean Object, 
+    ( c'est-&#224;-dire qu'il appara&#238;t dans une table JMRI )
+        la valeur de retour (de Java #toString() ) est l'adresse mat&#233;rielle.
+    
+    Si vous avez besoin de l'ID Tag UserName, par exemple pour un canton 
+    avec le nom utilisateur "BlockUserName", vous pouvez utiliser :
+    </p>
+        <pre style="font-family : monospace ;">
+        mylocostring=blocks.getByUserName("BlockUserName").getValue() #Valeur du bloc 
+        L'objet peut &#234;tre une cha&#238;ne de caract&#232;res ou une balise d'identification
+        si (estinstance(mylocostring,jmri.NamedBean)) : # L'objet est un BeanNomm&#233;
+            mylocostring = mylocostring .getUserName() # d&#233;finir Nom Utilisateur pour
+        imprimer mylocostring
+        </pre>
+               
+    <p>Il peut parfois &#234;tre utile d'obtenir des informations compl&#233;mentaires 
+    sur une valeur de Rapport.
+    La m&#233;thode toReportString fournit un rapport sp&#233;cifique &#224; l'objet, 
+    qui peut ou non contenir le nom utilisateur en lui-m&#234;me.
+    <p>ar exemple, un TranspondingTag LocoNet peut signaler des cha&#238;nes
+     de caract&#232;res telles que "1234 enter" ou "1234 exit",
+    tandis que les objets Railcom ajouteront &#224; la cha&#238;ne toutes les 
+    valeurs fournies par le d&#233;tecteur, comme l'orientation.
+
+    <p>Eg. Pour un Canton avec le nom utilisateur "BlockUserName", vous pourriez utiliser :</p>
+    
+        <pre style="font-family : monospace ;">
+        mylocostring=blocks.getByUserName("BlockUserName").getValue() #L'objet bloc peut &#234;tre une cha&#238;ne ou une balise d'identification
+        si (estinstance(mylocostring,jmri.Reportable)) : # L'objet est un "Rapporte
+            mylocostring = mylocostring .toReportString() # D&#233;finir la Chaine Rapport pour
+        imprimer mylocostring
+        </pre>
+     
+    <p><a href="#WhatWhereTopOfPage">[Aller en haut de la page]</a></p>        
+
+
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  	    
+	   <h2><a id="import" name="import">Que signifient les mots "<code>import</code>", "<code>classe</code>" ?</a></h2>
+
+      <div class="para">
+        Ils font partie du langage jython utilis&#233; pour le script.
+
+        <p> "import" vous permettent de faire r&#233;f&#233;rence &#224; des choses par des
+     noms, en disant essentiellement &#224; jython de "rechercher les paquets 
+     import&#233;s (par exemple jarray et jmri)s et d'y reconna&#238;tre 
+     tous les noms". Pour quelqu'un qui essaie de comprendre ce script, 
+     vous pouvez simplement le traiter
+        comme "s'assurer que le programme peut trouver les pi&#232;ces que nous voulons".</p>
+
+        <p> "classe" signifie "commencer la d&#233;finition d'un groupe de choses
+        qui vont ensemble" (tous les autres experts, s'il vous pla&#238;t ne sautez pas
+        sur moi &#224; ce sujet ; je comprends &#224; la fois intrins&#232;que/extrins&#232;que,
+        polymorphisme, j'essaie juste de me faire une id&#233;e g&#233;n&#233;rale
+        across).</p>
+
+        <p>Par exemple, dans le fichier SigletExample.py se trouve une
+        description d'une "classe" appel&#233;e SigletExemple, qui
+        contient deux routines/fonctions/membres : Une sous-routine
+        appel&#233; "defineIO", et un autre appel&#233; "setOutput"</p>
+
+        <p>Cette "classe" est associ&#233;e &#224; une autre appel&#233;e "Siglet".
+        (en fait jmri.jmrit.automat.Siglet ; c'est encore cette histoire de nom ), 
+        qui sait quand invoquer des routines par ces deux noms pour obtenir ce que vous voulez.</p>
+
+        <p> Essentiellement, vous d&#233;finissez deux parties ("defineIO" &amp ;
+        "setOutput") qui se branchent sur une structure pr&#233;existante pour
+        signaux de conduite. Cette structure pr&#233;existante est tr&#232;s
+        puissante, et vous permet de faire toutes sortes de choses, mais aussi
+        fournit cette m&#233;thode pour essayer de la simplifier.
+        <p>OK, &#224; ce stade, la plupart des gens ont les yeux enti&#232;rement vitreux.  
+        Pour commencer, il est pr&#233;f&#233;rable d'utiliser
+        l'approche "copier et modifier" pour le d&#233;veloppement de logiciels.
+        Il est bon d'essayer de comprendre l'ensemble du contenu du fichier
+        mais ne vous souciez pas de bien le comprendre suffisamment pour
+        &#234;tre capable de le recr&#233;er &#224; partir de z&#233;ro. Au lieu de cela, il suffit de modifier
+        des petits bouts et jouer avec.</p>
+
+      <p><a href="#WhatWhereTopOfPage">[Aller en haut de la page]</a></p>
+
+        </div>
+	  
+    <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
+      <h2><a id="threads" name="threads">Pourquoi devrais-je baser mes scripts sur les classes "Siglet" et "AbstractAutomaton" ?</a></h2>
+ 	  <!-- Section cr&#233;&#233;e par Jerry Grochow 2019-10-14 sur la base d'un post de Bob Jacobson &#224; jmriusers@groups.io 2018-11-01 -->
+
+      
+      <div class="para">
+      
+      <p>Les scripts font partie du programme principal de JMRI. Cela cr&#233;e un petit probl&#232;me : lorsque quelque chose ne va pas
+      dans un sc&#233;nario, il peut planter JMRI.  Lorsqu'un script s'endort, c'est tout le programme qui s'endort. Cependant, si vous voulez
+       fonctionner ind&#233;pendamment de JMRI, vous pouvez via un "fil" s&#233;par&#233;.  Les classes Siglet et AbstractAutomaton ont &#233;t&#233;
+      cr&#233;&#233; pour vous permettre de baser vos scripts sur une classe qui fonctionnera comme un fil de discussion ind&#233;pendant mais avec
+      la capacit&#233; de communiquer avec le reste de JMRI.  Pour plus d'informations, voir 
+      <a href="../../../../../help/fr/html/doc/Technical/Threads.shtml">la section sur les "fils".</a></p>      
+      
+      <p>Effectivement, chaque Automate ou Siglet est un programme distinct qui s'ex&#233;cute quand il le faut.  Comme ils s'ex&#233;cutent dans 
+      de JMRI, ils peuvent attendre que quelque chose se passe pendant que le reste du programme JMRI se d&#233;roule - une
+      capacit&#233; tr&#232;s utile en effet. </p>    
+      
+      </div>
+  
+  
+    <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
+	  <h2><a id="siglet-automaton" name="siglet-automaton">Quelle est la diff&#233;rence entre le "Siglet" et
+      Classes "AbstractAutomaton" ?</a></h2>
+
+      <div class="para">
+ 
+        <p>Certains exemples utilisent le <a href=
+        "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html" target="_blank">
+        AbstractAutomaton</a> comme base, tandis que d'autres utilisent la classe
+        <a href=
+        "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html" target="_blank">
+        Siglet</a> classe. En effet, ceux-ci sont destin&#233;s &#224;
+        deux objectifs diff&#233;rents.</p>
+
+        <p> "Siglet" est destin&#233; &#224; &#234;tre utilis&#233; pour les signaux de conduite. Vous
+        fournissez deux morceaux de code:</p>
+
+        <dl>
+          <dt><b>d&#233;finitionIO</b></dt>
+
+          <dd>qui d&#233;finit les diff&#233;rents capteurs, les aiguillages et les
+          les signaux dont d&#233;pend la sortie signal en tant qu'entr&#233;e lors du calcul
+          de l'apparence  du signal.</dd>
+
+          <dt><b>setOutout</b></dt>
+
+          <dd>qui recalcule l'apparence du signal &#224; partir des
+          entr&#233;es d&#233;finies.</dd>
+        </dl>
+
+        <p>La classe de base de Siglet prend alors en charge toute la surveillance
+        pour les modifications, la mise en place d'une ex&#233;cution parall&#232;le, etc. Votre
+      routine defineIO sera appel&#233;e une fois au d&#233;but, et
+        apr&#232;s qu'une ou plusieures des entr&#233;es aient chang&#233;, votre
+         routine setOutput sera appel&#233;e pour recalculer l'apparence du signal
+        .</p>
+
+        <p>Bien s&#251;r, vous pouvez utiliser cette classe pour calculer d'autres
+         choses que des apparences de signaux. Mais l'&#233;l&#233;ment cl&#233; est que
+        le calcul est refait lorsque les entr&#233;es changent, et seulement
+        lorsque les entr&#233;es changent.</p>
+
+        <p>AbstractAutomaton est une classe plus g&#233;n&#233;rale qui est
+        destin&#233; &#224; permettre des op&#233;rations plus puissantes (et Siglet
+        utilise en fait cette base plus puissante). Vous d&#233;finissez deux
+        fonctions:</p>
+
+        <dl>
+          <dt><b>init</b></dt>
+
+          <dd>qui est appel&#233; exactement une fois pour faire une installation unique dont
+          vous avez besoin</dd>
+
+          <dt><b>handle</b></dt>
+
+          <dd>qui est appel&#233; encore et encore jusqu'&#224; ce qu'il
+          renvoie FALSE.</dd>
+        </dl>Using AbstractAutomoton vous offre un certain nombre d'
+        outils : vous pouvez attendre qu'un capteur particulier soit activ&#233;,
+        faire quelque chose, puis attendre qu'un autre capteur se d&#233;clenche
+        inactif, etc. Cela vous donne beaucoup plus de libert&#233; pour cr&#233;er
+        des s&#233;quences compliqu&#233;es et puissantes que la classe Siglet,
+        parce que les Siglets sont limit&#233;s &#224; une seule chose (ils
+        ne sont pas destin&#233;s &#224; faire des s&#233;quences d'op&#233;rations).
+
+        <p>Pour plus d'informations sur les routines que AbstractAutomaton
+        fournit pour vous aider, voir le <a href=
+        "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html#method_summary" target="_blank">
+        Javadocs</a> pour la classe. (Faites d&#233;filer l'&#233;cran jusqu'&#224; la section
+        appel&#233;e "R&#233;sum&#233; de la m&#233;thode")</p>
+
+      <p><a href="#WhatWhereTopOfPage">[Aller en haut de la page]</a></p>
+
+
+
+        </div>
+
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
+	  
+
+        <!--#include virtual="/Footer.shtml" -->
+      </div><!-- closes #mainContent-->
+    </div><!-- closes #mBody-->
+</body>
+</html>
+
+   
+
