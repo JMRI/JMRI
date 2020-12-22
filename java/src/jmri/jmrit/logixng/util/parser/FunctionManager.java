@@ -23,6 +23,10 @@ public class FunctionManager implements jmri.InstanceManagerAutoDefault {
         }
     }
     
+    public Map<String, Function> getFunctions() {
+        return Collections.unmodifiableMap(_functions);
+    }
+    
     public Function get(String name) {
         return _functions.get(name);
     }

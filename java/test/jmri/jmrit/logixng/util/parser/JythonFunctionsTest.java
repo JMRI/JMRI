@@ -45,6 +45,7 @@ public class JythonFunctionsTest {
                 + "\n"
                 + "jmri.InstanceManager.getDefault(jmri.jmrit.logixng.util.parser.FunctionManager).put(\"jythonTest\", MyFunction())\n";
         
+//        System.out.format("%s%n", myScript);
         
         AtomicBoolean exceptionIsThrown = new AtomicBoolean(false);
         Map<String, Variable> _variables = new HashMap<>();
@@ -70,7 +71,7 @@ public class JythonFunctionsTest {
         try {
             t.parseExpression("jythonTest()").calculate();
         } catch (WrongNumberOfParametersException e) {
-            System.err.format("Error message: %s%n", e.getMessage());
+//            System.err.format("Error message: %s%n", e.getMessage());
             Assert.assertTrue("exception message matches", "Function requires one parameter".equals(e.getMessage()));
             exceptionIsThrown.set(true);
         }
@@ -80,7 +81,7 @@ public class JythonFunctionsTest {
         try {
             t.parseExpression("jythonTest(8,\"Hello\")").calculate();
         } catch (WrongNumberOfParametersException e) {
-            System.err.format("Error message: %s%n", e.getMessage());
+//            System.err.format("Error message: %s%n", e.getMessage());
             Assert.assertTrue("exception message matches", "Function requires one parameter".equals(e.getMessage()));
             exceptionIsThrown.set(true);
         }

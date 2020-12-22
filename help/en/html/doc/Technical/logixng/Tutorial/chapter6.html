@@ -1,0 +1,78 @@
+<html>
+<head>
+<title>LogixNG Tutorial - Chapter 6</title>
+<script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="script.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<!--
+<a id="id1" href="#">Note for developers</a>
+<p id="id2" class="hidden">If you click on me, aaa I will disappear.</p>
+-->
+<table width="800">
+<tr>
+<td>
+
+<h1>LogixNG Tutorial - Chapter 6</h1>
+
+<h2>Formula</h2>
+
+
+<h3>Add new function with Jython</h3>
+
+It's possible to create a new function i Jython to be used by formula. The code below gives an example that you can use
+as a start. A new function is added by creating a new class that extends <b>Function</b> and that implements these methods:
+<table border="1" cellspacing="0" cellpadding="2">
+<tr><th>Method</th><th>Description</th></tr>
+<tr><td>getModule</td><td>The name of the module that the function belongs to</td></tr>
+<tr><td>getName</td><td>The name of the function</td></tr>
+<tr><td>calculate</td><td>Calculate the function</td></tr>
+<tr><td>getDescription</td><td>Description of the function for the user</td></tr>
+</table>
+
+<p>
+
+<table border="1" cellspacing="0" cellpadding="2">
+<tr><td>
+<pre>
+import jmri
+
+class MyFunction(jmri.jmrit.logixng.util.parser.Function):
+  def getModule(self):
+    return "Jython example"
+  
+  def getName(self):
+    return "jythonTest"
+  
+  def calculate(self, parameterList):
+    if (parameterList.size() != 1):
+	  raise jmri.jmrit.logixng.util.parser.WrongNumberOfParametersException("Function requires one parameter")
+    return parameterList.get(0).calculate() * 3.4
+  
+  def getDescription(self):
+    return "Example of function defined in Jython"
+
+
+jmri.InstanceManager.getDefault(jmri.jmrit.logixng.util.parser.FunctionManager).put("jythonTest", MyFunction())
+</pre>
+</td></tr>
+</table>
+
+<h3>Calculate the function</h3>
+
+The function <b>calculate</b> takes a number of arguments as a <b>List&lt;ExpressionNode&gt;</b>. We first checks the number
+of arguments by calling the method <b>size()</b> and if that's correct, we get the arguments by calling the method
+<b>get(index)</b> there "index" is the index of the argument.
+<p>
+But to do something useful with the arguments, we need to calculate each argument we want to use. We do that by calling
+the method <b>calculate</b> on each argument we want to use.
+<p>
+We then do the calculation, which in this case multiplies the first argument with 3.4 and then returns the value.
+
+</td>
+</tr>
+</table>
+</body>
+</html>

@@ -23,6 +23,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.swing.SwingTools;
+import jmri.jmrit.logixng.util.parser.swing.FunctionsHelpDialog;
 
 /**
  * Base class for LogixNG editors
@@ -633,6 +634,14 @@ public class TreeEditor extends TreeViewer {
         panel3.add(panel34);
         contentPanel.add(panel3);
         
+        // Function help
+        JButton showFunctionHelp = new JButton(Bundle.getMessage("ButtonFunctionHelp"));    // NOI18N
+        panel5.add(showFunctionHelp);
+        showFunctionHelp.addActionListener((ActionEvent e) -> {
+            InstanceManager.getDefault(FunctionsHelpDialog.class).showDialog();
+        });
+//        showFunctionHelp.setToolTipText("FunctionHelpButtonHint");      // NOI18N
+
         // Cancel
         JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));    // NOI18N
         panel5.add(cancel);

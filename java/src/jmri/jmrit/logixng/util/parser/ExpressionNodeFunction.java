@@ -1,9 +1,6 @@
 package jmri.jmrit.logixng.util.parser;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.ServiceLoader;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
