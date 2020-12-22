@@ -1,7 +1,6 @@
 package jmri.jmrit.logixng.util.parser;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
@@ -224,6 +223,18 @@ public class RecursiveDescentParserTest {
             exceptionIsThrown.set(true);
         }
         Assert.assertTrue("exception is thrown", exceptionIsThrown.get());
+        
+        
+        
+        jmri.Timebase fastClock = InstanceManager.getDefault(jmri.Timebase.class);
+        fastClock.setRun(false);
+        fastClock.setTime(new Date(0,0,0,11,05));   // 11:05
+        
+        int minSinceMidnight = (11 * 60) + 5;
+        exprNode = t.parseExpression("fastClock()");
+        Assert.assertEquals("expression matches", "Function:fastClock()", exprNode.getDefinitionString());
+//        System.err.format("Result: %s, %s%n", result, result.getClass().getName());
+        Assert.assertEquals("calculate is correct", minSinceMidnight, (int)exprNode.calculate());
     }
     
     

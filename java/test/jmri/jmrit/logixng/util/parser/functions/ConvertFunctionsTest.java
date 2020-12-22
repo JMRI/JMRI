@@ -21,7 +21,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test ParsedExpression
+ * Test ConvertFunctions
  * 
  * @author Daniel Bergqvist 2020
  */

@@ -117,8 +117,6 @@ public class FunctionsHelpDialog implements jmri.InstanceManagerAutoDefault {
         documentationScroller.setPreferredSize(new Dimension(panelWidth, panelHeight));
         documentationScroller.setAlignmentX(LEFT_ALIGNMENT);
         documentationScroller.setAlignmentY(TOP_ALIGNMENT);
-        int pp = documentationScroller.getHorizontalScrollBarPolicy();
-        System.out.format("pp: %d, needed: %d, never: %d, always: %d%n", pp, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         p.add(documentationScroller, c);
         
 //        _categoryComboBox.setToolTipText(jmri.jmrit.logixng.tools.swing.Bundle.getMessage("CategoryNamesHint"));    // NOI18N
