@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 
+import jmri.InstanceManager;
 import jmri.JmriException;
 
 /**
@@ -14,29 +15,14 @@ import jmri.JmriException;
  */
 public class ExpressionNodeFunction implements ExpressionNode {
 
-    private static final Map<String, Function> _functions = new HashMap<>();
-    
     private final String _identifier;
     private final Function _function;
     private final List<ExpressionNode> _parameterList;
     
     
-    static {
-        for (FunctionFactory actionFactory : ServiceLoader.load(FunctionFactory.class)) {
-            actionFactory.getFunctions().forEach((function) -> {
-                if (_functions.containsKey(function.getName())) {
-                    throw new RuntimeException("Function " + function.getName() + " is already registered. Class: " + function.getClass().getName());
-                }
-//                System.err.format("Add function %s, %s%n", function.getName(), function.getClass().getName());
-                _functions.put(function.getName(), function);
-            });
-        }
-    }
-    
-    
     public ExpressionNodeFunction(String identifier, List<ExpressionNode> parameterList) throws FunctionNotExistsException {
         _identifier = identifier;
-        _function = _functions.get(identifier);
+        _function = InstanceManager.getDefault(FunctionManager.class).get(identifier);
         _parameterList = parameterList;
         
         if (_function == null) {

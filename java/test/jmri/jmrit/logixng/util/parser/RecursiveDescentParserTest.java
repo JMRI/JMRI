@@ -1,12 +1,8 @@
 package jmri.jmrit.logixng.util.parser;
 
-//import jmri.jmrit.logixng.util.parser.RecursiveDescentParser.Function;
-//import jmri.jmrit.logixng.util.parser.RecursiveDescentParser.OperatorInfo;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import javax.script.ScriptException;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.LogixNG_Manager;
@@ -36,12 +32,12 @@ public class RecursiveDescentParserTest {
     public void testParseAndCalculate() throws Exception {
         
         AtomicBoolean exceptionIsThrown = new AtomicBoolean();
-        Map<String, Variable> _variables = new HashMap<>();
+        Map<String, Variable> variables = new HashMap<>();
         
-        _variables.put("abc", new MyVariable("abc", "ABC"));
-        _variables.put("x", new MyVariable("x", 12));
+        variables.put("abc", new MyVariable("abc", "ABC"));
+        variables.put("x", new MyVariable("x", 12));
         
-        RecursiveDescentParser t = new RecursiveDescentParser(_variables);
+        RecursiveDescentParser t = new RecursiveDescentParser(variables);
         ExpressionNode exprNode = t.parseExpression("");
         Assert.assertTrue("expression node is null", null == exprNode);
         exprNode = t.parseExpression("134");
