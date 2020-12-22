@@ -17,11 +17,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
- * Tests for the Warrant creation
+ * Tests for running multiple Warrants
  *
  * @author  Pete Cressman 2015
  *
- * todo - test error conditions
  */
 @Timeout(60)
 @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
@@ -368,7 +367,7 @@ public class LinkedWarrantTest {
                 sm.deregister(t);
             }
         }
-        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

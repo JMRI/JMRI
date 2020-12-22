@@ -685,6 +685,7 @@ public class Tracker {
 
         class BlockCellRenderer extends JLabel implements ListCellRenderer<Object> {
 
+            @Override
             public Component getListCellRendererComponent(
               JList<?> list,           // the list
               Object value,            // value to display

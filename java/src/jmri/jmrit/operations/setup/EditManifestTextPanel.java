@@ -187,14 +187,14 @@ public class EditManifestTextPanel extends OperationsPreferencesPanel {
         pAddHelpersAt.setBorder(BorderFactory.createTitledBorder(rb.getString("AddHelpersAt")));
         pAddHelpersAt.add(addHelpersAtTextField);
         addHelpersAtTextField.setText(TrainManifestText.getStringAddHelpers());
-        addHelpersAtTextField.setToolTipText(rb.getString("ToolTipScheduledWorkAt"));
+        addHelpersAtTextField.setToolTipText(rb.getString("ToolTipAddHelpers"));
         pManifest.add(pAddHelpersAt);
 
         JPanel pRemoveHelpersAt = new JPanel();
         pRemoveHelpersAt.setBorder(BorderFactory.createTitledBorder(rb.getString("RemoveHelpersAt")));
         pRemoveHelpersAt.add(removeHelpersAtTextField);
         removeHelpersAtTextField.setText(TrainManifestText.getStringRemoveHelpers());
-        removeHelpersAtTextField.setToolTipText(rb.getString("ToolTipScheduledWorkAt"));
+        removeHelpersAtTextField.setToolTipText(rb.getString("ToolTipRemoveHelpers"));
         pManifest.add(pRemoveHelpersAt);
 
         JPanel pLocoChangeAt = new JPanel();
