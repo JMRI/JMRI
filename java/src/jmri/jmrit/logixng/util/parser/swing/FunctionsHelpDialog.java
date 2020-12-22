@@ -203,7 +203,7 @@ public class FunctionsHelpDialog implements jmri.InstanceManagerAutoDefault {
     
     
     
-    private static class Module implements Comparable {
+    private static class Module implements Comparable<Module> {
         
         private final String _name;
         private final List<Function> _functions = new ArrayList<>();
@@ -213,7 +213,7 @@ public class FunctionsHelpDialog implements jmri.InstanceManagerAutoDefault {
         }
         
         @Override
-        public int compareTo(Object o) {
+        public int compareTo(Module o) {
             if (! (o instanceof Module)) {
                 throw new UnsupportedOperationException("Cannot compare different class types.");
             }
@@ -226,7 +226,7 @@ public class FunctionsHelpDialog implements jmri.InstanceManagerAutoDefault {
         }
     }
     
-    private static class SortableFunction implements Comparable {
+    private static class SortableFunction implements Comparable<SortableFunction> {
         
         private final String _name;
         private final Function _function;
@@ -237,7 +237,7 @@ public class FunctionsHelpDialog implements jmri.InstanceManagerAutoDefault {
         }
         
         @Override
-        public int compareTo(Object o) {
+        public int compareTo(SortableFunction o) {
             if (! (o instanceof SortableFunction)) {
                 throw new UnsupportedOperationException("Cannot compare different class types.");
             }
