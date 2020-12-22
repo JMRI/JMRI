@@ -1,4 +1,4 @@
-package jmri.jmrit.logixng.util.parser;
+package jmri.jmrit.logixng.util.parser.functions;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,6 +6,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import jmri.jmrit.logixng.util.parser.CalculateException;
+import jmri.jmrit.logixng.util.parser.ExpressionNode;
+import jmri.jmrit.logixng.util.parser.ExpressionNodeFloatingNumber;
+import jmri.jmrit.logixng.util.parser.ExpressionNodeString;
+import jmri.jmrit.logixng.util.parser.ExpressionNodeTrue;
+import jmri.jmrit.logixng.util.parser.Token;
+import jmri.jmrit.logixng.util.parser.TokenType;
+import jmri.jmrit.logixng.util.parser.WrongNumberOfParametersException;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -16,9 +24,9 @@ import org.junit.Test;
 /**
  * Test ParsedExpression
  * 
- * @author Daniel Bergqvist 2020
+ * @author Daniel Bergqvist 2019
  */
-public class ConvertFunctionsTest {
+public class MathFunctionsTest {
 
     ExpressionNode expr_boolean_true = new ExpressionNodeTrue();
     ExpressionNode expr_str_HELLO = new ExpressionNodeString(new Token(TokenType.NONE, "hello", 0));
@@ -52,31 +60,49 @@ public class ConvertFunctionsTest {
     }
     
     @Test
-    public void testIntFunction() throws Exception {
-        ConvertFunctions.IntFunction intFunction = new ConvertFunctions.IntFunction();
-        Assert.assertEquals("strings matches", "int", intFunction.getName());
-        Assert.assertEquals("strings matches", "int", new ConvertFunctions.IntFunction().getName());
+    public void testSinFunction() throws Exception {
+        MathFunctions.SinFunction sinFunction = new MathFunctions.SinFunction();
+        Assert.assertEquals("strings matches", "sin", sinFunction.getName());
+        
+        // Test sin(x)
+        Assert.assertEquals("numbers are equal", (Double)0.3334870921408144, (Double)sinFunction.calculate(getParameterList(expr0_34)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)0.8134155047893737, (Double)sinFunction.calculate(getParameterList(expr0_95)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)(-0.22444221895185537), (Double)sinFunction.calculate(getParameterList(expr12_34)), 0.0000001d);
+        
+        // Test sin(x) with a string as parameter
+        Assert.assertEquals("numbers are equal", (Double)0.3334870921408144, (Double)sinFunction.calculate(getParameterList(expr0_34)), 0.0000001d);
         
         AtomicBoolean hasThrown = new AtomicBoolean(false);
         
-        // Test unsupported token type
+        // Test sin(x,"rad"), sin(x,"deg"), sin(x,"hello"), sin(x, true)
+        Assert.assertEquals("numbers are equal", (Double)0.3334870921408144, (Double)sinFunction.calculate(getParameterList(expr0_34, expr_str_RAD)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)0.21371244079399437, (Double)sinFunction.calculate(getParameterList(expr12_34, expr_str_DEG)), 0.0000001d);
         hasThrown.set(false);
         try {
-            intFunction.calculate(getParameterList());
-        } catch (WrongNumberOfParametersException e) {
+            sinFunction.calculate(getParameterList(expr12_34, expr_str_HELLO));
+        } catch (CalculateException e) {
+            hasThrown.set(true);
+        }
+        Assert.assertTrue("exception is thrown", hasThrown.get());
+        hasThrown.set(false);
+        try {
+            sinFunction.calculate(getParameterList(expr12_34, expr_boolean_true));
+        } catch (CalculateException e) {
             hasThrown.set(true);
         }
         Assert.assertTrue("exception is thrown", hasThrown.get());
         
-        Assert.assertEquals("numbers are equal", 12, intFunction.calculate(getParameterList(expr12_34)));
+        // Test sin(x,"deg", 12, 23)
+        Assert.assertEquals("numbers are equal", (Double)14.350836848733938, (Double)sinFunction.calculate(getParameterList(expr12_34, expr_str_DEG, expr12, expr23)), 0.0000001d);
         
-        // Test unsupported token type
+        // Test sin()
         hasThrown.set(false);
         try {
-            intFunction.calculate(getParameterList(expr12_34, expr25_46));
+            sinFunction.calculate(getParameterList());
         } catch (WrongNumberOfParametersException e) {
             hasThrown.set(true);
         }
+        Assert.assertTrue("exception is thrown", hasThrown.get());
     }
     
     // The minimal setup for log4J

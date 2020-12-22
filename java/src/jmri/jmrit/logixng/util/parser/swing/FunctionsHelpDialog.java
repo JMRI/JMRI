@@ -30,7 +30,6 @@ public class FunctionsHelpDialog implements jmri.InstanceManagerAutoDefault {
     private final JComboBox<SortableFunction> _functionComboBox = new JComboBox<>();
     private final JLabel _moduleLabel = new JLabel(Bundle.getMessage("FunctionsHelpDialog_Module") + ":");  // NOI18N
     private final JLabel _functionLabel = new JLabel(Bundle.getMessage("FunctionsHelpDialog_Function") + ":");   // NOI18N
-//    private final JLabel _documentationLabel = new JLabel("<html><h1>Hej</h1>Some text<p>Some <b>other</b> text");   // NOI18N
     private final JEditorPane _documentationEditorPane = new JEditorPane();
     
     
@@ -67,11 +66,8 @@ public class FunctionsHelpDialog implements jmri.InstanceManagerAutoDefault {
             if (_functionComboBox.getSelectedIndex() > -1) {
                 SortableFunction f = _functionComboBox
                         .getItemAt(_functionComboBox.getSelectedIndex());
-                try {
-//                _documentationLabel.setText(f._function.getDescription());
                 _documentationEditorPane.setText(f._function.getDescription());
                 _documentationEditorPane.setCaretPosition(0);
-                } catch (Exception ee) {_documentationEditorPane.setText("Bla Bla");}
             } else {
                 _documentationEditorPane.setText("");
             }
@@ -115,7 +111,6 @@ public class FunctionsHelpDialog implements jmri.InstanceManagerAutoDefault {
         c.gridy = 2;
         c.gridwidth = 2;
         
-//        JScrollPane documentationScroller = new JScrollPane(_documentationLabel);
         _documentationEditorPane.setEditable(false);
         _documentationEditorPane.setContentType("text/html");
         JScrollPane documentationScroller = new JScrollPane(_documentationEditorPane);
@@ -124,10 +119,7 @@ public class FunctionsHelpDialog implements jmri.InstanceManagerAutoDefault {
         documentationScroller.setAlignmentY(TOP_ALIGNMENT);
         int pp = documentationScroller.getHorizontalScrollBarPolicy();
         System.out.format("pp: %d, needed: %d, never: %d, always: %d%n", pp, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-//        documentationScroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-//        documentationScroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         p.add(documentationScroller, c);
-        
         
 //        _categoryComboBox.setToolTipText(jmri.jmrit.logixng.tools.swing.Bundle.getMessage("CategoryNamesHint"));    // NOI18N
 //        _swingConfiguratorComboBox.setToolTipText(jmri.jmrit.logixng.tools.swing.Bundle.getMessage("TypeNamesHint"));   // NOI18N
@@ -214,10 +206,7 @@ public class FunctionsHelpDialog implements jmri.InstanceManagerAutoDefault {
         
         @Override
         public int compareTo(Module o) {
-            if (! (o instanceof Module)) {
-                throw new UnsupportedOperationException("Cannot compare different class types.");
-            }
-            return _name.compareTo(((Module)o)._name);
+            return _name.compareTo(o._name);
         }
         
         @Override
@@ -238,10 +227,7 @@ public class FunctionsHelpDialog implements jmri.InstanceManagerAutoDefault {
         
         @Override
         public int compareTo(SortableFunction o) {
-            if (! (o instanceof SortableFunction)) {
-                throw new UnsupportedOperationException("Cannot compare different class types.");
-            }
-            return _name.compareTo(((SortableFunction)o)._name);
+            return _name.compareTo(o._name);
         }
         
         @Override

@@ -1,4 +1,4 @@
-package jmri.jmrit.logixng.util.parser;
+package jmri.jmrit.logixng.util.parser.functions;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -6,6 +6,11 @@ import java.util.List;
 import java.util.Set;
 
 import jmri.JmriException;
+import jmri.jmrit.logixng.util.parser.CalculateException;
+import jmri.jmrit.logixng.util.parser.ExpressionNode;
+import jmri.jmrit.logixng.util.parser.Function;
+import jmri.jmrit.logixng.util.parser.FunctionFactory;
+import jmri.jmrit.logixng.util.parser.WrongNumberOfParametersException;
 import jmri.util.TypeConversionUtil;
 
 import org.openide.util.lookup.ServiceProvider;
