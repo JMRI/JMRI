@@ -39,7 +39,7 @@ public class TreeEditor extends TreeViewer {
     private JDialog _renameSocketDialog = null;
     private JDialog _selectItemTypeDialog = null;
     private JDialog _addItemDialog = null;
-    private JDialog _editConditionalNGDialog = null;
+    private JDialog _editActionExpressionDialog = null;
     private JDialog _editLocalVariablesDialog = null;
     private final JTextField _socketNameTextField = new JTextField(20);
     private final JTextField _systemName = new JTextField(20);
@@ -463,7 +463,7 @@ public class TreeEditor extends TreeViewer {
         // possible change
         _showReminder = true;
         // make an Edit Frame
-        if (_editConditionalNGDialog == null) {
+        if (_editActionExpressionDialog == null) {
             _editSwingConfiguratorInterface = SwingTools.getSwingConfiguratorForClass(femaleSocket.getConnectedSocket().getObject().getClass());
             _editSwingConfiguratorInterface.setFrame(this);
             // Edit ConditionalNG
@@ -490,8 +490,8 @@ public class TreeEditor extends TreeViewer {
                     _editSwingConfiguratorInterface.updateObject(femaleSocket.getConnectedSocket().getObject());
                     _swingConfiguratorInterfaceMaleSocket.updateObject(femaleSocket.getConnectedSocket());
                     _editSwingConfiguratorInterface.dispose();
-                    _editConditionalNGDialog.dispose();
-                    _editConditionalNGDialog = null;
+                    _editActionExpressionDialog.dispose();
+                    _editActionExpressionDialog = null;
                     for (TreeModelListener l : femaleSocketTreeModel.listeners) {
                         TreeModelEvent tme = new TreeModelEvent(
                                 femaleSocket,
@@ -680,7 +680,7 @@ public class TreeEditor extends TreeViewer {
         if (addOrEdit) {
             _addItemDialog = frame;
         } else {
-            _editConditionalNGDialog = frame;
+            _editActionExpressionDialog = frame;
         }
         
         _autoSystemName.setSelected(true);
@@ -704,8 +704,6 @@ public class TreeEditor extends TreeViewer {
         if (_editLocalVariablesDialog == null) {
             MaleSocket maleSocket = femaleSocket.getConnectedSocket();
             
-            _editSwingConfiguratorInterface = SwingTools.getSwingConfiguratorForClass(femaleSocket.getConnectedSocket().getObject().getClass());
-            _editSwingConfiguratorInterface.setFrame(this);
             // Edit ConditionalNG
             _edit = new JButton(Bundle.getMessage("ButtonOK"));  // NOI18N
             _edit.addActionListener((ActionEvent e) -> {
@@ -764,6 +762,14 @@ public class TreeEditor extends TreeViewer {
             // set up create and cancel buttons
             JPanel buttonPanel = new JPanel();
             buttonPanel.setLayout(new FlowLayout());
+            
+            // Function help
+            JButton showFunctionHelp = new JButton(Bundle.getMessage("ButtonFunctionHelp"));    // NOI18N
+            buttonPanel.add(showFunctionHelp);
+            showFunctionHelp.addActionListener((ActionEvent e) -> {
+                InstanceManager.getDefault(FunctionsHelpDialog.class).showDialog();
+            });
+//            showFunctionHelp.setToolTipText("FunctionHelpButtonHint");      // NOI18N
             
             // Add local variable
             JButton add = new JButton(Bundle.getMessage("TableAddVariable"));
@@ -875,11 +881,11 @@ public class TreeEditor extends TreeViewer {
      * @param e The event heard
      */
     final protected void cancelEditPressed(ActionEvent e) {
-        _editConditionalNGDialog.setVisible(false);
+        _editActionExpressionDialog.setVisible(false);
         _editSwingConfiguratorInterface.dispose();
         _swingConfiguratorInterfaceMaleSocket.dispose();
-        _editConditionalNGDialog.dispose();
-        _editConditionalNGDialog = null;
+        _editActionExpressionDialog.dispose();
+        _editActionExpressionDialog = null;
 //        _inCopyMode = false;
         this.setVisible(true);
     }

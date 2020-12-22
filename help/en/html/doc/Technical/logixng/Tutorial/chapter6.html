@@ -19,13 +19,61 @@
 
 <h2>Formula</h2>
 
+LogixNG has native support for complex calculations with the tool "Formula". Formula supports almost all the Java
+operators and you can use local variables and functions with formula. In many cases, like the action Turnout, you can
+choose to use formula to get the turnout you want to act on, or to get the new state you want to set.
+<p>
+Local variables, which are explained in chapter 8, can be used directly in formula. So if you have a local variable
+<i>index</i>, you can for example have the formula <i>"IT" + index</i>, which adds the string "IT" and the value of
+<i>index</i>. This can be useful if you for example want to set all the turnouts IT1, IT2, IT3, ..., IT10 to thrown.
+You can then use the action <i>For</i> to iterate from 1 to 10 and to set each of these turnouts to thrown.
+
+<h3>The Formula expressions</h3>
+
+There are three expressions for formula: Analog Formula, Digital Formula and String Formula. They all work the same
+way, except that Analog Formula returns a floating point number, Digital Formula returns a boolean value (true or
+false), and String Formula returns a string. The expression formula can have child expressions, for example reading
+an analog value or reading the state of a sensor. You use the result of the child expressions by using the name of the
+female socket in the formula. So if you have an expression Formula which has a child E1 to which an expression Sensor
+is connected, you can use the result of the expression Sensor in the formula by the identifier E1 which points to the
+female socket and its connected expression.
+
+<h3>Operators</h3>
+
+Formula supports most of the Java operators. A list of the Java operators, together with the priority of them, is on
+<a href="https://introcs.cs.princeton.edu/java/11precedence/">this page</a>.
+<p>
+Currently supported operators are:
+<table border="1" cellspacing="0" cellpadding="2">
+<tr><th>Operator</th><th>Description</th><th>Associativity</th></tr>
+<tr><td>-</td><td>unary minus</td><td>right to left</td></tr>
+<tr><td>* / %</td><td>multiply, divide, modulo</td><td>left to right</td></tr>
+<tr><td>+ -<br>+</td><td>additive<br>string concatenation</td><td>left to right</td></tr>
+<tr><td>< <= <br> > >=</td><td>relational</td><td>not associative</td></tr>
+<tr><td>==<br>!=</td><td>equality</td><td>left to right</td></tr>
+<tr><td>&&</td><td>logical AND</td><td>left to right</td></tr>
+<tr><td>||</td><td>logical OR</td><td>left to right</td></tr>
+<tr><td>?:</td><td>ternary</td><td>right to left</td></tr>
+<tr><td> =   +=   -= <br> *=   /=   %=</td><td>assignment</td><td>right to left</td></tr>
+</table>
 
 <h3>Functions</h3>
 
+Formula supports functions, like sin(x) and random(). Some functions takes one or several parameters. A function has
+an identifier, for example "sin", followed by a left parantheses, optional one or several parameters separated by
+comma, and then closed by a right parantheses.
+<p>
+The dialog boxes for editing an action or expression, and the dialog box for editing variables, has a button "Formula
+functions". If you click on that button, you get a new dialog box that shows the functions that are available and the
+documentation on each of them.
+<p>
 One may notice that there is several modules with one or two functions in each module. For example, the module Math has
 the functions random() and sin(). The reason for so many modules for so few functions is that the number of functions
 is expected to grow. For example, the Math module should have cos(), tan(), atan() and sqrt(), but neither of these are
 implemented yet.
+<p>
+For JMRI developers: The functions are defined in the package <i>jmri.jmrit.logixng.util.parser.functions</i> and each
+module has its own Java class. Each function is its own class that implements the <i>Function</i> interface.
 
 <h3>Add new function with Jython</h3>
 
