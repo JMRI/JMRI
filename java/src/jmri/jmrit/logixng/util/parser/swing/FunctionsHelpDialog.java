@@ -205,6 +205,18 @@ public class FunctionsHelpDialog implements jmri.InstanceManagerAutoDefault {
         }
         
         @Override
+        public boolean equals(Object o) {
+            return (o instanceof Module) && _name.equals(((Module)o)._name);
+        }
+        
+        @Override
+        public int hashCode() {
+            int hash = 7;
+            hash = 47 * hash + Objects.hashCode(this._name);
+            return hash;
+        }
+        
+        @Override
         public int compareTo(Module o) {
             return _name.compareTo(o._name);
         }
@@ -223,6 +235,18 @@ public class FunctionsHelpDialog implements jmri.InstanceManagerAutoDefault {
         private SortableFunction(String name, Function function) {
             _name = name;
             _function = function;
+        }
+        
+        @Override
+        public boolean equals(Object o) {
+            return (o instanceof SortableFunction) && _name.equals(((SortableFunction)o)._name);
+        }
+        
+        @Override
+        public int hashCode() {
+            int hash = 7;
+            hash = 47 * hash + Objects.hashCode(this._name);
+            return hash;
         }
         
         @Override
