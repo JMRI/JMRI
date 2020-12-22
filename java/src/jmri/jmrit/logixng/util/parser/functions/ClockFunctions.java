@@ -48,6 +48,7 @@ public class ClockFunctions implements FunctionFactory {
         }
         
         @Override
+        @SuppressWarnings("deprecation")        // Date.getMinutes, Date.getHours
         public Object calculate(List<ExpressionNode> parameterList) throws CalculateException, JmriException {
             Date currentTime = Date.from(Instant.now());
             
@@ -99,6 +100,7 @@ public class ClockFunctions implements FunctionFactory {
         }
         
         @Override
+        @SuppressWarnings("deprecation")        // Date.getMinutes, Date.getHours
         public Object calculate(List<ExpressionNode> parameterList) throws JmriException {
             Date currentTime = _fastClock.getTime();
             

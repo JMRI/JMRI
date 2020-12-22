@@ -50,7 +50,11 @@ public class FunctionsHelpDialog implements jmri.InstanceManagerAutoDefault {
         
         if (_selectItemTypeDialog != null) {
             _selectItemTypeDialog.requestFocus();
+            return;
         }
+        
+        _documentationEditorPane.setEditable(false);
+        _documentationEditorPane.setContentType("text/html");
         
         _moduleComboBox.removeAllItems();
         List<Module> list = new ArrayList<>(_modules.values());
@@ -73,7 +77,9 @@ public class FunctionsHelpDialog implements jmri.InstanceManagerAutoDefault {
             }
         });
         
-        if (_moduleComboBox.getItemCount() > 0) _moduleComboBox.setSelectedIndex(0);
+        if (_moduleComboBox.getItemCount() > 0) {
+            _moduleComboBox.setSelectedIndex(0);
+        }
         
         _selectItemTypeDialog  = new JDialog(
                 (JDialog)null,
@@ -111,8 +117,6 @@ public class FunctionsHelpDialog implements jmri.InstanceManagerAutoDefault {
         c.gridy = 2;
         c.gridwidth = 2;
         
-        _documentationEditorPane.setEditable(false);
-        _documentationEditorPane.setContentType("text/html");
         JScrollPane documentationScroller = new JScrollPane(_documentationEditorPane);
         documentationScroller.setPreferredSize(new Dimension(panelWidth, panelHeight));
         documentationScroller.setAlignmentX(LEFT_ALIGNMENT);

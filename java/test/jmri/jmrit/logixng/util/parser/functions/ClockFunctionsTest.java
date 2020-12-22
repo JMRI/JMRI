@@ -45,6 +45,7 @@ public class ClockFunctionsTest {
     }
     
     @Test
+    @SuppressWarnings("deprecation")        // Date.getMinutes, Date.getHours
     public void testSystemClockFunction() throws Exception {
         ClockFunctions.SystemClockFunction systemClockFunction = new ClockFunctions.SystemClockFunction();
         Assert.assertEquals("strings matches", "systemClock", systemClockFunction.getName());
@@ -61,6 +62,7 @@ public class ClockFunctionsTest {
     }
     
     @Test
+    @SuppressWarnings("deprecation")        // Date.getMinutes, Date.getHours
     public void testFastClockFunction() throws Exception {
         ClockFunctions.FastClockFunction fastClockFunction = new ClockFunctions.FastClockFunction();
         Assert.assertEquals("strings matches", "fastClock", fastClockFunction.getName());
