@@ -78,7 +78,7 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     }
 
-    // Test named power districts
+    // Test power replies
     @Test
     public void testNamedPowerDistrictReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("p 0 MAIN");
@@ -110,6 +110,17 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals('p', l.getOpCodeChar());
         Assert.assertEquals("MAIN", l.getPowerDistrictName());
         Assert.assertEquals("ON", l.getPowerDistrictStatus());
+
+        l = DCCppReply.parseDCCppReply("p1");
+        Assert.assertTrue(l.isPowerReply());
+        Assert.assertFalse(l.isNamedPowerReply());
+        Assert.assertTrue(l.getPowerBool());
+        l = DCCppReply.parseDCCppReply("p0");
+        Assert.assertFalse(l.getPowerBool());
+        l = DCCppReply.parseDCCppReply("p 0");
+        Assert.assertFalse(l.getPowerBool());
+        l = DCCppReply.parseDCCppReply("p 1");
+        Assert.assertTrue(l.getPowerBool());
     }
 
     // Test named and unnamed current replies
@@ -192,7 +203,13 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testVariousReplies() {
         //Turnout replies
-        DCCppReply r = DCCppReply.parseDCCppReply("H 23 0");
+        DCCppReply r = DCCppReply.parseDCCppReply("H 23 24 2 0");
+        Assert.assertTrue(r.isTurnoutDefReply());
+        Assert.assertTrue(r.isTurnoutReply());
+        Assert.assertEquals(23, r.getTurnoutDefNumInt());
+        Assert.assertEquals(24, r.getTurnoutDefAddrInt());
+        Assert.assertEquals(2, r.getTurnoutDefSubAddrInt());
+        r = DCCppReply.parseDCCppReply("H 23 0");
         Assert.assertTrue(r.isTurnoutReply());
         Assert.assertFalse(r.isTurnoutDefReply());
         Assert.assertEquals("CLOSED", r.getTOStateString());
@@ -210,10 +227,39 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertTrue(r.isMaxNumSlotsReply());
 
         //Sensor replies
-        r = DCCppReply.parseDCCppReply("Q 1 1 0");
+        r = DCCppReply.parseDCCppReply("Q 22 33 0");
         Assert.assertTrue(r.isSensorReply());
         Assert.assertTrue(r.isSensorDefReply());
-//        Assert.assertEquals("Inactive", r.getSensorStateString());
+        Assert.assertEquals("22", r.getSensorDefNumString());
+        Assert.assertEquals(22, r.getSensorDefNumInt());
+        Assert.assertEquals(33, r.getSensorDefPinInt());
+        Assert.assertFalse(r.getSensorDefPullupBool());
+        r = DCCppReply.parseDCCppReply("Q 22 33 1");
+        Assert.assertTrue(r.getSensorDefPullupBool());
+        r = DCCppReply.parseDCCppReply("Q 123");
+        Assert.assertTrue(r.isSensorReply());
+        Assert.assertFalse(r.isSensorDefReply());
+        Assert.assertEquals(123, r.getSensorNumInt());
+        Assert.assertEquals("Active", r.getSensorStateString());
+        Assert.assertTrue(r.getSensorIsActive());
+        r = DCCppReply.parseDCCppReply("q 124");
+        Assert.assertTrue(r.isSensorReply());
+        Assert.assertFalse(r.isSensorDefReply());
+        Assert.assertEquals(124, r.getSensorNumInt());
+        Assert.assertTrue(r.getSensorIsInactive());
+
+        //Output replies
+        r = DCCppReply.parseDCCppReply("Y 123 44 111 1");
+        Assert.assertTrue(r.isOutputListReply());
+        Assert.assertEquals("123", r.getOutputNumString());
+        Assert.assertEquals(123, r.getOutputNumInt());
+        Assert.assertEquals(44, r.getOutputListPinInt());
+        Assert.assertEquals(111, r.getOutputListIFlagInt());
+        Assert.assertEquals(1, r.getOutputListStateInt());
+
+        //EEPROM reply
+        r = DCCppReply.parseDCCppReply("e 12 34 56");
+        Assert.assertTrue(r.isWriteEepromReply());
     }
 
     @Test
@@ -267,6 +313,10 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         DCCppReply l = DCCppReply.parseDCCppReply("p0");
         Assert.assertEquals("Monitor string", "Power Status: OFF", l.toMonitorString());
         l = DCCppReply.parseDCCppReply("p1");
+        Assert.assertEquals("Monitor string", "Power Status: ON", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("p 0");
+        Assert.assertEquals("Monitor string", "Power Status: OFF", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("p 1");
         Assert.assertEquals("Monitor string", "Power Status: ON", l.toMonitorString());
     }
 

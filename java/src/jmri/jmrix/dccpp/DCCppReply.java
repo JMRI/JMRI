@@ -177,7 +177,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     text += "Status:" + getPowerDistrictStatus();
                 } else {
                     text = "Power Status: ";
-                    text += ((char) (getElement(1) & 0x00FF) == '1' ? "ON" : "OFF");
+                    text += (getPowerBool() ? "ON" : "OFF");
                 }
                 break;
             case DCCppConstants.CURRENT_REPLY:
@@ -1153,6 +1153,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean isOutputListReply() { return(this.matches(DCCppConstants.OUTPUT_LIST_REPLY_REGEX)); }
     public boolean isOutputCmdReply() { return(this.matches(DCCppConstants.OUTPUT_REPLY_REGEX)); }
     public boolean isCommTypeReply() { return(this.matches(DCCppConstants.COMM_TYPE_REPLY_REGEX)); }
+    public boolean isWriteEepromReply() { return(this.matches(DCCppConstants.WRITE_EEPROM_REPLY_REGEX)); }
 
     public boolean isValidReplyFormat() {
         if ((this.matches(DCCppConstants.THROTTLE_REPLY_REGEX)) ||
