@@ -198,8 +198,15 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("0.0.0", r.getVersion());
         Assert.assertEquals("23 Feb 2015 09:23:57", r.getBuildString());
         Assert.assertEquals("DCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD", r.getStationType());
+        
+        r = DCCppReply.parseDCCppReply(
+                "iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: V-1.2.1+ / Dec 22 2020 20:59:52");
+        Assert.assertTrue(r.isStatusReply());
+        Assert.assertEquals("1.2.1", r.getVersion());
+        Assert.assertEquals("Dec 22 2020 20:59:52", r.getBuildString());
+        Assert.assertEquals("DCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD", r.getStationType());
     }
-
+    
     @Test
     public void testVariousReplies() {
         //Turnout replies
