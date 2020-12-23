@@ -204,9 +204,10 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
                 // default filter is IN-USE and regular systems slot
                 // the default is whatever the person last closed it with
                 jmri.jmrix.loconet.LocoNetSlot slot =  entry.getModel().getSlot(entry.getIdentifier());
-                boolean include = false;
+                boolean include = entry.getModel().getSlot(entry.getIdentifier()).slotStatus() != LnConstants.LOCO_FREE
+                        && slot.getSlotType() == SlotType.LOCO;
                 if (slot.getSlotType() == SlotType.UNKNOWN) {
-                    return include;        // dont ever show unknown
+                    return false;        // dont ever show unknown
                 }
                 if (!include && showUnusedCheckBox.isSelected() && !slot.isSystemSlot()) {
                     include = true;
