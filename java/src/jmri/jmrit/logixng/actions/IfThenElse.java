@@ -65,11 +65,11 @@ public class IfThenElse extends AbstractDigitalAction
         super(sys, user);
         _type = type;
         _ifExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, "E");
+                .createFemaleSocket(this, this, "If");
         _thenActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
-                .createFemaleSocket(this, this, "A1");
+                .createFemaleSocket(this, this, "Then");
         _elseActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
-                .createFemaleSocket(this, this, "A2");
+                .createFemaleSocket(this, this, "Else");
     }
     
     @Override
@@ -213,7 +213,7 @@ public class IfThenElse extends AbstractDigitalAction
         return _elseActionSocket;
     }
 
-    public String getElseExpressionSocketSystemName() {
+    public String getElseActionSocketSystemName() {
         return _elseActionSocketSystemName;
     }
 

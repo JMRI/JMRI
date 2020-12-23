@@ -8,7 +8,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.AbstractDigitalExpression;
 
 /**
- * Executes an action after some time.
+ * Executes actions in a sequence.
  * 
  * @author Daniel Bergqvist Copyright 2020
  */
@@ -19,7 +19,13 @@ public class Sequence extends AbstractDigitalAction
     public static final int EXPRESSION_STOP = 1;
     public static final int EXPRESSION_RESET = 2;
     public static final int NUM_STATIC_EXPRESSIONS = 3;
-
+    
+    private String _startExpressionSocketSystemName;
+    private String _stopExpressionSocketSystemName;
+    private String _resetExpressionSocketSystemName;
+    private final FemaleDigitalExpressionSocket _startExpressionSocket;
+    private final FemaleDigitalExpressionSocket _stopExpressionSocket;
+    private final FemaleDigitalExpressionSocket _resetExpressionSocket;
     private final List<ExpressionEntry> _expressionEntries = new ArrayList<>();
     private final List<ActionEntry> _actionEntries = new ArrayList<>();
     private int _currentStep = -1;
@@ -30,15 +36,12 @@ public class Sequence extends AbstractDigitalAction
     
     public Sequence(String sys, String user) {
         super(sys, user);
-        _expressionEntries
-                .add(new ExpressionEntry(InstanceManager.getDefault(DigitalExpressionManager.class)
-                        .createFemaleSocket(this, this, Bundle.getMessage("SequenceSocketStart"))));
-        _expressionEntries
-                .add(new ExpressionEntry(InstanceManager.getDefault(DigitalExpressionManager.class)
-                        .createFemaleSocket(this, this, Bundle.getMessage("SequenceSocketStop"))));
-        _expressionEntries
-                .add(new ExpressionEntry(InstanceManager.getDefault(DigitalExpressionManager.class)
-                        .createFemaleSocket(this, this, Bundle.getMessage("SequenceSocketReset"))));
+        _startExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
+                .createFemaleSocket(this, this, Bundle.getMessage("SequenceSocketStart"));
+        _stopExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
+                .createFemaleSocket(this, this, Bundle.getMessage("SequenceSocketStop"));
+        _resetExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
+                .createFemaleSocket(this, this, Bundle.getMessage("SequenceSocketReset"));
         _actionEntries
                 .add(new ActionEntry(InstanceManager.getDefault(DigitalActionManager.class)
                         .createFemaleSocket(this, this, getNewActionSocketName())));
@@ -52,6 +55,12 @@ public class Sequence extends AbstractDigitalAction
             List<Map.Entry<String, String>> actionSystemNames)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
+        _startExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
+                .createFemaleSocket(this, this, "Start");
+        _stopExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
+                .createFemaleSocket(this, this, "Stop");
+        _resetExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
+                .createFemaleSocket(this, this, "Reset");
         setExpressionSystemNames(expressionSystemNames);
         setActionSystemNames(actionSystemNames);
     }
@@ -210,19 +219,18 @@ public class Sequence extends AbstractDigitalAction
     
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
-        if (index == EXPRESSION_START) return _expressionEntries.get(EXPRESSION_START)._socket;
-        if (index == EXPRESSION_STOP) return _expressionEntries.get(EXPRESSION_STOP)._socket;
-        if (index == EXPRESSION_RESET) return _expressionEntries.get(EXPRESSION_RESET)._socket;
+        if (index == EXPRESSION_START) return _startExpressionSocket;
+        if (index == EXPRESSION_STOP) return _stopExpressionSocket;
+        if (index == EXPRESSION_RESET) return _resetExpressionSocket;
         
         index -= NUM_STATIC_EXPRESSIONS;
-        
         if ((index % 2) == 0) return _actionEntries.get(index >> 1)._socket;
-        else return _expressionEntries.get((index >> 1) + NUM_STATIC_EXPRESSIONS)._socket;
+        else return _expressionEntries.get(index >> 1)._socket;
     }
 
     @Override
     public int getChildCount() {
-        return _expressionEntries.size() + _actionEntries.size();
+        return NUM_STATIC_EXPRESSIONS + _expressionEntries.size() + _actionEntries.size();
     }
 /*
     private void checkFreeSocket() {
@@ -273,7 +281,7 @@ public class Sequence extends AbstractDigitalAction
                 return index >= NUM_STATIC_EXPRESSIONS+2;   // Possible if not the three static sockets and the first two sockets after that
             case MoveDown:
                 // Possible if not the static sockets and if not last three sockets
-                return (index >= NUM_STATIC_EXPRESSIONS) && (index+3 < getChildCount());
+                return (index >= NUM_STATIC_EXPRESSIONS) && (index+NUM_STATIC_EXPRESSIONS < getChildCount());
             default:
                 throw new UnsupportedOperationException("Oper is unknown" + oper.name());
         }
@@ -375,16 +383,24 @@ public class Sequence extends AbstractDigitalAction
     public void connected(FemaleSocket socket) {
         if (disableCheckForUnconnectedSocket) return;
         
-        for (ExpressionEntry entry : _expressionEntries) {
-            if (socket == entry._socket) {
-                entry._socketSystemName =
-                        socket.getConnectedSocket().getSystemName();
+        if (socket == _startExpressionSocket) {
+            _startExpressionSocketSystemName = socket.getConnectedSocket().getSystemName();
+        } else if (socket == _stopExpressionSocket) {
+            _stopExpressionSocketSystemName = socket.getConnectedSocket().getSystemName();
+        } else if (socket == _resetExpressionSocket) {
+            _resetExpressionSocketSystemName = socket.getConnectedSocket().getSystemName();
+        } else {
+            for (ExpressionEntry entry : _expressionEntries) {
+                if (socket == entry._socket) {
+                    entry._socketSystemName =
+                            socket.getConnectedSocket().getSystemName();
+                }
             }
-        }
-        for (ActionEntry entry : _actionEntries) {
-            if (socket == entry._socket) {
-                entry._socketSystemName =
-                        socket.getConnectedSocket().getSystemName();
+            for (ActionEntry entry : _actionEntries) {
+                if (socket == entry._socket) {
+                    entry._socketSystemName =
+                            socket.getConnectedSocket().getSystemName();
+                }
             }
         }
         
@@ -393,14 +409,22 @@ public class Sequence extends AbstractDigitalAction
 
     @Override
     public void disconnected(FemaleSocket socket) {
-        for (ExpressionEntry entry : _expressionEntries) {
-            if (socket == entry._socket) {
-                entry._socketSystemName = null;
+        if (socket == _startExpressionSocket) {
+            _startExpressionSocketSystemName = null;
+        } else if (socket == _stopExpressionSocket) {
+            _stopExpressionSocketSystemName = null;
+        } else if (socket == _resetExpressionSocket) {
+            _resetExpressionSocketSystemName = null;
+        } else {
+            for (ExpressionEntry entry : _expressionEntries) {
+                if (socket == entry._socket) {
+                    entry._socketSystemName = null;
+                }
             }
-        }
-        for (ActionEntry entry : _actionEntries) {
-            if (socket == entry._socket) {
-                entry._socketSystemName = null;
+            for (ActionEntry entry : _actionEntries) {
+                if (socket == entry._socket) {
+                    entry._socketSystemName = null;
+                }
             }
         }
     }
@@ -413,6 +437,42 @@ public class Sequence extends AbstractDigitalAction
     @Override
     public String getLongDescription(Locale locale) {
         return Bundle.getMessage(locale, "Sequence_Long");
+    }
+
+    public FemaleDigitalExpressionSocket getStartExpressionSocket() {
+        return _startExpressionSocket;
+    }
+
+    public String getStartExpressionSocketSystemName() {
+        return _startExpressionSocketSystemName;
+    }
+
+    public void setStartExpressionSocketSystemName(String systemName) {
+        _startExpressionSocketSystemName = systemName;
+    }
+
+    public FemaleDigitalExpressionSocket getStopExpressionSocket() {
+        return _stopExpressionSocket;
+    }
+
+    public String getStopExpressionSocketSystemName() {
+        return _stopExpressionSocketSystemName;
+    }
+
+    public void setStopExpressionSocketSystemName(String systemName) {
+        _stopExpressionSocketSystemName = systemName;
+    }
+
+    public FemaleDigitalExpressionSocket getResetExpressionSocket() {
+        return _resetExpressionSocket;
+    }
+
+    public String getResetExpressionSocketSystemName() {
+        return _resetExpressionSocketSystemName;
+    }
+
+    public void setResetExpressionSocketSystemName(String systemName) {
+        _resetExpressionSocketSystemName = systemName;
     }
 
     public int getNumExpressions() {
@@ -478,8 +538,79 @@ public class Sequence extends AbstractDigitalAction
         // We don't want to check for unconnected sockets while setup sockets
         disableCheckForUnconnectedSocket = true;
         
-        for (ExpressionEntry ee : _expressionEntries) {
-            try {
+        try {
+            if ( !_startExpressionSocket.isConnected()
+                    || !_startExpressionSocket.getConnectedSocket().getSystemName()
+                            .equals(_startExpressionSocketSystemName)) {
+                
+                String socketSystemName = _startExpressionSocketSystemName;
+                _startExpressionSocket.disconnect();
+                if (socketSystemName != null) {
+                    MaleSocket maleSocket =
+                            InstanceManager.getDefault(DigitalExpressionManager.class)
+                                    .getBySystemName(socketSystemName);
+                    if (maleSocket != null) {
+                        _startExpressionSocket.connect(maleSocket);
+                        maleSocket.setup();
+                    } else {
+                        log.error("cannot load digital expression " + socketSystemName);
+                    }
+                }
+            } else {
+                _startExpressionSocket.getConnectedSocket().setup();
+            }
+            
+            System.out.format("aaa%n");
+            if ( !_stopExpressionSocket.isConnected()
+                    || !_stopExpressionSocket.getConnectedSocket().getSystemName()
+                            .equals(_stopExpressionSocketSystemName)) {
+                
+                System.out.format("bbb%n");
+                String socketSystemName = _stopExpressionSocketSystemName;
+                _stopExpressionSocket.disconnect();
+                if (socketSystemName != null) {
+                    System.out.format("ccc%n");
+                    MaleSocket maleSocket =
+                            InstanceManager.getDefault(DigitalExpressionManager.class)
+                                    .getBySystemName(socketSystemName);
+                    _stopExpressionSocket.disconnect();
+                    if (maleSocket != null) {
+                        System.out.format("ddd%n");
+                        _stopExpressionSocket.connect(maleSocket);
+                        maleSocket.setup();
+                    } else {
+                        System.out.format("eee%n");
+                        log.error("cannot load digital expression " + socketSystemName);
+                    }
+                }
+            } else {
+                System.out.format("fff%n");
+                _stopExpressionSocket.getConnectedSocket().setup();
+            }
+            
+            if ( !_resetExpressionSocket.isConnected()
+                    || !_resetExpressionSocket.getConnectedSocket().getSystemName()
+                            .equals(_resetExpressionSocketSystemName)) {
+                
+                String socketSystemName = _resetExpressionSocketSystemName;
+                _resetExpressionSocket.disconnect();
+                if (socketSystemName != null) {
+                    MaleSocket maleSocket =
+                            InstanceManager.getDefault(DigitalExpressionManager.class)
+                                    .getBySystemName(socketSystemName);
+                    _resetExpressionSocket.disconnect();
+                    if (maleSocket != null) {
+                        _resetExpressionSocket.connect(maleSocket);
+                        maleSocket.setup();
+                    } else {
+                        log.error("cannot load digital expression " + socketSystemName);
+                    }
+                }
+            } else {
+                _resetExpressionSocket.getConnectedSocket().setup();
+            }
+            
+            for (ExpressionEntry ee : _expressionEntries) {
                 if ( !ee._socket.isConnected()
                         || !ee._socket.getConnectedSocket().getSystemName()
                                 .equals(ee._socketSystemName)) {
@@ -501,14 +632,9 @@ public class Sequence extends AbstractDigitalAction
                 } else {
                     ee._socket.getConnectedSocket().setup();
                 }
-            } catch (SocketAlreadyConnectedException ex) {
-                // This shouldn't happen and is a runtime error if it does.
-                throw new RuntimeException("socket is already connected");
             }
-        }
         
-        for (ActionEntry ae : _actionEntries) {
-            try {
+            for (ActionEntry ae : _actionEntries) {
                 if ( !ae._socket.isConnected()
                         || !ae._socket.getConnectedSocket().getSystemName()
                                 .equals(ae._socketSystemName)) {
@@ -530,10 +656,10 @@ public class Sequence extends AbstractDigitalAction
                 } else {
                     ae._socket.getConnectedSocket().setup();
                 }
-            } catch (SocketAlreadyConnectedException ex) {
-                // This shouldn't happen and is a runtime error if it does.
-                throw new RuntimeException("socket is already connected");
             }
+        } catch (SocketAlreadyConnectedException ex) {
+            // This shouldn't happen and is a runtime error if it does.
+            throw new RuntimeException("socket is already connected");
         }
         
         disableCheckForUnconnectedSocket = false;

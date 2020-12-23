@@ -68,7 +68,7 @@ public class IfThenElseXml extends jmri.managers.configurexml.AbstractNamedBeanM
         if (socket != null) {
             socketSystemName = socket.getSystemName();
         } else {
-            socketSystemName = p.getElseExpressionSocketSystemName();
+            socketSystemName = p.getElseActionSocketSystemName();
         }
         if (socketSystemName != null) {
             e2.addContent(new Element("systemName").addContent(socketSystemName));

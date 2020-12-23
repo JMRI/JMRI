@@ -703,6 +703,41 @@ public class StoreAndLoadTest {
         maleSocket = digitalActionManager.registerAction(sequence);
         actionManySocket.getChild(index++).connect(maleSocket);
         
+        And andTemp = new And(digitalExpressionManager.getAutoSystemName(), null);
+        andTemp.setComment("Start expression");
+        maleSocket = digitalExpressionManager.registerExpression(andTemp);
+        sequence.getChild(0).connect(maleSocket);
+        
+        andTemp = new And(digitalExpressionManager.getAutoSystemName(), null);
+        andTemp.setComment("Stop expression");
+        maleSocket = digitalExpressionManager.registerExpression(andTemp);
+        sequence.getChild(1).connect(maleSocket);
+        
+        andTemp = new And(digitalExpressionManager.getAutoSystemName(), null);
+        andTemp.setComment("Reset expression");
+        maleSocket = digitalExpressionManager.registerExpression(andTemp);
+        sequence.getChild(2).connect(maleSocket);
+        
+        DigitalMany manyTemp = new DigitalMany(digitalActionManager.getAutoSystemName(), null);
+        manyTemp.setComment("Action socket 1");
+        maleSocket = digitalActionManager.registerAction(manyTemp);
+        sequence.getChild(3).connect(maleSocket);
+        
+        andTemp = new And(digitalExpressionManager.getAutoSystemName(), null);
+        andTemp.setComment("Expression socket 1");
+        maleSocket = digitalExpressionManager.registerExpression(andTemp);
+        sequence.getChild(4).connect(maleSocket);
+/*        
+        manyTemp = new DigitalMany(digitalActionManager.getAutoSystemName(), null);
+        manyTemp.setComment("Action socket 2");
+        maleSocket = digitalActionManager.registerAction(manyTemp);
+        sequence.getChild(5).connect(maleSocket);
+        
+        andTemp = new And(digitalExpressionManager.getAutoSystemName(), null);
+        andTemp.setComment("Expression socket 2");
+        maleSocket = digitalExpressionManager.registerExpression(andTemp);
+        sequence.getChild(6).connect(maleSocket);
+*/        
         
         ShutdownComputer shutdownComputer =
                 new ShutdownComputer(digitalActionManager.getAutoSystemName(), null);
