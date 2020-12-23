@@ -74,7 +74,7 @@ public class LncvProgTableModel extends AbstractTableModel {
 
    @Override
    public int getRowCount() {
-      return 18;
+      return Math.max(5, parent.getCount());
    }
 
    @Override

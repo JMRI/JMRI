@@ -240,16 +240,20 @@ public class LncvMessageContents {
         switch (this.command) {
             case LNCV_PROG_START:
                 log.debug("START {}", cmd_data);
-                //if (mod == 0xff) {
+                if ((art & LNCV_ALL_MASK) == LNCV_ALL_MASK) {
                     returnString = Bundle.getMessage(locale, "LNCV_ALL_PROG_START_INTERPRETED");
-                //} else { // can't filter this one out, needs a state machine, first read is MOD_PROG_ON
-                //    returnString = Bundle.getMessage(locale, "LNCV_MOD_PROG_START_INTERPRETED", art, mod);
-                //}
+                } else if ((mod & LNCV_ALL_MASK) == LNCV_ALL_MASK) {
+                    returnString = Bundle.getMessage(locale, "LNCV_ART_PROG_START_INTERPRETED", art);
+                } else {
+                    returnString = Bundle.getMessage(locale, "LNCV_MOD_PROG_START_INTERPRETED", art, mod);
+                }
                 break;
             case LNCV_PROG_END:
                 log.debug("END {}", cmd_data);
-                if (mod == 0xff) {
+                if ((art & LNCV_ALL_MASK) == LNCV_ALL_MASK) {
                     returnString = Bundle.getMessage(locale, "LNCV_ALL_PROG_END_INTERPRETED");
+                } else if ((mod & LNCV_ALL_MASK) == LNCV_ALL_MASK) {
+                    returnString = Bundle.getMessage(locale, "LNCV_ART_PROG_END_INTERPRETED", art);
                 } else {
                     returnString = Bundle.getMessage(locale, "LNCV_MOD_PROG_END_INTERPRETED", art, mod);
                 }
@@ -364,8 +368,9 @@ public class LncvMessageContents {
         svx1 = svx1 + (((cvNum & 0x8000) == 0x8000) ? LNCV_CVN_H_CVNH7_CHECK_MASK : 0);
         svx1 = svx1 + (((moduleNum & 0x80) == 0x80) ? LNCV_MOD_L_MODL7_CHECK_MASK : 0);
         svx1 = svx1 + (((moduleNum & 0x8000) == 0x8000) ? LNCV_MOD_H_MODH7_CHECK_MASK : 0);
+        log.debug("Fetching hi bit {} of cmdData, value = {}", ((cmdData & 0x80) == 0x80), cmdData);
         svx1 = svx1 + (((cmdData & 0x80) == 0x80) ? LNCV_CMDDATA_DAT7_CHECK_MASK : 0);
-        // confirm bit 7 = 0 ?
+        // bit 7 always 0
         m.setElement(PXCT1_ELEMENT_INDEX, svx1);
 
         m.setElement(LNCV_ART_L_ELEMENT_INDEX, (articleNum & 0x7f));
@@ -439,12 +444,12 @@ public class LncvMessageContents {
      *
      * @return LocoNet message
      */
-    public static LocoNetMessage createAllProgStartRequest() {
+    public static LocoNetMessage createAllProgStartRequest(int articleNum) {
         return createLncvMessage(
                 0x1,
                 0x5,
                 LncvCommand.LNCV_PROG_START,
-                LNCV_ALL,
+                (articleNum > -1 ? articleNum : LNCV_ALL),
                 0x0,
                 LNCV_ALL);
     }
@@ -455,12 +460,12 @@ public class LncvMessageContents {
      *
      * @return LocoNet message
      */
-    public static LocoNetMessage createAllProgEndRequest() {
+    public static LocoNetMessage createAllProgEndRequest(int articleNum) {
         return createLncvMessage(
                 0x1,
                 0x5,
                 LncvCommand.LNCV_PROG_END,
-                LNCV_ALL,
+                (articleNum > -1 ? articleNum : LNCV_ALL),
                 0x0,
                 LNCV_ALL); // replaces 0x1 from KD notes
     }
@@ -476,7 +481,7 @@ public class LncvMessageContents {
         return createLncvMessage(
                 0x1,
                 0x5,
-                LncvCommand.LNCV_PROG_END,
+                LncvCommand.LNCV_PROG_START,
                 articleNum,
                 0x0,
                 moduleAddress); // effectively reads first CV0 = module address
@@ -575,7 +580,10 @@ public class LncvMessageContents {
         return m;
     }
 
-    public enum LncvCommand { // commands not mapped to function, LNCV knows only 3 simple commands
+    /**
+     * LNCV Commands mapped to sets of 3 parts in message. LNCV knows only 3 simple &lt;CMD&gt; values.
+     */
+    public enum LncvCommand { // commands mapped to 3 values in message, LNCV knows only 3 simple commands
         LNCV_WRITE (LNCV_CMD_WRITE, LnConstants.OPC_IMM_PACKET, 0x00), // CMD=0x20, CmdData=0x0
         // LNCV_WRITE_REPLY = LACK
         LNCV_READ (LNCV_CMD_READ, LnConstants.OPC_IMM_PACKET, 0x00), // CMD=0x21, CmdData=0x0
@@ -602,9 +610,9 @@ public class LncvMessageContents {
         }
 
         public Boolean matches(int matchCommand, int matchOpc, int matchData) {
-            log.debug("CMD ENUM command {}={}? {}", matchCommand, cmd, matchCommand == cmd);
-            log.debug("CMD ENUM opc {}={}}? {}", matchOpc, opc, matchOpc == opc);
-            log.debug("CMD ENUM commanddata {}={}}? {}", matchData, cmddata, matchData == cmddata);
+            log.debug("CMD ENUM command {}={}? {}", matchCommand, cmd, (matchCommand == cmd));
+            log.debug("CMD ENUM opc {}={}? {}", matchOpc, opc, (matchOpc == opc));
+            log.debug("CMD ENUM commanddata {}={}? {}", matchData, cmddata, (matchData == cmddata));
             return ((matchCommand == cmd) && (matchOpc == opc) && (matchData == cmddata));
         }
     }

@@ -66,7 +66,7 @@ public class Sv2ModulesTableModel extends AbstractTableModel {
 
    @Override
    public int getRowCount() {
-      return 8;
+       return Math.max(5, parent.getCount());
    }
 
    @Override

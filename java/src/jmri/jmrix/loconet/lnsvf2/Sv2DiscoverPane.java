@@ -25,7 +25,6 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
     private LocoNetSystemConnectionMemo memo;
     protected JButton discoverButton = new JButton(Bundle.getMessage("ButtonDiscoverAll"));
     protected JButton identifyByTypeButton = new JButton(Bundle.getMessage("ButtonDiscoverByType"));
-    protected JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
     protected JTextField typeField = new JTextField(4);
     protected JTable moduleTable = null;
     protected javax.swing.table.TableModel moduleTableModel = null;
@@ -40,7 +39,7 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
 
     protected JPanel panel2 = new JPanel();
     protected JPanel panel2a = new JPanel();
-    private HashMap<Integer, Sv2Module> modules = null;
+    private HashMap<Integer, Sv2Module> modules;
     private boolean discoveryRunning = false;
 
     /**
@@ -67,6 +66,7 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
     public synchronized void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
         this.memo = memo;
+        modules = new HashMap<>(0);
         // connect to the LnTrafficController
         if (memo.getLnTrafficController() == null) {
             log.error("No traffic controller is available");
@@ -159,8 +159,6 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
         identifyByTypeButton.setEnabled(!discoveryRunning);
         panel4.add(identifyByTypeButton);
 
-        doneButton.addActionListener(e -> doneButtonActionPerformed());
-        panel4.add(doneButton);
         return panel4;
     }
 
@@ -198,13 +196,6 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
         statusText1.setText(Bundle.getMessage("FeedBackEnterType"));
         discoveryRunning = false;
         discoverButton.setEnabled(true);
-    }
-
-    /**
-     * Handle Done button.
-     */
-    public void doneButtonActionPerformed() {
-        dispose();
     }
 
     @Override
@@ -278,6 +269,14 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
     }
 
     private int counter = 0;
+
+    /**
+     * Get number of (different?) module replies in table.
+     * @return number of Modules in modules hashmap
+     */
+    public int getCount() {
+        return counter;
+    }
 
     /**
      * Store elements received on LNSV2 QueryAll reply message.
