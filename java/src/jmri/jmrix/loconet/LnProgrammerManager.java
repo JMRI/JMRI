@@ -64,7 +64,7 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
     public static final ProgrammingMode LOCONETSV2MODE    = new ProgrammingMode("LOCONETSV2MODE", Bundle.getMessage("LOCONETSV2MODE"));
 
     /**
-     * Programming for LocoNet System Variables using version 2 of the protocol.
+     * Programming for Uhlenbrock (LocoNet) LNCV protocol.
      */
     public static final ProgrammingMode LOCONETLNCVMODE    = new ProgrammingMode("LOCONETLNCVMODE", Bundle.getMessage("LOCONETLNCVMODE"));
 

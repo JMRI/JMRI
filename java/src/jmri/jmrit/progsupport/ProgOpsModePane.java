@@ -366,27 +366,28 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
                     log.debug("OPS ACCY was selected in setProgrammerFromGui");
                     opsAccyMode = true;
                     opsSigMode = false;
-                    lnSv2Mode = false ;
-                    lncvMode = false ;
+                    lnSv2Mode = false;
+                    lncvMode = false;
                 } else if (entry.getKey() == ProgrammingMode.OPSACCEXTBYTEMODE) {
                     log.debug("OPS SIG was selected in setProgrammerFromGui");
                     opsAccyMode = false;
                     opsSigMode = true;
-                    lnSv2Mode = false ;
-                    lncvMode = false ;
+                    lnSv2Mode = false;
+                    lncvMode = false;
                 } else if (entry.getKey() == LnProgrammerManager.LOCONETLNCVMODE) {
                     log.debug("OPS LNCV was selected in setProgrammerFromGui");
                     opsAccyMode = false;
                     opsSigMode = false;
-                    lnSv2Mode = false ;
-                    lncvMode = true ;
+                    lnSv2Mode = false;
+                    lncvMode = true;
                 } else {
                     opsAccyMode = false;
                     opsSigMode = false;
+                    lncvMode = false;
                     if (entry.getKey() == LnProgrammerManager.LOCONETSV2MODE) {
-                        lnSv2Mode = true ;
+                        lnSv2Mode = true;
                     } else {
-                        lnSv2Mode = false ;
+                        lnSv2Mode = false;
                     }
                     getProgrammer().setMode(entry.getKey());
                 }
