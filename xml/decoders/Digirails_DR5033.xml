@@ -181,7 +181,7 @@
               <tooltip xml:lang="fr">Inversion de polarité ON au rétrosignal A: </tooltip>
               <tooltip xml:lang="nl">Omkering van de polariteit AAN voor feedback A</tooltip>
             </variable>
-            <variable CV="15" item="Feedback B Address" default="0">
+            <variable CV="16" item="Feedback B Address" default="0">
               <decVal min="0" max="2048"/>
               <label xml:lang="de">Verpolung EIN Rückmeldung B: </label>
               <label xml:lang="fr">Inversion ON rétrosignal B: </label>
@@ -192,7 +192,7 @@
               <tooltip xml:lang="fr">Inversion de polarité ON au rétrosignal B: </tooltip>
               <tooltip xml:lang="nl">Omkering van de polariteit AAN voor feedback B</tooltip>
             </variable>
-            <variable CV="15" item="Feedback D Address" default="0">
+            <variable CV="17" item="Feedback D Address" default="0">
               <decVal min="0" max="2048"/>
               <label xml:lang="de">Verpolung AUS Rückmeldung D: </label>
               <label xml:lang="fr">Inversion OFF rétrosignal D: </label>
@@ -203,7 +203,7 @@
               <tooltip xml:lang="fr">Inversion de polarité OFF au rétrosignal D: </tooltip>
               <tooltip xml:lang="nl">Omkering van de polariteit UIT voor terugkoppeling D</tooltip>
             </variable>
-            <variable CV="15" item="Feedback E Address" default="0">
+            <variable CV="18" item="Feedback E Address" default="0">
               <decVal min="0" max="2048"/>
               <label xml:lang="de">Verpolung AUS Rückmeldung E: </label>
               <label xml:lang="fr">Inversion OFF rétrosignal E: </label>

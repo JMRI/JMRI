@@ -58,8 +58,9 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     boolean opsSigMode = false;
     boolean oldOpsSigMode = false;
     boolean lnSv2Mode = false;
-    boolean lncvMode = false;
     boolean oldLnSv2Mode = false;
+    boolean lncvMode = false;
+    boolean oldLncvMode = false;
     boolean oldoffsetAddrCheckBox = false;
     transient volatile AddressedProgrammer programmer = null;
     transient volatile AccessoryOpsModeProgrammerFacade facadeProgrammer = null;
@@ -69,14 +70,15 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
      */
     @Override
     public Programmer getProgrammer() {
-        log.debug("getProgrammer mLongAddrCheck.isSelected()={}, oldLongAddr={}, mAddrField.getValue()={}, oldAddrValue={}, opsAccyMode={}, oldOpsAccyMode={}, opsSigMode={}, oldOpsSigMode={}, lnSv2Mode={}, oldLnSv2Mode={}, oldoffsetAddrCheckBox={})",
-                longAddrButton.isSelected(), oldLongAddr, mAddrField.getValue(), oldAddrValue, opsAccyMode, oldOpsAccyMode, opsSigMode, oldOpsSigMode, lnSv2Mode, oldLnSv2Mode, oldoffsetAddrCheckBox);
+        log.debug("getProgrammer mLongAddrCheck.isSelected()={}, oldLongAddr={}, mAddrField.getValue()={}, oldAddrValue={}, opsAccyMode={}, oldOpsAccyMode={}, opsSigMode={}, oldOpsSigMode={}, lnSv2Mode={}, oldLnSv2Mode={}, lncvMode={}, oldLncvMode={}, oldoffsetAddrCheckBox={})",
+                longAddrButton.isSelected(), oldLongAddr, mAddrField.getValue(), oldAddrValue, opsAccyMode, oldOpsAccyMode, opsSigMode, oldOpsSigMode, lnSv2Mode, oldLnSv2Mode, lncvMode, oldLncvMode, oldoffsetAddrCheckBox);
         if (longAddrButton.isSelected() == oldLongAddr
                 && mAddrField.getValue().equals(oldAddrValue)
                 && offsetAddrCheckBox.isSelected() == oldoffsetAddrCheckBox
                 && opsAccyMode == oldOpsAccyMode
                 && opsSigMode == oldOpsSigMode
-                && lnSv2Mode == oldLnSv2Mode) {
+                && lnSv2Mode == oldLnSv2Mode
+                && lncvMode == oldLncvMode) {
             log.debug("getProgrammer hasn't changed");
             // hasn't changed
             if (opsAccyMode || opsSigMode) {
@@ -93,6 +95,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         oldOpsAccyMode = opsAccyMode;
         oldOpsSigMode = opsSigMode;
         oldLnSv2Mode = lnSv2Mode;
+        oldLncvMode = lncvMode;
         oldoffsetAddrCheckBox = offsetAddrCheckBox.isSelected();
         setAddrParams();
 
