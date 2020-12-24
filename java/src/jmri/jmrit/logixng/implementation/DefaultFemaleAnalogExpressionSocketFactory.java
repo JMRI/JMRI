@@ -37,6 +37,11 @@ public class DefaultFemaleAnalogExpressionSocketFactory implements FemaleSocketF
         public FemaleSocket createSocket(Base parent, FemaleSocketListener listener, String name) {
             return new DefaultFemaleAnalogExpressionSocket(parent, listener, name);
         }
+        
+        @Override
+        public String toString() {
+            return getDescr();
+        }
     }
     
 }

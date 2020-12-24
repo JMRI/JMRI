@@ -37,6 +37,11 @@ public class DefaultFemaleDigitalExpressionSocketFactory implements FemaleSocket
         public FemaleSocket createSocket(Base parent, FemaleSocketListener listener, String name) {
             return new DefaultFemaleDigitalExpressionSocket(parent, listener, name);
         }
+        
+        @Override
+        public String toString() {
+            return getDescr();
+        }
     }
     
 }

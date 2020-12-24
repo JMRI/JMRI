@@ -26,6 +26,14 @@ public interface FemaleSocket extends Base {
     public void disconnect();
     
     /**
+     * Can a connected socket be disconnected?
+     * @return true if the socket can be disconnected, false otherwise
+     */
+    public default boolean canDisconnect() {
+        return true;
+    }
+    
+    /**
      * Get the connected socket.
      * @return the male socket or null if not connected
      */
@@ -79,6 +87,8 @@ public interface FemaleSocket extends Base {
      */
     public default boolean isSocketOperationAllowed(FemaleSocketOperation oper) {
         Base parent = getParent();
+        if (parent == null) return false;
+        
         for (int i=0; i < parent.getChildCount(); i++) {
             if (parent.getChild(i) == this) {
                 return parent.isSocketOperationAllowed(i, oper);

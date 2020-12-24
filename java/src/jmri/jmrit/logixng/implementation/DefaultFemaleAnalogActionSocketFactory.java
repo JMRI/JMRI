@@ -37,6 +37,11 @@ public class DefaultFemaleAnalogActionSocketFactory implements FemaleSocketFacto
         public FemaleSocket createSocket(Base parent, FemaleSocketListener listener, String name) {
             return new DefaultFemaleAnalogActionSocket(parent, listener, name);
         }
+        
+        @Override
+        public String toString() {
+            return getDescr();
+        }
     }
     
 }

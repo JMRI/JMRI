@@ -33,6 +33,7 @@ public class DefaultModule extends AbstractBase
     private String _socketSystemName = null;
     private final Map<String, Parameter> _parameters = new HashMap<>();
     private final Map<String, ParameterData> _localVariables = new HashMap<>();
+    private Lock _lock = Lock.NONE;
     
     
     public DefaultModule(String sys, String user) throws BadUserNameException, BadSystemNameException  {
@@ -75,12 +76,12 @@ public class DefaultModule extends AbstractBase
 
     @Override
     public String getShortDescription(Locale locale) {
-        return "Module";
+        return Bundle.getMessage("DefaultModule_Short");
     }
 
     @Override
     public String getLongDescription(Locale locale) {
-        return "Module: "+getDisplayName();
+        return Bundle.getMessage("DefaultModule_Long", getDisplayName());
     }
 
     @Override
@@ -100,22 +101,22 @@ public class DefaultModule extends AbstractBase
 
     @Override
     public Category getCategory() {
-        throw new UnsupportedOperationException("Not supported.");
+        return Category.OTHER;
     }
 
     @Override
     public boolean isExternal() {
-        throw new UnsupportedOperationException("Not supported.");
+        return false;
     }
 
     @Override
     public Lock getLock() {
-        throw new UnsupportedOperationException("Not supported.");
+        return _lock;
     }
 
     @Override
     public void setLock(Lock lock) {
-        throw new UnsupportedOperationException("Not supported.");
+        _lock = lock;
     }
 /*
     protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {
@@ -149,7 +150,7 @@ public class DefaultModule extends AbstractBase
         if ((_femaleRootSocket != null) && _femaleRootSocket.isConnected()) throw new RuntimeException("Cannot set root socket when it's connected");
         
         _rootSocketType = socketType;
-        _femaleRootSocket = socketType.createSocket(this, this, mSystemName);
+        _femaleRootSocket = socketType.createSocket(this, this, "Root");
         
         // Listeners should never be enabled for a module
         _femaleRootSocket.setEnableListeners(false);

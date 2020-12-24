@@ -13,7 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.HashMap;
+import java.util.*;
 
 import javax.swing.*;
 import javax.swing.Box;
@@ -44,16 +44,12 @@ import jmri.UserPreferencesManager;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 
-import java.util.ResourceBundle;
 
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
-import jmri.jmrit.logixng.tools.swing.LogixNGEditor;
+import jmri.jmrit.logixng.tools.swing.ModuleEditor;
 import jmri.jmrit.logixng.ModuleManager;
 
 /**
@@ -81,6 +77,8 @@ import jmri.jmrit.logixng.ModuleManager;
  */
 public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jmrit.logixng.Module> {
 
+    JComboBox<FemaleSocketManager.SocketType> _femaleSocketType = new JComboBox<>();
+    
     /**
      * Create a LogixNGTableAction instance.
      *
@@ -101,8 +99,9 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
     @Override
     protected AbstractLogixNGEditor<Module> getEditor(BeanTableFrame<Module> f, BeanTableDataModel<Module> m, String sName) {
 //        System.out.format("LogixNGModuleTableAction: getEditor()");
-        return null;
-//        return new ModuleEditor(f, m, sName);
+        ModuleEditor editor = new ModuleEditor(f, m, sName);
+        editor.initComponents();
+        return editor;
     }
     
     @Override
@@ -122,17 +121,25 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
     
     @Override
     protected boolean isEnabled(Module bean) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return true;
     }
     
     @Override
     protected Module createBean(String userName) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Module module = InstanceManager.getDefault(ModuleManager.class)
+                .createModule(userName);
+        module.setRootSocketType(
+                _femaleSocketType.getItemAt(_femaleSocketType.getSelectedIndex()));
+        return module;
     }
     
     @Override
     protected Module createBean(String systemName, String userName) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Module module = InstanceManager.getDefault(ModuleManager.class)
+                .createModule(systemName, userName);
+        module.setRootSocketType(
+                _femaleSocketType.getItemAt(_femaleSocketType.getSelectedIndex()));
+        return module;
     }
     
     @Override
@@ -161,7 +168,18 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
         addLogixNGFrame.setLocation(50, 30);
         Container contentPane = addLogixNGFrame.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-
+        
+        List<FemaleSocketManager.SocketType> list
+                = new ArrayList<>(InstanceManager.getDefault(FemaleSocketManager.class).getSocketTypes().values());
+        Collections.sort(list, (FemaleSocketManager.SocketType o1, FemaleSocketManager.SocketType o2) -> o1.getDescr().compareTo(o2.getDescr()));
+        
+        for (FemaleSocketManager.SocketType socketType : list) {
+            _femaleSocketType.addItem(socketType);
+            if ("DefaultFemaleDigitalActionSocket".equals(socketType.getName())) {
+                _femaleSocketType.setSelectedItem(socketType);
+            }
+        }
+        
         JPanel p;
         p = new JPanel();
         p.setLayout(new FlowLayout());
@@ -177,6 +195,8 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
         c.gridy = 1;
         p.add(_userNameLabel, c);
         _userNameLabel.setLabelFor(_addUserName);
+        c.gridy = 2;
+        p.add(new JLabel(Bundle.getMessage("LogixNG_ModuleSocketType")), c);
         c.gridx = 1;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.WEST;
@@ -185,6 +205,9 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
         p.add(_systemName, c);
         c.gridy = 1;
         p.add(_addUserName, c);
+        c.gridy = 2;
+        c.gridwidth = 2;
+        p.add(_femaleSocketType, c);
         c.gridx = 2;
         c.gridy = 1;
         c.anchor = java.awt.GridBagConstraints.WEST;
