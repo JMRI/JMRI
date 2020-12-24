@@ -570,31 +570,25 @@ public class Sequence extends AbstractDigitalAction
                 _startExpressionSocket.getConnectedSocket().setup();
             }
             
-            System.out.format("aaa%n");
             if ( !_stopExpressionSocket.isConnected()
                     || !_stopExpressionSocket.getConnectedSocket().getSystemName()
                             .equals(_stopExpressionSocketSystemName)) {
                 
-                System.out.format("bbb%n");
                 String socketSystemName = _stopExpressionSocketSystemName;
                 _stopExpressionSocket.disconnect();
                 if (socketSystemName != null) {
-                    System.out.format("ccc%n");
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(DigitalExpressionManager.class)
                                     .getBySystemName(socketSystemName);
                     _stopExpressionSocket.disconnect();
                     if (maleSocket != null) {
-                        System.out.format("ddd%n");
                         _stopExpressionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        System.out.format("eee%n");
                         log.error("cannot load digital expression " + socketSystemName);
                     }
                 }
             } else {
-                System.out.format("fff%n");
                 _stopExpressionSocket.getConnectedSocket().setup();
             }
             
