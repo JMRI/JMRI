@@ -1,25 +1,54 @@
 package jmri.jmrit.logixng.implementation.swing;
 
-import jmri.jmrit.logixng.actions.swing.*;
-
 import java.util.List;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JPanel;
 
-import jmri.InstanceManager;
-import jmri.jmrit.logixng.AnalogActionManager;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.actions.AnalogMany;
+import jmri.NamedBean;
+import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.swing.AbstractSwingConfigurator;
 
 /**
  * Configures an DefaultModule object with a Swing JPanel.
  */
-public class DefaultModuleSwing extends AbstractAnalogActionSwing {
+public class DefaultModuleSwing extends AbstractSwingConfigurator {
 
+    protected JPanel panel;
+    
+    /** {@inheritDoc} */
     @Override
+    public BaseManager<? extends NamedBean> getManager() {
+        return null;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public JPanel getConfigPanel(@Nonnull JPanel buttonPanel) throws IllegalArgumentException {
+        // This method is used to create a new item.
+        throw new UnsupportedOperationException("Not supported");
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public JPanel getConfigPanel(@Nonnull Base object, @Nonnull JPanel buttonPanel) throws IllegalArgumentException {
+        createPanel(object, buttonPanel);
+        return panel;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public String getExampleSystemName() {
+        throw new UnsupportedOperationException("Not supported");
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public String getAutoSystemName() {
+        throw new UnsupportedOperationException("Not supported");
+    }
+    
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         panel = new JPanel();
     }
@@ -33,8 +62,7 @@ public class DefaultModuleSwing extends AbstractAnalogActionSwing {
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
-        AnalogMany action = new AnalogMany(systemName, userName);
-        return InstanceManager.getDefault(AnalogActionManager.class).registerAction(action);
+        throw new UnsupportedOperationException("Not supported");
     }
     
     /** {@inheritDoc} */

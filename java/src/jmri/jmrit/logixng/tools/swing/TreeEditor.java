@@ -475,10 +475,14 @@ public class TreeEditor extends TreeViewer {
                 
                 boolean isValid = true;
                 
-                if (_editSwingConfiguratorInterface.getManager()
-                        .validSystemNameFormat(_systemName.getText()) != Manager.NameValidity.VALID) {
-                    isValid = false;
-                    errorMessages.add(Bundle.getMessage("InvalidSystemName", _systemName.getText()));
+                if (_editSwingConfiguratorInterface.getManager() != null) {
+                    if (_editSwingConfiguratorInterface.getManager()
+                            .validSystemNameFormat(_systemName.getText()) != Manager.NameValidity.VALID) {
+                        isValid = false;
+                        errorMessages.add(Bundle.getMessage("InvalidSystemName", _systemName.getText()));
+                    }
+                } else {
+                    log.debug("_editSwingConfiguratorInterface.getManager() returns null");
                 }
                 
                 isValid &= _editSwingConfiguratorInterface.validate(errorMessages);
