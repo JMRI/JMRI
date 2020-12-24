@@ -177,7 +177,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     text += "Status:" + getPowerDistrictStatus();
                 } else {
                     text = "Power Status: ";
-                    text += ((char) (getElement(1) & 0x00FF) == '1' ? "ON" : "OFF");
+                    text += (getPowerBool() ? "ON" : "OFF");
                 }
                 break;
             case DCCppConstants.CURRENT_REPLY:
@@ -251,9 +251,12 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         DCCppReply r = new DCCppReply(s);
         switch(s.charAt(0)) {
             case DCCppConstants.STATUS_REPLY:
-                if (s.matches(DCCppConstants.STATUS_REPLY_ESP32_REGEX)) {
-                    log.debug("ESP32 Status Reply: {}", r.toString());
-                    r.myRegex = DCCppConstants.STATUS_REPLY_ESP32_REGEX;
+                if (s.matches(DCCppConstants.STATUS_REPLY_BSC_REGEX)) {
+                    log.debug("BSC Status Reply: {}", r.toString());
+                    r.myRegex = DCCppConstants.STATUS_REPLY_BSC_REGEX;
+                } else if (s.matches(DCCppConstants.STATUS_REPLY_ESP32_REGEX)) {
+                        log.debug("ESP32 Status Reply: {}", r.toString());
+                        r.myRegex = DCCppConstants.STATUS_REPLY_ESP32_REGEX;
                 } else if (s.matches(DCCppConstants.STATUS_REPLY_REGEX)) {
                     log.debug("Original Status Reply: {}", r.toString());
                     r.myRegex = DCCppConstants.STATUS_REPLY_REGEX;
@@ -570,15 +573,15 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
-    //version is in 2nd match for v3+, does not exist prior 
+    //look for canonical version in 2nd match 
     public String getVersion() {
         if (this.isStatusReply()) {
             String s = this.getValueString(2);   
-                if (jmri.Version.isCanonicalVersion(s)) {
-                    return s;
-                } else {
-                    return("0.0.0");
-                }
+            if (jmri.Version.isCanonicalVersion(s)) {
+                return s;
+            } else {
+                return("0.0.0");
+            }
         } else {
             return("Unknown");
         }
@@ -1153,6 +1156,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean isOutputListReply() { return(this.matches(DCCppConstants.OUTPUT_LIST_REPLY_REGEX)); }
     public boolean isOutputCmdReply() { return(this.matches(DCCppConstants.OUTPUT_REPLY_REGEX)); }
     public boolean isCommTypeReply() { return(this.matches(DCCppConstants.COMM_TYPE_REPLY_REGEX)); }
+    public boolean isWriteEepromReply() { return(this.matches(DCCppConstants.WRITE_EEPROM_REPLY_REGEX)); }
 
     public boolean isValidReplyFormat() {
         if ((this.matches(DCCppConstants.THROTTLE_REPLY_REGEX)) ||
@@ -1173,6 +1177,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             (this.matches(DCCppConstants.MADC_FAIL_REPLY_REGEX)) ||
             (this.matches(DCCppConstants.MADC_SUCCESS_REPLY_REGEX)) ||
             (this.matches(DCCppConstants.STATUS_REPLY_REGEX)) ||
+            (this.matches(DCCppConstants.STATUS_REPLY_BSC_REGEX)) ||
             (this.matches(DCCppConstants.STATUS_REPLY_ESP32_REGEX)) ||
             (this.matches(DCCppConstants.STATUS_REPLY_DCCEX_REGEX))
 //            (this.isVersionReply())
