@@ -31,14 +31,12 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
     private ActionTimer _tempAction;    // We need an action in validate() to check female socket names.
     
     private String getNewSocketName(ActionTimer action) {
-        int numExpr = action.getNumExpressions();
-        int size = action.getNumExpressions() + MAX_NUM_TIMERS;
+        int size = ActionTimer.NUM_STATIC_EXPRESSIONS + MAX_NUM_TIMERS;
         String[] names = new String[size];
-        for (int i=0; i < numExpr; i++) {
-            names[i] = action.getExpressionSocket(i).getName();
-        }
+        names[ActionTimer.EXPRESSION_START] = action.getStartExpressionSocket().getName();
+        names[ActionTimer.EXPRESSION_STOP] = action.getStopExpressionSocket().getName();
         for (int i=0; i < MAX_NUM_TIMERS; i++) {
-            names[numExpr+i] = _timerSocketNames[i].getText();
+            names[ActionTimer.NUM_STATIC_EXPRESSIONS + i] = _timerSocketNames[i].getText();
         }
         return AbstractDigitalAction.getNewSocketName(names);
     }

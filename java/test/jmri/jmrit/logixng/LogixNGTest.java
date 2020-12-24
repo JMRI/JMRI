@@ -384,12 +384,12 @@ public class LogixNGTest {
                 .append("......! A").append(newLine)
                 .append(".........Many").append(newLine)
                 .append("............! A1").append(newLine)
-                .append("...............If E then A1 else A2").append(newLine)
-                .append("..................? E").append(newLine)
+                .append("...............If Then Else").append(newLine)
+                .append("..................? If").append(newLine)
                 .append(".....................Socket not connected").append(newLine)
-                .append("..................! A1").append(newLine)
+                .append("..................! Then").append(newLine)
                 .append(".....................Socket not connected").append(newLine)
-                .append("..................! A2").append(newLine)
+                .append("..................! Else").append(newLine)
                 .append(".....................Socket not connected").append(newLine)
                 .append("............! A2").append(newLine)
                 .append("...............Socket not connected").append(newLine);
@@ -474,7 +474,7 @@ public class LogixNGTest {
         Assert.assertTrue("description is correct", "Many".equals(many.getLongDescription()));
         MaleSocket ifThen = many.getChild(0).getConnectedSocket();
 //        System.err.format("aa: %s%n", ifThen.getLongDescription());
-        Assert.assertTrue("description is correct", "If E then A1 else A2".equals(ifThen.getLongDescription()));
+        Assert.assertTrue("description is correct", "If Then Else".equals(ifThen.getLongDescription()));
         systemName = InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName();
         DigitalExpressionBean expression = new ExpressionTurnout(systemName, "An expression for test");  // NOI18N
         MaleSocket digitalExpressionBean = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);

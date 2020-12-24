@@ -155,27 +155,27 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If E then A1 else A2%n" +
-"            ? E%n" +
-"               Sensor IS1 is Active%n" +
-"            ! A1%n" +
-"               Execute script%n" +
-"                  !~ AA%n" +
-"                     Socket not connected%n" +
-"                  ?~ AE%n" +
-"                     Socket not connected%n" +
-"                  ! DA%n" +
-"                     Socket not connected%n" +
-"                  !b DBA%n" +
-"                     Socket not connected%n" +
-"                  ? DE%n" +
-"                     Socket not connected%n" +
-"                  !s SA%n" +
-"                     Socket not connected%n" +
-"                  ?s SE%n" +
-"                     Socket not connected%n" +
-"            ! A2%n" +
-"               Socket not connected%n");
+                "         If Then Else%n" +
+                "            ? If%n" +
+                "               Sensor IS1 is Active%n" +
+                "            ! Then%n" +
+                "               Execute script%n" +
+                "                  !~ AA%n" +
+                "                     Socket not connected%n" +
+                "                  ?~ AE%n" +
+                "                     Socket not connected%n" +
+                "                  ! DA%n" +
+                "                     Socket not connected%n" +
+                "                  !b DBA%n" +
+                "                     Socket not connected%n" +
+                "                  ? DE%n" +
+                "                     Socket not connected%n" +
+                "                  !s SA%n" +
+                "                     Socket not connected%n" +
+                "                  ?s SE%n" +
+                "                     Socket not connected%n" +
+                "            ! Else%n" +
+                "               Socket not connected%n");
     }
     
     @Override

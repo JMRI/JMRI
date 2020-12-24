@@ -56,11 +56,11 @@ public class Sequence extends AbstractDigitalAction
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
         _startExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, "Start");
+                .createFemaleSocket(this, this, Bundle.getMessage("SequenceSocketStart"));
         _stopExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, "Stop");
+                .createFemaleSocket(this, this, Bundle.getMessage("SequenceSocketStop"));
         _resetExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, "Reset");
+                .createFemaleSocket(this, this, Bundle.getMessage("SequenceSocketReset"));
         setExpressionSystemNames(expressionSystemNames);
         setActionSystemNames(actionSystemNames);
     }
@@ -89,7 +89,6 @@ public class Sequence extends AbstractDigitalAction
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         Sequence copy = new Sequence(sysName, userName);
-        copy.setComment(getComment());
         copy.setComment(getComment());
         copy.setStartImmediately(_startImmediately);
         copy.setRunContinuously(_runContinuously);
@@ -290,8 +289,6 @@ public class Sequence extends AbstractDigitalAction
     }
     
     private void insertNewSocket(int index) {
-        index -= NUM_STATIC_EXPRESSIONS;
-        
         int actionIndex = index >> 1;
         int expressionIndex = index >> 1;
         
@@ -318,8 +315,6 @@ public class Sequence extends AbstractDigitalAction
     }
     
     private void removeSocket(int index) {
-        index -= NUM_STATIC_EXPRESSIONS;
-        
         int actionIndex = index >> 1;
         int expressionIndex = index-NUM_STATIC_EXPRESSIONS >> 1;
         
@@ -330,8 +325,6 @@ public class Sequence extends AbstractDigitalAction
     }
     
     private void moveSocketDown(int index) {
-        index -= NUM_STATIC_EXPRESSIONS;
-        
         int actionIndex = index >> 1;
         int expressionIndex = index >> 1;
         

@@ -43,12 +43,12 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "If E then A1 else A2%n" +
-                "   ? E%n" +
+                "If Then Else%n" +
+                "   ? If%n" +
                 "      Sensor '' is Active%n" +
-                "   ! A1%n" +
+                "   ! Then%n" +
                 "      Set turnout '' to state Thrown%n" +
-                "   ! A2%n" +
+                "   ! Else%n" +
                 "      Socket not connected%n");
     }
     
@@ -58,12 +58,12 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If E then A1 else A2%n" +
-                "            ? E%n" +
+                "         If Then Else%n" +
+                "            ? If%n" +
                 "               Sensor '' is Active%n" +
-                "            ! A1%n" +
+                "            ! Then%n" +
                 "               Set turnout '' to state Thrown%n" +
-                "            ! A2%n" +
+                "            ! Else%n" +
                 "               Socket not connected%n");
     }
     
@@ -324,9 +324,9 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
     @Test
     public void testToString() {
         DigitalActionBean a1 = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
-        Assert.assertEquals("strings are equal", "If then else", a1.getShortDescription());
+        Assert.assertEquals("strings are equal", "If Then Else", a1.getShortDescription());
         DigitalActionBean a2 = new IfThenElse("IQDA321", null, IfThenElse.Type.CONTINOUS_ACTION);
-        Assert.assertEquals("strings are equal", "If E then A1 else A2", a2.getLongDescription());
+        Assert.assertEquals("strings are equal", "If Then Else", a2.getLongDescription());
     }
     
     @Test

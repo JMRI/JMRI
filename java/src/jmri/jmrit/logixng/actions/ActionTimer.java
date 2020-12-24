@@ -27,8 +27,12 @@ public class ActionTimer extends AbstractDigitalAction
 
     public static final int EXPRESSION_START = 0;
     public static final int EXPRESSION_STOP = 1;
+    public static final int NUM_STATIC_EXPRESSIONS = 2;
     
-    private final List<ExpressionEntry> _expressionEntries = new ArrayList<>();
+    private String _startExpressionSocketSystemName;
+    private String _stopExpressionSocketSystemName;
+    private final FemaleDigitalExpressionSocket _startExpressionSocket;
+    private final FemaleDigitalExpressionSocket _stopExpressionSocket;
     private final List<ActionEntry> _actionEntries = new ArrayList<>();
     private ProtectedTimerTask _timerTask;
     private int _currentTimer = -1;
@@ -41,12 +45,10 @@ public class ActionTimer extends AbstractDigitalAction
     
     public ActionTimer(String sys, String user) {
         super(sys, user);
-        _expressionEntries
-                .add(new ExpressionEntry(InstanceManager.getDefault(DigitalExpressionManager.class)
-                        .createFemaleSocket(this, this, Bundle.getMessage("TimerSocketStart"))));
-        _expressionEntries
-                .add(new ExpressionEntry(InstanceManager.getDefault(DigitalExpressionManager.class)
-                        .createFemaleSocket(this, this, Bundle.getMessage("TimerSocketStop"))));
+        _startExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
+                .createFemaleSocket(this, this, Bundle.getMessage("TimerSocketStart"));
+        _stopExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
+                .createFemaleSocket(this, this, Bundle.getMessage("TimerSocketStop"));
         _actionEntries
                 .add(new ActionEntry(InstanceManager.getDefault(DigitalActionManager.class)
                         .createFemaleSocket(this, this, getNewSocketName())));
@@ -57,7 +59,10 @@ public class ActionTimer extends AbstractDigitalAction
             List<ActionData> actionDataList)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
-        setExpressionSystemNames(expressionSystemNames);
+        _startExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
+                .createFemaleSocket(this, this, Bundle.getMessage("TimerSocketStart"));
+        _stopExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
+                .createFemaleSocket(this, this, Bundle.getMessage("TimerSocketStop"));
         setActionData(actionDataList);
     }
     
@@ -69,7 +74,6 @@ public class ActionTimer extends AbstractDigitalAction
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionTimer copy = new ActionTimer(sysName, userName);
         copy.setComment(getComment());
-        copy.setComment(getComment());
         copy.setNumActions(getNumActions());
         for (int i=0; i < getNumActions(); i++) {
             copy.setDelay(i, getDelay(i));
@@ -78,20 +82,6 @@ public class ActionTimer extends AbstractDigitalAction
         copy.setRunContinuously(_runContinuously);
         copy.setUnit(_unit);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
-    }
-    
-    private void setExpressionSystemNames(List<Map.Entry<String, String>> systemNames) {
-        if (!_expressionEntries.isEmpty()) {
-            throw new RuntimeException("expression system names cannot be set more than once");
-        }
-        
-        for (Map.Entry<String, String> entry : systemNames) {
-            FemaleDigitalExpressionSocket socket =
-                    InstanceManager.getDefault(DigitalExpressionManager.class)
-                            .createFemaleSocket(this, this, entry.getKey());
-            
-            _expressionEntries.add(new ExpressionEntry(socket, entry.getValue()));
-        }
     }
     
     private void setActionData(List<ActionData> actionDataList) {
@@ -151,8 +141,8 @@ public class ActionTimer extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        if (_expressionEntries.get(EXPRESSION_STOP)._socket.isConnected()
-                && _expressionEntries.get(EXPRESSION_STOP)._socket.evaluate()) {
+        if (_stopExpressionSocket.isConnected()
+                && _stopExpressionSocket.evaluate()) {
             synchronized(this) {
                 if (_timerTask != null) _timerTask.stopTimer();
                 _timerTask = null;
@@ -161,8 +151,8 @@ public class ActionTimer extends AbstractDigitalAction
             return;
         }
         
-        if (_expressionEntries.get(EXPRESSION_START)._socket.isConnected()
-                && _expressionEntries.get(EXPRESSION_START)._socket.evaluate()) {
+        if (_startExpressionSocket.isConnected()
+                && _startExpressionSocket.evaluate()) {
             synchronized(this) {
                 if (_timerTask != null) {
                     _timerTask.stopTimer();
@@ -279,46 +269,47 @@ public class ActionTimer extends AbstractDigitalAction
     
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
-        if (index == EXPRESSION_START) return _expressionEntries.get(EXPRESSION_START)._socket;
-        if (index == EXPRESSION_STOP) return _expressionEntries.get(EXPRESSION_STOP)._socket;
-        if ((index < 0) || (index >= (_expressionEntries.size() + _actionEntries.size()))) {
+        if (index == EXPRESSION_START) return _startExpressionSocket;
+        if (index == EXPRESSION_STOP) return _stopExpressionSocket;
+        if ((index < 0) || (index >= (NUM_STATIC_EXPRESSIONS + _actionEntries.size()))) {
             throw new IllegalArgumentException(
                     String.format("index has invalid value: %d", index));
         }
-        return _actionEntries.get(index - _expressionEntries.size())._socket;
+        return _actionEntries.get(index - NUM_STATIC_EXPRESSIONS)._socket;
     }
 
     @Override
     public int getChildCount() {
-        return _expressionEntries.size() + _actionEntries.size();
+        return NUM_STATIC_EXPRESSIONS + _actionEntries.size();
     }
 
     @Override
     public void connected(FemaleSocket socket) {
-        for (ExpressionEntry entry : _expressionEntries) {
-            if (socket == entry._socket) {
-                entry._socketSystemName =
-                        socket.getConnectedSocket().getSystemName();
-            }
-        }
-        for (ActionEntry entry : _actionEntries) {
-            if (socket == entry._socket) {
-                entry._socketSystemName =
-                        socket.getConnectedSocket().getSystemName();
+        if (socket == _startExpressionSocket) {
+            _startExpressionSocketSystemName = socket.getConnectedSocket().getSystemName();
+        } else if (socket == _stopExpressionSocket) {
+            _stopExpressionSocketSystemName = socket.getConnectedSocket().getSystemName();
+        } else {
+            for (ActionEntry entry : _actionEntries) {
+                if (socket == entry._socket) {
+                    entry._socketSystemName =
+                            socket.getConnectedSocket().getSystemName();
+                }
             }
         }
     }
 
     @Override
     public void disconnected(FemaleSocket socket) {
-        for (ExpressionEntry entry : _expressionEntries) {
-            if (socket == entry._socket) {
-                entry._socketSystemName = null;
-            }
-        }
-        for (ActionEntry entry : _actionEntries) {
-            if (socket == entry._socket) {
-                entry._socketSystemName = null;
+        if (socket == _startExpressionSocket) {
+            _startExpressionSocketSystemName = null;
+        } else if (socket == _stopExpressionSocket) {
+            _stopExpressionSocketSystemName = null;
+        } else {
+            for (ActionEntry entry : _actionEntries) {
+                if (socket == entry._socket) {
+                    entry._socketSystemName = null;
+                }
             }
         }
     }
@@ -333,20 +324,28 @@ public class ActionTimer extends AbstractDigitalAction
         return Bundle.getMessage(locale, "ActionTimer_Long");
     }
 
-    public int getNumExpressions() {
-        return _expressionEntries.size();
-    }
-    
-    public FemaleDigitalExpressionSocket getExpressionSocket(int socket) {
-        return _expressionEntries.get(socket)._socket;
+    public FemaleDigitalExpressionSocket getStartExpressionSocket() {
+        return _startExpressionSocket;
     }
 
-    public String getExpressionSocketSystemName(int socket) {
-        return _expressionEntries.get(socket)._socketSystemName;
+    public String getStartExpressionSocketSystemName() {
+        return _startExpressionSocketSystemName;
     }
 
-    public void setExpressionSocketSystemName(int socket, String systemName) {
-        _expressionEntries.get(socket)._socketSystemName = systemName;
+    public void setStartExpressionSocketSystemName(String systemName) {
+        _startExpressionSocketSystemName = systemName;
+    }
+
+    public FemaleDigitalExpressionSocket getStopExpressionSocket() {
+        return _stopExpressionSocket;
+    }
+
+    public String getStopExpressionSocketSystemName() {
+        return _stopExpressionSocketSystemName;
+    }
+
+    public void setStopExpressionSocketSystemName(String systemName) {
+        _stopExpressionSocketSystemName = systemName;
     }
 
     public int getNumActions() {
@@ -393,37 +392,51 @@ public class ActionTimer extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void setup() {
-        for (ExpressionEntry ee : _expressionEntries) {
-            try {
-                if ( !ee._socket.isConnected()
-                        || !ee._socket.getConnectedSocket().getSystemName()
-                                .equals(ee._socketSystemName)) {
-
-                    String socketSystemName = ee._socketSystemName;
-                    ee._socket.disconnect();
-                    if (socketSystemName != null) {
-                        MaleSocket maleSocket =
-                                InstanceManager.getDefault(DigitalExpressionManager.class)
-                                        .getBySystemName(socketSystemName);
-                        ee._socket.disconnect();
-                        if (maleSocket != null) {
-                            ee._socket.connect(maleSocket);
-                            maleSocket.setup();
-                        } else {
-                            log.error("cannot load digital expression " + socketSystemName);
-                        }
+        try {
+            if ( !_startExpressionSocket.isConnected()
+                    || !_startExpressionSocket.getConnectedSocket().getSystemName()
+                            .equals(_startExpressionSocketSystemName)) {
+                
+                String socketSystemName = _startExpressionSocketSystemName;
+                _startExpressionSocket.disconnect();
+                if (socketSystemName != null) {
+                    MaleSocket maleSocket =
+                            InstanceManager.getDefault(DigitalExpressionManager.class)
+                                    .getBySystemName(socketSystemName);
+                    if (maleSocket != null) {
+                        _startExpressionSocket.connect(maleSocket);
+                        maleSocket.setup();
+                    } else {
+                        log.error("cannot load digital expression " + socketSystemName);
                     }
-                } else {
-                    ee._socket.getConnectedSocket().setup();
                 }
-            } catch (SocketAlreadyConnectedException ex) {
-                // This shouldn't happen and is a runtime error if it does.
-                throw new RuntimeException("socket is already connected");
+            } else {
+                _startExpressionSocket.getConnectedSocket().setup();
             }
-        }
-        
-        for (ActionEntry ae : _actionEntries) {
-            try {
+            
+            if ( !_stopExpressionSocket.isConnected()
+                    || !_stopExpressionSocket.getConnectedSocket().getSystemName()
+                            .equals(_stopExpressionSocketSystemName)) {
+                
+                String socketSystemName = _stopExpressionSocketSystemName;
+                _stopExpressionSocket.disconnect();
+                if (socketSystemName != null) {
+                    MaleSocket maleSocket =
+                            InstanceManager.getDefault(DigitalExpressionManager.class)
+                                    .getBySystemName(socketSystemName);
+                    _stopExpressionSocket.disconnect();
+                    if (maleSocket != null) {
+                        _stopExpressionSocket.connect(maleSocket);
+                        maleSocket.setup();
+                    } else {
+                        log.error("cannot load digital expression " + socketSystemName);
+                    }
+                }
+            } else {
+                _stopExpressionSocket.getConnectedSocket().setup();
+            }
+            
+            for (ActionEntry ae : _actionEntries) {
                 if ( !ae._socket.isConnected()
                         || !ae._socket.getConnectedSocket().getSystemName()
                                 .equals(ae._socketSystemName)) {
@@ -445,10 +458,10 @@ public class ActionTimer extends AbstractDigitalAction
                 } else {
                     ae._socket.getConnectedSocket().setup();
                 }
-            } catch (SocketAlreadyConnectedException ex) {
-                // This shouldn't happen and is a runtime error if it does.
-                throw new RuntimeException("socket is already connected");
             }
+        } catch (SocketAlreadyConnectedException ex) {
+            // This shouldn't happen and is a runtime error if it does.
+            throw new RuntimeException("socket is already connected");
         }
     }
     
@@ -486,21 +499,6 @@ public class ActionTimer extends AbstractDigitalAction
         }
     }
     
-    
-    private static class ExpressionEntry {
-        private String _socketSystemName;
-        private final FemaleDigitalExpressionSocket _socket;
-        
-        private ExpressionEntry(FemaleDigitalExpressionSocket socket, String socketSystemName) {
-            _socketSystemName = socketSystemName;
-            _socket = socket;
-        }
-        
-        private ExpressionEntry(FemaleDigitalExpressionSocket socket) {
-            this._socket = socket;
-        }
-        
-    }
     
     private static class ActionEntry {
         private int _delay;

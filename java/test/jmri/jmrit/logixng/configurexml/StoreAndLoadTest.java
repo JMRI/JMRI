@@ -521,8 +521,29 @@ public class StoreAndLoadTest {
         actionTimer.setDelay(2, 500);
         actionTimer.setStartImmediately(true);
         actionTimer.setRunContinuously(false);
+        actionTimer.setNumActions(2);
         maleSocket = digitalActionManager.registerAction(actionTimer);
         actionManySocket.getChild(index++).connect(maleSocket);
+        
+        And andTemp1 = new And(digitalExpressionManager.getAutoSystemName(), null);
+        andTemp1.setComment("Start expression");
+        maleSocket = digitalExpressionManager.registerExpression(andTemp1);
+        actionTimer.getChild(0).connect(maleSocket);
+        
+        andTemp1 = new And(digitalExpressionManager.getAutoSystemName(), null);
+        andTemp1.setComment("Stop expression");
+        maleSocket = digitalExpressionManager.registerExpression(andTemp1);
+        actionTimer.getChild(1).connect(maleSocket);
+        
+        DigitalMany manyTemp1 = new DigitalMany(digitalActionManager.getAutoSystemName(), null);
+        manyTemp1.setComment("Action socket 1");
+        maleSocket = digitalActionManager.registerAction(manyTemp1);
+        actionTimer.getChild(2).connect(maleSocket);
+        
+        manyTemp1 = new DigitalMany(digitalActionManager.getAutoSystemName(), null);
+        manyTemp1.setComment("Action socket 2");
+        maleSocket = digitalActionManager.registerAction(manyTemp1);
+        actionTimer.getChild(3).connect(maleSocket);
         
         
         ActionTurnout actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
@@ -727,7 +748,9 @@ public class StoreAndLoadTest {
         andTemp.setComment("Expression socket 1");
         maleSocket = digitalExpressionManager.registerExpression(andTemp);
         sequence.getChild(4).connect(maleSocket);
-/*        
+        
+        sequence.doSocketOperation(4, FemaleSocketOperation.InsertAfter);
+        
         manyTemp = new DigitalMany(digitalActionManager.getAutoSystemName(), null);
         manyTemp.setComment("Action socket 2");
         maleSocket = digitalActionManager.registerAction(manyTemp);
@@ -737,7 +760,7 @@ public class StoreAndLoadTest {
         andTemp.setComment("Expression socket 2");
         maleSocket = digitalExpressionManager.registerExpression(andTemp);
         sequence.getChild(6).connect(maleSocket);
-*/        
+        
         
         ShutdownComputer shutdownComputer =
                 new ShutdownComputer(digitalActionManager.getAutoSystemName(), null);

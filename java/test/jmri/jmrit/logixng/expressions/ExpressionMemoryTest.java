@@ -72,12 +72,12 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If E then A1 else A2%n" +
-                "            ? E%n" +
+                "         If Then Else%n" +
+                "            ? If%n" +
                 "               Memory IM1 is equal to \"\"%n" +
-                "            ! A1%n" +
+                "            ! Then%n" +
                 "               Set the atomic boolean to true%n" +
-                "            ! A2%n" +
+                "            ! Else%n" +
                 "               Socket not connected%n");
     }
     
