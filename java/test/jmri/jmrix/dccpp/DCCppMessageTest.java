@@ -351,13 +351,13 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMonitorStringTurnoutCommandMsgThrown() {
         msg = DCCppMessage.makeTurnoutCommandMsg(23, true);
-        Assert.assertEquals("Monitor string", "Turnout Cmd: T/O ID: 23, State: THROWN", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Turnout Cmd: ID: 23, State: THROWN", msg.toMonitorString());
     }
 
     @Test
     public void testMonitorStringTurnoutCommandMsgClosed() {
         msg = DCCppMessage.makeTurnoutCommandMsg(23, false);
-        Assert.assertEquals("Monitor string", "Turnout Cmd: T/O ID: 23, State: CLOSED", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Turnout Cmd: ID: 23, State: CLOSED", msg.toMonitorString());
     }
 
     @Test
@@ -695,13 +695,13 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMonitorStringOutputCmdMsgOn() {
         msg = DCCppMessage.makeOutputCmdMsg(23, true);
-        Assert.assertEquals("Monitor string", "Output Cmd: Output ID: 23, State: HIGH", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Output Cmd: ID: 23, State: HIGH", msg.toMonitorString());
     }
 
     @Test
     public void testMonitorStringOutputCmdMsgOff() {
         msg = DCCppMessage.makeOutputCmdMsg(23, false);
-        Assert.assertEquals("Monitor string", "Output Cmd: Output ID: 23, State: LOW", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Output Cmd: ID: 23, State: LOW", msg.toMonitorString());
     }
 
     @BeforeEach

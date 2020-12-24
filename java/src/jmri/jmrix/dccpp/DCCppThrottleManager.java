@@ -141,9 +141,15 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
     public void message(DCCppMessage l) {
     }
 
-    // Handle a timeout notification
+    // Handle message timeout notification
+    // If the message still has retries available, reduce retries and send it back to the traffic controller.
     @Override
     public void notifyTimeout(DCCppMessage msg) {
+        log.debug("Notified of timeout on message '{}' , {} retries available.", msg.toString(), msg.getRetries());
+        if (msg.getRetries() > 0) {
+            msg.setRetries(msg.getRetries() - 1);
+            tc.sendDCCppMessage(msg, this);
+        }        
     }
 
     @Override

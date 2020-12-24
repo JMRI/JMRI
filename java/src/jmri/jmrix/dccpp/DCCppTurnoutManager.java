@@ -71,10 +71,8 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
      */
     @Override
     public void message(DCCppReply l) {
-        if (log.isDebugEnabled()) {
-            log.debug("received message: {}", l.toString());
-        }
         if (l.isTurnoutReply()) {
+            log.debug("received Turnout Reply message: {}", l.toString());
             // parse message type
             int addr = l.getTOIDInt();
             if (addr >= 0) {
@@ -97,6 +95,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
                 }
             }
         } else if (l.isOutputCmdReply()) {
+            log.debug("received Output Cmd Reply message: {}", l.toString());
             // parse message type
             int addr = l.getOutputNumInt();
             if (addr >= 0) {
@@ -150,14 +149,15 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
     public void message(DCCppMessage l) {
     }
 
-    /**
-     * Handle a timeout notification.
-     */
+    // Handle message timeout notification
+    // If the message still has retries available, reduce retries and send it back to the traffic controller.
     @Override
     public void notifyTimeout(DCCppMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message{}", msg.toString());
-        }
+        log.debug("Notified of timeout on message '{}' , {} retries available.", msg.toString(), msg.getRetries());
+        if (msg.getRetries() > 0) {
+            msg.setRetries(msg.getRetries() - 1);
+            tc.sendDCCppMessage(msg, this);
+        }        
     }
 
     /** {@inheritDoc} */

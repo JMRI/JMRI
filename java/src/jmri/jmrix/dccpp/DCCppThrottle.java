@@ -324,9 +324,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     // Handle a timeout notification
     @Override
     public void notifyTimeout(DCCppMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message{} , {} retries available.", msg.toString(), msg.getRetries());
-        }
+        log.debug("Notified of timeout on message '{}' , {} retries available.", msg.toString(), msg.getRetries());
         if (msg.getRetries() > 0) {
             // If the message still has retries available, send it back to 
             // the traffic controller.

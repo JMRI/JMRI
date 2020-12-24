@@ -115,9 +115,7 @@ public class DCCppTurnoutReplyCache implements DCCppListener {
     // Handle a timeout notification
     @Override
     public void notifyTimeout(DCCppMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message{}", msg.toString());
-        }
+        log.debug("Notified of timeout on message '{}'", msg.toString());
     }
 
     private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutReplyCache.class);

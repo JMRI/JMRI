@@ -84,7 +84,6 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     @Override
     public void message(DCCppReply l) {
         int addr = -1;  // -1 flags that no sensor address was found in reply
-        log.debug("received message: {}", l);
         if (l.isSensorDefReply()) {
             addr = l.getSensorDefNumInt();
             if (log.isDebugEnabled()) {
@@ -125,14 +124,15 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     public void message(DCCppMessage l) {
     }
 
-    /**
-     * Handle a timeout notification.
-     * 
-     * @param msg the message to parse
-     */
+    // Handle message timeout notification
+    // If the message still has retries available, reduce retries and send it back to the traffic controller.
     @Override
     public void notifyTimeout(DCCppMessage msg) {
-        log.debug("Notified of timeout on message {}", msg);
+        log.debug("Notified of timeout on message '{}' , {} retries available.", msg.toString(), msg.getRetries());
+        if (msg.getRetries() > 0) {
+            msg.setRetries(msg.getRetries() - 1);
+            tc.sendDCCppMessage(msg, this);
+        }        
     }
 
     @Override

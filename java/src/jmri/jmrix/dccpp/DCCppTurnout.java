@@ -260,8 +260,6 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
      */
     @Override
     synchronized public void message(DCCppReply l) {
-        log.debug("received message: {}", l);
-
         switch (getFeedbackMode()) {
         case EXACT:
             handleExactModeFeedback(l);
@@ -283,9 +281,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     // Handle a timeout notification
     @Override
     public void notifyTimeout(DCCppMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message {}", msg.toString());
-        }
+        log.debug("Notified of timeout on message '{}'", msg.toString());
     }
 
     /*

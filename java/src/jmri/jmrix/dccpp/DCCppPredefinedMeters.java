@@ -44,7 +44,7 @@ public class DCCppPredefinedMeters implements DCCppListener {
         //is_enabled = false;
         updateTask.initTimer();
 
-        log.debug("DCCppMultiMeter constructor called");
+        log.debug("DCCppPredefinedMeters constructor called");
     }
 
     public void setDCCppTrafficController(DCCppTrafficController controller) {
@@ -53,8 +53,8 @@ public class DCCppPredefinedMeters implements DCCppListener {
 
     @Override
     public void message(DCCppReply r) {
-        log.debug("DCCppMultiMeter received reply: {}", r.toString());
         if (r.isCurrentReply()) {
+            log.debug("DCCppPredefinedMeters received reply: {}", r.toString());
             try {
                 currentMeter.setCommandedAnalogValue(((r.getCurrentInt() * 1.0f) / (DCCppConstants.MAX_CURRENT * 1.0f)) * 100.0f );  // return as percentage.
             } catch (JmriException e) {
@@ -77,7 +77,7 @@ public class DCCppPredefinedMeters implements DCCppListener {
     // Handle a timeout notification
     @Override
     public void notifyTimeout(DCCppMessage msg) {
-        log.debug("Notified of timeout on message {}, {} retries available.", msg.toString(), msg.getRetries());
+        log.debug("Notified of timeout on message '{}', {} retries available.", msg.toString(), msg.getRetries());
     }
 
     private final static Logger log = LoggerFactory.getLogger(DCCppPredefinedMeters.class);
