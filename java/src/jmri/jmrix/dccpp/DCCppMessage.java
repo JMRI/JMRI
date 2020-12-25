@@ -595,6 +595,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 text = "Clear EEPROM Cmd: ";
                 text += toString();
                 break;
+            case DCCppConstants.QUERY_SENSOR_STATES_CMD:
+                text = "Query Sensor States Cmd: '" + toString() + "'";
+                break;               
             default:
                 text = "Unknown Message: '" + toString() + "'";
         }
