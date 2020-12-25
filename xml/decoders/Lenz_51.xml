@@ -18,9 +18,9 @@
   <!-- The defaults in this file match the values found in decoders from the factory but not the documentation -->
   <!-- Note that these Lenz decoders only support a 15 position speed table CV67-CV81 -->
   <!-- This file was built using the Lenz 5.4 XML file as a basis -->
-  <!-- Version 3, Correction speed table to CV67-81 and Range 1-63.
+  <!-- Version 3, Corection speed table to CV67-81 and Range 1-63.
                   Vhigh (CV5) default from 255 to 10 change.
-                  Correction CV19 address from 1-255 no direction change.
+                  Corection CV19 adres from 1-255 no direction change.
                   Forgotten CV30 and CV60 Bit1 added.
                   Dutch translating inserted.   -->
   <decoder>
@@ -128,6 +128,11 @@
         <label xml:lang="de">Startspannung</label>
         <label xml:lang="nl">Startspanning</label>
         <label xml:lang="cs">Rozjezdové napětí</label>
+        <tooltip>Range 1-15</tooltip>
+        <tooltip xml:lang="cs">Meze 1-15</tooltip>
+        <tooltip xml:lang="de">Bereich 1-15</tooltip>
+        <tooltip xml:lang="it">Valori 1-15</tooltip>
+        <tooltip xml:lang="nl">Bereik 1-15</tooltip>
         <comment>Range 1-15</comment>
       </variable>
       <variable item="Accel" CV="3" comment="Range 1-31" default="4">
@@ -137,6 +142,11 @@
         <label xml:lang="de">Accel</label>
         <label xml:lang="cs">Zrychlení</label>
         <label xml:lang="nl">Acceleratie</label>
+        <tooltip>Range 1-31</tooltip>
+        <tooltip xml:lang="cs">Meze 1-31</tooltip>
+        <tooltip xml:lang="de">Bereich 1-31</tooltip>
+        <tooltip xml:lang="it">Valori 1-31</tooltip>
+        <tooltip xml:lang="nl">Bereik 1-31</tooltip>
         <comment>Range 1-31</comment>
       </variable>
       <variable item="Decel" CV="4" comment="Range 1-31" default="1">
@@ -145,6 +155,11 @@
         <label xml:lang="it">Decellerazione</label>
         <label xml:lang="de">Decel</label>
         <label xml:lang="cs">Zpomalení</label>
+        <tooltip>Range 1-31</tooltip>
+        <tooltip xml:lang="cs">Meze 1-31</tooltip>
+        <tooltip xml:lang="de">Bereich 1-31</tooltip>
+        <tooltip xml:lang="it">Valori 1-31</tooltip>
+        <tooltip xml:lang="nl">Bereik 1-31</tooltip>
         <comment>Range 1-31</comment>
       </variable>
       <variable item="Vhigh" CV="5" default="10">
@@ -179,6 +194,11 @@
         <label xml:lang="de">Total PWM Period</label>
         <label xml:lang="cs">Frekvence EMF</label>
         <label xml:lang="nl">EMF-frequentie</label>
+        <tooltip>Range 1-15</tooltip>
+        <tooltip xml:lang="cs">Meze 1-15</tooltip>
+        <tooltip xml:lang="de">Bereich 1-15</tooltip>
+        <tooltip xml:lang="it">Valori 1-15</tooltip>
+        <tooltip xml:lang="nl">Bereik 1-15</tooltip>
         <comment>Range 0-15</comment>
       </variable>
       <!-- CV=19 -->
@@ -371,9 +391,10 @@
         <label xml:lang="de">Brems verhalten beim DC-Betrieb.</label>
         <label xml:lang="cs">DC brzdné zpomalení</label>
         <label xml:lang="nl">Rem gedrag bij DC-betrieb.</label>
-        
         <tooltip>&lt;html&gt;Controls how the locomotive reacts in a DC track block.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">Určuje jak bude lokomotiva reagovat na DC kolejovém obvodu</tooltip>
         <tooltip xml:lang="de">&lt;html&gt;Steuert, wie die Lokomotive in einem DC Gleisabschnitt reagiert&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="it">Controlla il comportamento della loco in un blocco Analogico</tooltip>
         <tooltip xml:lang="nl">&lt;html&gt;Regelt hoe de loc reageert in een DC spoor sectie.&lt;br&gt;&lt;/html&gt;</tooltip>
       </variable>
       <!-- No compliant Speed Table -->
