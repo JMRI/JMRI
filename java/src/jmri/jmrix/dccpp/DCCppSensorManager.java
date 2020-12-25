@@ -116,7 +116,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     }
 
     /**
-     * Listen for the messages to the LI100/LI101.
+     * Listen for the outgoing messages (to the command station)
      * 
      * @param l the message to parse
      */
@@ -217,8 +217,8 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
 
     /**
      * Get the bit address from the system name.
-     * @param systemName a valid LocoNet-based Turnout System Name
-     * @return the turnout number extracted from the system name
+     * @param systemName a valid Sensor System Name
+     * @return the sensor number extracted from the system name
      */
     public int getBitFromSystemName(String systemName) {
         try {

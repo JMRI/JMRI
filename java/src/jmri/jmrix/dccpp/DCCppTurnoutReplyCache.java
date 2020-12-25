@@ -107,7 +107,7 @@ public class DCCppTurnoutReplyCache implements DCCppListener {
         }
     }
 
-    // listen for the messages to the LI100/LI101
+    // Listen for the outgoing messages (to the command station)
     @Override
     public void message(DCCppMessage l) {
     }
