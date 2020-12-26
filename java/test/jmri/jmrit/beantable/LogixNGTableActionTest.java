@@ -395,7 +395,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         new JButtonOperator(addItemDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
         
         Assert.assertTrue("Is connected", conditionalNG.getChild(0).isConnected());
-        Assert.assertEquals("Action is correct", "If E then A1 else A2",
+        Assert.assertEquals("Action is correct", "If Then Else",
                 conditionalNG.getChild(0).getConnectedSocket().getLongDescription());
         Assert.assertEquals("Num childs are correct", 3, conditionalNG.getChild(0).getConnectedSocket().getChildCount());
         
