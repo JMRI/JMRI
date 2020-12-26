@@ -77,7 +77,7 @@ public class DCCppPredefinedMeters implements DCCppListener {
     // Handle a timeout notification
     @Override
     public void notifyTimeout(DCCppMessage msg) {
-        log.debug("Notified of timeout on message '{}', {} retries available.", msg.toString(), msg.getRetries());
+        log.debug("Notified of timeout on message '{}', {} retries available.", msg, msg.getRetries());
     }
 
     private final static Logger log = LoggerFactory.getLogger(DCCppPredefinedMeters.class);

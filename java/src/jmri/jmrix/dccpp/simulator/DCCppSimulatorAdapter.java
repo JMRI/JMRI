@@ -247,7 +247,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         Matcher m;
         DCCppReply reply = null;
 
-        log.debug("Generate Reply to message type {} string = {}", msg.getElement(0), msg.toString());
+        log.debug("Generate Reply to message type '{}' string = '{}'", msg.getElement(0), msg);
 
         switch (msg.getElement(0)) {
 
@@ -296,7 +296,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
             case DCCppConstants.OUTPUT_CMD:
                 if (msg.isOutputCmdMessage()) {
-                    log.debug("Output Command Message: {}", msg.toString());
+                    log.debug("Output Command Message: '{}'", msg);
                     r = "Y" + msg.getOutputIDString() + " " + (msg.getOutputStateBool() ? "1" : "0");
                     log.debug("Reply String: {}", r);
                     reply = DCCppReply.parseDCCppReply(r);

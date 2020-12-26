@@ -151,9 +151,7 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
     // Handle a timeout notification
     @Override
     public void notifyTimeout(DCCppMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message '{}'", msg.toString());
-        }
+        log.debug("Notified of timeout on message '{}'", msg);
     }
 
     @Override

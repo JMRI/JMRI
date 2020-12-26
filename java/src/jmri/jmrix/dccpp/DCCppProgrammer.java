@@ -264,7 +264,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
     // Handle a timeout notification
     @Override
     public void notifyTimeout(DCCppMessage msg) {
-        log.debug("Notified of timeout on message '{}'", msg.toString());
+        log.debug("Notified of timeout on message '{}'", msg);
     }
 
 

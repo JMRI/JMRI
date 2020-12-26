@@ -150,9 +150,7 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
     // Handle a timeout notification
     @Override
     public void notifyTimeout(DCCppMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message '{}'", msg.toString());
-        }
+        log.debug("Notified of timeout on message '{}'", msg);
     }
 
     private final static Logger log = LoggerFactory.getLogger(DCCppLight.class);

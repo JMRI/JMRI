@@ -237,7 +237,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
         // So we have to omit the JMRI-generated one.
         DCCppMessage msg = DCCppMessage.makeWriteDCCPacketMainMsg(reg, packet.length - 1, packet);
         assert msg != null;
-        log.debug("sendPacket:'{}'", msg.toString());
+        log.debug("sendPacket:'{}'", msg);
 
         for (int i = 0; i < repeats; i++) {
             _tc.sendDCCppMessage(msg, null);

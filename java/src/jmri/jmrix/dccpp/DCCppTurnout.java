@@ -207,7 +207,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
             internalState = IDLE;
                 break;
         }
-        log.debug("Sending Message: {}", msg.toString());
+        log.debug("Sending Message: '{}'", msg);
         tc.sendDCCppMessage(msg, null);  // status returned via manager
     }
     
@@ -281,7 +281,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     // Handle a timeout notification
     @Override
     public void notifyTimeout(DCCppMessage msg) {
-        log.debug("Notified of timeout on message '{}'", msg.toString());
+        log.debug("Notified of timeout on message '{}'", msg);
     }
 
     /*

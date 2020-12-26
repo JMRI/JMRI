@@ -86,7 +86,7 @@ public class DCCppPowerManager extends AbstractPowerManager<DCCppSystemConnectio
     // If the message still has retries available, reduce retries and send it back to the traffic controller.
     @Override
     public void notifyTimeout(DCCppMessage msg) {
-        log.debug("Notified of timeout on message '{}' , {} retries available.", msg.toString(), msg.getRetries());
+        log.debug("Notified of timeout on message '{}' , {} retries available.", msg, msg.getRetries());
         if (msg.getRetries() > 0) {
             msg.setRetries(msg.getRetries() - 1);
             tc.sendDCCppMessage(msg, this);
