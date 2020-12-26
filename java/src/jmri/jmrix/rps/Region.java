@@ -41,7 +41,8 @@ public class Region {
     GeneralPath path;
 
     /**
-     * Ctor from a string like "(0,0,0);(1,0,0);(1,1,0);(0,1,0)"
+     * Ctor from a string like "(0,0,0);(1,0,0);(1,1,0);(0,1,0)" .
+     * @param s construction string.
      */
     public Region(String s) {
         String[] pStrings = s.split(";");
@@ -70,6 +71,7 @@ public class Region {
      * underlying object immutable, but by returning a Shape type hopefully we
      * achieve the same result with a little better performance. Please don't
      * assume you can cast and modify this.
+     * @return the path.
      */
     public Shape getPath() {
         return path;

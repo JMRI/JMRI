@@ -1,10 +1,9 @@
 package jmri.util.swing;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -24,14 +23,14 @@ public class UnexpectedExceptionContextTest extends ExceptionContextTest {
         Assert.assertEquals("Title",Bundle.getMessage("UnexpectedExceptionOperationTitle",Exception.class.getSimpleName()),ec.getTitle());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();    
         ec = new UnexpectedExceptionContext(new Exception("Test"),"Test Op");
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         ec = null;

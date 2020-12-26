@@ -45,6 +45,8 @@ public class TrainCommon {
     protected static final String SPACE = " ";
     protected static final String BLANK_LINE = " ";
     protected static final String HORIZONTAL_LINE_CHAR = "-";
+    protected static final String BUILD_REPORT_CHAR = "-";
+    public static final String HYPHEN = "-";
     protected static final String VERTICAL_LINE_CHAR = "|";
     protected static final String TEXT_COLOR_START = "<FONT color=\"";
     protected static final String TEXT_COLOR_END = "</FONT>";
@@ -62,11 +64,6 @@ public class TrainCommon {
     CarManager carManager = InstanceManager.getDefault(CarManager.class);
     EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
     LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
-
-    // for manifests
-    protected int cars = 0; // number of cars in train at a RouteLocation
-    protected int emptyCars = 0; // number of empty cars in train at a
-                                 // RouteLocation
 
     // for switch lists
     protected boolean pickupCars; // true when there are pickups
@@ -230,7 +227,7 @@ public class TrainCommon {
             printSetoutHeader = true;
             printLocalMoveHeader = true;
         }
-        List<Track> tracks = rl.getLocation().getTrackByNameList(null);
+        List<Track> tracks = rl.getLocation().getTracksByNameList(null);
         List<String> trackNames = new ArrayList<>();
         clearUtilityCarTypes(); // list utility cars by quantity
         boolean isOnlyPassenger = train.isOnlyPassengerCars();
@@ -288,10 +285,10 @@ public class TrainCommon {
                             pickUpCar(file, car, isManifest);
                         }
                         pickupCars = true;
-                        cars++;
-                        if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
-                            emptyCars++;
-                        }
+//                        cars++;
+//                        if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
+//                            emptyCars++;
+//                        }
                     }
                 }
                 if (isOnlyPassenger) {
@@ -351,11 +348,11 @@ public class TrainCommon {
                         dropCar(file, car, isManifest);
                     }
                     dropCars = true;
-                    cars--;
-                    if (InstanceManager.getDefault(CarLoads.class).getLoadType(car.getTypeName(), car.getLoadName())
-                            .equals(CarLoad.LOAD_TYPE_EMPTY)) {
-                        emptyCars--;
-                    }
+//                    cars--;
+//                    if (InstanceManager.getDefault(CarLoads.class).getLoadType(car.getTypeName(), car.getLoadName())
+//                            .equals(CarLoad.LOAD_TYPE_EMPTY)) {
+//                        emptyCars--;
+//                    }
                 }
             }
             if (!Setup.isSortByTrackNameEnabled()) {
@@ -380,7 +377,7 @@ public class TrainCommon {
             List<RouteLocation> routeList, RouteLocation rl, boolean printHeader, boolean isManifest) {
         index = 0;
         int lineLength = getLineLength(isManifest);
-        List<Track> tracks = rl.getLocation().getTrackByNameList(null);
+        List<Track> tracks = rl.getLocation().getTracksByNameList(null);
         List<String> trackNames = new ArrayList<>();
         clearUtilityCarTypes(); // list utility cars by quantity
         if (printHeader) {
@@ -411,10 +408,10 @@ public class TrainCommon {
                             continue;
                         }
                         pickupCars = true;
-                        cars++;
-                        if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
-                            emptyCars++;
-                        }
+//                        cars++;
+//                        if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
+//                            emptyCars++;
+//                        }
                         String s;
                         if (car.isUtility()) {
                             s = pickupUtilityCars(carList, car, isManifest, !IS_TWO_COLUMN_TRACK);
@@ -480,7 +477,7 @@ public class TrainCommon {
     protected void blockCarsByTrackNameTwoColumn(PrintWriter file, List<Car> carList,
             List<RouteLocation> routeList, RouteLocation rl, boolean printHeader, boolean isManifest) {
         index = 0;
-        List<Track> tracks = rl.getLocation().getTrackByNameList(null);
+        List<Track> tracks = rl.getLocation().getTracksByNameList(null);
         List<String> trackNames = new ArrayList<>();
         doneCars.clear();
         clearUtilityCarTypes(); // list utility cars by quantity
@@ -511,10 +508,10 @@ public class TrainCommon {
                         }
                         trackNames.add(trackName); // use a track name once
                         pickupCars = true;
-                        cars++;
-                        if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
-                            emptyCars++;
-                        }
+//                        cars++;
+//                        if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
+//                            emptyCars++;
+//                        }
                         String s;
                         if (car.isUtility()) {
                             s = pickupUtilityCars(carList, car, isManifest, IS_TWO_COLUMN_TRACK);
@@ -559,7 +556,7 @@ public class TrainCommon {
     protected void printTrackComments(PrintWriter file, RouteLocation rl, List<Car> carList, boolean isManifest) {
         Location location = rl.getLocation();
         if (location != null) {
-            List<Track> tracks = location.getTrackByNameList(null);
+            List<Track> tracks = location.getTracksByNameList(null);
             for (Track track : tracks) {
                 if (isManifest && !track.isPrintManifestCommentEnabled() ||
                         !isManifest && !track.isPrintSwitchListCommentEnabled()) {
@@ -644,10 +641,10 @@ public class TrainCommon {
     private String appendSetoutString(String s, List<Car> carList, RouteLocation rl, Car car, boolean isManifest,
             boolean isTwoColumnTrack) {
         dropCars = true;
-        cars--;
-        if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
-            emptyCars--;
-        }
+//        cars--;
+//        if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
+//            emptyCars--;
+//        }
 
         String dropText;
 
@@ -1057,7 +1054,7 @@ public class TrainCommon {
         boolean showLoad = showUtilityCarLoad(format);
         boolean showLocation = false;
         boolean showDestination = false;
-        String carType = car.getTypeName().split("-")[0];
+        String carType = car.getTypeName().split(HYPHEN)[0];
         String carAttributes;
         // Note for car pick up: type, id, track name. For set out type, track
         // name, id (reversed).
@@ -1092,7 +1089,7 @@ public class TrainCommon {
                 if (!c.isUtility()) {
                     continue;
                 }
-                String cType = c.getTypeName().split("-")[0];
+                String cType = c.getTypeName().split(HYPHEN)[0];
                 if (!cType.equals(carType)) {
                     continue;
                 }
@@ -1183,13 +1180,13 @@ public class TrainCommon {
                 if (sb.length() + word.length() < lineLengthMax) {
                     sb.append(word + SPACE);
                 } else {
-                    file.println(level + "- " + sb.toString());
+                    file.println(level + BUILD_REPORT_CHAR + " " + sb.toString());
                     sb = new StringBuffer(word + SPACE);
                 }
             }
             string = sb.toString();
         }
-        file.println(level + "- " + string);
+        file.println(level + BUILD_REPORT_CHAR + " " + string);
     }
 
     /**
@@ -1255,7 +1252,7 @@ public class TrainCommon {
      * @return First half of the string.
      */
     public static String splitString(String name) {
-        String[] splitname = name.split("-");
+        String[] splitname = name.split(HYPHEN);
         // is the hyphen followed by a number or left parenthesis?
         if (splitname.length > 1 && !splitname[1].startsWith("(")) {
             try {
@@ -1274,7 +1271,7 @@ public class TrainCommon {
      * @return First half of the string.
      */
     private static String splitStringLeftParenthesis(String name) {
-        String[] splitname = name.split("-");
+        String[] splitname = name.split(HYPHEN);
         if (splitname.length > 1 && splitname[1].startsWith("(")) {
             return splitname[0].trim();
         }
@@ -1375,7 +1372,7 @@ public class TrainCommon {
                                     InstanceManager.getDefault(CarLoads.class).getMaxNameLength() +
                                             1)
                                     : " " +
-                                            padAndTruncateIfNeeded(car.getLoadName().split("-")[0],
+                                            padAndTruncateIfNeeded(car.getLoadName().split(HYPHEN)[0],
                                                     InstanceManager.getDefault(CarLoads.class).getMaxNameLength());
         } else if (attribute.equals(Setup.LOAD_TYPE)) {
             return " " +
@@ -1450,10 +1447,10 @@ public class TrainCommon {
         if (attribute.equals(Setup.NUMBER)) {
             return " " + padAndTruncateIfNeeded(splitString(rs.getNumber()), Control.max_len_string_print_road_number);
         } else if (attribute.equals(Setup.ROAD)) {
-            String road = rs.getRoadName().split("-")[0];
+            String road = rs.getRoadName().split(HYPHEN)[0];
             return " " + padAndTruncateIfNeeded(road, InstanceManager.getDefault(CarRoads.class).getMaxNameLength());
         } else if (attribute.equals(Setup.TYPE)) {
-            String type = rs.getTypeName().split("-")[0];
+            String type = rs.getTypeName().split(HYPHEN)[0];
             return " " + padAndTruncateIfNeeded(type, InstanceManager.getDefault(CarTypes.class).getMaxNameLength());
         } else if (attribute.equals(Setup.LENGTH)) {
             return " " +

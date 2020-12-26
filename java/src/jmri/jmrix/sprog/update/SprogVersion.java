@@ -149,7 +149,8 @@ public class SprogVersion {
     }
 
     /**
-     *
+     * Custom toString with Version Number.
+     * @param s sprog version.
      * @return String representation of SPROG version
      */
     public String toString(SprogVersion s) {

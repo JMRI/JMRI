@@ -31,6 +31,7 @@ public class CbusConsoleDecodeOptionsPane extends javax.swing.JPanel implements 
     
     private final CbusConsolePane _mainPane;
     private final CbusNameService nameService;
+    private final jmri.UserPreferencesManager p;
     
     private JCheckBox timeCheckBox;
     private JCheckBox priCheckBox;
@@ -47,9 +48,23 @@ public class CbusConsoleDecodeOptionsPane extends javax.swing.JPanel implements 
     
     private final DateFormat df;
     
+    private static final String SHOWARROWS_CB = ".ShowarrowsCheckBox";
+    private static final String TIME_CB = ".TimeCheckBox";
+    private static final String SHOWOPC_CB = ".ShowOpcCheckBox";
+    private static final String SHOWEVNDNAME_CB = ".ShowEvNdName";
+    private static final String SHOWJMRIBEANS_CB = ".ShowJmriBeans";
+    private static final String SHOWOPCNAME_CB = ".ShowOpcNameCheckBox";
+    private static final String SHOWOPCEXTRA_CB = ".ShowOpcExtraCheckBox";
+    private static final String SHOWADDR_CB = ".ShowAddressCheckBox";
+    private static final String PRI_CB = ".PriCheckBox";
+    private static final String CANID_CB = ".CanidCheckBox";
+    private static final String SHOWCAN_CB = ".ShowCanCheckBox";
+    private static final String SHOWRTR_CB = ".ShowRtrCheckBox";
+    
     public CbusConsoleDecodeOptionsPane(CbusConsolePane mainPane){
         super();
         _mainPane = mainPane;
+        p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         makePane();
         df = new SimpleDateFormat("HH:mm:ss.SSS");
         addTc(_mainPane.tc);
@@ -64,7 +79,6 @@ public class CbusConsoleDecodeOptionsPane extends javax.swing.JPanel implements 
     
         add(showarrowsCheckBox);
         add(timeCheckBox);
-        
         add(showOpcCheckBox);
         add(showEvNdName);
         add(showJmriBeans);
@@ -84,27 +98,19 @@ public class CbusConsoleDecodeOptionsPane extends javax.swing.JPanel implements 
         canidCheckBox = new JCheckBox(Bundle.getMessage("CanID"));
         showarrowsCheckBox = new JCheckBox(Bundle.getMessage("TrafficDirection"));
         showRtrCheckBox = new JCheckBox(Bundle.getMessage("RtrCheckbox"));
-        
         showOpcCheckBox = new JCheckBox(Bundle.getMessage("showOpcCheckbox"));
-        showOpcNameCheckBox = new JCheckBox(("OPC Name"));
+        showOpcNameCheckBox = new JCheckBox(Bundle.getMessage("OpcName"));
         showOpcExtraCheckBox = new JCheckBox(Bundle.getMessage("OpcExtraCheckbox"));
         showAddressCheckBox = new JCheckBox(Bundle.getMessage("showAddressCheckBox"));
         showCanCheckBox = new JCheckBox(Bundle.getMessage("showCanCheckBox"));
         showJmriBeans = new JCheckBox("JMRI");
-        showEvNdName = new JCheckBox("CBUS");
+        showEvNdName = new JCheckBox(Bundle.getMessage("MenuItemCBUS"));
         
         initButtonTips();
         
     }
     
     private void initButtonTips() {
-        
-        showarrowsCheckBox.setSelected(true);
-        showOpcCheckBox.setSelected(true);
-        showJmriBeans.setSelected(true);
-        showEvNdName.setSelected(true);
-        showOpcNameCheckBox.setSelected(true);
-        
         timeCheckBox.setToolTipText(Bundle.getMessage("TooltipShowTimestamps"));
         priCheckBox.setToolTipText(Bundle.getMessage("TooltipShowPrios"));
         // canidCheckBox.setToolTipText(Bundle.getMessage("CanID"));
@@ -118,6 +124,33 @@ public class CbusConsoleDecodeOptionsPane extends javax.swing.JPanel implements 
         showJmriBeans.setToolTipText(("<html>Display names from JMRI Turnout, Sensor and Light Table.<br>CBUS Event Table must be Running</html>"));
         showEvNdName.setToolTipText(("<html>Display names from CBUS Event Table and CBUS Node Manager<br>CBUS Event Table and CBUS Node Manager must be started.</html>"));
         
+        setCheckBoxes();
+    }
+    
+    private void setCheckBoxes() {
+        
+        if ( p.getSimplePreferenceState(this.getClass().getName() + ".FirstRun") ) { // NOI18N
+            showarrowsCheckBox.setSelected(p.getSimplePreferenceState(getClass().getName() + SHOWARROWS_CB));
+            timeCheckBox.setSelected(p.getSimplePreferenceState(getClass().getName() + TIME_CB));
+            showOpcCheckBox.setSelected(p.getSimplePreferenceState(getClass().getName() + SHOWOPC_CB));
+            showEvNdName.setSelected(p.getSimplePreferenceState(getClass().getName() + SHOWEVNDNAME_CB));
+            showJmriBeans.setSelected(p.getSimplePreferenceState(getClass().getName() + SHOWJMRIBEANS_CB));
+            showOpcNameCheckBox.setSelected(p.getSimplePreferenceState(getClass().getName() + SHOWOPCNAME_CB));
+            showOpcExtraCheckBox.setSelected(p.getSimplePreferenceState(getClass().getName() + SHOWOPCEXTRA_CB));
+            showAddressCheckBox.setSelected(p.getSimplePreferenceState(getClass().getName() + SHOWADDR_CB));
+            priCheckBox.setSelected(p.getSimplePreferenceState(getClass().getName() + PRI_CB));
+            canidCheckBox.setSelected(p.getSimplePreferenceState(getClass().getName() + CANID_CB));
+            showCanCheckBox.setSelected(p.getSimplePreferenceState(getClass().getName() + SHOWCAN_CB));
+            showRtrCheckBox.setSelected(p.getSimplePreferenceState(getClass().getName() + SHOWRTR_CB));
+            
+        } else {
+            // set virgin load view
+            showarrowsCheckBox.setSelected(true);
+            showOpcCheckBox.setSelected(true);
+            showJmriBeans.setSelected(true);
+            showEvNdName.setSelected(true);
+            showOpcNameCheckBox.setSelected(true);
+        }
     }
     
     /**
@@ -246,6 +279,19 @@ public class CbusConsoleDecodeOptionsPane extends javax.swing.JPanel implements 
     
     public void dispose(){
         removeTc(_mainPane.tc);
+        p.setSimplePreferenceState(getClass().getName() + ".FirstRun", true); // NOI18N
+        p.setSimplePreferenceState(getClass().getName() + SHOWARROWS_CB, showarrowsCheckBox.isSelected());
+        p.setSimplePreferenceState(getClass().getName() + TIME_CB, timeCheckBox.isSelected());
+        p.setSimplePreferenceState(getClass().getName() + SHOWOPC_CB, showOpcCheckBox.isSelected());
+        p.setSimplePreferenceState(getClass().getName() + SHOWEVNDNAME_CB, showEvNdName.isSelected());
+        p.setSimplePreferenceState(getClass().getName() + SHOWJMRIBEANS_CB, showJmriBeans.isSelected());
+        p.setSimplePreferenceState(getClass().getName() + SHOWOPCNAME_CB, showOpcNameCheckBox.isSelected());
+        p.setSimplePreferenceState(getClass().getName() + SHOWOPCEXTRA_CB, showOpcExtraCheckBox.isSelected());
+        p.setSimplePreferenceState(getClass().getName() + SHOWADDR_CB, showAddressCheckBox.isSelected());
+        p.setSimplePreferenceState(getClass().getName() + PRI_CB, priCheckBox.isSelected());
+        p.setSimplePreferenceState(getClass().getName() + CANID_CB, canidCheckBox.isSelected());
+        p.setSimplePreferenceState(getClass().getName() + SHOWCAN_CB, showCanCheckBox.isSelected());
+        p.setSimplePreferenceState(getClass().getName() + SHOWRTR_CB, showRtrCheckBox.isSelected());
     }
     
     // private final static Logger log = LoggerFactory.getLogger(CbusConsoleDecodeOptionsPane.class);

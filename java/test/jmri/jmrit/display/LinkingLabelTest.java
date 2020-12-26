@@ -6,7 +6,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -40,7 +42,7 @@ public class LinkingLabelTest extends PositionableTestBase {
         to.setDisplayLevel(jmri.jmrit.display.Editor.LABELS);
         editor.putItem(to);
 
-        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(editor);
+        InstanceManager.getDefault(EditorManager.class).add(editor);
         editor.setLocation(150, 150);
 
         editor.setTitle();
@@ -64,7 +66,7 @@ public class LinkingLabelTest extends PositionableTestBase {
         Assert.assertEquals("URL after set", "bar", l.getURL());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         super.setUp();
@@ -77,7 +79,7 @@ public class LinkingLabelTest extends PositionableTestBase {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         to = null;
         super.tearDown();

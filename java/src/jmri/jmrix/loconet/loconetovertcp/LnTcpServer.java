@@ -11,7 +11,6 @@ import jmri.InstanceManager;
 import jmri.ShutDownManager;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-import jmri.implementation.QuietShutDownTask;
 import jmri.util.zeroconf.ZeroConfService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +27,7 @@ public class LnTcpServer {
     private ServerSocket serverSocket;
     private final List<LnTcpServerListener> stateListeners = new ArrayList<>();
     private boolean settingsChanged = false;
-    private QuietShutDownTask shutDownTask;
+    private final Runnable shutDownTask = this::disable;
     private ZeroConfService service = null;
 
     private int portNumber;
@@ -87,15 +86,6 @@ public class LnTcpServer {
             }
             log.info("Starting ZeroConfService _loconetovertcpserver._tcp.local for LocoNetOverTCP Server");
             this.service.publish();
-            if (this.shutDownTask == null) {
-                this.shutDownTask = new QuietShutDownTask("LocoNetOverTcpServer") {
-                    @Override
-                    public boolean execute() {
-                        LnTcpServer.this.disable();
-                        return true;
-                    }
-                };
-            }
             InstanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);
         }
     }

@@ -1,13 +1,13 @@
 package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
+
 import jmri.JmriException;
 import jmri.Sensor;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 
 /**
@@ -32,7 +32,7 @@ public abstract class AbstractSensorTestBase {
     abstract public void checkStatusRequestMsgSent();
 
     // implementing classes must provide this abstract member:
-    @Before
+    @BeforeEach
     abstract public void setUp(); // load t with actual object; create scaffolds as needed
 
     protected AbstractSensor t = null; // holds object under test; set by setUp()
@@ -82,6 +82,15 @@ public abstract class AbstractSensorTestBase {
         t.setState(Sensor.ACTIVE); // in case registration with TrafficController is deferred to after first use
         t.dispose();
         Assert.assertEquals("controller listeners remaining", 0, numListeners());
+    }
+    
+    @Test
+    public void testRemoveListenerOnDispose() {
+        Assert.assertEquals("starts 0 listeners", 0, t.getNumPropertyChangeListeners());
+        t.addPropertyChangeListener(new Listen());
+        Assert.assertEquals("controller listener added", 1, t.getNumPropertyChangeListeners());
+        t.dispose();
+        Assert.assertTrue("controller listeners remaining < 1", t.getNumPropertyChangeListeners() < 1);
     }
 
     @Test
@@ -196,7 +205,7 @@ public abstract class AbstractSensorTestBase {
     }
 
     //dispose of t.
-    @After
+    @AfterEach
     abstract public void tearDown();
 
 }

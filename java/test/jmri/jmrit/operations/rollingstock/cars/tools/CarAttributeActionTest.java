@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
@@ -25,7 +25,7 @@ public class CarAttributeActionTest extends OperationsTestCase {
         Assert.assertNotNull("exists", a);
         
         Assert.assertFalse("toggle state", cef.showQuanity);
-        a.actionPerformed(new ActionEvent(this, 0, null));
+        a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
         Assert.assertTrue("toggle state", cef.showQuanity);
         
         JmriJFrame f = JmriJFrame.getFrame("Edit Car Road");

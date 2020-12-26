@@ -1,10 +1,9 @@
 package jmri.jmrit.display.controlPanelEditor.shape.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * LocoLabelXmlTest.java
@@ -20,12 +19,12 @@ public class LocoLabelXmlTest {
       Assert.assertNotNull("LocoLabelXml constructor",new LocoLabelXml());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -123,7 +123,10 @@ public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listen
 
     /**
      * Nested class to create one of these using old-style defaults.
+     * 
+     * @deprecated since 4.19.7; use {@link Mx1MonPanelAction} instead
      */
+    @Deprecated
     static public class Default extends jmri.jmrix.zimo.swing.Mx1NamedPaneAction {
 
         public Default() {

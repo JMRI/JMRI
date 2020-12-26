@@ -1,10 +1,8 @@
 package jmri.implementation.swing;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,7 +48,7 @@ public class SwingShutDownTaskTest {
                 };
 
         // and display
-        t.execute();
+        t.run();
     }
 
     @Test
@@ -74,16 +72,16 @@ public class SwingShutDownTaskTest {
                 };
 
         // and display
-        t.execute();
+        t.run();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         this.modalDialogStopsTest = System.getProperty("modalDialogStopsTest", "false").equals("true");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

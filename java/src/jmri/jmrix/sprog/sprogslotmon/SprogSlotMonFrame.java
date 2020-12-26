@@ -149,17 +149,6 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
         addHelpMenu("package.jmri.jmrix.sprog.sprogslotmon.SprogSlotMonFrame", true);  // NOI18N
     }
 
-    /**
-     * Find the existing SprogSlotMonFrame object.
-     *
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI
-     * multi-system support structure
-     */
-    @Deprecated
-    static public final SprogSlotMonFrame instance() {
-        return null;
-    }
-
     public void update() {
         slotModel.fireTableDataChanged();
     }

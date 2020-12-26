@@ -1,10 +1,9 @@
 package jmri.jmrix.ieee802154.xbee;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * XBeeMessageTest.java
@@ -22,13 +21,13 @@ public class XBeeMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         m = new XBeeMessage(3);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         m = null;
         JUnitUtil.tearDown();

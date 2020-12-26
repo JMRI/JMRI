@@ -23,6 +23,7 @@ public class Z21XNetReply extends XNetReply {
 
     /**
      * Create a reply from an XNetMessage.
+     * @param message message to create reply from.
      */
     public Z21XNetReply(Z21XNetMessage message) {
         super(message);
@@ -30,6 +31,7 @@ public class Z21XNetReply extends XNetReply {
 
     /**
      * Create a reply from a string of hex characters.
+     * @param message hex character string.
      */
     public Z21XNetReply(String message) {
         super(message);

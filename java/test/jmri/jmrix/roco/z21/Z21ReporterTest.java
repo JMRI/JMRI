@@ -1,7 +1,9 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for Z21Reporter class.
@@ -29,7 +31,7 @@ public class Z21ReporterTest extends jmri.implementation.AbstractRailComReporter
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -42,7 +44,7 @@ public class Z21ReporterTest extends jmri.implementation.AbstractRailComReporter
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         r = null;
         tc.terminateThreads();

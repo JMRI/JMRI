@@ -155,7 +155,8 @@ public class SerialDriverAdapter extends PortController {
     }
 
     /**
-     * Migration method
+     * Migration method.
+     * @return valid baud values.
      * @deprecated since 4.16
      */
     @Deprecated

@@ -5,10 +5,8 @@ import jmri.util.JUnitUtil;
 
 import java.beans.PropertyVetoException;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +20,7 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBa
 
     private GrapevineSystemConnectionMemo memo = null; 
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -40,6 +38,11 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBa
     @Override
     public String getSystemName(int n) {
         return "GL" + n;
+    }
+    
+    @Override
+    protected String getASystemNameWithNoPrefix() {
+        return "1106";
     }
 
     @Test
@@ -96,7 +99,7 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBa
     }
 
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

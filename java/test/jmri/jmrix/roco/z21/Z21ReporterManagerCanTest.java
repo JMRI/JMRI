@@ -2,7 +2,9 @@ package jmri.jmrix.roco.z21;
 
 import jmri.Reporter;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * This class provides tests for the Z21ReporterManager's ability to create
@@ -73,8 +75,18 @@ public class Z21ReporterManagerCanTest extends jmri.managers.AbstractReporterMgr
         Assert.assertEquals("system name same all lower", t, l.getBySystemName("ZRabcd:5"));
         Assert.assertEquals("system name same all upper", t, l.getBySystemName("ZRABCD:5"));
     }
+    
+    // No test for manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    // No test for manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -86,7 +98,7 @@ public class Z21ReporterManagerCanTest extends jmri.managers.AbstractReporterMgr
         l = new Z21ReporterManager(memo);
    }
 
-   @After
+   @AfterEach
    public void tearDown(){
         l = null;
         tc.terminateThreads();

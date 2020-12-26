@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.JComboBox;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -61,21 +61,9 @@ public class ScheduleManagerTest extends OperationsTestCase {
         Assert.assertEquals("Schedule 1", sch1, sm.getScheduleByName("new schedule"));
         Assert.assertEquals("Schedule 2", sch2, sm.getScheduleByName("newer schedule"));
 
-        // Remove references to swing
-        // JComboBox box = sm.getComboBox();
-        // Assert.assertEquals("3 First schedule name", "", box.getItemAt(0));
-        // Assert.assertEquals("3 First schedule name", sch1, box.getItemAt(1));
-        // Assert.assertEquals("3 First schedule name", sch2, box.getItemAt(2));
-        //
-        // JComboBox box2 = sm.getSidingsByScheduleComboBox(s1);
-        // Assert.assertEquals("First siding name", null, box2.getItemAt(0));
-        // now add a schedule to siding
+        // now add a schedule to spur
         t.setSchedule(sch1);
 
-        // JComboBox box3 = sm.getSidingsByScheduleComboBox(s1);
-        // LocationTrackPair ltp = (LocationTrackPair)box3.getItemAt(0);
-        // Assert.assertEquals("Location track pair location", l, ltp.getLocation());
-        // Assert.assertEquals("Location track pair track", t, ltp.getTrack());
         Assert.assertEquals("1 Schedule Item 1 type", "BoxCar", i1.getTypeName());
         Assert.assertEquals("1 Schedule Item 1 road", "new road", i1.getRoadName());
         Assert.assertEquals("1 Schedule Item 1 load", "new load", i1.getReceiveLoadName());
@@ -194,9 +182,9 @@ public class ScheduleManagerTest extends OperationsTestCase {
         Assert.assertEquals("3 First schedule name", sch2, box.getItemAt(2));
 
         JComboBox<LocationTrackPair> box2 = sm.getSpursByScheduleComboBox(s1);
-        Assert.assertEquals("First siding name", null, box2.getItemAt(0));
+        Assert.assertEquals("First spur name", null, box2.getItemAt(0));
 
-        // now add a schedule to siding
+        // now add a schedule to spur
         t.setSchedule(sch1);
 
         JComboBox<LocationTrackPair> box3 = sm.getSpursByScheduleComboBox(s1);

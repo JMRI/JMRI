@@ -6,10 +6,9 @@ import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.loconet.hexfile.LnSensorManagerTurnout class.
@@ -84,7 +83,7 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LnSensorManagerTest.class);
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
@@ -98,7 +97,7 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
         jmri.InstanceManager.setSensorManager(l);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
         lnis = null;

@@ -197,7 +197,7 @@ public class PrintLocationsAction extends AbstractAction {
             usedLength += location.getUsedLength();
             numberRS += location.getNumberRS();
 
-            List<Track> yards = location.getTrackByNameList(Track.YARD);
+            List<Track> yards = location.getTracksByNameList(Track.YARD);
             if (yards.size() > 0) {
                 // header
                 writer.write(SPACE + Bundle.getMessage("YardName") + NEW_LINE);
@@ -208,7 +208,7 @@ public class PrintLocationsAction extends AbstractAction {
                 }
             }
 
-            List<Track> spurs = location.getTrackByNameList(Track.SPUR);
+            List<Track> spurs = location.getTracksByNameList(Track.SPUR);
             if (spurs.size() > 0) {
                 // header
                 writer.write(SPACE + Bundle.getMessage("SpurName") + NEW_LINE);
@@ -219,7 +219,7 @@ public class PrintLocationsAction extends AbstractAction {
                 }
             }
 
-            List<Track> interchanges = location.getTrackByNameList(Track.INTERCHANGE);
+            List<Track> interchanges = location.getTracksByNameList(Track.INTERCHANGE);
             if (interchanges.size() > 0) {
                 // header
                 writer.write(SPACE + Bundle.getMessage("InterchangeName") + NEW_LINE);
@@ -230,7 +230,7 @@ public class PrintLocationsAction extends AbstractAction {
                 }
             }
 
-            List<Track> stagingTracks = location.getTrackByNameList(Track.STAGING);
+            List<Track> stagingTracks = location.getTracksByNameList(Track.STAGING);
             if (stagingTracks.size() > 0) {
                 // header
                 writer.write(SPACE + Bundle.getMessage("StagingName") + NEW_LINE);
@@ -281,7 +281,7 @@ public class PrintLocationsAction extends AbstractAction {
                 if (_location != null && location != _location) {
                     continue;
                 }
-                List<Track> spurs = location.getTrackByNameList(Track.SPUR);
+                List<Track> spurs = location.getTracksByNameList(Track.SPUR);
                 for (Track spur : spurs) {
                     if (spur.getScheduleId().equals(schedule.getId())) {
                         // pad out schedule name
@@ -399,7 +399,7 @@ public class PrintLocationsAction extends AbstractAction {
             writer.write(s);
             s = SPACE + location.getComment() + NEW_LINE;
             writer.write(s);
-            for (Track track : location.getTrackByNameList(null)) {
+            for (Track track : location.getTracksByNameList(null)) {
                 if (!track.getComment().equals(Track.NONE) ||
                         !track.getCommentBoth().equals(Track.NONE) ||
                         !track.getCommentPickup().equals(Track.NONE) ||
@@ -455,28 +455,28 @@ public class PrintLocationsAction extends AbstractAction {
             s = getLocationTypes(location);
             writer.write(s);
 
-            List<Track> yards = location.getTrackByNameList(Track.YARD);
+            List<Track> yards = location.getTracksByNameList(Track.YARD);
             if (yards.size() > 0) {
                 s = SPACE + Bundle.getMessage("YardName") + NEW_LINE;
                 writer.write(s);
                 printTrackInfo(location, yards);
             }
 
-            List<Track> spurs = location.getTrackByNameList(Track.SPUR);
+            List<Track> spurs = location.getTracksByNameList(Track.SPUR);
             if (spurs.size() > 0) {
                 s = SPACE + Bundle.getMessage("SpurName") + NEW_LINE;
                 writer.write(s);
                 printTrackInfo(location, spurs);
             }
 
-            List<Track> interchanges = location.getTrackByNameList(Track.INTERCHANGE);
+            List<Track> interchanges = location.getTracksByNameList(Track.INTERCHANGE);
             if (interchanges.size() > 0) {
                 s = SPACE + Bundle.getMessage("InterchangeName") + NEW_LINE;
                 writer.write(s);
                 printTrackInfo(location, interchanges);
             }
 
-            List<Track> stagings = location.getTrackByNameList(Track.STAGING);
+            List<Track> stagings = location.getTracksByNameList(Track.STAGING);
             if (stagings.size() > 0) {
                 s = SPACE + Bundle.getMessage("StagingName") + NEW_LINE;
                 writer.write(s);
@@ -591,7 +591,7 @@ public class PrintLocationsAction extends AbstractAction {
                 continue;
             }
             writer.write(location.getName() + NEW_LINE);
-            for (Track track : location.getTrackByNameList(null)) {
+            for (Track track : location.getTracksByNameList(null)) {
                 if (!track.checkPickups().equals(Track.PICKUP_OKAY)) {
                     writer.write(TAB + track.checkPickups() + NEW_LINE);
                     foundError = true;
@@ -610,9 +610,9 @@ public class PrintLocationsAction extends AbstractAction {
             if (_location != null && location != _location) {
                 continue;
             }
-            List<Track> tracks = location.getTrackByNameList(trackType);
+            List<Track> tracks = location.getTracksByNameList(trackType);
             for (Track track : tracks) {
-                if (track.acceptsTypeName(carType)) {
+                if (track.isTypeNameAccepted(carType)) {
                     trackLength = trackLength + track.getLength();
                     writer.write(
                             SPACE +
@@ -737,7 +737,7 @@ public class PrintLocationsAction extends AbstractAction {
         int typeCount = 0;
 
         for (String type : cts.getNames()) {
-            if (track.acceptsTypeName(type)) {
+            if (track.isTypeNameAccepted(type)) {
                 typeCount++;
                 charCount += type.length() + 2;
                 if (charCount > charactersPerLine - 2 * TAB_LENGTH) {
@@ -749,7 +749,7 @@ public class PrintLocationsAction extends AbstractAction {
         }
 
         for (String type : InstanceManager.getDefault(EngineTypes.class).getNames()) {
-            if (track.acceptsTypeName(type)) {
+            if (track.isTypeNameAccepted(type)) {
                 typeCount++;
                 charCount += type.length() + 2;
                 if (charCount > charactersPerLine - 2 * TAB_LENGTH) {

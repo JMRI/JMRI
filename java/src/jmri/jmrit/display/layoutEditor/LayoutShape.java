@@ -58,6 +58,7 @@ public class LayoutShape {
      * constructor method (used by XML loading code)
      *
      * @param name         the name of the shape
+     * @param t            the layout shape type.
      * @param layoutEditor reference to the LayoutEditor this shape is in
      */
     public LayoutShape(String name, LayoutShapeType t, LayoutEditor layoutEditor) {
@@ -130,7 +131,7 @@ public class LayoutShape {
                     layoutShapeType = t;
                     break;
                 default:    // You shouldn't ever have any invalid LayoutShapeTypes
-                    log.error("Invalid Shape Type {}", t); //I18IN
+                    log.error("Invalid Shape Type {}", t); // I18IN
             }
         }
     }
@@ -259,9 +260,10 @@ public class LayoutShape {
     }
 
     /**
-     * get point
+     * Get point.
      *
-     * @param idx the index of the point to add
+     * @param idx the index of the point to add.
+     * @return the 2D point of the ID, MathUtil.zeroPoint2D if no result.
      */
     public Point2D getPoint(int idx) {
         Point2D result = MathUtil.zeroPoint2D;
@@ -424,12 +426,12 @@ public class LayoutShape {
         if (layoutEditor.isEditable()) {
             int pointIndex = hitPointType.shapePointIndex();
 
-            //JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LayoutShape")) + getName());
+            // JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LayoutShape")) + getName());
             JMenuItem jmi = popup.add(Bundle.getMessage("ShapeNameMenuItemTitle", getName()));
 
             jmi.setToolTipText(Bundle.getMessage("ShapeNameMenuItemToolTip"));
             jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                //prompt for new name
+                // prompt for new name
                 String newValue = QuickPromptUtil.promptForString(layoutEditor,
                         Bundle.getMessage("LayoutShapeName"),
                         Bundle.getMessage("LayoutShapeName"),
@@ -532,7 +534,7 @@ public class LayoutShape {
                     Bundle.getMessage("ShapeLevelMenuItemTitle")) + level));
             jmi.setToolTipText(Bundle.getMessage("ShapeLevelMenuItemToolTip"));
             jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                //prompt for level
+                // prompt for level
                 int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                         Bundle.getMessage("ShapeLevelMenuItemTitle"),
                         Bundle.getMessage("ShapeLevelMenuItemTitle"),
@@ -572,7 +574,7 @@ public class LayoutShape {
                     Bundle.getMessage("ShapeLineWidthMenuItemTitle")) + lineWidth));
             jmi.setToolTipText(Bundle.getMessage("ShapeLineWidthMenuItemToolTip"));
             jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                //prompt for lineWidth
+                // prompt for lineWidth
                 int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                         Bundle.getMessage("ShapeLineWidthMenuItemTitle"),
                         Bundle.getMessage("ShapeLineWidthMenuItemTitle"),
@@ -589,7 +591,7 @@ public class LayoutShape {
                         LayoutShape ls = new LayoutShape(LayoutShape.this);
                         ls.setName(layoutEditor.getFinder().uniqueName("S"));
 
-                        double gridSize = layoutEditor.getGridSize();
+                        double gridSize = layoutEditor.gContext.getGridSize();
                         Point2D delta = new Point2D.Double(gridSize, gridSize);
                         for (LayoutShapePoint lsp : ls.getPoints()) {
                             lsp.setPoint(MathUtil.add(lsp.getPoint(), delta));
@@ -684,12 +686,12 @@ public class LayoutShape {
                         if (getType() == LayoutShapeType.Open) {
                             path.moveTo(p.getX(), p.getY());    // then start here
                         } else {    // otherwise
-                            path.moveTo(midL.getX(), midL.getY());  //start here
-                            path.lineTo(p.getX(), p.getY());        //draw to here
+                            path.moveTo(midL.getX(), midL.getY());  // start here
+                            path.lineTo(p.getX(), p.getY());        // draw to here
                         }
                     } else {
-                        path.lineTo(midL.getX(), midL.getY());  //start here
-                        path.lineTo(p.getX(), p.getY());        //draw to here
+                        path.lineTo(midL.getX(), midL.getY());  // start here
+                        path.lineTo(p.getX(), p.getY());        // draw to here
                     }
                     // if this is not the last point...
                     // ...or our shape isn't open
@@ -746,14 +748,14 @@ public class LayoutShape {
         g2.draw(trackEditControlCircleAt(getCoordsCenter()));
     }   // drawEditControls
 
-    //these are convenience methods to return circles used to draw onscreen
+    // these are convenience methods to return circles used to draw onscreen
     //
-    //compute the control point rect at inPoint; use the turnout circle size
+    // compute the control point rect at inPoint; use the turnout circle size
     public Ellipse2D trackEditControlCircleAt(@Nonnull Point2D inPoint) {
         return trackControlCircleAt(inPoint);
     }
 
-    //compute the turnout circle at inPoint (used for drawing)
+    // compute the turnout circle at inPoint (used for drawing)
     public Ellipse2D trackControlCircleAt(@Nonnull Point2D inPoint) {
         return new Ellipse2D.Double(inPoint.getX() - layoutEditor.circleRadius,
                 inPoint.getY() - layoutEditor.circleRadius,
@@ -766,8 +768,8 @@ public class LayoutShape {
      */
     public static class LayoutShapePoint {
 
-        private transient LayoutShapePointType type;
-        private transient Point2D point;
+        private LayoutShapePointType type;
+        private Point2D point;
 
         /**
          * constructor method
@@ -780,8 +782,9 @@ public class LayoutShape {
         }
 
         /**
-         * constructor method
+         * Constructor method.
          *
+         * @param t the layout shape point type.
          * @param c Point2D for initial point
          */
         public LayoutShapePoint(LayoutShapePointType t, Point2D c) {

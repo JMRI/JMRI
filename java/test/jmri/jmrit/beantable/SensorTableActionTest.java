@@ -7,7 +7,9 @@ import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.*;
 import org.netbeans.jemmy.util.NameComponentChooser;
 import org.slf4j.Logger;
@@ -159,7 +161,7 @@ public class SensorTableActionTest extends AbstractTableActionBase<Sensor> {
 
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -169,7 +171,7 @@ public class SensorTableActionTest extends AbstractTableActionBase<Sensor> {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         a.dispose();
         a = null;

@@ -2,10 +2,18 @@ package jmri.jmrit.timetable.swing;
 
 import java.awt.GraphicsEnvironment;
 import java.beans.PropertyVetoException;
+import java.io.File;
+import java.io.IOException;
+
 import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
+
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -13,9 +21,6 @@ import org.netbeans.jemmy.operators.*;
  * @author Dave Sand Copyright (C) 2018
  */
 public class TimeTableFrameTest {
-
-    @Rule
-    public org.junit.rules.TemporaryFolder folder = new org.junit.rules.TemporaryFolder();
 
     TimeTableFrame _ttf = null;
     JFrameOperator _jfo = null;
@@ -483,19 +488,15 @@ public class TimeTableFrameTest {
         return t;
     }
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    public void setUp(@TempDir File folder) throws IOException {
         jmri.util.JUnitUtil.setUp();
 
         JUnitUtil.resetInstanceManager();
-        try {
-            JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
-        } catch(java.io.IOException ioe){
-          Assert.fail("failed to setup profile for test");
-        }
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
     }
 
-    @After
+    @AfterEach
     public  void tearDown() {
        // use reflection to reset the static file location.
        try {

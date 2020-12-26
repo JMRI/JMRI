@@ -291,9 +291,10 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
     }
 
     /**
-     * Configure a table to have our standard rows and columns. This is
-     * optional, in that other table formats can use this table model. But we
-     * put it here to help keep it consistent.
+     * Configure a table to have our standard rows and columns.
+     * This is optional, in that other table formats can use this table model. 
+     * But we put it here to help keep it consistent.
+     * @param table table to configured.
      */
     public void configureTable(JTable table) {
         // allow reordering of the columns
@@ -340,6 +341,8 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
      * Service method to set up a column so that it will hold a button for it's
      * values.
      *
+     * @param table The overall table, accessed for formatting
+     * @param column Which column to configure with this call
      * @param sample Typical button, used for size
      */
     void setColumnToHoldButton(JTable table, int column, JButton sample) {

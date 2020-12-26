@@ -4,7 +4,7 @@ import java.awt.Dimension;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.util.EventObject;
-import javax.help.SwingHelpUtilities;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JComponent;
@@ -15,8 +15,11 @@ import javax.swing.JSeparator;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.text.DefaultEditorKit;
+
+import apps.jmrit.DebugMenu;
+import apps.plaf.macosx.Application;
+
 import jmri.InstanceManager;
-import jmri.jmrit.DebugMenu;
 import jmri.jmrit.ToolsMenu;
 import jmri.jmrit.decoderdefn.PrintDecoderListAction;
 import jmri.jmrit.display.PanelMenu;
@@ -25,8 +28,6 @@ import jmri.jmrit.operations.OperationsMenu;
 import jmri.jmrit.roster.swing.RosterMenu;
 import jmri.jmrit.withrottle.WiThrottleCreationAction;
 import jmri.jmrix.ActiveSystemsMenu;
-import jmri.plaf.macosx.Application;
-import jmri.plaf.macosx.PreferencesHandler;
 import jmri.util.FileUtil;
 import jmri.util.HelpUtil;
 import jmri.util.JmriJFrame;
@@ -35,6 +36,7 @@ import jmri.util.WindowMenu;
 import jmri.util.swing.JFrameInterface;
 import jmri.util.swing.WindowInterface;
 import jmri.web.server.WebServerAction;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -157,11 +159,8 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
         prefsAction = new apps.gui3.tabbedpreferences.TabbedPreferencesAction(Bundle.getMessage("MenuItemPreferences"));
         // Put prefs in Apple's prefered area on Mac OS X
         if (SystemType.isMacOSX()) {
-            Application.getApplication().setPreferencesHandler(new PreferencesHandler() {
-                @Override
-                public void handlePreferences(EventObject eo) {
-                    prefsAction.actionPerformed(null);
-                }
+            Application.getApplication().setPreferencesHandler((EventObject eo) -> {
+                prefsAction.actionPerformed(null);
             });
         }
         // Include prefs in Edit menu if not on Mac OS X or not using Aqua Look and Feel
@@ -185,7 +184,7 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
     }
 
     protected void panelMenu(JMenuBar menuBar, WindowInterface wi) {
-        menuBar.add(InstanceManager.getDefault(PanelMenu.class));
+        menuBar.add(new PanelMenu());
     }
 
     /**
@@ -268,7 +267,7 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
         JMenu helpMenu = HelpUtil.makeHelpMenu(containedPane.windowHelpID(), true);
 
         // tell help to use default browser for external types
-        SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
+        HelpUtil.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
 
         // use as main help menu
         menuBar.add(helpMenu);

@@ -193,7 +193,7 @@ returns to the command line.
 
       <h2>Using Python for signal logic and automation</h2>The
       existing JMRI "<a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/package-summary.html">Automat</a>"
+      "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/package-summary.html">Automat</a>"
       classes provide hooks for user layout automation, including
       signaling. But they require that you write Java code and
       compile it into .class files, or write Jython code and import it.

@@ -1,10 +1,9 @@
 package jmri.jmrix.debugthrottle;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -17,14 +16,14 @@ public class DebugThrottleManagerTest extends jmri.managers.AbstractThrottleMana
         Assert.assertNotNull("exists",tm);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         tm = new DebugThrottleManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

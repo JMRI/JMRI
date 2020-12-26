@@ -1,10 +1,9 @@
 package jmri.jmrix.loconet.locoio;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.jmrix.loconet.*;
 
@@ -24,7 +23,7 @@ public class LocoIOModeListTest {
     public void test() {
         new LocoIOModeList() {  // just have to create it to test it via initializer
             {
-                /**
+                /*
                  * This used to be in main class file, so we run
                  * it as an initializer
                  */
@@ -32,7 +31,7 @@ public class LocoIOModeListTest {
                 for (int i = 0; i <= modeList.size() - 1; i++) {
                     LocoIOMode m = modeList.elementAt(i);
 
-                    int haderror = 0;
+                    int hadError = 0;
                     for (i = 1; i <= 2047; i++) {
                         int svA = m.getSV();
                         int v1A = addressToValue1(m, i);
@@ -42,7 +41,7 @@ public class LocoIOModeListTest {
 
                         LocoIOMode lim = getLocoIOModeFor(svA, v1A, v2A);
                         if (lim == null) {
-                            if (haderror == 0) {
+                            if (hadError == 0) {
                                 log.error("Testing {}      ERROR:", m.getFullMode()); // NOI18N
                             }
                             String err
@@ -51,11 +50,11 @@ public class LocoIOModeListTest {
                                     + Integer.toHexString(v1A) + " "
                                     + Integer.toHexString(v2A) + " <CHK>\n"; // NOI18N
                             log.error(err);
-                            haderror++;
+                            hadError++;
                         } else {
                             int decodedaddress = valuesToAddress(lim.getOpCode(), svA, v1A, v2A);
                             if ((i) != decodedaddress) {
-                                if (haderror == 0) {
+                                if (hadError == 0) {
                                     log.error("Testing {}      ERROR:", m.getFullMode()); // NOI18N
                                 }
                                 String err
@@ -67,23 +66,23 @@ public class LocoIOModeListTest {
                                         + Integer.toHexString(v1A) + " "
                                         + Integer.toHexString(v2A) + "[mask=" + Integer.toHexString(lim.getV2()) + "]\n"; // NOI18N
                                 log.error(err);
-                                haderror++;
+                                hadError++;
                             }
                         }
                     }
-                    Assert.assertEquals("find 0", 0, haderror);
+                    Assert.assertEquals("find 0", 0, hadError);
                 }
                 log.debug("Finished test sequence\n"); // NOI18N
             }
         };
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

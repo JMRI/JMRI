@@ -116,7 +116,7 @@ public class JmriSRCPTimeServer extends AbstractTimeServer {
         } else {
             // add this alarm to the list of alarms.
             if (alarmList == null) {
-                alarmList = new java.util.ArrayList<java.util.GregorianCalendar>();
+                alarmList = new java.util.ArrayList<>();
             }
             alarmList.add(cal);
             // and start the timeListener.
@@ -152,26 +152,22 @@ public class JmriSRCPTimeServer extends AbstractTimeServer {
 
     @Override
     public void listenToTimebase(boolean listen) {
-        if (listen == false && timeListener == null) {
+        if (!listen && timeListener == null) {
             return; // nothing to do.
         }
         if (timeListener == null) {
-            timeListener = new PropertyChangeListener() {
-
-                @Override
-                public void propertyChange(PropertyChangeEvent evt) {
-                    try {
-                        if (evt.getPropertyName().equals("minutes")) {
-                            checkAlarmList();
-                        }
-                    } catch (IOException ex) {
-                        log.warn("Unable to send message to client: {}", ex.getMessage());
-                        timebase.removeMinuteChangeListener(timeListener);
+            timeListener = evt -> {
+                try {
+                    if (evt.getPropertyName().equals("minutes")) {
+                        checkAlarmList();
                     }
+                } catch (IOException ex) {
+                    log.warn("Unable to send message to client: {}", ex.getMessage());
+                    timebase.removeMinuteChangeListener(timeListener);
                 }
             };
         }
-        if (listen == true) {
+        if (listen) {
             timebase.addMinuteChangeListener(timeListener);
         } else {
             timebase.removeMinuteChangeListener(timeListener);

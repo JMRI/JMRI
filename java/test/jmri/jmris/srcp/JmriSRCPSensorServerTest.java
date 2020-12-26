@@ -18,35 +18,35 @@ public class JmriSRCPSensorServerTest extends jmri.jmris.AbstractSensorServerTes
     private ByteArrayOutputStream output;
 
     /**
-     * {@inhertDoc} 
+     * {@inheritDoc}
      */
     @Override
     public void checkErrorStatusSent(){
-         assertThat(output.toString()).endsWith("499 ERROR unspecified error\n\r").withFailMessage("Active Message Sent");
+         assertThat(output.toString()).withFailMessage("Active Message Sent").endsWith("499 ERROR unspecified error\n\r");
     }
 
     /**
-     * {@inhertDoc} 
+     * {@inheritDoc}
      */
     @Override
     public void checkSensorActiveSent(){
-        assertThat(output.toString()).endsWith("100 INFO 0 FB 1 1\n\r").withFailMessage("Active Message Sent");
+        assertThat(output.toString()).withFailMessage("Active Message Sent").endsWith("100 INFO 0 FB 1 1\n\r");
     }
 
     /**
-     * {@inhertDoc} 
+     * {@inheritDoc}
      */
     @Override
     public void checkSensorInActiveSent(){
-        assertThat(output.toString()).endsWith("100 INFO 0 FB 1 0\n\r").withFailMessage("Active Message Sent");
+        assertThat(output.toString()).withFailMessage("Active Message Sent").endsWith("100 INFO 0 FB 1 0\n\r");
     }
 
     /**
-     * {@inhertDoc} 
+     * {@inheritDoc}
      */
     @Override
     public void checkSensorUnknownSent(){
-        assertThat(output.toString()).endsWith("411 ERROR unknown value\n\r").withFailMessage("Active Message Sent");
+        assertThat(output.toString()).withFailMessage("Active Message Sent").endsWith("411 ERROR unknown value\n\r");
 
     }
 
@@ -61,7 +61,7 @@ public class JmriSRCPSensorServerTest extends jmri.jmris.AbstractSensorServerTes
         ss = new JmriSRCPSensorServer(input, output);
     }
 
-    @AfterEach public void tearDown() throws Exception {
+    @AfterEach public void tearDown() {
         ss.dispose();
         ss = null;
         JUnitUtil.tearDown();

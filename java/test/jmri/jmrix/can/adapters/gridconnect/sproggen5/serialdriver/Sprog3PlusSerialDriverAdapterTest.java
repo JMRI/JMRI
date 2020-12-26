@@ -1,7 +1,9 @@
 package jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for Sprog3PlusSerialDriverAdapter class.
@@ -11,19 +13,19 @@ import org.junit.*;
 public class Sprog3PlusSerialDriverAdapterTest {
 
     @Test
-    public void ConstructorTest(){
+    public void ConstructorTest() {
         Sprog3PlusSerialDriverAdapter a = new Sprog3PlusSerialDriverAdapter();
-        Assert.assertNotNull("SerialDriverAdapter constructor", a);
+        Assert.assertNotNull("SerialDriverAdapter constructor",a);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
-    @After
+    @AfterEach
     public void tearDown(){
         JUnitUtil.tearDown();
     }

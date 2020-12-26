@@ -113,6 +113,8 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
 
     /**
      * Internal method to remember who's using the programmer.
+     * @param p Who gets reply
+     * @throws ProgrammerException when programmer in invalid state
      */
     protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
         // test for only one!
@@ -129,6 +131,10 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
 
     /**
      * Internal method to create the SprogMessage for programmer task start.
+     * @param mode Mode to be used
+     * @param val value to be written
+     * @param cvnum CV address to write to 
+     * @return formatted message to do programming operation
      */
     protected SprogMessage progTaskStart(ProgrammingMode mode, int val, int cvnum) {
         // val = -1 for read command; mode is direct, etc

@@ -294,6 +294,7 @@ public enum HitPointType {
      * Ideally, this would be replaced by turntable code that works
      * directly with the enum values as a step toward using objects
      * to implement hit points.
+     * @return (Temporary) 0-63 index of the enum element
      */
     protected int turntableTrackIndex() {
         int result = this.ordinal() - HitPointType.TURNTABLE_RAY_0.ordinal();
@@ -314,6 +315,8 @@ public enum HitPointType {
      * Ideally, this would be replaced by turntable code that works
      * directly with the enum values as a step toward using objects
      * to implement hit points.
+     * @param i (Temporary) 0-63 index of the enum element
+     * @return Requested enum element
      */
     protected static HitPointType turntableTrackIndexedValue(int i) {
         if (i < 0 || i > 63) {
@@ -326,6 +329,7 @@ public enum HitPointType {
      * Return an array of the valid TURNTABLE_RAY enum values.
      * Meant for interations over the set of rays.  Order is
      * from 0 to 63.
+     * @return (Temporary) Array containing TURNTABLE_RAY_0 through TURNTABLE_RAY_63
      */
     protected static HitPointType[] turntableValues() {
         return new HitPointType[]{TURNTABLE_RAY_0, TURNTABLE_RAY_1, TURNTABLE_RAY_2, TURNTABLE_RAY_3, TURNTABLE_RAY_4, TURNTABLE_RAY_5, TURNTABLE_RAY_6, TURNTABLE_RAY_7, TURNTABLE_RAY_8, TURNTABLE_RAY_9, TURNTABLE_RAY_10, TURNTABLE_RAY_11, TURNTABLE_RAY_12, TURNTABLE_RAY_13, TURNTABLE_RAY_14, TURNTABLE_RAY_15, TURNTABLE_RAY_16, TURNTABLE_RAY_17, TURNTABLE_RAY_18, TURNTABLE_RAY_19, TURNTABLE_RAY_20, TURNTABLE_RAY_21, TURNTABLE_RAY_22, TURNTABLE_RAY_23, TURNTABLE_RAY_24, TURNTABLE_RAY_25, TURNTABLE_RAY_26, TURNTABLE_RAY_27, TURNTABLE_RAY_28, TURNTABLE_RAY_29, TURNTABLE_RAY_30, TURNTABLE_RAY_31, TURNTABLE_RAY_32, TURNTABLE_RAY_33, TURNTABLE_RAY_34, TURNTABLE_RAY_35, TURNTABLE_RAY_36, TURNTABLE_RAY_37, TURNTABLE_RAY_38, TURNTABLE_RAY_39, TURNTABLE_RAY_40, TURNTABLE_RAY_41, TURNTABLE_RAY_42, TURNTABLE_RAY_43, TURNTABLE_RAY_44, TURNTABLE_RAY_45, TURNTABLE_RAY_46, TURNTABLE_RAY_47, TURNTABLE_RAY_48, TURNTABLE_RAY_49, TURNTABLE_RAY_50, TURNTABLE_RAY_51, TURNTABLE_RAY_52, TURNTABLE_RAY_53, TURNTABLE_RAY_54, TURNTABLE_RAY_55, TURNTABLE_RAY_56, TURNTABLE_RAY_57, TURNTABLE_RAY_58, TURNTABLE_RAY_59, TURNTABLE_RAY_60, TURNTABLE_RAY_61, TURNTABLE_RAY_62, TURNTABLE_RAY_63};
@@ -342,6 +346,7 @@ public enum HitPointType {
      * Ideally, this would be replaced by shape code that works
      * directly with the enum values as a step toward using objects
      * to implement hit points.
+     * @return (Temporary) 0-9 index of the enum element
      */
     protected int shapePointIndex() {
         int result = this.ordinal() - HitPointType.SHAPE_POINT_0.ordinal();
@@ -362,6 +367,8 @@ public enum HitPointType {
      * Ideally, this would be replaced by shape code that works
      * directly with the enum values as a step toward using objects
      * to implement hit points.
+     * @param i (Temporary) 0-9 index of the enum element
+     * @return Requested enum element
      */
     protected static HitPointType shapePointIndexedValue(int i) {
         if (i < 0 || i > 9) {
@@ -374,6 +381,7 @@ public enum HitPointType {
      * Return an array of the valid SHAPE_POINT enum values.
      * Meant for interations over the set of points.  Order is
      * from 0 to 9.
+     * @return (Temporary) Array containing SHAPE_POINT_0 through SHAPE_POINT_9
      */
     protected static HitPointType[] shapePointValues() {
         return new HitPointType[]{SHAPE_POINT_0, SHAPE_POINT_1, SHAPE_POINT_2, SHAPE_POINT_3, SHAPE_POINT_4, SHAPE_POINT_5, SHAPE_POINT_6, SHAPE_POINT_7, SHAPE_POINT_8, SHAPE_POINT_9};
@@ -390,12 +398,13 @@ public enum HitPointType {
     // *****************************************************************
     /**
      * Find the 0-8 index with respect to BEZIER_CONTROL_POINT_0
-     * of a given enum entry.  Throws {@link IllegalArgumentException} if
-     * the given enum value isn't one of the BEZIER_CONTROL_POINT_n entries.
+     * of this enum entry. Throws {@link IllegalArgumentException} if
+     * the enum value isn't one of the BEZIER_CONTROL_POINT_n entries.
      * <p>
      * Ideally, this would be replaced by bezier code that works
      * directly with the enum values as a step toward using objects
      * to implement hit points.
+     * @return (Temporary) 0-8 index of this enum
      */
     protected int bezierPointIndex() {
         int result = this.ordinal() - HitPointType.BEZIER_CONTROL_POINT_0.ordinal();
@@ -409,13 +418,15 @@ public enum HitPointType {
     }
 
     /**
-     * Return a specific SHAPE_POINT from its 0-8 index.
+     * Return a specific BEZIER_CONTROL_POINT from its 0-8 index.
      * Throws {@link IllegalArgumentException} if
      * the given index value isn't valid for the SHAPE_POINT entries.
      * <p>
      * Ideally, this would be replaced by shape code that works
      * directly with the enum values as a step toward using objects
      * to implement hit points.
+     * @param i (Temporary) 0-8 index of the enum element
+     * @return Requested enum element
      */
     protected static HitPointType bezierPointIndexedValue(int i) {
         if (i < 0 || i > 8) {

@@ -1,8 +1,8 @@
 package jmri.jmrix.powerline;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the SerialPortController class.
@@ -12,7 +12,7 @@ import org.junit.Before;
 public class SerialPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp(){
        JUnitUtil.setUp();
        new SerialTrafficController(){
@@ -43,8 +43,7 @@ public class SerialPortControllerTest extends jmri.jmrix.AbstractSerialPortContr
              */
             @Override
             public String[] validBaudRates(){
-               String[] retval = {"9600"};
-               return retval;
+                return new String[]{"9600"};
             }
 
             /**
@@ -60,7 +59,7 @@ public class SerialPortControllerTest extends jmri.jmrix.AbstractSerialPortContr
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown(){
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

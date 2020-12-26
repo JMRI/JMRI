@@ -42,7 +42,8 @@ public abstract class NetMessage implements Serializable {
     }
 
     /**
-     * Get a String representation of the op code in hex
+     * Get a String representation of the op code in hex.
+     * @return string of Opcode, 0x format.
      */
     public String getOpCodeHex() {
         return "0x" + Integer.toHexString(getOpCode());
@@ -50,6 +51,7 @@ public abstract class NetMessage implements Serializable {
 
     /**
      * Get length, including op code and error-detection byte
+     * @return total number of data elements.
      */
     public int getNumDataElements() {
         return mNDataBytes;
@@ -84,6 +86,7 @@ public abstract class NetMessage implements Serializable {
 
     /**
      * check whether the message has a valid parity
+     * @return true if parity valid, else false.
      */
     public abstract boolean checkParity();
 

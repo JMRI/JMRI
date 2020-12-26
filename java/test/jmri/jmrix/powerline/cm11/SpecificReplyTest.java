@@ -3,10 +3,9 @@ package jmri.jmrix.powerline.cm11;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.SerialTrafficController;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the cm11.SpecficReply class.
@@ -32,7 +31,7 @@ public class SpecificReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp(){
         JUnitUtil.setUp();
         memo = new SpecificSystemConnectionMemo();
@@ -40,7 +39,7 @@ public class SpecificReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         m = msg = new SpecificReply(t);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo = null;
         t = null;

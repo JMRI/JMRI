@@ -13,8 +13,7 @@ import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
 import jmri.jmrit.blockboss.BlockBossLogic;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrit.blockboss.BlockBossLogicProvider;
 
 /**
  * ConnectivityUtil provides methods supporting use of layout connectivity
@@ -38,27 +37,33 @@ import org.slf4j.LoggerFactory;
  * <p>
  * The methods in this module are accessed via direct calls from the inquiring
  * method.
+ * <p>
+ * A single object of this type, obtained via {@link LayoutEditor#getConnectivityUtil()}
+ * is shared across all instances of {@link LayoutBlock}.
  *
  * @author Dave Duchamp Copyright (c) 2009
  * @author George Warner Copyright (c) 2017-2018
  */
-public class ConnectivityUtil {
+final public class ConnectivityUtil {
 
     // constants
     // operational instance variables
-    private LayoutEditor layoutEditor = null;
-    private LayoutEditorAuxTools auxTools = null;
-    private LayoutBlockManager layoutBlockManager = null;
+    final private LayoutEditor layoutEditor;
+    final private LayoutEditorAuxTools auxTools;
+    final private LayoutBlockManager layoutBlockManager;
 
     private final int TRACKNODE_CONTINUING = 0;
     private final int TRACKNODE_DIVERGING = 1;
     private final int TRACKNODE_DIVERGING_2ND_3WAY = 2;
 
+    private final BlockBossLogicProvider blockBossLogicProvider;
+
     // constructor method
     public ConnectivityUtil(LayoutEditor thePanel) {
         layoutEditor = thePanel;
-        auxTools = new LayoutEditorAuxTools(layoutEditor);
+        auxTools = layoutEditor.getLEAuxTools();
         layoutBlockManager = InstanceManager.getDefault(LayoutBlockManager.class);
+        blockBossLogicProvider = InstanceManager.getDefault(BlockBossLogicProvider.class);
     }
 
     private TrackSegment trackSegment = null;
@@ -519,6 +524,9 @@ public class ConnectivityUtil {
                     // turnout is inside current block, add it to the list
                     result.add(new LayoutTrackExpectedState<>(ls, getTurnoutSetting(ls, cType, suppress)));
                 }
+            } else if (HitPointType.isTurntableRayHitType(cType)) {
+                // Declare arrival at a turntable ray to be the end of the block
+                trackSegment = null;
             }
         }
         return result;
@@ -689,7 +697,7 @@ public class ConnectivityUtil {
                     txt.append("???");
                 }
             }
-            log.error(txt.toString());
+            log.error("Turnouts for Block {}", txt.toString());
         }
         return result;
     }
@@ -770,15 +778,15 @@ public class ConnectivityUtil {
             lBlock = layoutBlockManager.getByUserName(userName);
         }
         if (((p.getConnect1()).getLayoutBlock() == lBlock) && ((p.getConnect2()).getLayoutBlock() != lBlock)) {
-            if ((LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect2(), p) && facing)
-                    || ((!LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect2(), p)) && (!facing))) {
+            if ((LayoutEditorTools.isAtWestEndOfAnchor(layoutEditor, p.getConnect2(), p) && facing)
+                    || ((!LayoutEditorTools.isAtWestEndOfAnchor(layoutEditor, p.getConnect2(), p)) && (!facing))) {
                 return (InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(p.getWestBoundSignal()));
             } else {
                 return (InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(p.getEastBoundSignal()));
             }
         } else if (((p.getConnect1()).getLayoutBlock() != lBlock) && ((p.getConnect2()).getLayoutBlock() == lBlock)) {
-            if ((LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect1(), p) && facing)
-                    || ((!LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect1(), p)) && (!facing))) {
+            if ((LayoutEditorTools.isAtWestEndOfAnchor(layoutEditor, p.getConnect1(), p) && facing)
+                    || ((!LayoutEditorTools.isAtWestEndOfAnchor(layoutEditor, p.getConnect1(), p)) && (!facing))) {
                 return (InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(p.getWestBoundSignal()));
             } else {
                 return (InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(p.getEastBoundSignal()));
@@ -814,15 +822,15 @@ public class ConnectivityUtil {
             lBlock = layoutBlockManager.getByUserName(userName);
         }
         if (((p.getConnect1()).getLayoutBlock() == lBlock) && ((p.getConnect2()).getLayoutBlock() != lBlock)) {
-            if ((LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect2(), p) && facing)
-                    || ((!LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect2(), p)) && (!facing))) {
+            if ((LayoutEditorTools.isAtWestEndOfAnchor(layoutEditor, p.getConnect2(), p) && facing)
+                    || ((!LayoutEditorTools.isAtWestEndOfAnchor(layoutEditor, p.getConnect2(), p)) && (!facing))) {
                 return (InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(p.getWestBoundSignalMastName()));
             } else {
                 return (InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(p.getEastBoundSignalMastName()));
             }
         } else if (((p.getConnect1()).getLayoutBlock() != lBlock) && ((p.getConnect2()).getLayoutBlock() == lBlock)) {
-            if ((LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect1(), p) && facing)
-                    || ((!LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect1(), p)) && (!facing))) {
+            if ((LayoutEditorTools.isAtWestEndOfAnchor(layoutEditor, p.getConnect1(), p) && facing)
+                    || ((!LayoutEditorTools.isAtWestEndOfAnchor(layoutEditor, p.getConnect1(), p)) && (!facing))) {
                 return (InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(p.getWestBoundSignalMastName()));
             } else {
                 return (InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(p.getEastBoundSignalMastName()));
@@ -1098,7 +1106,7 @@ public class ConnectivityUtil {
                     || ((bbLogic.getSensor3() != null) && (bbLogic.getSensor3()).equals(name))
                     || ((bbLogic.getSensor4() != null) && (bbLogic.getSensor4()).equals(name))
                     || ((bbLogic.getSensor5() != null) && (bbLogic.getSensor5()).equals(name))) {
-                bbLogic.retain();
+                blockBossLogicProvider.register(bbLogic);
                 bbLogic.start();
                 return true;
             }
@@ -1114,7 +1122,7 @@ public class ConnectivityUtil {
                 bbLogic.setSensor5(name);
             } else {
                 log.error("could not add sensor to SSL for signal head {} because there is no room in the SSL.", sh.getDisplayName());
-                bbLogic.retain();
+                blockBossLogicProvider.register(bbLogic);
                 bbLogic.start();
                 return false;
             }
@@ -1123,7 +1131,7 @@ public class ConnectivityUtil {
                 case DIVERGING:
                     if (((bbLogic.getWatchedSensor2() != null) && (bbLogic.getWatchedSensor2()).equals(name))
                             || ((bbLogic.getWatchedSensor2Alt() != null) && (bbLogic.getWatchedSensor2Alt()).equals(name))) {
-                        bbLogic.retain();
+                        blockBossLogicProvider.register(bbLogic);
                         bbLogic.start();
                         return true;
                     }
@@ -1133,7 +1141,7 @@ public class ConnectivityUtil {
                         bbLogic.setWatchedSensor2Alt(name);
                     } else {
                         log.error("could not add watched sensor to SSL for signal head {} because there is no room in the facing SSL diverging part.", sh.getSystemName());
-                        bbLogic.retain();
+                        blockBossLogicProvider.register(bbLogic);
                         bbLogic.start();
                         return false;
                     }
@@ -1141,7 +1149,7 @@ public class ConnectivityUtil {
                 case CONTINUING:
                     if (((bbLogic.getWatchedSensor1() != null) && (bbLogic.getWatchedSensor1()).equals(name))
                             || ((bbLogic.getWatchedSensor1Alt() != null) && (bbLogic.getWatchedSensor1Alt()).equals(name))) {
-                        bbLogic.retain();
+                        blockBossLogicProvider.register(bbLogic);
                         bbLogic.start();
                         return true;
                     }
@@ -1151,14 +1159,14 @@ public class ConnectivityUtil {
                         bbLogic.setWatchedSensor1Alt(name);
                     } else {
                         log.error("could not add watched sensor to SSL for signal head {} because there is no room in the facing SSL continuing part.", sh.getSystemName());
-                        bbLogic.retain();
+                        blockBossLogicProvider.register(bbLogic);
                         bbLogic.start();
                         return false;
                     }
                     break;
                 default:
                     log.error("could not add watched sensor to SSL for signal head {}because 'where' to place the sensor was not correctly designated.", sh.getSystemName());
-                    bbLogic.retain();
+                    blockBossLogicProvider.register(bbLogic);
                     bbLogic.start();
                     return false;
             }
@@ -1166,7 +1174,7 @@ public class ConnectivityUtil {
             log.error("SSL has not been set up for signal head {}. Could not add sensor - {}.", sh.getDisplayName(), name);
             return false;
         }
-        bbLogic.retain();
+        blockBossLogicProvider.register(bbLogic);
         bbLogic.start();
         return true;
     }
@@ -1226,7 +1234,7 @@ public class ConnectivityUtil {
             // this to avoid Unexpected mode ERROR message at startup
             bbLogic.setMode(BlockBossLogic.SINGLEBLOCK);
         }
-        bbLogic.retain();
+        blockBossLogicProvider.register(bbLogic);
         bbLogic.start();
         return true;
     }
@@ -2819,5 +2827,5 @@ public class ConnectivityUtil {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ConnectivityUtil.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConnectivityUtil.class);
 }

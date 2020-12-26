@@ -1,12 +1,13 @@
 package jmri.util.swing;
 
 import java.awt.Color;
+
 import javax.swing.JButton;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -32,13 +33,13 @@ public class JmriColorChooserPanelTest {
         Assert.assertEquals("display name", "JMRI", panel.getDisplayName());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         panel = new JmriColorChooserPanel();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
         panel = null;

@@ -3,7 +3,9 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.GraphicsEnvironment;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of LayoutEditorFloatingToolBarPanel
@@ -21,15 +23,15 @@ public class LayoutEditorFloatingToolBarPanelTest {
 
 
     // from here down is testing infrastructure
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    // private final static Logger log = LoggerFactory.getLogger(LayoutEditorFloatingToolBarPanelTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorFloatingToolBarPanelTest.class);
 }

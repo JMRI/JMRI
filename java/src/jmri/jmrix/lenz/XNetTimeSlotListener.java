@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  */
 public class XNetTimeSlotListener implements XNetListener {
 
-    private XNetPortController port = null;
+    private XNetPortController port;
 
     public XNetTimeSlotListener(XNetPortController p){
        port = p;

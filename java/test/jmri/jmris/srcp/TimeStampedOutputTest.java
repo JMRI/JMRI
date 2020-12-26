@@ -22,7 +22,7 @@ public class TimeStampedOutputTest {
     @Test
     public void testCTor() {
         TimeStampedOutput t = new TimeStampedOutput(new ByteArrayOutputStream());
-        assertThat(t).isNotNull().withFailMessage("exists");
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
 
     @Test

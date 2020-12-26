@@ -2,7 +2,9 @@ package jmri.jmrix.nce;
 
 import jmri.JmriException;
 import jmri.ProgrammingMode;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the NceProgrammer class
@@ -33,7 +35,7 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         // infrastructure objects
@@ -44,7 +46,7 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         tc = null;
         programmer = p = null;

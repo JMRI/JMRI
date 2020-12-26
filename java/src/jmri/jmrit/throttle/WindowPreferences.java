@@ -88,6 +88,7 @@ public class WindowPreferences {
      * <li> width
      * <li> height
      * </ul>
+     * @param ignorePosition true to not set location, false to set.
      */
     public static void setPreferences(Container c, Element e, boolean ignorePosition) {
         try {

@@ -1,7 +1,8 @@
 package jmri.jmrix.rps;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -14,14 +15,14 @@ public class RpsReporterTest extends jmri.implementation.AbstractReporterTestBas
         return "3";
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         r = new RpsReporter("RR(0,0,0);(1,0,0);(1,1,0);(0,1,0)", "R");
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         r = null;

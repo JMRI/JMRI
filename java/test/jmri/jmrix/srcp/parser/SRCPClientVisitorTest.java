@@ -1,16 +1,16 @@
 package jmri.jmrix.srcp.parser;
 
 import java.io.StringReader;
+
 import jmri.jmrix.srcp.SRCPSystemConnectionMemo;
 import jmri.jmrix.srcp.SRCPTrafficController;
 import jmri.jmrix.srcp.SRCPListener;
 import jmri.jmrix.srcp.SRCPMessage;
 import jmri.jmrix.srcp.SRCPReply;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -609,7 +609,7 @@ public class SRCPClientVisitorTest {
         e.jjtAccept(v, memo);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         SRCPTrafficController et = new SRCPTrafficController() {
@@ -621,7 +621,7 @@ public class SRCPClientVisitorTest {
         memo = new SRCPSystemConnectionMemo("D", "SRCP", et);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

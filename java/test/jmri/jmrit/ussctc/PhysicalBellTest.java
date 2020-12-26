@@ -2,7 +2,9 @@ package jmri.jmrit.ussctc;
 
 import jmri.util.JUnitUtil;
 import jmri.*;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for PhysicalBell class in the jmri.jmrit.ussctc package
@@ -30,7 +32,7 @@ public class PhysicalBellTest {
     
     Turnout layoutTurnout;
     
-    @org.junit.Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -40,7 +42,7 @@ public class PhysicalBellTest {
         layoutTurnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1"); layoutTurnout.setUserName("Bell output");
     }
 
-    @org.junit.After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

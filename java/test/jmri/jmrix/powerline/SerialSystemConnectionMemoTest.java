@@ -1,17 +1,17 @@
 package jmri.jmrix.powerline;
 
+import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the SerialSystemConnectionMemo class.
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class SerialSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+public class SerialSystemConnectionMemoTest extends SystemConnectionMemoTestBase<SerialSystemConnectionMemo> {
 
     @Override
     @Test
@@ -20,47 +20,44 @@ public class SerialSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionM
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
-       JUnitUtil.setUp();
-       SerialSystemConnectionMemo memo = new SerialSystemConnectionMemo();
-       memo.setTrafficController(new SerialTrafficController() {
-          @Override
-          public void sendSerialMessage(SerialMessage m, SerialListener reply) {
-          }
+        JUnitUtil.setUp();
+        scm = new SerialSystemConnectionMemo();
+        scm.setTrafficController(new SerialTrafficController() {
+            @Override
+            public void sendSerialMessage(SerialMessage m, SerialListener reply) {
+            }
 
-          @Override
-          public void transmitLoop() {
-          }
+            @Override
+            public void transmitLoop() {
+            }
 
-          @Override
-          public void receiveLoop() {
-          }
-       });
-       memo.getTrafficController().setAdapterMemo(memo); // indirect way to link the two and prevent an NPE
-       memo.setSerialAddress(new SerialAddress(memo));
-       memo.setTurnoutManager(new SerialTurnoutManager(memo.getTrafficController()));
-       memo.setLightManager(new SerialLightManager(memo.getTrafficController()) {
-          @Override
-          protected jmri.Light createNewSpecificLight(String systemName, String userName) {
-             return null;
-          }
-       });
-       memo.setSensorManager(new SerialSensorManager(memo.getTrafficController()) {
-          @Override
-          public void reply(SerialReply r) {
-          }
-       });
-       scm = memo;
+            @Override
+            public void receiveLoop() {
+            }
+        });
+        scm.getTrafficController().setAdapterMemo(scm); // indirect way to link the two and prevent an NPE
+        scm.setSerialAddress(new SerialAddress(scm));
+        scm.setTurnoutManager(new SerialTurnoutManager(scm.getTrafficController()));
+        scm.setLightManager(new SerialLightManager(scm.getTrafficController()) {
+            @Override
+            protected jmri.Light createNewSpecificLight(String systemName, String userName) {
+                return null;
+            }
+        });
+        scm.setSensorManager(new SerialSensorManager(scm.getTrafficController()) {
+            @Override
+            public void reply(SerialReply r) {
+            }
+        });
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
-        scm = null;
-        // put in place because AbstractMRTrafficController implementing
-        // subclass was not terminated properly
-        JUnitUtil.clearShutDownManager();
+        scm.getTrafficController().terminateThreads();
+        scm.dispose();
         JUnitUtil.tearDown();
     }
 

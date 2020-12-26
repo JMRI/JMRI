@@ -4,18 +4,21 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.util.List;
+
 import javax.swing.JFrame;
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
-import jmri.configurexml.AbstractXmlAdapter;
-import jmri.configurexml.XmlAdapter;
-import jmri.jmrit.display.PanelMenu;
-import jmri.jmrit.display.Positionable;
-import jmri.jmrit.display.panelEditor.PanelEditor;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.ConfigureManager;
+import jmri.InstanceManager;
+import jmri.configurexml.AbstractXmlAdapter;
+import jmri.configurexml.XmlAdapter;
+import jmri.jmrit.display.EditorManager;
+import jmri.jmrit.display.Positionable;
+import jmri.jmrit.display.panelEditor.PanelEditor;
 
 /**
  * Handle configuration for {@link PanelEditor} panes.
@@ -83,11 +86,6 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         return panel;
     }
 
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
     /**
      * Create a PanelEditor object, then register and fill it, then pop it in a
      * JFrame.
@@ -127,7 +125,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
             name = shared.getAttribute("name").getValue();
         }
         // confirm that panel hasn't already been loaded
-        if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(name)) {
+        if (InstanceManager.getDefault(EditorManager.class).contains(name)) {
             log.warn("File contains a panel with the same name ({}) as an existing panel", name);
             result = false;
         }
@@ -155,7 +153,8 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         panel.setTitle();
         panel.getTargetFrame().setLocation(x, y);
         panel.getTargetFrame().setSize(width, height);
-        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(panel);
+        //Panel already added to EditorManager with new PanelEditor(name)
+//        InstanceManager.getDefault(EditorManager.class).add(panel);
 
         // Load editor option flags. This has to be done before the content
         // items are loaded, to preserve the individual item settings

@@ -2,8 +2,8 @@ package jmri.jmrix.sprog.sprog;
 
 import jmri.util.JUnitUtil;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for ConnectionConfig class.
@@ -12,7 +12,7 @@ import org.junit.Before;
  **/
 public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionConfigTestBase  {
 
-   @Before
+   @BeforeEach
    @Override
    public void setUp() {
         JUnitUtil.setUp();
@@ -21,7 +21,7 @@ public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionCon
         cc = new ConnectionConfig();
    }
 
-   @After
+   @AfterEach
    @Override
    public void tearDown(){
         if (cc != null) {

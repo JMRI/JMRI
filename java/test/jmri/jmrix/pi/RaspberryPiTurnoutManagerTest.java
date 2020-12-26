@@ -2,12 +2,12 @@ package jmri.jmrix.pi;
 
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioProvider;
+
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for RaspberryPiTurnoutManager.
@@ -21,6 +21,11 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
     @Override
     public String getSystemName(int i) {
         return l.getSystemPrefix() + "T" + i;
+    }
+    
+    @Override
+    protected String getASystemNameWithNoPrefix() {
+        return "" + getNumToTest2();
     }
 
     @Test
@@ -36,7 +41,7 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
     private GpioProvider myProvider;
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -45,7 +50,7 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
         l = new RaspberryPiTurnoutManager(new RaspberryPiSystemConnectionMemo());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         // unprovisionPin if it exists to allow reuse of GPIO pin in next test (without need to override test)
         RaspberryPiTurnout t1 = (RaspberryPiTurnout) l.getTurnout(getSystemName(getNumToTest1()));

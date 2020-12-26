@@ -34,8 +34,8 @@ import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.SignalHead;
 import jmri.jmrit.catalog.CatalogPanel;
-import jmri.jmrit.catalog.CatalogTreeLeaf;
-import jmri.jmrit.catalog.CatalogTreeNode;
+import jmri.CatalogTreeLeaf;
+import jmri.CatalogTreeNode;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.picker.PickListModel;
@@ -305,7 +305,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             button.setAlignmentX(Component.CENTER_ALIGNMENT);
             p.add(button);
             panel.add(p);
-            // TODO align button centered in GridLayout EBR
+            // TODO align button centered in GridLayout
             _iconPanel.add(panel);
         }
         this.add(_iconPanel, 0);

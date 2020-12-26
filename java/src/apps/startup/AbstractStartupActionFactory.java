@@ -1,45 +1,16 @@
 package apps.startup;
 
-import java.util.Locale;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
- * Abstract implementation of {@link apps.startup.StartupActionFactory} that
- * covers some boilerplate code for most implementations.
  *
- * @author Randall Wood (C) 2016
+ * @author Randall Wood Copyright 2020
+ * @deprecated since 4.19.6; use
+ * {@link jmri.util.startup.AbstractStartupActionFactory} instead
  */
-abstract public class AbstractStartupActionFactory implements StartupActionFactory {
-
-    /**
-     * {@inheritDoc}
-     *
-     * This implementation calls
-     * {@link #getTitle(java.lang.Class, java.util.Locale)} with the default
-     * locale.
-     *
-     * @param clazz the class
-     * @return the title
-     * @throws IllegalArgumentException if the class is not supported by this
-     *                                  factory
-     */
-    @Override
-    public String getTitle(Class<?> clazz) throws IllegalArgumentException {
-        return this.getTitle(clazz, Locale.getDefault());
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * This implementation returns an empty array.
-     *
-     * @param clazz the class
-     * @return an empty array
-     * @throws IllegalArgumentException if the class is not supported by this
-     *                                  factory
-     */
-    @Override
-    public String[] getOverriddenClasses(Class<?> clazz) throws IllegalArgumentException {
-        return new String[0];
-    }
+@Deprecated
+@SuppressWarnings("deprecation")
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Deprecated by refactoring; retaining unchanged until removal")
+public abstract class AbstractStartupActionFactory extends jmri.util.startup.AbstractStartupActionFactory implements StartupActionFactory {
 
 }

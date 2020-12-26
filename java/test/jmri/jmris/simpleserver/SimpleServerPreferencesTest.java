@@ -26,7 +26,7 @@ public class SimpleServerPreferencesTest {
 
     @Test public void defaultPort() {
         SimpleServerPreferences a = new SimpleServerPreferences();
-        assertThat(a.getDefaultPort()).isEqualTo(2048).withFailMessage("Default Port");
+        assertThat(a.getDefaultPort()).withFailMessage("Default Port").isEqualTo(2048);
     }
 
     @BeforeEach public void setUp() {
@@ -34,7 +34,7 @@ public class SimpleServerPreferencesTest {
         JUnitUtil.resetProfileManager();
     }
 
-    @AfterEach public void tearDown() throws Exception {
+    @AfterEach public void tearDown() {
         JUnitUtil.tearDown();
     }
 

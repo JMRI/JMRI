@@ -12,7 +12,8 @@ import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.jmrix.AbstractSerialPortController;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +36,7 @@ public class SerialSensorAdapter extends AbstractSerialPortController {
     SerialPort activeSerialPort = null;
 
     public SerialSensorAdapter() {
-        super(new SystemConnectionMemo("S", Bundle.getMessage("TypeSerial")) {
+        super(new DefaultSystemConnectionMemo("S", Bundle.getMessage("TypeSerial")) {
 
             @Override
             protected ResourceBundle getActionModelResourceBundle() {
@@ -212,6 +213,8 @@ public class SerialSensorAdapter extends AbstractSerialPortController {
 
     /**
      * Do a sensor change on the event queue.
+     * @param sensor sensor 
+     * @param value true if sensor changes on, else false.
      */
     public void notify(String sensor, boolean value) {
     }

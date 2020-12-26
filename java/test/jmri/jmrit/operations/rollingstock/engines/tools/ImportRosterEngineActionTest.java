@@ -8,9 +8,9 @@ import java.io.IOException;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
+import org.junit.jupiter.api.io.TempDir;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -20,22 +20,17 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@Timeout(20)
 public class ImportRosterEngineActionTest extends OperationsTestCase {
 
-    @Rule
-    public jmri.util.junit.rules.RetryRule retryRule = new jmri.util.junit.rules.RetryRule(3);  // allow 3 retries
-
-    @Rule // This test class was periodically stalling and causing the CI run to time out. Limit its duration.
-    public org.junit.rules.Timeout globalTimeout = org.junit.rules.Timeout.seconds(20);
-
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+    public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
 
     @Test
     public void testCTor() {
@@ -49,7 +44,7 @@ public class ImportRosterEngineActionTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ImportRosterEngineAction importRosterAction = new ImportRosterEngineAction();
         Assert.assertNotNull("exists", importRosterAction);
-        importRosterAction.actionPerformed(new ActionEvent("Test Action", 0, null));
+        importRosterAction.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
 
         Thread run = JUnitUtil.getThreadByName("Import Roster Engines");
 
@@ -69,12 +64,11 @@ public class ImportRosterEngineActionTest extends OperationsTestCase {
     }
 
     @Test
-    public void testImport() throws IOException, FileNotFoundException {
+    public void testImport(@TempDir File rosterDir) throws IOException, FileNotFoundException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // copied from "RosterTest"
         // store files in random temp directory
-        File rosterDir = folder.newFolder();
         FileUtil.createDirectory(rosterDir);
 
         File f = new File(rosterDir, "rosterTest.xml");
@@ -100,7 +94,7 @@ public class ImportRosterEngineActionTest extends OperationsTestCase {
 
         ImportRosterEngineAction importRosterAction = new ImportRosterEngineAction();
         Assert.assertNotNull("exists", importRosterAction);
-        importRosterAction.actionPerformed(new ActionEvent("Test Action", 0, null));
+        importRosterAction.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
 
         Thread run = JUnitUtil.getThreadByName("Import Roster Engines");
 

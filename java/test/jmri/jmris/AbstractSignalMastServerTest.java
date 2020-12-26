@@ -1,6 +1,5 @@
 package jmri.jmris;
 
-import java.io.IOException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,13 +25,13 @@ public class AbstractSignalMastServerTest {
        jmri.util.JUnitUtil.setUp();
        sms = new AbstractSignalMastServer(){
           @Override
-          public void sendStatus(String signalMast, String Status) throws IOException {
+          public void sendStatus(String signalMast, String Status) {
           }
           @Override
-          public void sendErrorStatus(String route) throws IOException {
+          public void sendErrorStatus(String route) {
           }
           @Override
-          public void parseStatus(String statusString) throws IOException {
+          public void parseStatus(String statusString) {
           }
 
        };

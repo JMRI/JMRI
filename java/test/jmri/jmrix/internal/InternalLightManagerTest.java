@@ -1,13 +1,10 @@
 package jmri.jmrix.internal;
 
-import jmri.InstanceManager;
-import jmri.Light;
-import jmri.LightManager;
+import jmri.*;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,10 +55,20 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
         // ask for a Light, and check type
         LightManager lm = jmri.InstanceManager.lightManagerInstance();
 
-        Assert.assertTrue(lm.newLight("IL21", "my name").isIntensityVariable());
+        Assert.assertTrue(lm.newLight("IL21", "my name") instanceof VariableLight);
     }
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -70,7 +77,7 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
         jmri.InstanceManager.setLightManager(l);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -17,7 +17,11 @@ import org.slf4j.LoggerFactory;
 public class RfidNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     /**
-     * Enhanced constructor for placing the pane in various GUIs
+     * Enhanced constructor for placing the pane in various GUIs.
+     * @param s action name.
+     * @param wi the window interface.
+     * @param paneClass the pane class.
+     * @param memo system connection.
      */
     public RfidNamedPaneAction(String s, WindowInterface wi, String paneClass, RfidSystemConnectionMemo memo) {
         super(s, wi, paneClass);

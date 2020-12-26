@@ -3,10 +3,8 @@ package jmri.jmrit.operations.trains;
 import java.io.BufferedReader;
 import java.io.File;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -261,7 +259,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Assert.assertEquals("confirm number of lines in switch list", 12, inD.lines().count());
 
         train.move(rlc); // move train to C
-        Assert.assertEquals("current train location", "Test Location C", train.getCurrentLocation().getName());
+        Assert.assertEquals("current train location", "Test Location C", train.getCurrentRouteLocation().getName());
 
         tsl.buildSwitchList(locationA);
         tsl.buildSwitchList(locationB); // should report that already serviced train
@@ -278,9 +276,9 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Assert.assertEquals("confirm number of lines in switch list", 12, inD.lines().count());
 
         train.move(); // move train to D
-        Assert.assertEquals("current train location", "Test Location D", train.getCurrentLocation().getName());
+        Assert.assertEquals("current train location", "Test Location D", train.getCurrentRouteLocation().getName());
         train.move(); // move train to D reverse direction
-        Assert.assertEquals("current train location", "Test Location D", train.getCurrentLocation().getName());
+        Assert.assertEquals("current train location", "Test Location D", train.getCurrentRouteLocation().getName());
 
         tsl.buildSwitchList(locationA);
         tsl.buildSwitchList(locationB);
@@ -297,7 +295,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Assert.assertEquals("confirm number of lines in switch list", 10, inD.lines().count());
 
         train.move(); // move train to C
-        Assert.assertEquals("current train location", "Test Location C", train.getCurrentLocation().getName());
+        Assert.assertEquals("current train location", "Test Location C", train.getCurrentRouteLocation().getName());
 
         tsl.buildSwitchList(locationA);
         tsl.buildSwitchList(locationB);
@@ -314,7 +312,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Assert.assertEquals("confirm number of lines in switch list", 10, inD.lines().count());
 
         train.move(); // move train to B
-        Assert.assertEquals("current train location", "Test Location B", train.getCurrentLocation().getName());
+        Assert.assertEquals("current train location", "Test Location B", train.getCurrentRouteLocation().getName());
 
         tsl.buildSwitchList(locationA);
         tsl.buildSwitchList(locationB);
@@ -331,7 +329,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Assert.assertEquals("confirm number of lines in switch list", 10, inD.lines().count());
 
         train.move(); // move train to A
-        Assert.assertEquals("current train location", "Test Location A", train.getCurrentLocation().getName());
+        Assert.assertEquals("current train location", "Test Location A", train.getCurrentRouteLocation().getName());
 
         tsl.buildSwitchList(locationA);
         tsl.buildSwitchList(locationB);
@@ -531,7 +529,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
         // setup new managers
@@ -572,7 +570,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         super.tearDown();
     }

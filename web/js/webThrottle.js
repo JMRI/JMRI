@@ -22,6 +22,7 @@
 
 //----------------------------------------- Global vars
 
+var log = new Logger();
 var $debug = true;
 var $vScrollbarWidth;
 var $showScrollBar = false;
@@ -172,7 +173,7 @@ $(document).ready(function() {
 	* $jmri.getRosterGroups()
 	* . Returns array of strings: rosterGroup
 	* $jmri.getObjectList(listType) {
-	* . Possible values for string 'listType' (get): roster, panels, lights, reporters, sensors, turnouts, signalHeads, signalMasts, routes, memories
+	* . Possible values for string 'listType' (get): roster, panels, lights, reporters, sensors, turnouts, signalHeads, signalMasts, routes, memories, blocks, oblocks
 	* . Returns array of objects: list
 	* $jmri.closeSocket()
 	* . To stop communication with JMRI (usually, before exit and before blocking code: alert(), ...)
@@ -191,6 +192,8 @@ $(document).ready(function() {
 	* Possible 'args' for 'route': {"userName":userName,"comment":comment,"state":state}
 	* Possible 'args' for 'memory': {"userName":userName,"comment":comment,"value":value}
 	* Possible 'args' for 'power': {"state":state}
+	* block
+	* oblock
 	* >>> Other values for 'type' and new 'args' may be available
 	********************************************/
 	var debug = loadLocalInfo('webThrottle.debug');
@@ -330,8 +333,8 @@ $(document).ready(function() {
 var startJMRI = function() {
 	$jmri = $.JMRI({
 		//*** Callback Functions available in '$jmri' object
-		toSend: function(data) {$debug && window.console && console.log(new Date() + ' - ' + document.title + '\n' + 'JSONtoSend: ' + data);},	//Nothing to do
-		fullData: function(data) {$debug && window.console && console.log(new Date() + ' - ' + document.title + '\n' + 'JSONreceived: ' + data);},	//Nothing to do
+		toSend: function(data) {$debug && log.log(new Date() + ' - ' + document.title + '\n' + 'JSONtoSend: ' + data);},	//Nothing to do
+		fullData: function(data) {$debug && log.log(new Date() + ' - ' + document.title + '\n' + 'JSONreceived: ' + data);},	//Nothing to do
                 error: function (code, message) {
                     if (code === 0)
                         jmriLostComm(message);
@@ -662,7 +665,7 @@ var jmriReady = function(jsonVersion, jmriVersion, railroadName) {
 					img.attr('src', '/roster/' + encodeURIComponent(loco.name) + '/' + (icon ? 'icon' : 'image') + '?maxHeight=' + $cellHeightRef);
 				}
 				$locoAddress = '' + loco.dccAddress;
-				$jmri.setJMRI('throttle', $locoAddress, {"address":loco.dccAddress});
+                $jmri.setJMRI('throttle', $locoAddress, {"rosterEntry":loco.name});
 			} else smoothAlert('Loco \'' + $paramLocoName + '\' doesn\'t exist.\nReopen the web page with a valid loco name.');
 			break;
 		case 'turnouts':

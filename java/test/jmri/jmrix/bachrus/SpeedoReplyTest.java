@@ -1,10 +1,9 @@
 package jmri.jmrix.bachrus;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * SpeedoReplyTest.java
@@ -15,7 +14,7 @@ import org.junit.Test;
  */
 public class SpeedoReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -33,7 +32,7 @@ public class SpeedoReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("maxsize",32, m.maxSize());
     }
     
-    @After
+    @AfterEach
     public void tearDown() {
         m = null;
         JUnitUtil.tearDown();

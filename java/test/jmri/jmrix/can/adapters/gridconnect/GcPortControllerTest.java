@@ -2,8 +2,8 @@ package jmri.jmrix.can.adapters.gridconnect;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the GcPortController class.
@@ -13,7 +13,7 @@ import org.junit.Before;
 public class GcPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp(){
        JUnitUtil.setUp();
        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
@@ -36,8 +36,7 @@ public class GcPortControllerTest extends jmri.jmrix.AbstractSerialPortControlle
 
             @Override
             public String[] validBaudRates(){
-               String[] retval = {"9600"};
-               return retval;
+                return new String[]{"9600"};
             }
 
             /**
@@ -53,7 +52,7 @@ public class GcPortControllerTest extends jmri.jmrix.AbstractSerialPortControlle
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown(){
        JUnitUtil.tearDown();
     }

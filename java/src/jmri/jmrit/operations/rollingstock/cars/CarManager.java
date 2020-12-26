@@ -18,7 +18,6 @@ import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.Train;
 
@@ -603,14 +602,6 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
 
         Element values;
         List<String> names = getKernelNameList();
-        if (Control.backwardCompatible) {
-            root.addContent(values = new Element(Xml.KERNELS));
-            for (String name : names) {
-                String kernelNames = name + "%%"; // NOI18N
-                values.addContent(kernelNames);
-            }
-        }
-        // new format using elements
         Element kernels = new Element(Xml.NEW_KERNELS);
         for (String name : names) {
             Element kernel = new Element(Xml.KERNEL);

@@ -16,7 +16,8 @@ public interface CentralSection<To extends Enum<To>, From extends Enum<From>> {
     public To codeSendStart();
     
     /**
-     * Provides the code sequence to the central CTC machine at the end of the indication-send operation
+     * Provides the code sequence to the central CTC machine at the end of the indication-send operation.
+     * @param value to be conveyed.
      */
     public void indicationComplete(From value);    
     

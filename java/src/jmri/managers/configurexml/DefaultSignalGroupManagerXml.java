@@ -156,7 +156,7 @@ public class DefaultSignalGroupManagerXml
             List<Element> appList = e.getChildren("appearance"); // deprecated 4.7.2 for aspect; warning added 4.19.1
             for (Element app : appList) {
                 String value = app.getAttribute("valid").getValue();
-                jmri.util.Log4JUtil.deprecationWarning(log, "appearance elements in file");
+                jmri.util.LoggingUtil.deprecationWarning(log, "appearance elements in file");
                 sg.addSignalMastAspect(value);
             }
             List<Element> aspList = e.getChildren("aspect");
@@ -216,11 +216,6 @@ public class DefaultSignalGroupManagerXml
             }
         }
         return true;
-    }
-
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
     }
 
     private int getIntFromColour(String color) {

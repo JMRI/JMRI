@@ -96,6 +96,7 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
      * a feedback message at initialization without changing the state of the
      * sensor with respect to whether or not a feedback request was sent. This
      * is used only when the sensor is created by on layout feedback.
+     * @param l Init message
      */
     synchronized void initmessage(DCCppReply l) {
         boolean oldState = statusRequested;

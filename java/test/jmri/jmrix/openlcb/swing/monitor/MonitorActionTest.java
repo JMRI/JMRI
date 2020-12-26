@@ -3,10 +3,9 @@ package jmri.jmrix.openlcb.swing.monitor;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -23,7 +22,7 @@ public class MonitorActionTest {
         Assert.assertNotNull("exists",t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -35,7 +34,7 @@ public class MonitorActionTest {
         jmri.InstanceManager.setDefault(CanSystemConnectionMemo.class,memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo.dispose();
         memo = null;

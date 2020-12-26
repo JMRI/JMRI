@@ -1,8 +1,8 @@
 package jmri.jmrix.tams.swing.monitor;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of TamsMonPane
@@ -13,7 +13,7 @@ public class TamsMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // pane for AbstractMonPaneTestBase, panel for JmriPanelTest
@@ -22,7 +22,7 @@ public class TamsMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         panel = pane = null;
         JUnitUtil.tearDown();

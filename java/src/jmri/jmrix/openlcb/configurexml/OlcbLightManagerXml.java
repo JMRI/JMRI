@@ -29,11 +29,6 @@ public class OlcbLightManagerXml extends jmri.managers.configurexml.AbstractLigh
     }
 
     @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
-    @Override
     public boolean load(@Nonnull Element shared, Element perNode) {
         boolean result;
         // We tell the Light managers that we will be loading Lights from XML and they should
@@ -56,5 +51,5 @@ public class OlcbLightManagerXml extends jmri.managers.configurexml.AbstractLigh
         return result;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbLightManagerXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(OlcbLightManagerXml.class);
 }

@@ -1,7 +1,6 @@
 package jmri.jmrix.internal;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * InternalConsistManagerTest.java
@@ -13,7 +12,7 @@ import org.junit.Before;
  */
 public class InternalConsistManagerOpsModeTest extends jmri.implementation.AbstractConsistManagerTestBase {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -21,7 +20,7 @@ public class InternalConsistManagerOpsModeTest extends jmri.implementation.Abstr
         cm = new InternalConsistManager();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         cm = null;

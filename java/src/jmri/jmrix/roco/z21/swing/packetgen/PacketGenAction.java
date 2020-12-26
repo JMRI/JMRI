@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  */
 public class PacketGenAction extends AbstractAction {
 
-    jmri.jmrix.roco.z21.Z21SystemConnectionMemo _memo = null;
+    jmri.jmrix.roco.z21.Z21SystemConnectionMemo _memo;
 
     public PacketGenAction(String s, jmri.jmrix.roco.z21.Z21SystemConnectionMemo memo) {
         super(s);

@@ -30,11 +30,12 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
     // internal ends of the pipes
     private DataOutputStream outpipe = null;  // feed pin
     private DataInputStream inpipe = null; // feed pout
-    private Z21SystemConnectionMemo _memo = null;
+    private Z21SystemConnectionMemo _memo;
     private Thread sourceThread;
 
     /**
      * Build a new LocoNet tunnel.
+     * @param memo system connection.
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SC_START_IN_CTOR", justification="done at end, waits for data")
     public Z21LocoNetTunnel(Z21SystemConnectionMemo memo) {
@@ -266,6 +267,7 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
     /**
      * Package protected method to retrieve the stream port controller
      * associated with this tunnel.
+     * @return PortController for this connection
      */
     jmri.jmrix.loconet.streamport.LnStreamPortController getStreamPortController() {
        return lsc;
@@ -274,6 +276,7 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
     /**
      * Package protected method to set the stream port controller
      * associated with this tunnel.
+     * @param x PortController for this connection
      */
     void setStreamPortController(LnStreamPortController x){
         lsc = x;

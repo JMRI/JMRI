@@ -75,10 +75,10 @@
             </packagings>
             <goals>
                 <goal>test</goal>
-                <goal>jacoco:report</goal>
             </goals>
             <properties>
                 <test>${packageClassName}</test>
+                <netbeans.jacoco.report>true</netbeans.jacoco.report>
             </properties>
         </action>
         <action>
@@ -88,7 +88,9 @@
             </packagings>
             <goals>
                 <goal>test</goal>
-                <goal>jacoco:report</goal>
             </goals>
+            <properties>
+                <netbeans.jacoco.report>true</netbeans.jacoco.report>
+            </properties>
         </action>
-    </actions>
+</actions>

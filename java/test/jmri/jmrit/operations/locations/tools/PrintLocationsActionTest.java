@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -153,7 +153,7 @@ public class PrintLocationsActionTest extends OperationsTestCase {
         PrintLocationsAction pla = new PrintLocationsAction(true, location);
         Assert.assertNotNull("exists", pla);
 
-        pla.actionPerformed(new ActionEvent("Test Action", 0, null));
+        pla.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
 
         // confirm print option window is showing
         LocationPrintOptionFrame printOptionFrame =

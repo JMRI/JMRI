@@ -21,7 +21,7 @@
 <body>
   <!-- This page doesn't have the usual formatting because it's -->
   <!-- only encountered (normally) from the help system. See    -->
-  <!-- http://jmri.org/help/en/html/doc/Technical/Help.shtml    -->
+  <!-- https://jmri.org/help/en/html/doc/Technical/Help.shtml    -->
 
   <div id="mainContent">
     <h1>JMRI Help</h1>
@@ -55,7 +55,7 @@
     <h2>Further information</h2>
 
     <p>The main JMRI web page <a href=
-    "http://jmri.org">http://jmri.org</a> is a good place to start
+    "https://jmri.org">https://jmri.org</a> is a good place to start
     for information about current status, updates, etc.<br>
     (Depending on your computer, you might have to copy that link
     to your web browser to be able to see external sites
@@ -77,11 +77,11 @@
     "https://groups.io/g/jmriusers">https://groups.io/g/jmriusers/</a>.</p>
 
     <p>Our <a href=
-    "http://jmri.org/help/en/html/doc/Technical/index.shtml">technical
+    "https://jmri.org/help/en/html/doc/Technical/index.shtml">technical
     web pages</a> are continually being updated. We're always short
     of documentation, so if you're interested in working with the
     code or updating some Help files, we'd love to help you
-    <a href="http://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">
+    <a href="https://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">
     get started</a>.</p>
   </div><!-- close #mainContent -->
 </body>

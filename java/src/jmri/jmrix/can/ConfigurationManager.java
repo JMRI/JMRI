@@ -21,6 +21,21 @@ abstract public class ConfigurationManager {
     final public static String RAWCAN = "Raw CAN"; // TODO I18N
     final public static String TEST = "Test - do not use";
 
+    public enum SubProtocol {
+        NONE,
+        CBUS
+    }
+    
+    /**
+     * Enumerate support for switching programming modes in connected hardware
+     */
+    public enum ProgModeSwitch {
+        NONE,       // No support for switching programming modes, or no programmer,
+                    // or unknown CBUS attached command station/programmer
+        EITHER,     // Service mode or ops mode, but not both at the same time
+        SPROG3PLUS  // Specific hardware choice
+    }
+    
     private static String[] options = new String[]{SPROGCBUS, MERGCBUS, OPENLCB, RAWCAN, TEST};
 
     /**
@@ -68,7 +83,9 @@ abstract public class ConfigurationManager {
     abstract public void configureManagers();
 
     /**
-     * Tells which managers this class provides.
+     * Get which managers this class provides.
+     * @param type class to query.
+     * @return true if provided, else false.
      */
     abstract public boolean provides(Class<?> type);
 

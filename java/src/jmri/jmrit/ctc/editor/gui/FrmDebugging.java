@@ -1,5 +1,6 @@
 package jmri.jmrit.ctc.editor.gui;
 
+import jmri.jmrit.ctc.NBHSensor;
 import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
 import jmri.jmrit.ctc.editor.code.CommonSubs;
 import jmri.jmrit.ctc.ctcserialdata.OtherData;
@@ -23,8 +24,8 @@ public class FrmDebugging extends javax.swing.JFrame {
     private String _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensorOrig;
 
     private void initOrig(OtherData otherData) {
-        _mCTCDebugSystemReloadInternalSensorOrig = otherData._mCTCDebugSystemReloadInternalSensor;
-        _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensorOrig = otherData._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor;
+        _mCTCDebugSystemReloadInternalSensorOrig = otherData._mCTCDebugSystemReloadInternalSensor.getHandleName();
+        _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensorOrig = otherData._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.getHandleName();
     }
     private boolean dataChanged() {
         if (!_mCTCDebugSystemReloadInternalSensorOrig.equals(_mCTCSystemReloadInternalSensor.getText())) return true;
@@ -38,8 +39,8 @@ public class FrmDebugging extends javax.swing.JFrame {
         CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_menuCfgDeb", true);  // NOI18N
         _mAwtWindowProperties = awtWindowProperties;
         _mOtherData = otherData;
-        _mCTCSystemReloadInternalSensor.setText(otherData._mCTCDebugSystemReloadInternalSensor);
-        _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.setText(otherData._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor);
+        _mCTCSystemReloadInternalSensor.setText(otherData._mCTCDebugSystemReloadInternalSensor.getHandleName());
+        _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.setText(otherData._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.getHandleName());
         initOrig(otherData);
         _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mSaveAndClose);
@@ -151,8 +152,15 @@ public class FrmDebugging extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void _mSaveAndCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mSaveAndCloseActionPerformed
-        _mOtherData._mCTCDebugSystemReloadInternalSensor = _mCTCSystemReloadInternalSensor.getText();
-        _mOtherData._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor = _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.getText();
+        if (dataChanged()) {
+
+            NBHSensor newSensor = CommonSubs.getNBHSensor(_mCTCSystemReloadInternalSensor.getText(), true);
+            if (newSensor != null) _mOtherData._mCTCDebugSystemReloadInternalSensor = newSensor;
+
+            newSensor = CommonSubs.getNBHSensor(_mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.getText(), true);
+            if (newSensor != null) _mOtherData._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor = newSensor;
+        }
+
         _mClosedNormally = true;
         _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
         dispose();

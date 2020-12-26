@@ -30,6 +30,7 @@ import jmri.SignalMast;
 import jmri.SignalMastManager;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.MultiSensorIcon;
 import jmri.jmrit.display.Positionable;
 import jmri.server.json.JSON;
@@ -43,6 +44,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract servlet for using panels in browser.
+ * <p>
+ * See JMRI Web Server - Panel Servlet Help in help/en/html/web/PanelServlet.shtml for an example description of
+ * the interaction between the Web Servlets, the Web Browser and the JMRI application.
  *
  * @author Randall Wood
  */
@@ -205,9 +209,9 @@ public abstract class AbstractPanelServlet extends HttpServlet {
 
     @CheckForNull
     protected Editor getEditor(String name) {
-        for (Editor editor : Editor.getEditors()) {
+        for (Editor editor : InstanceManager.getDefault(EditorManager.class).getAll()) {
             Container container = editor.getTargetPanel().getTopLevelAncestor();
-            if (Frame.class.isInstance(container)) {
+            if (container instanceof Frame) {
                 if (((Frame) container).getTitle().equals(name)) {
                     return editor;
                 }
@@ -274,7 +278,7 @@ public abstract class AbstractPanelServlet extends HttpServlet {
                 Element ea = new Element(aspect.replaceAll("[ ()]", "")); //create element for aspect after removing invalid chars
                 String url = signalMast.getAppearanceMap().getImageLink(aspect, imgset);  // use correct imageset
                 if (!url.contains("preference:")) {
-                    url = "program:" + url.substring(url.indexOf("resources"));
+                    url = "/" + url.substring(url.indexOf("resources"));
                 }
                 ea.setAttribute(JSON.ASPECT, aspect);
                 ea.setAttribute("url", url);
@@ -283,7 +287,7 @@ public abstract class AbstractPanelServlet extends HttpServlet {
             String url = signalMast.getAppearanceMap().getImageLink("$held", imgset);  //add "Held" aspect if defined
             if (!url.isEmpty()) {
                 if (!url.contains("preference:")) {
-                    url = "program:" + url.substring(url.indexOf("resources"));
+                    url = "/" + url.substring(url.indexOf("resources"));
                 }
                 Element ea = new Element(JSON.ASPECT_HELD);
                 ea.setAttribute(JSON.ASPECT, JSON.ASPECT_HELD);
@@ -293,7 +297,7 @@ public abstract class AbstractPanelServlet extends HttpServlet {
             url = signalMast.getAppearanceMap().getImageLink("$dark", imgset);  //add "Dark" aspect if defined
             if (!url.isEmpty()) {
                 if (!url.contains("preference:")) {
-                    url = "program:" + url.substring(url.indexOf("resources"));
+                    url = "/" + url.substring(url.indexOf("resources"));
                 }
                 Element ea = new Element(JSON.ASPECT_DARK);
                 ea.setAttribute(JSON.ASPECT, JSON.ASPECT_DARK);
@@ -302,12 +306,18 @@ public abstract class AbstractPanelServlet extends HttpServlet {
             }
             Element ea = new Element(JSON.ASPECT_UNKNOWN);
             ea.setAttribute(JSON.ASPECT, JSON.ASPECT_UNKNOWN);
-            ea.setAttribute("url", "program:resources/icons/misc/X-red.gif");  //add icon for unknown state
+            ea.setAttribute("url", "/resources/icons/misc/X-red.gif");  //add icon for unknown state
             icons.addContent(ea);
         }
         return icons;
     }
 
+    /**
+     * Build and return a panel state display element containing icon URLs for all states.
+     *
+     * @param sub Positional containing additional icons for display (in MultiSensorIcon)
+     * @return a display element based on element name
+     */
     protected Element positionableElement(@Nonnull Positionable sub) {
         Element e = ConfigXmlManager.elementFromObject(sub);
         if (e != null) {
@@ -349,4 +359,5 @@ public abstract class AbstractPanelServlet extends HttpServlet {
         }
         return e;
     }
+
 }

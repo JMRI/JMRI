@@ -4,8 +4,8 @@ import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -162,7 +162,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
                 .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("ButtonCopy")}), Bundle.getMessage("ButtonOK"));
         
         // enter the same name
-        tcf.trackNameTextField.setText(acton.getTrackList().get(2).getName());
+        tcf.trackNameTextField.setText(acton.getTracksList().get(2).getName());
         
         JemmyUtil.enterClickAndLeave(tcf.copyButton);
         

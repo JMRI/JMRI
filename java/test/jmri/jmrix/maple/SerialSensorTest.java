@@ -1,8 +1,8 @@
 package jmri.jmrix.maple;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the jmri.jmrix.maple.SerialSensor class
@@ -23,7 +23,7 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
     @Override
     public void checkStatusRequestMsgSent() {}
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -32,7 +32,7 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
         t = new SerialSensor("KS1"); // does not need the _memo
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         t.dispose();

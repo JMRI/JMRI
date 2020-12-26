@@ -2,7 +2,6 @@ package jmri.jmris.srcp;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
 /**
@@ -20,12 +19,6 @@ public class JmriSRCPServerFrameTest extends jmri.util.JmriJFrameTestBase {
         if(!GraphicsEnvironment.isHeadless()){
            frame = new JmriSRCPServerFrame();
         }
-    }
-
-    @AfterEach
-    @Override
-    public void tearDown() {
-        super.tearDown();
     }
 
 }

@@ -3,7 +3,7 @@ package jmri.jmrit.display.layoutEditor;
 import jmri.Block;
 
 /**
- * TrackNode is a temporary object specifying and returning track node
+ * TrackNode is a memo object specifying and returning track node
  * information
  * <p>
  * Used in conjunction with ConnectivityUtil.java to return information about
@@ -49,9 +49,9 @@ public class TrackNode {
     boolean _ReachedEndBumper = false;
     int _NodeState = 0;
 
-    // temporary instance variables
     /**
-     * Access methods
+     * Set the node.
+     * @param node the layout track node.
      */
     public void setNode(LayoutTrack node) {
         _Node = node;
@@ -93,7 +93,8 @@ public class TrackNode {
       Operational methods
      */
     /**
-     * Returns the Block of the node Object at the nodeType position
+     * Get the node block.
+     * @return the Block of the node Object at the nodeType position, may be null.
      */
     public Block getNodeBlock() {
         if (HitPointType.POS_POINT == _NodeType) {

@@ -1,11 +1,10 @@
 package jmri.jmrix.loconet.locormi;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.AfterClass;
+
+import org.junit.jupiter.api.AfterAll;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -21,17 +20,17 @@ public class LnMessageClientTest {
         Assert.assertNotNull("exists", t);
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDownClass() throws Exception {
         System.setSecurityManager(SM);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

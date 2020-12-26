@@ -134,6 +134,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
      * even though there's no definitions for it. This is protected against
      * invoking any listeners, as the change is meant to be transparent; the
      * original selection is set back.
+     * @param specific The value to update
      */
     void updateMfgListContents(String specific) {
         if (mMfgListener != null) {
@@ -186,6 +187,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
     /**
      * Set a selection in the manufacturer list, without triggering an update of
      * the decoder panel.
+     * @param mfg Selected manufacturer code
      */
     void updateMfgListWithoutTrigger(String mfg) {
         mMfgList.removeListSelectionListener(mMfgListener);

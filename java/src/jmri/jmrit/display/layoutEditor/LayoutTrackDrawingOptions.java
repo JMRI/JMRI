@@ -5,8 +5,9 @@ import javax.annotation.Nonnull;
 import jmri.util.swing.JmriColorChooser;
 
 /*******************************************************************************
- * LayoutTrackDrawingOptions.
- * since 4.15.6 blockDefaultColor, blockOccupiedColor and blockAlternativeColor added here
+ * Hold various values defining how to draw various LayoutTrack elements.
+ * 
+ * @since 4.15.6 blockDefaultColor, blockOccupiedColor and blockAlternativeColor added here
  *
  * @author George Warner Copyright (c) 2017-2018
  */

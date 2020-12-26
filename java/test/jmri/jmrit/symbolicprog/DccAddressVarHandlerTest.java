@@ -1,11 +1,12 @@
 package jmri.jmrit.symbolicprog;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
 import java.util.HashMap;
+
 import jmri.progdebugger.ProgDebugger;
+
 import javax.swing.JLabel;
 
 /**
@@ -51,13 +52,13 @@ public class DccAddressVarHandlerTest {
         Assert.assertNotNull("exists",t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.tearDown();

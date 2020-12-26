@@ -2,10 +2,9 @@ package jmri.jmrix.dccpp;
 
 import jmri.Light;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.dccpp.DCCppLightManager class.
@@ -36,7 +35,7 @@ public class DCCppLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
     }
 
     // from here down is testing infrastructure
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -50,7 +49,7 @@ public class DCCppLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
         l = null;

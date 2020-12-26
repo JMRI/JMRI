@@ -69,7 +69,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         
         // for LocoNet throttles, the default is f2 momentary (for the horn)
         // all other functions are continuos (as set in AbstractThrottle).
-        this.f2Momentary = true;
+        super.updateFunctionMomentary(2, true);
 
         this.address = slot.locoAddr();
         this.isForward = slot.isForward();
@@ -395,7 +395,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
         // Release throttle connections
         if (slot != null) {
-            if (slot.slotStatus() != LnConstants.LOCO_COMMON) {
+            if (slot.slotStatus() == LnConstants.LOCO_IN_USE  ) {
                 // Digitrax throttles do not set the slot speed to zero, so do
                 // not do so here.
 
@@ -589,10 +589,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                     | LnConstants.DEC_MODE_128;
         }
         log.debug("New Slot Mode: {}", LnConstants.DEC_MODE(status));
-        if (mRefreshTimer != null) // the refresh timer isn't created until
-        // after initilization.  We only want to
-        // modify the slot after the initilization
-        // is complete.
+        if (isInitialized ) 
+            // check that the throttle is completely initialized.
         {
             network.sendLocoNetMessage(slot.writeMode(status));
         }

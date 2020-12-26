@@ -240,6 +240,7 @@ public class DataSource extends jmri.util.JmriJFrame {
      * Send output bytes, e.g. characters controlling operation, to the tester
      * with small delays between the characters. This is used to reduce overrrun
      * problems.
+     * @param bytes content to send
      */
     synchronized void sendBytes(byte[] bytes) {
         try {
@@ -259,6 +260,7 @@ public class DataSource extends jmri.util.JmriJFrame {
 
     /**
      * Open button has been pushed, create the actual display connection
+     * @param e Event driving this action
      */
     void openPortButtonActionPerformed(java.awt.event.ActionEvent e) {
         log.info("Open button pushed");

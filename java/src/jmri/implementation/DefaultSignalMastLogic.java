@@ -20,7 +20,7 @@ import jmri.Section;
 import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.Turnout;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
@@ -291,17 +291,17 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         }
         if (boo) {
             log.debug("Set use layout editor");
-            List<LayoutEditor> layout = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
+            Set<LayoutEditor> layout = InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class);
             /*We don't care which layout editor panel the signalmast is on, just so long as
              the routing is done via layout blocks*/
             // TODO: what is this?
             log.debug("userLayoutEditor finds layout list size is {}", Integer.toString(layout.size()));
-            for (int i = 0; i < layout.size(); i++) {
+            for (LayoutEditor editor : layout) {
                 if (log.isDebugEnabled()) {
-                    log.debug(layout.get(i).getLayoutName());
+                    log.debug(editor.getLayoutName());
                 }
                 if (facingBlock == null) {
-                    facingBlock = InstanceManager.getDefault(LayoutBlockManager.class).getFacingBlockByMast(getSourceMast(), layout.get(i));
+                    facingBlock = InstanceManager.getDefault(LayoutBlockManager.class).getFacingBlockByMast(getSourceMast(), editor);
                 }
             }
         }
@@ -846,8 +846,10 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         if (advancedAspect != null) {
             String aspect = stopAspect;
             if (destList.get(destination).permissiveBlock) {
-                //if a block is in a permissive state then we set the permissive appearance
-                aspect = getSourceMast().getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE);
+                if (!getSourceMast().isPermissiveSmlDisabled()) {
+                    //if a block is in a permissive state then we set the permissive appearance
+                    aspect = getSourceMast().getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE);
+                }
             } else {
                 for (int i = 0; i < advancedAspect.length; i++) {
                     if (!getSourceMast().isAspectDisabled(advancedAspect[i])) {
@@ -2071,27 +2073,27 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
             if ((destinationBlock != null) && (log.isDebugEnabled())) {
                 log.debug("{} Set use layout editor", destination.getDisplayName());
             }
-            List<LayoutEditor> layout = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
+            Set<LayoutEditor> layout = InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class);
             List<LayoutBlock> protectingBlocks = new ArrayList<>();
             // We don't care which Layout Editor panel the signal mast is on, just so long as
             // the routing is done via layout blocks.
             LayoutBlock remoteProtectingBlock = null;
             for (int i = 0; i < layout.size(); i++) {
                 if (log.isDebugEnabled()) {
-                    log.debug("{} Layout name {}", destination.getDisplayName(), layout.get(i).getLayoutName());
+                    log.debug("{} Layout name {}", destination.getDisplayName(), editor.getLayoutName());
                 }
                 if (facingBlock == null) {
-                    facingBlock = lbm.getFacingBlockByNamedBean(getSourceMast(), layout.get(i));
+                    facingBlock = lbm.getFacingBlockByNamedBean(getSourceMast(), editor);
                 }
                 if (protectingBlock == null && protectingBlocks.isEmpty()) {
                     //This is wrong
-                    protectingBlocks = lbm.getProtectingBlocksByNamedBean(getSourceMast(), layout.get(i));
+                    protectingBlocks = lbm.getProtectingBlocksByNamedBean(getSourceMast(), editor);
                 }
                 if (destinationBlock == null) {
-                    destinationBlock = lbm.getFacingBlockByNamedBean(destination, layout.get(i));
+                    destinationBlock = lbm.getFacingBlockByNamedBean(destination, editor);
                 }
                 if (remoteProtectingBlock == null) {
-                    remoteProtectingBlock = lbm.getProtectedBlockByNamedBean(destination, layout.get(i));
+                    remoteProtectingBlock = lbm.getProtectedBlockByNamedBean(destination, editor);
                 }
             }
             // At this point, if we are not using the Layout Editor turnout or block
@@ -2114,10 +2116,10 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                 StringBuffer lBlksNamesBuf = new StringBuffer();
                 for (LayoutBlock pBlk : protectingBlocks) {
                     log.debug("checking layoutBlock {}", pBlk.getDisplayName());
-                    pBlkNames = pBlkNames + pBlk.getDisplayName() + " (" + lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock, pBlk, destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.MASTTOMAST) + "), ";
-                    if (lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock, pBlk, destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.MASTTOMAST)) {
+                    pBlkNames = pBlkNames + pBlk.getDisplayName() + " (" + lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock, pBlk, destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.Routing.MASTTOMAST) + "), ";
+                    if (lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock, pBlk, destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.Routing.MASTTOMAST)) {
                         try {
-                            lblks = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(facingBlock, destinationBlock, pBlk, true, jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools.MASTTOMAST);
+                            lblks = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(facingBlock, destinationBlock, pBlk, true, jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools.Routing.MASTTOMAST);
                             protectingBlock = pBlk;
                             log.debug("building path names...");
                             for (LayoutBlock lBlk : lblks) {
@@ -2137,7 +2139,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                 }
             }
             try {
-                if (!lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock, protectingBlock, destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.MASTTOMAST)) {
+                if (!lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock, protectingBlock, destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.Routing.MASTTOMAST)) {
                     throw new jmri.JmriException("Path not valid, destination check failed.");
                 }
             } catch (jmri.JmriException e) {
@@ -2158,7 +2160,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                 }
 
                 try {
-                    lblks = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(facingBlock, destinationBlock, protectingBlock, true, jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools.MASTTOMAST);
+                    lblks = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(facingBlock, destinationBlock, protectingBlock, true, jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools.Routing.MASTTOMAST);
                 } catch (jmri.JmriException ee) {
                     log.error("No blocks found by the layout editor for pair {}-{}", source.getDisplayName(), destination.getDisplayName());
                 }
@@ -2235,16 +2237,22 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                             LayoutSlip ls = (LayoutSlip) lt;
                             int slipState = turnoutList.get(x).getExpectedState();
                             int taState = ls.getTurnoutState(slipState);
+                            Turnout tTemp = ls.getTurnout();
+                            if (tTemp == null ) {
+                                log.error("Unexpected null Turnout in {}, skipped", ls);
+                                continue; // skip this one in loop, what else can you do?
+                            }
                             turnoutSettings.put(ls.getTurnout(), taState);
                             int tbState = ls.getTurnoutBState(slipState);
                             turnoutSettings.put(ls.getTurnoutB(), tbState);
                         } else {
                             String t = lt.getTurnoutName();
+                            // temporary = why is this looking up the Turnout instead of using getTurnout()?
                             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(t);
                             if (log.isDebugEnabled()) {
                                 if (    (lt.getTurnoutType() == LayoutTurnout.TurnoutType.RH_TURNOUT ||
                                          lt.getTurnoutType() == LayoutTurnout.TurnoutType.LH_TURNOUT ||
-                                         lt.getTurnoutType() == LayoutTurnout.TurnoutType.WYE_TURNOUT) 
+                                         lt.getTurnoutType() == LayoutTurnout.TurnoutType.WYE_TURNOUT)
                                         && (!lt.getBlockName().equals(""))) {
                                     log.debug("turnout in list is straight left/right wye");
                                     log.debug("turnout block Name {}", lt.getBlockName());
@@ -2258,32 +2266,34 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                             if (turnout != null ) {
                                 turnoutSettings.put(turnout, turnoutList.get(x).getExpectedState());
                             }
-                            if (lt.getSecondTurnout() != null) {
-                                turnoutSettings.put(lt.getSecondTurnout(), turnoutList.get(x).getExpectedState());
+                            Turnout tempT;
+                            if ((tempT = lt.getSecondTurnout()) != null) {
+                                turnoutSettings.put(tempT, turnoutList.get(x).getExpectedState());
                             }
                             /* TODO: We could do with a more intelligent way to deal with double crossovers, other than
                                 just looking at the state of the other conflicting blocks, such as looking at Signalmasts
                                 that protect the other blocks and the settings of any other turnouts along the way.
                              */
                             if (lt.getTurnoutType() == LayoutTurnout.TurnoutType.DOUBLE_XOVER) {
+                                LayoutBlock tempLB;
                                 if (turnoutList.get(x).getExpectedState() == jmri.Turnout.THROWN) {
                                     if (lt.getLayoutBlock() == lblks.get(i) || lt.getLayoutBlockC() == lblks.get(i)) {
-                                        if (lt.getLayoutBlockB() != null) {
-                                            dblCrossoverAutoBlocks.add(lt.getLayoutBlockB().getBlock());
-                                            block.put(lt.getLayoutBlockB().getBlock(), Block.UNOCCUPIED);
+                                        if ((tempLB = lt.getLayoutBlockB()) != null) {
+                                            dblCrossoverAutoBlocks.add(tempLB.getBlock());
+                                            block.put(tempLB.getBlock(), Block.UNOCCUPIED);
                                         }
-                                        if (lt.getLayoutBlockD() != null) {
-                                            dblCrossoverAutoBlocks.add(lt.getLayoutBlockD().getBlock());
-                                            block.put(lt.getLayoutBlockD().getBlock(), Block.UNOCCUPIED);
+                                        if ((tempLB = lt.getLayoutBlockD()) != null) {
+                                            dblCrossoverAutoBlocks.add(tempLB.getBlock());
+                                            block.put(tempLB.getBlock(), Block.UNOCCUPIED);
                                         }
                                     } else if (lt.getLayoutBlockB() == lblks.get(i) || lt.getLayoutBlockD() == lblks.get(i)) {
-                                        if (lt.getLayoutBlock() != null) {
-                                            dblCrossoverAutoBlocks.add(lt.getLayoutBlock().getBlock());
-                                            block.put(lt.getLayoutBlock().getBlock(), Block.UNOCCUPIED);
+                                        if ((tempLB = lt.getLayoutBlock()) != null) {
+                                            dblCrossoverAutoBlocks.add(tempLB.getBlock());
+                                            block.put(tempLB.getBlock(), Block.UNOCCUPIED);
                                         }
-                                        if (lt.getLayoutBlockC() != null) {
-                                            dblCrossoverAutoBlocks.add(lt.getLayoutBlockC().getBlock());
-                                            block.put(lt.getLayoutBlockC().getBlock(), Block.UNOCCUPIED);
+                                        if ((tempLB = lt.getLayoutBlockC()) != null) {
+                                            dblCrossoverAutoBlocks.add(tempLB.getBlock());
+                                            block.put(tempLB.getBlock(), Block.UNOCCUPIED);
                                         }
                                     }
                                 }

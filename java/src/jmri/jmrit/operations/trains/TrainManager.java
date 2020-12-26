@@ -192,28 +192,6 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
     }
 
     /**
-     * Sets the selected schedule id
-     *
-     * @param id Selected schedule id
-     * Moved to TrainScheduleManager.java
-     * @deprecated at or before 4.13.7
-     */
-    @Deprecated  // at or before 4.13.7
-    public void setTrainSecheduleActiveId(String id) {
-        InstanceManager.getDefault(TrainScheduleManager.class).setTrainScheduleActiveId(id);
-    }
-
-    /**
-     * @deprecated at or before 4.13.7
-     * Moved to TrainScheduleManager.java
-     * @return active schedule id
-     */
-    @Deprecated // at or before 4.13.7
-    public String getTrainScheduleActiveId() {
-        return InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId();
-    }
-
-    /**
      * Add a script to run after trains have been loaded
      *
      * @param pathname The script's pathname
@@ -291,7 +269,26 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         }
     }
     
-    public boolean hasRoadRestrictions() {
+    public boolean isBuiltRestricted() {
+        for (Train train : getList()) {
+            if (!train.getBuiltStartYear().equals(Train.NONE) ||
+                    !train.getBuiltEndYear().equals(Train.NONE)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean isLoadRestricted() {
+        for (Train train : getList()) {
+            if (!train.getLoadOption().equals(Train.ALL_LOADS)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean isRoadRestricted() {
         for (Train train : getList()) {
             if (!train.getRoadOption().equals(Train.ALL_ROADS)) {
                 return true;
@@ -300,9 +297,9 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         return false;
     }
     
-    public boolean hasLoadRestrictions() {
+    public boolean isOwnerRestricted() {
         for (Train train : getList()) {
-            if (!train.getLoadOption().equals(Train.ALL_LOADS)) {
+            if (!train.getOwnerOption().equals(Train.ALL_OWNERS)) {
                 return true;
             }
         }
@@ -486,7 +483,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
                 continue;
             }
             // does this train service this car?
-            if (train.services(buildReport, car)) {
+            if (train.isServiceable(buildReport, car)) {
                 return train;
             }
         }
@@ -668,7 +665,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         box.removeAllItems();
         box.addItem(null);
         for (Train train : getTrainsByNameList()) {
-            if (train.services(car)) {
+            if (train.isServiceable(car)) {
                 box.addItem(train);
             }
         }
@@ -732,11 +729,10 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
     }
 
     /**
-     *
-     * @return the available text colors used for printing
-     * @deprecated since 4.9.6 use a {@link javax.swing.JColorChooser } instead. 
+     * JColorChooser is not a replacement for getRowColorComboBox as it doesn't support no color as a selection.
+     * 
+     * @return the available colors used highlighting table rows including no color.
      */
-    @Deprecated
     public JComboBox<String> getRowColorComboBox() {
         JComboBox<String> box = new JComboBox<>();
         box.addItem(NONE);
@@ -790,16 +786,16 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         newTrain.setSecondLegEngineRoad(train.getSecondLegEngineRoad());
         newTrain.setSecondLegOptions(train.getSecondLegOptions());
         newTrain.setSecondLegCabooseRoad(train.getSecondLegCabooseRoad());
-        newTrain.setSecondLegStartLocation(train.getSecondLegStartLocation());
-        newTrain.setSecondLegEndLocation(train.getSecondLegEndLocation());
+        newTrain.setSecondLegStartRouteLocation(train.getSecondLegStartRouteLocation());
+        newTrain.setSecondLegEndRouteLocation(train.getSecondLegEndRouteLocation());
         // third leg
         newTrain.setThirdLegNumberEngines(train.getThirdLegNumberEngines());
         newTrain.setThirdLegEngineModel(train.getThirdLegEngineModel());
         newTrain.setThirdLegEngineRoad(train.getThirdLegEngineRoad());
         newTrain.setThirdLegOptions(train.getThirdLegOptions());
         newTrain.setThirdLegCabooseRoad(train.getThirdLegCabooseRoad());
-        newTrain.setThirdLegStartLocation(train.getThirdLegStartLocation());
-        newTrain.setThirdLegEndLocation(train.getThirdLegEndLocation());
+        newTrain.setThirdLegStartRouteLocation(train.getThirdLegStartRouteLocation());
+        newTrain.setThirdLegEndRouteLocation(train.getThirdLegEndRouteLocation());
         // scripts
         for (String scriptName : train.getBuildScripts()) {
             newTrain.addBuildScript(scriptName);

@@ -4,15 +4,18 @@ import java.awt.Color;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.io.File;
+
 import jmri.*;
 import jmri.jmrit.display.*;
 import jmri.util.*;
 import jmri.util.junit.rules.*;
 import jmri.util.swing.JemmyUtil;
-import org.junit.*;
-import org.junit.Test;
-import org.junit.rules.Timeout;
-import org.netbeans.jemmy.*;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
+import org.netbeans.jemmy.EventTool;
+import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JMenuOperator;
 
 /**
@@ -22,17 +25,14 @@ import org.netbeans.jemmy.operators.JMenuOperator;
  * @author George Warner Copyright (C) 2019
  * @author Bob Jacobsen Copyright (C) 2020
  */
+@Timeout(10)
 public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
 
     private EditorFrameOperator jfo;
 
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
-
-    @Rule
     public RetryRule retryRule = new RetryRule(3); // allow 3 retries
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -46,7 +46,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         if (e != null) {
@@ -75,7 +75,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
 
 
     @Test
-    @Ignore("Test fails to find and close dialog on Jenkins")
+    @Disabled("Test fails to find and close dialog on Jenkins")
     public void testSavePanel() {
 
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -126,7 +126,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
 
     @Test
     @Override
-    @Ignore("failing to set size on appveyor")
+    @Disabled("failing to set size on appveyor")
     public void testSetSize() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setSize(100, 100);
@@ -139,7 +139,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    @Ignore("Failing to set second zoom")
+    @Disabled("Failing to set second zoom")
     public void testGetSetZoom() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((m) -> {
@@ -221,14 +221,14 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     public void testGetLayoutWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 0
-        Assert.assertEquals("layout width", 0, e.getLayoutWidth());
+        Assert.assertEquals("layout width", 0, e.gContext.getLayoutWidth());
     }
 
     @Test
     public void testGetLayoutHeight() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 0
-        Assert.assertEquals("layout height", 0, e.getLayoutHeight());
+        Assert.assertEquals("layout height", 0, e.gContext.getLayoutHeight());
     }
 
     @Test
@@ -236,7 +236,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to screen width - 20
         int w = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() - 20);
-        Assert.assertEquals("window width", w, e.getWindowWidth());
+        Assert.assertEquals("window width", w, e.gContext.getWindowWidth());
     }
 
     @Test
@@ -244,21 +244,21 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to screen height - 120
         int h = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 120);
-        Assert.assertEquals("window height", h, e.getWindowHeight());
+        Assert.assertEquals("window height", h, e.gContext.getWindowHeight());
     }
 
     @Test
     public void testGetUpperLeftX() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 0
-        Assert.assertEquals("upper left X", 0, e.getUpperLeftX());
+        Assert.assertEquals("upper left X", 0, e.gContext.getUpperLeftX());
     }
 
     @Test
     public void testGetUpperLeftY() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 0
-        Assert.assertEquals("upper left Y", 0, e.getUpperLeftY());
+        Assert.assertEquals("upper left Y", 0, e.gContext.getUpperLeftY());
     }
 
     @Test
@@ -267,86 +267,86 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         ThreadingUtil.runOnGUI(() -> {
             // set the panel dimensions to known values
             e.setLayoutDimensions(100, 100, 100, 100, 100, 100);
-            Assert.assertEquals("layout width after set", 100, e.getLayoutWidth());
-            Assert.assertEquals("layout height after set", 100, e.getLayoutHeight());
-            Assert.assertEquals("window width after set", 100, e.getWindowWidth());
-            Assert.assertEquals("window height after set", 100, e.getWindowHeight());
-            Assert.assertEquals("upper left X after set", 100, e.getUpperLeftX());
-            Assert.assertEquals("upper left Y after set", 100, e.getUpperLeftX());
+            Assert.assertEquals("layout width after set", 100, e.gContext.getLayoutWidth());
+            Assert.assertEquals("layout height after set", 100, e.gContext.getLayoutHeight());
+            Assert.assertEquals("window width after set", 100, e.gContext.getWindowWidth());
+            Assert.assertEquals("window height after set", 100, e.gContext.getWindowHeight());
+            Assert.assertEquals("upper left X after set", 100, e.gContext.getUpperLeftX());
+            Assert.assertEquals("upper left Y after set", 100, e.gContext.getUpperLeftX());
         });
     }
 
     @Test
     public void testSetGrideSize() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals("grid size after set", 100, e.setGridSize(100));
+        Assert.assertEquals("grid size after set", 100, e.gContext.setGridSize(100));
     }
 
     @Test
     public void testGetGrideSize() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 10.
-        Assert.assertEquals("grid size", 10, e.getGridSize());
+        Assert.assertEquals("grid size", 10, e.gContext.getGridSize());
     }
 
     @Test
     public void testGetMainlineTrackWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 4.
-        Assert.assertEquals("mainline track width", 4, e.getMainlineTrackWidth());
+        Assert.assertEquals("mainline track width", 4, e.gContext.getMainlineTrackWidth());
     }
 
     @Test
     public void testSetMainlineTrackWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // set to known value
-        e.setMainlineTrackWidth(10);
-        Assert.assertEquals("mainline track width after set", 10, e.getMainlineTrackWidth());
+        e.gContext.setMainlineTrackWidth(10);
+        Assert.assertEquals("mainline track width after set", 10, e.gContext.getMainlineTrackWidth());
     }
 
     @Test
     public void testGetSidelineTrackWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 2.
-        Assert.assertEquals("side track width", 2, e.getSidelineTrackWidth());
+        Assert.assertEquals("side track width", 2, e.gContext.getSidelineTrackWidth());
     }
 
     @Test
     public void testSetSideTrackWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // set to known value
-        e.setSidelineTrackWidth(10);
-        Assert.assertEquals("Side track width after set", 10, e.getSidelineTrackWidth());
+        e.gContext.setSidelineTrackWidth(10);
+        Assert.assertEquals("Side track width after set", 10, e.gContext.getSidelineTrackWidth());
     }
 
     @Test
     public void testGetXScale() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 1.
-        Assert.assertEquals("XScale", 1.0, e.getXScale(), 0.0);
+        Assert.assertEquals("XScale", 1.0, e.gContext.getXScale(), 0.0);
     }
 
     @Test
     public void testSetXScale() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // set to known value
-        e.setXScale(2.0);
-        Assert.assertEquals("XScale after set ", 2.0, e.getXScale(), 0.0);
+        e.gContext.setXScale(2.0);
+        Assert.assertEquals("XScale after set ", 2.0, e.gContext.getXScale(), 0.0);
     }
 
     @Test
     public void testGetYScale() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 1.
-        Assert.assertEquals("YScale", 1.0, e.getYScale(), 0.0);
+        Assert.assertEquals("YScale", 1.0, e.gContext.getYScale(), 0.0);
     }
 
     @Test
     public void testSetYScale() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // set to known value
-        e.setYScale(2.0);
-        Assert.assertEquals("YScale after set ", 2.0, e.getYScale(), 0.0);
+        e.gContext.setYScale(2.0);
+        Assert.assertEquals("YScale after set ", 2.0, e.gContext.getYScale(), 0.0);
     }
 
     @Test
@@ -880,7 +880,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    @Ignore("unreliable on CI servers")
+    @Disabled("unreliable on CI servers")
     public void testSetHighlightSelectedBlockFalse() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setHighlightSelectedBlock(false);
@@ -895,7 +895,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
         Assert.assertNotNull("Options Menu Exists", jmo);
-        Assert.assertEquals("Menu Item Count", 17, jmo.getItemCount());
+        Assert.assertEquals("Menu Item Count", 19, jmo.getItemCount());
     }
 
     @Test
@@ -931,7 +931,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    @Disabled("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testToolBarPositionLeft() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
@@ -952,7 +952,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    @Disabled("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testToolBarPositionBottom() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
@@ -973,7 +973,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    @Disabled("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testToolBarPositionRight() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
@@ -994,7 +994,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    @Disabled("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testToolBarPositionFloat() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
@@ -1024,5 +1024,21 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         JUnitUtil.dispose(e);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LayoutEditorTest.class.getName());
+    @Test
+    public void testScrollViewPort() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        javax.swing.JScrollPane scrollPane = e.getPanelScrollPane();
+        java.awt.Rectangle scrollBounds = scrollPane.getViewportBorderBounds();
+        int x = (int) scrollBounds.getX();
+        int y = (int) scrollBounds.getY();
+        int w = (int) scrollBounds.getWidth();
+        int h = (int) scrollBounds.getHeight();
+        // scrollBounds values are platform and OS dependent so specific values cannot be determined.
+        Assert.assertTrue("scroll bound x", x > 0);
+        Assert.assertTrue("scroll bound y", y > 0);
+        Assert.assertTrue("scroll bound w", w > 0);
+        Assert.assertTrue("scroll bound h", h > 0);
+    }
+
+//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorTest.class.getName());
 }

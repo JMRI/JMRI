@@ -8,20 +8,16 @@
 
   <title>JMRI: DecoderPro Frequently Asked Questions</title>
 
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
-    <!-- FAQ-Head -->
+  <!--#include virtual="/Style.shtml" -->
+
+  <!-- FAQ-Head -->
     <script type="text/javascript">
     /*<![CDATA[*/document.documentElement.className="hasJS";/*]]>*/
   </script>
     <link rel="stylesheet" type="text/css" href="/web/css/faq.css"
           media="screen">
-    <!-- /FAQ-Head -->
+  <!-- /FAQ-Head -->
+
 </head>
 
 <body>
@@ -36,11 +32,13 @@
 
       <p>This page is the JMRI DecoderPro "frequently asked
       questions" list. Items get listed here if they're asked a
-      lot, even if they're also available somewhere else.</p>
+      lot, even if they're also available somewhere else.
+      See also the <a href="../../FAQ.shtml">JMRI general FAQ.</a>
+      </p>
 
       <dl class="faq">
-        <dt class="on"><a name="newdecoder" id="newdecoder">How
-        can I get a new decoder type defined?</a></dt>
+        <dt class="on" id="newdecoder">How
+        can I get a new decoder type defined?</dt>
 
         <dd>
           A completely new decoder needs a new or updated
@@ -48,7 +46,7 @@
           "CreateDecoder.shtml">create your own</a> or ask on
           <a href=
           "https://groups.io/g/jmriusers">JMRI users</a> for
-          somebody to create one for you.<br>
+          somebody to create one for you.<br><br>
 
           In many cases, you can use an existing decoder that's
           "close enough". For example, a decoder from the same
@@ -57,8 +55,8 @@
           definition would work fine.
         </dd>
 
-        <dt><a name="newfile" id="newfile">What do I do with this
-        new decoder file?</a></dt>
+        <dt id="newfile">What do I do with this
+        new decoder file?</dt>
 
         <dd>
           For DecoderPro to use the definition of a decoder type
@@ -85,22 +83,22 @@
           index each time you update.
         </dd>
 
-        <dt><a name="update" id="update">How can I get
-        the latest decoder definitions?</a></dt>
+        <dt id="update">How can I get
+        the latest decoder definitions?</dt>
 
         <dd>
           The easiest way to update really is to download a new
           version of the program. This is unlikely to cause
           problems, and automatically installs the latest versions
-          of that have been contributed to DecoderPro.<br>
+          of that have been contributed to DecoderPro.<br><br>
 
           Updates occur continuously between versions of the
           program. As files are contributed, we make them available
-          on our <a href="http://jmri.org/xml/decoders">collected
+          on our <a href="../../../../../xml/decoders">collected
           decoder definitions</a> web page. You can download them
           from there, but note that most web browsers will not let
           you directly view them; you really do have to download
-          them.<br>
+          them.<br><br>
 
           While people are working on decoder definitions, they
           often put their draft definitions in the <a href=
@@ -108,15 +106,26 @@
           area of JMRI users </a> (log in to
           access). You can <a href=
           "https://groups.io/g/jmriusers/files/Decoder%20files">
-          download them from the Decoder Files folder</a>.<br>
+          download them from the Decoder Files folder</a>.<br><br>
           Note that as an anti-spam measure, you will have to
           <a href=
           "https://groups.io/g/jmriusers/join">
           join the group</a> to be able to download the files.
         </dd>
 
-        <dt><a name="lb-xp" id="lb-xp">Why does my
-        LocoBuffer-II not work in Windows XP?</a></dt>
+
+        <dt id="errormsg">What does it mean to get Error 301 or Error 306 or any other errors?</dt>
+
+        <dd>
+        JMRI will display various errors when it finds something wrong in attempting to communicate with your DCC command station.  In particular,
+        Error 301 means that DecoderPro doesn't see a locomotive on the programming track when it is trying to program a decoder.  If you do have an
+        engine on the track (only one!), clean the wheels and the track and try again.  Error 306 means that JMRI is not getting the expected signal
+        from the command station.  If this happens when you are first setting things up, check your wiring, connections, and com port selection.  
+        This<a href="../Errors.shtml">list of all error messages </a>also provides some suggestions about how to clear them.
+        </dd>
+        
+      
+        <dt id="lb-xp">Why does my LocoBuffer-II not work in Windows XP?</dt>
 
         <dd>
           With Windows XP, your serial port parameters might not

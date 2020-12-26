@@ -1,8 +1,8 @@
 package jmri.jmrix.zimo.swing.packetgen;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of Mx1PacketGenPanel
@@ -12,7 +12,7 @@ import org.junit.Before;
 public class Mx1PacketGenPanelTest extends jmri.util.swing.JmriPanelTest {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         panel = new Mx1PacketGenPanel();
@@ -21,6 +21,6 @@ public class Mx1PacketGenPanelTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

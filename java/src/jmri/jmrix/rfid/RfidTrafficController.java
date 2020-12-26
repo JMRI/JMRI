@@ -57,6 +57,8 @@ abstract public class RfidTrafficController extends AbstractMRTrafficController 
      * <p>
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
+     * @param length message length.
+     * @return the RfidMessage.
      */
     public RfidMessage getRfidMessage(int length) {
         return null;

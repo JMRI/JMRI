@@ -50,6 +50,7 @@ public class EcosLocoTableAction extends AbstractTableAction<NamedBean> {
      * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
+     * @param s Action title string.
      */
     public EcosLocoTableAction(String s) {
         super(s);

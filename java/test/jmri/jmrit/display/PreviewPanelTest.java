@@ -3,8 +3,8 @@ package jmri.jmrit.display;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Test;
 
 import jmri.util.JUnitUtil;
 

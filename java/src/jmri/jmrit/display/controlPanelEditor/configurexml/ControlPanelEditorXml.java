@@ -3,7 +3,6 @@ package jmri.jmrit.display.controlPanelEditor.configurexml;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
-import java.util.HashMap;
 import java.util.List;
 import javax.swing.JFrame;
 import jmri.ConfigureManager;
@@ -12,10 +11,9 @@ import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
-import jmri.jmrit.display.controlPanelEditor.PortalIcon;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -68,14 +66,12 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("state", "" + p.getExtendedState());
         panel.setAttribute("shapeSelect", "" + (p.getShapeSelect() ? "yes" : "no"));
 
+        String family = p.getPortalIconFamily();
+        if (family != null) {
         Element elem = new Element("icons");
-        HashMap<String, NamedIcon> map = p.getPortalIconMap();
-        elem.addContent(storeIcon("visible", map.get(PortalIcon.VISIBLE)));
-        elem.addContent(storeIcon("path_edit", map.get(PortalIcon.PATH)));
-        elem.addContent(storeIcon("hidden", map.get(PortalIcon.HIDDEN)));
-        elem.addContent(storeIcon("to_arrow", map.get(PortalIcon.TO_ARROW)));
-        elem.addContent(storeIcon("from_arrow", map.get(PortalIcon.FROM_ARROW)));
-        panel.addContent(elem);
+            elem.setAttribute("portalFamily", family);
+            panel.addContent(elem);
+        }
 
         // include contents
         List<Positionable> contents = p.getContents();
@@ -102,11 +98,6 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         Element element = new Element(elemName);
         element.addContent(new Element("url").addContent(icon.getURL()));
         return element;
-    }
-
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
     }
 
     /**
@@ -148,7 +139,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
             name = shared.getAttribute("name").getValue();
         }
         // confirm that panel hasn't already been loaded
-        if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(name)) {
+        if (InstanceManager.getDefault(EditorManager.class).contains(name)) {
             log.warn("File contains a panel with the same name ({}) as an existing panel", name);
             result = false;
         }
@@ -175,7 +166,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
 
         ControlPanelEditor panel = new ControlPanelEditor(name);
         panel.getTargetFrame().setVisible(false);   // save painting until last
-        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(panel);
+        InstanceManager.getDefault(EditorManager.class).add(panel);
 
         // Load editor option flags. This has to be done before the content
         // items are loaded, to preserve the individual item settings
@@ -237,6 +228,14 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
             }
         }
 
+        Element elem = shared.getChild("icons");
+        if (elem != null) {
+            Attribute attr = elem.getAttribute("portalFamily");
+            if (attr != null) {
+                panel.setPortalIconFamily(attr.getValue());
+            }
+        }
+
         String state = "both";
         if ((a = shared.getAttribute("scrollable")) != null) {
             state = a.getValue();
@@ -252,16 +251,6 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         } catch (NullPointerException e) {  // considered normal if the attributes are not present
         }
 
-        Element icons = shared.getChild("icons");
-/*        if (icons != null) {
-            HashMap<String, NamedIcon> portalIconMap = new HashMap<String, NamedIcon>();
-            portalIconMap.put(PortalIcon.VISIBLE, loadIcon("visible", icons, panel));
-            portalIconMap.put(PortalIcon.PATH, loadIcon("path_edit", icons, panel));
-            portalIconMap.put(PortalIcon.HIDDEN, loadIcon("hidden", icons, panel));
-            portalIconMap.put(PortalIcon.TO_ARROW, loadIcon("to_arrow", icons, panel));
-            portalIconMap.put(PortalIcon.FROM_ARROW, loadIcon("from_arrow", icons, panel));
-            panel.setDefaultPortalIcons(portalIconMap);
-        }*/
         shared.removeChild("icons");
 
         //set the (global) editor display widgets to their flag settings
@@ -285,15 +274,6 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
                 log.error("Exception while loading {}", panelItem.getName(), e);
                 result = false;
             }
-        }
-        if (icons != null) {
-            HashMap<String, NamedIcon> portalIconMap = new HashMap<>();
-            portalIconMap.put(PortalIcon.VISIBLE, loadIcon("visible", icons, panel));
-            portalIconMap.put(PortalIcon.PATH, loadIcon("path_edit", icons, panel));
-            portalIconMap.put(PortalIcon.HIDDEN, loadIcon("hidden", icons, panel));
-            portalIconMap.put(PortalIcon.TO_ARROW, loadIcon("to_arrow", icons, panel));
-            portalIconMap.put(PortalIcon.FROM_ARROW, loadIcon("from_arrow", icons, panel));
-            panel.setDefaultPortalIcons(portalIconMap);
         }
         panel.disposeLoadData();     // dispose of url correction data
 

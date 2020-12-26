@@ -18,7 +18,7 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
-import jmri.implementation.QuietShutDownTask;
+import jmri.implementation.AbstractShutDownTask;
 import jmri.jmris.JmriServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,16 +51,14 @@ public class JsonServer extends JmriServer implements InstanceManagerAutoDefault
     public JsonServer(int port, int timeout) {
         super(port, timeout);
         this.mapper = new ObjectMapper().configure(Feature.AUTO_CLOSE_SOURCE, false);
-        shutDownTask = new QuietShutDownTask("Stop JSON Server") { // NOI18N
+        shutDownTask = new AbstractShutDownTask("Stop JSON Server") { // NOI18N
             @Override
-            public boolean execute() {
+            public void run() {
                 try {
                     JsonServer.this.stop();
                 } catch (Exception ex) {
-                    log.warn("ERROR shutting down JSON Server: {}", ex.getMessage());
-                    log.debug("Details follow: ", ex);
+                    log.warn("Exception shutting down JSON Server: {}", ex);
                 }
-                return true;
             }
         };
     }

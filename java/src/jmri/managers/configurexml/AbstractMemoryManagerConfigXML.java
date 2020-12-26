@@ -88,11 +88,6 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
      */
     abstract public void setStoreElementClass(Element memories);
 
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
     /**
      * Create a MemoryManager object of the correct class, then register and
      * fill it.

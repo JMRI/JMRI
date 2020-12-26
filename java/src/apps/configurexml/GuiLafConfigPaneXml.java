@@ -63,6 +63,8 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
                 (g.mouseEvent.isSelected() ? "yes" : "no"));
         e.setAttribute("graphicTableState",
                 (g.graphicStateDisplay.isSelected() ? "yes" : "no"));
+        e.setAttribute("tabbedOblockEditor",
+                (g.tabbedOblockEditor.isSelected() ? "yes" : "no"));
         return e;
     }
 
@@ -108,13 +110,17 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         Attribute clickAttr = shared.getAttribute("nonStandardMouseEvent");
         if (clickAttr != null) {
             boolean nonStandardMouseEvent = clickAttr.getValue().equals("yes");
-            jmri.util.swing.SwingSettings.setNonStandardMouseEvent(nonStandardMouseEvent);
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setNonStandardMouseEvent(nonStandardMouseEvent);
         }
         Attribute graphicAttr = shared.getAttribute("graphicTableState");
         if (graphicAttr != null) {
             boolean graphicTableState = graphicAttr.getValue().equals("yes");
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setGraphicTableState(graphicTableState);
+        }
+        Attribute oBlockTable = shared.getAttribute("tabbedOblockEditor");
+        if (oBlockTable != null) {
+            boolean tabbedOblockEditor = oBlockTable.getValue().equals("yes");
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(tabbedOblockEditor);
         }
         GuiLafConfigPane g = new GuiLafConfigPane();
         ConfigureManager cm = jmri.InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
@@ -157,16 +163,6 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         }
     }
 
-    /**
-     * Update static data from XML file
-     *
-     * @param element Top level Element to unpack.
-     * @param o       ignored
-     */
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Unexpected call of load(Element, Object)");
-    }
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(GuiLafConfigPaneXml.class);
 

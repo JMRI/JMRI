@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>19</minor>
+    <test>6</test>
+    <modifier />
+  </jmriversion>
+  <LayoutEditor animating="yes" antialiasing="no" autoblkgenerate="no" blueBackground="204" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" controlling="yes" defaultalternativetrackcolor="white" defaultoccupiedtrackcolor="red" defaulttextcolor="black" defaulttrackcolor="black" drawgrid="yes" editable="yes" greenBackground="255" gridSize="10" gridSize2nd="10" mainlinetrackwidth="8" name="Board1" openDispatcher="no" panelheight="827" panelwidth="1060" positionable="yes" redBackground="204" scrollable="none" showhelpbar="no" sidetrackwidth="2" sliders="no" snaponadd="yes" snaponmove="yes" tooltipsinedit="yes" tooltipsnotedit="no" turnoutbx="40.0" turnoutcirclecolor="black" turnoutcircles="no" turnoutcirclesize="4" turnoutcx="30.0" turnoutdrawunselectedleg="yes" turnoutwid="20.0" useDirectTurnoutControl="no" windowheight="1047" windowwidth="1061" x="742" xoverhwid="10.0" xoverlong="30.0" xovershort="10.0" xscale="1.0" y="0" yscale="1.0">
+    <sensoricon sensor="MoveInProgress1" x="80" y="730" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+   </LayoutEditor>
+</layout-config>

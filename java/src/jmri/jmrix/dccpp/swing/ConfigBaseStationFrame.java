@@ -354,8 +354,8 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                             log.debug("Delete sensor {}", idx);
                             break;
                         case TURNOUT:
-                            String m = "T " + Integer.toString(idx);
-                            tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
+                            DCCppMessage m = new DCCppMessage("T " + Integer.toString(idx));
+                            tc.sendDCCppMessage(m, this);
                             log.debug("Sending: {}", m);
                             turnoutModel.removeRow(sel);
                             break;
@@ -364,7 +364,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                             outputModel.removeRow(sel);
                             break;
                         default:
-                            jmri.util.Log4JUtil.warnOnce(log, "Unexpected cTab value = {}", cTab);
+                            jmri.util.LoggingUtil.warnOnce(log, "Unexpected cTab value = {}", cTab);
                             break;
                    }
                 }
@@ -485,8 +485,8 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                                     (int) r.get(1), (int) r.get(2)), this);
                             turnoutModel.setNewRow(row, false);
                         } else if (isdelete) {
-                            String m = "T " + Integer.toString((int) r.get(0));
-                            tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
+                            DCCppMessage m = new DCCppMessage("T " + Integer.toString((int) r.get(0)));
+                            tc.sendDCCppMessage(m, this);
                             log.debug("Sending: {}", m);
                             turnoutModel.getRowData().remove(r);
                         } else if (isdirty) {
@@ -543,7 +543,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                 JOptionPane.YES_NO_OPTION);
 
         if (value == JOptionPane.YES_OPTION) {
-            tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage("E"), this);
+            tc.sendDCCppMessage(new DCCppMessage("E"), this);
             log.debug("Sending: <E> (Write To EEPROM)");
             // These might not actually be necessary...
             sensorModel.fireTableDataChanged();
@@ -585,7 +585,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                     JOptionPane.YES_NO_OPTION);
 
             if (value == JOptionPane.YES_OPTION) {
-                tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage("E"), this);
+                tc.sendDCCppMessage(new DCCppMessage("E"), this);
                 log.debug("Sending: <E> (Write To EEPROM)");
                 sensorModel.fireTableDataChanged();
             }

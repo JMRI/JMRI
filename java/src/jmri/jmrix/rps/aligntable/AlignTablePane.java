@@ -38,7 +38,8 @@ public class AlignTablePane extends javax.swing.JPanel {
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.rps.aligntable.AlignTableBundle");
 
     /**
-     * Constructor method
+     * Constructor method.
+     * @param flag the ModifiedFlag tag.
      */
     public AlignTablePane(jmri.ModifiedFlag flag) {
         super();

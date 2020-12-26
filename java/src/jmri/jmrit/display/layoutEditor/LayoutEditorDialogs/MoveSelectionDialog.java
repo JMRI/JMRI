@@ -31,12 +31,12 @@ public class MoveSelectionDialog {
     |* Dialog box to enter move selection info *|
     \*=========================================*/
     //operational variables for move selection pane
-    private transient JmriJFrame moveSelectionFrame = null;
+    private JmriJFrame moveSelectionFrame = null;
     private boolean moveSelectionOpen = false;
-    private final transient JTextField xMoveField = new JTextField(6);
-    private final transient JTextField yMoveField = new JTextField(6);
-    private transient JButton moveSelectionDone;
-    private transient JButton moveSelectionCancel;
+    private final JTextField xMoveField = new JTextField(6);
+    private final JTextField yMoveField = new JTextField(6);
+    private JButton moveSelectionDone;
+    private JButton moveSelectionCancel;
 
     //display dialog for translation a selection
     @InvokeOnGuiThread
@@ -169,6 +169,6 @@ public class MoveSelectionDialog {
                 JOptionPane.ERROR_MESSAGE);
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(
+    //private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(
     //        MoveSelectionDialog.class);
 }

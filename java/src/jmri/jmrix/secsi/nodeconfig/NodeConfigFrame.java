@@ -57,6 +57,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
     /**
      * Constructor method
+     * @param _memo system connection.
      */
     public NodeConfigFrame(SecsiSystemConnectionMemo _memo) {
         super();

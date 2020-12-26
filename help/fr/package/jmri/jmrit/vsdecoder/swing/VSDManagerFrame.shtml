@@ -46,7 +46,7 @@
       haut-parleurs sur votre ordinateur, bien s&ucirc;r!<br>
       Devez avoir &eacute;galement le syst&egrave;me audio OpenAL
       ou JavaSound install&eacute; sur votre votre ordinateur. Voir
-      <a href="http://jmri.org/help/en/html/tools/Audio.shtml">les
+      <a href="https://jmri.org/help/en/html/tools/Audio.shtml">les
       pages d'aides Audio JMRI</a>pour plus de d&eacute;tails .<br>
       <hr>
 
@@ -311,7 +311,7 @@
                 <br>
                 <a id="prefs" name="prefs">( Ceci est la page
                 d'aide de jmri.jmrit.vsdecoder.VSDecoderFrame ) 
-                <!--#include virtual="/Footer"--></a>
+                <!--#include virtual="/Footer.shtml"--></a>
               </div>
             </div>
           </dd>

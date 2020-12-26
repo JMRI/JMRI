@@ -1,6 +1,7 @@
 package jmri.configurexml;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Base class for tests of classes inheriting and implementing AbstractXmlAdapter
@@ -16,10 +17,10 @@ abstract public class AbstractXmlAdapterTestBase {
         Assert.assertNotNull(xmlAdapter);
     }
 
-    @Before
+    @BeforeEach
     abstract public void setUp();
 
-    @After
+    @AfterEach
     abstract public void tearDown();
 
 }

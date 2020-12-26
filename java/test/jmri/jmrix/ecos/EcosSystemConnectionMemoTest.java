@@ -1,45 +1,47 @@
 package jmri.jmrix.ecos;
 
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
+import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Bundle class
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class EcosSystemConnectionMemoTest  extends jmri.jmrix.SystemConnectionMemoTestBase {
-
-    private EcosSystemConnectionMemo memo = null;
+public class EcosSystemConnectionMemoTest extends SystemConnectionMemoTestBase<EcosSystemConnectionMemo> {
 
     @Override
     @Test
-    public void testProvidesConsistManager(){
-       Assert.assertTrue("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+    public void testProvidesConsistManager() {
+        Assert.assertTrue("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDefaultUserMessagePreferences();
-        scm = memo = new jmri.jmrix.ecos.EcosSystemConnectionMemo();
-        memo.setEcosTrafficController(new EcosInterfaceScaffold());
-        memo.configureManagers();
-        memo.getPreferenceManager().setPreferencesLoaded();
-        jmri.InstanceManager.store(memo, jmri.jmrix.ecos.EcosSystemConnectionMemo.class);
+        scm = new EcosSystemConnectionMemo();
+        scm.setEcosTrafficController(new EcosInterfaceScaffold());
+        scm.configureManagers();
+        scm.getPreferenceManager().setPreferencesLoaded();
+        InstanceManager.store(scm, EcosSystemConnectionMemo.class);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
-        memo.getLocoAddressManager().terminateThreads();
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        InstanceManager.getDefault(ShutDownManager.class).deregister(scm.getLocoAddressManager().ecosLocoShutDownTask);
+        scm.getLocoAddressManager().terminateThreads();
+        scm.getTrafficController().terminateThreads();
+        scm.dispose();
         JUnitUtil.tearDown();
     }
 

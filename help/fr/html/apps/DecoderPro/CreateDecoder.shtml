@@ -62,7 +62,7 @@ sur ce r&#233;pertoire et ce qu'il contient.</p>
 <p>Si vous modifiez une d&#233;finition de d&#233;codeur, il vaut mieux commencer avec la version la plus
 r&#233;cente, qui peut &#234;tre trouv&#233;e ici
 sur le site web de JMRI &#224;
-<a href="http://jmri.org/xml/decoders/">http://jmri.org/xml/decoders/</a>.
+<a href="https://jmri.org/xml/decoders/">https://jmri.org/xml/decoders/</a>.
 De cette fa&#231;on il ne sera pas difficile de fusionner vos changements avec ceux qui pourrait avoir
 &#233;t&#233; fait entre temps.
 SVP Ne reformater pas plus que n&#233;cessaire. Si vous changez

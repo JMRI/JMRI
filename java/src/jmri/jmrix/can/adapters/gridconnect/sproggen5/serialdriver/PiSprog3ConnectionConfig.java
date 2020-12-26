@@ -45,7 +45,7 @@ public class PiSprog3ConnectionConfig extends jmri.jmrix.can.adapters.Connection
     @Override
     protected void setInstance() {
         if (adapter == null) {
-            adapter = new Sprog3PlusSerialDriverAdapter();
+            adapter = new PiSprog3SerialDriverAdapter();
         }
     }
 

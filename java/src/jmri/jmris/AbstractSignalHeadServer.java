@@ -24,7 +24,7 @@ abstract public class AbstractSignalHeadServer {
     private static final Logger log = LoggerFactory.getLogger(AbstractSignalHeadServer.class);
 
     public AbstractSignalHeadServer(){
-        signalHeads = new HashMap<String, SignalHeadListener>();
+        signalHeads = new HashMap<>();
     }
 
     /*

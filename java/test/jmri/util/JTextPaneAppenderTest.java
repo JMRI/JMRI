@@ -1,11 +1,10 @@
 package jmri.util;
 
 import java.util.*;
+
 import org.apache.log4j.*;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -34,12 +33,12 @@ public class JTextPaneAppenderTest {
             ));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     @SuppressWarnings("unchecked") // cast required by logging APIs
     public void tearDown() {        
         // remove any JTextPaneAppender objects that 

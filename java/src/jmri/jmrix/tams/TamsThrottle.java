@@ -200,6 +200,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         tmq.add(tm);
 
         firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
+        record(speed);
     }
 
     @Override
@@ -224,6 +225,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         active = false;
         TamsMessage tm = TamsMessage.getXEvtLok();
         tc.removePollMessage(tm, this);
+        finishRecord();
     }
 
     @Override

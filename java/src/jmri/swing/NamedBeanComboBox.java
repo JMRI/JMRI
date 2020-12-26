@@ -31,9 +31,9 @@ import jmri.Manager;
 import jmri.NamedBean;
 import jmri.ProvidingManager;
 import jmri.NamedBean.DisplayOptions;
+import jmri.beans.SwingPropertyChangeListener;
 import jmri.util.NamedBeanComparator;
 import jmri.util.NamedBeanUserNameComparator;
-import jmri.util.ThreadingPropertyChangeListener;
 
 /**
  * A {@link javax.swing.JComboBox} for {@link jmri.NamedBean}s.
@@ -85,7 +85,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
     private boolean validatingInput = true;
     private final transient Set<B> excludedItems = new HashSet<>();
     private final transient PropertyChangeListener managerListener =
-            ThreadingPropertyChangeListener.guiListener(evt -> sort());
+            new SwingPropertyChangeListener(evt -> sort());
     private String userInput = null;
     private static final Logger log = LoggerFactory.getLogger(NamedBeanComboBox.class);
 
@@ -121,13 +121,14 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      * @param displayOrder the sorting scheme for NamedBeans
      */
     public NamedBeanComboBox(Manager<B> manager, B selection, DisplayOptions displayOrder) {
+        // uses NamedBeanComboBox.this... to prevent overridden methods from being
+        // called in constructor
         super();
         this.manager = manager;
         super.setToolTipText(
                 Bundle.getMessage("NamedBeanComboBoxDefaultToolTipText", this.manager.getBeanTypeHandled(true)));
         setDisplayOrder(displayOrder);
-        NamedBeanComboBox.this.setEditable(false); // prevent overriding method
-                                                   // call in constructor
+        NamedBeanComboBox.this.setEditable(false);
         NamedBeanRenderer namedBeanRenderer = new NamedBeanRenderer(getRenderer());
         setRenderer(namedBeanRenderer);
         setKeySelectionManager(namedBeanRenderer);
@@ -136,7 +137,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         this.manager.addPropertyChangeListener("beans", managerListener);
         this.manager.addPropertyChangeListener("DisplayListName", managerListener);
         sort();
-        setSelectedItem(selection);
+        NamedBeanComboBox.this.setSelectedItem(selection);
     }
 
     public Manager<B> getManager() {

@@ -20,6 +20,8 @@ public class SprogCSThrottle extends AbstractThrottle {
 
     /**
      * Constructor.
+     * @param memo system connection.
+     * @param address Loco Address.
      */
     public SprogCSThrottle(SprogSystemConnectionMemo memo, LocoAddress address) {
         super(memo);

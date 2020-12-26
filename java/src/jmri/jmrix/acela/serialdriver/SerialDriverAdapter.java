@@ -136,7 +136,7 @@ public class SerialDriverAdapter extends AcelaPortController {
      */
     @Override
     public String[] validBaudRates() {
-    // Really just want 9600 Baud for Acela
+        // Really just want 9600 Baud for Acela
         return new String[]{Bundle.getMessage("Baud9600")};
     }
 
@@ -149,25 +149,14 @@ public class SerialDriverAdapter extends AcelaPortController {
         return new int[]{9600};
     }
 
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
+
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialDriverAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new SerialDriverAdapter();
-        }
-        return mInstance;
-    }
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static SerialDriverAdapter mInstance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 

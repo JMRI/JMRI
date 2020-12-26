@@ -1,6 +1,6 @@
 package jmri.jmrit.sample.swing;
 
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the ampleConfigStartUpActionFactory class
@@ -15,12 +15,12 @@ public class SampleConfigStartUpActionFactoryTest {
         new SampleConfigStartUpActionFactory();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

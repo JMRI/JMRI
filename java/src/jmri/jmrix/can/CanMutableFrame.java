@@ -51,7 +51,7 @@ public interface CanMutableFrame extends CanFrame {
      *
      * @param d array of CAN Frame data bytes, max 8
      */
-    default void setData(int[] d) {
+    public default void setData(int[] d) {
         int len = (d.length <= 8) ? d.length : 8;
         for (int i = 0; i < len; i++) {
             setElement(i,d[i]);
@@ -63,7 +63,7 @@ public interface CanMutableFrame extends CanFrame {
      *
      * @param d array of CAN Frame data bytes, max 8
      */
-    default void setData(byte[] d) {
+    public default void setData(byte[] d) {
         int len = (d.length <= 8) ? d.length : 8;
         for (int i = 0; i < len; i++) {
             setElement(i,d[i] & 0xFF);

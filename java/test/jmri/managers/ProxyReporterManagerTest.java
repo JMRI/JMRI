@@ -5,10 +5,9 @@ import jmri.Reporter;
 import jmri.ReporterManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test the ProxyReporterManager
@@ -88,9 +87,19 @@ public class ProxyReporterManagerTest extends AbstractReporterMgrTestBase {
         Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class).provideReporter("JR1"));
         Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class).provideReporter("IR2"));
     }
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -98,7 +107,7 @@ public class ProxyReporterManagerTest extends AbstractReporterMgrTestBase {
         l = InstanceManager.getDefault(jmri.ReporterManager.class);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -19,10 +19,6 @@ public class SerialSensor extends AbstractSensor {
         _knownState = UNKNOWN;
     }
 
-    @Override
-    public void dispose() {
-    }
-
     /**
      * Request an update on status.
      * <p>

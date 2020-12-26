@@ -22,6 +22,7 @@ public class SRCPThrottleManager extends AbstractThrottleManager {
 
     /**
      * Constructor.
+     * @param memo system connection.
      */
     public SRCPThrottleManager(SRCPBusConnectionMemo memo) {
         super(memo);

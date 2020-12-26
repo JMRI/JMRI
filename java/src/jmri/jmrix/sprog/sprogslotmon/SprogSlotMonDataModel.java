@@ -260,10 +260,11 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
     }
 
     /**
-     * Configure a table to have our standard rows and columns. This is
-     * optional, in that other table formats can use this table model. But we
-     * put it here to help keep it consistent.
+     * Configure a table to have our standard rows and columns.
+     * This is optional, in that other table formats can use this table model. 
+     * But we put it here to help keep it consistent.
      *
+     * @param slotTable the slot table to configure.
      */
     public void configureTable(JTable slotTable) {
         // allow reordering of the columns
@@ -365,6 +366,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
      * time.
      *
      * @param row Row number in the displayed table
+     * @return Matching slot number
      */
     protected int slotNum(int row) {
         // ??? Can't this just return row ???

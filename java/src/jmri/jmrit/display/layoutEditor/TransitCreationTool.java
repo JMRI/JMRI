@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright (C) 2011
  * @author George Warner Copyright (c) 2017-2018
  */
-public class TransitCreationTool {
+final public class TransitCreationTool {
 
     public TransitCreationTool() {
     }
@@ -53,12 +53,12 @@ public class TransitCreationTool {
                 jmri.SignalMastLogic sml = smlm.getSignalMastLogic(((SignalMast) list.get(list.size() - 1)));
                 if (sml == null || !sml.isDestinationValid((SignalMast) nb)) {
                     String error = Bundle.getMessage("TCTErrorMastPairsNotValid", nb.getDisplayName(), list.get(list.size() - 1).getDisplayName());
-                    log.error(error);
+                    log.error("will throw {}", error);
                     throw new JmriException(error);
                 }
                 if (sml.getAssociatedSection((SignalMast) nb) == null) {
                     String error = Bundle.getMessage("TCTErrorMastPairsNoSection", list.get(list.size() - 1).getDisplayName(), nb.getDisplayName());
-                    log.error(error);
+                    log.error("will throw {}", error);
                     throw new JmriException(error);
                 }
             } else {
@@ -85,7 +85,7 @@ public class TransitCreationTool {
                 //In theory sec being null would already have been tested when the signal was added.
                 if (sec == null) {
                     String error = Bundle.getMessage("TCTErrorMastPairsNoSection", list.get(i - 1).getDisplayName(), list.get(i).getDisplayName());
-                    log.error(error);
+                    log.error("will throw {}", error);
                     tm.deregister(t);
                     t.dispose();
                     cancelTransitCreate();
@@ -111,5 +111,5 @@ public class TransitCreationTool {
         return !list.isEmpty();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TransitCreationTool.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TransitCreationTool.class);
 }

@@ -1,10 +1,9 @@
 package jmri.jmrix.lenz.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * XNetTurnoutManagerXmlTest.java
@@ -20,12 +19,12 @@ public class XNetTurnoutManagerXmlTest {
       Assert.assertNotNull("XNetTurnoutManagerXml constructor",new XNetTurnoutManagerXml());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -1,12 +1,13 @@
 package jmri.jmrix.rps.swing.polling;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
@@ -25,7 +26,7 @@ public class PollDataModelTest {
         Assert.assertNotNull("exists",t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -33,7 +34,7 @@ public class PollDataModelTest {
         memo = new RpsSystemConnectionMemo();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

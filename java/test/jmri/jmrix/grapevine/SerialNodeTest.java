@@ -3,10 +3,8 @@ package jmri.jmrix.grapevine;
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
 /**
@@ -43,7 +41,7 @@ public class SerialNodeTest {
     }
 
     @Test
-    @Ignore("Disabled in JUnit 3")
+    @Disabled("Disabled in JUnit 3")
     public void testInitialization1() {
         // comment these out, because they cause a later timeout (since
         // the init message is actually queued in the createInitPacket() method)
@@ -912,7 +910,7 @@ public class SerialNodeTest {
         Assert.assertEquals("4 check s8", Sensor.ACTIVE, s8.getKnownState());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -926,7 +924,7 @@ public class SerialNodeTest {
     }
 
     // reset objects
-    @After
+    @AfterEach
     public void tearDown() {
         tcis.terminateThreads();
         tcis = null;

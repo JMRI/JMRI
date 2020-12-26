@@ -118,7 +118,7 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
         pathPanel.add(panel);
         pathPanel.add(Box.createVerticalStrut(STRUT_SIZE));
 
-        _lengthPanel = new LengthPanel(_homeBlock, "pathLength");
+        _lengthPanel = new LengthPanel(_homeBlock, LengthPanel.PATH_LENGTH);
         pathPanel.add(_lengthPanel);
         pathPanel.add(Box.createVerticalStrut(STRUT_SIZE));
 
@@ -633,6 +633,7 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
             for (BeanSetting beanSetting : newPath.getSettings()) {
                 _currentPath.addSetting(beanSetting);
             }
+            _savePathGroup = _pathGroup;
             log.debug("update _currentPath");
         } else {
             newPath.setLength(_lengthPanel.getLength());

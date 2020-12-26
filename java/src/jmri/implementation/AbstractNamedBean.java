@@ -275,6 +275,7 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     /**
      * Overload this in a sub-class to add extra info to the results of toString()
+     * @return a suffix to add at the end of #toString() result
      */
     protected String toStringSuffix() {
         return "";

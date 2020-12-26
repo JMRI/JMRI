@@ -267,7 +267,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 MessageFormat.format(Bundle.getMessage("WantAddCarsToTrain?"), new Object[]{_train.getName()}),
                 Bundle.getMessage("AddCarsToTrain?"),
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            new CarsTableFrame(false, _train.getCurrentLocation().getName(), null);
+            new CarsTableFrame(false, _train.getCurrentRouteLocation().getName(), null);
         }
     }
 
@@ -428,7 +428,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
             setLabelFont(header);
             pMoves.add(header);
         }
-        List<Track> tracks = rl.getLocation().getTrackByNameList(null);
+        List<Track> tracks = rl.getLocation().getTracksByNameList(null);
         List<RouteLocation> routeList = _train.getRoute().getLocationsBySequenceList();
         List<Car> carList = carManager.getByTrainDestinationList(_train);
         for (Track track : tracks) {
@@ -436,15 +436,18 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 for (Car car : carList) {
                     // determine if car is a pick up from the right track
                     // caboose or FRED is placed at end of the train
-                    // passenger trains are already blocked in the car list
+                    // passenger trains are already blocked in the car list and
+                    // are added to the end of the train.
                     if (car.getTrack() != null &&
                             car.getRouteLocation() == rl &&
                             car.getRouteDestination() != rl &&
                             (!Setup.isSortByTrackNameEnabled() || car.getTrackName().equals(track.getName())) &&
-                            ((car.getRouteDestination() == rld && !car.isCaboose() && !car.hasFred()) ||
+                            ((car.getRouteDestination() == rld &&
+                                    !car.isCaboose() &&
+                                    !car.hasFred() &&
+                                    !car.isPassenger()) ||
                                     (rld == routeList.get(routeList.size() - 1) &&
-                                            (car.isCaboose() || car.hasFred())) ||
-                                    car.isPassenger())) {
+                                            (car.isCaboose() || car.hasFred() || car.isPassenger())))) {
                         // yes we have a pick up
                         pWorkPanes.setVisible(true);
                         pickupPane.setVisible(true);
@@ -618,7 +621,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
             return MessageFormat.format(TrainManifestText.getStringTrainTerminates(), new Object[]{_train
                     .getTrainTerminatesName()});
         }
-        if (rl != _train.getCurrentLocation() && _train.getExpectedArrivalTime(rl).equals(Train.ALREADY_SERVICED)) {
+        if (rl != _train.getCurrentRouteLocation() && _train.getExpectedArrivalTime(rl).equals(Train.ALREADY_SERVICED)) {
             return MessageFormat.format(TrainSwitchListText.getStringTrainDone(), new Object[]{_train
                     .getName()});
         }

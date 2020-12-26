@@ -1,12 +1,10 @@
 package jmri.jmrix.rfid.protocol.olimex;
 
 import jmri.jmrix.AbstractMRReply;
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the OlimexRfidProtocol class
@@ -118,12 +116,12 @@ public class OlimexRfidProtocolTest {
         }
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }

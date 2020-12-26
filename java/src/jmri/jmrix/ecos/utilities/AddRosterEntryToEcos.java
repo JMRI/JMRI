@@ -22,7 +22,8 @@ public class AddRosterEntryToEcos extends AbstractAction {
     private EcosLocoAddressManager objEcosLocoManager;
 
     /**
-     * @param s Name of this action, e.g. in menus
+     * @param s Name of this action, e.g. in menus.
+     * @param memo system connection.
      */
     public AddRosterEntryToEcos(String s, EcosSystemConnectionMemo memo) {
         super(s);

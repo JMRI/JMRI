@@ -29,7 +29,6 @@ import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.gui.GuiLafPreferencesManager;
-import jmri.util.swing.SwingSettings;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -72,6 +71,7 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     public JCheckBox mouseEvent;
     private JComboBox<Integer> fontSizeComboBox;
     public JCheckBox graphicStateDisplay;
+    public JCheckBox tabbedOblockEditor;
     public JCheckBox editorUseOldLocSizeDisplay;
 
     public GuiLafConfigPane() {
@@ -85,6 +85,8 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         add(p);
         doGraphicState(p = new JPanel());
         add(p);
+        doTabbedOblockEditor(p = new JPanel());
+        add(p);
         doEditorUseOldLocSize(p = new JPanel());
         add(p);
         doToolTipDismissDelay(p = new JPanel());
@@ -94,7 +96,6 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     void doClickSelection(JPanel panel) {
         panel.setLayout(new FlowLayout());
         mouseEvent = new JCheckBox(ConfigBundle.getMessage("GUIButtonNonStandardRelease"));
-        mouseEvent.setSelected(SwingSettings.getNonStandardMouseEvent());
         mouseEvent.addItemListener((ItemEvent e) -> {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setNonStandardMouseEvent(mouseEvent.isSelected());
         });
@@ -109,6 +110,17 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setGraphicTableState(graphicStateDisplay.isSelected());
         });
         panel.add(graphicStateDisplay);
+    }
+
+    void doTabbedOblockEditor(JPanel panel) {
+        panel.setLayout(new FlowLayout());
+        tabbedOblockEditor = new JCheckBox(ConfigBundle.getMessage("GUITabbedOblockEditor"));
+        tabbedOblockEditor.setSelected(InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed());
+        tabbedOblockEditor.setToolTipText(ConfigBundle.getMessage("GUIToolTipTabbedEdit"));
+        tabbedOblockEditor.addItemListener((ItemEvent e) -> {
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(tabbedOblockEditor.isSelected());
+        });
+        panel.add(tabbedOblockEditor);
     }
 
     void doEditorUseOldLocSize(JPanel panel) {

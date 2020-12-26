@@ -92,7 +92,8 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
     /**
      * Can provide some mechanism to prompt for user for one last chance to
      * change his/her mind
-     *
+     * @param entry Which roster entry?
+     * @param group In which roster group?
      * @return true if user says to continue
      */
     boolean userOK(String entry, String group) {

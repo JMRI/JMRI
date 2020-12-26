@@ -4,7 +4,9 @@ import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.managers.DefaultIdTagManager class.
@@ -113,8 +115,18 @@ public class DefaultIdTagManagerTest extends AbstractProvidingManagerTestBase<Id
         Assert.assertFalse("Non-matching IdTag returned via provideTag by user name", t1.equals(m.provideIdTag("Test Tag 2")));
         Assert.assertFalse("Non-matching IdTag returned via provideTag by tag ID", t1.equals(m.provideIdTag("0413275FCA")));
     }
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
 
-    @Before
+    // No manager-specific system name validation at present    
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
+
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -125,7 +137,7 @@ public class DefaultIdTagManagerTest extends AbstractProvidingManagerTestBase<Id
         l = getManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         l = null;
         jmri.util.JUnitUtil.tearDown();

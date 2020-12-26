@@ -136,7 +136,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         // tool tips, see setPrintButtonText() for more tool tips
         addButton.setToolTipText(Bundle.getMessage("AddTrain"));
         buildButton.setToolTipText(Bundle.getMessage("BuildSelectedTip"));
-        switchListsButton.setToolTipText(Bundle.getMessage("PreviewPrintSwitchLists"));
+        switchListsButton.setToolTipText(Bundle.getMessage("PreviewPrintSwitchListsTip"));
 
         terminateButton.setToolTipText(Bundle.getMessage("TerminateSelectedTip"));
         saveButton.setToolTipText(Bundle.getMessage("SaveBuildsTip"));
@@ -287,7 +287,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         addPropertyChangeLocations();
 
         // auto save
-        new AutoSave().start();
+        AutoSave.start();
     }
 
     @Override

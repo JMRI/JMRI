@@ -18,7 +18,7 @@ public class CbusMenuTest {
 
 
     // private TrafficController tc = null;
-    private CanSystemConnectionMemo m = null;
+    private CanSystemConnectionMemo m;
  
     @Test
     @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
@@ -38,6 +38,8 @@ public class CbusMenuTest {
 
     @AfterEach
     public void tearDown() { 
+        m.dispose();
+        m = null;
         JUnitUtil.tearDown();
         // tc = null;
     }

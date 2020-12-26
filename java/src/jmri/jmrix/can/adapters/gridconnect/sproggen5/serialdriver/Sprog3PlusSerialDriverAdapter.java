@@ -1,5 +1,6 @@
 package jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver;
 
+import jmri.jmrix.can.ConfigurationManager;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
 import jmri.jmrix.can.adapters.gridconnect.canrs.MergTrafficController;
@@ -19,8 +20,7 @@ import org.slf4j.LoggerFactory;
 public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
 
     public Sprog3PlusSerialDriverAdapter() {
-//        super("S", GridconnectProtocol.SPROGGEN5);
-        super("S");
+        super("S", purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_IN + purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_OUT);
     }
 
     /**
@@ -47,6 +47,8 @@ public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
         tc.connectPort(this);
 
         this.getSystemConnectionMemo().setProtocol(getOptionState(option1Name));
+        this.getSystemConnectionMemo().setSubProtocol(ConfigurationManager.SubProtocol.NONE);
+        this.getSystemConnectionMemo().setProgModeSwitch(ConfigurationManager.ProgModeSwitch.SPROG3PLUS);
 
         // do central protocol-specific configuration    
         //jmri.jmrix.can.ConfigurationManager.configure(getOptionState(option1Name));
@@ -58,7 +60,7 @@ public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
      */
     @Override
     public String[] validBaudRates() {
-        return new String[]{Bundle.getMessage("Baud115200")};
+        return new String[]{Bundle.getMessage("Baud460800")};
     }
 
     /**
@@ -66,7 +68,7 @@ public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
      */
     @Override
     public int[] validBaudNumbers() {
-        return new int[]{115200};
+        return new int[]{460800};
     }
 
     @Override

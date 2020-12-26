@@ -2,6 +2,7 @@ package jmri.jmrit.ctc.editor.gui;
 
 import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
+import jmri.jmrit.ctc.ctcserialdata.OtherData;
 
 /**
  *
@@ -11,13 +12,15 @@ public class FrmAbout extends javax.swing.JFrame {
 
     private static final String FORM_PROPERTIES = "dlgAbout";
     private final AwtWindowProperties _mAwtWindowProperties;
+
     /**
-     * Creates new form dlgAbout
+     * Creates new form dlgAbout.
+     * @param awtWindowProperties window properties.
      */
     public FrmAbout(AwtWindowProperties awtWindowProperties) {
         super();
         initComponents();
-        _mHelpTitle.setText(_mHelpTitle.getText() + CTCSerialData.CTCVersion);
+        _mHelpTitle.setText(_mHelpTitle.getText() + OtherData.CTC_VERSION);
         _mAwtWindowProperties = awtWindowProperties;
         _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mOK);
@@ -38,6 +41,7 @@ public class FrmAbout extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("About");
@@ -52,7 +56,6 @@ public class FrmAbout extends javax.swing.JFrame {
 
         _mOK.setText(Bundle.getMessage("ButtonOK"));
         _mOK.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mOKActionPerformed(evt);
             }
@@ -67,6 +70,8 @@ public class FrmAbout extends javax.swing.JFrame {
         jLabel5.setText("Helped me learn CTC concepts:");
 
         jLabel6.setText("Bob Perrin");
+
+        jLabel1.setText("Rick Moser");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -94,7 +99,8 @@ public class FrmAbout extends javax.swing.JFrame {
                                 .addGap(1, 1, 1)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(_mOK)
-                                    .addComponent(jLabel6))))))
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel1))))))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -111,10 +117,12 @@ public class FrmAbout extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addGap(27, 27, 27)
                 .addComponent(_mOK)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
@@ -133,6 +141,7 @@ public class FrmAbout extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel _mHelpTitle;
     private javax.swing.JButton _mOK;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

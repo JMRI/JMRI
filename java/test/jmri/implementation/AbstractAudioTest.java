@@ -1,7 +1,9 @@
 package jmri.implementation;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for AbstractAudio
@@ -49,12 +51,12 @@ public class AbstractAudioTest {
         Assert.assertTrue("test roundDecimal()", AbstractAudio.roundDecimal((float) 10.5555555) < 10.561);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

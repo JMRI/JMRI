@@ -4,7 +4,7 @@ import java.util.HashMap;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
 class EntryExitTestTools {
@@ -14,7 +14,7 @@ class EntryExitTestTools {
         java.io.File f = new java.io.File("java/test/jmri/jmrit/entryexit/load/EntryExitTest.xml");
         cm.load(f);
 
-        for (LayoutEditor panel : InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList()) {
+        for (LayoutEditor panel : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
             switch (panel.getLayoutName()) {
                 case "Alpha":
                     panels.put("Alpha", panel);

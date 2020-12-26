@@ -22,6 +22,8 @@ public class JMRIClientReporter extends AbstractReporter implements JMRIClientLi
 
     /**
      * JMRIClient reporters use the reporter number on the remote host.
+     * @param number reporter number.
+     * @param memo system connection.
      */
     public JMRIClientReporter(int number, JMRIClientSystemConnectionMemo memo) {
         super(memo.getSystemPrefix() + "R" + number);

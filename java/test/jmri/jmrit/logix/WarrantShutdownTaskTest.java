@@ -1,11 +1,12 @@
 package jmri.jmrit.logix;
 
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
 import java.awt.GraphicsEnvironment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -17,15 +18,15 @@ public class WarrantShutdownTaskTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         WarrantShutdownTask t = new WarrantShutdownTask("test warrant shtudown task");
-        Assert.assertNotNull("exists",t);
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

@@ -1,10 +1,11 @@
 package jmri.managers;
 
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -14,16 +15,16 @@ public class DefaultPowerManagerTest {
 
     @Test
     public void testCTor() {
-        DefaultPowerManager t = new DefaultPowerManager();
+        DefaultPowerManager t = new DefaultPowerManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         Assert.assertNotNull("exists",t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -1,14 +1,15 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.util.Locale;
+
 import javax.swing.JComboBox;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.setup.Setup;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Operations CarTypes class Last manually cross-checked on
@@ -118,14 +119,14 @@ public class CarTypesTest extends OperationsTestCase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
         defaultLocale = Locale.getDefault(); // save the default locale.
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         // reset the default locale
         Locale.setDefault(defaultLocale);

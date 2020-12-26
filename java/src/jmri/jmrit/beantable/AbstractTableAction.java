@@ -16,7 +16,7 @@ import jmri.Manager;
 import jmri.NamedBean;
 import jmri.ProxyManager;
 import jmri.UserPreferencesManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.SystemConnectionMemoManager;
 import jmri.swing.ManagerComboBox;
 
@@ -216,11 +216,12 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
 
     /**
      * Configure the combo box listing managers.
+     * Can be placed on Add New pane to select a connection for the new item.
      *
      * @param comboBox     the combo box to configure
      * @param manager      the current manager
      * @param managerClass the implemented manager class for the current
-     *                     mananger; this is the class used by
+     *                     manager; this is the class used by
      *                     {@link InstanceManager#getDefault(Class)} to get the
      *                     default manager, which may or may not be the current
      *                     manager

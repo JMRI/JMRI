@@ -7,10 +7,9 @@ import jmri.Throttle;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -30,7 +29,7 @@ public abstract class AbstractThrottleManagerTestBase {
     /**
      * Overload to load l with actual object; create scaffolds as needed
      */
-    @Before
+    @BeforeEach
     abstract public void setUp(); 
 
     protected ThrottleManager tm = null; // holds objects under test
@@ -50,16 +49,6 @@ public abstract class AbstractThrottleManagerTestBase {
         public void notifyFailedThrottleRequest(LocoAddress address, String reason){
             throttleNotFoundResult = true;
         }
-        
-        /**
-         * {@inheritDoc}
-         * @Deprecated since 4.15.7; use #notifyDecisionRequired
-         */
-        @Deprecated
-        @Override
-        public void notifyStealThrottleRequired(jmri.LocoAddress address) {
-            notifyDecisionRequired(address,DecisionType.STEAL);
-        }
 
         @Override
         public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
@@ -69,7 +58,7 @@ public abstract class AbstractThrottleManagerTestBase {
         }
     }
 
-    @After
+    @AfterEach
     public void postTestReset(){
        throttleFoundResult = false;
        throttleNotFoundResult = false;

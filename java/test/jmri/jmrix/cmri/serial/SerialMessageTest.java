@@ -1,7 +1,9 @@
 package jmri.jmrix.cmri.serial;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the SerialMessage class.
@@ -13,13 +15,13 @@ public class SerialMessageTest extends jmri.jmrix.AbstractMessageTestBase{
     private SerialMessage msg = null;
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         m = msg = new SerialMessage(1);
     }
 
-    @After
+    @AfterEach
     public void tearDown(){
         m = msg = null;
         JUnitUtil.tearDown();

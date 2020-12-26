@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -30,28 +31,28 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     public AbstractConnectionConfig() {
         try {
             // The next commented-out line replacing the following when Issue #4670 is resolved; see Manager
-            // systemPrefixField = new JFormattedTextField(new jmri.util.swing.RegexFormatter("[A-Za-z]\\d*"));
-            systemPrefixField = new JFormattedTextField(new SystemPrefixFormatter()) {
-                @Override
-                public void setValue(Object value) {
-                    log.debug("setValue {} {}", value, getBackground());
-                    if (getBackground().equals(java.awt.Color.RED)) { // only if might have set before, leaving default otherwise
-                        setBackground(java.awt.Color.WHITE); 
-                        setToolTipText(null);
-                    }
-                    super.setValue(value);
-                }
-                
-                @Override
-                public void setText(String value) {
-                    log.debug("setText {} {}", value, getBackground());
-                    if (getBackground().equals(java.awt.Color.RED)) { // only if might have set before, leaving default otherwise
-                        setBackground(java.awt.Color.WHITE); 
-                        setToolTipText(null);
-                    }
-                    super.setText(value);
-                }
-            };
+            systemPrefixField = new JFormattedTextField(new jmri.util.swing.RegexFormatter("[A-Za-z]\\d*"));
+//            systemPrefixField = new JFormattedTextField(new SystemPrefixFormatter()) {
+//                @Override
+//                public void setValue(Object value) {
+//                    log.debug("setValue {} {}", value, getBackground());
+//                    if (getBackground().equals(java.awt.Color.RED)) { // only if might have set before, leaving default otherwise
+//                        setBackground(java.awt.Color.WHITE);
+//                        setToolTipText(null);
+//                    }
+//                    super.setValue(value);
+//                }
+//
+//                @Override
+//                public void setText(String value) {
+//                    log.debug("setText {} {}", value, getBackground());
+//                    if (getBackground().equals(java.awt.Color.RED)) { // only if might have set before, leaving default otherwise
+//                        setBackground(java.awt.Color.WHITE);
+//                        setToolTipText(null);
+//                    }
+//                    super.setText(value);
+//                }
+//            };
             
             systemPrefixField.setPreferredSize(new JTextField("P123").getPreferredSize());
             systemPrefixField.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
@@ -99,7 +100,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
 
     protected JPanel _details = null;
 
-    protected final HashMap<String, Option> options = new HashMap<>();
+    protected final Map<String, Option> options = new TreeMap<>();
 
     /**
      * Determine if configuration needs to be written to disk.

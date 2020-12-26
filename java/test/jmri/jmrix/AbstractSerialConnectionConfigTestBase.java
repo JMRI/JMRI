@@ -1,7 +1,8 @@
 package jmri.jmrix;
 
 import org.assertj.swing.edt.GuiActionRunner;
-import org.junit.*;
+import org.junit.jupiter.api.*;
+
 import javax.swing.JPanel;
 
 /**

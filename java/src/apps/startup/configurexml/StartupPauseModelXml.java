@@ -1,6 +1,6 @@
 package apps.startup.configurexml;
 
-import apps.StartupActionsManager;
+import jmri.util.startup.StartupActionsManager;
 import apps.startup.StartupPauseModel;
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  */
 public class StartupPauseModelXml extends AbstractXmlAdapter {
 
-    private final static Logger log = LoggerFactory.getLogger(StartupPauseModelXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(StartupPauseModelXml.class);
 
     public StartupPauseModelXml() {
     }
@@ -57,11 +57,6 @@ public class StartupPauseModelXml extends AbstractXmlAdapter {
         // store the model
         InstanceManager.getDefault(StartupActionsManager.class).addAction(model);
         return result;
-    }
-
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Unexpected call of load(Element, Object)");
     }
 
 }

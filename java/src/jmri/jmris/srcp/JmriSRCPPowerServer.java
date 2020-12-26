@@ -66,12 +66,8 @@ public class JmriSRCPPowerServer extends AbstractPowerServer {
             if (p.getPower() == PowerManager.ON || p.getPower() == PowerManager.OFF) {
                 sendStatus(p.getPower());
             }
-        } catch (jmri.JmriException ex) {
-            try {
-                sendErrorStatus();
-            } catch (IOException ie) {
-            }
         } catch (IOException ie2) {
+            // silently ignore
         }
     }
     private static final Logger log = LoggerFactory.getLogger(JmriSRCPPowerServer.class);

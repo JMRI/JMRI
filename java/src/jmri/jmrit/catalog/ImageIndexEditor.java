@@ -19,6 +19,7 @@ import javax.swing.SwingConstants;
 import javax.swing.tree.*;
 
 import jmri.CatalogTreeManager;
+import jmri.CatalogTreeNode;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.implementation.AbstractInstanceInitializer;

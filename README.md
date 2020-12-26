@@ -26,5 +26,6 @@ Jenkins: [![Build Status](https://builds.jmri.org/jenkins/buildStatus/icon?job=d
 [![Build Status](https://builds.jmri.org/jenkins/buildStatus/icon?job=development/separate-tests&subject=Development/Separate%20Tests)](https://builds.jmri.org/jenkins/job/development/job/separate-tests/)
 
 Travis: [![Build Status](https://travis-ci.org/JMRI/JMRI.svg?branch=master)](https://travis-ci.org/JMRI/JMRI)
-AppVeyor: [![Build status](https://ci.appveyor.com/api/projects/status/lmdrtxjxf62xym0p/branch/master?svg=true)](https://ci.appveyor.com/project/JMRI/jmri/branch/master)
+![Windows CI Tests](https://github.com/jmri/jmri/workflows/Windows%20CI%20Tests/badge.svg)
+![Static Analysis](https://github.com/jmri/jmri/workflows/Static%20Analysis/badge.svg)
 Coveralls: [![Coverage Status](https://coveralls.io/repos/github/JMRI/JMRI/badge.svg?branch=master)](https://coveralls.io/github/JMRI/JMRI?branch=master)

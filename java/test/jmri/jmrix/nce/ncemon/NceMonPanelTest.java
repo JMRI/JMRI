@@ -1,6 +1,7 @@
 package jmri.jmrix.nce.ncemon;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.AbstractMonPaneScaffold;
 import jmri.jmrix.nce.NceInterfaceScaffold;
 import jmri.jmrix.nce.NceMessage;
@@ -9,8 +10,10 @@ import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
+
 import org.assertj.swing.edt.GuiActionRunner;
-import org.junit.*;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -25,7 +28,7 @@ public class NceMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
     private NceSystemConnectionMemo memo = null;
 
     @Test
-    @Ignore("Ignore due to timing-specific, occasionally fail")
+    @Disabled("Ignore due to timing-specific, occasionally fail")
     public void testMsg() {
         NceMessage m = new NceMessage(3);
         m.setBinary(false);
@@ -42,7 +45,7 @@ public class NceMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
     }
 
     @Test
-    @Ignore("Ignore due to timing-specific, occasionally fail")
+    @Disabled("Ignore due to timing-specific, occasionally fail")
     public void testReply() {
         NceReply m = new NceReply(memo.getNceTrafficController());
         m.setBinary(false);
@@ -90,7 +93,7 @@ public class NceMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
@@ -103,7 +106,7 @@ public class NceMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         panel = pane = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

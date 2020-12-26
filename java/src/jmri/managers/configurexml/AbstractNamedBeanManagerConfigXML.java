@@ -426,6 +426,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * @param list list of Elements read from xml
      * @param perNode Top-level XML element containing the private, single-node elements of the description.
      *                always null in current application, included to use for Element panel in jmri.jmrit.display
+     * @return true if the load was successful
      */
     boolean loadInAdapter(List<Element> list, Element perNode) {
         boolean result = true;

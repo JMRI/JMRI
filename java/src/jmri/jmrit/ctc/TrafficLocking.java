@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import jmri.Sensor;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
-import jmri.jmrit.ctc.ctcserialdata.TrafficLockingEntry;
+import jmri.jmrit.ctc.ctcserialdata.TrafficLockingData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,49 +39,40 @@ public class TrafficLocking {
                                     NBHSensor switchIndicator3,
                                     NBHSensor switchIndicator4,
                                     NBHSensor switchIndicator5,
-                                    String occupancyExternalSensor1,
-                                    String occupancyExternalSensor2,
-                                    String occupancyExternalSensor3,
-                                    String occupancyExternalSensor4,
-                                    String occupancyExternalSensor5,
-                                    String occupancyExternalSensor6,
-                                    String occupancyExternalSensor7,
-                                    String occupancyExternalSensor8,
-                                    String occupancyExternalSensor9,
-                                    String optionalSensor1,
-                                    String optionalSensor2,
+                                    NBHSensor occupancyExternalSensor1,
+                                    NBHSensor occupancyExternalSensor2,
+                                    NBHSensor occupancyExternalSensor3,
+                                    NBHSensor occupancyExternalSensor4,
+                                    NBHSensor occupancyExternalSensor5,
+                                    NBHSensor occupancyExternalSensor6,
+                                    NBHSensor occupancyExternalSensor7,
+                                    NBHSensor occupancyExternalSensor8,
+                                    NBHSensor occupancyExternalSensor9,
+                                    NBHSensor optionalSensor1,
+                                    NBHSensor optionalSensor2,
                                     String ruleEnabled) {
             _mSwitchIndicatorsRoute = new SwitchIndicatorsRoute(switchIndicator1, switchIndicator2, switchIndicator3, switchIndicator4, switchIndicator5, null);
-            _mOccupancyExternalSensor1 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor1", occupancyExternalSensor1, true);  // NOI18N
-            _mOccupancyExternalSensor2 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor2", occupancyExternalSensor2, true);  // NOI18N
-            _mOccupancyExternalSensor3 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor3", occupancyExternalSensor3, true);  // NOI18N
-            _mOccupancyExternalSensor4 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor4", occupancyExternalSensor4, true);  // NOI18N
-            _mOccupancyExternalSensor5 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor5", occupancyExternalSensor5, true);  // NOI18N
-            _mOccupancyExternalSensor6 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor6", occupancyExternalSensor6, true);  // NOI18N
-            _mOccupancyExternalSensor7 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor7", occupancyExternalSensor7, true);  // NOI18N
-            _mOccupancyExternalSensor8 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor8", occupancyExternalSensor8, true);  // NOI18N
-            _mOccupancyExternalSensor9 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor9", occupancyExternalSensor9, true);  // NOI18N
-            _mOptionalSensor1 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " optionalSensor1", optionalSensor1, true); // NOI18N
-            _mOptionalSensor2 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " optionalSensor2", optionalSensor2, true); // NOI18N
+            _mOccupancyExternalSensor1 = occupancyExternalSensor1;
+            _mOccupancyExternalSensor2 = occupancyExternalSensor2;
+            _mOccupancyExternalSensor3 = occupancyExternalSensor3;
+            _mOccupancyExternalSensor4 = occupancyExternalSensor4;
+            _mOccupancyExternalSensor5 = occupancyExternalSensor5;
+            _mOccupancyExternalSensor6 = occupancyExternalSensor6;
+            _mOccupancyExternalSensor7 = occupancyExternalSensor7;
+            _mOccupancyExternalSensor8 = occupancyExternalSensor8;
+            _mOccupancyExternalSensor9 = occupancyExternalSensor9;
+            _mOptionalSensor1 = optionalSensor1;
+            _mOptionalSensor2 = optionalSensor2;
             _mRuleEnabled = !ruleEnabled.equals(Bundle.getMessage("TLE_RuleDisabled")); // NOI18N  Any problem, default is ENABLED!
         }
 
         public boolean isEnabled() { return _mRuleEnabled; }
-        public boolean isValid() {
+        public boolean isValid(boolean fleetingEnabled) {
             if (!_mRuleEnabled) return false;    // If disabled, treat as invalid so we skip this rule and try the next rule.
-//  For all of these, ONLY unoccupied(INACTIVE) is "valid".  ACTIVE, INCONSISTENT and UNKNOWN all are considered occupied (ACTIVE):
-            if (_mOccupancyExternalSensor1.getKnownState() != Sensor.INACTIVE) return false;
-            if (_mOccupancyExternalSensor2.getKnownState() != Sensor.INACTIVE) return false;
-            if (_mOccupancyExternalSensor3.getKnownState() != Sensor.INACTIVE) return false;
-            if (_mOccupancyExternalSensor4.getKnownState() != Sensor.INACTIVE) return false;
-            if (_mOccupancyExternalSensor5.getKnownState() != Sensor.INACTIVE) return false;
-            if (_mOccupancyExternalSensor6.getKnownState() != Sensor.INACTIVE) return false;
-            if (_mOccupancyExternalSensor7.getKnownState() != Sensor.INACTIVE) return false;
-            if (_mOccupancyExternalSensor8.getKnownState() != Sensor.INACTIVE) return false;
-            if (_mOccupancyExternalSensor9.getKnownState() != Sensor.INACTIVE) return false;
-            if (!_mSwitchIndicatorsRoute.isRouteSelected()) return false;
-            if (!isOptionalSensorActive(_mOptionalSensor1)) return false;
-            if (!isOptionalSensorActive(_mOptionalSensor2)) return false;
+
+            if (!_mSwitchIndicatorsRoute.isRouteSelected()
+            || !isOptionalSensorActive(_mOptionalSensor1)
+            || !isOptionalSensorActive(_mOptionalSensor2)) return false;
             return true;
         }
 
@@ -112,15 +103,15 @@ public class TrafficLocking {
     private final ArrayList<TrafficLockingRecord> _mLeftTrafficLockingRulesArrayList = new ArrayList<>();
     private final ArrayList<TrafficLockingRecord> _mRightTrafficLockingRulesArrayList = new ArrayList<>();
     private final String _mUserIdentifier;
-    private final String _mLeftTrafficLockingRulesSSVList;
-    private final String _mRightTrafficLockingRulesSSVList;
+    private final ArrayList<TrafficLockingData> _mLeftTrafficLockingRulesList;
+    private final ArrayList<TrafficLockingData> _mRightTrafficLockingRulesList;
     private final LockedRoutesManager _mLockedRoutesManager;
 
-    public TrafficLocking(String userIdentifier, String leftTrafficLockingRulesSSVList, String rightTrafficLockingRulesSSVList, LockedRoutesManager lockedRoutesManager)
+    public TrafficLocking(String userIdentifier, ArrayList<TrafficLockingData> _mTRL_LeftTrafficLockingRules, ArrayList<TrafficLockingData> _mTRL_RightTrafficLockingRules, LockedRoutesManager lockedRoutesManager)
     {
         _mUserIdentifier = userIdentifier;                                      // Squirrel it
-        _mLeftTrafficLockingRulesSSVList = leftTrafficLockingRulesSSVList;      // away for later
-        _mRightTrafficLockingRulesSSVList = rightTrafficLockingRulesSSVList;    // "fileReadComplete"
+        _mLeftTrafficLockingRulesList = _mTRL_LeftTrafficLockingRules;      // away for later
+        _mRightTrafficLockingRulesList = _mTRL_RightTrafficLockingRules;    // "fileReadComplete"
         _mLockedRoutesManager = lockedRoutesManager;
     }
 
@@ -129,58 +120,61 @@ public class TrafficLocking {
 //  Since the user may specify "forward referenced" O/S sections (i.e. an entry references an O.S. section that hasn't been read in and created yet),
 //  we delay processing of everything until after the file has been completely read in.  Here we do the real work:
     public void fileReadComplete(HashMap<Integer, CodeButtonHandler> cbHashMap, HashMap<Integer, SwitchDirectionIndicators> swdiHashMap) {
-        addAllTrafficLockingEntries(_mUserIdentifier, _mLeftTrafficLockingRulesSSVList, "leftTrafficLockingRulesSSVList", cbHashMap, swdiHashMap, _mLeftTrafficLockingRulesArrayList);     // NOI18N
-        addAllTrafficLockingEntries(_mUserIdentifier, _mRightTrafficLockingRulesSSVList, "rightTrafficLockingRulesSSVList", cbHashMap, swdiHashMap, _mRightTrafficLockingRulesArrayList);  // NOI18N
+        addAllTrafficLockingEntries(_mUserIdentifier, _mLeftTrafficLockingRulesList, "leftTrafficLockingRulesList", cbHashMap, swdiHashMap, _mLeftTrafficLockingRulesArrayList);     // NOI18N
+        addAllTrafficLockingEntries(_mUserIdentifier, _mRightTrafficLockingRulesList, "rightTrafficLockingRulesList", cbHashMap, swdiHashMap, _mRightTrafficLockingRulesArrayList);  // NOI18N
     }
 
     private void addAllTrafficLockingEntries(   String                                                  userIdentifier,
-                                                String                                                  trafficLockingRulesSSVList,
+                                                ArrayList<TrafficLockingData>                           trafficLockingRulesList,
                                                 String                                                  parameter,
                                                 HashMap<Integer, CodeButtonHandler>                     cbHashMap,
                                                 HashMap<Integer, SwitchDirectionIndicators>             swdiHashMap,
                                                 ArrayList<TrafficLockingRecord>                         trafficLockingRecordsArrayList) {  // <- Output
-        ArrayList<String> arrayListOfSSVEntries;
-        arrayListOfSSVEntries = ProjectsCommonSubs.getArrayListFromSSV(trafficLockingRulesSSVList);
-        for (String csvEntry : arrayListOfSSVEntries) {
-            TrafficLockingEntry trafficLockingEntry = new TrafficLockingEntry(csvEntry);
-            int osSection1UniqueID = getUniqueID(trafficLockingEntry._mUniqueID1);
-            int osSection2UniqueID = getUniqueID(trafficLockingEntry._mUniqueID2);
-            int osSection3UniqueID = getUniqueID(trafficLockingEntry._mUniqueID3);
-            int osSection4UniqueID = getUniqueID(trafficLockingEntry._mUniqueID4);
-            int osSection5UniqueID = getUniqueID(trafficLockingEntry._mUniqueID5);
+        trafficLockingRulesList.forEach(row -> {
+            // Convert TrafficLockingData into a set of fixed size ArrayLists
+            ArrayList<NBHSensor> occupancySensors = row.getOccupancySensors();
+            ArrayList<NBHSensor> optionalSensors = row.getOptionalSensors();
+            ArrayList<Integer> ids = row.getUniqueIDs();
+            ArrayList<String> alignments = row.getAlignments();
+
+            int osSection1UniqueID = ids.get(0);
+            int osSection2UniqueID = ids.get(1);
+            int osSection3UniqueID = ids.get(2);
+            int osSection4UniqueID = ids.get(3);
+            int osSection5UniqueID = ids.get(4);
 
             TrafficLockingRecord trafficLockingRecord
                 = new TrafficLockingRecord( userIdentifier,
                                             parameter,
-                                            getSwitchDirectionIndicatorSensor(osSection1UniqueID, trafficLockingEntry._mSwitchAlignment1, swdiHashMap),
-                                            getSwitchDirectionIndicatorSensor(osSection2UniqueID, trafficLockingEntry._mSwitchAlignment2, swdiHashMap),
-                                            getSwitchDirectionIndicatorSensor(osSection3UniqueID, trafficLockingEntry._mSwitchAlignment3, swdiHashMap),
-                                            getSwitchDirectionIndicatorSensor(osSection4UniqueID, trafficLockingEntry._mSwitchAlignment4, swdiHashMap),
-                                            getSwitchDirectionIndicatorSensor(osSection5UniqueID, trafficLockingEntry._mSwitchAlignment5, swdiHashMap),
-                                            trafficLockingEntry._mOccupancyExternalSensor1,
-                                            trafficLockingEntry._mOccupancyExternalSensor2,
-                                            trafficLockingEntry._mOccupancyExternalSensor3,
-                                            trafficLockingEntry._mOccupancyExternalSensor4,
-                                            trafficLockingEntry._mOccupancyExternalSensor5,
-                                            trafficLockingEntry._mOccupancyExternalSensor6,
-                                            trafficLockingEntry._mOccupancyExternalSensor7,
-                                            trafficLockingEntry._mOccupancyExternalSensor8,
-                                            trafficLockingEntry._mOccupancyExternalSensor9,
-                                            trafficLockingEntry._mOptionalExternalSensor1,
-                                            trafficLockingEntry._mOptionalExternalSensor2,
-                                            trafficLockingEntry._mRuleEnabled);
+                                            getSwitchDirectionIndicatorSensor(osSection1UniqueID, alignments.get(0), swdiHashMap),
+                                            getSwitchDirectionIndicatorSensor(osSection2UniqueID, alignments.get(1), swdiHashMap),
+                                            getSwitchDirectionIndicatorSensor(osSection3UniqueID, alignments.get(2), swdiHashMap),
+                                            getSwitchDirectionIndicatorSensor(osSection4UniqueID, alignments.get(3), swdiHashMap),
+                                            getSwitchDirectionIndicatorSensor(osSection5UniqueID, alignments.get(4), swdiHashMap),
+                                            occupancySensors.get(0),
+                                            occupancySensors.get(1),
+                                            occupancySensors.get(2),
+                                            occupancySensors.get(3),
+                                            occupancySensors.get(4),
+                                            occupancySensors.get(5),
+                                            occupancySensors.get(6),
+                                            occupancySensors.get(7),
+                                            occupancySensors.get(8),
+                                            optionalSensors.get(0),
+                                            optionalSensors.get(1),
+                                            row._mRuleEnabled);
             if (!trafficLockingRecord.getOccupancySensors().isEmpty()) {
                 trafficLockingRecordsArrayList.add(trafficLockingRecord);
             }
-        }
+        });
     }
 
-    public TrafficLockingInfo valid(int presentSignalDirectionLever) {
-        if (presentSignalDirectionLever == CTCConstants.LEFTTRAFFIC) return validForTraffic(_mLeftTrafficLockingRulesArrayList);
-        return validForTraffic(_mRightTrafficLockingRulesArrayList);
+    public TrafficLockingInfo valid(int presentSignalDirectionLever, boolean fleetingEnabled) {
+        if (presentSignalDirectionLever == CTCConstants.LEFTTRAFFIC) return validForTraffic(_mLeftTrafficLockingRulesArrayList, false, fleetingEnabled);
+        return validForTraffic(_mRightTrafficLockingRulesArrayList, true, fleetingEnabled);
     }
 
-    private TrafficLockingInfo validForTraffic(ArrayList<TrafficLockingRecord> trafficLockingRecordArrayList) {
+    private TrafficLockingInfo validForTraffic(ArrayList<TrafficLockingRecord> trafficLockingRecordArrayList, boolean rightTraffic, boolean fleetingEnabled) {
         TrafficLockingInfo returnValue = new TrafficLockingInfo(true);          // ASSUME valid return status
         if (trafficLockingRecordArrayList.isEmpty()) return returnValue; // No rules, OK all of the time.
 //  If ALL are disabled, then treat as if nothing in there, always allow, otherwise NONE would be valid!
@@ -192,11 +186,11 @@ public class TrafficLocking {
 
         for (int index = 0; index < trafficLockingRecordArrayList.size(); index++) {
             TrafficLockingRecord trafficLockingRecord = trafficLockingRecordArrayList.get(index);
-            if (trafficLockingRecord.isValid()) {
-//  Ah, we found a rule that matches the route, and is not occupied.  See if that route
+            if (trafficLockingRecord.isValid(fleetingEnabled)) {
+//  Ah, we found a rule that matches the route.  See if that route
 //  is in conflict with any other routes presently in effect:
                 String ruleNumber = Integer.toString(index+1);
-                returnValue._mLockedRoute = _mLockedRoutesManager.checkRouteAndAllocateIfAvailable(trafficLockingRecord.getOccupancySensors(), _mUserIdentifier, "Rule #" + ruleNumber);
+                returnValue._mLockedRoute = _mLockedRoutesManager.checkRouteAndAllocateIfAvailable(trafficLockingRecord.getOccupancySensors(), _mUserIdentifier, "Rule #" + ruleNumber, rightTraffic);
                 if (returnValue._mLockedRoute != null) { // OK:
                     if (jmri.InstanceManager.getDefault(CTCMain.class)._mCTCDebug_TrafficLockingRuleTriggeredDisplayLoggingEnabled) log.info("Rule {} valid", ruleNumber);
                     return returnValue;
@@ -214,17 +208,4 @@ public class TrafficLocking {
         if (switchDirectionIndicators == null) return null;     // Safety, technically shouldn't happen....
         return switchDirectionIndicators.getProperIndicatorSensor(isNormalAlignment);
     }
-
-    private int getUniqueID(String aString) {
-        return ProjectsCommonSubs.getIntFromStringNoThrow(aString, -1); // If a problem, -1!
-    }
-
-/*
-    private NBHSensor getOSSectionOccupancySensor(int uniqueID, HashMap<Integer, CodeButtonHandler> cbHashMap) {
-        if (uniqueID < 0) return null;
-        CodeButtonHandler codeButtonHandler = cbHashMap.get(uniqueID);
-        if (codeButtonHandler == null) return null;     // Safety, technically shouldn't happen....
-        return codeButtonHandler.getOSSectionOccupiedExternalSensor();
-    }
-*/
 }

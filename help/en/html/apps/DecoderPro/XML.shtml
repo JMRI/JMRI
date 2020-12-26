@@ -82,7 +82,7 @@
       <p>The definitive version of the data is in
       XML files. These can be obtained from any JMRI distribution,
       or via the web at <a href=
-      "http://jmri.org/xml">http://jmri.org/xml</a>.</p>
+      "https://jmri.org/xml">https://jmri.org/xml</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- close #mainContent -->
   </div><!-- close #mBody -->

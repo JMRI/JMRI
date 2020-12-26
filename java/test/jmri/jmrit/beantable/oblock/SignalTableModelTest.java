@@ -1,12 +1,12 @@
 package jmri.jmrit.beantable.oblock;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -17,17 +17,17 @@ public class SignalTableModelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TableFrames f = new TableFrames();
-        SignalTableModel t = new SignalTableModel(f);
-        Assert.assertNotNull("exists",t);
+        TableFrames tf = new TableFrames();
+        SignalTableModel stm = new SignalTableModel(tf);
+        Assert.assertNotNull("exists", stm);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

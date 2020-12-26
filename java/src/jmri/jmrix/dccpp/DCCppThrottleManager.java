@@ -25,14 +25,19 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
 
     /**
      * Constructor.
+     * @param memo system connection.
      */
     public DCCppThrottleManager(DCCppSystemConnectionMemo memo) {
         super(memo);
+        DCCppMessage msg;
         // connect to the TrafficManager
         tc = memo.getDCCppTrafficController();
 
         // Register to listen for throttle messages
         tc.addDCCppListener(DCCppInterface.THROTTLE, this);
+        //Request number of available slots
+        msg = DCCppMessage.makeCSMaxNumSlotsMsg();
+        tc.sendDCCppMessage(msg, this);
     }
 
     /**
@@ -43,17 +48,15 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         DCCppThrottle throttle;
-        if (log.isDebugEnabled()) {
-            log.debug("Requesting Throttle: {}", address);
-        }
+        log.debug("Requesting Throttle: {}", address);
         if (throttles.containsKey(address)) {
             notifyThrottleKnown(throttles.get(address), address);
         } else {
             if (tc.getCommandStation().requestNewRegister(address.getNumber()) == DCCppConstants.NO_REGISTER_FREE) {
-            // TODO: Eventually add something more robust here.
-            log.error("No Register available for Throttle. Address = {}", address);
-            return;
-        }
+                failedThrottleRequest(address, "No Register available for Throttle. Address="+ address);
+                log.error("No Register available for Throttle. Address = {}", address);
+                return;
+            }
             throttle = new DCCppThrottle((DCCppSystemConnectionMemo) adapterMemo, address, tc);
             throttles.put(address, throttle);
             notifyThrottleKnown(throttle, address);
@@ -90,12 +93,12 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
     }
 
     /**
-     * Address 127 and below is a short address
+     * Address between 1 and 127 is a short address
      *
      */
     @Override
     public boolean canBeShortAddress(int address) {
-        return !isLongAddress(address);
+        return (address >= 1 && !isLongAddress(address));
     }
 
     /**
@@ -126,28 +129,14 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
     // Handle incoming messages for throttles.
     @Override
     public void message(DCCppReply r) {
- // Guts of how a throttle handles replies...
- //
- // What should this be??
- // For now, drop the message.
- /*
-        // We want to check to see if a throttle has taken over an address
-        if (r.getElement(0) == DCCppConstants.LOCO_INFO_RESPONSE) {
-            if (r.getElement(1) == DCCppConstants.LOCO_NOT_AVAILABLE) {
-                // This is a take over message.  If we know about this throttle,
-                // send the message on.
-                LocoAddress address = new jmri.DccLocoAddress(r.getThrottleMsgAddr(),
-                        isLongAddress(r.getThrottleMsgAddr()));
-                if (throttles.containsKey(address)) {
-                    throttles.get(address).message(r);
-                }
-            }
+        // handle maxNumSlots and set value in commandstation
+        if (r.getElement(0) == DCCppConstants.MAXNUMSLOTS_REPLY) {
+            log.debug("MaxNumSlots reply received: {}", r);
+            tc.getCommandStation().setCommandStationMaxNumSlots(r);
         }
- */
-
     }
 
-    // listen for the messages to the LI100/LI101
+    // listen for the messages to the command station
     @Override
     public void message(DCCppMessage l) {
     }
@@ -159,6 +148,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
 
     @Override
     public void releaseThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
+        super.releaseThrottle(t, l);
     }
 
     @Override
@@ -167,6 +157,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
             tc.getCommandStation().releaseRegister(t.getLocoAddress().getNumber());
             if (t instanceof DCCppThrottle) {
                 DCCppThrottle lnt = (DCCppThrottle) t;
+                throttles.remove(lnt.getLocoAddress()); // remove from throttles map.
                 lnt.throttleDispose();
                 return true;
             }

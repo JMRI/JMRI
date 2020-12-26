@@ -819,6 +819,7 @@ public class ThrottleWindow extends JmriJFrame {
          */
         @Override
         public void keyReleased(KeyEvent e) {
+            log.trace("TW {}", e);
             if (e.isAltDown() && e.getKeyCode() == NEXT_THROTTLE_KEY) {
                 log.debug("next");
                 nextThrottleFrame();

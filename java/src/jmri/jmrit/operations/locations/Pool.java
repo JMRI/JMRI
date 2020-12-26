@@ -2,9 +2,11 @@ package jmri.jmrit.operations.locations;
 
 import java.util.ArrayList;
 import java.util.List;
-import jmri.beans.Bean;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.beans.Bean;
 
 /**
  * Represents a pool of tracks that share their length.
@@ -104,6 +106,17 @@ public class Pool extends Bean {
 
     public int getTotalLengthTracks() {
         return getTracks().stream().map(track -> track.getLength()).reduce(0, Integer::sum);
+    }
+    
+    public int getMaxLengthTrack(Track track) {
+        int length = getTotalLengthTracks();
+        for (Track t : getTracks()) {
+            if (t == track) {
+                continue;
+            }
+            length = length - t.getMinimumLength();
+        }
+        return length;
     }
 
     /**

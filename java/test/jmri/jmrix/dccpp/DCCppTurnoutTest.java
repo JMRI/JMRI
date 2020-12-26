@@ -2,15 +2,12 @@ package jmri.jmrix.dccpp;
 
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
- * DCCppThrottleTest.java
- *
- * Test for the jmri.jmrix.dccpp.DCCppTurnout class
+ * Tests for the jmri.jmrix.dccpp.DCCppTurnout class
  *
  * @author Paul Bender
  * @author Mark Underwood
@@ -168,7 +165,7 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
 
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
@@ -176,7 +173,7 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         t = new DCCppTurnout("DCCPP", 42, dnis);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

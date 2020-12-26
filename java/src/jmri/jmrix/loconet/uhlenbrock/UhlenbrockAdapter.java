@@ -103,6 +103,7 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
 
     /**
      * Provide just one valid command station value.
+     * @return array with single entry, name of COMMAND_STATION_IBX_TYPE_2 .
      */
     public String[] commandStationOptions() {
         String[] retval = {

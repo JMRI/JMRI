@@ -1,6 +1,6 @@
 package jmri.jmrix.loconet.sdf;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the jmri.jmrix.loconet.sdf.InitiateSound class.

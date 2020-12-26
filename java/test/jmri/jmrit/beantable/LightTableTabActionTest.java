@@ -1,7 +1,9 @@
 package jmri.jmrit.beantable;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -30,7 +32,7 @@ public class LightTableTabActionTest extends AbstractTableTabActionBase {
         Assert.assertTrue("Default include add button", a.includeAddButton());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -41,7 +43,7 @@ public class LightTableTabActionTest extends AbstractTableTabActionBase {
         a = new LightTableTabAction();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         a = null;

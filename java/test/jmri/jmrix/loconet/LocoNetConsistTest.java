@@ -4,7 +4,9 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.jmrit.consisttool.ConsistPreferencesManager;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -105,7 +107,7 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
         Assert.assertFalse("Direction in CS Consist", c.getLocoDirection(B));
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -142,7 +144,7 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
 
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         ltm.dispose();

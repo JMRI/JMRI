@@ -405,7 +405,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         // determine if train services this car's load
         if (car.getTrain() != null) {
             Train train = car.getTrain();
-            if (!train.acceptsLoad(car.getLoadName(), car.getTypeName())) {
+            if (!train.isLoadNameAccepted(car.getLoadName(), car.getTypeName())) {
                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                         .getMessage("carTrainNotServLoad"), car.getLoadName(), train.getName()),
                         Bundle.getMessage("rsNotMove"), JOptionPane.ERROR_MESSAGE);
@@ -413,7 +413,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
                 setRouteLocationAndDestination(car, train, null, null);
                 return false;
             }
-            if (car.getLocation() != null && car.getDestination() != null && !train.services(car)) {
+            if (car.getLocation() != null && car.getDestination() != null && !train.isServiceable(car)) {
                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carTrainNotService"),
                         car.toString(), train.getName()), Bundle.getMessage("rsNotMove"),
                         JOptionPane.ERROR_MESSAGE);

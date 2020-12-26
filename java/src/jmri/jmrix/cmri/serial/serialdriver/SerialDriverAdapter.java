@@ -101,6 +101,7 @@ public class SerialDriverAdapter extends SerialPortAdapter {
 
     /**
      * Can the port accept additional characters? Yes, always
+     * @return always true.
      */
     public boolean okToSend() {
         return true;
@@ -147,7 +148,9 @@ public class SerialDriverAdapter extends SerialPortAdapter {
     }
 
     /**
-     * Local method to do specific port configuration
+     * Local method to do specific port configuration.
+     * 
+     * @throws UnsupportedCommOperationException when underlying port can't do what's requested
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
@@ -189,22 +192,6 @@ public class SerialDriverAdapter extends SerialPortAdapter {
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialDriverAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new SerialDriverAdapter();
-        }
-        return mInstance;
-    }
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static SerialDriverAdapter mInstance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 

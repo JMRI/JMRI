@@ -283,7 +283,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
                 startRunBox.setSelectedIndex(START_NORUNCHANGE);
                 break;
             default:
-                jmri.util.Log4JUtil.warnOnce(log, "Unexpected initial run state = {}", clock.getClockInitialRunState());
+                jmri.util.LoggingUtil.warnOnce(log, "Unexpected initial run state = {}", clock.getClockInitialRunState());
                 break;
         }
         startRunBox.addActionListener(this::startRunBoxChanged);
@@ -718,6 +718,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         // Format and display the time
         timeLabel.setText(" " + (hours / 10) + (hours - (hours / 10) * 10) + ":"
                 + (minutes / 10) + (minutes - (minutes / 10) * 10));
+        timeLabel.setToolTipText(clock.getTime().toString());
     }
 
     /**
@@ -756,7 +757,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
                 : Bundle.getMessage("StoreClockString") );
         
         // remind to save
-        Object[] options = {Bundle.getMessage("ButtonSaveUser"), Bundle.getMessage("ButtonSaveConfig"),
+        Object[] options = {Bundle.getMessage("ButtonSaveConfig"), Bundle.getMessage("ButtonSaveUser"),
                 Bundle.getMessage("ButtonCancel")};
         int retval = javax.swing.JOptionPane.showOptionDialog(this,
                 messageString,

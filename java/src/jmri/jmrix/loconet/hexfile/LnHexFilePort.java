@@ -46,6 +46,10 @@ public class LnHexFilePort extends LnPortController implements Runnable {
         } catch (java.io.IOException e) {
             log.error("init (pipe): Exception: {}", e.toString());
         }
+        options.put("MaxSlots", // NOI18N
+                new Option(Bundle.getMessage("MaxSlots")
+                        + ":", // NOI18N
+                        new String[] {"5","10","21","120","400"}));
         options.put("SensorDefaultState", // NOI18N
                 new Option(Bundle.getMessage("DefaultSensorState")
                         + ":", // NOI18N

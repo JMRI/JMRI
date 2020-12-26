@@ -56,23 +56,23 @@ public class TurnoutLock {
     private int _m_ndcos_WhenLockedSwitchState = 0;
 
     public TurnoutLock( String userIdentifier,
-                        String dispatcherSensorLockToggle,          // Toggle switch that indicates lock/unlock on the panel.  If None, then PERMANENTLY locked by the Dispatcher!
-                        String actualTurnout,                       // The turnout being locked: LTxx a real turnout, like LT69.
+                        NBHSensor dispatcherSensorLockToggle,          // Toggle switch that indicates lock/unlock on the panel.  If None, then PERMANENTLY locked by the Dispatcher!
+                        NBHTurnout actualTurnout,                       // The turnout being locked: LTxx a real turnout, like LT69.
                         boolean actualTurnoutFeedbackDifferent,     // True / False, in case feedback backwards but switch command above isn't!
-                        String dispatcherSensorUnlockedIndicator,   // Display unlocked status (when ACTIVE) back to the Dispatcher.
+                        NBHSensor dispatcherSensorUnlockedIndicator,   // Display unlocked status (when ACTIVE) back to the Dispatcher.
                         boolean noDispatcherControlOfSwitch,        // Dispatcher doesn't control the switch.  If TRUE, then provide:
                         int ndcos_WhenLockedSwitchState,            // When Dispatcher does lock, switch should be set to: CLOSED/THROWN
                         CodeButtonHandlerData.LOCK_IMPLEMENTATION _mLockImplementation,  // Someday, choose which one to implement.  Right now, my own.
                         boolean turnoutLocksEnabledAtStartup,
-                        String additionalTurnout1,
+                        NBHTurnout additionalTurnout1,
                         boolean additionalTurnout1FeebackReversed,
-                        String additionalTurnout2,
+                        NBHTurnout additionalTurnout2,
                         boolean additionalTurnout2FeebackReversed,
-                        String additionalTurnout3,
+                        NBHTurnout additionalTurnout3,
                         boolean additionalTurnout3FeebackReversed) {
-        _mDispatcherSensorLockToggle = new NBHSensor("TurnoutLock", userIdentifier, "dispatcherSensorLockToggle", dispatcherSensorLockToggle, true);    // NOI18N
+        _mDispatcherSensorLockToggle = dispatcherSensorLockToggle;
         addTurnoutMonitored(userIdentifier, "actualTurnout", actualTurnout, actualTurnoutFeedbackDifferent, true);
-        _mDispatcherSensorUnlockedIndicator = new NBHSensor("TurnoutLock", userIdentifier, "dispatcherSensorUnlockedIndicator", dispatcherSensorUnlockedIndicator, true);   // NOI18N
+        _mDispatcherSensorUnlockedIndicator = dispatcherSensorUnlockedIndicator;
         _mDispatcherSensorLockToggle.setKnownState(turnoutLocksEnabledAtStartup ? Sensor.INACTIVE : Sensor.ACTIVE);
         _mNoDispatcherControlOfSwitch = noDispatcherControlOfSwitch;
         _m_ndcos_WhenLockedSwitchState = ndcos_WhenLockedSwitchState;
@@ -97,15 +97,14 @@ public class TurnoutLock {
 
     public NBHSensor getDispatcherSensorLockToggle() { return _mDispatcherSensorLockToggle; }
 
-    private void addTurnoutMonitored(String userIdentifier, String parameter, String actualTurnout, boolean FeedbackDifferent, boolean required) {
-        boolean actualTurnoutPresent = !ProjectsCommonSubs.isNullOrEmptyString(actualTurnout);
+    private void addTurnoutMonitored(String userIdentifier, String parameter, NBHTurnout actualTurnout, boolean FeedbackDifferent, boolean required) {
+        boolean actualTurnoutPresent = actualTurnout.valid();
         if (required && !actualTurnoutPresent) {
             (new CTCException("TurnoutLock", userIdentifier, parameter, Bundle.getMessage("RequiredTurnoutMissing"))).logError();   // NOI18N
             return;
         }
         if (actualTurnoutPresent) { // IF there is something there, try it:
-            NBHTurnout tempTurnout = new NBHTurnout("TurnoutLock", userIdentifier, parameter, actualTurnout, FeedbackDifferent);    // NOI18N
-            if (tempTurnout.valid()) _mTurnoutsMonitored.add(tempTurnout);
+            if (actualTurnout.valid()) _mTurnoutsMonitored.add(actualTurnout);
         }
     }
 
@@ -149,7 +148,10 @@ This routine DOES NOT modify the state of the switch, ONLY the lock!
     public void codeButtonPressed() {
         boolean newLockedState = getNewLockedState();
         if (newLockedState == _mLocked) return; // Nothing changed
-        if (_mNoDispatcherControlOfSwitch || newLockedState == true) { // No dispatcher control of switch, or LOCKING them, "normalize" the switch:
+//  The PROTOTYPE would not do this: Since the dispatcher CANNOT control the state of the switch, and
+//  our operating crews (for example: "brains go dead going down the stairs") MAY forget to normalize the switch
+//  for the main (for instance), we FORCE the state of the switch(s) to a known state (hopefully for the main)
+        if (_mNoDispatcherControlOfSwitch && newLockedState == true) { // No dispatcher control of switch and LOCKING them, "normalize" the switch:
             for (NBHTurnout turnout : _mTurnoutsMonitored) {
                 turnoutSetCommandedState(turnout, _m_ndcos_WhenLockedSwitchState);     // Make it so.
             }

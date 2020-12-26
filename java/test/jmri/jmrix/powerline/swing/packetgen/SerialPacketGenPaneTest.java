@@ -1,8 +1,8 @@
 package jmri.jmrix.powerline.swing.packetgen;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of SerialPacketGenPane
@@ -14,7 +14,7 @@ public class SerialPacketGenPaneTest extends jmri.util.swing.JmriPanelTest {
     // private SerialTrafficControlScaffold tc = null;
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // tc = new SerialTrafficControlScaffold();
@@ -24,7 +24,7 @@ public class SerialPacketGenPaneTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
         // tc = null;

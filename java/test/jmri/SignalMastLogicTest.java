@@ -2,7 +2,9 @@ package jmri;
 
 import java.util.Hashtable;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.SignalMastLogic class
@@ -119,7 +121,7 @@ public class SignalMastLogicTest {
         sml.dispose();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
@@ -127,7 +129,7 @@ public class SignalMastLogicTest {
         jmri.util.JUnitUtil.initInternalTurnoutManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

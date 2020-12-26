@@ -394,6 +394,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // slot specific message?
         int i = findSlotFromMessage(m);
         if (i != -1) {
+            getMoreDetailsForSlot(m, i);
             forwardMessageToSlot(m, i);
             respondToAddrRequest(m, i);
             programmerOpMessage(m, i);
@@ -779,6 +780,55 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 log.debug("no request for addr {}", addr); // NOI18N
             }
         }
+    }
+
+    /**
+     * If it is a slot being sent COMMON,
+     *  after a delay, get the new status of the slot
+     * If it is a true slot move, not dispatch or null
+     *  after a delay, get the new status of the from slot, which varies by CS.
+     *  the to slot should come in the reply.
+     * @param m a LocoNet message
+     * @param i the slot to which it is directed
+     */
+    protected void getMoreDetailsForSlot(LocoNetMessage m, int i) {
+        // is called any time a LocoNet message is received.
+        // sets up delayed slot read to update our effected slots to match the CS
+        if (m.getOpCode() == LnConstants.OPC_SLOT_STAT1 &&
+                ((m.getElement(2) & LnConstants.LOCOSTAT_MASK) == LnConstants.LOCO_COMMON ) ) {
+            // Changing a slot to common. Depending on a CS and its OpSw, and throttle speed 
+            // it could have its status changed a number of ways.
+            sendReadSlotDelayed(i,100);
+        } else if (m.getOpCode() == LnConstants.OPC_MOVE_SLOTS) {
+            // if a true move get the new from slot status
+            // the to slot status is sent in the reply
+            int slotTwo;
+            slotTwo = m.getElement(2);
+            if (i != 0 && slotTwo != 0) {
+                sendReadSlotDelayed(i,100);
+            }
+       }
+    }
+
+    /**
+     * Scedule a delayed slot read.
+     * @param slotNo - the slot.
+     * @param delay - delay in msecs.
+     */
+    protected void sendReadSlotDelayed(int slotNo, long delay) {
+        java.util.TimerTask meterTask = new java.util.TimerTask() {
+            int slotNumber = slotNo;
+
+            @Override
+            public void run() {
+                try {
+                    sendReadSlot(slotNumber);
+                } catch (Exception e) {
+                    log.error("Exception occurred sendReadSlotDelayed:", e);
+                }
+            }
+        };
+        jmri.util.TimerUtil.schedule(meterTask, delay);
     }
 
     /**
@@ -1499,6 +1549,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     /**
      * Continue the sequence of reading all slots.
+     * @param toSlot index of the next slot to read
+     * @param interval wait time before operation, milliseconds
      */
     synchronized protected void readNextSlot(int toSlot, int interval) {
         // send info request

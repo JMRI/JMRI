@@ -26,8 +26,9 @@ import org.slf4j.LoggerFactory;
 public class SoundUtil {
 
     /**
-     * Play a sound from a buffer
+     * Play a sound from a buffer.
      *
+     * @param wavData the .wav byte array.
      */
     public static void playSoundBuffer(byte[] wavData) {
 

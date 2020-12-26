@@ -1,10 +1,8 @@
 package jmri.jmrit.throttle;
 
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.awt.Dimension;
 
@@ -83,13 +81,13 @@ public class ThrottlesPreferencesTest {
         Assert.assertTrue("preferences dirty after toolbar setting update", preferences.isDirty());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
         preferences = new ThrottlesPreferences();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
 

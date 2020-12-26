@@ -15,6 +15,8 @@ public class MemoryTracker {
 
     /**
      * Create a Tracker object, providing a list of blocks to watch
+     * @param b block to track.
+     * @param namePrefix system name prefix.
      */
     public MemoryTracker(Block b, String namePrefix) throws IllegalArgumentException {
         block = b;

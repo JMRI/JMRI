@@ -111,15 +111,7 @@ public class RailDriverMenuItem extends JMenuItem
             //
             if (!invokeOnMenuOnly) {
                 // start the HID services
-                InstanceManager.getDefault(ShutDownManager.class)
-                        .register(new AbstractShutDownTask("RailDriverMenuItem shutdown HID") {
-                            // if we're going to start, we have to also stop
-                            @Override
-                            public boolean execute() {
-                                hidServices.stop();
-                                return true;
-                            }
-                        });
+                InstanceManager.getDefault(ShutDownManager.class).register(hidServices::stop);
                 log.debug("Starting HID services.");
                 hidServices.start();
 
@@ -727,14 +719,14 @@ public class RailDriverMenuItem extends JMenuItem
                         case 34: {  // Gear Shift Up
                             if (isDown) {
                                 // shuntFn
-                                functionButtons[3].changeState(false);
+                                functionButtons[3].setSelected(false);
                             }
                             break;
                         }
                         case 35: {  // Gear Shift Down
                             if (isDown) {
                                 // shuntFn
-                                functionButtons[3].changeState(true);
+                                functionButtons[3].setSelected(true);
                             }
                             break;
                         }
@@ -784,10 +776,10 @@ public class RailDriverMenuItem extends JMenuItem
                         if (button != null) {
                             if (button.getIsLockable()) {
                                 if (isDown) {
-                                    button.changeState(!button.getState());
+                                    button.setSelected(!button.getState());
                                 }
                             } else {
-                                button.changeState(isDown);
+                                button.setSelected(isDown);
                             }
                         }
                     }

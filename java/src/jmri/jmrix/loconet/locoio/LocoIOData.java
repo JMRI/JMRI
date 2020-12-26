@@ -56,6 +56,9 @@ public class LocoIOData extends PropertyChangeSupport
 
     /**
      * Create a new instance of LocoIOData.
+     * @param unitAddr unit address.
+     * @param unitSubAddr unit SubAddress.
+     * @param tc system connection traffic controller.
      */
     public LocoIOData(int unitAddr, int unitSubAddr, LnTrafficController tc) {
         timeoutcounter = 0;
@@ -102,6 +105,8 @@ public class LocoIOData extends PropertyChangeSupport
      * The subAddress is in the range of 0x01 .. 0x7E
      * <br>
      * (0x7F is reserved)
+     * @param unit unit address.
+     * @param unitSub unit subAddress.
      */
     public synchronized void setUnitAddress(int unit, int unitSub) {
         setUnitAddress(unit);
@@ -127,7 +132,7 @@ public class LocoIOData extends PropertyChangeSupport
     }
 
     /**
-     * TODO: LocoIO Board level configuration.
+     * No LocoIO Board level configuration.
      * <pre>
      * Bit 0: 0 = default, 1 = Port Refresh
      * Bit 1: 0 = Fixed code PBs, 1 = Alternated code PBs
@@ -135,13 +140,19 @@ public class LocoIOData extends PropertyChangeSupport
      * Bit 3: 0 = default, 1 = Ports 5-12 are Servo Ports
      * Bit 4-7: Blink Rate
      *
-     * If possibe add/support the additional config options for HDL boards
+     * Add/support the additional config options for HDL boards -
+     * Work has moved to xml decoder definition Public_Domain_HDL_LocoIO, is included there since 4.21.2
      * </pre>
+     * @param portRefresh port refresh value, bit 0.
+     * @param altCodePBs alternated code PBs, bit 1.
+     * @param isServo servo port, bit 3.
+     * @param blinkRate blink rate, bits 4-7.
      */
     public void setUnitConfig(int portRefresh, int altCodePBs, int isServo, int blinkRate) {
         int newsv0 = ((portRefresh & 0x01)) |   // bit 0
                 ((altCodePBs & 0x01) << 0x01) | // bit 1
                 // bit 2 is left at zero
+                // later LocoServo boards store 2 pos/4 pos type in bits 2-3, see Public_Domain_HDL_LocoIO
                 ((isServo & 0x01) << 0x03) |    // bit 3
                 ((blinkRate & 0x0F) << 0x04);   // bits 4-7
         firePropertyChange("UnitConfig", sv0, newsv0); // NOI18N
@@ -219,6 +230,7 @@ public class LocoIOData extends PropertyChangeSupport
      *
      * @param channel integer value of the addresses in use for this row
      *                (0 = invalid)
+     * @param value channel value.
      */
     public void setAddr(int channel, int value) {
         addr[channel] = value & 0x7FF;
@@ -419,7 +431,7 @@ public class LocoIOData extends PropertyChangeSupport
                             } else if (type == 1) {     // v1
                                 setV1(channel, data);
                                 setMode(channel, "<none>"); // NOI18N
-                            } else if (type == 0) {       // cv
+                            } else if (type == 0) {     // cv
                                 setSV(channel, data);
                                 // Now that we have all the pieces, recalculate mode
                                 LocoIOMode lim = validmodes.getLocoIOModeFor(getSV(channel), getV1(channel), getV2(channel));
@@ -431,12 +443,15 @@ public class LocoIOData extends PropertyChangeSupport
                                     setMode(channel, lim.getFullMode());
                                     setAddr(channel, validmodes.valuesToAddress(lim.getOpCode(), getSV(channel), getV1(channel), getV2(channel)));
                                 }
-                                log.debug("... decoded address (cv={} v1={} v2={}) is {}(0x{})", Integer.toHexString(getSV(channel)), Integer.toHexString(getV1(channel)), Integer.toHexString(getV2(channel)), getAddr(channel), Integer.toHexString(getAddr(channel))); // NOI18N
+                                log.debug("... decoded address (cv={} v1={} v2={}) is {}(0x{})",
+                                        Integer.toHexString(getSV(channel)), Integer.toHexString(getV1(channel)),
+                                        Integer.toHexString(getV2(channel)), getAddr(channel),
+                                        Integer.toHexString(getAddr(channel))); // NOI18N
                             } else {
                                 log.warn("OPC_PEER_XFR: Type ({}) is not {0,1,2} for channel {}", type, channel); // NOI18N
                             }
-                        } else {
-                            // log.error("last CV recorded is invalid: "+lastOpCv);
+                        // } else {
+                            // log.error("last CV recorded is invalid: {}", lastOpCv);
                         }
                     }  // end of read processing
 
@@ -629,7 +644,7 @@ public class LocoIOData extends PropertyChangeSupport
      * Timer Management Protect against communication failures, addressing
      * mixups and the like.
      */
-    static private int TIMEOUT = 2000;    // ms
+    private static final int TIMEOUT = 2000;    // ms
     protected javax.swing.Timer timer = null;
     private int timeoutcounter;
 
@@ -671,7 +686,8 @@ public class LocoIOData extends PropertyChangeSupport
     }
 
     /**
-     * Internal routine to handle timer starts and restarts.
+     * Internal routine to handle timer starts and restarts.    
+     * @param delay Milliseconds to wait
      */
     protected void restartTimer(int delay) {
         if (timer == null) {
@@ -690,7 +706,9 @@ public class LocoIOData extends PropertyChangeSupport
 
     /**
      * Read an SV from a given LocoIO device.
-     *
+     * @param locoIOAddress primary board address
+     * @param locoIOSubAddress subaddress within board
+     * @param cv CV number to access
      */
     void sendReadCommand(int locoIOAddress, int locoIOSubAddress, int cv) {
         // remember current op is read
@@ -704,7 +722,10 @@ public class LocoIOData extends PropertyChangeSupport
 
     /**
      * Write an SV to a given LocoIO device.
-     *
+     * @param locoIOAddress primary board address
+     * @param locoIOSubAddress subaddress within board
+     * @param cv CV number to access
+     * @param data value to be written
      */
     void sendWriteCommand(int locoIOAddress, int locoIOSubAddress, int cv, int data) {
         // remember current op is write

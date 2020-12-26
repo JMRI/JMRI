@@ -679,6 +679,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      * <p>
      * Listeners will be notified if the hours or minutes changed 
      * since the last time.
+     * @param e Event which triggered this
      */
     void handleAlarm(ActionEvent e) {
         // on first pass, set up the timer to call this routine

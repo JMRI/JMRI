@@ -1,12 +1,13 @@
 package jmri.jmrix.oaktree.serialmon;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
 import jmri.jmrix.oaktree.SerialTrafficControlScaffold;
 import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 import jmri.jmrix.oaktree.SerialTrafficController;
@@ -28,7 +29,7 @@ public class SerialMonFrameTest {
         Assert.assertNotNull("exists", action);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         m = new OakTreeSystemConnectionMemo();
@@ -37,7 +38,7 @@ public class SerialMonFrameTest {
         m.setTrafficController(tc);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }

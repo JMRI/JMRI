@@ -16,7 +16,7 @@ public class ServerMenuTest {
     @Test
     public void testCTor() {
         ServerMenu t = new ServerMenu();
-        assertThat(t).isNotNull().withFailMessage("exists");
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
 
     @BeforeEach

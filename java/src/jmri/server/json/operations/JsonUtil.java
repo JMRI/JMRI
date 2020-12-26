@@ -214,7 +214,7 @@ public class JsonUtil {
             types.add(type);
         }
         ArrayNode tracks = data.putArray(TRACK);
-        for (Track track : location.getTrackList()) {
+        for (Track track : location.getTracksList()) {
             tracks.add(getTrack(track, locale));
         }
         return data;
@@ -391,8 +391,8 @@ public class JsonUtil {
             data.put(JSON.TERMINATES_LOCATION, train.getTrainTerminatesName());
         }
         data.put(LOCATION, train.getCurrentLocationName());
-        if (train.getCurrentLocation() != null) {
-            data.put(JsonOperations.LOCATION_ID, train.getCurrentLocation().getId());
+        if (train.getCurrentRouteLocation() != null) {
+            data.put(JsonOperations.LOCATION_ID, train.getCurrentRouteLocation().getId());
         }
         data.put(JSON.STATUS, train.getStatus(locale));
         data.put(JSON.STATUS_CODE, train.getStatusCode());

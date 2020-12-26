@@ -10,6 +10,7 @@ public abstract class AbstractXNetSerialConnectionConfig extends jmri.jmrix.Abst
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     * @param p serial port adapter.
      */
     public AbstractXNetSerialConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);

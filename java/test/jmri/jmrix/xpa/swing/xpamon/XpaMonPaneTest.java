@@ -1,8 +1,8 @@
 package jmri.jmrix.xpa.swing.xpamon;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * @author Paul Bender Copyright(C) 2016
@@ -10,7 +10,7 @@ import org.junit.Before;
 public class XpaMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -23,7 +23,7 @@ public class XpaMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         panel = pane = null;
         JUnitUtil.tearDown();

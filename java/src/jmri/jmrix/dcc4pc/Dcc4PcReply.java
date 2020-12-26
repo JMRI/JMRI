@@ -72,6 +72,7 @@ public class Dcc4PcReply extends AbstractMRReply {
 
     /**
      * Is this reply indicating that a general error has occurred?
+     * @return true if error, else false.
      */
     public boolean isError() {
         return error;
@@ -109,7 +110,8 @@ public class Dcc4PcReply extends AbstractMRReply {
     }
 
     /**
-     * Returns a string representation of this Dcc4PcReply
+     * Returns a hex string representation of this Dcc4PcReply.
+     * @return hex string format of Reply using 0x format.
      */
     public String toHexString() {
 

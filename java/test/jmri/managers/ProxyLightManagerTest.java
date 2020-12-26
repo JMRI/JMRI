@@ -1,6 +1,7 @@
 package jmri.managers;
 
 import java.beans.PropertyChangeListener;
+
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
@@ -8,10 +9,9 @@ import jmri.jmrix.internal.InternalLightManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * Test the ProxyLightManager.
@@ -60,15 +60,10 @@ public class ProxyLightManagerTest {
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testProvideFailure() {
-        try {
-            l.provideLight("");
-            Assert.fail("didn't throw");
-        } catch (IllegalArgumentException ex) {
-            JUnitAppender.assertErrorMessage("Invalid system name for Light: System name must start with \"" + l.getSystemNamePrefix() + "\".");
-            throw ex;
-        }
+        Assert.assertThrows(IllegalArgumentException.class, () -> l.provideLight(""));
+        JUnitAppender.assertErrorMessage("Invalid system name for Light: System name must start with \"" + l.getSystemNamePrefix() + "\".");
     }
 
     @Test
@@ -179,7 +174,7 @@ public class ProxyLightManagerTest {
         return 7;
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // create and register the manager object
@@ -187,7 +182,7 @@ public class ProxyLightManagerTest {
         jmri.InstanceManager.setLightManager(l);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

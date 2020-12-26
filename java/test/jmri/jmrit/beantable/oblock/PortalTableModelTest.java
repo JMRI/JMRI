@@ -1,12 +1,14 @@
 package jmri.jmrit.beantable.oblock;
 
 import java.awt.GraphicsEnvironment;
+
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import jmri.util.gui.GuiLafPreferencesManager;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -17,17 +19,19 @@ public class PortalTableModelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TableFrames f = new TableFrames();
-        PortalTableModel t = new PortalTableModel(f);
-        Assert.assertNotNull("exists",t);
+        TableFrames tf = new TableFrames();
+        PortalTableModel ptm = new PortalTableModel(tf);
+        Assert.assertNotNull("exists", ptm);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        // use original _desktop interface
+        InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(false);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

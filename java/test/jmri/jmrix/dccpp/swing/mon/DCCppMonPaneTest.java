@@ -1,8 +1,8 @@
 package jmri.jmrix.dccpp.swing.mon;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of DCCppMonPane
@@ -14,7 +14,7 @@ public class DCCppMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     jmri.jmrix.dccpp.DCCppSystemConnectionMemo memo = null;
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.jmrix.dccpp.DCCppInterfaceScaffold t = new jmri.jmrix.dccpp.DCCppInterfaceScaffold(new jmri.jmrix.dccpp.DCCppCommandStation());
@@ -28,7 +28,7 @@ public class DCCppMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         panel = pane = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

@@ -274,7 +274,7 @@
 		NetBeans a de bons outils pour travailler avec des fichiers XML, y compris 
 		l'&#233;dition et leur validation. JMRI utilise XInclude pour inclure 
 		des "fragments" de fichiers XML dans d'autres via l'URL qui pointe 
-		sur le site web de JMRI: http://jmri.org/xml/decoders/types/foo.xml
+		sur le site web de JMRI: https://jmri.org/xml/decoders/types/foo.xml
 		Les programmes JMRI les convertissent au moment de l'ex&#233;cution en fichiers locaux de r&#233;f&#233;rences,
 		mais par d&#233;faut NetBeans ne sait pas faire cela.
 		<p>

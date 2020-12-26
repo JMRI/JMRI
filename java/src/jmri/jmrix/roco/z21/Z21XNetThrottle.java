@@ -17,14 +17,19 @@ import org.slf4j.LoggerFactory;
 public class Z21XNetThrottle extends jmri.jmrix.roco.RocoXNetThrottle {
 
     /**
-     * Constructor
+     * Constructor.
+     * @param memo system connection.
+     * @param controller traffic controller.
      */
     public Z21XNetThrottle(XNetSystemConnectionMemo memo, XNetTrafficController controller) {
         super(memo,controller);
     }
 
     /**
-     * Constructor
+     * Constructor.
+     * @param memo system connection.
+     * @param address loco address.
+     * @param controller traffic controller.
      */
     public Z21XNetThrottle(XNetSystemConnectionMemo memo, LocoAddress address, XNetTrafficController controller) {
         super(memo,address,controller);
@@ -76,7 +81,6 @@ public class Z21XNetThrottle extends jmri.jmrix.roco.RocoXNetThrottle {
         // traffic controller to do this for us.
         // now, we queue the message for sending to the command station
         queueMessage(msg, THROTTLESTATSENT);
-        return;
     }
 
     /**

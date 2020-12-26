@@ -2,7 +2,9 @@ package jmri.jmrit.catalog;
 
 import java.awt.Container;
 import java.awt.GraphicsEnvironment;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
@@ -32,12 +34,12 @@ public class DirectorySearcherTest {
         JUnitUtil.pressButton(pane, "Cancel");
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();

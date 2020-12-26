@@ -860,7 +860,7 @@ selects the different algorithm needed here.
       <ul>
           <li>
               A <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">splitVal</a>
-              type. This handles a numeric value stored across up to at least 8 CVs.
+              type. This handles a numeric value stored across multiple CV's (tested for up to 8 CVs).
               <ul>
                   <li>
                       For examples, see <a href= "#splitvalExample">splitVal example</a> below and this
@@ -923,7 +923,7 @@ selects the different algorithm needed here.
 
       The original technique of specifying a "CV" and a "highCV" is not appropriate
       in cases where many more CVs are needed. Alternative more concise methods of specifying
-      multiple CVs (contiguous or not) in the "CV" parameter are now available:
+      multiple CVs (contiguous or not) in the "CV" variable parameter are now available:
       <ul>
           <li>
               The available methods (with example strings) are detailed under
@@ -1281,7 +1281,7 @@ means that it doesn't.
           It is possible to generate complex, repeated decoder XML parts using XSL stylesheets.
           For more information, please see <a href="TransformDecoder.shtml">Use XSLT Transformation for complex decoders</a>.
       </p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

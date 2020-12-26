@@ -2,8 +2,10 @@ package jmri.jmrix.can.cbus;
 
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+
 import jmri.beans.PreferencesBean;
 import jmri.jmrix.can.cbus.node.CbusNode;
+import jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSprog3PlusModeSwitcherFrame;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
 
@@ -28,6 +30,11 @@ public class CbusPreferences extends PreferencesBean {
     private boolean _saveRestoreEventTable = true;
     private int minimumNumBackupsToKeep = 10;
     private int bootWriteDelay = CbusNode.BOOT_PROG_TIMEOUT_FAST;
+    // Default to no programmers available. The p[rogrammer manager will validate
+    // the preferences for the hardware connection in use.
+    private boolean _isGlobalProgrammerAvailable = true;
+    private boolean _isAddressedModePossible = true;
+    private int _progTrackMode = SprogCbusSprog3PlusModeSwitcherFrame.PROG_OFF_MODE;
     
     public CbusPreferences() {
         super(ProfileManager.getDefault().getActiveProfile());
@@ -53,6 +60,13 @@ public class CbusPreferences extends PreferencesBean {
             "bootWriteDelay",this.getBootWriteDelay() );
         this._saveRestoreEventTable = sharedPreferences.getBoolean(
             "saveRestoreEventTable",this.getSaveRestoreEventTable() );
+
+        this._isGlobalProgrammerAvailable = sharedPreferences.getBoolean(
+            "globalprogrammer", this.isGlobalProgrammerAvailable() );
+        this._isAddressedModePossible = sharedPreferences.getBoolean(
+            "addressedprogrammer", this.isAddressedModePossible() );
+
+        this._progTrackMode = sharedPreferences.getInt("progtrackmode", this.getProgTrackMode() );
     }
 
     public void savePreferences() {
@@ -71,6 +85,11 @@ public class CbusPreferences extends PreferencesBean {
         sharedPreferences.putInt("minimumNumBackupsToKeep", this.getMinimumNumBackupsToKeep() );
         sharedPreferences.putInt("bootWriteDelay", this.getBootWriteDelay() );
         sharedPreferences.putBoolean("saveRestoreEventTable", this.getSaveRestoreEventTable() );
+
+        sharedPreferences.putBoolean("globalprogrammer", this.isGlobalProgrammerAvailable() );
+        sharedPreferences.putBoolean("addressedprogrammer", this.isAddressedModePossible() );
+        
+        sharedPreferences.putInt("progtrackmode", this.getProgTrackMode() );
         
         try {
             sharedPreferences.sync();
@@ -256,6 +275,67 @@ public class CbusPreferences extends PreferencesBean {
      */
     public void setBootWriteDelay( int newVal ){
         bootWriteDelay = newVal;
+        savePreferences();
+    }
+    
+    /**
+     * Get the global programmer state
+     * @return global programmer state
+     */
+    public boolean isGlobalProgrammerAvailable() {
+        return _isGlobalProgrammerAvailable;
+    }
+    
+    /**
+     * Get the addressed programmer state
+     * @return addressed programmer state
+     */
+    public boolean isAddressedModePossible() {
+        return _isAddressedModePossible;
+    }
+    
+    /**
+     * Set global (service mode) programmer availability
+     * @param state true if available
+     */
+    public void setGlobalProgrammerAvailable(boolean state) {
+        _isGlobalProgrammerAvailable = state;
+        savePreferences();
+    }
+    
+    /**
+     * Set global (service mode) programmer availability
+     * @param state true if available
+     */
+    public void setAddressedModePossible(boolean state) {
+        _isAddressedModePossible = state;
+        savePreferences();
+    }
+    
+    /**
+     * Set the programmer type
+     * @param global true if global (service mode) programmer is available
+     * @param addressed thru if addressed (ops mode) programmer is available
+     */
+    public void setProgrammersAvailable(boolean global, boolean addressed) {
+        setGlobalProgrammerAvailable(global);
+        setAddressedModePossible(addressed);
+    }
+    
+    /**
+     * Get the programming track mode
+     * @return the mode
+     */
+    public int getProgTrackMode() {
+        return _progTrackMode;
+    }
+    
+    /**
+     * Set programming track mode
+     * @param mode to be set
+     */
+    public void setProgTrackMode(int mode) {
+        _progTrackMode = mode;
         savePreferences();
     }
     

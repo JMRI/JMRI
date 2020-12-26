@@ -3,7 +3,9 @@ package jmri.jmrix.ieee802154.xbee;
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * XBeeNodeTest.java
@@ -161,13 +163,13 @@ public class XBeeNodeTest{
         Assert.assertEquals("Global Transmit Address",node.getXBeeAddress64(),node.getPreferedTransmitAddress());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         tc = new XBeeInterfaceScaffold();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         ((XBeeInterfaceScaffold)tc).dispose();
         tc = null;

@@ -1,8 +1,8 @@
 package jmri.jmrix.loconet.locoid;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -11,7 +11,7 @@ import org.junit.Before;
 public class LocoIdPanelTest extends jmri.util.swing.JmriPanelTest {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         panel = new LocoIdPanel();
@@ -20,7 +20,7 @@ public class LocoIdPanelTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

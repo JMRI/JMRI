@@ -2,6 +2,7 @@ package jmri.util.gui;
 
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
@@ -20,7 +21,6 @@ import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
 import jmri.spi.PreferencesManager;
 import jmri.util.prefs.InitializationException;
-import jmri.util.swing.SwingSettings;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,10 +38,10 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public static final String LOCALE = "locale";
     public static final String LOOK_AND_FEEL = "lookAndFeel";
     public static final String NONSTANDARD_MOUSE_EVENT = "nonstandardMouseEvent";
-    /**
-     * Display state in bean tables as icon.
-     */
+    // Display state in bean tables as icon.
     public static final String GRAPHIC_TABLE_STATE = "graphicTableState";
+    // Classic OBlock editor or tabbed tables
+    public static final String OBLOCK_EDIT_TABBED = "oblockEditTabbed";
     public static final String VERTICAL_TOOLBAR = "verticalToolBar";
     public static final String SHOW_TOOL_TIP_TIME = "showToolTipDismissDelay";
     public static final String EDITOR_USE_OLD_LOC_SIZE = "editorUseOldLocSize";
@@ -71,6 +71,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     private int defaultFontSize = 0;
     private boolean nonStandardMouseEvent = false;
     private boolean graphicTableState = false;
+    private boolean oblockEditTabbed = false;
     private boolean editorUseOldLocSize = false;
     private String lookAndFeel = UIManager.getLookAndFeel().getClass().getName();
     private int toolTipDismissDelay = ToolTipManager.sharedInstance().getDismissDelay();
@@ -114,6 +115,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             this.setNonStandardMouseEvent(
                     preferences.getBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent()));
             this.setGraphicTableState(preferences.getBoolean(GRAPHIC_TABLE_STATE, this.isGraphicTableState()));
+            this.setOblockEditTabbed(preferences.getBoolean(OBLOCK_EDIT_TABBED, this.isOblockEditTabbed()));
             this.setEditorUseOldLocSize(preferences.getBoolean(EDITOR_USE_OLD_LOC_SIZE, this.isEditorUseOldLocSize()));
             this.setToolTipDismissDelay(preferences.getInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay()));
 
@@ -123,7 +125,6 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
             this.applyLookAndFeel();
             this.applyFontSize();
-            SwingSettings.setNonStandardMouseEvent(this.isNonStandardMouseEvent());
             this.setDirty(migrate);
             this.initialized = true;
         }
@@ -136,7 +137,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
     @Override
     @Nonnull
-    public Iterable<Class<? extends PreferencesManager>> getRequires() {
+    public Collection<Class<? extends PreferencesManager>> getRequires() {
         return new HashSet<>();
     }
 
@@ -175,6 +176,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         }
         preferences.putBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent());
         preferences.putBoolean(GRAPHIC_TABLE_STATE, this.isGraphicTableState());
+        preferences.putBoolean(OBLOCK_EDIT_TABBED, this.isOblockEditTabbed());
         preferences.putBoolean(EDITOR_USE_OLD_LOC_SIZE, this.isEditorUseOldLocSize());
         preferences.putInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay());
         try {
@@ -404,6 +406,22 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     /**
+     * @return the graphicTableState
+     */
+    public boolean isOblockEditTabbed() {
+        return oblockEditTabbed;
+    }
+
+    /**
+     * @param tabbed the Editor interface to set (fasle  = desktop)
+     */
+    public void setOblockEditTabbed(boolean tabbed) {
+        boolean oldOblockTabbed = this.oblockEditTabbed;
+        this.oblockEditTabbed = tabbed;
+        firePropertyChange(OBLOCK_EDIT_TABBED, oldOblockTabbed, tabbed);
+    }
+
+    /**
      * @return the editorUseOldLocSize value
      */
     public boolean isEditorUseOldLocSize() {
@@ -621,4 +639,5 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public List<Exception> getInitializationExceptions(Profile profile) {
         return new ArrayList<>(this.exceptions);
     }
+
 }

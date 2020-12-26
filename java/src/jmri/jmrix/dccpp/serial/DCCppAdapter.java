@@ -158,6 +158,7 @@ public class DCCppAdapter extends DCCppSerialPortController {
 
     /**
      * Local method to do specific configuration.
+     * @throws UnsupportedCommOperationException if the underlying port cannot comply
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options

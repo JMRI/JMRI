@@ -3,8 +3,8 @@ package jmri.jmrix.powerline;
 import jmri.implementation.AbstractTurnoutTestBase;
 import jmri.jmrix.powerline.simulator.SpecificSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.powerline.SerialTurnout class
@@ -18,7 +18,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     private SerialTrafficControlScaffold tc = null;
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
@@ -30,11 +30,10 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
         t = new SerialTurnout("PTA4", tc, "tA4");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
-
     }
 
     @Override
@@ -51,9 +50,9 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     @Override
     public void checkClosedMsgSent() {
-//        tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
-//        Assert.assertTrue("message sent", tcis.outbound.size() > 0);
-//        Assert.assertEquals("content", "41 54 00", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // CLOSED message
+//      tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
+//      Assert.assertTrue("message sent", tcis.outbound.size() > 0);
+//      Assert.assertEquals("content", "41 54 00", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // CLOSED message
     }
 
 }

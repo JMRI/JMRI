@@ -1,9 +1,8 @@
 package jmri.jmrix.openlcb;
 
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 import org.openlcb.NodeID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,12 +23,12 @@ public class OpenLcbLocoAddressTest {
         assertThat(a1.hashCode()).isEqualTo(a2.hashCode());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

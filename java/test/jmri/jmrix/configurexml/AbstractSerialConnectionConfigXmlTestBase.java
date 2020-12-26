@@ -1,6 +1,8 @@
 package jmri.jmrix.configurexml;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.jdom2.Element;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.AbstractSerialPortController;
@@ -31,7 +33,8 @@ abstract public class AbstractSerialConnectionConfigXmlTestBase extends Abstract
         validateConnectionDetails(cc, e);
     }
 
-    @Test(timeout=5000)
+    @Test
+    @Timeout(5000)
     @Override
     public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
         Assume.assumeNotNull(cc);

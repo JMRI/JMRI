@@ -2,10 +2,9 @@ package jmri.jmrix.can.adapters.gridconnect;
 
 import jmri.jmrix.can.CanMessage;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.can.adapters.gridconnect.GridConnectMessage class
@@ -52,7 +51,7 @@ public class GridConnectMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         CanMessage msg = new CanMessage(0x123);
@@ -67,7 +66,7 @@ public class GridConnectMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         m = g = new GridConnectMessage(msg);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         m = g = null;
         JUnitUtil.tearDown();

@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import jmri.InstanceManager;
 import jmri.jmrix.xpa.XpaPortController;
 import jmri.jmrix.xpa.XpaSystemConnectionMemo;
 import jmri.jmrix.xpa.XpaTrafficController;
@@ -105,10 +106,10 @@ public class SerialDriverAdapter extends XpaPortController {
         XpaTrafficController tc = memo.getXpaTrafficController();
         tc.connectPort(this);
         
-        jmri.InstanceManager.store(memo.getPowerManager(), jmri.PowerManager.class);
-
-        jmri.InstanceManager.store(memo.getTurnoutManager(),jmri.TurnoutManager.class);
-        jmri.InstanceManager.store(memo.getThrottleManager(),jmri.ThrottleManager.class);
+        InstanceManager.store(memo.getPowerManager(), jmri.PowerManager.class);
+        InstanceManager.store(memo.getTurnoutManager(),jmri.TurnoutManager.class);
+        InstanceManager.store(memo.getThrottleManager(),jmri.ThrottleManager.class);
+        memo.register();
 
         // start operation
         tc.startTransmitThread();

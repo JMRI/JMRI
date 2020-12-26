@@ -14,7 +14,8 @@ import javax.swing.JMenu;
 abstract public class ComponentFactory {
 
     /**
-     * Provide a menu with all items attached to this system connection
+     * Provide a menu with all items attached to this system connection.
+     * @return menu with all items attached to this system connection.
      */
     abstract public JMenu getMenu();
 

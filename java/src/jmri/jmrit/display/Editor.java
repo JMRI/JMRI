@@ -24,7 +24,6 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
@@ -68,22 +67,12 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import jmri.BlockManager;
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
-import jmri.Light;
-import jmri.NamedBean;
-import jmri.NamedBeanUsageReport;
-import jmri.Reporter;
-import jmri.ShutDownManager;
-import jmri.SignalHeadManager;
-import jmri.SignalMastManager;
+import jmri.*;
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.DirectorySearcher;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.controlPanelEditor.shape.PositionableShape;
-import jmri.jmrit.display.palette.DecoratorPanel;
 import jmri.jmrit.operations.trains.TrainIcon;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.roster.Roster;
@@ -237,7 +226,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
         InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
         InstanceManager.getDefault(BlockManager.class).addVetoableChangeListener(this);
-        InstanceManager.getDefault(EditorManager.class).addEditor(this);
+        InstanceManager.getDefault(EditorManager.class).add(this);
     }
 
     public Editor(String name) {
@@ -624,6 +613,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             _highlightColor = color;
         }
 
+        public Color getHighlightColor() {
+            return _highlightColor;
+        }
+
         public void setSelectGroupColor(Color color) {
             _selectGroupColor = color;
         }
@@ -650,14 +643,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 g2d = (Graphics2D) g;
                 g2d.scale(_paintScale, _paintScale);
             }
-
-            // It is rather unpleasant that the following needs to be done in a try-catch, but exceptions have been observed
-            try {
-               super.paint(g);
-               paintTargetPanel(g);
-            } catch (Exception e) {
-                log.error("paint failed in thread {} {}: ", Thread.currentThread().getName(), Thread.currentThread().getId(), e);
-            }
+            super.paint(g);
 
             Stroke stroke = new BasicStroke();
             if (g2d != null) {
@@ -697,6 +683,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 g.drawRect(_highlightcomponent.x, _highlightcomponent.y,
                         _highlightcomponent.width, _highlightcomponent.height);
             }
+            paintTargetPanel(g);
+
             g.setColor(color);
             if (g2d != null) {
                 g2d.setStroke(stroke);
@@ -1062,7 +1050,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 switch (selectedValue) {
                     case 0:
                         _targetFrame.setVisible(false);   // doesn't remove the editor!
-                        InstanceManager.getDefault(PanelMenu.class).updateEditorPanel(this);
                         break;
                     case 1:
                         if (deletePanel()) { // disposes everything
@@ -1072,7 +1059,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     case 2:
                         showCloseInfoMessage = false;
                         _targetFrame.setVisible(false);   // doesn't remove the editor!
-                        InstanceManager.getDefault(PanelMenu.class).updateEditorPanel(this);
                         break;
                     default:    // dialog closed - do nothing
                         _targetFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -1083,7 +1069,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
         } else {
             _targetFrame.setVisible(false);   // doesn't remove the editor!
-            InstanceManager.getDefault(PanelMenu.class).updateEditorPanel(this);
         }
     }
 
@@ -1120,7 +1105,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             ed.setSize(getSize());
 //            ed.pack();
             ed.setVisible(true);
-            InstanceManager.getDefault(PanelMenu.class).addEditorPanel(ed);
             dispose();
             return ed;
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException cnfe) {
@@ -2575,8 +2559,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (cm != null) {
             cm.deregister(this);
         }
-        InstanceManager.getDefault(PanelMenu.class).deletePanel(this);
-        InstanceManager.getDefault(EditorManager.class).removeEditor(this);
+        InstanceManager.getDefault(EditorManager.class).remove(this);
         setVisible(false);
         _contents.clear();
         removeAll();
@@ -2834,79 +2817,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
         if (log.isDebugEnabled()) {
             log.debug("modifySelectionGroup: size= {}, selection {}", _selectionGroup.size(), (removed ? "removed" : "added"));
-        }
-    }
-
-    protected boolean setTextAttributes(Positionable p, JPopupMenu popup) {
-        if (p.getPopupUtility() == null) {
-            return false;
-        }
-        popup.add(new AbstractAction(Bundle.getMessage("TextAttributes")) {
-            Positionable comp;
-            Editor ed;
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                (new TextAttrDialog(comp, ed)).setVisible(true);
-            }
-
-            AbstractAction init(Positionable pos, Editor e) { // e unused?
-                comp = pos;
-                ed = e;
-                return this;
-            }
-        }.init(p, this));
-        return true;
-    }
-
-    public class TextAttrDialog extends DisplayFrame {
-
-        Positionable _pos;
-        DecoratorPanel _decorator;
-        BufferedImage[] _backgrounds;
-
-        TextAttrDialog(Positionable p, Editor ed) {
-            super(Bundle.getMessage("TextAttributes"), ed);
-            _pos = p;
-            JPanel panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            _decorator = new DecoratorPanel(this);
-            _decorator.initDecoratorPanel(_pos);
-            panel.add(_decorator);
-            panel.add(makeDoneButtonPanel());
-            Dimension dim = panel.getPreferredSize();
-            JScrollPane sp = new JScrollPane(panel);
-            dim = new Dimension(dim.width +10, dim.height + 10);
-            sp.setPreferredSize(dim);
-            setContentPane(sp);
-            InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(_pos.getEditor(), (Component)_pos, this);
-            pack();
-        }
-
-        protected JPanel makeDoneButtonPanel() {
-            JPanel panel0 = new JPanel();
-            panel0.setLayout(new FlowLayout());
-            JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
-            doneButton.addActionListener(a -> {
-                PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
-                _decorator.setSuppressRecentColor(false);
-                _decorator.setAttributes(_pos);
-                if (_selectionGroup == null) {
-                    setAttributes(util, _pos);
-                } else {
-                    setSelectionsAttributes(util, _pos);
-                }
-               dispose();
-            });
-            panel0.add(doneButton);
-
-            JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-            cancelButton.addActionListener(a -> {
-                _decorator.setSuppressRecentColor(false);
-                dispose();
-            });
-            panel0.add(cancelButton);
-            return panel0;
         }
     }
 
@@ -3247,14 +3157,13 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * Get a List of the currently-existing Editor objects. The returned list is
      * a copy made at the time of the call, so it can be manipulated as needed
      * by the caller.
-     * <p>
-     * This is a convenience reference to {@link jmri.jmrit.display.EditorManager#getEditorsList()}
      *
      * @return a List of Editors
-     * @see jmri.jmrit.display.EditorManager#getEditorsList()
+     * @deprecated since 4.19.6; use {@link EditorManager#getAll()} instead
      */
+    @Deprecated
     synchronized public static List<Editor> getEditors() {
-        return InstanceManager.getDefault(EditorManager.class).getEditorsList();
+        return new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll());
     }
 
     /**
@@ -3263,30 +3172,28 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * <p>
      * The returned list is a copy made at the time of the call, so it can be
      * manipulated as needed by the caller.
-     * <p>
-     * This is a convenience reference to {@link jmri.jmrit.display.EditorManager#getEditorsList(Class)}
      *
      * @param <T>  the Class the list should be limited to.
      * @param type the Class the list should be limited to.
      * @return a List of Editors.
-     * @see jmri.jmrit.display.EditorManager#getEditorsList(Class)
+     * @deprecated since 4.19.6; use {@link EditorManager#getAll(Class)} instead
      */
+    @Deprecated
     synchronized public static <T extends Editor> List<T> getEditors(@Nonnull Class<T> type) {
-        return InstanceManager.getDefault(EditorManager.class).getEditorsList(type);
+        return new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll(type));
     }
 
     /**
      * Get an Editor of a particular name. If more than one exists, there's no
      * guarantee as to which is returned.
-     * <p>
-     * This is a convenience reference to {@link jmri.jmrit.display.EditorManager#getEditor(String)}
      *
      * @param name the editor to get
      * @return an Editor or null if no matching Editor could be found
-     * @see jmri.jmrit.display.EditorManager#getEditor(String)
+     * @deprecated since 4.19.6; use {@link EditorManager#get(String)} instead
      */
+    @Deprecated
     public static Editor getEditor(String name) {
-        return InstanceManager.getDefault(EditorManager.class).getEditor(name);
+        return InstanceManager.getDefault(EditorManager.class).get(name);
     }
 
     public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {

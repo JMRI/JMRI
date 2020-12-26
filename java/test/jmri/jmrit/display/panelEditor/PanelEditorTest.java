@@ -4,11 +4,10 @@ import java.awt.GraphicsEnvironment;
 
 import jmri.jmrit.display.AbstractEditorTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -30,7 +29,7 @@ public class PanelEditorTest extends AbstractEditorTestBase<PanelEditor> {
         Assert.assertNotNull("exists", e);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -40,7 +39,7 @@ public class PanelEditorTest extends AbstractEditorTestBase<PanelEditor> {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         if (e != null) {

@@ -84,6 +84,7 @@ public class LnSensor extends AbstractSensor  {
      * _once_ if anything has changed state (or set the commanded state
      * directly)
      *
+     * @param l LocoNet message from manager.
      */
     public void messageFromManager(LocoNetMessage l) {
         // parse message type

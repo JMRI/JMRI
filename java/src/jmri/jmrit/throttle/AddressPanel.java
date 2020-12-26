@@ -89,8 +89,10 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     }
 
     /**
-     * Add an AddressListener. AddressListeners are notified when the user
+     * Add an AddressListener.
+     * AddressListeners are notified when the user
      * selects a new address and when a Throttle is acquired for that address
+     * @param l listener to add.
      *
      */
     public void addAddressListener(AddressListener l) {
@@ -105,6 +107,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     /**
      * Remove an AddressListener.
      *
+     * @param l listener to remove.
      */
     public void removeAddressListener(AddressListener l) {
         if (listeners == null) {
@@ -234,16 +237,6 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
         javax.swing.JOptionPane.showMessageDialog(null, reason, Bundle.getMessage("FailedSetupRequestTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
     }
-    
-    /**
-     * {@inheritDoc}
-     * @deprecated since 4.15.7; use #notifyDecisionRequired
-     */
-    @Override
-    @Deprecated
-    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
-        notifyDecisionRequired(address, DecisionType.STEAL);
-    }
 
     /**
     * A decision is required for Throttle creation to continue.
@@ -365,6 +358,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 
     /**
      * Set the RosterEntry for this throttle.
+     * @param entry roster entry to set.
      */
     public void setRosterEntry(RosterEntry entry) {
         getRosterEntrySelector().setSelectedRosterEntry(entry);

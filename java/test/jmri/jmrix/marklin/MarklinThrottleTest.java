@@ -1,11 +1,11 @@
 package jmri.jmrix.marklin;
 
+import jmri.ThrottleManager;
 import jmri.util.JUnitUtil;
 import jmri.SpeedStepMode;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -382,7 +382,7 @@ public class MarklinThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -391,17 +391,14 @@ public class MarklinThrottleTest extends jmri.jmrix.AbstractThrottleTest {
            public void sendMarklinMessage(MarklinMessage m, MarklinListener reply) {
            }
         };
-        MarklinSystemConnectionMemo c = new MarklinSystemConnectionMemo(tc){
-          @Override
-          public MarklinThrottleManager getThrottleManager() {
-             return (MarklinThrottleManager)jmri.InstanceManager.getDefault(jmri.ThrottleManager.class);
-          }
-        };
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new MarklinThrottleManager(c));
+        MarklinSystemConnectionMemo c = new MarklinSystemConnectionMemo(tc);
+        c.store(new MarklinThrottleManager(c), ThrottleManager.class);
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,c.get(ThrottleManager.class));
+
         instance = new MarklinThrottle(c,new jmri.DccLocoAddress(42,false));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

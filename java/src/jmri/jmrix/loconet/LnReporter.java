@@ -167,6 +167,7 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
 
     /**
      * Handle LISSY message
+     * @param l Message from which to extract LISSY content
      */
     void lissyReport(LocoNetMessage l) {
         int loco = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);

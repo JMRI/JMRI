@@ -94,6 +94,7 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
 
     /**
      * Allow derived classes to set the private checkBuffer value.
+     * @param b Buffer to be held and used from now on.
      */
     protected void setCheckBuffer(boolean b) {
         checkBuffer = b;

@@ -21,7 +21,8 @@ import jmri.Programmer;
 public abstract class ProgModeSelector extends javax.swing.JPanel {
 
     /**
-     * Get the configured programmer
+     * Get the configured programmer.
+     * @return the programmer.
      */
     abstract public Programmer getProgrammer();
 

@@ -6,7 +6,9 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetThrottle;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.roco.RocoXNetThrottle class
@@ -15,7 +17,8 @@ import org.junit.*;
  */
 public class RocoXNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
 
-    @Test(timeout = 1000)
+    @Test
+    @Timeout(1000)
     @Override
     public void testCtor() {
         // infrastructure objects
@@ -54,7 +57,8 @@ public class RocoXNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
     }
 
     // Test the constructor with an address specified.
-    @Test(timeout = 1000)
+    @Test
+    @Timeout(1000)
     @Override
     public void testCtorWithArg() throws Exception {
         Assert.assertNotNull(instance);
@@ -62,102 +66,118 @@ public class RocoXNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
 
     // Test the initilization sequence.
     @Override
-    @Ignore("parent class method creates a new throttle")
+    @Disabled("parent class method creates a new throttle")
     @ToDo("rewrite test to create proper throttle")
-    @Test(timeout = 1000)
+    @Test
+    @Timeout(1000)
     public void testInitSequenceNormalUnitSpeedStep128() throws Exception {
     }
 
     @Override
-    @Ignore("parent class method creates a new throttle")
+    @Disabled("parent class method creates a new throttle")
     @ToDo("rewrite test to create proper throttle")
-    @Test(timeout = 1000)
+    @Test
+    @Timeout(1000)
     public void initSequenceNormalUnitSpeedStep14() throws Exception {
     }
 
     @Override
-    @Ignore("parent class method creates a new throttle")
+    @Disabled("parent class method creates a new throttle")
     @ToDo("rewrite test to create proper throttle")
-    @Test(timeout = 1000)
+    @Test
+    @Timeout(1000)
     public void initSequenceMUAddress28SpeedStep() throws Exception {
     }
 
     @Override
-    @Ignore("parent class method creates a new throttle")
+    @Disabled("parent class method creates a new throttle")
     @ToDo("rewrite test to create proper throttle")
-    @Test(timeout = 1000)
+    @Test
+    @Timeout(1000)
     public void initSequenceMuedUnitSpeedStep128() throws Exception {
     }
 
     @Override
-    @Ignore("parent class method creates a new throttle")
+    @Disabled("parent class method creates a new throttle")
     @ToDo("rewrite test to create proper throttle")
-    @Test(timeout = 1000)
+    @Test
+    @Timeout(1000)
     public void initSequenceDHUnitSpeedStep27() throws Exception {
     }
 
     @Override
     @NotApplicable("only one software version for Roco")
-    @Test(timeout = 1000)
+    @Test
+    @Timeout(1000)
     public void testSendFunctionGroup5v35() throws Exception {
     }
 
     @Override
     @NotApplicable("only one software version for Roco")
-    @Test(timeout = 1000)
+    @Test
+    @Timeout(1000)
     public void testSendFunctionGroup4v35() {
     }
 
     @Override
     @NotApplicable("not supported by Roco")
-    @Test(timeout = 1000)
+    @Test
+    @Timeout(1000)
     public void testSendMomentaryFunctionGroup1() {
     }
 
     @Override
     @NotApplicable("not supported by Roco")
-    @Test(timeout = 1000)
+    @Test
+    @Timeout(1000)
     public void testSendMomentaryFunctionGroup2() {
     }
 
     @Override
     @NotApplicable("not supported by Roco")
-    @Test(timeout = 1000)
+    @Test
+    @Timeout(1000)
     public void testSendMomentaryFunctionGroup3() {
     }
 
     @Override
     @NotApplicable("not supported by Roco")
-    @Test(timeout = 1000)
+    @Test
+    @Timeout(1000)
     public void testSendMomentaryFunctionGroup4() {
     }
 
     @Override
     @NotApplicable("not supported by Roco")
-    @Test(timeout = 1000)
+    @Test
+    @Timeout(1000)
     public void testSendMomentaryFunctionGroup5() {
     }
 
     @Override
     @NotApplicable("not supported by Roco")
-    @Test(timeout = 1000)
+    @Test
+    @Timeout(1000)
     public void testSendFunctionHighMomentaryStatusRequest() throws Exception {
     }
 
     @Override
     @NotApplicable("never sent by Roco throttle support")
-    @Test(timeout = 1000)
+    @Test
+    @Timeout(1000)
     public void testSendFunctionStatusInformationRequest() {
     }
 
     @Override
     @NotApplicable("never sent by Roco throttle support")
-    @Test(timeout = 1000)
+    @Test
+    @Timeout(1000)
     public void testSendFunctionHighStatusInformationRequest() {
     }
 
     @Override
-    @Test(timeout = 1000)
+    @Test
+    @Timeout(1000)
     public void sendEmergencyStop() throws Exception {
         int n = tc.outbound.size();
         RocoXNetThrottle t = (RocoXNetThrottle) instance;
@@ -186,7 +206,7 @@ public class RocoXNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         tc = new XNetInterfaceScaffold(new RocoCommandStation());

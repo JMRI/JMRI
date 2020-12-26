@@ -9,14 +9,12 @@ package jmri.jmrix.dccpp;
  * @author Mark Underwood Copyright (C) 2015
  * @author Harald Barth Copyright (C) 2019
  *
- * Variable prefix abreviation keys: ACC_ is for accessory messages BC_ is for
+ * Variable prefix abbreviation keys: ACC_ is for accessory messages BC_ is for
  * broadcast messages CS_ is for command station messages PROG_ is for
  * programming related messages LOCO_ is for locomotive related commands
- * OPS_MODE_ is for operations mode programming commands LI_ is for commands that
- * are for messages to and from the computer interface LI101_ is for commands
- * specific to the LI101
+ * OPS_MODE_ is for operations mode programming commands
  *
- * A few variables don't have a prefix. The name should be self explanitory, but
+ * A few variables don't have a prefix. The name should be self explanatory, but
  * a prefix may be added later.
  */
 public final class DCCppConstants {
@@ -64,7 +62,7 @@ public final class DCCppConstants {
     public static final char TRACK_POWER_OFF        = '0'; // Track power OFF
     public static final char READ_TRACK_CURRENT     = 'c'; // Read current draw on ops track
     public static final char READ_CS_STATUS         = 's'; // Read status from command station
-    public static final char READ_CS_MAXNUMSLOTS    = '#'; // Read max number of slots supported by CS
+    public static final char READ_MAXNUMSLOTS       = '#'; // Read max number of slots supported by CS
 //    public static final char QUERY_SENSOR_STATE     = 'q'; // Query state of sensor
     public static final char WRITE_TO_EEPROM_CMD    = 'E'; // Store settings to eeprom  -- NEW V1.1
     public static final char CLEAR_EEPROM_CMD       = 'e'; // Clear EEPROM settings     -- NEW V1.1
@@ -132,38 +130,40 @@ public final class DCCppConstants {
     public static final String GET_FREE_MEMORY_REGEX = "\\s*f\\s*";
     public static final String LIST_REGISTER_CONTENTS_REGEX = "\\s*L\\s*";
     public static final String ENTER_DIAG_MODE_REGEX = "\\s*D\\s*";
-    public static final String READ_CS_MAXNUMSLOTS_REGEX = "\\s*#\\s*";
+    public static final String READ_MAXNUMSLOTS_REGEX = "\\s*#\\s*";
 
     // Reply Regexes
-    public static final String THROTTLE_REPLY_REGEX = "\\s*T\\s*(\\d+)\\s+([-]*\\d+)\\s+([1,0])\\s*";
-    public static final String TURNOUT_REPLY_REGEX = "\\s*H\\s*(\\d+)\\s+([1,0])\\s*";
-    public static final String TURNOUT_DEF_REPLY_REGEX = "\\s*H\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+([0|1])\\s*";
-    public static final String LIST_TURNOUTS_REPLY_REGEX = "\\s*H\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+([1,0])\\s*";
-    public static final String LIST_SENSORS_REPLY_REGEX = "\\s*Q\\s*(\\d+)\\s+(\\d+)\\s+([0,1])\\s*";
-    public static final String PROGRAM_REPLY_REGEX = "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+([-]*\\d+)\\s*";
-    public static final String PROGRAM_BIT_REPLY_REGEX = "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*";
-    public static final String MAXNUMSLOTS_REPLY_REGEX = "\\s*#\\s*(\\d+)\\s*";
-    public static final String CURRENT_REPLY_REGEX = "\\s*a\\s*(\\d+)\\s*";
-    public static final String CURRENT_REPLY_NAMED_REGEX = "\\s*a\\s*(\\w*?[a-zA-Z])\\s*(\\d+)\\s*";
-    public static final String TRACK_POWER_REPLY_REGEX = "\\s*p\\s*([0,1])\\s*";
-    public static final String TRACK_POWER_REPLY_NAMED_REGEX = "\\s*p\\s*(\\d+)\\s+(\\w+)\\s*";
-    public static final String SENSOR_REPLY_REGEX = "\\s*[Qq]\\s*(\\d+)\\s*";
-    public static final String SENSOR_DEF_REPLY_REGEX = "\\s*Q\\s*(\\d+)\\s+(\\d+)\\s+([0|1])\\s*";
-    public static final String SENSOR_ACTIVE_REPLY_REGEX = "\\s*Q\\s*(\\d+)\\s*";
+    public static final String THROTTLE_REPLY_REGEX =      "\\s*T\\s*(\\d+)\\s+([-]*\\d+)\\s+([1,0]).*";
+    public static final String TURNOUT_REPLY_REGEX =       "\\s*H\\s*(\\d+)\\s+([1,0])\\s*";
+    public static final String TURNOUT_DEF_REPLY_REGEX =   "\\s*H\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+([0|1]).*";
+//    public static final String LIST_TURNOUTS_REPLY_REGEX = "\\s*H\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+([1,0]).*";
+//  public static final String LIST_SENSORS_REPLY_REGEX =    "\\s*Q\\s*(\\d+)\\s+(\\d+)\\s+([0,1]).*";
+    public static final String PROGRAM_REPLY_REGEX =       "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+([-]*\\d+)\\s*";
+    public static final String PROGRAM_BIT_REPLY_REGEX =   "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*";
+    public static final String MAXNUMSLOTS_REPLY_REGEX =   "\\s*#\\s*(\\d+).*";
+    public static final String CURRENT_REPLY_REGEX =       "\\s*a\\s*(\\d+).*";
+    public static final String CURRENT_REPLY_NAMED_REGEX = "\\s*a\\s*(\\w*?[a-zA-Z])\\s*(\\d+).*";
+    public static final String TRACK_POWER_REPLY_REGEX =       "\\s*p\\s*([0,1])\\s*";
+    public static final String TRACK_POWER_REPLY_NAMED_REGEX = "\\s*p\\s*(\\d+)\\s+(\\w+).*";
+    public static final String SENSOR_REPLY_REGEX =          "\\s*[Qq]\\s*(\\d+)\\s*";
+    public static final String SENSOR_DEF_REPLY_REGEX =      "\\s*Q\\s*(\\d+)\\s+(\\d+)\\s+([0|1]).*";
+    public static final String SENSOR_ACTIVE_REPLY_REGEX =   "\\s*Q\\s*(\\d+)\\s*";
     public static final String SENSOR_INACTIVE_REPLY_REGEX = "\\s*q\\s*(\\d+)\\s*";
-    public static final String BROKEN_SENSOR_REPLY_REGEX = "\\s*(\\d+)\\s*";
-    public static final String OUTPUT_REPLY_REGEX = "\\s*Y\\s*(\\d+)\\s+(\\d+)\\s*"; // <Y ID STATE>
-    public static final String OUTPUT_LIST_REPLY_REGEX = "\\s*Y\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*"; // <Y ID PIN IFLAG STATE>
-    public static final String MADC_FAIL_REPLY_REGEX = "\\s*X\\s*";
-    public static final String MADC_SUCCESS_REPLY_REGEX = "\\s*O\\s*";
+//    public static final String BROKEN_SENSOR_REPLY_REGEX = "\\s*(\\d+).*";
+    public static final String OUTPUT_REPLY_REGEX =       "\\s*Y\\s*(\\d+)\\s+(\\d+)\\s*"; // <Y ID STATE>
+    public static final String OUTPUT_LIST_REPLY_REGEX =  "\\s*Y\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+).*"; // <Y ID PIN IFLAG STATE>
+    public static final String MADC_FAIL_REPLY_REGEX =    "\\s*X.*";
+    public static final String MADC_SUCCESS_REPLY_REGEX = "\\s*O.*";
 //    public static final String STATUS_REPLY_REGEX = "i(DCC\\+\\+.*): BUILD (.*)"; // V1.0
 //    public static final String STATUS_REPLY_REGEX = "i(DCC\\+\\+[^:]*): BUILD (.*)"; // V1.0 / V1.1
-    public static final String STATUS_REPLY_REGEX = "i(DCC\\+\\+[^:]*):(?:\\sBUILD)? (.*)"; // V1.0 / V1.1 / V1.2
+    public static final String STATUS_REPLY_REGEX =       "i(DCC\\+\\+[^:]*):(?:\\sBUILD)? (.*)"; // V1.0 / V1.1 / V1.2
+    public static final String STATUS_REPLY_BSC_REGEX =   "i(DCC\\+\\+.*): V-(.*)\\+\\s\\/\\s(.*)"; // BaseStation Classic
     public static final String STATUS_REPLY_ESP32_REGEX = "iDCC\\+\\+.*ESP32.*: V-([\\d\\.]+)\\s+/\\s+(.*)"; // V1.0
+    public static final String STATUS_REPLY_DCCEX_REGEX = "i(DCC-EX) V-([\\d\\.]*).*G-(.*)"; 
     //public static final String STATUS_REPLY_REGEX = "i(DCC\\+\\+\\s?.*):\\s?(?:BUILD)? (.*)"; // V1.0 / V1.1 / V1.2
-    public static final String FREE_MEMORY_REPLY_REGEX = "\\s*f\\s*(\\d+)\\s*";
-    public static final String WRITE_EEPROM_REPLY_REGEX = "\\s*e\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*";
-    public static final String COMM_TYPE_REPLY_REGEX = "\\s*N\\s*(\\d+):\\s+((SERIAL)|(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}))\\s*";
+    public static final String FREE_MEMORY_REPLY_REGEX =  "\\s*f\\s*(\\d+).*";
+    public static final String WRITE_EEPROM_REPLY_REGEX = "\\s*e\\s*(\\d+)\\s+(\\d+)\\s+(\\d+).*";
+    public static final String COMM_TYPE_REPLY_REGEX =    "\\s*N\\s*(\\d+):\\s+((SERIAL)|(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})).*";
 
     // Misc standard values
     public static final char WHITESPACE = ' ';

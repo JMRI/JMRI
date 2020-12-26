@@ -10,7 +10,7 @@
   <title>JMRI: Signaling introduction</title>
   <meta name="Author" content="Bob Jacobsen">
   <meta name="Author" content="Egbert Broerse">
-  <meta name="Author" content="B. MIlhaupt">
+  <meta name="Author" content="B. Milhaupt">
   <meta name="Date.Modified" content="20200106">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -60,7 +60,7 @@
 
       <h2>Signaling Vocabulary</h2>
 
-      <h3>Prototype Railroad Signaling terms:</h3><a href=
+      <h3>Prototype Railroad Signaling terms</h3><a href=
       "https://commons.wikimedia.org/wiki/File:CSX_River_Sub_Kingston_CP_90.jpg"><img src="images/132px-CSX_River_Sub_Kingston_CP_90.jpg"
       width="132" height="240" align="right"></a> 
       <!-- With some very useful information from the JMRI developers structure site -->
@@ -158,7 +158,7 @@
       Signal Heads, showing a "red over red" Aspect, meaning the
       "Stop" Indication.</p>
 
-      <h3>JMRI specific Signaling terms:</h3>
+      <h3>JMRI specific Signaling terms</h3>
 
       <ul>
         <li><b>Virtual</b> Virtual signals are JMRI internal
@@ -615,11 +615,11 @@ signals.getSignalHead("IH1").setAppearance(YELLOW)
       code your own signal logic into the program; see the <a href=
       "../automation/viaJava.shtml">Automation page</a>. The
       <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html">"Siglet"
+      "https://jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html">"Siglet"
       class</a> and it's kin are meant to make it easy to write
       complex custom signal logic; a variant of these was used by
       Nick Kulp's for signaling automation on his <a href=
-      "http://jmri.org/community/examples/Panels-Cornwall/CornwallRunning.html">
+      "https://jmri.org/community/examples/Panels-Cornwall/CornwallRunning.html">
       Cornwall Railroad</a>.
 
       <p>Although Automation Classes require writing code instead
@@ -652,7 +652,9 @@ signals.getSignalHead("IH1").setAppearance(YELLOW)
         conflicts and strange Signal Aspects, do not attempt to
         combine the use of the SSL Tool and the newer Signal Mast
         Logic tools for the same signals.</li>
-      </ul><!--#include virtual="/Footer.shtml" -->
+      </ul>
+
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -83,7 +83,7 @@
 
        <li>Select whatever as Command station type (DB150 Empire Builder on my side)</li>
        
-       <li>Additional Connection settings, set port to 5550</li>       
+       <li>Under Additional Connection settings, set port to 5550</li>
       </ul>
       
       <h4>Via USB</h4>

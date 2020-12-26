@@ -51,6 +51,9 @@ public class NameFile extends XmlFile {
     /**
      * Read the contents of a NameFile XML file into this object. Note that this
      * does not clear any existing entries.
+     * @param name File name to read
+     * @throws JDOMException if the file can't be parsed
+     * @throws IOException from underlying IO operations
      */
     void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
         if (log.isDebugEnabled()) {

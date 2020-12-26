@@ -21,6 +21,8 @@ public class SprogThrottle extends AbstractThrottle {
 
     /**
      * Constructor.
+     * @param memo system connection.
+     * @param address Loco address.
      */
     public SprogThrottle(SprogSystemConnectionMemo memo, DccLocoAddress address) {
         super(memo);
@@ -174,7 +176,7 @@ public class SprogThrottle extends AbstractThrottle {
                 value = 31;      // max possible speed
             }
             if (value < 0) {
-                value = 0;        // emergency stop
+                value = 1;        // emergency stop
             }
             String step = "" + value;
 

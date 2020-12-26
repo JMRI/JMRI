@@ -26,7 +26,9 @@ import org.apache.log4j.spi.LoggingEvent;
  * (which did not work properly, not even compile) and adapted for my needs.
  *
  * @author bender heri See 4/15/2009 Log4J email
+ * @deprecated since 4.22.1 without replacement
  */
+@Deprecated
 public class JTextPaneAppender extends AppenderSkeleton {
 
     JTextPane myTextPane;

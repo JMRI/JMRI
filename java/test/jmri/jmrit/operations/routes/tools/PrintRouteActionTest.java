@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.routes.Route;
@@ -34,7 +34,7 @@ public class PrintRouteActionTest extends OperationsTestCase {
         Route r = JUnitOperationsUtil.createThreeLocationTurnRoute();
         PrintRouteAction pra = new PrintRouteAction(true, r);
         Assert.assertNotNull("exists", pra);
-        pra.actionPerformed(new ActionEvent("Test Action", 0, null));
+        pra.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
 
         ResourceBundle rb = ResourceBundle.getBundle("jmri.util.UtilBundle");
 

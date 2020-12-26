@@ -51,14 +51,8 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
     }
 
     @Override
-    protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
-        super.makeDndIconPanel(iconMap, "SignalHeadStateRed");
-    }
-
-    @Override
-    protected void openDialog(String type, String family, HashMap<String, NamedIcon> iconMap) {
-        closeDialogs();
-        _dialog = new SignalHeadIconDialog(type, family, this, iconMap);
+    protected String getDisplayKey() {
+        return "SignalHeadStateGreen";
     }
 
     /**
@@ -80,7 +74,7 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
             _updateButton.setToolTipText(null);
             if (_family != null) {
                 // get raw map of all appearances for row's head type.
-                HashMap<String, NamedIcon> fullmap = getFilteredIconMap(ItemPanel.makeNewIconMap(_itemType));
+                HashMap<String, NamedIcon> fullmap = getFilteredIconMap(makeNewIconMap(_itemType));
                 // icon map of appearances for type of current bean.
                 HashMap<String, NamedIcon> currentmap = (getIconMap());
                 log.debug("currentmap keys = {}", currentmap.keySet().toString());
@@ -98,7 +92,8 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
                     }
                 }
                 log.debug("set Signal Head {} map size= {}", _table.getValueAt(row, 0), iconMap.size());
-                setIconMap(iconMap);
+//                _currentIconMap = iconMap;
+                updateFamiliesPanel();
             }
         } else {
             _updateButton.setEnabled(false);
@@ -206,5 +201,4 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
     }
 
     private final static Logger log = LoggerFactory.getLogger(SignalHeadItemPanel.class);
-
 }

@@ -5,10 +5,8 @@ import jmri.managers.DefaultProgrammerManager;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * IdentifyLocoTest.java
@@ -109,7 +107,7 @@ public class IdentifyLocoTest {
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // initialize the system
@@ -124,7 +122,7 @@ public class IdentifyLocoTest {
         InstanceManager.store(dpm, GlobalProgrammerManager.class);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         p = null;
         JUnitUtil.tearDown();

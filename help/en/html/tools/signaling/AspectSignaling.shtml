@@ -89,7 +89,7 @@
         Signal System.
         <!-- icons from AAR-2 xml appearance definition xml March 2014 -->
          <a href=
-        "http://jmri.org/xml/signals/AAR-1946/aspects.xml"><img src="images/AAR-2Clear.png"
+        "https://jmri.org/xml/signals/AAR-1946/aspects.xml"><img src="images/AAR-2Clear.png"
         width="187" height="187" align="right" border=
         "1"></a><br></li>
 
@@ -368,7 +368,7 @@
 
       <p>The most current list of Aspect Signal Systems supported
       in JMRI can be found at <a href=
-      "http://jmri.org/xml/signals/">http://jmri.org/xml/signals/</a>.</p>
+      "https://jmri.org/xml/signals/">https://jmri.org/xml/signals/</a>.</p>
 
       <p>To create your own Signaling System Definition follow
       these <a href="DefineNewAspects.shtml">Instructions</a>. If

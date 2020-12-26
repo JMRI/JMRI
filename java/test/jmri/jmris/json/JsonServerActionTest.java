@@ -16,7 +16,7 @@ public class JsonServerActionTest {
     @Test
     public void testCTor() {
         JsonServerAction t = new JsonServerAction();
-        assertThat(t).isNotNull().withFailMessage("exists");
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
 
     @BeforeEach

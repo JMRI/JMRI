@@ -31,6 +31,9 @@ public class EcosTurnout extends AbstractTurnout
      * identification in the system name.
      *
      * @param number DCC address of the turnout
+     * @param prefix system prefix
+     * @param etc system connection traffic controller
+     * @param etm ecos turnout manager
      */
     public EcosTurnout(int number, String prefix, EcosTrafficController etc, EcosTurnoutManager etm) {
         super(prefix + "T" + number);
@@ -127,9 +130,11 @@ public class EcosTurnout extends AbstractTurnout
         return slaveAddress;
     }
 
-    // Handle a request to change state by sending a turnout command
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected void forwardCommandChangeToLayout(int s) {
+    protected void forwardCommandChangeToLayout(int newState) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
         //  public void firePropertyChange(String propertyName,
@@ -138,11 +143,11 @@ public class EcosTurnout extends AbstractTurnout
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states
-        if ((s & Turnout.CLOSED) != 0) {
+        if ((newState & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) != 0) {
+            if ((newState & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN {}", s);
+                log.error("Cannot command both CLOSED and THROWN {}", newState);
                 return;
             } else {
                 // send a CLOSED command
@@ -235,7 +240,7 @@ public class EcosTurnout extends AbstractTurnout
                 int turnaddr = _number - 1;
                 Turnout t = tm.getTurnout(prefix + "T" + turnaddr);
                 secondstate = closed;
-                if (t==null){
+                if (t == null){
                     log.error("Unable to locate second Turnout address {}",turnaddr);
                     return;
                 } else {
@@ -249,7 +254,7 @@ public class EcosTurnout extends AbstractTurnout
             } else {
                 Turnout t = tm.getTurnout(slaveAddress);
                 firststate = closed;
-                if (t==null){
+                if (t == null){
                     log.error("Unable to locate slave Turnout address {}",slaveAddress);
                     return;
                 } else {

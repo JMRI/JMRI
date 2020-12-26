@@ -1,9 +1,14 @@
 package jmri.jmrix.openlcb;
 
 
+import java.beans.PropertyVetoException;
+
 import jmri.Light;
+import jmri.ProvidingManager;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.openlcb.*;
 
 /**
@@ -21,6 +26,11 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     @Override
     public String getSystemName(int i) {
         throw new UnsupportedOperationException("olcb lights need 2 addresses");
+    }
+    
+    @Override
+    public String getASystemNameWithNoPrefix() {
+        return "x0102030405060701;x0102030405060702";
     }
     
     public String getSystemName(int on, int off) {
@@ -108,20 +118,29 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         String name = t.getSystemName();
         Assert.assertNull(l.getLight(name.toLowerCase()));
     }
+    
+    @Override
+    @Test
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException,
+            NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        String s1 = l.makeSystemName("x0102030405060701;x0102030405060702");
+        String s2 = l.makeSystemName("x0102030405060703;x0102030405060704");
+        testRegisterDuplicateSystemName(l, s1, s2);
+    }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         l = new OlcbLightManager(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
         l = null;
     }
 
-    @BeforeClass
+    @BeforeAll
     static public void preClassInit() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
@@ -147,7 +166,7 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 
-    @AfterClass
+    @AfterAll
     public static void postClassTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();

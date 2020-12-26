@@ -2,10 +2,9 @@ package jmri.jmrit.vsdecoder.listener;
 
 import jmri.*;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of VSDListener
@@ -23,12 +22,12 @@ public class VSDListenerTest {
         InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         // this created an audio manager, clean that up
         InstanceManager.getDefault(jmri.AudioManager.class).cleanup();

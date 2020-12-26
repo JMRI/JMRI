@@ -6,10 +6,9 @@ import jmri.jmrix.can.cbus.simulator.CbusSimulator;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.TrafficControllerScaffoldLoopback;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -188,7 +187,7 @@ public class CbusCommandStationTest {
     }
     
     
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         lnis = new TrafficControllerScaffold();
@@ -197,7 +196,7 @@ public class CbusCommandStationTest {
         t = new CbusCommandStation(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo.dispose();
         lnis.terminateThreads();

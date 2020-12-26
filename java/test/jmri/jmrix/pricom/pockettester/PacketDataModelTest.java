@@ -1,7 +1,7 @@
 package jmri.jmrix.pricom.pockettester;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the PacketDataModel class

@@ -5,7 +5,7 @@ import javax.annotation.Nonnull;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.Manager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -180,7 +180,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     @Override
     @CheckForNull
     public String getEntryToolTip() {
-        return "Enter a number from 1 to 9999"; // Basic number format help
+        return Bundle.getMessage("EnterNumber1to9999ToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractLightManager.class);

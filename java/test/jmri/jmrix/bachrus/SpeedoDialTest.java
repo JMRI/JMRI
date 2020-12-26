@@ -3,7 +3,9 @@ package jmri.jmrix.bachrus;
 import java.awt.GraphicsEnvironment;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -35,13 +37,13 @@ public class SpeedoDialTest {
         JUnitUtil.dispose(frame);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         dial = new SpeedoDial();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         dial = null;
         JUnitUtil.tearDown();

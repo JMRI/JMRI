@@ -2,10 +2,9 @@ package jmri.jmrix.tams;
 
 import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -27,7 +26,7 @@ public class TamsProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
                 ((TamsProgrammer)programmer).getBestMode());        
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -36,7 +35,7 @@ public class TamsProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         programmer = t;
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         programmer = null;

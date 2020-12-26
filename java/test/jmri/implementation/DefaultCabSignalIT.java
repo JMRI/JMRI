@@ -16,7 +16,9 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 
 /**
@@ -49,7 +51,7 @@ public class DefaultCabSignalIT {
         // Find new window by name (should be more distinctive, comes from sample file)
         EditorFrameOperator to = new EditorFrameOperator("Cab Signal Test");
         LayoutEditor le = (LayoutEditor) jmri.util.JmriJFrame.getFrame("Cab Signal Test");
-        InstanceManager.getDefault(jmri.jmrit.display.PanelMenu.class).addEditorPanel(le);
+        InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class).add(le);
         jmri.SignalMastLogicManager smlm = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
         smlm.initialise();
         for(jmri.SignalMastLogic sml:smlm.getSignalMastLogicList()) {
@@ -167,7 +169,7 @@ public class DefaultCabSignalIT {
         }
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -179,11 +181,10 @@ public class DefaultCabSignalIT {
         JUnitUtil.initLayoutBlockManager();
         JUnitUtil.initDefaultSignalMastManager();
         JUnitUtil.initSignalMastLogicManager();
-        InstanceManager.setDefault(jmri.jmrit.display.PanelMenu.class,new jmri.jmrit.display.PanelMenu());
         cs = new DefaultCabSignal(new DccLocoAddress(1234,true));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         cs.dispose(); // verify no exceptions
         cs = null;

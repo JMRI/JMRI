@@ -1,10 +1,9 @@
 package jmri.jmrix.nce.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * NceLightManagerXmlTest.java
@@ -20,12 +19,12 @@ public class NceLightManagerXmlTest {
       Assert.assertNotNull("NceLightManagerXml constructor",new NceLightManagerXml());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

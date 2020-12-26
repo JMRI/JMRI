@@ -1,5 +1,6 @@
 package jmri.jmris.srcp;
 
+import jmri.swing.PreferencesPanelTestBase;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,26 +8,19 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 /**
  * Tests for the jmri.jmris.srcp.JmriSRCPServerPreferencesPanel class
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class JmriSRCPServerPreferencesPanelTest {
+public class JmriSRCPServerPreferencesPanelTest extends PreferencesPanelTestBase<JmriSRCPServerPreferencesPanel> {
 
-    @Test public void testCtor() {
-        JmriSRCPServerPreferencesPanel a = new JmriSRCPServerPreferencesPanel();
-        assertThat(a).isNotNull();
-    }
-
-    @BeforeEach public void setUp() {
+    @Override
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
-    }
-
-    @AfterEach public void tearDown() throws Exception {
-        JUnitUtil.tearDown();
+        prefsPanel = new JmriSRCPServerPreferencesPanel();
     }
 
 }

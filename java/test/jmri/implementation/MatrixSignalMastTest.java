@@ -3,10 +3,9 @@ package jmri.implementation;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the MatrixSignalMast implementation.
@@ -166,6 +165,7 @@ public class MatrixSignalMastTest {
         // log.debug(java.util.Arrays.toString(m.getBitsForAspect("Stop")));
         Assert.assertEquals("check bitarray for Stop", "[0, 0, 1]", java.util.Arrays.toString(m.getBitsForAspect("Stop")));
 
+        InstanceManager.getDefault(jmri.TurnoutManager.class).setOutputInterval(0); // default outputInterval = 250, set to 0 to speed up test
         m.setAspect("Clear");
         Assert.assertEquals("check Clear", "Clear", m.getAspect());
         JUnitUtil.waitFor( ()->{ return it11.getCommandedState() == Turnout.CLOSED; }, "it11 for Clear" );
@@ -202,13 +202,13 @@ public class MatrixSignalMastTest {
 
     // from here down is testing infrastructure
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

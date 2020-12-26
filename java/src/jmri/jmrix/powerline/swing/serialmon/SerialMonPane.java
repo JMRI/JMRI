@@ -78,8 +78,10 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialL
     }
 
     /**
-     * Nested class to create one of these using old-style defaults
+     * Nested class to create one of these using old-style defaults.
+     * @deprecated since 4.19.7; use {@link SerialMonPaneAction} instead
      */
+    @Deprecated
     static public class Default extends jmri.jmrix.powerline.swing.PowerlineNamedPaneAction {
 
         public Default() {

@@ -52,7 +52,7 @@
     <xs:complexType name="EditorIconTextType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing an icon reference with extended "text" information
+          Define the XML structure for storing an icon reference with extended "text" information
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.SlipTurnoutIconXml#storeIcon
@@ -202,6 +202,7 @@
           <xs:complexType><xs:sequence><xs:element name="url" type="urlType" minOccurs="1" maxOccurs="1"></xs:element></xs:sequence></xs:complexType>
         </xs:element>
       </xs:sequence>
+      <xs:attribute name="portalFamily" type="xs:string"></xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="EditorLayoutTrackDrawingOptionsType">
@@ -1181,7 +1182,6 @@
             <xs:enumeration value="LH_TURNOUT"></xs:enumeration>
             <xs:enumeration value="WYE_TURNOUT"></xs:enumeration>
             <xs:enumeration value="DOUBLE_XOVER"></xs:enumeration>
-            <xs:enumeration value="TURNOUT_D"></xs:enumeration>
             <xs:enumeration value="RH_XOVER"></xs:enumeration>
             <xs:enumeration value="LH_XOVER"></xs:enumeration>
             <xs:enumeration value="SINGLE_SLIP"></xs:enumeration>
@@ -1823,6 +1823,9 @@
       <xs:attribute name="ident" type="beanNameType" use="required">
         <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
       </xs:attribute>
+      <xs:attribute name=" blockname" type="beanNameType">
+        <xs:annotation><xs:documentation>Added 4.19.6 to identify block to which turntable belongs</xs:documentation></xs:annotation>
+      </xs:attribute>
       <xs:attribute name="radius" type="xs:float" use="required"></xs:attribute>
       <xs:attribute name="xcen" type="xs:float" use="required"></xs:attribute>
       <xs:attribute name="ycen" type="xs:float" use="required"></xs:attribute>
@@ -1869,7 +1872,7 @@
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
-            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+          <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
         </xs:element>
         <xs:element name="occupancyblock" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="occupancysensor" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
@@ -1908,7 +1911,7 @@
     <xs:complexType name="EditorSlipTurnoutTconType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing an SlipTurnoutTcon
+          Define the XML structure for storing an SlipTurnoutTcon
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.SlipTurnoutIconXml
@@ -1965,6 +1968,7 @@
         </xs:simpleType>
       </xs:attribute>
 
+      <xs:attribute name="degrees" type="xs:float"></xs:attribute>
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
 
        <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
@@ -1973,7 +1977,7 @@
     <xs:complexType name="EditorIndicatorTurnoutIconType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing an IndicatorTurnoutIcon
+          Define the XML structure for storing an IndicatorTurnoutIcon
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml

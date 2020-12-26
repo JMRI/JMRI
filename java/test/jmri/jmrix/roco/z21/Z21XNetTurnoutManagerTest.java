@@ -2,8 +2,8 @@ package jmri.jmrix.roco.z21;
 
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.roco.z21.Z21XNetTurnoutManager class.
@@ -14,7 +14,7 @@ import org.junit.Before;
 public class Z21XNetTurnoutManagerTest extends jmri.jmrix.lenz.XNetTurnoutManagerTest {
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         lnis = null;
         l = null;
@@ -24,7 +24,7 @@ public class Z21XNetTurnoutManagerTest extends jmri.jmrix.lenz.XNetTurnoutManage
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface, register

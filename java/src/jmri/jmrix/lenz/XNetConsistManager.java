@@ -14,20 +14,21 @@ import org.slf4j.LoggerFactory;
  */
 public class XNetConsistManager extends AbstractConsistManager {
 
-    protected XNetTrafficController tc = null;
+    protected XNetTrafficController tc;
     private boolean requestingUpdate = false;
 
     /**
      * Constructor - call the constructor for the superclass, and initialize the
      * consist reader thread, which retrieves consist information from the
      * command station.
+     * @param systemMemo system connection.
      */
     public XNetConsistManager(XNetSystemConnectionMemo systemMemo) {
         super();
         tc = systemMemo.getXNetTrafficController();
         this.systemMemo = systemMemo;
     }
-    XNetSystemConnectionMemo systemMemo;
+    final XNetSystemConnectionMemo systemMemo;
 
     /**
      * This implementation does command station consists, so return true.

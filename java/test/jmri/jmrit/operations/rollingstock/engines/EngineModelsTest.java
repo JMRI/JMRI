@@ -3,7 +3,7 @@ package jmri.jmrit.operations.rollingstock.engines;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Operations RollingStock Engine class Last manually

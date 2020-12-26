@@ -386,7 +386,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
                     final int toState = newState;
                     final Turnout setTurnout = t;
                     ThreadingUtil.runOnLayoutEventually(() -> {   // eventually, even though we have timing here, should be soon
-                        setTurnout.setCommandedState(toState); // delayed on specific connection by its turnoutManager
+                        setTurnout.setCommandedStateAtInterval(toState); // delayed on specific connection by its turnoutManager
                     });
                     try {
                         Thread.sleep(mDelay); // only the Mast specific user defined delay is applied here
@@ -518,7 +518,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     /**
      * Set the delay between issuing Matrix Output commands to the outputs on this specific mast.
-     * Delay be extended by a connection specific Output Delay set in the connection config.
+     * Mast Delay will be extended by a connection specific Output Delay set in the connection config.
      *
      * @see jmri.implementation.configurexml.MatrixSignalMastXml#load(org.jdom2.Element, org.jdom2.Element)
      * @param delay the new delay in milliseconds

@@ -1,6 +1,7 @@
 package jmri.jmrix;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Base tests for messages implementing the jmri.jmrix.Message interface.
@@ -11,12 +12,12 @@ abstract public class AbstractMessageTestBase {
 
     protected AbstractMessage m = null; // set in setUp
 
-    @Before
+    @BeforeEach
     public void setUp() { // minimum needed, usually overridden
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() { // minimum needed, usually overridden
         jmri.util.JUnitUtil.tearDown();
     }

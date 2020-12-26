@@ -1,0 +1,57 @@
+@startuml
+
+
+package javax.swing {
+    class JComponent
+}
+
+package display.layoutEditor {
+
+  class LayoutEditor {
+    == GUI ==
+    == Structure ==
+  }
+
+  class LayoutTrack {
+    == Structure ==
+  }
+  note bottom : Only structural\nelements
+  class LayoutTurnout {
+    == Structure ==
+  }
+
+  LayoutTrack <|-- LayoutTurnout
+
+  class LayoutTrackView {
+    == GUI ==
+  }
+  note bottom : GUI moves\nto here
+  class LayoutTurnoutView{
+    == GUI ==
+  }
+  
+  LayoutTrackView <|-- LayoutTurnoutView
+  
+  LayoutTrack *-- LayoutTrackView
+  LayoutTurnout *-- LayoutTurnoutView
+  
+}
+
+LayoutTrack *-- LayoutEditor
+JComponent *-- LayoutTrackView
+
+JComponent *-- LayoutEditor
+JComponent <|-- LayoutEditor
+
+
+package jmrit.something {
+    class DoStuffWithStructure
+}
+
+LayoutEditor *-- DoStuffWithStructure
+
+note "Confine GUI to these" as N1
+LayoutTrackView .. N1
+LayoutTurnoutView .. N1
+
+@end

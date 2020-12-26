@@ -134,18 +134,18 @@ public class TrainCsvCommon extends TrainCommon {
 
     protected final void checkForEngineOrCabooseChange(CSVPrinter fileOut, Train train, RouteLocation rl) throws IOException {
         if (train.getSecondLegOptions() != Train.NO_CABOOSE_OR_FRED) {
-            if (rl == train.getSecondLegStartLocation()) {
+            if (rl == train.getSecondLegStartRouteLocation()) {
                 engineCsvChange(fileOut, rl, train.getSecondLegOptions());
             }
-            if (rl == train.getSecondLegEndLocation()) {
+            if (rl == train.getSecondLegEndRouteLocation()) {
                 printRemoveHelpers(fileOut);
             }
         }
         if (train.getThirdLegOptions() != Train.NO_CABOOSE_OR_FRED) {
-            if (rl == train.getThirdLegStartLocation()) {
+            if (rl == train.getThirdLegStartRouteLocation()) {
                 engineCsvChange(fileOut, rl, train.getThirdLegOptions());
             }
-            if (rl == train.getThirdLegEndLocation()) {
+            if (rl == train.getThirdLegEndRouteLocation()) {
                 printRemoveHelpers(fileOut);
             }
         }
@@ -167,7 +167,7 @@ public class TrainCsvCommon extends TrainCommon {
     protected void printTrackComments(CSVPrinter fileOut, RouteLocation rl, List<Car> carList) throws IOException {
         Location location = rl.getLocation();
         if (location != null) {
-            List<Track> tracks = location.getTrackByNameList(null);
+            List<Track> tracks = location.getTracksByNameList(null);
             for (Track track : tracks) {
                 // any pick ups or set outs to this track?
                 boolean pickup = false;

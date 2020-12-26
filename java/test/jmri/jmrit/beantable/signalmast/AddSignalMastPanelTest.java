@@ -8,7 +8,9 @@ import java.awt.GraphicsEnvironment;
 
 import org.netbeans.jemmy.operators.*;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * @author Bob Jacobsen Copyright 2014
@@ -31,6 +33,7 @@ public class AddSignalMastPanelTest {
 
     @Test
     public void testIssueWarningUserName() {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // show and cancel each of the error dialogs
         AddSignalMastPanel a = new AddSignalMastPanel();
@@ -42,6 +45,7 @@ public class AddSignalMastPanelTest {
     
     @Test
     public void testIssueWarningUserNameAsSystem() {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // show and cancel each of the error dialogs
         AddSignalMastPanel a = new AddSignalMastPanel();
@@ -53,6 +57,7 @@ public class AddSignalMastPanelTest {
     
     @Test
     public void testIssueNoUserNameGiven() {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // show and cancel each of the error dialogs
         AddSignalMastPanel a = new AddSignalMastPanel();
@@ -63,6 +68,7 @@ public class AddSignalMastPanelTest {
     
     @Test
     public void testIssueDialogFailMessage() {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // show and cancel each of the error dialogs
         AddSignalMastPanel a = new AddSignalMastPanel();
@@ -74,6 +80,7 @@ public class AddSignalMastPanelTest {
     
     @Test
     public void testSearch() throws Exception {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         try {
             AddSignalMastPanel a = new AddSignalMastPanel();
 
@@ -92,6 +99,8 @@ public class AddSignalMastPanelTest {
 
     @Test
     public void testCheckUserName() throws Exception {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+        
         AddSignalMastPanel a = new AddSignalMastPanel();
         
         VirtualSignalMast s1 = new VirtualSignalMast("IF$vsm:basic:one-searchlight($1)", "user name");
@@ -129,7 +138,7 @@ public class AddSignalMastPanelTest {
         JUnitAppender.assertErrorMessage("User Name \"IF$vsm:basic:one-searchlight($1)\" already exists as a System name");
     }
     
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
@@ -143,7 +152,7 @@ public class AddSignalMastPanelTest {
         }
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         try {
             SignalSystemTestUtil.deleteMockSystem();

@@ -298,7 +298,7 @@
 
       <blockquote>
         <p>The <a style="font-weight: bold;" target="_blank" href=
-        "http://jmri.org/help/en/package/jmri/jmrix/jinput/treemodel/TreeFrame.shtml">
+        "https://jmri.org/help/en/package/jmri/jmrix/jinput/treemodel/TreeFrame.shtml">
         USB Assignments window</a> lets you connect JMRI sensors
         and memories to USB input devices on your computer. For
         example, you could have a JMRI sensor go ACTIVE when you
@@ -334,7 +334,7 @@
         Index.shtml page using the URL displayed in the dialog.</p>
 
         <p>The <a href=
-        "http://jmri.org/help/en/html/web/index.shtml">JMRI web
+        "https://jmri.org/help/en/html/web/index.shtml">JMRI web
         server</a> is meant to be a quick and easy way for model
         railroaders, not Masters of the Web, to get a web
         connection to JMRI up and running.</p>
@@ -354,7 +354,7 @@
         JMRI</p>
 
         <p>Additional information on <strong><a href=
-        "http://jmri.org/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml"
+        "https://jmri.org/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml"
         target="_blank">creating a WiThrottle.</a></strong></p>
       </blockquote>
 

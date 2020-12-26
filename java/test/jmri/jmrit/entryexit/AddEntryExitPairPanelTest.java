@@ -5,11 +5,11 @@ import java.util.HashMap;
 
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
-import org.junit.AfterClass;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -76,7 +76,7 @@ public class AddEntryExitPairPanelTest {
         nxFrame.dispose();
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() throws Exception {
         JUnitUtil.setUp();
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -86,7 +86,7 @@ public class AddEntryExitPairPanelTest {
         Assert.assertEquals("Get LE panels", 2, panels.size());  // NOI18N
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() {
         panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
         panels = null;

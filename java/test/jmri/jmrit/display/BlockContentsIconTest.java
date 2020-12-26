@@ -1,19 +1,20 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JFrame;
+
 import jmri.BlockManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.junit.annotations.ToDo;
+
 import org.apache.log4j.Level;
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.QueueTool;
 
 /**
@@ -108,7 +109,7 @@ public class BlockContentsIconTest extends PositionableLabelTest {
         Assert.assertEquals("Degrees", 50, p.getDegrees());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         super.setUp();
@@ -124,7 +125,7 @@ public class BlockContentsIconTest extends PositionableLabelTest {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         to = null;

@@ -186,6 +186,19 @@ public class Bundle {
         return MessageFormat.format(handleGetMessage(locale, key), subs);
     }
 
+    /**
+     * Formats a message string with parameters.
+     * <p>
+     * It's used when a message is fetched from a foreign bundle.
+     * 
+     * @param message The message to be formatted
+     * @param subs    Array of objects to be inserted into the message
+     * @return The formatted message
+     */
+    public static String formatMessage(String message, Object... subs) {
+        return MessageFormat.format(message, subs);
+    }
+
     // the following is different from the method in subclasses because
     // this is the root of the search tree
     protected String retry(Locale locale, String key) throws MissingResourceException {

@@ -86,7 +86,8 @@ public class PdiFile {
     }
 
     /**
-     * Return the comment embedded at the front of the file
+     * Return the comment embedded at the front of the file.
+     * @return file comment.
      */
     public String getComment() {
         return comment;

@@ -1,5 +1,5 @@
 /**
- * Select from palette of items
+ * Select from palette of items.
  *
  * <h2>Related Documentation</h2>
  *

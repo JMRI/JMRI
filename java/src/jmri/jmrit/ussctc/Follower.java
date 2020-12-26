@@ -27,6 +27,7 @@ public class Follower implements Constants {
      *
      * @param output Output turnout to be driven
      * @param sensor Sensor checking for OS occupancy
+     * @param invert route ISONACTIVE inverted.
      * @param veto   veto Sensor, or ""
      */
     public Follower(String output, String sensor, boolean invert, String veto) {

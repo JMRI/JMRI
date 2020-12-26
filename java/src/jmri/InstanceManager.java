@@ -28,8 +28,8 @@ import jmri.util.ThreadingUtil;
  * Provides methods for locating various interface implementations. These form
  * the base for locating JMRI objects, including the key managers.
  * <p>
- * The structural goal is to have the jmri package not depend on the lower
- * jmri.jmrit and jmri.jmrix packages, with the implementations still available
+ * The structural goal is to have the jmri package not depend on lower
+ * packages, with the implementations still available
  * at run-time through the InstanceManager.
  * <p>
  * To retrieve the default object of a specific type, do
@@ -411,6 +411,10 @@ public final class InstanceManager {
 
     /**
      * Check if a default has been set for the given type.
+     * <p>
+     * As a side-effect, then (a) ensures that the list for the given 
+     * type exists, though it may be empty, and (b) if it had to create
+     * the list, a PropertyChangeEvent is fired to denote that.
      *
      * @param <T>  The type of the class
      * @param type The class type
@@ -421,6 +425,22 @@ public final class InstanceManager {
         List<T> l = getList(type);
         return !l.isEmpty();
     }
+
+    /**
+     * Check if a particular type has been initialized without
+     * triggering an automatic initialization. The existence or
+     * non-existence of the corresponding list is not changed, and 
+     * no PropertyChangeEvent is fired.
+     *
+     * @param <T>  The type of the class
+     * @param type The class type
+     * @return true if an item is available as a default for the given type;
+     *         false otherwise
+     */
+    public static <T> boolean isInitialized(@Nonnull Class<T> type) {
+        return getDefault().managerLists.get(type) != null;
+    }
+
 
     /**
      * Dump generic content of InstanceManager by type.
@@ -641,6 +661,51 @@ public final class InstanceManager {
             ((ProxyManager<IdTag>) apm).addManager(p);
         } else {
             log.error("Incorrect setup: IdTagManager default isn't an AbstractProxyManager<IdTag>");
+        }
+    }
+
+    // Needs to have proxy manager converted to work
+    // with current list of managers (and robust default
+    // management) before this can be deprecated in favor of
+    // store(p, MeterManager.class)
+    @SuppressWarnings("unchecked") // AbstractProxyManager of the right type is type-safe by definition
+    static public void setMeterManager(MeterManager p) {
+        log.debug(" setMeterManager");
+        MeterManager apm = getDefault(MeterManager.class);
+        if (apm instanceof ProxyManager<?>) { // <?> due to type erasure
+            ((ProxyManager<Meter>) apm).addManager(p);
+        } else {
+            log.error("Incorrect setup: MeterManager default isn't an AbstractProxyManager<Meter>");
+        }
+    }
+
+    // Needs to have proxy manager converted to work
+    // with current list of managers (and robust default
+    // management) before this can be deprecated in favor of
+    // store(p, TurnoutManager.class)
+    @SuppressWarnings("unchecked") // AbstractProxyManager of the right type is type-safe by definition
+    static public void setAnalogIOManager(AnalogIOManager p) {
+        log.debug(" setAnalogIOManager");
+        AnalogIOManager apm = getDefault(AnalogIOManager.class);
+        if (apm instanceof ProxyManager<?>) { // <?> due to type erasure
+            ((ProxyManager<AnalogIO>) apm).addManager(p);
+        } else {
+            log.error("Incorrect setup: AnalogIOManager default isn't an AbstractProxyManager<AnalogIO>");
+        }
+    }
+
+    // Needs to have proxy manager converted to work
+    // with current list of managers (and robust default
+    // management) before this can be deprecated in favor of
+    // store(p, TurnoutManager.class)
+    @SuppressWarnings("unchecked") // AbstractProxyManager of the right type is type-safe by definition
+    static public void setStringIOManager(StringIOManager p) {
+        log.debug(" setStringIOManager");
+        StringIOManager apm = getDefault(StringIOManager.class);
+        if (apm instanceof ProxyManager<?>) { // <?> due to type erasure
+            ((ProxyManager<StringIO>) apm).addManager(p);
+        } else {
+            log.error("Incorrect setup: StringIOManager default isn't an AbstractProxyManager<StringIO>");
         }
     }
 

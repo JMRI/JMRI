@@ -18,7 +18,7 @@ public class JsonProgrammerServerTest {
     @Test
     public void testCTor() {
         JsonProgrammerServer t = new JsonProgrammerServer(new JsonMockConnection((DataOutputStream) null));
-        assertThat(t).isNotNull().withFailMessage("exists");
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
 
     @BeforeEach

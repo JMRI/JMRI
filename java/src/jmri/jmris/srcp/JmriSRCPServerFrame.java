@@ -37,32 +37,16 @@ public class JmriSRCPServerFrame extends jmri.util.JmriJFrame {
         pack();
 
         // install start button handler
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                startSRCPServer();
-            }
-        }
-        );
+        startButton.addActionListener(a -> startSRCPServer());
 
         // install stop button handler
-        stopButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                stopSRCPServer();
-            }
-        }
-        );
+        stopButton.addActionListener(a -> stopSRCPServer());
 
         // install close button handler
-        closeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                setVisible(false);
-                dispose();
-            }
-        }
-        );
+        closeButton.addActionListener(a -> {
+            setVisible(false);
+            dispose();
+        });
 
     }
 

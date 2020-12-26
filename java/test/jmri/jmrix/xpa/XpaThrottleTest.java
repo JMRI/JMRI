@@ -2,14 +2,13 @@ package jmri.jmrix.xpa;
 
 import jmri.SpeedStepMode;
 import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 
 /**
- * Test for the jmri.jmrix.xpa.XpaThrottle class.
+ * Tests for the jmri.jmrix.xpa.XpaThrottle class.
  *
  * @author Paul Bender
  */
@@ -209,17 +208,17 @@ public class XpaThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         tc = new XpaTrafficController();
-        instance = new XpaThrottle(new jmri.DccLocoAddress(3, false),tc);
+        instance = new XpaThrottle(new jmri.DccLocoAddress(3, false), tc);
         XpaSystemConnectionMemo memo = new XpaSystemConnectionMemo();
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new XpaThrottleManager(memo));
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, new XpaThrottleManager(memo));
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
         tc = null;

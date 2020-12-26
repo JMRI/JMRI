@@ -683,18 +683,6 @@ public class JUnitOperationsUtil {
         Assert.assertNotNull(operationShutdownTask);
         sm.deregister(operationShutdownTask);
     }
-    
-    /**
-     * Only the NCE traffic controller shutdown task is running
-     */
-    public static void checkNceShutDownTask() {
-        Assert.assertTrue(InstanceManager.containsDefault(ShutDownManager.class));
-        ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
-        List<ShutDownTask> list = sm.tasks();
-        ShutDownTask nceShutdownTask = list.get(0);
-        Assert.assertNotNull(nceShutdownTask);
-        sm.deregister(nceShutdownTask);
-    }
 
     // private final static Logger log = LoggerFactory.getLogger(JUnitOperationsUtil.class);
 }

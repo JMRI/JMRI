@@ -103,7 +103,7 @@ public class JsonManifest extends TrainCommon {
             // engine change or helper service?
             if (train.getSecondLegOptions() != Train.NO_CABOOSE_OR_FRED) {
                 ArrayNode options = this.mapper.createArrayNode();
-                if (routeLocation == train.getSecondLegStartLocation()) {
+                if (routeLocation == train.getSecondLegStartRouteLocation()) {
                     if ((train.getSecondLegOptions() & Train.HELPER_ENGINES) == Train.HELPER_ENGINES) {
                         options.add(JSON.ADD_HELPERS);
                     } else if ((train.getSecondLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE
@@ -113,14 +113,14 @@ public class JsonManifest extends TrainCommon {
                         options.add(JSON.CHANGE_ENGINES);
                     }
                 }
-                if (routeLocation == train.getSecondLegEndLocation()) {
+                if (routeLocation == train.getSecondLegEndRouteLocation()) {
                     options.add(JSON.REMOVE_HELPERS);
                 }
                 jsonLocation.set(JSON.OPTIONS, options);
             }
             if (train.getThirdLegOptions() != Train.NO_CABOOSE_OR_FRED) {
                 ArrayNode options = this.mapper.createArrayNode();
-                if (routeLocation == train.getThirdLegStartLocation()) {
+                if (routeLocation == train.getThirdLegStartRouteLocation()) {
                     if ((train.getThirdLegOptions() & Train.HELPER_ENGINES) == Train.HELPER_ENGINES) {
                         options.add(JSON.ADD_HELPERS);
                     } else if ((train.getThirdLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE
@@ -130,7 +130,7 @@ public class JsonManifest extends TrainCommon {
                         options.add(JSON.CHANGE_ENGINES);
                     }
                 }
-                if (routeLocation == train.getThirdLegEndLocation()) {
+                if (routeLocation == train.getThirdLegEndRouteLocation()) {
                     options.add(JSON.ADD_HELPERS);
                 }
                 jsonLocation.set(JSON.OPTIONS, options);
@@ -207,7 +207,7 @@ public class JsonManifest extends TrainCommon {
     private ObjectNode getTrackComments(RouteLocation routeLocation, List<Car> cars) {
         ObjectNode comments = this.mapper.createObjectNode();
         if (routeLocation.getLocation() != null) {
-            List<Track> tracks = routeLocation.getLocation().getTrackByNameList(null);
+            List<Track> tracks = routeLocation.getLocation().getTracksByNameList(null);
             for (Track track : tracks) {
                 ObjectNode jsonTrack = this.mapper.createObjectNode();
                 // any pick ups or set outs to this track?

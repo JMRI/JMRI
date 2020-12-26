@@ -2,10 +2,9 @@ package jmri.jmrix.can.cbus.eventtable;
 
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -84,12 +83,12 @@ public class CbusTableEventTest {
         Assert.assertEquals(new jmri.jmrix.can.cbus.CbusEvent(null,123,456), new CbusTableEvent(null,123,456));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

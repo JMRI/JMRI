@@ -41,7 +41,7 @@
 
       <p>Le soutien JMRI pour xAP a commenc&eacute; avec un simple
       <a href=
-      "http://jmri.org/jython/jython/xAPadapter.py">script</a>
+      "https://jmri.org/jython/jython/xAPadapter.py">script</a>
       disponible dans JMRI 2.9.5 et versions ult&eacute;rieures.
       Finalement, un ensemble complet d'outils de JMRI xAP sera
       disponibles directement au sein de l'ensemble des outils

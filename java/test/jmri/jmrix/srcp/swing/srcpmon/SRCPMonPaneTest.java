@@ -1,10 +1,9 @@
 package jmri.jmrix.srcp.swing.srcpmon;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * @author Paul Bender Copyright(C) 2016
@@ -19,7 +18,7 @@ public class SRCPMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         Assert.assertNotNull(f);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -32,7 +31,7 @@ public class SRCPMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         title = Bundle.getMessage("MenuItemSRCPCommandMonitorTitle");
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         panel = pane = null;

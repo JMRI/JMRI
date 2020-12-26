@@ -304,7 +304,9 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     }
 
     protected void flipIcon(int flip) {
-        _namedIcon.flip(flip, this);
+        if (_namedIcon != null) {
+            _namedIcon.flip(flip, this);
+        }
         updateSize();
         repaint();
     }

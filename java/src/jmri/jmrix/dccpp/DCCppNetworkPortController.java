@@ -51,6 +51,7 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
     // in pr3/PR3Adapter
     /**
      * Set config info from a name, which needs to be one of the valid ones.
+     * @param name exact name of command station type.
      */
     public void setCommandStationType(String name) {
         for (int i = 0; i < commandStationNames.length; i++) {
@@ -65,6 +66,7 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
     
     /**
      * Set config info from the command station type enum.
+     * @param value command station type.
      */
     public void setCommandStationType(int value) {
         log.debug("setCommandStationType: {}{}", Integer.toString(value));

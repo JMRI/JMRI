@@ -1,10 +1,9 @@
 package jmri.jmrix.internal.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * InternalTurnoutManagerXmlTest.java
@@ -20,12 +19,12 @@ public class InternalTurnoutManagerXmlTest {
       Assert.assertNotNull("InternalTurnoutManagerXml constructor",new InternalTurnoutManagerXml());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

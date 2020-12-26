@@ -34,6 +34,7 @@ public class TrainSwitchLists extends TrainCommon {
     TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
     private static final char FORM_FEED = '\f';
     private static final boolean IS_PRINT_HEADER = true;
+    private static final String HYPHEN = TrainCommon.HYPHEN;
 
     String messageFormatText = ""; // the text being formated in case there's an exception
 
@@ -344,7 +345,7 @@ public class TrainSwitchLists extends TrainCommon {
                 for (Location loc : locationManager.getLocationsByNameList()) {
                     if (!splitString(loc.getName()).equals(splitString(location.getName())))
                         continue;
-                    for (Track track : loc.getTrackByNameList(null)) {
+                    for (Track track : loc.getTracksByNameList(null)) {
                         String trackName = splitString(track.getName());
                         if (trackNames.contains(trackName))
                             continue;
@@ -392,7 +393,7 @@ public class TrainSwitchLists extends TrainCommon {
                                                 InstanceManager.getDefault(CarRoads.class).getMaxNameLength()),
                                                 padAndTruncateIfNeeded(TrainCommon.splitString(car.getNumber()),
                                                         Control.max_len_string_print_road_number),
-                                                padAndTruncateIfNeeded(car.getTypeName().split("-")[0],
+                                                padAndTruncateIfNeeded(car.getTypeName().split(HYPHEN)[0],
                                                         InstanceManager.getDefault(CarTypes.class).getMaxNameLength()),
                                                 padAndTruncateIfNeeded(car.getLength() + Setup.getLengthUnitAbv(),
                                                         Control.max_len_string_length_name),

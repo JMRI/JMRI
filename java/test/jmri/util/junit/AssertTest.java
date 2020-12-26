@@ -1,6 +1,7 @@
 package jmri.util.junit;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 /**
  * Ensure Java's assert() works with JMRI infrastructure
  * 
@@ -60,7 +61,7 @@ public class AssertTest {
     // initialized in setUp
     boolean assertsEnabled;
     
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         
@@ -76,7 +77,7 @@ public class AssertTest {
         return true;
     }
     
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

@@ -1,10 +1,9 @@
 package jmri.jmrix.lenz.swing.mon;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * XNetMonPaneTest.java
@@ -23,7 +22,7 @@ public class XNetMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         Assert.assertNotNull(f);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -36,7 +35,7 @@ public class XNetMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         title = Bundle.getMessage("MenuItemXNetCommandMonitor");
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         panel = pane = null;

@@ -22,6 +22,7 @@ public class TamsThrottleManager extends AbstractThrottleManager implements Tams
 
     /**
      * Constructor.
+     * @param memo system connection.
      */
     public TamsThrottleManager(TamsSystemConnectionMemo memo) {
         super(memo);

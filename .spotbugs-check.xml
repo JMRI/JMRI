@@ -18,7 +18,6 @@
         <Confidence value="2" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
         <Or>
            <Bug pattern="IS2_INCONSISTENT_SYNC" />
-           <Bug pattern="SLF4J_SIGN_ONLY_FORMAT" />
         </Or>
      </Match>
 
@@ -47,6 +46,11 @@
      <Match>
        <!-- Minor clarity issue -->
        <Bug pattern="RI_REDUNDANT_INTERFACES" />
+     </Match>
+
+     <Match>
+        <!-- Minimal messages can be very useful at DEBUG or TRACE level -->
+        <Bug pattern="SLF4J_SIGN_ONLY_FORMAT" />
      </Match>
 
      <Match>

@@ -154,6 +154,8 @@ public class FullBackupImportAction extends ImportRosterItemAction {
 
     /**
      * @return true if OK to continue to next entry
+     * @param zipper Stream to receive output
+     * @throws IOException from underlying operations
      */
 
     protected boolean processRosterFile(ZipInputStream zipper) throws IOException {

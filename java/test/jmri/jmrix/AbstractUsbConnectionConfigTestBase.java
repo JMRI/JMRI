@@ -1,6 +1,6 @@
 package jmri.jmrix;
 
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 /**
  * Base tests for UsbConnectionConfig objects.

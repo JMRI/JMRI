@@ -4,12 +4,8 @@ import jmri.util.JUnitUtil;
 
 import org.openlcb.*;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the OlcbSignalMast implementation
@@ -339,12 +335,12 @@ public class OlcbSignalMastTest {
     static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
     static java.util.ArrayList<Message> messages;
     
-    @Before
+    @BeforeEach
     public void setUp() {
         messages = new java.util.ArrayList<>();
     }
 
-    @BeforeClass
+    @BeforeAll
     static public void preClassInit() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
@@ -366,16 +362,16 @@ public class OlcbSignalMastTest {
                 return connection;
             }
         });
-        
+
         jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         messages = null;
     }
 
-    @AfterClass
+    @AfterAll
     public static void postClassTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();

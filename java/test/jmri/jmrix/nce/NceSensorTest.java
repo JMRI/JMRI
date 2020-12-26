@@ -1,8 +1,8 @@
 package jmri.jmrix.nce;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -24,14 +24,14 @@ public class NceSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         t = new NceSensor("NS1");
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         t.dispose();
         JUnitUtil.tearDown();

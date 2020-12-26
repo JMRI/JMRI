@@ -1,10 +1,9 @@
 package jmri.jmrix.acela;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -32,14 +31,14 @@ public class AcelaSensorTest extends jmri.implementation.AbstractSensorTestBase 
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         t = new AcelaSensor("AS1");
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         t.dispose();
         JUnitUtil.tearDown();

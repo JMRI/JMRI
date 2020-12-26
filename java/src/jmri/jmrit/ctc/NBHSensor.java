@@ -1,7 +1,10 @@
 package jmri.jmrit.ctc;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBeanHandle;
@@ -22,7 +25,12 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
  *     We ASSUME here that you are ALWAYS passing a valid "newState".  If not,
  *     then this call is effectively a no-op (do nothing).
  * <li> Use ONLY named beans internally for proper JMRI support of renaming objects.
- * <li> Support renaming of this object fully (if possible via normal JMRI methods). (FUTURE CODE)
+ * <li> Allow any CTC Editor routines to mindlessly change the underlying sensor
+ *     name used WITHOUT affecting any existing run time (CTCRunTime) code.
+ *     For example: User changes existing IS:XYZ to IS:ABC, which is a different
+ *     sensor altogether.  Everything happens under the covers, and the higher
+ *     level code that uses these objects do not know the change happened, and
+ *     they SHOULD continue to function without affect.
  * <li> Prevents "null" access to improperly constructed internal objects.  For example:
  *     If the caller passes invalid parameter(s) to the constructor(s), then this object's
  *     internal Sensor will be set to null by the constructor(s).  If the USER then
@@ -55,7 +63,7 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
  *     it differently than the default sane values.  There is a function "valid()"
  *     for that situation.
  * </ol>
- * @author Gregory J. Bedlek Copyright (C) 2018, 2019
+ * @author Gregory J. Bedlek Copyright (C) 2018, 2019, 2020
  */
 
 // Prefix NBH = Named Bean Handler....
@@ -64,17 +72,26 @@ public class NBHSensor {
 //  Special case sane return values:
     public static final int DEFAULT_SENSOR_STATE_RV = Sensor.INACTIVE;
 //  Standard sane return values for the types indicated:
-    public static final Object DEFAULT_OBJECT_RV = null;       // For any function that returns something derived from Java's Object.
-    public static final boolean DEFAULT_BOOLEAN_RV = false;    // For any function that returns boolean.
-    public static final int DEFAULT_INT_RV = 0;                // For any function that returns int.
-    public static final long DEFAULT_LONG_RV = 0;              // For any function that returns long.
-    public static final String DEFAULT_STRING_RV = "UNKNOWN";  // NOI18N  For any function that returns String.
+//  public static final Object DEFAULT_OBJECT_RV = null;       // For any function that returns something derived from Java's Object.
+//  public static final boolean DEFAULT_BOOLEAN_RV = false;    // For any function that returns boolean.
+//  public static final int DEFAULT_INT_RV = 0;                // For any function that returns int.
+//  public static final long DEFAULT_LONG_RV = 0;              // For any function that returns long.
+//  public static final String DEFAULT_STRING_RV = "UNKNOWN";  // NOI18N  For any function that returns String.
 //  Functions that don't return any of the above have specific implementations.  Ex: PropertyChangeListener[] or ArrayList<>
 
 //  The "thing" we're protecting:
-    private final NamedBeanHandle<Sensor> _mNamedBeanHandleSensor;
+    private NamedBeanHandle<Sensor> _mNamedBeanHandleSensor;
+    private final String _mUserIdentifier;
+    private final String _mParameter;
+    private final boolean _mOptional;
+    private final ArrayList<PropertyChangeListener> _mArrayListOfPropertyChangeListeners = new ArrayList<>();
     public Sensor getBean() {
         if (valid()) return _mNamedBeanHandleSensor.getBean();
+        return null;
+    }
+
+    public NamedBeanHandle getBeanHandle() {
+        if (valid()) return _mNamedBeanHandleSensor;
         return null;
     }
 
@@ -84,16 +101,41 @@ public class NBHSensor {
     }
 
     public NBHSensor(String module, String userIdentifier, String parameter, String sensor, boolean optional) {
-        Sensor tempSensor = optional ? getSafeOptionalJMRISensor(module, userIdentifier, parameter, sensor) : getSafeExistingJMRISensor(module, userIdentifier, parameter, sensor);
+        _mUserIdentifier = userIdentifier;
+        _mParameter = parameter;
+        _mOptional = optional;
+        Sensor tempSensor = _mOptional ? getSafeOptionalJMRISensor(module, userIdentifier, _mParameter, sensor) : getSafeExistingJMRISensor(module, userIdentifier, _mParameter, sensor);
         if (tempSensor != null) {
             _mNamedBeanHandleSensor = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(sensor, tempSensor);
         } else {
             _mNamedBeanHandleSensor = null;
         }
+        registerSensor(sensor);
     }
 
-//  Use when something else has the thing we help with:
+    public NBHSensor(String module, String userIdentifier, String parameter, String sensorName) {
+        _mUserIdentifier = userIdentifier;
+        _mParameter = parameter;
+        _mOptional = false;
+
+        Sensor tempSensor = getSafeInternalSensor(module, userIdentifier, parameter, sensorName);
+        if (tempSensor != null) {
+            _mNamedBeanHandleSensor = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, tempSensor);
+        } else {
+            _mNamedBeanHandleSensor = null;
+        }
+        registerSensor(sensorName);
+    }
+
+    void registerSensor(String sensorName) {
+        if (valid()) InstanceManager.getDefault(CtcManager.class).putNBHSensor(sensorName, this);
+    }
+
+//  Used by CallOn to create a temporary NBHSensor for the current sensor for a block.
     public NBHSensor(NamedBeanHandle<Sensor> namedBeanHandleSensor) {
+        _mUserIdentifier = Bundle.getMessage("Unknown");    // NOI18N
+        _mParameter = _mUserIdentifier;
+        _mOptional = true;              // We CAN'T know, but this is safe.
         _mNamedBeanHandleSensor = namedBeanHandleSensor;
     }
 
@@ -106,6 +148,11 @@ public class NBHSensor {
 
     private static Sensor getSafeOptionalJMRISensor(String module, String userIdentifier, String parameter, String sensor) {
         try { return getOptionalJMRISensor(module, userIdentifier, parameter, sensor); } catch (CTCException e) { e.logError(); }
+        return null;
+    }
+
+    private static Sensor getSafeInternalSensor(String module, String userIdentifier, String parameter, String sensor) {
+        try { return getInternalSensor(module, userIdentifier, parameter, sensor); } catch (CTCException e) { e.logError(); }
         return null;
     }
 
@@ -129,6 +176,14 @@ public class NBHSensor {
         } else { return null; }
     }
 
+// Special case for CTC internal sensors.  These are not always predefined so the provide() method is used.
+    private static Sensor getInternalSensor(String module, String userIdentifier, String parameter, String sensor) throws CTCException {
+        if (!ProjectsCommonSubs.isNullOrEmptyString(sensor)) {
+            // Cannot use a constant Instance manager reference due to the dynamic nature of tests.
+            return InstanceManager.getDefault(SensorManager.class).provide(sensor);
+        } else { return null; }
+    }
+
     public int getKnownState() {
         if (_mNamedBeanHandleSensor == null) return DEFAULT_SENSOR_STATE_RV;
         return _mNamedBeanHandleSensor.getBean().getKnownState();
@@ -141,13 +196,35 @@ public class NBHSensor {
     }
 
 
-    public void addPropertyChangeListener(PropertyChangeListener l) {
+    public void addPropertyChangeListener(PropertyChangeListener propertyChangeListener) {
         if (_mNamedBeanHandleSensor == null) return;
-        _mNamedBeanHandleSensor.getBean().addPropertyChangeListener(l);
+        _mNamedBeanHandleSensor.getBean().addPropertyChangeListener(propertyChangeListener);
+        _mArrayListOfPropertyChangeListeners.add(propertyChangeListener);
     }
 
-    public void removePropertyChangeListener(PropertyChangeListener l) {
+    public void removePropertyChangeListener(PropertyChangeListener propertyChangeListener) {
         if (_mNamedBeanHandleSensor == null) return;
-        _mNamedBeanHandleSensor.getBean().removePropertyChangeListener(l);
+        _mNamedBeanHandleSensor.getBean().removePropertyChangeListener(propertyChangeListener);
+        _mArrayListOfPropertyChangeListeners.remove(propertyChangeListener);
     }
+
+//  Support for "Grand Unification" (Editor support):
+
+
+    /**
+     * @return The sensor's handle name.
+     */
+    public String getHandleName() {
+        return valid() ? _mNamedBeanHandleSensor.getName() : "";
+    }
+
+    /**
+     * For Unit testing only.
+     * @return Returns the present number of property change listeners registered with us so far.
+     */
+    public int testingGetCountOfPropertyChangeListenersRegistered() {
+        return _mArrayListOfPropertyChangeListeners.size();
+    }
+
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NBHSensor.class);
 }

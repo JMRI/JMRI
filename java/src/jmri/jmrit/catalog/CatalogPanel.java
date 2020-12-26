@@ -32,6 +32,8 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.tree.*;
 
 import jmri.CatalogTree;
+import jmri.CatalogTreeNode;
+import jmri.CatalogTreeLeaf;
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
 import jmri.jmrit.display.Editor;

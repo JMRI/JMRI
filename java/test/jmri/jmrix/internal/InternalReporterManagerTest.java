@@ -2,8 +2,7 @@ package jmri.jmrix.internal;
 
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * Test the InternalReporterManager
@@ -18,8 +17,23 @@ public class InternalReporterManagerTest extends jmri.managers.AbstractReporterM
     public String getSystemName(String i) {
         return "IR" + i;
     }
+    
+    @Override
+    protected String getASystemNameWithNoPrefix() {
+        return "My Reporter 6";
+    }
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -28,7 +42,7 @@ public class InternalReporterManagerTest extends jmri.managers.AbstractReporterM
         l = new InternalReporterManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

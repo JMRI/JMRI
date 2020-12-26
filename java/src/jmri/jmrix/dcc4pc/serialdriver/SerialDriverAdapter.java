@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.dcc4pc.Dcc4PcConnectionTypeList;
 import jmri.jmrix.dcc4pc.Dcc4PcPortController;
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
@@ -88,7 +88,8 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
     }
 
     /**
-     * Option 1 controls the connection used for programming
+     * Option 1 controls the connection used for programming.
+     * @return array with options for programming.
      */
     public String[] validOption1() {
         List<SystemConnectionMemo> connList = jmri.InstanceManager.getList(SystemConnectionMemo.class);
@@ -115,6 +116,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
     /**
      * Get a String that says what Option 2 represents May be an empty string,
      * but will not be null
+     * @return option to match detected locos to roster.
      */
     public String option2Name() {
         return "Match Detected Locos to Roster: ";
@@ -184,6 +186,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
     InputStream serialStream = null;
 
     /**
+     * @return instance.
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated

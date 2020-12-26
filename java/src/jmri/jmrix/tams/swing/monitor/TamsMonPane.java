@@ -114,7 +114,9 @@ public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListe
 
     /**
      * Nested class to create one of these using old-style defaults
+     * @deprecated since 4.19.7; use {@link TamsMonPaneAction} instead
      */
+    @Deprecated
     static public class Default extends jmri.jmrix.tams.swing.TamsNamedPaneAction {
 
         public Default() {

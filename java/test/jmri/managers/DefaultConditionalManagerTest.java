@@ -8,10 +8,9 @@ import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.managers.DefaultConditionalManager class.
@@ -46,8 +45,18 @@ public class DefaultConditionalManagerTest extends AbstractManagerTestBase<jmri.
         Assert.assertTrue(c1.getUserName().equals("Foo"));
         Assert.assertTrue(c2.getUserName().equals("Foo"));
     }
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -68,7 +77,7 @@ public class DefaultConditionalManagerTest extends AbstractManagerTestBase<jmri.
         l = new DefaultConditionalManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         l = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();

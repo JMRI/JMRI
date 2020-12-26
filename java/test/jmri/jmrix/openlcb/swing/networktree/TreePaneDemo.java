@@ -1,14 +1,14 @@
 package jmri.jmrix.openlcb.swing.networktree;
 
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JFrame;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.openlcb.AbstractConnection;
 import org.openlcb.Connection;
 import org.openlcb.EventID;
@@ -55,7 +55,7 @@ public class TreePaneDemo {
 
     MimicNodeStore store;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         store = new MimicNodeStore(connection, nid1);
         Message msg = new ProducerIdentifiedMessage(nid1, eventA, EventState.Unknown);
@@ -87,7 +87,7 @@ public class TreePaneDemo {
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         if (!GraphicsEnvironment.isHeadless()) {
             frame.setVisible(false);

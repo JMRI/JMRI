@@ -1,10 +1,12 @@
 package jmri.jmrix.rfid;
 
 import javax.annotation.Nonnull;
+
 import jmri.Reporter;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.rfid.RfidReporterManager class
@@ -80,8 +82,18 @@ public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     @NotApplicable("Abstract Class under test, test does not apply")
     public void testReporterProvideByNumber() {
     }
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -100,7 +112,7 @@ public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

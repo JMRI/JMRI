@@ -128,11 +128,12 @@ public class EditCircuitFrame extends EditFrame implements PropertyChangeListene
 
         String[] blurbLines = { Bundle.getMessage("DragOccupancySensor", Bundle.getMessage("DetectionSensor")),
                                 Bundle.getMessage("DragErrorName", Bundle.getMessage("ErrorSensor"))};
-        _pickTable = new OpenPickListButton<>(blurbLines, PickListModel.sensorPickModelInstance(), this);
+        _pickTable = new OpenPickListButton<>(blurbLines, PickListModel.sensorPickModelInstance(),
+                this, Bundle.getMessage("OpenPicklist", Bundle.getMessage("BeanNameSensor")));
         contentPane.add(_pickTable.getButtonPanel());
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
 
-        _lengthPanel = new LengthPanel(_homeBlock, "blockLength");
+        _lengthPanel = new LengthPanel(_homeBlock, LengthPanel.BLOCK_LENGTH);
         _lengthPanel.changeUnits();
         _lengthPanel.setLength(_homeBlock.getLengthMm());
         contentPane.add(_lengthPanel);

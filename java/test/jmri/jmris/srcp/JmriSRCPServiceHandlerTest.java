@@ -16,7 +16,7 @@ public class JmriSRCPServiceHandlerTest {
     @Test
     public void testCTor() {
         JmriSRCPServiceHandler t = new JmriSRCPServiceHandler(42);
-        assertThat(t).isNotNull().withFailMessage("exists");
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
 
     @BeforeEach

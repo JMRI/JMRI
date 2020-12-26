@@ -1,10 +1,9 @@
 package jmri.jmrix.nce.simulator;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -38,13 +37,13 @@ public class SimulatorAdapterTest {
        Assert.assertEquals("no currentbaudrate set for simulator","", adapter.getCurrentBaudRate());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         adapter = new SimulatorAdapter();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
         adapter.dispose();

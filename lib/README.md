@@ -34,6 +34,16 @@ which checks the dates of the control files to make sure they've benen updated w
 
 ### Specific components:
 
+##### apiguardian-api-1.1.0.jar
+- version 1.1.0
+- provides Javadoc markers of API stability
+- from https://github.org/apiguardian-team/apiguardian
+
+##### jetty-*.jar
+- version 9.4.28.v20200408
+- provides the HTTP and WebSocket servers
+- from https://search.maven.org/search?q=g:org.eclipse.jetty%20v:9.4.28.v20200428
+
 ##### jsplitbutton-1.3.1.jar
 - version 1.3.1
 - provides a Swing split button
@@ -105,8 +115,9 @@ which checks the dates of the control files to make sure they've benen updated w
 - JSON Schema validation library
 - from https://github.com/networknt/json-schema-validator/releases
 
-##### mqtt-client-0.4.0.jar
-starting in JMRI 4.11.5
+##### org.eclipse.paho.client.mqttv3-1.2.5.jar
+ - Eclipse Paho library  https://www.eclipse.org/paho/
+ - mqtt-client-0.4.0.jar starting in JMRI 4.11.5, move to 1.2.5 in JMRI 4.21.3
 
 ##### BlueCove access to bluetooth
 bluecove-2.1.1-SNAPSHOT.jar
@@ -281,6 +292,14 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - Usage info at https://github.com/phamernik/i18nchecker/blob/master/README.md
 - Additional useful information at https://blogs.oracle.com/geertjan/entry/i18nchecker and https://blogs.oracle.com/geertjan/entry/i18nchecker_part_2
 
+##### PlantUML
+- plantuml.jar
+    was from plantuml.org, now from https://github.com/plantuml/plantuml.git
+- umldoclet.jar
+    downloaded as umldoclet-2.0.10-javadoc.jar
+    from https://github.com/talsma-ict/umldoclet/releases
+    see https://github.com/talsma-ict/umldoclet
+    
 ##### rscbundlecheck.jar
 - check for duplicated properties
 
@@ -313,12 +332,12 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - Only needed at compile/build time, not runtime
 - http://repo1.maven.org/maven2/com/github/spotbugs/spotbugs-annotations/3.1.7/
 
-##### UmlGraph-5.7
-- from http://www.umlgraph.org/download.html
-- only used for ant javadoc-uml
-
 
 ## Older, no longer present:
+
+##### UmlGraph-5.7
+- from http://www.umlgraph.org/download.html
+- only used for ant javadoc-uml with earlier Java
 
 ##### javacsv.jar
 - version 2.0

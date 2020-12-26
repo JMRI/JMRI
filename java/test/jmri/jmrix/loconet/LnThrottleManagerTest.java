@@ -1,13 +1,12 @@
 package jmri.jmrix.loconet;
 
-import jmri.DccLocoAddress;
-import jmri.DccThrottle;
-import jmri.InstanceManager;
-import jmri.ThrottleListener;
+import jmri.*;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +35,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
     @Test
     @Override
-    @Ignore("parent class test requires further setup")
+    @Disabled("parent class test requires further setup")
     @ToDo("complete initialization and remove this overriden method so that the parent class test can run")
     public void testGetThrottleInfo() {
     }
@@ -54,15 +53,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
             }
 
             @Override
@@ -117,7 +107,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
     @Test
     public void testCreateLnThrottleRunAndDispatch() {
-        tm = memo.throttleManager;
+        tm = memo.get(ThrottleManager.class);
         ThrottleListener throtListen = new ThrottleListener() {
             @Override
             public void notifyThrottleFound(DccThrottle t) {
@@ -129,15 +119,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
             }
 
             @Override
@@ -226,15 +207,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
-            }
 
             @Override
             public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
@@ -319,15 +291,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 failedThrottleRequest = true;
                 log.error("Throttle request failed for {} because {}", address, reason);
             }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
-            }
 
             @Override
             public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
@@ -374,15 +337,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 failedThrottleRequest = true;
                 log.error("Throttle request failed for {} because {}", address, reason);
             }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
-            }
 
             @Override
             public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
@@ -428,15 +382,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 failedThrottleRequest = true;
                 log.error("Throttle request failed for {} because {}", address, reason);
             }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
-            }
 
             @Override
             public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
@@ -469,7 +414,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
     @Test
     public void testCreateLnThrottleStealScenario4() {
         throttle = null;
-        tm = memo.throttleManager;
+        tm = memo.get(ThrottleManager.class);
 
         ThrottleListener throtListen = new ThrottleListener() {
             @Override
@@ -482,15 +427,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
             }
 
             @Override
@@ -526,7 +462,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
     @Test
     public void testCreateLnThrottleStealScenario5() {
         throttle = null;
-        tm = memo.throttleManager;
+        tm = memo.get(ThrottleManager.class);
 
         ThrottleListener throtListen = new ThrottleListener() {
             @Override
@@ -539,15 +475,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
             }
 
             @Override
@@ -580,7 +507,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
     @Test
     public void testCreateLnThrottleStealScenario7() {
         throttle = null;
-        tm = memo.throttleManager;
+        tm = memo.get(ThrottleManager.class);
 
         ThrottleListener throtListen = new ThrottleListener() {
             @Override
@@ -593,15 +520,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
             }
 
             @Override
@@ -643,7 +561,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         // . release "throttle"
 
         throttle = null;
-        tm = memo.throttleManager;
+        tm = memo.get(ThrottleManager.class);
 
         ThrottleListener throtListen = new ThrottleListener() {
             @Override
@@ -656,15 +574,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
             }
 
             @Override
@@ -688,15 +597,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle2 request failed for {} because {}", address, reason);
                 failedThrottleRequest2 = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
             }
 
             @Override
@@ -718,10 +618,19 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
         Assert.assertEquals("count is correct", 1, lnis.outbound.size());
         LocoNetMessage cmdStationReply = new LocoNetMessage(new int[] {
-                0xe7, 0x0e, 0x9, 0x00, 0x04, 0x0, 0x0, 0x7, 0x0, 0x02, 0x00, 0x13, 0x01, 0x53});  // slot is in-use
+                0xe7, 0x0e, 0x9, 0x00, 0x04, 0x0, 0x0, 0x7, 0x0, 0x02, 0x00, 0x13, 0x01, 0x53});  // slot is free
         lnis.sendTestMessage(cmdStationReply);
         Assert.assertNotNull("Throttle should be created and non-null", throttle);
+
         jmri.util.JUnitAppender.assertErrorMessage("created a throttle");
+
+        // send it to INUSE
+        Assert.assertEquals("NUll move",
+                "BA 09 09 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        cmdStationReply = new LocoNetMessage(new int[] {
+                0xe7, 0x0e, 0x9, 0x30, 0x04, 0x0, 0x0, 0x7, 0x0, 0x02, 0x00, 0x13, 0x01, 0x53});  // slot is in-use
+        lnis.sendTestMessage(cmdStationReply);
 
         int netTxMsgCount = lnis.outbound.size()-1;
 
@@ -737,8 +646,9 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         Assert.assertEquals("sent speed message",
                 "A0 09 44 00", lnis.outbound.elementAt(lnis.outbound.size() -1). toString());
         Assert.assertEquals("only one new loconet message", netTxMsgCount +1, lnis.outbound.size()-1);
+        lnis.outbound.clear();
         tm.releaseThrottle(throttle2, throtListen2);
-        Assert.assertEquals("No loconet traffic at throttle2 release", netTxMsgCount +1, lnis.outbound.size()-1);
+        Assert.assertEquals("No loconet traffic at throttle2 release", 0, lnis.outbound.size());
 
         Assert.assertTrue("Address still required",
                 InstanceManager.throttleManagerInstance().addressStillRequired(260));
@@ -746,10 +656,16 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         tm.releaseThrottle(throttle, throtListen);
         Assert.assertFalse("Address no longer required",
                 InstanceManager.throttleManagerInstance().addressStillRequired(new DccLocoAddress(260, true)));
-
-        Assert.assertEquals("One loconet message sent at throttle release", netTxMsgCount +2, lnis.outbound.size()-1);
-        Assert.assertEquals("sent set slot status to COMMON message",
-                "B5 09 10 00", lnis.outbound.elementAt(lnis.outbound.size() -1). toString());
+        // Wait for 2 messages, the set slot common and then the get slot refresh
+        JUnitUtil.waitFor(() -> {
+            return lnis.outbound.size() > 0;
+        },"wait for message");
+        JUnitUtil.waitFor(() -> {
+            return !lnis.outbound.elementAt(lnis.outbound.size() -1).toString().equals("B5 09 10 00");
+        }, "COMMON");
+        JUnitUtil.waitFor(() -> {
+            return !lnis.outbound.elementAt(lnis.outbound.size() -1).toString().equals("BB 09 00 00");
+        }, "Slot read");
 
         throtListen = null;
         throtListen2 = null;
@@ -767,7 +683,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         // . release "throttle2"
 
         throttle = null;
-        tm = memo.throttleManager;
+        tm = memo.get(ThrottleManager.class);
 
         ThrottleListener throtListen = new ThrottleListener() {
             @Override
@@ -780,15 +696,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
             }
 
             @Override
@@ -812,15 +719,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle2 request failed for {} because {}", address, reason);
                 failedThrottleRequest2 = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
             }
 
             @Override
@@ -848,6 +746,16 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         Assert.assertNotNull("Throttle should be created and non-null", throttle);
         jmri.util.JUnitAppender.assertErrorMessage("created a throttle");
 
+        // send it to INUSE
+        Assert.assertEquals("NUll move",
+                "BA 09 09 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        cmdStationReply = new LocoNetMessage(new int[] {
+                0xe7, 0x0e, 0x09, 0x30, 0x05, 0x0, 0x0, 0x7, 0x0, 0x02, 0x00, 0x13, 0x01, 0x53});  // slot is in-use
+        lnis.sendTestMessage(cmdStationReply);
+
+        lnis.outbound.clear();
+
         int netTxMsgCount = lnis.outbound.size()-1;
 
         tm.requestThrottle(260, throtListen2, true);  // An additional user of the same throttle
@@ -862,9 +770,9 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         Assert.assertEquals("sent speed message",
                 "A0 09 44 00", lnis.outbound.elementAt(lnis.outbound.size() -1). toString());
 
-        Assert.assertEquals("only one new loconet message", 2, lnis.outbound.size()-1);
+        Assert.assertEquals("only one new loconet message", 1, lnis.outbound.size());
         tm.dispatchThrottle(throttle2, throtListen2); // this fails as loco is in use on multiple throttles
-        Assert.assertEquals("Message Count still 2", 2, lnis.outbound.size()-1);
+        Assert.assertEquals("Message Count still 1", 1, lnis.outbound.size());
         Assert.assertEquals("Usage Count 2", 2,
                 InstanceManager.throttleManagerInstance().getThrottleUsageCount(new DccLocoAddress(260, true)));
         Assert.assertTrue("Address still required",
@@ -881,18 +789,27 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         tm.releaseThrottle(throttle, throtListen);
         Assert.assertTrue("Address still required",
                 InstanceManager.throttleManagerInstance().addressStillRequired(new DccLocoAddress(260, true)));
-
+        //reset outbound.
+        lnis.outbound.clear();
         tm.dispatchThrottle(throttle2, throtListen2);
         Assert.assertFalse("Address no longer required",
                 InstanceManager.throttleManagerInstance().addressStillRequired(new DccLocoAddress(260, true)));
-        Assert.assertEquals("slot is set to 'common' status",
-                "B5 09 10 00",
-                lnis.outbound.elementAt(4).toString());
-        Assert.assertEquals("Expect the slot to be dispatched",
-                "BA 09 00 00",
-                lnis.outbound.elementAt(5).toString());
 
-        Assert.assertEquals("No more loconet messages sent at throttle release", 6, lnis.outbound.size()-1);
+        // Wait for 3 messages, the set slot common and then the get slot refresh
+        JUnitUtil.waitFor(() -> {
+            return lnis.outbound.size() > 0;
+        },"wait for message");
+        JUnitUtil.waitFor(() -> {
+            return !lnis.outbound.elementAt(lnis.outbound.size() -1).toString().equals("B5 09 10 00");
+        }, "COMMON");
+        JUnitUtil.waitFor(() -> {
+            return !lnis.outbound.elementAt(lnis.outbound.size() -1).toString().equals("BA 09 00 00");
+        }, "DISPATCH");
+        JUnitUtil.waitFor(() -> {
+            return !lnis.outbound.elementAt(lnis.outbound.size() -1).toString().equals("BB 09 00 00");
+        }, "Slot read");
+
+        Assert.assertEquals("No more loconet messages sent at throttle release", 3, lnis.outbound.size()-1);
 
         throtListen = null;
         throtListen2 = null;
@@ -911,7 +828,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         // release "throttle3"
 
         throttle = null;
-        tm = memo.throttleManager;
+        tm = memo.get(ThrottleManager.class);
 
         ThrottleListener throtListen = new ThrottleListener() {
             @Override
@@ -924,15 +841,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
             }
 
             @Override
@@ -957,15 +865,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 log.error("Throttle2 request failed for {} because {}", address, reason);
                 failedThrottleRequest2 = true;
             }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
-            }
 
             @Override
             public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
@@ -988,15 +887,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle3 request failed for {} because {}", address, reason);
                 failedThrottleRequest3 = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
             }
 
             @Override
@@ -1022,6 +912,14 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         lnis.sendTestMessage(cmdStationReply);
         Assert.assertNotNull("Throttle should be created and non-null", throttle);
         jmri.util.JUnitAppender.assertErrorMessage("created a throttle");
+
+        // send it to INUSE
+        Assert.assertEquals("NUll move",
+                "BA 0A 0A 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        cmdStationReply = new LocoNetMessage(new int[] {
+                0xe7, 0x0e, 0x0A, 0x30, 0x05, 0x0, 0x0, 0x7, 0x0, 0x02, 0x00, 0x13, 0x01, 0x53});  // slot is in-use
+        lnis.sendTestMessage(cmdStationReply);
 
         int netTxMsgCount = lnis.outbound.size()-1;
 
@@ -1097,7 +995,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         // . release "throttle"
 
         throttle = null;
-        tm = memo.throttleManager;
+        tm = memo.get(ThrottleManager.class);
 
         ThrottleListener throtListen = new ThrottleListener() {
             @Override
@@ -1110,15 +1008,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
             }
 
             @Override
@@ -1143,15 +1032,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle2 request failed for {} because {}", address, reason);
                 failedThrottleRequest2 = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
             }
 
             @Override
@@ -1223,7 +1103,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
     
     @Test 
     public void testUseRosterEntry() {
-        tm = memo.throttleManager; 
+        tm = memo.get(ThrottleManager.class);
         org.jdom2.Element e = new org.jdom2.Element("locomotive")
                 .setAttribute("id", "our id 1")
                 .setAttribute("fileName", "file here")
@@ -1252,15 +1132,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle4 request failed for {} because {}", address, reason);
                 failedThrottleRequest4 = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
             }
 
             @Override
@@ -1330,7 +1201,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
     LocoNetSystemConnectionMemo memo;
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new LocoNetSystemConnectionMemo();
@@ -1342,10 +1213,11 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         log.debug("new throttle manager is {}", tm.toString());
         memo.getSensorManager().dispose(); // get rid of sensor manager to prevent it from sending interrogation messages
         memo.getPowerManager().dispose(); // get rid of power manager to prevent it from sending slot 0 read message
+        memo.getPredefinedMeters().dispose(); // get rid of meter to prevent it reading slots
         flagGotStealRequest = -1;
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         ((LnThrottleManager)tm).dispose();
         memo.dispose();

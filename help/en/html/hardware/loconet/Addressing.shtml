@@ -724,7 +724,7 @@
       <a name="SVs" id="SVs"></a>
       <h2>Addressing LocoNet Device "System Variables" (SVs)</h2>
       <p>(The following was first fully available in <a href=
-      "http://jmri.org/releasenotes/jmri4.1.2.shtml">JMRI
+      "https://jmri.org/releasenotes/jmri4.1.2.shtml">JMRI
       4.1.2</a>. Versions before that may not be complete).</p>
 
       <p>Like decoders store Configuration Variables (CVs) to hold
@@ -924,7 +924,7 @@
       <a name="boards" id="boards"></a>
       <h2>Addressing "Op Switches" in Digitrax boards</h2>
       <p>(The following was first fully available in <a href=
-      "http://jmri.org/releasenotes/jmri4.9.7.shtml">JMRI
+      "https://jmri.org/releasenotes/jmri4.9.7.shtml">JMRI
       4.9.7</a>. Versions before that may not be complete).</p>
 
         <p>Digitrax PM4, BDL168, SE8c and
@@ -947,7 +947,7 @@
 
       <h2>Addressing "Op Switches" in Digitrax command stations</h2>
       <p>(The following was first fully available in <a href=
-      "http://jmri.org/releasenotes/jmri4.9.7.shtml">JMRI
+      "https://jmri.org/releasenotes/jmri4.9.7.shtml">JMRI
       4.9.7</a>. Versions before that may not be complete).</p>
 
         <p>Digitrax command stations use a special messaging protocol to program their Op

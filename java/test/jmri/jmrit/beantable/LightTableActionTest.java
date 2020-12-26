@@ -1,18 +1,19 @@
 package jmri.jmrit.beantable;
 
 import jmri.util.gui.GuiLafPreferencesManager;
+
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import jmri.*;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -533,7 +534,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
 
         Light created = lightManager.provideLight("IL444");
         Assert.assertEquals("1 Control", 1, created.getLightControlList().size());
-        Assert.assertEquals("Correct Light Control Type and Settings", "ON for 20 msec. when ISS2 goes Active.",
+        Assert.assertEquals("Correct Light Control Type and Settings", "ON for 20 ms when ISS2 goes Active.",
                 LightTableAction.getDescriptionText(created.getLightControlList().get(0),
                         created.getLightControlList().get(0).getControlType()));
 
@@ -572,7 +573,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         // light edit frame closes
 
         // light should now be updaed to S1
-        Assert.assertEquals("Correct Light Control Type", "ON for 777 msec. when ISS1 goes Active.",
+        Assert.assertEquals("Correct Light Control Type", "ON for 777 ms when ISS1 goes Active.",
                 LightTableAction.getDescriptionText(created.getLightControlList().get(0),
                         created.getLightControlList().get(0).getControlType()));
     }
@@ -734,7 +735,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         Assert.assertEquals("Message did not appear", toTest, lblFeedback.getText());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -751,7 +752,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         turnoutManager = InstanceManager.getDefault(TurnoutManager.class);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JFrame f = a.getFrame();

@@ -68,7 +68,9 @@
         <xs:element name="soundlabels" type="SoundLabelType" minOccurs="0" maxOccurs="1" />
         
         <xs:element name="attributepairs" type="AttributePairsType" minOccurs="0" maxOccurs="unbounded" />
-        
+
+        <xs:element name="speedprofile" type="SpeedProfileType" minOccurs="0" maxOccurs="1" />
+
         <xs:element name="values" minOccurs="0" maxOccurs="1">
           <xs:complexType>
             <xs:sequence>
@@ -178,6 +180,7 @@
     <xs:attribute name="family" type="xs:string" use="required"/>
     <xs:attribute name="model" type="xs:string" use="required"/>
     <xs:attribute name="comment" type="xs:string"/>
+    <xs:attribute name="maxFnNum" type="xs:int"/>
   </xs:complexType>
   
 
@@ -191,7 +194,6 @@
                   <xs:simpleType>
                     <xs:restriction base="xs:integer">
                       <xs:minInclusive value="0"/>
-                      <xs:maxInclusive value="28"/>
                     </xs:restriction>
                   </xs:simpleType>
                 </xs:attribute>
@@ -215,13 +217,34 @@
                   <xs:simpleType>
                     <xs:restriction base="xs:integer">
                       <xs:minInclusive value="0"/>
-                      <xs:maxInclusive value="28"/>
                     </xs:restriction>
                   </xs:simpleType>
                 </xs:attribute>
             </xs:extension>
           </xs:simpleContent>
         </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="SpeedProfileType">
+    <xs:sequence>
+      <xs:element name="overRunTimeForward" type='xs:decimal' />
+        <xs:element name="overRunTimeReverse" type='xs:decimal' />
+        <xs:element name="speeds" minOccurs="0" maxOccurs="1" >
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="speed" minOccurs="1" maxOccurs="unbounded" >
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="step" type='xs:integer' />
+                    <xs:element name="forward" type='xs:decimal'/>
+                    <xs:element name="reverse" type='xs:decimal'/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
       </xs:element>
     </xs:sequence>
   </xs:complexType>

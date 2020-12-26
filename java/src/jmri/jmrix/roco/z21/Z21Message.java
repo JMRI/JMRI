@@ -57,6 +57,7 @@ public class Z21Message extends AbstractMRMessage {
      * This ctor interprets the String as the exact sequence to send,
      * byte-for-byte.
      *
+     * @param m message string.
      */
     public Z21Message(String m) {
         super(m);
@@ -80,6 +81,7 @@ public class Z21Message extends AbstractMRMessage {
      * This ctor interprets the byte array as a sequence of characters to send.
      *
      * @param a Array of bytes to send
+     * @param l unused.
      */
     public Z21Message(byte[] a, int l) {
         super(String.valueOf(a));

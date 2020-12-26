@@ -3,10 +3,9 @@ package jmri.implementation;
 import jmri.CommandStation;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the DccSignalMast implementation
@@ -42,7 +41,7 @@ public class DccSignalMastTest {
 
     // from here down is testing infrastructure
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
@@ -72,7 +71,7 @@ public class DccSignalMastTest {
     byte[] lastSentPacket;
     int sentPacketCount;
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

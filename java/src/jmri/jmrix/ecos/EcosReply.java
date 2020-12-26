@@ -53,7 +53,8 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
     int endAtElement = -1;
 
     /**
-     * Check for last line starts with {@code "<END "}
+     * Check for last line starts with {@code "<END "}.
+     * @return true if contains END, else false.
      */
     public boolean containsEnd() {
         for (int i = 0; i < getNumDataElements() - 6; i++) {
@@ -71,7 +72,8 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * returns -1 if the end code has not been found.
+     * Get the Result Code.
+     * @return result code, else -1 if the end code has not been found.
      */
     public int getResultCode() {
         if (!containsEnd()) {
@@ -96,6 +98,7 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * Is this EcosReply actually an independent {@code <EVENT} message?
+     * @return true if it is an independent message
      */
     boolean isEvent() {
         if (getNumDataElements() < 8) {
@@ -239,6 +242,7 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * get the contents of the reply, excluding the header and footer
+     * @return array with reply values.
      */
     public String[] getContents() {
         String[] lines = toString().split("\n");

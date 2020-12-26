@@ -2,8 +2,11 @@ package jmri.jmrit;
 
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+
 import jmri.DccLocoAddress;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of DccLocoAddressSelector
@@ -117,14 +120,14 @@ public class DccLocoAddressSelectorTest {
         Assert.assertEquals("check updated type ", false, sel.getAddress().isLongAddress());
     }
 
-    @Before 
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDebugThrottleManager();
         sel = new DccLocoAddressSelector();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         sel = null;
         jmri.util.JUnitUtil.tearDown();

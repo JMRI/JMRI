@@ -3,8 +3,11 @@ package jmri.util;
 import java.beans.*;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+
 import jmri.*;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.util.PropertyChangeEventQueue class.
@@ -74,7 +77,7 @@ public class PropertyChangeEventQueueTest {
     Sensor is2;
     volatile boolean flag1;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.initInternalSensorManager();
@@ -83,7 +86,7 @@ public class PropertyChangeEventQueueTest {
         flag1 = false;
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }

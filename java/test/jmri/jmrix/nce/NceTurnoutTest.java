@@ -2,7 +2,9 @@ package jmri.jmrix.nce;
 
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnoutTestBase;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.nce.NceTurnout class
@@ -13,7 +15,7 @@ public class NceTurnoutTest extends AbstractTurnoutTestBase {
 
     private NceTrafficControlScaffold tcis = null;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         super.setUp();
@@ -23,7 +25,7 @@ public class NceTurnoutTest extends AbstractTurnoutTestBase {
         t = new NceTurnout(tcis, "NT", 4);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         // prepare an interface
@@ -80,7 +82,8 @@ public class NceTurnoutTest extends AbstractTurnoutTestBase {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);
         // 2004 eprom output:
         // Assert.assertEquals("content", "93 02 81 FE 7F", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
-        Assert.assertEquals("content", "AD 00 04 04 00", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROWN message
+        Assert.assertEquals("content",
+                "AD 00 04 04 00", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROWN message
     }
 
     @Override
@@ -88,7 +91,8 @@ public class NceTurnoutTest extends AbstractTurnoutTestBase {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);
         // 2004 eprom output:
         //Assert.assertEquals("content", "93 02 81 FF 7E", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
-        Assert.assertEquals("content", "AD 00 04 03 00", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // CLOSED message
+        Assert.assertEquals("content",
+                "AD 00 04 03 00", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // CLOSED message
     }
 
 }

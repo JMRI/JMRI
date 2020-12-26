@@ -2,7 +2,9 @@ package jmri.jmrit.ussctc;
 
 import jmri.util.JUnitUtil;
 import jmri.*;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for VetoedBell class in the jmri.jmrit.ussctc package
@@ -54,7 +56,7 @@ public class VetoedBellTest {
     Sensor veto;
     Turnout bellTurnout;
     
-    @org.junit.Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -65,7 +67,7 @@ public class VetoedBellTest {
         bellTurnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1"); bellTurnout.setUserName("Bell output");
     }
 
-    @org.junit.After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -403,11 +403,22 @@ public class Transit extends AbstractNamedBean {
             }
         }
         ArrayList<Block> internalBlocks = getInternalBlocksList();
-        for (int i = internalBlocks.size(); i > 0; i--) {
-            if (blockSecSeqList.get(i - 1) > startSeq) {
-                // could stop in this block, keep it
-                list.add(internalBlocks.get(i - 1));
-                destBlocksSeqList.add(blockSecSeqList.get(i - 1));
+        //allow for transits of length 1
+        if (startInTransit) {
+            for (int i = internalBlocks.size(); i > 0; i--) {
+                if (blockSecSeqList.get(i - 1) > startSeq) {
+                    // could stop in this block, keep it
+                    list.add(internalBlocks.get(i - 1));
+                    destBlocksSeqList.add(blockSecSeqList.get(i - 1));
+                }
+            }
+        } else {
+            for (int i = internalBlocks.size(); i > 0; i--) {
+                if (blockSecSeqList.get(i - 1) >= startSeq) {
+                    // could stop in this block, keep it
+                    list.add(internalBlocks.get(i - 1));
+                    destBlocksSeqList.add(blockSecSeqList.get(i - 1));
+                }
             }
         }
         return list;
@@ -479,7 +490,9 @@ public class Transit extends AbstractNamedBean {
      * @param panel the panel to check against
      * @return 0 if all Sections have all required signals or the number of
      *         Sections missing required signals; -1 if the panel is null
+     * @deprecated 4.19.7 Without replacement, as moved to DispatcherFrame, its only usage
      */
+    @Deprecated // for removal 4.19.7 Without replacement, as moved to DispatcherFrame, its only usage
     public int checkSignals(LayoutEditor panel) {
         if (panel == null) {
             log.error("checkSignals called with a null LayoutEditor panel");
@@ -499,8 +512,11 @@ public class Transit extends AbstractNamedBean {
      *
      * @param panel the panel containing Sections to validate
      * @return number of invalid sections or -1 if panel if null
+     * @deprecated 4.19.7 Without replacement, as moved to DispatcherFrame, its only usage
      */
+    @Deprecated // for removal 4.19.7 Without replacement, as moved to DispatcherFrame, its only usage
     public int validateConnectivity(LayoutEditor panel) {
+        jmri.util.LoggingUtil.deprecationWarning(log, "validateConnectivity");
         if (panel == null) {
             log.error("validateConnectivity called with a null LayoutEditor panel");
             return -1;
