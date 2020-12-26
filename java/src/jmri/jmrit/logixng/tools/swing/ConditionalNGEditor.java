@@ -50,7 +50,7 @@ public class ConditionalNGEditor extends TreeEditor {
             public void disconnected(FemaleSocket socket) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
-        }, "A"), false);
+        }, "A"), false, false);
         _conditionalNG = null;
     }
     
@@ -60,7 +60,7 @@ public class ConditionalNGEditor extends TreeEditor {
      * @param conditionalNG the ConditionalNG to be edited
      */
     public ConditionalNGEditor(@Nonnull ConditionalNG conditionalNG) {
-        super(conditionalNG.getFemaleSocket(), true);
+        super(conditionalNG.getFemaleSocket(), true, false);
         
         _conditionalNG = conditionalNG;
         

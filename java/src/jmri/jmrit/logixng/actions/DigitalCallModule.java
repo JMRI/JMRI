@@ -24,7 +24,7 @@ import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 public class DigitalCallModule extends AbstractDigitalAction implements VetoableChangeListener {
 
     private NamedBeanHandle<Module> _moduleHandle;
-    private final Map<String, ParameterData> _parameterData = new HashMap<>();
+    private final List<ParameterData> _parameterData = new ArrayList<>();
     
     public DigitalCallModule(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -39,10 +39,9 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
         if (sysName == null) sysName = manager.getAutoSystemName();
         DigitalCallModule copy = new DigitalCallModule(sysName, userName);
         if (_moduleHandle != null) copy.setModule(_moduleHandle);
-        for (Map.Entry<String, ParameterData> entry : _parameterData.entrySet()) {
-            ParameterData data = entry.getValue();
+        for (ParameterData data : _parameterData) {
             copy.addParameter(
-                    entry.getKey(),
+                    data.getName(),
                     data.getInitalValueType(),
                     data.getInitialValueData(),
                     data.getReturnValueType(),
@@ -169,13 +168,13 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
         int currentStackPos = InstanceManager.getDefault(LogixNG_Manager.class).getStack().getCount();
         
         DefaultSymbolTable newSymbolTable = new DefaultSymbolTable();
-        newSymbolTable.createSymbols(_parameterData.values());
+        newSymbolTable.createSymbols(_parameterData);
         newSymbolTable.createSymbols(module.getLocalVariables());
         InstanceManager.getDefault(LogixNG_Manager.class).setSymbolTable(newSymbolTable);
         
         ((FemaleDigitalActionSocket)femaleSocket).execute();
         
-        returnSymbols(newSymbolTable, _parameterData.values());
+        returnSymbols(newSymbolTable, _parameterData);
         
         InstanceManager.getDefault(LogixNG_Manager.class).getStack().setCount(currentStackPos);
         
@@ -240,7 +239,7 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
             ReturnValueType returnValueType,
             String returnValueData) {
         
-        _parameterData.put(name,
+        _parameterData.add(
                 new Module.ParameterData(
                         name,
                         initialValueType,
@@ -249,12 +248,12 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
                         returnValueData));
     }
     
-    public void removeParameter(String name) {
-        _parameterData.remove(name);
-    }
+//    public void removeParameter(String name) {
+//        _parameterData.remove(name);
+//    }
     
-    public Map<String, ParameterData> getParameterData() {
-        return Collections.unmodifiableMap(_parameterData);
+    public List<ParameterData> getParameterData() {
+        return _parameterData;
     }
     
     

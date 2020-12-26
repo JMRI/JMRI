@@ -36,7 +36,7 @@ public interface Module extends Base, NamedBean {
     
     public Collection<Parameter> getParameters();
     
-    public Collection<ParameterData> getLocalVariables();
+    public Collection<VariableData> getLocalVariables();
     
     
     /**
@@ -84,6 +84,12 @@ public interface Module extends Base, NamedBean {
             
             _returnValueType = returnValueType;
             _returnValueData = returnValueData;
+        }
+        
+        public ParameterData(ParameterData data) {
+            super(data._name, data._initalValueType, data._initialValueData);
+            _returnValueType = data._returnValueType;
+            _returnValueData = data._returnValueData;
         }
         
         public ReturnValueType getReturnValueType() {

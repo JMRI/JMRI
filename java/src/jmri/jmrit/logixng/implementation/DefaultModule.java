@@ -14,6 +14,7 @@ import jmri.jmrit.logixng.Module.Parameter;
 import jmri.jmrit.logixng.Module.ParameterData;
 import jmri.jmrit.logixng.ModuleManager;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
+import jmri.jmrit.logixng.SymbolTable.VariableData;
 
 /**
  * The default implementation of LogixNG.
@@ -29,7 +30,7 @@ public class DefaultModule extends AbstractBase
     private String _socketSystemName = null;
     private final List<Parameter> _parameters = new ArrayList<>();
 //    private final Map<String, Parameter> _parameters = new HashMap<>();
-    private final List<ParameterData> _localVariables = new ArrayList<>();
+    private final List<VariableData> _localVariables = new ArrayList<>();
 //    private final Map<String, ParameterData> _localVariables = new HashMap<>();
     private Lock _lock = Lock.NONE;
     
@@ -237,12 +238,10 @@ public class DefaultModule extends AbstractBase
             InitialValueType initialValueType,
             String initialValueData) {
         
-        _localVariables.add(new ParameterData(
+        _localVariables.add(new VariableData(
                 name,
                 initialValueType,
-                initialValueData,
-                ReturnValueType.None,
-                null));
+                initialValueData));
     }
     
 //    @Override
@@ -256,7 +255,7 @@ public class DefaultModule extends AbstractBase
     }
     
     @Override
-    public List<ParameterData> getLocalVariables() {
+    public List<VariableData> getLocalVariables() {
         return _localVariables;
     }
     

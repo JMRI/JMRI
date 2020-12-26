@@ -72,6 +72,7 @@ public class TreeEditor extends TreeViewer {
     private LocalVariableTableModel _localVariableTableModel;
     
     private final boolean _enableClipboard;
+    private final boolean _disableRootRemoveCutCopy;
     
     
     /**
@@ -79,10 +80,16 @@ public class TreeEditor extends TreeViewer {
      *
      * @param femaleRootSocket the root of the tree
      * @param enableClipboard true if clipboard should be on the menu
+     * @param disableRootRemoveCutCopy true if the popup menu items remove,
+     *                                  cut and copy should be disabled
      */
-    public TreeEditor(@Nonnull FemaleSocket femaleRootSocket, boolean enableClipboard) {
+    public TreeEditor(
+            @Nonnull FemaleSocket femaleRootSocket,
+            boolean enableClipboard,
+            boolean disableRootRemoveCutCopy) {
         super(femaleRootSocket);
         _enableClipboard = enableClipboard;
+        _disableRootRemoveCutCopy = disableRootRemoveCutCopy;
     }
     
     @Override
@@ -1119,10 +1126,10 @@ public class TreeEditor extends TreeViewer {
                     && !femaleSocket.isAncestor(clipboard.getTopItem());
             
             menuItemAdd.setEnabled(!isConnected);
-            menuItemRemove.setEnabled(isConnected);
+            menuItemRemove.setEnabled(isConnected && !_disableRootRemoveCutCopy);
             menuItemEdit.setEnabled(isConnected);
-            menuItemCut.setEnabled(isConnected);
-            menuItemCopy.setEnabled(isConnected);
+            menuItemCut.setEnabled(isConnected && !_disableRootRemoveCutCopy);
+            menuItemCopy.setEnabled(isConnected && !_disableRootRemoveCutCopy);
             menuItemPaste.setEnabled(!isConnected && canConnectFromClipboard);
             
             for (FemaleSocketOperation oper : FemaleSocketOperation.values()) {

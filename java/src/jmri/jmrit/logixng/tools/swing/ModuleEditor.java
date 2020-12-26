@@ -47,7 +47,7 @@ public class ModuleEditor extends TreeEditor implements AbstractLogixNGEditor<Mo
     public ModuleEditor(BeanTableFrame<Module> f,
             BeanTableDataModel<Module> m, String sName) {
         
-        super(setupRootSocket(sName), true);
+        super(setupRootSocket(sName), true, true);
 /*        
         super(new RootSocket(null, new FemaleSocketListener() {
             @Override
