@@ -34,7 +34,6 @@ public class ModuleParametersTableModel extends AbstractTableModel {
     
     
     public ModuleParametersTableModel(@Nonnull Module module) {
-        module.getParameters();
         for (Parameter v : module.getParameters()) {
             _parameters.add(new DefaultParameter(v));
         }
