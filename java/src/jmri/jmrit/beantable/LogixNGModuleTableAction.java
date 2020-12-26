@@ -127,18 +127,15 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
     @Override
     protected Module createBean(String userName) {
         Module module = InstanceManager.getDefault(ModuleManager.class)
-                .createModule(userName);
-        module.setRootSocketType(
-                _femaleSocketType.getItemAt(_femaleSocketType.getSelectedIndex()));
+                .createModule(userName, _femaleSocketType.getItemAt(_femaleSocketType.getSelectedIndex()));
         return module;
     }
     
     @Override
     protected Module createBean(String systemName, String userName) {
         Module module = InstanceManager.getDefault(ModuleManager.class)
-                .createModule(systemName, userName);
-        module.setRootSocketType(
-                _femaleSocketType.getItemAt(_femaleSocketType.getSelectedIndex()));
+                .createModule(systemName, userName,
+                        _femaleSocketType.getItemAt(_femaleSocketType.getSelectedIndex()));
         return module;
     }
     

@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.SymbolTable.VariableData;
  */
 public interface Module extends Base, NamedBean {
     
-    public void setRootSocketType(FemaleSocketManager.SocketType socketType);
+//    public void setRootSocketType(FemaleSocketManager.SocketType socketType);
     
     public FemaleSocketManager.SocketType getRootSocketType();
     
@@ -23,14 +23,16 @@ public interface Module extends Base, NamedBean {
     
     public void addParameter(String name, boolean isInput, boolean isOutput);
     
-    public void removeParameter(String name);
+    public void addParameter(Parameter parameter);
+    
+//    public void removeParameter(String name);
     
     public void addLocalVariable(
             String name,
             SymbolTable.InitialValueType initialValueType,
             String initialValueData);
     
-    public void removeLocalVariable(String name);
+//    public void removeLocalVariable(String name);
     
     public Collection<Parameter> getParameters();
     

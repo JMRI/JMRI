@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.implementation.configurexml;
 
 import jmri.InstanceManager;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.ModuleManager;
 import jmri.jmrit.logixng.implementation.DefaultModule;
@@ -31,9 +32,10 @@ public class DefaultModuleXml extends jmri.managers.configurexml.AbstractNamedBe
         Element element = new Element("module");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-//        element.addContent(new Element("fileName").addContent(p.getFileName()));
         
         storeCommon(p, element);
+        
+        element.addContent(new Element("rootSocketType").addContent(p.getRootSocketType().getName()));
         
         return element;
     }
@@ -42,8 +44,15 @@ public class DefaultModuleXml extends jmri.managers.configurexml.AbstractNamedBe
     public boolean load(Element shared, Element perNode) {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-//        String fileName = shared.getChild("fileName").getTextTrim();
-        Module h = InstanceManager.getDefault(ModuleManager.class).createModule(sys, uname);
+        
+        String rootSocketTypeName = shared.getChild("rootSocketType").getTextTrim();
+        
+        FemaleSocketManager.SocketType socketType =
+                InstanceManager.getDefault(FemaleSocketManager.class)
+                        .getSocketTypeByType(rootSocketTypeName);
+        
+        Module h = InstanceManager.getDefault(ModuleManager.class)
+                .createModule(sys, uname, socketType);
         
         loadCommon(h, shared);
         

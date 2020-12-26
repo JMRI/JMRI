@@ -61,6 +61,22 @@ public interface SymbolTable {
      */
     public void printSymbolTable(java.io.PrintStream stream);
     
+    /**
+     * Validates the name of a symbol
+     * @param name the name
+     * @return true if the name is valid, false otherwise
+     */
+    public static boolean validateName(String name) {
+        if (name.isEmpty()) return false;
+        if (!Character.isLetter(name.charAt(0))) return false;
+        for (int i=0; i < name.length(); i++) {
+            if (!Character.isLetterOrDigit(name.charAt(i)) || (name.charAt(i) == '_')) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
     
     
     /**
@@ -110,7 +126,7 @@ public interface SymbolTable {
     
     
     /**
-     * Data for a parameter.
+     * Data for a variable.
      */
     public static class VariableData {
         

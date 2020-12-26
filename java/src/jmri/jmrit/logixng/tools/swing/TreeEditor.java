@@ -711,24 +711,50 @@ public class TreeEditor extends TreeViewer {
             // Edit ConditionalNG
             _edit = new JButton(Bundle.getMessage("ButtonOK"));  // NOI18N
             _edit.addActionListener((ActionEvent e) -> {
-                _femaleRootSocket.unregisterListeners();
-                
-                maleSocket.clearLocalVariables();
-                for (SymbolTable.VariableData variableData : _localVariableTableModel.getVariables()) {
-                    maleSocket.addLocalVariable(variableData);
+                List<String> errorMessages = new ArrayList<>();
+                boolean hasErrors = false;
+                for (SymbolTable.VariableData v : _localVariableTableModel.getVariables()) {
+                    if (v.getName().isEmpty()) {
+                        errorMessages.add(Bundle.getMessage("VariableNameIsEmpty", v.getName()));
+                        hasErrors = true;
+                    }
+                    if (! SymbolTable.validateName(v.getName())) {
+                        errorMessages.add(Bundle.getMessage("VariableNameIsNotValid", v.getName()));
+                        hasErrors = true;
+                    }
                 }
                 
-                _editLocalVariablesDialog.dispose();
-                _editLocalVariablesDialog = null;
-                for (TreeModelListener l : femaleSocketTreeModel.listeners) {
-                    TreeModelEvent tme = new TreeModelEvent(
-                            femaleSocket,
-                            path.getPath()
-                    );
-                    l.treeNodesChanged(tme);
+                if (hasErrors) {
+                    StringBuilder errorMsg = new StringBuilder();
+                    for (String s : errorMessages) {
+                        if (errorMsg.length() > 0) errorMsg.append("<br>");
+                        errorMsg.append(s);
+                    }
+                    JOptionPane.showMessageDialog(null,
+                            Bundle.getMessage("ValidateErrorMessage", errorMsg),
+                            Bundle.getMessage("ValidateErrorTitle"),
+                            JOptionPane.ERROR_MESSAGE);
+                    
+                } else {
+                    _femaleRootSocket.unregisterListeners();
+                    
+                    maleSocket.clearLocalVariables();
+                    for (SymbolTable.VariableData variableData : _localVariableTableModel.getVariables()) {
+                        maleSocket.addLocalVariable(variableData);
+                    }
+                    
+                    _editLocalVariablesDialog.dispose();
+                    _editLocalVariablesDialog = null;
+                    for (TreeModelListener l : femaleSocketTreeModel.listeners) {
+                        TreeModelEvent tme = new TreeModelEvent(
+                                femaleSocket,
+                                path.getPath()
+                        );
+                        l.treeNodesChanged(tme);
+                    }
+                    tree.updateUI();
+                    if (_femaleRootSocket.isActive()) _femaleRootSocket.registerListeners();
                 }
-                tree.updateUI();
-                if (_femaleRootSocket.isActive()) _femaleRootSocket.registerListeners();
             });
 //            _edit.setToolTipText(Bundle.getMessage("EditButtonHint"));  // NOI18N
             

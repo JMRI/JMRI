@@ -94,15 +94,14 @@ public class StoreAndLoadTest {
         
         // Create module IQM1
         jmri.jmrit.logixng.Module module =
-                InstanceManager.getDefault(ModuleManager.class).createModule("IQM1", null);
+                InstanceManager.getDefault(ModuleManager.class).createModule("IQM1", null,
+                        InstanceManager.getDefault(FemaleSocketManager.class)
+                                .getSocketTypeByType("DefaultFemaleDigitalActionSocket"));
         
         module.addParameter("n", true, false);
         module.addParameter("result", false, true);
         module.addLocalVariable("temp1", SymbolTable.InitialValueType.None, null);
         module.addLocalVariable("temp2", SymbolTable.InitialValueType.None, null);
-        
-        module.setRootSocketType(InstanceManager.getDefault(FemaleSocketManager.class)
-                .getSocketTypeByType("DefaultFemaleDigitalActionSocket"));
         
         DigitalMany many901 = new DigitalMany("IQDA901", null);
         MaleSocket manySocket901 =

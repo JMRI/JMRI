@@ -195,14 +195,20 @@ public class DefaultSymbolTable implements SymbolTable {
     
     public static class DefaultParameter implements Parameter {
         
-        private final String _name;
-        private final boolean _isInput;
-        private final boolean _isOutput;
+        private String _name;
+        private boolean _isInput;
+        private boolean _isOutput;
         
         public DefaultParameter(String name, boolean isInput, boolean isOutput) {
             _name = name;
             _isInput = isInput;
             _isOutput = isOutput;
+        }
+        
+        public DefaultParameter(Parameter parameter) {
+            _name = parameter.getName();
+            _isInput = parameter.isInput();
+            _isOutput = parameter.isOutput();
         }
         
         /** {@inheritDoc} */
@@ -211,16 +217,28 @@ public class DefaultSymbolTable implements SymbolTable {
             return _name;
         }
         
+        public void setName(String name) {
+            _name = name;
+        }
+        
         /** {@inheritDoc} */
         @Override
         public boolean isInput() {
             return _isInput;
         }
         
+        public void setIsInput(boolean value) {
+            _isInput = value;
+        }
+        
         /** {@inheritDoc} */
         @Override
         public boolean isOutput() {
             return _isOutput;
+        }
+        
+        public void setIsOutput(boolean value) {
+            _isOutput = value;
         }
         
     }

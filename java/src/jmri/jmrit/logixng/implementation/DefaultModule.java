@@ -3,10 +3,7 @@ package jmri.jmrit.logixng.implementation;
 import static jmri.NamedBean.UNKNOWN;
 
 import java.io.PrintWriter;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -17,7 +14,6 @@ import jmri.jmrit.logixng.Module.Parameter;
 import jmri.jmrit.logixng.Module.ParameterData;
 import jmri.jmrit.logixng.ModuleManager;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
-import jmri.jmrit.logixng.SymbolTable.VariableData;
 
 /**
  * The default implementation of LogixNG.
@@ -28,16 +24,26 @@ public class DefaultModule extends AbstractBase
         implements Module, FemaleSocketListener {
     
     
-    private FemaleSocketManager.SocketType _rootSocketType;
-    private FemaleSocket _femaleRootSocket;
+    private final FemaleSocketManager.SocketType _rootSocketType;
+    private final FemaleSocket _femaleRootSocket;
     private String _socketSystemName = null;
-    private final Map<String, Parameter> _parameters = new HashMap<>();
-    private final Map<String, ParameterData> _localVariables = new HashMap<>();
+    private final List<Parameter> _parameters = new ArrayList<>();
+//    private final Map<String, Parameter> _parameters = new HashMap<>();
+    private final List<ParameterData> _localVariables = new ArrayList<>();
+//    private final Map<String, ParameterData> _localVariables = new HashMap<>();
     private Lock _lock = Lock.NONE;
     
     
-    public DefaultModule(String sys, String user) throws BadUserNameException, BadSystemNameException  {
+    public DefaultModule(String sys, String user, FemaleSocketManager.SocketType socketType)
+            throws BadUserNameException, BadSystemNameException  {
+        
         super(sys, user);
+        
+        _rootSocketType = socketType;
+        _femaleRootSocket = socketType.createSocket(this, this, "Root");
+        
+        // Listeners should never be enabled for a module
+        _femaleRootSocket.setEnableListeners(false);
         
         // Do this test here to ensure all the tests are using correct system names
         Manager.NameValidity isNameValid = InstanceManager.getDefault(ModuleManager.class).validSystemNameFormat(mSystemName);
@@ -81,7 +87,51 @@ public class DefaultModule extends AbstractBase
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage("DefaultModule_Long", getDisplayName());
+        StringBuilder sb = new StringBuilder(Bundle.getMessage("DefaultModule_Long", getDisplayName()));
+        if (! _parameters.isEmpty()) {
+            List<String> inParams = new ArrayList<>();
+            List<String> outParams = new ArrayList<>();
+            List<String> inOutParams = new ArrayList<>();
+            
+            for (Parameter p : _parameters) {
+                if (p.isInput() && p.isOutput()) inOutParams.add(p.getName());
+                else if (p.isInput()) inParams.add(p.getName());
+                else if (p.isOutput()) outParams.add(p.getName());
+                else throw new RuntimeException("Parameter "+p.getName()+" is neither in or out");
+            }
+            sb.append(" ::: ");
+            
+            boolean addComma = false;
+            for (int i=0; i < inParams.size(); i++) {
+                if (i==0) {
+                    sb.append(Bundle.getMessage("DefaultModuleParamInput"));
+                    addComma = true;
+                }
+                else sb.append(", ");
+                sb.append(inParams.get(i));
+            }
+            
+            if (addComma) sb.append(", ");
+            addComma = false;
+            
+            for (int i=0; i < outParams.size(); i++) {
+                if (i==0) {
+                    sb.append(Bundle.getMessage("DefaultModuleParamOuput"));
+                    addComma = true;
+                }
+                else sb.append(", ");
+                sb.append(outParams.get(i));
+            }
+            
+            if (addComma) sb.append(", ");
+            
+            for (int i=0; i < inOutParams.size(); i++) {
+                if (i==0) sb.append(Bundle.getMessage("DefaultModuleParamInputOutput"));
+                else sb.append(", ");
+                sb.append(inOutParams.get(i));
+            }
+        }
+        return sb.toString();
     }
 
     @Override
@@ -144,7 +194,7 @@ public class DefaultModule extends AbstractBase
 
         _femaleRootSocket.printTree(locale, writer, indent, currentIndent+indent);
     }
-    
+/*    
     @Override
     public void setRootSocketType(FemaleSocketManager.SocketType socketType) {
         if ((_femaleRootSocket != null) && _femaleRootSocket.isConnected()) throw new RuntimeException("Cannot set root socket when it's connected");
@@ -155,7 +205,7 @@ public class DefaultModule extends AbstractBase
         // Listeners should never be enabled for a module
         _femaleRootSocket.setEnableListeners(false);
     }
-    
+*/    
     @Override
     public FemaleSocketManager.SocketType getRootSocketType() {
         return _rootSocketType;
@@ -168,42 +218,46 @@ public class DefaultModule extends AbstractBase
     
     @Override
     public void addParameter(String name, boolean isInput, boolean isOutput) {
-        _parameters.put(name, new DefaultSymbolTable.DefaultParameter(name, isInput, isOutput));
+        _parameters.add(new DefaultSymbolTable.DefaultParameter(name, isInput, isOutput));
     }
     
     @Override
-    public void removeParameter(String name) {
-        _parameters.remove(name);
+    public void addParameter(Parameter parameter) {
+        _parameters.add(parameter);
     }
+    
+//    @Override
+//    public void removeParameter(String name) {
+//        _parameters.remove(name);
+//    }
     
     @Override
     public void addLocalVariable(
             String name,
-            SymbolTable.InitialValueType initialValueType,
+            InitialValueType initialValueType,
             String initialValueData) {
         
-        _localVariables.put(name,
-                new ParameterData(
-                        name,
-                        initialValueType,
-                        initialValueData,
-                        ReturnValueType.None,
-                        null));
+        _localVariables.add(new ParameterData(
+                name,
+                initialValueType,
+                initialValueData,
+                ReturnValueType.None,
+                null));
+    }
+    
+//    @Override
+//    public void removeLocalVariable(String name) {
+//        _localVariables.remove(name);
+//    }
+    
+    @Override
+    public List<Parameter> getParameters() {
+        return _parameters;
     }
     
     @Override
-    public void removeLocalVariable(String name) {
-        _localVariables.remove(name);
-    }
-    
-    @Override
-    public Collection<Parameter> getParameters() {
-        return _parameters.values();
-    }
-    
-    @Override
-    public Collection<ParameterData> getLocalVariables() {
-        return _localVariables.values();
+    public List<ParameterData> getLocalVariables() {
+        return _localVariables;
     }
     
     @Override

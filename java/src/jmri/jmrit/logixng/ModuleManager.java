@@ -18,9 +18,11 @@ public interface ModuleManager extends Manager<Module> {
      *
      * @param systemName the system name
      * @param userName   the user name
+     * @param socketType the socket type
      * @return a new Module or null if unable to create
      */
-    public Module createModule(String systemName, String userName)
+    public Module createModule(String systemName, String userName,
+            FemaleSocketManager.SocketType socketType)
             throws IllegalArgumentException;
     
     /**
@@ -28,9 +30,10 @@ public interface ModuleManager extends Manager<Module> {
      * the user can optionally supply a username.
      *
      * @param userName the user name
+     * @param socketType the socket type
      * @return a new Module or null if unable to create
      */
-    public Module createModule(String userName)
+    public Module createModule(String userName, FemaleSocketManager.SocketType socketType)
             throws IllegalArgumentException;
     
     /**

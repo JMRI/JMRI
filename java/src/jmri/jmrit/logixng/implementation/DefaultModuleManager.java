@@ -27,42 +27,29 @@ public class DefaultModuleManager extends AbstractManager<Module>
         InstanceManager.getDefault(LogixNGPreferences.class);
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getXMLOrder() {
         return LOGIXNGS;
     }
 
+    /** {@inheritDoc} */
     @Override
     public char typeLetter() {
         return 'Q';
     }
 
-    /**
-     * Test if parameter is a properly formatted system name.
-     *
-     * @param systemName the system name
-     * @return enum indicating current validity, which might be just as a prefix
-     */
+    /** {@inheritDoc} */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
         return LogixNG_Manager.validSystemNameFormat(
                 getSubSystemNamePrefix(), systemName);
-//        if (systemName.matches(getSubSystemNamePrefix()+"(:AUTO:)?\\d+")) {
-//            return NameValidity.VALID;
-//        } else {
-//            return NameValidity.INVALID;
-//        }
     }
 
-    /**
-     * Method to create a new Module if the Module does not exist.
-     * <p>
-     * Returns null if
-     * a Logix with the same systemName or userName already exists, or if there
-     * is trouble creating a new Module.
-     */
+    /** {@inheritDoc} */
     @Override
-    public Module createModule(String systemName, String userName)
+    public Module createModule(String systemName, String userName,
+            FemaleSocketManager.SocketType socketType)
             throws IllegalArgumentException {
         
         // Check that Module does not already exist
@@ -82,7 +69,7 @@ public class DefaultModuleManager extends AbstractManager<Module>
             throw new IllegalArgumentException("SystemName " + systemName + " is not in the correct format");
         }
         // Module does not exist, create a new Module
-        x = new DefaultModule(systemName, userName);
+        x = new DefaultModule(systemName, userName, socketType);
         // save in the maps
         register(x);
         
@@ -92,11 +79,13 @@ public class DefaultModuleManager extends AbstractManager<Module>
         return x;
     }
 
+    /** {@inheritDoc} */
     @Override
-    public Module createModule(String userName) throws IllegalArgumentException {
-        return createModule(getAutoSystemName(), userName);
+    public Module createModule(String userName, FemaleSocketManager.SocketType socketType) throws IllegalArgumentException {
+        return createModule(getAutoSystemName(), userName, socketType);
     }
     
+    /** {@inheritDoc} */
     @Override
     public Module getModule(String name) {
         Module x = getByUserName(name);
@@ -106,11 +95,13 @@ public class DefaultModuleManager extends AbstractManager<Module>
         return getBySystemName(name);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Module getByUserName(String name) {
         return _tuser.get(name);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Module getBySystemName(String name) {
         return _tsys.get(name);
@@ -138,26 +129,14 @@ public class DefaultModuleManager extends AbstractManager<Module>
         }
     }
 
-    /*.* {@inheritDoc} *./
-    @Override
-    public void activateAllLogixNGs() {
-        for (Module logixNG : _tsys.values()) {
-            logixNG.activateLogixNG();
-        }
-    }
-*/
+    /** {@inheritDoc} */
     @Override
     public void deleteModule(Module x) {
         // delete the Module
         deregister(x);
         x.dispose();
     }
-/*
-    @Override
-    public void setLoadDisabled(boolean s) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-*/    
+    
     /** {@inheritDoc} */
     @Override
     public void printTree(PrintWriter writer, String indent) {
@@ -188,6 +167,7 @@ public class DefaultModuleManager extends AbstractManager<Module>
         return (_instance);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Class<Module> getNamedBeanClass() {
         return Module.class;
