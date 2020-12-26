@@ -17,6 +17,9 @@ import org.slf4j.LoggerFactory;
  * drives a test App. It controls reading from a .hex file, feeding the
  * information to a LocoMonFrame (monitor) and connecting to a LocoGenFrame (for
  * sending a few commands).
+ * Note that running a simulated LocoNet connection, {@link HexFileFrame#configure()} will substitute the
+ * {@link jmri.progdebugger.ProgDebugger} for the {@link jmri.jmrix.loconet.LnOpsModeProgrammer}
+ * overriding the readCV and writeCV methods.
  *
  * @author Bob Jacobsen Copyright 2001, 2002
  * @author i18n Egbert Broerse 2017

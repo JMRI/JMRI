@@ -4,6 +4,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 import jmri.jmrix.loconet.LnConstants;
+import jmri.jmrix.loconet.LnOpsModeProgrammer;
 import jmri.jmrix.loconet.LocoNetMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -610,6 +611,7 @@ public class LnSv2MessageContents {
 
     /**
      * Create a LocoNet message containing an SV Programming Format 2 message.
+     * See Programmer message code in {@link jmri.jmrix.loconet.LnOpsModeProgrammer} loadSV2MessageFormat
      *
      * @param source  source device address (7 bit, for &lt;SRC&gt;)
      * @param command  SV Programming Format 2 command number (for &lt;SV_CMD&gt;)

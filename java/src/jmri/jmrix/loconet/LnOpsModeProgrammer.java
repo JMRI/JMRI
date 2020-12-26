@@ -10,10 +10,29 @@ import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 import jmri.beans.PropertyChangeSupport;
+import jmri.jmrix.loconet.hexfile.HexFileFrame;
+import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
+
+import static jmri.jmrix.loconet.uhlenbrock.LncvMessageContents.createCvReadRequest;
+import static jmri.jmrix.loconet.uhlenbrock.LncvMessageContents.createCvWriteRequest;
 
 /**
  * Provide an Ops Mode Programmer via a wrapper that works with the LocoNet
  * SlotManager object.
+ * Specific handling for message formats:
+ * <ul>
+ * <li>LOCONETOPSBOARD</li>
+ * <li>LOCONETSV1MODE</li>
+ * <li>LOCONETSV2MODE</li>
+ * <li>LOCONETLNCVMODE</li>
+ * <li>LOCONETBDOPSWMODE</li>
+ * <li>LOCONETCSOPSWMODE</li>
+ * </ul>
+ * as defined in {@link LnProgrammerManager}
+ *
+ * Note that running a simulated LocoNet connection, {@link HexFileFrame#configure()} will substitute the
+ * {@link jmri.progdebugger.ProgDebugger} for the {@link jmri.jmrix.loconet.LnOpsModeProgrammer},
+ * overriding {@link #readCV(String, ProgListener)} and {@link #writeCV(String, int, ProgListener)}.
  *
  * @see jmri.Programmer
  * @author Bob Jacobsen Copyright (C) 2002
@@ -125,6 +144,24 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             memo.getLnTrafficController().sendLocoNetMessage(m);
 
             sv2AccessTimer.start();
+        } else if (getMode().equals(LnProgrammerManager.LOCONETLNCVMODE)) {
+            /*
+             * CV format is e.g. "5033.12" where the first part defines the
+             * article number (type/module class) for the board and the second is the specific bit number.
+             * Modules without their own art. no. use 65535 (broadcast mode).
+             */
+            // Board programming mode
+            log.debug("write CV \"{}\" to {} addr:{}", CV, val, mAddress);
+            String[] parts = CV.split("\\.");
+            int artNum = Integer.parseInt(parts[0]);
+            int cvNum = Integer.parseInt(parts[parts.length>1 ? 1 : 0]);
+            p = pL;
+            // LNCV mode
+            log.debug("write CV \"{}\" to {} addr:{}", cvNum, val, artNum);
+            // make message
+            m = createCvWriteRequest(artNum, cvNum, val); // module must be in Programming mode (handled by LNCV tool)
+            log.debug("  Message {}", m);
+            memo.getLnTrafficController().sendLocoNetMessage(m);
         } else {
             // DCC ops mode
             memo.getSlotManager().writeCVOpsMode(CV, val, pL, mAddress, mLongAddr);
@@ -159,7 +196,8 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
                 initializeBdOpsAccessTimer();
             }
             p = pL;
-            doingWrite = false;
+            doingWrite = false; // prevents verify read after write as long as
+            // TODO numberformat "113.12" is not supported by ProgDebugger.
             // Board programming mode
             log.debug("read CV \"{}\" addr:{}", CV, mAddress);
             parts = CV.split("\\.");
@@ -213,6 +251,26 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             memo.getLnTrafficController().sendLocoNetMessage(m);
 
             sv2AccessTimer.start();
+        } else if (getMode().equals(LnProgrammerManager.LOCONETLNCVMODE)) {
+            /*
+             * CV format is e.g. "5033.12" where the first part defines the
+             * article number (type/module class) for the board and the second is the specific bit number.
+             * Modules without their own art. no. use 65535 (broadcast mode).
+             */
+            // Board programming mode
+            log.debug("read CV \"{}\" addr:{}", CV, mAddress);
+            parts = CV.split("\\.");
+            int artNum = Integer.parseInt(parts[0]);
+            int cvNum = Integer.parseInt(parts[parts.length>1 ? 1 : 0]);
+            doingWrite = false; // prevents verify read after write as long as
+            // TODO numberformat "113.12" is not supported by ProgDebugger.
+            p = pL;
+            // LNCV mode
+            log.debug("read CV \"{}\" addr:{}", CV, mAddress);
+            // make message
+            m = createCvReadRequest(artNum, cvNum, mAddress); // module must be in Programming mode (handled by LNCV tool)
+            log.debug("  Message {}", m);
+            memo.getLnTrafficController().sendLocoNetMessage(m);
         } else {
             // DCC ops mode
             memo.getSlotManager().readCVOpsMode(CV, pL, mAddress, mLongAddr);
@@ -231,10 +289,14 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             memo.getSlotManager().readCV(CV, pL); // deal with this via service-mode programmer
         } else if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
             readCV(CV, pL);
-        }
-        else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
+        } else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
             // SV2 mode
             log.warn("confirm CV \"{}\" addr:{} in SV2 mode not implemented", CV, mAddress);
+            notifyProgListenerEnd(pL, 0, ProgListener.UnknownError);
+        } else if (getMode().equals(LnProgrammerManager.LOCONETLNCVMODE)) {
+            // LNCV (Uhlenbrock) mode
+            log.warn("confirm CV \"{}\" addr:{} in LNCV mode not (yet) implemented", CV, mAddress);
+            // readCV(CV, pL); TODO
             notifyProgListenerEnd(pL, 0, ProgListener.UnknownError);
         } else {
             // DCC ops mode
@@ -371,6 +433,14 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
         }
     }
 
+    /** Fill in an SV2 format LocoNet message from parameters provided.
+     * Compare to SV2 message handler in {@link LnSv2MessageContents#createSv2Message(int, int, int, int, int, int, int, int)}
+     *
+     * @param m         Base LocoNet message to fill
+     * @param mAddress  Destination board address
+     * @param cvAddr    Dest. board CV number
+     * @param data      Value to put into CV
+     */
     void loadSV2MessageFormat(LocoNetMessage m, int mAddress, int cvAddr, int data) {
         m.setElement(0, LnConstants.OPC_PEER_XFER);
         m.setElement(1, 0x10);
@@ -449,6 +519,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
         ret.add(LnProgrammerManager.LOCONETOPSBOARD);
         ret.add(LnProgrammerManager.LOCONETSV1MODE);
         ret.add(LnProgrammerManager.LOCONETSV2MODE);
+        ret.add(LnProgrammerManager.LOCONETLNCVMODE);
         ret.add(LnProgrammerManager.LOCONETBDOPSWMODE);
         ret.add(LnProgrammerManager.LOCONETCSOPSWMODE);
         return ret;

@@ -265,7 +265,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         List<ProgrammingMode> modes = new ArrayList<>();
         if (getProgrammer() != null) {
             modes.addAll(programmer.getSupportedModes());
-        } else {
+        } else if (progBox.getSelectedItem() != null) {
             modes.addAll(((AddressedProgrammerManager) progBox.getSelectedItem()).getDefaultModes());
         }
         // add OPSACCBYTEMODE & OPSACCEXTBYTEMODE if possible
@@ -329,21 +329,11 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
                         opsSigMode = true;
                         lnSv2Mode = false ;
                         lncvMode = false ;
-                    } else if (mode == LnProgrammerManager.LOCONETLNCVMODE) {
-                        log.debug("OPS LNCV was selected in actionPerformed");
-                        opsAccyMode = false;
-                        opsSigMode = false;
-                        lnSv2Mode = false ;
-                        lncvMode = true ;
                     } else {
                         opsAccyMode = false;
                         opsSigMode = false;
-                        lncvMode = false ;
-                        if (mode == LnProgrammerManager.LOCONETSV2MODE) {
-                            lnSv2Mode = true ;
-                        } else {
-                            lnSv2Mode = false ;
-                        }
+                        lnSv2Mode = (mode == LnProgrammerManager.LOCONETSV2MODE);
+                        lncvMode = (mode == LnProgrammerManager.LOCONETLNCVMODE);
                         getProgrammer().setMode(mode);
                     }
                 }
@@ -358,8 +348,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
      *
      * @param programmer The type of programmer (i.e. Byte Mode)
      */
-    void setProgrammerFromGui(Programmer programmer
-    ) {
+    void setProgrammerFromGui(Programmer programmer) {
         for (Map.Entry<ProgrammingMode, JRadioButton> entry : buttonMap.entrySet()) {
             if (entry.getValue().isSelected()) {
                 if (entry.getKey() == ProgrammingMode.OPSACCBYTEMODE) {
@@ -374,21 +363,11 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
                     opsSigMode = true;
                     lnSv2Mode = false;
                     lncvMode = false;
-                } else if (entry.getKey() == LnProgrammerManager.LOCONETLNCVMODE) {
-                    log.debug("OPS LNCV was selected in setProgrammerFromGui");
-                    opsAccyMode = false;
-                    opsSigMode = false;
-                    lnSv2Mode = false;
-                    lncvMode = true;
                 } else {
                     opsAccyMode = false;
                     opsSigMode = false;
-                    lncvMode = false;
-                    if (entry.getKey() == LnProgrammerManager.LOCONETSV2MODE) {
-                        lnSv2Mode = true;
-                    } else {
-                        lnSv2Mode = false;
-                    }
+                    lnSv2Mode = (entry.getKey() == LnProgrammerManager.LOCONETSV2MODE);
+                    lncvMode = (entry.getKey() == LnProgrammerManager.LOCONETLNCVMODE);
                     getProgrammer().setMode(entry.getKey());
                 }
             }

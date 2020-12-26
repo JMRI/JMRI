@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- Copyright Bob Jacobsen 2008 -->
 
 <html lang="en">
 <head>
@@ -16,24 +15,41 @@
     <div id="mainContent">
 
       <h1>LocoNet LNCV Programming Pane</h1>
+
       <p>The "Configure LNCV Modules" tool lets you access and program all connected
       LocoNet devices that respond to the (Uhlenbrock) LNCV protocol.<br>
+        Examples are the Uhlenbrock xxx and Digikeijs DR5033 booster.
       You find the tool in the LocoNet menu as long as a LocoNet connection is available.</p>
 
       <p>As the tool is still under development, we advice to use it in combination with the "Show Raw Data"
-        option in the <a href="../locomon/LocoMonFrame.shtml">LocoNet
-          Monitor</a> to check for any additional responses rejected by the LNCV filters.</p>
+        option in the <a href="../locomon/LocoMonFrame.shtml">LocoNet Monitor</a> to check for any additional
+        responses rejected by the LNCV filters.</p>
 
-      <p>Simply click "Open Programming Session" to start a session.</p>
-      <p>To close a session, click "Leave Programming Session".</p>
-      <p>Unless a session is running, LNCV modules will not respond to Read/Write commands.</p>
+      <p>Unless a session is running, LNCV modules will not respond to Read/Write commands (and the buttons are
+        disabled).</p>
 
-      <p>LNCV Programming requires entry of an Article (model) number provided in the manufacturer's documentation.<br>
-        Enter the number eg. 5033 in the "Article" field before proceeding.</p>
-      <p>After opening a session, the "Open Module Programming" is active. To close the programming of a
-        module, click the same button, that now reads "Stop Module Programming".</p>
+      <h2>Module LNCV Programming</h2>
+      <p>LNCV Programming requires entry of an Article (model) number as provided in the manufacturer's
+        documentation.<br>
+        Enter the number eg. 5033 in the "Article" field before proceeding.<br>
+      Also, enter the Module Address in the corresponding field.</p>
 
-      <p>Responses will be listed in the table (under development).</p>
+      <p>After opening a session, the "Open Module Programming" stays highlighted amd the Read and Write buttons are
+        enabled. To close the programming of a module, click the same button, that now reads "Stop Module Programming"
+        .</p>
+      <p>Enter a CV number and click Read, or a CV number plus a new value to set in the CV, and click Write.</p>
+
+      <p>LNCV Responses coming back from the layout will be listed in the table (under development).</p>
+
+    <h2>Broadcast LNCV Programming</h2>
+      <p>Click "Start Broadcast Programming" to start a session.</p>
+      <p>To close a Broadcast session, click "Leave Broadcast Programming".</p>
+
+      <p>Using the universal address 65535 you can, as the name suggests, call up all mobile station Adapters.
+      As the universal address is not valid for addressing various mobile station adapters, it can only
+      be used to call up an individual adapter for which the address is unknown.
+      For this you connect the said adapter to the LocoNet. The adapter can then be called up and its address
+        read from LNCV 0.</p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div>
