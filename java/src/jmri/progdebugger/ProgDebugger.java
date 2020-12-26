@@ -10,7 +10,6 @@ import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 import jmri.beans.PropertyChangeSupport;
-import jmri.jmrix.loconet.LnProgrammerManager;
 import jmri.jmrix.loconet.hexfile.HexFileFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +25,8 @@ import org.slf4j.LoggerFactory;
  * CV is made.
  * <p>
  * Only supports the DCC single-number address space, should be updated to handle
- * any string address. As a temporary fix we simply discard the first part of any CV name containg "." and use hte rest.
+ * any string address. As a temporary fix we simply discard the first part of any CV name
+ * containing "." and use the rest.
  * TODO Fully support numberformat "113.12" in ProgDebugger (used in LOCONETLNCVMODE and LOCONETBDOPSWMODE)
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007, 2013

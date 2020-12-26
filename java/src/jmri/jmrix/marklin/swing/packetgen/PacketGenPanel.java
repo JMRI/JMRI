@@ -111,7 +111,7 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         String text = packetTextField.getText();
         // TODO check input + feedback on error. Too easy to cause NPE
-        if (text != null || !Objects.equals(text, "")) {
+        if (text != null && !Objects.equals(text, "")) {
             if (text.length() == 0) {
                 return; // no work
             }

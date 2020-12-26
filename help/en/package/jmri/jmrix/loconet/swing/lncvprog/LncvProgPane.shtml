@@ -29,27 +29,52 @@
         disabled).</p>
 
       <h2>Module LNCV Programming</h2>
-      <p>LNCV Programming requires entry of an Article (model) number as provided in the manufacturer's
-        documentation.<br>
-        Enter the number eg. 5033 in the "Article" field before proceeding.<br>
-      Also, enter the Module Address in the corresponding field.</p>
+      <p>LNCV Programming requires 3 elements to address an LNCV module on LocoNet:</p>
+      <ol>
+        <li>Article Number (aka type/class ID)</li>
+        <li>Module Address (optional, se below)</li>
+        <li>CV number</li>
+      </ol>
+      <p>Uhlenbrock and Digikeijs/Digirails publish the Article number for each (new) device. For example,
+      the Digikeijs DigiBoost DR5033 has Article number 5033, which was registered with Uhlenbrock.<br>
+      Enter the Article number eg. 5033 in the "Article" field before proceeding.<br>
+      Next, enter the Module Address in the corresponding field.</p>
 
-      <p>After opening a session, the "Open Module Programming" stays highlighted amd the Read and Write buttons are
-        enabled. To close the programming of a module, click the same button, that now reads "Stop Module Programming"
-        .</p>
-      <p>Enter a CV number and click Read, or a CV number plus a new value to set in the CV, and click Write.</p>
+      <p>After opening a programming session, the "Open Module Programming" stays highlighted and the Read and Write
+      buttons are enabled.<br>
+      To close the programming of a module, click the same button, that now reads "Stop Module Programming".<br>
+      While a programming session is runningm the button is highlighted and the Address field is not editable, to
+      prevent switching module address without first closing the session running. Note that changing the module
+      address stored in CV0 won't immediately halt the session, so be aware and close the current session before
+      opening a new session on the new address.</p>
 
       <p>LNCV Responses coming back from the layout will be listed in the table (under development).</p>
 
-    <h2>Broadcast LNCV Programming</h2>
+      <p>To read, enter a CV number in the fields on the right of the tool pane and click [Read] to see the value in the
+      Value field.<br>
+      To write, enter a CV number plus a new value to set in the CV, and click Write.</p>
+
+      <h2>Broadcast LNCV Programming</h2>
+      <p>Older LNCV devices may not have their own address, or even no article ID. They can be programmed using
+      Broadcast mode, but you have to be sure only one such device is powered, as they all would respond to
+      programming commands.</p>
       <p>Click "Start Broadcast Programming" to start a session.</p>
       <p>To close a Broadcast session, click "Leave Broadcast Programming".</p>
-
-      <p>Using the universal address 65535 you can, as the name suggests, call up all mobile station Adapters.
-      As the universal address is not valid for addressing various mobile station adapters, it can only
+      <p>Using the universal address 65535 (or leave the Article field empty) you can, as the name suggests, call up
+      all LNCV Adapters. As the universal address is not valid for addressing specific modules, it can only
       be used to call up an individual adapter for which the address is unknown.
       For this you connect the said adapter to the LocoNet. The adapter can then be called up and its address
-        read from LNCV 0.</p>
+      read from LNCV 0.</p>
+
+      <h2>LNCV Decoder definitions</h2>
+      Once an LNCV Module Programming session is running, you can switch to DecoderPro Roster and open the entry for
+      the module. Go to the LNCV tab to read and write the options supported by the device.
+      <p>Anyone interested in writing their own LNCV decoder definitions in JMRI, please note that LNCV programming
+      mode is <code>&lt;mode&gt;LOCONETLNCVMODE&lt;/mode&gt;</code>.<br>
+      To process LNCV commands in JMRI LnOpsProgrammer, elements 1. and 3. are combined into a single CV number as
+      "part_1.part_3".<br>
+      For example CV6 in the DR5033 is defined as: <code>&lt;variable CV="5033.6" readOnly="yes"
+      item="Temperature"&gt;</code></p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div>

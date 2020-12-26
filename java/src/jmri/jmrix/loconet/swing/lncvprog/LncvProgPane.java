@@ -17,16 +17,14 @@ import java.util.HashMap;
 
 /**
  * Frame for discovery and display of LocoNet LNCV boards.
- * Derived from xbee node config.
+ * Derived from xbee node config. Verified with Digikeijs DR5033 hardware.
  *
  * Some of the message formats used in this class are Copyright Uhlenbrock.de
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Uhlenbrock.
  *
- * @author Bob Jacobsen Copyright (C) 2004
- * @author Dave Duchamp Copyright (C) 2004
- * @author Paul Bender Copyright (C) 2013
+ * TODO add buttons in table rows to switch to DecoderPro ops mode programmer?
  * @author Egbert Broerse Copyright (C) 2020
  */
 public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements LocoNetListener {
@@ -267,8 +265,6 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
             statusText1.setText(Bundle.getMessage("FeedBackStopAllProg"));
             allProgButton.setText(Bundle.getMessage("ButtonStartAllProg"));
             allProgRunning = false;
-            // remove listener last to see message sent out
-            //memo.getLnTrafficController().removeLocoNetListener(~0, this);
             return;
         }
         try {
@@ -326,8 +322,6 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
                 modProgButton.setText(Bundle.getMessage("ButtonStartModProg"));
                 moduleProgRunning = -1;
                 addressField.setEditable(true);
-                // remove listener last to see message sent out, no reply expected
-                //memo.getLnTrafficController().removeLocoNetListener(~0, this);
             } catch (NumberFormatException e) {
                 statusText1.setText(Bundle.getMessage("FeedBackEnterArticle"));
                 modProgButton.setSelected(true);
@@ -477,12 +471,9 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
             modules.put(counter++, mod);
             log.debug("LNCV Added Module {}: {}", counter, foundMod);
             moduleTable.revalidate();
-            // query to get module address/all CV's/switch to DecoderPro tabs?
-            // for each module, ask address
-            //        for (module : modules.entrySet()) {
-            //            LocoNetMessage q = new createSv2DeviceDiscoveryReply();
-            //            //int section4 = contents.getSv2Address();
-            //        }
+            // enter returned value in Value field
+            valueField.setText(section3 + "");
+            valueField.setBackground(Color.YELLOW);
         }
 
         if (reply != null) {
