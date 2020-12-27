@@ -71,7 +71,7 @@ public final class DCCppConstants {
     // Special Commands not for normal use.  Diagnostic and Test Use Only
     public static final char WRITE_DCC_PACKET_MAIN  = 'M';
     public static final char WRITE_DCC_PACKET_PROG  = 'P';
-    public static final char GET_FREE_MEMORY        = 'F';
+//    public static final char GET_FREE_MEMORY        = 'F';
     public static final char LIST_REGISTER_CONTENTS = 'L';
     public static final char ENTER_DIAG_MODE_CMD    = 'D'; // Enter Diagnostics mode -- NEW V1.2?
  
@@ -127,7 +127,7 @@ public final class DCCppConstants {
     public static final String QUERY_SENSOR_REGEX = "\\s*[Q,q]\\s*(\\d+)\\s*";
     public static final String WRITE_DCC_PACKET_MAIN_REGEX = "M\\s+(\\d+)((\\s+[0-9a-fA-F]{1,2}){2,5})\\s*"; // M REG pktbyte1 pktbyte2 pktbyte3 ?pktbyte4 ?pktbyte5
     public static final String WRITE_DCC_PACKET_PROG_REGEX = "P\\s+(\\d+)((\\s+[0-9a-fA-F]{1,2}){2,5})\\s*"; // P REG pktbyte1 pktbyte2 pktbyte3 ?pktbyte4 ?pktbyte5
-    public static final String GET_FREE_MEMORY_REGEX = "\\s*f\\s*";
+//    public static final String GET_FREE_MEMORY_REGEX = "\\s*f\\s*";
     public static final String LIST_REGISTER_CONTENTS_REGEX = "\\s*L\\s*";
     public static final String ENTER_DIAG_MODE_REGEX = "\\s*D\\s*";
     public static final String READ_MAXNUMSLOTS_REGEX = "\\s*#\\s*";
@@ -157,10 +157,11 @@ public final class DCCppConstants {
 //    public static final String STATUS_REPLY_REGEX = "i(DCC\\+\\+.*): BUILD (.*)"; // V1.0
 //    public static final String STATUS_REPLY_REGEX = "i(DCC\\+\\+[^:]*): BUILD (.*)"; // V1.0 / V1.1
     public static final String STATUS_REPLY_REGEX =       "i(DCC\\+\\+[^:]*):(?:\\sBUILD)? (.*)"; // V1.0 / V1.1 / V1.2
+    public static final String STATUS_REPLY_BSC_REGEX =   "i(DCC\\+\\+.*): V-(.*)\\+\\s\\/\\s(.*)"; // BaseStation Classic
     public static final String STATUS_REPLY_ESP32_REGEX = "iDCC\\+\\+.*ESP32.*: V-([\\d\\.]+)\\s+/\\s+(.*)"; // V1.0
     public static final String STATUS_REPLY_DCCEX_REGEX = "i(DCC-EX) V-([\\d\\.]*).*G-(.*)"; 
     //public static final String STATUS_REPLY_REGEX = "i(DCC\\+\\+\\s?.*):\\s?(?:BUILD)? (.*)"; // V1.0 / V1.1 / V1.2
-    public static final String FREE_MEMORY_REPLY_REGEX =  "\\s*f\\s*(\\d+).*";
+//    public static final String FREE_MEMORY_REPLY_REGEX =  "\\s*f\\s*(\\d+).*";
     public static final String WRITE_EEPROM_REPLY_REGEX = "\\s*e\\s*(\\d+)\\s+(\\d+)\\s+(\\d+).*";
     public static final String COMM_TYPE_REPLY_REGEX =    "\\s*N\\s*(\\d+):\\s+((SERIAL)|(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})).*";
 

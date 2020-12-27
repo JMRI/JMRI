@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Base for classes representing a LocoNet communications port
+ * Base for classes representing a DCCpp communications port
  *
  * @author Kevin Dickerson Copyright (C) 2011
  * @author Mark Underwoodn Copyright (C) 2015
@@ -47,8 +47,6 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
         }
     }
     
-    // There are also "PR3 standalone programmer" and "Stand-alone LocoNet"
-    // in pr3/PR3Adapter
     /**
      * Set config info from a name, which needs to be one of the valid ones.
      * @param name exact name of command station type.
@@ -69,7 +67,7 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
      * @param value command station type.
      */
     public void setCommandStationType(int value) {
-        log.debug("setCommandStationType: {}{}", Integer.toString(value));
+        log.debug("setCommandStationType: {}", Integer.toString(value));
         commandStationType = value;
     }
     
