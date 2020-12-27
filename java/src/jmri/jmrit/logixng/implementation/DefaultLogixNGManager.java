@@ -5,6 +5,7 @@ import java.util.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.Stack;
 import jmri.managers.AbstractManager;
 import jmri.util.*;
@@ -142,6 +143,10 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         for (LogixNG logixNG : _tsys.values()) {
             logixNG.setup();
             logixNG.setParentForAllChildren();
+        }
+        for (Module module : InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet()) {
+            module.setup();
+            module.setParentForAllChildren();
         }
         _clipboard.setup();
     }

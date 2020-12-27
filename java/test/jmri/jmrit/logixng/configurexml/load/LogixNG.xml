@@ -73,7 +73,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="4:10 AM">
+    <memory value="12:26 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -112,7 +112,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun Dec 27 04:09:54 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Dec 28 00:26:31 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <logixngs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <logixng enabled="no">
       <systemName>IQ:AUTO:0001</systemName>
@@ -145,6 +145,27 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <module class="jmri.jmrit.logixng.implementation.configurexml.DefaultModuleXml">
       <systemName>IQM1</systemName>
       <rootSocketType>DefaultFemaleDigitalActionSocket</rootSocketType>
+      <parameters>
+        <parameter>
+          <name>other</name>
+          <isInput>yes</isInput>
+          <isOutput>yes</isOutput>
+        </parameter>
+        <parameter>
+          <name>n</name>
+          <isInput>yes</isInput>
+          <isOutput>no</isOutput>
+        </parameter>
+        <parameter>
+          <name>result</name>
+          <isInput>no</isInput>
+          <isOutput>yes</isOutput>
+        </parameter>
+      </parameters>
+      <rootSocket>
+        <socketName>Root</socketName>
+        <systemName>IQDA901</systemName>
+      </rootSocket>
     </module>
   </logixngModules>
   <logixngConditionalNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultConditionalNGManagerXml">
@@ -8987,9 +9008,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Sun Dec 27 04:10:05 CET 2020</date>
+      <date>Mon Dec 28 00:26:44 CET 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.21.4ish+daniel+2020-12-27T03:08:35Z+RUNKNOWN on Sun Dec 27 04:10:05 CET 2020-->
+  <!--Written by JMRI version 4.21.4ish+daniel+2020-12-27T23:23:37Z+RUNKNOWN on Mon Dec 28 00:26:44 CET 2020-->
 </layout-config>

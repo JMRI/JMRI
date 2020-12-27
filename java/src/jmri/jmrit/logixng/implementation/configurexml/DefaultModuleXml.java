@@ -1,8 +1,11 @@
 package jmri.jmrit.logixng.implementation.configurexml;
 
+import java.util.List;
+
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
+import jmri.jmrit.logixng.Module.Parameter;
 import jmri.jmrit.logixng.ModuleManager;
 import jmri.jmrit.logixng.implementation.DefaultModule;
 
@@ -37,6 +40,30 @@ public class DefaultModuleXml extends jmri.managers.configurexml.AbstractNamedBe
         
         element.addContent(new Element("rootSocketType").addContent(p.getRootSocketType().getName()));
         
+        Element elementParameters = new Element("parameters");
+        for (Parameter data : p.getParameters()) {
+            Element elementParameter = new Element("parameter");
+            elementParameter.addContent(new Element("name").addContent(data.getName()));
+            elementParameter.addContent(new Element("isInput").addContent(data.isInput() ? "yes" : "no"));
+            elementParameter.addContent(new Element("isOutput").addContent(data.isOutput() ? "yes" : "no"));
+            elementParameters.addContent(elementParameter);
+        }
+        element.addContent(elementParameters);
+        
+        Element e2 = new Element("rootSocket");
+        e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
+        MaleSocket socket = p.getRootSocket().getConnectedSocket();
+        String socketSystemName;
+        if (socket != null) {
+            socketSystemName = socket.getSystemName();
+        } else {
+            socketSystemName = p.getSocketSystemName();
+        }
+        if (socketSystemName != null) {
+            e2.addContent(new Element("systemName").addContent(socketSystemName));
+        }
+        element.addContent(e2);
+        
         return element;
     }
     
@@ -51,13 +78,32 @@ public class DefaultModuleXml extends jmri.managers.configurexml.AbstractNamedBe
                 InstanceManager.getDefault(FemaleSocketManager.class)
                         .getSocketTypeByType(rootSocketTypeName);
         
-        Module h = InstanceManager.getDefault(ModuleManager.class)
-                .createModule(sys, uname, socketType);
+        DefaultModule h = new DefaultModule(sys, uname, socketType);
         
         loadCommon(h, shared);
         
+        List<Element> parameterList = shared.getChild("parameters").getChildren();  // NOI18N
+        log.debug("Found " + parameterList.size() + " parameters");  // NOI18N
+
+        for (Element e : parameterList) {
+            Element elementName = e.getChild("name");
+            
+            boolean isInput = "yes".equals(e.getChild("isInput").getTextTrim());
+            boolean isOutput = "yes".equals(e.getChild("isOutput").getTextTrim());
+            
+            h.addParameter(elementName.getTextTrim(), isInput, isOutput);
+        }
+        
+        Element socketName = shared.getChild("rootSocket").getChild("socketName");
+        h.getChild(0).setName(socketName.getTextTrim());
+        Element socketSystemName = shared.getChild("rootSocket").getChild("systemName");
+        if (socketSystemName != null) {
+            h.setSocketSystemName(socketSystemName.getTextTrim());
+        }
+        
+        InstanceManager.getDefault(ModuleManager.class).register(h);
         return true;
     }
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultModuleXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultModuleXml.class);
 }

@@ -94,11 +94,12 @@ public class StoreAndLoadTest {
         Assert.assertNotNull(csvTable);
         
         // Create module IQM1
-        jmri.jmrit.logixng.Module module =
+        Module module =
                 InstanceManager.getDefault(ModuleManager.class).createModule("IQM1", null,
                         InstanceManager.getDefault(FemaleSocketManager.class)
                                 .getSocketTypeByType("DefaultFemaleDigitalActionSocket"));
         
+        module.addParameter("other", true, true);
         module.addParameter("n", true, false);
         module.addParameter("result", false, true);
         module.addLocalVariable("temp1", SymbolTable.InitialValueType.None, null);
@@ -1803,6 +1804,16 @@ public class StoreAndLoadTest {
                 stringExpressionManager.deleteStringExpression(aStringExpression);
             }
             
+            java.util.Set<Module> moduleSet = new java.util.HashSet<>(InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet());
+            for (Module aModule : moduleSet) {
+                InstanceManager.getDefault(ModuleManager.class).deleteModule(aModule);
+            }
+            
+            java.util.Set<NamedTable> tableSet = new java.util.HashSet<>(InstanceManager.getDefault(NamedTableManager.class).getNamedBeanSet());
+            for (NamedTable aTable : tableSet) {
+                InstanceManager.getDefault(NamedTableManager.class).deleteNamedTable(aTable);
+            }
+            
             Assert.assertEquals(0, logixNG_Manager.getNamedBeanSet().size());
             Assert.assertEquals(0, conditionalNGManager.getNamedBeanSet().size());
             Assert.assertEquals(0, analogActionManager.getNamedBeanSet().size());
@@ -1811,6 +1822,8 @@ public class StoreAndLoadTest {
             Assert.assertEquals(0, digitalExpressionManager.getNamedBeanSet().size());
             Assert.assertEquals(0, stringActionManager.getNamedBeanSet().size());
             Assert.assertEquals(0, stringExpressionManager.getNamedBeanSet().size());
+            Assert.assertEquals(0, InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet().size());
+            Assert.assertEquals(0, InstanceManager.getDefault(NamedTableManager.class).getNamedBeanSet().size());
             
             
             

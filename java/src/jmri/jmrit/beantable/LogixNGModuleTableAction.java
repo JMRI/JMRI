@@ -141,12 +141,14 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
     
     @Override
     protected void deleteBean(Module bean) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        InstanceManager.getDefault(ModuleManager.class).deleteModule(bean);
     }
 
     @Override
     protected String getBeanText(Module bean) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        StringWriter writer = new StringWriter();
+        _curNamedBean.printTree(new PrintWriter(writer), "    ");
+        return writer.toString();
     }
     
     /**

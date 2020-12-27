@@ -11,7 +11,6 @@ import jmri.Manager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.Module.Parameter;
-import jmri.jmrit.logixng.Module.ParameterData;
 import jmri.jmrit.logixng.ModuleManager;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.SymbolTable.VariableData;
@@ -29,9 +28,7 @@ public class DefaultModule extends AbstractBase
     private final FemaleSocket _femaleRootSocket;
     private String _socketSystemName = null;
     private final List<Parameter> _parameters = new ArrayList<>();
-//    private final Map<String, Parameter> _parameters = new HashMap<>();
     private final List<VariableData> _localVariables = new ArrayList<>();
-//    private final Map<String, ParameterData> _localVariables = new HashMap<>();
     private Lock _lock = Lock.NONE;
     
     
