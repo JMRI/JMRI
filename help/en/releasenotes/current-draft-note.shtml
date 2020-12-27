@@ -31,7 +31,7 @@
 
         <h4>DCC-EX</h4>
             <ul>
-                <li>prepare for future message syntax enhancements</li>
+                <li>messaging enhancements and cleanup, retry some failed messages</li>
             </ul>
 
         <h4>DCC4pc</h4>

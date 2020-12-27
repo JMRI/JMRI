@@ -107,7 +107,7 @@ public class DCCppTurnoutReplyCache implements DCCppListener {
         }
     }
 
-    // listen for the messages to the LI100/LI101
+    // Listen for the outgoing messages (to the command station)
     @Override
     public void message(DCCppMessage l) {
     }
@@ -115,9 +115,7 @@ public class DCCppTurnoutReplyCache implements DCCppListener {
     // Handle a timeout notification
     @Override
     public void notifyTimeout(DCCppMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message{}", msg.toString());
-        }
+        log.debug("Notified of timeout on message '{}'", msg);
     }
 
     private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutReplyCache.class);
