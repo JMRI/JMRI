@@ -471,9 +471,13 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
             modules.put(counter++, mod);
             log.debug("LNCV Added Module {}: {}", counter, foundMod);
             moduleTable.revalidate();
+
+            // enter returned CV in CVnum field
+            cvField.setText(section2 + "");
+            cvField.setBackground(Color.WHITE);
             // enter returned value in Value field
             valueField.setText(section3 + "");
-            valueField.setBackground(Color.YELLOW);
+            valueField.setBackground(Color.WHITE);
         }
 
         if (reply != null) {

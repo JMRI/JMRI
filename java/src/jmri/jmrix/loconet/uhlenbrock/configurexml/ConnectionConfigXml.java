@@ -5,7 +5,7 @@ import jmri.jmrix.loconet.uhlenbrock.ConnectionConfig;
 import jmri.jmrix.loconet.uhlenbrock.UhlenbrockAdapter;
 
 /**
- * Handle XML persistance of layout connections by persisting the
+ * Handle XML persistence of layout connections by persisting the
  * LocoBufferAdapter (and connections). Note this is named as the XML version of
  * a ConnectionConfig object, but it's actually persisting the
  * LocoBufferAdapter.
