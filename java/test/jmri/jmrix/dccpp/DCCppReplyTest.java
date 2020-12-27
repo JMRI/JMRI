@@ -286,21 +286,21 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMonitorStringTurnoutReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("H 1234 0");
-        Assert.assertEquals("Monitor string", "Turnout Reply: T/O Number: 1234, Direction: CLOSED", l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Turnout Reply: Number: 1234, Direction: CLOSED", l.toMonitorString());
     }
 
     @Test
     public void testMonitorStringOutputPinReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("Y 1234 0");
-        Assert.assertEquals("Monitor string", "Output Command Reply: Output Number: 1234, OutputState: LOW", l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Output Command Reply: Number: 1234, State: LOW", l.toMonitorString());
     }
 
     @Test
     public void testMonitorStringSensorStatusReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("Q 1234");
-        Assert.assertEquals("Monitor string", "Sensor Reply (Active): Sensor Number: 1234, State: ACTIVE", l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Sensor Reply (Active): Number: 1234, State: ACTIVE", l.toMonitorString());
         l = DCCppReply.parseDCCppReply("q 1234");
-        Assert.assertEquals("Monitor string", "Sensor Reply (Inactive): Sensor Number: 1234, State: INACTIVE", l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Sensor Reply (Inactive): Number: 1234, State: INACTIVE", l.toMonitorString());
     }
 
     @Test

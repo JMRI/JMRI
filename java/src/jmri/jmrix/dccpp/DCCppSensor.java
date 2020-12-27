@@ -114,15 +114,10 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
      */
     @Override
     public synchronized void message(DCCppReply l) {
-        if (log.isDebugEnabled()) {
-            log.debug("received message: {}", l);
-        }
-
-        if (l.isSensorDefReply()) {
+         if (l.isSensorDefReply()) {
+            log.debug("Sensor Def Reply received: '{}'", l);
             if (l.getSensorDefNumInt() == address) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Def Message for sensor {} (Pin {})", systemName, address);
-                }
+                log.debug("Def Message for sensor {} (Pin {})", systemName, address);
                 pin = l.getSensorDefPinInt();
                 pullup = l.getSensorDefPullupBool();
                 setOwnState(Sensor.UNKNOWN);
@@ -156,9 +151,7 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
     // Handle a timeout notification
     @Override
     public void notifyTimeout(DCCppMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message{}", msg.toString());
-        }
+        log.debug("Notified of timeout on message '{}'", msg);
     }
 
     @Override

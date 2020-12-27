@@ -120,20 +120,17 @@ public class DCCppCommandStation implements jmri.CommandStation {
 
     protected void setCommandStationMaxNumSlots(DCCppReply l) {
         int newNumSlots = l.getValueInt(1);
-        if (newNumSlots < maxNumSlots) {
-            log.warn("Command Station maxNumSlots cannot be reduced from {} to {}", maxNumSlots, newNumSlots);
-            return;
-        }
-        log.info("changing maxNumSlots from {} to {}", maxNumSlots, newNumSlots);
-        maxNumSlots = newNumSlots;
+        setCommandStationMaxNumSlots(newNumSlots);
     }
     protected void setCommandStationMaxNumSlots(int newNumSlots) {
         if (newNumSlots < maxNumSlots) {
             log.warn("Command Station maxNumSlots cannot be reduced from {} to {}", maxNumSlots, newNumSlots);
             return;
         }
-        log.info("changing maxNumSlots from {} to {}", maxNumSlots, newNumSlots);
-        maxNumSlots = newNumSlots;
+        if (newNumSlots != maxNumSlots) {
+            log.info("changing maxNumSlots from {} to {}", maxNumSlots, newNumSlots);
+            maxNumSlots = newNumSlots;
+        }
     }
     protected int getCommandStationMaxNumSlots() {
         return maxNumSlots;
@@ -237,7 +234,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
         // So we have to omit the JMRI-generated one.
         DCCppMessage msg = DCCppMessage.makeWriteDCCPacketMainMsg(reg, packet.length - 1, packet);
         assert msg != null;
-        log.debug("sendPacket:'{}'", msg.toString());
+        log.debug("sendPacket:'{}'", msg);
 
         for (int i = 0; i < repeats; i++) {
             _tc.sendDCCppMessage(msg, null);

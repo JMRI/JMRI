@@ -168,7 +168,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
     public synchronized void message(final DCCppReply l) {
         // receive a DCC++ message and log it
         // display the raw data if requested
-        log.debug("Message in Monitor: {} opcode {}", l.toString(), Character.toString(l.getOpCodeChar()));
+        log.debug("Message in Monitor: '{}' opcode {}", l, Character.toString(l.getOpCodeChar()));
 
         logMessage("", "RX: ", l);
     }
@@ -185,9 +185,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
     // Handle a timeout notification
     @Override
     public void notifyTimeout(final DCCppMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message{}", msg.toString());
-        }
+        log.debug("Notified of timeout on message '{}'", msg);
     }
 
     /**

@@ -142,7 +142,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
         // update statistics
         //transmittedMsgCount++;
 
-        log.debug("queue DCCpp packet: {}", m.toString());
+        log.debug("queue DCCpp packet: {}", m);
         // in an atomic operation, queue the request and wake the xmit thread
         try {
             synchronized (xmtHandler) {
