@@ -770,7 +770,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             Pattern p = Pattern.compile(pat);
             Matcher m = p.matcher(s);
             if (!m.matches()) {
-                log.debug("No Match {} Command: '{}' Pattern: '{}'", name, s, pat);
+                log.trace("No Match {} Command: '{}' Pattern: '{}'", name, s, pat);
                 return (null);
             }
             return (m);

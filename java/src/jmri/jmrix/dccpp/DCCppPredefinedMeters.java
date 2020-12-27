@@ -54,7 +54,7 @@ public class DCCppPredefinedMeters implements DCCppListener {
     @Override
     public void message(DCCppReply r) {
         if (r.isCurrentReply()) {
-            log.debug("DCCppPredefinedMeters received reply: {}", r.toString());
+            log.debug("DCCppPredefinedMeters received reply: '{}'", r);
             try {
                 currentMeter.setCommandedAnalogValue(((r.getCurrentInt() * 1.0f) / (DCCppConstants.MAX_CURRENT * 1.0f)) * 100.0f );  // return as percentage.
             } catch (JmriException e) {

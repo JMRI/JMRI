@@ -255,7 +255,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         // First, we want to see if this throttle is waiting for a message 
         //or not.
         if (log.isDebugEnabled()) {
-            log.debug("Throttle {} - received message \"{}\"", getDccAddress(), l.toString());
+            log.debug("Throttle {} - received message '{}'", getDccAddress(), l);
         }
         if (requestState == THROTTLEIDLE) {
             log.debug("Current throttle status is THROTTLEIDLE");
@@ -278,7 +278,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
   
         }
         if ((requestState & THROTTLEFUNCSENT) == THROTTLEFUNCSENT) {
-            log.debug("Current throttle status is THROTTLEFUNCSENT. Ignoring Reply: {}",l.toString());
+            log.debug("Current throttle status is THROTTLEFUNCSENT. Ignoring Reply: '{}'", l);
         }
         requestState=THROTTLEIDLE;
         sendQueuedMessage();
