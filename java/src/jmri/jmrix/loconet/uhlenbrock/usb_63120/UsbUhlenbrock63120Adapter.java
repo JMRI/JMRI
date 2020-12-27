@@ -15,7 +15,7 @@ import java.util.Arrays;
  * Status: EXPERIMENTAL - as added to title until confirmed by hardware users in 4.21.4
  *
  * Specs:
- * PC - LocoNet Communication (only for Experts)
+ * PC - LocoNet Communication (from Uhlenbrock 63120 datasheet)
  * Communication between PC and LocoNet must be according to the following schema:
  * - Send message over USB and then wait to receive the sent message again, before a new message is sent.
  *   Process other messages received during the waiting period.
@@ -75,10 +75,13 @@ public class UsbUhlenbrock63120Adapter extends LocoBufferAdapter {
         if (getOptionState(option1Name).equals(validOption1[1])) {
             flow = SerialPort.FLOWCONTROL_NONE;
         }
-        log.info("Uhlenbrock adapter{}{} RTSCTS_OUT="
-                + SerialPort.FLOWCONTROL_RTSCTS_OUT
-                + " RTSCTS_IN="
-                + SerialPort.FLOWCONTROL_RTSCTS_IN, activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=", activeSerialPort.getFlowControlMode());
+        configureLeadsAndFlowControl(activeSerialPort, flow);
+
+        log.info("Uhlenbrock adapter {}, mode={} RTSCTS_OUT={} RTSCTS_IN={}",
+                (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "set hardware flow control" : "set no flow control"),
+                activeSerialPort.getFlowControlMode(),
+                SerialPort.FLOWCONTROL_RTSCTS_OUT,
+                SerialPort.FLOWCONTROL_RTSCTS_IN);
     }
 
     private final static Logger log = LoggerFactory.getLogger(UsbUhlenbrock63120Adapter.class);

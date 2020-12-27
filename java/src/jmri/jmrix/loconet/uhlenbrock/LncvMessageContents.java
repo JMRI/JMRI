@@ -29,12 +29,15 @@ public class LncvMessageContents {
     private final int art_l; // D1
     private final int art_h; // D2
     private final int art;
+    private final String sArt;
     private final int cvn_l; // D3
     private final int cvn_h; // D4
     private final int cvn;
+    private final String sCvn;
     private final int mod_l; // D5
     private final int mod_h; // D6
     private final int mod;
+    private final String sMod;
     private final int cmd_data; // D7
     private final LncvCommand command;
 
@@ -123,14 +126,17 @@ public class LncvMessageContents {
         art_l = m.getElement(LNCV_ART_L_ELEMENT_INDEX) + (((pxct1 & LNCV_ART_L_ARTL7_CHECK_MASK) == LNCV_ART_L_ARTL7_CHECK_MASK) ? 0x80 : 0);
         art_h = m.getElement(LNCV_ART_H_ELEMENT_INDEX) + (((pxct1 & LNCV_ART_H_ARTH7_CHECK_MASK) == LNCV_ART_H_ARTH7_CHECK_MASK) ? 0x80 : 0);
         art = art_l + (256 * art_h);
+        sArt = art + "";
 
         cvn_l = m.getElement(LNCV_CVN_L_ELEMENT_INDEX) + (((pxct1 & LNCV_CVN_L_CVNL7_CHECK_MASK) == LNCV_CVN_L_CVNL7_CHECK_MASK) ? 0x80 : 0);
         cvn_h = m.getElement(LNCV_CVN_H_ELEMENT_INDEX) + (((pxct1 & LNCV_CVN_H_CVNH7_CHECK_MASK) == LNCV_CVN_H_CVNH7_CHECK_MASK) ? 0x80 : 0);
         cvn = cvn_l + (256 * cvn_h);
+        sCvn = cvn + "";
 
         mod_l = m.getElement(LNCV_MOD_L_ELEMENT_INDEX) + (((pxct1 & LNCV_MOD_L_MODL7_CHECK_MASK) == LNCV_MOD_L_MODL7_CHECK_MASK) ? 0x80 : 0);
         mod_h = m.getElement(LNCV_MOD_H_ELEMENT_INDEX) + (((pxct1 & LNCV_MOD_H_MODH7_CHECK_MASK) == LNCV_MOD_H_MODH7_CHECK_MASK) ? 0x80 : 0);
         mod = mod_l + (256 * mod_h);
+        sMod = mod + "";
 
         cmd_data = m.getElement(LNCV_CMDDATA_ELEMENT_INDEX) + (((pxct1 & LNCV_CMDDATA_DAT7_CHECK_MASK) == LNCV_CMDDATA_DAT7_CHECK_MASK) ? 0x80 : 0);
     }
@@ -243,9 +249,9 @@ public class LncvMessageContents {
                 if ((art & LNCV_ALL_MASK) == LNCV_ALL_MASK) {
                     returnString = Bundle.getMessage(locale, "LNCV_ALL_PROG_START_INTERPRETED");
                 } else if ((mod & LNCV_ALL_MASK) == LNCV_ALL_MASK) {
-                    returnString = Bundle.getMessage(locale, "LNCV_ART_PROG_START_INTERPRETED", art);
+                    returnString = Bundle.getMessage(locale, "LNCV_ART_PROG_START_INTERPRETED", sArt);
                 } else {
-                    returnString = Bundle.getMessage(locale, "LNCV_MOD_PROG_START_INTERPRETED", art, mod);
+                    returnString = Bundle.getMessage(locale, "LNCV_MOD_PROG_START_INTERPRETED", sArt, sMod);
                 }
                 break;
             case LNCV_PROG_END:
@@ -253,20 +259,20 @@ public class LncvMessageContents {
                 if ((art & LNCV_ALL_MASK) == LNCV_ALL_MASK) {
                     returnString = Bundle.getMessage(locale, "LNCV_ALL_PROG_END_INTERPRETED");
                 } else if ((mod & LNCV_ALL_MASK) == LNCV_ALL_MASK) {
-                    returnString = Bundle.getMessage(locale, "LNCV_ART_PROG_END_INTERPRETED", art);
+                    returnString = Bundle.getMessage(locale, "LNCV_ART_PROG_END_INTERPRETED", sArt);
                 } else {
-                    returnString = Bundle.getMessage(locale, "LNCV_MOD_PROG_END_INTERPRETED", art, mod);
+                    returnString = Bundle.getMessage(locale, "LNCV_MOD_PROG_END_INTERPRETED", sArt, sMod);
                 }
                 break;
             case LNCV_WRITE: // mod positions store CV value in ReadReply
-                returnString = Bundle.getMessage(locale, "LNCV_WRITE_INTERPRETED", art, cvn, mod);
+                returnString = Bundle.getMessage(locale, "LNCV_WRITE_INTERPRETED", sArt, sCvn, sMod);
                 break;
             case LNCV_READ:
                 // read = module prog start
-                returnString = Bundle.getMessage(locale, "LNCV_READ_INTERPRETED", art, mod, cvn);
+                returnString = Bundle.getMessage(locale, "LNCV_READ_INTERPRETED", sArt, sMod, sCvn);
                 break;
             case LNCV_READ_REPLY: // mod positions store CV value in ReadReply
-                returnString = Bundle.getMessage(locale, "LNCV_READ_REPLY_INTERPRETED", art, cvn, mod);
+                returnString = Bundle.getMessage(locale, "LNCV_READ_REPLY_INTERPRETED", sArt, sCvn, sMod);
                 break;
             default:
                 return Bundle.getMessage(locale, "LNCV_UNDEFINED_MESSAGE") + "\n";

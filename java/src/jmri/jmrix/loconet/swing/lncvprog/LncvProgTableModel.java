@@ -3,12 +3,13 @@ package jmri.jmrix.loconet.swing.lncvprog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 /**
- * Table model for the programmed LNCV values table.
+ * Table model for the programmed LNCV Modules table.
  *
  * @author Egbert Broerse Copyright (C) 2020
  */
@@ -18,11 +19,13 @@ public class LncvProgTableModel extends AbstractTableModel {
     public static final int MODADDR_COLUMN = 2;
     public static final int CV_COLUMN = 3;
     public static final int VALUE_COLUMN = 4;
+    public static final int PROGRAM_COLUMN = 5;
     private final String[] columnNames = {"",
             Bundle.getMessage("HeadingArticle"),
             Bundle.getMessage("HeadingAddress"),
-            Bundle.getMessage("HeadingCv"),
-            Bundle.getMessage("HeadingValue")};
+            Bundle.getMessage("HeadingCvLastRead"),
+            Bundle.getMessage("HeadingValue"),
+            ""};
     private final LncvProgPane parent;
 
     LncvProgTableModel(LncvProgPane parent) {
@@ -59,22 +62,28 @@ public class LncvProgTableModel extends AbstractTableModel {
 
    @Override
    public Class<?> getColumnClass(int c) {
+       if (c == PROGRAM_COLUMN) {
+           return JButton.class;
+       }
        return String.class;
    }
 
    @Override
    public boolean isCellEditable(int r, int c) {
+      if (c == PROGRAM_COLUMN) {
+           return true;
+      }
       return false;
    }
 
    @Override
    public int getColumnCount() {
-      return 5;
+      return 6;
    }
 
    @Override
    public int getRowCount() {
-      return Math.max(5, parent.getCount());
+      return Math.max(2, parent.getCount());
    }
 
    @Override
@@ -93,6 +102,8 @@ public class LncvProgTableModel extends AbstractTableModel {
                  return parent.getModule(r).getCvNum();
              case VALUE_COLUMN:
                  return parent.getModule(r).getCvValue();
+              case PROGRAM_COLUMN:
+                  return Bundle.getMessage("ButtonProgram");
              default:
                  return r + 1;
           }
@@ -104,6 +115,10 @@ public class LncvProgTableModel extends AbstractTableModel {
 
     @Override
     public void setValueAt(Object type, int r, int c) {
+        if (c == PROGRAM_COLUMN) {
+            // copy parameters to Program screen
+            parent.copyEntry((Integer) getValueAt(r, ARTICLE_COLUMN), (Integer) getValueAt(r, MODADDR_COLUMN));
+        }
         // nothing is stored here
     }
 
