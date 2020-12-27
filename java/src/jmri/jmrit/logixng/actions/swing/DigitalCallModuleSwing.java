@@ -37,7 +37,7 @@ public class DigitalCallModuleSwing extends AbstractDigitalActionSwing {
         
         JPanel beanPanel = new JPanel();
         beanPanel.add(new JLabel("Module:"));
-        _moduleComboBox = new JComboBox();
+        _moduleComboBox = new JComboBox<>();
         _moduleComboBox.addItem(new ModuleItem(null));
         for (Module m : InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet()) {
 //            System.out.format("Root socket type: %s%n", m.getRootSocketType().getName());
