@@ -6,6 +6,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -89,7 +91,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
     private JButton _stopButton;
 
     private final JComboBox<String> _rosterBox = new JComboBox<>();
-    private final JTextField _dccNumBox = new JTextField();
+    private final AddressTextField _dccNumBox = new AddressTextField();
     private final JTextField _trainNameBox = new JTextField(6);
     private final JButton _viewProfile = new JButton(Bundle.getMessage("ViewProfile"));
     private JmriJFrame _spTable = null;
@@ -110,12 +112,28 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
     }
 
     protected abstract void selectedRoute(ArrayList<BlockOrder> orders);
+    protected abstract void maxThrottleEventAction();
 
     @Override
     public abstract void propertyChange(java.beans.PropertyChangeEvent e);
     
     protected void setSpeedUtil(SpeedUtil sp) {
         _speedUtil = sp;
+    }
+
+    static class AddressTextField extends JTextField implements FocusListener {
+        public AddressTextField() {
+            super();
+            addFocusListener(this);
+        }
+        @Override
+        public void focusGained(FocusEvent e) {
+            
+        }
+        @Override
+        public void focusLost(FocusEvent e) {
+            fireActionPerformed();
+        }
     }
 
     /* ************************* Panel for Route search depth **********************/
@@ -414,6 +432,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
                     return null;
                 }
             }
+            maxThrottleEventAction();
         }
 
         String id = (String)_rosterBox.getSelectedItem();
@@ -432,6 +451,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
                _speedUtil.setRosterId(id);
            }
            _dccNumBox.setText(re.getDccLocoAddress().toString());
+           maxThrottleEventAction();
            msg = null;
         } else if (msg == null) {
             _rosterBox.setSelectedItem(Bundle.getMessage("noSuchAddress"));
@@ -450,7 +470,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         return null;
     }
 
-    private void calculate() {
+    protected void calculate() {
         String msg = findRoute();
         if (msg != null) {
             JOptionPane.showMessageDialog(this, msg,
@@ -1166,7 +1186,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         }
         JScrollPane tablePane = new JScrollPane(routeTable);
         Dimension dim = routeTable.getPreferredSize();
-        dim.height = routeTable.getRowHeight() * 8;
+        dim.height = routeTable.getRowHeight() * 11;
         tablePane.getViewport().setPreferredSize(dim);
 
         JPanel routePanel = new JPanel();
@@ -1492,6 +1512,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         if (comp instanceof JTextField || comp instanceof JComboBox) {
             comp.setBackground(Color.white);
         }
+        panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         button.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
         panel.add(button);
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
