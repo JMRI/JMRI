@@ -99,7 +99,7 @@ public class CallModuleParameterTableModel extends AbstractTableModel {
     /** {@inheritDoc} */
     @Override
     public boolean isCellEditable(int row, int col) {
-        return true;
+        return col != COLUMN_NAME;
     }
 
     /** {@inheritDoc} */

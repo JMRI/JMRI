@@ -198,14 +198,14 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
 
     @Override
     public String getLongDescription(Locale locale) {
-        String memoryName;
+        String moduleName;
         if (_moduleHandle != null) {
-            memoryName = _moduleHandle.getBean().getDisplayName();
+            moduleName = _moduleHandle.getBean().getDisplayName();
         } else {
-            memoryName = Bundle.getMessage(locale, "BeanNotSelected");
+            moduleName = Bundle.getMessage(locale, "BeanNotSelected");
         }
         
-        return Bundle.getMessage(locale, "DigitalCallModule_Long", memoryName);
+        return Bundle.getMessage(locale, "DigitalCallModule_Long", moduleName);
     }
     
     /** {@inheritDoc} */

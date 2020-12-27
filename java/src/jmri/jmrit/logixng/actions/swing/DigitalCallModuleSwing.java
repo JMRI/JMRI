@@ -21,6 +21,7 @@ import jmri.jmrit.logixng.tools.swing.CallModuleParameterTableModel;
  */
 public class DigitalCallModuleSwing extends AbstractDigitalActionSwing {
 
+    JComboBox<ModuleItem> _moduleComboBox;
     CallModuleParameterTableModel _moduleParametersTableModel;
     
     @Override
@@ -33,6 +34,25 @@ public class DigitalCallModuleSwing extends AbstractDigitalActionSwing {
         panel = new JPanel();
         
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        
+        JPanel beanPanel = new JPanel();
+        beanPanel.add(new JLabel("Module:"));
+        _moduleComboBox = new JComboBox();
+        _moduleComboBox.addItem(new ModuleItem(null));
+        for (Module m : InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet()) {
+//            System.out.format("Root socket type: %s%n", m.getRootSocketType().getName());
+            if ("DefaultFemaleDigitalActionSocket".equals(m.getRootSocketType().getName())) {
+                ModuleItem mi = new ModuleItem(m);
+                _moduleComboBox.addItem(mi);
+                if ((callModule != null)
+                        && (callModule.getModule() != null)
+                        && (callModule.getModule().getBean() == m)) {
+                    _moduleComboBox.setSelectedItem(mi);
+                }
+            }
+        }
+        beanPanel.add(_moduleComboBox);
+        panel.add(beanPanel);
         
         Module module = null;
         List<ParameterData> parameterData;
@@ -78,13 +98,21 @@ public class DigitalCallModuleSwing extends AbstractDigitalActionSwing {
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
         DigitalCallModule action = new DigitalCallModule(systemName, userName);
+        updateObject(action);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
     }
     
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
-        // Do nothing
+        if (! (object instanceof DigitalCallModule)) {
+            throw new IllegalArgumentException("object is not a Module: " + object.getClass().getName());
+        }
+        DigitalCallModule callModule = (DigitalCallModule)object;
+        
+        ModuleItem mi = _moduleComboBox.getItemAt(_moduleComboBox.getSelectedIndex());
+        if (mi._module != null) callModule.setModule(mi._module);
+        else callModule.removeModule();
     }
     
     /** {@inheritDoc} */
@@ -95,6 +123,22 @@ public class DigitalCallModuleSwing extends AbstractDigitalActionSwing {
     
     @Override
     public void dispose() {
+    }
+    
+    
+    private static class ModuleItem {
+        
+        private final Module _module;
+        
+        public ModuleItem(Module m) {
+            _module = m;
+        }
+        
+        @Override
+        public String toString() {
+            if (_module == null) return "";
+            else return _module.getDisplayName();
+        }
     }
     
 }

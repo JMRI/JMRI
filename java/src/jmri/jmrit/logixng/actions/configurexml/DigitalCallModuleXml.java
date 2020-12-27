@@ -1,10 +1,10 @@
 package jmri.jmrit.logixng.actions.configurexml;
 
 import jmri.InstanceManager;
-import jmri.Light;
-import jmri.LightManager;
 import jmri.NamedBeanHandle;
 import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.Module;
+import jmri.jmrit.logixng.ModuleManager;
 import jmri.jmrit.logixng.actions.DigitalCallModule;
 
 import org.jdom2.Element;
@@ -36,10 +36,10 @@ public class DigitalCallModuleXml extends jmri.managers.configurexml.AbstractNam
         
         storeCommon(p, element);
 
-//        NamedBeanHandle light = p.getLight();
-//        if (light != null) {
-//            element.addContent(new Element("light").addContent(light.getName()));
-//        }
+        NamedBeanHandle<Module> module = p.getModule();
+        if (module != null) {
+            element.addContent(new Element("module").addContent(module.getName()));
+        }
         
 //        element.addContent(new Element("lightState").addContent(p.getLightState().name()));
 
@@ -54,12 +54,12 @@ public class DigitalCallModuleXml extends jmri.managers.configurexml.AbstractNam
 
         loadCommon(h, shared);
 
-//        Element lightName = shared.getChild("light");
-//        if (lightName != null) {
-//            Light t = InstanceManager.getDefault(LightManager.class).getLight(lightName.getTextTrim());
-//            if (t != null) h.setLight(t);
-//            else h.removeLight();
-//        }
+        Element moduleName = shared.getChild("module");
+        if (moduleName != null) {
+            Module t = InstanceManager.getDefault(ModuleManager.class).getModule(moduleName.getTextTrim());
+            if (t != null) h.setModule(t);
+            else h.removeModule();
+        }
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
