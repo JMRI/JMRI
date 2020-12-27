@@ -43,6 +43,50 @@
 
               <xs:element name="module" type="beanNameType" minOccurs="0" maxOccurs="1"/>
 
+              <xs:element name="parameters" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="parameter" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+
+                          <xs:element name="initalValueType" minOccurs="1" maxOccurs="1">
+                            <xs:simpleType>
+                              <xs:restriction base="xs:token">
+                                <xs:enumeration value="None"/>
+                                <xs:enumeration value="Integer"/>
+                                <xs:enumeration value="FloatingNumber"/>
+                                <xs:enumeration value="String"/>
+                                <xs:enumeration value="LocalVariable"/>
+                                <xs:enumeration value="Memory"/>
+                                <xs:enumeration value="Reference"/>
+                                <xs:enumeration value="Formula"/>
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+
+                          <xs:element name="initialValueData" type="xs:string" minOccurs="1" maxOccurs="1"/>
+
+                          <xs:element name="returnValueType" minOccurs="1" maxOccurs="1">
+                            <xs:simpleType>
+                              <xs:restriction base="xs:token">
+                                <xs:enumeration value="None"/>
+                                <xs:enumeration value="LocalVariable"/>
+                                <xs:enumeration value="Memory"/>
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+
+                          <xs:element name="returnValueData" type="xs:string" minOccurs="1" maxOccurs="1"/>
+
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
               <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>

@@ -12,6 +12,7 @@ import jmri.*;
 import jmri.implementation.VirtualSignalHead;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.actions.*;
 import jmri.jmrit.logixng.expressions.*;
@@ -617,6 +618,14 @@ public class StoreAndLoadTest {
         callModule = new DigitalCallModule(digitalActionManager.getAutoSystemName(), null);
         callModule.setComment("A comment");
         callModule.setModule("IQM1");
+        callModule.addParameter("Abc", InitialValueType.FloatingNumber, "12.32", Module.ReturnValueType.LocalVariable, "SomeVar");
+        callModule.addParameter("Def", InitialValueType.Formula, "12 + 32", Module.ReturnValueType.Memory, "M1");
+        callModule.addParameter("Ghi", InitialValueType.Integer, "21", Module.ReturnValueType.None, null);
+        callModule.addParameter("Jkl", InitialValueType.LocalVariable, "MyVar", Module.ReturnValueType.Memory, "M34");
+        callModule.addParameter("Mno", InitialValueType.Memory, "M2", Module.ReturnValueType.LocalVariable, "SomeVar");
+        callModule.addParameter("Pqr", InitialValueType.None, null, Module.ReturnValueType.LocalVariable, "SomeVar");
+        callModule.addParameter("Stu", InitialValueType.Reference, "{MyVar}", Module.ReturnValueType.LocalVariable, "SomeVar");
+        callModule.addParameter("Vxy", InitialValueType.String, "Some string", Module.ReturnValueType.LocalVariable, "SomeVar");
         maleSocket = digitalActionManager.registerAction(callModule);
         actionManySocket.getChild(index++).connect(maleSocket);
         

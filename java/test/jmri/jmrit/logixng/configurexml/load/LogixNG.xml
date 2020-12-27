@@ -73,7 +73,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="2:49 AM">
+    <memory value="4:10 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -112,7 +112,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun Dec 27 02:49:45 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun Dec 27 04:09:54 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <logixngs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <logixng enabled="no">
       <systemName>IQ:AUTO:0001</systemName>
@@ -7204,6 +7204,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </action-turnout>
     <call-module class="jmri.jmrit.logixng.actions.configurexml.DigitalCallModuleXml">
       <systemName>IQDA:AUTO:0043</systemName>
+      <parameters />
       <maleSocket>
         <localVariable>
           <name>A1</name>
@@ -7251,6 +7252,64 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDA:AUTO:0044</systemName>
       <comment>A comment</comment>
       <module>IQM1</module>
+      <parameters>
+        <parameter>
+          <name>Abc</name>
+          <initalValueType>FloatingNumber</initalValueType>
+          <initialValueData>12.32</initialValueData>
+          <returnValueType>LocalVariable</returnValueType>
+          <returnValueData>SomeVar</returnValueData>
+        </parameter>
+        <parameter>
+          <name>Def</name>
+          <initalValueType>Formula</initalValueType>
+          <initialValueData>12 + 32</initialValueData>
+          <returnValueType>Memory</returnValueType>
+          <returnValueData>M1</returnValueData>
+        </parameter>
+        <parameter>
+          <name>Ghi</name>
+          <initalValueType>Integer</initalValueType>
+          <initialValueData>21</initialValueData>
+          <returnValueType>None</returnValueType>
+          <returnValueData />
+        </parameter>
+        <parameter>
+          <name>Jkl</name>
+          <initalValueType>LocalVariable</initalValueType>
+          <initialValueData>MyVar</initialValueData>
+          <returnValueType>Memory</returnValueType>
+          <returnValueData>M34</returnValueData>
+        </parameter>
+        <parameter>
+          <name>Mno</name>
+          <initalValueType>Memory</initalValueType>
+          <initialValueData>M2</initialValueData>
+          <returnValueType>LocalVariable</returnValueType>
+          <returnValueData>SomeVar</returnValueData>
+        </parameter>
+        <parameter>
+          <name>Pqr</name>
+          <initalValueType>None</initalValueType>
+          <initialValueData />
+          <returnValueType>LocalVariable</returnValueType>
+          <returnValueData>SomeVar</returnValueData>
+        </parameter>
+        <parameter>
+          <name>Stu</name>
+          <initalValueType>Reference</initalValueType>
+          <initialValueData>{MyVar}</initialValueData>
+          <returnValueType>LocalVariable</returnValueType>
+          <returnValueData>SomeVar</returnValueData>
+        </parameter>
+        <parameter>
+          <name>Vxy</name>
+          <initalValueType>String</initalValueType>
+          <initialValueData>Some string</initialValueData>
+          <returnValueType>LocalVariable</returnValueType>
+          <returnValueData>SomeVar</returnValueData>
+        </parameter>
+      </parameters>
       <maleSocket>
         <localVariable>
           <name>A1</name>
@@ -8928,9 +8987,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Sun Dec 27 02:49:57 CET 2020</date>
+      <date>Sun Dec 27 04:10:05 CET 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.21.4ish+daniel+2020-12-27T01:49:30Z+RUNKNOWN on Sun Dec 27 02:49:57 CET 2020-->
+  <!--Written by JMRI version 4.21.4ish+daniel+2020-12-27T03:08:35Z+RUNKNOWN on Sun Dec 27 04:10:05 CET 2020-->
 </layout-config>

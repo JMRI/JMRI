@@ -1,10 +1,12 @@
 package jmri.jmrit.logixng.actions.configurexml;
 
+import java.util.List;
+
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
-import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.Module;
-import jmri.jmrit.logixng.ModuleManager;
+import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.Module.ParameterData;
 import jmri.jmrit.logixng.actions.DigitalCallModule;
 
 import org.jdom2.Element;
@@ -41,7 +43,17 @@ public class DigitalCallModuleXml extends jmri.managers.configurexml.AbstractNam
             element.addContent(new Element("module").addContent(module.getName()));
         }
         
-//        element.addContent(new Element("lightState").addContent(p.getLightState().name()));
+        Element parameters = new Element("parameters");
+        for (ParameterData pd : p.getParameterData()) {
+            Element elementParameter = new Element("parameter");
+            elementParameter.addContent(new Element("name").addContent(pd._name));
+            elementParameter.addContent(new Element("initalValueType").addContent(pd._initalValueType.name()));
+            elementParameter.addContent(new Element("initialValueData").addContent(pd._initialValueData));
+            elementParameter.addContent(new Element("returnValueType").addContent(pd._returnValueType.name()));
+            elementParameter.addContent(new Element("returnValueData").addContent(pd._returnValueData));
+            parameters.addContent(elementParameter);
+        }
+        element.addContent(parameters);
 
         return element;
     }
@@ -60,10 +72,43 @@ public class DigitalCallModuleXml extends jmri.managers.configurexml.AbstractNam
             if (t != null) h.setModule(t);
             else h.removeModule();
         }
+        
+        List<Element> parameterList = shared.getChild("parameters").getChildren();  // NOI18N
+        log.debug("Found " + parameterList.size() + " parameters");  // NOI18N
+
+        for (Element e : parameterList) {
+            Element elementName = e.getChild("name");
+            
+            SymbolTable.InitialValueType initalValueType = null;
+            Element elementType = e.getChild("initalValueType");
+            if (elementType != null) {
+                initalValueType = SymbolTable.InitialValueType.valueOf(elementType.getTextTrim());
+            }
+            
+            Element elementInitialValueData = e.getChild("initialValueData");
+            
+            Module.ReturnValueType returnValueType = null;
+            elementType = e.getChild("returnValueType");
+            if (elementType != null) {
+                returnValueType = Module.ReturnValueType.valueOf(elementType.getTextTrim());
+            }
+            
+            Element elementReturnValueData = e.getChild("returnValueData");
+            
+            if (elementName == null) throw new IllegalArgumentException("Element 'name' does not exists");
+            if (initalValueType == null) throw new IllegalArgumentException("Element 'initalValueType' does not exists");
+            if (elementInitialValueData == null) throw new IllegalArgumentException("Element 'initialValueData' does not exists");
+            if (returnValueType == null) throw new IllegalArgumentException("Element 'returnValueType' does not exists");
+            if (elementReturnValueData == null) throw new IllegalArgumentException("Element 'returnValueData' does not exists");
+            
+            h.addParameter(elementName.getTextTrim(),
+                    initalValueType, elementInitialValueData.getTextTrim(),
+                    returnValueType, elementReturnValueData.getTextTrim());
+        }
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLightXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalCallModuleXml.class);
 }
