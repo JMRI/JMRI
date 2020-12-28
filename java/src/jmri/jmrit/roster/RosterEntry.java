@@ -75,6 +75,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public static final String PROTOCOL = "protocol"; // NOI18N
     public static final String COMMENT = "comment"; // NOI18N
     public static final String DECODER_MODEL = "decodermodel"; // NOI18N
+    public static final String DECODER_MANUFACTURERID = "manufacturerID"; // NOI18N
+    public static final String DECODER_PRODUCTID = "productID"; // NOI18N
     public static final String DECODER_FAMILY = "decoderfamily"; // NOI18N
     public static final String DECODER_COMMENT = "decodercomment"; // NOI18N
     public static final String DECODER_MAXFNNUM = "decodermaxFnNum"; // NOI18N
@@ -113,6 +115,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected String _dateUpdated = "";
     protected Date dateModified = null;
     protected int _maxSpeedPCT = 100;
+    protected String _manufacturerID = "";
+    protected String _productID = "";
 
     /**
      * Deprecated, use {@link #getMAXFNNUM} directly.
@@ -446,6 +450,27 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public String getDecoderModel() {
         return _decoderModel;
+    }
+
+    public void setManufacturerID(String s) {
+        String old = _manufacturerID;
+        _manufacturerID = s;
+        firePropertyChange(DECODER_MANUFACTURERID, old, s);
+    }
+
+    public String getManufacturerID() {
+        return _manufacturerID;
+    }
+
+    public void setProductID(String s) {
+        String old = _productID;
+        if (s== null) {s="";}
+        _productID = s;
+        firePropertyChange(DECODER_PRODUCTID, old, s);
+    }
+
+    public String getProductID() {
+        return _productID;
     }
 
     public void setDecoderFamily(String s) {

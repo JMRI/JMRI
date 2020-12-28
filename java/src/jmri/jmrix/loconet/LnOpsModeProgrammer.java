@@ -161,7 +161,9 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
              */
             // LNCV Module programming mode
             String[] parts = CV.split("\\.");
-            artNum = Integer.parseInt(parts[0]); // stored for comparison
+            if (parts.length > 1) {
+                artNum = Integer.parseInt(parts[0]); // stored for comparison
+            }
             int cvNum = Integer.parseInt(parts[parts.length > 1 ? 1 : 0]);
             p = pL;
             doingWrite = true;
@@ -182,6 +184,8 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
 
     /**
      * {@inheritDoc}
+     * @param CV the CV to read, could be a composite string that is split in this method te pass eg. the module type
+     * @param pL  the listener that will be notified of the read
      */
     @Override
     public void readCV(String CV, ProgListener pL) throws ProgrammerException {
@@ -267,20 +271,22 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
                 initializeLncvAccessTimer();
             }
             /*
-             * CV format is e.g. "5033.12" where the first part defines the
+             * CV format passed by SymbolicProg is formed "5033.12", where the first part defines the
              * article number (type/module class) for the board and the second is the specific bit number.
-             * Modules without their own art. no. use 65535 (broadcast mode).
+             * Modules without their own art. no. use 65535 (broadcast mode), so cannot use decoder definition.
              */
             parts = CV.split("\\.");
-            artNum = Integer.parseInt(parts[0]);
+            if (parts.length > 1) {
+                artNum = Integer.parseInt(parts[0]); // stored for comparison
+            }
             int cvNum = Integer.parseInt(parts[parts.length > 1 ? 1 : 0]);
             doingWrite = false;
-            // numberformat "113.12" is simply consumed by ProgDebugger
+            // numberformat "113.12" is simply consumed by ProgDebugger (HexFile sim connection)
             p = pL;
             // LNCV mode
             log.debug("read LNCV \"{}\" addr:{}", CV, mAddress);
             // make message
-            m = createCvReadRequest(artNum, cvNum, mAddress); // module must be in Programming mode (is handled by LNCV tool)
+            m = createCvReadRequest(artNum, mAddress, cvNum); // module must be in Programming mode (is handled by LNCV tool)
             log.debug("  Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
             lncvAccessTimer.start();
@@ -447,24 +453,28 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
                     default:
                         code = ProgListener.UnknownError;
                 }
-                lncvAccessTimer.stop(); // kill the timeout timer
+                if (lncvAccessTimer != null) {
+                    lncvAccessTimer.stop(); // kill the timeout timer
+                }
                 // LACK with 0x00 or 0x50 in byte 1; assume it's to us.
                 ProgListener temp = p;
                 p = null;
                 notifyProgListenerEnd(temp, 0, code);
             }
             if (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ_REPLY) {
-                // it's a LNCV ReadReply message, decode contents
+                // it's an LNCV ReadReply message, decode contents
                 LncvMessageContents contents = new LncvMessageContents(m);
                 int artReturned = contents.getLncvArticleNum();
                 int valReturned = contents.getCvValue();
                 code = ProgListener.OK;
                 // forward write reply
                 if (artReturned != artNum) { // it's not for for us?
-                    code = ProgListener.ConfirmFailed;
-                    log.error("LNCV read reply received for wrong article");
+                    //code = ProgListener.ConfirmFailed;
+                    log.warn("LNCV read reply received for article {}, expected article {}", artReturned, artNum);
                 }
-                lncvAccessTimer.stop(); // kill the timeout timer
+                if (lncvAccessTimer != null) {
+                    lncvAccessTimer.stop(); // kill the timeout timer
+                }
                 ProgListener temp = p;
                 p = null;
                 notifyProgListenerEnd(temp, valReturned, code);

@@ -22,7 +22,7 @@ public class Sv2DiscoverPaneTest extends jmri.util.swing.JmriPanelTest {
         JUnitUtil.initDefaultUserMessagePreferences();
 
         // prepare an interface, register
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
+        //LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
         //jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
 
         // pane for AbstractMonFrameTestBase, panel for JmriPanelTest

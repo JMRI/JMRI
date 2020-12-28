@@ -3,6 +3,7 @@ package jmri.jmrix.loconet.swing.lncvprog;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrix.loconet.*;
+import jmri.jmrix.loconet.uhlenbrock.LncvDevice;
 import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -59,7 +60,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
     private final String rawDataCheck = this.getClass().getName() + ".RawData"; // NOI18N
     private UserPreferencesManager pm;
 
-    private HashMap<Integer, LncvModule> modules;
+    private HashMap<Integer, LncvDevice> modules;
     private boolean allProgRunning = false;
     private int moduleProgRunning = -1; // stores module address as int during moduleProgramming session, -1 = no session
 
@@ -109,19 +110,19 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         add(initButtonPanel());
         add(initStatusPanel());
         // Set up the SV2 modules table
-        moduleTableModel = new LncvProgTableModel(this);
-        moduleTable = new JTable(moduleTableModel);
-        moduleTable.setRowSelectionAllowed(false);
-        moduleTable.getColumnModel().getColumn(LncvProgTableModel.PROGRAM_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
-        moduleTable.getColumnModel().getColumn(LncvProgTableModel.PROGRAM_COLUMN).setCellRenderer(new ButtonRenderer());
-        moduleTable.setPreferredScrollableViewportSize(new Dimension(300, 200));
-        JScrollPane tableScrollPane = new JScrollPane(moduleTable);
+        //moduleTableModel = new LncvProgTableModel(this, memo);
+        //moduleTable = new JTable(moduleTableModel);
+        //moduleTable.setRowSelectionAllowed(false);
+        //moduleTable.getColumnModel().getColumn(LncvProgTableModel.OPENPRGMRBUTTONCOLUMN).setCellEditor(new ButtonEditor(new JButton()));
+        //moduleTable.getColumnModel().getColumn(LncvProgTableModel.OPENPRGMRBUTTONCOLUMN).setCellRenderer(new ButtonRenderer());
+        //moduleTable.setPreferredScrollableViewportSize(new Dimension(300, 200));
+        //JScrollPane tableScrollPane = new JScrollPane(moduleTable);
         tablePanel = new JPanel();
         Border resultBorder = BorderFactory.createEtchedBorder();
         Border resultTitled = BorderFactory.createTitledBorder(resultBorder, Bundle.getMessage("LncvTableTitle"));
         tablePanel.setBorder(resultTitled);
         tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.Y_AXIS));
-        tablePanel.add(tableScrollPane, BorderLayout.CENTER);
+        //tablePanel.add(tableScrollPane, BorderLayout.CENTER);
 
         add(tablePanel);
 
@@ -489,39 +490,39 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         if (LncvMessageContents.extractMessageType(l) == LncvMessageContents.LncvCommand.LNCV_READ_REPLY) {
             // it's a LNCV ReadReply message, decode contents:
             LncvMessageContents contents = new LncvMessageContents(l);
-            int section1 = contents.getLncvArticleNum();
-            int section2 = contents.getCvNum();
-            int section3 = contents.getCvValue();
+            int msgArt = contents.getLncvArticleNum();
+            int msgCv = contents.getCvNum();
+            int msgVal = contents.getCvValue();
 
             // store=write reply
-            LncvModule mod = new LncvModule(new int[]{section1, section2, section3});
+            LncvDevice dev = new LncvDevice(msgArt, adr, msgCv, msgVal);
             int tempMod = 0;
-            if (section1 == art) {
-                mod.setAddress(adr); // trust last used address, to be sure, check against Article (hardware class) number
+            if (msgArt == art) {
+                dev.setAddress(adr); // trust last used address, to be sure, check against Article (hardware class) number
                 tempMod = adr;
             }
-            String foundMod = "LNCV art:" + section1 + " address:" + tempMod + " cv:" + section2 + " value:" + section3 + "\n";
+            String foundMod = "LNCV art:" + art + " address:" + tempMod + " cv:" + msgCv + " value:" + msgVal + "\n";
             reply += foundMod;
             boolean inMap = false;
-            for (Map.Entry<Integer, LncvModule> module : modules.entrySet()) {
-                if ((module.getValue().getClassNum() == section1) && (module.getValue().getAddress() == tempMod)) {
-                    module.getValue().setCvNum(section2);
-                    module.getValue().setCvValue(section3);
+            for (Map.Entry<Integer, LncvDevice> module : modules.entrySet()) {
+                if ((module.getValue().getClassNum() == art) && (module.getValue().getAddress() == tempMod)) {
+                    module.getValue().setCvNum(msgCv);
+                    module.getValue().setCvValue(msgVal);
                     inMap = true;
                     break;
                 }
             }
             if (!inMap) {
-                modules.put(counter++, mod);
+                modules.put(counter++, dev);
                 log.debug("LNCV Added Module {}: {}", counter, foundMod);
             }
-            moduleTable.revalidate();
+            //moduleTable.revalidate();
 
             // enter returned CV in CVnum field
-            cvField.setText(section2 + "");
+            cvField.setText(msgCv + "");
             cvField.setBackground(Color.WHITE);
             // enter returned value in Value field
-            valueField.setText(section3 + "");
+            valueField.setText(msgVal + "");
             valueField.setBackground(Color.WHITE);
         }
 
@@ -566,7 +567,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         super.dispose();
     }
 
-    protected LncvModule getModule(int i) {
+    protected LncvDevice getModule(int i) {
         if ((modules != null) && (i <= modules.size())) {
             return modules.get(i);
         } else {

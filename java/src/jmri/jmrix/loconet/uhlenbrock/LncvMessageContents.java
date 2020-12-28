@@ -115,7 +115,7 @@ public class LncvMessageContents {
         dst_l = m.getElement(LNCV_DST_L_ELEMENT_INDEX);
         dst_h = m.getElement(LNCV_DST_H_ELEMENT_INDEX);
         dst = dst_l + (256 * dst_h);
-        log.debug("src={}, dst={}", src, dst); // must use vars for CI
+        log.debug("src={}, dst={}{}", src, dst, (dst == 19273 ? "=IK" : "")); // must use vars for CI
 
         cmd = m.getElement(LNCV_CMD_ELEMENT_INDEX);
 
@@ -415,7 +415,8 @@ public class LncvMessageContents {
 
     public int getCvNum() {
         if ((cmd == LncvCommand.LNCV_READ.cmd) ||
-                (cmd == LncvCommand.LNCV_WRITE.cmd)) {
+                (cmd == LncvCommand.LNCV_WRITE.cmd) ||
+                (cmd == LncvCommand.LNCV_READ_REPLY.cmd)) {
             return cvn;
         }
         return -1;
