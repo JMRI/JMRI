@@ -57,7 +57,9 @@
       <h2>Limitations</h2>
 
       <ul>
-        <li>Full support of Intellibox-II has been added to JMRI in
+        <li><span class="since">Since
+        <a href="https://jmri.org/releasenotes/jmri3.11.1.shtml" target="_blank">
+        JMRI 4.11.1</a></span>Full support of Intellibox-II has been added to JMRI in
         version 3.11.1 and up. It is not available in previous
         versions 3.10 and below.</li>
       </ul>
@@ -185,12 +187,21 @@
         connection.</li>
 
         <li>Select the appropriate System Connection for your
-        hardware, either Intellibox-I or -II.</li>
+        hardware, either Intellibox-I or -II or the 63120Adapter.</li>
 
         <li>Select the serial port used for this connection.</li>
 
-        <li>The single corresponding Command Station (group) choice will be selected
-        automatically.</li>
+        <li>For either Intellibox connection, the single corresponding Command Station (group)
+        choice will be selected automatically.</li>
+
+        <li><span class="since">Since
+        <a href="https://jmri.org/releasenotes/jmri4.21.4.shtml" target="_blank">
+        JMRI 4.21.4</a></span><em>EXPERIMENTAL</em>: The Uhlenbrock USB Adapter part #63120 will only work with a
+        Windows OS, as it requires special Uhlenbrock supplied drivers to be installed. Follow the manufacturers
+        instruction for that install.<br>
+        In the JMRI Connection Preferences, verify the (default) settings. The options as stored in the adapter should
+        only be configured from a LocoNet throttle, for example the Daisy.<br>
+        Since JMRI can only communicate via the connection, it could lose contact during configuration.</li>
 
         <li>If desired, adjust the system prefix and connection user name.<br>
         Note that an existing panel contains a certain prefix and changing this
