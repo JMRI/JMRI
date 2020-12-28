@@ -54,7 +54,7 @@ bar = JMenuBar()
 jmri.util.HelpUtil.helpMenu(bar, 'html.apps.DispatcherSystem.DispatcherSystem' , True)
 frame.setJMenuBar(bar)
 #
-
+logLevel = 0
 
 ###info
 import os
@@ -407,6 +407,7 @@ def CreateTransits_action(event):
     global g
     global le
     global DisplayProgress_global
+    global logLevel
     
     #the displayProgress is in CreateTransits
     CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
@@ -432,7 +433,7 @@ def CreateTransits_action(event):
     progress = 10
     dpg.Update(str(progress)+ "% complete")
     
-    print "updating logic"
+    if logLevel > 0: print "updating logic"
     CreateSignalLogic = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateSignalLogicAndSections.py')
     exec(open (CreateSignalLogic).read())
     usl = Update_Signal_Logic()
@@ -442,7 +443,7 @@ def CreateTransits_action(event):
     
     #print "updating logic stage2"
     usl.update_logic(run_file)
-    print "updated logic"
+    if logLevel > 0: print "updated logic"
     
     progress = 15
     dpg.Update(str(progress)+ "% complete")

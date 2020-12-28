@@ -23,7 +23,7 @@ tListener = None
 class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def __init__(self):
-        self.logLevel = 1
+        self.logLevel = 0
 
     def setup(self):
         #run before setting up Schedule Master
@@ -105,7 +105,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         global trains_to_be_scheduled
         global scheduled
         global timebase
-        print "************************************run trains******************"
+        if self.logLevel > 0: print "************************************run trains******************"
         if self.logLevel > 0: print "run trains started: loop: scheduled trains", trains_to_be_scheduled
         for train in trains_to_be_scheduled:
             if scheduled[train] == False:
@@ -120,7 +120,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                 if self.logLevel > 0: print "scheduled train ", train
         if self.logLevel > 0: print "!!!!!!!!!!!!!!!!!!!!!run_trains finished"
         if self.logLevel > 0: print "trains_to_be_scheduled ", trains_to_be_scheduled
-        print "timebase.getRate()",timebase.getRate()
+        if self.logLevel > 0: print "timebase.getRate()",timebase.getRate()
         noMsec = int(60000/timebase.getRate())
         self.waitMsec(noMsec)  ##every fast minute 
         return True
@@ -270,7 +270,7 @@ class RunTrain(MoveTrain):
             return False
 
     def run_train(self):
-        print "************************************run train******************"
+        if self.logLevel > 0: print "************************************run train******************"
         if self.logLevel > 0:  "!     start run_train"
         route = self.train.getRoute()
         if route == None:
@@ -294,15 +294,15 @@ class RunTrain(MoveTrain):
                 
                 doNotRun = False
                 repeat = False
-                print "train_to_move", train_to_move
+                if self.logLevel > 0: print "train_to_move", train_to_move
                 if train_to_move != None:
-                    print "************************************moving train******************",train_to_move
+                    if self.logLevel > 0: print "************************************moving train******************",train_to_move
                     self.move_between_stations(station_from, station_to, train_to_move, self.graph)
                 else:
                     msg = "No train in block for scheduled train starting from " + station_from
                     title = "Scheduling Error"
                     opt1 = "Not scheduling train"
-                    print "No train in block for scheduled train starting from " + station_from
+                    if self.logLevel > 0: print "No train in block for scheduled train starting from " + station_from
                     OptionDialog().customMessage(msg, title, opt1)
                     doNotRun = True
                     break
@@ -344,27 +344,27 @@ class RunRoute(MoveTrain):
             return False
 
     def run_route(self):
-        print "************************************run train******************"
+        if self.logLevel > 0: print "************************************run train******************"
         if self.logLevel > 0:  "!     start run_route"
         station_list_locations = self.route.getLocationsBySequenceList()
         #convert station_list to strings
         station_list = [location.getName() for location in station_list_locations]
-        print "station_list before", station_list, "self.station_from",self.station_from,"self.station_to",self.station_to,"station_list[0]",station_list[0]
+        if self.logLevel > 0: print "station_list before", station_list, "self.station_from",self.station_from,"self.station_to",self.station_to,"station_list[0]",station_list[0]
         if self.station_from == None:                       #ensure route starts at station_from
             pass
         elif self.station_from != station_list[0]:
             station_list.insert(0,self.station_from)
-        print "station_list",station_list
+        if self.logLevel > 0: print "station_list",station_list
         if self.station_to == None:                         #ensure route ends at station_to
             pass
         elif self.station_to != station_list[-1]:
             
             station_list.append(self.station_to)
-        print "station_list",station_list
+        if self.logLevel > 0: print "station_list",station_list
         if self.repeat == True:                             #ensure route end at start point if repeating
             if self.station_to != self.station_from:
                 station_list.append(self.station_to)
-        print "station_list after", station_list        
+        if self.logLevel > 0: print "station_list after", station_list        
         station_from = None
         for station in station_list:
             station_to = station  # both now strings
@@ -379,15 +379,15 @@ class RunRoute(MoveTrain):
                 
                 doNotRun = False
                 repeat = False
-                print "train_to_move", train_to_move
+                if self.logLevel > 0: print "train_to_move", train_to_move
                 if train_to_move != None:
-                    print "************************************moving train******************",train_to_move
+                    if self.logLevel > 0: print "************************************moving train******************",train_to_move
                     self.move_between_stations(station_from, station_to, train_to_move, self.graph)
                 else:
                     msg = "No train in block for scheduled train starting from " + station_from
                     title = "Scheduling Error"
                     opt1 = "Not scheduling train"
-                    print "No train in block for scheduled train starting from " + station_from
+                    if self.logLevel > 0: print "No train in block for scheduled train starting from " + station_from
                     OptionDialog().customMessage(msg, title, opt1)
                     doNotRun = True
                     break

@@ -306,7 +306,7 @@ class Update_Signal_Logic():
         return None                      
                         
     def update_signal_logic(self, signal_masts, routes_in_autoblocks):
-        print "in update signal logic"
+        if self.loglevel > 0: print "in update signal logic"
         #preliminary
         sm_source_name, sm_dest_name, sml, autoblocks = signal_masts
         SignalMastManager = jmri.InstanceManager.getDefault(jmri.SignalMastManager)
