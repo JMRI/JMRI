@@ -13,6 +13,8 @@ import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.Module.ParameterData;
+import jmri.jmrit.logixng.Module.ReturnValueType;
+import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.actions.DigitalCallModule;
 import jmri.jmrit.logixng.tools.swing.CallModuleParameterTableModel;
 
@@ -57,7 +59,9 @@ public class DigitalCallModuleSwing extends AbstractDigitalActionSwing {
         Module module = null;
         List<ParameterData> parameterData;
         if (callModule != null) {
-            module = callModule.getModule() != null ? callModule.getModule().getBean() : null;
+            if (callModule.getModule() != null) {
+                module = callModule.getModule().getBean();
+            }
             parameterData = callModule.getParameterData();
         } else {
             parameterData = new ArrayList<>();
@@ -66,15 +70,19 @@ public class DigitalCallModuleSwing extends AbstractDigitalActionSwing {
         JTable table = new JTable();
         _moduleParametersTableModel = new CallModuleParameterTableModel(module, parameterData);
         table.setModel(_moduleParametersTableModel);
-        table.setDefaultRenderer(SymbolTable.InitialValueType.class,
+        table.setDefaultRenderer(InitialValueType.class,
                 new CallModuleParameterTableModel.TypeCellRenderer());
-        table.setDefaultEditor(SymbolTable.InitialValueType.class,
-                new CallModuleParameterTableModel.TypeCellEditor());
+        table.setDefaultEditor(InitialValueType.class,
+                new CallModuleParameterTableModel.InitialValueCellEditor());
+        table.setDefaultRenderer(ReturnValueType.class,
+                new CallModuleParameterTableModel.TypeCellRenderer());
+        table.setDefaultEditor(ReturnValueType.class,
+                new CallModuleParameterTableModel.ReturnValueCellEditor());
 //        table.setDefaultRenderer(CallModuleParameterTableModel.Menu.class,
 //                new CallModuleParameterTableModel.MenuCellRenderer());
 //        table.setDefaultEditor(CallModuleParameterTableModel.Menu.class,
 //                new CallModuleParameterTableModel.MenuCellEditor(table, _moduleParametersTableModel));
-//        _moduleParametersTableModel.setColumnForMenu(table);
+        _moduleParametersTableModel.setColumnsForComboBoxes(table);
         JScrollPane scrollpane = new JScrollPane(table);
         scrollpane.setPreferredSize(new Dimension(400, 200));
         tablePanel.add(scrollpane, BorderLayout.CENTER);
@@ -111,8 +119,17 @@ public class DigitalCallModuleSwing extends AbstractDigitalActionSwing {
         DigitalCallModule callModule = (DigitalCallModule)object;
         
         ModuleItem mi = _moduleComboBox.getItemAt(_moduleComboBox.getSelectedIndex());
-        if (mi._module != null) callModule.setModule(mi._module);
-        else callModule.removeModule();
+        if (mi._module != null) {
+            callModule.setModule(mi._module);
+            callModule.getParameterData().clear();
+            callModule.getParameterData().addAll(_moduleParametersTableModel.getParameters());
+//            for (ParameterData pd : _moduleParametersTableModel.getParameters()) {
+//                callModule.addParameter(pd);
+//            }
+        }
+        else {
+            callModule.removeModule();
+        }
     }
     
     /** {@inheritDoc} */
