@@ -228,7 +228,7 @@ public class CallModuleParameterTableModel extends AbstractTableModel {
             
             initialValueTypeComboBox.setSelectedItem(value);
             initialValueTypeComboBox.addActionListener(this);
-
+            
             return initialValueTypeComboBox;
         }
         
