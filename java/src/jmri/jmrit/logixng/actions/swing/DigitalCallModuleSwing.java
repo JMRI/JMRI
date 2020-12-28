@@ -78,22 +78,11 @@ public class DigitalCallModuleSwing extends AbstractDigitalActionSwing {
                 new CallModuleParameterTableModel.TypeCellRenderer());
         table.setDefaultEditor(ReturnValueType.class,
                 new CallModuleParameterTableModel.ReturnValueCellEditor());
-//        table.setDefaultRenderer(CallModuleParameterTableModel.Menu.class,
-//                new CallModuleParameterTableModel.MenuCellRenderer());
-//        table.setDefaultEditor(CallModuleParameterTableModel.Menu.class,
-//                new CallModuleParameterTableModel.MenuCellEditor(table, _moduleParametersTableModel));
         _moduleParametersTableModel.setColumnsForComboBoxes(table);
         JScrollPane scrollpane = new JScrollPane(table);
         scrollpane.setPreferredSize(new Dimension(400, 200));
         tablePanel.add(scrollpane, BorderLayout.CENTER);
         panel.add(tablePanel);
-        
-//        // Add parameter
-//        JButton add = new JButton(Bundle.getMessage("TableAddParameter"));
-//        buttonPanel.add(add);
-//        add.addActionListener((ActionEvent e) -> {
-//            _moduleParametersTableModel.add();
-//        });
     }
     
     /** {@inheritDoc} */

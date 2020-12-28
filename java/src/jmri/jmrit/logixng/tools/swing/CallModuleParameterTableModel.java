@@ -17,8 +17,8 @@ import jmri.jmrit.logixng.Module.ReturnValueType;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 
 /**
- * Table model for local variables
- * @author Daniel Bergqvist Copyright 2018
+ * Table model for CallModule parameters
+ * @author Daniel Bergqvist Copyright 2020
  */
 public class CallModuleParameterTableModel extends AbstractTableModel {
 
@@ -27,7 +27,6 @@ public class CallModuleParameterTableModel extends AbstractTableModel {
     public static final int COLUMN_INPUT_DATA = 2;
     public static final int COLUMN_OUTPUT_TYPE = 3;
     public static final int COLUMN_OUTPUT_DATA = 4;
-//    public static final int COLUMN_MENU = 5;
     
     private final List<ParameterData> _parameterData = new ArrayList<>();
     
@@ -76,8 +75,6 @@ public class CallModuleParameterTableModel extends AbstractTableModel {
                 return Bundle.getMessage("ColumnOutputParameterType");
             case COLUMN_OUTPUT_DATA:
                 return Bundle.getMessage("ColumnOutputParameterData");
-//            case COLUMN_MENU:
-//                return Bundle.getMessage("ColumnParameterMenu");
             default:
                 throw new IllegalArgumentException("Invalid column");
         }
@@ -91,8 +88,6 @@ public class CallModuleParameterTableModel extends AbstractTableModel {
                 return InitialValueType.class;
             case COLUMN_OUTPUT_TYPE:
                 return ReturnValueType.class;
-//            case COLUMN_MENU:
-//                return Menu.class;
             case COLUMN_NAME:
             case COLUMN_INPUT_DATA:
             case COLUMN_OUTPUT_DATA:
@@ -129,9 +124,6 @@ public class CallModuleParameterTableModel extends AbstractTableModel {
             case COLUMN_OUTPUT_DATA:
                 variable._returnValueData = (String) value;
                 break;
-//            case COLUMN_MENU:
-//                // Do nothing
-//                break;
             default:
                 throw new IllegalArgumentException("Invalid column");
         }      
@@ -153,8 +145,6 @@ public class CallModuleParameterTableModel extends AbstractTableModel {
                 return _parameterData.get(rowIndex).getReturnValueType();
             case COLUMN_OUTPUT_DATA:
                 return _parameterData.get(rowIndex).getReturnValueData();
-//            case COLUMN_MENU:
-//                return Menu.Select;
             default:
                 throw new IllegalArgumentException("Invalid column");
         }
@@ -225,18 +215,17 @@ public class CallModuleParameterTableModel extends AbstractTableModel {
                 boolean isSelected, int row, int column) {
             
             if (value == null) value = InitialValueType.None;
-
+            
             if (! (value instanceof InitialValueType)) {
                 throw new IllegalArgumentException("value is not an InitialValueType: " + value.getClass().getName());
             }
-
+            
             JComboBox<InitialValueType> initialValueTypeComboBox = new JComboBox<>();
-//                JComboBox<InitialValueType> initialValueComboBox = new JComboBox<>();
-
+            
             for (InitialValueType type : InitialValueType.values()) {
                 initialValueTypeComboBox.addItem(type);
             }
-
+            
             initialValueTypeComboBox.setSelectedItem(value);
             initialValueTypeComboBox.addActionListener(this);
 
@@ -260,7 +249,7 @@ public class CallModuleParameterTableModel extends AbstractTableModel {
     
     public static class ReturnValueCellEditor extends AbstractCellEditor
             implements TableCellEditor, ActionListener {
-
+        
         private ReturnValueType _returnValueType;
         
         @Override
@@ -276,10 +265,6 @@ public class CallModuleParameterTableModel extends AbstractTableModel {
             
             if (! (value instanceof ReturnValueType)) {
                 throw new IllegalArgumentException("value is not an ReturnValueType: " + value.getClass().getName());
-            }
-            
-            if (! (value instanceof ReturnValueType)) {
-                throw new IllegalArgumentException("value is not an InitialValueType: " + value.getClass().getName());
             }
             
             JComboBox<ReturnValueType> returnValueTypeComboBox = new JComboBox<>();
