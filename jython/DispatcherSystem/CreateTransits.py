@@ -22,13 +22,13 @@ from javax.swing import JButton, JFrame, JPanel, JProgressBar, \
 
 class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
 
-    loglevel = 0
+    logLevel = 0
 
     def __init__(self):
         pass
         
     def run_transits(self, filename_icon, filename_run):
-        if self.loglevel > 0: print "will store new panel in filename" , filename_run
+        if self.logLevel > 0: print "will store new panel in filename" , filename_run
         self.msg = "About to create all transits and train info files\nrequired for dispatcher operation"
         self.msg = self.msg + "\n***********************\n Do you wish to continue\n***********************"
         myAnswer = JOptionPane.showConfirmDialog(None, self.msg)
@@ -44,7 +44,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             JOptionPane.showMessageDialog(None, 'Stopping', "Have a cup of Tea", JOptionPane.WARNING_MESSAGE)
             return 
         elif myAnswer == JOptionPane.CLOSED_OPTION:
-            if self.loglevel > 0: print "You closed the window. How rude!"
+            if self.logLevel > 0: print "You closed the window. How rude!"
         self.process_panels()
         filename_icon = filename_run.replace("run","icon")
         msg = "All Transits and TrainInfo Files produced\n and saved in " + filename_run +"\n - Restart JMRI and \n - load the file " + filename_run + "\n - instead of " + filename_icon + "\nThen run Stage3 to set the dispatcher options\nand run the dispatcher system from the panel"
@@ -54,7 +54,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         #self.displayMessage(msg )
         
     def store_panel(self, filename):
-        if self.loglevel > 0: print "storing file"
+        if self.logLevel > 0: print "storing file"
         file = java.io.File(filename)
         cm = jmri.InstanceManager.getNullableDefault(jmri.ConfigureManager)
         result = cm.storeUser(file)
@@ -62,17 +62,17 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             msg = "store was successful" 
         else: 
             msg = "store failed"
-        if self.loglevel > 0: print(msg)
+        if self.logLevel > 0: print(msg)
     
     
     def process_panels(self):
         #self.g = StationGraph()
         EditorManager = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager)
-        if self.loglevel > 0: print "finding panels"
+        if self.logLevel > 0: print "finding panels"
         for panel in EditorManager.getEditorsList():
-            if self.loglevel > 0: print "Panel = ", panel   
-            if self.loglevel > 0: print "type = " , type(panel)
-            if self.loglevel > 0: print "****"
+            if self.logLevel > 0: print "Panel = ", panel   
+            if self.logLevel > 0: print "type = " , type(panel)
+            if self.logLevel > 0: print "****"
             if type(panel) == jmri.jmrit.display.layoutEditor.LayoutEditor:
                 self.create_transits_and_trainTrainInfos(panel)       
          
@@ -111,7 +111,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
     ## ***********************************************************************************
         
     def create_transits_and_trainTrainInfos(self, panel):
-        #if self.loglevel > 0: print "*********************************** producing transit ******************************"
+        #if self.logLevel > 0: print "*********************************** producing transit ******************************"
         #produce all the transits, so use the stopping graph which is more complete than the stopping graph
         
         self.delete_transits()
@@ -138,29 +138,29 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
                 elif os.path.isdir(file_path):
                     shutil.rmtree(file_path)
             except Exception as e:
-                if self.loglevel > 0: print('Failed to delete %s. Reason: %s' % (file_path, e)) 
+                if self.logLevel > 0: print('Failed to delete %s. Reason: %s' % (file_path, e)) 
             
         
     def get_signal_mast_lists(self,panel):
         global g
         for e in g.g_express.edgeSet():
-            if self.loglevel > 0: print "******* signal_mast_list *******"                  
+            if self.logLevel > 0: print "******* signal_mast_list *******"                  
             
             # 1) get the signal mast list excluding the last signal mast
                                                      
-            #if self.loglevel > 0: print "stopping",g.dict_path_stopping
-            if self.loglevel > 0: print "edge = " , e.to_string()
+            #if self.logLevel > 0: print "stopping",g.dict_path_stopping
+            if self.logLevel > 0: print "edge = " , e.to_string()
             #layout_block_list = g.dict_path_stopping[e]
             layout_block_list = e.getItem("path")
-            if self.loglevel > 0: print "layout_block_list",layout_block_list
+            if self.logLevel > 0: print "layout_block_list",layout_block_list
             layout_block_list_name = e.getItem("path_name")
-            if self.loglevel > 0: print "layout_block_list_name",layout_block_list_name
+            if self.logLevel > 0: print "layout_block_list_name",layout_block_list_name
             #get the list of signal masts
             #panel = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager).get('My Layout')
             signal_mast_class = jmri.SignalMast
             lbctools= jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools()
             signal_mast_list=lbctools.getBeansInPath(layout_block_list,panel,signal_mast_class)
-            if self.loglevel > 0: print "signal_mast_list",signal_mast_list
+            if self.logLevel > 0: print "signal_mast_list",signal_mast_list
             # 2) get the last signal mast
             last_block = layout_block_list[-1]
             penultimate_signal_mast = signal_mast_list[-1]
@@ -168,8 +168,8 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             
             # 3) add the last signal mast
             signal_mast_list.append(last_signal_mast)
-            if self.loglevel > 0: print "final signal mast list " , signal_mast_list
-            if self.loglevel > 0: print "final signal mast list " , [ signal.getUserName() for signal in signal_mast_list]
+            if self.logLevel > 0: print "final signal mast list " , signal_mast_list
+            if self.logLevel > 0: print "final signal mast list " , [ signal.getUserName() for signal in signal_mast_list]
             
             # 4) store signal_mast_list
             e.setItem(signal_mast_list=signal_mast_list)
@@ -177,34 +177,34 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             
     def get_last_signal_mast(self,signal_mast,layout_block):
     
-        if self.loglevel > 0: print "get_last_signal_mast"
+        if self.logLevel > 0: print "get_last_signal_mast"
               
         
                                                            
         # 1) get_sections containing_block_with_previous_signal_mast
-        if self.loglevel > 0: print "block - ", layout_block.getUserName(), layout_block
+        if self.logLevel > 0: print "block - ", layout_block.getUserName(), layout_block
         block = layout_block.getBlock()
         SectionManager = jmri.InstanceManager.getDefault(jmri.SectionManager)
         # for section in SectionManager.getNamedBeanSet():
-            # if self.loglevel > 0: print section.getUserName(), "section.getBlockList()", section.getBlockList()
+            # if self.logLevel > 0: print section.getUserName(), "section.getBlockList()", section.getBlockList()
             # if block in section.getBlockList():
                 # section_found  = [section ]
-                # if self.loglevel > 0: print "section_found" ,section_found
+                # if self.logLevel > 0: print "section_found" ,section_found
         sections = [section for section in SectionManager.getNamedBeanSet() if block in section.getBlockList()]
-        if self.loglevel > 0: print "sections = " , sections
+        if self.logLevel > 0: print "sections = " , sections
         
         # 2) of these sections find the one that contains the previous signal mast
         
         signal_mast_name = str(signal_mast.getUserName())
         found_section_name = None
         for section in sections:
-            if self.loglevel > 0: print "mast, section", signal_mast.getUserName() ,section.getUserName()
+            if self.logLevel > 0: print "mast, section", signal_mast.getUserName() ,section.getUserName()
             section_name = str(section.getUserName())
             test = signal_mast_name in section_name
-            if self.loglevel > 0: print test
+            if self.logLevel > 0: print test
             if signal_mast_name in section_name:
                 found_section_name = section_name
-            if self.loglevel > 0: print "found_section", found_section_name
+            if self.logLevel > 0: print "found_section", found_section_name
             
         # 3) the section has two signal masts. return the signal mast that isn't the previous signal mast
         
@@ -217,7 +217,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         SignalMastManager = jmri.InstanceManager.getDefault(jmri.SignalMastManager)
         if other_signal_mast_in_section != None:
             last_signal_mast = SignalMastManager.getByUserName(other_signal_mast_in_section)
-        if self.loglevel > 0: print "last_signal_mast", last_signal_mast
+        if self.logLevel > 0: print "last_signal_mast", last_signal_mast
         if last_signal_mast == None:
             msg = "The routine at present requires section names to be the names of the signal masts separated by a :"
             msg = msg + "\nEither rename the section or (recommended)"
@@ -238,12 +238,12 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         max_no_transits = 20000       #always produce transists useful for testing
         t = []
         
-        if self.loglevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-        if self.loglevel > 0: print "&&&& producing transits &&&&"
-        if self.loglevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+        if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+        if self.logLevel > 0: print "&&&& producing transits &&&&"
+        if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
         i = -1
         
-        if self.loglevel > 0: print "g-",g.g_express
+        if self.logLevel > 0: print "g-",g.g_express
 
         no_of_edges = 0
         for e in g.g_express.edgeSet():
@@ -252,7 +252,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         progress = 20
             
         interval_percent = int((100.0-progress)/8.0)
-        print "interval" , interval_percent, "progress", progress, "no_of_edges", no_of_edges
+        if self.logLevel > 0: print "interval" , interval_percent, "progress", progress, "no_of_edges", no_of_edges
         interval_count = int(no_of_edges/8)
         interval_count_total = interval_count
 
@@ -262,32 +262,32 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
                            
         for e in g.g_express.edgeSet():
             if i > max_no_transits:                                                                                                     
-                if self.loglevel > 0: print "passing",i
+                if self.logLevel > 0: print "passing",i
                 pass
             else:
                 i+=1
                 if  i > interval_count_total:
                     interval_count_total = interval_count_total + interval_count
                     progress = int(progress + interval_percent)
-                    print progress, i
+                    if self.logLevel > 0: print progress, i
                     p = int(min(progress, 100))
-                    print "p" , p
+                    if self.logLevel > 0: print "p" , p
                     dpg.Update(str(progress)+ "% complete")
                 
-                if self.loglevel > 0: print "creating",i
+                if self.logLevel > 0: print "creating",i
                 filename_fwd = self.get_filename(e, "fwd")
                 filename_rvs = self.get_filename(e, "rvs")
-                if self.loglevel > 0: print "processing " ,filename_fwd
+                if self.logLevel > 0: print "processing " ,filename_fwd
                 
                 transit = self.create_transit(e)
                 transit_name = transit.getUserName()
                 sml= [signalmast.getUserName() for signalmast in e.getItem("signal_mast_list")]
-                if self.loglevel > 0: print "transit info, name, transit", transit_name, transit, e.getItem("transit") , "\n", e.getItem("signal_mast_list"), sml
+                if self.logLevel > 0: print "transit info, name, transit", transit_name, transit, e.getItem("transit") , "\n", e.getItem("signal_mast_list"), sml
                 self.store_TrainInfo(e, self.store_forward_train_TrainInfo, filename_fwd, transit_name, transit )
-                if self.loglevel > 0: print "*************************************"
+                if self.logLevel > 0: print "*************************************"
                 self.store_TrainInfo(e, self.store_reverse_train_TrainInfo, filename_rvs, transit_name, transit )
-                if self.loglevel > 0: print "*************************************"
-                if self.loglevel > 0: print "created transits", i, filename_fwd, " & rvs"
+                if self.logLevel > 0: print "*************************************"
+                if self.logLevel > 0: print "created transits", i, filename_fwd, " & rvs"
                 self.delete_transit(transit)
                 #check if transit exists
                 #try:
@@ -296,17 +296,17 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
                     # if transit != None:
                         # transit_name = transit.getUserName()
                         # sml= [signalmast.getUserName() for signalmast in e.getItem("signal_mast_list")]
-                        # if self.loglevel > 0: print "transit info, name, transit", transit_name, transit, e.getItem("transit") , "\n", e.getItem("signal_mast_list"), sml
+                        # if self.logLevel > 0: print "transit info, name, transit", transit_name, transit, e.getItem("transit") , "\n", e.getItem("signal_mast_list"), sml
                         # self.store_TrainInfo(e, self.store_forward_train_TrainInfo, filename_fwd, transit_name, transit )
-                        # if self.loglevel > 0: print "*************************************"
+                        # if self.logLevel > 0: print "*************************************"
                         # self.store_TrainInfo(e, self.store_reverse_train_TrainInfo, filename_rvs, transit_name, transit )
-                        # if self.loglevel > 0: print "*************************************"
-                        # if self.loglevel > 0: print "created transits", i, filename_fwd, " & rvs"
+                        # if self.logLevel > 0: print "*************************************"
+                        # if self.logLevel > 0: print "created transits", i, filename_fwd, " & rvs"
                         # self.delete_transit(transit)
                 # except Exception as e:
-                    # if self.loglevel > 0: print "problem with transit fwd", filename_fwd
-                    # if self.loglevel > 0: print(e)
-                    # if self.loglevel > 0: print "end of problem with transit"                
+                    # if self.logLevel > 0: print "problem with transit fwd", filename_fwd
+                    # if self.logLevel > 0: print(e)
+                    # if self.logLevel > 0: print "end of problem with transit"                
 
         # #we produced the transits and deleted each one so we did not ghave to checkifa transit existed
         # we now have to re-create each transit
@@ -321,21 +321,21 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
                     transit = self.create_transit(e)
                 except jmri.JmriException as ex:
                     filename = self.get_filename(e, "fwd")
-                    if self.loglevel > 0: print (ex),
-                    if self.loglevel > 0: print "transit for" , filename, "not produced (duplicate)"
+                    if self.logLevel > 0: print (ex),
+                    if self.logLevel > 0: print "transit for" , filename, "not produced (duplicate)"
                 except:
                     filename = self.get_filename(e, "fwd")
-                    if self.loglevel > 0: print "transit for" , filename, "not produced (duplicate)"
+                    if self.logLevel > 0: print "transit for" , filename, "not produced (duplicate)"
                     
                 try:
                     transit = self.create_transit(e)
                 except jmri.JmriException as ex:
                     filename = self.get_filename(e, "rvs")
-                    if self.loglevel > 0: print (ex),
-                    if self.loglevel > 0: print "transit for" , filename, "not produced (duplicate)"
+                    if self.logLevel > 0: print (ex),
+                    if self.logLevel > 0: print "transit for" , filename, "not produced (duplicate)"
                 except:
                     filename = self.get_filename(e, "rvs")
-                    if self.loglevel > 0: print "transit for" , filename, "not produced (duplicate)"
+                    if self.logLevel > 0: print "transit for" , filename, "not produced (duplicate)"
         dpg.killLabel()
         # for frame in self.frame_list:
             # self.closeframe(frame)
@@ -345,18 +345,18 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         start_signal_mast = signal_mast_list[0].getUserName()
         end_signal_mast = signal_mast_list[-1].getUserName()
         transit_name = "From " + start_signal_mast +  " to " + end_signal_mast
-        if self.loglevel > 0: print "transit_name",transit_name
+        if self.logLevel > 0: print "transit_name",transit_name
         transits = jmri.InstanceManager.getDefault(jmri.TransitManager)
         transit_list = [transit  for transit in transits.getNamedBeanSet() if transit.getUserName() == transit_name]
-        if self.loglevel > 0: print "transit_list",transit_list
+        if self.logLevel > 0: print "transit_list",transit_list
         
         if transit_list == []:
             return None
         else:
             transit = transit_list[0]
-            if self.loglevel > 0: print "transit", transit.getUserName()
-            if self.loglevel > 0: print "transit_username", transit.getUserName()
-            if self.loglevel > 0: print "transit exists", transit.getUserName(), transit
+            if self.logLevel > 0: print "transit", transit.getUserName()
+            if self.logLevel > 0: print "transit_username", transit.getUserName()
+            if self.logLevel > 0: print "transit exists", transit.getUserName(), transit
             e.setItem(transit=transit)
             return transit            
     def create_transit( self, e):
@@ -364,20 +364,20 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         #check if transit already exists
         transit = self.get_existing_transit(e)                                                
         if transit != None:
-            if self.loglevel > 0: print "TRANSIT =",transit
+            if self.logLevel > 0: print "TRANSIT =",transit
             return transit                             
         #create transit
-        #if self.loglevel > 0: print " creating transit "
+        #if self.logLevel > 0: print " creating transit "
         TransitCreationTool = jmri.jmrit.display.layoutEditor.TransitCreationTool()
         transit = None
         
         #iterate through the signalmasts
         signal_mast_list = e.getItem("signal_mast_list")
         for signal_mast in signal_mast_list:
-            #if self.loglevel > 0: print "adding ", signal_mast.getUserName()
+            #if self.logLevel > 0: print "adding ", signal_mast.getUserName()
             TransitCreationTool.addNamedBean(signal_mast)
-            #if self.loglevel > 0: print "added", signal_mast.getUserName()
-        #if self.loglevel > 0: print "about to create transit"
+            #if self.logLevel > 0: print "added", signal_mast.getUserName()
+        #if self.logLevel > 0: print "about to create transit"
         
         #create transit
         try:
@@ -396,12 +396,12 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             transit_action=self.transit_action_turn_on(sensor_name)
             last_section.addAction(transit_action)           
         except jmri.JmriException as ex:
-            if self.loglevel > 0: print(ex),
-            if self.loglevel > 0: print "could not create transit", signal_mast_list
+            if self.logLevel > 0: print(ex),
+            if self.logLevel > 0: print "could not create transit", signal_mast_list
         except Exception as ex:
-            if self.loglevel > 0: print(ex),
-            if self.loglevel > 0: print "could not create transit", signal_mast_list
-        #if self.loglevel > 0: print "finished transit"
+            if self.logLevel > 0: print(ex),
+            if self.logLevel > 0: print "could not create transit", signal_mast_list
+        #if self.logLevel > 0: print "finished transit"
  
         return transit
         
@@ -416,13 +416,13 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         # use java.util.concurrent.CopyOnWriteArrayList  so can iterate through the transits while deleting
         
         TransitManager = jmri.InstanceManager.getDefault(jmri.TransitManager)
-        #if self.loglevel > 0: print "Section"
+        #if self.logLevel > 0: print "Section"
         TransitList = java.util.concurrent.CopyOnWriteArrayList()
         for transit in TransitManager.getNamedBeanSet():
             TransitList.add(transit)
         
         for transit in TransitList:
-            if self.loglevel > 0: print "deleting Transit ", transit.getUserName()
+            if self.logLevel > 0: print "deleting Transit ", transit.getUserName()
             TransitManager.deleteTransit(transit)        
         
     def get_filename(self, e, suffix):
@@ -448,7 +448,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
     
         #store_fn is either store_forward_train_TrainInfo or store_reverse_train_TrainInfo
     
-        #if self.loglevel > 0: print " storing transit "
+        #if self.logLevel > 0: print " storing transit "
 
         # or self.doreverse: 
         #store the transit if it has not already been stored
@@ -565,7 +565,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         roster_entries_with_speed_profile = []
         r = jmri.jmrit.roster.Roster.getDefault()
         for roster_entry in jmri.jmrit.roster.Roster.getAllEntries(r):
-            #if self.loglevel > 0: print roster_entry.getId(), roster_entry.getSpeedProfile()
+            #if self.logLevel > 0: print roster_entry.getId(), roster_entry.getSpeedProfile()
             if roster_entry.getSpeedProfile() != None:
                 roster_entries_with_speed_profile.append(roster_entry.getId())
         return roster_entries_with_speed_profile    
@@ -579,7 +579,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             JOptionPane.showMessageDialog(None, "No roster entries\nCannot produce train info files", 'Stopping', JOptionPane.WARNING_MESSAGE)
             raise Exception
         else:
-            if self.loglevel > 0: print "list of transits" , list
+            if self.logLevel > 0: print "list of transits" , list
             train_name = str(list[0])      #use the first roster entry with a speed profile
         
             TrainInfo.setTrainName(train_name)
@@ -605,17 +605,17 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             no_of_blocks_in_path = len(path_name)
             #end block seq starts counting at 0 at the second block in path_name
             #we want the last block
-            if self.loglevel > 0: print "got here"
-            if self.loglevel > 0: print "transit = ", transit
+            if self.logLevel > 0: print "got here"
+            if self.logLevel > 0: print "transit = ", transit
             blocks = jmri.InstanceManager.getDefault(jmri.BlockManager)
             startBlock = blocks.getBlock(path_name[0])
             transit.getDestinationBlocksList(startBlock, False)
             destinationBlockSeqList = transit.getDestBlocksSeqList()
-            if self.loglevel > 0: print "got destinationBlockSeqList", destinationBlockSeqList
-            if self.loglevel > 0: print "no_of_blocks_in_path-1",no_of_blocks_in_path-1
-            if self.loglevel > 0: print "path_name", path_name
+            if self.logLevel > 0: print "got destinationBlockSeqList", destinationBlockSeqList
+            if self.logLevel > 0: print "no_of_blocks_in_path-1",no_of_blocks_in_path-1
+            if self.logLevel > 0: print "path_name", path_name
             seq = destinationBlockSeqList.get(0)
-            if self.loglevel > 0: print "seq",seq
+            if self.logLevel > 0: print "seq",seq
             TrainInfo.setDestinationBlockSeq(seq)                                                            
             ALLOCATE_AS_FAR_AS_IT_CAN = -1          # this value can go in TrainInfo.setAllocationMethod() 
             ALLOCATE_BY_SAFE_SECTIONS = 0           # this value can go in TrainInfo.setAllocationMethod() 
@@ -679,7 +679,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         # frame.requestFocus()
         frame.dispatchEvent(java.awt.event.WindowEvent(frame, java.awt.event.WindowEvent.WINDOW_CLOSING));
         #frame = None
-        #if self.loglevel > 0: print frame
+        #if self.logLevel > 0: print frame
         
 
     def append_station_block_list(self,*blocks):
@@ -687,19 +687,19 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             station_block_name = alias_block(block_alias)
             g.station_block_list.append(station_block_name)
             g.station_blk_list.append(layoutblocks.getLayoutBlock(station_block_name))
-        #if self.loglevel > 0: print g.station_block_list        
+        #if self.logLevel > 0: print g.station_block_list        
         
     def set_memory_all(self, train_name):
         for station_block_name in g.station_block_list:
             ## Build Diagram
-            #if self.loglevel > 0: print station_block_name
+            #if self.logLevel > 0: print station_block_name
             layoutBlock = layoutblocks.getLayoutBlock(station_block_name)
             sensor = layoutBlock.getOccupancySensor()
             if sensor.getKnownState() == ACTIVE:
-                #if self.loglevel > 0: print "layoutblock =", layoutBlock
-                #if self.loglevel > 0: print "sensor =", sensor
+                #if self.logLevel > 0: print "layoutblock =", layoutBlock
+                #if self.logLevel > 0: print "sensor =", sensor
                 mem=layoutBlock.getMemory()
-                #if self.loglevel > 0: print "mem =", mem, mem.getValue()
+                #if self.logLevel > 0: print "mem =", mem, mem.getValue()
                 if mem.getValue() == None:
                     mem.setValue(train_name)                  
 
@@ -709,7 +709,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             self.displayMessage('Sensor {} not found'.format(sensorName))
             return
         if sensorState == 'active':
-            #if self.loglevel > 0: print ("wait_sensor active: sensorName {} sensorState {}",format(sensorName, sensorState))
+            #if self.logLevel > 0: print ("wait_sensor active: sensorName {} sensorState {}",format(sensorName, sensorState))
             self.waitSensorActive(sensor)
         elif sensorState == 'inactive':
             self.waitSensorInactive(sensor)
@@ -754,21 +754,21 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         for i in range(0, 20):
             if turnout.getKnownState() == newState:
                 break;
-            if self.loglevel > 0: print 'Turnout feedback loop: {}'.format(i)
+            if self.logLevel > 0: print 'Turnout feedback loop: {}'.format(i)
             self.waitMsec(250)
         self.waitMsec(turnoutDelay)
         
     def set_memory(self, block_name, train_name):
-        #if self.loglevel > 0: print "in set_memory"
-        #if self.loglevel > 0: print "train_name =", train_name
-        #if self.loglevel > 0: print "block_name =", block_name
+        #if self.logLevel > 0: print "in set_memory"
+        #if self.logLevel > 0: print "train_name =", train_name
+        #if self.logLevel > 0: print "block_name =", block_name
         layoutBlock = layoutblocks.getLayoutBlock(block_name)
         if layoutBlock == None:
             block_name = alias_block(block_name)
             layoutBlock = layoutblocks.getLayoutBlock(block_name)
-        #if self.loglevel > 0: print "layoutblock =", layoutBlock
+        #if self.logLevel > 0: print "layoutblock =", layoutBlock
         mem = layoutBlock.getMemory()
-        #if self.loglevel > 0: print "mem =", mem, mem.getValue()
+        #if self.logLevel > 0: print "mem =", mem, mem.getValue()
         if mem.getValue() == None:
             mem.setValue(train_name)         
     
@@ -783,7 +783,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
                    
     def get_memory(self, block_name):
         layoutBlock = layoutblocks.getLayoutBlock(block_name)
-        #if self.loglevel > 0: print "layoutNlock =", layoutBlock
+        #if self.logLevel > 0: print "layoutNlock =", layoutBlock
         mem = layoutBlock.getMemory()
         mem_val = mem.getValue()
         return mem_val
@@ -796,9 +796,9 @@ import java.util.concurrent.CopyOnWriteArrayList
 class ClearTransits(CreateTransits):
 
     def __init__(self):
-        #if self.loglevel > 0: print "deleting transits"
+        #if self.logLevel > 0: print "deleting transits"
         self.delete_transits()
-        #if self.loglevel > 0: print "deleted transits"
+        #if self.logLevel > 0: print "deleted transits"
     
     def handle(self):  #just to make it close down
         pass
@@ -810,13 +810,13 @@ class ClearTransits(CreateTransits):
         # use java.util.concurrent.CopyOnWriteArrayList  so can iterate through the transits while deleting
         
         TransitManager = jmri.InstanceManager.getDefault(jmri.TransitManager)
-        #if self.loglevel > 0: print "Section"
+        #if self.logLevel > 0: print "Section"
         TransitList = java.util.concurrent.CopyOnWriteArrayList()
         for transit in TransitManager.getNamedBeanSet():
             TransitList.add(transit)
         
         for transit in TransitList:
-            if self.loglevel > 0: print "deleting Transit ", transit.getUserName()
+            if self.logLevel > 0: print "deleting Transit ", transit.getUserName()
             TransitManager.deleteTransit(transit)
             
            

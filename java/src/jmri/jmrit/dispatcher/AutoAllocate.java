@@ -105,7 +105,7 @@ public class AutoAllocate {
         copyAndSortARs(list);
         removeCompletePlans();
         for (int i = 0; i < orderedRequests.size(); i++) {
-            //try {
+            try {
                 okToAllocate = false;
                 AllocationRequest ar = orderedRequests.get(i);
                 if (ar == null) {
@@ -300,10 +300,10 @@ public class AutoAllocate {
                         }
                     }
                 }
-//            } catch (RuntimeException e) {
-//                log.warn("scanAllocationRequestList - maybe the allocationrequest was removed due to a terminating train??{}", e.toString());
-//                continue;
-//            }
+            } catch (RuntimeException e) {
+                log.warn("scanAllocationRequestList - maybe the allocationrequest was removed due to a terminating train??{}", e.toString());
+                continue;
+            }
         }
     }
 

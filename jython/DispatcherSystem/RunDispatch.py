@@ -87,7 +87,6 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
         list = JList(list_items)
         list.setSelectedIndex(0)
         i = []
-        print "len i", len(i)
         while len(i) == 0:
             JOptionPane.showMessageDialog(None, list, title, JOptionPane.PLAIN_MESSAGE)
             i = list.getSelectedIndices()
@@ -98,7 +97,7 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
         # ans = OptionDialog().List(list_items)
         # print ans
         
-    #list and option buttons
+    #list and option buttons 
     def ListOptions(self, list_items, title, options):
         list = JList(list_items)
         list.setSelectedIndex(0)
@@ -118,8 +117,9 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
         # options = ["opt1", "opt2", "opt3"]
         # title = "title"
         # result = OptionDialog().ListOptions(list_items, title, options) 
-        # print "result= " ,result[0], "list = ",result[1]
-        # result = opt2 list = list1   
+        # list= result[0]
+        # option = result[1]
+        # print "option= " ,option, " list = ",list 
     
     def variable_combo_box(self, options, default, msg, title = None, type = JOptionPane.QUESTION_MESSAGE):
     
@@ -291,7 +291,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
        
                     msg = self.get_all_trains_msg()
                     title = None
-                    opt1 = "Select train on next optionbox1"
+                    opt1 = "Select train"
                     
                     OptionDialog().customMessage(msg, title, opt1)
                     msg = "Select the train in " + station_block_name
@@ -375,7 +375,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         #non_allocated_trains = self.get_non_allocated_trains()
         #return "the non-allocated trains are: \n" +'\n'.join([ str(train)   for train in non_allocated_trains]) 
         trains_in_sections_allocated1 = self.trains_in_sections_allocated()
-        msg = "the non-allocated trains are in sections: \n" + "\n".join([ str(train[0]) for train in trains_in_sections_allocated1 if train[2] == "non-allocated"])
+        msg = "the non-allocated trains are in sections: \n\n" + "\n".join(["  " + str(train[0]) for train in trains_in_sections_allocated1 if train[2] == "non-allocated"])
         return msg
         
     def get_all_trains_msg(self):
@@ -721,7 +721,7 @@ class OffActionMaster(jmri.jmrit.automat.AbstractAutomaton):
                 if self.logLevel > 0: print "setting start sensor active"
                 start_sensor.setKnownState(ACTIVE)
                 
-        # if sensor_that_went_inactive in self.route_dispatch_sensors: 
+        # if sensor_that_went_inactive in self.setup_route_or_run_dispatch_sensors: 
             # if self.logLevel > 0: print "run route dispatch sensor went inactive"
             # route_sensor = sensors.getSensor("setDispatchSensor")
             # dispatch_sensor =  sensors.getSensor("setRouteSensor")
@@ -734,8 +734,8 @@ class OffActionMaster(jmri.jmrit.automat.AbstractAutomaton):
         #self.waitMsec(20000)
         return False
     def get_route_dispatch_buttons(self):
-        self.route_dispatch_sensors = [sensors.getSensor(sensorName) for sensorName in ["setDispatchSensor","setRouteSensor"]]
-        #self.route_dispatch_states = [self.check_sensor_state(rd_sensor) for rd_sensor in self.route_dispatch_sensors]
+        self.setup_route_or_run_dispatch_sensors = [sensors.getSensor(sensorName) for sensorName in ["setDispatchSensor","setRouteSensor"]]
+        #self.route_dispatch_states = [self.check_sensor_state(rd_sensor) for rd_sensor in self.setup_route_or_run_dispatch_sensors]
         pass        
         
     def get_run_buttons(self):
@@ -748,6 +748,8 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     # if a button is turned on, this routing turns it off
     # another class will actually respond to the button and do something
+    
+    # also monitors Setup Dispatch and Setup Route and also Run Route
     
     button_sensors_to_watch = []
     def __init__(self):
@@ -762,90 +764,95 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         #get dictionary of buttons self.button_dict
         self.get_buttons()
         self.get_route_dispatch_buttons()
+        self.get_route_run_button()
         #set all move_to buttons inactive
         for sensor in self.button_sensors:
             sensor.setKnownState(INACTIVE)
             
-        for sensor in self.route_dispatch_sensors:
+        for sensor in self.setup_route_or_run_dispatch_sensors:
             sensor.setKnownState(INACTIVE)
-        #store the values in a clone
-        #self.store_button_states()
-        # #at moment there are no trains so:
-        self.button_sensors_to_watch = self.button_sensors + self.route_dispatch_sensors
+            
+        for sensor in self.route_run_sensor:
+            sensor.setKnownState(INACTIVE)
+
+
+        self.button_sensors_to_watch = self.route_run_sensor + self.button_sensors + self.setup_route_or_run_dispatch_sensors
 
         if self.logLevel > 0: print "self.button_sensors_to_watch_init", [sensor.getUserName() for sensor in self.button_sensors_to_watch]
 
         self.sensor_active = None
         self.sensor_active_route_dispatch = None
+        self.sensor_active_run_dispatch = None
         self.sensor_active_old = None
         self.sensor_active_route_dispatch_old = None
         
-        # #wait for one to go active
-        # aJavaList = java.util.Arrays.asList(self.button_sensors_to_watch)
-        # if self.logLevel > 0: print aJavaList[0].getUserName()
-        # self.waitSensorState(aJavaList, jmri.Sensor.ACTIVE)
-        # #determine which one changed
-        # self.sensor_active = [sensor for sensor in button_sensors_to_watch if sensor.getKnownState() == ACTIVE][0]
-        # #we really need to determine what train it was
-          # #just work with one train for now
-        # #get the list of sensors to watch
-        # self.button_sensors_to_watch = self.button_sensors - [sensor_changed]
-
         if self.logLevel > 0: print "finished ResetButtonMaster setup"
         return True
 
     def handle(self):
-        #only one button is active. We will keep it that way
-        if self.logLevel > 0: print "handle"
-        #wait for one to go active
+        #wait for a sensor to go active
         button_sensors_to_watch_JavaList = java.util.Arrays.asList(self.button_sensors_to_watch)
-        
         self.waitSensorState(button_sensors_to_watch_JavaList, ACTIVE)
-        #determine which one changed
-        #if self.logLevel > 0: print "sensor went active"
-        sensor_active_all = [sensor for sensor in self.button_sensors_to_watch if sensor.getKnownState() == ACTIVE][0]
         
+        #determine which one changed
+        if self.logLevel > 0: print "self.button_sensors_to_watch",self.button_sensors_to_watch    
+        sensor_active_all_array = [sensor for sensor in self.button_sensors_to_watch if sensor.getKnownState() == ACTIVE]
+        
+        #reset button_sensors_to_watch
+        self.button_sensors_to_watch = self.route_run_sensor + self.button_sensors + self.setup_route_or_run_dispatch_sensors
+        
+        # 1) modify button_sensors_to_watch so we don't keep triggering same senosr active
+        # 2) perform the correct action if a new button has been triggered
+        #    note we have to see whether a new sensor has been triggered by looking at old values
+        
+        if self.logLevel > 0: print "sensor_active_all_array" , sensor_active_all_array
+        if self.logLevel > 0: print "self.sensor_active_route_dispatch_old" , self.sensor_active_route_dispatch_old
+        if self.logLevel > 0: print "self.sensor_active_route_dispatch" , self.sensor_active_route_dispatch
+        if self.logLevel > 0: print "self.sensor_active", self.sensor_active 
+        if self.logLevel > 0: print "self.sensor_active_old", self.sensor_active_old
+
+        for sensor in self.setup_route_or_run_dispatch_sensors:
+            if self.logLevel > 0: print "senssor in setup_route_or_run_dispatch_sensors", sensor
+            if sensor in sensor_active_all_array:
+                if self.logLevel > 0: print "sensor in sensor_active_all_array", sensor
+                sensor_active_all_array.remove(sensor)
+                self.sensor_active_route_dispatch = sensor
+                if self.sensor_active_route_dispatch != None and self.sensor_active_route_dispatch != self.sensor_active_route_dispatch_old:
+                    self.process_setup_route_or_run_dispatch_sensors(self.sensor_active_route_dispatch)
+                    self.sensor_active_route_dispatch_old = self.sensor_active_route_dispatch
+                    if self.logLevel > 0: print "removing ", self.sensor_active_route_dispatch_old
+                    
+        self.button_sensors_to_watch.remove(self.sensor_active_route_dispatch_old)
+                    
+        if len(sensor_active_all_array) > 0:
+            sensor_active_all = sensor_active_all_array[0]   # there should be only one or zero items in thes array, and that not in self.setup_route_or_run_dispatch_sensors
+        else:   
+            sensor_active_all = None
+            
+        #the sensor can be in self.button_sensors or in self.route_run_sensor
         if sensor_active_all in self.button_sensors: 
             self.sensor_active = sensor_active_all
-        if sensor_active_all in self.route_dispatch_sensors: 
-            self.sensor_active_route_dispatch = sensor_active_all
-        
-        if self.sensor_active != None and self.sensor_active != self.sensor_active_old:
-            self.process_button_sensors(self.sensor_active)
-            self.sensor_active_old =self.sensor_active
-        if self.sensor_active_route_dispatch != None and self.sensor_active_route_dispatch != self.sensor_active_route_dispatch_old:
-            self.process_route_dispatch_sensors(self.sensor_active_route_dispatch)
-            self.sensor_active_route_dispatch_old = self.sensor_active_route_dispatch
-        
-        # exclude the current active buttons from the button to watch
-        self.button_sensors_to_watch = self.button_sensors + self.route_dispatch_sensors
-        
-        if self.sensor_active_old != None:
-            self.button_sensors_to_watch.remove(self.sensor_active_old) 
-        if self.sensor_active_route_dispatch_old != None:
-            if self.logLevel > 0: print "self.sensor_active_route_dispatch_old" , self.sensor_active_route_dispatch_old
-            self.button_sensors_to_watch.remove(self.sensor_active_route_dispatch_old)
-            
-        self.waitMsec(2000)
+            if self.sensor_active != self.sensor_active_old :
+                self.process_button_sensors(self.sensor_active)
+                self.sensor_active_old = self.sensor_active
+            self.button_sensors_to_watch.remove(self.sensor_active)
+        elif sensor_active_all in self.route_run_sensor: 
+            self.sensor_active_run_dispatch = sensor_active_all
+            self.process_run_route()
+        elif sensor_active_all in self.setup_route_or_run_dispatch_sensors:
+            if self.logLevel > 0: print "there is an error"  #we have eliminated this case already
+        else:
+            pass    
+
         return True
-        # #if self.logLevel > 0: print "sensor_changed",sensor_changed.getUserName()
-        # #set other buttons to inactive
-        # if self.sensor_active != None:
-            # self.sensor_active.setKnownState(INACTIVE)
-            # self.waitMsec(2000)
-        # #remember the active button
-        # self.sensor_active = sensor_changed
-        # #get the list of sensors to watch
-        # #if self.logLevel > 0: print "self.button_sensors_to_watch_before_remove", [sensor.getUserName() for sensor in self.button_sensors_to_watch]
-        # self.button_sensors_to_watch.remove(sensor_changed)
-        # #if self.logLevel > 0: print "self.button_sensors_to_watch", [sensor.getUserName() for sensor in self.button_sensors_to_watch]
-        # #if self.logLevel > 0: print "end handle"
-        # return True
+
+
         
     def process_button_sensors(self, sensor_changed):
         [sensor.setKnownState(INACTIVE) for sensor in self.button_sensors if sensor != sensor_changed]
        
-    def process_route_dispatch_sensors(self, sensor_changed):
+    def process_setup_route_or_run_dispatch_sensors(self, sensor_changed):
+        if self.logLevel > 0: print "sensor_changed", sensor_changed
         if sensor_changed == sensors.getSensor("setDispatchSensor"):
             sensors.getSensor("setRouteSensor").setKnownState(INACTIVE)
             msg = "Press section buttons to set dispatch \nA train needs to be set up in a section first"
@@ -856,9 +863,13 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             sensors.getSensor("setDispatchSensor").setKnownState(INACTIVE)
             msg = "Press section buttons to set route \nThe route may be used to schedule a train"
             OptionDialog().displayMessage(msg)
-        elif sensor_changed == sensors.getSensor("runRouteSensor"):  
-            self.run_route()
-            sensors.getSensor("runRouteSensor").setKnownState(INACTIVE)
+        else:
+            msg = "error"
+            OptionDialog().displayMessage(msg)
+            
+    def process_run_route(self):
+        self.run_route()
+        sensors.getSensor("runRouteSensor").setKnownState(INACTIVE)
             
     def show_trains_setup(self):
         pass
@@ -870,8 +881,11 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             # self.button_dict[button_sensor] = self.check_sensor_state(button_sensor)
             
     def get_route_dispatch_buttons(self):
-        self.route_dispatch_sensors = [sensors.getSensor(sensorName) for sensorName in ["setDispatchSensor","setRouteSensor","runRouteSensor"]]
-        self.route_dispatch_states = [self.check_sensor_state(rd_sensor) for rd_sensor in self.route_dispatch_sensors]
+        self.setup_route_or_run_dispatch_sensors = [sensors.getSensor(sensorName) for sensorName in ["setDispatchSensor","setRouteSensor"]]
+        self.route_dispatch_states = [self.check_sensor_state(rd_sensor) for rd_sensor in self.setup_route_or_run_dispatch_sensors]
+        
+    def get_route_run_button(self):
+        self.route_run_sensor = [sensors.getSensor(sensorName) for sensorName in ["runRouteSensor"]]   
             
     def check_sensor_state(self, sensor):
         #if self.logLevel > 0: print("check_sensor_state",sensor)
@@ -908,7 +922,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                 # sensor, val = button_dict_value
         
     def run_route(self):
-        list_items = ("Run Route", "Run Route / Station Combo", "Cancel")
+        list_items = ("Run Route", "Cancel")
         title = "choose option"
         result = OptionDialog().List(title, list_items)
         if result == "Run Route":
@@ -916,7 +930,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             list_items = RouteManager.getRoutesByNameList()
             title = "choose route"
             routeName = str(OptionDialog().List(title, list_items))
-            print "routeName", routeName
+            if self.logLevel > 0: print "routeName", routeName
             route = RouteManager.getRouteByName(routeName)
             
             list_items = self.get_list_of_engines_to_move()
@@ -931,7 +945,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             title = "What do you want to do"
             option = OptionDialog().List(title, list_items)
             repeat = False
-
+            dont_run_route = False
             if option == "stop at end of route":
                 station_to = None
                 repeat = False
@@ -941,10 +955,13 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             elif option == "return to start position and repeat":
                 station_to = station_from
                 repeat = True
-            print "station_from",    station_from, "station_to",station_to, "repeat",repeat
-            run_train = RunRoute(route, g.g_express, station_from, station_to, repeat)
-            run_train.setName("running_route_" + routeName)
-            run_train.start()
+            else:
+                dont_run_route = True
+            if dont_run_route == False:
+                if self.logLevel > 0: print "station_from",    station_from, "station_to",station_to, "repeat",repeat
+                run_train = RunRoute(route, g.g_express, station_from, station_to, repeat)
+                run_train.setName("running_route_" + routeName)
+                run_train.start()
 
         
     def get_list_of_engines_to_move(self):
@@ -968,18 +985,13 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         # JOptionPane.showMessageDialog(None,msg)
         if trains_to_choose == []:
             str_trains_dispatched= (' '.join(trains_dispatched))
-            msg = "There are no trains available for dispatch\nTrains dispatched are:\n"+str_trains_dispatched+"\nOK (yes) RESET (no)"
-            title = ""
-            result = JOptionPane.showConfirmDialog(None, msg, title, JOptionPane.YES_NO_OPTION)
-            if result == JOptionPane.NO_OPTION:
-                trains_dispatched = []                      
-            #sensor_changed.setKnownState(INACTIVE)
-        # else:
-            # msg = "select train you want to move"
-            # train_to_move = modifiableJComboBox(trains_to_choose,msg).return_val()
-            # title = "choose train to move"
-            # engine = OptionDialog().MultipleBox(title, list_items)
-            # station_from =     #location of engine
+            msg = "There are no trains available for dispatch\nTrains dispatched are:\n"+str_trains_dispatched+"\n"
+            title = "Cannot move train"
+            opt1 = "continue"
+            opt2 = "reset all allocations"
+            result = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
+            if result == "reset all allocations":
+                trains_dispatched = []
         return trains_to_choose
         
     def get_position_of_train(self, train_to_move):
@@ -1087,7 +1099,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         
         if self.logLevel > 0: print "**********************"
         if self.logLevel > 0: print "handle DispatchMaster1"
-        if self.logLevel > 0: print "buttons to watch",[str(sensor.getUserName()) for sensor in self.button_sensors_to_watch]
+        #if self.logLevel > 0: print "buttons to watch",[str(sensor.getUserName()) for sensor in self.button_sensors_to_watch]
         if self.logLevel > 0: print "**********************" 
         #wait for one to go active
         button_sensors_to_watch_JavaList = java.util.Arrays.asList(self.button_sensors_to_watch)
@@ -1104,7 +1116,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 0: print "button_sensor_name",button_sensor_name
         if self.logLevel > 0: print "button_station_name",button_station_name
         
-        #if SchedulerSensor2 button is pressed then set up route, otherwise attempt to dispatch train
+        #set up route, dispatch train or run route
         if self.logLevel > 0: print "!!!!!!!!!!!!!!!!!!!!!!!!"
         setup_dispatch_sensor = sensors.getSensor("setDispatchSensor") 
         set_route_sensor = sensors.getSensor("setRouteSensor")
@@ -1114,15 +1126,18 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             if self.logLevel > 0: print ("set_route")
             test = self.set_route(sensor_changed, button_sensor_name, button_station_name)
             if self.logLevel > 0: print "test = " , test
-            if test == False:
-                self.button_sensors_to_watch = copy.copy(self.button_sensors)
-                sensor_changed.setKnownState(INACTIVE)
+            # if test == False:
+                # self.button_sensors_to_watch = copy.copy(self.button_sensors)
+            sensor_changed.setKnownState(INACTIVE)
         elif setup_dispatch_sensor.getKnownState() == ACTIVE:
             if self.logLevel > 0: print ("dispatch_train")
             self.dispatch_train(sensor_changed, button_sensor_name, button_station_name)
+            #self.button_sensors_to_watch = copy.copy(self.button_sensors)
+            sensor_changed.setKnownState(INACTIVE)
         #if run_route_sensor is active - do nothing from here
             
-        if self.logLevel > 0: print "end handle"                    
+        if self.logLevel > 0: print "end handle" 
+        self.waitMsec(10000)
         return True 
         
     def set_route(self, sensor_changed, button_sensor_name, button_station_name):
@@ -1221,7 +1236,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         all_trains = self.get_all_roster_entries_with_speed_profile()
         #trains to choose from are the allocated - dispatched
         trains_to_choose = copy.copy(trains_allocated)
-        if self.logLevel > 0: print "trains_dispatchedx", trains_dispatched
+        if self.logLevel > 0: print "trains_dispatched", trains_dispatched
         if self.logLevel > 0: print "trains_allocated",trains_allocated
         if self.logLevel > 0: print "trains_to_choose",trains_to_choose
         if trains_dispatched != []:
@@ -1233,115 +1248,191 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         # JOptionPane.showMessageDialog(None,msg)
         if trains_to_choose == []:
             str_trains_dispatched= (' '.join(trains_dispatched))
-            msg = "There are no trains available for dispatch\nTrains dispatched are:\n"+str_trains_dispatched+"\nOK (yes) RESET (no)"
-            title = ""
-            result = JOptionPane.showConfirmDialog(None, msg, title, JOptionPane.YES_NO_OPTION)
-            if result == JOptionPane.NO_OPTION:
+            # msg = "There are no trains available for dispatch\nTrains dispatched are:\n"+str_trains_dispatched+"\n"
+            # title = "Cannot move train"
+            # opt1 = "continue"
+            # opt2 = "reset all allocations"
+            # #result = JOptionPane.showConfirmDialog(None, msg, title, JOptionPane.YES_NO_OPTION)
+            # result = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
+            # if result == "reset all allocations":
+            # #if result == JOptionPane.NO_OPTION:
+                # trains_dispatched = []                      
+            # sensor_changed.setKnownState(INACTIVE)
+            
+            msg = "There are no trains available for dispatch\nTrains dispatched are:\n"+str_trains_dispatched+"\n"
+            title = "Cannot move train"
+            opt1 = "continue"
+            opt2 = "reset all allocations"
+            result = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
+            if result == "reset all allocations":
                 trains_dispatched = []                      
             sensor_changed.setKnownState(INACTIVE)
         else:
+            #####################################################
+            #
+            # get train to move & whether express or slow
+            # if the block pressed is not the station where the train is#
+            #     the station where the train is is occupied
+            #####################################################
+            if self.logLevel > 0: print "+++++++++++++++++++"
+            if self.logLevel > 0: print "checking pressed button"
+            if self.logLevel > 0: print "+++++++++++++++++++"
             msg = "select train you want to move"
-            train_to_move = modifiableJComboBox(trains_to_choose,msg).return_val()
-            
-            print "+++++++++++++++++++"
-            print "checking pressed button"
-            print "+++++++++++++++++++"
-            
-            ## Check the pressed button
-            for station_block_name in g.station_block_list:
-                if self.logLevel > 0: print "station_block_name", station_block_name
-                #get a True if the block block_value has the train name in it
-                block_value_state = self.check_train_in_block(station_block_name, train_to_move)
-                if self.logLevel > 0: print "block_value_state= ",block_value_state
-                #get a True if the block is occupied
-                block_occupied_state = self.check_sensor_state_given_block_name(station_block_name)
-                if self.logLevel > 0: print "block_occupied_state= ",block_occupied_state
-                if self.logLevel > 0: print ("station block name {} : {}". format(station_block_name, str(block_occupied_state)))
-                # do not attempt to move to where you are
-                button_pressed_in_occupied_station = (button_station_name == station_block_name)
-                #check if the block is occupied and has the required train in it  
-                if block_value_state == True and block_occupied_state == True and button_pressed_in_occupied_station == False:
-                    #move from station_block_Name to button_name_station
+            list_items = trains_to_choose
+            express = self.get_express_flag()
+            if express:
+                options = ["express", "stopping"]
+                default = "express"
+            else:
+                options = ["stopping", "express"]
+                default = "stopping"
+            title = "title"
+            result = OptionDialog().ListOptions(list_items, msg, options) 
+            list = result[0]
+            option = result[1]
+            if self.logLevel > 0: print "option= " ,option, " list = ",list
+            train_to_move = str(list)
+            train_type = str(option)
 
-                    express = self.get_express_flag()   # flag determining whether want to stop at all stations or not stop
+            if self.logLevel > 0: print "train_to_move",train_to_move 
+            if self.logLevel > 0: print "train_type" , train_type
+            
+            if train_type is None or train_to_move is None:
+                if self.logLevel > 0: print ("train_type is None or train_to_move is None")
+            else:
+                for station_block_name in g.station_block_list:
+                
+                    # choose the block in station_block_list that has the required train in it
+                    # block_value_state must be true
+                    block_value_state = self.check_train_in_block(station_block_name, train_to_move)
                     
-                    title = "will the train stop at all stations?"
-                    msg = "select the train type:"
-                    if express:
-                        options = ["express", "stopping"]
-                        default = "express"
-                        result = OptionDialog().variable_combo_box(options, default, msg, title, JOptionPane.QUESTION_MESSAGE)
-                    else:
-                        options = ["stopping", "express"]
-                        default = "stopping"
-                        result = OptionDialog().variable_combo_box( options, default, msg, title, JOptionPane.QUESTION_MESSAGE)
-                    if self.logLevel > 0: print "result = ",result    
-                    if result == "express":
-                        if self.logLevel > 0: print "moving express"                                          
-                        if g == None:
-                            if self.logLevel > 0: print "G IS NONE"
-                        #graph = self.mark_occupied_blocks(g.g_express)
-                        #self.move_between_stations(station_block_name, button_station_name, train_name, g.g_express)
-                        move_train = MoveTrain(station_block_name, button_station_name, train_to_move, g.g_express)
-                        instanceList.append(move_train)
-                        if move_train.setup():
-                            move_train.setName(train_to_move)
-                            move_train.start()
-                        if self.logLevel > 0: print "station_block_name",station_block_name
-                        if self.logLevel > 0: print "button_station_name", button_station_name
-                        #if self.logLevel > 0: print "button_block_name", button_block_name
-                        if self.logLevel > 0: print "**********************"
+                    # the block must be occupied
+                    # block_occupied_state must be true
+                    block_occupied_state = self.check_sensor_state_given_block_name(station_block_name)
+                    
+                    # do not attempt to move to where you are
+                    # button_pressed_in_occupied_station must be false
+                    button_pressed_in_occupied_station = (button_station_name == station_block_name)
+                    
+                    if block_value_state == True and block_occupied_state == True and button_pressed_in_occupied_station == False:
+                        if train_type == "express":
+                            if self.logLevel > 0: print "moving express"                                          
+                            if g == None:
+                                if self.logLevel > 0: print "G IS NONE"
+                                
+                            move_train = MoveTrain(station_block_name, button_station_name, train_to_move, g.g_express)
+                            
+                            instanceList.append(move_train)
+                            if move_train.setup():
+                                move_train.setName(train_to_move)
+                                move_train.start()
+                            if self.logLevel > 0: print "station_block_name",station_block_name
+                            if self.logLevel > 0: print "button_station_name", button_station_name
+                            if self.logLevel > 0: print "**********************"
+                        elif False == False:
+                            if self.logLevel > 0: print "moving slow"
+                            if g == None:
+                                if self.logLevel > 0: print "G IS NONE"
+                                
+                            move_train = MoveTrain(station_block_name, button_station_name, train_to_move, g.g_stopping)
+                            
+                            instanceList.append(move_train)
+                            if move_train.setup():
+                                move_train.setName(train_to_move)
+                                if self.logLevel > 0: print "********calling thread move**************"
+                                move_train.start()
+                                if self.logLevel > 0: print "********called thread move***************"
+                            if self.logLevel > 0: print "station_block_name",station_block_name
+                            if self.logLevel > 0: print "button_station_name", button_station_name
+                            if self.logLevel > 0: print "**********************"
+                        else:
+                            #express flag not set up
+                            pass
+                        break
+                
+                # ## Check the pressed button
+                # for station_block_name in g.station_block_list:
+                    # if self.logLevel > 0: print "station_block_name", station_block_name
+                    # #get a True if the block block_value has the train name in it
+                    # block_value_state = self.check_train_in_block(station_block_name, train_to_move)
+                    # if self.logLevel > 0: print "block_value_state= ",block_value_state
+                    # #get a True if the block is occupied
+                    # block_occupied_state = self.check_sensor_state_given_block_name(station_block_name)
+                    # if self.logLevel > 0: print "block_occupied_state= ",block_occupied_state
+                    # if self.logLevel > 0: print ("station block name {} : {}". format(station_block_name, str(block_occupied_state)))
+                    # # do not attempt to move to where you are
+                    # button_pressed_in_occupied_station = (button_station_name == station_block_name)
+                    # #check if the block is occupied and has the required train in it  
+                    # if block_value_state == True and block_occupied_state == True and button_pressed_in_occupied_station == False:
+                        # #move from station_block_Name to button_name_station
 
-                    elif express == False:
-                        if self.logLevel > 0: print "moving slow"
-                        #OptionDialog().displayMessage("a stopping train")
-                        if g == None:
-                            if self.logLevel > 0: print "G IS NONE"
-                        move_train = MoveTrain(station_block_name, button_station_name, train_to_move, g.g_stopping)
-                        instanceList.append(move_train)
-                        if move_train.setup():
-                            move_train.setName(train_to_move)
-                            if self.logLevel > 0: print "********calling thread move**************"
-                            move_train.start()
-                            if self.logLevel > 0: print "********called thread move***************"
-                        if self.logLevel > 0: print "station_block_name",station_block_name
-                        if self.logLevel > 0: print "button_station_name", button_station_name
-                        #if self.logLevel > 0: print "button_block_name", button_block_name
-                        if self.logLevel > 0: print "**********************"                    
-                        #self.move_between_stations(station_block_name, button_station_name, train_name, g.g_stopping)
-                    else:
-                        #express flag not set up
-                        pass
-                    break
-            #set old button which activated the same train to inactive
-            if self.button_dict != {}:
-                if self.logLevel > 0: print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-                if self.logLevel > 0: print "self.button_dict = ",self.button_dict
-                if self.logLevel > 0: print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-                if train_to_move in self.button_dict:
-                    old_button_sensor = self.button_dict[train_to_move]
-                    old_button_sensor.setKnownState(INACTIVE)
-                    self.button_sensors_to_watch.append(old_button_sensor)
-            #associate new button with train
-            if self.logLevel > 0: print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-            if self.logLevel > 0: print "train_to_move", train_to_move
-            if self.logLevel > 0: print "sensor_changed", sensor_changed
-            if self.logLevel > 0: print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-            self.button_dict[train_to_move] = sensor_changed
-            if self.logLevel > 0: print "self.button_dict = ",self.button_dict
+                        # express = self.get_express_flag()   # flag determining whether want to stop at all stations or not stop
+                        
+                        # title = "will the train stop at all stations?"
+                        # msg = "select the train type:"
+                        # if express:
+                            # options = ["express", "stopping"]
+                            # default = "express"
+                            # result = OptionDialog().variable_combo_box(options, default, msg, title, JOptionPane.QUESTION_MESSAGE)
+                        # else:
+                            # options = ["stopping", "express"]
+                            # default = "stopping"
+                            # result = OptionDialog().variable_combo_box( options, default, msg, title, JOptionPane.QUESTION_MESSAGE)
+                        # if self.logLevel > 0: print "result = ",result    
+                        # if result == "express":
+                            # if self.logLevel > 0: print "moving express"                                          
+                            # if g == None:
+                                # if self.logLevel > 0: print "G IS NONE"
+                            # #graph = self.mark_occupied_blocks(g.g_express)
+                            # #self.move_between_stations(station_block_name, button_station_name, train_name, g.g_express)
+                            # move_train = MoveTrain(station_block_name, button_station_name, train_to_move, g.g_express)
+                            # instanceList.append(move_train)
+                            # if move_train.setup():
+                                # move_train.setName(train_to_move)
+                                # move_train.start()
+                            # if self.logLevel > 0: print "station_block_name",station_block_name
+                            # if self.logLevel > 0: print "button_station_name", button_station_name
+                            # #if self.logLevel > 0: print "button_block_name", button_block_name
+                            # if self.logLevel > 0: print "**********************"
 
-            # #set other buttons to inactive
-            # if self.sensor_active != None:
-                # self.sensor_active.setKnownState(INACTIVE)
-                # self.waitMsec(2000)
-            #remember the active button
-            # self.sensor_active = sensor_changed
-            #get the list of sensors to watch
-            #if self.logLevel > 0: print "self.button_sensors_to_watch_before_remove", [sensor.getUserName() for sensor in self.button_sensors_to_watch]
-            self.button_sensors_to_watch.remove(sensor_changed)
-        #if self.logLevel > 0: print "self.button_sensors_to_watch", [sensor.getUserName() for sensor in self.button_sensors_to_watch]
-        
-           
+                        # elif express == False:
+                            # if self.logLevel > 0: print "moving slow"
+                            # #OptionDialog().displayMessage("a stopping train")
+                            # if g == None:
+                                # if self.logLevel > 0: print "G IS NONE"
+                            # move_train = MoveTrain(station_block_name, button_station_name, train_to_move, g.g_stopping)
+                            # instanceList.append(move_train)
+                            # if move_train.setup():
+                                # move_train.setName(train_to_move)
+                                # if self.logLevel > 0: print "********calling thread move**************"
+                                # move_train.start()
+                                # if self.logLevel > 0: print "********called thread move***************"
+                            # if self.logLevel > 0: print "station_block_name",station_block_name
+                            # if self.logLevel > 0: print "button_station_name", button_station_name
+                            # #if self.logLevel > 0: print "button_block_name", button_block_name
+                            # if self.logLevel > 0: print "**********************"                    
+                            # #self.move_between_stations(station_block_name, button_station_name, train_name, g.g_stopping)
+                        # else:
+                            # #express flag not set up
+                            # pass
+                        # break
+                #set old button which activated the same train to inactive
+                if self.button_dict != {}:
+                    if self.logLevel > 0: print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+                    if self.logLevel > 0: print "self.button_dict = ",self.button_dict
+                    if self.logLevel > 0: print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+                    if train_to_move in self.button_dict:
+                        old_button_sensor = self.button_dict[train_to_move]
+                        old_button_sensor.setKnownState(INACTIVE)
+                        self.button_sensors_to_watch.append(old_button_sensor)
+                #associate new button with train
+                if self.logLevel > 0: print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+                if self.logLevel > 0: print "train_to_move", train_to_move
+                if self.logLevel > 0: print "sensor_changed", sensor_changed
+                if self.logLevel > 0: print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+                self.button_dict[train_to_move] = sensor_changed
+                if self.logLevel > 0: print "self.button_dict = ",self.button_dict 
+        self.waitMsec(1000)
 
     def get_block_name_from_button_sensor_name(self, button_sensor_name):
         #button_sensor_name MoveToblock8_stored
@@ -1503,6 +1594,7 @@ class RunDispatcherMaster():
         #set default valus of buttons
         sensors.getSensor("Express").setKnownState(ACTIVE)
         sensors.getSensor("simulateSensor").setKnownState(INACTIVE)
+        sensors.getSensor("setDispatchSensor").setKnownState(ACTIVE)
             
             
 if __name__ == '__builtin__':

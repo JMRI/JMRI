@@ -1543,7 +1543,7 @@ public class Section extends AbstractNamedBean {
      * LayoutBlock a must be in the Section. LayoutBlock b may be in this
      * Section or may be an Entry Point to the Section.
      */
-    private int getDirectionForBlocks(LayoutBlock a, LayoutBlock b) {
+    public int getDirectionForBlocks(LayoutBlock a, LayoutBlock b) {
         if (containsBlock(b.getBlock())) {
             // both blocks are within this Section
             if (getBlockSequenceNumber(a.getBlock()) > getBlockSequenceNumber(b.getBlock())) {
