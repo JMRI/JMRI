@@ -95,7 +95,7 @@ public class ActivateTrainFrame {
     private final JComboBox<String> destinationBlockBox = new JComboBox<>();
     private List<Block> destinationBlockBoxList = new ArrayList<>();
     private List<Integer> destinationBlockSeqList = new ArrayList<>();
-    public JButton addNewTrainButton = null;
+    private JButton addNewTrainButton = null;
     private JButton loadButton = null;
     private JButton saveButton = null;
     private JButton deleteButton = null;
