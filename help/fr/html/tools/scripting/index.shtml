@@ -1,17 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
+"http://www.w3.org/TR/html4/loose.dtd">
 
 <html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
-  <!-- UpDates  by Blorec Herv&#233; 2013-09-26-->
-
+   <!-- UpDates  by Blorec Herv&#233; 2020-12-29-->
+  <meta name="keywords" content="custom jmri script, jython, automation, combine java python,
+        user scripts, jython examples">
   <title>JMRI: Scripting</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  "text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -21,33 +21,55 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+ <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-      <!-- Page Body -->
+      <!-- Corps de la page -->
 
-      <h2>JMRI: Script</h2>Ces pages aborde les scripts JMRI
-      utilisant un langage appel&eacute; Jython.
+      <h2>JMRI : Sc&#233;nario </h2>
+      
+      <p>Ecriture et ex&#233;cution d'un "script" (programme en Python/Jython ou autre langage - voir ci-dessous)
+      est un moyen de dire &#224; JMRI d'ex&#233;cuter des commandes sp&#233;cifiques &#224; votre environnement JMRI et
+      ou m&#234;me d'automatiser enti&#232;rement votre r&#233;seau et l'exploitation des trains.Les scripts peuvent 
+      &#234;tre aussi simples que de dire &#224;JMRI de r&#233;gler un seul capteur ou aussi complexes que de r&#233;gler
+       la fa&#231;on dont l'&#233;criture de sc&#233;narios est tr&#232;s avantageuse avec JMRI.
+      Les sections "Comment" et "O&#250;" fournissent &#233;galement de nombreuses id&#233;es et conseils glan&#233;s
+       aupr&#232;s de la communaut&#233; JMRI sur les caract&#233;ristiques et les capacit&#233;s des scripts.</p>
+      
+      
+      <p>Les pages suivantes traitent de l'&#233;criture de scripts JMRI en utilisant la version Jython de Python:</p>
 
-      <p>L'information est disponible sur</p>
+      <ul>
+        <li><a href="Start.shtml">D&#233;marrer avec des scripts simples</a></li>
 
-      <ol>
-        <li><a href="Start.shtml">Mise en route avec des scripts
-        simples</a></li>
+        <li><a href="Python.shtml">Le langage Python/Jython</a></li>
 
-        <li><a href="Python.shtml">Le langage
-        lui-m&ecirc;me</a></li>
+        <li><a href="ex_set_turnouts.shtml">Exemple de script : D&#233;finition de l'&#233;tat par d&#233;faut des aiguillages</a></li>
 
-        <li><a href="Examples.shtml">Exemples</a></li>
+		<li><a href="Examples.shtml">Plusieurs autres scripts d'exemple (Liens)</a><</li>
+		
+		<li><a href="HowTo.shtml">Bon nombre de "How To..." pour les scripts JMRI</a></li>
+            
+		<li><a href="WhatWhere.shtml">"Quoi...O&#250; tidbits int&#233;ressants sur la cr&#233;ation de scripts Jython &#224; utiliser avec JMRI</a></li>
+		
+        <li><a href="Jynstruments.shtml">Modifier l'interface utilisateur graphique avec Jynstruments</a></li>
+        
+        <li><a href="AppleScript.shtml">Architecture de script ouverte (disponible pour Mac)</a></li>
+		    
+      </ul>
+       
+      <p>Voir aussi la section d'aide sur <a href="Python.shtml">Python et JMRI.</a></p> 
+      <p>En plus <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/scripting/prog_guide/api.html" target="_blank">
+     un API Java Scripting  </a> (commun&#233;ment appel&#233; JSR-223) peut &#234;tre ajout&#233; &#224; JMRI,
+     si vous souhaitez ajouter un autre langage de script, trouvez un interpr&#233;teur conforme 
+     &#224; la norme JSR-223 et ajoutez-le &#224; la classpath JMRI en tant que <a 
+     href="../../doc/Technical/StartUpScripts.shtml" target="_blank">document&#233; pour votre syst&#232;me d'exploitation</a>
+        (les diff&#233;rents syst&#232;mes d'exploitation ont des lanceurs diff&#233;rents qui sont configur&#233;s diff&#233;remment).</p>
+      
+      <!--#include virtual="/Footer.shtml" -->
 
-        <li><a href="FAQ.shtml">Foire aux questions</a></li>
 
-        <li><a href="Jynstruments.shtml">Modification de
-        l'interface graphique avec Jynstruments</a></li>
-      </ol><!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>
