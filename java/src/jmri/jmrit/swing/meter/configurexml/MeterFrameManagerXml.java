@@ -87,7 +87,8 @@ public class MeterFrameManagerXml extends jmri.configurexml.AbstractXmlAdapter {
             if (frame == null) {
                 frame = new MeterFrame(uuid);
                 frame.initComponents();
-                log.error("uuid: {}, meter: {}, meter: {}, systemName: {}", frame.getUUID(), meter, frame.getMeter().getSystemName(), meterSystemName);
+                String sn = (frame.getMeter()!=null?frame.getMeter().getSystemName():"null");
+                log.error("uuid: {}, meter: {}, meter: {}, systemName: {}", frame.getUUID(), meter, sn, meterSystemName);
             }
             if (meter != null) frame.setMeter(meter);
             
