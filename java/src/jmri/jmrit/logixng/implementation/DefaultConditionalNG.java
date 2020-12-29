@@ -11,6 +11,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_ThreadingUtil;
 import jmri.util.*;
 
 /**
@@ -28,7 +29,7 @@ public class DefaultConditionalNG extends AbstractBase
     private boolean _enabled = true;
     private Base.Lock _lock = Base.Lock.NONE;
     private final ExecuteLock executeLock = new ExecuteLock();
-    private boolean _runOnGUIDelayed = true;
+    private boolean _runDelayed = true;
     
     
     public DefaultConditionalNG(String sys, String user) throws BadUserNameException, BadSystemNameException  {
@@ -64,21 +65,21 @@ public class DefaultConditionalNG extends AbstractBase
 
     /** {@inheritDoc} */
     @Override
-    public void setRunOnGUIDelayed(boolean value) {
-        _runOnGUIDelayed = value;
+    public void setRunDelayed(boolean value) {
+        _runDelayed = value;
     }
     
     /** {@inheritDoc} */
     @Override
-    public boolean getRunOnGUIDelayed() {
-        return _runOnGUIDelayed;
+    public boolean getRunDelayed() {
+        return _runDelayed;
     }
     
-    private void runOnGUI(@Nonnull ThreadingUtil.ThreadAction ta) {
-        if (_runOnGUIDelayed) {
-            ThreadingUtil.runOnGUIEventually(ta);
+    private void runOnLogixNG_Thread(@Nonnull ThreadingUtil.ThreadAction ta) {
+        if (_runDelayed) {
+            LogixNG_ThreadingUtil.runOnLogixNGEventually(ta);
         } else {
-            ThreadingUtil.runOnGUI(ta);
+            LogixNG_ThreadingUtil.runOnLogixNG(ta);
         }
     }
     
@@ -86,7 +87,7 @@ public class DefaultConditionalNG extends AbstractBase
     @Override
     public void execute() {
         if (executeLock.once()) {
-            runOnGUI(() -> {
+            runOnLogixNG_Thread(() -> {
                 while (executeLock.loop()) {
                     if (isEnabled()) {
                         DefaultSymbolTable newSymbolTable = new DefaultSymbolTable();

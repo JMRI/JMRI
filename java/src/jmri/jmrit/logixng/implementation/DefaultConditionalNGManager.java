@@ -153,7 +153,7 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
     @Override
     public void setRunOnGUIDelayed(boolean value) {
         for (ConditionalNG conditionalNG : getNamedBeanSet()) {
-            conditionalNG.setRunOnGUIDelayed(false);
+            conditionalNG.setRunDelayed(false);
         }
     }
     

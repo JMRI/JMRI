@@ -7,9 +7,10 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.Stack;
+import jmri.jmrit.logixng.util.LogixNG_ThreadingUtil;
 import jmri.managers.AbstractManager;
-import jmri.util.*;
-
+import jmri.util.LoggingUtil;
+import jmri.util.ThreadingUtil;
 
 /**
  * Class providing the basic logic of the LogixNG_Manager interface.
@@ -32,6 +33,8 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         // The LogixNGPreferences class may load plugins so we must ensure
         // it's loaded here.
         InstanceManager.getDefault(LogixNGPreferences.class);
+        
+        LogixNG_ThreadingUtil.launchLogixNGThread();
     }
 
     @Override

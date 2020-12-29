@@ -150,7 +150,7 @@ public class AbstractScriptDigitalActionTest {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         conditionalNG.setEnabled(false);
-        conditionalNG.setRunOnGUIDelayed(false);
+        conditionalNG.setRunDelayed(false);
         logixNG.addConditionalNG(conditionalNG);
         
         actionAbstractScriptDigitalAction = new AbstractScriptDigitalAction(null) {
@@ -169,6 +169,7 @@ public class AbstractScriptDigitalActionTest {
     
     @After
     public void tearDown() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
         JUnitUtil.tearDown();
     }
     

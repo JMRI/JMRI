@@ -22,10 +22,6 @@ public class InvalidConditionalVariableExceptionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager();
-        JUnitUtil.initConfigureManager();
-        JUnitUtil.initLogixNGManager();
     }
 
     @After

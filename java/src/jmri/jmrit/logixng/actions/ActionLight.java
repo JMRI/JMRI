@@ -69,7 +69,7 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
             setLight(light);
         } else {
             removeLight();
-            log.error("light \"{}\" is not found", lightName);
+            log.warn("light \"{}\" is not found", lightName);
         }
     }
     
@@ -294,7 +294,7 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
 //        System.out.format("ActionLight.execute: light: %s%n", light);
         
         if (light == null) {
-//            log.error("light is null");
+//            log.warn("light is null");
             return;
         }
         

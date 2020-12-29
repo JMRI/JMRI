@@ -53,8 +53,8 @@ public class ImportActionLightTest extends ImportActionTestBase {
         light = InstanceManager.getDefault(LightManager.class).provide("IL2");
         ca = new DefaultConditionalAction();
         ca.setActionData(Light.ON);
-        ca.setDeviceName("IL2");
         ca.setType(Conditional.Action.SET_LIGHT);
+        ca.setDeviceName("IL2");
         return ca;
     }
     

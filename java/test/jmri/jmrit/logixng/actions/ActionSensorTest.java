@@ -178,7 +178,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         
         actionSensor.setSensor("A non existent sensor");
         Assert.assertNull("sensor handle is null", actionSensor.getSensor());
-        JUnitAppender.assertErrorMessage("sensor \"A non existent sensor\" is not found");
+        JUnitAppender.assertWarnMessage("sensor \"A non existent sensor\" is not found");
         
         actionSensor.setSensor(sensor13.getSystemName());
         Assert.assertTrue("sensor is correct", sensor13 == actionSensor.getSensor().getBean());
@@ -532,7 +532,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
                 .createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
         conditionalNG.setEnabled(true);
-        conditionalNG.setRunOnGUIDelayed(false);
+        conditionalNG.setRunDelayed(false);
         actionSensor = new ActionSensor(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         actionSensor.setSensor(sensor);
         actionSensor.setBeanState(ActionSensor.SensorState.Active);
@@ -551,7 +551,8 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
 
     @After
     public void tearDown() {
-        JUnitAppender.clearBacklog();
+        // JUnitAppender.clearBacklog();    REMOVE THIS!!!
+        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
         JUnitUtil.tearDown();
     }
     

@@ -102,6 +102,7 @@ public class JythonFunctionsTest {
 
     @After
     public void tearDown() {
+        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }

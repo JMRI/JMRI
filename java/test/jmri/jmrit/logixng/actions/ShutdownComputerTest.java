@@ -137,7 +137,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         conditionalNG.setEnabled(true);
-        conditionalNG.setRunOnGUIDelayed(false);
+        conditionalNG.setRunDelayed(false);
         logixNG.addConditionalNG(conditionalNG);
         actionShutdownComputer = new ShutdownComputer("IQDA321", null);
         MaleSocket maleSocket =
@@ -156,6 +156,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
     @After
     public void tearDown() {
         JUnitAppender.assertErrorMessage("Shutdown failed");
+        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
         JUnitUtil.tearDown();
     }
     

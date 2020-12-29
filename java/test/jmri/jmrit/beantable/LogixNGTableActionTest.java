@@ -462,7 +462,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         new JMenuBarOperator(editConditionalNGFrameOperator).pushMenu("File|Close Window", "|");
         
         
-        logixNG.getConditionalNG(0).setRunOnGUIDelayed(false);
+        logixNG.getConditionalNG(0).setRunDelayed(false);
         
         // Test that the LogixNG is running
         sensor1.setState(Sensor.INACTIVE);

@@ -227,7 +227,7 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
-        conditionalNG.setRunOnGUIDelayed(false);
+        conditionalNG.setRunDelayed(false);
         conditionalNG.setEnabled(true);
         
         logixNG.addConditionalNG(conditionalNG);
@@ -263,6 +263,7 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
     @After
     public void tearDown() {
         _base.dispose();
+        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
         JUnitUtil.tearDown();
     }
     

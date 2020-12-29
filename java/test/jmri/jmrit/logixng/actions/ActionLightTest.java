@@ -178,7 +178,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         
         actionLight.setLight("A non existent light");
         Assert.assertNull("light handle is null", actionLight.getLight());
-        JUnitAppender.assertErrorMessage("light \"A non existent light\" is not found");
+        JUnitAppender.assertWarnMessage("light \"A non existent light\" is not found");
         
         actionLight.setLight(light13.getSystemName());
         Assert.assertTrue("light is correct", light13 == actionLight.getLight().getBean());
@@ -532,7 +532,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
-        conditionalNG.setRunOnGUIDelayed(false);
+        conditionalNG.setRunDelayed(false);
         conditionalNG.setEnabled(true);
         actionLight = new ActionLight(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         actionLight.setLight(light);
@@ -552,6 +552,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
 
     @After
     public void tearDown() {
+        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
         JUnitUtil.tearDown();
     }
     

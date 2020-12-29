@@ -85,6 +85,7 @@ public class DigitalBooleanActionManagerTest extends AbstractManagerTestBase {
     public void tearDown() {
         _m = null;
         _manager = null;
+        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
         JUnitUtil.tearDown();
     }
     

@@ -60,7 +60,7 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
             setMemory(memory);
         } else {
             removeMemory();
-            log.error("memory \"{}\" is not found", memoryName);
+            log.warn("memory \"{}\" is not found", memoryName);
         }
     }
     
@@ -96,7 +96,7 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
             setOtherMemory(memory);
         } else {
             removeOtherMemory();
-            log.error("memory \"{}\" is not found", memoryName);
+            log.warn("memory \"{}\" is not found", memoryName);
         }
     }
     
@@ -243,7 +243,7 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
                     if (_otherMemoryHandle != null) {
                         memory.setValue(_otherMemoryHandle.getBean().getValue());
                     } else {
-                        log.error("setMemory should copy memory to memory but other memory is null");
+                        log.warn("setMemory should copy memory to memory but other memory is null");
                     }
                     break;
                     

@@ -60,8 +60,8 @@ public class ImportExpressionMemoryTest extends ImportExpressionComplexTestBase 
         if ((me.type == Conditional.Type.MEMORY_EQUALS) || (me.type == Conditional.Type.MEMORY_EQUALS_INSENSITIVE)) {
             cv.setDataString("Some string to TEST");    // The constant string to compare with
         } else {
-            InstanceManager.getDefault(MemoryManager.class).provide("OtherMemory").setValue("Some string to TEST");
-            cv.setDataString("OtherMemory");    // The memory to compare with
+            InstanceManager.getDefault(MemoryManager.class).provide("IMOtherMemory").setValue("Some string to TEST");
+            cv.setDataString("IMOtherMemory");    // The memory to compare with
         }
         
         cv.setNum1(me.num1);
@@ -228,7 +228,7 @@ public class ImportExpressionMemoryTest extends ImportExpressionComplexTestBase 
     @Override
     public ConditionalVariable newConditionalVariable() {
         memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
-        InstanceManager.getDefault(MemoryManager.class).provide("OtherMemory");
+        InstanceManager.getDefault(MemoryManager.class).provide("IMOtherMemory");
         cv = new ConditionalVariable();
         cv.setName("IM1");
         return cv;

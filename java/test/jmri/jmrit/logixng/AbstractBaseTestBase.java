@@ -484,7 +484,7 @@ public abstract class AbstractBaseTestBase {
         // If a test want to test with runOnGUIDelayed true, that test can
         // set runOnGUIDelayed to true.
         Assert.assertFalse("runOnGUIDelayed is false",
-                _base.getConditionalNG().getRunOnGUIDelayed());
+                _base.getConditionalNG().getRunDelayed());
     }
     
     @Test

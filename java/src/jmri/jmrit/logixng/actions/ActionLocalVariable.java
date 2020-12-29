@@ -70,7 +70,7 @@ public class ActionLocalVariable extends AbstractDigitalAction implements Vetoab
             setMemory(memory);
         } else {
             removeMemory();
-            log.error("memory \"{}\" is not found", memoryName);
+            log.warn("memory \"{}\" is not found", memoryName);
         }
     }
     
@@ -200,7 +200,7 @@ public class ActionLocalVariable extends AbstractDigitalAction implements Vetoab
                     if (_memoryHandle != null) {
                         symbolTable.setValue(_variableName, _memoryHandle.getBean().getValue());
                     } else {
-                        log.error("setLocalVariable should copy memory to variable but memory is null");
+                        log.warn("setLocalVariable should copy memory to variable but memory is null");
                     }
                     break;
                     

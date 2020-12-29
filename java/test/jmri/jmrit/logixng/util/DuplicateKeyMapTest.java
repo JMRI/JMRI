@@ -184,12 +184,6 @@ public class DuplicateKeyMapTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager();
-        JUnitUtil.initConfigureManager();
-        JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initLogixNGManager();
         
         t = new DuplicateKeyMap<>();
         Assert.assertEquals("size is correct", 0, t.size());

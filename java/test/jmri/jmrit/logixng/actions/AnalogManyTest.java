@@ -334,7 +334,7 @@ public class AnalogManyTest extends AbstractAnalogActionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         conditionalNG.setEnabled(true);
-        conditionalNG.setRunOnGUIDelayed(false);
+        conditionalNG.setRunDelayed(false);
         logixNG.addConditionalNG(conditionalNG);
         
         DoAnalogAction doAnalogAction = new DoAnalogAction("IQDA321", null);
@@ -359,6 +359,7 @@ public class AnalogManyTest extends AbstractAnalogActionTestBase {
 
     @After
     public void tearDown() {
+        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
         JUnitUtil.tearDown();
     }
     

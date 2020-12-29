@@ -209,7 +209,7 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
-        conditionalNG.setRunOnGUIDelayed(false);
+        conditionalNG.setRunDelayed(false);
         conditionalNG.setEnabled(true);
         actionAtomicBoolean = new ActionAtomicBoolean("IQDA321", null, atomicBoolean, true);
         MaleSocket socket =
@@ -228,6 +228,7 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
 
     @After
     public void tearDown() {
+        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
         JUnitUtil.tearDown();
     }
     

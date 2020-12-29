@@ -70,7 +70,7 @@ public class ExpressionScript extends AbstractDigitalExpression {
         }
         
         if (_scriptClass == null) {
-            log.error("script has not initialized params._scriptClass");
+            log.warn("script has not initialized params._scriptClass");
         }
     }
     

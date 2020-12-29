@@ -63,14 +63,14 @@ public class ActionScript extends AbstractDigitalAction {
             
             _scriptClass = params._scriptClass.get();
         } catch (ScriptException e) {
-            log.error("cannot load script", e);
+            log.warn("cannot load script", e);
             _scriptText = null;
             _scriptClass = null;
             return;
         }
         
         if (_scriptClass == null) {
-            log.error("script has not initialized params._scriptClass");
+            log.warn("script has not initialized params._scriptClass");
         }
     }
     

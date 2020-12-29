@@ -365,11 +365,11 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         // Test bad script
         actionScript.setScript("This is a bad script");
         Assert.assertNull("Script is null", actionScript.getScriptText());
-        JUnitAppender.assertErrorMessage("cannot load script");
+        JUnitAppender.assertWarnMessage("cannot load script");
         
         // Test script that did not initialized params._scriptClass
         actionScript.setScript("");
-        JUnitAppender.assertErrorMessage("script has not initialized params._scriptClass");
+        JUnitAppender.assertWarnMessage("script has not initialized params._scriptClass");
         
         // Test setScript() when listeners are registered
         Assert.assertNotNull("Script is not null", actionScript.getScriptText());
@@ -479,7 +479,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
-        conditionalNG.setRunOnGUIDelayed(false);
+        conditionalNG.setRunDelayed(false);
         conditionalNG.setEnabled(true);
         
         ifThenElse = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
@@ -512,6 +512,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
 
     @After
     public void tearDown() {
+        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }

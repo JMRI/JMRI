@@ -33,22 +33,22 @@ public interface ConditionalNG extends Base, NamedBean {
     public boolean isEnabled();
     
     /**
-     * Set whenether execute() should run on the GUI thread at once or should
-     * dispatch the call until later.
+     * Set whenether execute() should run on the LogixNG thread at once or
+     * should dispatch the call until later.
      * Most tests turns off the delay to simplify the tests.
-     * @param value true if execute() should run on GUI thread delayed,
+     * @param value true if execute() should run on LogixNG thread delayed,
      * false otherwise.
      */
-    public void setRunOnGUIDelayed(boolean value);
+    public void setRunDelayed(boolean value);
     
     /**
-     * Get whenether execute() should run on the GUI thread at once or should
-     * dispatch the call until later.
+     * Get whenether execute() should run on the LogixNG thread at once or
+     * should dispatch the call until later.
      * Most tests turns off the delay to simplify the tests.
-     * @return true if execute() should run on GUI thread delayed,
+     * @return true if execute() should run on LogixNG thread delayed,
      * false otherwise.
      */
-    public boolean getRunOnGUIDelayed();
+    public boolean getRunDelayed();
     
     /**
      * Execute the ConditionalNG.

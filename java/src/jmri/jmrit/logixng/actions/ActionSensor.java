@@ -69,7 +69,7 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
             setSensor(sensor);
         } else {
             removeSensor();
-            log.error("sensor \"{}\" is not found", sensorName);
+            log.warn("sensor \"{}\" is not found", sensorName);
         }
     }
     
@@ -294,7 +294,7 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
 //        System.out.format("ActionSensor.execute: sensor: %s%n", sensor);
         
         if (sensor == null) {
-//            log.error("sensor is null");
+//            log.warn("sensor is null");
             return;
         }
         

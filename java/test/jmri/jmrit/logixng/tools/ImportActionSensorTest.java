@@ -53,8 +53,8 @@ public class ImportActionSensorTest extends ImportActionTestBase {
         sensor = InstanceManager.getDefault(SensorManager.class).provide("IS2");
         ca = new DefaultConditionalAction();
         ca.setActionData(Sensor.ACTIVE);
-        ca.setDeviceName("IS2");
         ca.setType(Conditional.Action.SET_SENSOR);
+        ca.setDeviceName("IS2");
         return ca;
     }
     

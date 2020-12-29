@@ -86,7 +86,7 @@ public class ActionSignalMast extends AbstractDigitalAction
             setSignalMast(signalMast);
         } else {
             removeSignalMast();
-            log.error("signalMast \"{}\" is not found", signalMastName);
+            log.warn("signalMast \"{}\" is not found", signalMastName);
         }
     }
     
@@ -121,7 +121,7 @@ public class ActionSignalMast extends AbstractDigitalAction
             setExampleSignalMast(signalMast);
         } else {
             removeExampleSignalMast();
-            log.error("signalMast \"{}\" is not found", signalMastName);
+            log.warn("signalMast \"{}\" is not found", signalMastName);
         }
     }
     
@@ -451,7 +451,7 @@ public class ActionSignalMast extends AbstractDigitalAction
 //        System.out.format("ActionSignalMast.execute: sensor: %s%n", sensor);
         
         if (signalMast == null) {
-//            log.error("signalMast is null");
+//            log.warn("signalMast is null");
             return;
         }
         

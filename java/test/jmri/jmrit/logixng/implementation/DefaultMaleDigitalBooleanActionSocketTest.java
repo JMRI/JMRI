@@ -180,6 +180,7 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
     @AfterEach
     @Override
     public void tearDown() {
+        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
         JUnitUtil.tearDown();
     }
     

@@ -72,7 +72,7 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
             ExpressionEntryExit.this.setDestinationPoints(destinationPoints);
         } else {
             removeDestinationPoints();
-            log.error("destinationPoints \"{}\" is not found", entryExitName);
+            log.warn("destinationPoints \"{}\" is not found", entryExitName);
         }
     }
     

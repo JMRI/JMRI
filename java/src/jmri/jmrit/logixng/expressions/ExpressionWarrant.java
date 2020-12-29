@@ -71,7 +71,7 @@ public class ExpressionWarrant extends AbstractDigitalExpression
             setWarrant(warrant);
         } else {
             removeWarrant();
-            log.error("warrant \"{}\" is not found", warrantName);
+            log.warn("warrant \"{}\" is not found", warrantName);
         }
     }
     

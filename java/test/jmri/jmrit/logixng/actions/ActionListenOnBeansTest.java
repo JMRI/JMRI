@@ -121,7 +121,7 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
-        conditionalNG.setRunOnGUIDelayed(false);
+        conditionalNG.setRunDelayed(false);
         conditionalNG.setEnabled(true);
         actionListenOnBeans = new ActionListenOnBeans(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionListenOnBeans);
@@ -139,6 +139,7 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
 
     @After
     public void tearDown() {
+        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
         JUnitUtil.tearDown();
     }
 

@@ -62,7 +62,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
             setMemory(memory);
         } else {
             removeMemory();
-            log.error("memory \"{}\" is not found", memoryName);
+            log.warn("memory \"{}\" is not found", memoryName);
         }
     }
     
@@ -99,7 +99,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
             setOtherMemory(memory);
         } else {
             removeOtherMemory();
-            log.error("memory \"{}\" is not found", memoryName);
+            log.warn("memory \"{}\" is not found", memoryName);
         }
     }
     

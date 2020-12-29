@@ -252,10 +252,9 @@ public abstract class ImportExpressionComplexTestBase {
 //    @After
 //    public void tearDown() {
     public void teardownTest() {
-        // REMOVE THIS LATER!!!
-        JUnitAppender.clearBacklog();
+        // JUnitAppender.clearBacklog();    REMOVE THIS!!!
         
-        
+        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }

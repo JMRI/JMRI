@@ -250,7 +250,7 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         conditionalNG.setEnabled(true);
-        conditionalNG.setRunOnGUIDelayed(false);
+        conditionalNG.setRunDelayed(false);
         logixNG.addConditionalNG(conditionalNG);
         
         DoAnalogAction doAnalogAction = new DoAnalogAction("IQDA321", null);
@@ -281,6 +281,7 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
     @After
     public void tearDown() {
         _base.dispose();
+        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
         JUnitUtil.tearDown();
     }
     

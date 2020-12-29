@@ -213,6 +213,7 @@ public class AbstractFemaleSocketTest {
     @AfterEach
     public void tearDown() {
         _listener = null;
+        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
         JUnitUtil.tearDown();
     }
     

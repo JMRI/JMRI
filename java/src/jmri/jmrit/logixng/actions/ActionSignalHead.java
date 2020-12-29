@@ -86,7 +86,7 @@ public class ActionSignalHead extends AbstractDigitalAction
             setSignalHead(signalHead);
         } else {
             removeSignalHead();
-            log.error("signalHead \"{}\" is not found", signalHeadName);
+            log.warn("signalHead \"{}\" is not found", signalHeadName);
         }
     }
     
@@ -121,7 +121,7 @@ public class ActionSignalHead extends AbstractDigitalAction
             setExampleSignalHead(signalHead);
         } else {
             removeExampleSignalHead();
-            log.error("signalHead \"{}\" is not found", signalHeadName);
+            log.warn("signalHead \"{}\" is not found", signalHeadName);
         }
     }
     
@@ -462,7 +462,7 @@ public class ActionSignalHead extends AbstractDigitalAction
 //        System.out.format("ActionSignalHead.execute: sensor: %s%n", sensor);
         
         if (signalHead == null) {
-//            log.error("signalHead is null");
+//            log.warn("signalHead is null");
             return;
         }
         

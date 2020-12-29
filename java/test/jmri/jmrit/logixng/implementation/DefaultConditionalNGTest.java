@@ -64,7 +64,7 @@ public class DefaultConditionalNGTest {
     @Test
     public void testExecute() throws SocketAlreadyConnectedException, JmriException {
         DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
-        conditionalNG.setRunOnGUIDelayed(false);
+        conditionalNG.setRunDelayed(false);
         MyDigitalAction action = new MyDigitalAction("IQDA1", null);
         MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class)
                 .registerAction(action);
@@ -137,6 +137,7 @@ public class DefaultConditionalNGTest {
 
     @After
     public void tearDown() {
+        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
         JUnitUtil.tearDown();
     }
     

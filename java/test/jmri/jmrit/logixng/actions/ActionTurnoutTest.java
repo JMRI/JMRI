@@ -531,7 +531,7 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
-        conditionalNG.setRunOnGUIDelayed(false);
+        conditionalNG.setRunDelayed(false);
         conditionalNG.setEnabled(true);
         actionTurnout = new ActionTurnout(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         actionTurnout.setTurnout(turnout);
@@ -551,7 +551,7 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
 
     @After
     public void tearDown() {
-//        JUnitAppender.clearBacklog();   // REMOVE THIS!!!!!!!
+        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
         JUnitUtil.tearDown();
     }
     

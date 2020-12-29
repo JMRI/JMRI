@@ -326,7 +326,7 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         
         // Test script that did not initialized params._scriptClass
         expressionScript.setScript("");
-        JUnitAppender.assertErrorMessage("script has not initialized params._scriptClass");
+        JUnitAppender.assertWarnMessage("script has not initialized params._scriptClass");
         
         // Test setScript() when listeners are registered
         Assert.assertNotNull("Script is not null", expressionScript.getScriptText());
@@ -448,7 +448,7 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
-        conditionalNG.setRunOnGUIDelayed(false);
+        conditionalNG.setRunDelayed(false);
         logixNG.setEnabled(false);
         logixNG.addConditionalNG(conditionalNG);
         IfThenElse ifThenElse = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
@@ -482,6 +482,7 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
 
     @After
     public void tearDown() {
+        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }

@@ -430,7 +430,7 @@ public class StoreAndLoadTest {
         actionSignalMast.setAspectFormula("\"IT\"+index3");
         actionSignalMast.setAspectLocalVariable("index3");
         actionSignalMast.setAspectReference("{IM3}");
-        actionSignalMast.setExampleSignalMast("IH2");
+        actionSignalMast.setExampleSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
         maleSocket = digitalActionManager.registerAction(actionSignalMast);
         actionManySocket.getChild(index++).connect(maleSocket);
         
@@ -1176,7 +1176,7 @@ public class StoreAndLoadTest {
         expressionScript.setScript("import jmri\n");
         maleSocket = digitalExpressionManager.registerExpression(expressionScript);
         and.getChild(index++).connect(maleSocket);
-        JUnitAppender.assertErrorMessage("script has not initialized params._scriptClass");
+        JUnitAppender.assertWarnMessage("script has not initialized params._scriptClass");
         
         
         ExpressionSensor expressionSensor = new ExpressionSensor(digitalExpressionManager.getAutoSystemName(), null);
@@ -1350,7 +1350,7 @@ public class StoreAndLoadTest {
         expressionSignalMast.setAspectFormula("\"IT\"+index3");
         expressionSignalMast.setAspectLocalVariable("index3");
         expressionSignalMast.setAspectReference("{IM3}");
-        expressionSignalMast.setExampleSignalMast("IH2");
+        expressionSignalMast.setExampleSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
         and.getChild(index++).connect(maleSocket);
         
@@ -1957,7 +1957,19 @@ public class StoreAndLoadTest {
 
     @After
     public void tearDown() {
-        JUnitAppender.clearBacklog();
+        // JUnitAppender.clearBacklog();    REMOVE THIS!!!
+        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
+        JUnitAppender.assertWarnMessage("destinationPoints \"Something\" is not found");
+        JUnitAppender.assertWarnMessage("destinationPoints \"Something\" is not found");
+        JUnitAppender.assertWarnMessage("destinationPoints \"Something\" is not found");
+        JUnitAppender.assertWarnMessage("destinationPoints \"Something\" is not found");
+        JUnitAppender.assertWarnMessage("script has not initialized params._scriptClass");
+        JUnitAppender.assertWarnMessage("warrant \"Something\" is not found");
+        JUnitAppender.assertWarnMessage("warrant \"Something\" is not found");
+        JUnitAppender.assertWarnMessage("warrant \"Something\" is not found");
+        JUnitAppender.assertWarnMessage("warrant \"Something\" is not found");
+        JUnitAppender.assertErrorMessage("systemName is already registered: IH1");
+        JUnitAppender.assertErrorMessage("systemName is already registered: IH2");
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }

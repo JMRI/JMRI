@@ -8,6 +8,7 @@ import java.lang.reflect.Field;
 import jmri.*;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.simpleclock.SimpleTimebase;
 
 /**
  * Test import of Logix to LogixNG.
@@ -57,7 +58,8 @@ public class ImportExpressionClockTest extends ImportExpressionComplexTestBase {
         
         ClockEnum ce = ClockEnum.valueOf(e.name());
         
-        PropertyChangeEvent evt = new PropertyChangeEvent(this, "something", null, "new");
+        SimpleTimebase timeBase = new SimpleTimebase();
+        PropertyChangeEvent evt = new PropertyChangeEvent(timeBase, "something", null, "new");
         
         cv.setType(Conditional.Type.FAST_CLOCK_RANGE);
         cv.setNum1(ce._start);  // start time

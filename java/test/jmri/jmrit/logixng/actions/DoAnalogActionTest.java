@@ -286,7 +286,7 @@ public class DoAnalogActionTest extends AbstractDigitalActionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         conditionalNG.setEnabled(true);
-        conditionalNG.setRunOnGUIDelayed(false);
+        conditionalNG.setRunDelayed(false);
         logixNG.addConditionalNG(conditionalNG);
         actionDoAnalogAction = new DoAnalogAction("IQDA321", null);
         MaleSocket maleSocket =
@@ -304,6 +304,7 @@ public class DoAnalogActionTest extends AbstractDigitalActionTestBase {
 
     @After
     public void tearDown() {
+        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
         JUnitUtil.tearDown();
     }
     

@@ -311,7 +311,7 @@ public class DigitalBooleanOnChangeTest extends AbstractDigitalBooleanActionTest
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         conditionalNG.setEnabled(true);
-        conditionalNG.setRunOnGUIDelayed(false);
+        conditionalNG.setRunDelayed(false);
         logixNG.addConditionalNG(conditionalNG);
         Logix action = new Logix("IQDA321", null);
         MaleSocket maleSocket =
@@ -348,6 +348,7 @@ public class DigitalBooleanOnChangeTest extends AbstractDigitalBooleanActionTest
 
     @After
     public void tearDown() {
+        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
         JUnitUtil.tearDown();
     }
     

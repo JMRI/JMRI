@@ -125,12 +125,6 @@ public class ExpressionNodeAssignmentOperatorTest {
     @Before
     public void setUp() throws JmriException {
         JUnitUtil.setUp();
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager();
-        JUnitUtil.initConfigureManager();
-        JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initLogixNGManager();
         
         List<SymbolTable.VariableData> localVariables = new ArrayList<>();
         localVariables.add(new SymbolTable.VariableData("myVar", SymbolTable.InitialValueType.FloatingNumber, "42.11"));
@@ -142,6 +136,7 @@ public class ExpressionNodeAssignmentOperatorTest {
 
     @After
     public void tearDown() {
+        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
         JUnitUtil.tearDown();
     }
     

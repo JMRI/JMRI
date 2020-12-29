@@ -281,6 +281,7 @@ public class DefaultFemaleGenericExpressionSocket3_Test {
 
     @After
     public void tearDown() {
+        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
         JUnitUtil.tearDown();
     }
     

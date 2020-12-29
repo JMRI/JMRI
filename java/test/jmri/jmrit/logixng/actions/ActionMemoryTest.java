@@ -163,7 +163,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         
         actionMemory.setMemory("A non existent memory");
         Assert.assertNull("memory handle is null", actionMemory.getMemory());
-        JUnitAppender.assertErrorMessage("memory \"A non existent memory\" is not found");
+        JUnitAppender.assertWarnMessage("memory \"A non existent memory\" is not found");
         
         actionMemory.setMemory(memory13.getSystemName());
         Assert.assertTrue("memory is correct", memory13 == actionMemory.getMemory().getBean());
@@ -317,7 +317,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
-        conditionalNG.setRunOnGUIDelayed(false);
+        conditionalNG.setRunDelayed(false);
         conditionalNG.setEnabled(true);
         actionMemory = new ActionMemory(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         actionMemory.setMemory(memory);
@@ -337,6 +337,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
 
     @After
     public void tearDown() {
+        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
         JUnitUtil.tearDown();
     }
     

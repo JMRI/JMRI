@@ -410,7 +410,7 @@ public class ForTest extends AbstractDigitalActionTestBase {
         _conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         _conditionalNG.setEnabled(true);
-        _conditionalNG.setRunOnGUIDelayed(false);
+        _conditionalNG.setRunDelayed(false);
         _logixNG.addConditionalNG(_conditionalNG);
         _for = new For("IQDA321", null);
         _maleSocket =
@@ -436,6 +436,7 @@ public class ForTest extends AbstractDigitalActionTestBase {
     @After
     public void tearDown() {
         _logixNG.setEnabled(false);
+        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
         JUnitUtil.tearDown();
         _category = null;
         _logixNG = null;
