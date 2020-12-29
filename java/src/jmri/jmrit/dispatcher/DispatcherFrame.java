@@ -1813,7 +1813,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         //   If in addition Auto setting of turnouts is requested, the turnouts are set automatically
         //   if not in the correct position.
         // Note: Turnout checking and/or setting is not performed when allocating an extra section.
-        if ((_UseConnectivity) && (ar.getSectionSeqNumber() != -999)) {
+        if ((_UseConnectivity) && (ar.getSectionSeqNumber() != -99)) {
             if (!checkTurnoutStates(s, ar.getSectionSeqNumber(), nextSection, at, at.getLastAllocatedSection())) {
                 return null;
             }
