@@ -594,3 +594,4 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             snd = jmri.jmrit.Sound("resources/sounds/Bell.wav")
             snd.play()
 
+    
