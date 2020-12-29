@@ -592,6 +592,4 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
     def bell(self, bell_on = "True"):
         if bell_on == "True":
             snd = jmri.jmrit.Sound("resources/sounds/Bell.wav")
-            snd.play()
-
-    
+            snd.play(
