@@ -150,13 +150,13 @@ public class LncvMessageContents {
     public static boolean isSupportedLncvMessage(LocoNetMessage m) {
         // must be OPC_PEER_XFER or OPC_IMM_PACKET opcode
         if ((m.getOpCode() != LnConstants.OPC_PEER_XFER) && (m.getOpCode() != LnConstants.OPC_IMM_PACKET)) {
-            log.debug("cannot be LNCV message because not OPC_PEER_XFER or OPC_IMM_PACKET");  // NOI18N
+            //log.debug("cannot be LNCV message because not OPC_PEER_XFER or OPC_IMM_PACKET");  // NOI18N
             return false;
         }
 
         // length must be 0x0f
         if (m.getElement(1) != LNCV_LENGTH_ELEMENT_VALUE) {
-            log.debug("cannot be LNCV message because not length 0x0f");  // NOI18N
+            //log.debug("cannot be LNCV message because not length 0x0f");  // NOI18N
             return false;
         }
 
