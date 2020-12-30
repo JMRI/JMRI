@@ -302,6 +302,8 @@ public class DigitalBooleanOnChangeTest extends AbstractDigitalBooleanActionTest
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        
+        InstanceManager.getDefault(LogixNGPreferences.class).setInstallDebugger(false);
         JUnitUtil.initLogixNGManager();
         
         _category = Category.COMMON;

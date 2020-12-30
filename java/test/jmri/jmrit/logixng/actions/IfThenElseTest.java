@@ -348,6 +348,8 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        
+        InstanceManager.getDefault(LogixNGPreferences.class).setInstallDebugger(false);
         JUnitUtil.initLogixNGManager();
         
         _category = Category.COMMON;

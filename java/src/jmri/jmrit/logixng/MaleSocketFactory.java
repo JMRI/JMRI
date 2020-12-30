@@ -14,11 +14,10 @@ public interface MaleSocketFactory<T extends NamedBean> {
     
     /**
      * Encapsulate a male socket into another male socket.
-     * @param clazz the type of the male socket to be encapsulated
+     * @param manager the manager that registers this male socket
      * @param maleSocket the male socket to be encapsulated
      * @return the new male socket that encapsulates the old male socket
      */
     public T encapsulateMaleSocket(BaseManager<T> manager, T maleSocket);
-//    public MaleSocket encapsulateMaleSocket(Class<? extends Base> clazz, MaleSocket maleSocket);
     
 }

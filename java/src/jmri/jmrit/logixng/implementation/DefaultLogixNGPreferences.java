@@ -23,6 +23,7 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
     private boolean _useGenericFemaleSockets = false;
     private boolean _allowDebugMode = false;
     private boolean _showSystemUserNames = false;
+    private boolean _installDebugger = true;
     
     public DefaultLogixNGPreferences() {
         super(ProfileManager.getDefault().getActiveProfile());
@@ -170,6 +171,17 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
     @Override
     public boolean getShowSystemUserNames() {
         return _showSystemUserNames;
+    }
+
+    @Override
+    public void setInstallDebugger(boolean value) {
+        _installDebugger = value;
+        setIsDirty(true);
+    }
+
+    @Override
+    public boolean getInstallDebugger() {
+        return _installDebugger;
     }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGPreferences.class);

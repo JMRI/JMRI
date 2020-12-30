@@ -54,12 +54,12 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     }
 
     @Override
-    public final Base getParent() {
+    public Base getParent() {
         return _parent;
     }
     
     @Override
-    public final void setParent(Base parent) {
+    public void setParent(Base parent) {
         _parent = parent;
     }
     
@@ -171,8 +171,12 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             printLocalVariable(locale, writer, currentIndent, localVariable);
         }
         
-        for (int i=0; i < getChildCount(); i++) {
-            getChild(i).printTree(locale, writer, indent, currentIndent+indent);
+        if (getObject() instanceof MaleSocket) {
+            getObject().printTree(locale, writer, indent, currentIndent);
+        } else {
+            for (int i=0; i < getChildCount(); i++) {
+                getChild(i).printTree(locale, writer, indent, currentIndent+indent);
+            }
         }
     }
     

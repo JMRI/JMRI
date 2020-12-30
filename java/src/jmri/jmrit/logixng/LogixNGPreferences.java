@@ -79,4 +79,16 @@ public interface LogixNGPreferences {
      */
     public boolean getShowSystemUserNames();
 
+    /**
+     * Set whenether the debugger should be installed or nog.
+     * @param value true if the debugger should be installed, false otherwise
+     */
+    public void setInstallDebugger(boolean value);
+
+    /**
+     * Get whenether the debugger should be installed or nog.
+     * @return true if the debugger should be installed, false otherwise
+     */
+    public boolean getInstallDebugger();
+
 }

@@ -61,7 +61,7 @@ public class DefaultDigitalActionManagerXml extends AbstractManagerXml {
                     }
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(getAction(a));
                     if (e != null) {
-                        e.addContent(storeMaleSocket((MaleSocket)a));
+                        e.addContent(storeMaleSocket(a));
                         actions.addContent(e);
                     }
                 } catch (RuntimeException | IllegalAccessException | NoSuchFieldException e) {
