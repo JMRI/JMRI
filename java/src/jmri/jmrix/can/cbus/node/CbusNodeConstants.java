@@ -596,7 +596,7 @@ public class CbusNodeConstants {
         result.put(2, "integrated CANISB (firmware derived from CANCMD).");
         result.put(3, "integrated CANISB (firmware derived from CANCMD).");
         result.put(4, "System booster");
-        result.put(4, "integrated CANISB (firmware derived from CANCMD).");
+        result.put(5, "integrated CANISB (firmware derived from CANCMD).");
         result.put(6, "Isolated CANUSB and CBUS node.");
         return Collections.unmodifiableMap(result);
     }   
