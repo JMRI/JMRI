@@ -24,7 +24,6 @@ public class DebuggerMaleDigitalActionSocket extends AbstractDebuggerMaleSocket 
 
     @Override
     public void execute() throws JmriException {
-        System.out.format("DebuggerMaleDigitalActionSocket: %s%n", this.getLongDescription());
         ((MaleDigitalActionSocket) _maleSocket).execute();
     }
 
