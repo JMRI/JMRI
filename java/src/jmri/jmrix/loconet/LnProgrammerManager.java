@@ -6,6 +6,8 @@ import jmri.AddressedProgrammer;
 import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
 
+import javax.annotation.Nonnull;
+
 /**
  * Extend DefaultProgrammerManager to provide programmers on LocoNet.
  *
@@ -83,6 +85,7 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
      * Types implemented here.
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getDefaultModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(ProgrammingMode.OPSBYTEMODE);

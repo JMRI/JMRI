@@ -11,42 +11,34 @@ import org.slf4j.LoggerFactory;
  * See jmri.jmrix.loconet.lnsvf2.Sv2DiscoverPane
  *
  * @author B. Milhaupt 2020
+ * @author Egbert Broerse 2020
  */
 public class LncvDevice {
-    private int destinationAddr;
+    private int deviceAddress; // Module address in reply, value of -1 is ignored, LNCV default address : 1
+    private int artNum; // used as LNCV ProductID, must be int to pass as part of CV "art.cv"
     private String deviceName;
-    private String rosterName;
+    private String rosterEntryName;
     private int swVersion;
     private RosterEntry rosterEntry;
     private DecoderFile decoderFile;
-    private final int classNum; // used as LNCV ProductID
-    private int address = 0; // Module address in reply
     private int cvNum;
     private int cvValue;
 
-    public LncvDevice(int classNum, int address, int lastCv, int lastVal, String deviceName, String rosterName, int swVersion) {
-        this.classNum = classNum;
-        this.address = address;
+    public LncvDevice(int art, int address, int lastCv, int lastVal, String deviceName, String rosterName, int swVersion) {
+        this.artNum = art;
+        this.deviceAddress = address;
         cvNum = lastCv;
         cvValue = lastVal;
         this.deviceName = deviceName;
-        this.rosterName = rosterName;
+        this.rosterEntryName = rosterName;
         this.swVersion = swVersion;
-        log.debug("Added Module {}/{} by 6 params", classNum, address);
+        log.debug("Added Module {}/{} by 7 params", art, address);
     }
 
-    public LncvDevice(int classNum, int address, int lastCv, int lastVal) {
-        this.classNum = classNum;
-        this.address = address;
-        cvNum = lastCv;
-        cvValue = lastVal;
-        log.debug("Added Module {}/{} by 3 params", classNum, address);
-    }
-
-    public int getProductID() {return classNum;}
-    public int getDestAddr() {return destinationAddr;}
+    public int getProductID() {return artNum;}
+    public int getDestAddr() {return deviceAddress;}
     public String getDeviceName() {return deviceName;}
-    public String getRosterName() {return rosterName;}
+    public String getRosterName() {return rosterEntryName;}
     public int getSwVersion() {return swVersion;}
 
     /**
@@ -55,9 +47,9 @@ public class LncvDevice {
      *
      * @param destAddr device destination address
      */
-    public void setDestAddr(int destAddr) {this.destinationAddr = destAddr;}
+    public void setDestAddr(int destAddr) {this.deviceAddress = destAddr;}
     public void setDevName(String s) {deviceName = s;}
-    public void setRosterName(String s) {rosterName = s;}
+    public void setRosterName(String s) {rosterEntryName = s;}
     public void setSwVersion(int version) {swVersion = version;}
     public DecoderFile getDecoderFile() {
         return decoderFile;
@@ -70,19 +62,11 @@ public class LncvDevice {
     }
     public void setRosterEntry(RosterEntry e) {
         rosterEntry = e;
-        setRosterName(e.getId());
+        setRosterName(e.getId()); // is a name (String)
+        log.debug("RosterEntry set to {} for device {}", rosterEntryName, deviceName);
     }
 
-
-    public int getAddress() {
-        return address;
-    }
-    public void setAddress(int addr) {
-        address = addr;
-    }
-    public int getClassNum() {
-        return classNum;
-    }
+    // optional: remember last used CV
     public int getCvNum() {
         return cvNum;
     }

@@ -13,15 +13,16 @@
 <!-- for more details. -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" 
+                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-23-1.xsd"
                 showEmptyPanes="no">
 
     <version author="Knut Schwichtenberg" version="1" lastUpdated="20151122" />
+    <version author="B. Milhaupt" version="1" lastUpdated="20201220" />
 
     <decoder>
 
         <family name="FREDi" mfg="Public-domain and DIY">
-            <model model="FREDi using LNSV2" productID="11" developerID="1" />
+            <model model="FREDi using LNSV2" productID="11" developerID="1" manufacturerID="13"/>
         </family>
 
         <programming direct="no" paged="no" register="no" ops="no">

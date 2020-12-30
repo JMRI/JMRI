@@ -75,6 +75,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public static final String PROTOCOL = "protocol"; // NOI18N
     public static final String COMMENT = "comment"; // NOI18N
     public static final String DECODER_MODEL = "decodermodel"; // NOI18N
+    public static final String DECODER_DEVELOPERID = "developerID"; // NOI18N
     public static final String DECODER_MANUFACTURERID = "manufacturerID"; // NOI18N
     public static final String DECODER_PRODUCTID = "productID"; // NOI18N
     public static final String DECODER_FAMILY = "decoderfamily"; // NOI18N
@@ -115,6 +116,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected String _dateUpdated = "";
     protected Date dateModified = null;
     protected int _maxSpeedPCT = 100;
+    protected String _developerID = "";
     protected String _manufacturerID = "";
     protected String _productID = "";
 
@@ -205,6 +207,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         _comment = pEntry._comment;
         _decoderModel = pEntry._decoderModel;
         _decoderFamily = pEntry._decoderFamily;
+        _developerID = pEntry._developerID;
+        _manufacturerID = pEntry._manufacturerID;
+        _productID = pEntry._productID;
         _decoderComment = pEntry._decoderComment;
         _owner = pEntry._owner;
         _imageFilePath = pEntry._imageFilePath;
@@ -450,6 +455,16 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public String getDecoderModel() {
         return _decoderModel;
+    }
+
+    public void setDeveloperID(String s) {
+        String old = _developerID;
+        _developerID = s;
+        firePropertyChange(DECODER_DEVELOPERID, old, s);
+    }
+
+    public String getDeveloperID() {
+        return _developerID;
     }
 
     public void setManufacturerID(String s) {
@@ -748,6 +763,19 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         if ((a = e.getAttribute(RosterEntry.MAX_SPEED)) != null) {
             _maxSpeedPCT = Integer.parseInt(a.getValue());
         }
+
+        if ((a = e.getAttribute(DECODER_DEVELOPERID)) != null) {
+            _developerID = a.getValue();
+        }
+
+        if ((a = e.getAttribute(DECODER_MANUFACTURERID)) != null) {
+            _manufacturerID = a.getValue();
+        }
+
+        if ((a = e.getAttribute(DECODER_PRODUCTID)) != null) {
+            _productID = a.getValue();
+        }
+
         Element e3;
         if ((e3 = e.getChild("dateUpdated")) != null) {
             this.setDateUpdated(e3.getText());
@@ -797,6 +825,15 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             }
             if ((a = d.getAttribute("family")) != null) {
                 _decoderFamily = a.getValue();
+            }
+            if ((a = d.getAttribute(DECODER_DEVELOPERID)) != null) {
+                _developerID = a.getValue();
+            }
+            if ((a = d.getAttribute(DECODER_MANUFACTURERID)) != null) {
+                _manufacturerID = a.getValue();
+            }
+            if ((a = d.getAttribute(DECODER_PRODUCTID)) != null) {
+                _productID = a.getValue();
             }
             if ((a = d.getAttribute("comment")) != null) {
                 _decoderComment = a.getValue();
@@ -1188,6 +1225,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         e.setAttribute("dccAddress", getDccAddress());
         //e.setAttribute("protocol", "" + getProtocol());
         e.setAttribute("comment", getComment());
+        e.setAttribute(DECODER_DEVELOPERID, getDeveloperID());
+        e.setAttribute(DECODER_MANUFACTURERID, getManufacturerID());
+        e.setAttribute(DECODER_PRODUCTID, getProductID());
         e.setAttribute(RosterEntry.MAX_SPEED, (Integer.toString(getMaxSpeedPCT())));
         // file path are saved without default xml config path
         e.setAttribute("imageFilePath",
@@ -1296,6 +1336,12 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 + _decoderModel
                 + " "
                 + _decoderFamily
+                + " "
+                + _developerID
+                + " "
+                + _manufacturerID
+                + " "
+                + _productID
                 + " "
                 + _decoderComment
                 + "]";

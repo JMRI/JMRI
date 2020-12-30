@@ -42,10 +42,10 @@ import org.slf4j.LoggerFactory;
 public class LncvDevicesManager extends PropertyChangeSupport
         implements LocoNetListener {
     private final LocoNetSystemConnectionMemo memo;
-    private volatile LncvDevices lncvDevices;
-    private List<Integer> readLncvAddressList;
+    private final LncvDevices lncvDevices;
+    //private List<Integer> readLncvAddressList;
     //private java.util.TimerTask delayTask = null;
-    private volatile boolean waitingForDiscoveryReplies;
+    //private volatile boolean waitingForDiscoveryReplies;
 
     public LncvDevicesManager(LocoNetSystemConnectionMemo memo) {
         this.memo = memo;
@@ -55,8 +55,8 @@ public class LncvDevicesManager extends PropertyChangeSupport
             log.error("No LocoNet connection available, this tool cannot function"); // NOI18N
         }
         lncvDevices = new LncvDevices();
-        readLncvAddressList = new ArrayList<>();
-        waitingForDiscoveryReplies = false;
+        //readLncvAddressList = new ArrayList<>();
+        //waitingForDiscoveryReplies = false;
     }
 
     public LncvDevices getDeviceList() {
@@ -83,20 +83,21 @@ public class LncvDevicesManager extends PropertyChangeSupport
     public void message(LocoNetMessage m) {
         if (LncvMessageContents.isSupportedLncvMessage(m)) {
             if (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ_REPLY) {
-                // it's a LNCV ReadReply message, decode contents:
+                // it's an LNCV ReadReply message, decode contents:
                 LncvMessageContents contents = new LncvMessageContents(m);
                 int art = contents.getLncvArticleNum();
                 int addr = -1;
                 int cv = contents.getCvNum();
                 int val = contents.getCvValue();
+                log.debug("LNCV read reply: art:{}, address:{} cv:{} val:{}", art, addr, cv, val);
                 if (cv == 0) { // trust last used address
                     addr = val; // if cvNum = 0, this is the LNCV module address
                     log.debug("LNCV read reply: device address {} of LNCV returns {}", addr, val);
 
-                    lncvDevices.addDevice(new LncvDevice(art, addr, cv, val));
-                    log.debug("new LncvDevice added");
+                    lncvDevices.addDevice(new LncvDevice(art, addr, cv, val, "", "", -1));
+                    log.debug("new LncvDevice added to table");
                     firePropertyChange("DeviceListChanged", true, false);
-                    waitingForDiscoveryReplies = true;
+//                    waitingForDiscoveryReplies = true;
 //                    if (delayTask == null) {
 //                        delayTask = new java.util.TimerTask() {
 //                            @Override
@@ -111,66 +112,61 @@ public class LncvDevicesManager extends PropertyChangeSupport
 //                            }};
 //                        jmri.util.TimerUtil.scheduleAtFixedRateOnLayoutThread(delayTask, 500, 500);
 //                    }
-                    if (addr > 0) {
-                        readLncvAddressList.add(addr);
-                    }
+//                    if (addr > 0) {
+//                        readLncvAddressList.add(addr); // TODO check for identical addresses? see SV2
+//                    }
 
                     // Annotate the discovered device LNCV data based on address
                     int count = lncvDevices.size();
-                        for (int i = 0; i < count; ++ i) {
-                            LncvDevice d = lncvDevices.getDevice(i);
-                            if ((d.getClassNum() == art) && (d.getDestAddr() == addr)) {
-                                //d.setSwVersion(val);
-                                // need to find a corresponding roster entry?
-                                if (d.getRosterName().length() == 0) {
-                                    // Yes. Try to find a roster entry which matches the device characteristics
-                                    List<RosterEntry> l = Roster.getDefault().matchingList(
-                                            null,
-                                            null,
-                                            Integer.toString(d.getDestAddr()),
-                                            null,
-                                            null,
-                                            null,
-                                            Integer.toString(d.getProductID()));
-                                    if (l.size() == 0) {
-                                        log.debug("Did not find a corresponding roster entry");
-                                    } else if (l.size() == 1) {
-                                        log.debug("Found a matching roster entries.");
-                                        d.setRosterEntry(l.get(0)); // link this device to the entry
-                                    } else {
-                                        log.info("Found multiple matching roster entries. "
-                                                + "Cannot associate any one to this device.");
-                                    }
+                    for (int i = 0; i < count; ++ i) {
+                        LncvDevice d = lncvDevices.getDevice(i);
+                        if ((d.getProductID() == art) && (d.getDestAddr() == addr)) {
+                            //d.setSwVersion(val);
+                            // need to find a corresponding roster entry?
+                            if (d.getRosterName() != null && d.getRosterName().length() == 0) {
+                                // Yes. Try to find a roster entry which matches the device characteristics
+                                List<RosterEntry> l = Roster.getDefault().matchingList(
+                                        null,
+                                        null,
+                                        Integer.toString(d.getDestAddr()),
+                                        null,
+                                        null,
+                                        null,
+                                        Integer.toString(d.getProductID()));
+                                if (l.size() == 0) {
+                                    log.debug("Did not find a corresponding roster entry");
+                                } else if (l.size() == 1) {
+                                    log.debug("Found a matching roster entry.");
+                                    d.setRosterEntry(l.get(0)); // link this device to the entry
+                                } else {
+                                    log.info("Found multiple matching roster entries. "
+                                            + "Cannot associate any one to this device.");
                                 }
-                                // notify listeners of pertinent change to device
-                                firePropertyChange("DeviceListChanged", true, false);
+                            }
+                            // notify listeners of pertinent change to device
+                            firePropertyChange("DeviceListChanged", true, false);
                         }
                     }
+                } else {
+                    log.debug("LNCV device check skipped as value not CV0/module address");
                 }
             }
         }
     }
 
-    private void queryLncvValues() {
-        if (readLncvAddressList.size() > 0) {
-            int art = readLncvAddressList.get(1);
-            int addr = readLncvAddressList.get(0);
-            readLncvAddressList.remove(0);
-            memo.getLnTrafficController().sendLocoNetMessage(
-                    LncvMessageContents.createCvReadRequest(art, addr, 1)); // for version
-        }
-    }
-
-//        public void reconfigResetDevice(LncvDevice dev) {
+//    private void queryLncvValues() {
+//        if (readLncvAddressList.size() > 0) {
+//            int art = ??????
+//            int addr = readLncvAddressList.get(0);
+//            readLncvAddressList.remove(0);
 //            memo.getLnTrafficController().sendLocoNetMessage(
-//                    LncvMessageContents.createLncvMessage(
-//                            0,
-//                            LncvMessageContents.LncvCommand.SV2_RECONFIGURE_DEVICE.getCmd(),
-//                            dev.getDestAddr(),
-//                            0, 0, 0, 0, 0));
+//                    LncvMessageContents.createCvReadRequest(art, addr, 1));
+//            // firmware version = CV1? only known for Digikeijs
 //        }
+//    }
+
 //    public void reprogramDeviceAddress(LncvDevice dev, int newAddr) {
-//        int art = dev.getClassNum();
+//        int art = dev.getProductID();
 //        memo.getLnTrafficController().sendLocoNetMessage(LncvMessageContents.createCvWriteRequest(
 //                art, 0, newAddr));
 //    }
@@ -190,11 +186,12 @@ public class LncvDevicesManager extends PropertyChangeSupport
                 deviceCount++;
             }
         }
+        log.debug("prepareForSymbolicProgrammer found {} matches", deviceCount);
         if (deviceCount > 1) {
             return ProgrammingResult.FAIL_MULTIPLE_DEVICES_SAME_DESTINATION_ADDRESS;
         }
 
-        if ((dev.getRosterName()==null) || (dev.getRosterName().length()==0)) {
+        if ((dev.getRosterName() == null) || (dev.getRosterName().length() == 0)) {
             return ProgrammingResult.FAIL_NO_MATCHING_ROSTER_ENTRY;
         }
 
@@ -207,14 +204,14 @@ public class LncvDevicesManager extends PropertyChangeSupport
             return ProgrammingResult.FAIL_NO_ADDRESSED_PROGRAMMER;
         }
 
-        if (!p.getSupportedModes().contains(LnProgrammerManager.LOCONETLNCVMODE)) {
-            return ProgrammingResult.FAIL_NO_LNCV_PROGRAMMER;
-        }
-        p.setMode(LnProgrammerManager.LOCONETLNCVMODE);
-        ProgrammingMode prgMode = p.getMode();
-        if (!prgMode.equals(LnProgrammerManager.LOCONETLNCVMODE)) {
-            return ProgrammingResult.FAIL_NO_LNCV_PROGRAMMER;
-        }
+//        if (!p.getSupportedModes().contains(LnProgrammerManager.LOCONETLNCVMODE)) {
+//            return ProgrammingResult.FAIL_NO_LNCV_PROGRAMMER;
+//        }
+//        p.setMode(LnProgrammerManager.LOCONETLNCVMODE);
+//        ProgrammingMode prgMode = p.getMode();
+//        if (!prgMode.equals(LnProgrammerManager.LOCONETLNCVMODE)) {
+//            return ProgrammingResult.FAIL_NO_LNCV_PROGRAMMER;
+//        }
 
         RosterEntry re = Roster.getDefault().entryFromTitle(dev.getRosterName());
         String name = re.getId();

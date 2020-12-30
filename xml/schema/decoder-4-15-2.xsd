@@ -466,7 +466,7 @@
           <xs:attribute name="productID" type="xs:string" >
             <xs:annotation><xs:documentation>
                 For a decoder definition which
-                describes a device implementing the LocoNet SV2 messaging protocol,
+                describes a device implementing the LocoNet SV2 or LNCV messaging protocol,
                 this value is used to match a "discovered" device
                 to an appropriate decoder definition
             </xs:documentation></xs:annotation>
