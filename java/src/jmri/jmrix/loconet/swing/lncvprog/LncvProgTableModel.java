@@ -14,6 +14,7 @@ import jmri.jmrix.loconet.uhlenbrock.LncvDevice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
@@ -42,15 +43,17 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
             Bundle.getMessage("HeadingCvLastRead"),
             Bundle.getMessage("HeadingValue"),
             "Roster Entry",
-            ""};
+            "Program"}; // TODO I18N
     private final LncvProgPane parent;
     private final transient LocoNetSystemConnectionMemo memo;
     protected Roster _roster;
     protected LncvDevicesManager lncvdm;
 
-    LncvProgTableModel(LncvProgPane parent, LocoNetSystemConnectionMemo memo) {
+    LncvProgTableModel(LncvProgPane parent, @Nonnull LocoNetSystemConnectionMemo memo) {
         this.parent = parent;
         this.memo = memo;
+        lncvdm = memo.getLncvDevicesManager();
+        lncvdm.addPropertyChangeListener(this);
         log.debug("LNCV TABLE created, parent = {} null", (parent == null ? "" : "not"));
     }
 
@@ -101,7 +104,12 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
 
    @Override
    public int getRowCount() {
-      return Math.max(2, parent.getCount());
+        if (lncvdm == null) {
+            log.error("NULL DEVMANAGER");
+            return 0;
+        } else {
+            return lncvdm.getDeviceCount();
+        }
    }
 
    @Override
@@ -183,7 +191,7 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
                 dev.setRosterName((String) value);
                 break;
             case OPENPRGMRBUTTONCOLUMN:
-                if (((String)getValueAt(r, c)).compareTo("Create Roster Entry") == 0) { // I18N
+                if (((String)getValueAt(r, c)).compareTo("Create Roster Entry") == 0) { // TODO I18N
                     createRosterEntry(dev);
                     if (dev.getRosterEntry() != null) {
                         setValueAt(dev.getRosterName(), r, c);
@@ -194,6 +202,9 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
                 // Gadget: copy parameters to Program screen
                 parent.copyEntry((Integer) getValueAt(r, ARTICLE_COLUMN), (Integer) getValueAt(r, MODADDR_COLUMN));
                 break;
+            default:
+                // no change, so do not fire a property change event
+                return;
         }
         if (getRowCount() >= 1) {
             this.fireTableRowsUpdated(r, r);

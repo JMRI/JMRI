@@ -5,6 +5,8 @@ import jmri.UserPreferencesManager;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.loconet.uhlenbrock.LncvDevice;
 import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
+import jmri.swing.JTablePersistenceManager;
+import jmri.util.ThreadingUtil;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +44,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
     protected JTextField valueField = new JTextField(4);
     protected JCheckBox rawCheckBox = new JCheckBox(Bundle.getMessage("ButtonShowRaw"));
     protected JTable moduleTable = null;
-    protected javax.swing.table.TableModel moduleTableModel = null;
+    protected LncvProgTableModel moduleTableModel = null;
 
     protected JPanel tablePanel = null;
     protected JLabel statusText1 = new JLabel();
@@ -59,8 +62,10 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
     boolean writeConfirmed = false;
     private final String rawDataCheck = this.getClass().getName() + ".RawData"; // NOI18N
     private UserPreferencesManager pm;
+    private transient TableRowSorter<LncvProgTableModel> sorter;
+    private LncvDevicesManager lncvdm;
 
-    private HashMap<Integer, LncvDevice> modules;
+    //private HashMap<Integer, LncvDevice> modules;
     private boolean allProgRunning = false;
     private int moduleProgRunning = -1; // stores module address as int during moduleProgramming session, -1 = no session
 
@@ -88,7 +93,9 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
     public synchronized void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
         this.memo = memo;
-        modules = new HashMap<>(0);
+        lncvdm = memo.getLncvDevicesManager();
+        log.debug("lncvdm created {}", (lncvdm == null));
+        //modules = new HashMap<>(0);
         // connect to the LnTrafficController
         if (memo.getLnTrafficController() == null) {
             log.error("No traffic controller is available");
@@ -96,33 +103,50 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
             // add listener
             memo.getLnTrafficController().addLocoNetListener(~0, this);
         }
-    }
-
-    /**
-     * Initialize the config window
-     */
-    @Override
-    public void initComponents() {
+//    }
+//
+//    /**
+//     * Initialize the config window
+//     */
+//    @Override
+//    public void initComponents() {
         pm = InstanceManager.getDefault(UserPreferencesManager.class);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // buttons at top, like SE8c pane
         add(initButtonPanel());
         add(initStatusPanel());
-        // Set up the SV2 modules table
-        //moduleTableModel = new LncvProgTableModel(this, memo);
-        //moduleTable = new JTable(moduleTableModel);
-        //moduleTable.setRowSelectionAllowed(false);
-        //moduleTable.getColumnModel().getColumn(LncvProgTableModel.OPENPRGMRBUTTONCOLUMN).setCellEditor(new ButtonEditor(new JButton()));
-        //moduleTable.getColumnModel().getColumn(LncvProgTableModel.OPENPRGMRBUTTONCOLUMN).setCellRenderer(new ButtonRenderer());
-        //moduleTable.setPreferredScrollableViewportSize(new Dimension(300, 200));
-        //JScrollPane tableScrollPane = new JScrollPane(moduleTable);
+        // Set up the LNCV modules table
+//        if (memo == null) {
+//            log.error("NO LN MEMO");
+//        }
+
+        // create the data model and its table
+        moduleTableModel = new LncvProgTableModel(this, memo);
+        moduleTable = new JTable(moduleTableModel);
+        moduleTable.setRowSelectionAllowed(false);
+        moduleTable.getColumnModel().getColumn(LncvProgTableModel.OPENPRGMRBUTTONCOLUMN).setCellEditor(new ButtonEditor(new JButton()));
+        moduleTable.getColumnModel().getColumn(LncvProgTableModel.OPENPRGMRBUTTONCOLUMN).setCellRenderer(new ButtonRenderer());
+        moduleTable.setPreferredScrollableViewportSize(new Dimension(300, 200));
+
+        // establish row sorting for the table
+        sorter = new TableRowSorter<LncvProgTableModel>(moduleTableModel);
+        moduleTable.setRowSorter(sorter);
+        // establish table physical characteristics persistence
+        moduleTable.setName("LNCV Device Management"); // NOI18N
+        // Reset and then persist the table's ui state
+        InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent((tpm) -> {
+            tpm.resetState(moduleTable);
+            tpm.persist(moduleTable, true);
+        });
+
+        JScrollPane tableScrollPane = new JScrollPane(moduleTable);
         tablePanel = new JPanel();
         Border resultBorder = BorderFactory.createEtchedBorder();
         Border resultTitled = BorderFactory.createTitledBorder(resultBorder, Bundle.getMessage("LncvTableTitle"));
         tablePanel.setBorder(resultTitled);
         tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.Y_AXIS));
-        //tablePanel.add(tableScrollPane, BorderLayout.CENTER);
+        tablePanel.add(tableScrollPane, BorderLayout.CENTER);
 
         add(tablePanel);
 
@@ -163,7 +187,6 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
 
         JPanel panel41 = new JPanel();
         panel41.setLayout(new BoxLayout(panel41, BoxLayout.PAGE_AXIS));
-        //panel411.setLayout(new GridLayout(2, 3));
         allProgButton.setText(allProgRunning ?
                 Bundle.getMessage("ButtonStopAllProg") : Bundle.getMessage("ButtonStartAllProg"));
         allProgButton.setToolTipText(Bundle.getMessage("TipAllProgButton"));
@@ -450,7 +473,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
      * {@inheritDoc}
      * Compare to {@link LnOpsModeProgrammer#message(jmri.jmrix.loconet.LocoNetMessage)}
      *
-     * @param l a message received and analysed
+     * @param l a message received and analysed for LNCV characteristics
      */
     @Override
     public synchronized void message(LocoNetMessage l) { // receive a LocoNet message and log it
@@ -491,31 +514,33 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
             // it's a LNCV ReadReply message, decode contents:
             LncvMessageContents contents = new LncvMessageContents(l);
             int msgArt = contents.getLncvArticleNum();
+            int msgAdr = moduleProgRunning;
             int msgCv = contents.getCvNum();
             int msgVal = contents.getCvValue();
-
-            // store=write reply
-            LncvDevice dev = new LncvDevice(msgArt, adr, msgCv, msgVal);
-            int tempMod = 0;
-            if (msgArt == art) {
-                dev.setAddress(adr); // trust last used address, to be sure, check against Article (hardware class) number
-                tempMod = adr;
+            if ((msgCv == 0) || (msgArt == art)) { // trust last used address. to be sure, check against Article (hardware class) number
+                msgAdr = msgVal; // if cvNum = 0, this is the LNCV module address
             }
-            String foundMod = "LNCV art:" + art + " address:" + tempMod + " cv:" + msgCv + " value:" + msgVal + "\n";
+            String foundMod = "(LNCV) art:" + art + " address:" + msgAdr + " cv:" + msgCv + " value:" + msgVal + "\n";
             reply += foundMod;
-            boolean inMap = false;
-            for (Map.Entry<Integer, LncvDevice> module : modules.entrySet()) {
-                if ((module.getValue().getClassNum() == art) && (module.getValue().getAddress() == tempMod)) {
-                    module.getValue().setCvNum(msgCv);
-                    module.getValue().setCvValue(msgVal);
-                    inMap = true;
-                    break;
-                }
-            }
-            if (!inMap) {
-                modules.put(counter++, dev);
-                log.debug("LNCV Added Module {}: {}", counter, foundMod);
-            }
+            // store Module in list using write reply, moved to LncvDevicesManager
+            //LncvDevice dev = new LncvDevice(msgArt, msgAdr, msgCv, msgVal);
+//            boolean inMap = false;
+//            for (Map.Entry<Integer, LncvDevice> module : modules.entrySet()) {
+//                if ((module.getValue().getClassNum() == art) && (module.getValue().getAddress() == msgAdr)) {
+//                    module.getValue().setCvNum(msgCv);
+//                    module.getValue().setCvValue(msgVal);
+//                    inMap = true;
+//                    break;
+//                }
+//            }
+//            if (!inMap) {
+//                modules.put(counter++, dev);
+//                lncvdm.clearDevicesList();
+//                ThreadingUtil.runOnLayoutEventually( ()->{
+//                    lncvdm.sendLncvDiscoveryRequest();
+//                });
+                //log.debug("LNCV Added Module {}: {}", counter, foundMod);
+//            }
             //moduleTable.revalidate();
 
             // enter returned CV in CVnum field
@@ -541,12 +566,16 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         } else {
             log.debug("LNCV process completed successfully.");
             statusText2.setText(Bundle.getMessage("FeedBackDiscoverSuccess",
-                    (modules == null ? 0 : modules.size())));
+                    lncvdm.getDeviceCount()));
+                    //(modules == null ? 0 : modules.size())));
             // reload the CV? list
             result.setText(reply);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         if (memo != null && memo.getLnTrafficController() != null) {
@@ -564,12 +593,17 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
             allProgButtonActionPerformed();
         }
         super.setVisible(false);
+
+        InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent((tpm) -> {
+            tpm.stopPersisting(moduleTable);
+        });
+
         super.dispose();
     }
 
     protected LncvDevice getModule(int i) {
-        if ((modules != null) && (i <= modules.size())) {
-            return modules.get(i);
+        if (i <= lncvdm.getDeviceCount()) {
+            return lncvdm.getDeviceList().getDevice(i);
         } else {
             log.debug("getModule({}) failed", i);
             return null;
@@ -579,53 +613,53 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
     private int counter = 0;
 
     /**
-     * Get number of (different?) module replies in table.
+     * Get the number of modules (replies) in table.
      * @return number of Modules in modules hashmap
      */
     public int getCount() {
         return counter;
     }
 
-    /**
-     * Store elements received on LNCV reply message.
-     */
-    static class LncvModule {
-        private final int classNum;
-        private int address = 0; // Module address in reply
-        private int cvNum;
-        private int cvValue;
-
-        LncvModule(int[] response) {
-            classNum = response[0];
-            //address = response[1];
-            cvNum = response[1];
-            cvValue = response[2];
-            log.debug("Added Module {}", classNum);
-        }
-
-        int getAddress() {
-            return address;
-        }
-        void setAddress(int addr) {
-            address = addr;
-        }
-        int getClassNum() {
-            return classNum;
-        }
-        int getCvNum() {
-            return cvNum;
-        }
-        void setCvNum(int num) {
-            cvNum = num;
-        }
-        int getCvValue() {
-            return cvValue;
-        }
-        void setCvValue(int val) {
-            cvValue = val;
-        }
-
-    }
+//    /**
+//     * Store elements received on LNCV reply message.
+//     */
+//    static class LncvModule {
+//        private final int classNum;
+//        private int address = 0; // Module address in reply
+//        private int cvNum;
+//        private int cvValue;
+//
+//        LncvModule(int[] response) {
+//            classNum = response[0];
+//            //address = response[1];
+//            cvNum = response[1];
+//            cvValue = response[2];
+//            log.debug("Added Module {}", classNum);
+//        }
+//
+//        int getAddress() {
+//            return address;
+//        }
+//        void setAddress(int addr) {
+//            address = addr;
+//        }
+//        int getClassNum() {
+//            return classNum;
+//        }
+//        int getCvNum() {
+//            return cvNum;
+//        }
+//        void setCvNum(int num) {
+//            cvNum = num;
+//        }
+//        int getCvValue() {
+//            return cvValue;
+//        }
+//        void setCvValue(int val) {
+//            cvValue = val;
+//        }
+//
+//    }
 
     private final static Logger log = LoggerFactory.getLogger(LncvProgPane.class);
 

@@ -6,8 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
- * @author aptly
+ * Based on Lnsvf2Devices bu B. Milhaupt
+ * @author Egbert Broerse 2020
  */
 public class LncvDevices {
 

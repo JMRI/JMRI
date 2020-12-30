@@ -2,7 +2,7 @@ package jmri.jmrix.loconet.uhlenbrock;
 
 /**
  * Definition of objects to handle configuring an Uhlenbrock serial port layout
- * connection via an UhlenbrockAdapter object.
+ * connection via an IntelliboxAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  */

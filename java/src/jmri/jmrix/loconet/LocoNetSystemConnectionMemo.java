@@ -76,7 +76,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
     private LnTrafficController lt;
     protected LocoNetThrottledTransmitter tm;
     private SlotManager sm;
-    private LncvDevicesManager lncvm = null;
+    private LncvDevicesManager lncvdm = null;
     private LnMessageManager lnm = null;
 
     /**
@@ -124,8 +124,8 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         store(p,DefaultProgrammerManager.class);
     }
 
-    public void setLncvDevicesManager(LncvDevicesManager lncvm) {
-        this.lncvm = lncvm;
+    public void setLncvDevicesManager(LncvDevicesManager lncvdm) {
+        this.lncvdm = lncvdm;
     }
 
     protected boolean mTurnoutNoRetry = false;
@@ -298,7 +298,11 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         if (getDisabled()) {
             return null;
         }
-        return lncvm;
+        if (lncvdm == null) {
+            setLncvDevicesManager(new LncvDevicesManager(this));
+            log.debug("Auto create of LncvDevicesManager for initial configuration");
+        }
+        return lncvdm;
     }
 
     protected LnPredefinedMeters predefinedMeters;

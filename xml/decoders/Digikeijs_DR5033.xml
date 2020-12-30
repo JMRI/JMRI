@@ -3,7 +3,7 @@
 
 <!-- Copyright (C) JMRI 2020 All rights reserved   -->
 <!-- LOCONETLNCVMODE requires 3 elements to address an LNCV module on LocoNet:
-1. Article Number (aka type/class ID)
+1. Article Number (aka type/class ID) = decoder model productID (integer)
 2. Module Address (optional, se below)
 3. CV number
 For processing by JMRI LnOpsProgrammer, elements 1. and 3. are combined in the CV number e.g., "1.3".
@@ -18,7 +18,7 @@ programming commands. See LNCV help in -->
     <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
 
     <decoder>
-        <family name="Booster" mfg="Digirails" type="stationary">
+        <family name="Booster" mfg="Digikeijs" type="stationary">
             <model model="DR5033" maxTotalCurrent="3.0A" productID="5033" formFactor="Stationary" comment="3A LocoNet Booster">
               <versionCV />
               <size length="102" width="86" height="20" units="mm" />

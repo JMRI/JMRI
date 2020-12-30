@@ -51,7 +51,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
     <!-- version 1 - based on Digirails_DR80010-15.xml -->
     
     <decoder>
-        <family name="Stationary" mfg="Digirails" comment="also sold under the Digikeijs label in NL">
+        <family name="Stationary" mfg="Digikeijs" comment="also sold under the Digirails label">
             <model model="DR4018" numOuts="16" numFns="0" maxInputVolts="6.5-18V" maxTotalCurrent="2.5A" productID="4018" formFactor="Stationary" comment="Multiprotocol switching decoder">
                 <versionCV lowVersionID="134" highVersionID="255"/>
                 <output name="1" label="Out1" connection="other" maxcurrent="500 mA" />
@@ -105,7 +105,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="fr">ID constructeur: </label>
                 <label xml:lang="de">Hersteller ID: </label>
                 <label xml:lang="nl">Fabrikant-ID: </label>
-                <tooltip>Read-Only, 42 = Digirails/Digikeijs</tooltip>
+                <tooltip>Read-Only, 42 = Digikeijs/Digirails</tooltip>
             </variable>
             <!-- CV29 via nmra include in line 79 -->
             <variable item="Presets4018" CV="47" mask="XXXXVVVV" writeOnly="yes" default="0" include="4018">

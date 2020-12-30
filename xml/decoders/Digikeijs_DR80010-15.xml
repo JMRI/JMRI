@@ -14,7 +14,7 @@
     <!--             Added tooltips and localised in NL, DE and FR (as per manual)  -->
     <!-- version 2.1 Default values adjusted for Fade in/out effect                 -->
     <decoder>
-        <family name="Locomotive lighting" mfg="Digirails">
+        <family name="Locomotive lighting" mfg="Digikeijs">
             <model model="DR80010" numOuts="8" numFns="18" maxInputVolts="6.5-18V" maxMotorCurrent="0.0A, peak=0A for 5 sec." maxTotalCurrent="1.0A" productID="80010" formFactor="HO" comment="Warm white LED strip with integrated function decoder">
                 <versionCV lowVersionID="10" highVersionID="10"/>
                 <output name="1" label="Head|Light" connection="solder" maxcurrent="500 mA" />
@@ -53,7 +53,7 @@
                 <label xml:lang="de">Hersteller ID: </label>
                 <label xml:lang="nl">Fabrikant-ID: </label>
                 <label>Manufacturer ID: </label>
-                <tooltip>Read-Only, 42 = Digirails/Digikeijs</tooltip>
+                <tooltip>Read-Only, 42 = Digikeijs/Digirails</tooltip>
             </variable>
             <!-- CV=19 -->
             <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
