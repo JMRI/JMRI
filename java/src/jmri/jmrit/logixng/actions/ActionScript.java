@@ -43,7 +43,7 @@ public class ActionScript extends AbstractDigitalAction {
     private void loadScript() {
         try {
             jmri.script.JmriScriptEngineManager scriptEngineManager = jmri.script.JmriScriptEngineManager.getDefault();
-
+            
             Bindings bindings = new SimpleBindings();
             ScriptParams params = new ScriptParams(this);
             
@@ -55,12 +55,12 @@ public class ActionScript extends AbstractDigitalAction {
             bindings.put("digitalExpressions", InstanceManager.getNullableDefault(DigitalExpressionManager.class));
             bindings.put("stringActions", InstanceManager.getNullableDefault(StringActionManager.class));
             bindings.put("stringExpressions", InstanceManager.getNullableDefault(StringExpressionManager.class));
-            
+
             bindings.put("params", params);    // Give the script access to the local variable 'params'
-            
+
             scriptEngineManager.getEngineByName(JmriScriptEngineManager.PYTHON)
                     .eval(_scriptText, bindings);
-            
+
             _scriptClass = params._scriptClass.get();
         } catch (ScriptException e) {
             log.warn("cannot load script", e);
@@ -107,7 +107,22 @@ public class ActionScript extends AbstractDigitalAction {
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        if (_scriptClass != null) _scriptClass.execute();
+        AtomicReference<JmriException> jmriExceptionRef = new AtomicReference<>();
+        AtomicReference<RuntimeException> runtimeExceptionRef = new AtomicReference<>();
+        
+        if (_scriptClass != null) {
+            jmri.util.ThreadingUtil.runOnLayout(() -> {
+                try {
+                    _scriptClass.execute();
+                } catch (JmriException e) {
+                    jmriExceptionRef.set(e);
+                } catch (RuntimeException e) {
+                    runtimeExceptionRef.set(e);
+                }
+            });
+            if (jmriExceptionRef.get() != null) throw jmriExceptionRef.get();
+            if (runtimeExceptionRef.get() != null) throw runtimeExceptionRef.get();
+        }
     }
 
     @Override

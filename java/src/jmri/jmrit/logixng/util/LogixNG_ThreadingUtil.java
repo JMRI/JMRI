@@ -83,7 +83,6 @@ public class LogixNG_ThreadingUtil {
                     " event queue and the event is put on the event queue in"+
                     " the synchronize block.")
     static public void runOnLogixNG(@Nonnull ThreadAction ta) {
-        if (logixNGThread == null) throw new RuntimeException("Daniel: LogixNG thread not started");
         if (logixNGThread != null) {
             Object lock = new Object();
             synchronized(lock) {
@@ -96,7 +95,7 @@ public class LogixNG_ThreadingUtil {
                 }
             }
         } else {
-            ThreadingUtil.runOnGUI(ta);
+            throw new RuntimeException("LogixNG thread not started");
         }
     }
 
@@ -116,11 +115,10 @@ public class LogixNG_ThreadingUtil {
      * @param ta What to run, usually as a lambda expression
      */
     static public void runOnLogixNGEventually(@Nonnull ThreadAction ta) {
-        if (logixNGThread == null) throw new RuntimeException("Daniel: LogixNG thread not started");
         if (logixNGThread != null) {
             logixNGEventQueue.add(new ThreadEvent(ta));
         } else {
-            ThreadingUtil.runOnGUIEventually(ta);
+            throw new RuntimeException("LogixNG thread not started");
         }
     }
 
@@ -143,7 +141,6 @@ public class LogixNG_ThreadingUtil {
      */
     @Nonnull 
     static public Timer runOnLogixNGDelayed(@Nonnull ThreadAction ta, int delay) {
-        if (logixNGThread == null) throw new RuntimeException("Daniel: LogixNG thread not started");
         if (logixNGThread != null) {
             // dispatch to Swing via timer. We are forced to use a Swing Timer
             // since the method returns a Timer object and we don't want to
@@ -157,7 +154,7 @@ public class LogixNG_ThreadingUtil {
             timer.start();
             return timer;
         } else {
-            return ThreadingUtil.runOnGUIDelayed(ta, delay);
+            throw new RuntimeException("LogixNG thread not started");
         }
     }
 
@@ -170,7 +167,7 @@ public class LogixNG_ThreadingUtil {
         if (logixNGThread != null) {
             return logixNGThread == Thread.currentThread();
         } else {
-            return ThreadingUtil.isGUIThread();
+            throw new RuntimeException("LogixNG thread not started");
         }
     }
 

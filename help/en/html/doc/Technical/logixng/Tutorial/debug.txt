@@ -81,3 +81,17 @@ The reason for this is that if two conditionalngs uses the same thread, the seco
 executed until the first conditionalng has finished execution. But if they are using different threads, they may be
 executed in parallel.
 
+
+
+
+
+Note for JMRI developers:
+
+The debugger is an example of the modularity of LogixNG. The debugger share the same editor with the ConditionalNG
+editor, the Module editor and the clipboard editor. And it manages to step thru the ConditionalNG and Module by adding
+an extra MaleSocket on top of the ordinary male socket that embed the actions and expressions. The point here is that
+it's easy to add new tools that do interesting stuff without the tool needs deep understanding of the things the tool
+works on. For example, the debugger knows nothing about the actions and expressions it debugs.
+
+
+

@@ -313,15 +313,17 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
                     turnout.setCommandedState(_turnoutState.getID());
                 }
             } else {
-                if (_turnoutState == TurnoutState.Toggle) {
-                    if (turnout.getCommandedState() == Turnout.CLOSED) {
-                        turnout.setCommandedState(Turnout.THROWN);
+                jmri.util.ThreadingUtil.runOnLayout(() -> {
+                    if (_turnoutState == TurnoutState.Toggle) {
+                        if (turnout.getCommandedState() == Turnout.CLOSED) {
+                            turnout.setCommandedState(Turnout.THROWN);
+                        } else {
+                            turnout.setCommandedState(Turnout.CLOSED);
+                        }
                     } else {
-                        turnout.setCommandedState(Turnout.CLOSED);
+                        turnout.setCommandedState(TurnoutState.valueOf(name)._id);
                     }
-                } else {
-                    turnout.setCommandedState(TurnoutState.valueOf(name)._id);
-                }
+                });
             }
         });
     }

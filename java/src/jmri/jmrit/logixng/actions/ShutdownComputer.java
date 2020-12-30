@@ -45,7 +45,9 @@ public class ShutdownComputer extends AbstractDigitalAction {
     /** {@inheritDoc} */
     @Override
     public void execute() {
-        InstanceManager.getDefault(ShutDownManager.class).shutdownOS();
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
+            InstanceManager.getDefault(ShutDownManager.class).shutdownOS();
+        });
 
         // If we are here, shutdown has failed
         log.error("Shutdown failed");  // NOI18N

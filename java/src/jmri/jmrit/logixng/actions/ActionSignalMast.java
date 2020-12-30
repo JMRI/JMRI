@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.annotation.Nonnull;
 
@@ -457,34 +458,42 @@ public class ActionSignalMast extends AbstractDigitalAction
         
         OperationType operation = getOperation();
         
-        switch (operation) {
-            case Aspect:
-                String newAspect = getNewAspect();
-                if (!newAspect.isEmpty()) {
-                    signalMast.setAspect(newAspect);
+        AtomicReference<JmriException> ref = new AtomicReference<>();
+        jmri.util.ThreadingUtil.runOnLayout(() -> {
+            try {
+                switch (operation) {
+                    case Aspect:
+                        String newAspect = getNewAspect();
+                        if (!newAspect.isEmpty()) {
+                            signalMast.setAspect(newAspect);
+                        }
+                        break;
+                    case Lit:
+                        signalMast.setLit(true);
+                        break;
+                    case NotLit:
+                        signalMast.setLit(false);
+                        break;
+                    case Held:
+                        signalMast.setHeld(true);
+                        break;
+                    case NotHeld:
+                        signalMast.setHeld(false);
+                        break;
+                    case PermissiveSmlDisabled:
+                        signalMast.setPermissiveSmlDisabled(true);
+                        break;
+                    case PermissiveSmlNotDisabled:
+                        signalMast.setPermissiveSmlDisabled(false);
+                        break;
+                    default:
+                        throw new JmriException("Unknown enum: "+_operationType.name());
                 }
-                break;
-            case Lit:
-                signalMast.setLit(true);
-                break;
-            case NotLit:
-                signalMast.setLit(false);
-                break;
-            case Held:
-                signalMast.setHeld(true);
-                break;
-            case NotHeld:
-                signalMast.setHeld(false);
-                break;
-            case PermissiveSmlDisabled:
-                signalMast.setPermissiveSmlDisabled(true);
-                break;
-            case PermissiveSmlNotDisabled:
-                signalMast.setPermissiveSmlDisabled(false);
-                break;
-            default:
-                throw new RuntimeException("Unknown enum: "+_operationType.name());
-        }
+            } catch (JmriException e) {
+                ref.set(e);
+            }
+        });
+        if (ref.get() != null) throw ref.get();
     }
 
     @Override

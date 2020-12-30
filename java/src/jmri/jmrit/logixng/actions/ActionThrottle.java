@@ -159,9 +159,14 @@ public class ActionThrottle extends AbstractDigitalAction
                         ((MaleDigitalExpressionSocket)_locoDirectionSocket.getConnectedSocket())
                                 .evaluate();
             }
-
-            _throttle.setSpeedSetting((float) speed);
-            _throttle.setIsForward(isForward);
+            
+            DccThrottle throttle = _throttle;
+            float spd = (float) speed;
+            boolean fwd = isForward;
+            jmri.util.ThreadingUtil.runOnLayout(() -> {
+                throttle.setSpeedSetting(spd);
+                throttle.setIsForward(fwd);
+            });
         }
     }
 

@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.annotation.Nonnull;
 
@@ -468,34 +469,42 @@ public class ActionSignalHead extends AbstractDigitalAction
         
         OperationType operation = getOperation();
         
-        switch (operation) {
-            case Appearance:
-                int newAppearance = getNewAppearance();
-                if (newAppearance != -1) {
-                    signalHead.setAppearance(newAppearance);
+        AtomicReference<JmriException> ref = new AtomicReference<>();
+        jmri.util.ThreadingUtil.runOnLayout(() -> {
+            try {
+                switch (operation) {
+                    case Appearance:
+                        int newAppearance = getNewAppearance();
+                        if (newAppearance != -1) {
+                            signalHead.setAppearance(newAppearance);
+                        }
+                        break;
+                    case Lit:
+                        signalHead.setLit(true);
+                        break;
+                    case NotLit:
+                        signalHead.setLit(false);
+                        break;
+                    case Held:
+                        signalHead.setHeld(true);
+                        break;
+                    case NotHeld:
+                        signalHead.setHeld(false);
+                        break;
+        //            case PermissiveSmlDisabled:
+        //                signalHead.setPermissiveSmlDisabled(true);
+        //                break;
+        //            case PermissiveSmlNotDisabled:
+        //                signalHead.setPermissiveSmlDisabled(false);
+        //                break;
+                    default:
+                        throw new JmriException("Unknown enum: "+_operationType.name());
                 }
-                break;
-            case Lit:
-                signalHead.setLit(true);
-                break;
-            case NotLit:
-                signalHead.setLit(false);
-                break;
-            case Held:
-                signalHead.setHeld(true);
-                break;
-            case NotHeld:
-                signalHead.setHeld(false);
-                break;
-//            case PermissiveSmlDisabled:
-//                signalHead.setPermissiveSmlDisabled(true);
-//                break;
-//            case PermissiveSmlNotDisabled:
-//                signalHead.setPermissiveSmlDisabled(false);
-//                break;
-            default:
-                throw new RuntimeException("Unknown enum: "+_operationType.name());
-        }
+            } catch (JmriException e) {
+                ref.set(e);
+            }
+        });
+        if (ref.get() != null) throw ref.get();
     }
 
     @Override
