@@ -78,6 +78,6 @@ public interface DigitalBooleanActionManager extends BaseManager<MaleDigitalBool
      *
      * @param x the DigitalBooleanAction to delete
      */
-    void deleteDigitalBooleanAction(MaleDigitalBooleanActionSocket x);
+    public void deleteDigitalBooleanAction(MaleDigitalBooleanActionSocket x);
     
 }

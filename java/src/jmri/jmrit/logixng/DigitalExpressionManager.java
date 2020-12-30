@@ -84,6 +84,6 @@ public interface DigitalExpressionManager extends BaseManager<MaleDigitalExpress
      *
      * @param x the DigitalExpression to delete
      */
-    void deleteDigitalExpression(MaleDigitalExpressionSocket x);
+    public void deleteDigitalExpression(MaleDigitalExpressionSocket x);
 
 }

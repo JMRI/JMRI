@@ -78,6 +78,6 @@ public interface AnalogActionManager extends BaseManager<MaleAnalogActionSocket>
      *
      * @param x the Action to delete
      */
-    void deleteAnalogAction(MaleAnalogActionSocket x);
+    public void deleteAnalogAction(MaleAnalogActionSocket x);
     
 }

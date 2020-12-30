@@ -60,5 +60,11 @@ public interface BaseManager<E extends NamedBean> extends Manager<E> {
      * @return the last item
      */
     public MaleSocket getLastRegisteredMaleSocket();
-
+    
+    /**
+     * Register a male socket factory.
+     * @param factory the factory
+     */
+    public void registerMaleSocketFactory(MaleSocketFactory<E> factory);
+    
 }

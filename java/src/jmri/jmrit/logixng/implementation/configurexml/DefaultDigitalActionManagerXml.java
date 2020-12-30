@@ -12,6 +12,7 @@ import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultDigitalActionManager;
+import jmri.jmrit.logixng.implementation.DefaultMaleDigitalActionSocket;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 import jmri.util.ThreadingUtil;
 
@@ -49,13 +50,18 @@ public class DefaultDigitalActionManagerXml extends AbstractManagerXml {
         DigitalActionManager tm = (DigitalActionManager) o;
 //        System.out.format("DefaultDigitalActionManagerXml: manager: %s%n", tm);
         if (tm != null) {
-            for (DigitalActionBean action : tm.getNamedBeanSet()) {
+            for (MaleDigitalActionSocket action : tm.getNamedBeanSet()) {
                 log.debug("action system name is " + action.getSystemName());  // NOI18N
 //                log.error("action system name is " + action.getSystemName() + ", " + action.getLongDescription());  // NOI18N
                 try {
-                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(getAction(action));
+                    // The male socket may be embedded in other male sockets
+                    MaleDigitalActionSocket a = action;
+                    while (!(a instanceof DefaultMaleDigitalActionSocket)) {
+                        a = (MaleDigitalActionSocket) a.getObject();
+                    }
+                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(getAction(a));
                     if (e != null) {
-                        e.addContent(storeMaleSocket((MaleSocket)action));
+                        e.addContent(storeMaleSocket((MaleSocket)a));
                         actions.addContent(e);
                     }
                 } catch (RuntimeException | IllegalAccessException | NoSuchFieldException e) {

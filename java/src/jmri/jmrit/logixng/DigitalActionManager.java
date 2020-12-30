@@ -56,6 +56,6 @@ public interface DigitalActionManager extends BaseManager<MaleDigitalActionSocke
      *
      * @param x the DigitalActionBean to delete
      */
-    void deleteDigitalAction(MaleDigitalActionSocket x);
+    public void deleteDigitalAction(MaleDigitalActionSocket x);
     
 }

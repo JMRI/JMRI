@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
 import java.beans.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -18,6 +19,9 @@ import jmri.managers.AbstractManager;
  * @author Daniel Bergqvist 2020
  */
 public abstract class AbstractBaseManager<E extends NamedBean> extends AbstractManager<E> implements BaseManager<E> {
+    
+    protected List<MaleSocketFactory<E>> _maleSocketFactories = new ArrayList<>();
+    
     
     /**
      * Inform all registered listeners of a vetoable change.If the propertyName
@@ -100,6 +104,19 @@ public abstract class AbstractBaseManager<E extends NamedBean> extends AbstractM
                 getSubSystemNamePrefix(), systemName);
     }
     
+    @Override
+    public void register(@Nonnull E s) {
+        E bean = s;
+        for (MaleSocketFactory<E> factory : _maleSocketFactories) {
+            bean = factory.encapsulateMaleSocket(this, bean);
+        }
+        super.register(bean);
+    }
+    
+    @Override
+    public void registerMaleSocketFactory(MaleSocketFactory<E> factory) {
+        _maleSocketFactories.add(factory);
+    }
     
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractBaseManager.class);
     

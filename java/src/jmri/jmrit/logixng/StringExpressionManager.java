@@ -85,6 +85,6 @@ public interface StringExpressionManager extends BaseManager<MaleStringExpressio
      *
      * @param x the StringExpression to delete
      */
-    void deleteStringExpression(MaleStringExpressionSocket x);
+    public void deleteStringExpression(MaleStringExpressionSocket x);
 
 }

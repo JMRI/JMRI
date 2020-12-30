@@ -78,6 +78,6 @@ public interface StringActionManager extends BaseManager<MaleStringActionSocket>
      *
      * @param x the StringAction to delete
      */
-    void deleteStringAction(MaleStringActionSocket x);
+    public void deleteStringAction(MaleStringActionSocket x);
     
 }

@@ -85,6 +85,6 @@ public interface AnalogExpressionManager extends BaseManager<MaleAnalogExpressio
      *
      * @param x the Expression to delete
      */
-    void deleteAnalogExpression(MaleAnalogExpressionSocket x);
+    public void deleteAnalogExpression(MaleAnalogExpressionSocket x);
 
 }

@@ -44,6 +44,10 @@ public class DefaultDigitalActionManager extends AbstractBaseManager<MaleDigital
                 actionClassList.get(entry.getKey()).add(entry.getValue());
             });
         }
+        
+        for (MaleDigitalActionSocketFactory maleSocketFactory : ServiceLoader.load(MaleDigitalActionSocketFactory.class)) {
+            _maleSocketFactories.add(maleSocketFactory);
+        }
     }
 
     /** {@inheritDoc} */
