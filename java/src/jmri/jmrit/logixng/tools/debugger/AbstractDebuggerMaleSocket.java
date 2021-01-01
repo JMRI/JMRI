@@ -1,7 +1,6 @@
 package jmri.jmrit.logixng.tools.debugger;
 
 import java.beans.*;
-import java.io.PrintWriter;
 import java.util.*;
 
 import jmri.NamedBean;
@@ -19,30 +18,6 @@ public class AbstractDebuggerMaleSocket extends AbstractMaleSocket {
     public AbstractDebuggerMaleSocket(BaseManager<? extends MaleSocket> manager, MaleSocket maleSocket) {
         super(manager);
         _maleSocket = maleSocket;
-    }
-
-    @Override
-    public void addLocalVariable(
-            String name,
-            SymbolTable.InitialValueType initialValueType,
-            String initialValueData) {
-        
-        _maleSocket.addLocalVariable(name, initialValueType, initialValueData);
-    }
-    
-    @Override
-    public void addLocalVariable(SymbolTable.VariableData variableData) {
-        _maleSocket.addLocalVariable(variableData);
-    }
-    
-    @Override
-    public void clearLocalVariables() {
-        _maleSocket.clearLocalVariables();
-    }
-    
-    @Override
-    public List<SymbolTable.VariableData> getLocalVariables() {
-        return _maleSocket.getLocalVariables();
     }
 
     @Override
@@ -244,11 +219,6 @@ public class AbstractDebuggerMaleSocket extends AbstractMaleSocket {
     @Override
     public final void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         _maleSocket.removePropertyChangeListener(propertyName, listener);
-    }
-
-    @Override
-    protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {
-        // Do nothing
     }
 
 }

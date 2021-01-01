@@ -35,22 +35,39 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             SymbolTable.InitialValueType initialValueType,
             String initialValueData) {
         
-        _localVariables.add(new VariableData(name, initialValueType, initialValueData));
+        if (getObject() instanceof MaleSocket) {
+            ((MaleSocket)getObject()).addLocalVariable(name, initialValueType, initialValueData);
+        } else {
+            _localVariables.add(new VariableData(name, initialValueType, initialValueData));
+        }
     }
     
     @Override
     public void addLocalVariable(VariableData variableData) {
-        _localVariables.add(variableData);
+        
+        if (getObject() instanceof MaleSocket) {
+            ((MaleSocket)getObject()).addLocalVariable(variableData);
+        } else {
+            _localVariables.add(variableData);
+        }
     }
     
     @Override
     public void clearLocalVariables() {
-        _localVariables.clear();
+        if (getObject() instanceof MaleSocket) {
+            ((MaleSocket)getObject()).clearLocalVariables();
+        } else {
+            _localVariables.clear();
+        }
     }
     
     @Override
     public List<VariableData> getLocalVariables() {
-        return _localVariables;
+        if (getObject() instanceof MaleSocket) {
+            return ((MaleSocket)getObject()).getLocalVariables();
+        } else {
+            return _localVariables;
+        }
     }
 
     @Override
@@ -117,14 +134,32 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         return isEnabled() && ((getParent() == null) || getParent().isActive());
     }
     
+    /**
+     * Print this row.
+     * If getObject() doesn't return an AbstractMaleSocket, print this row.
+     * <P>
+     * If a male socket that extends AbstractMaleSocket wants to print
+     * something here, it needs to override this method.
+     * <P>
+     * The reason this method doesn't print if getObject() returns an
+     * AbstractMaleSocket is to protect so it doesn't print itself twice if
+     * it's embedding an other AbstractMaleSocket. An example of this is the
+     * AbstractDebuggerMaleSocket which embeds other male sockets.
+     * 
+     * @param locale The locale to be used
+     * @param writer the stream to print the tree to
+     * @param currentIndent the current indentation
+     */
     protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {
-        writer.append(currentIndent);
-        writer.append(getLongDescription(locale));
-        if (getComment() != null) {
-            writer.append(" ::: ");
-            writer.append(getComment());
+        if (!(getObject() instanceof AbstractMaleSocket)) {
+            writer.append(currentIndent);
+            writer.append(getLongDescription(locale));
+            if (getComment() != null) {
+                writer.append(" ::: ");
+                writer.append(getComment());
+            }
+            writer.println();
         }
-        writer.println();
     }
     
     protected void printLocalVariable(
