@@ -3,7 +3,7 @@
 #
 # Author: Bill Fitch, copyright 2020
 # Part of the JMRI distribution
-  
+
 import sys
 import jmri
 import os
@@ -21,14 +21,14 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
     g = DirectedMultigraph(DefaultEdge)
     g_stopping = DirectedMultigraph(DefaultEdge)
     g_express = DirectedMultigraph(DefaultEdge)
-    
+
     station_block_list = []
     station_blk_list = []
     dict_path_stopping = {}
     dict_path_express = {}
     dict_path_name_stopping= {}
     dict_path_name_express= {}
-    
+
     logLevel = 0
 
     def __init__(self):
@@ -42,8 +42,8 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
 
     # **************************************************
     # Set up station block list either from manual list or from Block Table
-    # **************************************************        
-        
+    # **************************************************
+
     def setup_station_block_list(self):
         BlockManager = jmri.InstanceManager.getDefault(jmri.BlockManager)
         if self.logLevel > 0: print "Block", BlockManager.getNamedBeanSet()
@@ -57,12 +57,12 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                     self.station_blk_list.append(self.get_layout_block(station_block_name))
         if self.logLevel > 0: print 'self.station_block_list' , self.station_block_list
         if self.logLevel > 0: print 'PPPPPPPPPPP'
-        
+
     def get_layout_block(self, block_name):
         LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
         layoutBlock = LayoutBlockManager.getLayoutBlock(block_name)
-        return layoutBlock        
-        
+        return layoutBlock
+
     def setup_graph_vertices(self):
 
         for station_block_name in self.station_block_list:
@@ -73,8 +73,8 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
             self.g_express.addVertex(station_block_name)
             self.g_stopping.addVertex(station_block_name)
         if self.logLevel > 0: print 'end setup_graph_vertices"
-    
-        
+
+
     def setup_graph_edges(self):
         if self.logLevel > 0: print "*****************************"
         if self.logLevel > 0: print "****setup_graph_edges********"
@@ -145,7 +145,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                             if self.logLevel > 0: print edge.to_string()
                             if self.logLevel > 0: print "got here 4a3"
                             if self.logLevel > 0: print "self.g_express",self.g_express
-                            
+
                             #add only edges for paths that do not go through a station for stopping train graph
                             if self.logLevel > 0: print "a","b",a,b
                             through_stations = [str(block_name) for block_name in self.station_block_list if block_name not in [station,destination]]
@@ -173,7 +173,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                             else:
                                 if self.logLevel > 0: print "not adding to stopping graph"
                                 pass
-                            if self.logLevel > 0: print "*********************************"    
+                            if self.logLevel > 0: print "*********************************"
                         else:
                             if self.logLevel > 0: print "got here 4b"
                             pass
@@ -185,24 +185,24 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                     if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&"
                     if self.logLevel > 0: print "&& end graph up to now &&"
                     if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&
-                    
+
         if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&"
         if self.logLevel > 0: print "&& express"
-        if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&"        
+        if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&"
 
         for e in self.g_express.edgeSet():
             if self.logLevel > 0: print (self.g_express.getEdgeSource(e) + " --> " + self.g_express.getEdgeTarget(e))
-        
+
         if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&"
         if self.logLevel > 0: print "&& stopping"
-        if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&" 
-                    
+        if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&"
+
         for e in self.g_stopping.edgeSet():
-            if self.logLevel > 0: print (self.g_stopping.getEdgeSource(e) + " --> " + self.g_stopping.getEdgeTarget(e))                 
-        
+            if self.logLevel > 0: print (self.g_stopping.getEdgeSource(e) + " --> " + self.g_stopping.getEdgeTarget(e))
+
         #set the indicators for the train to reverse
         for e in self.g_stopping.edgeSet():
-            
+
             if self.logLevel > 0: print "edge = ",e
 
             try:
@@ -215,7 +215,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
             except:
                 if self.logLevel > 0: print "unable to set opposite direction neighbor_name for edge" , e.to_string()
                 continue
-                          
+
 
 # r.Setup_station_block_list
 
@@ -232,13 +232,13 @@ class LabelledEdge(DefaultEdge):
      # * Constructs a relationship edge
      # *
      # * @param label the label of the new edge.
-     # * 
+     # *
      # */
     def __init__(self):
 
         self.dict = {}
         #self.label = label
-        
+
         # for key, value in kwargs.items():
             # self.dict[key]=value
 
@@ -250,20 +250,20 @@ class LabelledEdge(DefaultEdge):
     def setItem(self, **kwargs):
         for key, value in kwargs.items():
             self.dict[key]=value
-        
+
     def getItem(self, item):
         if self.logLevel > 0: print self.dict
         if self.logLevel > 0: print "item = ", item
         return self.dict[item]
-        
+
     def getTarget(self):
         line = self.toString()
         line = line.lstrip("( ").rstrip(" )").split(" : ")
         if self.logLevel > 0: print "Target line", line
         target = str(line[1])
         if self.logLevel > 0: print "Target =", target
-        return target 
-        
+        return target
+
     def getSource(self):
         line = self.toString()
         line = line.lstrip("( ").rstrip(" )").split(" : ")
@@ -271,28 +271,28 @@ class LabelledEdge(DefaultEdge):
         source = str(line[0])
         if self.logLevel > 0: print "Source =", source
         return source
-    
+
     def to_string_one_line(self):
         item_list = ""
         for item, value in self.dict.items():
             item_list = item_list + str(item) + " = " + str(value) +" : "
             if self.logLevel > 0: print "item_list", item_list
-        if self.logLevel > 0: print item_list    
-    
-        #return self.toString() + " : " + item_list 
-        return "*****to_string*****(" + self.getSource() + " : " + self.getTarget()  + " : " + item_list.rstrip(": ") + ")"    
+        if self.logLevel > 0: print item_list
+
+        #return self.toString() + " : " + item_list
+        return "*****to_string*****(" + self.getSource() + " : " + self.getTarget()  + " : " + item_list.rstrip(": ") + ")"
 
     def to_string(self):
         item_list = "\n"
         for item, value in self.dict.items():
             item_list = item_list + str(item) + " = " + str(value) +" :\n "
             if self.logLevel > 0: print "item_list", item_list
-        if self.logLevel > 0: print item_list    
-    
-        #return self.toString() + " : " + item_list 
+        if self.logLevel > 0: print item_list
+
+        #return self.toString() + " : " + item_list
         return "*****to_string*****(\n" + self.getSource() + " : " + self.getTarget()  + " : " + item_list.rstrip(": ") + ")*****to_string end*******"
-        
-#if __name__ == "__main__":        
+
+#if __name__ == "__main__":
     #g =StationGraph()
     #print "Graph = ", g
     #for v in vertices:
