@@ -2,11 +2,14 @@ package jmri.jmrix.loconet.swing.lncvprog;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
+import jmri.jmrit.beantable.LogixTableAction;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.loconet.uhlenbrock.LncvDevice;
 import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
@@ -123,10 +126,18 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         moduleTable.setRowHeight(ROW_HEIGHT);
         moduleTable.setDefaultEditor(JButton.class, new ButtonEditor(new JButton()));
         moduleTable.setDefaultRenderer(JButton.class, new ButtonRenderer());
+        moduleTable.setRowSelectionAllowed(true);
+        moduleTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent event) {
+                // print first column value from selected row
+                copyEntry((int) moduleTable.getValueAt(moduleTable.getSelectedRow(), 1),
+                        (int) moduleTable.getValueAt(moduleTable.getSelectedRow(), 2));
+            }
+        });
         // establish row sorting for the table
         sorter = new TableRowSorter<LncvProgTableModel>(moduleTableModel);
         moduleTable.setRowSorter(sorter);
-        // establish table physical characteristics persistence
+         // establish table physical characteristics persistence
         moduleTable.setName("LNCV Device Management"); // NOI18N
         // Reset and then persist the table's ui state
         InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent((tpm) -> {
@@ -163,7 +174,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
 
         panel31.add(rawCheckBox);
         rawCheckBox.setVisible(true);
-        rawCheckBox.setToolTipText(Bundle.getMessage("TooltipShowRaw")); // NOI18N
+        rawCheckBox.setToolTipText(Bundle.getMessage("TooltipShowRaw"));
         panel3.add(panel31);
         Border panel3Border = BorderFactory.createEtchedBorder();
         Border panel3Titled = BorderFactory.createTitledBorder(panel3Border, Bundle.getMessage("LncvMonitorTitle"));
@@ -516,8 +527,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
             }
             String foundMod = "(LNCV) art:" + art + " address:" + msgAdr + " cv:" + msgCv + " value:" + msgVal + "\n";
             reply += foundMod;
-            // store Module in list using write reply, moved to LncvDevicesManager
-            // is handled by loconet.LncvDevicesManager
+            // store Module in list using write reply is handled by loconet.LncvDevicesManager
 
             // enter returned CV in CVnum field
             cvField.setText(msgCv + "");
@@ -525,6 +535,14 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
             // enter returned value in Value field
             valueField.setText(msgVal + "");
             valueField.setBackground(Color.WHITE);
+
+            LncvDevice dev = memo.getLncvDevicesManager().getDevice(art, adr);
+            if (dev != null) {
+                dev.setCvNum(msgCv);
+                dev.setCvValue(msgVal);
+            }
+            memo.getLncvDevicesManager().firePropertyChange("DeviceListChanged", true, false);
+
         }
 
         if (reply != null) {

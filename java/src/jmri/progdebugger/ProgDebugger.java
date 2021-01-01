@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * Debugging implementation of Programmer interface.
  * <p>
  * Note that running a simulated LocoNet connection, {@link HexFileFrame#configure()} will substitute the
- * {@link jmri.progdebugger.ProgDebugger} for the {@link jmri.jmrix.loconet.LnOpsModeProgrammer},
+ * {@link jmri.progdebugger.ProgDebugger} instead of the {@link jmri.jmrix.loconet.LnOpsModeProgrammer},
  * overriding {@link #readCV(String, ProgListener)} and {@link #writeCV(String, int, ProgListener)}.
  * <p>
  * Remembers writes, and returns the last written value when a read to the same

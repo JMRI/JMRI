@@ -4,7 +4,7 @@ package jmri.jmrix.loconet;
 import java.util.List;
 
 import jmri.Programmer;
-//import jmri.ProgrammingMode;
+import jmri.ProgrammingMode;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -15,8 +15,11 @@ import jmri.jmrix.loconet.uhlenbrock.LncvDevice;
 import jmri.jmrix.loconet.uhlenbrock.LncvDevices;
 import jmri.managers.DefaultProgrammerManager;
 
+import jmri.progdebugger.ProgDebugger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
 
 /**
  * LocoNet LNCV Devices Manager
@@ -119,7 +122,6 @@ public class LncvDevicesManager extends PropertyChangeSupport
                     for (int i = 0; i < count; ++ i) {
                         LncvDevice dev = lncvDevices.getDevice(i);
                         if ((dev.getProductID() == art) && (dev.getDestAddr() == addr)) {
-                            //d.setSwVersion(val);
                             // need to find a corresponding roster entry?
                             if (dev.getRosterName() != null && dev.getRosterName().length() == 0) {
                                 // Yes. Try to find a roster entry which matches the device characteristics
@@ -134,6 +136,12 @@ public class LncvDevicesManager extends PropertyChangeSupport
                                     log.debug("Found a matching roster entry.");
                                     dev.setRosterEntry(l.get(0)); // link this device to the entry
                                 } else {
+                                    JOptionPane.showMessageDialog(null, // TODO I18N
+                                            "The Roster contains multiple LNCV art. " + addr
+                                            + " modules with address " + l.size() + ".\nMake sure each module"
+                                            + "has a unique address.\n(disconnect all but 1 of these modules,"
+                                            + "open new Module Programming Session and write new address to CV0)",
+                                            "Open Roster Entry", JOptionPane.WARNING_MESSAGE);
                                     log.info("Found multiple matching roster entries. "
                                             + "Cannot associate any one to this device.");
                                 }
@@ -149,22 +157,16 @@ public class LncvDevicesManager extends PropertyChangeSupport
         }
     }
 
-//    private void queryLncvValues() {
-//        if (readLncvAddressList.size() > 0) {
-//            int art = ??????
-//            int addr = readLncvAddressList.get(0);
-//            readLncvAddressList.remove(0);
-//            memo.getLnTrafficController().sendLocoNetMessage(
-//                    LncvMessageContents.createCvReadRequest(art, addr, 1));
-//            // firmware version = CV1? only known for Digikeijs
-//        }
-//    }
-
-//    public void reprogramDeviceAddress(LncvDevice dev, int newAddr) {
-//        int art = dev.getProductID();
-//        memo.getLnTrafficController().sendLocoNetMessage(LncvMessageContents.createCvWriteRequest(
-//                art, 0, newAddr));
-//    }
+    public LncvDevice getDevice(int art, int addr) {
+        int count = lncvDevices.size();
+        for (int i = 0; i < count; ++ i) {
+            LncvDevice dev = lncvDevices.getDevice(i);
+            if ((dev.getProductID() == art) && (dev.getDestAddr() == addr)) {
+                return dev;
+            }
+        }
+        return null;
+    }
 
     public ProgrammingResult prepareForSymbolicProgrammer(LncvDevice dev, ProgrammingTool t) {
 
@@ -199,15 +201,17 @@ public class LncvDevicesManager extends PropertyChangeSupport
             return ProgrammingResult.FAIL_NO_ADDRESSED_PROGRAMMER;
         }
 
-//        if (!p.getSupportedModes().contains(LnProgrammerManager.LOCONETLNCVMODE)) {
-//            return ProgrammingResult.FAIL_NO_LNCV_PROGRAMMER;
-//        }
-//        p.setMode(LnProgrammerManager.LOCONETLNCVMODE);
-//        ProgrammingMode prgMode = p.getMode();
-//        if (!prgMode.equals(LnProgrammerManager.LOCONETLNCVMODE)) {
-//            return ProgrammingResult.FAIL_NO_LNCV_PROGRAMMER;
-//        }
-
+        if (p.getClass() != ProgDebugger.class) {
+            // ProgDebugger used for LocoNet HexFile Sim, setting progMode not required so skip allows testing of LNCV Tool
+            if (!p.getSupportedModes().contains(LnProgrammerManager.LOCONETLNCVMODE)) {
+                return ProgrammingResult.FAIL_NO_LNCV_PROGRAMMER;
+            }
+            p.setMode(LnProgrammerManager.LOCONETLNCVMODE);
+            ProgrammingMode prgMode = p.getMode();
+            if (!prgMode.equals(LnProgrammerManager.LOCONETLNCVMODE)) {
+                return ProgrammingResult.FAIL_NO_LNCV_PROGRAMMER;
+            }
+        }
         RosterEntry re = Roster.getDefault().entryFromTitle(dev.getRosterName());
         String name = re.getId();
 

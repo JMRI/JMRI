@@ -53,27 +53,11 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
         lncvdm.addPropertyChangeListener(this);
     }
 
-//    public void initTable(javax.swing.JTable lncvModulesTable) {
-//       TableColumnModel assignmentColumnModel = lncvModulesTable.getColumnModel();
-//       TableColumn idColumn = assignmentColumnModel.getColumn(0);
-//       idColumn.setMaxWidth(8);
-//       TableColumn articleColumn = assignmentColumnModel.getColumn(ARTICLE_COLUMN);
-//       articleColumn.setMinWidth(10);
-//       articleColumn.setMaxWidth(50);
-//       articleColumn.setResizable(true);
-//       TableColumn addressColumn = assignmentColumnModel.getColumn(MODADDR_COLUMN);
-//       addressColumn.setMinWidth(10);
-//       addressColumn.setMaxWidth(50);
-//       addressColumn.setResizable(true);
-//       TableColumn cvColumn = assignmentColumnModel.getColumn(CV_COLUMN);
-//       cvColumn.setMinWidth(10);
-//       cvColumn.setMaxWidth(50);
-//       cvColumn.setResizable(true);
-//       TableColumn valueColumn = assignmentColumnModel.getColumn(VALUE_COLUMN);
-//       valueColumn.setMinWidth(10);
-//       valueColumn.setMaxWidth(50);
-//       valueColumn.setResizable(true);
-//    }
+    public void initTable(javax.swing.JTable lncvModulesTable) {
+       TableColumnModel assignmentColumnModel = lncvModulesTable.getColumnModel();
+       TableColumn idColumn = assignmentColumnModel.getColumn(0);
+       idColumn.setMaxWidth(8);
+    }
 
    @Override
    public String getColumnName(int c) {
@@ -87,11 +71,11 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
            case VALUE_COLUMN:
                return Bundle.getMessage("HeadingValue");
            case DEVICENAMECOLUMN:
-               return "Device Name";
+               return Bundle.getMessage("HeadingDeviceModel");
            case ROSTERENTRYCOLUMN:
-               return "Roster Entry";
+               return Bundle.getMessage("HeadingDeviceId");
            case OPENPRGMRBUTTONCOLUMN:
-               return "Program"; // TODO I18N
+               return Bundle.getMessage("ButtonProgram");
            case COUNT_COLUMN:
            default:
                return "#";
@@ -190,7 +174,7 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
               case OPENPRGMRBUTTONCOLUMN:
                   assert dev != null;
                   if ((dev.getRosterName() != null) && (dev.getRosterName().length() == 0)) {
-                      return "Create Roster Entry";
+                      return Bundle.getMessage("ButtonCreateEntry");
                   }
                   return Bundle.getMessage("ButtonProgram");
               default:
@@ -205,19 +189,19 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
     @Override
     public void setValueAt(Object value, int r, int c) {
         if (getRowCount() <= r) {
-            // prevent update of a row that does not yet exist
+            // prevent update of a row that does not (yet) exist
             return;
         }
         LncvDevice dev = memo.getLncvDevicesManager().getDeviceList().getDevice(r);
         switch(c) {
-            case DEVICENAMECOLUMN:
-                dev.setDevName((String) value);
-                break;
-            case ROSTERENTRYCOLUMN:
-                dev.setRosterName((String) value);
-                break;
+//            case DEVICENAMECOLUMN:
+//                dev.setDevName((String) value);
+//                break;
+//            case ROSTERENTRYCOLUMN:
+//                dev.setRosterName((String) value);
+//                break;
             case OPENPRGMRBUTTONCOLUMN:
-                if (((String)getValueAt(r, c)).compareTo("Create Roster Entry") == 0) { // TODO I18N
+                if (((String)getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonCreateEntry")) == 0) {
                     createRosterEntry(dev);
                     if (dev.getRosterEntry() != null) {
                         setValueAt(dev.getRosterName(), r, c);
@@ -246,47 +230,43 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
                 return;
             case FAIL_NO_SUCH_DEVICE:
                 JOptionPane.showMessageDialog(parent,
-                        "Device no found on LocoNet. Re-try the &quot;LNCV "
-                                + "Device Discovery&quot' process and try again. "
-                                + "Cannot open the programmer!",
-                        "Open Roster Entry", JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("FAIL_NO_SUCH_DEVICE"),
+                        Bundle.getMessage("TitleOpenRosterEntry"), JOptionPane.ERROR_MESSAGE);
                 return;
             case FAIL_NO_APPROPRIATE_PROGRAMMER:
                 JOptionPane.showMessageDialog(parent,
-                        "No suitable programmer available for this LocoNet connection."
-                                + " Cannot open the programmer!", "Open Roster Entry", JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("FAIL_NO_APPROPRIATE_PROGRAMMER"),
+                        Bundle.getMessage("TitleOpenRosterEntry"), JOptionPane.ERROR_MESSAGE);
                 return;
             case FAIL_NO_MATCHING_ROSTER_ENTRY:
                 JOptionPane.showMessageDialog(parent,
-                        "There does not appear to be a roster entry for this "
-                                + "device.  Cannot open the programmer!", "Open Roster Entry", JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("FAIL_NO_MATCHING_ROSTER_ENTRY"),
+                        Bundle.getMessage("TitleOpenRosterEntry"), JOptionPane.ERROR_MESSAGE);
                 return;
             case FAIL_DESTINATION_ADDRESS_IS_ZERO:
                 JOptionPane.showMessageDialog(parent,
-                        "Device is at address 0.  Re-configure device address to a non-zero"
-                                + "value before programming! "
-                                + "Canceling operation!", "Open Roster Entry", JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("FAIL_DESTINATION_ADDRESS_IS_ZERO"),
+                        Bundle.getMessage("TitleOpenRosterEntry"), JOptionPane.ERROR_MESSAGE);
                 return;
             case FAIL_MULTIPLE_DEVICES_SAME_DESTINATION_ADDRESS:
                 JOptionPane.showMessageDialog(parent,
-                        "Should not program as there are multiple devices with device"
-                                + " address " + dev.getDestAddr() + " present on LocoNet. "
-                                + "Canceling operation!", "Open Roster Entry", JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("FAIL_MULTIPLE_DEVICES_SAME_DESTINATION_ADDRESS", dev.getDestAddr()),
+                        Bundle.getMessage("TitleOpenRosterEntry"), JOptionPane.ERROR_MESSAGE);
                 return;
             case FAIL_NO_ADDRESSED_PROGRAMMER:
                 JOptionPane.showMessageDialog(parent,
-                        "No addressed programmer available for this LocoNet connection."
-                                + " Cannot open the programmer!", "Open Roster Entry", JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("FAIL_NO_ADDRESSED_PROGRAMMER"),
+                        Bundle.getMessage("TitleOpenRosterEntry"), JOptionPane.ERROR_MESSAGE);
                 return;
             case FAIL_NO_LNCV_PROGRAMMER:
                 JOptionPane.showMessageDialog(parent,
-                        "LNCV programming mode is not available on this connection."
-                                + " Cannot open the programmer!", "Open Roster Entry", JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("FAIL_NO_LNCV_PROGRAMMER"),
+                        Bundle.getMessage("TitleOpenRosterEntry"), JOptionPane.ERROR_MESSAGE);
                 return;
             default:
                 JOptionPane.showMessageDialog(parent,
-                        "Unknown error occurred.  Cannot open programmer." // TODO I18N
-                                + " Cannot open the programmer!", "Open Roster Entry", JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("FAIL_UNKNOWN"),
+                        Bundle.getMessage("TitleOpenRosterEntry"), JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -312,14 +292,13 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
     private void createRosterEntry(LncvDevice dev) {
         if (dev.getDestAddr() == 0) {
             JOptionPane.showMessageDialog(parent,
-                    "Cannot create a roster entry when the destination address"
-                            + " is 0.  Canceling operation." // TODO I18N
-                    , "Create Roster Entry", JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("FAIL_ADD_ENTRY_0"),
+                    Bundle.getMessage("ButtonCreateEntry"), JOptionPane.ERROR_MESSAGE);
         } else {
             String s = null;
             while (s == null) {
                 s = JOptionPane.showInputDialog(parent,
-                        "Enter a name for the roster entry", ""); // TODO I18N
+                        Bundle.getMessage("DialogEnterEntryName"), "");
                 if (s == null) {
                     // cancel button hit
                     return;
@@ -351,6 +330,14 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
             This may slow things down, but that is a small price to pay!
         */
         fireTableDataChanged();
+    }
+
+    private void JTableMouseClicked(java.awt.event.MouseEvent evt) {
+        JTable source = (JTable)evt.getSource();
+        int row = source.rowAtPoint( evt.getPoint() );
+        String s = source.getModel().getValueAt(row, 3) + "";
+
+        log.debug("clicked at row {}", s);
     }
 
     public void dispose() {

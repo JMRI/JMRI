@@ -102,9 +102,9 @@ public class LncvMessageContents {
      */
     public LncvMessageContents(LocoNetMessage m) throws IllegalArgumentException {
 
-        log.debug("interpreting a LocoNet message - may be an LNCV message");  // NOI18N
+        //log.debug("interpreting a LocoNet message - may be an LNCV message");  // NOI18N
         if (!isSupportedLncvMessage(m)) {
-            log.debug("interpreting a LocoNet message - is NOT an LNCV message");   // NOI18N
+            //log.debug("interpreting a LocoNet message - is NOT an LNCV message");   // NOI18N
             throw new IllegalArgumentException("LocoNet message is not an LNCV message"); // NOI18N
         }
         this.command = extractMessageType(m);
@@ -162,7 +162,7 @@ public class LncvMessageContents {
 
         // <SRC_ELEMENT> must be correct
         if ((m.getElement(LNCV_SRC_ELEMENT_INDEX) != LNCV_CS_SRC_VALUE) && (m.getElement(LNCV_SRC_ELEMENT_INDEX) != LNCV_LNMODULE_VALUE)) {
-            log.debug("cannot be LNCV message because Source not correct");  // NOI18N
+            //log.debug("cannot be LNCV message because Source not correct");  // NOI18N
             return false;
         }
 
@@ -170,10 +170,10 @@ public class LncvMessageContents {
         // check the (compound) command element
         int msgData = m.getElement(LNCV_CMDDATA_ELEMENT_INDEX) + (((m.getElement(PXCT1_ELEMENT_INDEX) & LNCV_CMDDATA_DAT7_CHECK_MASK) == LNCV_CMDDATA_DAT7_CHECK_MASK) ? 0x80 : 0);
         if (isSupportedLncvCommand(m.getElement(LNCV_CMD_ELEMENT_INDEX), m.getOpCode(), msgData)) {
-            log.debug("LocoNet message is a supported LNCV Format message");
+            //log.debug("LocoNet message is a supported LNCV Format message");
             return true;
         }
-        log.debug("LocoNet message is not a supported LNCV Format message");  // NOI18N
+        //log.debug("LocoNet message is not a supported LNCV Format message");  // NOI18N
         return false;
     }
 
@@ -191,10 +191,9 @@ public class LncvMessageContents {
         }
         // compare the <LNCV_CMD> value against cvCmd
         if (Objects.equals(extractMessageType(m), cvCmd)) {
-            log.debug("LocoNet message is the specified LNCV Format message");  // NOI18N
+            //log.debug("LocoNet message is the specified LNCV Format message");  // NOI18N
             return true;
         }
-        log.debug("LocoNet message is not a supported LNCV Format message");  // NOI18N
         return false;
     }
 
@@ -211,12 +210,11 @@ public class LncvMessageContents {
             int msgData = m.getElement(LNCV_CMDDATA_ELEMENT_INDEX) + (((m.getElement(PXCT1_ELEMENT_INDEX) & LNCV_CMDDATA_DAT7_CHECK_MASK) == LNCV_CMDDATA_DAT7_CHECK_MASK) ? 0x80 : 0);
             for (LncvCommand c : LncvCommand.values()) {
                 if (c.matches(msgCmd, m.getOpCode(), msgData)) {
-                    log.debug("LocoNet message has LNCV simple command {}", msgCmd);  // NOI18N
+                    //log.debug("LocoNet message has LNCV simple command {}", msgCmd);  // NOI18N
                     return c;
                 }
             }
         }
-        log.debug("MESSAGE TYPE NOT LNCV");
         return null;
     }
 
@@ -241,11 +239,10 @@ public class LncvMessageContents {
      */
     public String toString(Locale locale) {
         String returnString;
-        log.debug("interpreting an LNCV message - simple cmd is {}", cmd);  // NOI18N
+        //log.debug("interpreting an LNCV message - simple cmd is {}", cmd);  // NOI18N
 
         switch (this.command) {
             case LNCV_PROG_START:
-                log.debug("START {}", cmd_data);
                 if ((art & LNCV_ALL_MASK) == LNCV_ALL_MASK) {
                     returnString = Bundle.getMessage(locale, "LNCV_ALL_PROG_START_INTERPRETED");
                 } else if ((mod & LNCV_ALL_MASK) == LNCV_ALL_MASK) {
@@ -255,7 +252,6 @@ public class LncvMessageContents {
                 }
                 break;
             case LNCV_PROG_END:
-                log.debug("END {}", cmd_data);
                 if ((art & LNCV_ALL_MASK) == LNCV_ALL_MASK) {
                     returnString = Bundle.getMessage(locale, "LNCV_ALL_PROG_END_INTERPRETED");
                 } else if ((mod & LNCV_ALL_MASK) == LNCV_ALL_MASK) {
@@ -278,7 +274,6 @@ public class LncvMessageContents {
                 return Bundle.getMessage(locale, "LNCV_UNDEFINED_MESSAGE") + "\n";
         }
 
-        log.debug("interpreted: {}", returnString);  // NOI18N
         return returnString + "\n"; // NOI18N
     }
 
@@ -287,7 +282,6 @@ public class LncvMessageContents {
      * @return true if the possibleCmd value is one of the supported (simple) LNCV Programming Format commands
      */
     public static boolean isSupportedLncvCommand(int simpleCommand) {
-        log.debug("CMD = {}", simpleCommand);
         switch (simpleCommand) {
             case (LNCV_CMD_READ):
             case (LNCV_CMD_WRITE):
@@ -307,7 +301,7 @@ public class LncvMessageContents {
      * @return true if the possibleCmd value is one of the supported (simple) LNCV Programming Format commands
      */
     public static boolean isSupportedLncvCommand(int command, int opc, int cmdData) {
-        log.debug("CMD = {}-{}-{}", command, opc, cmdData);
+        //log.debug("CMD = {}-{}-{}", command, opc, cmdData);
         for (LncvCommand commandToCheck : LncvCommand.values()) {
             if (commandToCheck.matches(command, opc, cmdData)) {
                 return true;
@@ -364,7 +358,7 @@ public class LncvMessageContents {
         m.setElement(LNCV_SRC_ELEMENT_INDEX, source);
         m.setElement(LNCV_DST_L_ELEMENT_INDEX, (destination & 0xff));
         m.setElement(LNCV_DST_H_ELEMENT_INDEX, (destination >> 8));
-        log.debug("element {} = command = {}", LNCV_CMD_ELEMENT_INDEX, command);
+        //log.debug("element {} = command = {}", LNCV_CMD_ELEMENT_INDEX, command);
         m.setElement(LNCV_CMD_ELEMENT_INDEX, command);
 
         int svx1 = 0x0;
@@ -374,7 +368,7 @@ public class LncvMessageContents {
         svx1 = svx1 + (((cvNum & 0x8000) == 0x8000) ? LNCV_CVN_H_CVNH7_CHECK_MASK : 0);
         svx1 = svx1 + (((moduleNum & 0x80) == 0x80) ? LNCV_MOD_L_MODL7_CHECK_MASK : 0);
         svx1 = svx1 + (((moduleNum & 0x8000) == 0x8000) ? LNCV_MOD_H_MODH7_CHECK_MASK : 0);
-        log.debug("Fetching hi bit {} of cmdData, value = {}", ((cmdData & 0x80) == 0x80), cmdData);
+        //("Fetching hi bit {} of cmdData, value = {}", ((cmdData & 0x80) == 0x80), cmdData);
         svx1 = svx1 + (((cmdData & 0x80) == 0x80) ? LNCV_CMDDATA_DAT7_CHECK_MASK : 0);
         // bit 7 always 0
         m.setElement(PXCT1_ELEMENT_INDEX, svx1);
@@ -384,12 +378,12 @@ public class LncvMessageContents {
         m.setElement(LNCV_CVN_L_ELEMENT_INDEX, (cvNum & 0x7f));
         m.setElement(LNCV_CVN_H_ELEMENT_INDEX, ((cvNum >> 8) & 0x7f));
         m.setElement(LNCV_MOD_L_ELEMENT_INDEX, (moduleNum & 0x7f));
-        log.debug("LNCV MOD_L = {}", m.getElement(LNCV_MOD_L_ELEMENT_INDEX));
+        //log.debug("LNCV MOD_L = {}", m.getElement(LNCV_MOD_L_ELEMENT_INDEX));
         m.setElement(LNCV_MOD_H_ELEMENT_INDEX, ((moduleNum >> 8) & 0x7f));
-        log.debug("LNCV MOD_H = {}", m.getElement(LNCV_MOD_H_ELEMENT_INDEX));
+        //log.debug("LNCV MOD_H = {}", m.getElement(LNCV_MOD_H_ELEMENT_INDEX));
         m.setElement(LNCV_CMDDATA_ELEMENT_INDEX, (cmdData & 0x7f));
 
-        log.debug("LocoNet Message ready, cmd = {}", m.getElement(LNCV_CMD_ELEMENT_INDEX));
+        //log.debug("LocoNet Message ready, cmd = {}", m.getElement(LNCV_CMD_ELEMENT_INDEX));
         return m;
     }
 
@@ -503,7 +497,7 @@ public class LncvMessageContents {
      * @return LocoNet message
      */
     public static LocoNetMessage createModProgEndRequest(int articleNum, int moduleAddress) {
-        log.debug("MODPROG_END {} message created", moduleAddress);
+        //log.debug("MODPROG_END {} message created", moduleAddress);
         return createLncvMessage(
                 0x1,
                 0x5,
@@ -617,9 +611,9 @@ public class LncvMessageContents {
         }
 
         public Boolean matches(int matchCommand, int matchOpc, int matchData) {
-            log.debug("CMD ENUM command {}={}? {}", matchCommand, cmd, (matchCommand == cmd));
-            log.debug("CMD ENUM opc {}={}? {}", matchOpc, opc, (matchOpc == opc));
-            log.debug("CMD ENUM commanddata {}={}? {}", matchData, cmddata, (matchData == cmddata));
+            //log.debug("CMD ENUM command {}={}? {}", matchCommand, cmd, (matchCommand == cmd));
+            //log.debug("CMD ENUM opc {}={}? {}", matchOpc, opc, (matchOpc == opc));
+            //log.debug("CMD ENUM commanddata {}={}? {}", matchData, cmddata, (matchData == cmddata));
             return ((matchCommand == cmd) && (matchOpc == opc) && (matchData == cmddata));
         }
     }

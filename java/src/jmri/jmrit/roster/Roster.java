@@ -600,7 +600,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * This method calls {@link #getEntriesMatchingCriteria(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
      * }
      * with a null group.
-     * This pattern specifically for LNCV
+     * This pattern is specifically for LNCV (since 4.22).
      *
      * @param dccAddress    address of entry or null for any address
      * @param productID     productID number
