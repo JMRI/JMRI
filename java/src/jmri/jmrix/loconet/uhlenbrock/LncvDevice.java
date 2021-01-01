@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LncvDevice {
     private int deviceAddress; // Module address in reply, value of -1 is ignored, LNCV default address : 1
-    private int artNum; // used as LNCV ProductID, must be int to pass as part of CV "art.cv"
+    private final int artNum; // used as LNCV ProductID, must be int to pass as part of CV "art.cv"
     private String deviceName;
     private String rosterEntryName;
     private int swVersion;
@@ -79,6 +79,6 @@ public class LncvDevice {
         cvValue = val;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LncvDevice.class);
+    //private final static Logger log = LoggerFactory.getLogger(LncvDevice.class);
 
 }

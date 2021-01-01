@@ -132,7 +132,7 @@ public class DecoderFile extends XmlFile {
         if ((manufacturerID.length() > 0) && (manufacturerID.compareTo("-1") != 0)) {
             // prefer manufacturerID over mfgID
             _manufacturerID = manufacturerID;
-        } else if (mfgID.compareTo("") != 0) {
+        } else if ((mfgID != null) && (mfgID.compareTo("") != 0)) {
             // do not have manufacturerID, so take mfgID (which might not be set!)
             _manufacturerID = mfgID;
         } else {

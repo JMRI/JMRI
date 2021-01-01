@@ -324,20 +324,12 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
     public void propertyChange(PropertyChangeEvent evt) {
         // these messages can arrive without a complete
         // GUI, in which case we just ignore them
-        String eventName = evt.getPropertyName();
+        //String eventName = evt.getPropertyName();
         /* always use fireTableDataChanged() because it does not always
             resize columns to "preferred" widths!
             This may slow things down, but that is a small price to pay!
         */
         fireTableDataChanged();
-    }
-
-    private void JTableMouseClicked(java.awt.event.MouseEvent evt) {
-        JTable source = (JTable)evt.getSource();
-        int row = source.rowAtPoint( evt.getPoint() );
-        String s = source.getModel().getValueAt(row, 3) + "";
-
-        log.debug("clicked at row {}", s);
     }
 
     public void dispose() {
