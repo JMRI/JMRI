@@ -1,10 +1,10 @@
 package jmri.jmrix.loconet;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.List;
 
 import jmri.Programmer;
-import jmri.ProgrammingMode;
+//import jmri.ProgrammingMode;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -70,9 +70,7 @@ public class LncvDevicesManager extends PropertyChangeSupport
     public void clearDevicesList() {
         lncvDevices.removeAllDevices();
 
-        jmri.util.ThreadingUtil.runOnLayoutEventually( ()->{
-            firePropertyChange("DeviceListChanged", true, false);
-        });
+        jmri.util.ThreadingUtil.runOnLayoutEventually( ()-> firePropertyChange("DeviceListChanged", true, false));
     }
 
     public void sendLncvDiscoveryRequest() {
@@ -96,7 +94,7 @@ public class LncvDevicesManager extends PropertyChangeSupport
 
                     lncvDevices.addDevice(new LncvDevice(art, addr, cv, val, "", "", -1));
                     log.debug("new LncvDevice added to table");
-                    firePropertyChange("DeviceListChanged", true, false);
+                    //firePropertyChange("DeviceListChanged", true, false);
 //                    waitingForDiscoveryReplies = true;
 //                    if (delayTask == null) {
 //                        delayTask = new java.util.TimerTask() {
@@ -119,25 +117,22 @@ public class LncvDevicesManager extends PropertyChangeSupport
                     // Annotate the discovered device LNCV data based on address
                     int count = lncvDevices.size();
                     for (int i = 0; i < count; ++ i) {
-                        LncvDevice d = lncvDevices.getDevice(i);
-                        if ((d.getProductID() == art) && (d.getDestAddr() == addr)) {
+                        LncvDevice dev = lncvDevices.getDevice(i);
+                        if ((dev.getProductID() == art) && (dev.getDestAddr() == addr)) {
                             //d.setSwVersion(val);
                             // need to find a corresponding roster entry?
-                            if (d.getRosterName() != null && d.getRosterName().length() == 0) {
+                            if (dev.getRosterName() != null && dev.getRosterName().length() == 0) {
                                 // Yes. Try to find a roster entry which matches the device characteristics
+                                log.debug("Looking for prodID {}/adr {} in Roster", dev.getProductID(), dev.getDestAddr());
                                 List<RosterEntry> l = Roster.getDefault().matchingList(
-                                        null,
-                                        null,
-                                        Integer.toString(d.getDestAddr()),
-                                        null,
-                                        null,
-                                        null,
-                                        Integer.toString(d.getProductID()));
+                                        Integer.toString(dev.getDestAddr()),
+                                        Integer.toString(dev.getProductID()));
+                                log.debug("LncvDeviceManager found {} matches in roster", l.size());
                                 if (l.size() == 0) {
                                     log.debug("Did not find a corresponding roster entry");
                                 } else if (l.size() == 1) {
                                     log.debug("Found a matching roster entry.");
-                                    d.setRosterEntry(l.get(0)); // link this device to the entry
+                                    dev.setRosterEntry(l.get(0)); // link this device to the entry
                                 } else {
                                     log.info("Found multiple matching roster entries. "
                                             + "Cannot associate any one to this device.");

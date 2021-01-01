@@ -496,8 +496,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     public List<RosterEntry> getEntriesMatchingCriteria(String roadName, String roadNumber, String dccAddress,
             String mfg, String decoderModel, String decoderFamily, String id, String group,
             String developerID, String manufacturerID, String productID) {
-            // specifically updated for SV2!
-
+            // specifically updated for SV2
             return findMatchingEntries(
                 (RosterEntry r) -> {
                     return checkEntry(r, roadName, roadNumber, dccAddress,
@@ -547,7 +546,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * @param mfg           manufacturer of entry or null for any manufacturer
      * @param decoderModel  decoder model of entry or null for any model
      * @param decoderFamily decoder family of entry or null for any family
-     * @param id            id of entry or null for any id
+     * @param id            id (unique name) of entry or null for any id
      * @return List of matching RosterEntries or an empty List
      * @see #getEntriesMatchingCriteria(java.lang.String, java.lang.String,
      * java.lang.String, java.lang.String, java.lang.String, java.lang.String,
@@ -592,6 +591,29 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         return this.getEntriesMatchingCriteria(roadName, roadNumber, dccAddress,
                 mfg, decoderModel, decoderFamily, id, null, developerID,
                 manufacturerID, productID);
+    }
+
+    /**
+     * Get a List of {@link RosterEntry} objects in Roster matching some
+     * information. The list will be empty if there are no matches.
+     * <p>
+     * This method calls {@link #getEntriesMatchingCriteria(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+     * }
+     * with a null group.
+     * This pattern specifically for LNCV
+     *
+     * @param dccAddress    address of entry or null for any address
+     * @param productID     productID number
+     * @return List of matching RosterEntries or an empty List
+     * @see #getEntriesMatchingCriteria(java.lang.String, java.lang.String,
+     * java.lang.String, java.lang.String, java.lang.String, java.lang.String,
+     * java.lang.String, java.lang.String)
+     */
+    @Nonnull
+    public List<RosterEntry> matchingList(String dccAddress, String productID) {
+        return this.getEntriesMatchingCriteria(null, null, dccAddress,
+                null, null, null, null, null, null,
+                null, productID);
     }
 
     /**

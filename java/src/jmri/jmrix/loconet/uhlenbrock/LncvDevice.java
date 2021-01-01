@@ -24,15 +24,14 @@ public class LncvDevice {
     private int cvNum;
     private int cvValue;
 
-    public LncvDevice(int art, int address, int lastCv, int lastVal, String deviceName, String rosterName, int swVersion) {
-        this.artNum = art;
+    public LncvDevice(int productID, int address, int lastCv, int lastVal, String deviceName, String rosterName, int swVersion) {
+        this.artNum = productID;
         this.deviceAddress = address;
         cvNum = lastCv;
         cvValue = lastVal;
         this.deviceName = deviceName;
         this.rosterEntryName = rosterName;
         this.swVersion = swVersion;
-        log.debug("Added Module {}/{} by 7 params", art, address);
     }
 
     public int getProductID() {return artNum;}
@@ -57,13 +56,13 @@ public class LncvDevice {
     public void setDecoderFile(DecoderFile f) {
         decoderFile = f;
     }
+
     public RosterEntry getRosterEntry() {
         return rosterEntry;
     }
     public void setRosterEntry(RosterEntry e) {
         rosterEntry = e;
         setRosterName(e.getId()); // is a name (String)
-        log.debug("RosterEntry set to {} for device {}", rosterEntryName, deviceName);
     }
 
     // optional: remember last used CV

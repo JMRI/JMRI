@@ -13,7 +13,7 @@ import jmri.ProgrammingMode;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrix.loconet.hexfile.HexFileFrame;
 import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
-import jmri.jmrix.loconet.swing.lncvprog.LncvProgPane;
+//import jmri.jmrix.loconet.swing.lncvprog.LncvProgPane;
 import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
 
 import static jmri.jmrix.loconet.uhlenbrock.LncvMessageContents.createCvReadRequest;

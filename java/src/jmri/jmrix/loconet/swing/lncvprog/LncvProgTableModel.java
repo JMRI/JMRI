@@ -36,8 +36,8 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
     public static final int MODADDR_COLUMN = 2;
     public static final int CV_COLUMN = 3;
     public static final int VALUE_COLUMN = 4;
-    public static final int ROSTERENTRYCOLUMN = 5;
-    public static final int DEVICENAMECOLUMN = 6;
+    public static final int DEVICENAMECOLUMN = 5;
+    public static final int ROSTERENTRYCOLUMN = 6;
     public static final int OPENPRGMRBUTTONCOLUMN = 7;
     static public final int NUMCOLUMNS = 8;
     private final LncvProgPane parent;
@@ -51,7 +51,6 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
         lncvdm = memo.getLncvDevicesManager();
         _roster = Roster.getDefault();
         lncvdm.addPropertyChangeListener(this);
-        log.debug("LNCV TABLE created, parent = {} null", (parent == null ? "" : "not"));
     }
 
 //    public void initTable(javax.swing.JTable lncvModulesTable) {
@@ -87,10 +86,10 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
                return Bundle.getMessage("HeadingCvLastRead");
            case VALUE_COLUMN:
                return Bundle.getMessage("HeadingValue");
+           case DEVICENAMECOLUMN:
+               return "Device Name";
            case ROSTERENTRYCOLUMN:
                return "Roster Entry";
-           case DEVICENAMECOLUMN:
-               return "Entry Name";
            case OPENPRGMRBUTTONCOLUMN:
                return "Program"; // TODO I18N
            case COUNT_COLUMN:
@@ -110,8 +109,8 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
                return Integer.class;
            case OPENPRGMRBUTTONCOLUMN:
                return JButton.class;
-           case ROSTERENTRYCOLUMN:
            case DEVICENAMECOLUMN:
+           case ROSTERENTRYCOLUMN:
            default:
                return String.class;
        }
@@ -130,7 +129,6 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
    @Override
    public int getRowCount() {
         if (lncvdm == null) {
-            log.error("NULL DEVMANAGER");
             return 0;
         } else {
             return lncvdm.getDeviceCount();
@@ -140,7 +138,6 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
    @Override
    public Object getValueAt(int r, int c) {
        LncvDevice dev = memo.getLncvDevicesManager().getDeviceList().getDevice(r);
-       log.debug("dev {}null", (dev == null ? "" : "not "));
        try {
           switch (c) {
               case ARTICLE_COLUMN:
@@ -155,46 +152,41 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
               case VALUE_COLUMN:
                   assert dev != null;
                   return dev.getCvValue();
-              case ROSTERENTRYCOLUMN: // always empty??
-                  assert dev != null;
-                  return dev.getRosterName();
               case DEVICENAMECOLUMN:
                   assert dev != null;
-                  if (dev.getDeviceName().length() == 0) { // not yet filled in
-                      log.debug("dev.getDevName() = {}", dev.getDeviceName());
+                  if (dev.getDeviceName().length() == 0) { // not yet filled in, look for a candidate
                       List<DecoderFile> l =
-                              InstanceManager.getDefault(
-                                      DecoderIndexFile.class).
-                                      matchingDecoderList(
-                                              "Digikeijs",
-                                              null,
-                                              null,
-                                              null,
-                                              null,
-                                              null,
-                                              null,
-                                              null,
-                                              String.valueOf(dev.getProductID()) // a bit risky to check just 1 value
-                                      );
-                      log.debug("found {} possible matches", l.size());
-                      String lastModelName="";
+                          InstanceManager.getDefault(
+                              DecoderIndexFile.class).
+                              matchingDecoderList(
+                                      null,
+                                      null,
+                                      null,
+                                      null,
+                                      String.valueOf(dev.getProductID()), // a bit risky to check just 1 value
+                                      null,
+                                      null,
+                                      null,
+                                      null
+                              );
+                      //log.debug("found {} possible decoder matches for LNCV device", l.size());
+                      String lastModelName = "";
                       if (l.size() > 0) {
-                          for (DecoderFile d: l) {
+                          for (DecoderFile d : l) {
                               if (d.getModel().equals("")) {
-                                  log.debug("model(name) in decoderfile is empty");
+                                  log.warn("Empty model(name) in decoderfile {}", d.getFileName());
                               }
-                              log.debug("possible match: ID {}/title {}/mdl {}/fam {}/file {}",
-                                      d.getProductID(), d.titleString(), d.getModel(), d.getFamily(), d.getFileName());
                               lastModelName = d.getModel();
-                              log.debug("lastModelName = {}", lastModelName);
                           }
                           dev.setDevName(lastModelName);
-                          log.debug("devName {} set to lastModelName = {}", dev.getDeviceName(), lastModelName);
                           dev.setDecoderFile(l.get(l.size()-1));
                       }
                       return lastModelName;
                   }
                   return dev.getDeviceName();
+              case ROSTERENTRYCOLUMN: // always empty??
+                  assert dev != null;
+                  return dev.getRosterName();
               case OPENPRGMRBUTTONCOLUMN:
                   assert dev != null;
                   if ((dev.getRosterName() != null) && (dev.getRosterName().length() == 0)) {
@@ -205,7 +197,7 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
                  return r + 1;
           }
       } catch (NullPointerException npe) {
-        log.debug("Caught NPE reading Module {}", r);
+        log.warn("Caught NPE reading Module {}", r);
         return "";
       }
    }
@@ -219,7 +211,7 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
         LncvDevice dev = memo.getLncvDevicesManager().getDeviceList().getDevice(r);
         switch(c) {
             case DEVICENAMECOLUMN:
-                dev.setDevName((String)value);
+                dev.setDevName((String) value);
                 break;
             case ROSTERENTRYCOLUMN:
                 dev.setRosterName((String) value);
@@ -305,7 +297,7 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
     public void openPaneOpsProgFrame(RosterEntry re, String name,
                                      String programmerFile, Programmer p) {
         // would be better if this was a new task on the GUI thread...
-        log.warn("attempting to open programmer, re={}, name={}, programmerFile={}, programmer={}",
+        log.debug("attempting to open programmer, re={}, name={}, programmerFile={}, programmer={}",
                 re, name, programmerFile, p);
 
         DecoderFile decoderFile = InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle(re.getDecoderModel());
@@ -334,11 +326,8 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
                 }
             }
 
-            log.warn("got here");
-            log.debug("dev.getDecoderFile() is {}null", (dev.getDecoderFile() == null ? "" : "not "));
             RosterEntry re = new RosterEntry(dev.getDecoderFile().getFileName());
             re.setDccAddress(Integer.toString(dev.getDestAddr()));
-            log.debug("dev.getDecoderFile().getModel() = {}null", dev.getDecoderFile().getModel() == null ? "" : "not ");
             re.setDecoderModel(dev.getDecoderFile().getModel());
             re.setProductID(Integer.toString(dev.getProductID()));
             re.setId(s);
@@ -356,10 +345,7 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
     public void propertyChange(PropertyChangeEvent evt) {
         // these messages can arrive without a complete
         // GUI, in which case we just ignore them
-        log.debug("property change received event name{} old{} new{}",
-                evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
         String eventName = evt.getPropertyName();
-        log.debug("Property change seen {}", eventName);
         /* always use fireTableDataChanged() because it does not always
             resize columns to "preferred" widths!
             This may slow things down, but that is a small price to pay!

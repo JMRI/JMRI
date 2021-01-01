@@ -479,7 +479,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setProductID(String s) {
         String old = _productID;
-        if (s== null) {s="";}
+        if (s == null) {s="";}
         _productID = s;
         firePropertyChange(DECODER_PRODUCTID, old, s);
     }
