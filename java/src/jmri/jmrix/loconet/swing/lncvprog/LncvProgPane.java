@@ -109,7 +109,6 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         super.initComponents(memo);
         this.memo = memo;
         lncvdm = memo.getLncvDevicesManager();
-        log.debug("lncvdm created {}", (lncvdm == null));
         // connect to the LnTrafficController
         if (memo.getLnTrafficController() == null) {
             log.error("No traffic controller is available");
