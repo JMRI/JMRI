@@ -1,6 +1,8 @@
 package jmri.jmrix.loconet.hexfile;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JFileChooser;
+import javax.swing.JPanel;
 
 import jmri.*;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
@@ -32,7 +34,6 @@ public class HexFileFrame extends JmriJFrame {
     javax.swing.JButton jButton1 = new javax.swing.JButton();
     javax.swing.JTextField delayField = new javax.swing.JTextField(5);
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
-    JCheckBox simReplyBox = new JCheckBox(Bundle.getMessage("SimReplyBox"));
     
     private int maxSlots = 10;  //maximum addresses that can be acquired at once, this default will be overridden by config
     private int slotsInUse = 0;
@@ -80,7 +81,6 @@ public class HexFileFrame extends JmriJFrame {
         jLabel1.setText(Bundle.getMessage("FieldDelay"));
         jLabel1.setVisible(true);
 
-        simReplyBox.setToolTipText(Bundle.getMessage("SimReplyTip"));
         setTitle(Bundle.getMessage("TitleLocoNetSimulator"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
@@ -101,10 +101,6 @@ public class HexFileFrame extends JmriJFrame {
         pane3.add(filePauseButton);
         pane3.add(jButton1);
         getContentPane().add(pane3);
-
-        JPanel pane4 = new JPanel();
-        pane4.add(simReplyBox);
-        getContentPane().add(pane4);
 
         openHexFileButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -128,12 +124,6 @@ public class HexFileFrame extends JmriJFrame {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 delayFieldActionPerformed(e);
-            }
-        });
-        simReplyBox.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                simReplyActionPerformed(e);
             }
         });
     }
@@ -296,11 +286,6 @@ public class HexFileFrame extends JmriJFrame {
         return port;
     }
     private LnHexFilePort port = null;
-
-    public void simReplyActionPerformed(java.awt.event.ActionEvent e) {  // resume button
-        log.debug("simReplyBox changed");
-        port.setSimReply(simReplyBox.isSelected());
-    }
 
     private final static Logger log = LoggerFactory.getLogger(HexFileFrame.class);
 

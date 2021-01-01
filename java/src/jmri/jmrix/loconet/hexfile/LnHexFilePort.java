@@ -9,10 +9,8 @@ import java.io.InputStreamReader;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
-import jmri.jmrix.loconet.*;
-import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
-import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
-
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.jmrix.loconet.LnPortController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +28,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public class LnHexFilePort extends LnPortController implements LocoNetListener, Runnable {
+public class LnHexFilePort extends LnPortController implements Runnable {
 
     volatile BufferedReader sFile = null;
 
@@ -58,8 +56,6 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
                         new String[]{Bundle.getMessage("BeanStateUnknown"),
                             Bundle.getMessage("SensorStateInactive"),
                             Bundle.getMessage("SensorStateActive")}, true));
-        // add listener for other traffic on simulated LocoNet, in order to simulate appropriate replies (eg. for developers)
-        memo.getLnTrafficController().addLocoNetListener(~0, this);
     }
 
     /**
@@ -97,7 +93,7 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
     public void run() { // invoked in a new thread
         log.info("LocoNet Simulator Started"); // NOI18N
         while (true) {
-            while (sFile == null && message == null) {
+            while (sFile == null) {
                 // Wait for a file to be available. We have nothing else to do, so we can sleep
                 // until we are interrupted
                 try {
@@ -111,60 +107,43 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
                     }
                 }
             }
+
             log.info("LnHexFilePort.run: changing input file..."); // NOI18N
 
             // process the input file into the output side of pipe
             _running = true;
             try {
-                if (message != null) {
-                    log.debug("Simulator received a message");
-                    LocoNetMessage reply = generateReply(message);
-                    if (reply != null) {
-                        getSystemConnectionMemo().getLnTrafficController().sendLocoNetMessage(reply);
-//                        int len = reply.getOpCode();
-//                        for (int i = 0; i < len; i++) {
-//                            log.debug("byte {} of SV2 message", i);
-//                            // parse as hex into integer, then convert to byte
-//                            int ival = reply.getElement(i);
-//                            // send each byte to the output pipe (input to consumer)
-//                            byte bval = (byte) ival;
-//                            outpipe.writeByte(bval);
-//                        }
-//                        // flush the pipe so other threads can see the message
-//                        outpipe.flush();
+                // Take ownership of the current file, it will automatically go out of scope
+                // when we leave this scope block.  Set sFile to null so we can detect a new file
+                // being set in load() while we are running the current file.
+                BufferedReader currFile = sFile;
+                sFile = null;
+
+                String s;
+                while ((s = currFile.readLine()) != null) {
+                    // this loop reads one line per turn
+                    // ErrLog.msg(ErrLog.debugging, "LnHexFilePort", "run", "string=<" + s + ">");
+                    int len = s.length();
+                    for (int i = 0; i < len; i += 3) {
+                        // parse as hex into integer, then convert to byte
+                        int ival = Integer.valueOf(s.substring(i, i + 2), 16).intValue();
+                        // send each byte to the output pipe (input to consumer)
+                        byte bval = (byte) ival;
+                        outpipe.writeByte(bval);
                     }
-                    // ready
-                } else { // must be a new file
-                    // Take ownership of the current file, it will automatically go out of scope
-                    // when we leave this scope block.  Set sFile to null so we can detect a new file
-                    // being set in load() while we are running the current file.
-                    BufferedReader currFile = sFile;
-                    sFile = null;
 
-                    String s;
-                    while ((s = currFile.readLine()) != null) {
-                        // this loop reads one line per turn
-                        // ErrLog.msg(ErrLog.debugging, "LnHexFilePort", "run", "string=<" + s + ">");
-                        int len = s.length();
-                        for (int i = 0; i < len; i += 3) {
-                            // parse as hex into integer, then convert to byte
-                            int ival = Integer.valueOf(s.substring(i, i + 2), 16);
-                            // send each byte to the output pipe (input to consumer)
-                            byte bval = (byte) ival;
-                            outpipe.writeByte(bval);
-                        }
+                    // flush the pipe so other threads can see the message
+                    outpipe.flush();
 
-                        // flush the pipe so other threads can see the message
-                        outpipe.flush();
-
-                        // finished that line, wait
-                        Thread.sleep(delay);
-                    }
-                    // here we're done processing the file
-                    log.info("LnHexFilePort.run: normal finish to file"); // NOI18N
+                    // finished that line, wait
+                    Thread.sleep(delay);
                 }
+
+                // here we're done processing the file
+                log.info("LnHexFDilePort.run: normal finish to file"); // NOI18N
+
             } catch (InterruptedException e) {
-                if (sFile != null || message != null) { // changed in another thread before the interrupt
+                if (sFile != null) { // changed in another thread before the interrupt
                     log.info("LnHexFilePort.run: user selected new file"); // NOI18N
                     // swallow the exception since we have handled its intent
                 } else {
@@ -310,69 +289,6 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
         super.configureOption3(value);
         log.debug("configureOption3: {}", value); // NOI18N
         setTurnoutHandling(value);
-    }
-
-    LocoNetMessage message;
-
-    @Override
-    public synchronized void message(LocoNetMessage m) {
-        log.debug("LnMessage stored");
-        message = m; // store 1 LocoNet message
-    }
-
-    private boolean simReply = false;
-
-    /**
-     * Turn on/off replying to LocoNet messages to simulate devices.
-     * @param state new state for simReplies
-     */
-    public void setSimReply(boolean state) {
-        simReply = state;
-    }
-
-    /**
-     * Small set of hardware replies to send in simulator in response to specific messages.
-     * Supported types:
-     * <ul>
-     *     <li>LN SV rev2 board (@link jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents)</li>
-     *     <li>LNCV board (@link jmri.jmrix.loconet.uhlenbrock.Lncv2MessageContents)</li>
-     * </ul>
-     *
-     * @param m message heard on connection thread
-     * @return fitting reply message
-     */
-    LocoNetMessage generateReply(LocoNetMessage m) {
-        if (simReply) {
-            if (LnSv2MessageContents.isSupportedSv2Message(m)) {
-                log.debug("generate reply for SV2 message");
-                LnSv2MessageContents c = new LnSv2MessageContents(m);
-                if (c.getDestAddr() == -1) { // Sv2 QueryAll, reply (content includes no address)
-                    log.debug("generate LNSV2 query reply message");
-                    int dest = 1; // keep it simple, don't fetch src from m
-                    int myId = 44; // a random value
-                    int mf = 129; // Digitrax
-                    int dev = 0;
-                    int type = 3055;
-                    int serial = 111;
-                    return LnSv2MessageContents.createSv2DeviceDiscoveryReply(myId, dest, mf, dev, type, serial);
-                }
-            }
-            if (LncvMessageContents.isSupportedLncvMessage(m)) {
-                log.debug("generate reply for LNCV Read message");
-                LncvMessageContents c = new LncvMessageContents(m);
-                // READ REPLY
-                if (c.getCvNum() >= 0) { // was LNCV Read, reply value (contents)
-                    log.debug("generate LNCV Read reply message");
-                    return LncvMessageContents.createLncvReadReply(m);
-                }
-                // WRITE reply LACK
-                if (c.getCmd() == 0x20) { // was LNCV Write
-                    log.debug("generate LNCV Write reply message");
-                    return new LocoNetMessage(new int[]{LnConstants.OPC_LONG_ACK, 0x6d, 0x7f, 0x1});
-                }
-            }
-        }
-        return null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnHexFilePort.class);
