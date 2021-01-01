@@ -988,7 +988,7 @@ public class PaneProgPane extends javax.swing.JPanel
             writeAllButton.setSelected(true);
             writeAllButton.setEnabled(true);
         }
-        if (container.isBusy() == false) {
+        if (!container.isBusy()) {
             container.enableButtons(false);
         }
         setToWrite(justChanges, true);

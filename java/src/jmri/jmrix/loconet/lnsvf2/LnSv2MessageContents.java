@@ -4,7 +4,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.LnOpsModeProgrammer;
+//import jmri.jmrix.loconet.LnOpsModeProgrammer;
 import jmri.jmrix.loconet.LocoNetMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

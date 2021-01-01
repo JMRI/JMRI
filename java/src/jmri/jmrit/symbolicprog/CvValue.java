@@ -58,7 +58,7 @@ public class CvValue extends AbstractValue implements ProgListener {
     public String number() {
         return _num;
     }
-    private String _num;
+    private final String _num;
 
     public String cvName() {
         return _cvName;
@@ -82,7 +82,7 @@ public class CvValue extends AbstractValue implements ProgListener {
     }
 
     protected void notifyValueChange(int value) {
-        prop.firePropertyChange("Value", null, Integer.valueOf(value));
+        prop.firePropertyChange("Value", null, value);
     }
 
     /**

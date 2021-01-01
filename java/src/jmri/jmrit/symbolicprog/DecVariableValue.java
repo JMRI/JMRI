@@ -398,7 +398,7 @@ public class DecVariableValue extends VariableValue
     JTextField _value = null;
 
     /* Internal class extends a JTextField so that its color is consistent with
-     * an underlying variable.
+     * an underlying variable
      *
      * @author   Bob Jacobsen   Copyright (C) 2001
      */

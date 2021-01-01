@@ -143,7 +143,7 @@ public class DecoderFile extends XmlFile {
     }
 
     // store acceptable version numbers
-    boolean versions[] = new boolean[256];
+    boolean[] versions = new boolean[256];
 
     public void setOneVersion(int i) {
         versions[i] = true;
@@ -172,7 +172,7 @@ public class DecoderFile extends XmlFile {
             if (highVersionID != null) {
                 // low version null, but high is not null
                 setOneVersion(Integer.parseInt(highVersionID));
-            } else {
+            //} else {
                 // both low and high version are null; do nothing
             }
         }
