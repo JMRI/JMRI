@@ -88,7 +88,7 @@ public abstract class MeterUpdateTask {
         }
         _intervalTask = new UpdateTask();
         // At some point this will be dynamic intervals...
-        log.debug("Starting Meter Timer");
+        log.debug("Starting Meter Timer for {}ms, {}ms", _sleepInterval, _sleepInterval);
         jmri.util.TimerUtil.scheduleAtFixedRate(_intervalTask,
                 _sleepInterval, _sleepInterval);
     }
