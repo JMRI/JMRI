@@ -1,0 +1,161 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch DecoderPro",
+            "request": "launch",
+            "mainClass": "apps.DecoderPro.DecoderPro",
+            "projectName": "jmri"
+        },
+        {
+            "type": "java",
+            "name": "Launch DispatcherPro",
+            "request": "launch",
+            "mainClass": "apps.DispatcherPro.DispatcherPro",
+            "projectName": "jmri"
+        },
+        {
+            "type": "java",
+            "name": "Launch InstallTest",
+            "request": "launch",
+            "mainClass": "apps.InstallTest.InstallTest",
+            "projectName": "jmri"
+        },
+        {
+            "type": "java",
+            "name": "Launch JmriFaceless",
+            "request": "launch",
+            "mainClass": "apps.JmriFaceless",
+            "projectName": "jmri"
+        },
+        {
+            "type": "java",
+            "name": "Launch PanelPro",
+            "request": "launch",
+            "mainClass": "apps.PanelPro.PanelPro",
+            "projectName": "jmri"
+        },
+        {
+            "type": "java",
+            "name": "Launch SampleMinimalProgram",
+            "request": "launch",
+            "mainClass": "apps.SampleMinimalProgram",
+            "projectName": "jmri"
+        },
+        {
+            "type": "java",
+            "name": "Launch SoundPro",
+            "request": "launch",
+            "mainClass": "apps.SoundPro.SoundPro",
+            "projectName": "jmri"
+        },
+        {
+            "type": "java",
+            "name": "Launch DecoderPro3",
+            "request": "launch",
+            "mainClass": "apps.gui3.dp3.DecoderPro3",
+            "projectName": "jmri"
+        },
+        {
+            "type": "java",
+            "name": "Launch MDI",
+            "request": "launch",
+            "mainClass": "apps.gui3.mdi.MDI",
+            "projectName": "jmri"
+        },
+        {
+            "type": "java",
+            "name": "Launch Paned",
+            "request": "launch",
+            "mainClass": "apps.gui3.paned.Paned",
+            "projectName": "jmri"
+        },
+        {
+            "type": "java",
+            "name": "Launch XmlFileValidateRunner",
+            "request": "launch",
+            "mainClass": "apps.jmrit.XmlFileValidateRunner",
+            "projectName": "jmri"
+        },
+        {
+            "type": "java",
+            "name": "Launch DecoderIndexBuilder",
+            "request": "launch",
+            "mainClass": "apps.jmrit.decoderdefn.DecoderIndexBuilder",
+            "projectName": "jmri"
+        },
+        {
+            "type": "java",
+            "name": "Launch AllTest",
+            "request": "launch",
+            "mainClass": "apps.tests.AllTest",
+            "projectName": "jmri"
+        },
+        {
+            "type": "java",
+            "name": "Launch OperationTests",
+            "request": "launch",
+            "mainClass": "apps.tests.OperationTests",
+            "projectName": "jmri"
+        },
+        {
+            "type": "java",
+            "name": "Launch HeadLessTest",
+            "request": "launch",
+            "mainClass": "jmri.HeadLessTest",
+            "projectName": "jmri"
+        },
+        {
+            "type": "java",
+            "name": "Launch Version",
+            "request": "launch",
+            "mainClass": "jmri.Version",
+            "projectName": "jmri"
+        },
+        {
+            "type": "java",
+            "name": "Launch PickSinglePanelDemo",
+            "request": "launch",
+            "mainClass": "jmri.jmrit.picker.PickSinglePanelDemo",
+            "projectName": "jmri"
+        },
+        {
+            "type": "java",
+            "name": "Launch PackageDemo",
+            "request": "launch",
+            "mainClass": "jmri.jmrit.ussctc.PackageDemo",
+            "projectName": "jmri"
+        },
+        {
+            "type": "java",
+            "name": "Launch SampleFactory",
+            "request": "launch",
+            "mainClass": "jmri.jmrix.openlcb.SampleFactory",
+            "projectName": "jmri"
+        },
+        {
+            "type": "java",
+            "name": "Launch GetJavaProperty",
+            "request": "launch",
+            "mainClass": "jmri.util.GetJavaProperty",
+            "projectName": "jmri"
+        },
+        {
+            "type": "java",
+            "name": "Launch TestClassMainMethod",
+            "request": "launch",
+            "mainClass": "jmri.util.junit.TestClassMainMethod",
+            "projectName": "jmri"
+        }
+    ]
+}
