@@ -2,8 +2,7 @@ package jmri.jmrit.logixng.util;
 
 import java.awt.event.ActionEvent;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicReference;
@@ -30,7 +29,7 @@ import jmri.util.ThreadingUtil.ThreadAction;
  * @author Daniel Bergqvist  Copyright 2020
  */
 @ThreadSafe
-public class LogixNG_Thread extends Thread {
+public class LogixNG_Thread {
 
     public static final int DEFAULT_LOGIXNG_THREAD = 0;
     public static final int DEFAULT_LOGIXNG_DEBUG_THREAD = 1;
@@ -91,6 +90,19 @@ public class LogixNG_Thread extends Thread {
         }
     }
     
+    public static int getThreadID(String name) {
+        synchronized (LogixNG_Thread.class) {
+            for (LogixNG_Thread t : _threads.values()) {
+                if (name.equals(t._name)) return t._threadID;
+            }
+            throw new IllegalArgumentException(String.format("Thread name \"%s\" does not exists", name));
+        }
+    }
+    
+    public static Collection<LogixNG_Thread> getThreads() {
+        return Collections.unmodifiableCollection(_threads.values());
+    }
+    
     private LogixNG_Thread(int threadID, String name) {
         _threadID = threadID;
         _name = name;
@@ -121,7 +133,7 @@ public class LogixNG_Thread extends Thread {
         }
     }
     
-    public int getThreadID() {
+    public int getThreadId() {
         return _threadID;
     }
     
@@ -290,7 +302,8 @@ public class LogixNG_Thread extends Thread {
 
     public static void stopAllLogixNGThreads() {
         synchronized(LogixNG_Thread.class) {
-            for (LogixNG_Thread thread : _threads.values()) {
+            List<LogixNG_Thread> list = new ArrayList<>(_threads.values());
+            for (LogixNG_Thread thread : list) {
                 thread.stopLogixNGThread();
             }
         }

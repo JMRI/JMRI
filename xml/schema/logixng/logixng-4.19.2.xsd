@@ -47,6 +47,15 @@
       </xs:annotation>
       <xs:sequence>
         
+        <xs:element name="thread" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" type="xs:int" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
         <xs:element name="logixng" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
@@ -116,6 +125,7 @@
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="thread" type="xs:int" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="socketName" type="xs:string" minOccurs="0" maxOccurs="1"/>
               <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>

@@ -16,6 +16,7 @@ import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.actions.*;
 import jmri.jmrit.logixng.expressions.*;
+import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.*;
 
 import org.junit.*;
@@ -122,6 +123,30 @@ public class StoreAndLoadTest {
                 conditionalNGManager.createConditionalNG("An empty conditionalNG");
         logixNG.addConditionalNG(conditionalNG);
         logixNG.setEnabled(false);
+        conditionalNG.setEnabled(false);
+        
+        
+        // Create an empty ConditionalNG on the debug thread
+        conditionalNG =
+                conditionalNGManager.createConditionalNG(
+                        "A second empty conditionalNG", LogixNG_Thread.DEFAULT_LOGIXNG_THREAD);
+        logixNG.addConditionalNG(conditionalNG);
+        conditionalNG.setEnabled(false);
+        
+        
+        // Create an empty ConditionalNG on another thread
+        LogixNG_Thread.createNewThread(53, "My logixng thread");
+        conditionalNG =
+                conditionalNGManager.createConditionalNG("A third empty conditionalNG", 53);
+        logixNG.addConditionalNG(conditionalNG);
+        conditionalNG.setEnabled(false);
+        
+        
+        // Create an empty ConditionalNG on another thread
+        LogixNG_Thread.createNewThread("My other logixng thread");
+        conditionalNG = conditionalNGManager.createConditionalNG(
+                "A fourth empty conditionalNG", LogixNG_Thread.getThreadID("My other logixng thread"));
+        logixNG.addConditionalNG(conditionalNG);
         conditionalNG.setEnabled(false);
         
         
@@ -1825,6 +1850,8 @@ public class StoreAndLoadTest {
             Assert.assertEquals(0, InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet().size());
             Assert.assertEquals(0, InstanceManager.getDefault(NamedTableManager.class).getNamedBeanSet().size());
             
+            LogixNG_Thread.stopAllLogixNGThreads();
+            LogixNG_Thread.assertLogixNGThreadNotRunning();
             
             
             //**********************************
@@ -1959,6 +1986,7 @@ public class StoreAndLoadTest {
     public void tearDown() {
         // JUnitAppender.clearBacklog();    REMOVE THIS!!!
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        
         JUnitAppender.assertWarnMessage("destinationPoints \"Something\" is not found");
         JUnitAppender.assertWarnMessage("destinationPoints \"Something\" is not found");
         JUnitAppender.assertWarnMessage("destinationPoints \"Something\" is not found");

@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.implementation.configurexml;
 
 import java.util.List;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.ConditionalNG;
@@ -8,7 +9,9 @@ import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGManager;
+import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.ThreadingUtil;
+
 import org.jdom2.Element;
 
 /**
@@ -40,10 +43,13 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
                 boolean enabled = conditionalNG.isEnabled();
                 Element elem = new Element("conditionalng");  // NOI18N
                 elem.addContent(new Element("systemName").addContent(conditionalNG.getSystemName()));  // NOI18N
-
+                
                 // store common part
                 storeCommon(conditionalNG, elem);
-
+                
+                elem.addContent(new Element("thread").addContent(
+                        Integer.toString(conditionalNG.getStartupThreadId())));  // NOI18N
+                
                 Element e2 = new Element("socket");
                 e2.addContent(new Element("socketName").addContent(conditionalNG.getChild(0).getName()));
                 MaleSocket socket = conditionalNG.getChild(0).getConnectedSocket();
@@ -105,39 +111,45 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
         List<Element> conditionalNGList = conditionalNGs.getChildren("conditionalng");  // NOI18N
         log.debug("Found " + conditionalNGList.size() + " logixngConditionalNGs");  // NOI18N
         ConditionalNG_Manager tm = InstanceManager.getDefault(jmri.jmrit.logixng.ConditionalNG_Manager.class);
-
+        
         for (int i = 0; i < conditionalNGList.size(); i++) {
             
             Element conditionalNG_Element = conditionalNGList.get(i);
-
+            
             String sysName = getSystemName(conditionalNG_Element);
             if (sysName == null) {
                 log.warn("unexpected null in systemName " + conditionalNG_Element);  // NOI18N
                 break;
             }
-
+            
             String userName = getUserName(conditionalNG_Element);
-
+            
+            int threadId = LogixNG_Thread.DEFAULT_LOGIXNG_THREAD;
+            Element threadElem = conditionalNG_Element.getChild("thread");
+            if (threadElem != null) threadId = Integer.parseInt(threadElem.getTextTrim());
+            
             String enabled = "";
             if (conditionalNG_Element.getAttribute("enabled") != null) {  // NOI18N
                 enabled = conditionalNG_Element.getAttribute("enabled").getValue();  // NOI18N
             }
             log.debug("create conditionalng: (" + sysName + ")("  // NOI18N
                     + (userName == null ? "<null>" : userName) + ")");  // NOI18N
-
+            
             // Create a new ConditionalNG but don't setup the initial tree.
-            DefaultConditionalNG conditionalNG = (DefaultConditionalNG)tm.createConditionalNG(sysName, userName);
+            DefaultConditionalNG conditionalNG =
+                    (DefaultConditionalNG)tm.createConditionalNG(sysName, userName, threadId);
+            
             if (conditionalNG != null) {
                 // load common part
                 loadCommon(conditionalNG, conditionalNG_Element);
-
+                
                 Element socketName = conditionalNG_Element.getChild("socket").getChild("socketName");
                 if (socketName != null) {
                     conditionalNG.getFemaleSocket().setName(socketName.getTextTrim());
                 }
                 Element socketSystemName = conditionalNG_Element.getChild("socket").getChild("systemName");
                 if (socketSystemName != null) {
-        //            log.warn("Socket system name: {}", socketSystemName.getTextTrim());
+//                    log.warn("Socket system name: {}", socketSystemName.getTextTrim());
                     conditionalNG.setSocketSystemName(socketSystemName.getTextTrim());
                 }
                 

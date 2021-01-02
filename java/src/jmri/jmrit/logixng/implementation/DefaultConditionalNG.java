@@ -23,6 +23,7 @@ public class DefaultConditionalNG extends AbstractBase
         implements ConditionalNG, FemaleSocketListener {
     
     private final LogixNG_Thread _thread;
+    private int _startupThreadId;
     private MaleSocket.ErrorHandlingType _errorHandlingType = MaleSocket.ErrorHandlingType.LOG_ERROR;
     private Base _parent = null;
     private String _socketSystemName = null;
@@ -33,13 +34,16 @@ public class DefaultConditionalNG extends AbstractBase
     private boolean _runDelayed = true;
     
     
-    public DefaultConditionalNG(String sys, String user) throws BadUserNameException, BadSystemNameException  {
+    public DefaultConditionalNG(String sys, String user)
+            throws BadUserNameException, BadSystemNameException  {
         this(sys, user, LogixNG_Thread.DEFAULT_LOGIXNG_THREAD);
     }
     
-    public DefaultConditionalNG(String sys, String user, int threadID) throws BadUserNameException, BadSystemNameException  {
+    public DefaultConditionalNG(String sys, String user, int threadID)
+            throws BadUserNameException, BadSystemNameException  {
         super(sys, user);
         
+        _startupThreadId = threadID;
         _thread = LogixNG_Thread.getThread(threadID);
         
         // Do this test here to ensure all the tests are using correct system names
@@ -50,6 +54,25 @@ public class DefaultConditionalNG extends AbstractBase
         _femaleSocket = new DefaultFemaleDigitalActionSocket(this, this, "A");
     }
     
+    /** {@inheritDoc} */
+    @Override
+    public int getCurrentThreadId() {
+        return _thread.getThreadId();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public int getStartupThreadId() {
+        return _startupThreadId;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void setStartupThreadId(int threadId) {
+        _startupThreadId = threadId;
+    }
+    
+    /** {@inheritDoc} */
     @Override
     public Base getParent() {
         return _parent;
@@ -195,6 +218,9 @@ public class DefaultConditionalNG extends AbstractBase
 
     @Override
     public String getLongDescription(Locale locale) {
+        if (_thread.getThreadId() != LogixNG_Thread.DEFAULT_LOGIXNG_THREAD) {
+            return "ConditionalNG: "+getDisplayName() + " on thread " + _thread.getThreadName();
+        }
         return "ConditionalNG: "+getDisplayName();
     }
 

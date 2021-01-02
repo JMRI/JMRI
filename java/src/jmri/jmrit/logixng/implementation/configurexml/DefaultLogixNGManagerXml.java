@@ -17,6 +17,7 @@ import jmri.jmrit.logixng.implementation.ClipboardMany;
 import jmri.jmrit.logixng.implementation.DefaultClipboard;
 import jmri.jmrit.logixng.implementation.DefaultLogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.ThreadingUtil;
 
 /**
@@ -43,6 +44,13 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
         setStoreElementClass(logixNGs);
         LogixNG_Manager tm = (LogixNG_Manager) o;
         if (tm != null) {
+            for (LogixNG_Thread thread : LogixNG_Thread.getThreads()) {
+                Element e = new Element("thread");  // NOI18N
+                e.addContent(new Element("id").addContent(Integer.toString(thread.getThreadId())));
+                e.addContent(new Element("name").addContent(thread.getThreadName()));
+                logixNGs.addContent(e);
+            }
+            
             for (LogixNG logixNG : tm.getNamedBeanSet()) {
                 log.debug("logixng system name is " + logixNG.getSystemName());  // NOI18N
                 boolean enabled = logixNG.isEnabled();
@@ -110,11 +118,35 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
         // create the master object
         replaceLogixNGManager();
         // load individual sharedLogix
+        loadThreads(sharedLogixNG);
         loadLogixNGs(sharedLogixNG);
         loadClipboard(sharedLogixNG);
         return true;
     }
 
+    /**
+     * Utility method to load the individual LogixNG objects. If there's no
+     * additional info needed for a specific logixng type, invoke this with the
+     * parent of the set of LogixNG elements.
+     *
+     * @param sharedLogixNG Element containing the LogixNG elements to load.
+     */
+    public void loadThreads(Element sharedLogixNG) {
+        List<Element> threads = sharedLogixNG.getChildren("thread");  // NOI18N
+        log.debug("Found " + threads.size() + " threads");  // NOI18N
+        
+        for (int i = 0; i < threads.size(); i++) {
+            
+            Element threadElement = threads.get(i);
+            
+            int threadId = Integer.parseInt(threadElement.getChild("id").getTextTrim());
+            String threadName = threadElement.getChild("name").getTextTrim();
+            
+            log.debug("create thread: " + Integer.toString(threadId) + ", " + threadName);  // NOI18N
+            LogixNG_Thread.createNewThread(threadId, threadName);
+        }
+    }
+    
     /**
      * Utility method to load the individual LogixNG objects. If there's no
      * additional info needed for a specific logixng type, invoke this with the

@@ -73,7 +73,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="12:26 AM">
+    <memory value="8:21 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -112,8 +112,20 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Dec 28 00:26:31 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sat Jan 02 20:21:40 CET 2021" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <logixngs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
+    <thread>
+      <id>0</id>
+      <name>LogixNG_Thread</name>
+    </thread>
+    <thread>
+      <id>53</id>
+      <name>My logixng thread</name>
+    </thread>
+    <thread>
+      <id>54</id>
+      <name>My other logixng thread</name>
+    </thread>
     <logixng enabled="no">
       <systemName>IQ:AUTO:0001</systemName>
       <userName>An empty logixNG</userName>
@@ -124,13 +136,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>A logixNG with an empty conditionlNG</userName>
       <conditionalngs>
         <conditionalNG_SystemName>IQC:AUTO:0001</conditionalNG_SystemName>
+        <conditionalNG_SystemName>IQC:AUTO:0002</conditionalNG_SystemName>
+        <conditionalNG_SystemName>IQC:AUTO:0003</conditionalNG_SystemName>
+        <conditionalNG_SystemName>IQC:AUTO:0004</conditionalNG_SystemName>
       </conditionalngs>
     </logixng>
     <logixng enabled="no">
       <systemName>IQ:AUTO:0003</systemName>
       <userName>A logixNG</userName>
       <conditionalngs>
-        <conditionalNG_SystemName>IQC:AUTO:0002</conditionalNG_SystemName>
+        <conditionalNG_SystemName>IQC:AUTO:0005</conditionalNG_SystemName>
       </conditionalngs>
     </logixng>
     <clipboard>
@@ -172,13 +187,39 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <conditionalng enabled="no">
       <systemName>IQC:AUTO:0001</systemName>
       <userName>An empty conditionalNG</userName>
+      <thread>0</thread>
+      <socket>
+        <socketName>A</socketName>
+      </socket>
+    </conditionalng>
+    <conditionalng enabled="no">
+      <systemName>IQC:AUTO:0002</systemName>
+      <userName>A second empty conditionalNG</userName>
+      <thread>0</thread>
+      <socket>
+        <socketName>A</socketName>
+      </socket>
+    </conditionalng>
+    <conditionalng enabled="no">
+      <systemName>IQC:AUTO:0003</systemName>
+      <userName>A third empty conditionalNG</userName>
+      <thread>53</thread>
+      <socket>
+        <socketName>A</socketName>
+      </socket>
+    </conditionalng>
+    <conditionalng enabled="no">
+      <systemName>IQC:AUTO:0004</systemName>
+      <userName>A fourth empty conditionalNG</userName>
+      <thread>54</thread>
       <socket>
         <socketName>A</socketName>
       </socket>
     </conditionalng>
     <conditionalng enabled="yes">
-      <systemName>IQC:AUTO:0002</systemName>
+      <systemName>IQC:AUTO:0005</systemName>
       <userName>Yet another conditionalNG</userName>
+      <thread>0</thread>
       <socket>
         <socketName>A</socketName>
         <systemName>IQDA:AUTO:0001</systemName>
@@ -3274,6 +3315,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <aspectReference>{IM3}</aspectReference>
       <aspectLocalVariable>index3</aspectLocalVariable>
       <aspectFormula>"IT"+index3</aspectFormula>
+      <exampleSignalMast>IF$shsm:AAR-1946:CPL(IH1)</exampleSignalMast>
       <maleSocket>
         <localVariable>
           <name>A1</name>
@@ -6318,6 +6360,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <aspectReference>{IM3}</aspectReference>
       <aspectLocalVariable>index3</aspectLocalVariable>
       <aspectFormula>"IT"+index3</aspectFormula>
+      <exampleSignalMast>IF$shsm:AAR-1946:CPL(IH1)</exampleSignalMast>
       <maleSocket>
         <localVariable>
           <name>A1</name>
@@ -9008,9 +9051,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Mon Dec 28 00:26:44 CET 2020</date>
+      <date>Sat Jan 02 20:21:41 CET 2021</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.21.4ish+daniel+2020-12-27T23:23:37Z+RUNKNOWN on Mon Dec 28 00:26:44 CET 2020-->
+  <!--Written by JMRI version 4.21.4ish+daniel+2021-01-02T19:19:31Z+RUNKNOWN on Sat Jan 02 20:21:41 CET 2021-->
 </layout-config>

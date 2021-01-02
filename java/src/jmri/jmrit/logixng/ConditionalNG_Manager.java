@@ -34,6 +34,29 @@ public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
             throws IllegalArgumentException;
     
     /**
+     * Create a new ConditionalNG if the ConditionalNG does not exist.
+     *
+     * @param systemName the system name
+     * @param userName   the user name
+     * @param threadID   the thread ID that this ConditionalNG will execute on
+     * @return a new ConditionalNG or null if unable to create
+     */
+    public ConditionalNG createConditionalNG(
+            String systemName, String userName, int threadID)
+            throws IllegalArgumentException;
+    
+    /**
+     * For use with User GUI, to allow the auto generation of systemNames, where
+     * the user can optionally supply a username.
+     *
+     * @param userName the user name
+     * @param threadID   the thread ID that this ConditionalNG will execute on
+     * @return a new ConditionalNG or null if unable to create
+     */
+    public ConditionalNG createConditionalNG(String userName, int threadID)
+            throws IllegalArgumentException;
+    
+    /**
      * Locate via user name, then system name if needed. Does not create a new
      * one if nothing found
      *

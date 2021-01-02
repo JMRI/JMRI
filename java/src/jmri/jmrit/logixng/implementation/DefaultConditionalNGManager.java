@@ -1,10 +1,9 @@
 package jmri.jmrit.logixng.implementation;
 
-import java.util.*;
-
 import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.managers.AbstractManager;
 import jmri.util.*;
 
@@ -24,37 +23,37 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
         InstanceManager.getDefault(LogixNGPreferences.class);
     }
     
+    /** {@inheritDoc} */
     @Override
     public int getXMLOrder() {
         return LOGIXNG_CONDITIONALNGS;
     }
 
+    /** {@inheritDoc} */
     @Override
     public char typeLetter() {
         return 'Q';
     }
 
-    /**
-     * Test if parameter is a properly formatted system name.
-     *
-     * @param systemName the system name
-     * @return enum indicating current validity, which might be just as a prefix
-     */
+    /** {@inheritDoc} */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
         return LogixNG_Manager.validSystemNameFormat(
                 getSubSystemNamePrefix(), systemName);
     }
 
-    /**
-     * Method to create a new ConditionalNG if the ConditionalNG does not exist.
-     * <p>
-     * Returns null if
-     * a Logix with the same systemName or userName already exists, or if there
-     * is trouble creating a new ConditionalNG.
-     */
+    /** {@inheritDoc} */
     @Override
     public ConditionalNG createConditionalNG(String systemName, String userName)
+            throws IllegalArgumentException {
+        
+        return createConditionalNG(systemName, userName, LogixNG_Thread.DEFAULT_LOGIXNG_THREAD);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public ConditionalNG createConditionalNG(
+            String systemName, String userName, int threadID)
             throws IllegalArgumentException {
         
         // Check that ConditionalNG does not already exist
@@ -76,27 +75,29 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
             throw new IllegalArgumentException("SystemName " + systemName + " is not in the correct format");
         }
         // ConditionalNG does not exist, create a new ConditionalNG
-        x = new DefaultConditionalNG(systemName, userName);
+        x = new DefaultConditionalNG(systemName, userName, threadID);
         // save in the maps
         register(x);
         
         // Keep track of the last created auto system name
         updateAutoNumber(systemName);
         
-//        if (setupTree) {
-            // Setup initial tree for the ConditionalNG
-//            setupInitialConditionalNGTree(x);
-//            throw new UnsupportedOperationException("Throw exception for now until this is fixed");
-//        }
-        
         return x;
     }
 
+    /** {@inheritDoc} */
     @Override
     public ConditionalNG createConditionalNG(String userName) throws IllegalArgumentException {
         return createConditionalNG(getAutoSystemName(), userName);
     }
     
+    /** {@inheritDoc} */
+    @Override
+    public ConditionalNG createConditionalNG(String userName, int threadID) throws IllegalArgumentException {
+        return createConditionalNG(getAutoSystemName(), userName, threadID);
+    }
+    
+    /** {@inheritDoc} */
     @Override
     public ConditionalNG getConditionalNG(String name) {
         ConditionalNG x = getByUserName(name);
@@ -106,11 +107,13 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
         return getBySystemName(name);
     }
 
+    /** {@inheritDoc} */
     @Override
     public ConditionalNG getByUserName(String name) {
         return _tuser.get(name);
     }
 
+    /** {@inheritDoc} */
     @Override
     public ConditionalNG getBySystemName(String name) {
         return _tsys.get(name);
@@ -138,6 +141,7 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void deleteConditionalNG(ConditionalNG x) {
         // delete the ConditionalNG
@@ -145,11 +149,13 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
         x.dispose();
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setLoadDisabled(boolean s) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setRunOnGUIDelayed(boolean value) {
         for (ConditionalNG conditionalNG : getNamedBeanSet()) {
@@ -171,6 +177,7 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
         return (_instance);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Class<ConditionalNG> getNamedBeanClass() {
         return ConditionalNG.class;

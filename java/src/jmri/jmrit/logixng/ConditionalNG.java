@@ -10,6 +10,30 @@ import jmri.NamedBean;
 public interface ConditionalNG extends Base, NamedBean {
 
     /**
+     * Get the thread id that this conditionalNG executes on.
+     * @return the thread ID
+     */
+    public int getCurrentThreadId();
+    
+    /**
+     * Get the thread id that this conditionalNG should execute on when JMRI
+     * starts next time.
+     * It's not currently possible to move a ConditionalNG from one thread to
+     * another without restarting JMRI.
+     * @return the thread ID
+     */
+    public int getStartupThreadId();
+    
+    /**
+     * Set the thread id that this conditionalNG should execute on when JMRI
+     * starts next time.
+     * It's not currently possible to move a ConditionalNG from one thread to
+     * another without restarting JMRI.
+     * @param threadId the thread ID
+     */
+    public void setStartupThreadId(int threadId);
+    
+    /**
      * Get the female socket of this ConditionalNG.
      * @return the female socket
      */
