@@ -236,7 +236,13 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
         <name xml:lang="de">LNCV Boosterkonfiguration</name>
         <name xml:lang="nl">LNCV Booster instellen</name>
         <row>
-            <column>
+          <column>
+              <label>
+                <text>Before writing, open an LNCV Programming session using the LocoNet LNCV Tool.</text>
+                <text xml:lang="nl">Voordat je waarden schrijft eerst een LNCV Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
+                <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV Programmierwerkzeugs einen LNCV Programmierufgang starten.</text>
+              </label>
+
               <label>
                 <text>Addresses</text>
                 <text xml:lang="nl">Adressen</text>

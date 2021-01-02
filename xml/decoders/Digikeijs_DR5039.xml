@@ -85,14 +85,18 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
         <name xml:lang="de">LNCV Konfiguration</name>
         <name xml:lang="nl">LNCV instellen</name>
         <row>
-
-            <column>
-                <label>
-                  <text>LNCV3 Configuration</text>
-                  <text xml:lang="nl">Instelling LNCV3</text>
-                  <text xml:lang="de">LNCV3 Konfiguration</text>
-                  <text xml:lang="fr">Configuration LNCV3</text>
-                </label>
+          <column>
+              <label>
+                <text>LNCV3 Configuration</text>
+                <text xml:lang="nl">Instelling LNCV3</text>
+                <text xml:lang="de">LNCV3 Konfiguration</text>
+                <text xml:lang="fr">Configuration LNCV3</text>
+              </label>
+              <label>
+                <text>Before writing, open an LNCV Programming session using the LocoNet LNCV Tool.</text>
+                <text xml:lang="nl">Voordat je waarden schrijft eerst een LNCV Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
+                <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV Programmierwerkzeugs einen LNCV Programmierufgang starten.</text>
+              </label>
               <separator/>
                 <display item="Send GPON" format="checkbox"/>
                 <display item="Send Short" format="checkbox"/>
