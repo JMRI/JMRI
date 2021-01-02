@@ -120,7 +120,19 @@ public class LogixNG_Thread extends Thread {
             _logixNGThread.setDaemon(true);
         }
     }
-
+    
+    public int getThreadID() {
+        return _threadID;
+    }
+    
+    public String getThreadName() {
+        return _name;
+    }
+    
+    public void setThreadName(String name) {
+        _name = name;
+    }
+    
     /**
      * Run some LogixNG-specific code before returning.
      * <p>
