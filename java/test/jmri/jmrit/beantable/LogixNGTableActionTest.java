@@ -509,6 +509,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @Override
     public void tearDown() {
         a = null;
+        jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
