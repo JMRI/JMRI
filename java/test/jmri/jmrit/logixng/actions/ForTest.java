@@ -436,7 +436,7 @@ public class ForTest extends AbstractDigitalActionTestBase {
     @After
     public void tearDown() {
         _logixNG.setEnabled(false);
-        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
+        jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
         _category = null;
         _logixNG = null;

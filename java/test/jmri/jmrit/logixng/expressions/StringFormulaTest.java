@@ -746,7 +746,7 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
     @After
     public void tearDown() {
         // JUnitAppender.clearBacklog();    REMOVE THIS!!!
-        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
+        jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
     

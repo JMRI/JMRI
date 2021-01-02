@@ -314,7 +314,7 @@ public class Import_TriggerOnChange_Test {
     public void tearDown() {
         // JUnitAppender.clearBacklog();    REMOVE THIS!!!
         
-        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
+        jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }

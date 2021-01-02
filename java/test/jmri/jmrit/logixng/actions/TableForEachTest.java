@@ -304,7 +304,7 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
     public void tearDown() {
         JUnitAppender.suppressErrorMessage("tableHandle is null");
         _logixNG.setEnabled(false);
-        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
+        jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
         _category = null;
         _logixNG = null;

@@ -347,7 +347,7 @@ public class DigitalManyTest extends AbstractDigitalActionTestBase {
 
     @After
     public void tearDown() {
-        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
+        jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
     

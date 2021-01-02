@@ -11,7 +11,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.util.LogixNG_ThreadingUtil;
+import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.*;
 
 /**
@@ -22,6 +22,7 @@ import jmri.util.*;
 public class DefaultConditionalNG extends AbstractBase
         implements ConditionalNG, FemaleSocketListener {
     
+    private final LogixNG_Thread _thread;
     private MaleSocket.ErrorHandlingType _errorHandlingType = MaleSocket.ErrorHandlingType.LOG_ERROR;
     private Base _parent = null;
     private String _socketSystemName = null;
@@ -33,7 +34,13 @@ public class DefaultConditionalNG extends AbstractBase
     
     
     public DefaultConditionalNG(String sys, String user) throws BadUserNameException, BadSystemNameException  {
+        this(sys, user, LogixNG_Thread.DEFAULT_LOGIXNG_THREAD);
+    }
+    
+    public DefaultConditionalNG(String sys, String user, int threadID) throws BadUserNameException, BadSystemNameException  {
         super(sys, user);
+        
+        _thread = LogixNG_Thread.getThread(threadID);
         
         // Do this test here to ensure all the tests are using correct system names
         Manager.NameValidity isNameValid = InstanceManager.getDefault(ConditionalNG_Manager.class).validSystemNameFormat(mSystemName);
@@ -77,9 +84,9 @@ public class DefaultConditionalNG extends AbstractBase
     
     private void runOnLogixNG_Thread(@Nonnull ThreadingUtil.ThreadAction ta) {
         if (_runDelayed) {
-            LogixNG_ThreadingUtil.runOnLogixNGEventually(ta);
+            _thread.runOnLogixNGEventually(ta);
         } else {
-            LogixNG_ThreadingUtil.runOnLogixNG(ta);
+            _thread.runOnLogixNG(ta);
         }
     }
     

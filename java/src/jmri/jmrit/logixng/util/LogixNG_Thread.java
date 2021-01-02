@@ -1,9 +1,9 @@
 package jmri.jmrit.logixng.util;
 
-import jmri.util.*;
-
 import java.awt.event.ActionEvent;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicReference;
@@ -11,6 +11,8 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.swing.Timer;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
+
+import jmri.util.*;
 
 import jmri.InvokeOnGuiThread;
 import jmri.util.ThreadingUtil;
@@ -28,26 +30,81 @@ import jmri.util.ThreadingUtil.ThreadAction;
  * @author Daniel Bergqvist  Copyright 2020
  */
 @ThreadSafe
-public class LogixNG_ThreadingUtil {
+public class LogixNG_Thread extends Thread {
 
-    private static volatile boolean stopThread = false;
+    public static final int DEFAULT_LOGIXNG_THREAD = 0;
+    public static final int DEFAULT_LOGIXNG_DEBUG_THREAD = 1;
     
-    @InvokeOnGuiThread
-    public static void launchLogixNGThread() {
-        
-        synchronized(LogixNG_ThreadingUtil.class) {
-            if (logixNGThread != null) {
-                throw new RuntimeException("logixNGThread is already started");
+    private static final Map<Integer, LogixNG_Thread> _threads = new HashMap<>();
+    private static int _highestThreadID = -1;
+    
+    private final int _threadID;
+    private String _name;
+    private volatile boolean _stopThread = false;
+    private volatile boolean _threadIsStopped = false;
+    
+    private final Thread _logixNGThread;
+    private final BlockingQueue<ThreadEvent> _logixNGEventQueue;
+    
+    
+    public static LogixNG_Thread createNewThread(String name) {
+        return createNewThread(-1, name);
+    }
+    
+//    @InvokeOnGuiThread
+    public static LogixNG_Thread createNewThread(int threadID, String name) {
+        synchronized (LogixNG_Thread.class) {
+            if (threadID == -1) {
+                threadID = ++_highestThreadID;
+            } else {
+                if (threadID > _highestThreadID) _highestThreadID = threadID;
             }
             
-            logixNGEventQueue = new ArrayBlockingQueue<>(1024);
-            logixNGThread = new Thread(() -> {
-                while (!stopThread) {
+            if (_threads.containsKey(threadID)) {
+                throw new IllegalArgumentException(String.format("Thread ID %d already exists", threadID));
+            }
+            
+            LogixNG_Thread thread = new LogixNG_Thread(threadID, name);
+            _threads.put(threadID, thread);
+            thread._logixNGThread.start();
+            
+            return thread;
+        }
+    }
+    
+    public static LogixNG_Thread getThread(int threadID) {
+        synchronized (LogixNG_Thread.class) {
+            LogixNG_Thread thread = _threads.get(threadID);
+            if (thread == null) {
+                switch (threadID) {
+                    case DEFAULT_LOGIXNG_THREAD:
+                        thread = createNewThread(DEFAULT_LOGIXNG_THREAD, Bundle.formatMessage("LogixNG_Thread"));
+                        break;
+                    case DEFAULT_LOGIXNG_DEBUG_THREAD:
+                        thread = createNewThread(DEFAULT_LOGIXNG_DEBUG_THREAD, Bundle.formatMessage("LogixNG_DebugThread"));
+                        break;
+                    default:
+                        throw new IllegalArgumentException(String.format("Thread ID %d does not exists", threadID));
+                }
+            }
+            return thread;
+        }
+    }
+    
+    private LogixNG_Thread(int threadID, String name) {
+        _threadID = threadID;
+        _name = name;
+        
+        synchronized(LogixNG_Thread.class) {
+            
+            _logixNGEventQueue = new ArrayBlockingQueue<>(1024);
+            _logixNGThread = new Thread(() -> {
+                while (!_stopThread) {
                     try {
-                        ThreadEvent event = logixNGEventQueue.take();
+                        ThreadEvent event = _logixNGEventQueue.take();
                         if (event._lock != null) {
                             synchronized(event._lock) {
-                                if (!stopThread) event._threadAction.run();
+                                if (!_stopThread) event._threadAction.run();
                                 event._lock.notify();
                             }
                         } else {
@@ -57,9 +114,10 @@ public class LogixNG_ThreadingUtil {
                         Thread.currentThread().interrupt();
                     }
                 }
+                _threadIsStopped = true;
             }, "JMRI LogixNGThread");
-            logixNGThread.setDaemon(true);
-            logixNGThread.start();
+            
+            _logixNGThread.setDaemon(true);
         }
     }
 
@@ -82,11 +140,11 @@ public class LogixNG_ThreadingUtil {
                     " since the caller must first fetch the event from the"+
                     " event queue and the event is put on the event queue in"+
                     " the synchronize block.")
-    static public void runOnLogixNG(@Nonnull ThreadAction ta) {
-        if (logixNGThread != null) {
+    public void runOnLogixNG(@Nonnull ThreadAction ta) {
+        if (_logixNGThread != null) {
             Object lock = new Object();
             synchronized(lock) {
-                logixNGEventQueue.add(new ThreadEvent(ta, lock));
+                _logixNGEventQueue.add(new ThreadEvent(ta, lock));
                 try {
                     lock.wait();
                 } catch (InterruptedException e) {
@@ -95,7 +153,7 @@ public class LogixNG_ThreadingUtil {
                 }
             }
         } else {
-            throw new RuntimeException("LogixNG thread not started");
+            throw new RuntimeException("LogixNG thread not started. ThreadID: "+Integer.toString(_threadID));
         }
     }
 
@@ -114,9 +172,9 @@ public class LogixNG_ThreadingUtil {
      *
      * @param ta What to run, usually as a lambda expression
      */
-    static public void runOnLogixNGEventually(@Nonnull ThreadAction ta) {
-        if (logixNGThread != null) {
-            logixNGEventQueue.add(new ThreadEvent(ta));
+    public void runOnLogixNGEventually(@Nonnull ThreadAction ta) {
+        if (_logixNGThread != null) {
+            _logixNGEventQueue.add(new ThreadEvent(ta));
         } else {
             throw new RuntimeException("LogixNG thread not started");
         }
@@ -140,15 +198,15 @@ public class LogixNG_ThreadingUtil {
      * @return reference to timer object handling delay so you can cancel if desired; note that operation may have already taken place.
      */
     @Nonnull 
-    static public Timer runOnLogixNGDelayed(@Nonnull ThreadAction ta, int delay) {
-        if (logixNGThread != null) {
-            // dispatch to Swing via timer. We are forced to use a Swing Timer
-            // since the method returns a Timer object and we don't want to
-            // change the method interface.
+    public Timer runOnLogixNGDelayed(@Nonnull ThreadAction ta, int delay) {
+        if (_logixNGThread != null) {
+            // dispatch to logixng thread via timer. We are forced to use a
+            // Swing Timer since the method returns a Timer object and we don't
+            // want to change the method interface.
             Timer timer = new Timer(delay, (ActionEvent e) -> {
                 // Dispatch the event to the layout event handler once the time
                 // has passed.
-                logixNGEventQueue.add(new ThreadEvent(ta));
+                _logixNGEventQueue.add(new ThreadEvent(ta));
             });
             timer.setRepeats(false);
             timer.start();
@@ -163,9 +221,9 @@ public class LogixNG_ThreadingUtil {
      *
      * @return true if on the layout-operation thread
      */
-    static public boolean isLogixNGThread() {
-        if (logixNGThread != null) {
-            return logixNGThread == Thread.currentThread();
+    public boolean isLogixNGThread() {
+        if (_logixNGThread != null) {
+            return _logixNGThread == Thread.currentThread();
         } else {
             throw new RuntimeException("LogixNG thread not started");
         }
@@ -175,7 +233,7 @@ public class LogixNG_ThreadingUtil {
      * Checks if the the current thread is the layout thread.
      * The check is only done if debug is enabled.
      */
-    static public void checkIsLogixNGThread() {
+    public void checkIsLogixNGThread() {
         if (log.isDebugEnabled()) {
             if (!isLogixNGThread()) {
                 LoggingUtil.warnOnce(log, "checkIsLogixNGThread() called on wrong thread", new Exception());
@@ -199,37 +257,44 @@ public class LogixNG_ThreadingUtil {
         }
     }
 
-    public static void stopLogixNGThread() {
-        synchronized(LogixNG_ThreadingUtil.class) {
-            if (logixNGThread != null) {
-                stopThread = true;
-                logixNGThread.interrupt();
+    private void stopLogixNGThread() {
+        synchronized(LogixNG_Thread.class) {
+            if (_logixNGThread != null) {
+                _stopThread = true;
+                _logixNGThread.interrupt();
                 try {
-                    logixNGThread.join(0);
+                    _logixNGThread.join(0);
                 } catch (InterruptedException e) {
                     throw new RuntimeException("stopLogixNGThread() was interrupted");
                 }
-                if (logixNGThread.getState() != Thread.State.TERMINATED) {
-                    throw new RuntimeException("Could not stop logixNGThread. Current state: "+logixNGThread.getState().name());
+                if (_logixNGThread.getState() != Thread.State.TERMINATED) {
+                    throw new RuntimeException("Could not stop logixNGThread. Current state: "+_logixNGThread.getState().name());
                 }
-                stopThread = false;
-                logixNGThread = null;
+                _threads.remove(_threadID);
+                _stopThread = false;
             }
         }
     }
 
-    public static void assertLogixNGThreadNotRunning() {
-        synchronized(LogixNG_ThreadingUtil.class) {
-            if (logixNGThread != null) {
-                throw new RuntimeException("logixNGThread is running");
+    public static void stopAllLogixNGThreads() {
+        synchronized(LogixNG_Thread.class) {
+            for (LogixNG_Thread thread : _threads.values()) {
+                thread.stopLogixNGThread();
             }
         }
     }
     
-    private static Thread logixNGThread = null;
-    private static BlockingQueue<ThreadEvent> logixNGEventQueue = null;
-
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNG_ThreadingUtil.class);
+    public static void assertLogixNGThreadNotRunning() {
+        synchronized(LogixNG_Thread.class) {
+            for (LogixNG_Thread thread : _threads.values()) {
+                if (!thread._threadIsStopped) {
+                    throw new RuntimeException("logixNGThread is running");
+                }
+            }
+        }
+    }
+    
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNG_Thread.class);
 
 }
 

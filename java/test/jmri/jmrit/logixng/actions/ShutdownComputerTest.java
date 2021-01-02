@@ -156,7 +156,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
     @After
     public void tearDown() {
         JUnitAppender.assertErrorMessage("Shutdown failed");
-        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
+        jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
     

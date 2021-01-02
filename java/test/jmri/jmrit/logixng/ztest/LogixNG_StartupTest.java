@@ -32,13 +32,9 @@ public class LogixNG_StartupTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         new LogixNG_StartupAction().actionPerformed(null);
         
-        // MyLogixNG_Manager will try to start the LogixNG thread
-        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
-        
         // Test that actionPerformed() throws PropertyVetoException
         InstanceManager.setDefault(LogixNG_Manager.class, new MyLogixNG_Manager());
         new LogixNG_StartupAction().actionPerformed(null);
-//DANIEL        jmri.util.JUnitAppender.assertErrorMessage("exception thrown");
         
         AtomicBoolean hasThrown = new AtomicBoolean(false);
         try {
@@ -119,7 +115,7 @@ public class LogixNG_StartupTest {
 
     @After
     public void tearDown() {
-        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
+        jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
     

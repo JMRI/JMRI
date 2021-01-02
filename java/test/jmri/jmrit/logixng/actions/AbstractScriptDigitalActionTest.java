@@ -169,7 +169,7 @@ public class AbstractScriptDigitalActionTest {
     
     @After
     public void tearDown() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
-        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
+        jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
     

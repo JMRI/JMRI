@@ -263,7 +263,7 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
     @After
     public void tearDown() {
         _base.dispose();
-        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
+        jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
     

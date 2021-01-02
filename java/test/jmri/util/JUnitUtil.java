@@ -292,11 +292,8 @@ public class JUnitUtil {
      */
     public static void tearDown() {
 
-        // Many tests needs to do this
-        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.stopLogixNGThread();
-
-        // check LogixNG thread is not running
-        jmri.jmrit.logixng.util.LogixNG_ThreadingUtil.assertLogixNGThreadNotRunning();
+        // check that no LogixNG threads is still running
+        jmri.jmrit.logixng.util.LogixNG_Thread.assertLogixNGThreadNotRunning();
 
         // check for hanging shutdown tasks
         checkShutDownManager();
