@@ -143,7 +143,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <label xml:lang="fr">Activation d'après court-circuit: </label>
               <label xml:lang="nl">Wachttijd na kortsluiting: </label>
               <label>Restart Wait after Short: </label>
-              <tooltip>Turn on automatically following a short circuit in 3 ms steps. The standard value is equivaent to approx. 3/4 of a second (750 ms)</tooltip>
+              <tooltip>Turn on automatically following a short circuit in 3 ms steps. The standard value is equivalent to approx. 3/4 of a second (750 ms)</tooltip>
               <tooltip xml:lang="de">Automatisches Einschalten nach einem Kurzschluss im drei Ms Takt. Der Standardwert entspricht ca. einer 3/4 Sekunde (750 ms)</tooltip>
               <tooltip xml:lang="fr">Activation automatique si court-circuit en étapes de 3 ms. La valeur standard équivaut à env. 3⁄4 de seconde (750 ms)</tooltip>
               <tooltip xml:lang="nl">Wachttijd tot de herstart na kortsluiting. De standaardwaarde ca. 3/4 seconde (750 ms). (Het instellen gebeurt in drie milliseconde stappen.)</tooltip>

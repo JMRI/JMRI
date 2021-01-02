@@ -95,8 +95,6 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
      */
     @Override
     public void initComponents() {
-        pm = InstanceManager.getDefault(UserPreferencesManager.class);
-
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // buttons at top, like SE8c pane
         add(initButtonPanel());
@@ -109,6 +107,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         super.initComponents(memo);
         this.memo = memo;
         lncvdm = memo.getLncvDevicesManager();
+        pm = InstanceManager.getDefault(UserPreferencesManager.class);
         // connect to the LnTrafficController
         if (memo.getLnTrafficController() == null) {
             log.error("No traffic controller is available");
@@ -140,8 +139,10 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         moduleTable.setName("LNCV Device Management"); // NOI18N
         // Reset and then persist the table's ui state
         InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent((tpm) -> {
-            tpm.resetState(moduleTable);
-            tpm.persist(moduleTable, true);
+            synchronized (this) {
+                tpm.resetState(moduleTable);
+                tpm.persist(moduleTable, true);
+            }
         });
 
         JScrollPane tableScrollPane = new JScrollPane(moduleTable);
@@ -558,11 +559,10 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
              statusText2.setText(Bundle.getMessage("FeedBackDiscoverFail"));
         } else {
             log.debug("LNCV process completed successfully.");
-            statusText2.setText(Bundle.getMessage("FeedBackDiscoverSuccess",
-                    lncvdm.getDeviceCount()));
-                    //(modules == null ? 0 : modules.size())));
-            // reload the CV? list
-            result.setText(reply);
+            synchronized (this) {
+                statusText2.setText(Bundle.getMessage("FeedBackDiscoverSuccess", lncvdm.getDeviceCount()));
+                result.setText(reply);
+            }
         }
     }
 
@@ -588,13 +588,15 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         super.setVisible(false);
 
         InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent((tpm) -> {
-            tpm.stopPersisting(moduleTable);
+            synchronized (this) {
+                tpm.stopPersisting(moduleTable);
+            }
         });
 
         super.dispose();
     }
 
-    protected LncvDevice getModule(int i) {
+    protected synchronized LncvDevice getModule(int i) {
         if (i <= lncvdm.getDeviceCount()) {
             return lncvdm.getDeviceList().getDevice(i);
         } else {

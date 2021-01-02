@@ -939,7 +939,7 @@ public class LnSv2MessageContents {
         SV2_CHANGE_DEVICE_ADDRESS_REPLY (0x49),
         SV2_RECONFIGURE_DEVICE_REPLY (0x4f);
 
-        public int cmd;
+        private final int cmd;
         
         Sv2Command(int cmd) {
             this.cmd = cmd;

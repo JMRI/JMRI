@@ -592,9 +592,9 @@ public class LncvMessageContents {
         LNCV_PROG_START (LNCV_CMD_READ, LnConstants.OPC_IMM_PACKET, LNCV_DATA_PRON_MASK), // CMD=0x21, CmdData=0x80
         LNCV_PROG_END (LNCV_CMD_READ, LnConstants.OPC_PEER_XFER, LNCV_DATA_PROFF_MASK); // CMD=0x21, CmdData=0x40
 
-        public int cmd;
-        public int opc;
-        public int cmddata;
+        private final int cmd;
+        private final int opc;
+        private final int cmddata;
         
         LncvCommand(int cmd, int opc, int cmddata) {
             this.cmd = cmd;

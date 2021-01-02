@@ -193,28 +193,20 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
             return;
         }
         LncvDevice dev = memo.getLncvDevicesManager().getDeviceList().getDevice(r);
-        switch(c) {
-//            case DEVICENAMECOLUMN:
-//                dev.setDevName((String) value);
-//                break;
-//            case ROSTERENTRYCOLUMN:
-//                dev.setRosterName((String) value);
-//                break;
-            case OPENPRGMRBUTTONCOLUMN:
-                if (((String)getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonCreateEntry")) == 0) {
-                    createRosterEntry(dev);
-                    if (dev.getRosterEntry() != null) {
-                        setValueAt(dev.getRosterName(), r, c);
-                    } else {
-                        log.warn("Failed to connect RosterEntry to device {}", dev.getRosterName());
-                    }
+        if (c == OPENPRGMRBUTTONCOLUMN) {
+            if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonCreateEntry")) == 0) {
+                createRosterEntry(dev);
+                if (dev.getRosterEntry() != null) {
+                    setValueAt(dev.getRosterName(), r, c);
                 } else {
-                    openProgrammer(r);
+                    log.warn("Failed to connect RosterEntry to device {}", dev.getRosterName());
                 }
-                break;
-            default:
-                // no change, so do not fire a property change event
-                return;
+            } else {
+                openProgrammer(r);
+            }
+        } else {
+            // no change, so do not fire a property change event
+            return;
         }
         if (getRowCount() >= 1) {
             this.fireTableRowsUpdated(r, r);
