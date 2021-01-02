@@ -17,7 +17,7 @@ import java.util.Objects;
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Uhlenbrock.
  *
- * @author Egbert Broerse Copyright (C) 2020
+ * @author Egbert Broerse Copyright (C) 2020, 2021
  */
 public class LncvMessageContents {
     private final int opc;
@@ -80,8 +80,8 @@ public class LncvMessageContents {
     public final static int LNCV_CMDDATA_DAT7_CHECK_MASK = 0x40;
 
     // LocoNet "LNCV format" helper definitions for data
-//    public final static int LNCV_DATA_START = 0x00;
-//    public final static int LNCV_DATA_END = 0x40;
+    //    public final static int LNCV_DATA_START = 0x00;
+    //    public final static int LNCV_DATA_END = 0x40;
     public final static int LNCV_DATA_PROFF_MASK = 0x40;
     public final static int LNCV_DATA_PRON_MASK = 0x80;
     public final static int LNCV_DATA_RO_MASK = 0x01;
@@ -90,7 +90,7 @@ public class LncvMessageContents {
     public final static int LNCV_CMD_WRITE = 0x20;
     public final static int LNCV_CMD_READ = 0x21;
     public final static int LNCV_CMD_READ_REPLY = 0x1f; // reply to both LNCV_CMD_READ and ENTER_PROG_MOD (in which case CV0 VAL = MOD)
-    // reply to LNCV_CMD_WRITE = LACK
+    // reply to LNCV_CMD_WRITE = LACK, already defined as general LocoNet message type
 
 
     /**
@@ -169,12 +169,8 @@ public class LncvMessageContents {
         // "command_data" identifier must be correct. handled via Enum
         // check the (compound) command element
         int msgData = m.getElement(LNCV_CMDDATA_ELEMENT_INDEX) + (((m.getElement(PXCT1_ELEMENT_INDEX) & LNCV_CMDDATA_DAT7_CHECK_MASK) == LNCV_CMDDATA_DAT7_CHECK_MASK) ? 0x80 : 0);
-        if (isSupportedLncvCommand(m.getElement(LNCV_CMD_ELEMENT_INDEX), m.getOpCode(), msgData)) {
-            //log.debug("LocoNet message is a supported LNCV Format message");
-            return true;
-        }
+        return isSupportedLncvCommand(m.getElement(LNCV_CMD_ELEMENT_INDEX), m.getOpCode(), msgData);
         //log.debug("LocoNet message is not a supported LNCV Format message");  // NOI18N
-        return false;
     }
 
     /**
@@ -190,11 +186,7 @@ public class LncvMessageContents {
             return false;
         }
         // compare the <LNCV_CMD> value against cvCmd
-        if (Objects.equals(extractMessageType(m), cvCmd)) {
-            //log.debug("LocoNet message is the specified LNCV Format message");  // NOI18N
-            return true;
-        }
-        return false;
+        return Objects.equals(extractMessageType(m), cvCmd);
     }
 
     /**
@@ -311,7 +303,7 @@ public class LncvMessageContents {
     }
 
     /**
-     * Confirm a message specifies a valid (known) LNCV Programming Format command.
+     * Confirm a message corresponds with a valid (known) LNCV Programming Format command.
      *
      * @return true if the LNCV message specifies a valid (known) LNCV Programming Format command.
      */
@@ -329,13 +321,16 @@ public class LncvMessageContents {
     /**
      * Create a LocoNet message containing an LNCV Programming Format message.
      *
+     * @param opc         Opcode (&lt;OPC&gt;), see LnConstants
      * @param source      source device (&lt;SRC&gt;)
      * @param destination destination address (for &lt;DST_L&gt; and &lt;DST_H&gt;)
-     * @param command     LNCV Programming command (for &lt;LNCV_CMD&gt;)
-     * @param articleNum  manufacturer's hardware class/article code as per specs
+     * @param command     LNCV Programming simple command (for &lt;LNCV_CMD&gt;), part of
+     *                    complex command {@link LncvCommand}
+     * @param articleNum  manufacturer's hardware class/article code as per specs (4 decimal digits)
      * @param cvNum       CV number (for &lt;LNCV_CVN_L&gt; and &lt;LNCV_CVN_H&gt;)
      * @param moduleNum   module address (for &lt;LNCV_MOD_L&gt; and &lt;LNCV_MOD_H&gt;),
      *                    same field is used for CV Value in WRITE to and READ_REPLY from Module
+     * @param cmdData     signals programming start/stop: LNCV_DATA_PRON/LNCV_DATA_PROFF
      * @return LocoNet message for the requested instruction
      * @throws IllegalArgumentException of command is not a valid LNCV Programming Format &lt;LNCV_CMD&gt; value
      */
@@ -443,6 +438,8 @@ public class LncvMessageContents {
     /**
      * Create LocoNet broadcast message to start LNCV programming.
      *
+     * @param articleNum LNCV device type number used as filter to respond. Leave out to 'broadcast' to
+     *                   all connected devices (which works for discovery purpose only)
      * @return LocoNet message
      */
     public static LocoNetMessage createAllProgStartRequest(int articleNum) {
@@ -459,6 +456,9 @@ public class LncvMessageContents {
      * Create LocoNet broadcast message to end LNCV programming.
      * (expect no reply from module)
      *
+     * @param articleNum LNCV device type number used as filter to respond. Leave out to 'broadcast' to
+     *                   all connected devices (which works for discovery purpose only). Best to use same
+     *                   value as used while opening the session.
      * @return LocoNet message
      */
     public static LocoNetMessage createAllProgEndRequest(int articleNum) {
