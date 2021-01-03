@@ -12,6 +12,7 @@ import java.util.*;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.And;
+import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.logixng.ActionClearSlots;
@@ -210,6 +211,8 @@ public class StoreAndLoadTest {
             Assert.assertEquals(0, digitalActionManager.getNamedBeanSet().size());
             Assert.assertEquals(0, digitalExpressionManager.getNamedBeanSet().size());
             
+            LogixNG_Thread.stopAllLogixNGThreads();
+            LogixNG_Thread.assertLogixNGThreadNotRunning();
             
             
             //**********************************
@@ -338,7 +341,8 @@ public class StoreAndLoadTest {
 
     @After
     public void tearDown() {
-        JUnitAppender.clearBacklog();
+        // JUnitAppender.clearBacklog();    // REMOVE THIS!!!
+        jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
