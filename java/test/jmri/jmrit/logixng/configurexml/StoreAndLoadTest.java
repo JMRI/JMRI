@@ -1853,6 +1853,10 @@ public class StoreAndLoadTest {
             LogixNG_Thread.stopAllLogixNGThreads();
             LogixNG_Thread.assertLogixNGThreadNotRunning();
             
+            // This test fails on GitHub Windows CI but not on my local computer.
+            // Maybe a sleep will help?M /Daniel
+            Thread.sleep(1000);
+            LogixNG_Thread.assertLogixNGThreadNotRunning();
             
             //**********************************
             // Try to load file
