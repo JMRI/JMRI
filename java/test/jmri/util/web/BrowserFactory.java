@@ -60,6 +60,7 @@ public class BrowserFactory {
                 if (driver == null) {
                     WebDriverManager.getInstance(ChromeDriver.class).setup();
                     ChromeOptions chromeOptions = new ChromeOptions();
+                    chromeOptions.addArguments("--verbose");
                    // if (GraphicsEnvironment.isHeadless()) {
                         chromeOptions.addArguments("--headless");
                     //} else {
