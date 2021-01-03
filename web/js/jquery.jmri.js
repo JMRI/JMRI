@@ -510,7 +510,7 @@
                     jmri.socket.send("power", {});
                 } else {
                     $.getJSON(jmri.url + "power", function (json) {
-                        jmri.power(json.data.state);
+                        // jmri.power(json.data.state);
                     });
                 }
             };
