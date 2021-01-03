@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -87,6 +88,53 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             public void keyTyped(KeyEvent keyEvent) {
             }
         });
+
+        mqttUsernameField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                adapter.setMqttUsername(mqttUsernameField.getText());
+                p.setComboBoxLastSelection(adapter.getClass().getName() + ".mqttusername", mqttUsernameField.getText());
+            }
+        });
+        mqttUsernameField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent keyEvent) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent keyEvent) {
+                adapter.setMqttUsername(mqttUsernameField.getText());
+                p.setComboBoxLastSelection(adapter.getClass().getName() + ".mqttusername", mqttUsernameField.getText());
+            }
+
+            @Override
+            public void keyTyped(KeyEvent keyEvent) {
+            }
+        });
+
+        mqttPasswordField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                adapter.setMqttPassword(mqttPasswordField.getText());
+                p.setComboBoxLastSelection(adapter.getClass().getName() + ".mqttpassword", mqttPasswordField.getText());
+            }
+        });
+        mqttPasswordField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent keyEvent) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent keyEvent) {
+                adapter.setMqttPassword(mqttPasswordField.getText());
+                p.setComboBoxLastSelection(adapter.getClass().getName() + ".mqttpassword", mqttPasswordField.getText());
+            }
+
+            @Override
+            public void keyTyped(KeyEvent keyEvent) {
+            }
+        });
+
         portField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -287,6 +335,12 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     protected JTextField portField = new JTextField(10);
     protected JLabel portFieldLabel;
 
+    protected JTextField mqttUsernameField = new JTextField(15);
+    protected JLabel mqttUsernameFieldLabel;
+
+    protected JPasswordField mqttPasswordField = new JPasswordField(15);
+    protected JLabel mqttPasswordFieldLabel;
+
     protected JCheckBox showAutoConfig = new JCheckBox(Bundle.getMessage("AutoConfigLabel"));
     protected JTextField adNameField = new JTextField(15);
     protected JLabel adNameFieldLabel;
@@ -378,6 +432,22 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         portField.setEnabled(true);
         portField.setText("" + adapter.getPort());
         portFieldLabel = new JLabel(Bundle.getMessage("PortFieldLabel"));
+
+        mqttUsernameField.setText(adapter.getMqttUsername());
+        mqttUsernameFieldLabel = new JLabel(Bundle.getMessage("MqttUsernameFieldLabel"));
+        mqttUsernameField.setToolTipText(Bundle.getMessage("MqttUsernameToolTip"));
+        if (adapter.getMqttUsername() != null || adapter.getMqttUsername() != "") {
+            mqttUsernameField.setText(p.getComboBoxLastSelection(adapter.getClass().getName() + ".mqttusername"));
+            adapter.setMqttUsername(mqttUsernameField.getText());
+        }
+
+        mqttPasswordField.setText(adapter.getMqttPassword());
+        mqttPasswordFieldLabel = new JLabel(Bundle.getMessage("MqttPasswordFieldLabel"));
+        mqttPasswordField.setToolTipText(Bundle.getMessage("MqttPasswordToolTip"));
+        if (adapter.getMqttPassword() != null || adapter.getMqttPassword() != "") {
+            mqttPasswordField.setText(p.getComboBoxLastSelection(adapter.getClass().getName() + ".mqttpassword"));
+            adapter.setMqttPassword(mqttPasswordField.getText());
+        }
 
         adNameField.setToolTipText(Bundle.getMessage("AdNameFieldToolTip"));
         adNameField.setEnabled(false);
@@ -483,6 +553,20 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                 gbLayout.setConstraints(portField, cR);
                 _details.add(portFieldLabel);
                 _details.add(portField);
+                i++;
+                cR.gridy = i;
+                cL.gridy = i;
+                gbLayout.setConstraints(mqttUsernameFieldLabel, cL);
+                gbLayout.setConstraints(mqttUsernameField, cR);
+                _details.add(mqttUsernameFieldLabel);
+                _details.add(mqttUsernameField);
+                i++;
+                cR.gridy = i;
+                cL.gridy = i;
+                gbLayout.setConstraints(mqttPasswordFieldLabel, cL);
+                gbLayout.setConstraints(mqttPasswordField, cR);
+                _details.add(mqttPasswordFieldLabel);
+                _details.add(mqttPasswordField);
                 i++;
             }
 

@@ -25,6 +25,9 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     protected Socket socketConn = null;
     protected int connTimeout = 0; // connection timeout for read operations.
     // Default is 0, an infinite timeout.
+    // the MQTT Credentials.
+    protected String m_MqttUsername = null;
+    protected String m_MqttPassword = null;
 
     protected AbstractNetworkPortController(SystemConnectionMemo connectionMemo) {
         super(connectionMemo);
@@ -32,9 +35,11 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     }
 
     @Override
-    public void connect(String host, int port) throws IOException {
+    public void connect(String host, int port, String mqttuser, String mqttpass) throws IOException {
         setHostName(host);
         setPort(port);
+        setMqttUsername(mqttuser);
+        setMqttPassword(mqttpass);
         connect();
     }
 
@@ -89,6 +94,44 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     @Override
     public String getHostName() {
         return m_HostName;
+    }
+
+    /**
+     * Remember the associated MQTT Username.
+     *
+     * @param s the mqtt username; 
+     */
+    @Override
+    public void setMqttUsername(String s) {
+        log.trace("setMqttUsername({})", s, new Exception("traceback only"));
+        m_MqttUsername = s;
+        if ((s == null || s.equals("")) && !getMdnsConfigure()) {
+            m_MqttUsername = JmrixConfigPane.NONE;
+        }
+    }
+
+    @Override
+    public String getMqttUsername() {
+        return m_MqttUsername;
+    }
+
+    /**
+     * Remember the associated MQTT Password.
+     *
+     * @param s the mqtt password; 
+     */
+    @Override
+    public void setMqttPassword(String s) {
+        log.trace("setMqttPassword({})", s, new Exception("traceback only"));
+        m_MqttPassword = s;
+        if ((s == null || s.equals("")) && !getMdnsConfigure()) {
+            m_MqttPassword = JmrixConfigPane.NONE;
+        }
+    }
+
+    @Override
+    public String getMqttPassword() {
+        return m_MqttPassword;
     }
 
     /**
