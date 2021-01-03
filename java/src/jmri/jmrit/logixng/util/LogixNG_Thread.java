@@ -311,10 +311,15 @@ public class LogixNG_Thread {
     
     public static void assertLogixNGThreadNotRunning() {
         synchronized(LogixNG_Thread.class) {
+            boolean aThreadIsRunning = false;
             for (LogixNG_Thread thread : _threads.values()) {
                 if (!thread._threadIsStopped) {
-                    throw new RuntimeException("logixNGThread is running");
+                    aThreadIsRunning = true;
+                    thread.stopLogixNGThread();
                 }
+            }
+            if (aThreadIsRunning) {
+                throw new RuntimeException("logixNGThread is running");
             }
         }
     }

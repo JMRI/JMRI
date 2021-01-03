@@ -1853,51 +1853,10 @@ public class StoreAndLoadTest {
             LogixNG_Thread.stopAllLogixNGThreads();
             LogixNG_Thread.assertLogixNGThreadNotRunning();
             
-            // This test fails on GitHub Windows CI but not on my local computer.
-            // Maybe a sleep will help?M /Daniel
-            Thread.sleep(1000);
-            LogixNG_Thread.assertLogixNGThreadNotRunning();
-            
             //**********************************
             // Try to load file
             //**********************************
             
-            java.util.Set<ConditionalNG> conditionalNG_Set =
-                    new java.util.HashSet<>(conditionalNGManager.getNamedBeanSet());
-            for (ConditionalNG aConditionalNG : conditionalNG_Set) {
-                conditionalNGManager.deleteConditionalNG(aConditionalNG);
-            }
-            java.util.SortedSet<MaleAnalogActionSocket> set1 = analogActionManager.getNamedBeanSet();
-            List<MaleSocket> l = new ArrayList<>(set1);
-            for (MaleSocket x1 : l) {
-                analogActionManager.deleteBean((MaleAnalogActionSocket)x1, "DoDelete");
-            }
-            java.util.SortedSet<MaleAnalogExpressionSocket> set2 = analogExpressionManager.getNamedBeanSet();
-            l = new ArrayList<>(set2);
-            for (MaleSocket x2 : l) {
-                analogExpressionManager.deleteBean((MaleAnalogExpressionSocket)x2, "DoDelete");
-            }
-            java.util.SortedSet<MaleDigitalActionSocket> set3 = digitalActionManager.getNamedBeanSet();
-            l = new ArrayList<>(set3);
-            for (MaleSocket x3 : l) {
-                digitalActionManager.deleteBean((MaleDigitalActionSocket)x3, "DoDelete");
-            }
-            java.util.SortedSet<MaleDigitalExpressionSocket> set4 = digitalExpressionManager.getNamedBeanSet();
-            l = new ArrayList<>(set4);
-            for (MaleSocket x4 : l) {
-                digitalExpressionManager.deleteBean((MaleDigitalExpressionSocket)x4, "DoDelete");
-            }
-            java.util.SortedSet<MaleStringActionSocket> set5 = stringActionManager.getNamedBeanSet();
-            l = new ArrayList<>(set5);
-            for (MaleSocket x5 : l) {
-                stringActionManager.deleteBean((MaleStringActionSocket)x5, "DoDelete");
-            }
-            java.util.SortedSet<MaleStringExpressionSocket> set6 = stringExpressionManager.getNamedBeanSet();
-            l = new ArrayList<>(set6);
-            for (MaleSocket x6 : l) {
-                stringExpressionManager.deleteBean((MaleStringExpressionSocket)x6, "DoDelete");
-            }
-
             results = cm.load(secondFile);
             log.debug(results ? "load was successful" : "store failed");
             if (results) {
