@@ -66,8 +66,9 @@ public class TreeEditor extends TreeViewer {
     private JButton _edit;
     
     private SwingConfiguratorInterface _addSwingConfiguratorInterface;
+    private SwingConfiguratorInterface _addSwingConfiguratorInterfaceMaleSocket;
     private SwingConfiguratorInterface _editSwingConfiguratorInterface;
-    private SwingConfiguratorInterface _swingConfiguratorInterfaceMaleSocket;
+    private final List<Map.Entry<SwingConfiguratorInterface, Base>> _swingConfiguratorInterfaceList = new ArrayList<>();
     
     private LocalVariableTableModel _localVariableTableModel;
     
@@ -410,7 +411,10 @@ public class TreeEditor extends TreeViewer {
                     } else {
                         socket = _addSwingConfiguratorInterface.createNewObject(_systemName.getText(), _addUserName.getText());
                     }
-                    _swingConfiguratorInterfaceMaleSocket.updateObject(socket);
+                    _addSwingConfiguratorInterfaceMaleSocket.updateObject(socket);
+//                    for (Map.Entry<SwingConfiguratorInterface, Base> entry : _swingConfiguratorInterfaceList) {
+//                        entry.getKey().updateObject(entry.getValue());
+//                    }
                     socket.setComment(_addComment.getText());
                     try {
                         femaleSocket.connect(socket);
@@ -455,7 +459,7 @@ public class TreeEditor extends TreeViewer {
             _create.setToolTipText(Bundle.getMessage("CreateButtonHint"));  // NOI18N
             
             if (_addSwingConfiguratorInterface != null) {
-                makeAddEditFrame(true, femaleSocket, _addSwingConfiguratorInterface, _create);  // NOI18N
+                makeAddEditFrame(true, femaleSocket, _create);  // NOI18N
             }
         }
     }
@@ -471,8 +475,8 @@ public class TreeEditor extends TreeViewer {
         _showReminder = true;
         // make an Edit Frame
         if (_editActionExpressionDialog == null) {
-            _editSwingConfiguratorInterface = SwingTools.getSwingConfiguratorForClass(femaleSocket.getConnectedSocket().getObject().getClass());
-            _editSwingConfiguratorInterface.setFrame(this);
+//            _editSwingConfiguratorInterface = SwingTools.getSwingConfiguratorForClass(femaleSocket.getConnectedSocket().getObject().getClass());
+//            _editSwingConfiguratorInterface.setFrame(this);
             // Edit ConditionalNG
             _edit = new JButton(Bundle.getMessage("ButtonOK"));  // NOI18N
             _edit.addActionListener((ActionEvent e) -> {
@@ -498,9 +502,10 @@ public class TreeEditor extends TreeViewer {
                     Base object = femaleSocket.getConnectedSocket().getObject();
                     ((NamedBean)object).setUserName(_addUserName.getText());
                     ((NamedBean)object).setComment(_addComment.getText());
-                    _editSwingConfiguratorInterface.updateObject(femaleSocket.getConnectedSocket().getObject());
-                    _swingConfiguratorInterfaceMaleSocket.updateObject(femaleSocket.getConnectedSocket());
-                    _editSwingConfiguratorInterface.dispose();
+                    for (Map.Entry<SwingConfiguratorInterface, Base> entry : _swingConfiguratorInterfaceList) {
+                        entry.getKey().updateObject(entry.getValue());
+                        entry.getKey().dispose();
+                    }
                     _editActionExpressionDialog.dispose();
                     _editActionExpressionDialog = null;
                     for (TreeModelListener l : femaleSocketTreeModel.listeners) {
@@ -526,7 +531,7 @@ public class TreeEditor extends TreeViewer {
             });
             _edit.setToolTipText(Bundle.getMessage("EditButtonHint"));  // NOI18N
             
-            makeAddEditFrame(false, femaleSocket, _editSwingConfiguratorInterface, _edit);  // NOI18N
+            makeAddEditFrame(false, femaleSocket, _edit);  // NOI18N
         }
     }
 
@@ -535,13 +540,11 @@ public class TreeEditor extends TreeViewer {
      *
      * @param addOrEdit true if add, false if edit
      * @param femaleSocket the female socket to which we want to add something
-     * @param swingConfiguratorInterface the swing interface to configure this item
      * @param button a button to add to the dialog
      */
     final protected void makeAddEditFrame(
             boolean addOrEdit,
             FemaleSocket femaleSocket,
-            SwingConfiguratorInterface swingConfiguratorInterface,
             JButton button) {
         
         JDialog frame  = new JDialog(
@@ -590,10 +593,12 @@ public class TreeEditor extends TreeViewer {
                 c.gridy = 0;
                 p.add(_autoSystemName, c);
             }
-
-            _systemName.setToolTipText(Bundle.getMessage("SystemNameHint",
-                    swingConfiguratorInterface.getExampleSystemName()));
-            _addUserName.setToolTipText(Bundle.getMessage("UserNameHint"));
+            
+            if (addOrEdit) {
+                _systemName.setToolTipText(Bundle.getMessage("SystemNameHint",
+                        _addSwingConfiguratorInterface.getExampleSystemName()));
+                _addUserName.setToolTipText(Bundle.getMessage("UserNameHint"));
+            }
         } else {
             c.gridx = 0;
             c.gridy = 0;
@@ -626,20 +631,38 @@ public class TreeEditor extends TreeViewer {
         
         // Get panel for the item
         JPanel panel33;
-        JPanel panel34;
+        JPanel panel34 = new JPanel();
+        panel34.setLayout(new BoxLayout(panel34, BoxLayout.Y_AXIS));
+        _swingConfiguratorInterfaceList.clear();
         if (femaleSocket.isConnected()) {
-            panel33 = swingConfiguratorInterface.getConfigPanel(femaleSocket.getConnectedSocket().getObject(), panel5);
-            _swingConfiguratorInterfaceMaleSocket =
-                    SwingTools.getSwingConfiguratorForClass(femaleSocket.getConnectedSocket().getClass());
-            panel34 = _swingConfiguratorInterfaceMaleSocket.getConfigPanel(femaleSocket.getConnectedSocket(), panel5);
+            Base object = femaleSocket.getConnectedSocket();
+            while (object instanceof MaleSocket) {
+                SwingConfiguratorInterface swi =
+                        SwingTools.getSwingConfiguratorForClass(object.getClass());
+                panel34.add(swi.getConfigPanel(femaleSocket.getConnectedSocket(), panel5));
+                _swingConfiguratorInterfaceList.add(new HashMap.SimpleEntry<>(swi, object));
+                object = ((MaleSocket)object).getObject();
+            }
+            if (object != null) {
+                _editSwingConfiguratorInterface =
+                        SwingTools.getSwingConfiguratorForClass(object.getClass());
+                _editSwingConfiguratorInterface.setFrame(this);
+                panel33 = _editSwingConfiguratorInterface.getConfigPanel(object, panel5);
+                _swingConfiguratorInterfaceList.add(new HashMap.SimpleEntry<>(_editSwingConfiguratorInterface, object));
+            } else {
+                // 'object' should be an action or expression but is null
+                panel33 = new JPanel();
+                panel33.add(new JLabel("Error: femaleSocket.getConnectedSocket().getObject().getObject()....getObject() doesn't return a non MaleSocket"));
+                log.error("femaleSocket.getConnectedSocket().getObject().getObject()....getObject() doesn't return a non MaleSocket");
+            }
         } else {
-            panel33 = swingConfiguratorInterface.getConfigPanel(panel5);
+            panel33 = _addSwingConfiguratorInterface.getConfigPanel(panel5);
             
             Class<? extends MaleSocket> maleSocketClass =
-                    swingConfiguratorInterface.getManager().getMaleSocketClass();
-            _swingConfiguratorInterfaceMaleSocket =
+                    _addSwingConfiguratorInterface.getManager().getMaleSocketClass();
+            _addSwingConfiguratorInterfaceMaleSocket =
                     SwingTools.getSwingConfiguratorForClass(maleSocketClass);
-            panel34 = _swingConfiguratorInterfaceMaleSocket.getConfigPanel(panel5);
+            panel34 = _addSwingConfiguratorInterfaceMaleSocket.getConfigPanel(panel5);
         }
         panel3.add(panel33);
         panel3.add(panel34);
@@ -919,8 +942,13 @@ public class TreeEditor extends TreeViewer {
      */
     final protected void cancelEditPressed(ActionEvent e) {
         _editActionExpressionDialog.setVisible(false);
-        _editSwingConfiguratorInterface.dispose();
-        _swingConfiguratorInterfaceMaleSocket.dispose();
+//        _editSwingConfiguratorInterface.dispose();
+        for (Map.Entry<SwingConfiguratorInterface, Base> entry : _swingConfiguratorInterfaceList) {
+            entry.getKey().dispose();
+//            entry.getKey().updateObject(entry.getValue());
+//        for (SwingConfiguratorInterface swi : _swingConfiguratorInterfaceList) {
+//            swi.dispose();
+        }
         _editActionExpressionDialog.dispose();
         _editActionExpressionDialog = null;
 //        _inCopyMode = false;
