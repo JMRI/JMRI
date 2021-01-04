@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng;
 
 import jmri.NamedBean;
+import jmri.jmrit.logixng.util.LogixNG_Thread;
 
 /**
  * ConditionalNG.
@@ -10,10 +11,10 @@ import jmri.NamedBean;
 public interface ConditionalNG extends Base, NamedBean {
 
     /**
-     * Get the thread id that this conditionalNG executes on.
-     * @return the thread ID
+     * Get the thread that this conditionalNG executes on.
+     * @return the thread
      */
-    public int getCurrentThreadId();
+    public LogixNG_Thread getCurrentThread();
     
     /**
      * Get the thread id that this conditionalNG should execute on when JMRI

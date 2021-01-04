@@ -56,8 +56,8 @@ public class DefaultConditionalNG extends AbstractBase
     
     /** {@inheritDoc} */
     @Override
-    public int getCurrentThreadId() {
-        return _thread.getThreadId();
+    public LogixNG_Thread getCurrentThread() {
+        return _thread;
     }
     
     /** {@inheritDoc} */

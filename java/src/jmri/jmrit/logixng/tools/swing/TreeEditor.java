@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -23,7 +24,9 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.swing.SwingTools;
+import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.jmrit.logixng.util.parser.swing.FunctionsHelpDialog;
+import jmri.util.ThreadingUtil;
 
 /**
  * Base class for LogixNG editors
@@ -146,6 +149,38 @@ public class TreeEditor extends TreeViewer {
             });
         } else {
             _clipboardEditor.setVisible(true);
+        }
+    }
+    
+    
+    /**
+     * Run the thread action on either the ConditionalNG thread or the
+     * GUI thread.
+     * If the conditionalNG is not null, run it on the conditionalNG thread.
+     * If the conditionalNG is null, run it on the GUI thread.
+     * The conditionalNG is null when editing the clipboard or a module.
+     * @param conditionalNG the conditionalNG or null if no conditionalNG
+     * @param ta the thread action
+     */
+    private void runOnConditionalNGThreadOrGUIThread(
+            ConditionalNG conditionalNG, ThreadingUtil.ThreadAction ta) {
+        
+        AtomicReference<RuntimeException> ar = new AtomicReference();
+        
+        if (conditionalNG != null) {
+            ThreadingUtil.ThreadAction taException = () -> {
+                try {
+                    ta.run();
+                } catch (RuntimeException e) {
+                    ar.set(e);
+                }
+            };
+            LogixNG_Thread thread = conditionalNG.getCurrentThread();
+            thread.runOnLogixNG(taException);
+            if (ar.get() != null) throw ar.get();
+        } else {
+            // Run the thread action on the GUI thread. And we already are on the GUI thread.
+            ta.run();
         }
     }
     
@@ -385,76 +420,82 @@ public class TreeEditor extends TreeViewer {
             // Create item
             _create = new JButton(Bundle.getMessage("ButtonCreate"));  // NOI18N
             _create.addActionListener((ActionEvent e) -> {
-                _femaleRootSocket.unregisterListeners();
-                
-                List<String> errorMessages = new ArrayList<>();
-                
-                boolean isValid = true;
-                
-                if (!_prefs.getShowSystemUserNames()
-                        || (_systemName.getText().isEmpty() && _autoSystemName.isSelected())) {
-                    _systemName.setText(_addSwingConfiguratorInterface.getAutoSystemName());
-                }
-                
-                if (_addSwingConfiguratorInterface.getManager()
-                        .validSystemNameFormat(_systemName.getText()) != Manager.NameValidity.VALID) {
-                    isValid = false;
-                    errorMessages.add(Bundle.getMessage("InvalidSystemName", _systemName.getText()));
-                }
-                
-                isValid &= _addSwingConfiguratorInterface.validate(errorMessages);
-                
-                if (isValid) {
-                    MaleSocket socket;
-                    if (_addUserName.getText().isEmpty()) {
-                        socket = _addSwingConfiguratorInterface.createNewObject(_systemName.getText(), null);
+                runOnConditionalNGThreadOrGUIThread(
+                        _femaleRootSocket.getConditionalNG(),
+                        () -> {
+                    _femaleRootSocket.unregisterListeners();
+
+                    List<String> errorMessages = new ArrayList<>();
+
+                    boolean isValid = true;
+
+                    if (!_prefs.getShowSystemUserNames()
+                            || (_systemName.getText().isEmpty() && _autoSystemName.isSelected())) {
+                        _systemName.setText(_addSwingConfiguratorInterface.getAutoSystemName());
+                    }
+
+                    if (_addSwingConfiguratorInterface.getManager()
+                            .validSystemNameFormat(_systemName.getText()) != Manager.NameValidity.VALID) {
+                        isValid = false;
+                        errorMessages.add(Bundle.getMessage("InvalidSystemName", _systemName.getText()));
+                    }
+
+                    isValid &= _addSwingConfiguratorInterface.validate(errorMessages);
+
+                    if (isValid) {
+                        MaleSocket socket;
+                        if (_addUserName.getText().isEmpty()) {
+                            socket = _addSwingConfiguratorInterface.createNewObject(_systemName.getText(), null);
+                        } else {
+                            socket = _addSwingConfiguratorInterface.createNewObject(_systemName.getText(), _addUserName.getText());
+                        }
+                        _addSwingConfiguratorInterfaceMaleSocket.updateObject(socket);
+    //                    for (Map.Entry<SwingConfiguratorInterface, Base> entry : _swingConfiguratorInterfaceList) {
+    //                        entry.getKey().updateObject(entry.getValue());
+    //                    }
+                        socket.setComment(_addComment.getText());
+                        try {
+                            femaleSocket.connect(socket);
+                        } catch (SocketAlreadyConnectedException ex) {
+                            throw new RuntimeException(ex);
+                        }
+
+                        femaleSocket.forEntireTree((Base b) -> {
+                            b.addPropertyChangeListener(this);
+                        });
+
+                        ThreadingUtil.runOnGUIEventually(() -> {
+                            _addSwingConfiguratorInterface.dispose();
+                            _addItemDialog.dispose();
+                            _addItemDialog = null;
+
+                            for (TreeModelListener l : femaleSocketTreeModel.listeners) {
+                                TreeModelEvent tme = new TreeModelEvent(
+                                        femaleSocket,
+                                        path.getPath()
+                                );
+                                l.treeNodesChanged(tme);
+                            }
+                            tree.expandPath(path);
+                            tree.updateUI();
+
+                            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+                                prefMgr.setCheckboxPreferenceState(_systemNameAuto, _autoSystemName.isSelected());
+                            });
+                        });
                     } else {
-                        socket = _addSwingConfiguratorInterface.createNewObject(_systemName.getText(), _addUserName.getText());
+                        StringBuilder errorMsg = new StringBuilder();
+                        for (String s : errorMessages) {
+                            if (errorMsg.length() > 0) errorMsg.append("<br>");
+                            errorMsg.append(s);
+                        }
+                        JOptionPane.showMessageDialog(null,
+                                Bundle.getMessage("ValidateErrorMessage", errorMsg),
+                                Bundle.getMessage("ValidateErrorTitle"),
+                                JOptionPane.ERROR_MESSAGE);
                     }
-                    _addSwingConfiguratorInterfaceMaleSocket.updateObject(socket);
-//                    for (Map.Entry<SwingConfiguratorInterface, Base> entry : _swingConfiguratorInterfaceList) {
-//                        entry.getKey().updateObject(entry.getValue());
-//                    }
-                    socket.setComment(_addComment.getText());
-                    try {
-                        femaleSocket.connect(socket);
-                    } catch (SocketAlreadyConnectedException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                    
-                    femaleSocket.forEntireTree((Base b) -> {
-                        b.addPropertyChangeListener(this);
-                    });
-                    
-                    _addSwingConfiguratorInterface.dispose();
-                    _addItemDialog.dispose();
-                    _addItemDialog = null;
-                    
-                    for (TreeModelListener l : femaleSocketTreeModel.listeners) {
-                        TreeModelEvent tme = new TreeModelEvent(
-                                femaleSocket,
-                                path.getPath()
-                        );
-                        l.treeNodesChanged(tme);
-                    }
-                    tree.expandPath(path);
-                    tree.updateUI();
-                    
-                    InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
-                        prefMgr.setCheckboxPreferenceState(_systemNameAuto, _autoSystemName.isSelected());
-                    });
-                } else {
-                    StringBuilder errorMsg = new StringBuilder();
-                    for (String s : errorMessages) {
-                        if (errorMsg.length() > 0) errorMsg.append("<br>");
-                        errorMsg.append(s);
-                    }
-                    JOptionPane.showMessageDialog(null,
-                            Bundle.getMessage("ValidateErrorMessage", errorMsg),
-                            Bundle.getMessage("ValidateErrorTitle"),
-                            JOptionPane.ERROR_MESSAGE);
-                }
-                if (_femaleRootSocket.isActive()) _femaleRootSocket.registerListeners();
+                    if (_femaleRootSocket.isActive()) _femaleRootSocket.registerListeners();
+                });
             });
             _create.setToolTipText(Bundle.getMessage("CreateButtonHint"));  // NOI18N
             
@@ -480,54 +521,64 @@ public class TreeEditor extends TreeViewer {
             // Edit ConditionalNG
             _edit = new JButton(Bundle.getMessage("ButtonOK"));  // NOI18N
             _edit.addActionListener((ActionEvent e) -> {
-                _femaleRootSocket.unregisterListeners();
                 
-                List<String> errorMessages = new ArrayList<>();
-                
-                boolean isValid = true;
-                
-                if (_editSwingConfiguratorInterface.getManager() != null) {
-                    if (_editSwingConfiguratorInterface.getManager()
-                            .validSystemNameFormat(_systemName.getText()) != Manager.NameValidity.VALID) {
-                        isValid = false;
-                        errorMessages.add(Bundle.getMessage("InvalidSystemName", _systemName.getText()));
+                runOnConditionalNGThreadOrGUIThread(
+                        _femaleRootSocket.getConditionalNG(),
+                        () -> {
+                            
+                    _femaleRootSocket.unregisterListeners();
+                    
+                    List<String> errorMessages = new ArrayList<>();
+                    
+                    boolean isValid = true;
+                    
+                    if (_editSwingConfiguratorInterface.getManager() != null) {
+                        if (_editSwingConfiguratorInterface.getManager()
+                                .validSystemNameFormat(_systemName.getText()) != Manager.NameValidity.VALID) {
+                            isValid = false;
+                            errorMessages.add(Bundle.getMessage("InvalidSystemName", _systemName.getText()));
+                        }
+                    } else {
+                        log.debug("_editSwingConfiguratorInterface.getManager() returns null");
                     }
-                } else {
-                    log.debug("_editSwingConfiguratorInterface.getManager() returns null");
-                }
-                
-                isValid &= _editSwingConfiguratorInterface.validate(errorMessages);
-                
-                if (isValid) {
-                    Base object = femaleSocket.getConnectedSocket().getObject();
-                    ((NamedBean)object).setUserName(_addUserName.getText());
-                    ((NamedBean)object).setComment(_addComment.getText());
-                    for (Map.Entry<SwingConfiguratorInterface, Base> entry : _swingConfiguratorInterfaceList) {
-                        entry.getKey().updateObject(entry.getValue());
-                        entry.getKey().dispose();
+                    
+                    isValid &= _editSwingConfiguratorInterface.validate(errorMessages);
+                    
+                    if (isValid) {
+                        ThreadingUtil.runOnGUIEventually(() -> {
+                            Base object = femaleSocket.getConnectedSocket().getObject();
+                            ((NamedBean)object).setUserName(_addUserName.getText());
+                            ((NamedBean)object).setComment(_addComment.getText());
+                            for (Map.Entry<SwingConfiguratorInterface, Base> entry : _swingConfiguratorInterfaceList) {
+                                entry.getKey().updateObject(entry.getValue());
+                                entry.getKey().dispose();
+                            }
+                            for (TreeModelListener l : femaleSocketTreeModel.listeners) {
+                                TreeModelEvent tme = new TreeModelEvent(
+                                        femaleSocket,
+                                        path.getPath()
+                                );
+                                l.treeNodesChanged(tme);
+                            }
+                            _editActionExpressionDialog.dispose();
+                            _editActionExpressionDialog = null;
+                            tree.updateUI();
+                        });
+                    } else {
+                        StringBuilder errorMsg = new StringBuilder();
+                        for (String s : errorMessages) {
+                            if (errorMsg.length() > 0) errorMsg.append("<br>");
+                            errorMsg.append(s);
+                        }
+                        ThreadingUtil.runOnGUIEventually(() -> {
+                            JOptionPane.showMessageDialog(null,
+                                    Bundle.getMessage("ValidateErrorMessage", errorMsg),
+                                    Bundle.getMessage("ValidateErrorTitle"),
+                                    JOptionPane.ERROR_MESSAGE);
+                        });
                     }
-                    _editActionExpressionDialog.dispose();
-                    _editActionExpressionDialog = null;
-                    for (TreeModelListener l : femaleSocketTreeModel.listeners) {
-                        TreeModelEvent tme = new TreeModelEvent(
-                                femaleSocket,
-                                path.getPath()
-                        );
-                        l.treeNodesChanged(tme);
-                    }
-                    tree.updateUI();
-                } else {
-                    StringBuilder errorMsg = new StringBuilder();
-                    for (String s : errorMessages) {
-                        if (errorMsg.length() > 0) errorMsg.append("<br>");
-                        errorMsg.append(s);
-                    }
-                    JOptionPane.showMessageDialog(null,
-                            Bundle.getMessage("ValidateErrorMessage", errorMsg),
-                            Bundle.getMessage("ValidateErrorTitle"),
-                            JOptionPane.ERROR_MESSAGE);
-                }
-                if (_femaleRootSocket.isActive()) _femaleRootSocket.registerListeners();
+                    if (_femaleRootSocket.isActive()) _femaleRootSocket.registerListeners();
+                });
             });
             _edit.setToolTipText(Bundle.getMessage("EditButtonHint"));  // NOI18N
             
@@ -766,24 +817,30 @@ public class TreeEditor extends TreeViewer {
                             JOptionPane.ERROR_MESSAGE);
                     
                 } else {
-                    _femaleRootSocket.unregisterListeners();
-                    
-                    maleSocket.clearLocalVariables();
-                    for (SymbolTable.VariableData variableData : _localVariableTableModel.getVariables()) {
-                        maleSocket.addLocalVariable(variableData);
-                    }
-                    
-                    _editLocalVariablesDialog.dispose();
-                    _editLocalVariablesDialog = null;
-                    for (TreeModelListener l : femaleSocketTreeModel.listeners) {
-                        TreeModelEvent tme = new TreeModelEvent(
-                                femaleSocket,
-                                path.getPath()
-                        );
-                        l.treeNodesChanged(tme);
-                    }
-                    tree.updateUI();
-                    if (_femaleRootSocket.isActive()) _femaleRootSocket.registerListeners();
+                    runOnConditionalNGThreadOrGUIThread(
+                            _femaleRootSocket.getConditionalNG(),
+                            () -> {
+                        _femaleRootSocket.unregisterListeners();
+
+                        maleSocket.clearLocalVariables();
+                        for (SymbolTable.VariableData variableData : _localVariableTableModel.getVariables()) {
+                            maleSocket.addLocalVariable(variableData);
+                        }
+
+                        ThreadingUtil.runOnGUIEventually(() -> {
+                            _editLocalVariablesDialog.dispose();
+                            _editLocalVariablesDialog = null;
+                            for (TreeModelListener l : femaleSocketTreeModel.listeners) {
+                                TreeModelEvent tme = new TreeModelEvent(
+                                        femaleSocket,
+                                        path.getPath()
+                                );
+                                l.treeNodesChanged(tme);
+                            }
+                            tree.updateUI();
+                        });
+                        if (_femaleRootSocket.isActive()) _femaleRootSocket.registerListeners();
+                    });
                 }
             });
 //            _edit.setToolTipText(Bundle.getMessage("EditButtonHint"));  // NOI18N
@@ -1203,35 +1260,45 @@ public class TreeEditor extends TreeViewer {
                     
                 case ACTION_COMMAND_CUT:
                     if (_currentFemaleSocket.isConnected()) {
-                        _femaleRootSocket.unregisterListeners();
-                        Clipboard clipboard =
-                                InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
-                        clipboard.add(_currentFemaleSocket.getConnectedSocket());
-                        _currentFemaleSocket.disconnect();
-                        updateTree(_currentFemaleSocket, _currentPath.getPath());
+                        runOnConditionalNGThreadOrGUIThread(
+                                _femaleRootSocket.getConditionalNG(),
+                                () -> {
+                            _femaleRootSocket.unregisterListeners();
+                            Clipboard clipboard =
+                                    InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
+                            clipboard.add(_currentFemaleSocket.getConnectedSocket());
+                            _currentFemaleSocket.disconnect();
+                            updateTree(_currentFemaleSocket, _currentPath.getPath());
+                        });
                         _femaleRootSocket.registerListeners();
-                    } else {
+                   } else {
                         log.error("_currentFemaleSocket is not connected");
                     }
                     break;
                     
                 case ACTION_COMMAND_COPY:
                     if (_currentFemaleSocket.isConnected()) {
-                        _femaleRootSocket.unregisterListeners();
-                        Clipboard clipboard =
-                                InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
-                        Map<String, String> systemNames = new HashMap<>();
-                        Map<String, String> userNames = new HashMap<>();
-                        try {
-                            clipboard.add((MaleSocket) _currentFemaleSocket.getConnectedSocket().getDeepCopy(systemNames, userNames));
-                        } catch (JmriException ex) {
-                            log.error("getDeepCopy thrown exception: {}", ex, ex);
-                            JOptionPane.showMessageDialog(null,
-                                    "An exception has occured: "+ex.getMessage(),
-                                    "An error has occured",
-                                    JOptionPane.ERROR_MESSAGE);
-                        }
-                        _femaleRootSocket.registerListeners();
+                        runOnConditionalNGThreadOrGUIThread(
+                                _femaleRootSocket.getConditionalNG(),
+                                () -> {
+                            _femaleRootSocket.unregisterListeners();
+                            Clipboard clipboard =
+                                    InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
+                            Map<String, String> systemNames = new HashMap<>();
+                            Map<String, String> userNames = new HashMap<>();
+                            try {
+                                clipboard.add((MaleSocket) _currentFemaleSocket.getConnectedSocket().getDeepCopy(systemNames, userNames));
+                            } catch (JmriException ex) {
+                                log.error("getDeepCopy thrown exception: {}", ex, ex);
+                                ThreadingUtil.runOnGUIEventually(() -> {
+                                    JOptionPane.showMessageDialog(null,
+                                            "An exception has occured: "+ex.getMessage(),
+                                            "An error has occured",
+                                            JOptionPane.ERROR_MESSAGE);
+                                });
+                            }
+                            _femaleRootSocket.registerListeners();
+                        });
                     } else {
                         log.error("_currentFemaleSocket is not connected");
                     }
@@ -1239,16 +1306,22 @@ public class TreeEditor extends TreeViewer {
                     
                 case ACTION_COMMAND_PASTE:
                     if (! _currentFemaleSocket.isConnected()) {
-                        _femaleRootSocket.unregisterListeners();
-                        Clipboard clipboard =
-                                InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
-                        try {
-                            _currentFemaleSocket.connect(clipboard.fetchTopItem());
-                            updateTree(_currentFemaleSocket, _currentPath.getPath());
-                        } catch (SocketAlreadyConnectedException ex) {
-                            log.error("item cannot be connected", ex);
-                        }
-                        _femaleRootSocket.registerListeners();
+                        runOnConditionalNGThreadOrGUIThread(
+                                _femaleRootSocket.getConditionalNG(),
+                                () -> {
+                            _femaleRootSocket.unregisterListeners();
+                            Clipboard clipboard =
+                                    InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
+                            try {
+                                _currentFemaleSocket.connect(clipboard.fetchTopItem());
+                                ThreadingUtil.runOnGUIEventually(() -> {
+                                    updateTree(_currentFemaleSocket, _currentPath.getPath());
+                                });
+                            } catch (SocketAlreadyConnectedException ex) {
+                                log.error("item cannot be connected", ex);
+                            }
+                            _femaleRootSocket.registerListeners();
+                        });
                     } else {
                         log.error("_currentFemaleSocket is connected");
                     }
@@ -1348,7 +1421,14 @@ public class TreeEditor extends TreeViewer {
          */
         @Override
         public Void doInBackground() {
-            _femaleRootSocket.unregisterListeners();
+            // This is not optimal. It would be desired to run the whole method
+            // on the ConditionalNG thread. But would that lock the
+            // ConditionalNG thread?
+            runOnConditionalNGThreadOrGUIThread(
+                    _femaleRootSocket.getConditionalNG(),
+                    () -> {
+                _femaleRootSocket.unregisterListeners();
+            });
             
             List<Map.Entry<FemaleSocket, MaleSocket>> sockets = new ArrayList<>();
             

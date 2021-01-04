@@ -302,19 +302,19 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     /** {@inheritDoc} */
     @Override
     public final ConditionalNG getConditionalNG() {
-        throw new UnsupportedOperationException("Not supported.");
+        return _parent.getConditionalNG();
     }
     
     /** {@inheritDoc} */
     @Override
     public final LogixNG getLogixNG() {
-        throw new UnsupportedOperationException("Not supported.");
+        return _parent.getLogixNG();
     }
     
     /** {@inheritDoc} */
     @Override
     public final Base getRoot() {
-        throw new UnsupportedOperationException("Not supported.");
+        return _parent.getRoot();
     }
     
     protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {

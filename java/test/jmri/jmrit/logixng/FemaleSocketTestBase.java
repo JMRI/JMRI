@@ -369,44 +369,12 @@ public abstract class FemaleSocketTestBase {
         
         errorFlag.set(false);
         try {
-            _femaleSocket.getConditionalNG();
-        } catch (UnsupportedOperationException ex) {
-            errorFlag.set(true);
-        }
-        Assert.assertTrue("method not supported", errorFlag.get());
-        
-        errorFlag.set(false);
-        try {
-            _femaleSocket.getLogixNG();
-        } catch (UnsupportedOperationException ex) {
-            errorFlag.set(true);
-        }
-        Assert.assertTrue("method not supported", errorFlag.get());
-        
-        errorFlag.set(false);
-        try {
-            _femaleSocket.getRoot();
-        } catch (UnsupportedOperationException ex) {
-            errorFlag.set(true);
-        }
-        Assert.assertTrue("method not supported", errorFlag.get());
-        
-        errorFlag.set(false);
-        try {
             _femaleSocket.getCategory();
         } catch (UnsupportedOperationException ex) {
             errorFlag.set(true);
         }
         Assert.assertTrue("method not supported", errorFlag.get());
-/*        
-        errorFlag.set(false);
-        try {
-            femaleSocket.isActive();
-        } catch (UnsupportedOperationException ex) {
-            errorFlag.set(true);
-        }
-        Assert.assertTrue("method not supported", errorFlag.get());
-*/        
+        
         errorFlag.set(false);
         try {
             _femaleSocket.isExternal();
