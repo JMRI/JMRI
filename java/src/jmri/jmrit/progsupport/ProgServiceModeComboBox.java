@@ -44,6 +44,7 @@ import org.slf4j.LoggerFactory;
 public class ProgServiceModeComboBox extends ProgModeSelector implements PropertyChangeListener, ActionListener {
 
     // GUI member declarations
+    JLabel progLabel = new JLabel(Bundle.getMessage("ProgrammerLabel"));
     JComboBox<GlobalProgrammerManager> progBox;
     JComboBox<ProgrammingMode> modeBox;
     ArrayList<Integer> modes = new ArrayList<Integer>();
@@ -110,6 +111,7 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
             }
         }
 
+        add(progLabel);
         add(progBox = new JComboBox<>(v));
         // if only one, don't show (might be confusing to user, better show combo with just 1 choice)
         //if (progBox.getItemCount() < 2) {
