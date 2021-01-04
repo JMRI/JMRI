@@ -10,17 +10,15 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import jmri.GlobalProgrammerManager;
-import jmri.InstanceManager;
-import jmri.Programmer;
-import jmri.ProgrammingMode;
+
+import jmri.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide a JPanel with a JComboBox to configure the service mode programmer.
+ * Provide a JPanel with a JComboBox to configure the service mode (Global) programmer.
  * <p>
- * The using code should get a configured programmer with getProgrammer.
+ * The using code should get a configured programmer with {@link #getProgrammer()}.
  * <p>
  * A ProgModePane may "share" between one of these and a ProgOpsModePane, which
  * means that there might be _none_ of these buttons selected. When that
@@ -80,7 +78,8 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
     }
 
     /**
-     * Get the list of global managers
+     * Get the list of Global ProgrammingManagers.
+     *
      * @return empty list if none
      */
     protected List<GlobalProgrammerManager> getMgrList() {
@@ -96,50 +95,51 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
         setLayout(new BoxLayout(this, direction));
 
         // create the programmer display combo box
-        progBox = new JComboBox<GlobalProgrammerManager>();
+        progBox = new JComboBox<>();
         Vector<GlobalProgrammerManager> v = new Vector<>();
         for (GlobalProgrammerManager pm : getMgrList()) {
-            Programmer globProg=null;
-            if (pm != null ) {
+            Programmer globProg = null;
+            if (pm != null) {
                 globProg = pm.getGlobalProgrammer();
             }
-            if ( globProg != null) {
+            if (globProg != null) {
                 v.add(pm);
+                log.debug("ProgSMCombo added programmer {} as item {}", pm.getClass(), v.size());
                 // listen for changes
                 globProg.addPropertyChangeListener(this);
             }
         }
 
-        add(progBox = new JComboBox<GlobalProgrammerManager>(v));
-        // if only one, don't show
-        if (progBox.getItemCount() < 2) {
-            progBox.setVisible(false);
-        } else {
-            progBox.setSelectedItem(InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)); // set default
-            progBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // new programmer selection
-                    programmerSelected();
-                }
-            });
-        }
+        add(progBox = new JComboBox<>(v));
+        // if only one, don't show (might be confusing to user, better show combo with just 1 choice)
+        //if (progBox.getItemCount() < 2) {
+        //    progLabel.setVisible(false);
+        //    progBox.setVisible(false);
+        //} else {
+        progBox.setSelectedItem(InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)); // set default
+        progBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // new programmer selection
+                programmerSelected();
+            }
+        });
+        // }
 
         // install items in GUI
-        add(new JLabel(Bundle.getMessage("ProgrammingMode")));
+        add(new JLabel(Bundle.getMessage("ProgrammingModeLabel")));
 
         add(modeBox);
 
         // and execute the setup for 1st time
         programmerSelected();
-
     }
 
     /**
-     * reload the interface with the new programmers
+     * Reload the interface with the new programming modes
      */
     void programmerSelected() {
-        DefaultComboBoxModel<ProgrammingMode> model = new DefaultComboBoxModel<ProgrammingMode>();
+        DefaultComboBoxModel<ProgrammingMode> model = new DefaultComboBoxModel<>();
         Programmer p = getProgrammer();
         if (p != null) {
             for (ProgrammingMode mode : getProgrammer().getSupportedModes()) {
@@ -151,11 +151,10 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
         ProgrammingMode mode = (getProgrammer() != null) ? getProgrammer().getMode() : null;
         log.trace("programmerSelected sets mode {}", mode);
         modeBox.setSelectedItem(mode);
-
     }
 
     /**
-     * Listen to box for mode changes
+     * Listen to modeBox for mode changes
      */
     @Override
     public void actionPerformed(java.awt.event.ActionEvent e) {
