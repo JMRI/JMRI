@@ -105,7 +105,8 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
             }
             if (globProg != null) {
                 v.add(pm);
-                log.debug("ProgSMCombo added programmer {} as item {}", pm.getClass(), v.size());
+                log.debug("ProgSMCombo added programmer {} as item {}",
+                        (pm.getClass() != null ? pm.getClass() : "null"), v.size());
                 // listen for changes
                 globProg.addPropertyChangeListener(this);
             }
