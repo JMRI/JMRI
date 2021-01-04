@@ -165,7 +165,7 @@ public class TreeEditor extends TreeViewer {
     private void runOnConditionalNGThreadOrGUIThread(
             ConditionalNG conditionalNG, ThreadingUtil.ThreadAction ta) {
         
-        AtomicReference<RuntimeException> ar = new AtomicReference();
+        AtomicReference<RuntimeException> ar = new AtomicReference<>();
         
         if (conditionalNG != null) {
             ThreadingUtil.ThreadAction taException = () -> {
