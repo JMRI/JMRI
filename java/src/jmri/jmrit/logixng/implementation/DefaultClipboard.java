@@ -13,7 +13,7 @@ import jmri.jmrit.logixng.*;
  * 
  * @author Daniel Bergqvist (C) 2020
  */
-public class DefaultClipboard extends AbstractBase implements Clipboard, Base {
+public class DefaultClipboard extends AbstractBase implements Clipboard {
 
     private ClipboardMany _clipboardItems = new ClipboardMany("", null);
     
