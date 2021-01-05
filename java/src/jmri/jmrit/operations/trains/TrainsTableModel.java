@@ -46,7 +46,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     private static final int BUILT_COLUMN = DESCRIPTION_COLUMN + 1;
     private static final int ROAD_COLUMN = BUILT_COLUMN + 1;
     private static final int LOAD_COLUMN = ROAD_COLUMN + 1;
-    private static final int OWNER_COLUMN =  LOAD_COLUMN + 1;
+    private static final int OWNER_COLUMN = LOAD_COLUMN + 1;
     private static final int ROUTE_COLUMN = OWNER_COLUMN + 1;
     private static final int DEPARTS_COLUMN = ROUTE_COLUMN + 1;
     private static final int TERMINATES_COLUMN = DEPARTS_COLUMN + 1;
@@ -57,7 +57,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     private static final int HIGHESTCOLUMN = EDIT_COLUMN + 1;
 
-    public TrainsTableModel() {
+    public TrainsTableModel(){
         super();
         trainManager.addPropertyChangeListener(this);
         Setup.getDefault().addPropertyChangeListener(this);
@@ -80,8 +80,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     public void setShowAll(boolean showAll) {
         _showAll = showAll;
         updateList();
-        fireTableStructureChanged();
-        initTable();
+        fireTableDataChanged();
     }
 
     public boolean isShowAll() {
@@ -92,7 +91,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         // first, remove listeners from the individual objects
         removePropertyChangeTrains();
 
-        synchronized (this) {
+        synchronized (sysList) {
             if (_sort == SORTBYID) {
                 sysList = trainManager.getTrainsByIdList();
             } else {
@@ -113,8 +112,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         addPropertyChangeTrains();
     }
 
-    private synchronized Train getTrainByRow(int row) {
-        return sysList.get(row);
+    private Train getTrainByRow(int row) {
+        synchronized (sysList) {
+            return sysList.get(row);
+        }
     }
 
     List<Train> sysList = trainManager.getTrainsByTimeList();
@@ -131,7 +132,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     // Train frame table column widths (13), starts with id column and ends with
     // edit
-    private final int[] _tableColumnWidths = { 50, 50, 50, 72, 100, 140, 50, 50, 50, 50, 120, 120, 120, 120, 120, 90, 70 };
+    private final int[] _tableColumnWidths = { 50, 50, 50, 72, 100, 140, 50, 50, 50, 50, 120, 120, 120, 120, 120, 90,
+            70 };
 
     void initTable() {
         // Use XTableColumnModel so we can control which columns are visible
@@ -172,8 +174,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     @Override
-    public synchronized int getRowCount() {
-        return sysList.size();
+    public int getRowCount() {
+        synchronized (sysList) {
+            return sysList.size();
+        }
     }
 
     @Override
@@ -337,8 +341,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                         return Bundle.getMessage("OpenFile");
                     }
                     if (Setup.isGenerateCsvManifestEnabled() && trainManager.isRunFileEnabled()) {
-                        setToolTip(MessageFormat.format(Bundle.getMessage("RunTrainTip"), new Object[] { train.getName() }),
-                                row, col);
+                        setToolTip(MessageFormat.format(Bundle.getMessage("RunTrainTip"),
+                                new Object[] { train.getName() }), row, col);
                         return Bundle.getMessage("RunFile");
                     }
                     setToolTip(Bundle.getMessage("PrintTrainTip"), row, col);
@@ -374,9 +378,11 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     private void setToolTip(String text, int row, int col) {
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
         ButtonRenderer buttonRenderer = (ButtonRenderer) tcm.getColumnByModelIndex(col).getCellRenderer();
-        buttonRenderer.setToolTipText(text);
+        if (buttonRenderer != null) {
+            buttonRenderer.setToolTipText(text);
+        }
     }
-    
+
     private String getBuiltString(Train train) {
         if (!train.getBuiltStartYear().equals(Train.NONE) && train.getBuiltEndYear().equals(Train.NONE)) {
             return "A " + train.getBuiltStartYear();
@@ -585,22 +591,24 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 e.getPropertyName().equals(Train.DEPARTURETIME_CHANGED_PROPERTY) ||
                 (e.getPropertyName().equals(Train.BUILD_CHANGED_PROPERTY) && !isShowAll())) {
             updateList();
-            fireTableDataChanged();
+            SwingUtilities.invokeLater(() -> {
+                fireTableDataChanged();
+            });
         } else if (e.getSource().getClass().equals(Train.class)) {
             Train train = ((Train) e.getSource());
             int row;
-            synchronized (this) {
+            synchronized (sysList) {
                 row = sysList.indexOf(train);
-            }
-            if (Control.SHOW_PROPERTY) {
-                log.debug("Update train table row: {} name: {}", row, train.getName());
-            }
-            if (row >= 0 && _table != null) {
-                SwingUtilities.invokeLater(() -> {
-                    fireTableRowsUpdated(row, row);
-                    int viewRow = _table.convertRowIndexToView(row);
-                    _table.scrollRectToVisible(_table.getCellRect(viewRow, 0, true));
-                });
+                if (Control.SHOW_PROPERTY) {
+                    log.debug("Update train table row: {} name: {}", row, train.getName());
+                }
+                if (row >= 0 && _table != null) {
+                    SwingUtilities.invokeLater(() -> {
+                        fireTableRowsUpdated(row, row);
+                        int viewRow = _table.convertRowIndexToView(row);
+                        _table.scrollRectToVisible(_table.getCellRect(viewRow, 0, true));
+                    });
+                }
             }
         }
     }
