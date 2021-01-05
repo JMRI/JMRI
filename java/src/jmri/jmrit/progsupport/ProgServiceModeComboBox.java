@@ -106,7 +106,7 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
             if (globProg != null) {
                 v.add(pm);
                 log.debug("ProgSMCombo added programmer {} as item {}",
-                        (pm.getClass() != null ? pm.getClass() : "null"), v.size());
+                        (pm != null ? pm.getClass() : "null"), v.size());
                 // listen for changes
                 globProg.addPropertyChangeListener(this);
             }
@@ -114,11 +114,7 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
 
         add(progLabel);
         add(progBox = new JComboBox<>(v));
-        // if only one, don't show (might be confusing to user, better show combo with just 1 choice)
-        //if (progBox.getItemCount() < 2) {
-        //    progLabel.setVisible(false);
-        //    progBox.setVisible(false);
-        //} else {
+        // if only one, don't show is confusing to user, so show combo with just 1 choice)
         progBox.setSelectedItem(InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)); // set default
         progBox.addActionListener(new ActionListener() {
             @Override
@@ -127,7 +123,6 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
                 programmerSelected();
             }
         });
-        // }
 
         // install items in GUI
         add(new JLabel(Bundle.getMessage("ProgrammingModeLabel")));
