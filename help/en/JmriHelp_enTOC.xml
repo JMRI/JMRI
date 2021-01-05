@@ -23,7 +23,7 @@
 
   <tocitem text="USB input " target="package.jmri.jmrix.jinput.treemodel.TreeFrame"/>
 
-  <tocitem text="Error Codes " target="html.setup.Errors"/>
+  <tocitem text="Error Codes " target="html.apps.Errors"/>
 
   <tocitem text="InstallTest (Windows) " target="package.apps.InstallTest.InstallTest"/>
 
