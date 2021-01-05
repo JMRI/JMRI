@@ -42,11 +42,11 @@ public interface Clipboard {
     public MaleSocket getTopItem();
     
     /**
-     * Get the root of the clipboard tree.
+     * Get the female socket root of the clipboard tree.
      * 
      * @return the root female socket
      */
-    public FemaleSocket getRoot();
+    public FemaleSocket getFemaleSocket();
     
     /**
      * Moves an item on the clipboard to the top of the clipboard.

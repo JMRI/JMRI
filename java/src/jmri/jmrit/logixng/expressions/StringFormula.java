@@ -99,7 +99,7 @@ public class StringFormula extends AbstractStringExpression implements FemaleSoc
         
         return new DefaultFemaleGenericExpressionSocket(
                 FemaleGenericExpressionSocket.SocketType.GENERIC, parent, listener, socketName)
-                .getGenericSocket();
+                .getGenericSocket(parent);
     }
 
     public final void setFormula(String formula) throws ParserException {

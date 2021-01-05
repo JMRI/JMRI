@@ -4,6 +4,8 @@ import java.beans.*;
 import java.io.PrintWriter;
 import java.util.*;
 
+import javax.annotation.Nonnull;
+
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
@@ -23,11 +25,12 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     boolean _enableListeners = true;
     
     
-    public AbstractFemaleSocket(Base parent, FemaleSocketListener listener, String name) {
+    public AbstractFemaleSocket(@Nonnull Base parent, FemaleSocketListener listener, String name) {
         if (!validateName(name)) {
             throw new IllegalArgumentException("the name is not valid: " + name);
         }
         if (listener == null) throw new IllegalArgumentException("FemaleSocketListener is null");
+        if (parent == null) throw new IllegalArgumentException("parent is null");
         _parent = parent;
         _listener = listener;
         _name = name;
@@ -46,6 +49,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     }
     
     /** {@inheritDoc} */
+    @Nonnull
     @Override
     public Base getParent() {
         return _parent;
@@ -53,7 +57,8 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     
     /** {@inheritDoc} */
     @Override
-    public void setParent(Base parent) {
+    public void setParent(@Nonnull Base parent) {
+        if (parent == null) throw new IllegalArgumentException("parent is null");
         _parent = parent;
     }
     

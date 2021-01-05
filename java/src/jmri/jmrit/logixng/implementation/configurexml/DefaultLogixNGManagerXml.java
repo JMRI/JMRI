@@ -78,8 +78,8 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
             // Store items on the clipboard
             Element elemClipboard = new Element("clipboard");  // NOI18N
             Clipboard clipboard = tm.getClipboard();
-            if (clipboard.getRoot().isConnected()) {
-                Base rootObject = clipboard.getRoot().getConnectedSocket().getObject();
+            if (clipboard.getFemaleSocket().isConnected()) {
+                Base rootObject = clipboard.getFemaleSocket().getConnectedSocket().getObject();
                 try {
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(rootObject);
                     if (e != null) {
@@ -245,7 +245,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
                 log.error("class has wrong type: " + o.getClass().getName());
                 return;
             }
-
+            
             LogixNG_Manager tm = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
             ClipboardMany anyMany = ((ClipboardManyXml)o).loadItem(clipboardList.get(0));
             ((DefaultClipboard)tm.getClipboard()).replaceClipboardItems(anyMany);

@@ -116,6 +116,8 @@ public class DefaultFemaleDigitalBooleanActionSocketTest extends FemaleSocketTes
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
         
+        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
+                .createConditionalNG("A conditionalNG");  // NOI18N
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();
         _action = new MyOnChangeAction("IQDB321");
@@ -123,7 +125,7 @@ public class DefaultFemaleDigitalBooleanActionSocketTest extends FemaleSocketTes
         manager = InstanceManager.getDefault(DigitalBooleanActionManager.class);
         maleSocket = ((DigitalBooleanActionManager)manager).registerAction(_action);
         otherMaleSocket = ((DigitalBooleanActionManager)manager).registerAction(otherAction);
-        _femaleSocket = new DefaultFemaleDigitalBooleanActionSocket(null, new FemaleSocketListener() {
+        _femaleSocket = new DefaultFemaleDigitalBooleanActionSocket(conditionalNG, new FemaleSocketListener() {
             @Override
             public void connected(FemaleSocket socket) {
                 flag.set(true);

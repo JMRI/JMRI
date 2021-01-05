@@ -13,11 +13,11 @@ import jmri.jmrit.logixng.*;
  * 
  * @author Daniel Bergqvist (C) 2020
  */
-public class DefaultClipboard implements Clipboard {
+public class DefaultClipboard extends AbstractBase implements Clipboard, Base {
 
     private ClipboardMany _clipboardItems = new ClipboardMany("", null);
     
-    private final FemaleAnySocket _femaleSocket = new DefaultFemaleAnySocket(null, new FemaleSocketListener() {
+    private final FemaleAnySocket _femaleSocket = new DefaultFemaleAnySocket(this, new FemaleSocketListener() {
         @Override
         public void connected(FemaleSocket socket) {
             // Do nothing
@@ -31,6 +31,8 @@ public class DefaultClipboard implements Clipboard {
     
     
     public DefaultClipboard() {
+        super("IQClipboard");
+        
         // Listeners should never be enabled for the clipboard
         _femaleSocket.setEnableListeners(false);
         
@@ -40,6 +42,8 @@ public class DefaultClipboard implements Clipboard {
             // This should never happen
             throw new RuntimeException("Program error", ex);
         }
+        _femaleSocket.setParentForAllChildren();
+        _clipboardItems.setParent(_femaleSocket.getConnectedSocket());
     }
     
     @Override
@@ -52,6 +56,7 @@ public class DefaultClipboard implements Clipboard {
         _clipboardItems.ensureFreeSocketAtTop();
         try {
             _clipboardItems.getChild(0).connect(maleSocket);
+            _clipboardItems.setParentForAllChildren();
         } catch (SocketAlreadyConnectedException ex) {
             throw new RuntimeException("Cannot add socket", ex);
         }
@@ -76,7 +81,7 @@ public class DefaultClipboard implements Clipboard {
     }
 
     @Override
-    public FemaleSocket getRoot() {
+    public FemaleSocket getFemaleSocket() {
         return _femaleSocket;
     }
 
@@ -103,6 +108,92 @@ public class DefaultClipboard implements Clipboard {
     
     public void replaceClipboardItems(ClipboardMany clipboardItems) {
         _clipboardItems = clipboardItems;
+        _clipboardItems.setParent(_femaleSocket.getConnectedSocket());
+    }
+
+    @Override
+    protected void registerListenersForThisClass() {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    protected void unregisterListenersForThisClass() {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    protected void disposeMe() {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    public void setState(int s) throws JmriException {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    public int getState() {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    public String getBeanType() {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    public String getShortDescription(Locale locale) {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    public String getLongDescription(Locale locale) {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    public Base getParent() {
+        return null;
+    }
+
+    @Override
+    public void setParent(Base parent) {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    public int getChildCount() {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    public Category getCategory() {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    public boolean isExternal() {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    public Lock getLock() {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    public void setLock(Lock lock) {
+        throw new UnsupportedOperationException("Not supported");
     }
     
     

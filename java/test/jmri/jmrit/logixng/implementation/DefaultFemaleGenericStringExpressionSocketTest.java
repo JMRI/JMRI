@@ -18,6 +18,7 @@ import org.mockito.Mockito;
  */
 public class DefaultFemaleGenericStringExpressionSocketTest extends FemaleSocketTestBase {
 
+    private ConditionalNG _conditionalNG;
     private String _memorySystemName;
     private Memory _memory;
     private MyStringExpressionMemory _expression;
@@ -91,9 +92,9 @@ public class DefaultFemaleGenericStringExpressionSocketTest extends FemaleSocket
         Assert.assertEquals("femaleGenericSocket has the same parent as _femaleSocket",
                 base, femaleGenericSocket.getParent());
         
-        _femaleSocket.setParent(null);
-        Assert.assertNull("_femaleSocket.getParent() is null", _femaleSocket.getParent());
-        Assert.assertNull("femaleGenericSocket is null", femaleGenericSocket.getParent());
+        _femaleSocket.setParent(_conditionalNG);
+        Assert.assertEquals("_femaleSocket.getParent() is _conditionalNG", _conditionalNG, _femaleSocket.getParent());
+        Assert.assertEquals("femaleGenericSocket is null", _conditionalNG, femaleGenericSocket.getParent());
         
         femaleGenericSocket.setParent(base);
         Assert.assertEquals("femaleGenericSocket.getParent() is base",
@@ -124,6 +125,8 @@ public class DefaultFemaleGenericStringExpressionSocketTest extends FemaleSocket
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
         
+        _conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
+                .createConditionalNG("A conditionalNG");  // NOI18N
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();
         _memorySystemName = "IM1";
@@ -136,7 +139,7 @@ public class DefaultFemaleGenericStringExpressionSocketTest extends FemaleSocket
         otherMaleSocket = ((StringExpressionManager)manager).registerExpression(otherExpression);
         femaleGenericSocket = new DefaultFemaleGenericExpressionSocket(
                 FemaleGenericExpressionSocket.SocketType.GENERIC,
-                null,
+                _conditionalNG,
                 new FemaleSocketListener() {
                     @Override
                     public void connected(FemaleSocket socket) {
@@ -162,7 +165,7 @@ public class DefaultFemaleGenericStringExpressionSocketTest extends FemaleSocket
                     }
                 };
         
-        _femaleSocket  = femaleGenericSocket.getStringSocket();
+        _femaleSocket  = femaleGenericSocket.getStringSocket(_conditionalNG);
         
         InstanceManager.getDefault(LogixNG_Manager.class)
                 .setSymbolTable(new DefaultSymbolTable());

@@ -134,6 +134,8 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
         
+        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
+                .createConditionalNG("A conditionalNG");  // NOI18N
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();
         _memorySystemName = "IM1";
@@ -144,7 +146,7 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
         manager = InstanceManager.getDefault(AnalogActionManager.class);
         maleSocket = ((AnalogActionManager)manager).registerAction(_action);
         otherMaleSocket = ((AnalogActionManager)manager).registerAction(otherAction);
-        _femaleSocket = new DefaultFemaleAnalogActionSocket(null, new FemaleSocketListener() {
+        _femaleSocket = new DefaultFemaleAnalogActionSocket(conditionalNG, new FemaleSocketListener() {
             @Override
             public void connected(FemaleSocket socket) {
                 flag.set(true);

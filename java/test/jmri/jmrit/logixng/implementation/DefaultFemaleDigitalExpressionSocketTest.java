@@ -135,6 +135,8 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
         
+        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
+                .createConditionalNG("A conditionalNG");  // NOI18N
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();
         _expression = new MyExpressionTurnout("IQDE321");
@@ -142,7 +144,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         manager = InstanceManager.getDefault(DigitalExpressionManager.class);
         maleSocket = ((DigitalExpressionManager)manager).registerExpression(_expression);
         otherMaleSocket = ((DigitalExpressionManager)manager).registerExpression(otherExpression);
-        _femaleSocket = new DefaultFemaleDigitalExpressionSocket(null, new FemaleSocketListener() {
+        _femaleSocket = new DefaultFemaleDigitalExpressionSocket(conditionalNG, new FemaleSocketListener() {
             @Override
             public void connected(FemaleSocket socket) {
                 flag.set(true);

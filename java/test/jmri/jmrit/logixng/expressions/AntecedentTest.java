@@ -427,7 +427,7 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
             String socketName = "E"+Integer.toString(count++);
             FemaleDigitalExpressionSocket socket =
                     InstanceManager.getDefault(DigitalExpressionManager.class)
-                            .createFemaleSocket(null, this, socketName);
+                            .createFemaleSocket(conditionalNG, this, socketName);
             socket.connect((MaleSocket) expressionAntecedent);
             expressionEntryList.add(new ExpressionEntry(socket, socketName));
         }

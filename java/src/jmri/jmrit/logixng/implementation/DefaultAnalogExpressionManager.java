@@ -154,7 +154,7 @@ public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnal
         if (preferences.getUseGenericFemaleSockets()) {
             return new DefaultFemaleGenericExpressionSocket(
                     FemaleGenericExpressionSocket.SocketType.ANALOG, parent, listener, socketName)
-                    .getAnalogSocket();
+                    .getAnalogSocket(parent);
         } else {
             return new DefaultFemaleAnalogExpressionSocket(parent, listener, socketName);
         }

@@ -74,9 +74,9 @@ public class ClipboardManyXml extends jmri.managers.configurexml.AbstractNamedBe
         }
         
         ClipboardMany h = new ClipboardMany("", null, systemNamesAndClasses);
-
+        
         loadCommon(h, shared);
-
+        
 //        InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         
 //        log.warn("Register action: " + h.getSystemName() + ", " + h.getLongDescription());
@@ -85,5 +85,5 @@ public class ClipboardManyXml extends jmri.managers.configurexml.AbstractNamedBe
     
     
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalManyXml.class);
-
+    
 }

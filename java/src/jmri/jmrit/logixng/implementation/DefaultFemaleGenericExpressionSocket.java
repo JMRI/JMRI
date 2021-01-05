@@ -72,40 +72,40 @@ public class DefaultFemaleGenericExpressionSocket
     }
     
     
-    public FemaleAnalogExpressionSocket getAnalogSocket() {
+    public FemaleAnalogExpressionSocket getAnalogSocket(Base parent) {
         if (_internalSocket != null) {
             throw new RuntimeException("internal socket cannot be set more than once");
         }
-        FemaleAnalogExpressionSocket socket = new AnalogSocket(_socketListener, getName());
+        FemaleAnalogExpressionSocket socket = new AnalogSocket(parent, _socketListener, getName());
         _internalSocket = socket;
         return socket;
     }
     
-    public FemaleDigitalExpressionSocket getDigitalSocket() {
+    public FemaleDigitalExpressionSocket getDigitalSocket(Base parent) {
         if (_internalSocket != null) {
             throw new RuntimeException("internal socket cannot be set more than once");
         }
         
-        FemaleDigitalExpressionSocket socket = new DigitalSocket(_socketListener, getName());
+        FemaleDigitalExpressionSocket socket = new DigitalSocket(parent, _socketListener, getName());
         _internalSocket = socket;
         return socket;
     }
     
-    public FemaleStringExpressionSocket getStringSocket() {
+    public FemaleStringExpressionSocket getStringSocket(Base parent) {
         if (_internalSocket != null) {
             throw new RuntimeException("internal socket cannot be set more than once");
         }
-        FemaleStringExpressionSocket socket = new StringSocket(_socketListener, getName());
+        FemaleStringExpressionSocket socket = new StringSocket(parent, _socketListener, getName());
         _internalSocket = socket;
         return socket;
     }
     
-    public FemaleGenericExpressionSocket getGenericSocket() {
+    public FemaleGenericExpressionSocket getGenericSocket(Base parent) {
         if (_internalSocket != null) {
             throw new RuntimeException("internal socket cannot be set more than once");
         }
         
-        FemaleGenericExpressionSocket socket = new GenericSocket(_socketListener, getName());
+        FemaleGenericExpressionSocket socket = new GenericSocket(parent, _socketListener, getName());
         _internalSocket = socket;
         return socket;
     }
@@ -419,8 +419,8 @@ public class DefaultFemaleGenericExpressionSocket
     
     private class AnalogSocket extends DefaultFemaleAnalogExpressionSocket {
         
-        public AnalogSocket(FemaleSocketListener listener, String name) {
-            super(null, listener, name);
+        public AnalogSocket(Base parent, FemaleSocketListener listener, String name) {
+            super(parent, listener, name);
         }
         
         /** {@inheritDoc} */
@@ -543,8 +543,8 @@ public class DefaultFemaleGenericExpressionSocket
     
     private class DigitalSocket extends DefaultFemaleDigitalExpressionSocket {
         
-        public DigitalSocket(FemaleSocketListener listener, String name) {
-            super(null, listener, name);
+        public DigitalSocket(Base parent, FemaleSocketListener listener, String name) {
+            super(parent, listener, name);
         }
         
         /** {@inheritDoc} */
@@ -667,8 +667,8 @@ public class DefaultFemaleGenericExpressionSocket
     
     private class StringSocket extends DefaultFemaleStringExpressionSocket {
         
-        public StringSocket(FemaleSocketListener listener, String name) {
-            super(null, listener, name);
+        public StringSocket(Base parent, FemaleSocketListener listener, String name) {
+            super(parent, listener, name);
         }
         
         /** {@inheritDoc} */
@@ -792,8 +792,8 @@ public class DefaultFemaleGenericExpressionSocket
     private class GenericSocket extends AbstractFemaleSocket
             implements FemaleGenericExpressionSocket {
         
-        public GenericSocket(FemaleSocketListener listener, String name) {
-            super(null, listener, name);
+        public GenericSocket(Base parent, FemaleSocketListener listener, String name) {
+            super(parent, listener, name);
         }
         
         /** {@inheritDoc} */

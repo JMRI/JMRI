@@ -15,6 +15,7 @@ import jmri.jmrit.logixng.*;
 public class ClipboardMany extends AbstractBase
         implements FemaleSocketListener {
 
+    private Base _parent;
     private final List<ItemEntry> _itemEntries = new ArrayList<>();
     private boolean disableCheckForUnconnectedSocket = false;
     
@@ -182,12 +183,12 @@ public class ClipboardMany extends AbstractBase
 
     @Override
     public Base getParent() {
-        return null;
+        return _parent;
     }
 
     @Override
     public void setParent(Base parent) {
-        throw new UnsupportedOperationException("Not supported");
+        _parent = parent;
     }
 
     @Override

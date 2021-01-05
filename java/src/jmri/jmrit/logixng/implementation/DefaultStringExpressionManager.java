@@ -141,7 +141,7 @@ public class DefaultStringExpressionManager extends AbstractBaseManager<MaleStri
         if (preferences.getUseGenericFemaleSockets()) {
             return new DefaultFemaleGenericExpressionSocket(
                     FemaleGenericExpressionSocket.SocketType.STRING, parent, listener, socketName)
-                    .getStringSocket();
+                    .getStringSocket(parent);
         } else {
             return new DefaultFemaleStringExpressionSocket(parent, listener, socketName);
         }

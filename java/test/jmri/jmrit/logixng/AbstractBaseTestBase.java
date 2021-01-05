@@ -125,9 +125,9 @@ public abstract class AbstractBaseTestBase {
         Assert.assertTrue("Parent of _base is _baseMaleSocket", _base.getParent() == _baseMaleSocket);
     }
     
-    /**
+    /*.*
      * Set parent to null for all children to item, and their children.
-     */
+     *./
     private void clearParent(Base item) {
         for (int i=0; i < item.getChildCount(); i++) {
             FemaleSocket femaleSocket = item.getChild(i);
@@ -139,9 +139,9 @@ public abstract class AbstractBaseTestBase {
         }
     }
     
-    /**
+    /*.*
      * Check that parent is correct for all children to item, and their children.
-     */
+     *./
     private void checkParent(Base item) {
         for (int i=0; i < item.getChildCount(); i++) {
             FemaleSocket femaleSocket = item.getChild(i);
@@ -162,26 +162,26 @@ public abstract class AbstractBaseTestBase {
         }
     }
     
-    /**
+    /*.*
      * Test that the method setParentForAllChildren() works when there are
      * connected children.
-     */
+     *./
     @Test
     public void testSetParentForAllChildren_WithConnectedChildren() {
         _base.getConditionalNG().setEnabled(false);
-        clearParent(_base);
+        clearParent(_base);     // Parent can't be set to null for AbstractFemaleSocket
         _base.setParentForAllChildren();
         checkParent(_base);
     }
     
-    /**
+    /*.*
      * Test that the method setParentForAllChildren() works when there are
      * no connected children.
-     */
+     *./
     @Test
     public void testSetParentForAllChildren_WithoutConnectedChildren() {
         _base.getConditionalNG().setEnabled(false);
-        clearParent(_base);
+        clearParent(_base);     // Parent can't be set to null for AbstractFemaleSocket
         for (int i=0; i < _base.getChildCount(); i++) {
             FemaleSocket femaleSocket = _base.getChild(i);
             femaleSocket.disconnect();
@@ -189,7 +189,7 @@ public abstract class AbstractBaseTestBase {
         _base.setParentForAllChildren();
         checkParent(_base);
     }
-    
+*/    
     /**
      * Returns the expected result of _base.printTree(writer, TREE_INDENT)
      * @return the expected printed tree

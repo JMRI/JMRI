@@ -32,7 +32,9 @@ public class SocketTest {
             }
         };
         
-        DefaultFemaleDigitalActionSocket b = new DefaultFemaleDigitalActionSocket(null, listener, "A1");
+        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
+                .createConditionalNG("An empty conditionalNG");
+        DefaultFemaleDigitalActionSocket b = new DefaultFemaleDigitalActionSocket(conditionalNG, listener, "A1");
         Assert.assertNotNull("exists", b);
     }
     

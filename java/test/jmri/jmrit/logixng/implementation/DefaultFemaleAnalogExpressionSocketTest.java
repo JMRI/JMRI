@@ -115,6 +115,8 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
         
+        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
+                .createConditionalNG("A conditionalNG");  // NOI18N
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();
         _memorySystemName = "IM1";
@@ -125,7 +127,7 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
         manager = InstanceManager.getDefault(AnalogExpressionManager.class);
         maleSocket = ((AnalogExpressionManager)manager).registerExpression(_expression);
         otherMaleSocket = ((AnalogExpressionManager)manager).registerExpression(otherExpression);
-        _femaleSocket = new DefaultFemaleAnalogExpressionSocket(null, new FemaleSocketListener() {
+        _femaleSocket = new DefaultFemaleAnalogExpressionSocket(conditionalNG, new FemaleSocketListener() {
             @Override
             public void connected(FemaleSocket socket) {
                 flag.set(true);

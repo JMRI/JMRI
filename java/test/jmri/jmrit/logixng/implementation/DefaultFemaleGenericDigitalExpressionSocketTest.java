@@ -18,6 +18,7 @@ import org.mockito.Mockito;
  */
 public class DefaultFemaleGenericDigitalExpressionSocketTest extends FemaleSocketTestBase {
 
+    private ConditionalNG _conditionalNG;
     private MyExpressionTurnout _expression;
     private DefaultFemaleGenericExpressionSocket femaleGenericSocket;
     private final AtomicBoolean _listenersAreRegistered = new AtomicBoolean(false);
@@ -92,9 +93,9 @@ public class DefaultFemaleGenericDigitalExpressionSocketTest extends FemaleSocke
         Assert.assertEquals("femaleGenericSocket has the same parent as _femaleSocket",
                 base, femaleGenericSocket.getParent());
         
-        _femaleSocket.setParent(null);
-        Assert.assertNull("_femaleSocket.getParent() is null", _femaleSocket.getParent());
-        Assert.assertNull("femaleGenericSocket is null", femaleGenericSocket.getParent());
+        _femaleSocket.setParent(_conditionalNG);
+        Assert.assertEquals("_femaleSocket.getParent() is _conditionalNG", _conditionalNG, _femaleSocket.getParent());
+        Assert.assertEquals("femaleGenericSocket is _conditionalNG", _conditionalNG, femaleGenericSocket.getParent());
         
         femaleGenericSocket.setParent(base);
         Assert.assertEquals("femaleGenericSocket.getParent() is base",
@@ -125,6 +126,8 @@ public class DefaultFemaleGenericDigitalExpressionSocketTest extends FemaleSocke
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
         
+        _conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
+                .createConditionalNG("A conditionalNG");  // NOI18N
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();
         _expression = new MyExpressionTurnout("IQDE321");
@@ -134,7 +137,7 @@ public class DefaultFemaleGenericDigitalExpressionSocketTest extends FemaleSocke
         otherMaleSocket = ((DigitalExpressionManager)manager).registerExpression(otherExpression);
         femaleGenericSocket = new DefaultFemaleGenericExpressionSocket(
                 FemaleGenericExpressionSocket.SocketType.GENERIC,
-                null,
+                _conditionalNG,
                 new FemaleSocketListener() {
                     @Override
                     public void connected(FemaleSocket socket) {
@@ -160,7 +163,7 @@ public class DefaultFemaleGenericDigitalExpressionSocketTest extends FemaleSocke
                     }
                 };
         
-        _femaleSocket  = femaleGenericSocket.getDigitalSocket();
+        _femaleSocket  = femaleGenericSocket.getDigitalSocket(_conditionalNG);
         
         InstanceManager.getDefault(LogixNG_Manager.class)
                 .setSymbolTable(new DefaultSymbolTable());

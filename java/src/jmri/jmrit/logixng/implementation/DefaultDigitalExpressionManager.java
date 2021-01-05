@@ -141,7 +141,7 @@ public class DefaultDigitalExpressionManager extends AbstractBaseManager<MaleDig
         if (preferences.getUseGenericFemaleSockets()) {
             return new DefaultFemaleGenericExpressionSocket(
                     FemaleGenericExpressionSocket.SocketType.DIGITAL, parent, listener, socketName)
-                    .getDigitalSocket();
+                    .getDigitalSocket(parent);
         } else {
             return new DefaultFemaleDigitalExpressionSocket(parent, listener, socketName);
         }

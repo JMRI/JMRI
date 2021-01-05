@@ -1314,6 +1314,7 @@ public class TreeEditor extends TreeViewer {
                                     InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
                             try {
                                 _currentFemaleSocket.connect(clipboard.fetchTopItem());
+                                _currentFemaleSocket.setParentForAllChildren();
                                 ThreadingUtil.runOnGUIEventually(() -> {
                                     updateTree(_currentFemaleSocket, _currentPath.getPath());
                                 });
