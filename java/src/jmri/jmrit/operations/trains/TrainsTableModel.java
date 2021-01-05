@@ -91,7 +91,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         // first, remove listeners from the individual objects
         removePropertyChangeTrains();
 
-        synchronized (sysList) {
+        synchronized (this) {
             if (_sort == SORTBYID) {
                 sysList = trainManager.getTrainsByIdList();
             } else {
@@ -112,10 +112,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         addPropertyChangeTrains();
     }
 
-    private Train getTrainByRow(int row) {
-        synchronized (sysList) {
-            return sysList.get(row);
-        }
+    private synchronized Train getTrainByRow(int row) {
+        return sysList.get(row);
     }
 
     List<Train> sysList = trainManager.getTrainsByTimeList();
@@ -174,10 +172,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     @Override
-    public int getRowCount() {
-        synchronized (sysList) {
-            return sysList.size();
-        }
+    public synchronized int getRowCount() {
+        return sysList.size();
     }
 
     @Override
@@ -597,7 +593,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         } else if (e.getSource().getClass().equals(Train.class)) {
             Train train = ((Train) e.getSource());
             int row;
-            synchronized (sysList) {
+            synchronized (this) {
                 row = sysList.indexOf(train);
                 if (Control.SHOW_PROPERTY) {
                     log.debug("Update train table row: {} name: {}", row, train.getName());
