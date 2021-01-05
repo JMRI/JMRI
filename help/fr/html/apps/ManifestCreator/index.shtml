@@ -1,0 +1,16 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head><title>JMRI : Page redirig&#233;e</titre>
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+<!-- CHANGER LA LIGNE SUIVANTE POUR INDIQUER LE NOUVEAU LIEU -->
+<META HTTP-EQUIV=""Refresh" CONTENT="5; URL=/community/connections/ManifestCreator/index.shtml ">
+</head>
+<body>
+Cette page a été d&#233;plac&#233;e vers un autre endroit pour &#234;tre list&#233;e dans les applications communautaires qui se connectent avec JMRI 
+(<a href="/community/connections/ManifestCreator/index.shtml">/community/connections/ManifestCreator/index.shtml</a>)
+dans le cadre de la mise &#224; jour de notre site web.
+<br>Veuillez mettre &#224; jour vos signets.  
+<br>Si vous avez acc&#233;d&#233; &#224; cette page depuis une autre page JMRI, veuillez nous le faire savoir afin que nous puissions la corriger.
+<br>Vous devriez &#234;tre redirig&#233; vers la nouvelle page dans les 5 secondes.  
+</body>
+</html>
