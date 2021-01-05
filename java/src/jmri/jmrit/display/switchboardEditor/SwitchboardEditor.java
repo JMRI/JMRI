@@ -31,11 +31,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
-import jmri.Manager;
-import jmri.NamedBean;
-import jmri.NamedBeanUsageReport;
+import jmri.*;
 import jmri.jmrit.display.CoordinateEdit;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
@@ -68,7 +64,7 @@ import static jmri.util.ColorUtil.contrast;
  * unconnected switch.
  *
  * @author Pete Cressman Copyright (c) 2009, 2010, 2011
- * @author Egbert Broerse Copyright (c) 2017, 2018
+ * @author Egbert Broerse Copyright (c) 2017, 2018, 2021
  */
 public class SwitchboardEditor extends Editor {
 
@@ -95,7 +91,7 @@ public class SwitchboardEditor extends Editor {
     private final JCheckBox autoItemRange = new JCheckBox(Bundle.getMessage("CheckBoxAutoItemRange"));
     private JButton allOffButton;
     private JButton allOnButton;
-    private TargetPane switchboardLayeredPane; // JLayeredPane
+    private TargetPane switchboardLayeredPane; // is a JLayeredPane
     static final String TURNOUT = Bundle.getMessage("Turnouts");
     static final String SENSOR = Bundle.getMessage("Sensors");
     static final String LIGHT = Bundle.getMessage("Lights");
@@ -124,7 +120,7 @@ public class SwitchboardEditor extends Editor {
     private int rows = 4; // matches initial autoRows pref for default pane size
     private final float cellProportion = 1.0f; // TODO analyse actual W:H per switch type/shape: worthwhile?
     private int _tileSize = 100;
-    private JSpinner rowsSpinner = new JSpinner(new SpinnerNumberModel(rows, 1, 25, 1));
+    private final JSpinner rowsSpinner = new JSpinner(new SpinnerNumberModel(rows, 1, 25, 1));
     // number of rows displayed on switchboard, disabled when autoRows is on
     private final JTextArea help2 = new JTextArea(Bundle.getMessage("Help2"));
     private final JTextArea help3 = new JTextArea(Bundle.getMessage("Help3", Bundle.getMessage("CheckBoxHideUnconnected")));
@@ -230,22 +226,22 @@ public class SwitchboardEditor extends Editor {
         JLabel beanManuTitle = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ConnectionLabel")));
         beanSetupPane.add(beanManuTitle);
         beanManuNames = new JComboBox<>();
-        if (getManager(beanTypeChar) instanceof jmri.managers.AbstractProxyManager) { // from abstractTableTabAction
-            jmri.managers.AbstractProxyManager proxy = (jmri.managers.AbstractProxyManager) getManager(beanTypeChar);
-            List<jmri.Manager<?>> managerList = proxy.getManagerList(); // picks up all managers to fetch
+        if (getManager(beanTypeChar) instanceof jmri.managers.AbstractProxyManager) { // copied from abstractTableTabAction
+            jmri.managers.AbstractProxyManager<jmri.NamedBean> proxy = (jmri.managers.AbstractProxyManager<jmri.NamedBean>) getManager(beanTypeChar);
+            List<jmri.Manager<NamedBean>> managerList = proxy.getManagerList(); // picks up all managers to fetch
             for (int x = 0; x < managerList.size(); x++) {
                 String manuPrefix = managerList.get(x).getSystemPrefix();
                 log.debug("Prefix{} = [{}]", x, manuPrefix);
                 String manuName = managerList.get(x).getMemo().getUserName();
                 log.debug("Connection name {} = [{}]", x, manuName);
-                beanManuNames.addItem(manuName);  // add to comboBox
-                beanManuPrefixes.add(manuPrefix); // add to list
+                beanManuNames.addItem(manuName);  // add connection name to comboBox
+                beanManuPrefixes.add(manuPrefix); // add connection prefix to list
             }
         } else {
             String manuPrefix = getManager(beanTypeChar).getSystemPrefix();
             String manuName = getManager(beanTypeChar).getMemo().getUserName();
             beanManuNames.addItem(manuName);
-            beanManuPrefixes.add(manuPrefix); // add to list (as only item)
+            beanManuPrefixes.add(manuPrefix); // add to list (as the only item)
         }
         beanManuNames.setSelectedIndex(0); // defaults to Internal on init()
         beanManuNames.addActionListener((ActionEvent event) -> {
@@ -323,8 +319,6 @@ public class SwitchboardEditor extends Editor {
         // set scrollbar initial state
         setScroll(SCROLL_NONE);
         scrollNone.setSelected(true);
-//        super.setDefaultToolTip(new ToolTip(null, 0, 0, new Font("Serif", Font.PLAIN, 12),
-//                Color.black, new Color(255, 250, 210), Color.black)); // TODO remove if not missed
         // register the resulting panel for later configuration
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
@@ -436,7 +430,7 @@ public class SwitchboardEditor extends Editor {
         createSwitchRange((Integer) minSpinner.getValue(),
                 (Integer) maxSpinner.getValue(),
                 beanTypeList.getSelectedIndex(),
-                beanManuPrefixes.get(beanManuNames.getSelectedIndex()),
+                beanManuNames.getSelectedIndex(),
                 switchShapeList.getSelectedIndex());
 
         if (autoRowsBox.isSelected()) {
@@ -454,9 +448,9 @@ public class SwitchboardEditor extends Editor {
         }
 
         // update the title at the bottom of the switchboard to match (no) layout control
-        if (beanManuNames.getSelectedItem() != null && beanTypeList.getSelectedItem() != null) {
-            border.setTitle(beanManuNames.getSelectedItem().toString() + " " +
-                    beanTypeList.getSelectedItem().toString() + " - " + (allControlling() ? interact : noInteract));
+        if ((beanManuNames.getSelectedIndex() >= 0) && (beanTypeList.getSelectedIndex() >= 0)) {
+            border.setTitle(beanManuNames.getSelectedItem() + " " +
+                    beanTypeList.getSelectedItem() + " - " + (allControlling() ? interact : noInteract));
         }
         help3.setVisible(switchesOnBoard.size() == 0); // show/hide help3 warning
         help2.setVisible(switchesOnBoard.size() != 0); // hide help2 when help3 is shown vice versa (as no items are dimmed or not)
@@ -484,44 +478,54 @@ public class SwitchboardEditor extends Editor {
      * @param max         highest ordinal of Switch address range
      * @param beanType    index of selected item in Type comboBox, either T, S
      *                    or L
-     * @param manuPrefix  selected item in Connection comboBox, filled from
+     * @param manuPrefixChoice  index of selected item in Connection comboBox, filled from
      *                    active connections
-     * @param switchShape index of selected visual presentation of Switch shape
+     * @param switchShapeChoice index of selected visual presentation of Switch shape
      *                    selected in Type comboBox, choose either a JButton
      *                    showing the name or (to do) a graphic image
      */
-    private void createSwitchRange(int min, int max, int beanType, String manuPrefix, int switchShape) {
+    private void createSwitchRange(int min, int max, int beanType, int manuPrefixChoice, int switchShapeChoice) {
         log.debug("_hideUnconnected = {}", _hideUnconnected);
         String name;
         BeanSwitch _switch;
         NamedBean nb;
-        log.debug("_manu = {}", manuPrefix);
-        String _insert = "";
-        if (manuPrefix.startsWith("M")) {
-            _insert = "+"; // for CANbus.MERG On event
-        }
+        String prefix = (manuPrefixChoice >= 0 ? beanManuPrefixes.get(manuPrefixChoice) : beanManuPrefixes.get(0));
+        // TODO special handling of non-numeric system names such as MERG, C/MRI?
+        log.debug("_manuprefix={} beanType={}", prefix, beanType);
+        // use validated bean names
         for (int i = min; i <= max; i++) {
             switch (beanType) {
                 case 0:
-                    name = manuPrefix + "T" + _insert + i;
-                    nb = jmri.InstanceManager.turnoutManagerInstance().getTurnout(name);
+                    try {
+                        name = InstanceManager.getDefault(TurnoutManager.class).createSystemName(i + "", prefix);
+                    } catch (jmri.JmriException ex) {
+                        log.error("Error creating range at turnout {}", i);
+                        return;
+                    }
+                    nb = jmri.InstanceManager.getDefault(TurnoutManager.class).getTurnout(name);
                     break;
                 case 1:
-                    name = manuPrefix + "S" + _insert + i;
-                    nb = jmri.InstanceManager.sensorManagerInstance().getSensor(name);
+                    try {
+                        name = InstanceManager.sensorManagerInstance().createSystemName(i + "", prefix);
+                    } catch (jmri.JmriException ex) {
+                        log.error("Error creating range at sensor {}", i);
+                        return;
+                    }
+                    nb = jmri.InstanceManager.getDefault(SensorManager.class).getSensor(name);
                     break;
-                case 2:
-                    name = manuPrefix + "L" + _insert + i;
+                case 2: // calling InstanceManager.getDefault(SensorManager.class) often fails 1st time, useless for test
+                    name = prefix + "L" + i;
                     nb = jmri.InstanceManager.lightManagerInstance().getLight(name);
                     break;
                 default:
-                    log.error("addSwitchRange: cannot parse bean name. manuPrefix = {}; i = {}", manuPrefix, i);
+                    log.error("addSwitchRange: cannot parse bean name. manuPrefix = {}; i = {}; type={}", prefix, i, beanType);
                     return;
             }
             if (nb == null && _hideUnconnected) {
-                continue; // skip i
+                continue; // skip bean i
             }
-            _switch = new BeanSwitch(i, nb, name, switchShape, this); // add button instance i
+            log.debug("Creating Switch for {}", name);
+            _switch = new BeanSwitch(i, nb, name, switchShapeChoice, this); // add button instance i
             if (nb == null) {
                 _switch.setEnabled(false); // not connected
             } else {
@@ -1134,21 +1138,22 @@ public class SwitchboardEditor extends Editor {
     /**
      * Store bean type.
      *
-     * @return bean type prefix
+     * @return bean type prefix as set for Switchboard
      */
     public String getSwitchType() {
+        String typePref = "T";
         String switchType = "";
         if (beanTypeList.getSelectedItem() != null) {
             switchType = beanTypeList.getSelectedItem().toString();
         }
         if (switchType.equals(LIGHT)) { // switch-case doesn't work here
-            typePrefix = "L";
+            typePref = "L";
         } else if (switchType.equals(SENSOR)) {
-            typePrefix = "S";
+            typePref = "S";
         } else { // Turnout
-            typePrefix = "T";
+            typePref = "T";
         }
-        return typePrefix;
+        return typePref;
     }
 
     /**
@@ -1191,7 +1196,11 @@ public class SwitchboardEditor extends Editor {
      * @return bean connection prefix
      */
     public String getSwitchManu() {
-        return this.beanManuPrefixes.get(beanManuNames.getSelectedIndex());
+        if (beanManuNames.getSelectedIndex()  >= 0) {
+            return this.beanManuPrefixes.get(beanManuNames.getSelectedIndex());
+        } else {
+            return this.beanManuPrefixes.get(0);
+        }
     }
 
     /**
@@ -1276,7 +1285,7 @@ public class SwitchboardEditor extends Editor {
     }
 
     /**
-     * Store Switchboard rowsnum spinner or turn on autoRows option.
+     * Store Switchboard rowsNum JSpinner or turn on autoRows option.
      *
      * @return the number of switches to display per row or 0 if autoRowsBox (menu-setting) is selected
      */
@@ -1289,7 +1298,7 @@ public class SwitchboardEditor extends Editor {
     }
 
     /**
-     * Load Switchboard rowsnum spinner.
+     * Load Switchboard rowsNum JSpinner.
      *
      * @param rws the number of switches displayed per row (as text) or 0 te activate autoRowsBox setting
      */

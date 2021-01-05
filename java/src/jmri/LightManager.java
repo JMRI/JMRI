@@ -203,7 +203,7 @@ public interface LightManager extends ProvidingManager<Light> {
      * Get a system name for a given hardware address and system prefix.
      *
      * @param curAddress desired hardware address
-     * @param prefix     system prefix used in system name, excluding Bean type-letter..
+     * @param prefix     system prefix used in system name, excluding Bean type-letter.
      * @return the complete Light system name for the prefix and current
      *         address
      * @throws jmri.JmriException if unable to create a system name for the

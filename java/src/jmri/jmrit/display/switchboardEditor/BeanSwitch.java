@@ -97,7 +97,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         switchTooltip = switchName + " (" + _uName + ")";
         this.setLayout(new BorderLayout()); // makes JButtons expand to the whole grid cell
         _shape = shapeChoice;
-        String beanManuPrefix = _editor.getSwitchManu(); // connection/manufacturer prefix i.e. M for MERG
+        String beanManuPrefix = _editor.getSwitchManu(); // connection/manufacturer prefix i.e. default) M for MERG
         beanTypeChar = _switchSysName.charAt(beanManuPrefix.length()); // bean type, i.e. L, usually at char(1)
         // check for space char which might be caused by connection name > 2 chars and/or space in name
         if (beanTypeChar != 'T' && beanTypeChar != 'S' && beanTypeChar != 'L') { // add if more bean types are supported
@@ -914,13 +914,13 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
 
     /**
      * Create new bean and connect it to this switch. Use type letter from
-     * switch label (S, T or L).
+     * switch label (T, S or L).
      *
      * @param systemName system name of bean.
      */
     protected void connectNew(String systemName) {
         log.debug("Request new bean");
-        userName.setText(""); // only available on unconnected switches, so no useful content yet
+        userName.setText(""); // this method is only available on unconnected switches, so no useful content yet
         // provide etc.
         if (addFrame == null) {
             addFrame = new JmriJFrame(Bundle.getMessage("ConnectNewMenu", ""), false, true);
@@ -930,7 +930,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             ActionListener okListener = this::okAddPressed;
             ActionListener cancelListener = this::cancelAddPressed;
             AddNewDevicePanel switchConnect = new AddNewDevicePanel(sysNameTextBox, userName, "ButtonOK", okListener, cancelListener);
-            switchConnect.setSystemNameFieldIneditable(); // prevent user interference with switch label
+            switchConnect.setSystemNameFieldIneditable(); // prevent user interference with switch label (proposed system name)
             switchConnect.setOK(); // activate OK button on Add new device pane
             addFrame.add(switchConnect);
         }
