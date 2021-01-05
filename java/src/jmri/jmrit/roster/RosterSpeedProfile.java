@@ -107,7 +107,7 @@ public class RosterSpeedProfile {
      * @param mms MilliMetres per second
      * @return a string with scale speed and units
      */
-    public String convertMMSToScaleSpeedWithUnits(float mms) {
+    static public String convertMMSToScaleSpeedWithUnits(float mms) {
         int interp = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation();
         float scale = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getLayoutScale();
         String formattedWithUnits;

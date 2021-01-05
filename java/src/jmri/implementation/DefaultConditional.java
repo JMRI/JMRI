@@ -1049,7 +1049,9 @@ public class DefaultConditional extends AbstractNamedBean
                         if (w == null) {
                             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
                         } else {
-                            w.getSpeedUtil().setDccAddress(getActionString(action));
+                            if(!w.getSpeedUtil().setAddress(getActionString(action))) {
+                                errorList.add("invalid train ID in action - " + action.getDeviceName());  // NOI18N
+                            }
                             actionCount++;
                         }
                         break;
@@ -1071,7 +1073,7 @@ public class DefaultConditional extends AbstractNamedBean
                             String err = frame.runTrain(w, Warrant.MODE_RUN);
                             if (err != null) {
                                 errorList.add("runAutoTrain error - " + err);  // NOI18N
-                                w.stopWarrant(true);
+                                w.stopWarrant(true, true);
                             }
                             actionCount++;
                         }

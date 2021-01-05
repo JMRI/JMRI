@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
@@ -238,9 +239,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     }
 
     /**
-     * 
+     *
      * SYSNAMECOL returns the actual Bean, NOT the System Name.
-     * 
+     *
      * {@inheritDoc}
      */
     @Override
@@ -283,7 +284,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 return value;
         }
     }
-    
+
     public void comboBoxAction(ActionEvent e) {
         log.debug("Combobox change");
         if (thistable != null && thistable.getCellEditor() != null) {
@@ -396,7 +397,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 }
                 if (value instanceof JComboBox) {
                     value = ((JComboBox<?>) value).getSelectedItem();
-                }                
+                }
                 NamedBean b = getBySystemName(sysNameList.get(row));
                 b.setProperty(desc.propertyKey, value);
         }
@@ -435,7 +436,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     public void configureTable(JTable table) {
         // Property columns will be invisible at start.
         setPropertyColumnsVisible(table, false);
-        
+
         table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
@@ -458,9 +459,10 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         MouseListener popupListener = new PopupListener();
         table.addMouseListener(popupListener);
         this.persistTable(table);
+
         thistable = table;
     }
-    
+
     private JTable thistable;
 
     protected void configValueColumn(JTable table) {
@@ -637,7 +639,19 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @CheckForNull RowSorter<? extends TableModel> sorter) {
         Objects.requireNonNull(name, "the table name must be nonnull");
         Objects.requireNonNull(model, "the table model must be nonnull");
-        return this.configureJTable(name, new JTable(model), sorter);
+        JTable table = new JTable(model) {
+
+            @Override
+            public String getToolTipText(MouseEvent e) {
+                java.awt.Point p = e.getPoint();
+                int rowIndex = rowAtPoint(p);
+                int colIndex = columnAtPoint(p);
+                int realRowIndex = convertRowIndexToModel(rowIndex);
+                int realColumnIndex = convertColumnIndexToModel(colIndex);
+                return getCellToolTip(this, realRowIndex, realColumnIndex);
+            }
+        };
+        return this.configureJTable(name, table, sorter);
     }
 
     /**
@@ -711,6 +725,12 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         menuItem = new JMenuItem(Bundle.getMessage("Move"));
         menuItem.addActionListener((ActionEvent e1) -> {
             moveBean(rowindex, 0);
+        });
+        popupMenu.add(menuItem);
+
+        menuItem = new JMenuItem(Bundle.getMessage("EditComment"));
+        menuItem.addActionListener((ActionEvent e1) -> {
+            editComment(rowindex, 0);
         });
         popupMenu.add(menuItem);
 
@@ -896,6 +916,76 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                             Bundle.getMessage("UpdateComplete", getBeanType()),
                             getMasterClassName(), "remindSaveReLoad");
         }
+    }
+
+    public void editComment(int row, int column) {
+        T nBean = getBySystemName(sysNameList.get(row));
+        JTextArea commentField = new JTextArea(5, 50);
+        JScrollPane commentFieldScroller = new JScrollPane(commentField);
+        commentField.setText(nBean.getComment());
+        Object[] editCommentOption = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonUpdate")};
+        int retval = JOptionPane.showOptionDialog(null,
+                commentFieldScroller, Bundle.getMessage("EditComment"),
+                0, JOptionPane.INFORMATION_MESSAGE, null,
+                editCommentOption, editCommentOption[1]);
+        if (retval != 1) {
+            return;
+        }
+        nBean.setComment(commentField.getText());
+   }
+
+    /**
+     * Display the comment text for the current row as a tool tip.  Most of the bean tables
+     * use the standard model with comments in column 3.  The SignalMastLogic table
+     * uses column 4 for the comment field.  TurnoutTableAction has its own getCellToolTip.
+     * @param table The current table.
+     * @param row The current row.
+     * @param col The current column.
+     * @return a formatted tool tip or null if there is none.
+     */
+    String getCellToolTip(JTable table, int row, int col) {
+        String tip = null;
+        if (!table.getName().contains("SignalMastLogic")) {
+            int column = COMMENTCOL;
+            if (table.getName().contains("SignalGroup")) column = 2;
+            if (col == column) {
+                T nBean = getBySystemName(sysNameList.get(row));
+                if (nBean != null) {
+                    tip = formatToolTip(nBean.getComment());
+                }
+            }
+        } else {
+            // SML comments are in column 4
+            if (col == 4) {
+                // The table does not have a "system name"
+                SignalMastManager smm = InstanceManager.getDefault(SignalMastManager.class);
+                SignalMast source = smm.getSignalMast((String) table.getModel().getValueAt(row, 0));
+                SignalMast dest = smm.getSignalMast((String) table.getModel().getValueAt(row, 2));
+                if (source != null) {
+                    SignalMastLogic sml = InstanceManager.getDefault(SignalMastLogicManager.class).getSignalMastLogic(source);
+                    if (sml != null && dest != null) {
+                        tip = formatToolTip(sml.getComment(dest));
+                    }
+                }
+            }
+        }
+        return tip;
+    }
+
+    /**
+     * Format a comment field as a tool tip string. Multi line comments are supported.
+     * @param comment The comment string.
+     * @return a html formatted string or null if the comment is mepty.
+     */
+    String formatToolTip(String comment) {
+        String tip = null;
+        if (comment != null && !comment.isEmpty()) {
+            StringBuilder sb = new StringBuilder("<html>");
+            sb.append(comment.replaceAll(System.getProperty("line.separator"), "<br>"));
+            sb.append("</html>");
+            tip = sb.toString();
+        }
+        return tip;
     }
 
     protected void showTableHeaderPopup(MouseEvent e, JTable table) {

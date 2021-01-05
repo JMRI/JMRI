@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Basis for ConditionalListEdit and ConditionalListCopy
- * 
+ *
  * @author Pete Cressman Copyright (C) 2020
  */
 abstract public class ConditionalList extends ConditionalEditBase {
@@ -22,7 +22,7 @@ abstract public class ConditionalList extends ConditionalEditBase {
     ConditionalFrame _conditionalFrame = null;
     boolean _newConditional = false;
     TreeSet<String> _oldTargetNames = new TreeSet<>();
-    
+
     /**
      * Create a new Conditional List View editor.
      *
@@ -58,15 +58,17 @@ abstract public class ConditionalList extends ConditionalEditBase {
     /**
      * Make the bottom panel for _conditionalFrame to hold buttons for
      * Update/Save, Cancel, Delete/FullEdit
-     * 
+     *
      * @return the panel
      */
     abstract JPanel makeBottomPanel();
 
+    abstract void updateConditionalTableModel();
+
     /**
      * Update _curConditional, the current Conditional.
-     * Checks for being well formed rules and registers its usage. 
-     * 
+     * Checks for being well formed rules and registers its usage.
+     *
      * @param uName Conditiona's user name
      * @param logicType Logic type od antecedent
      * @param trigger Trigger on variablr change action choice
@@ -75,10 +77,10 @@ abstract public class ConditionalList extends ConditionalEditBase {
      */
     abstract boolean updateConditional(String uName, Conditional.AntecedentOperator logicType, boolean trigger, String antecedent);
 
-    boolean updateConditional(String uName, Logix logix, 
+    boolean updateConditional(String uName, Logix logix,
             Conditional.AntecedentOperator logicType, boolean trigger, String antecedent) {
         log.debug("updateConditional");
-        
+
         // Check if the User Name has been changed
         if (!uName.equals(_curConditional.getUserName())) {
             // user name has changed - check if already in use
@@ -105,12 +107,13 @@ abstract public class ConditionalList extends ConditionalEditBase {
             logix.addConditional(_curConditional.getSystemName(), -1);
             _showReminder = true;
             _newConditional = false;
+            updateConditionalTableModel();
         }
         TreeSet<String> newTargetNames = new TreeSet<String>();
         loadReferenceNames(_conditionalFrame._variableList, newTargetNames);
         updateWhereUsed(_oldTargetNames, newTargetNames, _curConditional.getSystemName());
         closeConditionalFrame();
-        return true;        
+        return true;
     }
 
     PickSingleListener getPickSingleListener(JTextField textField, Conditional.ItemType itemType) {
@@ -136,7 +139,7 @@ abstract public class ConditionalList extends ConditionalEditBase {
         }
         // when user uses the escape key and returns to editing, interaction with
         // window closing event create strange environment
-        
+
         if (_conditionalFrame != null) {
             _conditionalFrame.dispose();
             _conditionalFrame = null;

@@ -478,8 +478,12 @@ public class SplitVariableValue extends VariableValue
      */
     @Override
     public void setValue(String value) {
-        long val = Long.parseUnsignedLong(value);
-        setLongValue(val);
+        try {
+            long val = Long.parseUnsignedLong(value);
+            setLongValue(val);
+        } catch (NumberFormatException e) {
+            log.warn("skipping set of non-long value \"{}\"", value);
+        }
     }
 
     @Override

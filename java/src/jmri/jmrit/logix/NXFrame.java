@@ -13,6 +13,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -26,7 +27,6 @@ import jmri.jmrit.logix.ThrottleSetting.ValueType;
 import jmri.JmriException;
 import jmri.SpeedStepMode;
 import jmri.implementation.SignalSpeedMap;
-import jmri.jmrit.roster.RosterSpeedProfile;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -120,7 +120,16 @@ public class NXFrame extends WarrantRoute {
         mainPanel.add(_routePanel);
         getContentPane().add(mainPanel);
         
-        int interpretation = WarrantPreferences.getDefault().getInterpretation() ;
+        int interpretation = SignalSpeedMap.SPEED_KMPH;
+        float prefMaxThrottle = 100;
+        WarrantPreferences wp = WarrantPreferences.getDefault();
+        if (wp != null) {
+            interpretation = WarrantPreferences.getDefault().getInterpretation();
+            prefMaxThrottle = WarrantPreferences.getDefault().getThrottleScale()*100;
+            _scale = wp.getLayoutScale();
+        }
+        _maxThrottleBox.setText(NumberFormat.getNumberInstance().format(prefMaxThrottle));
+        
         if (interpretation == SignalSpeedMap.SPEED_KMPH) {
             _speedUnits.setText(LABEL_KPH);
             _originUnits.setText(LABEL_CM);
@@ -130,17 +139,8 @@ public class NXFrame extends WarrantRoute {
             _originUnits.setText(LABEL_IN);
             _destUnits.setText(LABEL_IN);            
         }
+        maxThrottleEventAction();
         
-        float prefMaxThrottle = WarrantPreferences.getDefault().getThrottleScale() ;
-        _maxThrottleBox.setText(NumberFormat.getNumberInstance().format(prefMaxThrottle));
-        
-        float prefNormalScale = 0.0F;
-        try {
-            prefNormalScale = WarrantPreferences.getDefault().getSpeedNameValue("Normal");
-        } catch (Exception e) {
-            log.warn("Warrants Aspect Speed table does not contain speed name 'Normal'", e);
-        }
-        _maxSpeedBox.setText(NumberFormat.getNumberInstance().format(prefNormalScale));
         
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -235,27 +235,26 @@ public class NXFrame extends WarrantRoute {
         return button;
     }
 
-    private void maxThrottleEventAction() {
-        boolean isForward = _forward.isSelected();
-        RosterSpeedProfile profile = _speedUtil.getSpeedProfile();
-        if (profile != null) {
-            NumberFormat formatter = NumberFormat.getNumberInstance(); 
-            float num = 0;
-            try {
-                num =  formatter.parse(_maxThrottleBox.getText()).floatValue();
-            } catch (java.text.ParseException pe) {
-                _maxThrottleBox.setText("");
-                return;
-            }
-            float speed = profile.getSpeed(num, isForward);
-            if (_speedUnits.getText().equals(LABEL_MPH)) {
-                _maxSpeedBox.setText(formatter.format(speed * _scale * .0022369363f));                        
-            } else {
-                _maxSpeedBox.setText(formatter.format(speed * _scale * .0036f));                                               
-            }
+    @Override
+    protected void maxThrottleEventAction() {
+        NumberFormat formatter = NumberFormat.getNumberInstance(); 
+        float num = 0;
+        try {
+            num =  formatter.parse(_maxThrottleBox.getText()).floatValue()/100;
+            num = Math.min(1.0f, Math.max(num,  0.f));
+            _maxThrottleBox.setText(""+num*100);
+        } catch (java.text.ParseException pe) {
+            _maxThrottleBox.setText(null);
+            _maxSpeedBox.setText(null);
             return;
         }
-        _maxSpeedBox.setText(Bundle.getMessage("NoData"));        
+        _speedUtil.setIsForward(_forward.isSelected());
+        float speed = _speedUtil.getTrackSpeed(num);
+        if (_speedUnits.getText().equals(LABEL_MPH)) {
+            _maxSpeedBox.setText(formatter.format(speed * _scale * 2.2369363f));                        
+        } else {
+            _maxSpeedBox.setText(formatter.format(speed * _scale * 3.6f));                                               
+        }
     }
 
     private JPanel makeAutoRunPanel() {
@@ -266,29 +265,48 @@ public class NXFrame extends WarrantRoute {
         _maxThrottleBox.addActionListener((ActionEvent evt)-> maxThrottleEventAction());
 
         _maxSpeedBox.addActionListener((ActionEvent evt)-> {
-            boolean isForward = _forward.isSelected();
-            RosterSpeedProfile profile = _speedUtil.getSpeedProfile();
-            if (profile != null) {
-                NumberFormat formatter = NumberFormat.getNumberInstance(); 
-                float num = 0;
-                try {
-                    num =  formatter.parse(_maxSpeedBox.getText()).floatValue();
-                } catch (java.text.ParseException pe) {
-                    _maxSpeedBox.setText("");
-                    return;
-                }
-                if (_speedUnits.getText().equals(LABEL_MPH)) {
-                    num = num * 447.04f / _scale;                        
-                } else {
-                    num = num * 277.7778f / _scale;                        
-                }
-                float throttle = profile.getThrottleSetting(num, isForward);
-                if (throttle > 0.0f) {
-                    _maxThrottleBox.setText(formatter.format(throttle));                    
-                    return;
-                }
+            NumberFormat formatter = NumberFormat.getNumberInstance(); 
+            float num = 0;
+            try {
+                num =  formatter.parse(_maxSpeedBox.getText()).floatValue() / _scale;
+            } catch (java.text.ParseException pe) {
+                _maxSpeedBox.setText("");
+                return;
             }
-            _maxSpeedBox.setText(Bundle.getMessage("NoData"));
+            if (num < 0) {
+                _maxSpeedBox.setText(formatter.format(0));
+                _maxThrottleBox.setText(formatter.format(0));
+                return;
+            }
+            float maxSpeed = _speedUtil.getTrackSpeed(1);
+            float maxNum;
+            if (_speedUnits.getText().equals(LABEL_MPH)) {
+                maxNum = maxSpeed * 2.2369363f;
+            } else {
+                maxNum = maxSpeed * 3.6f;
+            }
+            if (num > maxNum) {
+                String name = _speedUtil.getRosterId();
+                if (name == null || name.charAt(0) == '$') {
+                    name = getTrainName();
+                    if (name == null || name.isEmpty()) {
+                        name = Bundle.getMessage("unknownTrain");
+                    }
+                }
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("maxSpeedLimit", 
+                        name, formatter.format(maxNum * _scale), _speedUnits.getText()),
+                        Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
+                _maxSpeedBox.setText(formatter.format(maxNum * _scale));
+                _maxThrottleBox.setText(formatter.format(100));
+                return;
+            }
+            if (_speedUnits.getText().equals(LABEL_MPH)) {
+                num = num * 0.44704f;
+            } else {
+                num = num * 0.277778f;
+            }
+            float throttle = _speedUtil.getThrottleSettingForSpeed(num)*100;
+            _maxThrottleBox.setText(formatter.format(throttle));
         });
         _speedUnits.addActionListener((ActionEvent evt)-> {
             NumberFormat formatter = NumberFormat.getNumberInstance(); 
@@ -308,7 +326,7 @@ public class NXFrame extends WarrantRoute {
                 _maxSpeedBox.setText(formatter.format(num / 100));
             }
         });
-        p1.add(makeTextBoxPanel(false, _maxThrottleBox, "MaxSpeed", null));
+        p1.add(makeTextAndButtonPanel(_maxThrottleBox, new JLabel(Bundle.getMessage("percent")), "MaxSpeed", null));
         p1.add(makeTextAndButtonPanel(_maxSpeedBox, _speedUnits, "scaleSpeed", "ToolTipScaleSpeed"));
 
         _originUnits = getButton(LABEL_IN);
@@ -442,7 +460,7 @@ public class NXFrame extends WarrantRoute {
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         String property = e.getPropertyName();
-        log.debug("propertyChange \"{}\" old= {} new= {} source= {}",property,
+        log.trace("propertyChange \"{}\" old= {} new= {} source= {}",property,
                                             e.getOldValue(),e.getNewValue(),
                                             e.getSource().getClass().getName());
         if (property.equals("DnDrop")) {
@@ -554,11 +572,6 @@ public class NXFrame extends WarrantRoute {
         }
     }
 
-    // for the convenience of testing
-    protected void setScale(float s) {
-        _scale = s;
-    }
-
     // for testing
     protected void setMaxSpeed(float s) {
         _maxThrottle = s;
@@ -608,7 +621,10 @@ public class NXFrame extends WarrantRoute {
         }
         _maxThrottle = maxSpeed;
 
-        setAddress();
+        String msg = setAddress();
+        if (msg != null) {
+            return msg;
+        }
 
         int time = (Integer)_timeIncre.getValue();
         _speedUtil.setRampTimeIncrement(time);
@@ -790,14 +806,6 @@ public class NXFrame extends WarrantRoute {
         } while ((upRamp.getRampLength() + intervalDist + downRamp.getRampLength()) > totalLen);
         _maxThrottle = downRamp.getMaxSpeed();
 
-        if (log.isDebugEnabled()) {
-            if (_speedUtil.profileHasSpeedInfo()) {
-                log.debug("maxThrottle= {} ({} meters per sec), scale= {}", 
-                        _maxThrottle, _speedUtil.getTrackSpeed(_maxThrottle), _scale);                
-            } else {
-                log.debug("maxThrottle= {} scale= {} no SpeedProfile data", _maxThrottle, _scale);                                
-            }
-        }
         float blockLen = _startDist;    // length of path in current block
 
         // start train
@@ -954,7 +962,7 @@ public class NXFrame extends WarrantRoute {
         // distance in block where down ramp is started
         blkDistance += remMaxSpeedDist;
         // time to start down ramp
-        speedTime = _speedUtil.getTimeForDistance(curThrottle, remMaxSpeedDist) + timeInterval;
+        speedTime = _speedUtil.getTimeForDistance(curThrottle, remMaxSpeedDist);
 
         if (log.isDebugEnabled()) {
             log.debug("Begin Ramp Down at block \"{}\" blockLen={}, at distance= {} curDistance = {} remTotal= {} curThrottle= {} ({})",

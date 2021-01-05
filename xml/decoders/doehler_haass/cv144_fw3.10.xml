@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2019</year>
     <holder>JMRI</holder>
@@ -23,6 +23,12 @@
         <surname>Le Marchand</surname>
       </personname>
     </author>
+    <author>
+      <personname>
+        <firstname>Wouter</firstname>
+        <surname>Kok</surname>
+      </personname>
+    </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
@@ -30,6 +36,12 @@
       <date>2019-07-28</date>
       <authorinitials>ALM</authorinitials>
       <revremark>CV144 addtional bits from fw version 3.10+</revremark>
+    </revision>
+    <revision>
+      <revnumber>2</revnumber>
+      <date>2020-12-12</date>
+      <authorinitials>WK</authorinitials>
+      <revremark>Include Sound Decoders 2020</revremark>
     </revision>
   </revhistory>
   <variable item="Advanced Group 1 Option 1" CV="144" mask="XXXXXXVX" default="0">
@@ -47,7 +59,7 @@
     <tooltip xml:lang="de">Spezielles Bit für Beleuchtung im Analogbetrieb</tooltip>
     <tooltip xml:lang="fr">Bit Spécial Lumières en mode Analogique</tooltip>
   </variable>
-  <variable item="Brake Section Output" CV="144" mask="XXXXVXXX" default="0" include="DH21A_2018_04,DH21A_2018_09,DH22A_2018_04,DH22A_2018_09,FH22A_2018_04,FH22A_2018_09">
+  <variable item="Brake Section Output" CV="144" mask="XXXXVXXX" default="0" include="DH21A_2018_04,DH21A_2018_09,DH22A_2018_04,DH22A_2018_09,FH22A_2018_04,FH22A_2018_09,Sound Decoders (2020)">
       <enumVal>
         <enumChoice choice="Braking">
             <choice>Braking</choice>
@@ -64,7 +76,7 @@
     <label xml:lang="de">Bremsstreckenausgabe an "GPIO"</label>
     <label xml:lang="fr">Sortie Section Freinage</label>
   </variable>
-  <variable item="Brake with GPIO" CV="144" mask="XXXVXXXX" default="0" include="DH21A_2018_04,DH21A_2018_09,DH22A_2018_04,DH22A_2018_09,FH22A_2018_04,FH22A_2018_09">
+  <variable item="Brake with GPIO" CV="144" mask="XXXVXXXX" default="0" include="DH21A_2018_04,DH21A_2018_09,DH22A_2018_04,DH22A_2018_09,FH22A_2018_04,FH22A_2018_09,Sound Decoders (2020)">
       <enumVal>
         <enumChoice choice="Braking">
             <choice>Braking</choice>

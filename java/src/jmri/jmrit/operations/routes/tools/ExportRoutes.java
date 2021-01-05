@@ -68,11 +68,6 @@ public class ExportRoutes extends XmlFile {
                 count++;
                 fileOut.printRecord(route.getName(),
                         "", // NOI18N
-                        "", // NOI18N
-                        "", // NOI18N
-                        "", // NOI18N
-                        "", // NOI18N
-                        "", // NOI18N
                         route.getComment());
                 for (RouteLocation rl : route.getLocationsBySequenceList()) {
                     fileOut.printRecord("", // NOI18N
@@ -111,8 +106,6 @@ public class ExportRoutes extends XmlFile {
 
     private void loadHeader(CSVPrinter fileOut) throws IOException {
         fileOut.printRecord(Bundle.getMessage("Route"),
-                " ",
-                Bundle.getMessage("Name"),
                 Bundle.getMessage("Location"),
                 Bundle.getMessage("TrainDirection"),
                 Bundle.getMessage("Moves"),
@@ -126,8 +119,6 @@ public class ExportRoutes extends XmlFile {
                 Bundle.getMessage("X"),
                 Bundle.getMessage("Y"),
                 Bundle.getMessage("Comment"),
-                Bundle.getMessage("Comment"),
-                " ",
                 Bundle.getMessage("TextColor"));
     }
 

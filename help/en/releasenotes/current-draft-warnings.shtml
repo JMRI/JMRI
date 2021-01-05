@@ -7,16 +7,3 @@
     </li>
     <li>
     </li>
-    <li>
-    </li>
-
-    <li>
-    </li>
-    
-    <li>The Layout Editor code has been substantially restructured in this release.
-        If you have scripts that reference the jmri.jmrit.display.layoutEditor package
-        please check them carefully, as new classes have been created and 
-        some methods have moved.  Panel files containing Layout Editor panels
-        that are stored (written out) by this release may not be readable 
-        by earlier releases; this release should load older files just fine.
-    </li>
