@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+
+  <title>JMRI: Storing Your Work</title>
+  <meta name="Author" content="Jerry Grochow">
+  <!--#include virtual="/Style.shtml" -->
+ <meta http-equiv="Content-Type" content=
+  "text/html; charset=iso-8859-1">
+</head>
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
+<a id="TopOfPage" name="TopOfPage"></a> 
+        <h1>JMRI : Stocker votre travail</h1>
+        <p class="subtitle">Ce que tout le monde devrait savoir</p>
+        
+      <p class="noted">Cette page fournit les informations de base que vous devez conna&#238;tre sur les commandes utilis&#233;es pour stocker les donn&#233;es que vous cr&#233;ez et mettez &#224; jour dans  JMRI. Une page d'accompagnement contenant plus d'informations pour les utilisateurs avanc&#233;s sur quand, comment et o&#249; JMRI
+      stocke les donn&#233;es est disponible <a href="DataManagement.shtml"> ici.</a></p>
+        
+      <p>Le mod&#232;le de JMRI pour la cr&#233;ation, la mise &#224; jour et le stockage (ou l'&#233;limination) des informations dont il a besoin pour remplir ses diff&#233;rentes fonctions
+      d&#233;pend de la fonction JMRI &#224; laquelle vous avez affaire. Certains types de donn&#233;es sont trait&#233;s de mani&#232;re enti&#232;rement automatique. D'autres sont
+      cr&#233;&#233;s par vous et mis &#224; jour par JMRI. Pour d'autres encore, vous avez la possibilit&#233; de modifier ou de conserver ces donn&#233;es d'un passage &#224; l'autre de JMRI. Par exemple, l'enregistrement des modifications apport&#233;es aux entr&#233;es de l'Inventaire est distinct de l'enregistrement de votre configuration de mise en page.
+      
+      <p>Malheureusement, JMRI ne vous informe pas toujours de la pr&#233;sence de donn&#233;es non sauvegard&#233;es lorsqu'il quitte (bien que la communaut&#233; des d&#233;veloppeurs
+      travaille constamment &#224; l'am&#233;liorer).  Par exemple, lorsque vous cr&#233;ez un capteur dans le tableau des capteurs, il appara&#238;tra dans la fen&#234;tre des capteurs, mais il dispara&#238;tra si vous fermez JMRI - &#224; moins que vous ne preniez l'une des mesures &#233;num&#233;r&#233;es ci-dessous pour le sauvegarder.</p>
+      
+      
+      <p>Pour vous assurer que les donn&#233;es que vous cr&#233;ez (ou qui sont cr&#233;&#233;es et mises &#224; jour pour vous) sont conserv&#233;es comme vous le souhaitez, vous devez 
+      comprendre quand et comment les diff&#233;rents types de donn&#233;es sont enregistr&#233;s sur un fichier disque, ou non, et, dans le cas des CV, sur vos locomotives
+      et autres d&#233;codeurs DCC.  Cette page est destin&#233;e &#224; vous donner les informations de base que vous devez conna&#238;tre.
+      
+       <ul class="snav">
+		<li><a href="#usave">Utilisateur initi&#233;</a></li>
+		<li><a href="#autosave">Automatique</a></li>
+		<li><a href="#nosave">Non stock&#233;</a></li>
+	   </ul>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+      <a name="usave" id="usave"></a>
+      <h2>Ce que vous devez faire pour "stocker" ou "sauvegarder"</h2>
+ 
+      <div class="para">      
+ 
+     <p>JMRI vous avertira parfois (mais pas toujours) lorsque vous voudrez "enregistrer" ou "stocker". Ce sont les endroits o&#249; l'action de l'utilisateur peut &#234;tre requise:</p>
+            
+            
+    <ul>
+     <li><a href="../../package/apps/TabbedPreferences.shtml">Pr&#233;f&#233;rences (toutes les apps)</a>
+        <ul>
+          <li><strong>Tous les &#233;l&#233;ments de pr&#233;f&#233;rences</strong> : <em>Modifier&rArr;Pr&#233;f&#233;rences</em>, Appuyez sur <strong>"Sauvegarder"</strong></li>
+        </ul>
+      <br>     
+     </li>
+
+     <li><a href="DecoderPro/index.shtml">DecoderPro</a>
+        <ul>
+         <li><a href="DecoderPro/Roster.shtml"><strong>Entr&#233;e de l'Inventaire</strong></a> :
+          <ul>
+           <li>Sur une fen&#234;tre d'entr&#233;e individuelle de l'Inventaire: S&#233;lectionnez <strong>Fichier&rArr; "Sauvegarder"</strong> ou <strong>"Sauvegarder dans l'Inventaire"</strong></li>
+           <li>Sur une fen&#234;tre d'entr&#233;e individuelle de  l'Inventaire: S&#233;lectionnez <strong> "Ecrire"</strong> dans le d&#233;codeur afin de modifier les CV</li>
+          </ul>
+         </li>
+         <li><strong>Groupe des Inventaires</strong> : <a href="#autosave">Sauvegarde automatique</a><</li>
+        </ul>
+      <br>
+     </li>
+ 
+     <li><a href="PanelPro/index.shtml">PanelPro</a>
+       <ul>
+        <li><strong>Panneaux</strong> : <em>Panneaux&rArr;nouveaux Panneaux </em>, ou de n'importe quel &#233;diteur de panneau : S&#233;lectionnez <strong>Fichier&rArr; "Sauvegarder  Panneaux..."</strong>
+        (commande &#233;galement disponible sur la fen&#234;tre principale de PanelPro : <strong>Panneaux&rArr; "Sauvegarder  Panneaux..."</strong>).
+        Notez que cette commande stocke &#233;galement toutes les tables, elle remplit donc la m&#234;me fonction que <strong>"Sauvegarder  Configuration et Panneaux"</strong>
+        qui apparaissent sur la fen&#234;tres de laTable.</li>
+        <li><strong>Tableaux</strong> : <em>Outils&rArr;Tables&rArr;[Table sp&#233;cifique]</em>, S&#233;lectionner :  
+          <ul>
+            <li><strong>Fichier&rArr; "Sauvegarder  Configuration"</strong> (stocke TOUTES les tables) ou</li>
+            <li><strong>Fichier&rArr; "Sauvegarder  Configuration et Panneaux"</strong> [qui fait la m&#234;me chose que <strong>"Sauvegarder  Panneaux"</strong> dans les &#233;diteurs de pannneaux]</li>
+          </ul>
+        </li>
+        <li><strong>Horloge Rapide</strong>:<em> Outils&rArr;HorlogesrArr; D&#233;finir Horloge Rapide...</em>, puis comme pour les Tables.</li>
+        <li><a href="../../package/jmri/jmrit/display/IconAdder.shtml"><strong>Images/Ic&#244;nes</strong></a> : Hit <strong>"SauvegarderIndex Image "</strong></li>
+        <li><a href="../tools/scripting/index.shtml"><strong>Scripts</strong></a> : <em>Panneauxl&rArr;Entrée Script</em>,Touche <strong>"Sauvegarder..."</strong></li>
+        <li><a href="../tools/throttle/ThrottleChapter1.shtml"><strong>R&#233;gulateurs</strong></a> : <strong>Outils&rArr;Régulateurs&rArr;</strong>
+          <ul>
+          <li><strong> "Sauvegarder la disposition de l'acc&#233;l&#233;rateur"</strong></li>
+          <li><strong>Nouveau R&#233;gulateur&rArr;Fichier&rArr; "Sauvegarder R&#233;gulateur Actuel"</strong></li>
+          <li><strong>Nouveau R&#233;gulateur&rArr;Fichier&rArr; "Sauvegarder  R&#233;gulateur Actuel Sous..."</strong> [vous permet en outre de sauvegarder les boutons de fonction personnalis&#233;s]</li>
+
+          </ul>
+         </li>
+       </ul>
+       <br> 
+      </li>
+      
+      <li><a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">DispatcherPro</a>
+       <ul>
+<li><strong>Tables (sections, transits)</strong> : <em>Outils&rArr;TablesArr;[Table Sp&#233;cifique ]</em>, S&#233;lectionner :
+          <ul>
+           <li><strong>FichierArr; "Stocker la configuration"</strong> (stocke TOUTES les tables) ou</li>
+           <li><strong>FichierArr; " Stocker la configuration et les panneaux"</strong> [qui fait la m&#234;me chose que <strong>"Stocker les Panneaux"</strong> dans les &#233;diteurs de panneaux]</li>
+           </ul>aux         </li>
+        <li><strong>Options Dispatcher </strong> : <em>Outils&rArr;Dispatcher&rArr;</em><strong>OptionsArr; "Sauvegarder Options"</strong></li>
+        </ul>
+       <br>
+      </li>
+ 
+      <li><a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro</a>
+       <ul>
+         <li>Toutes les donn&#233;es : <a href="#autosave">Sauvegarde automatique</a></li>
+       </ul>
+       <br>
+       </li>
+      
+      <li><a href="SoundPro/SoundPro.shtml">SoundPro</a>
+       <ul>
+        <li><strong>Tables Audio (Auditeur, Buffer, Sources)</strong> : <em>Outils&rArr;Tables&rArr;Audio</em>, S&#233;lectionner :
+          <ul>
+           <li><strong>FichierArr; "Stocker la configuration"</strong> (stocke TOUTES les tables) ou</li>
+           <li><strong>FichierArr; "Stocker la configuration et les panneaux"</strong> [qui fait la m&#234;me chose que <strong>"Stocker les Panneaux"</strong> dans les &#233;diteurs de panneaux]</li>
+          </ul>
+        </li>
+       </ul>
+       <br>
+      </li>     
+
+    </ul>
+ 
+      <p>Assurez-vous doncde la pr&#233;sence de vostouche <strong>"Sauvegarder"</strong> et <strong>"Stocker"</strong> pour tous les diff&#233;rents outils que vous utilisez au sein de JMRI et vous
+      pourrez toujours avoir ce sur quoi vous avez travaill&#233; la fois suivante.  Et s'il y a un probl&#232;me, n'oubliez pas que JMRI conserve des fichiers de sauvegarde lorsqu'il &#233;crit
+      vos donn&#233;es vers un stockage permanent, soit automatiquement, soit sur votre ordre, recherchez donc les fichiers avec le suffixe ".bak
+      et vous pourrez vous remettre de la plupart des faux pas.</p>
+
+  <p><a href="#TopOfPage">[Aller en haut de la page]</a></p>     
+
+     <p class="important"><strong>Panneaux Perdus:</strong>Un probl&#232;me fr&#233;quemment signal&#233; sur <a href="https://groups.io/g/jmriusers" target="_blank">le
+      forum des utilisateurs JMRI</a> est que les panneaux ont disparu au red&#233;marrage de PanelPro et &#224; l'ouverture d'un fichier de panneaux.  Souvent, cela est dû au fait que quelqu'un a s&#233;lectionn&#233; "Stocker
+      configuration" plut&#244;t que "Stocker la configuration et les panneaux" et a &#233;cras&#233; un fichier de panneau existant.  Pas de panique - la copie de sauvegarde (dans le r&#233;pertoire
+      "backupPanels" dans <a href="../doc/Technical/ProfileFileStructure.shtml">l'Emplacement Profile</a>) est l&#224;.  La meilleure 
+      pratique pour travailler avec PanelPro est d'utiliser presque toujours <strong>"Stocker la configuration et les panneaux"</strong> ou <strong>"Stocker les Panneaux..."</strong>
+      o&#249; il appara&#238;t, et de renommer le fichier que vous enregistrez afin d'avoir plusieurs versions nomm&#233;es par vous pour y revenir si n&#233;cessaire.</p>
+ 
+      </div>
+
+ 
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+      <a name="autosave" id="autosave"></a>
+      <h2>Choses qui sont stock&#233;es automatiquement</h2>
+      <div class="para">      
+
+
+      <ul>
+       <li>Positions et tailles des fen&#234;tres (toutes ne sont pas enregistr&#233;es)</li>
+       <li><a href="DecoderPro/index.shtml">DecoderPro</a>
+        <ul>
+         <li><a href="DecoderPro/Roster.shtml"><forte>Entr&#233;e de l'Inventaire</strong></a> : Enregistr&#233; automatiquement lorsqu'il est modifi&#233; sur la page principale de l'Inventaire</li>
+         <li><fort>Groupe d'Inventaire</strong> : nouveau, y compris les changements apport&#233;s &#224; l'association des tableaux de groupes d'Inventaires ; &#233;galement renommage et suppression de groupes</li>.
+        </ul>
+       </li>
+       <li><a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro</a> donn&#233;es : stock&#233;es automatiquement lorsque les donn&#233;es sont modifi&#233;es.</li>
+      </ul>
+      <br>
+
+  <p><a href="#TopOfPage">[Aller en haut de la page]</a></p>     
+
+      </div>
+
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+     <a name="nosave" id="nosave"></a>
+     <h2>Ce qui n'est PAS stock&#233; apr&#232;s avoir quitt&#233; JMRI</h2>
+      <div class="para">      
+ 
+      <p>Certaines donn&#233;es que vous cr&#233;erez pendant votre session JMRI ou qui seront cr&#233;&#233;es par communication avec votre r&#233;seau  <em>ne</em> sont <em>pas</em> enregistr&#233;es
+      apr&#232;s dans JMRI.  C'est normal car ces donn&#233;es repr&#233;sentent l'&#233;tat actuel de vos trains et de votre r&#233;seau (par exemple, la position des aiguillages), donc
+      n&#233;cessite un retour d'information de votre part ou de votre r&#233;seau.  Ces donn&#233;es transitoires sont:</p>
+      <ul>
+       <li>Etat du capteur</li>
+       <li>Etat de l'Aiguille</li>
+       <li>DispatcherPro Trains</li>
+       <li>[Liste &#233;ventuellement incompl&#232;te]</li>
+      </ul>
+      <br>
+
+  <p><a href="#TopOfPage">[Aller en haut de la page]</a></p>  
+
+
+      </div>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+ 
+ 
+ <!--   <p><a href="#TopOfPage">[Go to top of page]</a></p>     -->
+
+
+   <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+   
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
