@@ -4,39 +4,22 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.util.List;
-import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JSpinner;
-import javax.swing.JTextArea;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.WindowConstants;
+import javax.annotation.Nonnull;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+//import com.alexandriasoftware.swing.Validation;
 import jmri.*;
 import jmri.jmrit.display.CoordinateEdit;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableJComponent;
 import jmri.jmrit.display.ToolTip;
+import jmri.jmrix.SystemConnectionMemoManager;
+import jmri.swing.ManagerComboBox;
+//import jmri.swing.SystemNameValidator;
 import jmri.util.ColorUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriColorChooser;
@@ -104,8 +87,20 @@ public class SwitchboardEditor extends Editor {
         Bundle.getMessage("Symbols")
     };
     private JComboBox<String> switchShapeList;
-    private final List<String> beanManuPrefixes = new ArrayList<>();
-    private JComboBox<String> beanManuNames;
+    //private JComboBox<String> beanManuNames;
+    ManagerComboBox<jmri.NamedBean> beanManuNames = new ManagerComboBox<>();
+    ManagerComboBox<Turnout> turnoutManComboBox = new ManagerComboBox<>();
+    ManagerComboBox<Sensor> sensorManComboBox = new ManagerComboBox<>();
+    ManagerComboBox<Light> lightManComboBox = new ManagerComboBox<>();
+    protected TurnoutManager turnoutManager = InstanceManager.getDefault(TurnoutManager.class);
+    protected SensorManager sensorManager = InstanceManager.getDefault(SensorManager.class);
+    protected LightManager lightManager = InstanceManager.getDefault(LightManager.class);
+    private SystemConnectionMemo memo;
+    private int shape;
+    private String type = TURNOUT;
+    private String typePrefix;
+    //SystemNameValidator hardwareAddressValidator;
+    JTextField addressTextField = new JTextField(10);
     private TitledBorder border;
     private final String interact = Bundle.getMessage("SwitchboardInteractHint");
     private final String noInteract = Bundle.getMessage("SwitchboardNoInteractHint");
@@ -121,6 +116,7 @@ public class SwitchboardEditor extends Editor {
     private final float cellProportion = 1.0f; // TODO analyse actual W:H per switch type/shape: worthwhile?
     private int _tileSize = 100;
     private final JSpinner rowsSpinner = new JSpinner(new SpinnerNumberModel(rows, 1, 25, 1));
+    private final JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
     // number of rows displayed on switchboard, disabled when autoRows is on
     private final JTextArea help2 = new JTextArea(Bundle.getMessage("Help2"));
     private final JTextArea help3 = new JTextArea(Bundle.getMessage("Help3", Bundle.getMessage("CheckBoxHideUnconnected")));
@@ -169,9 +165,10 @@ public class SwitchboardEditor extends Editor {
      *
      * @param name the title of the switchboard content frame
      */
-    @SuppressWarnings("unchecked") // AbstractProxyManager of the right type is type-safe by definition
     @Override
     protected void init(String name) {
+        memo = SystemConnectionMemoManager.getDefault().getSystemConnectionMemoForUserName("Internal");
+
         Container contentPane = getContentPane(); // the actual Editor configuration pane
         setVisible(false);      // start with Editor window hidden
         setUseGlobalFlag(true); // always true for a Switchboard
@@ -213,8 +210,12 @@ public class SwitchboardEditor extends Editor {
         JLabel beanTypeTitle = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanTypeLabel")));
         beanSetupPane.add(beanTypeTitle);
         beanTypeList = new JComboBox<>(beanTypeStrings);
-        beanTypeList.setSelectedIndex(0); // select bean type in comboBox
+        beanTypeList.setSelectedIndex(0); // select bean type T in comboBox
         beanTypeList.addActionListener((ActionEvent event) -> {
+            String typeChoice = (String) beanTypeList.getSelectedItem();
+            if (typeChoice != null) {
+                configureManagerComboBoxes(typeChoice);
+            }
             updatePressed();
             setDirty();
         });
@@ -225,30 +226,80 @@ public class SwitchboardEditor extends Editor {
         log.debug("beanTypeChar set to [{}]", beanTypeChar);
         JLabel beanManuTitle = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ConnectionLabel")));
         beanSetupPane.add(beanManuTitle);
-        beanManuNames = new JComboBox<>();
-        if (getManager(beanTypeChar) instanceof jmri.managers.AbstractProxyManager) { // copied from abstractTableTabAction
-            jmri.managers.AbstractProxyManager<jmri.NamedBean> proxy = (jmri.managers.AbstractProxyManager<jmri.NamedBean>) getManager(beanTypeChar);
-            List<jmri.Manager<NamedBean>> managerList = proxy.getManagerList(); // picks up all managers to fetch
-            for (int x = 0; x < managerList.size(); x++) {
-                String manuPrefix = managerList.get(x).getSystemPrefix();
-                log.debug("Prefix{} = [{}]", x, manuPrefix);
-                String manuName = managerList.get(x).getMemo().getUserName();
-                log.debug("Connection name {} = [{}]", x, manuName);
-                beanManuNames.addItem(manuName);  // add connection name to comboBox
-                beanManuPrefixes.add(manuPrefix); // add connection prefix to list
-            }
-        } else {
-            String manuPrefix = getManager(beanTypeChar).getSystemPrefix();
-            String manuName = getManager(beanTypeChar).getMemo().getUserName();
-            beanManuNames.addItem(manuName);
-            beanManuPrefixes.add(manuPrefix); // add to list (as the only item)
-        }
-        beanManuNames.setSelectedIndex(0); // defaults to Internal on init()
-        beanManuNames.addActionListener((ActionEvent event) -> {
+
+        beanSetupPane.add(turnoutManComboBox);
+        beanSetupPane.add(sensorManComboBox);
+        beanSetupPane.add(lightManComboBox);
+        turnoutManComboBox.setVisible(true);
+        sensorManComboBox.setVisible(false);
+        lightManComboBox.setVisible(false);
+
+        configureManagerComboBoxes("T"); // fill the combos
+
+        lightManComboBox.addActionListener((ActionEvent event) -> {
+            // set memo
+            memo = (lightManComboBox.getSelectedItem() != null ? lightManComboBox.getSelectedItem().getMemo() : lightManComboBox.getItemAt(0).getMemo());
+            log.debug("Lbox set to {}. Updating", memo.getUserName());
             updatePressed();
             setDirty();
         });
-        beanSetupPane.add(beanManuNames);
+        sensorManComboBox.addActionListener((ActionEvent event) -> {
+            // set memo
+            memo = (sensorManComboBox.getSelectedItem() != null ? sensorManComboBox.getSelectedItem().getMemo() : sensorManComboBox.getItemAt(0).getMemo());
+            log.debug("Sbox set to {}. Updating", memo.getUserName());
+            updatePressed();
+            setDirty();
+        });
+        turnoutManComboBox.addActionListener((ActionEvent event) -> {
+            // set memo
+            memo = (turnoutManComboBox.getSelectedItem() != null ? turnoutManComboBox.getSelectedItem().getMemo() : turnoutManComboBox.getItemAt(0).getMemo());
+            log.debug("Lbox set to {}. Updating", memo.getUserName());
+            updatePressed();
+            setDirty();
+        });
+
+//        hardwareAddressValidator = new SystemNameValidator(addressTextField,
+//                turnoutManComboBox.getItemAt(0),
+//                false); // initial system (for type Turnout)
+//        addressTextField.setInputVerifier(hardwareAddressValidator);
+
+        turnoutManComboBox.addActionListener((evt) -> {
+            Manager<?> manager = turnoutManComboBox.getSelectedItem();
+            if (manager != null) {
+                addressTextField.setText("");     // Reset saved text before switching managers
+                //hardwareAddressValidator.setManager(manager);
+            }
+            //hardwareAddressValidator.setManager(turnoutManComboBox.getSelectedItem());
+        });
+        sensorManComboBox.addActionListener((evt) -> {
+            Manager<?> manager = sensorManComboBox.getSelectedItem();
+            if (manager != null) {
+                addressTextField.setText("");     // Reset saved text before switching managers
+                //hardwareAddressValidator.setManager(manager);
+            }
+            //hardwareAddressValidator.setManager(sensorManComboBox.getSelectedItem());
+        });
+        lightManComboBox.addActionListener((evt) -> {
+            Manager<?> manager = lightManComboBox.getSelectedItem();
+            if (manager != null) {
+                addressTextField.setText("");     // Reset saved text before switching managers
+                //hardwareAddressValidator.setManager(manager);
+            }
+            //hardwareAddressValidator.setManager(lightManComboBox.getSelectedItem());
+        });
+
+//        hardwareAddressValidator.addPropertyChangeListener("validation", (evt) -> { // NOI18N
+//            Validation validation = hardwareAddressValidator.getValidation();
+//            Validation.Type valid = validation.getType();
+//            updateButton.setEnabled(valid != Validation.Type.WARNING && valid != Validation.Type.DANGER);
+//            help2.setText(validation.getMessage());
+//        });
+//        hardwareAddressValidator.setManager(turnoutManComboBox.getItemAt(0)); // initial system (for type Turnout)
+//        hardwareAddressValidator.verify(addressTextField);
+
+        //        lightManComboBox.setSelectedItem("Internal"); // defaults to Internal on init() NPE, wait for init to complete
+        //        sensorManComboBox.setSelectedItem("Internal");
+        //        turnoutManComboBox.setSelectedItem("Internal");
         add(beanSetupPane);
 
         // add shape combobox
@@ -325,10 +376,10 @@ public class SwitchboardEditor extends Editor {
             cm.registerUser(this);
         }
 
+        //add(addressTextField);
         add(createControlPanel());
 
         JPanel updatePanel = new JPanel();
-        JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
         updateButton.addActionListener((ActionEvent event) -> {
             updatePressed();
             setDirty();
@@ -389,7 +440,7 @@ public class SwitchboardEditor extends Editor {
     public void updatePressed() {
         log.debug("updatePressed START _tileSize = {}", _tileSize);
 
-        if (_autoItemRange && !autoItemRange.isSelected()){
+        if (_autoItemRange && !autoItemRange.isSelected()) {
             autoItemRange.setSelected(true);
         }
         setVisible(_editable); // show/hide editor
@@ -426,12 +477,17 @@ public class SwitchboardEditor extends Editor {
 
         log.debug("creating range for manu index {}", beanManuNames.getSelectedIndex());
 
-        // fill switchesOnBoard LinkedHashMap
+//        Validation.Type valid = hardwareAddressValidator.getValidation().getType();
+        String startAddress = "";
+//        if (addressTextField.getText() != null && valid != Validation.Type.WARNING && valid != Validation.Type.DANGER) {
+//            startAddress = addressTextField.getText();
+//        }
+        // fill switchesOnBoard LinkedHashMap, uses memo/manager already set
         createSwitchRange((Integer) minSpinner.getValue(),
                 (Integer) maxSpinner.getValue(),
                 beanTypeList.getSelectedIndex(),
-                beanManuNames.getSelectedIndex(),
-                switchShapeList.getSelectedIndex());
+                switchShapeList.getSelectedIndex(),
+                startAddress);
 
         if (autoRowsBox.isSelected()) {
             rows = autoRows(cellProportion); // TODO: use specific proportion value per Type/Shape choice?
@@ -448,8 +504,8 @@ public class SwitchboardEditor extends Editor {
         }
 
         // update the title at the bottom of the switchboard to match (no) layout control
-        if ((beanManuNames.getSelectedIndex() >= 0) && (beanTypeList.getSelectedIndex() >= 0)) {
-            border.setTitle(beanManuNames.getSelectedItem() + " " +
+        if (beanTypeList.getSelectedIndex() >= 0) {
+            border.setTitle(memo.getUserName() + " " +
                     beanTypeList.getSelectedItem() + " - " + (allControlling() ? interact : noInteract));
         }
         help3.setVisible(switchesOnBoard.size() == 0); // show/hide help3 warning
@@ -478,26 +534,29 @@ public class SwitchboardEditor extends Editor {
      * @param max         highest ordinal of Switch address range
      * @param beanType    index of selected item in Type comboBox, either T, S
      *                    or L
-     * @param manuPrefixChoice  index of selected item in Connection comboBox, filled from
-     *                    active connections
      * @param switchShapeChoice index of selected visual presentation of Switch shape
      *                    selected in Type comboBox, choose either a JButton
      *                    showing the name or (to do) a graphic image
      */
-    private void createSwitchRange(int min, int max, int beanType, int manuPrefixChoice, int switchShapeChoice) {
+    private void createSwitchRange(int min, int max, int beanType, int switchShapeChoice, @Nonnull String startAdress) {
         log.debug("_hideUnconnected = {}", _hideUnconnected);
         String name;
         BeanSwitch _switch;
         NamedBean nb;
-        String prefix = (manuPrefixChoice >= 0 ? beanManuPrefixes.get(manuPrefixChoice) : beanManuPrefixes.get(0));
-        // TODO special handling of non-numeric system names such as MERG, C/MRI?
+        if (memo == null) {
+            log.error("null memo, can't create range");
+            return;
+        }
+        String prefix = memo.getSystemPrefix();
+        // TODO handling of non-numeric system names such as MERG, C/MRI using validator textField
+        // if (!startAddress.equals("")) { // use as start address, spinners are only for the number of items
         log.debug("_manuprefix={} beanType={}", prefix, beanType);
         // use validated bean names
         for (int i = min; i <= max; i++) {
             switch (beanType) {
                 case 0:
                     try {
-                        name = InstanceManager.getDefault(TurnoutManager.class).createSystemName(i + "", prefix);
+                        name = ((TurnoutManager)memo.get(TurnoutManager.class)).createSystemName(i + "", prefix);
                     } catch (jmri.JmriException ex) {
                         log.error("Error creating range at turnout {}", i);
                         return;
@@ -506,7 +565,7 @@ public class SwitchboardEditor extends Editor {
                     break;
                 case 1:
                     try {
-                        name = InstanceManager.sensorManagerInstance().createSystemName(i + "", prefix);
+                        name = ((SensorManager)memo.get(SensorManager.class)).createSystemName(i + "", prefix);
                     } catch (jmri.JmriException ex) {
                         log.error("Error creating range at sensor {}", i);
                         return;
@@ -514,11 +573,16 @@ public class SwitchboardEditor extends Editor {
                     nb = jmri.InstanceManager.getDefault(SensorManager.class).getSensor(name);
                     break;
                 case 2: // calling InstanceManager.getDefault(SensorManager.class) often fails 1st time, useless for test
-                    name = prefix + "L" + i;
+                    try {
+                        name = ((LightManager)memo.get(LightManager.class)).createSystemName(i + "", prefix);
+                    } catch (jmri.JmriException ex) {
+                        log.error("Error creating range at light {}", i);
+                        return;
+                    }
                     nb = jmri.InstanceManager.lightManagerInstance().getLight(name);
                     break;
                 default:
-                    log.error("addSwitchRange: cannot parse bean name. manuPrefix = {}; i = {}; type={}", prefix, i, beanType);
+                    log.error("addSwitchRange: cannot parse bean name. Prefix = {}; i = {}; type={}", prefix, i, beanType);
                     return;
             }
             if (nb == null && _hideUnconnected) {
@@ -1035,7 +1099,7 @@ public class SwitchboardEditor extends Editor {
         }
 
         // start over stepping columns instead of rows
-        int columnsNumC = 1;
+        int columnsNumC;
         int rowsNumC = 1;
         float tileSizeC = 0.1f;
         float tileSizeCOld = 0.0f;
@@ -1131,9 +1195,6 @@ public class SwitchboardEditor extends Editor {
         return (int) maxSpinner.getValue();
     }
 
-    private String typePrefix;
-    private String type;
-
     // ***************** Store & Load xml ********************
     /**
      * Store bean type.
@@ -1141,7 +1202,7 @@ public class SwitchboardEditor extends Editor {
      * @return bean type prefix as set for Switchboard
      */
     public String getSwitchType() {
-        String typePref = "T";
+        String typePref;
         String switchType = "";
         if (beanTypeList.getSelectedItem() != null) {
             switchType = beanTypeList.getSelectedItem().toString();
@@ -1193,14 +1254,10 @@ public class SwitchboardEditor extends Editor {
     /**
      * Store connection type.
      *
-     * @return bean connection prefix
+     * @return active bean connection prefix
      */
     public String getSwitchManu() {
-        if (beanManuNames.getSelectedIndex()  >= 0) {
-            return this.beanManuPrefixes.get(beanManuNames.getSelectedIndex());
-        } else {
-            return this.beanManuPrefixes.get(0);
-        }
+        return memo.getSystemPrefix();
     }
 
     /**
@@ -1209,16 +1266,12 @@ public class SwitchboardEditor extends Editor {
      * @param manuPrefix connection prefix
      */
     public void setSwitchManu(String manuPrefix) {
-        int choice = 0;
-        for (int i = 0; i < beanManuPrefixes.size(); i++) {
-            if (beanManuPrefixes.get(i).equals(manuPrefix)) {
-                choice = i;
-                break;
-            }
-        }
         try {
-            beanManuNames.setSelectedIndex(choice);
-            log.debug("beanManuNames combo set to {} for {}", choice, manuPrefix);
+            memo = SystemConnectionMemoManager.getDefault().getSystemConnectionMemoForSystemPrefix(manuPrefix);
+            if (memo.get(TurnoutManager.class) != null) { // just for initial view
+                turnoutManComboBox.setSelectedItem(memo.get(TurnoutManager.class));
+                log.debug("turnoutManComboBox set to {} for {}", memo.getUserName(), manuPrefix);
+            }
         } catch (IllegalArgumentException e) {
             log.error("invalid connection [{}] in Switchboard", manuPrefix);
         }
@@ -1230,27 +1283,23 @@ public class SwitchboardEditor extends Editor {
      * @return bean shape prefix
      */
     public String getSwitchShape() {
-        String shape;
-        int shapeChoice = 0;
-        if (switchShapeList.getSelectedIndex() > 0) {
-            shapeChoice = switchShapeList.getSelectedIndex();
-        }
-        switch (shapeChoice) {
+        String shapeAsString;
+        switch (shape) {
             case 1:
-                shape = "icon";
+                shapeAsString = "icon";
                 break;
             case 2:
-                shape = "drawing";
+                shapeAsString = "drawing";
                 break;
             case 3:
-                shape = "symbol";
+                shapeAsString = "symbol";
                 break;
             default:
                 // 0 = basic labelled button
-                shape = "button";
+                shapeAsString = "button";
                 break;
         }
-        return shape;
+        return shapeAsString;
     }
 
     /**
@@ -1259,7 +1308,6 @@ public class SwitchboardEditor extends Editor {
      * @param switchShape name of switch shape
      */
     public void setSwitchShape(String switchShape) {
-        int shape;
         switch (switchShape) {
             case "icon":
                 shape = 1;
@@ -1382,11 +1430,11 @@ public class SwitchboardEditor extends Editor {
     protected Manager<?> getManager(char typeChar) {
         switch (typeChar) {
             case 'T': // Turnout
-                return InstanceManager.turnoutManagerInstance();
+                return InstanceManager.getNullableDefault(TurnoutManager.class);
             case 'S': // Sensor
-                return InstanceManager.sensorManagerInstance();
+                return InstanceManager.getNullableDefault(SensorManager.class);
             case 'L': // Light
-                return InstanceManager.lightManagerInstance();
+                return InstanceManager.getNullableDefault(LightManager.class);
             default:
                 log.error("Unsupported bean type character \"{}\" found.", typeChar);
                 return null;
@@ -1601,6 +1649,52 @@ public class SwitchboardEditor extends Editor {
         for (BeanSwitch bs : switchesOnBoard.values()) {
                 bs.switchLight(on);
             }
+    }
+
+    /**
+     * Configure the combo box listing managers.
+     * Adapted from AbstractTableAction.
+     *
+     * @param type one of the three NamedBean types as String
+     */
+    protected void configureManagerComboBoxes(String type) {
+        switch (type) {
+            case "L":
+                LightManager defaultManagerL = InstanceManager.getDefault(LightManager.class);
+                if (defaultManagerL instanceof ProxyManager) {
+                    lightManComboBox.setManagers(defaultManagerL);
+                } else {
+                    lightManComboBox.setManagers(lightManager);
+                }
+                lightManComboBox.setVisible(true);
+                sensorManComboBox.setVisible(false);
+                turnoutManComboBox.setVisible(false);
+                break;
+            case "S":
+                SensorManager defaultManagerS = InstanceManager.getDefault(SensorManager.class);
+                if (defaultManagerS instanceof ProxyManager) {
+                    sensorManComboBox.setManagers(defaultManagerS);
+                } else {
+                    sensorManComboBox.setManagers(sensorManager);
+                }
+                lightManComboBox.setVisible(false);
+                sensorManComboBox.setVisible(true);
+                turnoutManComboBox.setVisible(false);
+                break;
+            case "T":
+            default:
+                TurnoutManager defaultManagerT = InstanceManager.getDefault(TurnoutManager.class);
+                if (defaultManagerT instanceof ProxyManager) {
+                    turnoutManComboBox.setManagers(defaultManagerT);
+                } else {
+                    turnoutManComboBox.setManagers(turnoutManager);
+                }
+                lightManComboBox.setVisible(false);
+                sensorManComboBox.setVisible(false);
+                turnoutManComboBox.setVisible(true);
+                break;
+        }
+        // TODO store current selection in prefman
     }
 
     private final static Logger log = LoggerFactory.getLogger(SwitchboardEditor.class);
