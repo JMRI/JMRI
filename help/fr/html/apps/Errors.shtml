@@ -1,0 +1,210 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 - 2016 -->
+<!-- translated on 2021-01-06 -->
+  <title>JMRI Applications - Error Messages and Codes</title>
+
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=iso-8859-1">
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
+      <!-- Page Body -->
+
+      <h1>JMRI Applications: Messages d'Erreurs et Code</h1>
+      <!-- THIS WILL BE THE MASTER COPY: In process of removing copies from help/en/manual/DecoderPro3/Error.shtml and help/en/html/tools/programmer/ 
+      and help/en/html/setup/Errors.shtml   @jerryg2003 08/07/2020 -->
+
+      <p>Diverses choses peuvent mal se passer lorsque  JMRI essaie de travailler avec
+      votre Centrale DCC pour programmer un d&#233;codeur DCC. Cette page
+      &#233;num&#232;re le message d'erreur qui peut en r&#233;sulter, et d&#233;crit ce qu'il
+ signifie. </p>
+
+      <h2>Codes d'erreur JMRI</h2>
+
+      <dl>
+        <dt><strong>301 - aucune locomotive d&#233;tect&#233;e</strong></dt>
+
+        <dd>La centrale a signal&#233; qu'elle ne voit pas de
+        locomotive sur la voie de programmation.</dd>
+
+        <dd>
+          <p>Cela peut se produire si la locomotive n'&#233;tablit pas de contact &#233;lectrique ou s'il y a un d&#233;faut de c&#226;blage dans la locomotive.</p>
+        </dd>
+
+        <dt><strong>302 - programmeur occup&#233;</strong></dt>
+
+        <dd>
+          <p>La centrale a signal&#233; qu'elle est occup&#233;e &#224; faire
+          autre chose, et ne peut faire aucune programmation pour le moment.
+          Cela signifie g&#233;n&#233;ralement qu'une autre partie du syst&#232;me DCC
+          effectue une op&#233;ration de programmation, par exemple un
+          r&#233;gulateur.</p>
+        </dd>
+
+        <dd>
+          <p>Certains syst&#232;mes DCC ne peuvent pas programmer en mode ops
+          (programmation sur le r&#233;seau principal) tout en utilisant &#233;galement la voie de programmation , auquel cas ils renverront ce
+          message d'erreur.</p>
+        </dd>
+
+        <dt><strong>303 - demand&#233; non implant&#233; dans la centrale</strong></dt>
+
+        <dd>
+          <p>Cela signifie que JMRI a demand&#233; &#224; La centrale de
+          faire quelque chose pour laquelle elle n'est pas pr&#233;vue.
+        </dd>
+
+        <dd>
+          <p>Cela n'est pas cens&#233; se produire, car JMRI devrait d&#233;sactiver
+          des modes de programmation que la centrale ne peut pas fournir.
+          Si vous voyez ce message, veuillez signaler les
+          circonstances sur le <a href=
+          "https://groups.io/g/jmriusers">
+          Groupe d'utilisateurs JMRI</a>.</p>
+        </dd>
+
+        <dt><strong>304 - avort&#233; par l'utilisateur</strong></dt>
+
+        <dd>
+          <p>L'utilisateur a demand&#233; &#224; ce que l'op&#233;ration de lecture ou d'&#233;criture
+          s'arr&#234;ter pr&#233;matur&#233;ment.</p>
+        </dd>
+
+        <dd>
+          <p>Ceci est consid&#233;r&#233; comme une erreur, car le programme
+          ne sait pas si le d&#233;codeur a r&#233;ellement vu l'
+          op&#233;ration termin&#233;e ou non.</p>
+        </dd>
+
+        <dt><strong>305 - &#201;chec de la confirmation </strong></dt>
+
+        <dd>
+          <p>Certaines centrales vous permettent de "confirmer" le
+          contenu d'un CV, plut&#244;t que d'en lire la valeur. En
+          g&#233;n&#233;ral, c'est plus rapide que de faire une lecture compl&#232;te. Si
+          la valeur dans le CV ne correspond pas &#224; la valeur attendue,
+          ce message est &#233;mis. Il est consid&#233;r&#233; comme une erreur parce que
+          si les valeurs ne correspondent pas, nous savons que nous ne connaissons p
+          as la valeur correcte pour le contenu du CV.</p>
+        </dd>
+
+        <dt><strong>306 - D&#233;lai d&#233;passer pour le dialogue avec la centrale
+        </strong></dt>
+
+        <dd>
+          <p>Le programme n'a pas re&#231;u de r&#233;ponse de la centrale
+          quand il s'y attendait.</p>
+        </dd>
+
+        <dd>
+          <p>C'est de loin le message d'erreur le plus courant lorsque
+          les gens commencent &#224; utiliser JMRI. Dans ce cas, la connexion n'est g&#233;n&#233;ralement pas
+          correcte. Cela pourrait &#234;tre un probl&#232;me avec le(s) c&#226;ble(s) faisant
+          la connexion, ou un probl&#232;me dans la mani&#232;re dont les pr&#233;f&#233;rences sont &#233;tablies.  
+          Choisir le mauvais port s&#233;rie est particuli&#232;rement  courant.</p>
+
+          <p>Une fois que  JMRI fonctionne correctement, cette erreur peut
+          se produisent parfois en raison d'une erreur transitoire. DecoderPro
+          Dans ce cas, elle sera g&#233;n&#233;ralement r&#233;essay&#233;e avec succ&#232;s.</p>
+        </dd>
+
+        <dt><strong>307 - Erreur inconnue</strong></dt>
+
+        <dd>
+          <p>Une erreur s'est produite, mais JMRI n'en sait pas assez
+          &#224; ce sujet pour pouvoir en rendre compte de mani&#232;re plus d&#233;taill&#233;e.</p>
+        </dd>
+
+        <dd>
+          <p>En g&#233;n&#233;ral, JMRI est assez dou&#233;e pour d&#233;chiffrer ce qui
+          n'a pas fonctionn&#233;, et ce message n'est pas tr&#232;s courant. Si vous
+          voyez ce message, veuillez rapporter les circonstances sur le
+          <a href=
+          "https://groups.io/g/jmriusers">
+          Groupe d'utilisateurs JMRI</a>.</p>
+        </dd>
+
+        <dt><strong>308 - Pas d'acquittement de la part de
+        locomotive</strong></dt>
+
+        <dd>
+          <p>A la fin d'une op&#233;ration de lecture ou d'&#233;criture de CV, 
+          la locomotive r&#233;pond ("accuse r&#233;ception") &#224; la commande &
+          de la centrale en utilisant une impulsion de courant.</p>
+        </dd>
+
+        <dd>
+          <p>Si cette impulsion n'est pas visible, certaines centrale
+          fournissent ce message d'erreur. Il pourrait &#234;tre dû &#224; un mauvais
+          contact &#233;lectrique sur la voie de programmation ou &#224; l'int&#233;rieur
+          la locomotive. Il se peut aussi que le d&#233;codeur ne
+          soutient pas la relecture.</p>
+
+          <p>Certains d&#233;codeurs, en particulier certains d&#233;codeurs de son,
+          consomment tellement de courant que l'impulsion de r&#233;ponse n'est pas d&#233;tect&#233;e
+          par la centrale. Dans ce cas, l'un des diff&#233;rents
+           "boosters de programmation" peut r&#233;soudre le probl&#232;me.
+        </dd>
+
+        <dt><strong>309 - Court-circuit sur la voie de programmation
+        </strong></dt>
+
+        <dd>
+          <p>La centrale a signal&#233; avoir vu un court-circuit
+          t sur la voie de programmation. Cela permet d'&#233;viter
+          les op&#233;rations de programmation.</p>
+
+          <p>V&#233;rifier les connexions &#233;lectriques de la voie de programmation
+          et aussi &#224; l'int&#233;rieur de la locomotive.</p>
+        </dd>
+
+        <dt><strong>310 - Erreur de s&#233;quence</strong></dt>
+
+        <dd>
+          <p>Pour une raison quelconque, l'op&#233;ration de programmation s'est termin&#233;e pr&#233;matur&#233;ment
+          et la centrale est revenu en mode normal (abandon du
+          mode service) avant qu'il n'ait dû.</p>
+
+          <p>Cette erreur peut se produire lors de certaines op&#233;rations
+          dans JMRI pendant la programmation.  Mettre l'alimentation de la voie pendant l'op&#233;ration de programmation sur un XpressNet est un exemple de la fa&#231;on de
+           cr&#233;er cette erreur.</p>
+
+          <p>Si vous n'avez pas effectu&#233; d'op&#233;rations pendant votre
+          s&#233;quence de programmation, cette erreur, pourrait indiquer que
+          vous avez s&#233;lectionn&#233; la mauvaise centrale, dans le volet
+          pr&#233;f&#233;rences. V&#233;rifiez cela. Si c'est correct et que 
+          l'&#233;v&#233;nement se reproduit, demandez de l'aide sur la liste des utilisateurs de JMRI.</p>
+        </dd>
+
+        <dt><strong>311 - Erreur de communication entre le PC et la centrale</strong></dt>
+
+        <dd>
+          <p>Les donn&#233;es entre le PC et la centrale &#233;taient 
+          corrompu et la corruption a &#233;t&#233; d&#233;tect&#233;e avant que le 
+          La centrale a trait&#233; la demande.</p>
+
+          <p>Si cette erreur se produit fr&#233;quemment, elle peut 
+          indiquer un probl&#232;me de connexion entre votre PC
+          et la centrale ou un probl&#232;me avec votre syst&#232;me d'
+         interface .  Les connexions sans fil sont plus susceptibles 
+          &#224; cette question que des liens avec des
+          cables.</p>
+        </dd>
+      </dl>
+      <hr>
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
