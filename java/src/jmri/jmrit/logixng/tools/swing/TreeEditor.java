@@ -1210,11 +1210,14 @@ public class TreeEditor extends TreeViewer {
                     && femaleSocket.isCompatible(clipboard.getTopItem())
                     && !femaleSocket.isAncestor(clipboard.getTopItem());
             
+            boolean disableForRoot = _disableRootRemoveCutCopy
+                    && (_currentFemaleSocket == _femaleRootSocket);
+            
             menuItemAdd.setEnabled(!isConnected);
-            menuItemRemove.setEnabled(isConnected && !_disableRootRemoveCutCopy);
+            menuItemRemove.setEnabled(isConnected && !disableForRoot);
             menuItemEdit.setEnabled(isConnected);
-            menuItemCut.setEnabled(isConnected && !_disableRootRemoveCutCopy);
-            menuItemCopy.setEnabled(isConnected && !_disableRootRemoveCutCopy);
+            menuItemCut.setEnabled(isConnected && !disableForRoot);
+            menuItemCopy.setEnabled(isConnected && !disableForRoot);
             menuItemPaste.setEnabled(!isConnected && canConnectFromClipboard);
             
             for (FemaleSocketOperation oper : FemaleSocketOperation.values()) {
