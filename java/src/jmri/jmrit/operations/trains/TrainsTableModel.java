@@ -57,7 +57,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     private static final int HIGHESTCOLUMN = EDIT_COLUMN + 1;
 
-    public TrainsTableModel(){
+    public TrainsTableModel() {
         super();
         trainManager.addPropertyChangeListener(this);
         Setup.getDefault().addPropertyChangeListener(this);
@@ -100,11 +100,13 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
             if (!isShowAll()) {
                 // filter out trains not checked
-                for (int i = sysList.size() - 1; i >= 0; i--) {
-                    if (!sysList.get(i).isBuildEnabled()) {
-                        sysList.remove(i);
+                SwingUtilities.invokeLater(() -> {
+                    for (int i = sysList.size() - 1; i >= 0; i--) {
+                        if (!sysList.get(i).isBuildEnabled()) {
+                            sysList.remove(i);
+                        }
                     }
-                }
+                });
             }
         }
 
