@@ -25,12 +25,11 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     boolean _enableListeners = true;
     
     
-    public AbstractFemaleSocket(@Nonnull Base parent, FemaleSocketListener listener, String name) {
+    public AbstractFemaleSocket(Base parent, FemaleSocketListener listener, String name) {
         if (!validateName(name)) {
             throw new IllegalArgumentException("the name is not valid: " + name);
         }
         if (listener == null) throw new IllegalArgumentException("FemaleSocketListener is null");
-        if (parent == null) throw new IllegalArgumentException("parent is null");
         _parent = parent;
         _listener = listener;
         _name = name;
@@ -58,7 +57,6 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     /** {@inheritDoc} */
     @Override
     public void setParent(@Nonnull Base parent) {
-        if (parent == null) throw new IllegalArgumentException("parent is null");
         _parent = parent;
     }
     
@@ -307,18 +305,21 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     /** {@inheritDoc} */
     @Override
     public final ConditionalNG getConditionalNG() {
+        if (_parent == null) return null;
         return _parent.getConditionalNG();
     }
     
     /** {@inheritDoc} */
     @Override
     public final LogixNG getLogixNG() {
+        if (_parent == null) return null;
         return _parent.getLogixNG();
     }
     
     /** {@inheritDoc} */
     @Override
     public final Base getRoot() {
+        if (_parent == null) return null;
         return _parent.getRoot();
     }
     
