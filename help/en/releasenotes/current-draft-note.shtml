@@ -91,7 +91,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>Support MQTT Username and Password for Broker Authentication</li>
             </ul>
 
         <h4>MRC</h4>
