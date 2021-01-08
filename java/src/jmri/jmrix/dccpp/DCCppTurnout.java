@@ -207,7 +207,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
             internalState = IDLE;
                 break;
         }
-        log.debug("Sending Message: {}", msg.toString());
+        log.debug("Sending Message: '{}'", msg);
         tc.sendDCCppMessage(msg, null);  // status returned via manager
     }
     
@@ -260,8 +260,6 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
      */
     @Override
     synchronized public void message(DCCppReply l) {
-        log.debug("received message: {}", l);
-
         switch (getFeedbackMode()) {
         case EXACT:
             handleExactModeFeedback(l);
@@ -275,7 +273,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         }
     }
 
-    // listen for the messages to the LI100/LI101
+    // Listen for the outgoing messages (to the command station)
     @Override
     public void message(DCCppMessage l) {
     }
@@ -283,9 +281,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     // Handle a timeout notification
     @Override
     public void notifyTimeout(DCCppMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message {}", msg.toString());
-        }
+        log.debug("Notified of timeout on message '{}'", msg);
     }
 
     /*

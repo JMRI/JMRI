@@ -247,7 +247,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         Matcher m;
         DCCppReply reply = null;
 
-        log.debug("Generate Reply to message type {} string = {}", msg.getElement(0), msg.toString());
+        log.debug("Generate Reply to message type '{}' string = '{}'", msg.getElement(0), msg);
 
         switch (msg.getElement(0)) {
 
@@ -296,7 +296,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
             case DCCppConstants.OUTPUT_CMD:
                 if (msg.isOutputCmdMessage()) {
-                    log.debug("Output Command Message: {}", msg.toString());
+                    log.debug("Output Command Message: '{}'", msg);
                     r = "Y" + msg.getOutputIDString() + " " + (msg.getOutputStateBool() ? "1" : "0");
                     log.debug("Reply String: {}", r);
                     reply = DCCppReply.parseDCCppReply(r);
@@ -453,8 +453,9 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             case DCCppConstants.READ_TRACK_CURRENT:
                 log.debug("READ_TRACK_CURRENT detected");
                 int randint = 480 + rgen.nextInt(64);
-                reply = DCCppReply.parseDCCppReply("a " + (trackPowerState ? Integer.toString(randint) : "0"));
-                log.debug("Reply generated = {}", reply.toString());
+                String rs = "a " + (trackPowerState ? Integer.toString(randint) : "0");
+                reply = DCCppReply.parseDCCppReply(rs);
+                log.debug("Reply generated = '{}'", reply);
                 break;
 
             case DCCppConstants.READ_CS_STATUS:
@@ -468,11 +469,12 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             case DCCppConstants.OPS_WRITE_CV_BIT:
             case DCCppConstants.WRITE_DCC_PACKET_MAIN:
             case DCCppConstants.WRITE_DCC_PACKET_PROG:
-                log.debug("non-reply message detected");
+                log.debug("non-reply message detected: '{}'", msg);
                 // Send no reply.
                 return (null);
 
             default:
+                log.debug("unknown message detected: '{}'", msg);
                 return (null);
         }
         return (reply);

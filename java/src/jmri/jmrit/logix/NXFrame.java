@@ -588,7 +588,7 @@ public class NXFrame extends WarrantRoute {
             if (text==null) {
                 text = "\"\"";
             }
-            return Bundle.getMessage("badSpeedPercent", text);
+            return Bundle.getMessage("badSpeed100", text);
         }
 
         try {
@@ -604,7 +604,7 @@ public class NXFrame extends WarrantRoute {
         }
 
         if (maxSpeed > 100f || maxSpeed < 0.001f) {
-            return Bundle.getMessage("badSpeedPercent", maxSpeed);
+            return Bundle.getMessage("badSpeed100", maxSpeed);
         }
         _maxThrottle = maxSpeed / 100;
 
