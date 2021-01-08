@@ -186,14 +186,20 @@ public class WarrantTableAction extends AbstractAction {
     }
 
     @InvokeOnGuiThread
-    protected NXFrame makeNXFrame() {
+    protected void makeNXFrame() {
+        if (_openFrame != null) {
+            if (_openFrame.isRunning()) {
+                return;
+            } else {
+                closeWarrantFrame();
+            }
+        }
         if (_nxFrame == null) {
             _nxFrame = new NXFrame();
         }
         _nxFrame.setState(java.awt.Frame.NORMAL);
         _nxFrame.setVisible(true);
         _nxFrame.toFront();
-        return _nxFrame;
     }
 
     protected void closeWarrantFrame() {
@@ -209,9 +215,9 @@ public class WarrantTableAction extends AbstractAction {
             return;
         }
         closeWarrantFrame();
+        closeNXFrame();
         _openFrame = new WarrantFrame(startW, endW);
         _openFrame.setState(java.awt.Frame.NORMAL);
-        _openFrame.setVisible(true);
         _openFrame.toFront();            
     }
 
@@ -220,9 +226,9 @@ public class WarrantTableAction extends AbstractAction {
             return;
         }
         closeWarrantFrame();
+        closeNXFrame();
         _openFrame = new WarrantFrame(w);
         _openFrame.setState(java.awt.Frame.NORMAL);
-        _openFrame.setVisible(true);
         _openFrame.toFront();            
     }
 
