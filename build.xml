@@ -86,7 +86,7 @@
       <isset property="RELEASED"/>
     </condition>
 
-    <condition property="nsis.home" value="">
+    <condition property="nsis.home" value="C:\Program Files (x86)\NSIS">
         <not><isset property="nsis.home"/></not>
     </condition>
 
@@ -100,7 +100,7 @@
             <isset property="cp.append"/>
         </not>
     </condition>
-    <condition property="cp.prepend" value="C:\Program Files (x86)\NSIS">
+    <condition property="cp.prepend" value="">
         <not>
             <isset property="cp.prepend"/>
         </not>
