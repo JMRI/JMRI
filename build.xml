@@ -86,7 +86,7 @@
       <isset property="RELEASED"/>
     </condition>
 
-    <condition property="nsis.home" value="C:\Program Files (x86)\NSIS">
+    <condition property="nsis.home" value="">
         <not><isset property="nsis.home"/></not>
     </condition>
 
