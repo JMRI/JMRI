@@ -157,7 +157,7 @@ public abstract class RollingStockAttribute extends PropertyChangeSupport {
             maxNameSubStringLength = getMinNameLength();
             for (String name : getNames()) {
                 String[] subString = name.split(TrainCommon.HYPHEN);
-                if (subString[0].length() > maxNameSubStringLength) {
+                if (subString.length > 0 && subString[0].length() > maxNameSubStringLength) {
                     maxName = name;
                     maxNameSubStringLength = subString[0].length();
                 }

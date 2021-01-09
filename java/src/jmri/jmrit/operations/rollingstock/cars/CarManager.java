@@ -543,6 +543,13 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
                     car.setReturnWhenEmptyLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName());
                 }
             }
+            if (car.getTypeName().equals(type) && car.getReturnWhenLoadedLoadName().equals(oldLoadName)) {
+                if (newLoadName != null) {
+                    car.setReturnWhenLoadedLoadName(newLoadName);
+                } else {
+                    car.setReturnWhenLoadedLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultLoadName());
+                }
+            }
         }
     }
 
