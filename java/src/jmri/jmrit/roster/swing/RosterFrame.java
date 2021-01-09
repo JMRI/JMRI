@@ -29,30 +29,7 @@ import java.util.Arrays;
 import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JRadioButton;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JSplitPane;
-import javax.swing.JTable;
-import javax.swing.JTextPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.Timer;
-import javax.swing.TransferHandler;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
@@ -195,7 +172,11 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
     protected void additionsToToolBar() {
         getToolBar().add(new LargePowerManagerButton(true));
-        getToolBar().add(modePanel);
+        getToolBar().add(Box.createHorizontalGlue());
+        JPanel p = new JPanel();
+        p.setAlignmentX(JPanel.RIGHT_ALIGNMENT);
+        p.add(modePanel);
+        getToolBar().add(p);
     }
 
     /**
