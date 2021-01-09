@@ -36,7 +36,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     @Override
     protected void register() {
-        super.register(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
 }

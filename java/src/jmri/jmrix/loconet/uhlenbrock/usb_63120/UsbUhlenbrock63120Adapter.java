@@ -21,7 +21,10 @@ import java.util.Arrays;
  *   Process other messages received during the waiting period.
  * - LACK (Long Acknowledge Message) treatment: If a message can be followed by a LACK (see LocoNet
  *   documentation, for messages which can be followed by a LACK). A flag must be set by COM Port after
- *   the send and receive procedure. If this flag is set and the next message received is a LACK message then it must be processed because it is a response to the sent message. If the next message received is not a LACK then the set flag is reset. This ensures that a LACK is not assigned to a wrong message.
+ *   the send and receive procedure. If this flag is set and the next message received is a LACK message
+ *   then it must be processed because it is a response to the sent message.
+ *   If the next message received is not a LACK then the set flag is reset. This ensures that a LACK is
+ *   not assigned to a wrong message.
  * - Evaluate and process Received messages.
  *
  * @author Egbert Broerse Copyright (C) 2020
@@ -58,30 +61,6 @@ public class UsbUhlenbrock63120Adapter extends LocoBufferAdapter {
     @Override
     public int defaultBaudIndex() {
         return 3;
-    }
-
-    /**
-     * Local method to do specific configuration, overridden in class.
-     */
-    @Override
-    protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
-        // find the baud rate value, configure comm options
-        int baud = currentBaudNumber(mBaudRate);
-        activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
-                SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-
-        // find and configure flow control from option
-        int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also defaults in selectedOption1
-        if (getOptionState(option1Name).equals(validOption1[1])) {
-            flow = SerialPort.FLOWCONTROL_NONE;
-        }
-        configureLeadsAndFlowControl(activeSerialPort, flow);
-
-        log.info("Uhlenbrock adapter {}, mode={} RTSCTS_OUT={} RTSCTS_IN={}",
-                (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "set hardware flow control" : "set no flow control"),
-                activeSerialPort.getFlowControlMode(),
-                SerialPort.FLOWCONTROL_RTSCTS_OUT,
-                SerialPort.FLOWCONTROL_RTSCTS_IN);
     }
 
     private final static Logger log = LoggerFactory.getLogger(UsbUhlenbrock63120Adapter.class);
