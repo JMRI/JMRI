@@ -167,7 +167,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         _speedUtil = sp;
     }
 
-    class AddressTextField extends JTextField implements FocusListener {
+    static class AddressTextField extends JTextField implements FocusListener {
         public AddressTextField() {
             super();
             addFocusListener(this);
