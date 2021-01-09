@@ -894,8 +894,8 @@
    </p>
 
    <p>
-    You can quickly set the <a href="#SetTrainIconCoordinates">train icon coordinates</a> for your panel using tools in
-    the Routes and <a href="#EditRoute">Edit Route</a> windows.
+    You can quickly set the <a href="#SetTrainIconCoordinates">train icon coordinates</a> for your
+    panel using tools in the Routes and <a href="#EditRoute">Edit Route</a> windows.
    </p>
 
    <p>
@@ -4112,11 +4112,14 @@
 
    <a name="SetTrainIconCoordinates" id="SetTrainIconCoordinates"></a>
    <h4>Set Train Icon Coordinates</h4>
-   <p>Use this tool to set the default X and Y coordinates of your train icons for each
-    location. The tool allows you to specify the icon coordinates based on the train's direction.
-    You can also update all of your existing routes and locations with these new coordinates. As an
-    alternative, you can use a route's "Tools-&gt;Set Train Icon Coordinates for this Route" to
-    create coordinates unique to a specific route.</p>
+   <p>
+    Use this tool to set the default X and Y coordinates of your train icons for each location. The
+    tool allows you to specify the icon coordinates based on the train's direction. You can also
+    update all of your existing routes and locations with these new coordinates. As an alternative,
+    you can use a route's "Tools-&gt;Set Train Icon Coordinates for this Route" to create
+    coordinates unique to a specific route. Enter the name of the <a href="#PanelOptionsTrainIcons">panel</a>
+    you wish to use in the Settings window.
+   </p>
 
    <a name="Trains" id="Trains"></a>
    <h2>Trains</h2>
