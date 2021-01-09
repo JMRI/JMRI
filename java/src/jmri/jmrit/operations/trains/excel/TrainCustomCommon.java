@@ -265,7 +265,7 @@ public abstract class TrainCustomCommon {
     }
 
     public void store(Element options) {
-        Element mc = new Element(Xml.MANIFEST_CREATOR);
+        Element mc = new Element(xmlElement);
         Element file = new Element(Xml.RUN_FILE);
         file.setAttribute(Xml.NAME, getFileName());
         Element directory = new Element(Xml.DIRECTORY);
