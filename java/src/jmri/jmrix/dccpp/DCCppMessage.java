@@ -1508,6 +1508,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         switch (this.getOpCodeChar()) {
             case DCCppConstants.THROTTLE_CMD:
             case DCCppConstants.TURNOUT_CMD:
+            case DCCppConstants.SENSOR_CMD:
             case DCCppConstants.PROG_WRITE_CV_BYTE:
             case DCCppConstants.PROG_WRITE_CV_BIT:
             case DCCppConstants.PROG_READ_CV:
