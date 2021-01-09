@@ -2293,7 +2293,7 @@ var $drawWidgetSymbol = function(id, state) {
             ctx.lineTo(radius/2, 0);
             ctx.stroke();
             ctx.beginPath(); // the knob
-            var knobX = (state == "2" ? radius/2 : -radius/2)
+            var knobX = (state == "2" ? radius/2 : -radius/2);
             ctx.arc(knobX, 0, radius/2, 0, 2 * Math.PI);
             ctx.fillStyle = "white";
             ctx.fill();

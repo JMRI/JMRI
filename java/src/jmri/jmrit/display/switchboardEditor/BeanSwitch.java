@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * lights.
  * Separated from SwitchboardEditor.java in 4.12.3
  *
- * @author Egbert Broerse Copyright (c) 2017, 2018, 2020
+ * @author Egbert Broerse Copyright (c) 2017, 2018, 2020, 2021
  */
 public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListener, ActionListener {
 
@@ -55,13 +55,15 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     private final NamedBean _bname;
     private NamedBeanHandle<?> namedBean = null; // could be Turnout, Sensor or Light
     protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
-    private IconSwitch beanIcon;
+    private IconSwitch iconSwitch;
+    private IconSwitch beanSlider;
     private IconSwitch beanKey;
     private IconSwitch beanSymbol;
     private final char beanTypeChar;
     private final Color defaultActiveColor = Color.RED;
     private final Color defaultInactiveColor = Color.GREEN;
     //private final Color defaultUnknownColor = Color.WHITE; // often hard to see
+
     private final SwitchboardEditor _editor;
 
     /**
@@ -109,10 +111,14 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         }
 
         int r = _editor.getTileSize()/2; // max WxH of canvas inside cell, used as relative unit to draw
-        log.debug("BeanSwitch graphic tilesize/2  r = {}", r);
-        beanIcon = new IconSwitch(iconOnPath, iconOffPath, r);
-        beanKey = new IconSwitch(keyOnPath, keyOffPath, r);
-        beanSymbol = new IconSwitch(rootPath + beanTypeChar + "-on-s.png", rootPath + beanTypeChar + "-off-s.png", r);
+        int scale = editor.getIconScale();
+        log.debug("BeanSwitch graphic tilesize/2  r={} scale={}", r, scale);
+        beanSlider = new IconSwitch(_shape, beanTypeChar, r, scale); // draw as Graphic2D, was: keyOnPath, keyOffPath, r, scale );
+        beanKey = new IconSwitch(_shape, iconOnPath, iconOffPath, r, scale, editor.getDefaultBackgroundColor());
+        beanSymbol = new IconSwitch(
+                rootPath + beanTypeChar + "-on-s.png",
+                rootPath + beanTypeChar + "-off-s.png",
+                r);
 
         // look for bean to connect to by name
         log.debug("beanconnect = {}, beantype = {}", beanManuPrefix, beanTypeChar);
@@ -125,8 +131,8 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         }
         // attach shape specific code to this beanSwitch
         switch (_shape) {
-            case 1: // slider shape
-                beanIcon.addMouseListener(new MouseAdapter() { // handled by JPanel
+            case SwitchboardEditor.SLIDER: // slider shape
+                beanSlider.addMouseListener(new MouseAdapter() { // handled by JPanel
                     @Override
                     public void mouseClicked(MouseEvent me) {
                         operate(me, switchName);
@@ -148,18 +154,17 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 });
                 _text = true; // not actually used
                 _icon = true;
-                beanIcon.setPreferredSize(new Dimension(2*r, 2*r));
-                beanIcon.setLabels(switchLabel, _uLabel);
-                beanIcon.positionLabel(0, 5*r/-8, Component.CENTER_ALIGNMENT, Math.max(12,r/4));
-                beanIcon.positionSubLabel(0, r/3, Component.CENTER_ALIGNMENT, Math.max(9,r/5)); // smaller (system name)
+                beanSlider.setPreferredSize(new Dimension(2*r, 2*r));
+                beanSlider.setLabels(switchLabel, _uLabel);
+                beanSlider.positionLabel(0, 5*r/-8, Component.CENTER_ALIGNMENT, Math.max(12,r/4));
+                beanSlider.positionSubLabel(0, r/3, Component.CENTER_ALIGNMENT, Math.max(9,r/5)); // smaller (system name)
                 if (_editor.showToolTip()) {
-                    beanIcon.setToolTipText(switchTooltip);
+                    beanSlider.setToolTipText(switchTooltip);
                 }
-                beanIcon.setBackground(_editor.getDefaultBackgroundColor());
-                //remove the line around icon switches?
-                this.add(beanIcon);
+                beanSlider.setBackground(_editor.getDefaultBackgroundColor());
+                this.add(beanSlider);
                 break;
-            case 2: // Maerklin style keyboard
+            case SwitchboardEditor.KEY: // Maerklin style keyboard
                 beanKey.addMouseListener(new MouseAdapter() { // handled by JPanel
                     @Override
                     public void mouseClicked(MouseEvent me) {
@@ -194,7 +199,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 //remove the line around icon switches?
                 this.add(beanKey);
                 break;
-            case 3: // turnout/sensor/light Icon (selecting image by letter in switch name/label)
+            case SwitchboardEditor.SYMBOL: // turnout/sensor/light symbol (selecting image by letter in switch name/label)
                 beanSymbol.addMouseListener(new MouseAdapter() { // handled by JPanel
                     @Override
                     public void mouseClicked(MouseEvent me) {
@@ -235,11 +240,10 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 }
                 beanSymbol.setBackground(_editor.getDefaultBackgroundColor());
                 // common (in)activecolor etc defined in SwitchboardEditor, retrieved by Servlet
-                // remove the line around icon switches?
                 this.setBorder(BorderFactory.createLineBorder(_editor.getDefaultBackgroundColor(), 3));
                 this.add(beanSymbol);
                 break;
-            case 0: // 0 = "Button" shape
+            case SwitchboardEditor.BUTTON: // 0 = "Button" shape
             default:
                 beanButton.addMouseListener(new MouseAdapter() { // handled by JPanel
                     @Override
@@ -280,7 +284,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     }
                 });
 
-
                 beanButton.setMargin(new Insets(4, 1, 2, 1));
                 this.add(beanButton);
                 break;
@@ -296,7 +299,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                         beanButton.setEnabled(false);
                         break;
                     case 1:
-//                        beanIcon.setOpacity(dim);
+//                        beanSlider.setOpacity(dim);
 //                        break;
                     case 2:
 //                        beanKey.setOpacity(dim);
@@ -397,12 +400,11 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
      */
     public String getActiveText() {
         // fetch bean specific abbreviation
-        switch (beanTypeChar) {
-            case 'T':
-                _state = stateClosed; // +
-                break;
-            default: // Light, Sensor
-                _state = "+";         // 1 char abbreviation for StateOff not clear
+        if (beanTypeChar == 'T') {
+            _state = stateClosed; // +
+        } else {
+            // Light, Sensor
+            _state = "+";         // 1 char abbreviation for StateOff not clear
         }
         return _switchSysName + ": " + _state;
     }
@@ -415,12 +417,11 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
      */
     public String getInactiveText() {
         // fetch bean specific abbreviation
-        switch (beanTypeChar) {
-            case 'T':
-                _state = stateThrown; // +
-                break;
-            default: // Light, Sensor
-                _state = "-";         // 1 char abbreviation for StateOff not clear
+        if (beanTypeChar == 'T') {
+            _state = stateThrown; // +
+        } else {
+            // Light, Sensor
+            _state = "-";         // 1 char abbreviation for StateOff not clear
         }
         return _switchSysName + ": " + _state;
     }
@@ -488,30 +489,31 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         String switchLabel;
         Color switchColor;
         log.debug("Change heard. STATE={}", state);
-        // display abbreviated name of state instead of state index, fine for unconnected switches too
-        switch (state) {
-            case 1:
-                switchLabel = getUnknownText();
-                switchColor = Color.GRAY;
-                break;
-            case 2:
-                switchLabel = getActiveText();
-                switchColor = defaultActiveColor;
-                break;
-            case 4:
-                switchLabel = getInactiveText();
-                switchColor = defaultInactiveColor;
-                break;
-            default:
-                switchLabel = getInconsistentText();
-                switchColor = Color.WHITE;
-                //log.warn("SwitchState INCONSISTENT"); // normal for unconnected switchboard
-        }
         if (getNamedBean() == null) {
             switchLabel = _switchSysName; // unconnected, doesn't show state using : and ?
+            switchColor = Color.GRAY;
             log.debug("Switch label {} state {}, disconnected", switchLabel, state);
         } else {
-            log.debug("Switch label {} state: {}, connected", switchLabel, state);
+            // display abbreviated name of state instead of state index, fine for unconnected switches too
+            switch (state) {
+                case 1:
+                    switchLabel = getUnknownText();
+                    switchColor = Color.GRAY;
+                    break;
+                case 2:
+                    switchLabel = getActiveText();
+                    switchColor = defaultActiveColor;
+                    break;
+                case 4:
+                    switchLabel = getInactiveText();
+                    switchColor = defaultInactiveColor;
+                    break;
+                default:
+                    switchLabel = getInconsistentText();
+                    switchColor = Color.WHITE;
+                    //log.warn("SwitchState INCONSISTENT"); // normal for unconnected switchboard
+                    log.debug("Switch label {} state: {}, connected", switchLabel, state);
+            }
         }
         if (isText() && !isIcon()) { // to allow text buttons on web switchboard. always add graphic switches on web
             log.debug("Label = {}", getSwitchButtonLabel(switchLabel));
@@ -519,9 +521,9 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             beanButton.setBackground(switchColor); // only the color is visible TODO get access to bg color of JButton?
             beanButton.setOpaque(true);
         }
-        if (isIcon() && beanIcon != null && beanKey != null && beanSymbol != null) {
-            beanIcon.showSwitchIcon(state);
-            beanIcon.setLabels(switchLabel, _uLabel);
+        if (isIcon() && beanSlider != null && beanKey != null && beanSymbol != null) {
+            beanSlider.showSwitchIcon(state);
+            beanSlider.setLabels(switchLabel, _uLabel);
             beanKey.showSwitchIcon(state);
             beanKey.setLabels(switchLabel, _uLabel);
             beanSymbol.showSwitchIcon(state);
@@ -603,7 +605,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     newUserName = Bundle.getMessage("NoUserName"); // longer for tooltip
                 }
                 beanButton.setToolTipText(_switchSysName + " (" + newUserName + ")");
-                beanIcon.setToolTipText(_switchSysName + " (" + newUserName + ")");
+                beanSlider.setToolTipText(_switchSysName + " (" + newUserName + ")");
                 beanKey.setToolTipText(_switchSysName + " (" + newUserName + ")");
                 beanSymbol.setToolTipText(_switchSysName + " (" + newUserName + ")");
                 log.debug("User Name changed to {}", newUserName);
@@ -1022,25 +1024,25 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     }
 
     /**
-     * Chack the switch label currently displayed.
+     * Check the switch label currently displayed.
      * Used in test.
      *
      * @return line 1 of the label of this switch
      */
     protected String getIconLabel() {
         switch (_shape) {
-            case 0 : // button
+            case SwitchboardEditor.BUTTON: // button
                 String lbl = beanButton.getText();
                 if (!lbl.startsWith("<")) {
                     return lbl;
                 } else { // 2 line label, "<html><center>" + label + "</center>..."
                     return lbl.substring(14, lbl.indexOf("</center>"));
                 }
-            case 1:
-                return beanIcon.getIconLabel();
-            case 2:
+            case SwitchboardEditor.SLIDER:
+                return beanSlider.getIconLabel();
+            case SwitchboardEditor.KEY:
                 return beanKey.getIconLabel();
-            case 3:
+            case SwitchboardEditor.SYMBOL:
                 return beanSymbol.getIconLabel();
             default:
                 return "";
@@ -1084,6 +1086,10 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         private float subTextAlign = 0.0f;
         private float ropOffset = 0f;
         private int r = 10; // radius of circle fitting inside tile rect in px drawing units
+        private int _shape = SwitchboardEditor.BUTTON;
+        private int _state = 0;
+        private int _scale = 100;
+        private int _beanType = 0;
         private RescaleOp rop;
 
         /**
@@ -1092,38 +1098,80 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
          * @param filepath1 the ON image
          * @param filepath2 the OFF image
          * @param drawingRadius max distance in px from center of switch canvas, unit used for relative scaling
+         * @param iconScale percentage to resize, 100 to copy as is
          */
-        public IconSwitch(String filepath1, String filepath2, int drawingRadius) {
+        public IconSwitch(int shape, String filepath1, String filepath2, int drawingRadius, int iconScale, Color back) {
             // load image files
             try {
                 image1 = ImageIO.read(new File(filepath1));
                 image2 = ImageIO.read(new File(filepath2));
+                if ((iconScale != 100) && (iconScale >= 25) && (iconScale <= 150)) {
+                    image1 = resizeImage(image1, iconScale, back);
+                    image2 = resizeImage(image2, iconScale, back);
+                }
                 image = image2; // start off as showing inactive/closed
             } catch (IOException ex) {
                 log.error("error reading image from {}-{}", filepath1, filepath2, ex);
             }
+            _shape = shape;
             if (drawingRadius > 10) r = drawingRadius;
             log.debug("radius={} size={}", r, getWidth());
         }
 
+        /**
+         * Ctor with fixed scale of image at 100%. Original public ctor.
+         *
+         * @param filepath1 the ON image
+         * @param filepath2 the OFF image
+         * @param drawingRadius max distance in px from center of switch canvas, unit used for relative scaling
+         */
+        public IconSwitch(String filepath1, String filepath2, int drawingRadius) {
+            this(SwitchboardEditor.SYMBOL, filepath1, filepath2, drawingRadius, 100, Color.GRAY);
+        }
+
+        /**
+         * Ctor to draw graphic fully in Graphics.
+         *
+         * @param shape int to specify switch shape {@link SwitchboardEditor} constants
+         * @param type beanType to draw (optionally ignored depending on shape, eg. for slider)
+         * @param drawingRadius max distance in px from center of switch canvas, unit used for relative scaling
+         * @param iconScale percentage relative to tile size, 100 = default
+         */
+        public IconSwitch(int shape, int type, int drawingRadius, int iconScale) {
+            if (shape != SwitchboardEditor.SLIDER) { // only draw slider, for now
+                return; // leave in place for 0 = buttons drawn as JButtons, not graphics
+            }
+            _shape = shape;
+            _beanType = type;
+            _scale = iconScale;
+            if (drawingRadius > 10) r = drawingRadius;
+            log.debug("DrawnIcon type={}", type);
+        }
+
         public void setOpacity(float offset) {
             ropOffset = offset;
-            float ropScale = 1f;
+            float ropScale = 1.0f;
             rop = new RescaleOp(ropScale, ropOffset, null);
         }
 
         protected void showSwitchIcon(int stateIndex) {
             log.debug("showSwitchIcon {}", stateIndex);
-            if (image1 != null && image2 != null) {
-                switch (stateIndex) {
-                    case 2:
-                        image = image1; // on/Thrown/Active
-                        break;
-                    default:
-                        image = image2; // off, also for connected & unknown
-                        break;
+            if (_shape == SwitchboardEditor.SLIDER) {
+                //redraw (colors are already set above
+                _state = stateIndex;
+            } else {
+                if (image1 != null && image2 != null) {
+                    switch (stateIndex) {
+                        case 2:
+                            image = image1; // on/Thrown/Active
+                            break;
+                        case 1:
+                        default:
+                            image = image2; // off, also for connected & unknown
+                            break;
+                    }
+                    this.repaint();
                 }
-                this.repaint();
             }
         }
 
@@ -1179,10 +1227,29 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
+            // now the image
             g.translate(r, r); // set origin to center
-            //int imgZoom = Math.min(2*r/image.getWidth(), 2*r/image.getHeight()); // how to enlarge icon on painting?
-            g2d.drawImage(image, rop, image.getWidth()/-2, image.getHeight()/-2); // center bitmap
-            //g.drawImage(image, 0, 0, null);
+            if (_shape == SwitchboardEditor.SLIDER) { // slider
+                // Draw symbol on the beanswitch widget canvas
+                // see panel.js for vector drawing: var $drawWidgetSymbol = function(id, state), ctx is same as g2d
+                // backgroundcolor, stroke width?
+                //g.clearRect(0, 0, 2*r, 2*r); //  for alternating text and 'moving' items
+                g.setColor(_state == 2 ? defaultActiveColor : defaultInactiveColor); // simple change in color
+                // slider, same shape for all beanTypes (S, T, L)
+                // the sliderspace
+                g2d.fillRoundRect(-r/2, -r/4, r, r/2, r/2, r/2);
+                g.setColor(_state == 2 ? Color.BLACK : Color.DARK_GRAY);
+                g2d.drawRoundRect(-r/2, -r/4, r, r/2, r/2, r/2);
+                // the knob
+                int knobX = (_state == 2 ? 0 : -r/2);
+                g.setColor(Color.WHITE);
+                g2d.fillOval(knobX, -r/4, r/2, r/2);
+                g.setColor(Color.BLACK);
+                g2d.drawOval(knobX, -r/4, r/2, r/2);
+            } else {
+                // use image file
+                g2d.drawImage(image, rop, image.getWidth() / -2, image.getHeight() / -2); // center bitmap
+            }
             g.setFont(getFont());
             if (ropOffset > 0f) {
                 g.setColor(Color.GRAY); // dimmed
@@ -1211,6 +1278,31 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             this.repaint();
         }
 
+    }
+
+    /**
+     * Get a resized copy of the image.
+     *
+     * @param image the image to rescale
+     * @param scale scale percentage as int (will be divided by 100 in operation)
+     */
+    public static BufferedImage resizeImage(final Image image, int scale, Color background) {
+        int newWidth = scale*(image.getWidth(null))/100;
+        int newHeight = scale*image.getHeight(null)/100;
+        final BufferedImage bimg = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
+        final Graphics2D g2d = bimg.createGraphics();
+        AlphaComposite composite = AlphaComposite.getInstance(AlphaComposite.CLEAR, 0.0f);
+        g2d.setComposite(composite);
+        g2d.setColor(background);
+        g2d.fillRect(0, 0, newWidth, newHeight);
+        g2d.setComposite(AlphaComposite.Src);
+        //below three lines are for RenderingHints for better image quality at cost of higher processing time
+        //g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        //g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.drawImage(image, 0, 0, newWidth, newHeight, null);
+        g2d.dispose();
+        return bimg;
     }
 
     private final static Logger log = LoggerFactory.getLogger(BeanSwitch.class);

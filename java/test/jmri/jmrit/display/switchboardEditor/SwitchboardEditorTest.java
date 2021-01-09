@@ -51,7 +51,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
         EditorFrameOperator jfo = new EditorFrameOperator(e);
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
         Assert.assertNotNull("Options Menu Exists", jmo);
-        Assert.assertEquals("Menu Item Count", 9, jmo.getItemCount());
+        Assert.assertEquals("Menu Item Count", 10, jmo.getItemCount());
     }
 
     @Test

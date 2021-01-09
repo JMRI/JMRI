@@ -64,6 +64,7 @@
       <xs:attribute name="defaulttextcolor" type="screenColorType"/>
 <!--      <xs:attribute name="activecolor" type="screenColorType"/> fixed in Editor, not saved to disk-->
 <!--      <xs:attribute name="inactivecolor" type="screenColorType"/> fixed in Editor, not saved to disk-->
+      <xs:attribute name="iconscale" type="xs:int" default="100"></xs:attribute>
       <xs:attribute name="redBackground" type="xs:int"></xs:attribute>
       <xs:attribute name="greenBackground" type="xs:int"></xs:attribute>
       <xs:attribute name="blueBackground" type="xs:int"></xs:attribute>

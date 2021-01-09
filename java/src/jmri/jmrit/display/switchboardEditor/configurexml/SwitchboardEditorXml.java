@@ -68,6 +68,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("rows", "" + p.getRows());
         panel.setAttribute("total", "" + p.getTotal()); // total number of items displayed
         panel.setAttribute("showusername", "" + p.showUserName());
+        panel.setAttribute("iconscale", "" + p.getIconScale());
         panel.setAttribute("defaulttextcolor", p.getDefaultTextColor());
 //        panel.setAttribute("activecolor", p.getActiveSwitchColor()); not needed, fetched directly from Editor by Servlet
 //        panel.setAttribute("inactivecolor", p.getInactiveSwitchColor()); / not user-settable
@@ -106,6 +107,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         int rangemin = 1;
         int rangemax = 32;
         int rows = 4;
+        int iconscale = 100;
         String type;
         String connection;
         String shape;
@@ -260,6 +262,16 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             value = false;
         }
         panel.setShowUserName(value);
+
+        if ((a = shared.getAttribute("iconscale")) != null) {
+            try {
+                iconscale = shared.getAttribute("iconscale").getIntValue();
+            } catch (org.jdom2.DataConversionException e) {
+                log.error("failed to convert Switchboard's icon scale setting");
+                result = false;
+            }
+        }
+        panel.setIconScale(iconscale);
 
         Color defaultTextColor = Color.BLACK;
         if (shared.getAttribute("defaulttextcolor") != null) {
