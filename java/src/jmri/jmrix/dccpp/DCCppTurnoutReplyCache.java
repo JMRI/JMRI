@@ -49,9 +49,7 @@ public class DCCppTurnoutReplyCache implements DCCppListener {
         }
         try {
             if (messageCache[pNumber] != null) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Message for turnout {} cached.", pNumber);
-                }
+                log.debug("Message for turnout {} cached.", pNumber);
                 turnout.message(messageCache[pNumber]);
             } else {
   // TODO: Make sure this doesn't break under a no-feedback model.
@@ -97,13 +95,11 @@ public class DCCppTurnoutReplyCache implements DCCppListener {
     // listen for turnouts, creating them as needed
     @Override
     synchronized public void message(DCCppReply l) {
-        if (log.isDebugEnabled()) {
-            log.debug("received message: {}", l);
-        }
         if (l.isTurnoutReply()) {
-     // cache the message for later requests
-     messageCache[l.getTOIDInt()] = l;
-     messagePending[l.getTOIDInt()] = false;
+            log.debug("received message: {}", l);
+            // cache the message for later requests
+            messageCache[l.getTOIDInt()] = l;
+            messagePending[l.getTOIDInt()] = false;
         }
     }
 

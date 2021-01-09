@@ -80,17 +80,21 @@ public class MeterFrameManagerXml extends jmri.configurexml.AbstractXmlAdapter {
         
         for (Element elem : frames) {
             String uuidStr = elem.getChild("uuid").getText();
-            String meterSystemName = elem.getChild("meter").getText();      // This should be a NamedBeanHandle
+            String meterSystemName = elem.getChild("meter").getText();      // This should be a NamedBeanHandle, but may not exist yet
             Meter meter = InstanceManager.getDefault(MeterManager.class).getBySystemName(meterSystemName);
             UUID uuid = UUID.fromString(uuidStr);
             MeterFrame frame = MeterFrameManager.getInstance().getByUUID(uuid);
             if (frame == null) {
+                log.debug("creating frame for uuid: {}, selected meter: {}", uuidStr, meterSystemName);
                 frame = new MeterFrame(uuid);
                 frame.initComponents();
-                String sn = (frame.getMeter()!=null?frame.getMeter().getSystemName():"null");
-                log.error("uuid: {}, meter: {}, meter: {}, systemName: {}", frame.getUUID(), meter, sn, meterSystemName);
             }
-            if (meter != null) frame.setMeter(meter);
+            if (meter != null) {
+                frame.setMeter(meter);
+            } else {
+                log.debug("selected meter '{}' not (yet) defined, remembering for later.", meterSystemName);                
+                frame.setInitialMeterName(meterSystemName);
+            }
             
             Attribute a = elem.getAttribute("unit");
             if (a != null) frame.setUnit(unitEnumMap.inputFromAttribute(a));

@@ -81,6 +81,8 @@ public class MeterFrame extends JmriJFrame {
     private PropertyChangeListener propertyChangeListener;
 
     private Meter meter;
+    
+    private String initialMeterName=""; //remember the initially selected meter since it may not exist at frame creation
 
     NamedIcon integerDigits[] = new NamedIcon[10];
     NamedIcon decimalDigits[] = new NamedIcon[10];
@@ -645,6 +647,14 @@ public class MeterFrame extends JmriJFrame {
         update();
     }
 
+    public String getInitialMeterName() {
+        return initialMeterName;
+    }
+
+    public void setInitialMeterName(String initialMeterName) {
+        this.initialMeterName = initialMeterName;
+    }
+
     /**
      * updates the list of available meters
      */
@@ -653,21 +663,25 @@ public class MeterFrame extends JmriJFrame {
         if (mm == null) {
             return;
         }
-        log.debug("attempting to add all meters.  There are {} meters to add.",
-                mm.getNamedBeanSet().size());
+        if (log.isTraceEnabled()) { 
+            log.trace("attempting to add all meters.  There are {} meters to add.",
+                    mm.getNamedBeanSet().size());
+        }
         mm.getNamedBeanSet().forEach((m) -> {
-            if ((m != null) && (m instanceof VoltageMeter)) {
+            String n = m.getDisplayName();
+            if (m instanceof VoltageMeter) {
                 if (voltageMeters.contains(m)) {
-                    log.debug("meter {} is already present", m.getDisplayName());
+                    log.trace("voltage meter '{}' is already present", n);
                 } else {
                     voltageMeters.add(m);
-                    log.debug("Added voltage meter {}", m.getSystemName());
+                    log.trace("Added voltage meter '{}'", n);
                 }
-            } else if ((m != null) && (m instanceof CurrentMeter)) {
+            } else if (m instanceof CurrentMeter) {
                 if (currentMeters.contains(m)) {
-                    log.debug("meter {} is already present", m.getDisplayName());
+                    log.trace("current meter '{}' is already present", n);
                 } else {
                     currentMeters.add(m);
+                    log.trace("Added current meter '{}'", n);
                 }
             }
         });
@@ -687,7 +701,8 @@ public class MeterFrame extends JmriJFrame {
      */
     private void updateVoltageMeters(JMenu voltageMetersMenu) {
         for (Meter m : voltageMeters) {
-            log.debug("Need to add a new checkbox for voltmeter {}?", m.getDisplayName());
+            String n = m.getDisplayName();
+            log.trace("Need to add a new checkbox for voltmeter {}?", n);
             boolean found = false;
 
             if (voltageMetersMenu.getItemCount() > 0) {
@@ -695,19 +710,23 @@ public class MeterFrame extends JmriJFrame {
                     JMenuItem jim = voltageMetersMenu.getItem(i);
                     if (jim instanceof JCheckBoxMenuItem) {
                         if (jim.getText().compareTo(m.getDisplayName()) == 0 ) {
-                            log.debug("item {} is already in voltageMetersMenu", m.getDisplayName());
+                            log.trace("item '{}' is already in voltageMetersMenu", n);
                             found = true;
                         } else {
-                            log.debug("item {} is not already in voltageMetersMenu", m.getDisplayName());
+                            log.trace("item '{}' is not already in voltageMetersMenu", n);
                         }
                     }
                 }
             }
             if (!found) {
-                log.debug("Adding item {} to voltageMetersMenu", m.getDisplayName());
-                JCheckBoxMenuItem item = new JCheckBoxMenuItem(new SelectMeterAction(m.getDisplayName(), m));
+                log.debug("Adding item '{}' to voltageMetersMenu for frame {}", n, uuid);
+                JCheckBoxMenuItem item = new JCheckBoxMenuItem(new SelectMeterAction(n, m));
                 voltageMetersMenu.add(item);
                 meter_MenuItemMap.put(m, item);
+                //if this new meter was selected when panel stored, activate it
+                if (getInitialMeterName().equals(n)) {
+                    setMeter(m);
+                }
             }
         }
     }
@@ -719,7 +738,8 @@ public class MeterFrame extends JmriJFrame {
      */
     private void updateCurrentMeters(JMenu currentMetersMenu) {
         for (Meter m : currentMeters) {
-            log.debug("need to add a new checkbox for ammeter {}?", m.getDisplayName());
+            String n = m.getDisplayName();
+            log.trace("need to add a new checkbox for currentmeter '{}'?", n);
             boolean found = false;
 
             if (currentMetersMenu.getItemCount() > 0) {
@@ -727,19 +747,23 @@ public class MeterFrame extends JmriJFrame {
                     JMenuItem jim = currentMetersMenu.getItem(i);
                     if (jim instanceof JCheckBoxMenuItem) {
                         if (jim.getText().compareTo(m.getDisplayName()) == 0 ) {
-                            log.debug("item {} is already in currentMetersMenu", m.getDisplayName());
+                            log.trace("item '{}' is already in currentMetersMenu", n);
                             found = true;
                         } else {
-                            log.debug("item {} is not already in currentMetersMenu", m.getDisplayName());
+                            log.trace("item '{}' is not already in currentMetersMenu", n);
                         }
                     }
                 }
             }
             if (!found) {
-                log.debug("Adding item {} to currentMetersMenu", m.getDisplayName());
-                JCheckBoxMenuItem item = new JCheckBoxMenuItem(new SelectMeterAction(m.getDisplayName(), m));
+                log.debug("Adding item '{}' to currentMetersMenu for frame {}", n, uuid);
+                JCheckBoxMenuItem item = new JCheckBoxMenuItem(new SelectMeterAction(n, m));
                 currentMetersMenu.add(item);
                 meter_MenuItemMap.put(m, item);
+                //if this new meter was selected when panel stored, activate it
+                if (getInitialMeterName().equals(n)) {
+                    setMeter(m);
+                }
             }
         }
     }
@@ -748,7 +772,7 @@ public class MeterFrame extends JmriJFrame {
      * Updates the menu items in the voltage meters and current meters menus.
      */
     private void updateCheckboxList() {
-        log.debug("Updating the checkbox lists of meters.");
+        log.trace("Updating the checkbox lists of meters.");
         addAllMeters();
         currentMetersMenu.repaint();
         voltageMetersMenu.repaint();
