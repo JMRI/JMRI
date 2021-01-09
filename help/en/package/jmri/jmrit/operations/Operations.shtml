@@ -275,6 +275,7 @@
 
        <ul>
         <li><a href="#ReturnWhenEmpty">Return When Empty</a></li>
+        <li><a href="#ReturnWhenLoaded">Return When Loaded</a></li>
        </ul></li>
 
       <li><a href="#CarsTools">Cars Tools</a>
