@@ -74,12 +74,12 @@ public class Car extends RollingStock {
     public static final String SCHEDULE_ID_CHANGED_PROPERTY = "car schedule id changed"; // NOI18N
     public static final String KERNEL_NAME_CHANGED_PROPERTY = "kernel name changed"; // NOI18N
 
-    public Car(){
+    public Car() {
         super();
         loaded = true;
     }
 
-    public Car(String road, String number){
+    public Car(String road, String number) {
         super(road, number);
         loaded = true;
         log.debug("New car ({} {})", road, number);
@@ -242,6 +242,7 @@ public class Car extends RollingStock {
 
     /**
      * The next load name for this car. Normally set by a schedule.
+     * 
      * @param load the next load name.
      */
     public void setNextLoadName(String load) {
@@ -543,6 +544,20 @@ public class Car extends RollingStock {
         }
     }
 
+    /**
+     * Used to determine is car has been given a Return When Loaded (RWL) address or
+     * custom load
+     * 
+     * @return true if car has RWL
+     */
+    protected boolean isRwlEnabled() {
+        if (!getReturnWhenLoadedLoadName().equals(carLoads.getDefaultLoadName()) ||
+                !getReturnWhenLoadedDestName().equals(NONE)) {
+            return true;
+        }
+        return false;
+    }
+
     public void setCaboose(boolean caboose) {
         boolean old = _caboose;
         _caboose = caboose;
@@ -567,6 +582,12 @@ public class Car extends RollingStock {
         return _utility;
     }
 
+    /**
+     * Used to determine if car needs to perform a local move. A local move is when
+     * a car is moved to a new track at the same location.
+     * 
+     * @return true if local move
+     */
     public boolean isLocalMove() {
         if (getRouteLocation() == null || getRouteDestination() == null) {
             return false;
@@ -782,8 +803,10 @@ public class Car extends RollingStock {
                     // remove this car's final destination if it has one
                     setFinalDestination(null);
                     setFinalDestinationTrack(null);
+                    if (getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY) && isRwlEnabled()) {
+                        setLoadLoaded();
                     // car arriving into staging with the RWE load?
-                    if (getLoadName().equals(getReturnWhenEmptyLoadName())) {
+                    } else if (getLoadName().equals(getReturnWhenEmptyLoadName())) {
                         setLoadName(carLoads.getDefaultEmptyName());
                     } else {
                         setLoadEmpty(); // note that RWE sets the car's final destination
@@ -931,7 +954,7 @@ public class Car extends RollingStock {
      *
      * @param e Car XML element
      */
-    public Car(org.jdom2.Element e){
+    public Car(org.jdom2.Element e) {
         super(e);
         loaded = true;
         org.jdom2.Attribute a;

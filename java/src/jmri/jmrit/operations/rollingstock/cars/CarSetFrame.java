@@ -137,7 +137,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         addItem(pReturnWhenLoaded, new JLabel(Bundle.getMessage("Location")), 1, 0);
         addItem(pReturnWhenLoaded, new JLabel(Bundle.getMessage("Track")), 2, 0);
         addItem(pReturnWhenLoaded, new JLabel(Bundle.getMessage("Load")), 3, 0);
-        addItemLeft(pReturnWhenLoaded, ignoreRWECheckBox, 0, 1);
+        addItemLeft(pReturnWhenLoaded, ignoreRWLCheckBox, 0, 1);
         addItem(pReturnWhenLoaded, destReturnWhenLoadedBox, 1, 1);
         addItem(pReturnWhenLoaded, trackReturnWhenLoadedBox, 2, 1);
         addItem(pReturnWhenLoaded, loadReturnWhenLoadedBox, 3, 1);
@@ -173,6 +173,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
 
         // setup checkboxes
         addCheckBoxAction(ignoreRWECheckBox);
+        addCheckBoxAction(ignoreRWLCheckBox);
         addCheckBoxAction(autoReturnWhenEmptyTrackCheckBox);
         addCheckBoxAction(autoReturnWhenLoadedTrackCheckBox);
         addCheckBoxAction(ignoreLoadCheckBox);
