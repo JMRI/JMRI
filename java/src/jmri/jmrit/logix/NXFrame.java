@@ -242,7 +242,7 @@ public class NXFrame extends WarrantRoute {
         try {
             num =  formatter.parse(_maxThrottleBox.getText()).floatValue()/100;
             num = Math.min(1.0f, Math.max(num,  0.f));
-            _maxThrottleBox.setText(""+num*100);
+            _maxThrottleBox.setText(formatter.format(num*100));
         } catch (java.text.ParseException pe) {
             _maxThrottleBox.setText(null);
             _maxSpeedBox.setText(null);
@@ -591,7 +591,7 @@ public class NXFrame extends WarrantRoute {
             if (text==null) {
                 text = "\"\"";
             }
-            return Bundle.getMessage("badSpeed", text);
+            return Bundle.getMessage("badSpeed100", text);
         }
         try {
             text = _originDist.getText();
@@ -616,8 +616,8 @@ public class NXFrame extends WarrantRoute {
             return je.getMessage();
         }
 
-        if (maxSpeed > 1.0f || maxSpeed < 0.008f) {
-            return Bundle.getMessage("badSpeed", maxSpeed);
+        if (maxSpeed / 100.0f > 1.0f || maxSpeed / 100.0f < 0.008f) {
+            return Bundle.getMessage("badSpeed100", maxSpeed);
         }
         _maxThrottle = maxSpeed;
 

@@ -67,7 +67,7 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
      * @param value command station type.
      */
     public void setCommandStationType(int value) {
-        log.debug("setCommandStationType: {}{}", Integer.toString(value));
+        log.debug("setCommandStationType: {}", Integer.toString(value));
         commandStationType = value;
     }
     

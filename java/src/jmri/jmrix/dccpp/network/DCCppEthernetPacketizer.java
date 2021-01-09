@@ -76,7 +76,7 @@ public class DCCppEthernetPacketizer extends jmri.jmrix.dccpp.serial.SerialDCCpp
                         break;
                     } else if (m.getRetries() >= 0) {
                         if (log.isDebugEnabled()) {
-                            log.debug("Retry message: {} attempts remaining: {}", m.toString(), m.getRetries());
+                            log.debug("Retry message: '{}' attempts remaining: {}", m, m.getRetries());
                         }
                         m.setRetries(m.getRetries() - 1);
                         try {

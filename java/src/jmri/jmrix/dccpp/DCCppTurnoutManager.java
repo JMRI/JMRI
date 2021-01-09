@@ -73,7 +73,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
     @Override
     public void message(DCCppReply l) {
         if (l.isTurnoutReply()) {
-            log.debug("received Turnout Reply message: {}", l.toString());
+            log.debug("received Turnout Reply message: '{}'", l);
             // parse message type
             int addr = l.getTOIDInt();
             if (addr >= 0) {
@@ -96,7 +96,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
                 }
             }
         } else if (l.isOutputCmdReply()) {
-            log.debug("received Output Cmd Reply message: {}", l.toString());
+            log.debug("received Output Cmd Reply message: '{}'", l);
             // parse message type
             int addr = l.getOutputNumInt();
             if (addr >= 0) {

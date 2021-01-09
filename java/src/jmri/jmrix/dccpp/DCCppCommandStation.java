@@ -120,20 +120,17 @@ public class DCCppCommandStation implements jmri.CommandStation {
 
     protected void setCommandStationMaxNumSlots(DCCppReply l) {
         int newNumSlots = l.getValueInt(1);
-        if (newNumSlots < maxNumSlots) {
-            log.warn("Command Station maxNumSlots cannot be reduced from {} to {}", maxNumSlots, newNumSlots);
-            return;
-        }
-        log.info("changing maxNumSlots from {} to {}", maxNumSlots, newNumSlots);
-        maxNumSlots = newNumSlots;
+        setCommandStationMaxNumSlots(newNumSlots);
     }
     protected void setCommandStationMaxNumSlots(int newNumSlots) {
         if (newNumSlots < maxNumSlots) {
             log.warn("Command Station maxNumSlots cannot be reduced from {} to {}", maxNumSlots, newNumSlots);
             return;
         }
-        log.info("changing maxNumSlots from {} to {}", maxNumSlots, newNumSlots);
-        maxNumSlots = newNumSlots;
+        if (newNumSlots != maxNumSlots) {
+            log.info("changing maxNumSlots from {} to {}", maxNumSlots, newNumSlots);
+            maxNumSlots = newNumSlots;
+        }
     }
     protected int getCommandStationMaxNumSlots() {
         return maxNumSlots;

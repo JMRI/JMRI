@@ -236,9 +236,15 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
                 box.addItem(name);
             }
         }
-        // must return with at least one load name
-        if (box.getItemCount() == 0) {
-            box.addItem(getDefaultEmptyName());
+    }
+    
+    public void updateRwlComboBox(String type, JComboBox<String> box) {
+        box.removeAllItems();
+        List<String> loads = getNames(type);
+        for (String name : loads) {
+            if (getLoadType(type, name).equals(CarLoad.LOAD_TYPE_LOAD)) {
+                box.addItem(name);
+            }
         }
     }
 

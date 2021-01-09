@@ -72,7 +72,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
     @Override
     public String toString() {
-        log.trace("DCCppReply.toString(): msg {}", myReply.toString());
+        log.trace("DCCppReply.toString(): msg '{}'", myReply);
         return myReply.toString();
     }
 
@@ -250,22 +250,22 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         switch(s.charAt(0)) {
             case DCCppConstants.STATUS_REPLY:
                 if (s.matches(DCCppConstants.STATUS_REPLY_BSC_REGEX)) {
-                    log.debug("BSC Status Reply: {}", r.toString());
+                    log.debug("BSC Status Reply: '{}'", r);
                     r.myRegex = DCCppConstants.STATUS_REPLY_BSC_REGEX;
                 } else if (s.matches(DCCppConstants.STATUS_REPLY_ESP32_REGEX)) {
-                    log.debug("ESP32 Status Reply: {}", r.toString());
+                    log.debug("ESP32 Status Reply: '{}'", r);
                     r.myRegex = DCCppConstants.STATUS_REPLY_ESP32_REGEX;
                 } else if (s.matches(DCCppConstants.STATUS_REPLY_REGEX)) {
-                    log.debug("Original Status Reply: {}", r.toString());
+                    log.debug("Original Status Reply: '{}'", r);
                     r.myRegex = DCCppConstants.STATUS_REPLY_REGEX;
                 } else if (s.matches(DCCppConstants.STATUS_REPLY_DCCEX_REGEX)) {
-                    log.debug("DCC-EX Status Reply: {}", r.toString());
+                    log.debug("DCC-EX Status Reply: '{}'", r);
                     r.myRegex = DCCppConstants.STATUS_REPLY_DCCEX_REGEX;
                 } 
                 return(r);
             case DCCppConstants.THROTTLE_REPLY:
                 if (s.matches(DCCppConstants.THROTTLE_REPLY_REGEX)) {
-                   log.debug("Throttle Reply: {}", r.toString());
+                   log.debug("Throttle Reply: '{}'", r);
                    r.myRegex = DCCppConstants.THROTTLE_REPLY_REGEX;
                 }
                 return(r);
@@ -280,7 +280,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 } else if (s.matches(DCCppConstants.MADC_FAIL_REPLY_REGEX)) {
                     r.myRegex = DCCppConstants.MADC_FAIL_REPLY_REGEX;
                 }
-                log.debug("Parsed Reply: {} length {}", r.toString(), r._nDataChars);
+                log.debug("Parsed Reply: '{}' length {}", r.toString(), r._nDataChars);
                 return(r);
             case DCCppConstants.OUTPUT_REPLY:
                 if (s.matches(DCCppConstants.OUTPUT_LIST_REPLY_REGEX)) {
@@ -288,7 +288,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 } else if (s.matches(DCCppConstants.OUTPUT_REPLY_REGEX)) {
                     r.myRegex = DCCppConstants.OUTPUT_REPLY_REGEX;
                 }
-                log.debug("Parsed Reply: {} length {}", r.toString(), r._nDataChars);
+                log.debug("Parsed Reply: '{}' length {}", r, r._nDataChars);
                 return(r);
             case DCCppConstants.PROGRAM_REPLY:
                 if (s.matches(DCCppConstants.PROGRAM_BIT_REPLY_REGEX)) {
@@ -533,7 +533,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             Pattern p = Pattern.compile(pat);
             Matcher m = p.matcher(s);
             if (!m.matches()) {
-                //log.debug("No Match {} Command: {} pattern {}",name, s, pat);
+                log.trace("No Match {} Command: {} pattern {}",name, s, pat);
                 return(null);
             }
             return(m);

@@ -770,7 +770,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             Pattern p = Pattern.compile(pat);
             Matcher m = p.matcher(s);
             if (!m.matches()) {
-                log.debug("No Match {} Command: '{}' Pattern: '{}'", name, s, pat);
+                log.trace("No Match {} Command: '{}' Pattern: '{}'", name, s, pat);
                 return (null);
             }
             return (m);
@@ -1508,6 +1508,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         switch (this.getOpCodeChar()) {
             case DCCppConstants.THROTTLE_CMD:
             case DCCppConstants.TURNOUT_CMD:
+            case DCCppConstants.SENSOR_CMD:
             case DCCppConstants.PROG_WRITE_CV_BYTE:
             case DCCppConstants.PROG_WRITE_CV_BIT:
             case DCCppConstants.PROG_READ_CV:
