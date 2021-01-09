@@ -1581,13 +1581,13 @@
 <!--            </group>-->
 
         </variables>
-        <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset4.xml"/>
+        <!--<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset4.xml"/>-->
     </decoder>
     <!-- special panes -->
-    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneRailcom.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneUhlenbrock.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneId2Advanced.xml"/><!-- IntelliDrive2, overrides some CVs set above -->
+    <!--<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneRailcom.xml"/>-->
+    <!--<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneUhlenbrock.xml"/>-->
+    <!--<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneId2Advanced.xml"/>--><!-- IntelliDrive2, overrides some CVs set above -->
     <!--<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/fmapPane7outputs.xml"/>-->
-    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneExtendedFmap.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/SoundPaneId2.xml"/>
+    <!--<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneExtendedFmap.xml"/>-->
+    <!-- <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/SoundPaneId2.xml"/>-->
 </decoder-config>
