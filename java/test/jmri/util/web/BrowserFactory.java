@@ -64,6 +64,8 @@ public class BrowserFactory {
                         chromeOptions.addArguments("--headless");
                     //} else {
                         chromeOptions.addArguments("--log-level=3");
+                        chromeOptions.addArguments("--whitelisted-ips=''");
+                        chromeOptions.addArguments("--verbose");
                     //}
                     chromeOptions.addArguments("--disable-extensions");
                     LoggingPreferences logPrefs = new LoggingPreferences();
