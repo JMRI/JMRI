@@ -1,7 +1,9 @@
 package jmri.jmrit.logixng.util.parser;
 
 /**
- *
+ * Invalid syntax.
+ * 
+ * @author Daniel Bergqvist   Copyright (C) 2020
  */
 public class InvalidSyntaxException extends ParserException {
 

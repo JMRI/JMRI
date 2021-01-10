@@ -19,6 +19,7 @@ public interface MaleSocket extends Debugable {
         LOG_ERROR,
         LOG_ERROR_ONCE,
         THROW,
+        ABORT_EXECUTION,
     }
     
     /**

@@ -1,7 +1,7 @@
 package jmri.jmrit.logixng.util.parser;
 
 /**
- * Exception thrown when the calculation failed.
+ * Wrong number of parameters to a function.
  * 
  * @author Daniel Bergqvist 2019
  */

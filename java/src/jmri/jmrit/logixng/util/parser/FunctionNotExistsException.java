@@ -1,7 +1,9 @@
 package jmri.jmrit.logixng.util.parser;
 
 /**
- *
+ * The function does not exists.
+ * 
+ * @author Daniel Bergqvist   Copyright (C) 2020
  */
 public class FunctionNotExistsException extends ParserException {
 

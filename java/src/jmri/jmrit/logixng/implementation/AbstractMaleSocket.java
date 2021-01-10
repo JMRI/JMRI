@@ -10,13 +10,17 @@ import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.SymbolTable.VariableData;
+import jmri.jmrit.logixng.implementation.swing.ErrorHandlingDialog;
 import jmri.util.LoggingUtil;
+import jmri.util.ThreadingUtil;
 
 import org.slf4j.Logger;
 
 /**
  * The abstract class that is the base class for all LogixNG classes that
  * implements the Base interface.
+ * 
+ * @author Daniel Bergqvist 2020
  */
 public abstract class AbstractMaleSocket implements MaleSocket {
 
@@ -259,11 +263,17 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     }
     
     public void handleError(Base item, String message, JmriException e, Logger log) throws JmriException {
+        // Always throw AbortConditionalNGExecutionException exceptions
+        if (e instanceof AbortConditionalNGExecutionException) throw e;
+        
         switch (_errorHandlingType) {
-//            case SHOW_DIALOG_BOX:
-//                InstanceManager.getDefault(ErrorHandlerManager.class)
-//                        .notifyError(this, Bundle.getMessage("ExceptionSetValue", e), e);
-//                break;
+            case SHOW_DIALOG_BOX:
+                boolean abort = ThreadingUtil.runOnGUIwithReturn(() -> {
+                    ErrorHandlingDialog dialog = new ErrorHandlingDialog();
+                    return dialog.showDialog(item, message);
+                });
+                if (abort) throw new AbortConditionalNGExecutionException();
+                break;
                 
             case LOG_ERROR:
 //                e.printStackTrace();
@@ -277,6 +287,10 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                 
             case THROW:
                 throw e;
+                
+            case ABORT_EXECUTION:
+                log.error("item {}, {} thrown an exception: {}", item.toString(), getObject().toString(), e, e);
+                throw new AbortConditionalNGExecutionException(e);
                 
             default:
                 throw e;
@@ -285,10 +299,13 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     
     public void handleError(Base item, String message, RuntimeException e, Logger log) throws JmriException {
         switch (_errorHandlingType) {
-//            case SHOW_DIALOG_BOX:
-//                InstanceManager.getDefault(ErrorHandlerManager.class)
-//                        .notifyError(this, Bundle.getMessage("ExceptionSetValue", e), e);
-//                break;
+            case SHOW_DIALOG_BOX:
+                boolean abort = ThreadingUtil.runOnGUIwithReturn(() -> {
+                    ErrorHandlingDialog dialog = new ErrorHandlingDialog();
+                    return dialog.showDialog(item, message);
+                });
+                if (abort) throw new AbortConditionalNGExecutionException();
+                break;
                 
             case LOG_ERROR:
 //                e.printStackTrace();
@@ -302,6 +319,9 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                 
             case THROW:
                 throw e;
+                
+            case ABORT_EXECUTION:
+                throw new AbortConditionalNGExecutionException(e);
                 
             default:
                 throw e;
