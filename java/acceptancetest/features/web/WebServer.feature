@@ -21,8 +21,7 @@ Scenario Outline: Basic Http requests
    | firefox | http://localhost:12080/xml/signals/ | Directory: /xml/signals/ \| My JMRI Railroad |
    | firefox | http://localhost:12080/about/ | About JMRI |
 
-   # Chrome version failing on travis
-   @chrome @Ignore
+   @chrome
    Examples: Chrome Tests
    | browser | PageURL | PageTitle |
    | chrome  | http://localhost:12080/       | My JMRI Railroad |
