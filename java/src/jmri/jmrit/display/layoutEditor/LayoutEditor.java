@@ -707,6 +707,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     @Override
     public void targetWindowClosingEvent(WindowEvent e) {
+        boolean save = (isDirty() || (savedEditMode != isEditable())
+                || (savedPositionable != allPositionable())
+                || (savedControlLayout != allControlling())
+                || (savedAnimatingLayout != isAnimating())
+                || (savedShowHelpBar != getShowHelpBar()));
+        log.trace("Temp fix to disable CI errors: save = {}", save);
         targetWindowClosing();
     }
 
