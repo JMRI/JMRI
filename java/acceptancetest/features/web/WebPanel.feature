@@ -15,7 +15,9 @@ Scenario Outline: Web Panel requests
    | firefox | java/test/jmri/jmrit/display/layoutEditor/load/LayoutEditorTest-4-19-4.xml | http://localhost:12080/panel/Layout/Layout%20Editor%20Test  | Layout/Layout%20Editor%20Test \| My JMRI Railroad | Layout Editor Test \| My JMRI Railroad |
    | firefox | java/test/jmri/jmrit/display/layoutEditor/load/Decorations-4-19-6.xml | http://localhost:12080/panel/Layout/Decorations%20Testing  | Layout/Decorations%20Testing \| My JMRI Railroad | Decorations Testing \| My JMRI Railroad |
 
-   @chrome @Ignore
+
+	 # Chrome version fails on travis, ignore it
+	 @chrome @Ignore
    Examples: Chrome Panel Tests
    | browser | panel | panelURL | PageTitle | FormattedPageTitle |
    | chrome | java/test/jmri/jmrit/cabsignals/SimpleCabSignalTestPanel.xml | http://localhost:12080/panel/Layout/Cab%20Signal%20Test  | Layout/Cab%20Signal%20Test \| My JMRI Railroad |Cab Signal Test \| My JMRI Railroad|
