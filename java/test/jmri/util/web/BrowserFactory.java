@@ -62,11 +62,9 @@ public class BrowserFactory {
                     WebDriverManager.getInstance(ChromeDriver.class).setup();
                     ChromeOptions chromeOptions = new ChromeOptions();
                     if (GraphicsEnvironment.isHeadless()) {
-                        chromeOptions.addArguments("--headless");
+                        chromeOptions.addArguments("headless");
                     }
-                    chromeOptions.addArguments("--whitelisted-ips=''");
-                    chromeOptions.addArguments("--verbose");
-                    chromeOptions.addArguments("--disable-extensions");
+                    chromeOptions.addArguments("verbose", "whitelisted-ips=''","ignore-certificate-errors" );
                     LoggingPreferences logPrefs = new LoggingPreferences();
                     logPrefs.enable(LogType.BROWSER, Level.ALL);
                     chromeOptions.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);

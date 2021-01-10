@@ -55,6 +55,8 @@ public class WebServerAcceptanceSteps implements En {
         });
 
         When("^I ask for the url (.*)$", (String url) -> {
+            webDriver.get("http://localhost:12080/");
+            waitLoad();
             webDriver.get(url);
         });
 
