@@ -1,764 +1,1312 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
+"http://www.w3.org/TR/html4/loose.dtd">
 
 <html lang="fr">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
- <!--Translated by Herv&#233; Blorec le 2016-06-18 -->
-<title>JMRI: DecoderPro User Guide - Advanced Decoder Definitions</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html;  charset=utf-8">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI: DecoderPro User Guide - Advanced Decoder
+  Definitions</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
 
-<!--#include virtual="Sidebar.shtml" -->
-<div id="mainContent">
+      <h1>MRI : Guide de l'utilisateur de DecoderPro</h1>
 
-<H1>JMRI:Guide Utilisateur DecoderPro</H1>  -<h2> D&#233;finitions Avanc&#233;es des D&#233;codeurs </h2>
+      <h2>Définitions avancées des décodeurs</h2>
 
-<p>Cette page fournit des informations sur les fonctionnalit&#233;s avanc&#233;es dans
-les fichiers de d&#233;finiton d&#233;codeur pour le Programmateur Symbolique DecoderPro
-.</p>
+      <p>Cette page fournit des informations sur les fonctionnalités avancées 
+      des fichiers de définition du décodeur pour le  Programmeur DecoderPro Symbolic.</p><a name="html_formatting" id=
+      "html_formatting"></a>
 
-<a name="html_formatting" id="html_formatting"></a>
-<H3> Formatage sur la page </h3>
-Vous pouvez faire une mise en forme limit&#233;e sur l'&#233;cran en utilisant les balises HTML de formatage.
+      <h3>Formatage sur la page</h3>Vous pouvez faire un formatage limité
+      sur l'écran en utilisant des balises de formatage HTML.
 
-<p>
-Vous pouvez int&#233;grer du HTML dans le texte du volet, mais il doit &#234;tre enferm&#233; dans les Mots cl&#233;s &lt; html &gt; ... &lt; /html &gt; .
-</P>
-<P> Ceci est un peu difficile &#224; cause du chevauchement entre les "balises comme
-partie de la structure XML du fichier d&#233;codeur" et "les balises HTML inclus dans le fichier d&#233;codeur".
-Toutes les balises HTML doivent &#234;tre cit&#233;es, avec leurs caract&#232;res &lt; et &gt; 
-remplac&#233;es par leurs chaines &amp;lt; et &amp;gt; et tous les guillemets 
-int&#233;gr&#233;s remplac&#233;s par &amp;quot;. </p
-<p>
-Par exemple:
-</p>
-<pre style="white-space: pre-wrap;">
- &lt;label label="&amp;lt;html&amp;gt;&amp;lt;strong&amp;gt;JMRI 3.7.2 ou plus tard est requis pour utiliser cette d&#233;finition.&amp;lt;/strong&amp;gt;&amp;lt;/html&amp;gt;"/&gt;
-</pre>
-Apr&#232;s le XML est lu, les contenus de ce label seront affich&#233; depuis le texte dans l'attribut "label", qui est: 
-<pre>
- &lt;html&gt;&lt;strong&gt;JMRI 3.7.2 ou plus tard est requis pour utiliser cette d&#233;finition.&lt;/strong&gt;&lt;/html&gt;
-</pre>
-et qui apparaitre &#224; l'&#233;cran comme
-<p>
-&nbsp;&nbsp;&nbsp;<strong>JMRI 3.7.2 ou plus tard est requis pour utiliser cette d&#233;finition.</strong>
-<p>
-Pour plus d'exemple voir:
-<a href="https://github.com/JMRI/JMRI/blob/master/xml/decoders/esu/v4readMePane.xml" target="_blank">
-    xml/decoders/esu/v4readMePane.xml</a>.
-</p>
-<p>
-Ceci fournit seulement le support HTML5, ainsi si quelque chose n'est pas affich&#233;e comme vous l'attendiez, voyiez si une 
-approche utilisant  un simple HTML fonctionnera. 
-</p>
+      <p>Vous pouvez intégrer du HTML dans le texte du volet, mais il doit être inclus dans les balises  &lt;html&gt;...&lt;/html&gt;.</p>
+  
+          <p>Cela est rendu un peu délicat par le chevauchement entre les "balises faisant partie de la structure XML du fichier décodeur" et les "balises HTML
+      inclus dans le fichier du décodeur". Toutes les balises HTML doivent
+      être cités, avec leurs caractères &lt; et &gt;  remplacés par
+      les &amp;lt; et &amp;gt; les chaînes de caractères et tout double-note intégré étant remplacés par &amp;quot;.</p>
 
-<a name="id" id="id"></a>
-<h3>Identification</h3>
-Trois parties:
-<dl>
-<dt>Fabricant:</dt><dd>Valeur num&#233;rique depuis CV8, qui est adapt&#233;e &#224; un nom en utilisant 
-		les entr&#233;es dans le fichier xml/decoderIndex.xml. </dd>
-<dt>Version code:</dt><dd>Valeur num&#233;rique depuis CV7, qui est adapt&#233;e pour mod&#233;liser le nom (s) en utilisant
- 		les valeurs lowVersionID et highVersionID sur les &#233;l&#233;ments du mod&#232;le 
-		au sein de toutes les d&#233;finitions de d&#233;codeur pour le fabricant sp&#233;cifique.
-                Ceci est un processus complexe qui n'aboutit pas toujours 
-		en raison des valeurs &#224; dupliquer , etc..</dd>
-<dt>Code Identification Produits:</dt><dd>&#224; l'origine une valeur num&#233;rique lu &#224; partir d'un CV ou CVs
- 		sp&#233;cifique au fabricant; cela ne fonctionne que pour certains fabricants. Le processus de lecture
- 		est trait&#233; dans le code ( la classe
- <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/decoderdefn/IdentifyDecoder.html">jmri.jmrit.decoderdefn.IdentifyDecoder</a> )
-                et doit &#234;tre mis &#224; jour chaque fois qu'un fabricant commence &#224; fournir des valeurs dans un ou plusieurs 
-nouveaux CV. Lorsque le code produit est pr&#233;sent, il devrait briser toute d&#233;g&#233;n&#233;rescence entre chevauchement des valeurs de CV7 
-dans une famille de d&#233;codeur.
-		<p>
-                L'aide a aussi &#233;t&#233; ajout&#233;e pour trouver cette valeur en utilisant le
-                <a href="../../hardware/loconet/Addressing.shtml#SVs">ProtocoleLocoNet SV2</a>
-                quelque fois au cours de la validation de la s&#233;rie JMRI 4.1. Voir les notes de release 
-		pour plus infos sur la progression.      
-                <p>
-                &#201;tant donn&#233; que le code produit fonctionne avec les op&#233;rations d'inclusion/exclusion d&#233;crites ci-dessous 
-		vous pouvez &#233;galement l'utiliser dans les cas o&#249; il n'y a pas de CV ou CV qui en contiennent.
-                Dans ce cas , aucune ID automatique n'est donn&#233;e, mais la valeur depuis le
-                id_produit attribut du mod&#232;le s&#233;lectionn&#233; par l'utilisateur est utilis&#233;e pendant le traitement
-	        et l'extension de la d&#233;finition du d&#233;codeur ult&#233;rieur.
-                Les valeurs productId sont quelques fois utilis&#233;es pour pour &#233;viter 
-		les conflits avec  les valeurs num&#233;riques trouv&#233;es dans les CV.
-                    </dd>
-</dl>
-Par exempleF:
-<code><pre>
-  &lt;d&#233;codeurcoder&gt;
-    &lt;Nom de famille="Mon Nom de Famille" mfg="NMRA"&gt;
-      &lt;model model="Mod&#232;le A" lowVersionID="16" highVersionID="19" productID="400" /&gt;
+
+      <p>Par exemple:</p>
+      <pre style="font-family : monospace ;">
+   &lt;label label="&amp;lt;html&amp;gt;&amp;lt;strong&amp;gt;JMRI 3.7.2 ou une version ultérieure est nécessaire pour utiliser cette définition.&amp;lt;/strong&amp;gt;&amp;lt;/html&amp;gt;"/&gt;
+</pre>Après la lecture du XML, le contenu de cette étiquette sera
+affiché à partir du texte de l'attribut "label", qui est :
+      <pre style="font-family : monospace ;">
+     &lt;html&gt;&lt;strong&gt;Pour utiliser cette définition, il est nécessaire de disposer de JMRI 3.7.2 ou d'une version plus récente.&lt;/strong&gt;&lt;/html&gt;
+</pre>et apparaîtra à l'écran comme
+
+      <p> <strong>JMRI 3.7.2 ou supérieur est nécessaire pour utiliser cette
+      definition.</strong></p>
+
+      <p>Pour plus d'exemples, voir <a href=
+      "https://github.com/JMRI/JMRI/blob/master/xml/decoders/esu/v4readMePane.xml"
+      target="_blank">xml/decoders/esu/v4readMePane.xml</a>.</p>
+
+      <p>Il ne prend en charge que le HTML5, donc si quelque chose ne
+      s'affiche comme vous l'attendez, voyez si une approche utilisant du HTML plus simple fonctionnera.</p>
+
+
+      <a name="id" id="id"></a>
+      <h3>Identification</h3>
+      Lorsque la fonction "Lire le type de décodeur" est utilisée pour déterminer le
+      fichier de définition du décodeur, plusieurs informations
+      sont lues à partir du décodeur et utilisées pour tenter une correspondance
+      avec une famille et  un modèle :
+
+      <dl>
+        <dt>Fabricant:</dt>
+
+        <dd>Valeur numérique de CV8, qui est ensuite mise en correspondance avec un
+        nom en utilisant les entrées du fichier xml/decoderIndex.xml
+        file.</dd>
+
+        <dt>Code de version:</dt>
+
+        <dd>Valeur numérique de CV7, qui est ensuite mise en correspondance avec
+        le(s) nom(s) de modèle(s) utilisant les ID de version basse et haute
+        sur les éléments du modèle dans toutes les définitions de décodeur pour
+        le fabricant spécifique. Il s'agit d'un processus complexe qui
+        ne se passe pas toujours bien en raison de valeurs doubles, etc.
+
+        <dt>Code d'identification du produit:</dt>
+
+        <dd>
+        A l'origine, une valeur numérique lue à partir d'un
+         ou des CV spécifiques au fabricant; cela ne fonctionne que pour
+        certains fabricants. Le processus de lecture est traité dans le
+        code (le <a href=
+        "/JavaDoc/doc/jmri/jmrit/decoderdefn/IdentifyDecoder.html" target="_blank">
+        jmri.jmrit.decoderdefn.IdentifyDecoder</a> classe) et 
+        à mettre à jour chaque fois qu'un fabricant commence à fournir
+        dans un ou plusieurs nouveaux CV. Lorsque le code produit est
+        présent, il devrait briser toute dégénérescence entre
+        le chevauchement des valeurs CV7 au sein d'une famille de décodeurs.
+        Par exemple :
+        <pre style="font-family : monospace ;">
+  &lt;decoder&gt;
+    &lt;family name="My Decoder Family" mfg="NMRA"> ;
+      &lt;model model="Model A" lowVersionID="16" highVersionID="23" productID="400" /&gt;
+      &lt;;/model&gt;
+      &lt;model model="Model B" lowVersionID="21" highVersionID="27" productID="401" /&gt;
+      color=;/model&gt;;model model="401" /&gt;;model model="401" /&gt;
+    &lt;/family&gt;
+    &#8230 ;
+  &lt;/decoder&gt;</pre>
+
+        <p>Certains d&#233;codeurs peuvent avoir plusieurs ID de produits stock&#233;s possibles pour
+        des d&#233;codeurs identiques. Dans ce cas, plusieurs d&#233;codeurs s&#233;par&#233;s par des virgules
+        peuvent &#234;tre sp&#233;cifi&#233;es dans le champ "Product ID" et une correspondance avec une valeur quelconque de la liste 
+        identifiera le d&#233;codeur de mani&#232;re unique. Par exemple, la s&#233;rie ESUseries utilise les CV RailCom&reg ; Product ID, 
+        mais le Product ID est mis &#224 ; jour pour diff&#233;rents lots de production du m&#234;me mod&#232;le:</p>
+        <pre style="font-family : monospace ;">
+  &lt;decoder&gt;
+    &lt;family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255"} ;
+      &lt;model model="LokSound V4.0" numOuts="92" numFns="40" extFnsESU="yes" productID="33554493,33554503,33554538"} ;
       &lt;/model&gt;
-      &lt;model model="Mod&#232;le B" lowVersionID="21" highVersionID="22" productID="401" /&gt;
+      &lt;model model="LokSound V4.0 M4" numOuts="92" numFns="40" extFnsESU="yes" productID="33554500,33554536"} ;
       &lt;/model&gt;
-  &lt;/d&#233;codeur&gt;
-</pre></code>
+    &lt;/family&gt;
+    &#8230 ;
+  &lt;/decoder&gt;</pre>
 
-Si l'utilisateur s&#233;lectionne manuellenment un d&#233;codeur mod&#232;le, cettte s&#233;lection d&#233;finie
-les trois valeurs pour une utilisation lorsque la d&#233;finition de d&#233;codeur est &#233;largie
-pour la programmation (voir la section <a href="#conditional">D&#233;finitions Conditionnelles de D&#233;codeur </a> ci-dessous).
 
-<a name="pane_considerations" id="pane_considerations"></a>
-<h3>Volet Consid&#233;rations</h3>
-Les volets du programmateur sont utilis&#233;es pour r&#233;partir et organiser les variables du d&#233;codeur dans des cat&#233;gories nomm&#233;es 
-pratiques.
-<ul>
-  <li>
-    JMRI fournit un jeu standard de volets, d&#233;fini par les &#233;l&#233;ments &lt;pane&gt; inclus dans les &#233;l&#233;ments &lt;programmer&gt; 
-    de chacun des fichiers des Programmateur standard (Basique, Complet, Avanc&#233; etc.) dans le dossier xml/programmers/.
-  </li>
-  <li>
-    Les fichiers d&#233;finition D&#233;codeur peuvent contenir des volets personnalis&#233;s pour des d&#233;codeurs particuliers ou des familles 
-    de d&#233;codeurs, d&#233;finis par les &#233;l&#233;ments &lt;pane&gt; inclus dans l'&#233;l&#233;ment (Haut-niveau) &lt;decoder-config&gt; du fichier 
-    d&#233;codeur.
-  </li>
-  <li>
-    Les noms de volets sont sp&#233;cifi&#233;s par un &#233;l&#233;ment &lt;name&gt; en haut de chaque &#233;lement &lt;pane&gt;.
-  </li>
-</ul>
-<a name="pane_replacement" id="pane_replacement"></a>
-<h4>Volet de Remplacement </h4>
-Les volets personnalis&#233;s sont habituellement ajout&#233;s aux fichiers d&#233;finition pour une des raisons suivantes:
-<ol type="A">
-  <li>
-    Les &#233;l&#233;ments &#224; montrer ne sont dans aucunes des cat&#233;gories d&#233;finies par les noms standards des volets.
-    <ul>
-      <li>Dans ce cas le &lt;name&gt;se l'&#233;l&#233;ment du volet doit &#234;tre diff&#233;rent d'un nom standard existant..</li>
-      <li>Le nouveau volet personnalis&#233; sera ajout&#233; &#224; la fin de la liste volet.</li>
-    </ul>
-  </li>
-  <li>
-    La cat&#233;gorie standard volet applicable n'a pas la disposition correcte ou le nombre de variables.
-    <ul>
-      <li>Dans ce cas l'&#233;l&#233;ment volet &lt;name&gt; correspondra exactement &#224; un &#233;l&#233;ment standard volet &lt;name&gt; existant.</li>
-      <li>Le nouveau volet personnalis&#233; <strong><em>remplace</em></strong> le panneau standard du m&#234;me nom.</li>
-    </ul>
-  </li>
-</ol>
-<h4>Volets Vides</h4>
-Les volets vides sont d&#233;finis comme ceux qui n'ont aucun &#233;l&#233;ments variables actifs &#224; afficher pour le d&#233;codeur s&#233;lectionn&#233;.
-Ils peuvent encore contenir du texte..
-<a name="pane_visibility" id="pane_visibility"></a>
-<a name="visibility" id="visibility"></a>
-<h4>Visibilit&#233; Volet</h4>
-La visibilit&#233; volet est r&#233;git par un ensemble de r&#232;gles complexes:
-<ul>
-  <li>
-    Ind&#233;pendamment de toutes les autres r&#232;gles, un volet ne sera pas affich&#233; s'il &#233;choue &#224;
-    <a href="#pane_include">"inclure" ou "exclure" des attributs </a> dans son &#233;l&#233;ment &lt;pane&gt;.
-  </li>
-  <li>
-    La visibilit&#233; d'un volet vide est contr&#244;l&#233;e par ce qui suit, par ordre de priorit&#233; croissante:
-     <ul>
-      <li>les Pr&#233;f&#233;rences-&gt;Inventaire-&gt;programmateur-&gt;Montre des Onglets de r&#233;glages Vides.</li>
-      <li>Si pr&#233;sent, un attribut showEmptyPanes dans le fichier programmateur actuel XML.</li>
-      <li>Si pr&#233;sent, un attribut showEmptyPanes dans le fichier definition d&#233;codeur XML.</li>
-    </ul>
+      <a name="idwarn" id="idwarn"></a>
+          <p><strong>WAvertissement:</strong> Ne pas utiliser plusieurs Product IDs stock&#233;s 
+          possibles pour des d&#233;codeurs similaires qui n&#233;cessitent 
+          une <a href="#conditionnel">expansion conditionnelle </a> diff&#233;rente.
+          Cela ne fonctionnera pas, pour les raisons expliqu&#233;es <a href="#prodidwarn">dans une section ci-dessous</a>.
+          Dans ce cas, chaque ID de produit doit se voir attribuer un nom de mod&#232;le diff&#233;rent, comme dans le premier exemple ci-dessus.
+
+          <p>Le support est &#233;galement ajout&#233; pour trouver cette valeur en utilisant
+          le <a href=
+          "../../mat&#233;riel/loconet/Addressage.shtml#SVs" target="_blank"> protocole LocoNet SV2
+         </a> un certain temps pendant la diffusion de la version 4.1 de JMRI
+          s&#233;rie. Voir les notes de publication pour plus d'informations sur la s&#233;rie
+          progr&#232;s.</p>
+
+          <p>Puisque le code du produit fonctionne avec l'inclusion/exclusion
+          d&#233;crites ci-dessous, vous pouvez &#233;galement l'utiliser dans les cas suivants
+          o&#249; il n'y a pas de CV ou de CV qui le contiennent. Dans ce cas,
+          aucune identification automatique n'est effectu&#233;e, mais la valeur du productID
+          du mod&#232;le s&#233;lectionn&#233; par l'utilisateur est utilis&#233; lors de la
+          le traitement et l'extension de la d&#233;finition du d&#233;codeur.
+          Des valeurs alphanum&#233;riques productID sont parfois utilis&#233;es &#224; cette fin
+          afin d'&#233;viter les conflits avec les chiffres de
+          CVs.</p>
+        </dd>
+      </dl>
+        <p>Quand un mod&#232;le de d&#233;codeur est s&#233;lectionn&#233;,
+        soit manuellement, soit &#224; la suite du processus d'identification,
+        les noms de famille et de mod&#232;le sont stock&#233;s dans l'entr&#233;e de la liste en cours de cr&#233;ation
+        et sont utilis&#233;s pour relier &#224; l'avenir une entr&#233;e de la liste &#224; une d&#233;finition du d&#233;codeur.
+
+        <p>Il est important de noter que le code du fabricant, de la version ou
+        Les ID de produits ne sont pas enregistr&#233;s dans l'entr&#233;e du fichier, car les valeurs ne sont pas
+        d&#233;termin&#233; de mani&#232;re fiable dans certains cas
+        (par exemple, s&#233;lection manuelle, mise &#224; jour du micrologiciel par un logiciel fourni par le fabricant,
+        informations d'identification mises &#224; jour par le vendeur).
+        Cela a des implications pour le moment o&#249; la d&#233;finition du d&#233;codeur est &#233;largie pour la programmation
+        (<a href="#conditional">D&#233;finitions des d&#233;codeurs conditionnels</a>)
+        ou mis &#224; jour
+        (<a href="#update">Mises &#224; jour et migration</a>).</p>
+
+        <h4>D&#233;codeurs du domaine public et du bricolage</h4>
+
+        <span class="since">Depuis <a href="/releasenotes/jmri4.11.5.shtml" target="_blank">JMRI 4.11.5</a></span>
+
+        <p> La fonction "Lire le type de d&#233;codeur" est disponible pour les d&#233;codeurs du domaine public et les d&#233;codeurs de bricolage.</p>
+
+        <p>Trois identificateurs sont utilis&#233;s pour identifier le d&#233;codeur:</p>
+
+            <dl>
+                <dt>Fabricant:</dt>
+
+                <dd>Valeur num&#233;rique <b>CV8 = 13</b> selon la norme NMRA S-9.2.2.
+                fichier.</dd>
+
+                <dt>Code de version:</dt>
+
+                <dd>La valeur num&#233;rique de <b>CV7</b> o&#249; la version du logiciel est stock&#233;e.</dd>
+
+                <dt>Code d'identification du produit:</dt>
+
+                <dd>Valeur num&#233;rique stock&#233;e dans <b>CV47</b>, <b>CV48</b>, <b>CV49</b> et <b>CV50</b> 
+                selon le fichier de la norme S-9.2.2 de l'ARNM et r&#233;serv&#233; &#224; l'usage du fabricant.
+
+                    <p>L'ID du produit est calcul&#233; &#224; l'aide de la formule suivante:</p>
+
+                    <ul>
+                        <li>ID du produit = (((CV47 * 256) + CV48) * 256 + CV49) * 256 + CV50</li>
+                    </ul>
+
+                    <p>Les CV individuels ont la signification suivante:</p>
+
+                    <ul>
+                        <li>CV47 - code pays, par exemple CV47 = 1 pour la R&#233;publique tch&#232;que</li>
+                        <li>CV48 - code du d&#233;veloppeur ou du groupe de d&#233;veloppeurs, tel que CV48 = 1 pour dccdoma.cz</li>
+
+
+                        <li>CV49 - troisi&#232;me ProductID pour identification ult&#233;rieure</li>
+                        <li>CV50 - quatri&#232;me ProductID pour une identification plus pouss&#233;e</li>
+                    </ul>
+                </dd>
+            </dl>
+
+        <p>Le fichier xml de d&#233;finition du d&#233;codeur correspondant a un &#233;l&#233;ment rempli de type &lt;family&gt;. Exemple:</p>
     
-  </li>
-  <li>
-    Le fait qu'un volet vide sp&#233;cifique (tel que d&#233;fini dans Volets vides ci-dessus) indique &#233;galement d&#233;pend du type de volet :
-    <ul>
-      <li>
-        Si le volet vide est un volet standard ( comme d&#233;fini dans <a href="#pane_considerations">Consid&#233;rations Volet</a> ci-
-	dessus )
-        il ne se montrera que si showEmptyPanes est en vigueur.
-        <em>Cependant, son contenu usuel sera remplac&#233; par un message g&#233;n&#233;rique expliquant que le volet est inutilis&#233; puisque
-        ses contenus sont inapplicables ou apparaissent dans un autre volet.</em>
-      </li>
-      <li>
-        Si le volet vide est un volet de remplacement (comme d&#233;fini dans l'&#233;l&#233;ment de <a href="#pane_replacement">Volet de 
-	Remplacement</a> ci-dessus ),
-        il ne se montrerera que si showEmptyPanes est en vigueur.
-      </li>
-      <li>
-        Si le volet vide est est un volet personnalis&#233; ( comme d&#233;fini dans l'&#233;l&#233;ment A de <a href="#pane_replacement">Volet de 
-	Remplacement</a> ci-dessus ),
-        il sera toujours montr&#233;, ind&#233;pendamment du fait que showEmptyPanes soit en vigueur.
-      </li>
-    </ul>
+       <pre style="font-family : monospace ;">
+  &lt;decoder&gt;
+    &lt;family name="dccdoma.cz" mfg="Public-domain and DIY" &gt;
+      &lt;model model="UNI16ARD-NAV" lowVersionID="41" productID="16843010" &#8230 ; /&gt;
+    &lt;/family&gt;
+    &#8230 ;
+  &lt;/decoder&gt;</pre>
 
-  </li>
-</ul>
-<a name="pane_best_practice" id="pane_best_practice"></a>
-<h4>Bonne Pratique</h4>
-Les utilisateurs exp&#233;riment&#233;s peuvent choisir de masquer des volets vides, mais Montrer Onglets Vides est activ&#233; par d&#233;faut 
-ainsi les utilisateurs d&#233;butants ont besoin de savoir pourquoi les volets sont vides et o&#249; trouver les &#233;l&#233;ments qui ne sont pas 
-sur les volets attendus<p>
-La meilleur pratique recommand&#233;e est:<ul>
-  <li>
-    O&#249; c'est possible, les &#233;l&#233;ments doivent utiliser les volet standard existant
-  </li>
-  <li>
-   O&#249; un volet particulier standard existant ne convient pas en termes de nombre d'&#233;l&#233;ments ou de mise en page :
-    <ul>
-      <li>
-        Cr&#233;ez un <a href="#pane_replacement">volet de remplacement</a> avec le m&#234;me nom que le panneau standard existant.
-     </li>
-      <li>
-        Par exemples, voir les volets Avanc&#233;s et Sons du d&#233;codeur des 
-        <a href="https://github.com/JMRI/JMRI/blob/master/xml/decoders/ESU_LokSoundV4_0.xml" target="_blank">
-      ESU_LokSoundV4_0</a> .
-      </li>
-    </ul>
-  </li>
-  <li>
-    Si un volet standard existant ne convient pas en termes de conception:
-    <ul>
-      <li>
-        Cr&#233;ez un ou plusieurs nouveaux<a href="#pane_replacement"> volets personnalis&#233;s</a> avec un des noms descriptifs uniques.
-      </li>
-      <li>
-        Cr&#233;ez des 
-        <a href="#pane_replacement">volets de remplacements</a> d'information seulement ( pas d'affichage d'&#233;l&#233;ments, rien que 
-	du texte ) avec les m&#234;mes noms que les volets standards existants non-utilis&#233;s. Utilisez ces volets pour expliquer 
-	pourquoi chaque volet est inutilis&#233; et/ou trouver les informations qu'un utilisateur peut raisonnablement esp&#233;rer 
-	trouver sur ces volets.
-        Utilisez un <a href="#html_formatting">formatage HTML</a> pour am&#233;liorer l'affichage de ces panneaux explicatifs.
-      </li>
-      <li>
-        Par exemples, voir les volets de Niveaux Lumi&#232;re et Sons de la d&#233;finition du d&#233;codeur
-        <a href="https://github.com/JMRI/JMRI/blob/master/xml/decoders/ESU_LokSoundV4_0.xml" target="_blank">
-        ESU_LokSoundV4_0</a> .
-      </li>
-    </ul>
-  </li>
-  <li>
-    Les <a href="#pane_replacement">volets personnalis&#233;s</a> d'Information
-    seront <em>toujours</em> affich&#233;s.
-  </li>
-</ul>
-<p>
-Dans quelques cas, exemple: un d&#233;codeur accessoire pour servos o&#249; aucun des volets d&#233;codeur-locomotive n'a de sens, ainsi la 
-d&#233;finition du d&#233;codeur contient un nombre de panneau personnalis&#233;s, c'est une simplification de mettre un attribut 
-showEmptyPanes="no" dans l'&#233;l&#233;ment &lt;decoder-config&gt; de la d&#233;finition XML et de masquer tous les panneaux vides par d&#233;faut.
+        <p>Les attributs individuels de cet &#233;l&#233;ment doivent &#234;tre remplis comme suit:</p>
+        <ul>
+            <li><b>mfg="Public-domain and DIY"</b> qui correspond &#224; CV8</li>
+            <li><b>lowVersionID="nn" highVersionID="mm"</b> qui correspond &#224; CV7</li>
+            <li><b>productID="nnnnnn"</b> qui correspond aux CV47, CV48, CV49 et CV50</li>.
+        </ul>
 
-<a name="frag_include" id="frag_include"></a>
-<h3>Inclusion de Fragment de Fichier</h3>
+        <p>Le nom du fichier xml avec la d&#233;finition du d&#233;codeur doit avoir la structure suivante:</p>
 
-Des parties communes des d&#233;finitions de d&#233;codeur peuvent &#234;tre  plac&#233;es dans des "fragments de fichiers",
-qui peuvent alors &#234;tre inclus dans de multiples fichiers de d&#233;finitions de d&#233;codeur.
-Ceci rend plus ais&#233; la maintenance et l'actualisation de ces d&#233;finitions communes, exemple:
-les traduire dans d'autres langues.
-<p>
-Par convention, nous avons ces fichiers fragment&#233;s dans les sous-r&#233;pertoires:
-<dl>
-<dt>xml/decoders/nmra<dd> Les d&#233;finitions The NMRA pour les CVs, utilis&#233; par beaucoup de d&#233;codeurs types
-<dt>xml/decoders/(mfg)<dd> Les variables sp&#233;cifiques Constructeurs, par exemple xml/decoders/esu
-</dl>
-Le format pour une inclusion est:
-<code><pre>
+        <pre style="font-family : monospace ;"><b>Public_Domain</b>_<b>family-name</b>_<b>model-model</b>.xml</pre>
+
+        <p>o&#249; chaque partie d'un nom de fichier a la signification suivante:</p>
+        <ul>
+            <li><b>Public_Domain</b> qui correspond &#224; l'attribut &lt;family mfg="Public-domain and DIY" &gt;</li>
+            <li><b>family-name</b> qui correspond &#224; l'attribut &lt;family name="developer" &gt;</li>
+            <li><b>model-model</b> qui correspond &#224; l'attribut &lt;model model="decoder name" &gt;</li>
+        </ul>
+
+        <p>Exemple de fichier de d&#233;codage de d&#233;finition pour le d&#233;codeur de signal <i>UNI16ARD-NAV.xml</i> 
+            du groupe de d&#233;veloppeurs <i>dccdoma.cz</i> qui sont originaires de <i>la R&#233;publique tch&#232;que</i> 
+            <a href="../../../../../xml/d&#233;codeurs/Domaine_Public_dccdoma_UNI16ARD_NAV.xml">Public_Domain_dccdoma_UNI16ARD_NAV.xml</a>.</p> 
+        
+        <p>Pour le nouveau <i>code pays</i> et le nouveau <i>code d&#233;veloppeur</i>, veuillez 
+        contacter Groups.io jmriusers <a href="https://groups.io/g/jmriusers">https://groups.io/g/jmriusers</a>.</p>
+        
+      <a name="pane_considerations" id="pane_considerations"></a>
+      <h3>Consid&#233;rations sur les volets</h3>Les volets du programmateur sont utilis&#233;s pour
+      diviser et organiser les variables du d&#233;codeur en noms de cat&#233;gories pratiques
+      .
+
+      <ul>
+        <li>JMRI fournit un ensemble standard de volets, d&#233;fini par
+        &lt;pane&gt; inclus dans l'&#233;l&#233;ment &lt;programmer&gt;
+        de chacun des fichiers standard de Programmer (Basic,
+        Comprehensive, Advanced, etc.) dans le fichier xml/programmeurs/
+        .</li>
+
+        <li>Les fichiers de d&#233;finition du d&#233;codeur peuvent contenir des volets personnalis&#233;s pour
+        des d&#233;codeurs particuliers ou des familles de d&#233;codeurs, d&#233;finis par
+        &lt;pane&gt; &#233;l&#233;ments inclus dans le
+        &lt;decoder-config&gt; &#233;l&#233;ment du fichier d&#233;codeur ( haut niveau )
+        file.</li>
+
+        <li>Les noms des volets sont sp&#233;cifi&#233;s par un &#233;l&#233;ment de type &lt;name&gt; en
+        haut de chaque &#233;l&#233;ment &lt;pane&gt;.</li>
+      </ul><a name="pane_replacement" id="pane_replacement"></a>
+
+      <h4>Remplacement des volets</h4>Des volets personnalis&#233;es sont g&#233;n&#233;ralement ajout&#233;es &#224;
+      pour l'une des raisons suivantes :
+
+      <ol type="A">
+        <li>Les &#233;l&#233;ments &#224; montrer ne font partie d'aucun des
+        les cat&#233;gories d&#233;finies par les noms standard des volets.
+
+          <ul>
+            <li>Dans ce cas, le  &lt;name&gt;de l'&#233;l&#233;ment volet doit
+            &#234;tre diff&#233;rent de tout nom standard existant.</li>
+
+            <li>Le nouveau volet personnalis&#233; sera ajout&#233; &#224; la fin de la
+            pane liste des volets.</li>
+          </ul>
+        </li>
+
+        <li>La cat&#233;gorie de panneau standard applicable n'a pas la
+        une mise en page correcte ou un nombre de variables correct.
+
+          <ul>
+            <li>Dans ce cas, le &lt;name&gt;de l'&#233;l&#233;ment volet doit
+            correspondent exactement &#224; la norme existante de &lte;name&gt;
+            &#233;l&#233;ment volet.</li>
+
+            <li>Le nouveau volet personnalis&#233;
+            <strong><em>remplacera</em></strong> l'actuel
+            volet standard du m&#234;me nom.</li>
+          </ul>
+        </li>
+      </ol>
+
+      <h4>Volets vides</h4>Les volets vides sont d&#233;finis comme ceuxs qui n'ont pas 
+      d'&#233;l&#233;ments variables actifs &#224; afficher pour le d&#233;codeur s&#233;lectionn&#233;.
+      Ils peuvent encore contenir du contenu textuel. <un nom=
+      "pane_visibility" id="pane_visibility"></a> <a name=
+      "visibilit&#233;" id="visibilit&#233;"></a>
+
+      <h4>Visibilit&#233; des volets</h4>La visibilit&#233; des volets est r&#233;gie par un
+      un ensemble de r&#232;gles complexes 
+
+      <ul>
+        <li>Ind&#233;pendamment de toutes les autres r&#232;gles, un volet ne montrera pas
+        en cas d'&#233;chec <a href="#pane_include">"inclure" ou
+        "exclure" les attributs</a> dans son &#233;l&#233;ment &lt;pane&gt; .</li>
+
+        <li>La visibilit&#233; du volet vide est contr&#244;l&#233;e par les &#233;l&#233;ments suivants, en
+        ordre de priorit&#233; croissant :
+
+          <ul>
+            <li>Les Pr&#233;f&#233;rences-&gt;Liste-&gt;Programmeur-&gt;Afficher
+            Param&#233;trage des onglets vides.</li>
+
+            <li>Si pr&#233;sent, un attribut showEmptyPanes dans le
+            fichier XML du programmeur actuel.</li>
+
+
+
+            <li>Si pr&#233;sent, un attribut showEmptyPanes dans le fichier XML
+           de d&#233;finition sp&#233;cifique du d&#233;codeur .</li>
+          </ul>
+        </li>
+
+        <li>S'il s'agit d'un volet vide sp&#233;cifique (tel que d&#233;fini dans 
+        Panneaux Vides ci-dessus) il d&#233;pend &#233;galement du type de panneau :
+
+          <ul>
+            <li>Si le volet vide est un volet standard (tel que d&#233;fini dans
+            <a href="#pane_considerations">Consid&#233;rations sur les panneaux</a>
+            ci-dessus), il n'appara&#238;tra que si showEmptyPanes est dans
+            force. <em>Cependant, son contenu habituel sera remplac&#233;
+            par un message g&#233;n&#233;rique expliquant que le volet est inutilis&#233;
+            puisque le contenu est inapplicable ou figure sur
+            un autre volet.</em></li>
+
+            <li>Si le volet vide est un volet de remplacement (tel que d&#233;fini
+            dans le point B de <a href="#pane_replacement">Volet
+            Remplacement</a> ci-dessus), il n'appara&#238;tra que si
+            showEmptyPanes est en vigueur.</li>
+
+            <li>Si le volet vide est un volet personnalis&#233; (tel que d&#233;fini dans
+            item A of <a href="#pane_replacement">Volet
+            Remplacement</a> ci-dessus), il appara&#238;tra toujours,
+            ind&#233;pendamment du fait que showEmptyPanes soit en
+            vigueur.</li>
+          </ul>
+        </li>
+      </ul><a name="pane_best_practice" id=
+      "pane_best_practice"></a>
+
+      <h4>Bonne Pratique</h4>Les utilisateurs avanc&#233;s peuvent choisir de cacher le vide
+      mais l'option Afficher les onglets vides est activ&#233;e par d&#233;faut, donc 
+      les utilisateurs d&#233;butants doivent savoir pourquoi les volets sont vides ou o&#249; 
+      trouver les &#233;l&#233;ments qui ne figurent pas dans les volets pr&#233;vus.
+
+      <p>La meilleure pratique recommand&#233;e est:</p>
+
+      <ul>
+        <li>Dans la mesure du possible, les articles doivent utiliser la norme existante des volets
+        .</li>
+
+        <li> Lorsqu'un volet standard existant particulier ne convient pas
+        en termes de nombre d'articles ou de mise en page :
+
+          <ul>
+            <li>Cr&#233;er un <a href="#pane_replacement">panneau de remplacement</a> avec 
+            le m&#234;me nom que le panneau standard existant.</li>
+
+            <li>Pour des exemples, voir les volets "Avanc&#233;" et "Son" de
+            la d&#233;finition du d&#233;codeur <a href=
+            "https://github.com/JMRI/JMRI/blob/master/xml/decoders/ESU_LokSoundV4_0.xml"
+            target="_blank">ESU_LokSoundV4_0</a> .</li>
+          </ul>
+        </li>
+
+        <li> Lorsqu'un volet standard existant ne convient pas en termes
+        de concept :
+
+          <ul>
+            <li>Cr&#233;er un ou plusieurs nouveaux <a href=
+            "#pane_replacement">panneaux personnalis&#233;s</a> avec des
+            noms descriptifs.</li>
+
+            <li>Cr&#233;er des informations uniquement (pas d'affichage de variables
+            &#233;l&#233;ments, juste du texte) <a href=
+            "#pane_replacement">volets de remplacement</a> avec les m&#234;mes noms que 
+            les volets standards existant non utilis&#233;s.Utilisez ces panneaux 
+            pour expliquer pourquoi chaque volet est inutilis&#233; et/ou o&#249;
+            trouver les informations qu'un utilisateur peut raisonnablement esp&#233;rer
+            trouver sur ce volet. Utilisez le <a href="#html_formatting">formatage HTML
+            </a> pour am&#233;liorer l'affichage de ces
+            volets explicatifs.</li>
+
+            <li>Pour des exemples, voir les volets "Lumi&#232;res" et "Niveaux sonores
+            de la definition du d&#233;codeur <a href=
+            "https://github.com/JMRI/JMRI/blob/master/xml/decoders/ESU_LokSoundV4_0.xml"
+            target="_blank">ESU_LokSoundV4_0</a>.</li>
+          </ul>
+        </li>
+
+        <li>Information seulement <a href="#pane_replacement">Volets personnalis&#233;s</a> will <em>always</em> be displayed.</li>
+      </ul>
+
+      <p>Dans certains cas, par exemple un d&#233;codeur non-locomotive pour les servos
+      o&#249; aucune des volets du d&#233;codeur de locomotive n'a de sens, de sorte que 
+      la d&#233;finition du d&#233;codeur contient beaucoup de volets personnalis&#233;s, c'est une
+      simplification pour mettre un attribut showEmptyPanes="no" dans l'&#233;l&#233;ment de la d&#233;finition XML
+      &lt;decoder-config&gt; et juste
+      cacher tous ces volets vides par d&#233;faut. <a name="frag_include"
+      id="frag_include"></a></p>
+
+      <h3>Insertion des fragments de fichier f</h3>Parties communes du d&#233;codeur
+      Les d&#233;finitions peuvent &#234;tre plac&#233;es dans des "fragments de fichiers ", qui peuvent
+      ensuite &#234;tre inclus dans de multiples fichiers de d&#233;finition de d&#233;codeurs. Ce qui
+      facilite la maintenance et la mise &#224; jour de ces
+      d&#233;finitions, par exemple pour les traduire dans d'autres langues.
+
+      <p>Par convention, nous mettons ces fichiers de fragments dans
+      sous-r&#233;pertoires:</p>
+
+      <dl>
+        <dt>xml/d&#233;codeurs/nmra</dt>
+
+        <dd>Les d&#233;finitions NMRA pour les CV, utilis&#233;es par de nombreux d&#233;codeurs
+        types</dd>
+
+        <dt>xml/d&#233;codeurs/(mfg)</dt>
+
+        <dd> Variables sp&#233;cifiques aux fabricants, par exemple
+        xml/decoders/esu</dd>
+      </dl>Le format d'une inclusion est :
+      <pre style="font-family : monospace ;">
      &lt;xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/&gt;
-</pre></code>
+</pre>Le programme recherche d'abord ces fichiers dans le
+r&#233;pertoire des pr&#233;f&#233;rences, puis dans le r&#233;pertoire des programmes
+doit &#234;tre pr&#233;sent, par exemple vous avez besoin d'un r&#233;pertoire xml qui contient un
+r&#233;pertoire des d&#233;codeurs dans votre r&#233;pertoire de pr&#233;f&#233;rences pour le fragment
+&#224; trouver.
 
-Le programme cherche ces fragments de fichier d'abord dans le r&#233;pertoire &lt;preferences&gt;,
-puis dans le r&#233;pertoire &lt;programme&gt;. Le chemin complet doit &#234;tre pr&#233;sent, exemple
-vous avez besoin d'un r&#233;pertoire xml qui contient un r&#233;pertoire d&#233;codeurs dans votre r&#233;pertoire &lt;preferences&gt: pour le fragment de 
-fichier &#224; trouver.
-<p>
-Utilisez un fichier existant comme un exemple pour pour les meilleurs &#233;l&#233;ments et &amp; le format n&#233;cessaire.
+      <p>Utiliser un fichier existant comme exemple pour les &#233;l&#233;ments sup&#233;rieurs
+      &amp; format n&#233;cessaire.</p>
 
-<a name="update" id="update"></a>
-<h3>Actualisations et Migration</h3>
+    <a name="update" id="update"></a>
+      <h3>Mises &#224; jour et migration</h3>
+      Parfois, nous rempla&#231;ons une d&#233;finition ded&#233;codeur
+       par une meilleure. L'ancienne est en usage,  mais nous avons d&#233;cid&#233; 
+       de faire passer ces utilisateurs &#224; la nouvelle. Il existe des attributs 
+       de niveau-mod&#232;le qui peuvent &#234;tre ajout&#233;s &#224; l'ancienne (et non &#224; l
+      nouvelle) d&#233;finition pour faciliter cela :
+      <pre style="font-family : monospace ;">
+    &lt;model show="no" model="A4X" replacementModel="A4X" replacementFamily="Jan 2012"> ;
+      </pre>
+Lorsque l'utilisateur s&#233;lectionne "Mettre &#224; jour les d&#233;finitions du d&#233;codeur" dans le
+menu Debogage dans la fen&#234;tre PanelPro ou le menu Action dans DecoderPro, tous
+leurs entr&#233;es existantes dans l'inventaire qui utilisent une d&#233;finition de d&#233;codeur avec
+replacementModel et/ou replacementFamily d&#233;finis seront mis &#224; jour
+seront mis &#224; jour et remplac&#233;s par la d&#233;finition du d&#233;codeur de remplacement sp&#233;cifi&#233;. Cela permet
+aux gens de continuent &#224; utiliser leur ancienne et confortable d&#233;finition de d&#233;codeur 
+l'ancien dossier reste dans JMRI) jusqu'&#224; ce qu'ils d&#233;cident de passer &#224; un
+nouveau.
+<p>Notez qu'une mise &#224; jour d&#233;finie de cette mani&#232;re est inconditionnelle ; si les attributs de la famille et du mod&#232;le correspondent
+&#224; une entr&#233;e de l'inventaire, elle sera mise &#224; jour en fonction de la nouvelle famille/mod&#232;le.
+Les mises &#224; jour conditionnelles automatis&#233;es bas&#233;es sur la versionID ou la productID ne sont pas possibles
+car ces valeurs sont <a href="#id">non stock&#233;es</a> dans l'entr&#233;e de l'inventaire.
+Un processus de mise &#224; jour interactif est d&#233;sormais disponible dans ces cas
+et utilise une syntaxe sp&#233;ciale :
+<span class="since">Depuis <a href="/releasenotes/jmri4.9.5.shtml" target="_blank">JMRI 4.9.5</a></span>
+</p>
+      <pre style="font-family : monospace ;">
+    &lt;model show="no" model="DP2X" numOuts="2" numFns="2" replacementFamily="query:Jan 2000&#124;June 2007&#124;Jan 2012"} ;
+      </pre>
+<p>Un champ de remplacement commen&#231;ant par la cha&#238;ne &quot;query:&quot;,
+    &#233;ventuellement (de pr&#233;f&#233;rence) suivi d'une barre verticale &quot;&#124;&quot; liste s&#233;par&#233;e des remplacements possibles,
+    d&#233;clenche des dialogues interactifs avec l'utilisateur, contenant des explications et des conseils suppl&#233;mentaires pour l'utilisateur.
+    Cliquez sur
+      <a href="/help/en/html/apps/DecoderPro/images/UpdDecDef1.png" target="_blank">ici</a>
+    et
+      <a href="/help/en/html/apps/DecoderPro/images/UpdDecDef2.png" target="_blank">ici</a>
+    pour des exemples typiques de ces dialogues.
+    Les d&#233;finitions manquantes des d&#233;codeurs seront &#233;galement d&#233;tect&#233;es. Cliquez sur
+      <a href="/help/en/html/apps/DecoderPro/images/UpdDecDef3.png" target="_blank">ici</a> et
+      <a href="/help/en/html/apps/DecoderPro/images/UpdDecDef4.png" target="_blank">ici</a>
+    pour plus d'exemples.
+      </p>
+      <p> L'attribut "show" de l'&#233;l&#233;ment de mod&#232;le permet de s'assurer que les nouveaux
+      utilisateurs commencent avec la nouvelle d&#233;finition. Ses valeurs possibles
+      sont:</p>
 
-Quelquefois, nous rempla&#231;ons une d&#233;finition d&#233;codeur par une meilleure. La plus vieille est en service,
-mais nous aimerions d&#233;placer les utilisateurs vers la nouvelle &#233;ventuellement. Il y a des attributs model-level
-qui peuvent &#234;tre ajout&#233;s &#224; l'ancienne ( pas la nouvelle ) d&#233;finition pour faciliter cette tâche:
+      <ul>
+        <li> "oui" (par d&#233;faut) - le comportement traditionnel, toujours montrer
+        ce mod&#232;le et la famille qu'il contient</li>
 
-<code><pre>
-&lt;model show="no" model="A4X" replacementModel="A4X" replacementFamily="Jan 2012"&gt;
-</pre></code>
+        <li> "non" - ne jamais montrer ce mod&#232;le, m&#234;me s'il correspond &#224; une
+        s&#233;lection possible. Utilis&#233; pour les (anciennes) d&#233;finitions qui
+        ont &#233;t&#233; remplac&#233;es par de nouvelles.
 
-Quand l'utilisateur s&#233;lectionne "Mise &#224; Jour D&#233;finitions de D&#233;codeur" depuis le menu D&#233;bogage de la fen&#234;tre PanelPro
-ou le menu Action dans DecoderPro,
-toutes les entr&#233;es inventaire existantes qui utilisent la d&#233;finition d&#233;codeur avec "replacementModel" et/ou
-"replacementFamily" d&#233;finie seront mises &#224; jour avec la d&#233;finition d&#233;codeur de remplacement sp&#233;cifi&#233;e. 
-Cela permet au gens d'utiliser la vieille et confortable d&#233;finition d&#233;codeur ( l'ancien fichier reste dans JMRI ) jusqu'&#224; ce 
-qu'ils d&#233;cident d'avancer pour la nouvelle.
-<p>
-L'attribut de l'&#233;l&#233;ment model "show" permet de garantir que les nouveaux utilisateurs 
-d&#233;marrent avec la nouvelle d&#233;finition.
-Ses valeurs possibles sont:
-	<ul>
-	<li>"yes" (par d&#233;faut) - le comportement traditionnel, montre toujours ce mod&#232;le et la famille qu'il contient
-	<li>"no" - ne jamais montrer ce mod&#232;le, m&#234;me s'il correspond &#224; une s&#233;lection possible.
-	            Utilis&#233; pour les anciennes (vieilles) d&#233;finitions qui ont &#233;t&#233; remplac&#233;es par des nouvelles.
-	<li>"maybe" - afficher uniquement si elle correspond &#224; une (possible) identification automatique.
-	</ul>
+        <li> "peut-&#234;tre" - &#224; n'afficher que si elle correspond &#224; une (possible)
+        identification automatique.</li>
+      </ul>Cr&#233;er une d&#233;finition enti&#232;rement nouvelle pour un
+      mod&#232;le :
 
-Pour cr&#233;er une nouvelle d&#233;finition compl&#232;te pour un mod&#232;le existant:
-	<ol>
-	<li>D&#233;cidez o&#249; vous voulez que le nouveau mod&#232;le soit d&#233;fini. Il doit y avoir soit un nouveau nom de mod&#232;le, un nouveau 
-	nom de famille (nouveau fichier) ou les deux
-	<li>Cr&#233;er votre d&#233;finition.
-	<li>Ajouter les attributs "replacementModel" et "replacementFamily"pour la vieille d&#233;finition.
-	<li>G&#233;n&#233;ralement, d&#233;finissez l'attribut "show" dans l'ancienne d&#233;finition &#224; «no». La seule exception &#224; cette r&#232;gle est 
-	lorsque certains utilisateurs voudront s&#233;lectionner encore l'ancienne d&#233;finition pour un nouveau d&#233;codeur, peut-&#234;tre 
-	parce que l'identification automatique peut indiquer l'usage de l'ancienne d&#233;finition depuis de la nouvelle. 
-	( Par exemple, vous allez partager l'ancienne d&#233;finition en deux parties, car une nouvelle version locomotive existe )
-	</ol>
+      <ol>
+        <li>D&#233;cidez o&#249; vous voulez que le nouveau mod&#232;le soit d&#233;fini. Il doit
+        avoir soit un nouveau nom de mod&#232;le, soit un nouveau nom de famille (nouveau dossier)
+        ou les deux.</li>
 
-<h3>Capacit&#233;s de Programmation</h3>
+        <li>Cr&#233;ez votre d&#233;finition.</li>
 
-Quelques d&#233;codeurs peuvent faire des op&#233;rations de programmation suppl&#233;mentaires, par exemple en contournant les limitations de 
-la programmation de CV dans la station de commande. Les &#233;l&#233;ments "Capability" sont utilis&#233;s pour indiquer ceux-ci &#224; DecoderPro.
+        <li>Ajouter "replacementModel" et "replacementFamily
+        attribue &#224; l'ancienne d&#233;finition.</li>
 
-<h4>Acc&#232;s aux CV d'adresses Hautes</h4>
+        <li>G&#233;n&#233;ralement, placer l'attribut "show" dans l'ancien
+        d&#233;finition &#224; "non". La seule exception &#224; cette r&#232;gle est lorsque certains
+        utilisateurs voudront s&#233;lectionner l'ancienne d&#233;finition encore pour un
+        nouveau d&#233;codeur, peut-&#234;tre parce que l'identification automatique peut
+        distinguer les utilisations de l'ancienne d&#233;finition de la nouvelle. (par exemple
+        vous divisez l'ancienne d&#233;finition en deux parties parce qu'une 
+        nouvelle version de la locomotive existe)</li>
+      </ol>
 
-Certaines centrales de commandes peuvent seulement acc&#233;der aux CV 256 ou CV 512. Quelques 
-fabricants de d&#233;codeur ont construit des m&#233;canismes pour contourner cela. Par exemple,
-quelques d&#233;codeurs ESU peuvent utiliser l'&#233;critures sur divers CV pour acc&#233;der aux CV adresse CV.
-Pour dire &#224; DecoderPro qu'un d&#233;codeur peut faire cela, utilisez un &#233;l&#233;ment comme:
-<code><pre>
+      <a name="capability" id="capability"></a><h3>Capacit&#233;s de programmation</h3>
+      Certains d&#233;codeurs peuvent faire plus
+      d'op&#233;rations de programmation, par exemple en contournant les limitations
+      de Programmation des CV dans la Centrale. Les &#233;l&#233;ments "Capability"
+      sont utilis&#233;s pour en informer DecoderPro.
+
+      <h4>Acc&#232;s aux adresses CV &#233;lev&#233;es</h4>
+      Certaines Centrales
+      ne peueuvent acc&#233;der qu'au CV 256 ou CV512. Les fabricants de certains d&#233;codeurs
+       ont int&#233;gr&#233; des m&#233;canismes permettant de contourner ce probl&#232;me. 
+      Par exemple, certains d&#233;codeurs ESU peuvent utiliser des &#233;critures sur divers CV pour
+      acc&#233;der &#224; des CV &#224; haute adresse. Pour indiquer &#224; DecoderPro qu'un d&#233;codeur
+      peut le faire, utiliser un &#233;l&#233;ment comme :
+      <pre style="font-family : monospace ;">
     &lt;capability&gt;
         &lt;name&gt;High Access via Double Index&lt;/name&gt;
-        &lt;parameter name="Adresse CV Max "&gt;256&lt;/parameter&gt;
-        &lt;parameter name="CV Adresse Haute "&gt;96&lt;/parameter&gt;
-        &lt;parameter name="CV Adresse basse"&gt;97&lt;/parameter&gt;
-        &lt;parameter name="CV Acc&#232;s Registre"&gt;99&lt;/parameter&gt;
+        &lt;parameter name="Max Regular CV address"&gt;256&lt;/parameter&gt;
+        &lt;parameter name="High Address CV"&gt;96&lt;/parameter&gt;
+        &lt;parameter name="Low Address CV"&gt;97&lt;/parameter&gt;
+        &lt;parameter name="Access Register CV"&gt;99&lt;/parameter&gt;
         &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
     &lt;/capability&gt;
-</pre></code>
-<p>
-Les param&#232;tres doivent appara&#238;tre dans l'ordre montr&#233;. Ils signifient:
-	<ul>
-	<li>"CV Adresse Max" - Les adresses CV  &#233;gale ou inf&#233;rieure n'utilisent
-	 pas ce m&#233;canisme. ( Le m&#233;canisme ne sera pas utilis&#233;e si la centrale de commande
-	 peut directement lire/&#233;crire le CV demand&#233;, mais m&#234;me si elle ne peut pas, ce 
-	 m&#233;canisme ne sera pas utilis&#233; en dessous de cette valeur )
-	<li>"CV Adresse Haute" - La partie haute ( voir Modulo ) de l'adresse CV
-         est &#233;crite ici au d&#233;but de l'op&#233;ration
-	<li>"CV Adresse basse" -La partie basse (voir Modulo) de l'adresse de CV est
-	 &#233;crite ici en 2&#232;me partie de l'op&#233;ration.
-	<li>"CV Acc&#232;s Registre" - apr&#232;s que les valeurs d'adresse sont d&#233;finies, ceci est le
-	 CV qui est lu ou &#233;crit pour lire ou  r&#233;gler le CV r&#233;el d&#233;sir&#233;.
-	<li>"Modulo" - valeur utilis&#233;e pour partager l'adresse r&#233;elle des CVs entre l'adresse haute et basse.
-	 
-	</ul>
-<p>
-Par exemple, pour &#233;crire 21 dans le CV 614 avec les valeurs montr&#233;es, DecoderPro &#233;crira:
-	<ul>
-	<li> 6 =(614/100) dans le CV 96 pour la partie haute de l'adresse
-	<li> 14 = (614 mod 100) dans le CV 97 pour la partie basse de l'adresse
-	<li> 21 dans CV 99 pour &#233;crire dans le CV actuel 
-	</ul>
-<p>
-Pour un exemple d'o&#249; placer cette &#233;l&#233;ment "capability" dans le fichier, etc,... voir le fichier
-<a href="https://github.com/JMRI/JMRI/blob/master/xml/decoders/ESU_LokSoundV4_0.xml" target="_blank">
-    xml/decoders/ESU_LokSoundV4_0.xml</a> .
+</pre>
 
-<p>
-<a name="zimocapability" id="zimocapability"></a>
-Autre approche utilis&#233;e par exemple par Zimo, est de fournir un moyen d'acc&#232;s &#224; la page.
-par exemple, pour &#233;crire 21 dans le CV614 avec un de ceux-ci, vous devez &#233;crire:
-	<ul>
-	<li> 60 =(614/100)*10 dans le CV 7 pour la partie haute de l'adresse
-	<li> 21 dans le CV 14 (614 mod 100) pour &#233;crire dans le CV actuel 
-	</ul>
-Cet &#233;l&#233;ment "capability" va faire:
-<code><pre>
+      <p>Les param&#232;tres doivent appara&#238;tre dans l'ordre indiqu&#233;. Ils
+      mean:</p>
+
+      <ul>
+        <li> "Adresse CV ordinaire maximale" - adresses CV &#233;gales ou inf&#233;rieures
+        ce n'est pas ce m&#233;canisme qui est utilis&#233;. (Le m&#233;canisme ne sera pas utilis&#233;
+        si le poste de commandement peut directement lire/&#233;crire le CV &#233;tant
+        mais m&#234;me si ce n'est pas le cas, ce m&#233;canisme ne sera pas
+        utilis&#233; en dessous de cette valeur)</li>
+
+        <li> "High Address CV" - La partie haute (voir Modulo) du
+        L'adresse du CV est inscrite ici au d&#233;but de la
+        op&#233;ration</li>
+
+        <li> "CV &#224; faible adresse" - La partie basse (voir Modulo) du CV
+        L'adresse est &#233;crite ici comme la 2&#232;me partie de l
+        operation.</li>
+
+        <li> "Access Register CV" - apr&#232;s les valeurs d'adresse sont
+        set, c'est le CV qui est lu ou &#233;crit pour lire ou set
+        le CV r&#233;el souhait&#233;.</li>
+
+        <li> "Modulo" - valeur utilis&#233;e pour diviser l'adresse r&#233;elle du CV
+        entre les CV &#224; haute et basse adresse.</li>
+      </ul>
+
+      <p> Par exemple, pour &#233;crire 21 &#224; CV 614 avec les valeurs indiqu&#233;es,
+      DecoderPro va:</p>
+
+      <ul>
+        <li>Ecrire 6 =(614/100) au CV 96 pour l'adresse haute
+        part</li>
+
+        <li>Ecriture 14 = (614 mod 100) au CV 97 pour l'adresse basse
+        part</li>
+
+        <li>Ecrivez 21 &#224; CV 99 pour faire le CV r&#233;el write</li>
+      </ul>
+
+      <p>Pour un exemple de positionnement de cette capacit&#233;
+      dans le fichier, etc., voir l'&#233;l&#233;ment <a href=
+      "https://github.com/JMRI/JMRI/blob/master/xml/decoders/ESU_LokSoundV4_0.xml"
+      target="_blank">xml/decoders/ESU_LokSoundV4_0.xml</a>
+      fichier.</p>
+
+      <p><a name="zimocapability" id="zimocapability"></a> Autre
+      L'approche utilis&#233;e par Zimo, par exemple, consiste &#224; fournir un moyen de mettre en page le
+      l'acc&#232;s. Par exemple, pour &#233;crire 21 &#224; CV614 avec l'un d'entre eux,
+      vous devez:</p>
+
+      <ul>
+        <li>Ecrire 60 =(614/100)*10 au CV 7 pour l'adresse &#233;lev&#233;e
+        part</li>
+
+        <li>Ecrivez 21 dans le CV 14 (614 mod 100) pour faire le CV r&#233;el
+        write</li>
+      </ul>Cet &#233;l&#233;ment de capacit&#233; fera cela :
+      <pre style="font-family : monospace ;">
         &lt;capability&gt;
             &lt;name&gt;High Access via Partial Index&lt;/name&gt;
-            &lt;parameter name="CV Adresse Max "&gt;100&lt;/parameter&gt;
-            &lt;parameter name="CV Adresse Haute"&gt;7&lt;/parameter&gt;
-            &lt;parameter name="Multiplicateur Adresse Haute"&gt;10&lt;/parameter&gt;
+            &lt;parameter name="Max Regular CV address"&gt;100&lt;/parameter&gt;
+            &lt;parameter name="High Address CV"&gt;7&lt;/parameter&gt;
+            &lt;parameter name="High Address Multiplier"&gt;10&lt;/parameter&gt;
             &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
-        &lt;/capability&gt;
-</pre></code>
-Notez que "name" a une valeur diff&#233;rente. C'est ce qui s&#233;lectionne l'algorithme n&#233;cessaire ici.
-<p>
-Les param&#232;tres doivent appara&#238;tre dans l'ordre montr&#233;. Ils signifient:
-	<ul>
-	<li>"CV Adresse Max" - Les adresses CV  &#233;gale ou inf&#233;rieure n'utilisent
-	 pas ce m&#233;canisme. ( Le m&#233;canisme ne sera pas utilis&#233;e si la centrale de commande
-	 peut directement lire/&#233;crire le CV demand&#233;, mais m&#234;me si elle ne peut pas, ce 
-	 m&#233;canisme ne sera pas utilis&#233; en dessous de cette valeur )
-	<li>"CV Adresse Haute" - La partie haute ( voir Modulo ) de l'adresse CV
-         est &#233;crite ici au d&#233;but de l'op&#233;ration
-	<li>"Multiplicateur Adresse Haute" - Ceci multiplie la partie haute de l'adresse du CV
-	    avant qu'il soit stock&#233; dans l'Adresse Haute du CV.  Par exemple,
-	    mettre un 10 ici stockera la partie haute de l'adresse dans le "10ieme digit" de 
-	    l'Adresse Haute du CV.
-	<li>"Modulo" - valeur utilis&#233;e pour partager l'adresse r&#233;elle des CVs entre l'adresse haute et basse.
-	
-	</ul>
+        &lt;/capacit&#233;&gt;
+</pre>Note qu'il a une valeur de "nom" diff&#233;rente. C'est ce que
+s&#233;lectionne les diff&#233;rents algorithmes n&#233;cessaires ici.
 
-<p>
-<a id="zimobis"></a>
-Une autre approche  utilis&#233;, exemple: Zimo utilise une page registre qui
-sera effac&#233;e ensuite.
-Par exemple, pour &#233;crire 21 dans CV614 avec une de celles-ci vous devez:
-	<ul>
-	<li>&#201;crire 260 =(614/100)*10+200 dans CV 7 pour la partie haute de l'adresse
-	    Le"200" est un indicateur pour utiliser ce mode.
-	<li>&#201;crire 21 dans CV 14 (614 mod 100) pour &#233;crire dans le CV actuel
-	<li>&#201;crire 0 dans CV7 pour r&#233;initialiser l'indexage.
-	</ul>
-Cet &#233;l&#233;ment "capability" fera ceci wi:
-<code><pre>
+      <p>Les param&#232;tres doivent appara&#238;tre dans l'ordre indiqu&#233;. Ils
+      signifient:</p>
+
+      <ul>
+        <li> "Max Regular CV address"  - Les adresses de CV &#233;gales ou i
+        nf&#233;rieures n'utilisent pas son m&#233;canisme (Le m&#233;canisme ne sera pas utilis&#233;
+        si la centrale peut directement lire/&#233;crire le CV  CV demand&#233;, 
+        mais m&#234;me s'il ne le peut pas, ce m&#233;canisme ne sera pas
+        utilis&#233; en dessous de cette valeur)</li>
+
+        <li> "High Address CV" - La partie haute (voir Modulo) de
+        l'adresse du CV est inscrite ici au d&#233;but de l'op&#233;ration</li>
+
+         <li> "Low Address CV" - La partie basse (voir Modulo) de 
+         l'adresse du CV est &#233;crite ici comme la 2&#232;me partie de 
+         l'op&#233;ration.</li>
+         
+         <li>"Access Register CV" - apr&#232;s que les valeurs d'adresse 
+         aient &#233;t&#233; d&#233;finies, c'est le CV qui est lu ou &#233;crit pour 
+         lire ou d&#233;finir le CV r&#233;el souhait&#233;.</li>
+
+        <li> "Modulo" - valeur utilis&#233;e pour diviser l'adresse r&#233;elle du CV
+        entre les CV &#224; adresse haute et basse.</li>
+      </ul>
+      
+      <p> Par exemple, pour &#233;crire 21 dans CV 614 avec les valeurs indiqu&#233;es,
+      DecoderPro va:</p>
+
+      <ul>
+        <li>Ecrire 6 =(614/100) au CV 96 pour la partie haute de l'adresse 
+        </li>
+
+        <li>Ecrire 14 = (614 mod 100) au CV 97 pour la partie basse de l'adresse </li>
+
+        <li>Ecrire 21 dans CV 99 pour faire &#233;crire le CV r&#233;el </li>
+      </ul>
+	<p>Pour un exemple de l'endroit o&#249; placer cet &#233;l&#233;ment de capacit&#233; dans le fichier, etc., voir le <a href=
+      "https://github.com/JMRI/JMRI/blob/master/xml/decoders/ESU_LokSoundV4_0.xml"
+      target="_blank">xml/decoders/ESU_LokSoundV4_0.xml</a>
+      fichier.</p>
+
+      < <p><a name="zimocapability" id="zimocapability"></a> Une 
+      autre approche, utilis&#233;e par exemple par Zimo, consiste &#224; 
+      fournir un moyen de paginer l'acc&#232;s.  Par exemple, pour 
+      &#233;crire 21 &#224; CV614 avec l'un d'entre eux,, vous devez:</p>
+
+      <ul>
+        <li>Ecrire 260 =(614/100)*10+200 &#224; CV 7 pour la partie haute 
+        de l'adresse. "200" est un indicateur pour utiliser ce mode.</li>
+
+        <li>Ecrire 21 dans le CV 14 (614 mod 100) pour faire le CV r&#233;el
+        </li>
+<li>R&#233;e&#233;crire 0 dans CV 7 pour r&#233;iitialiser l'indexation</li>
+         </ul>Cet &#233;l&#233;ment de capacit&#233; fera cela :
+      <pre style="font-family : monospace ;">
         &lt;capability&gt;
-            &lt;name&gt;High Access via Partial Index with Reset&lt;/name&gt;
-             &lt;parameter name="CV Adresse Max "&gt;100&lt;/parameter&gt;
-            &lt;parameter name="CV Adresse Haute"&gt;7&lt;/parameter&gt;
-            &lt;parameter name="Multiplicateur Adresse Haute"&gt;10&lt;/parameter&gt;
+            &lt;name&gt;High Access via Partial Index avec Reset&lt;/name&gt;
+            &lt;parameter name="Max Regular CV address"&gt;100&lt;/parameter&gt;
+            &lt;parameter name="Adresse CV haute"&gt;7&lt;/param&#232;tre&gt;
+            &lt;parameter name="High Address Multiplier"&gt;10&lt;/parameter&gt;
             &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
-            &lt;parameter name="Indicateur"&gt;200&lt;/parameter&gt;
-        &lt;/capability&gt;
-</pre></code>
-<p>
-Les param&#232;tres doivent appara&#238;tre dans l'ordre montr&#233;. Ils signifient:
-	<ul>
-	<li>"CV Adresse Max" -Les adresses CV  &#233;gale ou inf&#233;rieure n'utilisent
-	 pas ce m&#233;canisme. ( Le m&#233;canisme ne sera pas utilis&#233;e si la centrale de commande
-	 peut directement lire/&#233;crire le CV demand&#233;, mais m&#234;me si elle ne peut pas, ce 
-	 m&#233;canisme ne sera pas utilis&#233; en dessous de cette valeur )
-	<li>"CV Adresse Haute" - La partie haute (voir Modulo) de l'adresse CV est
-	    &#233;crite ici au d&#233;but de l'op&#233;ration
-	<li>"Multiplicateur Adresse Haute" - Ceci multiplie la partie haute de l'adresse CV
-	    avant quelle soit stock&#233;e dans le cv Adresse Haute. Par exemple,
-	    mettre un  10 ici stockera la partie haute de l'adresse le "10ieme digit" de 
-	    l'Adresse Haute du CV.
-	<li>"Modulo" - valeur utilis&#233;e pour partager l'adresse r&#233;elle des CVs entre l'adresse haute et basse.
-	    CVs.
-	<li>"Indicateur" - valeur ajout&#233;e &#224; la valeur stock&#233;e dans le CV Adresse Haute 
-	    pour dire au d&#233;codeur d'utiliser ce mode.
-	</ul>
+            &lt;parameter name="Indicator"&gt;200&lt;/parameter&gt;
+        &lt;/capacit&#233;&gt;
+</pre>
 
-<a id="accessoryops"></a>
-<h4>D&#233;codeur Accessoire Mode Ops( Exploitaion )</h4>
-Les paquets sp&#233;ciaux de programmation sont utilis&#233;s par certains d&#233;codeurs accessoires
-pour configurer leur CVs depuis le signal DCC de la voie.
-La &lt;capability&gt; &#224; faire ceci est &#233;crite:
-<code><pre>
+      <p>Les param&#232;tres doivent appara&#238;tre dans l'ordre indiqu&#233;. Ils
+      mean:</p>
+
+      <ul>
+        <li>"Max Regular CV address" Les adresses de CV &#233;gales ou inf&#233;rieures &#224; la sienne 
+        n'utilisent pas ce m&#233;canisme.si la central peut directement lire/&#233;crire le CV demand&#233;, 
+        mais m&#234;me s'il ne le peut pas, ce m&#233;canisme ne sera pas
+        utilis&#233; en dessous de cette valeur)</li>
+
+        <li> "High Address CV" - La partie haute (voir Modulo) de
+        l'adresse du CV est inscrite ici au d&#233;but de l'op&#233;ration</li>
+
+        <li> "High Address Multiplier" - Ceci multiplie la partie haute de 
+        l'adresse du CV avant qu'elle ne soit stock&#233;e dans le CV de l'adresse 
+        principale. Par exemple, en mettant un 10 ici, on peut stocker 
+        la partie "haute adresse" dans le "10 i&#232;me digit" de l'Adresse Haute
+        CV.</li>
+
+        <li> "Modulo" - valeur utilis&#233;e pour diviser l'adresse r&#233;elle 
+        du CV entre les CV &#224; adresse haute et basse .</li>
+
+        <li> "Indicator" - valeur ajout&#233;e &#224; la valeur stock&#233;e
+        dans l'adresse haute du CV pour indiquer au d&#233;codeur d'utiliser ce mode.</li>
+      </ul>
+
+      <a id="accessoryops" name="accessoryops"></a>
+      <h4>Accessory Decoder Ops Mode</h4>
+      Certains d&#233;codeurs accessoires n&#233;cessitent des paquets de programmation 
+      sp&#233;ciaux pour configurer leurs CV &#224; partir du signal de la voie DCC.
+      La capacit&#233; de faire cela est &#233;crite :
+      <pre style="font-family : monospace ;">
         &lt;capability&gt;
             &lt;name&gt;Ops Mode Accessory Programming&lt;/name&gt;
-        &lt;/capability&gt;
-</pre></code>
-Il n'y a pas de param&#232;tres.  Notez que ceci fonctionne seulement pour l'&#233;criture en mode Ops;
-ces paquets NMRA DCC particuliers ne remplissent pas les op&#233;rations de lecture, ils ne travaillent 
-pas en mode service (voie de programmation).
-<h4>Acc&#232;s CV Index&#233;</h4>
+            &lt;parameter name="Address Type"&gt;decoder&lt;/parameter&gt;
+            &lt;nom du param&#232;tre="Delay"&gt;200&lt;/param&#232;tre&gt;
+        &lt;/capacit&#233;&gt;
+</pre>Le param&#232;tre "Address Type" est facultatif :
+      <ul>
+          <li>Si elle est "d&#233;coder" ou omise, l'adresse actuelle est interpr&#233;t&#233;e comme une adresse de d&#233;codeur accessoire de 9 bits.</li>
+          <li>Si elle est "accessory" ou "output", l'adresse actuelle est interpr&#233;t&#233;e comme une adresse de sortie accessoire de 11 bits.</li>
+          <li>Si c'est un "signal", l'adresse actuelle est interpr&#233;t&#233;e comme une adresse de d&#233;codeur de signal de 11 bits.</li>
+          <li>
+              Si elle est "altsignal", l'adresse actuelle est interpr&#233;t&#233;e comme une adresse de d&#233;codeur de signal de 11 bits,
+              en utilisant une autre interpr&#233;tation de
+              <a href="https://www.nmra.org/sites/default/files/s-9.2.1_2012_07.pdf"
+                target="_blank">NMRA standard 9.2.1</a>).
+           </li>
+          <li>
+              S'il s'agit d'un "h&#233;ritage", l'adresse actuelle est interpr&#233;t&#233;e comme une adresse sur 9 bits (comme pour le "d&#233;codeur")
+              mais un paquet de programmation "h&#233;rit&#233;e" (selon l'annexe A de
+              <a href="https://www.nmra.org/sites/default/files/s-9.2.1_2012_07.pdf"
+                target="_blank">NMRA standard 9.2.1</a>)
+           est envoy&#233;.
+          </li>
+      </ul>
+      Le param&#232;tre "Retard" est facultatif et sp&#233;cifie un retard minimum (en millisecondes)
+      entre des &#233;critures successives. Certains d&#233;codeurs manqueront des commandes si le d&#233;lai est trop court.
+      Si ce param&#232;tre est omis, le d&#233;lai par d&#233;faut est de 500 millisecondes.
+       <p>
+        Notez que cela ne fonctionne que pour les &#233;critures en mode ops; 
+        ces paquets DCC NMRA particuliers ne fonctionnent ni en mode 
+        lecture, ni en mode service (voie de programmation).
+      </p>
 
-Pour acc&#233;der &#224; des CV index&#233;s, inclure cet &#233;l&#233;ment de &lt;capability&gt;::
-<code><pre>
+      Notez un &#233;l&#233;ment :
+      <pre style="font-family : monospace ;">
+        &lt;variable &#8230 ; item="Short Address" &#8230;> ;
+            &#8230 ;
+        &lt;/variable&gt;</pre>
+      ou :
+      <pre style="font-family : monospace ;">
+        &lt;variable &#8230 ; item="Long Address" &#8230;> ;
+            &#8230 ;
+        &lt;/variable&gt;</pre>
+      est n&#233;cessaire pour que le programmeur en Mode Ops ait une adresse &#224; utiliser.
+      Les deux formulaires fonctionnent de mani&#232;re identique.
+      Le param&#232;tre "Address Type" est le seul moyen de sp&#233;cifier si l'adresse est sur 9 ou 11 bits.
+      <p>Pour un exemple de travail, voir le
+      <a href=
+      "https://github.com/JMRI/JMRI/blob/master/xml/decoders/ESU_SwitchPilot.xml"
+      target="_blank">xml/decoders/ESU_SwitchPilot.xml</a> fichier.
+      Dans le cas de cet exemple de d&#233;codeur, l'adresse est stock&#233;e dans les CV 1 et 9 selon
+      <a href=
+      "http://www.nmra.org/sites/default/files/standards/sandrp/pdf/s-9.2.2_decoder_cvs_2012.07.pdf"
+            target="_blank">
+      Norme NMRA 9.2.2</a>.
+      </p>
+
+      <a id="opsdelayed" name="opsdelayed"></a>
+      <h4>Programmation retard&#233;e en Mode Ops</h4>
+       <p>
+      La plupart des d&#233;codeurs de locomotives acceptent des paquets de programmation sp&#233;ciaux
+      pour configurer leurs CV &#224; partir du signal de voie DCC (Programmation sur la voie principale).
+      </p>
+      Toutefois, ces paquets prennent du temps &#224; traiter et si des paquets ult&#233;rieurs sont envoy&#233;s
+      trop t&#244;t, on peut les manquer.
+      La possibilit&#233; d'ajouter un d&#233;lai apr&#232;s la programmation de chaque CV est &#233;crite :
+      <pre style="font-family : monospace ;">
+        &lt;capability&gt;
+            &lt;name&gt;Ops Mode Delayed Programming&lt;/name&gt;
+            &lt;parameter name="Delay"&gt;500&lt;/parameter&gt;
+        &lt;/capacit&#233;&gt;
+</pre>Le param&#232;tre "Delay" sp&#233;cifie
+      un d&#233;lai minimum (en millisecondes) entre les &#233;critures successives.
+      Certains d&#233;codeurs manquent des commandes si le d&#233;lai est trop court.
+      Si ce param&#232;tre est omis, le d&#233;lai par d&#233;faut est de 500 millisecondes.
+
+
+       <p>
+        Notez que cela ne fonctionne que pour les &#233;critures en mode ops; 
+        ces paquets DCC NMRA particuliers ne fonctionnent ni en mode 
+        lecture, ni en mode service (voie de programmation)..
+      </p>
+       <p>
+        Il convient &#233;galement de noter que cette capacit&#233; particuli&#232;re ne 
+        fonctionne que pour les d&#233;codeurs multifonctions. Les d&#233;codeurs 
+        accessoires doivent utiliser le
+        <a href="#accessoryops">Mode d'exploitation du d&#233;codeur d'accessoires</a>
+        qui poss&#232;de son propre param&#232;tre "d&#233;lai".
+      </p>
+
+      <a name="indexedcap" id="indexedcap"></a>
+      <h4>Acc&#232;s au CV index&#233;</h4>
+      Pour acc&#233;der aux CV index&#233;s, il suffit d'inclure cet
+      &#233;l&#233;ment de capacit&#233; :
+      <pre style="font-family : monospace ;">
         &lt;capability&gt;
             &lt;name&gt;Indexed CV access&lt;/name&gt;
             &lt;parameter name="PI"&gt;31&lt;/parameter&gt;
             &lt;parameter name="SI"&gt;32&lt;/parameter&gt;
             &lt;parameter name="cvFirst"&gt;false&lt;/parameter&gt;
-        &lt;/capability&gt;
-</pre></code>
-Si cvFirst est true (vrai), le format est CV.PI ou CV.PI.SI comme utilis&#233; par QSI.
-S'il est false (faux), le format est PI.CV ou PI.SI.CV  comme utilis&#233; par ESU.
-<p>
-Si &#224; la fois ceci et les capacit&#233;s "acc&#232;s &#224; CV haut" sont pr&#233;sents, celui-ci devrait &#234;tre &#233;num&#233;r&#233; en deuxi&#232;me.
-<p>
-Pour un exemple de l'endroit o&#249; le positionner etc., voir le fichier
-<a href="https://github.com/JMRI/JMRI/blob/master/xml/decoders/ESU_LokSoundV4_0.xml" target="_blank">
-    xml/decoders/ESU_LokSoundV4_0.xml</a>.
+            &lt;parameter name="skipDupIndexWrite"&gt;true&lt;/parameter&gt;
+        &lt;/capacit&#233;&gt;
+</pre>
+      <p>Si cvFirst est vrai, le format est CV.PI ou CV.PI.SI tel qu'utilis&#233;
+        par QSI. Si elle est fausse, le format est PI.CV ou PI.SI.CV tel qu'utilis&#233; par
+        ESU.
+        
+      <p>Les num&#233;ros de CV PI et/ou SI peuvent &#233;galement &#234;tre d&#233;finis en utilisant une syntaxe "nn=nn" lors de la sp&#233;cification
+        PI et/ou SI.  Par exemple, en utilisant une fausse syntaxe cvFirst, "101=12.80" met CV101 &#224; 12 avant
+        l'acc&#232;s au CV 80, quelle que soit la valeur PI configur&#233;e dans la capacit&#233;.
 
-<a id="tcsaccess"></a>
-<h4>Acc&#232;s D&#233;codeur TCS WOW</h4>
-Les D&#233;codeurs TCS WOW utilisent utiliser plusieurs m&#233;thodes uniques (pour le moins) d'acc&#232;s aux CV..
-JMRI les re&#231;oit par l'interm&#233;diaire d'un &#233;l&#233;ment de capacit&#233; sp&#233;ciale:
+      <p>Si skipDupIndexWrite est vrai, certaines &#233;critures dans le PI et le SI
+        les CV peuvent &#234;tre ignor&#233;s si l'utilisateur choisit de le faire. Cela permet d'acc&#233;l&#233;rer l'acc&#232;s.
+        Certains d&#233;codeurs exigent que les CV soient &#233;crits pour chaque op&#233;ration, 
+        dans ce cas, il faut le mettre sur false. La valeur par d&#233;faut est true.
+      
+      <p>Si ce param&#232;tre et les capacit&#233;s d'"acc&#232;s aux CV &#233;lev&#233;s" sont
+      pr&#233;sent, celui-ci doit &#234;tre list&#233; en deuxi&#232;me position.</p>
 
-<code><pre>
+      <p>Pour un exemple de positionnement, etc.
+      <a href=
+      "https://github.com/JMRI/JMRI/blob/master/xml/decoders/ESU_LokSoundV4_0.xml"
+      target="_blank">xml/decoders/ESU_LokSoundV4_0.xml</a> fichier.
+      </p>
+
+        <a id="tcsaccess" name="tcsaccess"></a>
+      <h4>Acc&#232;s au d&#233;codeur TCS WOW</h4>Les d&#233;codeurs TCS WOW utilisent
+      plusieurs m&#233;thodes uniques (pour le moins) d'acc&#232;s au CV. JMRI
+      les accueille par le biais d'un &#233;l&#233;ment de capacit&#233; sp&#233;ciale :
+      <pre style="font-family : monospace ;">
         &lt;capability&gt;
             &lt;name&gt;TCS 4 CV access&lt;/name&gt;
         &lt;/capability&gt;
-</pre></code>
+</pre>Cela fournit deux formats de CV personnalis&#233;s :
 
-Ceci fournit deux formats personnalis&#233;s de CV:
-	<ul>
-	<li> T2CV.11.12 &#201;crit 11 dans le premier CV index (201), 12 dans le second CV index(202),
-	      puis lit/&#233;crit/confirme les op&#233;rations sur les CV 203 et 204
-	<li> T3CV.11.12.13 &#201;crit  11 ans le premier CV index (201), la donn&#233;e dans le second CV index (202),
-	      puis &#233;crit 12 dans le CV 203 et 13 dans le CV204.
-	</ul>
-Par exemples sur comment l'utiliser, voir la d&#233;finition d&#233;codeur TCS WOW .
+      <ul>
+        <li>T2CV.11.12 &#233;crit 11 au premier index CV (201), 12 au
+        2&#232;me index CV (202), puis fait l'&#233;criture/la lecture/confirmation 
+        sur les CV 203 et 204</li>
 
-<h4>Partage de Variables - "Adresses longues sur 2 CVs</h4>
+        <li>T3CV.11.12.13 &#233;crit 11 au premier index CV (201),
+        les donn&#233;es au 2&#232;me index CV (202), puis &#233;crit 12 au CV203
+        et 13 &#224; CV204.</li>
+      </ul>Pour des exemples d'utilisation, voir voir la d&#233;finition 
+      du d&#233;codeur WOW du TCS..
 
-<p>Quelques d&#233;codeurs, principalement des d&#233;codeurs accessoires, utilisent des adresses "longues" qui sont r&#233;parties sur 2 CVs, contigus ou non.</p>
-<p>CV1 et CV9 sont standardis&#233;s par le NMRA pour les adresses primaires des d&#233;codeurs d'accessoires, voir <a href="http://www.nmra.org/sites/default/files/standards/sandrp/pdf/s-9.2.2_decoder_cvs_2012.07.pdf">NMRA standard 9.2.2</a>.</p>
+      <a name="splitval" id="splitval"></a>
+      <h3>Variables fractionn&#233;es - r&#233;parties sur plusieurs CV</h3>
 
-<p>Les adresses longues peuvent &#234;tre accessible par le type "splitVal", comme dans les exemples suivants:</p>
+      <span class="since">Depuis <a href="jmri4.15.5.shtml">JMRI 4.15.5</a></span>
 
-<code><pre>
-    &lt;variable CV="1" item="Accessory Address" default="1" minOut="1"&gt;
+      <p>Certains d&#233;codeurs utilisent des variables r&#233;parties sur plusieurs CV, contigus ou non.</p>
+
+      <p>Un certain nombre de types sont pr&#233;vus pour faire face &#224; cette situation:</p>
+      <ul>
+          <li>
+              A <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">splitVal</a>
+              type. Il s'agit d'une valeur num&#233;rique stock&#233;e dans plusieurs CV (test&#233;s jusqu'&#224; 8 CV).
+              <ul>
+                  <li>
+                      Pour des exemples, voir <a href= "#splitvalExemple">splitVal exemple</a> ci-dessous et ceci
+                      <a href= "https://github.com/JMRI/JMRI/blob/master/xml/decoders/esu/v4decoderInfoCVs.xml" target="_blank">
+						  fichier de fragments de d&#233;codeur</a>.
+                  </li>
+                  <li>
+                      Pour plus de d&#233;tails sur les attributs requis/optionnels et les fonctionnalit&#233;s avanc&#233;es, voir 
+                      cette <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">Page JavaDoc</a>.
+                  </li>.
+              </ul>
+          </li>
+          <li>
+              A <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitHexVariableValue.html" target="_blank">splitHexVal</a>
+              type. C'est comme
+              <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">splitVal</a>
+              mais avec le nombre saisi et affich&#233; en hexad&#233;cimal. Un attribut facultatif "case=" peut &#234;tre utilis&#233; pour forcer
+              le num&#233;ro &#224; afficher en "majuscules" ou "minuscules".
+              <ul>
+                  <li>
+                      Pour des exemples, voir
+                      <a href= "https://github.com/JMRI/JMRI/blob/master/xml/decoders/esu/v4decoderInfoCVs.xml" target="_blank">fichier 
+                      de fragments de d&#233;codeur</a>.
+                  </li>
+
+                  <li>
+                      Pour plus de d&#233;tails, voir cette <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitHexVariableValue.html" target="_blank">Page JavaDoc</a>.
+                  </li>.
+              </ul>
+          </li>
+          <li>
+              Un type <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitDateTimeVariableValue.html" target="_blank">splitDateTimeValue</a>
+              C'est comme
+              <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">splitVal</a>
+              mais le nombre affich&#233; repr&#233;sente une valeur de date et/ou d'heure.
+              <ul>
+                  <li>
+                      Pour des exemples, voir
+                      <a href= "https://github.com/JMRI/JMRI/blob/master/xml/decoders/esu/v4decoderInfoCVs.xml" target="_blank"> fragments de fichier de d&#233;codeur</a>.
+                  </li>
+                  <li>
+                      Pour plus de d&#233;tails sur les attributs requis/optionnels et les fonctionnalit&#233;s avanc&#233;es, voir cette <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitDateTimeVariableValue.html" target="_blank">page JavaDoc</a>.
+                  </li>.
+              </ul>
+          </li>
+          <li>
+              Un type <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitTextVariableValue.html" target="_blank">splitTextVal</a>
+              type. C'est comme
+              <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">splitVal</a>
+              mais permet la saisie, le stockage (dans les CV) et l'affichage de cha&#238;nes de texte.
+              Le nombre de CV attribu&#233;s par l'utilisateur dans la d&#233;finition r&#233;git la longueur maximale de la cha&#238;ne.
+              <ul>
+                  <li>
+                      Pour des exemples, voir
+                      <a href= "https://github.com/JMRI/JMRI/blob/master/xml/decoders/esu/v4projectInfoCVs.xml" target="_blank">fragments de fichier de d&#233;codage</a>.
+                  </li>
+                  <li>
+                      Pour plus de d&#233;tails sur les attributs requis/optionnels et les fonctions avanc&#233;es, voir
+                      <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitTextVariableValue.html" target="_blank">Page JavaDoc</a>.
+                  </li>.
+              </ul>
+          </li>
+      </ul>
+
+      La technique originale consistant &#224; sp&#233;cifier un "CV" et un "CV &#233;lev&#233;" n'est pas appropri&#233;e
+      dans les cas o&#249; un nombre beaucoup plus important de CV est n&#233;cessaire. .D'autres m&#233;thodes plus 
+      concises de sp&#233;cification de CV multiples (contigus ou non) dans le param&#232;tre de 
+      variable "CV" sont d&#233;sormais disponibles :
+      <ul>
+          <li>
+              Les m&#233;thodes disponibles (avec des exemples de cha&#238;nes de caract&#232;res) sont d&#233;taill&#233;es sous
+              <a href="/JavaDoc/doc/jmri/util/CvUtil.html#expandCvList-java.lang.string-" target="_blank">expandCvList</a>
+              &#224; ce sujet
+              <a href="/JavaDoc/doc/jmri/util/CvUtil.html#expandCvList-java.lang.string-" target="_blank">JavaDoc page</a>.
+          </li>.
+          <li>
+              Par exemple, cette
+              <a href= "https://github.com/JMRI/JMRI/blob/master/xml/decoders/esu/v4projectInfoCVs.xml" target="_blank">fragments de fichier de d&#233;codeur</a>
+              a <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitTextVariableValue.html" target="_blank">splitTextVal</a>
+              n&#233;cessitant 28 CV.
+          </li>
+          <li>
+              On trouvera d'autres exemples dans ce
+              <a href= "https://github.com/JMRI/JMRI/blob/master/xml/decoders/esu/v4decoderInfoCVs.xml" target="_blank">fragments de fichier de d&#233;codeur</a>.
+          </li>
+          <li>
+              L'exemple suivant indique la Date de production de RailCom&reg; selon la
+              <a href="http://www.nmra.org/sites/default/files/s-9.3.2_2012_12_10.pdf">
+              Norme NMRA 9.3.2</a> :
+          </li>
+      </ul>
+      
+      <pre style="font-family : monospace ;">
+    &lt;variable CV="0.255.269:4" readOnly="yes" item="PDate"} ;
+        &lt;splitDateTimeVal display="dateOnly" base="2000-01-01T00:00:00"/&gt;
+        &lt;label&gt;Production Date&lt;/label&gt;
+    &lt;/variable&gt;
+      </pre>
+
+
+      <a name="splitvalExemple" id="splitvalExemple"></a>
+      <h4>splitVal exemple - adresses "longues" sur 2 CVs</h4>
+
+      <p>Certains d&#233;codeurs, principalement des d&#233;codeurs accessoires, utilisent des 
+      adresses "longues" r&#233;parties sur 2 CV, contigus ou non..</p>
+
+      <p>CV1 et CV9 sont normalis&#233;s par le NMRA pour 
+      l'adresse primaire des d&#233;codeurs accessoires, voir la <a href=
+      "http://www.nmra.org/sites/default/files/standards/sandrp/pdf/s-9.2.2_decoder_cvs_2012.07.pdf">
+      Norme NMRA 9.2.2</a>.</p>
+
+      <p>Les adresses longues sont accessibles via le type "splitVal", comme dans
+      l'exemple suivant:</p>
+      <pre style="font-family : monospace ;">
+    &lt;variable CV="1" item="Short Address" default="1" minOut="1"&gt;
         &lt;splitVal highCV="9" upperMask="XXXXXVVV"/&gt;
         &lt;label&gt;Accessory Address&lt;/label&gt;
     &lt;/variable&gt;
-</pre></code>
+</pre>
 
-<p>Le premier CV d&#233;clar&#233; est le LSB (l'octet le moins significatif) tandis que dans le"CV HautV" se trouve le MSB (l'octet le plus significatif).</p>
+      <p>Le "CV" d&#233;clar&#233; est le LSB (octet le moins significatif)
+      alors que le "highCV" est le MSB (Most Significant Byte).</p>
 
-<p>splitVal actuellement a deux param&#232;tres, un "Factor" et un "Offset":</p>
-	<ul>
-	<li>Valeur &#224; mettre dans les CVs = ((valeur dans le champ texte) - Offset)/Factor</li>
-	<li>Valeur &#224; mettre dans le  champ texte = ((valeur dans les CVs) * Factor) + Offset</li>
-	</ul>
-<code><pre>
+
+   <p>splitVal a en fait deux param&#232;tres, un "facteur" et une
+      " Offsetse ":</p>
+
+      <ul>
+        <li>Valeur &#224; mettre dans les CV = ((valeur dans le champ de texte) -
+        Compensation)/Facteur</li>
+
+        <li>Valeur &#224; mettre dans le champ de texte = ((valeur dans les CV) * Facteur)
+        + Offset</li>
+      </ul>
+      <pre style="font-family : monospace ;">
     &lt;splitVal highCV="9" factor="4" offset="-3"/&gt;
-</pre></code>
+</pre>
 
-<p>Pour exemple, voir le fichier <a href="https://github.com/JMRI/JMRI/blob/master/xml/decoders/SPROG_DCC_Servo6." target="_blank">xml/decoders/SPROG_DCC_Servo6.xml</a> .</p>
+      <p>Pour un exemple, voir le fichier <a href=
+      "https://github.com/JMRI/JMRI/blob/master/xml/decoders/SPROG_DCC_Servo6.xml"
+      target="_blank">xml/decoders/SPROG_DCC_Servo6.xml</a>
+      f.</p>
 
-<p>Pour les d&#233;tails et les fonctionnalit&#233;s avanc&#233;es , voir cette page <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">JavaDoc page</a></p>
+      
+      <a name="conditional" id="conditional"></a>
+      <h3>D&#233;finitions des d&#233;codeurs conditionnels</h3>Pour r&#233;duire le nombre
+      des fichiers de d&#233;finition de d&#233;codeur n&#233;cessaires, chaque fichier peut contenir
+      les d&#233;finitions de plusieurs mod&#232;les de d&#233;codeurs. JMRI fournit des moyens
+      d'adapter la d&#233;finition &#224; des mod&#232;les sp&#233;cifiques, tant au moment o&#249; le fichier 
+      est initialement d&#233;velopp&#233; pour &#234;tre utilis&#233;, que plus tard pendant que le 
+      programme travaille sur la d&#233;finition. Ces mesures sont particuli&#232;rement 
+      utiles lorsqu'on utilise un  fragment de fichier commun qui pourrait &#234;tre
+      inclus par de multiples fichiers de d&#233;finition de d&#233;codeur (d&#233;finissant des
+      familles diff&#233;rentes mais similaires) <a name="var_include" id=
+      "var_include"></a>
 
+       <h4>Inclure/Exclure pendant l'extension de la variable</h4>L'extension et 
+       l'utilisation de l'&#233;l&#233;ment variable peuvent &#234;tre conditionn&#233;es par le 
+       type de d&#233;codeur en utilisant les attributs "inclure" et "exclure
+      sur les &#233;l&#233;ments ; variables&gt; ,,variable&gt;,
+      sur &lt;enumChoice&gt; et sur &lt;enumChoiceGroup&gt; .
 
-<a name="conditional" id="conditional"></a>
-<h3>D&#233;finitions Conditionnelles de D&#233;codeur </h3>
+      <p>Une d&#233;finition de variable ne sera pas &#233;tendue et utilis&#233;e:</p>
 
-Pour r&#233;duire le nombre de fichiers de d&#233;finition d&#233;codeur n&#233;cessaires, chaque fichier peut contenir
-les d&#233;finitions pour de multiples mod&#232;les de d&#233;codeur.
-JMRI fournit les moyens d'adaptation de la d&#233;finition &#224; des mod&#232;les sp&#233;cifiques
-&#224; la fois quand le fichier est initialement d&#233;velopp&#233; pour une utilisation, et
-plus tard tandis que le programme travaille sur la d&#233;finition.
-Il y a des utilisations particuli&#232;res utilisant des fragment de fichiers communs 
-qui peuvent &#234;tre inclus par de multiple fichiers de d&#233;finition de d&#233;codeur (d&#233;finition
-diff&#233;rente-mais-familles similaires)
+      <ul>
+        <li>Si un attribut d'exclusion est pr&#233;sent, ni l'ID produit du 
+        d&#233;codeur, ni le nom du mod&#232;le, ni nom de famille n'est trouv&#233;
+        dans la liste d'exclusion.</li>
 
-<a name="var_include" id="var_include"></a>
-<h4>Inclure/Exclure lors de l'Expansion de la Variable</h4>
+        <li>Si un attribut include est pr&#233;sent, au moins un des
+        num&#233;ro d'identification du produit, le nom du mod&#232;le ou le nom de famille du d&#233;codeur est trouv&#233;
+        dans la liste d'inclusion.</li>
+      </ul>Ces deux conditions doivent &#234;tre remplies, et il est possible
+      d'utiliser &#224; la fois l'inclusion et l'exclusion sur le m&#234;me &#233;l&#233;ment, 
+      mais il est habituel de n'en utiliser qu'un seul.
 
-Un &#233;l&#233;ment "variable" d&#233;velopp&#233; et utilis&#233; peut &#234;tre rendu conditionnel au d&#233;codeur type utilisant les attributs "include" et "exclude" dans les &#233;l&#233;ments &lt;variables&gt; et &lt;variable&gt;.
-<p>
-Une d&#233;finition de variable ne peut pas &#234;tre d&#233;velopp&#233;e et utilis&#233;e:
-</p>
-	<ul>
-	<li>Si un attribut "exclude" est pr&#233;sent, ni si l'ID
-	produit d&#233;codeurs, nom de mod&#232;le, nom de famille est trouv&#233; dans la liste exclure.
-	<li>Si un attribut "include" est pr&#233;sent, au moins 
-	l'une des ID produit d&#233;codeurs, le nom du mod&#232;le, ou le nom de famille se trouve dans la liste d'inclusion. </ Ul>
-	</ul>
-Ces deux conditions doivent &#234;tre vrai, et il est possible d'utiliser
-&#224; la fois inclure et exclure sur le m&#234;me &#233;l&#233;ment, mais il est plus habituel d'en
-utiliser qu'un.
-<p>
-Exemple:
-</p>
-<pre>
-      &lt;variable label="My Variable" CV="72" include="ModelA,400"&gt;
+      <p>Exemple:</p>
+      <pre style="font-family : monospace ;">
+      &lt;variable label="My Variable" CV="72" include="ModelA,400" ;
         &lt;decVal/&gt;
       &lt;/variable&gt;
 </pre>
 
-<p>
-La variable ci-dessus appara&#238;t seulement lors du d&#233;veloppement de la d&#233;finition
-pour le ModelA ou le product ID 400.
-</p>
-<p>
-Vous pouvez aussi mettre des attributs inclure et exclure sur des choix individuels dans une variable de type
- &#233;num&#233;ration. Ceci peut &#234;tre utilis&#233; par exemple pour inclure des options sp&#233;cifiques d'&#233;clairage dans 
-certaines familles de d&#233;codeur.
-</p>
-<p>
-Les attributs sur un &#233;l&#233;ment &lt;variable&gt; agissent sur tous les &#233;l&#233;ments &lt;variable&gt; en son sein,
-ainsi que tous les attributs include ou exclude sur les variables individuelles.
-</p>
+      <p>La variable ci-dessus n'appara&#238;tra que lors de l'expansion de la
+      d&#233;finition du d&#233;codeur pour le mod&#232;le A ou l'ID de produit 400.</p>
 
-<a name="pane_include" id="pane_include"></a>
-<h4>Inclure/Exclure Pendant la Cr&#233;ation d'un Volet</h4>
+      <p> Vous pouvez &#233;galement mettre des attributs d'inclusion et d'exclusion sur
+      les choix individuels dans une variable de type &#233;num&#233;ration. Cela peut
+      &#234;tre utilis&#233; pour, par exemple, n'inclure que des options d'&#233;clairage sp&#233;cifiques dans
+      certaines familles de d&#233;codeurs.</p>
 
-si un volet (ou partie d'un volet) est cr&#233;&#233; il peut &#234;tre rendu conditionnel sur le type de d&#233;codeur en utilisant les attributs "include" et "exclude" sur le  &lt;pane&gt; et les &#233;l&#233;ments &lt;group&gt;.
-<p>
-Un volet ne peut pas &#234;tre cr&#233;&#233;
-</p>
-	<ul>
-	<li>Si un attribut "exclude" est pr&#233;sent, ni si l'ID
-	produit d&#233;codeurs, nom de mod&#232;le, nom de famille est trouv&#233; dans la liste exclure.
-	<li>Si un attribut "include" est pr&#233;sent, au moins 
-	l'une des ID produit d&#233;codeurs, le nom du mod&#232;le, ou le nom de famille se trouve dans la liste d'inclusion.
-	</ul>
-Ces deux conditions doivent &#234;tre vrai, et il est possible d'utiliser
-&#224; la fois inclure et exclure sur le m&#234;me &#233;l&#233;ment, mais il est plus habituel d'en
-utiliser qu'un.
-<p>
-Exemple:
-</p>
-<pre>
-      &lt;pane label="My Pane" include="ModelA,400"&gt;
+      <p>Les Attributs sur un &#233;l&#233;ment &lt;variables&gt; agiront sur tous les &#233;l&#233;ments 
+      &lt;variable&gt; &#224; l'int&#233;rieur de celui-ci, ainsi que tout attribut 
+      d'inclusion ou d'exclusion sur ces variables individuelles.</p>
+      
+      <p> Vous pouvez &#233;galement utiliser le m&#233;canisme d'inclusion
+      pour sp&#233;cifier la valeur par d&#233;faut d'une variable.
+      <p>Exemple:</p>
+      <pre style="font-family : monospace ;">
+      &lt;variable label="My Variable" CV="72" default="3"&gt;
+        &lt;defaultItem default="12" include="815"/&gt;  
+        &lt;decVal/&gt;
+      &lt;/variable&gt;
+</pre>
+      <p>Ceci d&#233;finira la valeur par d&#233;faut (initiale)
+      du CV &#224; 12 si le "815" correspond, 
+      et utiliser autrement le d&#233;faut de 3.
+      Vous pouvez avoir autant d'&#233;l&#233;ments defaultItem
+      selon les besoins ; le premier qui correspond est utilis&#233;.</p>
+      
+      <a name="pane_include" id="pane_include"></a>
+
+      <h4>Inclure/Exclure pendant la cr&#233;ation du volet</h4>La cr&#233;ation 
+      d'un volet ou d'une partie de volet peut &#234;tre conditionn&#233;e par le 
+      type de d&#233;codeur en utilisant les attributs "include" et "exclude" 
+      sur les &#233;l&#233;ments&lt;pane&gt; and;group&gt; ..
+
+      <p>Un volet ne sera pas cr&#233;&#233;:</p>
+
+      <ul>
+        <li>Si un attribut d'exclusion est pr&#233;sent, au moins l' ID produit du 
+        d&#233;codeur ou nom du mod&#232;le, ou nom de famille n'est trouv&#233;
+        dans la liste d'exclusion.</li>
+        <li>Si un attribut include est pr&#233;sent, au moins l' ID produit du 
+        d&#233;codeur ou nom du mod&#232;le, ou nom de famille est trouv&#233;
+        dans la liste d'exclusion.</li>
+      </ul>Ces deux conditions doivent &#234;tre remplies, et il est possible
+      d'utiliser &#224; la fois l'inclusion et l'exclusion sur le m&#234;me &#233;l&#233;ment, mais c'est
+      plus habituel de n'en utiliser qu'un.
+
+      <p>Exemple:</p>
+      <pre style="font-family : monospace ;">
+      &lt;pane label="My Pane" include="ModelA,400"> ;
         ...
       &lt;/pane&gt;
 </pre>
 
-<p>
-&quot;My Pane&quot; sera cr&#233;&#233; seulement lors du d&#233;veloppement de la d&#233;finition d&#233;codeur pour le 
- ModelA ou l'ID produit 400.
-</p>
-<p>
-Vous pouvez aussi cr&#233;er un &#233;l&#233;ment &lt;group&gt; avec les attributs inclus et exclus.
-Les &#233;l&#233;ments au sein du &lt;group&gt; seront cr&#233;er seulement si les conditions &lt;group&gt; sont respect&#233;es.
-Ceci peut &#234;tre utilis&#233; par exemple pour afficher des &#233;tiquettes texte sp&#233;cifiques pour certains mod&#232;les de d&#233;codeurs.
-</p>
-<p>
-Exemple:
+      <p> "Mon volet" ne sera cr&#233;&#233; que lors de de l'extension de la 
+      d&#233;finition du d&#233;codeur pour le mod&#232;le A ou l'ID de produit 400.</p>
 
-<pre>
-      &lt;group include="ModelA,400"&gt;
+      <p>Vous pouvez aussi cr&#233;er un &#233;l&#233;ment de type &lt;group&gt; avec include
+      et exclure des attributs. Les &#233;l&#233;ments &#224; l'int&#233;rieur du &lt;group&gt;
+      ne seront cr&#233;&#233;s que si les conditions du &lt;group&gt; sont remplies.
+      Cela peut &#234;tre utilis&#233; pour, par exemple, afficher des &#233;tiquettes de texte sp&#233;cifiques uniquement
+      pour certains mod&#232;les de d&#233;codeurs.</p>
+
+
+
+
+      <p>Exemple:</p>
+      <pre style="font-family : monospace ;">
+      &lt;group include="ModelA,400"> ;
         &lt;label&gt;
           &lt;text&gt;Ces d&#233;codeurs sont tr&#232;s vieux.&lt;/text&gt;
         &lt;/label&gt;
         &lt;label&gt;
-          &lt;text&gt;Quelques fonctions sont indisponibles.&lt;/text&gt;
+          &lt;text&gt;Certaines fonctionnalit&#233;s sont indisponibles.&lt;/text&gt;
         &lt;/label&gt;
       &lt;/group&gt;
 </pre>
 
-<p>
-Le texte sera cr&#233;er seulement lors du d&#233;veloppement de la d&#233;finition d&#233;codeur
-pour le ModelA ou le produit ID 400.
-</p>
+      <p>Le texte ne sera cr&#233;&#233; que lors de l'extension de la 
+      d&#233;finition du d&#233;codeur pour le mod&#232;le A ou l'ID de produit 400.</p>
 
-<a name="qualify" id="qualify"></a>
-<h4>Qualification de Temps d'ex&#233;cution de Variables</h4>
-<h5>Qualification des variables</h5>
+      <a name="prodidwarn" id="prodidwarn"></a>
+      <h4>Avertissement concernant l'utilisation de l'identification du produit dans Include/Exclude</h4>
+      Il convient de faire preuve de prudence lorsqu'on tente de faire correspondre des attributs d'inclusion 
+      ou d'exclusion avec l'ID du produit.. L'ID du produit ne correspond &#224; aucune valeur lue dans le
+      d&#233;codeur pendant l'<a href="#id">identification</a>
+      mais par rapport &#224; l'attribut productID sp&#233;cifi&#233; dans la d&#233;finition du d&#233;codeur.
+      Cela peut &#234;tre particuli&#232;rement probl&#233;matique si l'attribut productID a plusieurs valeurs.
+        Par exemple, l'attribut
+        <pre style="font-family : monospace ;">
+  color=;decoder&gt;
+    &lt;family name="My Big Family" mfg="NMRA"> ;
+      &lt;model model="My Model" productID="400,401" /&gt;
+      &lt;/model&gt;
+    &lt;/family&gt;
+    &#8230 ;
+  &lt;/decoder&gt;
+  &lt;pane label="My 400 Pane" include="400"} ;
+    &#8230 ;
+  &lt;/pane&gt;
+  &lt;pane label="My 401 Pane" include="401"} ;
+    &#8230 ;
+  &lt;/pane&gt;</pre>
 
-Un &#233;l&#233;ments "qualifier" sur un &#233;l&#233;ment variable pour permettre d'activer ou d&#233;sactiver la variable d&#233;pendant des valeurs actuelles 
-d'une autre variable. Ceci peut &#234;tre utile si, par exemple, le d&#233;codeur a un CV "mode" qui d&#233;termine la 
-signification des autres CVs.
-<p>
-Si une variable est qualifi&#233;e d'inactive, elle ne doit pas appara&#238;tre dans aucun 
-volet et ni lue ou &#233;crite dans le d&#233;codeur quand vous faites les op&#233;rations 
-de lecture ou d'&#233;criture "All" ou "Changes only". La valeur est sauv&#233;e dans l'inventaire et sera
-recharg&#233;e quand l'entr&#233;e inventaire sera r&#233;ouverte plus tard.
-</p>
-<p>Dans l'exemple suivant,
-un CV est interpr&#234;t&#233; comme deux variables diff&#233;rentes selon 
-que le d&#233;codeur est r&#233;gl&#233; pour un adressage court ou long.
+      Les deux volets seront toujours cr&#233;&#233;s.
+      Si les d&#233;finitions doivent diff&#233;rer entre les ID de produits, vous devrez cr&#233;er deux
+      mod&#232;les
+      <a href="#id">le premier exemple sous Identification</a>.
 
-<pre>
+      <a name="qualify" id="qualify"></a>
+      <h4>Qualification des variables</h4>
+
+      <h5>Variables qualificatives</h5>Un &#233;l&#233;ment "qualifiant" sur 
+      un &#233;l&#233;ment de variable vous permet d'activer ou de d&#233;sactiver la variable
+      en fonction de la valeur actuelle d'une autre variable. Cela peut
+      &#234;tre utile si, par exemple, le d&#233;codeur dispose d'un CV "mode" qui
+      d&#233;termine la signification des autres CV.
+
+      <p>Si une variable est qualifi&#233;e d'inactive, elle n'appara&#238;t dans 
+      aucun volet et n'est ni lue ni &#233;crite dans le d&#233;codeur et n'est 
+      ni lu ni &#233;crit sur le d&#233;codeurlorsque vous effectuez des op&#233;rations 
+      de lecture ou d'&#233;criture de type "Tout" ou "Modifications seulement".
+      La valeur est enregistr&#233;e dans le fichier et sera recharg&#233;e lorsque
+      l'entr&#233;e de l'inventaire est r&#233;ouverte plus tard.</p>
+
+      <p>Dans l'exemple suivant, un CV est interpr&#233;t&#233; comme deux
+      deux variables diff&#233;rentes  selon que le d&#233;codeur est r&#233;gl&#233; ou non
+      pour un adressage court ou long.</p>
+      <pre style="font-family : monospace ;">
   &lt;variable label="Variable for Short Address" CV="11"&gt;
     &lt;qualifier&gt;
       &lt;variableref&gt;Address Format&lt;/variableref&gt;
       &lt;relation&gt;eq&lt;/relation&gt;
-      &lt;value&gt;0&lt;/value&gt;
+      &lt;value&gt;0&lt;/valeur&gt;
     &lt;/qualifier&gt;
     &lt;decVal/&gt;
   &lt;/variable&gt;
-  &lt;variable label="Variable for Long Address" CV="11"&gt;
-    &lt;qualifier&gt;
+  &lt;variable label="Variable for Long Address" CV="11" ;
+    &lt;/qualifier&gt;
       &lt;variableref&gt;Address Format&lt;/variableref&gt;
       &lt;relation&gt;eq&lt;/relation&gt;
       &lt;value&gt;1&lt;/value&gt;
     &lt;/qualifier&gt;
     &lt;decVal/&gt;
   &lt;/variable&gt;
-</pre>
+</pre> Les autres op&#233;rateurs disponibles sont "gt", "ge", "ne", "lt",
+"le" et "exists". L'op&#233;rateur "exists" v&#233;rifie si une
+variable est d&#233;finie ou non ; une valeur de "1" signifie 
+qu'elle l'est, et une valeur de "0" qu'elle est signifie 
+que ce n'est pas le cas.
 
-D'autres op&#233;rateurs disponibles incluent "gt", "ge", "ne", "lt", "le" and "exists".
-L'op&#233;rateur "exists" v&#233;rifie si une variable est d&#233;finie ou pas; une valeur "1" 
-signifie qu'elle l'est, et un "0" signifie qu'elle ne l'est pas.
+      <p>Si plusieurs &#233;l&#233;ments qualificatifs sont pr&#233;sents, tous doivent &#234;tre
+      true pour que la variable soit active et affich&#233;e.</p><a name=
+      "panes" id="panes"></a>
 
-<p>
-Si de multiple &#233;l&#233;ment "qualifier" sont pr&#233;sent, tout doit &#234;tre vrai pour que la variable soit active et affich&#233;e.
-</p>
+      <h5>Volets qualifiants</h5>Un &#233;l&#233;ment "qualifiant" sur un volet
+      vous permet d'activer ou de d&#233;sactiver le volet en fonction de
+      la valeur actuelle d'une variable.
 
-<a name="panes" id="panes"></a>
-<h5>Qualification des Volets </h5>
+      <p>Si un volet est qualifi&#233; d'inactif, son contenu n'est plus 
+      affich&#233;. Cela inclut les &#233;tiquettes ou autres d&#233;corations
+      sur le volet, en plus des variables qu'il contient.
+      En fonction des autres options, le volet peut soit s'afficher comme
+      vide, ou ne pas se montrer du tout. Les variables qu'il contient sont toujours
+      actives, cependant, et un "Lire toutes les feuilles" ou "Ecrire toutes les feuilles".
+      les &#233;crira encore. Si vous avez des d&#233;finitions de variables qui se 
+      chevauchent, examinez attentivement si c'est ce que vous voulez. 
+      Vous pourriez avoir besoin de qualifier les diff&#233;rentes variables 
+      de chevauchement.</p>
 
-Un &#233;l&#233;ment "qualifier" sur un &#233;l&#233;ment volet vous permet d'activer ou de d&#233;sactiver le volet d&#233;pendant de la valeur actuelle d'une variable.
-
-<p>Si un volet est qualifi&#233; d'inactif, ses contenus ne seront plus affich&#233;s.
-Ceci inclus tous les labels ou autres d&#233;corations sur le volet, en plus de toutes les 
-variables qu'il contient.
-D&#233;pendant d'autres options,le volet peut soit &#234;tre montr&#233; vide ou pas montr&#233;
-du tout. Pourtant, Les variables en son sein sont toujours actives, et un 
-"Lire toutes les feuilles" ou "&#201;crire toutes les feuilles" les &#233;criront toujours.
-Si vous avez des d&#233;finitions de variables qui se chevauchent, examiner attentivement si cela est ce que vous voulez. Vous 
-pourriez avoir besoin de qualifier les variables qui se chevauchent individuellements.
-
-<p>L'exemple suivant active 
-un des deux volets d&#233;pendant du d&#233;codeur selon qu'il est actuellement fix&#233; &#224; un adressage court ou &#224; long .
-</p>
-<pre>
-  &lt;pane name="Courte Seulement"&gt;
+      <p> L'exemple suivant permet d'activer l'un des deux volets selon
+      sur le fait que le d&#233;codeur est actuellement r&#233;gl&#233; pour l'adressage court ou long.</p>
+      <pre style="font-family: monospace;">
+  &lt;pane name="Short Only"&gt;
     &lt;qualifier&gt;
       &lt;variableref&gt;Address Format&lt;/variableref&gt;
       &lt;relation&gt;eq&lt;/relation&gt;
       &lt;value&gt;0&lt;/value&gt;
     &lt;/qualifier&gt;
     &lt;column&gt;&lt;row&gt;
-      &lt;label label="Volet Courte Seulement"/&gt;
+      &lt;label label="Short Only Pane"/&gt;
     &lt;/row&gt;&lt;/column&gt;
   &lt;/pane&gt;
-  &lt;pane name="Longue Seulemnt"&gt;
+  &lt;pane name="Long Only"&gt;
     &lt;qualifier&gt;
       &lt;variableref&gt;Address Format&lt;/variableref&gt;
       &lt;relation&gt;eq&lt;/relation&gt;
       &lt;value&gt;1&lt;/value&gt;
     &lt;/qualifier&gt;
     &lt;column&gt;&lt;row&gt;
-      &lt;label label="Volet Longue Seulement"/&gt;
+      &lt;label label="Long Only Pane"/&gt;
     &lt;/row&gt;&lt;/column&gt;
   &lt;/pane&gt;
-</pre>
+</pre> Les autres op&#233;rateurs disponibles comprennent "gt", "ge", "ne", "lt" et
+"le".
 
-Autre op&#233;rateur incluant disponible "gt", "ge", "ne", "lt" et "le".
-<p>
-Si de multiple &#233;l&#233;ments "qualifier" sont pr&#233;sent, tous doivent &#234;tre vrais pour que
- le volet soit actif et affich&#233;.
+      <p>Si plusieurs &#233;l&#233;ments qualificatifs sont pr&#233;sents, tous doivent &#234;tre
+      true  pour que le volet soit actif et affich&#233;. <un nom=
+      "labels" id="labels"></a></p>
 
-<a name="labels" id="labels"></a>
-<h5>Qualification des &#201;l&#233;ments sur un Volet</h5>
+      <h5>Elements qualificatifs sur les panneaux</h5>Un &#233;l&#233;ment "qualificatif" sur
+      un &#233;l&#233;ment  "label", "soundlabel", "row", "column", "grid" ou 
+      "griditem"  vous permet d'activer ou de d&#233;sactiver
+      l'affichage de cet &#233;l&#233;ment sur un panneau sp&#233;cifique.
 
-Un &#233;l&#233;ment "qualifier" sur un &#233;l&#233;ment "label", "soundlabel", "row", "column", "grid" or "griditem"
-vous permet d'activer ou d&#233;sactiver l'affichage de cet &#233;l&#233;ment sur un volet sp&#233;cifique.
-<p>L'exemple suivant affiche un message d'avertissement si une 
-variable version-number a une valeur trop faible:</p>
-<pre>
-    &lt;label label="Version number too low!"&gt;
+      <p> L'exemple suivant affiche un avertissement si un &#233;l&#233;ment
+      variable version-number a une valeur trop faible:</p>
+      <pre style="font-family : monospace ;">
+    &lt;label label="Num&#233;ro de version trop bas !"> ;
       &lt;qualifier&gt;
-        &lt;variableref&gt;Version Number&lt;/variableref&gt;
+        &lt;variableref&gt;Num&#233;ro de version&lt;/variableref&gt;
         &lt;relation&gt;lt&lt;/relation&gt;
         &lt;value&gt;3&lt;/value&gt;
       &lt;/qualifier&gt;
     &lt;/label&gt;
 </pre>
-<p>
-  Vous pouvez utiliser le m&#234;me "qualifier" pour de multiple &#233;l&#233;ments en enfermant les &#233;l&#233;ments dans
- un &#233;l&#233;ment "group" et en ajoutant le "qualifier" &#224; l'&#233;l&#233;ment "group":
-</p>
-<pre>
+
+      <p>Vous pouvez utiliser le m&#234;me qualificatif pour plusieurs &#233;l&#233;ments en
+      en incluant les &#233;l&#233;ments dans un &#233;l&#233;ment "groupe" et en ajoutant le
+      qualificatif de l'&#233;l&#233;ment "groupe":</p>
+      <pre style="font-family : monospace ;">
     &lt;group&gt;
       &lt;qualifier&gt;
         &lt;variableref&gt;Version Number&lt;/variableref&gt;
         &lt;relation&gt;lt&lt;/relation&gt;
         &lt;value&gt;3&lt;/value&gt;
       &lt;/qualifier&gt;
-      &lt;label label="Version number too low!"/&gt;
+      &lt;label label="Version number too low !"/&gt;
       &lt;label label=" "/&gt;
       &lt;label label="Please update."/&gt;
     &lt;/group&gt;
 </pre>
-<p>
-  Une fois que vous avez lu le "Version Number" (variable ou CV) depuis le d&#233;codeur
-  Le label s'affichera si ce version-number est trop faible.  Notez
-  qu'initialement avant que les valeurs soient lues depuis le d&#233;codeur, cet
-  affichage d&#233;pendra de la valeur par d&#233;faut depuis le fichier qui pourrait induire en erreur l'utilisateur.
-</p>
 
-<!--#include virtual="/Footer.shtml" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+      <p>Une fois que vous avez lu le num&#233;ro de version (variable ou CV) du
+       d&#233;codeur, l'&#233;tiquette (ou les &#233;tiquettes) affichera si cette version
+      est trop faible. Notez qu'initialement, avant que les valeurs soient
+      lue &#224; partir du d&#233;codeur, cet affichage d&#233;pendra de la
+      valeur par d&#233;faut du fichier, ce qui pourrait induire en erreur l'utilisateur
+      user.</p>
+      <h3>Utilisation des transformations XSL</h3>
+      <p>
+          Il est possible de g&#233;n&#233;rer des parties complexes et r&#233;p&#233;t&#233;es du d&#233;codeur XML en utilisant des feuilles de style XSL.
+          Pour plus d'informations, veuillez consulter<a href="TransformDecoder.shtml">Utiliser la transformation XSLT pour les d&#233;codeurs complexes</a>.
+      </p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
 
-
-
-
+    
