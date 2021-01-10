@@ -488,7 +488,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         fileMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("MenuFileMnemonic")));
         menuBar.add(fileMenu);
-        StoreXmlUserAction store = new StoreXmlUserAction(Bundle.getMessage("MenuItemStore"));
+        StoreXmlUserAction store = new StoreXmlUserAction(Bundle.getMessage("FileMenuItemStore"));
         int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
         store.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(Bundle.getMessage("MenuItemStoreAccelerator")), primary_modifier));
@@ -707,13 +707,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     @Override
     public void targetWindowClosingEvent(WindowEvent e) {
-        boolean save = (isDirty() || (savedEditMode != isEditable())
-                || (savedPositionable != allPositionable())
-                || (savedControlLayout != allControlling())
-                || (savedAnimatingLayout != isAnimating())
-                || (savedShowHelpBar != getShowHelpBar()));
-
-        targetWindowClosing(save);
+        targetWindowClosing();
     }
 
     /**

@@ -271,15 +271,15 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 _portalIconMap = familyMap.get("Standard");
                 if (_portalIconMap == null) {
                     _portalIconMap = new HashMap<>();
-                    _portalIconMap.put(PortalIcon.HIDDEN, 
+                    _portalIconMap.put(PortalIcon.HIDDEN,
                             new NamedIcon("resources/icons/Invisible.gif", "resources/icons/Invisible.gif"));
-                    _portalIconMap.put(PortalIcon.PATH, 
+                    _portalIconMap.put(PortalIcon.PATH,
                             new NamedIcon("resources/icons/greenSquare.gif", "resources/icons/greenSquare.gif"));
-                    _portalIconMap.put(PortalIcon.VISIBLE, 
+                    _portalIconMap.put(PortalIcon.VISIBLE,
                             new NamedIcon("resources/icons/throttles/RoundRedCircle20.png", "resources/icons/throttles/RoundRedCircle20.png"));
-                    _portalIconMap.put(PortalIcon.TO_ARROW, 
+                    _portalIconMap.put(PortalIcon.TO_ARROW,
                             new NamedIcon("resources/icons/track/toArrow.gif", "resources/icons/track/toArrow.gif"));
-                    _portalIconMap.put(PortalIcon.FROM_ARROW, 
+                    _portalIconMap.put(PortalIcon.FROM_ARROW,
                             new NamedIcon("resources/icons/track/fromArrow.gif", "resources/icons/track/fromArrow.gif"));
                 }
             }
@@ -416,7 +416,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _menuBar.add(_fileMenu, 0);
         _fileMenu.add(new jmri.jmrit.display.NewPanelAction(Bundle.getMessage("MenuItemNew")));
 
-        _fileMenu.add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("MenuItemStore")));
+        _fileMenu.add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("FileMenuItemStore")));
         JMenuItem storeIndexItem = new JMenuItem(Bundle.getMessage("MIStoreImageIndex"));
         _fileMenu.add(storeIndexItem);
         storeIndexItem.addActionListener((ActionEvent event) -> InstanceManager.getDefault(CatalogTreeManager.class).storeImageIndex());
@@ -1406,7 +1406,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
      */
     @Override
     protected void targetWindowClosingEvent(java.awt.event.WindowEvent e) {
-        targetWindowClosing(true);
+        targetWindowClosing();
     }
 
     @Override

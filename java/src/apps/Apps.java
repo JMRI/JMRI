@@ -12,6 +12,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.EventObject;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.*;
 import javax.swing.text.DefaultEditorKit;
@@ -57,37 +58,38 @@ import apps.util.Log4JUtil;
  */
 public class Apps extends JPanel implements PropertyChangeListener, WindowListener {
 
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.jython.JythonBundle");      // Link for script menu items  // NOI18N
     static String profileFilename;
     private Action prefsAction;  // defer initialization until needed so that Bundle accesses translate
 
-    @SuppressFBWarnings(value = {"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", "SC_START_IN_CTOR"},
-            justification = "only one application at a time. The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage")
+    @SuppressFBWarnings(value = {"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", "SC_START_IN_CTOR"},  // NOI18N
+            justification = "only one application at a time. The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage")  // NOI18N
     public Apps() {
 
         super(true);
         long start = System.nanoTime();
-        log.trace("starting ctor at {}", start);
+        log.trace("starting ctor at {}", start);  // NOI18N
 
         splash(false);
         splash(true, true);
-        log.trace("splash screens up, about to setButtonSpace");
+        log.trace("splash screens up, about to setButtonSpace");  // NOI18N
         setButtonSpace();
-        log.trace("about to setJynstrumentSpace");
+        log.trace("about to setJynstrumentSpace");  // NOI18N
         setJynstrumentSpace();
 
-        log.trace("setLogo");
+        log.trace("setLogo");  // NOI18N
         jmri.Application.setLogo(logo());
-        log.trace("setURL");
+        log.trace("setURL");  // NOI18N
         jmri.Application.setURL(line2());
 
         // Get configuration profile
-        log.trace("start to get configuration profile - locate files");
+        log.trace("start to get configuration profile - locate files");  // NOI18N
         // Needs to be done before loading a ConfigManager or UserPreferencesManager
         FileUtil.createDirectory(FileUtil.getPreferencesPath());
         // Needs to be declared final as we might need to
         // refer to this on the Swing thread
         final File profileFile;
-        profileFilename = configFilename.replaceFirst(".xml", ".properties");
+        profileFilename = configFilename.replaceFirst(".xml", ".properties");  // NOI18N
         // decide whether name is absolute or relative
         if (!new File(profileFilename).isAbsolute()) {
             // must be relative, but we want it to
@@ -102,16 +104,16 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         if (System.getProperties().containsKey(ProfileManager.SYSTEM_PROPERTY)) {
             ProfileManager.getDefault().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
         }
-        log.trace("check if profile exists");
+        log.trace("check if profile exists");  // NOI18N
         // @see jmri.profile.ProfileManager#migrateToProfiles Javadoc for conditions handled here
         if (!profileFile.exists()) { // no profile config for this app
-            log.trace("profileFile {} doesn't exist", profileFile);
+            log.trace("profileFile {} doesn't exist", profileFile);  // NOI18N
             try {
                 if (ProfileManager.getDefault().migrateToProfiles(configFilename)) { // migration or first use
                     // notify user of change only if migration occurred
                     // TODO: a real migration message
                     JOptionPane.showMessageDialog(sp,
-                            Bundle.getMessage("ConfigMigratedToProfile"),
+                            Bundle.getMessage("ConfigMigratedToProfile"),  // NOI18N
                             jmri.Application.getApplicationName(),
                             JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -123,24 +125,24 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                 log.error("Exception migrating configuration to profiles: {}",ex.getMessage());
             }
         }
-        log.trace("about to try getStartingProfile");
+        log.trace("about to try getStartingProfile");  // NOI18N
         try {
             ProfileManagerDialog.getStartingProfile(sp);
             // Manually setting the configFilename property since calling
             // Apps.setConfigFilename() does not reset the system property
             configFilename = FileUtil.getProfilePath() + Profile.CONFIG_FILENAME;
-            System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
+            System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);  // NOI18N
             Profile profile = ProfileManager.getDefault().getActiveProfile();
             if (profile != null) {
-                log.info("Starting with profile {}", profile.getId());
+                log.info("Starting with profile {}", profile.getId());  // NOI18N
             } else {
-                log.info("Starting without a profile");
+                log.info("Starting without a profile");  // NOI18N
             }
 
             // rapid language set; must follow up later with full setting as part of preferences
             jmri.util.gui.GuiLafPreferencesManager.setLocaleMinimally(profile);
         } catch (IOException ex) {
-            log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
+            log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());  // NOI18N
         }
 
         // install a Preferences Action Factory.
@@ -151,7 +153,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         ConfigureManager cm = InstanceManager.setDefault(ConfigureManager.class, new AppsConfigurationManager());
 
         // record startup
-        InstanceManager.getDefault(FileHistory.class).addOperation("app", nameString, null);
+        InstanceManager.getDefault(FileHistory.class).addOperation("app", nameString, null);  // NOI18N
 
         // Install abstractActionModel
         InstanceManager.store(new apps.CreateButtonModel(), apps.CreateButtonModel.class);
@@ -188,30 +190,30 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         // ensure the UserPreferencesManager has loaded. Done on GUI
         // thread as it can modify GUI objects
-        log.debug("*** About to getDefault(jmri.UserPreferencesManager.class) with file {}", file);
+        log.debug("*** About to getDefault(jmri.UserPreferencesManager.class) with file {}", file);  // NOI18N
         ThreadingUtil.runOnGUI(() -> {
             InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         });
-        log.debug("*** Done");
+        log.debug("*** Done");  // NOI18N
 
         // now (attempt to) load the config file
-        log.debug("Using config file(s) {}", file.getPath());
+        log.debug("Using config file(s) {}", file.getPath());  // NOI18N
         if (file.exists()) {
-            log.debug("start load config file {}", file.getPath());
+            log.debug("start load config file {}", file.getPath());  // NOI18N
             try {
                 configOK = cm.load(file, true);
             } catch (JmriException e) {
-                log.error("Unhandled problem loading configuration", e);
+                log.error("Unhandled problem loading configuration", e);  // NOI18N
                 configOK = false;
             }
-            log.debug("end load config file, OK={}", configOK);
+            log.debug("end load config file, OK={}", configOK);  // NOI18N
         } else {
-            log.info("No saved preferences, will open preferences window.  Searched for {}", file.getPath());
+            log.info("No saved preferences, will open preferences window.  Searched for {}", file.getPath());  // NOI18N
             configOK = false;
         }
 
         // populate GUI
-        log.debug("Start UI");
+        log.debug("Start UI");  // NOI18N
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // done
@@ -224,7 +226,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
          */
         long sleep = 2500 - elapsedTime;
         if (sleep > 0) {
-            log.debug("Debug message was displayed for less than 2500ms ({}ms). Sleeping for {}ms to allow user sufficient time to do something.",
+            log.debug("Debug message was displayed for less than 2500ms ({}ms). Sleeping for {}ms to allow user sufficient time to do something.",  // NOI18N
                     elapsedTime, sleep);
             try {
                 Thread.sleep(sleep);
@@ -261,13 +263,13 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                         // return until deferred load is completed
                         SwingUtilities.invokeAndWait(new Runnable() {
                             @Override
-                            @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "configDeferredLoadOK write is semi-global")
+                            @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "configDeferredLoadOK write is semi-global")  // NOI18N
                             public void run() {
                                 configDeferredLoadOK = doDeferredLoad(file);
                             }
                         });
                     } catch (InterruptedException | InvocationTargetException ex) {
-                        log.error("Exception creating system console frame", ex);
+                        log.error("Exception creating system console frame", ex);  // NOI18N
                     }
                 }
             } else {
@@ -279,7 +281,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         }
         // If preferences need to be migrated, do it now
         if (sharedConfig == null && configOK == true && configDeferredLoadOK == true) {
-            log.info("Migrating preferences to new format...");
+            log.info("Migrating preferences to new format...");  // NOI18N
             // migrate preferences
             InstanceManager.getOptionalDefault(TabbedPreferences.class).ifPresent(tp -> {
                 // tp.init();
@@ -287,12 +289,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                 cm.storePrefs();
             });
             // notify user of change
-            log.info("Preferences have been migrated to new format.");
-            log.info("New preferences format will be used after JMRI is restarted.");
+            log.info("Preferences have been migrated to new format.");  // NOI18N
+            log.info("New preferences format will be used after JMRI is restarted.");  // NOI18N
             if (!GraphicsEnvironment.isHeadless()) {
                 Profile profile = ProfileManager.getDefault().getActiveProfile();
                 JOptionPane.showMessageDialog(sp,
-                        Bundle.getMessage("SingleConfigMigratedToSharedConfig", profile),
+                        Bundle.getMessage("SingleConfigMigratedToSharedConfig", profile),  // NOI18N
                         jmri.Application.getApplicationName(),
                         JOptionPane.INFORMATION_MESSAGE);
             }
@@ -309,30 +311,30 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             try {
                 InstanceManager.getDefault(DecoderIndexFile.class);
             } catch (RuntimeException ex) {
-                log.error("Error in trying to initialize decoder index file {}", ex.getMessage());
+                log.error("Error in trying to initialize decoder index file {}", ex.getMessage());  // NOI18N
             }
-        }, "initialize decoder index").start();
+        }, "initialize decoder index").start();  // NOI18N
 
-        if (Boolean.getBoolean("org.jmri.python.preload")) {
+        if (Boolean.getBoolean("org.jmri.python.preload")) {  // NOI18N
             new Thread(() -> {
                 try {
                     JmriScriptEngineManager.getDefault().initializeAllEngines();
                 } catch (RuntimeException ex) {
-                    log.error("Error in trying to initialize python interpreter {}", ex.getMessage());
+                    log.error("Error in trying to initialize python interpreter {}", ex.getMessage());  // NOI18N
                 }
-            }, "initialize python interpreter").start();
+            }, "initialize python interpreter").start();  // NOI18N
         }
 
         // if the configuration didn't complete OK, pop the prefs frame and help
-        log.debug("Config OK? {}, deferred config OK? {}", configOK, configDeferredLoadOK);
+        log.debug("Config OK? {}, deferred config OK? {}", configOK, configDeferredLoadOK);  // NOI18N
         if (!configOK || !configDeferredLoadOK) {
-            HelpUtil.displayHelpRef("package.apps.AppConfigPanelErrorPage");
+            HelpUtil.displayHelpRef("package.apps.AppConfigPanelErrorPage");  // NOI18N
             doPreferences();
         }
-        log.debug("Done with doPreferences, start statusPanel");
+        log.debug("Done with doPreferences, start statusPanel");  // NOI18N
 
         add(statusPanel());
-        log.debug("Done with statusPanel, start buttonSpace");
+        log.debug("Done with statusPanel, start buttonSpace");  // NOI18N
         add(buttonSpace());
         add(_jynstrumentSpace);
         long eventMask = AWTEvent.MOUSE_EVENT_MASK;
@@ -365,25 +367,25 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
 
-        log.debug("End constructor");
+        log.debug("End constructor");  // NOI18N
     }
 
     private boolean doDeferredLoad(File file) {
         boolean result;
-        log.debug("start deferred load from config");
+        log.debug("start deferred load from config");  // NOI18N
         try {
             ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cmOD != null) {
                 result = cmOD.loadDeferred(file);
             } else {
-                log.error("Failed to get default configure manager");
+                log.error("Failed to get default configure manager");  // NOI18N
                 result = false;
             }
         } catch (JmriException e) {
-            log.error("Unhandled problem loading deferred configuration", e);
+            log.error("Unhandled problem loading deferred configuration", e);  // NOI18N
             result = false;
         }
-        log.debug("end deferred load from config file, OK={}", result);
+        log.debug("end deferred load from config file, OK={}", result);  // NOI18N
         return result;
     }
 
@@ -393,16 +395,16 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      * additional buttons appended to it later. The default implementation here
      * just creates an empty space for these to be added to.
      */
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "only one application at a time")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",  // NOI18N
+            justification = "only one application at a time")  // NOI18N
     protected void setButtonSpace() {
         _buttonSpace = new JPanel();
         _buttonSpace.setLayout(new FlowLayout());
     }
     static JComponent _jynstrumentSpace = null;
 
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "only one application at a time")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",  // NOI18N
+            justification = "only one application at a time")  // NOI18N
     protected void setJynstrumentSpace() {
         _jynstrumentSpace = new JPanel();
         _jynstrumentSpace.setLayout(new FlowLayout());
@@ -416,7 +418,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     public static void ynstrument(String path) {
         Jynstrument it = JynstrumentFactory.createInstrument(path, _jynstrumentSpace);
         if (it == null) {
-            log.error("Error while creating Jynstrument {}", path);
+            log.error("Error while creating Jynstrument {}", path);  // NOI18N
             return;
         }
         ThrottleFrame.setTransparent(it);
@@ -436,7 +438,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     protected void createMenus(JMenuBar menuBar, WindowInterface wi) {
         // the debugging statements in the following are
         // for testing startup time
-        log.debug("start building menus");
+        log.debug("start building menus");  // NOI18N
 
         if (SystemType.isMacOSX()) {
             Application.getApplication().setQuitHandler((EventObject eo) -> handleQuit());
@@ -447,6 +449,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         toolsMenu(menuBar, wi);
         rosterMenu(menuBar, wi);
         panelMenu(menuBar, wi);
+        scriptMenu(menuBar, wi);
         // check to see if operations in main menu
         if (jmri.jmrit.operations.setup.Setup.isMainMenuEnabled()) {
             operationsMenu(menuBar, wi);
@@ -455,7 +458,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         debugMenu(menuBar, wi);
         menuBar.add(new WindowMenu(wi));
         helpMenu(menuBar, wi);
-        log.debug("end building menus");
+        log.debug("end building menus");  // NOI18N
     }
 
     /**
@@ -466,16 +469,22 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      *                menu bar
      */
     protected void fileMenu(JMenuBar menuBar, WindowInterface wi) {
-        JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
+        JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));  // NOI18N
         menuBar.add(fileMenu);
 
-        fileMenu.add(new PrintDecoderListAction(Bundle.getMessage("MenuPrintDecoderDefinitions"), wi.getFrame(), false));
-        fileMenu.add(new PrintDecoderListAction(Bundle.getMessage("MenuPrintPreviewDecoderDefinitions"), wi.getFrame(), true));
+        fileMenu.add(new jmri.configurexml.LoadXmlUserAction(Bundle.getMessage("FileMenuItemLoad")));  // NOI18N
+        fileMenu.add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("FileMenuItemStore")));  // NOI18N
+        fileMenu.add(new jmri.jmrit.revhistory.swing.FileHistoryAction(Bundle.getMessage("FileMenuItemHistory")));  // NOI18N
+
+        fileMenu.add(new JSeparator());
+
+        fileMenu.add(new PrintDecoderListAction(Bundle.getMessage("MenuPrintDecoderDefinitions"), wi.getFrame(), false));  // NOI18N
+        fileMenu.add(new PrintDecoderListAction(Bundle.getMessage("MenuPrintPreviewDecoderDefinitions"), wi.getFrame(), true));  // NOI18N
 
         // Use Mac OS X native Quit if using Aqua look and feel
         if (!(SystemType.isMacOSX() && UIManager.getLookAndFeel().isNativeLookAndFeel())) {
             fileMenu.add(new JSeparator());
-            fileMenu.add(new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
+            fileMenu.add(new AbstractAction(Bundle.getMessage("MenuItemQuit")) {  // NOI18N
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     handleQuit();
@@ -508,19 +517,19 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     protected void editMenu(JMenuBar menuBar, WindowInterface wi) {
 
-        JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
+        JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));  // NOI18N
         menuBar.add(editMenu);
 
         // cut, copy, paste
         AbstractAction a;
         a = new DefaultEditorKit.CutAction();
-        a.putValue(Action.NAME, Bundle.getMessage("MenuItemCut"));
+        a.putValue(Action.NAME, Bundle.getMessage("MenuItemCut"));  // NOI18N
         editMenu.add(a);
         a = new DefaultEditorKit.CopyAction();
-        a.putValue(Action.NAME, Bundle.getMessage("MenuItemCopy"));
+        a.putValue(Action.NAME, Bundle.getMessage("MenuItemCopy"));  // NOI18N
         editMenu.add(a);
         a = new DefaultEditorKit.PasteAction();
-        a.putValue(Action.NAME, Bundle.getMessage("MenuItemPaste"));
+        a.putValue(Action.NAME, Bundle.getMessage("MenuItemPaste"));  // NOI18N
         editMenu.add(a);
 
         // Put prefs in Apple's prefered area on Mac OS X
@@ -541,7 +550,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     protected void toolsMenu(JMenuBar menuBar, WindowInterface wi) {
-        menuBar.add(new ToolsMenu(Bundle.getMessage("MenuTools")));
+        menuBar.add(new ToolsMenu(Bundle.getMessage("MenuTools")));  // NOI18N
     }
 
     protected void operationsMenu(JMenuBar menuBar, WindowInterface wi) {
@@ -549,7 +558,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     protected void rosterMenu(JMenuBar menuBar, WindowInterface wi) {
-        menuBar.add(new RosterMenu(Bundle.getMessage("MenuRoster"), RosterMenu.MAINMENU, this));
+        menuBar.add(new RosterMenu(Bundle.getMessage("MenuRoster"), RosterMenu.MAINMENU, this));  // NOI18N
     }
 
     protected void panelMenu(JMenuBar menuBar, WindowInterface wi) {
@@ -582,10 +591,10 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         d.add(new RailDriverMenuItem());
 
         try {
-            d.add(new RunJythonScript(Bundle.getMessage("MenuRailDriverThrottle"), new File(FileUtil.findURL("jython/RailDriver.py").toURI())));
+            d.add(new RunJythonScript(Bundle.getMessage("MenuRailDriverThrottle"), new File(FileUtil.findURL("jython/RailDriver.py").toURI())));  // NOI18N
         } catch (URISyntaxException | NullPointerException ex) {
-            log.error("Unable to load RailDriver Throttle", ex);
-            JMenuItem i = new JMenuItem(Bundle.getMessage("MenuRailDriverThrottle"));
+            log.error("Unable to load RailDriver Throttle", ex);  // NOI18N
+            JMenuItem i = new JMenuItem(Bundle.getMessage("MenuRailDriverThrottle"));  // NOI18N
             i.setEnabled(false);
             d.add(i);
         }
@@ -610,25 +619,24 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      *
      * @param menuBar the menu bar to add the script menu to
      * @param wi      the window interface containing menuBar
-     * @deprecated since 4.17.5 without direct replacement; appears to have been
-     * empty method since 1.2.3
      */
-    @Deprecated
     protected void scriptMenu(JMenuBar menuBar, WindowInterface wi) {
-        // temporarily remove Scripts menu; note that "Run Script"
-        // has been added to the Panels menu
-        // JMenu menu = new JMenu("Scripts");
-        // menuBar.add(menu);
+        JMenu scriptMenu = new JMenu(rb.getString("MenuScripting"));  // NOI18N
+        scriptMenu.add(new jmri.jmrit.jython.RunJythonScript(rb.getString("MenuItemScript")));  // NOI18N
+        scriptMenu.add(new jmri.jmrit.automat.monitor.AutomatTableAction(rb.getString("MenuItemMonitor")));  // NOI18N
+        scriptMenu.add(new jmri.jmrit.jython.JythonWindow(rb.getString("MenuItemScriptLog")));  // NOI18N
+        scriptMenu.add(new jmri.jmrit.jython.InputWindowAction(rb.getString("MenuItemScriptInput")));  // NOI18N
+        menuBar.add(scriptMenu);
     }
 
     protected void developmentMenu(JMenuBar menuBar, WindowInterface wi) {
-        JMenu devMenu = new JMenu("Development");
+        JMenu devMenu = new JMenu("Development");  // NOI18N
         menuBar.add(devMenu);
-        devMenu.add(new jmri.jmrit.symbolicprog.autospeed.AutoSpeedAction("Auto-speed tool"));
+        devMenu.add(new jmri.jmrit.symbolicprog.autospeed.AutoSpeedAction("Auto-speed tool"));  // NOI18N
         devMenu.add(new JSeparator());
-        devMenu.add(new jmri.jmrit.automat.SampleAutomatonAction("Sample automaton 1"));
-        devMenu.add(new jmri.jmrit.automat.SampleAutomaton2Action("Sample automaton 2"));
-        devMenu.add(new jmri.jmrit.automat.SampleAutomaton3Action("Sample automaton 3"));
+        devMenu.add(new jmri.jmrit.automat.SampleAutomatonAction("Sample automaton 1"));  // NOI18N
+        devMenu.add(new jmri.jmrit.automat.SampleAutomaton2Action("Sample automaton 2"));  // NOI18N
+        devMenu.add(new jmri.jmrit.automat.SampleAutomaton3Action("Sample automaton 3"));  // NOI18N
         //devMenu.add(new JSeparator());
         //devMenu.add(new jmri.jmrix.serialsensor.SerialSensorAction("Serial port sensors"));
     }
@@ -638,7 +646,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         JMenu helpMenu = HelpUtil.makeHelpMenu(mainWindowHelpID(), true);
 
         // tell help to use default browser for external types
-        HelpUtil.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
+        HelpUtil.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");  // NOI18N
 
         // use as main help menu
         menuBar.add(helpMenu);
@@ -650,15 +658,15 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      * @return help identifier for main window
      */
     protected String mainWindowHelpID() {
-        return "package.apps.Apps";
+        return "package.apps.Apps";  // NOI18N
     }
 
     protected String line1() {
-        return Bundle.getMessage("DefaultVersionCredit", jmri.Version.name());
+        return Bundle.getMessage("DefaultVersionCredit", jmri.Version.name());  // NOI18N
     }
 
     protected String line2() {
-        return "http://jmri.org/";
+        return "http://jmri.org/";  // NOI18N
     }
 
     protected String line3() {
@@ -703,9 +711,9 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             return;
         }
 
-        log.debug("conn.name() is {} ", conn.name()); // eg CAN via MERG Network Interface
-        log.debug("conn.getConnectionName() is {} ", conn.getConnectionName()); // eg MERG2
-        log.debug("conn.getManufacturer() is {} ", conn.getManufacturer()); // eg MERG
+        log.debug("conn.name() is {} ", conn.name()); // eg CAN via MERG Network Interface  // NOI18N
+        log.debug("conn.getConnectionName() is {} ", conn.getConnectionName()); // eg MERG2  // NOI18N
+        log.debug("conn.getManufacturer() is {} ", conn.getManufacturer()); // eg MERG  // NOI18N
 
         ConnectionStatus.instance().addConnection(conn.getConnectionName(), conn.getInfo());
         cs.setFont(pane.getFont());
@@ -723,11 +731,11 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         }
         if (ConnectionStatus.instance().isConnectionOk(name, conn.getInfo())) {
             cs.setForeground(Color.black);
-            String cf = Bundle.getMessage("ConnectionSucceeded", name, conn.name(), conn.getInfo());
+            String cf = Bundle.getMessage("ConnectionSucceeded", name, conn.name(), conn.getInfo());  // NOI18N
             cs.setText(cf);
         } else {
             cs.setForeground(Color.red);
-            String cf = Bundle.getMessage("ConnectionFailed", name, conn.name(), conn.getInfo());
+            String cf = Bundle.getMessage("ConnectionFailed", name, conn.name(), conn.getInfo());  // NOI18N
             cs.setText(cf);
         }
 
@@ -739,13 +747,13 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     protected String line9() {
-        return Bundle.getMessage("JavaVersionCredit",
-                System.getProperty("java.version", "<unknown>"),
+        return Bundle.getMessage("JavaVersionCredit",  // NOI18N
+                System.getProperty("java.version", "<unknown>"),  // NOI18N
                 Locale.getDefault());
     }
 
     protected String logo() {
-        return "resources/logo.gif";
+        return "resources/logo.gif";  // NOI18N
     }
 
     /**
@@ -756,11 +764,11 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     protected JPanel statusPanel() {
         JPanel pane1 = new JPanel();
         pane1.setLayout(new BoxLayout(pane1, BoxLayout.X_AXIS));
-        log.debug("Fetch main logo: {}", logo());
-        pane1.add(new JLabel(new ImageIcon(getToolkit().getImage(FileUtil.findURL(logo(), FileUtil.Location.ALL)), "JMRI logo"), JLabel.LEFT));
+        log.debug("Fetch main logo: {}", logo());  // NOI18N
+        pane1.add(new JLabel(new ImageIcon(getToolkit().getImage(FileUtil.findURL(logo(), FileUtil.Location.ALL)), "JMRI logo"), JLabel.LEFT));  // NOI18N
         pane1.add(Box.createRigidArea(new Dimension(15, 0))); // Some spacing between logo and status panel
 
-        log.debug("start labels");
+        log.debug("start labels");  // NOI18N
         JPanel pane2 = new JPanel();
 
         pane2.setLayout(new BoxLayout(pane2, BoxLayout.Y_AXIS));
@@ -806,8 +814,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         if (!InstanceManager.getDefault(ShutDownManager.class).isShuttingDown()
                 && JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(
                         null,
-                        Bundle.getMessage("MessageLongCloseWarning"),
-                        Bundle.getMessage("MessageShortCloseWarning"),
+                        Bundle.getMessage("MessageLongCloseWarning"),  // NOI18N
+                        Bundle.getMessage("MessageShortCloseWarning"),  // NOI18N
                         JOptionPane.YES_NO_OPTION)) {
             handleQuit();
         }
@@ -840,14 +848,14 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     static protected void setJmriSystemProperty(String key, String value) {
         try {
-            String current = System.getProperty("org.jmri.Apps." + key);
+            String current = System.getProperty("org.jmri.Apps." + key);  // NOI18N
             if (current == null) {
-                System.setProperty("org.jmri.Apps." + key, value);
+                System.setProperty("org.jmri.Apps." + key, value);  // NOI18N
             } else if (!current.equals(value)) {
-                log.warn("JMRI property {} already set to {}, skipping reset to {}", key, current, value);
+                log.warn("JMRI property {} already set to {}, skipping reset to {}", key, current, value);  // NOI18N
             }
         } catch (RuntimeException e) {
-            log.error("Unable to set JMRI property {} to {} due to execption {}", key, value, e);
+            log.error("Unable to set JMRI property {} to {} due to execption {}", key, value, e);  // NOI18N
         }
     }
 
@@ -917,8 +925,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     static protected JPanel splashDebugMsg() {
-        JLabel panelLabel = new JLabel(Bundle.getMessage("PressF8ToDebug"));
-        panelLabel.setFont(panelLabel.getFont().deriveFont(9f));
+        JLabel panelLabel = new JLabel(Bundle.getMessage("PressF8ToDebug"));  // NOI18N
+        panelLabel.setFont(panelLabel.getFont().deriveFont(9f));  // NOI18N
         JPanel panel = new JPanel();
         panel.add(panelLabel);
         return panel;
@@ -939,7 +947,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             return;
         }
         InstanceManager.getDefault(jmri.LogixManager.class).setLoadDisabled(true);
-        log.info("Requested loading with Logixs disabled.");
+        log.info("Requested loading with Logixs disabled.");  // NOI18N
         debugmsg = false;
     }
 
@@ -985,30 +993,30 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      */
     static protected void setConfigFilename(String def, String[] args) {
         // skip if org.jmri.Apps.configFilename is set
-        if (System.getProperty("org.jmri.Apps.configFilename") != null) {
+        if (System.getProperty("org.jmri.Apps.configFilename") != null) {  // NOI18N
             return;
         }
         // save the configuration filename if present on the command line
         if (args.length >= 1 && args[0] != null && !args[0].contains("=")) {
             def = args[0];
-            log.debug("Config file was specified as: {}", args[0]);
+            log.debug("Config file was specified as: {}", args[0]);  // NOI18N
         }
         for (String arg : args) {
             String[] split = arg.split("=", 2);
-            if (split[0].equalsIgnoreCase("config")) {
+            if (split[0].equalsIgnoreCase("config")) {  // NOI18N
                 def = split[1];
-                log.debug("Config file was specified as: {}", arg);
+                log.debug("Config file was specified as: {}", arg);  // NOI18N
             }
         }
         Apps.configFilename = def;
-        setJmriSystemProperty("configFilename", def);
+        setJmriSystemProperty("configFilename", def);  // NOI18N
     }
 
     static public String getConfigFileName() {
         return configFilename;
     }
 
-    @SuppressWarnings("deprecation") // JmriPlugin.start(...)
+    @SuppressWarnings("deprecation") // JmriPlugin.start(...)  // NOI18N
     static protected void createFrame(Apps containedPane, JmriJFrame frame) {
         // create the main frame and menus
         // Create a WindowInterface object based on the passed-in Frame
@@ -1054,24 +1062,24 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                 try {
                     cmOD.load(pFile);
                 } catch (JmriException e) {
-                    log.error("Unhandled problem in loadFile", e);
+                    log.error("Unhandled problem in loadFile", e);  // NOI18N
                 }
             } else {
-                log.warn("Could not find {} config file", name);
+                log.warn("Could not find {} config file", name);  // NOI18N
             }
         } else {
-            log.error("Failed to get default configure manager");
+            log.error("Failed to get default configure manager");  // NOI18N
         }
     }
 
-    static String configFilename = System.getProperty("org.jmri.Apps.configFilename", "jmriconfig2.xml");  // usually overridden, this is default
+    static String configFilename = System.getProperty("org.jmri.Apps.configFilename", "jmriconfig2.xml");  // usually overridden, this is default  // NOI18N
     // The following MUST be protected for 3rd party applications
     // (such as CATS) which are derived from this class.
-    @SuppressFBWarnings(value = "MS_PKGPROTECT",
-            justification = "The following MUST be protected for 3rd party applications (such as CATS) which are derived from this class.")
+    @SuppressFBWarnings(value = "MS_PKGPROTECT",  // NOI18N
+            justification = "The following MUST be protected for 3rd party applications (such as CATS) which are derived from this class.")  // NOI18N
     protected static boolean configOK;
-    @SuppressFBWarnings(value = "MS_PKGPROTECT",
-            justification = "The following MUST be protected for 3rd party applications (such as CATS) which are derived from this class.")
+    @SuppressFBWarnings(value = "MS_PKGPROTECT",  // NOI18N
+            justification = "The following MUST be protected for 3rd party applications (such as CATS) which are derived from this class.")  // NOI18N
     protected static boolean configDeferredLoadOK;
     // GUI members
     private JMenuBar menuBar;
@@ -1082,7 +1090,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         try {
             jmri.Application.setApplicationName(name);
         } catch (IllegalArgumentException | IllegalAccessException ex) {
-            log.warn("Unable to set application name", ex);
+            log.warn("Unable to set application name", ex);  // NOI18N
         }
     }
 
@@ -1092,13 +1100,13 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      *
      * @param name Program/application name as known by the user
      */
-    @SuppressFBWarnings(value = "SLF4J_SIGN_ONLY_FORMAT",justification = "info message contains context information")
+    @SuppressFBWarnings(value = "SLF4J_SIGN_ONLY_FORMAT",justification = "info message contains context information")  // NOI18N
     protected static void setStartupInfo(String name) {
         // Set the application name
         try {
             jmri.Application.setApplicationName(name);
         } catch (IllegalArgumentException | IllegalAccessException ex) {
-            log.warn("Unable to set application name", ex);
+            log.warn("Unable to set application name", ex);  // NOI18N
         }
 
         // Log the startup information
@@ -1107,7 +1115,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     @Override
     public void propertyChange(PropertyChangeEvent ev) {
-        log.debug("property change: comm port status update");
+        log.debug("property change: comm port status update");  // NOI18N
         if (connection[0] != null) {
             updateLine(connection[0], cs4);
         }
