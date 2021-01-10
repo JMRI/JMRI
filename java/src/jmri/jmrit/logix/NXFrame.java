@@ -276,20 +276,24 @@ public class NXFrame extends WarrantRoute {
                 _maxThrottleBox.setText(formatter.format(0));
                 return;
             }
+            // maxSpeed is speed at full throttle in mm/sec
             float maxSpeed = _speedUtil.getTrackSpeed(1);   // mm/ms, i.e. m/s
+            // maximum number is maxSpeed when converted to selected units
             float maxNum;
+            // convert to display units. Note real world speed is converted to scaled world speed
+            // display label changes "Scale speed" to "Track Speed" accordingly
             switch (_displayPref) {
                 case MPH:
-                    maxNum = maxSpeed * 2.2369363f *_scale;
+                    maxNum = maxSpeed * 2.2369363f *_scale; // convert meters/sec to miles/hr
                     break;
                 case KPH:
-                    maxNum = maxSpeed * 3.6f * _scale;
+                    maxNum = maxSpeed * 3.6f * _scale;  // convert meters/sec to to kilometers/hr 
                     break;
                 case MMPS:
-                    maxNum = maxSpeed * 1000;
+                    maxNum = maxSpeed * 1000;   // convert meters/sec to milimeters/sec
                     break;
                 default:
-                    maxNum = maxSpeed * 39.37f;
+                    maxNum = maxSpeed * 39.37f; // convert meters/sec to inches/sec
                     break;
             }
             if (num > maxNum) {
@@ -307,10 +311,11 @@ public class NXFrame extends WarrantRoute {
                 _maxThrottleBox.setText(formatter.format(100));
                 return;
             }
-            // convert num display to actual track speed in meters/sec
+            // convert to display num in selected units to track speed in meters/sec (mm/ms)
+            // reciprocal of above
             switch (_displayPref) {
                 case MPH:
-                    num = num * 0.44704f / _scale;
+                    num = num * 0.44704f / _scale;  // convert miles/hr to mm/msec
                     break;
                 case KPH:
                     num = num * 0.277778f / _scale;
@@ -322,10 +327,12 @@ public class NXFrame extends WarrantRoute {
                     num = num / 39.37f;
                     break;
             }
+            // get throttla setting and display as percent full throttle.
             float throttle = _speedUtil.getThrottleSettingForSpeed(num)*100;
             _maxThrottleBox.setText(formatter.format(throttle));
         });
 
+        // User makes a choice for their desired units (_displayPref) to show max speed
         _speedUnits.addActionListener((ActionEvent evt)-> {
             NumberFormat formatter = NumberFormat.getNumberInstance(); 
             float num = 0;
@@ -335,26 +342,29 @@ public class NXFrame extends WarrantRoute {
                 _maxSpeedBox.setText(null);
                 return;
             }
+            // display preference for units cycles through 4 choices
+            // convert old choice to new 
             switch (_displayPref) {
                 case MPH:
                     _displayPref = Display.KPH;
-                    _maxSpeedBox.setText(formatter.format(num * 1.60934f));
+                    _maxSpeedBox.setText(formatter.format(num * 1.60934f)); // miles/hr to km/hr
                     break;
                 case KPH:
                     _displayPref = Display.MMPS;
-                    _maxSpeedBox.setText(formatter.format(num * 0277.778f / _scale));
+                    _maxSpeedBox.setText(formatter.format(num * 0277.778f / _scale));   // scale km/hr to mm/sec
                     _maxSpeedBoxLabel.setText(Bundle.getMessage("trackSpeed"));
                     break;
                 case MMPS:
                     _displayPref = Display.INPS;
-                    _maxSpeedBox.setText(formatter.format(num * 0.03937f));
+                    _maxSpeedBox.setText(formatter.format(num * 0.03937f)); // mm/sec to in/sec
                     break;
                 default:
                     _displayPref = Display.MPH;
-                    _maxSpeedBox.setText(formatter.format(num * 0.056818f * _scale));
+                    _maxSpeedBox.setText(formatter.format(num * 0.056818f * _scale)); // inches/sec to scale miles/hr
                     _maxSpeedBoxLabel.setText(Bundle.getMessage("scaleSpeed"));
                     break;
                 }
+                // display label changes "Scale speed" to "Track Speed" accordingly
                 _speedUnits.setDisplayPref(_displayPref);
             });
 

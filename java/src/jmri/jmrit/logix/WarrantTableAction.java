@@ -187,12 +187,8 @@ public class WarrantTableAction extends AbstractAction {
 
     @InvokeOnGuiThread
     protected void makeNXFrame() {
-        if (_openFrame != null) {
-            if (_openFrame.isRunning()) {
-                return;
-            } else {
-                closeWarrantFrame();
-            }
+        if (warrantFrameRunning()) {
+            return;
         }
         if (_nxFrame == null) {
             _nxFrame = new NXFrame();
@@ -210,11 +206,23 @@ public class WarrantTableAction extends AbstractAction {
         }
     }
 
+    // check if edited warrant is running test
+    private boolean warrantFrameRunning() {
+        if (_openFrame != null) {
+            if (_openFrame.isRunning()) {
+                _openFrame.toFront();
+                return true;
+            } else {
+                closeWarrantFrame();
+            }
+        }
+        return false;
+    }
+
     protected void makeWarrantFrame(Warrant startW, Warrant endW) {
-        if (_openFrame != null && _openFrame.isRunning()) {
+        if (warrantFrameRunning()) {
             return;
         }
-        closeWarrantFrame();
         closeNXFrame();
         _openFrame = new WarrantFrame(startW, endW);
         _openFrame.setState(java.awt.Frame.NORMAL);
@@ -222,10 +230,9 @@ public class WarrantTableAction extends AbstractAction {
     }
 
     protected void editWarrantFrame(Warrant w) {
-        if (_openFrame != null && _openFrame.isRunning()) {
+        if (warrantFrameRunning()) {
             return;
         }
-        closeWarrantFrame();
         closeNXFrame();
         _openFrame = new WarrantFrame(w);
         _openFrame.setState(java.awt.Frame.NORMAL);
