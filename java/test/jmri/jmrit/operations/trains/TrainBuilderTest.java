@@ -1263,7 +1263,308 @@ public class TrainBuilderTest extends OperationsTestCase {
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
+    
+    /**
+     * Test car with Return When Loaded (RWL) destination and load
+     */
+    @Test
+    public void testCarRWL() {
 
+        Train train1 = tmanager.newTrain("Train Acton-Boston-Chelmsford");
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
+        train1.setRoute(route);
+
+        Location acton = route.getDepartsRouteLocation().getLocation();
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+        
+        RouteLocation rlBoston = route.getRouteLocationBySequenceNumber(2);
+        Location boston = rlBoston.getLocation();
+        Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
+        RouteLocation rlChelmsford = route.getRouteLocationBySequenceNumber(3);
+        Location chelmsford = rlChelmsford.getLocation();
+        Track chelmsfordSpur1 = chelmsford.getTrackByName("Chelmsford Spur 1", null);
+        
+        // place cars at start of route
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", actonSpur1, 0);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("A", "2", "Boxcar", "40", actonSpur1, 10);
+
+        // give the cars a RWL destination
+        c1.setReturnWhenLoadedDestination(acton);
+        c2.setReturnWhenLoadedDestination(acton);
+        c2.setReturnWhenLoadedDestTrack(actonSpur1);
+        
+        // give the cars a RWL load
+        c1.setReturnWhenLoadedLoadName("Car 1 RWL Load");
+        c2.setReturnWhenLoadedLoadName("Car 2 RWL Load");
+
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertTrue("Train status", train1.isBuilt());
+
+        // confirm car destination, both have the "E", both going to a spur
+        Assert.assertEquals("car 1 train assignment", train1, c1.getTrain());
+        Assert.assertEquals("car 1 track assignment", chelmsfordSpur1, c1.getDestinationTrack());
+        
+        Assert.assertEquals("car 2 train assignment", train1, c2.getTrain());
+        Assert.assertEquals("car 2 track assignment", bostonSpur1, c2.getDestinationTrack());
+        
+        train1.terminate();
+        
+        // confirm that car's new destinations and loads are correct
+        Assert.assertEquals("car 1 destination", acton, c1.getFinalDestination());
+        Assert.assertEquals("car 1 destination track", null, c1.getFinalDestinationTrack());
+        Assert.assertEquals("car 1 load", "Car 1 RWL Load", c1.getLoadName());
+        Assert.assertEquals("car 2 destination", acton, c2.getFinalDestination());
+        Assert.assertEquals("car 2 destination track", actonSpur1, c2.getFinalDestinationTrack());
+        Assert.assertEquals("car 2 load", "Car 2 RWL Load", c2.getLoadName());
+        
+        // confirm that RWL destinations and loads haven't changed
+        Assert.assertEquals("car 1 RWL destination", acton, c1.getReturnWhenLoadedDestination());
+        Assert.assertEquals("car 1 RWL destination track", null, c1.getReturnWhenLoadedDestTrack());
+        Assert.assertEquals("car 1 RWL load", "Car 1 RWL Load", c1.getReturnWhenLoadedLoadName());
+        Assert.assertEquals("car 2 RWL destination", acton, c2.getReturnWhenLoadedDestination());
+        Assert.assertEquals("car 2 RWL destination track", actonSpur1, c2.getReturnWhenLoadedDestTrack());
+        Assert.assertEquals("car 2 RWL load", "Car 2 RWL Load", c2.getReturnWhenLoadedLoadName());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    /**
+     * Test car with RWL destination into staging using swap loads
+     */
+    @Test
+    public void testCarRWLStagingSwapLoads() {
+
+        Train train1 = tmanager.newTrain("Train Acton-Boston-Chelmsford-WestfordStaging");
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
+        train1.setRoute(route);
+
+        Location acton = route.getDepartsRouteLocation().getLocation();
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+
+        // create staging
+        Location westford = lmanager.newLocation("Westford Staging");
+        westford.setLocationOps(Location.STAGING);
+        Track westfordStaging1 = westford.addTrack("Staging 1", Track.STAGING);
+        westfordStaging1.setLength(1000);
+        
+        // Set staging to swap loads
+        westfordStaging1.setLoadSwapEnabled(true);
+
+        route.addLocation(westford);
+        
+        // send cars to staging
+        RouteLocation rlBoston = route.getRouteLocationBySequenceNumber(2);
+        rlBoston.setMaxCarMoves(0);
+        RouteLocation rlChelmsford = route.getRouteLocationBySequenceNumber(3);
+        rlChelmsford.setMaxCarMoves(0);
+
+        // place cars at start of route
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", actonSpur1, 0);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("A", "2", "Boxcar", "40", actonSpur1, 10);
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("A", "3", "Boxcar", "40", actonSpur1, 11);
+
+        // give the cars a RWL destination
+        c1.setReturnWhenLoadedDestination(acton);
+        c2.setReturnWhenLoadedDestination(acton);
+        c2.setReturnWhenLoadedDestTrack(actonSpur1);
+        c3.setReturnWhenLoadedDestination(acton);
+        c3.setReturnWhenLoadedDestTrack(actonSpur1);
+        
+        // give the cars a RWL load
+        c1.setReturnWhenLoadedLoadName("Car 1 RWL Load");
+        c2.setReturnWhenLoadedLoadName("Car 2 RWL Load");
+        c3.setReturnWhenLoadedLoadName("Car 2 RWL Load");
+        
+        // give c3 the "L" default load name so it won't use the RWL feature in staging
+        c3.setLoadName("L");
+
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertTrue("Train status", train1.isBuilt());
+
+        // confirm car destination
+        Assert.assertEquals("car 1 train assignment", train1, c1.getTrain());
+        Assert.assertEquals("car 1 track assignment", westfordStaging1, c1.getDestinationTrack());        
+        Assert.assertEquals("car 2 train assignment", train1, c2.getTrain());
+        Assert.assertEquals("car 2 track assignment", westfordStaging1, c2.getDestinationTrack());
+        Assert.assertEquals("car 3 train assignment", train1, c3.getTrain());
+        Assert.assertEquals("car 3 track assignment", westfordStaging1, c3.getDestinationTrack());
+        
+        train1.terminate();
+        
+        // confirm that RWL destinations and loads are correct
+        Assert.assertEquals("car 1 destination", acton, c1.getFinalDestination());
+        Assert.assertEquals("car 1 destination", null, c1.getFinalDestinationTrack());
+        Assert.assertEquals("car 1 load", "Car 1 RWL Load", c1.getLoadName());
+        Assert.assertEquals("car 2 destination", acton, c2.getFinalDestination());
+        Assert.assertEquals("car 2 destination", actonSpur1, c2.getFinalDestinationTrack());
+        Assert.assertEquals("car 2 load", "Car 2 RWL Load", c2.getLoadName());
+        // c3 had the "L" load, so no RWL
+        Assert.assertEquals("car 3 destination", null, c3.getFinalDestination());
+        Assert.assertEquals("car 3 destination", null, c3.getFinalDestinationTrack());
+        Assert.assertEquals("car 3 load", "E", c3.getLoadName());
+     
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    /**
+     * Test car with RWL destination into staging using remove custom loads
+     */
+    @Test
+    public void testCarRWLStagingCustomLoads() {
+
+        Train train1 = tmanager.newTrain("Train Acton-Boston-Chelmsford-WestfordStaging");
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
+        train1.setRoute(route);
+
+        Location acton = route.getDepartsRouteLocation().getLocation();
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+
+        // create staging
+        Location westford = lmanager.newLocation("Westford Staging");
+        westford.setLocationOps(Location.STAGING);
+        Track westfordStaging1 = westford.addTrack("Staging 1", Track.STAGING);
+        westfordStaging1.setLength(1000);
+        
+        // Set staging to remove custom loads
+        westfordStaging1.setRemoveCustomLoadsEnabled(true);
+
+        route.addLocation(westford);
+        
+        // send both cars to staging
+        RouteLocation rlBoston = route.getRouteLocationBySequenceNumber(2);
+        rlBoston.setMaxCarMoves(0);
+        RouteLocation rlChelmsford = route.getRouteLocationBySequenceNumber(3);
+        rlChelmsford.setMaxCarMoves(0);
+
+        // place cars at start of route
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", actonSpur1, 0);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("A", "2", "Boxcar", "40", actonSpur1, 10);
+
+        // give the cars a RWL destination
+        c1.setReturnWhenLoadedDestination(acton);
+        c2.setReturnWhenLoadedDestination(acton);
+        c2.setReturnWhenLoadedDestTrack(actonSpur1);
+        
+        // give the cars a RWL load
+        c1.setReturnWhenLoadedLoadName("Car 1 RWL Load");
+        c2.setReturnWhenLoadedLoadName("Car 2 RWL Load");
+        
+        // give c1 a custom load type empty
+        cld.addName("Boxcar", "Empty");
+        cld.setLoadType("Boxcar", "Empty", CarLoad.LOAD_TYPE_EMPTY);
+        c1.setLoadName("Empty");
+
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertTrue("Train status", train1.isBuilt());
+
+        // confirm car destination
+        Assert.assertEquals("car 1 train assignment", train1, c1.getTrain());
+        Assert.assertEquals("car 1 track assignment", westfordStaging1, c1.getDestinationTrack());
+        
+        Assert.assertEquals("car 2 train assignment", train1, c2.getTrain());
+        Assert.assertEquals("car 2 track assignment", westfordStaging1, c2.getDestinationTrack());
+        
+        train1.terminate();
+        
+        // confirm that RWL destinations and loads are correct
+        Assert.assertEquals("car 1 RWL destination", acton, c1.getFinalDestination());
+        Assert.assertEquals("car 1 RWL destination", null, c1.getFinalDestinationTrack());
+        Assert.assertEquals("car 1 RWL load", "Car 1 RWL Load", c1.getLoadName());
+        // c2 didn't have a custom empty type load going into staging
+        Assert.assertEquals("car 2 RWL destination", null, c2.getFinalDestination());
+        Assert.assertEquals("car 2 RWL destination", null, c2.getFinalDestinationTrack());
+        Assert.assertEquals("car 2 RWL load", "E", c2.getLoadName());
+     
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    /**
+     * Test car with Return When Empty (RWE) destination into staging using custom loads
+     */
+    @Test
+    public void testCarRWEStagingCustomLoads() {
+
+        Train train1 = tmanager.newTrain("Train Acton-Boston-Chelmsford-WestfordStaging");
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
+        train1.setRoute(route);
+
+        Location acton = route.getDepartsRouteLocation().getLocation();
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+
+        // create staging
+        Location westford = lmanager.newLocation("Westford Staging");
+        westford.setLocationOps(Location.STAGING);
+        Track westfordStaging1 = westford.addTrack("Staging 1", Track.STAGING);
+        westfordStaging1.setLength(1000);
+        
+        // Set staging to remove custom loads
+        westfordStaging1.setRemoveCustomLoadsEnabled(true);
+
+        route.addLocation(westford);
+        
+        // send cars to staging
+        RouteLocation rlBoston = route.getRouteLocationBySequenceNumber(2);
+        rlBoston.setMaxCarMoves(0);
+        RouteLocation rlChelmsford = route.getRouteLocationBySequenceNumber(3);
+        rlChelmsford.setMaxCarMoves(0);
+
+        // place cars at start of route
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", actonSpur1, 0);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("A", "2", "Boxcar", "40", actonSpur1, 10);
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("A", "3", "Boxcar", "40", actonSpur1, 11);
+
+        // give the cars a RWE destination
+        c1.setReturnWhenEmptyDestination(acton);
+        c2.setReturnWhenEmptyDestination(acton);
+        c2.setReturnWhenEmptyDestTrack(actonSpur1);
+        c3.setReturnWhenEmptyDestination(acton);
+        c3.setReturnWhenEmptyDestTrack(actonSpur1);
+        
+        // give the cars RWE loads
+        cld.addName("Boxcar", "Empty");
+        cld.setLoadType("Boxcar", "Empty", CarLoad.LOAD_TYPE_EMPTY);
+        c1.setReturnWhenEmptyLoadName("Empty");
+        c2.setReturnWhenEmptyLoadName("Empty");
+        c3.setReturnWhenEmptyLoadName("Empty");
+        
+        // give c3 the RWE load name so it won't use the RWE feature in staging
+        c1.setLoadName("car 1 load"); // default is load type load
+        c2.setLoadName("car 2 load"); // default is load type load
+        c3.setLoadName("Empty");
+        
+        // confirm that none of the cars have a return when loaded load
+        Assert.assertEquals("c1 RWL load", "L", c1.getReturnWhenLoadedLoadName());
+        Assert.assertEquals("c2 RWL load", "L", c2.getReturnWhenLoadedLoadName());
+        Assert.assertEquals("c3 RWL load", "L", c3.getReturnWhenLoadedLoadName());
+
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertTrue("Train status", train1.isBuilt());
+
+        // confirm car destination
+        Assert.assertEquals("car 1 train assignment", train1, c1.getTrain());
+        Assert.assertEquals("car 1 track assignment", westfordStaging1, c1.getDestinationTrack());        
+        Assert.assertEquals("car 2 train assignment", train1, c2.getTrain());
+        Assert.assertEquals("car 2 track assignment", westfordStaging1, c2.getDestinationTrack());
+        Assert.assertEquals("car 3 train assignment", train1, c3.getTrain());
+        Assert.assertEquals("car 3 track assignment", westfordStaging1, c3.getDestinationTrack());
+        
+        train1.terminate();
+        
+        // confirm that RWL destinations and loads are correct
+        Assert.assertEquals("car 1 destination", acton, c1.getFinalDestination());
+        Assert.assertEquals("car 1 destination track", null, c1.getFinalDestinationTrack());
+        Assert.assertEquals("car 1 load", "Empty", c1.getLoadName());
+        Assert.assertEquals("car 2 destination", acton, c2.getFinalDestination());
+        Assert.assertEquals("car 2 destination track", actonSpur1, c2.getFinalDestinationTrack());
+        Assert.assertEquals("car 2 load", "Empty", c2.getLoadName());
+        // c3 had the "Empty" load, so no RWE
+        Assert.assertEquals("car 3 destination", null, c3.getFinalDestination());
+        Assert.assertEquals("car 3 destination track", null, c3.getFinalDestinationTrack());
+        Assert.assertEquals("car 3 load", "E", c3.getLoadName());
+     
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
     @Test
     public void testYardFIFO() {
 
@@ -3281,9 +3582,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue("Train status", train1.isBuilt());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-
     }
-
+    
+ 
     /*
      * Test car departing staging with a car that has a final destination that
      * won't service the car.
@@ -3321,7 +3622,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("car final destination track", null, c4.getFinalDestinationTrack());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-
     }
 
     /**
