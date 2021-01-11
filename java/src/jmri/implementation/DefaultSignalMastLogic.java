@@ -374,8 +374,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
     }
 
     @Override
-    public int removeDirectionSensors() {
-        return 0;
+    public void removeDirectionSensors() {
+        //TODO find aaway of easilty identifying the ones we added.
+        return ;
     }
 
     @Override

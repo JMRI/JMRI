@@ -668,7 +668,7 @@ public interface SignalMastLogic extends NamedBean {
     /**
      * remove direction sensors from SML need to autoActiveTrains.
      */
-    public int removeDirectionSensors();
+    public void removeDirectionSensors();
 
     public void disableLayoutEditorUse();
 
