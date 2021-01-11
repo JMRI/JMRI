@@ -163,21 +163,24 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
                               lastModelName = d.getModel();
                           }
                           dev.setDevName(lastModelName);
-                          dev.setDecoderFile(l.get(l.size()-1));
+                          dev.setDecoderFile(l.get(l.size() - 1));
                       }
                       return lastModelName;
                   }
                   return dev.getDeviceName();
-              case ROSTERENTRYCOLUMN: // always empty??
+              case ROSTERENTRYCOLUMN:
                   assert dev != null;
                   return dev.getRosterName();
               case OPENPRGMRBUTTONCOLUMN:
                   assert dev != null;
-                  if ((dev.getRosterName() != null) && (dev.getRosterName().length() == 0)) {
-                      return Bundle.getMessage("ButtonCreateEntry");
+                  if (dev.getDeviceName().length() != 0) {
+                      if ((dev.getRosterName() != null) && (dev.getRosterName().length() == 0)) {
+                          return Bundle.getMessage("ButtonCreateEntry");
+                      }
+                      return Bundle.getMessage("ButtonProgram");
                   }
-                  return Bundle.getMessage("ButtonProgram");
-              default:
+                  return Bundle.getMessage("ButtonNoMatchInRoster");
+              default: // column 1
                  return r + 1;
           }
       } catch (NullPointerException npe) {
@@ -188,7 +191,7 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
 
     @Override
     public void setValueAt(Object value, int r, int c) {
-        if (getRowCount() <= r) {
+        if (getRowCount() < r + 1) {
             // prevent update of a row that does not (yet) exist
             return;
         }
@@ -201,7 +204,7 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
                 } else {
                     log.warn("Failed to connect RosterEntry to device {}", dev.getRosterName());
                 }
-            } else {
+            } else if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonProgram")) == 0) {
                 openProgrammer(r);
             }
         } else {

@@ -13,6 +13,8 @@ import org.junit.jupiter.api.BeforeEach;
  */
 public class LncvProgPaneTest extends jmri.util.swing.JmriPanelTest {
 
+    //        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
     @Override
     @BeforeEach
     public void setUp() {

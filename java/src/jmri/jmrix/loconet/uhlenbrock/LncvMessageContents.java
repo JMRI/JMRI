@@ -422,14 +422,18 @@ public class LncvMessageContents {
     public int getLncvArticleNum() {
         if ((cmd == LncvCommand.LNCV_READ.cmd) ||
                 (cmd == LncvCommand.LNCV_WRITE.cmd) ||
-                (cmd == LncvCommand.LNCV_READ_REPLY.cmd)) {
+                (cmd == LncvCommand.LNCV_READ_REPLY.cmd)||
+                (cmd == LncvCommand.LNCV_PROG_START.cmd && art != LNCV_ALL)||
+                (cmd == LncvCommand.LNCV_PROG_END.cmd && art != LNCV_ALL)) {
             return art;
         }
         return -1;
     }
 
     public int getLncvModuleNum() {
-        if (cmd == LncvCommand.LNCV_READ.cmd) {
+        if (cmd == LncvCommand.LNCV_READ.cmd ||
+                (cmd == LncvCommand.LNCV_PROG_START.cmd && art != LNCV_ALL)||
+                (cmd == LncvCommand.LNCV_PROG_END.cmd && art != LNCV_ALL)) {
             return mod;
         }
         return -1;
