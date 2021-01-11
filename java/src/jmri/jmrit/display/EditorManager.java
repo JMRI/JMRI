@@ -56,9 +56,9 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
         setShutDownTask();
     }
 
-    private transient AbstractShutDownTask task = null;
-    protected void setShutDownTask() {
-        task = new AbstractShutDownTask("EditorManager") {
+    public transient AbstractShutDownTask shutDownTask = null;
+    public void setShutDownTask() {
+        shutDownTask = new AbstractShutDownTask("EditorManager") {
             @Override
             public Boolean call() {
                 if (panelSetChanged) {
@@ -71,7 +71,7 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
             public void run() {
             }
         };
-        InstanceManager.getDefault(ShutDownManager.class).register(task);
+        InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask);
     }
 
     String getClassName() {

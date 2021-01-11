@@ -434,9 +434,10 @@ public class IconEditorWindowTest {
             JUnitUtil.dispose(_editor); // this seems to be more reliable, though it doesn't answer the question about saving.
         }
         _editor = null;
-        
+
         JUnitUtil.resetWindows(false, false); // don't log existing windows here, should just be from this class
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

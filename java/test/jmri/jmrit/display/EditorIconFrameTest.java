@@ -19,7 +19,7 @@ import org.junit.runner.RunWith;
 /**
  * This is a parameterized test for Editor object's getIconFrame
  * method.  It tests that the method returns a vaid value for all
- * expected parameters to the method. 
+ * expected parameters to the method.
  *
  * @author Paul Bender Copyright (C) 2018
  */
@@ -94,6 +94,7 @@ public class EditorIconFrameTest {
        }
        e = null;
        JUnitUtil.deregisterBlockManagerShutdownTask();
+       JUnitUtil.deregisterEditorManagerShutdownTask();
        JUnitUtil.tearDown();
     }
 

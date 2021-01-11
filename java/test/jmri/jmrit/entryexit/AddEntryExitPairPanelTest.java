@@ -65,8 +65,8 @@ public class AddEntryExitPairPanelTest {
         java.util.List<AddEntryExitPairFrame>  frames = jmri.util.JmriJFrame.getFrameList(AddEntryExitPairFrame.class);
         Assert.assertEquals("Should be only one frame", 1, frames.size());
         frames.get(0).nxPanel.optionWindow(null);
-        
-        
+
+
         // Close the options window
         JFrameOperator optionFrame = new JFrameOperator(Bundle.getMessage("OptionsTitle"));  // NOI18N
         Assert.assertNotNull("optionFrame", optionFrame);  // NOI18N
@@ -91,6 +91,7 @@ public class AddEntryExitPairPanelTest {
         panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
         panels = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -36,7 +36,7 @@ abstract public class JmriJFrameTestBase {
     }
 
     @BeforeEach
-    abstract public void setUp();  // set the value of frame.  
+    abstract public void setUp();  // set the value of frame.
                                    // do not call initComponents.
 
     @AfterEach
@@ -46,6 +46,7 @@ abstract public class JmriJFrameTestBase {
         }
         frame = null;
         JUnitUtil.resetWindows(false,false);
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -57,23 +57,5 @@ public class EditorFrameOperator extends JFrameOperator {
         });
         t.setName("Reminder Dialog Close Thread");
         t.start();
-
-        // that pops dialog, find and press Yes - Delete
-//         JDialogOperator d = new JDialogOperator(Bundle.getMessage("PanelHideTitle"));
-
-        // Find the button that deletes the panel
-//         JButtonOperator bo = new JButtonOperator(d,Bundle.getMessage("ButtonOK"));
-
-        // Click button to delete panel and close window
-//         bo.push();
-
-        // join t
-       /* try {
-            t.join();
-        } catch( java.lang.InterruptedException ie) {
-           // do nothing, this isn't an error in this test.
-           return;
-        }*/
     }
-
 }
