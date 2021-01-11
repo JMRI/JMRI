@@ -53,7 +53,7 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
 
     public EditorManager() {
         super(false);
-//         setShutDownTask();
+        setShutDownTask();
     }
 
     private transient AbstractShutDownTask task = null;
