@@ -1,20 +1,20 @@
 package jmri.jmrit.logixng.implementation.swing;
 
-import java.util.List;
+// import java.util.List;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+// import javax.annotation.CheckForNull;
+// import javax.annotation.Nonnull;
+// import javax.swing.JLabel;
+// import javax.swing.JPanel;
 
-import jmri.jmrit.logixng.Base;
+// import jmri.jmrit.logixng.Base;
 
 /**
  * Configures an DefaultMaleDigitalActionSocket object with a Swing JPanel.
  */
 public class DefaultMaleAnalogActionSocketSwing extends AbstractMaleSocketSwing {
 
-    private JPanel panel;
+//    private JPanel panel;
 /*    
     @Override
     protected JPanel createSubPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
