@@ -209,19 +209,23 @@ public class NXFrame extends WarrantRoute {
             _maxSpeedBox.setText(null);
             return;
         }
-        float speed = _speedUtil.getTrackSpeed(num/100);    // returns mm/ms
+        float speed = _speedUtil.getTrackSpeed(num/100);    // returns mm/ms (meters/sec)
         switch(_displayPref) {
             case MPH:
+                // Convert meters/sec to scale miles/hr
                 _maxSpeedBox.setText(formatter.format(speed * _scale * 2.2369363f));
                 break;
             case KPH:
+                // Convert meters/sec to scale kilometers/hr
                 _maxSpeedBox.setText(formatter.format(speed * _scale * 3.6f));
                 break;
             case MMPS:
+                // Convert meters/sec to millimeters/sec
                 _maxSpeedBox.setText(formatter.format(speed * 1000));  // mm/sec
                 break;
             case INPS:
             default:
+                // Convert meters/sec to inchec/sec
                 _maxSpeedBox.setText(formatter.format(speed * 39.37f));  // in/sec
         }
     }
@@ -244,9 +248,9 @@ public class NXFrame extends WarrantRoute {
             // errors reported later
         }
         if (_units.equals(Display.IN)) {
-            num = Math.round(num * 0.393701f);
+            num = Math.round(num * 0.393701f);  // convert centimeters to inches
         } else {
-            num = Math.round(num * 2.54f);
+            num = Math.round(num * 2.54f);  // convert inches to centimeters
         }
         button.setText(_units.toString());
         field.setText(formatter.format(num));
@@ -315,16 +319,16 @@ public class NXFrame extends WarrantRoute {
             // reciprocal of above
             switch (_displayPref) {
                 case MPH:
-                    num = num * 0.44704f / _scale;  // convert miles/hr to mm/msec
+                    num = num * 0.44704f / _scale;  // convert scale miles/hr to mm/msec
                     break;
                 case KPH:
-                    num = num * 0.277778f / _scale;
+                    num = num * 0.277778f / _scale;  // convert scale kilometers/hr to mm/msec
                     break;
                 case MMPS:
-                    num = num / 1000;
+                    num = num / 1000;  // convert mm/sec to mm/msec
                     break;
                 default:
-                    num = num / 39.37f;
+                    num = num / 39.37f;  // convert inches/sec to mm/msec
                     break;
             }
             // get throttla setting and display as percent full throttle.
@@ -450,9 +454,11 @@ public class NXFrame extends WarrantRoute {
         _stopDist = getPathLength(_orders.get(_orders.size()-1)) / 2;
         NumberFormat formatter = NumberFormat.getNumberInstance(); 
         if (_units.equals(Display.IN)) {
+            // convert millimeters to inches
             _originDist.setText(formatter.format(_startDist * 0.0393701));
             _destDist.setText(formatter.format(_stopDist * 0.0393701));
         } else {
+         // convert millimeters to centimeters
             _originDist.setText(formatter.format(_startDist / 10));
             _destDist.setText(formatter.format(_stopDist / 10));
         }
@@ -656,14 +662,14 @@ public class NXFrame extends WarrantRoute {
             throw new JmriException(Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName()));
         }
         if (_units.equals(Display.IN)){
-            distance *= 25.4f;
+            distance *= 25.4f;  // convert inches to millimeters
             if (distance < 0 || distance > pathLen) {
                 field.setText(formatter.format(pathLen * 12.07));
                 throw new JmriException(Bundle.getMessage(
                         "BadLengthIn", bo.getPathName(), bo.getBlock().getDisplayName(), pathLen*0.039701f, text));                                        
             }
         } else {
-            distance *= 10f;
+            distance *= 10f;  // convert centimeters to millimeters
             if (distance < 0 || distance > pathLen) {
                 field.setText(formatter.format(pathLen * 5));
                 throw new JmriException(Bundle.getMessage(
