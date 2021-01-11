@@ -1,10 +1,5 @@
 package jmri.jmrit.logixng.implementation.swing;
 
-// import jmri.jmrit.logixng.tools.swing.LocalVariableTableModel;
-
-// import java.awt.BorderLayout;
-// import java.awt.Dimension;
-// import java.awt.event.ActionEvent;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
@@ -13,8 +8,7 @@ import javax.swing.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-// import jmri.jmrit.logixng.SymbolTable.InitialValueType;
-// import jmri.jmrit.logixng.SymbolTable.VariableData;
+import jmri.jmrit.logixng.MaleSocket.ErrorHandlingType;
 import jmri.jmrit.logixng.swing.AbstractSwingConfigurator;
 
 /**
@@ -23,9 +17,9 @@ import jmri.jmrit.logixng.swing.AbstractSwingConfigurator;
 public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator {
 
     private JPanel panel;
-//    private JPanel tablePanel;
-//    private JTable table;
-//    private LocalVariableTableModel tableModel;
+    private final JLabel errorHandlingLabel = new JLabel(Bundle.getMessage("MaleSocket_ErrorHandlingLabel"));
+    private JComboBox<ErrorHandlingType> errorHandlingComboBox;
+    
     
     /** {@inheritDoc} */
     @Override
@@ -51,9 +45,32 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
         if ((object != null) && (! (object instanceof MaleSocket))) {
             throw new IllegalArgumentException("object is not a MaleSocket: " + object.getClass().getName());
         }
+        
         panel = new JPanel();
-/*        
+        
         MaleSocket maleSocket = (MaleSocket)object;
+        
+        panel.setLayout(new java.awt.GridBagLayout());
+        java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.anchor = java.awt.GridBagConstraints.EAST;
+        
+        panel.add(errorHandlingLabel, c);
+        
+        c.gridx = 1;
+        errorHandlingComboBox = new JComboBox<>();
+        for (ErrorHandlingType type : ErrorHandlingType.values()) {
+            errorHandlingComboBox.addItem(type);
+            if ((maleSocket != null) && (maleSocket.getErrorHandlingType() == type)) {
+                errorHandlingComboBox.setSelectedItem(type);
+            }
+        }
+        panel.add(errorHandlingComboBox, c);
+        
+/*        
         int row = 0;
         panel.setLayout(new java.awt.GridBagLayout());
         java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
@@ -102,17 +119,17 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
         return true;
     }
     
-    /**
+    /*.*
      * The sub class may override this method to add more detail to the panel.
      * @param object the object for which to return a configuration panel
      * @param buttonPanel panel with the buttons
      * @return a panel that configures this object
-     */
+     *./
     protected JPanel createSubPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         return null;
     }
     
-    /**
+    /*.*
      * If the sub class overrides createSubPanel(), it may use this method to
      * validate the sub panel.
      * <P>
@@ -122,7 +139,7 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
      * 
      * @param errorMessages the error messages in case of an error
      * @return true if data in the form is valid, false otherwise
-     */
+     *./
     public boolean validateSubPanel(@Nonnull List<String> errorMessages) {
         return true;
     }
@@ -130,6 +147,7 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
+        // Male sockets of this type is created by the system, not by the user
         throw new UnsupportedOperationException("Not supported");
     }
     
@@ -139,13 +157,9 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
         if (! (object instanceof MaleSocket)) {
             throw new IllegalArgumentException("object is not a MaleSocket: " + object.getClass().getName());
         }
-/*        
+        
         MaleSocket maleSocket = (MaleSocket)object;
-        maleSocket.clearLocalVariables();
-        for (VariableData variableData : tableModel.getVariables()) {
-            maleSocket.addLocalVariable(variableData);
-        }
-*/        
+        maleSocket.setErrorHandlingType(errorHandlingComboBox.getItemAt(errorHandlingComboBox.getSelectedIndex()));
     }
     
     /** {@inheritDoc} */

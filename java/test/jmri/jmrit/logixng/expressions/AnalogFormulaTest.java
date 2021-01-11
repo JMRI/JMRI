@@ -55,9 +55,9 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Analog Formula: E1%n" +
+                "Analog Formula: E1 ::: Log error%n" +
                 "   ?* E1%n" +
-                "      Get analog constant 1%n" +
+                "      Get analog constant 1 ::: Log error%n" +
                 "   ?* E2%n" +
                 "      Socket not connected%n");
     }
@@ -68,15 +68,15 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Read analog E and set analog A%n" +
+                "         Read analog E and set analog A ::: Log error%n" +
                 "            ?~ E%n" +
-                "               Analog Formula: E1%n" +
+                "               Analog Formula: E1 ::: Log error%n" +
                 "                  ?* E1%n" +
-                "                     Get analog constant 1%n" +
+                "                     Get analog constant 1 ::: Log error%n" +
                 "                  ?* E2%n" +
                 "                     Socket not connected%n" +
                 "            !~ A%n" +
-                "               Set memory IM2%n");
+                "               Set memory IM2 ::: Log error%n");
     }
     
     @Override

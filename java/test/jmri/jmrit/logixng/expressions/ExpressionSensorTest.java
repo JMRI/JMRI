@@ -64,7 +64,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Sensor IS1 is Active%n");
+        return String.format("Sensor IS1 is Active ::: Log error%n");
     }
     
     @Override
@@ -73,11 +73,11 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else%n" +
+                "         If Then Else ::: Log error%n" +
                 "            ? If%n" +
-                "               Sensor IS1 is Active%n" +
+                "               Sensor IS1 is Active ::: Log error%n" +
                 "            ! Then%n" +
-                "               Set the atomic boolean to true%n" +
+                "               Set the atomic boolean to true ::: Log error%n" +
                 "            ! Else%n" +
                 "               Socket not connected%n");
     }

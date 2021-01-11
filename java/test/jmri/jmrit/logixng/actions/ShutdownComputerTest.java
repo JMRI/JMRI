@@ -41,7 +41,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Shutdown computer%n");
+        return String.format("Shutdown computer ::: Log error%n");
     }
     
     @Override
@@ -50,7 +50,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Shutdown computer%n");
+                "         Shutdown computer ::: Log error%n");
     }
     
     @Override

@@ -15,11 +15,23 @@ public interface MaleSocket extends Debugable {
 
     public enum ErrorHandlingType {
         
-        SHOW_DIALOG_BOX,
-        LOG_ERROR,
-        LOG_ERROR_ONCE,
-        THROW,
-        ABORT_EXECUTION,
+        Default(Bundle.getMessage("ErrorHandling_Default")),
+        ShowDialogBox(Bundle.getMessage("ErrorHandling_ShowDialogBox")),
+        LogError(Bundle.getMessage("ErrorHandling_LogError")),
+        LogErrorOnce(Bundle.getMessage("ErrorHandling_LogErrorOnce")),
+        ThrowException(Bundle.getMessage("ErrorHandling_ThrowException")),
+        AbortExecution(Bundle.getMessage("ErrorHandling_AbortExecution"));
+        
+        private final String _description;
+        
+        private ErrorHandlingType(String description) {
+            _description = description;
+        }
+        
+        @Override
+        public String toString() {
+            return _description;
+        }
     }
     
     /**

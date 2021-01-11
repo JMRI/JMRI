@@ -47,7 +47,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Set memory IM1%n");
+        return String.format("Set memory IM1 ::: Log error%n");
     }
     
     @Override
@@ -56,11 +56,11 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Read string E and set string A%n" +
+                "         Read string E and set string A ::: Log error%n" +
                 "            ?s E%n" +
                 "               Socket not connected%n" +
                 "            !s A%n" +
-                "               Set memory IM1%n");
+                "               Set memory IM1 ::: Log error%n");
     }
     
     @Override

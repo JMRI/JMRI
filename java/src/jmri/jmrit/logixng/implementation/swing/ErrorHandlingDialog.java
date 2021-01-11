@@ -54,7 +54,7 @@ public class ErrorHandlingDialog {
         
         _selectItemTypeDialog  = new JDialog(
                 (JDialog)null,
-                Bundle.getMessage("FunctionsHelpDialogTitle"),
+                Bundle.getMessage("ErrorHandlingDialog_Title"),
                 true);
         
         
@@ -83,23 +83,23 @@ public class ErrorHandlingDialog {
         JPanel panel5 = new JPanel();
         panel5.setLayout(new FlowLayout());
         
-        // Continue
-        JButton continueButton = new JButton(Bundle.getMessage("ButtonCancel"));    // NOI18N
-        panel5.add(continueButton);
-        continueButton.addActionListener((ActionEvent e) -> {
-            continuePressed(null);
-        });
-//        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-        continueButton.setToolTipText("CancelLogixButtonHint");      // NOI18N
-        
         // Abort
-        JButton abortButton = new JButton(Bundle.getMessage("ButtonCancel"));    // NOI18N
+        JButton abortButton = new JButton(Bundle.getMessage("ErrorHandlingDialog_Abort"));  // NOI18N
         panel5.add(abortButton);
         abortButton.addActionListener((ActionEvent e) -> {
             abortPressed(null);
         });
 //        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-        abortButton.setToolTipText("CancelLogixButtonHint");      // NOI18N
+//        abortButton.setToolTipText("CancelLogixButtonHint");      // NOI18N
+        
+        // Continue
+        JButton continueButton = new JButton(Bundle.getMessage("ErrorHandlingDialog_Continue"));    // NOI18N
+        panel5.add(continueButton);
+        continueButton.addActionListener((ActionEvent e) -> {
+            continuePressed(null);
+        });
+//        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
+//        continueButton.setToolTipText("CancelLogixButtonHint");      // NOI18N
         
         _selectItemTypeDialog.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override

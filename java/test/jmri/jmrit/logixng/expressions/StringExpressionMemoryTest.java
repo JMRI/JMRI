@@ -51,7 +51,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Get memory IM1 as string value%n");
+        return String.format("Get memory IM1 as string value ::: Log error%n");
     }
     
     @Override
@@ -60,11 +60,11 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Read string E and set string A%n" +
+                "         Read string E and set string A ::: Log error%n" +
                 "            ?s E%n" +
-                "               Get memory IM1 as string value%n" +
+                "               Get memory IM1 as string value ::: Log error%n" +
                 "            !s A%n" +
-                "               Set memory IM2%n");
+                "               Set memory IM2 ::: Log error%n");
     }
     
     @Override

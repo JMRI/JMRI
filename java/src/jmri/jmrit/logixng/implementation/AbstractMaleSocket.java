@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import jmri.JmriException;
-import jmri.NamedBean;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.SymbolTable.VariableData;
+import jmri.jmrit.logixng.implementation.Bundle;
 import jmri.jmrit.logixng.implementation.swing.ErrorHandlingDialog;
 import jmri.util.LoggingUtil;
 import jmri.util.ThreadingUtil;
@@ -27,7 +27,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     protected final List<VariableData> _localVariables = new ArrayList<>();
     private final BaseManager<? extends NamedBean> _manager;
     private Base _parent;
-    private ErrorHandlingType _errorHandlingType = ErrorHandlingType.LOG_ERROR;
+    private ErrorHandlingType _errorHandlingType = ErrorHandlingType.LogError;
     
     public AbstractMaleSocket(BaseManager<? extends NamedBean> manager) {
         _manager = manager;
@@ -162,6 +162,8 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                 writer.append(" ::: ");
                 writer.append(getComment());
             }
+            writer.append(" ::: ");
+            writer.append(getErrorHandlingType().toString());
             writer.println();
         }
     }
@@ -263,11 +265,18 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     }
     
     public void handleError(Base item, String message, JmriException e, Logger log) throws JmriException {
+        
         // Always throw AbortConditionalNGExecutionException exceptions
         if (e instanceof AbortConditionalNGExecutionException) throw e;
         
-        switch (_errorHandlingType) {
-            case SHOW_DIALOG_BOX:
+        ErrorHandlingType errorHandlingType = _errorHandlingType;
+        if (errorHandlingType == ErrorHandlingType.Default) {
+            errorHandlingType = InstanceManager.getDefault(LogixNGPreferences.class)
+                    .getErrorHandlingType();
+        }
+        
+        switch (errorHandlingType) {
+            case ShowDialogBox:
                 boolean abort = ThreadingUtil.runOnGUIwithReturn(() -> {
                     ErrorHandlingDialog dialog = new ErrorHandlingDialog();
                     return dialog.showDialog(item, message);
@@ -275,20 +284,18 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                 if (abort) throw new AbortConditionalNGExecutionException();
                 break;
                 
-            case LOG_ERROR:
-//                e.printStackTrace();
+            case LogError:
                 log.error("item {}, {} thrown an exception: {}", item.toString(), getObject().toString(), e, e);
                 break;
                 
-            case LOG_ERROR_ONCE:
-//                e.printStackTrace();
+            case LogErrorOnce:
                 LoggingUtil.warnOnce(log, "item {}, {} thrown an exception: {}", item.toString(), getObject().toString(), e, e);
                 break;
                 
-            case THROW:
+            case ThrowException:
                 throw e;
                 
-            case ABORT_EXECUTION:
+            case AbortExecution:
                 log.error("item {}, {} thrown an exception: {}", item.toString(), getObject().toString(), e, e);
                 throw new AbortConditionalNGExecutionException(e);
                 
@@ -298,8 +305,15 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     }
     
     public void handleError(Base item, String message, RuntimeException e, Logger log) throws JmriException {
-        switch (_errorHandlingType) {
-            case SHOW_DIALOG_BOX:
+        
+        ErrorHandlingType errorHandlingType = _errorHandlingType;
+        if (errorHandlingType == ErrorHandlingType.Default) {
+            errorHandlingType = InstanceManager.getDefault(LogixNGPreferences.class)
+                    .getErrorHandlingType();
+        }
+        
+        switch (errorHandlingType) {
+            case ShowDialogBox:
                 boolean abort = ThreadingUtil.runOnGUIwithReturn(() -> {
                     ErrorHandlingDialog dialog = new ErrorHandlingDialog();
                     return dialog.showDialog(item, message);
@@ -307,20 +321,20 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                 if (abort) throw new AbortConditionalNGExecutionException();
                 break;
                 
-            case LOG_ERROR:
+            case LogError:
 //                e.printStackTrace();
                 log.error("item {}, {} thrown an exception: {}", item.toString(), getObject().toString(), e, e);
                 break;
                 
-            case LOG_ERROR_ONCE:
+            case LogErrorOnce:
 //                e.printStackTrace();
                 LoggingUtil.warnOnce(log, "item {}, {} thrown an exception: {}", item.toString(), getObject().toString(), e, e);
                 break;
                 
-            case THROW:
+            case ThrowException:
                 throw e;
                 
-            case ABORT_EXECUTION:
+            case AbortExecution:
                 throw new AbortConditionalNGExecutionException(e);
                 
             default:

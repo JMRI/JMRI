@@ -43,11 +43,11 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "If Then Else%n" +
+                "If Then Else ::: Log error%n" +
                 "   ? If%n" +
-                "      Sensor '' is Active%n" +
+                "      Sensor '' is Active ::: Log error%n" +
                 "   ! Then%n" +
-                "      Set turnout '' to state Thrown%n" +
+                "      Set turnout '' to state Thrown ::: Log error%n" +
                 "   ! Else%n" +
                 "      Socket not connected%n");
     }
@@ -58,11 +58,11 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else%n" +
+                "         If Then Else ::: Log error%n" +
                 "            ? If%n" +
-                "               Sensor '' is Active%n" +
+                "               Sensor '' is Active ::: Log error%n" +
                 "            ! Then%n" +
-                "               Set turnout '' to state Thrown%n" +
+                "               Set turnout '' to state Thrown ::: Log error%n" +
                 "            ! Else%n" +
                 "               Socket not connected%n");
     }

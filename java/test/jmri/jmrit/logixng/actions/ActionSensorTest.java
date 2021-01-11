@@ -64,7 +64,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Set sensor IS1 to state Active%n");
+        return String.format("Set sensor IS1 to state Active ::: Log error%n");
     }
     
     @Override
@@ -73,7 +73,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Set sensor IS1 to state Active%n");
+                "         Set sensor IS1 to state Active ::: Log error%n");
     }
     
     @Override

@@ -49,7 +49,7 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
         Assert.assertNotNull("exists", socket);
         
         socket.setEnabled(true);
-        socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.THROW);
+        socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
         
         action.je = null;
         action.re = null;

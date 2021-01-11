@@ -4,6 +4,7 @@ import java.util.prefs.Preferences;
 
 import jmri.beans.PreferencesBean;
 import jmri.jmrit.logixng.LogixNGPreferences;
+import jmri.jmrit.logixng.MaleSocket.ErrorHandlingType;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
 
@@ -18,12 +19,15 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
     public static final String USE_GENERIC_FEMALE_SOCKETS = "useGenericFemaleSockets";
     public static final String ALLOW_DEBUG_MODE = "allowDebugMode";
     public static final String SHOW_SYSTEM_USER_NAMES = "showSystemUserNames";
+    public static final String ERROR_HANDLING_TYPE = "errorHandlingType";
     
     private boolean _startLogixNGOnLoad = true;
     private boolean _useGenericFemaleSockets = false;
     private boolean _allowDebugMode = false;
     private boolean _showSystemUserNames = false;
     private boolean _installDebugger = true;
+    private ErrorHandlingType _errorHandlingType = ErrorHandlingType.ShowDialogBox;
+    
     
     public DefaultLogixNGPreferences() {
         super(ProfileManager.getDefault().getActiveProfile());
@@ -38,6 +42,8 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
         _useGenericFemaleSockets = sharedPreferences.getBoolean(USE_GENERIC_FEMALE_SOCKETS, _useGenericFemaleSockets);
         _allowDebugMode = sharedPreferences.getBoolean(ALLOW_DEBUG_MODE, _allowDebugMode);
         _showSystemUserNames = sharedPreferences.getBoolean(SHOW_SYSTEM_USER_NAMES, _showSystemUserNames);
+        _errorHandlingType = ErrorHandlingType.valueOf(
+                sharedPreferences.get(ERROR_HANDLING_TYPE, _errorHandlingType.name()));
         
 /*        
         this.allowRemoteConfig = sharedPreferences.getBoolean(ALLOW_REMOTE_CONFIG, this.allowRemoteConfig);
@@ -90,6 +96,7 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
         setUseGenericFemaleSockets(prefs.getUseGenericFemaleSockets());
         setAllowDebugMode(prefs.getAllowDebugMode());
         setShowSystemUserNames(prefs.getShowSystemUserNames());
+        this.setErrorHandlingType(prefs.getErrorHandlingType());
     }
 
     @Override
@@ -99,6 +106,7 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
         sharedPreferences.putBoolean(USE_GENERIC_FEMALE_SOCKETS, this.getUseGenericFemaleSockets());
         sharedPreferences.putBoolean(ALLOW_DEBUG_MODE, this.getAllowDebugMode());
         sharedPreferences.putBoolean(SHOW_SYSTEM_USER_NAMES, this.getShowSystemUserNames());
+        sharedPreferences.put(ERROR_HANDLING_TYPE, this.getErrorHandlingType().name());
 /*        
         sharedPreferences.putInt(PORT, this.getPort());
         sharedPreferences.putBoolean(USE_ZERO_CONF, this.isUseZeroConf());
@@ -182,6 +190,17 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
     @Override
     public boolean getInstallDebugger() {
         return _installDebugger;
+    }
+
+    @Override
+    public void setErrorHandlingType(ErrorHandlingType type) {
+        _errorHandlingType = type;
+        setIsDirty(true);
+    }
+
+    @Override
+    public ErrorHandlingType getErrorHandlingType() {
+        return _errorHandlingType;
     }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGPreferences.class);

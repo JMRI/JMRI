@@ -55,7 +55,7 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Get memory IM1 as analog value%n");
+        return String.format("Get memory IM1 as analog value ::: Log error%n");
     }
     
     @Override
@@ -64,11 +64,11 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Read analog E and set analog A%n" +
+                "         Read analog E and set analog A ::: Log error%n" +
                 "            ?~ E%n" +
-                "               Get memory IM1 as analog value%n" +
+                "               Get memory IM1 as analog value ::: Log error%n" +
                 "            !~ A%n" +
-                "               Set memory IM2%n");
+                "               Set memory IM2 ::: Log error%n");
     }
     
     @Override

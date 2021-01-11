@@ -38,7 +38,7 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Listen on beans%n");
+        return String.format("Listen on beans ::: Log error%n");
     }
     
     @Override
@@ -47,7 +47,7 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Listen on beans%n");
+                "         Listen on beans ::: Log error%n");
     }
     
     @Override

@@ -59,7 +59,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Throttle%n" +
+                "Throttle ::: Log error%n" +
                 "   ?~ E1%n" +
                 "      Socket not connected%n" +
                 "   ?~ E2%n" +
@@ -74,7 +74,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Throttle%n" +
+                "         Throttle ::: Log error%n" +
                 "            ?~ E1%n" +
                 "               Socket not connected%n" +
                 "            ?~ E2%n" +

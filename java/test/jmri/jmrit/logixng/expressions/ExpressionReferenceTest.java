@@ -61,7 +61,7 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Reference '' is Nothing%n");
+        return String.format("Reference '' is Nothing ::: Log error%n");
     }
     
     @Override
@@ -70,11 +70,11 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else%n" +
+                "         If Then Else ::: Log error%n" +
                 "            ? If%n" +
-                "               Reference '' is Nothing%n" +
+                "               Reference '' is Nothing ::: Log error%n" +
                 "            ! Then%n" +
-                "               Set the atomic boolean to true%n" +
+                "               Set the atomic boolean to true ::: Log error%n" +
                 "            ! Else%n" +
                 "               Socket not connected%n");
     }

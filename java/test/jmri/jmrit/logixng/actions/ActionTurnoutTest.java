@@ -44,7 +44,7 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Set turnout IT1 to state Thrown%n");
+        return String.format("Set turnout IT1 to state Thrown ::: Log error%n");
     }
     
     @Override
@@ -53,7 +53,7 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Set turnout IT1 to state Thrown%n");
+                "         Set turnout IT1 to state Thrown ::: Log error%n");
     }
     
     @Override

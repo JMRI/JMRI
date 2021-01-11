@@ -53,7 +53,7 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Hold while E1. Trigger on E2%n" +
+                "Hold while E1. Trigger on E2 ::: Log error%n" +
                 "   ? E1%n" +
                 "      Socket not connected%n" +
                 "   ? E2%n" +
@@ -66,15 +66,15 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else%n" +
+                "         If Then Else ::: Log error%n" +
                 "            ? If%n" +
-                "               Hold while E1. Trigger on E2%n" +
+                "               Hold while E1. Trigger on E2 ::: Log error%n" +
                 "                  ? E1%n" +
                 "                     Socket not connected%n" +
                 "                  ? E2%n" +
                 "                     Socket not connected%n" +
                 "            ! Then%n" +
-                "               Set the atomic boolean to true%n" +
+                "               Set the atomic boolean to true ::: Log error%n" +
                 "            ! Else%n" +
                 "               Socket not connected%n");
     }

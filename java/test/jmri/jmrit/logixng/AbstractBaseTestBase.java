@@ -200,7 +200,7 @@ public abstract class AbstractBaseTestBase {
     public void testGetPrintTree() {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
-        _base.printTree(Locale.ENGLISH, printWriter, TREE_INDENT);
+        _baseMaleSocket.printTree(Locale.ENGLISH, printWriter, TREE_INDENT);
         Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
     }
     
@@ -217,7 +217,7 @@ public abstract class AbstractBaseTestBase {
     public void testGetPrintTreeWithStandardLocale() {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
-        _base.printTree(printWriter, TREE_INDENT);
+        _baseMaleSocket.printTree(printWriter, TREE_INDENT);
         Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
     }
     
@@ -254,21 +254,13 @@ public abstract class AbstractBaseTestBase {
         
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
-        _base.printTree(Locale.ENGLISH, printWriter, TREE_INDENT);
+        _baseMaleSocket.printTree(Locale.ENGLISH, printWriter, TREE_INDENT);
         String originalTree = stringWriter.toString();
         
         Base copy = _base.getDeepCopy(systemNames, userNames);
         
         stringWriter = new StringWriter();
         printWriter = new PrintWriter(stringWriter);
-        
-        // REMOVE LATER!!!!!!!!
-        // REMOVE LATER!!!!!!!!
-        // REMOVE LATER!!!!!!!!
-        Assume.assumeTrue(copy != null);
-        // REMOVE LATER!!!!!!!!
-        // REMOVE LATER!!!!!!!!
-        // REMOVE LATER!!!!!!!!
         
         Assert.assertTrue(copy != null);
         

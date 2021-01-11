@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.Base;
 public class DefaultMaleAnalogActionSocketSwing extends AbstractMaleSocketSwing {
 
     private JPanel panel;
-    
+/*    
     @Override
     protected JPanel createSubPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         panel = new JPanel();
@@ -23,12 +23,12 @@ public class DefaultMaleAnalogActionSocketSwing extends AbstractMaleSocketSwing 
         return panel;
     }
     
-    /** {@inheritDoc} */
+    /*.* {@inheritDoc} *./
     @Override
     public boolean validateSubPanel(@Nonnull List<String> errorMessages) {
         return true;
     }
-    
+*/    
     
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OrSwing.class);
     

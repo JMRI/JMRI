@@ -38,6 +38,19 @@
       </xs:annotation>
       <xs:sequence>
         
+              <xs:element name="errorHandling" minOccurs="0" maxOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:token">
+                    <xs:enumeration value="Default"/>
+                    <xs:enumeration value="ShowDialogBox"/>
+                    <xs:enumeration value="LogError"/>
+                    <xs:enumeration value="LogErrorOnce"/>
+                    <xs:enumeration value="ThrowException"/>
+                    <xs:enumeration value="AbortExecution"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
               <xs:element name="localVariable" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>

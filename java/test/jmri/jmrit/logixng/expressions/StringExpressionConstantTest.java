@@ -50,7 +50,7 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Get string constant \"Something\"%n");
+        return String.format("Get string constant \"Something\" ::: Log error%n");
     }
     
     @Override
@@ -59,11 +59,11 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Read string E and set string A%n" +
+                "         Read string E and set string A ::: Log error%n" +
                 "            ?s E%n" +
-                "               Get string constant \"Something\"%n" +
+                "               Get string constant \"Something\" ::: Log error%n" +
                 "            !s A%n" +
-                "               Set memory IM2%n");
+                "               Set memory IM2 ::: Log error%n");
     }
     
     @Override

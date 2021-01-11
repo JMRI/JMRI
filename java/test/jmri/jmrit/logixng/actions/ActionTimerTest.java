@@ -44,7 +44,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Timer%n" +
+                "Timer ::: Log error%n" +
                 "   ? Start%n" +
                 "      Socket not connected%n" +
                 "   ? Stop%n" +
@@ -59,7 +59,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Timer%n" +
+                "         Timer ::: Log error%n" +
                 "            ? Start%n" +
                 "               Socket not connected%n" +
                 "            ? Stop%n" +

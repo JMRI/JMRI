@@ -173,6 +173,11 @@ public class StoreAndLoadTest {
         actionManySocket.getChild(index++).connect(maleSocket);
         
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionLight);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.Default);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
         actionLight.setComment("A comment");
         actionLight.setLight(light1);
         actionLight.setBeanState(ActionLight.LightState.Off);
@@ -185,6 +190,7 @@ public class StoreAndLoadTest {
         actionLight.setStateLocalVariable("index2");
         actionLight.setStateReference("{IM2}");
         maleSocket = digitalActionManager.registerAction(actionLight);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.AbortExecution);
         actionManySocket.getChild(index++).connect(maleSocket);
         
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
@@ -200,6 +206,7 @@ public class StoreAndLoadTest {
         actionLight.setStateLocalVariable("index2");
         actionLight.setStateReference("{IM2}");
         maleSocket = digitalActionManager.registerAction(actionLight);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogError);
         actionManySocket.getChild(index++).connect(maleSocket);
         
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
@@ -215,6 +222,7 @@ public class StoreAndLoadTest {
         actionLight.setStateLocalVariable("index2");
         actionLight.setStateReference("{IM2}");
         maleSocket = digitalActionManager.registerAction(actionLight);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogErrorOnce);
         actionManySocket.getChild(index++).connect(maleSocket);
         
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
@@ -230,6 +238,13 @@ public class StoreAndLoadTest {
         actionLight.setStateLocalVariable("index2");
         actionLight.setStateReference("{IM2}");
         maleSocket = digitalActionManager.registerAction(actionLight);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ShowDialogBox);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        
+        actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionLight);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
         actionManySocket.getChild(index++).connect(maleSocket);
         
         
@@ -878,12 +893,34 @@ public class StoreAndLoadTest {
         
         Antecedent antecedent = new Antecedent(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(antecedent);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.AbortExecution);
+        and.getChild(index++).connect(maleSocket);
+        
+        antecedent = new Antecedent(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(antecedent);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.Default);
         and.getChild(index++).connect(maleSocket);
         
         antecedent = new Antecedent(digitalExpressionManager.getAutoSystemName(), null);
         antecedent.setComment("A comment");
         antecedent.setAntecedent("R1 or R2");
         maleSocket = digitalExpressionManager.registerExpression(antecedent);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogError);
+        and.getChild(index++).connect(maleSocket);
+        
+        antecedent = new Antecedent(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(antecedent);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogErrorOnce);
+        and.getChild(index++).connect(maleSocket);
+        
+        antecedent = new Antecedent(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(antecedent);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ShowDialogBox);
+        and.getChild(index++).connect(maleSocket);
+        
+        antecedent = new Antecedent(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(antecedent);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
         and.getChild(index++).connect(maleSocket);
         
         

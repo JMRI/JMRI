@@ -132,7 +132,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Execute script%n" +
+                "Execute script ::: Log error%n" +
                 "   !~ AA%n" +
                 "      Socket not connected%n" +
                 "   ?~ AE%n" +
@@ -155,11 +155,11 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else%n" +
+                "         If Then Else ::: Log error%n" +
                 "            ? If%n" +
-                "               Sensor IS1 is Active%n" +
+                "               Sensor IS1 is Active ::: Log error%n" +
                 "            ! Then%n" +
-                "               Execute script%n" +
+                "               Execute script ::: Log error%n" +
                 "                  !~ AA%n" +
                 "                     Socket not connected%n" +
                 "                  ?~ AE%n" +

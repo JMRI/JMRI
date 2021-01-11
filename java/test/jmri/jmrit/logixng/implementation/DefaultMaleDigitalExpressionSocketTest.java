@@ -49,7 +49,7 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
         Assert.assertNotNull("exists", socket);
         
         socket.setEnabled(true);
-        socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.THROW);
+        socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
         
         expression.je = null;
         expression.re = null;

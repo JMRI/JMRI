@@ -24,7 +24,7 @@ public class DefaultConditionalNG extends AbstractBase
     
     private final LogixNG_Thread _thread;
     private int _startupThreadId;
-    private MaleSocket.ErrorHandlingType _errorHandlingType = MaleSocket.ErrorHandlingType.LOG_ERROR;
+    private MaleSocket.ErrorHandlingType _errorHandlingType = MaleSocket.ErrorHandlingType.LogError;
     private Base _parent = null;
     private String _socketSystemName = null;
     private final FemaleDigitalActionSocket _femaleSocket;
@@ -128,7 +128,7 @@ public class DefaultConditionalNG extends AbstractBase
                             _femaleSocket.execute();
                         } catch (JmriException | RuntimeException e) {
                             switch (_errorHandlingType) {
-                                case LOG_ERROR_ONCE:
+                                case LogErrorOnce:
                                     LoggingUtil.warnOnce(log, "ConditionalNG {} got an exception during execute: {}",
                                             getSystemName(), e, e);
                                     break;
@@ -138,7 +138,7 @@ public class DefaultConditionalNG extends AbstractBase
 //                                            .notifyError(this, Bundle.getMessage("ExceptionExecute", getSystemName(), e), e);
 //                                    break;
                                     
-                                case LOG_ERROR:
+                                case LogError:
                                     // fall through
                                 default:
                                     log.error("ConditionalNG {} got an exception during execute: {}",

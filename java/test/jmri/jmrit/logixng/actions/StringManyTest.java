@@ -47,7 +47,7 @@ public class StringManyTest extends AbstractStringActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Many%n" +
+                "Many ::: Log error%n" +
                 "   !s A1%n" +
                 "      Socket not connected%n");
     }
@@ -58,11 +58,11 @@ public class StringManyTest extends AbstractStringActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Read string E and set string A%n" +
+                "         Read string E and set string A ::: Log error%n" +
                 "            ?s E%n" +
                 "               Socket not connected%n" +
                 "            !s A%n" +
-                "               Many%n" +
+                "               Many ::: Log error%n" +
                 "                  !s A1%n" +
                 "                     Socket not connected%n");
     }

@@ -43,7 +43,7 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Set the atomic boolean to true%n");
+        return String.format("Set the atomic boolean to true ::: Log error%n");
     }
     
     @Override
@@ -52,7 +52,7 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Set the atomic boolean to true%n");
+                "         Set the atomic boolean to true ::: Log error%n");
     }
     
     @Override

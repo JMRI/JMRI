@@ -690,7 +690,7 @@ public class TreeEditor extends TreeViewer {
             while (object instanceof MaleSocket) {
                 SwingConfiguratorInterface swi =
                         SwingTools.getSwingConfiguratorForClass(object.getClass());
-                panel34.add(swi.getConfigPanel(femaleSocket.getConnectedSocket(), panel5));
+                panel34.add(swi.getConfigPanel(object, panel5));
                 _swingConfiguratorInterfaceList.add(new HashMap.SimpleEntry<>(swi, object));
                 object = ((MaleSocket)object).getObject();
             }

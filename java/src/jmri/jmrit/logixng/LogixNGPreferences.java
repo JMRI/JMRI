@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng;
 
+import jmri.jmrit.logixng.MaleSocket.ErrorHandlingType;
+
 /**
  * Preferences for LogixNG
  * 
@@ -90,5 +92,17 @@ public interface LogixNGPreferences {
      * @return true if the debugger should be installed, false otherwise
      */
     public boolean getInstallDebugger();
+
+    /**
+     * Set the default error handling type.
+     * @param type the error handling type
+     */
+    public void setErrorHandlingType(ErrorHandlingType type);
+
+    /**
+     * Get the default error handling type.
+     * @return the error handling type
+     */
+    public ErrorHandlingType getErrorHandlingType();
 
 }

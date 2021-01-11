@@ -49,7 +49,7 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
         Assert.assertNotNull("exists", socket);
         
         socket.setEnabled(true);
-        socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.THROW);
+        socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
         
         expression.je = null;
         expression.re = null;
@@ -107,7 +107,7 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
         Assert.assertNotNull("exists", socket);
         
         socket.setEnabled(true);
-        socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.THROW);
+        socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
         
         expression.result = Double.NaN;
         Throwable thrown = catchThrowable( () -> socket.evaluate());

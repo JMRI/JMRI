@@ -24,6 +24,7 @@ public abstract class AbstractManagerXml extends jmri.managers.configurexml.Abst
      */
     public Element storeMaleSocket(MaleSocket maleSocket) {
         Element element = new Element("maleSocket");
+        element.addContent(new Element("errorHandling").addContent(maleSocket.getErrorHandlingType().name()));
         for (SymbolTable.VariableData data : maleSocket.getLocalVariables()) {
             Element elementVariable = new Element("localVariable");
             elementVariable.addContent(new Element("name").addContent(data._name));
@@ -63,14 +64,21 @@ public abstract class AbstractManagerXml extends jmri.managers.configurexml.Abst
      */
     public void loadMaleSocket(Element element, MaleSocket maleSocket) {
         
-        if (element.getChild("maleSocket") == null) {
+        Element elementMaleSocket = element.getChild("maleSocket");
+        if (elementMaleSocket == null) {
             throw new IllegalArgumentException("maleSocket is null");
         }
         
-        List<Element> maleSocketList = element.getChild("maleSocket").getChildren();  // NOI18N
-        log.debug("Found " + maleSocketList.size() + " male sockets");  // NOI18N
-
-        for (Element e : maleSocketList) {
+        Element errorHandlingElement = elementMaleSocket.getChild("errorHandling");
+        if (errorHandlingElement != null) {
+            maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType
+                    .valueOf(errorHandlingElement.getTextTrim()));
+        }
+        
+        List<Element> localVariableList = elementMaleSocket.getChildren("localVariable");  // NOI18N
+        log.debug("Found " + localVariableList.size() + " male sockets");  // NOI18N
+        
+        for (Element e : localVariableList) {
             Element elementName = e.getChild("name");
             
             InitialValueType type = null;

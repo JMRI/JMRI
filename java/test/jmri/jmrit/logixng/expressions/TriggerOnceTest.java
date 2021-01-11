@@ -50,7 +50,7 @@ public class TriggerOnceTest extends AbstractDigitalExpressionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Trigger once%n" +
+                "Trigger once ::: Log error%n" +
                 "   ? E%n" +
                 "      Socket not connected%n");
     }
@@ -61,13 +61,13 @@ public class TriggerOnceTest extends AbstractDigitalExpressionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else%n" +
+                "         If Then Else ::: Log error%n" +
                 "            ? If%n" +
-                "               Trigger once%n" +
+                "               Trigger once ::: Log error%n" +
                 "                  ? E%n" +
                 "                     Socket not connected%n" +
                 "            ! Then%n" +
-                "               Set the atomic boolean to true%n" +
+                "               Set the atomic boolean to true ::: Log error%n" +
                 "            ! Else%n" +
                 "               Socket not connected%n");
     }

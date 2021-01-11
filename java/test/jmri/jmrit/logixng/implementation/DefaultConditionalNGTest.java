@@ -70,7 +70,7 @@ public class DefaultConditionalNGTest {
                 .registerAction(action);
         conditionalNG.getChild(0).connect(socket);
         
-        socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.THROW);
+        socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
         
         action.throwOnExecute = false;
         action.hasExecuted = false;
@@ -85,19 +85,19 @@ public class DefaultConditionalNGTest {
         
         action.throwOnExecute = true;
         action.hasExecuted = false;
-        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.LOG_ERROR);
+        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogError);
         conditionalNG.execute();
         JUnitAppender.assertErrorMessage("ConditionalNG IQC123 got an exception during execute: jmri.JmriException: An error has occured");
         
         action.throwOnExecute = true;
         action.hasExecuted = false;
-        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.LOG_ERROR_ONCE);
+        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogErrorOnce);
         conditionalNG.execute();
         JUnitAppender.assertWarnMessage("ConditionalNG IQC123 got an exception during execute: jmri.JmriException: An error has occured");
         
         action.throwOnExecute = true;
         action.hasExecuted = false;
-        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.THROW);
+        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
         conditionalNG.execute();
         JUnitAppender.assertErrorMessage("ConditionalNG IQC123 got an exception during execute: jmri.JmriException: An error has occured");
     }
@@ -112,15 +112,15 @@ public class DefaultConditionalNGTest {
     @Test
     public void testErrorHandlingType() {
         DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
-        Assert.assertEquals("Error handling type is correct", MaleSocket.ErrorHandlingType.LOG_ERROR, conditionalNG.getErrorHandlingType());
-        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.SHOW_DIALOG_BOX);
-        Assert.assertEquals("Error handling type is correct", MaleSocket.ErrorHandlingType.SHOW_DIALOG_BOX, conditionalNG.getErrorHandlingType());
-        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.LOG_ERROR);
-        Assert.assertEquals("Error handling type is correct", MaleSocket.ErrorHandlingType.LOG_ERROR, conditionalNG.getErrorHandlingType());
-        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.LOG_ERROR_ONCE);
-        Assert.assertEquals("Error handling type is correct", MaleSocket.ErrorHandlingType.LOG_ERROR_ONCE, conditionalNG.getErrorHandlingType());
-        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.THROW);
-        Assert.assertEquals("Error handling type is correct", MaleSocket.ErrorHandlingType.THROW, conditionalNG.getErrorHandlingType());
+        Assert.assertEquals("Error handling type is correct", MaleSocket.ErrorHandlingType.LogError, conditionalNG.getErrorHandlingType());
+        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.ShowDialogBox);
+        Assert.assertEquals("Error handling type is correct", MaleSocket.ErrorHandlingType.ShowDialogBox, conditionalNG.getErrorHandlingType());
+        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogError);
+        Assert.assertEquals("Error handling type is correct", MaleSocket.ErrorHandlingType.LogError, conditionalNG.getErrorHandlingType());
+        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogErrorOnce);
+        Assert.assertEquals("Error handling type is correct", MaleSocket.ErrorHandlingType.LogErrorOnce, conditionalNG.getErrorHandlingType());
+        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
+        Assert.assertEquals("Error handling type is correct", MaleSocket.ErrorHandlingType.ThrowException, conditionalNG.getErrorHandlingType());
     }
     
     // The minimal setup for log4J

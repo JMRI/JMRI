@@ -6,14 +6,12 @@ import jmri.jmrit.logixng.implementation.DefaultLogixNGPreferences;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
+import javax.swing.*;
+
 import org.openide.util.lookup.ServiceProvider;
 
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-
 import jmri.InstanceManager;
+import jmri.jmrit.logixng.MaleSocket.ErrorHandlingType;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
 
@@ -26,11 +24,12 @@ import jmri.swing.PreferencesPanel;
 public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel {
     
     private final DefaultLogixNGPreferences preferences;
-//    private jmri.web.server.WebServerPreferences apreferences;
     
     JCheckBox _startLogixNGOnLoadCheckBox;
     JCheckBox _allowDebugModeCheckBox;
     JCheckBox _showSystemUserNamesCheckBox;
+    private JComboBox<ErrorHandlingType> errorHandlingComboBox;
+    
     
     public LogixNGPreferencesPanel() {
         LogixNGPreferences prefs = InstanceManager.getDefault(LogixNGPreferences.class);
@@ -39,7 +38,6 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
         }
         preferences = (DefaultLogixNGPreferences)prefs;
         initGUI();
-        setGUI();
     }
 
     private void initGUI() {
@@ -58,11 +56,6 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
 //        add(getLogixNGPanel());
     }
 
-    private void setGUI() {
-        _startLogixNGOnLoadCheckBox.setSelected(preferences.getStartLogixNGOnStartup());
-        _showSystemUserNamesCheckBox.setSelected(preferences.getShowSystemUserNames());
-    }
-
     /**
      * set the local prefs to match the GUI Local prefs are independent from the
      * singleton instance prefs.
@@ -72,6 +65,7 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
     private boolean setValues() {
         boolean didSet = true;
         preferences.setStartLogixNGOnStartup(_startLogixNGOnLoadCheckBox.isSelected());
+        preferences.setAllowDebugMode(_allowDebugModeCheckBox.isSelected());
         preferences.setShowSystemUserNames(_showSystemUserNamesCheckBox.isSelected());
         return didSet;
     }
@@ -93,6 +87,22 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
         gridPanel.add(_startLogixNGOnLoadCheckBox);
         gridPanel.add(_allowDebugModeCheckBox);
         gridPanel.add(_showSystemUserNamesCheckBox);
+        
+        _startLogixNGOnLoadCheckBox.setSelected(preferences.getStartLogixNGOnStartup());
+        _allowDebugModeCheckBox.setSelected(preferences.getAllowDebugMode());
+        _showSystemUserNamesCheckBox.setSelected(preferences.getShowSystemUserNames());
+        
+        errorHandlingComboBox = new JComboBox<>();
+        for (ErrorHandlingType type : ErrorHandlingType.values()) {
+            // ErrorHandlingType.Default cannot be used as default
+            if (type != ErrorHandlingType.Default) {
+                errorHandlingComboBox.addItem(type);
+                if (preferences.getErrorHandlingType() == type) {
+                    errorHandlingComboBox.setSelectedItem(type);
+                }
+            }
+        }
+        gridPanel.add(errorHandlingComboBox);
         
         panel.setLayout(new FlowLayout(FlowLayout.CENTER, 40, 0));
         panel.add(gridPanel);

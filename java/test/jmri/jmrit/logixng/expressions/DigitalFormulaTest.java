@@ -56,9 +56,9 @@ public class DigitalFormulaTest extends AbstractDigitalExpressionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Digital Formula: E1%n" +
+                "Digital Formula: E1 ::: Log error%n" +
                 "   ?* E1%n" +
-                "      Always true%n" +
+                "      Always true ::: Log error%n" +
                 "   ?* E2%n" +
                 "      Socket not connected%n");
     }
@@ -69,15 +69,15 @@ public class DigitalFormulaTest extends AbstractDigitalExpressionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else%n" +
+                "         If Then Else ::: Log error%n" +
                 "            ? If%n" +
-                "               Digital Formula: E1%n" +
+                "               Digital Formula: E1 ::: Log error%n" +
                 "                  ?* E1%n" +
-                "                     Always true%n" +
+                "                     Always true ::: Log error%n" +
                 "                  ?* E2%n" +
                 "                     Socket not connected%n" +
                 "            ! Then%n" +
-                "               Set the atomic boolean to true%n" +
+                "               Set the atomic boolean to true ::: Log error%n" +
                 "            ! Else%n" +
                 "               Socket not connected%n");
     }
