@@ -100,12 +100,9 @@ public class IfThenElse extends AbstractDigitalAction
     public void execute() throws JmriException {
         _lastExpressionResult = _ifExpressionSocket.evaluate();
         
-        System.out.format("IfThenElse: Expression: %b%n", _lastExpressionResult);
         if (_lastExpressionResult) {
-            System.out.format("IfThenElse: Do Then%n");
             _thenActionSocket.execute();
         } else {
-            System.out.format("IfThenElse: Do Else%n");
             _elseActionSocket.execute();
         }
     }

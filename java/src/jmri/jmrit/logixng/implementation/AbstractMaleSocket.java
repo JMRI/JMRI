@@ -9,7 +9,6 @@ import java.util.Map;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.SymbolTable.VariableData;
-import jmri.jmrit.logixng.implementation.Bundle;
 import jmri.jmrit.logixng.implementation.swing.ErrorHandlingDialog;
 import jmri.util.LoggingUtil;
 import jmri.util.ThreadingUtil;
