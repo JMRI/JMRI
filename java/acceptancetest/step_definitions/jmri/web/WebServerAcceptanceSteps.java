@@ -8,7 +8,6 @@ import java.util.logging.Level;
 
 import jmri.InstanceManager;
 import jmri.ConfigureManager;
-import org.apache.log4j.lf5.LogLevel;
 import org.assertj.core.api.Condition;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
@@ -28,7 +27,6 @@ import org.slf4j.LoggerFactory;
 
 import static org.assertj.core.api.Assertions.allOf;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.util.Sets.newLinkedHashSet;
 
 /**
  * Cucumber step definitions for Web Server Acceptance tests.
@@ -55,8 +53,6 @@ public class WebServerAcceptanceSteps implements En {
         });
 
         When("^I ask for the url (.*)$", (String url) -> {
-            webDriver.get("http://localhost:12080/");
-            waitLoad();
             webDriver.get(url);
         });
 
@@ -69,15 +65,12 @@ public class WebServerAcceptanceSteps implements En {
             assertThat(webDriver.getTitle()).isEqualTo(pageTitle);
         });
 
-        Then("^either (.*) or (.*) is returned as the title$", (String pageTitle, String formattedPageTitle) -> {
+        Then("^(.*) is set as the title$", (String pageTitle) -> {
             waitLoad(); //wait for page to load
             //additional conditional wait for javascript to run and set the title
-            WebDriverWait wait = new WebDriverWait(webDriver, 15);
-            wait.until(//ExpectedConditions.or(
-                    //ExpectedConditions.titleIs(pageTitle),
-                    ExpectedConditions.titleIs(formattedPageTitle)//)
-            );
-            assertThat(webDriver.getTitle()).isIn(newLinkedHashSet(pageTitle, formattedPageTitle));
+            WebDriverWait wait = new WebDriverWait(webDriver, 10);
+            wait.until(ExpectedConditions.titleIs(pageTitle));
+            assertThat(webDriver.getTitle()).isEqualTo(pageTitle);
         });
 
 
@@ -137,11 +130,7 @@ public class WebServerAcceptanceSteps implements En {
             try {
                 webDriver.get("http://localhost:12080/");
             } catch (org.openqa.selenium.WebDriverException wde) {
-                // ignore reaching an error page, rethrow if anything
-                // not being able to reach the browser here is ok.
-                if (!(wde.getMessage().startsWith("Reached error page") || wde instanceof org.openqa.selenium.remote.UnreachableBrowserException)) {
-                    throw wde;
-                }
+                log.warn("Ignoring error navigating back to home.");
             }
         });
 
