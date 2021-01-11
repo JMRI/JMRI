@@ -1,4 +1,4 @@
-#These tests load a panel window, so must run headed.
+#These tests load a panel window, so JMRI must run headed, even though browsers are running headless
 @webtest @webpanel @Headed
 Feature: JMRI Web Panel
 
