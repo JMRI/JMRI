@@ -23,9 +23,9 @@ class LncvProgActionTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LnTrafficController lnis = new LocoNetInterfaceScaffold();
-        SlotManager slotmanager = new SlotManager(lnis);
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis, slotmanager);
+        // LnTrafficController lnis = new LocoNetInterfaceScaffold();
+        // SlotManager slotmanager = new SlotManager(lnis);
+        // LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis, slotmanager);
         LncvProgAction t = new LncvProgAction();
         Assert.assertNotNull("exists", t);
     }
