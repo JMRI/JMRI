@@ -517,7 +517,7 @@
     <h3>Timetable</h3>
         <a id="Timetable" name="Timetable"></a>
         <ul>
-            <li></li>
+            <li>Set the default start time for a new train to match the schedule start time.</li>
         </ul>
 
    <h3>Tracker</h3>
