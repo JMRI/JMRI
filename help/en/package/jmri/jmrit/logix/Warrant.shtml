@@ -128,16 +128,17 @@
         "CreateEditWarrant.shtml">Creating and Editing
         Warrants</a>.</li>
 
-        <li><b>Create New Warrant</b> - After providing system and
-        user names this opens a blank Warrant Editing Window to
-        create a new Warrant.<br>
-        The operations of this frame are
-        discussed in <a href="CreateEditWarrant.shtml">Creating and
-        Editing Warrants</a>.</li>
+        <li><b>Create New Warrant</b> - Opens the window used for
+        creating and editing warrants. This window has several display
+        modes. In this case, it is opened in the mode to create a
+        route for a new warrant.
+        The <a href="CreateEditWarrant.shtml">Creating and Editing Warrants</a>
+        help page has information about creating a warrant.</li>
 
-        <li><b>Train Trackers</b> - Opens window where the
-        identity of trains can be displayed as they are moved by
-        operators from one occupancy block to another.</li>
+        <li><b>Train Trackers</b> - Opens the Tracker Table window.
+        The <a href="Tracker.shtml">Train Trackers</a> help page
+        discusses how the movements of a train can be displayed 
+        as they move from one occupancy block to another.</li>
 
         <li><b>Create NX Warrant</b> - Opens a window to create a
         temporary eNtry/eXit (NX) Warrant. This is discussed
@@ -146,6 +147,13 @@
         <li><b>Open Session Log</b> - <span class="since">since
         3.7.3</span> Opens a window to name a file that records
         the Warrant and train tracking status messages.</li>
+
+        <li><b>Open Circuit builder</b> - Opens a window for
+        the circuit Builder to present its options for 
+        interactively editing and creating OBlocks, Portals, 
+        Paths. Also configures Signals and Indicator Track 
+        icons. <a href="../display/CircuitBuilder.shtml">
+        Circuit Builder</a> has details.</p></li>
       </ul>
 
 	  <h3>Warrants without Occupancy Detection</h3>

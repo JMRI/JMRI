@@ -430,9 +430,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.21.3+R4558b1c10.dmg](https://github.com/JMRI/JMRI/releases/download/v4.21.3/JMRI.4.21.3+R4558b1c10.dmg) | ebe812a971429a77e5a4245c9faa92c33d418cef07bbd9bd0f519ace1ec59ffb
-[JMRI.4.21.3+R4558b1c10.exe](https://github.com/JMRI/JMRI/releases/download/v4.21.3/JMRI.4.21.3+R4558b1c10.exe) | a8caba15505c8c86d2b3cca63ac6a4af000123d2eebd1778075220b9cf176d83
-[JMRI.4.21.3+R4558b1c10.tgz](https://github.com/JMRI/JMRI/releases/download/v4.21.3/JMRI.4.21.3+R4558b1c10.tgz) | b888278563e8fa4b7edf8e5f9b112f49f737d4604f6295e172801d29ed2f5d06
+[JMRI.4.21.3+R63094d48b.dmg](https://github.com/JMRI/JMRI/releases/download/v4.21.3/JMRI.4.21.3+R63094d48b.dmg) | 20c2000b00ca9b6c403bb17a187a2e9670b4c27e4a64a12ca3d592b888ca1a3a
+[JMRI.4.21.3+R63094d48b.exe](https://github.com/JMRI/JMRI/releases/download/v4.21.3/JMRI.4.21.3+R63094d48b.exe) | b4ed4c1cd7c61becbd10f964cba7e85579e3b7101f7b3e858f28272fb7e86a6d
+[JMRI.4.21.3+R63094d48b.tgz](https://github.com/JMRI/JMRI/releases/download/v4.21.3/JMRI.4.21.3+R63094d48b.tgz) | 057fa69849f5383def665dd9e7e84335ada9e39a5d8b60c5f1c39227f9ba40ae
 
 ```
 
@@ -467,6 +467,12 @@ help/en/webtoc.shtml
 help/en/Map.jhm
 help/en/JavaHelpSearch/*
 ```
+and perhaps (depending on merge history as the release branch was made) the control file:
+```
+pom.xml
+release.properties
+```
+
 If there are any changes in other files, do both of:
 
    - Make sure they get moved back to the master branch
