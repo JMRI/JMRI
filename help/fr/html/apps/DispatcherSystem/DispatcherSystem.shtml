@@ -1,0 +1,283 @@
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright ($Author$) 2016 -->
+
+  <title>JMRI: Dispatcher System</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+      <h1>Syst&#232;me de Dispatching</h1>
+
+      <p>Le Syst&#232;me de Dispatching est un ensemble d'outils Python permettant d'&#233;tendre les capacit&#233;s du
+      Dispatching.</p>
+
+      <div class="toc">
+        <ul>
+          <li><a href="#introduction">Introduction</a>
+            <ul>
+              <li><a href="#steps">Etapes de la mise en place du syst&#232;me</a></li>
+              <li><a href="#requirements"> Exigences du Syst&#232;me</a></li>
+            </ul>
+          </li>
+          <li><a href="#stage1">R&#233;alisation de l'&#233;tape 1 &mdash; Montage du panneau</a></li>
+          <li><a href="#stage2">R&#233;alisation de l'&#233;tape 2 &mdash; Production des transits</a></li>
+          <li><a href="#stage3">R&#233;alisation de l'&#233;tape 3 &mdash; V&#233;rifications finales</a></li>
+          <li><a href="#running">Ex&#233;cution du programme</a>
+            <ul>
+              <li><a href="#register">Enregistrer un train</a></li>
+              <li><a href="#dispatch">Configurer une distribution</a></li>
+            </ul>
+          </li>
+          <li><a href="#logic">Modification de la Logique du Signal</a></li>
+        </ul>
+      </div>
+
+      <a name="introduction" id="introduction"></a>
+      <h2>Introduction</h2>
+      <p>Il s'agit d'un syst&#232;me automatis&#233; con&#231;u pour vous permettre de faire circuler les trains en utilisant le Dispatcher
+      System entre les lieux (normalement les voies d'&#233;vitement ou les gares, mais en r&#233;alit&#233; n'importe quel ensemble de cantons)
+      d&#233;sign&#233; par vous-m&#234;me.</p>
+
+      <p>À condition que vous ayez mis en place un syst&#232;me tel que d&#233;crit dans la section Configuration requise, en appuyant sur
+      quelques boutons sur le panneau de g&#233;n&#233;ration du syst&#232;me, un syst&#232;me complet sera mis en place pour vous
+      avec les fichiers Transits, Train Info, et des boutons sur lesquels vous pouvez appuyer pour
+      faire passer les trains sur votre r&#233;seau.
+
+      <p>Un r&#233;seau sera mis en place en coulisses pour trouver le meilleur itin&#233;raire &#224; partir de
+      l'emplacement du train &#224; l'endroit requis, et mettre en place une s&#233;rie de transits
+      qui guidera le train jusqu'&#224; l'endroit souhait&#233;.
+
+      <p>Le train s'arr&#234;tera dans toutes les gares du parcours ou voyagera sans
+      s'arr&#234;ter aux arr&#234;ts interm&#233;diaires, selon qu'il s'agit d'un mode express ou d'un mode d'arr&#234;t
+      s&#233;lectionn&#233;</p>
+
+      <p>Il est pr&#233;vu de faire circuler plusieurs trains, les trains s'arr&#234;tant les uns pour les autres.
+      C'est une caract&#233;ristique du Dispatcher, mais le syst&#232;me permet de s&#233;lectionner facilement chaque train
+      pour contr&#244;ler chacun d'entre eux.</p>
+
+      <p>Malheureusement Il y a un d&#233;faut quelque part dans le programme ou le r&#233;partiteur et
+      deux trains ne peuvent pas fonctionner en m&#234;me temps. Le premier train s'arr&#234;te lorsque le second d&#233;marre.</p>.</p>
+
+      <a name="steps" id="steps"></a>
+      <h3>Etapes de la mise en place du syst&#232;me</h3>
+
+      <p>Il y a plusieurs &#233;tapes pour mettre en place le syst&#232;me de circulation automatique des trains:</p>
+
+      <p> Remplissez les conditions pr&#233;alables, qui comprennent le profilage de la vitesse de vos locos que vous souhaitez faire fonctionner avec le syst&#232;me</p>
+
+      <ul>
+        <li>D&#233;marrer JMRI sans panneau affich&#233;. </span></li>
+        <li>Le panneau aurait dû :
+          <ul>
+            <li>Mats de Signalisation</li>
+            <li>Logique du m&#226;t de signalisation</li>
+            <li> Pas de transit (s'il y en a, ils seront supprim&#233;s)</li>
+            <li> Pas de fichiers d'information sur les trains (s'il y en a, ils seront supprim&#233;s)</li>
+            <li>SignalMasts</li>
+          </ul>
+        </li>
+        <li>Renforcer le panneau du syst&#232;me de dispatching</li>
+        <li>R&#233;aliser l'&#233;tape 1 pour g&#233;n&#233;rer un panneau interm&#233;diaire avec des ic&#244;nes pour d&#233;placer les trains</li>
+        <li>Red&#233;marrage</li>
+        <li>Ex&#233;cuter la phase 2 pour g&#233;n&#233;rer un panneau de syst&#232;me d'ex&#233;cution</li>
+        <li>Red&#233;marrage</li>
+        <li>Ex&#233;cuter l'&#233;tape 3 pour v&#233;rifier les options du dispatcher</li>
+        <li>V&#233;rifier la logique du syst&#232;me produite automatiquement et la modifier &#224; la main</li>
+        <li>Sauvegarder dans un panneau de circulation modifi&#233;</li>
+        <li>Ex&#233;cuter le train</li>
+      </ul>
+
+      <a name="exigences" id="exigences"></a>
+      <h3>Pr&#233;requis du syst&#232;me</h3>
+
+      <p>Pour utiliser le syst&#232;me Dispatcher, il y a plusieurs conditions pr&#233;alables</p>
+      <ul>
+        <li> Vous auriez dû mettre en place le syst&#232;me avec des m&#226;ts de signalisation</li>
+        <li>Les locos que vous voulez ex&#233;cuter sur le syst&#232;me devraient &#234;tre :
+          <ul>
+            <li> inscrit dans l'Inventaire</li>
+            <li> &#233;tablir un profil de vitesse</li>
+          </ul>
+        </li>
+        <li> les arr&#234;ts requis (Cantons) doivent &#234;tre indiqu&#233;s en saisissant stop dans le champ de commentaires pour le canton appropri&#233;</li>
+        <li>Il est pr&#233;vu qu'une annonce soit faite en gare lorsqu'un train quitte une gare.</li>
+        <li>Si le nom du canton est impronon&#231;able, un bon nom d'arr&#234;t peut &#234;tre saisi dans le champ des commentaires pour les annonces de d&#233;part</li>
+        <li>Les commentaires des cantons typiques seraient</li>
+        <li><img src="images/NewItem31.png" alt="" /></li>
+      </ul>
+
+      <a name="stage1" id="stage1"></a>
+      <h2>R&#233;alisation de l'&#233;tape 1 &mdash; Montage du panneau</h2>
+      <p>Ex&#233;cuter DispatcherSystem.py dans le r&#233;pertoire principal de jython. Vous obtiendrez quelque chose comme ceci:</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem3.png"></p>
+      <p> Vous &#234;tes invit&#233; &#224; lancer l'&#233;tape 1 qui ajoute toutes les ic&#244;nes requises pour faire fonctionner le syst&#232;me sur un nouveau panneau.</p>
+      <p>si l'ancien nom du panneau &#233;tait WR.xml, le nouveau panneau sera WR_icons.xml</p>
+      <p>Certaines v&#233;rifications sont faites en premier</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem4.png"></p>
+      <p>Les contr&#244;les suivants sont effectu&#233;s</p>
+      <ul>
+        <li>Tous les cantons ont un capteur</li>
+        <li>Il n'y a pas deux cantons qui ont le m&#234;me capteur</li>
+        <li>des arr&#234;ts sont mis en place</li>
+        <li>tous les cantons ont des longueurs</li>
+      </ul>
+      <p>Si aucun train n'est pr&#233;sent dans le tableau de service avec des profils de vitesse, 
+      cela sera d&#233;tect&#233; et pourra &#234;tre corrig&#233; au moment de la circulation.</p>
+      <p>Lorsque le fichier d'ic&#244;nes est produit, un message similaire &#224; celui-ci sera produit:</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem34.png"></p>
+      <p>Un nouveau panneau a &#233;t&#233; cr&#233;&#233;. Vous devez fermer et charger le nouveau panneau, au lieu de l'original.</p>
+      <p>Note:</p>
+      <p>Le panneau aura &#233;t&#233; cr&#233;&#233; en chargeant le fichier xml original (dans ce cas WR.ml), 
+      en modifiant les d&#233;tails et en enregistrant dans un nouveau fichier (WR_icons.xml). </p>
+      <p>Si le fichier d'origine contient des modifications non sauvegard&#233;es, celles-ci ne s
+      eront pas pr&#233;sentes dans le nouveau fichier, mais vous ne les perdrez pas &#224; condition de 
+      les sauvegarder soit dans le fichier d'origine, soit dans un autre fichier une fois 
+      l'&#233;tape 1 termin&#233;e. Nous vous conseillons d'enregistrer toutes les modifications avant 
+      d'ex&#233;cuter l'&#233;tape 1, afin qu'elles soient r&#233;cup&#233;r&#233;es.
+
+
+      <a name="stage2" id="stage2"></a>
+      <h2>Etape 2 Produire les transits</h2>
+
+      <p>PanelPro doit &#234;tre red&#233;marr&#233; et le fichier d'ic&#244;nes produit &#224; l'&#233;tape 1 doit &#234;tre charg&#233;.</p>
+      <p>Un &#233;cran similaire &#224; celui qui suit sera produit:</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem6.png"></p>
+      <p>Une fois le bouton Stage2 enfonc&#233;, on obtient un message de confirmation:</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem7.png"></p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem8.png"></p>
+      <p> Les passages n&#233;cessaires pour faire avancer le train d'un arr&#234;t &#224; l'autre seront produits, et les
+      fichiers Train-info qui contiennent les informations n&#233;cessaires &#224; la circulation du train sont produits.
+      Certaines de ces informations sont &#233;cras&#233;es lorsque les fichiers d'informations sur les trains sont utilis&#233;s, comme le nom du train,
+      Il n'est donc pas n&#233;cessaire de produire des fichiers d'information sur les trains pour chaque train.
+      <p>Les fichiers Train-info sont produits pour chaque itin&#233;raire autoris&#233;, et tous les itin&#233;raires autoris&#233;s qui
+      sont physiquement possibles de circuler. Les fichiers Train-info sont produits pour l'exploitation en marche avant et en marche arri&#232;re,
+      Il peut donc y en avoir un certain nombre de produits.</p>
+      <p>Une fois que les fichiers de transit et d'informations sur les trains sont produits, nous recevons un message:</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem35.png"></p>
+      <p> Vous devez ensuite red&#233;marrer JMRI et charger le panneau d'ex&#233;cution au lieu du panneau des ic&#244;nes, dans cet exemple WR_run.xml</p>
+
+      <a name="stage3" id="stage3"></a>
+      <h2>Ex&#233;cution des contr&#244;les finaux de l'&#233;tape 3</h2>
+
+      <p></p>
+      <p> Relancez JMRI et chargez le nouveau panneau d'ex&#233;cution, dans notre exemple WR_run.xml</p>
+      <p">Ex&#233;cuter &#224; nouveau le syst&#232;me de dispatching pour obtenir</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem11.png"></p>
+      <p>Cliquez sur l'&#233;tape 3 et deux &#233;crans s'ouvriront, l'&#233;cran des options du dispatcher et un autre
+      en indiquant les options &#224; d&#233;finir pour que le syst&#232;me Dispatcher fonctionne</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem12.png"></p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem13.png"></p>
+      <p>S&#233;lectionnez l'option requise et nous recevons un message vous rappelant d'enregistrer les options modifi&#233;es</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem14.png"></p>
+      <p>S&#233;lectionnez la fen&#234;tre du dispatching qui s'est ouverte automatiquement et cliquez sur Options =&gt; Save Options</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem32.png"></p>
+
+      <a name="running" id="running"></a>
+      <h2>Ex&#233;cution du programme</h2>
+
+      <p> Pour faire fonctionner le syst&#232;me, il est conseill&#233; de faire fonctionner le moniteur de liens (Panneau =&gt; Moniteur de lien)</p>
+      <p> Vous remarquerez plusieurs boutons dans le coin sup&#233;rieur droit. </p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem15.png"></p>
+      <p> Les deux premiers d&#233;marrent et terminent les quatre fils de discussion n&#233;cessaires au fonctionnement du programme. 
+      Les liens de communication doivent &#234;tre en fonction pour que les autres boutons fonctionnent.
+      <p>Si l'on appuie par inadvertance sur le bouton de marche deux fois, huit liens seront produits.
+      Il est pr&#233;f&#233;rable de recommencer. En cliquant sur le bouton "Stop Dispatcher System", quatre d'entre eux seront ferm&#233;s,
+      mais l'autre devra &#234;tre ferm&#233; &#224; partir du moniteur de lien.</p>
+      <p>Choisir la direction</p>
+
+      <a name="register" id="register"></a>
+      <h3> Enregistrer un train</h3>
+
+      <p>La premi&#232;re &#233;tape consiste &#224; enregistrer un train dans une voie d'&#233;vitement ou &#224; un arr&#234;t. Conduire un train jusqu'&#224;
+      l'arr&#234;t requis, et appuyez sur Configuration du train sur la voie d'&#233;vitement.</p>
+      <p>Nous devons indiquer au syst&#232;me dans quelle direction le train se dirige. </p>
+      <ul>
+      <li>Sur une voie d'&#233;vitement, il est facile de choisir une direction dans laquelle le train peut aller, et nous disons dans quelle direction il est orient&#233; en dehors de la voie d'&#233;vitement</li>
+      <li>A un autre arr&#234;t, nous devons indiquer de quel c&#244;t&#233; nous parlons et nous mettons en &#233;vidence une direction</li>
+      </ul>
+      <p>supposons que nous ayons la disposition suivante</p>
+      <p><img width="617" height="140" alt="" style="padding : 1px;" src="images/NewItem16.png"></p>
+      <p>Choisir le train</p>
+      <p>Nous cliquons sur SetupTrain dans la voie d'&#233;vitement</p>
+      <p>Si le train est sur la voie 1b comme indiqu&#233;, on obtient le message suivant</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem17.png"></p>
+      <p>Si l'on clique sur le menu d&#233;roulant, on obtient tous les trains du syst&#232;me avec un profil de vitesse.
+      Nous choisissons le train requis et nous cliquons sur OK</p>
+      <p>Enregistrer la direction dans laquelle le train se dirige</p>
+      <p> Le message suivant appara&#238;t alors</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem18.png"></p>
+      <p>S&#233;lectionnez la bonne direction et cliquez sur OK.</p>
+      <p>Le train appara&#238;tra dans le lieu de m&#233;moire du canton</p>
+      <p><img width="629" height="140" alt="" style="padding : 1px;" src="images/NewItem20.png"></p>
+
+      <a name="dispatch" id="dispatch"></a>
+      <h3>Mettre en place une exp&#233;ditione</h3>
+
+      <p>Pour mettre en place une exp&#233;dition d'un train (ou plusieurs trains doivent &#234;tre enregistr&#233;s dans le syst&#232;me, et situ&#233;s dans un arr&#234;t).</p>
+      <p>Cliquer sur un bouton rouge permet de mettre en place une exp&#233;dition &#224; cet endroit.</p>
+      <p> Supposons que l'on ait la disposition suivante avec un train en voie de garage1. Cliquez sur le bouton "Passing Loop"
+      comme indiqu&#233; pour &#233;tablir une exp&#233;dition vers Passing Loop.</p>
+      <p><img alt="" width="681" height="304" style="padding : 1px;" src="images/NewItem24.png"></p>
+      <p>Il y a une ic&#244;ne express. Si vous le d&#233;finissez, le type de train sera par d&#233;faut express (se d&#233;place
+      sans s'arr&#234;ter aux stations interm&#233;diaires), Si elle n'est pas d&#233;finie, elle s'arr&#234;tera par d&#233;faut comme indiqu&#233;.</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem26.png"></p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem25.png"></p>
+      <p>S&#233;lectionnez le train requis dans le menu d&#233;roulant, et une exp&#233;dition sera mise en place jusqu'au prochain arr&#234;t (voie d'&#233;vitement 1A).</p>
+      <p><img alt="" width="692" height="157" style="padding : 1px;" src="images/NewItem27.png"></p>
+      <p>Le train va se mettre en marche, et la vitesse indiqu&#233;e dans la fen&#234;tre Auto trains.</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem28.png"></p>
+      <p>Le train se rendra &#224; la voie d'&#233;vitement 1B, s'arr&#234;tera et l'exp&#233;dition s'ach&#232;vera, une autre exp&#233;dition
+      d&#233;marrera jusqu'au prochain arr&#234;t qui sera "Passing Loop".</p>
+
+      <a name="logic" id="logic"></a>
+      <h2>Modifier la logique de Signalisation</h2>
+
+      <p>La logique des signaux automatiques n'est pas parfaite. Elle fonctionne bien lorsqu'il y a un aiguillage par section,
+      mais lorsqu'il y en a plus, il peut se tromper sur un ou plusieurs itin&#233;raires dans une section.
+      <p>Cela peut &#234;tre surmont&#233; en modifiant la logique du signal. Vous pouvez voir si la logique est erron&#233;e
+      soit en essayant de faire passer un train sur l'itin&#233;raire, soit en pla&#231;ant les aiguillages le long
+      l'itin&#233;raire et voir si les signaux sont verts</p>
+      <p>Dans l'itin&#233;raire fix&#233; depuis la voie d'&#233;vitement des marchandises et retour, on peut voir que la logique du signal automatique a &#233;chou&#233;.</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem22.png"><span class="rvts8">.</p>
+      <p>Cliquez &#224; droite sur le m&#226;t de signalisation et faites appara&#238;tre l'&#233;diteur logique du m&#226;t de signalisation. pour l'une des routes 
+      (Board2toPT11) que nous obtenons lorsque nous appuyons sur le bouton d'&#233;dition:</p>
+      <p><img style="padding : 1px;" src="images/NewItem37.png" alt="" width="667" height="495" /></p>
+      <p> Vous pouvez voir que pour cet itin&#233;raire, le tableau 2 &#224; T11 (l'itin&#233;raire de bas en haut) ne montre que 2 aiguillages au lieu de 4, 
+      et aussi qu'un des aspects est ferm&#233; au lieu d'&#234;tre lanc&#233;. Le Dispatcher ne fonctionnera pas. </p>
+      <p>Notez que l'essentiel est que tous les aiguillages utilis&#233;s sur le parcours doivent &#234;tre pr&#233;sents dans la logique de signalisation, 
+      et qu'ils doivent avoir le bon aspect. Si ce n'est pas le cas, nous devrions supprimer et remplacer. </p>
+      <p>Supprimez l'itin&#233;raire, appuyez sur Ajouter un signal logique. Et ajoutez un nouvel itin&#233;raire. </p>
+      <p>Il est n&#233;cessaire d' Utiliser les chemins d'acc&#232;s, Utiliser les d&#233;tails de l'aiguillage de l'&#233;diteur de r&#233;seau et 
+      Utiliser les d&#233;tails des cantons de l'&#233;diteur de r&#233;seau (cela permettra de s'assurer que les transits d&#233;j&#224; produits ne seront pas 
+      interrompus et de configurer le transit. Sauvegardez le panneau et red&#233;marrez.</p>
+      <p> Le r&#233;partiteur devrait maintenant courir le long de l'itin&#233;raire.</p>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
+
+    
+
