@@ -17,7 +17,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
 
     @Test
     public void testCtor() {
-        jmri.jmrix.loconet.uhlenbrock.configurexml.ConnectionConfigXml ccx = new jmri.jmrix.loconet.uhlenbrock.configurexml.ConnectionConfigXml();
+        ConnectionConfigXml ccx = new ConnectionConfigXml();
         Assertions.assertNotNull(ccx, "Instance is created");
     }
 
