@@ -1,7 +1,6 @@
 package jmri.util.web;
 
 import java.util.Map;
-import java.awt.GraphicsEnvironment;
 import java.util.HashMap;
 
 import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
@@ -61,14 +60,10 @@ public class BrowserFactory {
                 if (driver == null) {
                     WebDriverManager.getInstance(ChromeDriver.class).setup();
                     ChromeOptions chromeOptions = new ChromeOptions();
-                    if (GraphicsEnvironment.isHeadless()) {
-                        chromeOptions.addArguments("--headless");
-                    }
-                    chromeOptions.addArguments("--whitelisted-ips=''");
-                    chromeOptions.addArguments("--verbose");
-                    chromeOptions.addArguments("--disable-extensions");
+                    chromeOptions.addArguments("--headless", "--log-level=3", "--disable-extensions");
+                    
                     LoggingPreferences logPrefs = new LoggingPreferences();
-                    logPrefs.enable(LogType.BROWSER, Level.ALL);
+                    logPrefs.enable(LogType.BROWSER, Level.SEVERE);
                     chromeOptions.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
 
                     driver = new EventFiringWebDriver(new ChromeDriver(chromeOptions));
