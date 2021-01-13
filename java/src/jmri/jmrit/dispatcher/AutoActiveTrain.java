@@ -540,12 +540,8 @@ public class AutoActiveTrain implements ThrottleListener {
                     }
                 }
             } else if (b != _currentBlock) {
-                String x = "UNKWON";
-                String y = "UNKNOWN";
-                try { x=_currentBlock.getDisplayName(); } catch (Exception ex) {}
-                try { y=_nextBlock.getDisplayName(); } catch (Exception ex) {}
-                log.trace("{}: block going occupied {} is not _nextBlock[{}] or _currentBlock[{}] - ignored.",
-                        _activeTrain.getTrainName(), b.getDisplayName(USERSYS), _currentBlock, _nextBlock);
+                log.trace("{}: block going occupied {} is not _nextBlock or _currentBlock - ignored.",
+                        _activeTrain.getTrainName(), b.getDisplayName(USERSYS));
                 return;
             }
         } else if (b.getState() == Block.UNOCCUPIED) {
