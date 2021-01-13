@@ -143,7 +143,9 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        memo.getLnTrafficController().sendLocoNetMessage(createPacket(packetTextField.getText()));
+        String input = packetTextField.getText();
+        // TODO check input + feedback on error. Too easy to cause NPE
+        memo.getLnTrafficController().sendLocoNetMessage(createPacket(input));
     }
 
     // control sequence operation
@@ -258,7 +260,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     /**
-     * Create a well-formed LocoNet packet from a String
+     * Create a well-formed LocoNet packet from a String.
      * <p>
      * Well-formed generally means a space-separated string of hex values of
      * two characters each, as defined in

@@ -58,7 +58,7 @@ public class CvValue extends AbstractValue implements ProgListener {
     public String number() {
         return _num;
     }
-    private String _num;
+    private final String _num;
 
     public String cvName() {
         return _cvName;
@@ -82,13 +82,13 @@ public class CvValue extends AbstractValue implements ProgListener {
     }
 
     protected void notifyValueChange(int value) {
-        prop.firePropertyChange("Value", null, Integer.valueOf(value));
+        prop.firePropertyChange("Value", null, value);
     }
 
     /**
      * Edit a new value into the CV.
      * <p>
-     * Only use this for external edits, e.g. set form a GUI.
+     * Only use this for external edits, e.g. set from a GUI.
      * Not for internal uses, as it sets the state to EDITED.
      * @param value new CV value.
      */
@@ -105,7 +105,7 @@ public class CvValue extends AbstractValue implements ProgListener {
     private int _value = 0;
 
     /**
-     * Get the decoder value read during compare
+     * Get the decoder value read during compare.
      *
      * @return _decoderValue
      */
@@ -160,9 +160,9 @@ public class CvValue extends AbstractValue implements ProgListener {
     }
 
     /**
-     * Intended for debugging only, don't translate
+     * Intended for debugging only, don't translate.
      * @param state State to translate to text
-     * @return Text (human readable) representaton of state
+     * @return Text (human readable) representation of state
      */
     String stateToString(int state) {
         switch (state) {
@@ -194,8 +194,8 @@ public class CvValue extends AbstractValue implements ProgListener {
     }
 
     /**
-     * set the busy state and send notification. Should be used _only_ if this
-     * is the only thing changing
+     * Set the busy state and send notification. Should be used _only_ if this
+     * is the only thing changing.
      */
     private void setBusy(boolean busy) {
         log.debug("setBusy from {} to {} state {}", _busy, busy, _state); // NOI18N
@@ -206,7 +206,7 @@ public class CvValue extends AbstractValue implements ProgListener {
     }
 
     /**
-     * Notify of changes to the busy state
+     * Notify of changes to the busy state.
      */
     private void notifyBusyChange(boolean oldBusy, boolean newBusy) {
         log.debug("notifyBusyChange from {} to {} current state {}", oldBusy, newBusy, _state); // NOI18N
