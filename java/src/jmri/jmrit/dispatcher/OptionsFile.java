@@ -44,8 +44,6 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
     // operational variables
     protected DispatcherFrame dispatcher = null;
     private static String defaultFileName = FileUtil.getUserFilesPath() + "dispatcheroptions.xml";
-    public static final int SIGNALHEAD = 0x00;
-    public static final int SIGNALMAST = 0x01;
 
     public static void setDefaultFileName(String testLocation) {
         defaultFileName = testLocation;
@@ -93,9 +91,15 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                         }
                     }
                     if (options.getAttribute("usesignaltype") != null) {
-                        dispatcher.setSignalType(SIGNALHEAD);
-                        if (options.getAttribute("usesignaltype").getValue().equals("signalmast")) {
-                            dispatcher.setSignalType(SIGNALMAST);
+                        switch (options.getAttribute("usesignaltype").getValue()) {
+                            case "signalmast":
+                                dispatcher.setSignalType(DispatcherFrame.SIGNALMAST);
+                                break;
+                            case "sectionsallocated":
+                                dispatcher.setSignalType(DispatcherFrame.SECTIONSALLOCATED);
+                                break;
+                            default:
+                                dispatcher.setSignalType(DispatcherFrame.SIGNALHEAD);
                         }
                     }
                     if (options.getAttribute("useconnectivity") != null) {
@@ -126,6 +130,12 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                         dispatcher.setAutoAllocate(false);
                         if (options.getAttribute("autoallocate").getValue().equals("yes")) {
                             dispatcher.setAutoAllocate(true);
+                        }
+                    }
+                    if (options.getAttribute("autorelease") != null) {
+                        dispatcher.setAutoRelease(false);
+                        if (options.getAttribute("autorelease").getValue().equals("yes")) {
+                            dispatcher.setAutoRelease(true);
                         }
                     }
                     if (options.getAttribute("autoturnouts") != null) {
@@ -209,9 +219,9 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                     if (options.getAttribute("stoppingspeedname") != null) {
                         dispatcher.setStoppingSpeedName((options.getAttribute("stoppingspeedname")).getValue());
                     }
+                    
                     log.debug("  Options: {}, Detection={}, AutoAllocate={}, AutoTurnouts={}, SetSSLDirectionSensors={}", 
-                            (dispatcher.getSignalType()==SIGNALHEAD?"SignalHeads/SSL":"SignalMasts"),
-                            (dispatcher.getHasOccupancyDetection()?"yes":"no"),
+                            (dispatcher.getSignalTypeString()),
                             (dispatcher.getAutoAllocate()?"yes":"no"),
                             (dispatcher.getAutoTurnouts()?"yes":"no"),
                             (dispatcher.getSetSSLDirectionalSensors()?"yes":"no"));
@@ -251,6 +261,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
         options.setAttribute("trainsfromtrains", "" + (dispatcher.getTrainsFromTrains() ? "yes" : "no"));
         options.setAttribute("trainsfromuser", "" + (dispatcher.getTrainsFromUser() ? "yes" : "no"));
         options.setAttribute("autoallocate", "" + (dispatcher.getAutoAllocate() ? "yes" : "no"));
+        options.setAttribute("autorelease", "" + (dispatcher.getAutoRelease() ? "yes" : "no"));
         options.setAttribute("autoturnouts", "" + (dispatcher.getAutoTurnouts() ? "yes" : "no"));
         options.setAttribute("trustknownturnouts", "" + (dispatcher.getTrustKnownTurnouts() ? "yes" : "no"));
         options.setAttribute("minthrottleinterval", "" + (dispatcher.getMinThrottleInterval()));
@@ -266,10 +277,15 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
         options.setAttribute("usescalemeters", "" + (dispatcher.getUseScaleMeters() ? "yes" : "no"));
         options.setAttribute("userosterentryinblock", "" + (dispatcher.getRosterEntryInBlock() ? "yes" : "no"));
         options.setAttribute("stoppingspeedname", dispatcher.getStoppingSpeedName());
-        if (dispatcher.getSignalType() == SIGNALHEAD) {
-            options.setAttribute("usesignaltype", "signalhead");
-        } else {
-            options.setAttribute("usesignaltype", "signalmast");
+        switch (dispatcher.getSignalType()) {
+            case DispatcherFrame.SIGNALMAST:
+                options.setAttribute("usesignaltype", "signalmast");
+                break;
+            case DispatcherFrame.SECTIONSALLOCATED:
+                options.setAttribute("usesignaltype", "sectionsallocated");
+                break;
+            default:
+                options.setAttribute("usesignaltype", "signalhead");
         }
         root.addContent(options);
 

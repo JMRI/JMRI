@@ -73,6 +73,9 @@ public class LoadAtStartUpTest {
         assertThat(d.getActiveTrainsList().size()).withFailMessage("Train Loaded").isEqualTo(1);
 
         // trains loads and runs, 4 allocated sections, the one we are in and 3 ahead.
+        JUnitUtil.waitFor(() -> {
+            return d.getAllocatedSectionsList().size() == 4;
+        }, "Allocate Sections ahead");
         assertThat(d.getAllocatedSectionsList()).withFailMessage("Allocated sections 4").hasSize(4);
         // set up loco address
         DccLocoAddress addr = new DccLocoAddress(1000, true);
@@ -183,6 +186,8 @@ public class LoadAtStartUpTest {
         // cancel (terminate) the train.
         JButtonOperator bo = new JButtonOperator(dw, Bundle.getMessage("TerminateTrain"));
         bo.push();
+        // wait for cleanup to finish
+        JUnitUtil.waitFor(200);
 
         assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
 
