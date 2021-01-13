@@ -7,9 +7,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
 /**
- * Test for the ConnectionConfigXml class
+ * Test for the usb_63120 ConnectionConfigXml class.
  *
- * @author   Paul Bender  Copyright (C) 2016, 2020
+ * @author   Paul Bender  Copyright (C) 2016, 2021
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
 
