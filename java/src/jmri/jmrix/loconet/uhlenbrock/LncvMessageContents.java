@@ -442,7 +442,7 @@ public class LncvMessageContents {
     /**
      * Create LocoNet broadcast message to start LNCV programming.
      *
-     * @param articleNum LNCV device type number used as filter to respond. Leave out to 'broadcast' to
+     * @param articleNum LNCV device type number used as filter to respond. Leave this out to 'broadcast' to
      *                   all connected devices (which works for discovery purpose only)
      * @return LocoNet message
      */
