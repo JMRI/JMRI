@@ -70,7 +70,9 @@ public class DefaultConditionalNG extends AbstractBase
     /** {@inheritDoc} */
     @Override
     public void setStartupThreadId(int threadId) {
+        int oldStartupThreadId = _startupThreadId;
         _startupThreadId = threadId;
+        firePropertyChange("Thread", oldStartupThreadId, _startupThreadId);
     }
     
     /** {@inheritDoc} */

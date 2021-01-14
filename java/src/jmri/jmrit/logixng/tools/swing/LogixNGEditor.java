@@ -21,6 +21,7 @@ import jmri.*;
 import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.beantable.BeanTableFrame;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
 import jmri.util.table.ButtonEditor;
@@ -83,8 +84,9 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     JLabel status = new JLabel(" ");
 
     // ------------ ConditionalNG Variables ------------
-    ConditionalNGTableModel conditionalNGTableModel = null;
-    ConditionalNG _curConditionalNG = null;
+    private ConditionalNGTableModel _conditionalNGTableModel = null;
+    private JCheckBox _showStartupThreadsCheckBox = null;
+    private ConditionalNG _curConditionalNG = null;
     int _conditionalRowNumber = 0;
     boolean _inReorderMode = false;
     boolean _inActReorder = false;
@@ -113,8 +115,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     void makeEditLogixNGWindow() {
         editUserName.setText(_curLogixNG.getUserName());
         // clear conditional table if needed
-        if (conditionalNGTableModel != null) {
-            conditionalNGTableModel.fireTableStructureChanged();
+        if (_conditionalNGTableModel != null) {
+            _conditionalNGTableModel.fireTableStructureChanged();
         }
         _inEditMode = true;
         if (_editLogixNGFrame == null) {
@@ -160,8 +162,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             pTitle.add(new JLabel(Bundle.getMessage("ConditionalNGTableTitle")));  // NOI18N
             contentPane.add(pTitle);
             // initialize table of conditionals
-            conditionalNGTableModel = new ConditionalNGTableModel();
-            JTable conditionalTable = new JTable(conditionalNGTableModel);
+            _conditionalNGTableModel = new ConditionalNGTableModel();
+            JTable conditionalTable = new JTable(_conditionalNGTableModel);
             conditionalTable.setRowSelectionAllowed(false);
             TableColumnModel conditionalColumnModel = conditionalTable
                     .getColumnModel();
@@ -204,13 +206,20 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             buttonEditThreadsColumn.setMinWidth(testButton2.getPreferredSize().width);
             buttonEditThreadsColumn.setMaxWidth(testButton2.getPreferredSize().width);
             buttonEditThreadsColumn.setResizable(false);
-
+            
             JScrollPane conditionalTableScrollPane = new JScrollPane(conditionalTable);
             Dimension dim = conditionalTable.getPreferredSize();
             dim.height = 450;
             conditionalTableScrollPane.getViewport().setPreferredSize(dim);
             contentPane.add(conditionalTableScrollPane);
-
+            
+            _showStartupThreadsCheckBox = new JCheckBox("Show startup thread");
+            contentPane.add(_showStartupThreadsCheckBox);
+            _showStartupThreadsCheckBox.addActionListener((evt) -> {
+                _conditionalNGTableModel.setShowStartupThreads(
+                        _showStartupThreadsCheckBox.isSelected());
+            });
+            
             // add message area between table and buttons
             JPanel panel4 = new JPanel();
             panel4.setLayout(new BoxLayout(panel4, BoxLayout.Y_AXIS));
@@ -316,7 +325,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         _nextInOrder = 0;
         _inReorderMode = true;
         status.setText(Bundle.getMessage("ReorderMessage"));  // NOI18N
-        conditionalNGTableModel.fireTableDataChanged();
+        _conditionalNGTableModel.fireTableDataChanged();
     }
 
     /**
@@ -332,7 +341,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             _inReorderMode = false;
         }
         //status.setText("");
-        conditionalNGTableModel.fireTableDataChanged();
+        _conditionalNGTableModel.fireTableDataChanged();
     }
 
     /**
@@ -460,7 +469,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             }
             // add to LogixNG at the end of the calculate order
             _curLogixNG.addConditionalNG(_curConditionalNG);
-            conditionalNGTableModel.fireTableRowsInserted(_numConditionalNGs, _numConditionalNGs);
+            _conditionalNGTableModel.fireTableRowsInserted(_numConditionalNGs, _numConditionalNGs);
             _conditionalRowNumber = _numConditionalNGs;
             _numConditionalNGs++;
             _showReminder = true;
@@ -723,6 +732,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         public static final int BUTTON_EDIT_THREADS_COLUMN = BUTTON_DELETE_COLUMN + 1;
         public static final int NUM_COLUMNS = BUTTON_EDIT_THREADS_COLUMN + 1;
         
+        private boolean _showStartupThreads;
+        
         
         public ConditionalNGTableModel() {
             super();
@@ -749,6 +760,11 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             }
         }
 
+        public void setShowStartupThreads(boolean showStartupThreads) {
+            _showStartupThreads = showStartupThreads;
+            fireTableRowsUpdated(0, _curLogixNG.getNumConditionalNGs()-1);
+        }
+        
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("length")) {  // NOI18N
@@ -772,8 +788,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
          * @return true if a change in State or Appearance was heard
          */
         boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-            return (e.getPropertyName().contains("State") ||      // NOI18N
-                    e.getPropertyName().contains("Appearance"));  // NOI18N
+            return (e.getPropertyName().contains("UserName") ||      // NOI18N
+                    e.getPropertyName().contains("Thread"));  // NOI18N
         }
 
         @Override
@@ -880,7 +896,13 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                     return "";
                 }
                 case THREAD_COLUMN:
-                    return _curLogixNG.getConditionalNG(r).getCurrentThread().getThreadName();
+                    if (_showStartupThreads) {
+                        return LogixNG_Thread.getThread(
+                                _curLogixNG.getConditionalNG(r).getStartupThreadId())
+                                .getThreadName();
+                    } else {
+                        return _curLogixNG.getConditionalNG(r).getCurrentThread().getThreadName();
+                    }
                 default:
                     throw new IllegalArgumentException("Unknown column");
             }
@@ -1129,7 +1151,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 }
                 _curLogixNG.deleteConditionalNG(_curLogixNG.getConditionalNG(_row));
                 InstanceManager.getDefault(ConditionalNG_Manager.class).deleteBean(_conditionalNG, "DoDelete");  // NOI18N
-                conditionalNGTableModel.fireTableRowsDeleted(_row, _row);
+                _conditionalNGTableModel.fireTableRowsDeleted(_row, _row);
                 _numConditionalNGs--;
                 _showReminder = true;
                 _hasDeleted = true;

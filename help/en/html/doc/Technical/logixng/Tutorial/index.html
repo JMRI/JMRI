@@ -118,6 +118,18 @@ Some chapters has a panel and the panels has names like "Chapter 1", that tells 
 <hr>
 
 
+
+<h2>Error handling</h2>
+
+<h3>Throw</h3>
+
+Throw causes errors to be thrown to the upper level. It's useful if you want an error to abort execution for some
+levels. If you, for example, has a for loop, and you want that loop to be aborted if an error occurs in it's
+child, you can let the children throw the error.
+
+<hr>
+
+
 <h2>Threads</h2>
 
 The ConditionalNGs run in a separate thread from the rest of JMRI. But it's possible to use several threads for
