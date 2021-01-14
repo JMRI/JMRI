@@ -1,8 +1,8 @@
 package jmri.jmrix.loconet.uhlenbrock.usb_63120;
 
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +15,7 @@ public class UsbUhlenbrock63120AdapterTest {
     @Test
     public void testCTor() {
         UsbUhlenbrock63120Adapter t = new UsbUhlenbrock63120Adapter();
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -27,7 +27,5 @@ public class UsbUhlenbrock63120AdapterTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
-    // private final static Logger log = LoggerFactory.getLogger(UsbUhlenbrock63120AdapterTest.class);
 
 }

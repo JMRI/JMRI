@@ -1,7 +1,7 @@
 package jmri.jmrix.loconet.uhlenbrock.usb_63120.configurexml;
 
-import jmri.jmrix.loconet.locobufferusb.ConnectionConfig;
-import jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml;
+import jmri.jmrix.loconet.uhlenbrock.usb_63120.ConnectionConfig;
+import jmri.jmrix.loconet.uhlenbrock.usb_63120.UsbUhlenbrock63120Adapter;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -9,11 +9,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test for the usb_63120 ConnectionConfigXml class.
+ * Test for the Uhlenbrock usb_63120 ConnectionConfigXml class.
  *
- * @author   Paul Bender  Copyright (C) 2016, 2021
+ * @author Egbert Broerse Copyright (C) 2021
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
+
+    @Test
+    public void testCTor() {
+        UsbUhlenbrock63120Adapter t = new UsbUhlenbrock63120Adapter();
+        Assertions.assertNotNull(t, "exists");
+    }
 
     @BeforeEach
     @Override

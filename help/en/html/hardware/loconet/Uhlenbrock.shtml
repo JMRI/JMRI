@@ -3,24 +3,12 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI Hardware Support - Uhlenbrock Intellibox</title>
   <meta name="author" content="Michael Beck">
   <meta name="author" content="John Plocher">
   <meta name="keywords" content=
   "Uhlenbrock Intellibox java model railroad JMRI install">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -204,8 +192,8 @@
         Since JMRI can only communicate via the connection, it could lose contact during configuration.</li>
 
         <li>If desired, adjust the system prefix and connection user name.<br>
-        Note that an existing panel contains a certain prefix and changing this
-        option here will lead to an error upon loading such a panel.</li>
+        Note that an existing panel contains a certain system connection prefix and changing this
+        option here to a different value will lead to an error upon loading such a panel.</li>
 
       </ul>
       <p>Save and restart.</p>
