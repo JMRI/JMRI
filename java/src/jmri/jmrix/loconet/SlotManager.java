@@ -94,7 +94,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     /**
      * Initialize the slots array.
-     * @param initilize if true a new slot is created else it is just updated with type
+     * @param initialize if true a new slot is created else it is just updated with type
      *                  and protocol
      */
     protected void loadSlots(boolean initialize) {
@@ -199,7 +199,6 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     /*
      * command station switches
      */
-    private final int SLOTS_OTHER = 128;
     private final int SLOTS_DCS240 = 433;
     private int numSlots = SLOTS_DCS240;         // This is the largest number so far it will reset after the commandstation is known value.
     /**
