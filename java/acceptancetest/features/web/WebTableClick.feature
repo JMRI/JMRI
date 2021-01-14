@@ -19,8 +19,7 @@ Scenario Outline: Web Table requests with click testing
    | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Memories | IMRATEFACTOR | value | 1.0 | 1.0 |
    | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Signal Heads | IH8 | lit | true | true |
 
-   # Chrome version failing on travis
-   @chrome @Ignore
+   @chrome
    Examples: Chrome Table Click Tests
    | browser | panel | table | item | column | before | after |
    | chrome | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Turnouts | IT2 | state | closed | thrown | 

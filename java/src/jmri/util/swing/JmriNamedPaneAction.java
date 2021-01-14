@@ -68,7 +68,7 @@ public class JmriNamedPaneAction extends JmriAbstractAction {
      * or menu item selected, this runs the panel through the initial part of
      * its life cycle and installs in the given window interface.
      * <p>
-     * It different or additional initialization is needed, inherit from this class and
+     * If different or additional initialization is needed, inherit from this class and
      * override this method to do it.
      */
     @Override

@@ -76,6 +76,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
     private LnTrafficController lt;
     protected LocoNetThrottledTransmitter tm;
     private SlotManager sm;
+    private LncvDevicesManager lncvdm = null;
     private LnMessageManager lnm = null;
 
     /**
@@ -121,6 +122,10 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
 
     public void setProgrammerManager(DefaultProgrammerManager p) {
         store(p,DefaultProgrammerManager.class);
+    }
+
+    public void setLncvDevicesManager(LncvDevicesManager lncvdm) {
+        this.lncvdm = lncvdm;
     }
 
     protected boolean mTurnoutNoRetry = false;
@@ -209,6 +214,8 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
 
         setConsistManager(new LocoNetConsistManager(this));
 
+        setLncvDevicesManager(new jmri.jmrix.loconet.LncvDevicesManager(this));
+
         ClockControl cc = getClockControl();
 
         InstanceManager.setDefault(ClockControl.class, cc);
@@ -285,6 +292,17 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
             return null;
         }
         return (LnLightManager) classObjectMap.computeIfAbsent(LightManager.class, (Class c) -> new LnLightManager(this));
+    }
+
+    public LncvDevicesManager getLncvDevicesManager() {
+        if (getDisabled()) {
+            return null;
+        }
+        if (lncvdm == null) {
+            setLncvDevicesManager(new LncvDevicesManager(this));
+            log.debug("Auto create of LncvDevicesManager for initial configuration");
+        }
+        return lncvdm;
     }
 
     protected LnPredefinedMeters predefinedMeters;

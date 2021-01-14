@@ -105,6 +105,20 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                 JOptionPane.showMessageDialog(finalF, Bundle.getMessage("SectionGenerationComplete"));
             }
         });
+        JMenuItem setSMLDirSensors = new JMenuItem(Bundle.getMessage("MenuItemAddDirectionSensors"));
+        pathMenu.add(setSMLDirSensors);
+        setSMLDirSensors.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int n = InstanceManager.getDefault(SignalMastLogicManager.class).setupSignalMastsDirectionSensors();
+                if (n > 0) {
+                    JOptionPane.showMessageDialog(finalF, java.text.MessageFormat.format(
+                            Bundle.getMessage("MenuItemAddDirectionSensorsErrorCount"), n),
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
     }
 
     List<Hashtable<SignalMastLogic, SignalMast>> signalMastLogicList = null;
