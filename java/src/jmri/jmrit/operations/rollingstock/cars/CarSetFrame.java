@@ -40,14 +40,20 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
     private static final String TIP_IGNORE = "TipIgnore";
 
     CarManager carManager = InstanceManager.getDefault(CarManager.class);
+    CarLoads carLoads = InstanceManager.getDefault(CarLoads.class);
 
     Car _car;
 
     // combo boxes
-    protected JComboBox<Location> destReturnWhenEmptyBox = InstanceManager.getDefault(LocationManager.class).getComboBox();
+    protected JComboBox<Location> destReturnWhenEmptyBox = InstanceManager.getDefault(LocationManager.class)
+            .getComboBox();
     protected JComboBox<Track> trackReturnWhenEmptyBox = new JComboBox<>();
-    protected JComboBox<String> loadReturnWhenEmptyBox = InstanceManager.getDefault(CarLoads.class).getComboBox(null);
-    JComboBox<String> loadComboBox = InstanceManager.getDefault(CarLoads.class).getComboBox(null);
+    protected JComboBox<String> loadReturnWhenEmptyBox = carLoads.getComboBox(null);
+    protected JComboBox<Location> destReturnWhenLoadedBox = InstanceManager.getDefault(LocationManager.class)
+            .getComboBox();
+    protected JComboBox<Track> trackReturnWhenLoadedBox = new JComboBox<>();
+    protected JComboBox<String> loadReturnWhenLoadedBox = carLoads.getComboBox(null);
+    JComboBox<String> loadComboBox = carLoads.getComboBox(null);
     JComboBox<String> kernelComboBox = carManager.getKernelComboBox();
 
     // buttons
@@ -57,17 +63,20 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
     // check boxes
     protected JCheckBox ignoreRWECheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
     protected JCheckBox autoReturnWhenEmptyTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
+    protected JCheckBox ignoreRWLCheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
+    protected JCheckBox autoReturnWhenLoadedTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
     protected JCheckBox ignoreLoadCheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
     protected JCheckBox ignoreKernelCheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
 
     // Auto checkbox state
     private static boolean autoReturnWhenEmptyTrackCheckBoxSelected = false;
+    private static boolean autoReturnWhenLoadedTrackCheckBoxSelected = false;
 
     CarLoadEditFrame lef = null;
 
     private static boolean enableDestination = false;
 
-    public CarSetFrame() {
+    public CarSetFrame(){
         super(Bundle.getMessage("TitleCarSet"));
     }
 
@@ -82,21 +91,34 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_CarsSet", true); // NOI18N
-        
-        editLoadButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
-                Bundle.getMessage("load"))); // initial caps for some languages i.e. German
+
+        editLoadButton.setToolTipText(
+                MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"), Bundle.getMessage("load"))); // initial
+                                                                                                            // caps for
+                                                                                                            // some
+                                                                                                            // languages
+                                                                                                            // i.e.
+                                                                                                            // German
         editKernelButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
                 Bundle.getMessage(KERNEL).toLowerCase()));
 
-        // optional panel return when empty, load, and kernel
+        // optional panel load, return when empty, return when loaded, and kernel
         paneOptional.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutOptional")));
         pOptional.setLayout(new BoxLayout(pOptional, BoxLayout.Y_AXIS));
+
+        // add load fields
+        JPanel pLoad = new JPanel();
+        pLoad.setLayout(new GridBagLayout());
+        pLoad.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Load")));
+        addItemLeft(pLoad, ignoreLoadCheckBox, 1, 0);
+        addItem(pLoad, loadComboBox, 2, 0);
+        addItem(pLoad, editLoadButton, 3, 0);
+        pOptional.add(pLoad);
 
         // row 5
         JPanel pReturnWhenEmpty = new JPanel();
         pReturnWhenEmpty.setLayout(new GridBagLayout());
-        pReturnWhenEmpty.setBorder(BorderFactory.createTitledBorder(Bundle
-                .getMessage("BorderLayoutReturnWhenEmpty")));
+        pReturnWhenEmpty.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutReturnWhenEmpty")));
         addItem(pReturnWhenEmpty, new JLabel(Bundle.getMessage("Location")), 1, 0);
         addItem(pReturnWhenEmpty, new JLabel(Bundle.getMessage("Track")), 2, 0);
         addItem(pReturnWhenEmpty, new JLabel(Bundle.getMessage("Load")), 3, 0);
@@ -107,14 +129,20 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         addItem(pReturnWhenEmpty, autoReturnWhenEmptyTrackCheckBox, 4, 1);
         pOptional.add(pReturnWhenEmpty);
 
-        // add load fields
-        JPanel pLoad = new JPanel();
-        pLoad.setLayout(new GridBagLayout());
-        pLoad.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Load")));
-        addItemLeft(pLoad, ignoreLoadCheckBox, 1, 0);
-        addItem(pLoad, loadComboBox, 2, 0);
-        addItem(pLoad, editLoadButton, 3, 0);
-        pOptional.add(pLoad);
+        // row 6
+        JPanel pReturnWhenLoaded = new JPanel();
+        pReturnWhenLoaded.setLayout(new GridBagLayout());
+        pReturnWhenLoaded
+                .setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutReturnWhenLoaded")));
+        addItem(pReturnWhenLoaded, new JLabel(Bundle.getMessage("Location")), 1, 0);
+        addItem(pReturnWhenLoaded, new JLabel(Bundle.getMessage("Track")), 2, 0);
+        addItem(pReturnWhenLoaded, new JLabel(Bundle.getMessage("Load")), 3, 0);
+        addItemLeft(pReturnWhenLoaded, ignoreRWLCheckBox, 0, 1);
+        addItem(pReturnWhenLoaded, destReturnWhenLoadedBox, 1, 1);
+        addItem(pReturnWhenLoaded, trackReturnWhenLoadedBox, 2, 1);
+        addItem(pReturnWhenLoaded, loadReturnWhenLoadedBox, 3, 1);
+        addItem(pReturnWhenLoaded, autoReturnWhenLoadedTrackCheckBox, 4, 1);
+        pOptional.add(pReturnWhenLoaded);
 
         // add kernel fields
         JPanel pKernel = new JPanel();
@@ -127,13 +155,16 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
 
         // don't show ignore checkboxes
         ignoreRWECheckBox.setVisible(false);
+        ignoreRWLCheckBox.setVisible(false);
         ignoreLoadCheckBox.setVisible(false);
         ignoreKernelCheckBox.setVisible(false);
 
         autoReturnWhenEmptyTrackCheckBox.setSelected(autoReturnWhenEmptyTrackCheckBoxSelected);
+        autoReturnWhenLoadedTrackCheckBox.setSelected(autoReturnWhenLoadedTrackCheckBoxSelected);
 
         // setup combobox
         addComboBoxAction(destReturnWhenEmptyBox);
+        addComboBoxAction(destReturnWhenLoadedBox);
         addComboBoxAction(loadComboBox);
 
         // setup button
@@ -142,7 +173,9 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
 
         // setup checkboxes
         addCheckBoxAction(ignoreRWECheckBox);
+        addCheckBoxAction(ignoreRWLCheckBox);
         addCheckBoxAction(autoReturnWhenEmptyTrackCheckBox);
+        addCheckBoxAction(autoReturnWhenLoadedTrackCheckBox);
         addCheckBoxAction(ignoreLoadCheckBox);
         addCheckBoxAction(ignoreKernelCheckBox);
 
@@ -154,7 +187,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         autoReturnWhenEmptyTrackCheckBox.setToolTipText(Bundle.getMessage("rsTipAutoTrack"));
 
         // get notified if combo box gets modified
-        InstanceManager.getDefault(CarLoads.class).addPropertyChangeListener(this);
+        carLoads.addPropertyChangeListener(this);
         carManager.addPropertyChangeListener(this);
 
         packFrame();
@@ -164,9 +197,11 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         _car = car;
         load(car);
         updateLoadComboBox();
+        updateRweLoadComboBox();
+        updateRwlLoadComboBox();
         updateKernelComboBox();
     }
-    
+
     @Override
     protected ResourceBundle getRb() {
         return rb;
@@ -177,9 +212,11 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         super.updateComboBoxes();
 
         locationManager.updateComboBox(destReturnWhenEmptyBox);
+        locationManager.updateComboBox(destReturnWhenLoadedBox);
 
         updateFinalDestinationComboBoxes();
         updateReturnWhenEmptyComboBoxes();
+        updateReturnWhenLoadedComboBoxes();
     }
 
     @Override
@@ -198,6 +235,12 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         loadReturnWhenEmptyBox.setEnabled(!ignoreRWECheckBox.isSelected() && enabled);
         autoReturnWhenEmptyTrackCheckBox.setEnabled(!ignoreRWECheckBox.isSelected() && enabled);
 
+        ignoreRWLCheckBox.setEnabled(Setup.isCarRoutingEnabled() && enabled);
+        destReturnWhenLoadedBox.setEnabled(!ignoreRWLCheckBox.isSelected() && enabled);
+        trackReturnWhenLoadedBox.setEnabled(!ignoreRWLCheckBox.isSelected() && enabled);
+        loadReturnWhenLoadedBox.setEnabled(!ignoreRWLCheckBox.isSelected() && enabled);
+        autoReturnWhenLoadedTrackCheckBox.setEnabled(!ignoreRWLCheckBox.isSelected() && enabled);
+
         ignoreLoadCheckBox.setEnabled(enabled);
         loadComboBox.setEnabled(!ignoreLoadCheckBox.isSelected() && enabled);
         editLoadButton.setEnabled(!ignoreLoadCheckBox.isSelected() && enabled && _car != null);
@@ -211,14 +254,13 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
 
     private void enableDestinationFields(boolean enabled) {
         // if car in a built train, enable destination fields
-        boolean enableDest = enableDestination
-                || destinationBox.getSelectedItem() != null
-                || (_car != null && _car.getTrain() != null && _car.getTrain().isBuilt());
+        boolean enableDest = enableDestination ||
+                destinationBox.getSelectedItem() != null ||
+                (_car != null && _car.getTrain() != null && _car.getTrain().isBuilt());
 
         destinationBox.setEnabled(!ignoreDestinationCheckBox.isSelected() && enableDest && enabled);
         trackDestinationBox.setEnabled(!ignoreDestinationCheckBox.isSelected() && enableDest && enabled);
-        autoDestinationTrackCheckBox.setEnabled(!ignoreDestinationCheckBox.isSelected() && enableDest
-                && enabled);
+        autoDestinationTrackCheckBox.setEnabled(!ignoreDestinationCheckBox.isSelected() && enableDest && enabled);
     }
 
     // combo boxes
@@ -230,6 +272,9 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         }
         if (ae.getSource() == destReturnWhenEmptyBox) {
             updateReturnWhenEmpty();
+        }
+        if (ae.getSource() == destReturnWhenLoadedBox) {
+            updateReturnWhenLoaded();
         }
     }
 
@@ -273,22 +318,24 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
     protected boolean change(Car car) {
         // save the auto button
         autoReturnWhenEmptyTrackCheckBoxSelected = autoReturnWhenEmptyTrackCheckBox.isSelected();
+        autoReturnWhenLoadedTrackCheckBoxSelected = autoReturnWhenLoadedTrackCheckBox.isSelected();
 
         // car load
         if (!ignoreLoadCheckBox.isSelected() && loadComboBox.getSelectedItem() != null) {
             String load = (String) loadComboBox.getSelectedItem();
             if (!car.getLoadName().equals(load)) {
-                if (InstanceManager.getDefault(CarLoads.class).containsName(car.getTypeName(), load)) {
+                if (carLoads.containsName(car.getTypeName(), load)) {
                     car.setLoadName(load);
                     updateComboBoxesLoadChange();
                 } else {
-                    JOptionPane.showMessageDialog(this, MessageFormat.format(
-                            Bundle.getMessage("carLoadNotValid"),load, car.getTypeName()),
+                    JOptionPane.showMessageDialog(this,
+                            MessageFormat.format(Bundle.getMessage("carLoadNotValid"), load, car.getTypeName()),
                             Bundle.getMessage("carCanNotChangeLoad"), JOptionPane.WARNING_MESSAGE);
                 }
             }
         }
-        // set final destination fields before destination in case there's a schedule at destination
+        // set final destination fields before destination in case there's a schedule at
+        // destination
         if (!ignoreFinalDestinationCheckBox.isSelected()) {
             if (finalDestinationBox.getSelectedItem() == null) {
                 car.setFinalDestination(null);
@@ -298,21 +345,21 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
                 if (finalDestTrackBox.getSelectedItem() != null) {
                     finalDestTrack = (Track) finalDestTrackBox.getSelectedItem();
                 }
-                if (finalDestTrack != null && car.getFinalDestinationTrack() != finalDestTrack
-                        && finalDestTrack.isStaging()) {
+                if (finalDestTrack != null &&
+                        car.getFinalDestinationTrack() != finalDestTrack &&
+                        finalDestTrack.isStaging()) {
                     log.debug("Destination track ({}) is staging", finalDestTrack.getName());
-                    JOptionPane.showMessageDialog(this, Bundle.getMessage("rsDoNotSelectStaging"), Bundle
-                            .getMessage("rsCanNotFinal"), JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, Bundle.getMessage("rsDoNotSelectStaging"),
+                            Bundle.getMessage("rsCanNotFinal"), JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
                 car.setFinalDestination((Location) finalDestinationBox.getSelectedItem());
                 car.setFinalDestinationTrack(finalDestTrack);
-                String status = car.testDestination((Location) finalDestinationBox.getSelectedItem(),
-                        finalDestTrack);
+                String status = car.testDestination((Location) finalDestinationBox.getSelectedItem(), finalDestTrack);
                 if (!status.equals(Track.OKAY)) {
-                    JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
-                            .getMessage("rsCanNotFinalMsg"), car.toString(), status), Bundle
-                            .getMessage("rsCanNotFinal"), JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this,
+                            MessageFormat.format(Bundle.getMessage("rsCanNotFinalMsg"), car.toString(), status),
+                            Bundle.getMessage("rsCanNotFinal"), JOptionPane.WARNING_MESSAGE);
                 }
             }
         }
@@ -337,13 +384,15 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         // return when empty fields
         if (!ignoreRWECheckBox.isSelected()) {
             // check that RWE load is valid for this car's type
-            if (InstanceManager.getDefault(CarLoads.class).getNames(car.getTypeName()).contains(loadReturnWhenEmptyBox.getSelectedItem())) {
+            if (carLoads.getNames(car.getTypeName())
+                    .contains(loadReturnWhenEmptyBox.getSelectedItem())) {
                 car.setReturnWhenEmptyLoadName((String) loadReturnWhenEmptyBox.getSelectedItem());
             } else {
                 log.debug("Car ({}) type ({}) doesn't support RWE load ({})", car, car.getTypeName(),
                         loadReturnWhenEmptyBox.getSelectedItem());
-                JOptionPane.showMessageDialog(this, MessageFormat.format(
-                        Bundle.getMessage("carLoadNotValid"), loadReturnWhenEmptyBox.getSelectedItem(), car.getTypeName()),
+                JOptionPane.showMessageDialog(this,
+                        MessageFormat.format(Bundle.getMessage("carLoadNotValid"),
+                                loadReturnWhenEmptyBox.getSelectedItem(), car.getTypeName()),
                         Bundle.getMessage("carCanNotChangeRweLoad"), JOptionPane.WARNING_MESSAGE);
             }
             if (destReturnWhenEmptyBox.getSelectedItem() == null) {
@@ -356,16 +405,17 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
                     // warn user if they selected a staging track
                     if (trackRWE != null && trackRWE.isStaging()) {
                         log.debug("Return when empty track ({}) is staging", trackRWE.getName());
-                        JOptionPane.showMessageDialog(this, Bundle.getMessage("rsDoNotSelectStaging"), Bundle
-                                .getMessage("rsCanNotRWE"), JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, Bundle.getMessage("rsDoNotSelectStaging"),
+                                Bundle.getMessage("carCanNotRWE"), JOptionPane.ERROR_MESSAGE);
                         return false;
                     }
                     // use a test car with a load of "E" and no length
-                    String status = getTestCar(car).testDestination(locationRWE, trackRWE);
+                    String status = getTestCar(car, car.getReturnWhenEmptyLoadName()).testDestination(locationRWE,
+                            trackRWE);
                     if (!status.equals(Track.OKAY)) {
-                        JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
-                                .getMessage("rsCanNotRWEMsg"), car.toString(), status),
-                                Bundle.getMessage("rsCanNotRWE"), JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(this,
+                                MessageFormat.format(Bundle.getMessage("carCanNotRWEMsg"), car.toString(), status),
+                                Bundle.getMessage("carCanNotRWE"), JOptionPane.WARNING_MESSAGE);
                     }
                     car.setReturnWhenEmptyDestTrack(trackRWE);
                 } else {
@@ -374,20 +424,66 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
                 car.setReturnWhenEmptyDestination(locationRWE);
             }
         }
+        // return when loaded fields
+        if (!ignoreRWLCheckBox.isSelected()) {
+            // check that RWL load is valid for this car's type
+            if (carLoads.getNames(car.getTypeName())
+                    .contains(loadReturnWhenLoadedBox.getSelectedItem())) {
+                car.setReturnWhenLoadedLoadName((String) loadReturnWhenLoadedBox.getSelectedItem());
+            } else {
+                log.debug("Car ({}) type ({}) doesn't support RWL load ({})", car, car.getTypeName(),
+                        loadReturnWhenLoadedBox.getSelectedItem());
+                JOptionPane.showMessageDialog(this,
+                        MessageFormat.format(Bundle.getMessage("carLoadNotValid"),
+                                loadReturnWhenEmptyBox.getSelectedItem(), car.getTypeName()),
+                        Bundle.getMessage("carCanNotChangeRwlLoad"), JOptionPane.WARNING_MESSAGE);
+            }
+            if (destReturnWhenLoadedBox.getSelectedItem() == null) {
+                car.setReturnWhenLoadedDestination(null);
+                car.setReturnWhenLoadedDestTrack(null);
+            } else {
+                Location locationRWL = (Location) destReturnWhenLoadedBox.getSelectedItem();
+                if (trackReturnWhenLoadedBox.getSelectedItem() != null) {
+                    Track trackRWL = (Track) trackReturnWhenLoadedBox.getSelectedItem();
+                    // warn user if they selected a staging track
+                    if (trackRWL != null && trackRWL.isStaging()) {
+                        log.debug("Return when loaded track ({}) is staging", trackRWL.getName());
+                        JOptionPane.showMessageDialog(this, Bundle.getMessage("rsDoNotSelectStaging"),
+                                Bundle.getMessage("carCanNotRWL"), JOptionPane.ERROR_MESSAGE);
+                        return false;
+                    }
+                    // use a test car with a load of "E" and no length
+                    String status = getTestCar(car, car.getReturnWhenLoadedLoadName()).testDestination(locationRWL,
+                            trackRWL);
+                    if (!status.equals(Track.OKAY)) {
+                        JOptionPane.showMessageDialog(this,
+                                MessageFormat.format(Bundle.getMessage("carCanNotRWLMsg"), car.toString(), status),
+                                Bundle.getMessage("carCanNotRWL"), JOptionPane.WARNING_MESSAGE);
+                    }
+                    car.setReturnWhenLoadedDestTrack(trackRWL);
+                } else {
+                    car.setReturnWhenLoadedDestTrack(null);
+                }
+                car.setReturnWhenLoadedDestination(locationRWL);
+            }
+        }
         // check to see if there's a schedule when placing the car at a spur
-        if (!ignoreLocationCheckBox.isSelected() && trackLocationBox.getSelectedItem() != null
-                && saveTrack != trackLocationBox.getSelectedItem()) {
+        if (!ignoreLocationCheckBox.isSelected() &&
+                trackLocationBox.getSelectedItem() != null &&
+                saveTrack != trackLocationBox.getSelectedItem()) {
             Track track = (Track) trackLocationBox.getSelectedItem();
             if (track.getSchedule() != null) {
-                if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
-                        .getMessage("rsDoYouWantSchedule"), car.toString()), MessageFormat
-                        .format(Bundle.getMessage("rsSpurHasSchedule"), track.getName(), track.getScheduleName()),
-                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                if (JOptionPane
+                        .showConfirmDialog(this,
+                                MessageFormat.format(Bundle.getMessage("rsDoYouWantSchedule"), car.toString()),
+                                MessageFormat.format(Bundle.getMessage("rsSpurHasSchedule"), track.getName(),
+                                        track.getScheduleName()),
+                                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                     String results = track.checkSchedule(car);
                     if (!results.equals(Track.OKAY)) {
-                        JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
-                                .getMessage("rsNotAbleToApplySchedule"), results), Bundle
-                                .getMessage("rsApplyingScheduleFailed"), JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this,
+                                MessageFormat.format(Bundle.getMessage("rsNotAbleToApplySchedule"), results),
+                                Bundle.getMessage("rsApplyingScheduleFailed"), JOptionPane.ERROR_MESSAGE);
                         // restore previous location and track so we'll ask to test schedule again
                         if (saveTrack != null) {
                             car.setLocation(saveTrack.getLocation(), saveTrack);
@@ -406,17 +502,16 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         if (car.getTrain() != null) {
             Train train = car.getTrain();
             if (!train.isLoadNameAccepted(car.getLoadName(), car.getTypeName())) {
-                JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
-                        .getMessage("carTrainNotServLoad"), car.getLoadName(), train.getName()),
-                        Bundle.getMessage("rsNotMove"), JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carTrainNotServLoad"),
+                        car.getLoadName(), train.getName()), Bundle.getMessage("rsNotMove"), JOptionPane.ERROR_MESSAGE);
                 // prevent rs from being picked up and delivered
                 setRouteLocationAndDestination(car, train, null, null);
                 return false;
             }
             if (car.getLocation() != null && car.getDestination() != null && !train.isServiceable(car)) {
-                JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carTrainNotService"),
-                        car.toString(), train.getName()), Bundle.getMessage("rsNotMove"),
-                        JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this,
+                        MessageFormat.format(Bundle.getMessage("carTrainNotService"), car.toString(), train.getName()),
+                        Bundle.getMessage("rsNotMove"), JOptionPane.ERROR_MESSAGE);
                 // show the train's route and car location
                 if (tctf != null) {
                     tctf.dispose();
@@ -432,9 +527,9 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         if (askKernelChange && car.getKernel() != null) {
             List<Car> list = car.getKernel().getGroup();
             if (list.size() > 1) {
-                if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
-                        Bundle.getMessage("carInKernel"), car.toString()), MessageFormat
-                        .format(Bundle.getMessage("carPartKernel"), car.getKernelName()),
+                if (JOptionPane.showConfirmDialog(this,
+                        MessageFormat.format(Bundle.getMessage("carInKernel"), car.toString()),
+                        MessageFormat.format(Bundle.getMessage("carPartKernel"), car.getKernelName()),
                         JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                     if (!updateGroup(list)) {
                         return false;
@@ -475,13 +570,17 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
                 car.setReturnWhenEmptyDestination(_car.getReturnWhenEmptyDestination());
                 car.setReturnWhenEmptyDestTrack(_car.getReturnWhenEmptyDestTrack());
             }
+            if (!ignoreRWLCheckBox.isSelected()) {
+                car.setReturnWhenLoadedDestination(_car.getReturnWhenLoadedDestination());
+                car.setReturnWhenLoadedDestTrack(_car.getReturnWhenLoadedDestTrack());
+            }
             if (!ignoreFinalDestinationCheckBox.isSelected()) {
                 car.setFinalDestination(_car.getFinalDestination());
                 car.setFinalDestinationTrack(_car.getFinalDestinationTrack());
             }
             // update car load
-            if (!ignoreLoadCheckBox.isSelected()
-                    && InstanceManager.getDefault(CarLoads.class).containsName(car.getTypeName(), _car.getLoadName())) {
+            if (!ignoreLoadCheckBox.isSelected() &&
+                    carLoads.containsName(car.getTypeName(), _car.getLoadName())) {
                 car.setLoadName(_car.getLoadName());
             }
             // update kernel
@@ -501,6 +600,9 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         if (ae.getSource() == autoReturnWhenEmptyTrackCheckBox) {
             updateReturnWhenEmpty();
         }
+        if (ae.getSource() == autoReturnWhenLoadedTrackCheckBox) {
+            updateReturnWhenLoaded();
+        }
         if (ae.getSource() == autoTrainCheckBox) {
             updateTrainComboBox();
         }
@@ -509,6 +611,12 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
             trackReturnWhenEmptyBox.setEnabled(!ignoreRWECheckBox.isSelected());
             loadReturnWhenEmptyBox.setEnabled(!ignoreRWECheckBox.isSelected());
             autoReturnWhenEmptyTrackCheckBox.setEnabled(!ignoreRWECheckBox.isSelected());
+        }
+        if (ae.getSource() == ignoreRWLCheckBox) {
+            destReturnWhenLoadedBox.setEnabled(!ignoreRWLCheckBox.isSelected());
+            trackReturnWhenLoadedBox.setEnabled(!ignoreRWLCheckBox.isSelected());
+            loadReturnWhenLoadedBox.setEnabled(!ignoreRWLCheckBox.isSelected());
+            autoReturnWhenLoadedTrackCheckBox.setEnabled(!ignoreRWLCheckBox.isSelected());
         }
         if (ae.getSource() == ignoreLoadCheckBox) {
             loadComboBox.setEnabled(!ignoreLoadCheckBox.isSelected());
@@ -533,13 +641,39 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
             trackReturnWhenEmptyBox.removeAllItems();
         } else {
             log.debug("CarSetFrame sees return when empty: {}", destReturnWhenEmptyBox.getSelectedItem());
-            Location l = (Location) destReturnWhenEmptyBox.getSelectedItem();
-            l.updateComboBox(trackReturnWhenEmptyBox, getTestCar(_car),
+            Location loc = (Location) destReturnWhenEmptyBox.getSelectedItem();
+            loc.updateComboBox(trackReturnWhenEmptyBox, getTestCar(_car, _car.getReturnWhenEmptyLoadName()),
                     autoReturnWhenEmptyTrackCheckBox.isSelected(), true);
-            if (_car != null && _car.getReturnWhenEmptyDestination() != null
-                    && _car.getReturnWhenEmptyDestination().equals(l)
-                    && _car.getReturnWhenEmptyDestTrack() != null) {
+            if (_car != null &&
+                    _car.getReturnWhenEmptyDestination() != null &&
+                    _car.getReturnWhenEmptyDestination().equals(loc) &&
+                    _car.getReturnWhenEmptyDestTrack() != null) {
                 trackReturnWhenEmptyBox.setSelectedItem(_car.getReturnWhenEmptyDestTrack());
+            }
+        }
+    }
+
+    protected void updateReturnWhenLoadedComboBoxes() {
+        if (_car != null) {
+            log.debug("Updating return when loaded for car ({})", _car);
+            destReturnWhenLoadedBox.setSelectedItem(_car.getReturnWhenLoadedDestination());
+        }
+        updateReturnWhenLoaded();
+    }
+
+    protected void updateReturnWhenLoaded() {
+        if (destReturnWhenLoadedBox.getSelectedItem() == null) {
+            trackReturnWhenLoadedBox.removeAllItems();
+        } else {
+            log.debug("CarSetFrame sees return when empty: {}", destReturnWhenLoadedBox.getSelectedItem());
+            Location loc = (Location) destReturnWhenLoadedBox.getSelectedItem();
+            loc.updateComboBox(trackReturnWhenLoadedBox, getTestCar(_car, _car.getReturnWhenLoadedLoadName()),
+                    autoReturnWhenLoadedTrackCheckBox.isSelected(), true);
+            if (_car != null &&
+                    _car.getReturnWhenLoadedDestination() != null &&
+                    _car.getReturnWhenLoadedDestination().equals(loc) &&
+                    _car.getReturnWhenLoadedDestTrack() != null) {
+                trackReturnWhenLoadedBox.setSelectedItem(_car.getReturnWhenLoadedDestTrack());
             }
         }
     }
@@ -559,8 +693,10 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
             log.debug("CarSetFrame sees final destination: {}", finalDestinationBox.getSelectedItem());
             Location l = (Location) finalDestinationBox.getSelectedItem();
             l.updateComboBox(finalDestTrackBox, _car, autoFinalDestTrackCheckBox.isSelected(), true);
-            if (_car != null && _car.getFinalDestination() != null && _car.getFinalDestination().equals(l)
-                    && _car.getFinalDestinationTrack() != null) {
+            if (_car != null &&
+                    _car.getFinalDestination() != null &&
+                    _car.getFinalDestination().equals(l) &&
+                    _car.getFinalDestinationTrack() != null) {
                 finalDestTrackBox.setSelectedItem(_car.getFinalDestinationTrack());
             }
         }
@@ -569,10 +705,24 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
     protected void updateLoadComboBox() {
         if (_car != null) {
             log.debug("Updating load box for car ({})", _car);
-            InstanceManager.getDefault(CarLoads.class).updateComboBox(_car.getTypeName(), loadComboBox);
+            carLoads.updateComboBox(_car.getTypeName(), loadComboBox);
             loadComboBox.setSelectedItem(_car.getLoadName());
-            InstanceManager.getDefault(CarLoads.class).updateRweComboBox(_car.getTypeName(), loadReturnWhenEmptyBox);
+        }
+    }
+    
+    protected void updateRweLoadComboBox() {
+        if (_car != null) {
+            log.debug("Updating RWE load box for car ({})", _car);
+            carLoads.updateRweComboBox(_car.getTypeName(), loadReturnWhenEmptyBox);
             loadReturnWhenEmptyBox.setSelectedItem(_car.getReturnWhenEmptyLoadName());
+        }
+    }
+    
+    protected void updateRwlLoadComboBox() {
+        if (_car != null) {
+            log.debug("Updating RWL load box for car ({})", _car);
+            carLoads.updateRwlComboBox(_car.getTypeName(), loadReturnWhenLoadedBox);
+            loadReturnWhenLoadedBox.setSelectedItem(_car.getReturnWhenLoadedLoadName());
         }
     }
 
@@ -597,13 +747,13 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         }
     }
 
-    private Car getTestCar(Car car) {
+    private Car getTestCar(Car car, String loadName) {
         Car c = car;
         // clone car and set the load to RWE and a length of zero
         if (car != null) {
             c = car.copy();
-            c.setLoadName(car.getReturnWhenEmptyLoadName());
-            c.setLength("0"); // ignore car length
+            c.setLoadName(loadName);
+            c.setLength(Integer.toString(-RollingStock.COUPLERS)); // ignore car length
         }
         return c;
     }
@@ -625,20 +775,32 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         log.debug("PropertyChange ({}) new ({})", e.getPropertyName(), e.getNewValue());
         super.propertyChange(e);
-        if (e.getPropertyName().equals(Car.FINAL_DESTINATION_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Car.FINAL_DESTINATION_TRACK_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(Car.FINAL_DESTINATION_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Car.FINAL_DESTINATION_TRACK_CHANGED_PROPERTY)) {
             updateFinalDestinationComboBoxes();
         }
-        if (e.getPropertyName().equals(CarLoads.LOAD_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(CarLoads.LOAD_TYPE_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Car.LOAD_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(CarLoads.LOAD_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Car.LOAD_CHANGED_PROPERTY)) {
             updateLoadComboBox();
+        }
+        if (e.getPropertyName().equals(CarLoads.LOAD_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(CarLoads.LOAD_TYPE_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Car.RWE_LOAD_CHANGED_PROPERTY)) {
+            updateRweLoadComboBox();
+        }
+        if (e.getPropertyName().equals(CarLoads.LOAD_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(CarLoads.LOAD_TYPE_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Car.RWL_LOAD_CHANGED_PROPERTY)) {
+            updateRwlLoadComboBox();
         }
         if (e.getPropertyName().equals(Car.RETURN_WHEN_EMPTY_CHANGED_PROPERTY)) {
             updateReturnWhenEmptyComboBoxes();
         }
-        if (e.getPropertyName().equals(CarManager.KERNEL_LISTLENGTH_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Car.KERNEL_NAME_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(Car.RETURN_WHEN_LOADED_CHANGED_PROPERTY)) {
+            updateReturnWhenLoadedComboBoxes();
+        }
+        if (e.getPropertyName().equals(CarManager.KERNEL_LISTLENGTH_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Car.KERNEL_NAME_CHANGED_PROPERTY)) {
             updateKernelComboBox();
         }
         if (e.getPropertyName().equals(RollingStock.TRAIN_CHANGED_PROPERTY)) {

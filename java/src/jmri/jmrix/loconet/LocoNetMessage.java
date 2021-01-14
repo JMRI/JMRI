@@ -56,7 +56,6 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * <p>
      * Because a LocoNet message requires at least a size, if
      * not actual contents, this constructor always logs an error.
-     *
      */
     public LocoNetMessage() {
         _nDataChars = 0;

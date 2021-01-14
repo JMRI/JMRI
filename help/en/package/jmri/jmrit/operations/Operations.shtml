@@ -275,6 +275,7 @@
 
        <ul>
         <li><a href="#ReturnWhenEmpty">Return When Empty</a></li>
+        <li><a href="#ReturnWhenLoaded">Return When Loaded</a></li>
        </ul></li>
 
       <li><a href="#CarsTools">Cars Tools</a>
@@ -894,8 +895,8 @@
    </p>
 
    <p>
-    You can quickly set the <a href="#SetTrainIconCoordinates">train icon coordinates</a> for your panel using tools in
-    the Routes and <a href="#EditRoute">Edit Route</a> windows.
+    You can quickly set the <a href="#SetTrainIconCoordinates">train icon coordinates</a> for your
+    panel using tools in the Routes and <a href="#EditRoute">Edit Route</a> windows.
    </p>
 
    <p>
@@ -3602,6 +3603,38 @@
    <p>Use the "Load" menu to change the car's load, or create new ones by using the "Edit"
     button located to the right of the load menu.</p>
 
+   <a name="ReturnWhenEmpty" id="ReturnWhenEmpty"></a>
+   <h4>Return When Empty</h4>
+   You can also optionally enter the location and track that you want the car to return to when the
+   car's load status becomes empty. You can also replace the car's default empty "E" load with one
+   from the return when empty (RWE) load menu. Only custom loads that are type <a href="#LoadType">Empty</a>
+   are shown in the combo box. When you specify a custom RWE load for a car, the program will use
+   the RWE load instead of the default empty "E" load in all cases where the "E" load would normally
+   occur. Note that the RWE load also overrides the generation of custom loads out of staging since
+   the "E" load isn't used by the program for this car. However, if a car does arrive into staging
+   with the RWE load name, the program will set the load name to the default "E", and not use the
+   RWE addresses.
+
+   <p>Note that manually changing the load name will not cause the Return When Empty (RWE)
+    destination to become active, only when the car is set out by the program will the RWE
+    destination and RWE load become active.</p>
+
+   <a name="ReturnWhenLoaded" id="ReturnWhenLoaded"></a>
+   <h4>Return When Loaded</h4>
+   You can also optionally enter the location and track that you want the car to return to when the
+   car's load status becomes loaded. You can also replace the car's default load "L" with one from
+   the return when loaded (RWL) load menu. Only custom loads that are type
+   <a href="#LoadType">Load</a> are shown in the combo box. When you specify a custom RWL load for a
+   car, the program will use the RWL load instead of the default "L" load in all cases where the "L"
+   load would normally occur. When a car arrives into staging and has the "E" load and the option to
+   swap load names is enabled, the program will activate the RWL load and addresses. Also when a car
+   arrives into staging and has a custom load type of empty and the option to remove custom load
+   names is enabled, the program will activate the RWL load and addresses.
+
+   <p>Note that manually changing the load name will not cause the Return When Loaded (RWL)
+    destination to become active, only when the car is set out by the program will the RWL
+    destination and RWL load name become active.</p>
+
    <h4>Kernel</h4>
 
    <p>
@@ -3609,20 +3642,6 @@
     moved as a single unit. Select the kernel you want the car to be in using the "Kernel" menu, and
     use the "Edit" button to create new ones.
    </p>
-
-   <a name="ReturnWhenEmpty" id="ReturnWhenEmpty"></a>
-   <h4>Return When Empty</h4>
-   You can also optionally enter the location and track that you want the car to return to when the
-   car's load status becomes empty. You can also replace the car's default empty load "E" with one
-   from the return when empty (RWE) load menu. Only custom loads that are type <a href="#LoadType">Empty</a>
-   are shown in the combo box. When you specify a custom RWE load for a car, the program will use
-   the RWE load instead of the default empty "E" in all cases where the "E" load would normally
-   occur. Note that the RWE load also overrides the generation of custom loads out of staging since
-   the "E" load isn't used by the program for this car.
-
-   <p>Note that manually changing the load status to empty "E" will not cause the Return When
-    Empty (RWE) destination to become active, only when the car is set out by the program will the
-    RWE destination and RWE load become active.</p>
 
    <h4>Optional -- Normally Set by Program</h4>
    The next three set of fields are normally set by the program when building trains. We'll explain how they work in
@@ -4112,11 +4131,14 @@
 
    <a name="SetTrainIconCoordinates" id="SetTrainIconCoordinates"></a>
    <h4>Set Train Icon Coordinates</h4>
-   <p>Use this tool to set the default X and Y coordinates of your train icons for each
-    location. The tool allows you to specify the icon coordinates based on the train's direction.
-    You can also update all of your existing routes and locations with these new coordinates. As an
-    alternative, you can use a route's "Tools-&gt;Set Train Icon Coordinates for this Route" to
-    create coordinates unique to a specific route.</p>
+   <p>
+    Use this tool to set the default X and Y coordinates of your train icons for each location. The
+    tool allows you to specify the icon coordinates based on the train's direction. You can also
+    update all of your existing routes and locations with these new coordinates. As an alternative,
+    you can use a route's "Tools-&gt;Set Train Icon Coordinates for this Route" to create
+    coordinates unique to a specific route. Enter the name of the <a href="#PanelOptionsTrainIcons">panel</a>
+    you wish to use in the Settings window.
+   </p>
 
    <a name="Trains" id="Trains"></a>
    <h2>Trains</h2>

@@ -196,7 +196,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li></li>
+                <li>Allow configuration of more function outputs for FX3 decoders.</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -400,7 +400,8 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>New feature for cars, Return When Loaded. Now you can set a load name and destination for a car when
+            it's load status changes to loaded. See operations help for more details.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -516,7 +517,7 @@
     <h3>Timetable</h3>
         <a id="Timetable" name="Timetable"></a>
         <ul>
-            <li></li>
+            <li>Set the default start time for a new train to match the schedule start time.</li>
         </ul>
 
    <h3>Tracker</h3>
@@ -528,7 +529,9 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>A button to translate the throttle settings to track speed in inches/sec
+            	or millimeters/sec or scale speed on miles/hr or kilometers/hr has been
+            	added to the windows used for editing Warrants or creating NXWarrants.</li>
         </ul>
 
    <h3>Web Access</h3>

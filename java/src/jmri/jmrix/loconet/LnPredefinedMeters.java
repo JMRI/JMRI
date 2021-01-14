@@ -4,8 +4,6 @@ import jmri.*;
 import jmri.implementation.DefaultMeter;
 import jmri.implementation.MeterUpdateTask;
 import jmri.jmrix.loconet.duplexgroup.swing.LnIPLImplementation;
-import java.util.TimerTask;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

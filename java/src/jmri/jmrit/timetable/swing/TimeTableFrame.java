@@ -387,7 +387,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
         JMenuItem impcsv = new JMenuItem(Bundle.getMessage("MenuImportCsv"));  // NOI18N
         impcsv.addActionListener((ActionEvent event) -> importCsvPressed());
-        
+
         JMenuItem impopr = new JMenuItem(Bundle.getMessage("MenuImportOperations"));  // NOI18N
         impopr.addActionListener((ActionEvent event) -> importFromOperationsPressed());
 
@@ -970,6 +970,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
     void addTrain() {
         Train newTrain = new Train(_curNodeId);
+        newTrain.setStartTime(_dataMgr.getSchedule(_curNodeId).getStartHour() * 60);
         setShowReminder(true);
 
         // Build tree components
@@ -2263,7 +2264,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             completeImport(file);
         }
     }
-        
+
     void completeImport(File file) {
         try {
             feedbackList = new TimeTableCsvImport().importCsv(file);
@@ -2292,7 +2293,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                 Bundle.getMessage("MessageTitle"), // NOI18N
                 JOptionPane.INFORMATION_MESSAGE);
     }
-    
+
     void importFromOperationsPressed() {
         ExportTimetable ex = new ExportTimetable();
         new ExportTimetable().writeOperationsTimetableFile();

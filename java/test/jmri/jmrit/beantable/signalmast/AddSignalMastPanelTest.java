@@ -32,6 +32,7 @@ public class AddSignalMastPanelTest {
     }
 
     @Test
+    @Disabled("possible cause of 'No output has been received in the last 10m0s' failure")    
     public void testIssueWarningUserName() {
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -44,6 +45,7 @@ public class AddSignalMastPanelTest {
     }
     
     @Test
+    @Disabled("possible cause of 'No output has been received in the last 10m0s' failure")    
     public void testIssueWarningUserNameAsSystem() {
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -56,6 +58,7 @@ public class AddSignalMastPanelTest {
     }
     
     @Test
+    @Disabled("possible cause of 'No output has been received in the last 10m0s' failure")
     public void testIssueNoUserNameGiven() {
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -67,6 +70,7 @@ public class AddSignalMastPanelTest {
     }
     
     @Test
+    @Disabled("possible cause of 'No output has been received in the last 10m0s' failure")
     public void testIssueDialogFailMessage() {
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -98,6 +102,7 @@ public class AddSignalMastPanelTest {
     }
 
     @Test
+    @Disabled("possible cause of 'No output has been received in the last 10m0s' failure")
     public void testCheckUserName() throws Exception {
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         
