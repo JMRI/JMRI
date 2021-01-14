@@ -63,6 +63,6 @@ public class UsbUhlenbrock63120Adapter extends LocoBufferAdapter {
         return 3;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(UsbUhlenbrock63120Adapter.class);
+    //private final static Logger log = LoggerFactory.getLogger(UsbUhlenbrock63120Adapter.class);
 
 }

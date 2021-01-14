@@ -15,12 +15,6 @@ import org.junit.jupiter.api.Test;
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
 
-    @Test
-    public void testCtor() {
-        ConnectionConfigXml ccx = new ConnectionConfigXml();
-        Assertions.assertNotNull(ccx, "Instance is created");
-    }
-
     @BeforeEach
     @Override
     public void setUp() {
