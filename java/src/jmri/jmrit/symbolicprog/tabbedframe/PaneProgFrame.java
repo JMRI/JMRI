@@ -1126,7 +1126,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
             // handle include/exclude
             if (isIncludedFE(temp, modelElem, _rosterEntry, "", "")) {
-                newPane(name, temp, modelElem, false, isProgPane);  // dont force showing if empty
+                newPane(name, temp, modelElem, false, isProgPane);  // don't force showing if empty
             }
         }
     }

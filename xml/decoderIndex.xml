@@ -39,7 +39,7 @@
       <manufacturer mfg="Desktop Station" mfgID="140" />
       <manufacturer mfg="Dietz Modellbahntechnik" mfgID="115" />
       <manufacturer mfg="Digi-CZ" mfgID="152" />
-      <manufacturer mfg="Digirails" mfgID="42" />
+      <manufacturer mfg="Digikeijs" mfgID="42" />
       <manufacturer mfg="Digital Bahn" mfgID="64" />
       <manufacturer mfg="Digitools Elektronika, Kft" mfgID="75" />
       <manufacturer mfg="Digitrax" mfgID="129" />
@@ -1141,7 +1141,7 @@
           <size length="15" width="7" height="2.7" units="mm" />
         </model>
       </family>
-      <family name="Locomotive lighting" mfg="Digirails" file="Digirails_DR80010-15.xml">
+      <family name="Locomotive lighting" mfg="Digikeijs" file="Digikeijs_DR80010-15.xml">
         <model model="DR80010" numOuts="8" numFns="18" maxInputVolts="6.5-18V" maxMotorCurrent="0.0A, peak=0A for 5 sec." maxTotalCurrent="1.0A" productID="80010" formFactor="HO" comment="Warm white LED strip with integrated function decoder">
           <versionCV lowVersionID="10" highVersionID="10" />
           <output name="1" label="Head|Light" connection="solder" maxcurrent="500 mA" />
@@ -1162,7 +1162,7 @@
           <size length="10" width="6" height="3" units="mm" />
         </model>
       </family>
-      <family name="Stationary" mfg="Digirails" comment="also sold under the Digikeijs label in NL" file="Digirails_Stationary.xml">
+      <family name="Stationary" mfg="Digikeijs" comment="also sold under the Digirails label" file="Digikeijs_Stationary.xml">
         <model model="DR4018" numOuts="16" numFns="0" maxInputVolts="6.5-18V" maxTotalCurrent="2.5A" productID="4018" formFactor="Stationary" comment="Multiprotocol switching decoder">
           <versionCV lowVersionID="134" highVersionID="255" />
           <output name="1" label="Out1" connection="other" maxcurrent="500 mA" />

@@ -405,7 +405,7 @@ public abstract class AbstractMonPane extends JmriPanel {
      * @param rawPrefix     label to add to the start of the message.
      * @param message       message object to log.
      */
-    public void logMessage(String messagePrefix,String rawPrefix,Message message){
+    public void logMessage(String messagePrefix, String rawPrefix, Message message){
         // display the raw data if requested  
         StringBuilder raw = new StringBuilder(rawPrefix);
         if (rawCheckBox.isSelected()) {
@@ -413,7 +413,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         }
 
         // display the decoded data
-        String text=message.toMonitorString();
+        String text = message.toMonitorString();
         nextLine(messagePrefix + " " + text + "\n", raw.toString());
     }
 

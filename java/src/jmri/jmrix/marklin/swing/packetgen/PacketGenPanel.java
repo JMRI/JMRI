@@ -3,6 +3,7 @@ package jmri.jmrix.marklin.swing.packetgen;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.util.Objects;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -108,8 +109,9 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        if (packetTextField.getText() != null || !packetTextField.getText().equals("")) {
-            String text = packetTextField.getText();
+        String text = packetTextField.getText();
+        // TODO check input + feedback on error. Too easy to cause NPE
+        if (text != null && !Objects.equals(text, "")) {
             if (text.length() == 0) {
                 return; // no work
             }
@@ -133,7 +135,6 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
                         Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
             }
         }
-
     }
 
     /** 
