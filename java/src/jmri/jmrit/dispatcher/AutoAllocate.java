@@ -1627,7 +1627,7 @@ public class AutoAllocate implements Runnable {
             return false;
         }
 
-        if (sec.equals(mActiveTrain.getNextSectionToAllocate())) {
+        if (!sec.equals(mActiveTrain.getNextSectionToAllocate())) {
             log.error("[{}]Allocation request section does not match active train next section to allocate",mActiveTrain.getActiveTrainName());
             log.error("[{}]Section requested {}",mActiveTrain.getActiveTrainName(), sec.getDisplayName(USERSYS));
             if (mActiveTrain.getNextSectionToAllocate() != null) {
