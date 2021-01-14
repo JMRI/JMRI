@@ -9,12 +9,10 @@ import java.awt.*;
 
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
-import jmri.jmrit.beantable.LogixTableAction;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.loconet.uhlenbrock.LncvDevice;
 import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
 import jmri.swing.JTablePersistenceManager;
-//import jmri.util.ThreadingUtil;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -30,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Uhlenbrock.
  *
  * TODO add button in table rows to switch to DecoderPro ops mode programmer
- * @author Egbert Broerse Copyright (C) 2020
+ * @author Egbert Broerse Copyright (C) 2021
  */
 public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements LocoNetListener {
 
@@ -609,7 +607,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
     }
 
     /**
-     * Testing method.
+     * Testing methods.
      *
      * @return text currently in Article field
      */
@@ -621,11 +619,24 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         }
     }
 
-    public String getAddressEntry() {
+    protected String getAddressEntry() {
         if (!addressField.isEditable()) {
             return "locked";
         } else {
             return addressField.getText();
+        }
+    }
+
+    protected String getMonitorContents(){
+            return reply;
+    }
+
+    protected void setCvFields(int cvNum, int cvVal) {
+        cvField.setText(""+cvNum);
+        if (cvVal > -1) {
+            valueField.setText("" + cvVal);
+        } else {
+            valueField.setText("");
         }
     }
 
