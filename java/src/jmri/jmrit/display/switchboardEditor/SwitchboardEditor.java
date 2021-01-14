@@ -52,7 +52,7 @@ public class SwitchboardEditor extends Editor {
 
     protected JMenuBar _menuBar;
     private JMenu _editorMenu;
-    protected JMenu _editMenu;
+    //protected JMenu _editMenu;
     protected JMenu _fileMenu;
     protected JMenu _optionMenu;
     private transient boolean panelChanged = false;
@@ -146,7 +146,6 @@ public class SwitchboardEditor extends Editor {
     final static int SIZE_INIT = 100;
     final static int SIZE_MAX = 150;
 
-    private JPanel sliderPane;
     /**
      * To count number of displayed beanswitches, this array holds all beanswitches to be displayed
      * until the GridLayout is configured, used to determine the total number of items to be placed.
@@ -194,7 +193,7 @@ public class SwitchboardEditor extends Editor {
             }
         });
         // make menus
-        sliderPane = getIconScaleSlider(new JPanel()); // move to menu creation when no longer in editor pane
+        JPanel sliderPane = getIconScaleSlider(new JPanel()); // move to menu creation when no longer in editor pane
         _menuBar = new JMenuBar();
         makeOptionMenu();
         makeFileMenu();
@@ -242,9 +241,6 @@ public class SwitchboardEditor extends Editor {
         beanSetupPane.add(turnoutManComboBox);
         beanSetupPane.add(sensorManComboBox);
         beanSetupPane.add(lightManComboBox);
-//        turnoutManComboBox.setVisible(true);
-//        sensorManComboBox.setVisible(false);
-//        lightManComboBox.setVisible(false);
 
         turnoutManComboBox.setToolTipText(Bundle.getMessage("ManComboBoxTip", Bundle.getMessage("BeanNameTurnout")));
         sensorManComboBox.setToolTipText(Bundle.getMessage("ManComboBoxTip", Bundle.getMessage("BeanNameSensor")));
@@ -267,7 +263,6 @@ public class SwitchboardEditor extends Editor {
 //        hardwareAddressValidator.setManager(turnoutManComboBox.getItemAt(0)); // initial system (for type Turnout)
 //        hardwareAddressValidator.verify(addressTextField);
 
-
         add(beanSetupPane);
 
         // add shape combobox
@@ -278,7 +273,7 @@ public class SwitchboardEditor extends Editor {
         shapeList = new JComboBox<>(switchShapeStrings);
         shapeList.setSelectedIndex(0); // select Button choice in comboBox
         shapeList.addActionListener((ActionEvent event) -> {
-            shape = (shapeList.getSelectedIndex() >= 0 ? shapeList.getSelectedIndex() : 0);
+            shape = (Math.max(shapeList.getSelectedIndex(), 0)); // picks 1st item when no selection
             updatePressed();
             setDirty();
         });
@@ -479,6 +474,8 @@ public class SwitchboardEditor extends Editor {
         }
         // if range is confirmed, go ahead with switchboard update
         for (int i = switchesOnBoard.size() - 1; i >= 0; i--) {
+            // remove listeners before removing switches from JLayeredPane
+            ((BeanSwitch) switchboardLayeredPane.getComponent(i)).cleanup();
             // deleting items starting from 0 will result in skipping the even numbered items
             switchboardLayeredPane.remove(i);
         }
