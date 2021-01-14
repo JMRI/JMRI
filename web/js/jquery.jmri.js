@@ -509,9 +509,10 @@
                 if (jmri.socket) {
                     jmri.socket.send("power", {});
                 } else {
-                    $.getJSON(jmri.url + "power", function (json) {
-                        jmri.power(json.data.state);
-                    });
+                	$.getJSON(jmri.url + "power", function (json) {
+                		if ($.isArray(json)) json=json[0]; //unwrap array                   	
+                		jmri.power(json.data.state);
+                	});
                 }
             };
             jmri.setPower = function (state) {
@@ -685,9 +686,10 @@
                 if (jmri.socket) {
                     jmri.socket.send("time", {});
                 } else {
-                    $.getJSON(jmri.url + "time", function (json) {
-                        jmri.time(json.data.time, json.data);
-                    });
+                	$.getJSON(jmri.url + "time", function (json) {
+                		if ($.isArray(json)) json=json[0]; //unwrap array                   	
+                		jmri.time(json.data.time, json.data);
+                	});
                 }
             };
             jmri.getTrain = function (name) {

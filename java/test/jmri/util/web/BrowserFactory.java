@@ -60,12 +60,8 @@ public class BrowserFactory {
                 if (driver == null) {
                     WebDriverManager.getInstance(ChromeDriver.class).setup();
                     ChromeOptions chromeOptions = new ChromeOptions();
-                   // if (GraphicsEnvironment.isHeadless()) {
-                        chromeOptions.addArguments("--headless");
-                    //} else {
-                        chromeOptions.addArguments("--log-level=3");
-                    //}
-                    chromeOptions.addArguments("--disable-extensions");
+                    chromeOptions.addArguments("--headless", "--log-level=3", "--disable-extensions");
+                    
                     LoggingPreferences logPrefs = new LoggingPreferences();
                     logPrefs.enable(LogType.BROWSER, Level.SEVERE);
                     chromeOptions.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);

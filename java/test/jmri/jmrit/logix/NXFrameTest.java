@@ -81,7 +81,7 @@ public class NXFrameTest {
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
 
-        NXFrame nxFrame = WarrantTableAction.getDefault().makeNXFrame();
+        NXFrame nxFrame = new NXFrame();
         nxFrame.setVisible(true);
 
         JFrameOperator nfo = new JFrameOperator(nxFrame);
@@ -150,7 +150,7 @@ public class NXFrameTest {
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
         OBlock block = _OBlockMgr.getBySystemName("OB0");
 
-        NXFrame nxFrame = WarrantTableAction.getDefault().makeNXFrame();
+        NXFrame nxFrame = new NXFrame();
         nxFrame.setVisible(true);
 
         JFrameOperator nfo = new JFrameOperator(nxFrame);
