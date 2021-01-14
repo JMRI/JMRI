@@ -87,7 +87,10 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
         if (getShowSystemUserNames() != prefs.getShowSystemUserNames()) {
             return true;
         }
-        return (getUseGenericFemaleSockets() != prefs.getUseGenericFemaleSockets());
+        if (getUseGenericFemaleSockets() != prefs.getUseGenericFemaleSockets()) {
+            return true;
+        }
+        return (getErrorHandlingType() != prefs.getErrorHandlingType());
     }
 
     @Override

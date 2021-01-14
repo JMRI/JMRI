@@ -25,32 +25,8 @@ public class ErrorHandlingDialog {
     
     private boolean _abortExecution = false;
     
-    /*.*
-     * 
-     * 
-     * 
-     * An error has occurred in the ConditionalNG aaa.
-     * An exception has occurred in NNNN  (show the short description of the action/expression)
-     * Buffer overflow.  (show the error message here)
-     * 
-     * [x] Disable ConditionalNG
-     * [x] Disable LogixNG
-     * [x] Disable all LogixNGs
-     * 
-     * Abort will abort execution of the ConditionalNG by throwing
-     * AbortConditionalNGExecutionException.
-     * 
-     * Continue will continue the execution of the ConditionalNG.
-     * 
-     * Abort | Continue
-     * 
-     * 
-     */
     
     public boolean showDialog(Base item, String errorMessage) {
-        
-//        _functionComboBox.addActionListener((ActionEvent e) -> {
-//        });
         
         _selectItemTypeDialog  = new JDialog(
                 (JDialog)null,

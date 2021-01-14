@@ -45,6 +45,7 @@ public class DefaultConditionalNG extends AbstractBase
         
         _startupThreadId = threadID;
         _thread = LogixNG_Thread.getThread(threadID);
+        _thread.setThreadInUse();
         
         // Do this test here to ensure all the tests are using correct system names
         Manager.NameValidity isNameValid = InstanceManager.getDefault(ConditionalNG_Manager.class).validSystemNameFormat(mSystemName);

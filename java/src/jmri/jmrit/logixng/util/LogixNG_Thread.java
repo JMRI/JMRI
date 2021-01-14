@@ -1,11 +1,9 @@
 package jmri.jmrit.logixng.util;
 
 import java.awt.event.ActionEvent;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.atomic.AtomicReference;
 
 import javax.swing.Timer;
 import javax.annotation.Nonnull;
@@ -13,8 +11,6 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import jmri.util.*;
 
-import jmri.InvokeOnGuiThread;
-import jmri.util.ThreadingUtil;
 import jmri.util.ThreadingUtil.ThreadAction;
 
 /**
@@ -43,7 +39,8 @@ public class LogixNG_Thread {
     private volatile boolean _threadIsStopped = false;
     
     private final Thread _logixNGThread;
-    private final BlockingQueue<ThreadEvent> _logixNGEventQueue;
+    private boolean _threadInUse = false;
+    private final BlockingQueue<ThreadEvent> _eventQueue;
     
     
     public static LogixNG_Thread createNewThread(String name) {
@@ -99,6 +96,18 @@ public class LogixNG_Thread {
         }
     }
     
+    public static void deleteThread(LogixNG_Thread thread) {
+        synchronized (LogixNG_Thread.class) {
+            LogixNG_Thread aThread = _threads.get(thread._threadID);
+            
+            if (aThread == null) throw new IllegalArgumentException("Thread does not exists");
+            if (aThread != thread) throw new IllegalArgumentException("Thread ID does not match");
+            if (aThread._threadInUse) throw new IllegalArgumentException("Thread is in use");
+            
+            _threads.remove(thread._threadID);
+        }
+    }
+    
     public static Collection<LogixNG_Thread> getThreads() {
         return Collections.unmodifiableCollection(_threads.values());
     }
@@ -109,11 +118,11 @@ public class LogixNG_Thread {
         
         synchronized(LogixNG_Thread.class) {
             
-            _logixNGEventQueue = new ArrayBlockingQueue<>(1024);
+            _eventQueue = new ArrayBlockingQueue<>(1024);
             _logixNGThread = new Thread(() -> {
                 while (!_stopThread) {
                     try {
-                        ThreadEvent event = _logixNGEventQueue.take();
+                        ThreadEvent event = _eventQueue.take();
                         if (event._lock != null) {
                             synchronized(event._lock) {
                                 if (!_stopThread) event._threadAction.run();
@@ -145,6 +154,18 @@ public class LogixNG_Thread {
         _name = name;
     }
     
+    public boolean getThreadInUse() {
+        return _threadInUse;
+    }
+    
+    /**
+     * Set the thread to "in use".
+     * If a thread is in use, it cannot be unset as not in use.
+     */
+    public void setThreadInUse() {
+        _threadInUse = true;
+    }
+    
     /**
      * Run some LogixNG-specific code before returning.
      * <p>
@@ -168,7 +189,7 @@ public class LogixNG_Thread {
         if (_logixNGThread != null) {
             Object lock = new Object();
             synchronized(lock) {
-                _logixNGEventQueue.add(new ThreadEvent(ta, lock));
+                _eventQueue.add(new ThreadEvent(ta, lock));
                 try {
                     lock.wait();
                 } catch (InterruptedException e) {
@@ -198,7 +219,7 @@ public class LogixNG_Thread {
      */
     public void runOnLogixNGEventually(@Nonnull ThreadAction ta) {
         if (_logixNGThread != null) {
-            _logixNGEventQueue.add(new ThreadEvent(ta));
+            _eventQueue.add(new ThreadEvent(ta));
         } else {
             throw new RuntimeException("LogixNG thread not started");
         }
@@ -230,7 +251,7 @@ public class LogixNG_Thread {
             Timer timer = new Timer(delay, (ActionEvent e) -> {
                 // Dispatch the event to the layout event handler once the time
                 // has passed.
-                _logixNGEventQueue.add(new ThreadEvent(ta));
+                _eventQueue.add(new ThreadEvent(ta));
             });
             timer.setRepeats(false);
             timer.start();

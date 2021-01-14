@@ -67,6 +67,7 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
         preferences.setStartLogixNGOnStartup(_startLogixNGOnLoadCheckBox.isSelected());
         preferences.setAllowDebugMode(_allowDebugModeCheckBox.isSelected());
         preferences.setShowSystemUserNames(_showSystemUserNamesCheckBox.isSelected());
+        preferences.setErrorHandlingType(errorHandlingComboBox.getItemAt(errorHandlingComboBox.getSelectedIndex()));
         return didSet;
     }
     

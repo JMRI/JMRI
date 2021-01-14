@@ -16,7 +16,6 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import javax.swing.tree.TreePath;
 
 import jmri.*;
 import jmri.jmrit.beantable.BeanTableDataModel;
@@ -176,10 +175,17 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             uNameColumn.setResizable(true);
             uNameColumn.setMinWidth(210);
             uNameColumn.setPreferredWidth(260);
+            TableColumn threadColumn = conditionalColumnModel
+                    .getColumn(ConditionalNGTableModel.THREAD_COLUMN);
+            threadColumn.setResizable(true);
+            threadColumn.setMinWidth(210);
+            threadColumn.setPreferredWidth(260);
             TableColumn buttonColumn = conditionalColumnModel
                     .getColumn(ConditionalNGTableModel.BUTTON_COLUMN);
             TableColumn buttonDeleteColumn = conditionalColumnModel
                     .getColumn(ConditionalNGTableModel.BUTTON_DELETE_COLUMN);
+            TableColumn buttonEditThreadsColumn = conditionalColumnModel
+                    .getColumn(ConditionalNGTableModel.BUTTON_EDIT_THREADS_COLUMN);
 
             // install button renderer and editor
             ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -187,6 +193,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             TableCellEditor buttonEditor = new ButtonEditor(new JButton());
             conditionalTable.setDefaultEditor(JButton.class, buttonEditor);
             JButton testButton = new JButton("XXXXXX");  // NOI18N
+            JButton testButton2 = new JButton("XXXXXXXXXX");  // NOI18N
             conditionalTable.setRowHeight(testButton.getPreferredSize().height);
             buttonColumn.setMinWidth(testButton.getPreferredSize().width);
             buttonColumn.setMaxWidth(testButton.getPreferredSize().width);
@@ -194,6 +201,9 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             buttonDeleteColumn.setMinWidth(testButton.getPreferredSize().width);
             buttonDeleteColumn.setMaxWidth(testButton.getPreferredSize().width);
             buttonDeleteColumn.setResizable(false);
+            buttonEditThreadsColumn.setMinWidth(testButton2.getPreferredSize().width);
+            buttonEditThreadsColumn.setMaxWidth(testButton2.getPreferredSize().width);
+            buttonEditThreadsColumn.setResizable(false);
 
             JScrollPane conditionalTableScrollPane = new JScrollPane(conditionalTable);
             Dimension dim = conditionalTable.getPreferredSize();
@@ -702,17 +712,18 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     /**
      * Table model for ConditionalNGs in the Edit LogixNG pane.
      */
-    public final class ConditionalNGTableModel extends AbstractTableModel implements
-            PropertyChangeListener {
+    public final class ConditionalNGTableModel extends AbstractTableModel
+            implements PropertyChangeListener {
 
         public static final int SNAME_COLUMN = 0;
-
-        public static final int UNAME_COLUMN = 1;
-
-        public static final int BUTTON_COLUMN = 2;
-
-        public static final int BUTTON_DELETE_COLUMN = 3;
-
+        public static final int UNAME_COLUMN = SNAME_COLUMN + 1;
+        public static final int THREAD_COLUMN = UNAME_COLUMN + 1;
+        public static final int BUTTON_COLUMN = THREAD_COLUMN + 1;
+        public static final int BUTTON_DELETE_COLUMN = BUTTON_COLUMN + 1;
+        public static final int BUTTON_EDIT_THREADS_COLUMN = BUTTON_DELETE_COLUMN + 1;
+        public static final int NUM_COLUMNS = BUTTON_EDIT_THREADS_COLUMN + 1;
+        
+        
         public ConditionalNGTableModel() {
             super();
             updateConditionalNGListeners();
@@ -767,7 +778,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
 
         @Override
         public Class<?> getColumnClass(int c) {
-            if ((c == BUTTON_COLUMN) || (c == BUTTON_DELETE_COLUMN)) {
+            if ((c == BUTTON_COLUMN) || (c == BUTTON_DELETE_COLUMN) || (c == BUTTON_EDIT_THREADS_COLUMN)) {
                 return JButton.class;
             }
             return String.class;
@@ -775,7 +786,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
 
         @Override
         public int getColumnCount() {
-            return 4;
+            return NUM_COLUMNS;
         }
 
         @Override
@@ -786,7 +797,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         @Override
         public boolean isCellEditable(int r, int c) {
             if (!_inReorderMode) {
-                return ((c == UNAME_COLUMN) || (c == BUTTON_COLUMN) || (c == BUTTON_DELETE_COLUMN));
+                return ((c == UNAME_COLUMN) || (c == BUTTON_COLUMN)
+                        || (c == BUTTON_DELETE_COLUMN) || (c == BUTTON_EDIT_THREADS_COLUMN));
             } else if (c == BUTTON_COLUMN) {
                 if (r >= _nextInOrder) {
                     return (true);
@@ -802,9 +814,13 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                     return Bundle.getMessage("ColumnSystemName");  // NOI18N
                 case UNAME_COLUMN:
                     return Bundle.getMessage("ColumnUserName");  // NOI18N
+                case THREAD_COLUMN:
+                    return Bundle.getMessage("ConditionalNG_Table_ColumnThreadName");  // NOI18N
                 case BUTTON_COLUMN:
                     return ""; // no label
                 case BUTTON_DELETE_COLUMN:
+                    return ""; // no label
+                case BUTTON_EDIT_THREADS_COLUMN:
                     return ""; // no label
                 default:
                     throw new IllegalArgumentException("Unknown column");
@@ -819,10 +835,14 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                     return new JTextField(6).getPreferredSize().width;
                 case UNAME_COLUMN:
                     return new JTextField(17).getPreferredSize().width;
+                case THREAD_COLUMN:
+                    return new JTextField(10).getPreferredSize().width;
                 case BUTTON_COLUMN:
                     return new JTextField(6).getPreferredSize().width;
                 case BUTTON_DELETE_COLUMN:
                     return new JTextField(6).getPreferredSize().width;
+                case BUTTON_EDIT_THREADS_COLUMN:
+                    return new JTextField(12).getPreferredSize().width;
                 default:
                     throw new IllegalArgumentException("Unknown column");
             }
@@ -847,6 +867,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                     }
                 case BUTTON_DELETE_COLUMN:
                     return Bundle.getMessage("ButtonDelete");  // NOI18N
+                case BUTTON_EDIT_THREADS_COLUMN:
+                    return Bundle.getMessage("ConditionalNG_Table_ButtonEditThreads");  // NOI18N
                 case SNAME_COLUMN:
                     return _curLogixNG.getConditionalNG(rx);
                 case UNAME_COLUMN: {
@@ -857,6 +879,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                     }
                     return "";
                 }
+                case THREAD_COLUMN:
+                    return _curLogixNG.getConditionalNG(r).getCurrentThread().getThreadName();
                 default:
                     throw new IllegalArgumentException("Unknown column");
             }
@@ -937,6 +961,10 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                     break;
                 case BUTTON_DELETE_COLUMN:
                     deleteConditionalNG(row);
+                    break;
+                case BUTTON_EDIT_THREADS_COLUMN:
+                    EditThreadsDialog dialog = new EditThreadsDialog(_curLogixNG.getConditionalNG(row));
+                    dialog.showDialog();
                     break;
                 case SNAME_COLUMN:
                     throw new IllegalArgumentException("System name cannot be changed");
