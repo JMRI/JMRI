@@ -198,21 +198,6 @@ public class EditThreadsDialog {
             _threads = new ArrayList<>(LogixNG_Thread.getThreads());
         }
 
-        /**
-         * Check if this property event is announcing a change this table should
-         * display.
-         * <p>
-         * Note that events will come both from the NamedBeans and from the
-         * manager.
-         *
-         * @param e the event heard
-         * @return true if a change in State or Appearance was heard
-         */
-        boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-            return (e.getPropertyName().contains("State") ||      // NOI18N
-                    e.getPropertyName().contains("Appearance"));  // NOI18N
-        }
-
         @Override
         public Class<?> getColumnClass(int c) {
             if ((c == BUTTON_SELECT_THREAD_COLUMN) || (c == BUTTON_DELETE_COLUMN)) {
