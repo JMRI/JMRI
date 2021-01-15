@@ -111,6 +111,8 @@ public class SwitchboardEditor extends Editor {
     private final Color defaultActiveColor = Color.RED;
     private final Color defaultInactiveColor = Color.GREEN;
     private final Color defaultUnknownColor = Color.WHITE;
+    protected final static Color darkActiveColor = new Color(180, 50, 50);
+    protected final static Color darkInactiveColor = new Color(40, 150, 30);
     private boolean _hideUnconnected = false;
     private boolean _autoItemRange = true;
     private int rows = 4; // matches initial autoRows pref for default pane size
@@ -1769,7 +1771,7 @@ public class SwitchboardEditor extends Editor {
     }
 
     private void setScaleMenu(int size) {
-        switch (Math.round(size)) { // also set the scale radio menu items
+        switch (size) { // also set the scale radio menu items
             case (SIZE_MIN):
                 sizeSmall.setSelected(true);
                 break;

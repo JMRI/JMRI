@@ -2,6 +2,7 @@ package jmri.jmrit.display.switchboardEditor;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
 import java.io.File;
@@ -53,7 +54,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
 
     // the associated Bean object
     private final NamedBean _bname;
-    private NamedBeanHandle<?> namedBean = null; // could be Turnout, Sensor or Light
+    private NamedBeanHandle<?> namedBean = null; // can be Turnout, Sensor or Light
     protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
     private final char beanTypeChar;
     private final Color defaultActiveColor = Color.RED;
@@ -124,21 +125,22 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         // attach shape specific code to this beanSwitch
         switch (_shape) {
             case SwitchboardEditor.SLIDER: // slider shape
-                iconSwitch = new IconSwitch(_shape, beanTypeChar, r, scale); // draw as Graphic2D, was: keyOnPath, keyOffPath, r, scale );
+                iconSwitch = new IconSwitch(_shape, beanTypeChar, r, scale); // draw as Graphic2D
                 iconSwitch.setPreferredSize(new Dimension(2*r, 2*r));
                 iconSwitch.positionLabel(0, 5*r/-8, Component.CENTER_ALIGNMENT, Math.max(12,r/4));
                 iconSwitch.positionSubLabel(0, r/3, Component.CENTER_ALIGNMENT, Math.max(9,r/5)); // smaller (system name)
                 this.add(iconSwitch);
                 break;
             case SwitchboardEditor.KEY: // Maerklin style keyboard
-                iconSwitch = new IconSwitch(_shape, iconOnPath, iconOffPath, r, scale, editor.getDefaultBackgroundColor());
+                iconSwitch = new IconSwitch(_shape, beanTypeChar, r, scale); // draw as Graphic2D
+                //iconSwitch = new IconSwitch(_shape, keyOnPath, keyOffPath, r, scale, editor.getDefaultBackgroundColor());
                 iconSwitch.setPreferredSize(new Dimension(2*r, 2*r));
                 iconSwitch.positionLabel(0, r/16, Component.CENTER_ALIGNMENT, Math.max(12,r/4));
                 iconSwitch.positionSubLabel(0, r/4, Component.CENTER_ALIGNMENT, Math.max(9,r/5)); // smaller (system name)
                 // provide x, y offset, depending on image size and free space
                 this.add(iconSwitch);
                 break;
-            case SwitchboardEditor.SYMBOL: // turnout/sensor/light symbol (selecting image by letter in switch name/label)
+            case SwitchboardEditor.SYMBOL: // turnout/sensor/light symbol using image files (selecting image by letter in switch name/label)
                 iconSwitch = new IconSwitch(
                         rootPath + beanTypeChar + "-on-s.png",
                         rootPath + beanTypeChar + "-off-s.png",
@@ -166,9 +168,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 beanButton.setForeground(_editor.getDefaultTextColorAsColor());
                 beanButton.setOpaque(true); // to show color from the start
                 this.setBorder(BorderFactory.createLineBorder(_editor.getDefaultBackgroundColor(), 2));
-                if (_editor.showToolTip()) {
-                    beanButton.setToolTipText(switchTooltip);
-                }
                 beanButton.addComponentListener(new ComponentAdapter() {
                     @Override
                     public void componentResized(ComponentEvent e) {
@@ -179,36 +178,49 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                         }
                     }
                 });
+                beanButton.addMouseListener(new MouseAdapter() { // pass on mouseEvents
+                    public void mouseClicked(MouseEvent e) {
+                        redispatchToParent(e);
+                    }
 
+                    public void mouseReleased(MouseEvent e) {
+                        redispatchToParent(e);
+                    }
+
+                    public void mousePressed(MouseEvent e) {
+                        redispatchToParent(e);
+                    }
+                });
                 beanButton.setMargin(new Insets(4, 1, 2, 1));
                 this.add(beanButton);
                 break;
         }
-        // common configuration of graphic switches (skips BUTTON)
-        if (iconSwitch != null) {
-            iconSwitch.addMouseListener(new MouseAdapter() { // handled by JPanel
-                @Override
-                public void mouseClicked(MouseEvent me) {
-                    operate(me, switchName);
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent me) { // for Windows
-                    if (me.isPopupTrigger()) {
-                        showPopUp(me); // display the popup
-                    }
-                }
-
-                @Override
-                public void mousePressed(MouseEvent me) { // for macOS, Linux
-                    if (me.isPopupTrigger()) {
-                        showPopUp(me); // display the popup
-                    }
-                }
-            });
-            if (_editor.showToolTip()) {
-                iconSwitch.setToolTipText(switchTooltip);
+        // common configuration of graphic switches
+        addMouseListener(new MouseAdapter() { // handled by JPanel
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                operate(me, switchName);
             }
+
+            @Override
+            public void mouseReleased(MouseEvent me) { // for Windows
+                if (me.isPopupTrigger()) {
+                    showPopUp(me); // display the popup
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent me) { // for macOS, Linux
+                if (me.isPopupTrigger()) {
+                    log.debug("what's clicking?");
+                    showPopUp(me); // display the popup
+                }
+            }
+        });
+        if (_editor.showToolTip()) {
+            setToolTipText(switchTooltip);
+        }
+        if (iconSwitch != null) {
             iconSwitch.setBackground(_editor.getDefaultBackgroundColor());
             iconSwitch.setLabels(switchLabel, _uLabel);
         }
@@ -225,7 +237,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     case SwitchboardEditor.KEY:
                     case SwitchboardEditor.SYMBOL:
                     default:
-//                        iconSwitch.setOpacity(dim);
+                        // iconSwitch.setOpacity(dim); // activate for graphic painted switches
                 }
                 displayState(0); // show unconnected as unknown/greyed
             }
@@ -439,7 +451,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             beanButton.setText(getSwitchButtonLabel(switchLabel));
             beanButton.setBackground(switchColor); // only the color is visible TODO get access to bg color of JButton?
             beanButton.setOpaque(true);
-        } else if (isIcon() && iconSwitch != null) {
+        } else if (isIcon() && (iconSwitch != null)) {
             iconSwitch.showSwitchIcon(state);
             iconSwitch.setLabels(switchLabel, _uLabel);
         }
@@ -526,7 +538,16 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
 
     void cleanup() {
         if (namedBean != null) {
-            getTurnout().removePropertyChangeListener(this);
+            switch (beanTypeChar) {
+                case 'T':
+                    getTurnout().removePropertyChangeListener(this);
+                    break;
+                case 'S':
+                    getSensor().removePropertyChangeListener(this);
+                    break;
+                default: // light
+                    getLight().removePropertyChangeListener(this);
+            }
         }
         namedBean = null;
     }
@@ -597,8 +618,8 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             }
         }
         // display the popup
-        switchPopup.show(this, this.getWidth() / 3 + (int) ((_editor.getPaintScale() - 1.0) * this.getX()),
-                this.getHeight() / 3 + (int) ((_editor.getPaintScale() - 1.0) * this.getY()));
+        switchPopup.show(this, this.getWidth()/3 + (int) ((_editor.getPaintScale() - 1.0) * this.getX()),
+                this.getHeight()/3 + (int) ((_editor.getPaintScale() - 1.0) * this.getY()));
 
         return true;
     }
@@ -967,16 +988,14 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     }
 
     String rootPath = "resources/icons/misc/switchboard/";
-    String iconOffPath = rootPath + "appslide-off-s.png";
-    String iconOnPath = rootPath + "appslide-on-s.png";
     String keyOffPath = rootPath + "markl-off-s.png";
     String keyOnPath = rootPath + "markl-on-s.png";
-    String symbolOffPath; // = rootPath + "T-off-s.png"; // default for Turnout, replace T by S or L
+    String symbolOffPath; // default for Turnout, replace T by S or L
     String symbolOnPath; // = rootPath + "T-on-s.png";
 
     /**
      * Class to display individual bean state switches on a JMRI Switchboard
-     * using 2 image files.
+     * using 2DGraphic drawing code or alternating 2 image files.
      */
     public class IconSwitch extends JPanel {
 
@@ -1045,8 +1064,8 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
          * @param iconScale percentage relative to tile size, 100 = default
          */
         public IconSwitch(int shape, int type, int drawingRadius, int iconScale) {
-            if (shape != SwitchboardEditor.SLIDER) { // only draw slider, for now
-                return; // leave in place for 0 = buttons drawn as JButtons, not graphics
+            if ((shape == SwitchboardEditor.BUTTON) || (shape == SwitchboardEditor.SYMBOL)) {
+                return; // when SYMBOL is migrated, leave in place for 0 = BUTTON (drawn as JButtons, not graphics)
             }
             _shape = shape;
             if (drawingRadius > 10) r = drawingRadius;
@@ -1061,7 +1080,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
 
         protected void showSwitchIcon(int stateIndex) {
             log.debug("showSwitchIcon {}", stateIndex);
-            if (_shape == SwitchboardEditor.SLIDER) {
+            if ((_shape == SwitchboardEditor.SLIDER) || (_shape == SwitchboardEditor.KEY)) {
                 //redraw (colors are already set above
                 _state = stateIndex;
             } else {
@@ -1138,7 +1157,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 // Draw symbol on the beanswitch widget canvas
                 // see panel.js for vector drawing: var $drawWidgetSymbol = function(id, state), ctx is same as g2d
                 // backgroundcolor, stroke width?
-                //g.clearRect(0, 0, 2*r, 2*r); //  for alternating text and 'moving' items
+                //g.clearRect(0, 0, 2*r, 2*r); //  clear for alternating text and 'moving' items not cover by new paint
                 g.setColor(_state == 2 ? defaultActiveColor : defaultInactiveColor); // simple change in color
                 // slider, same shape for all beanTypes (S, T, L)
                 // the sliderspace
@@ -1151,9 +1170,26 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 g2d.fillOval(knobX, -r/4, r/2, r/2);
                 g.setColor(Color.BLACK);
                 g2d.drawOval(knobX, -r/4, r/2, r/2);
+            } else if (_shape == SwitchboardEditor.KEY) {
+                // key, same shape for all beanTypes (S, T, L)
+                // red = upper rounded rect
+                g.setColor(_state == 2 ? defaultActiveColor : SwitchboardEditor.darkActiveColor); // simple change in color
+                g2d.fillRoundRect(-r/2, -2*r/3, r, r/3, r/8, r/8);
+                // green = lower rounded rect
+                g.setColor(_state == 4 ? defaultInactiveColor : SwitchboardEditor.darkInactiveColor); // simple change in color
+                g2d.fillRoundRect(-r/2, r/6, r, r/3, r/8, r/8);
+                // add round LED at top
+                Point2D center = new Point2D.Float(-0.1f*r, -1.4f*r);
+                float radius = r/8.0f;
+                float[] dist = {0.0f, 1.0f};
+                Color[] colors = {Color.WHITE, (_state == 2 ? defaultActiveColor : SwitchboardEditor.darkActiveColor)};
+                RadialGradientPaint p =new RadialGradientPaint(center, radius, dist, colors);
+                // with black outline
+                g.setColor(Color.BLACK);
+                g2d.drawOval(-r/8, -r, r/4, r/4);
             } else {
                 // use image file
-                g2d.drawImage(image, rop, image.getWidth() / -2, image.getHeight() / -2); // center bitmap
+                g2d.drawImage(image, rop, image.getWidth()/-2, image.getHeight()/-2); // center bitmap
             }
             g.setFont(getFont());
             if (ropOffset > 0f) {
@@ -1168,7 +1204,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             if (Math.abs(textAlign - Component.CENTER_ALIGNMENT) < .0001) {
                 FontMetrics metrics = g.getFontMetrics(); // figure out where the center of the string is
-                labelX = metrics.stringWidth(tag) / -2;
+                labelX = metrics.stringWidth(tag)/-2;
             }
             g.drawString(tag, labelX, labelY); // draw name on top of button image (vertical, horizontal offset from top left)
 
@@ -1176,7 +1212,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 g.setFont(new Font(Font.SANS_SERIF, Font.ITALIC, Math.max(subTextSize, 6)));
                 if (Math.abs(subTextAlign - Component.CENTER_ALIGNMENT) < .0001) {
                     FontMetrics metrics2 = g.getFontMetrics(); // figure out where the center of the string is
-                    subLabelX = metrics2.stringWidth(subTag) / -2;
+                    subLabelX = metrics2.stringWidth(subTag)/-2;
                 }
                 g.drawString(subTag, subLabelX, subLabelY); // draw user name at bottom
             }
@@ -1208,6 +1244,12 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         g2d.drawImage(image, 0, 0, newWidth, newHeight, null);
         g2d.dispose();
         return bimg;
+    }
+
+    private void redispatchToParent(MouseEvent e){
+        Component source = (Component) e.getSource();
+        MouseEvent parentEvent = SwingUtilities.convertMouseEvent(source, e, source.getParent());
+        source.getParent().dispatchEvent(parentEvent);
     }
 
     private final static Logger log = LoggerFactory.getLogger(BeanSwitch.class);
