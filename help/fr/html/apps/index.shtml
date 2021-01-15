@@ -5,7 +5,7 @@
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
 <!-- $Id$ -->
-<!-- UpDated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-04 -->
+<!-- UpDated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2021-01-15 -->
 <title>JMRI: Applications</title>
 
 <!-- Style -->
@@ -71,13 +71,46 @@
 		</dd>
  </dl>		
 		
-<h2>Plus d'Outils</h2>
-  <ul>
-  <li<a href="../tools/index.shtml">Outils et Caract&#233;ristiques Communes</a> pour configurer et exploiter votre r&#233;seau partag&#233; par la 
-  plupart des applications JMRI.</li>
-			<li><a href="../tools/index.shtml#systemSpecificTools">Des Outils Syst&#232:me-Sp&#233;cifique </a> sont disponibles dans la plupart des 
-			applications JMRI depuis leur propre menu quand vous avez configur&#233; JMRI pour ce Syst&#232;me de Connexion.</li>
-	</ul>
+  <h2><a name="addapp" id="addapp">Applications suppl&#339;#233;mentaires avec des connexions JMRI...</a></h2>
+       <p>Les amateurs ont cr&#339;#233;&#339;#233; des applications qui fonctionnent avec JMRI
+       pour fournir des capacit&#339;#233;s suppl&#339;#233;mentaires. En outre, certains vendeurs ont
+       cr&#339;#233;&#339;#233; des applications qui fonctionnent avec, ajoutent des donn&#339;#233;es ou prennent des donn&#339;#233;es de JMRI</p>
+       <p>Voir le <a href="../../../../community/connections/CommunityConnectionsIndex.shtml">
+       community/connections directory</a> pour une liste et des liens.  
+       De nouvelles applications peuvent être ajout&#339;#233;es &#339;#224; tout moment !</p>
+       
+     
+      <h2>Fonctionnalit&#339;#233;s et outils de l'IRMJ</h2>
+
+<Le logiciel d'JMRI est constitu&#339;#233; d'une vaste biblioth&#339;#232;que de fonctions r&#339;#233;parties en
+
+<ul>
+  <li>une partie sp&#339;#233;cifique au syst&#339;#232;me, avec de nombreuses sous-parties, dont chacune communique avec un
+  syst&#339;#232;me mat&#339;#233;riel support&#339;#233;, comme le C/MRI, de mani&#339;#232;re sp&#339;#233;cifique au syst&#339;#232;me, et</li>
+  <li>une partie ind&#339;#233;pendante du syst&#339;#232;me où la plupart des fonctionnalit&#339;#233;s de JMRI sont mises en œuvre.</li>
+ </ul>
+ 
+ 
+ <p>Ainsi, par exemple, si l'utilisateur fait quelque chose (peut-être d&#339;#233;finir un itin&#339;#233;raire) pour que
+  JMRI devie un aiguillage, l'action de l'utilisateur se produira dans
+  la partie du logiciel ind&#339;#233;pendante du syst&#339;#232;me, puis JMRI enverra le
+  commande effective via la partie d&#339;#233;pendante du syst&#339;#232;me appropri&#339;#233;e au syst&#339;#232;me mat&#339;#233;riel
+  contr&#339;#244;lant l'aiguille particuliere &#339;#224; d&#339;#233;vier. JMRI est con&#339;#231;ue de mani&#339;#232;re &#339;#224; ce que
+  les fonctionnalit&#339;#233;s sont impl&#339;#233;ment&#339;#233;es dans la partie ind&#339;#233;pendante du syst&#339;#232;me autant que possible,
+  avec JMRI utilisant des sous-parties d&#339;#233;pendantes du syst&#339;#232;me uniquement lorsque c'est vraiment n&#339;#233;cessaire. Acc&#339;#233;dez
+  aux fonctions ind&#339;#233;pendantes du syst&#339;#232;me se fait via les principaux menus de JMRI, tels que le menu Outils.</p>
+
+      <ul>
+        <li>Vous pouvez
+        trouver des informations suppl&#339;#233;mentaires sur chacun des outils "communs" de JMRI en cliquant sur les liens dans la barre lat&#339;#233;rale ou sur le 
+        <a href="../tools/index.shtml">page d'index des outils.</a></li>
+
+        <li>Il y en a beaucoup <a href=
+        "../tools/index.shtml#systemSpecificTools">sp&#339;#233;cifique au syst&#339;#232;me
+        qui sont disponibles dans les applications JMRI. Vous pouvez trouver des informations suppl&#339;#233;mentaires
+        sur chacun d'eux en cliquant sur les liens dans la fichier <a href="../tools/index.shtml#systemSpecificTools"> page d'index des outilssp&#339;#233;cifique au syst&#339;#232;me
+        </a>.  Les outils eux-mêmes sont invoqu&#339;#233;s &#339;#224; partir de leurs propres menus d&#339;#233;roulants dans 
+        les applications JMRI lorsque vous avez configur&#339;#233; JMRI pour chaque connexion sp&#339;#233;cifique au syst&#339;#232;me.</li>
 
 <!--#include virtual="/Footer" -->
 </div> <!-- close #mainContent -->
