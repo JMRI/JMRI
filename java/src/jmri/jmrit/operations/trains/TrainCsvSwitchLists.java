@@ -60,7 +60,8 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
             trimCvsFile(file, location);
         }
 
-        try (CSVPrinter fileOut = new CSVPrinter(new FileWriter(file.getAbsolutePath(), append), CSVFormat.DEFAULT)) {
+        try (CSVPrinter fileOut = new CSVPrinter(new OutputStreamWriter(new FileOutputStream(file, append),
+                StandardCharsets.UTF_8), CSVFormat.DEFAULT)) {
             if (!append) {
                 // build header
                 printHeader(fileOut);
