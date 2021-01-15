@@ -460,8 +460,7 @@ public class AutoAllocate implements Runnable {
                 }
             } catch (RuntimeException e) {
                 log.warn(
-                        "scanAllocationRequestList - maybe the allocationrequest was removed due to a terminating train??{}",
-                        e.toString());
+                        "scanAllocationRequestList - maybe the allocationrequest was removed due to a terminating train??",e);
                 continue;
             }
         }
