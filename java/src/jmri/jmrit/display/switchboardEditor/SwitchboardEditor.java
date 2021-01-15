@@ -79,6 +79,7 @@ public class SwitchboardEditor extends Editor {
     static final String LIGHT = Bundle.getMessage("Lights");
     private final String[] beanTypeStrings = {TURNOUT, SENSOR, LIGHT};
     private JComboBox<String> beanTypeList;
+    private String type = TURNOUT;
     private final String[] switchShapeStrings = {
         Bundle.getMessage("Buttons"),
         Bundle.getMessage("Sliders"),
@@ -99,7 +100,6 @@ public class SwitchboardEditor extends Editor {
     protected LightManager lightManager = InstanceManager.getDefault(LightManager.class);
     private SystemConnectionMemo memo;
     private int shape = BUTTON; // for: button
-    private String type = TURNOUT;
     //SystemNameValidator hardwareAddressValidator;
     JTextField addressTextField = new JTextField(10);
     private TitledBorder border;
@@ -374,7 +374,6 @@ public class SwitchboardEditor extends Editor {
                 addressTextField.setText("");     // Reset input before switching managers
                 //hardwareAddressValidator.setManager(manager);
             }
-            //memo = (lightManComboBox.getSelectedItem() != null ? lightManComboBox.getSelectedItem().getMemo() : lightManComboBox.getItemAt(0).getMemo());
             log.debug("Lbox set to {}. Updating", memo.getUserName());
             updatePressed();
             setDirty();
@@ -386,7 +385,6 @@ public class SwitchboardEditor extends Editor {
                 addressTextField.setText("");     // Reset input before switching managers
                 //hardwareAddressValidator.setManager(manager);
             }
-            //memo = (sensorManComboBox.getSelectedItem() != null ? sensorManComboBox.getSelectedItem().getMemo() : sensorManComboBox.getItemAt(0).getMemo());
             log.debug("Sbox set to {}. Updating", memo.getUserName());
             updatePressed();
             setDirty();
@@ -398,7 +396,6 @@ public class SwitchboardEditor extends Editor {
                 addressTextField.setText("");     // Reset input before switching managers
                 //hardwareAddressValidator.setManager(manager);
             }
-            //memo = (turnoutManComboBox.getSelectedItem() != null ? turnoutManComboBox.getSelectedItem().getMemo() : turnoutManComboBox.getItemAt(0).getMemo());
             log.debug("Tbox set to {}. Updating", memo.getUserName());
             updatePressed();
             setDirty();
@@ -549,18 +546,18 @@ public class SwitchboardEditor extends Editor {
      *                    showing the name or (to do) a graphic image
      */
     private void createSwitchRange(int min, int max, int beanType, int shapeChoice, @Nonnull String startAddress) {
-        log.debug("_hideUnconnected = {}", _hideUnconnected);
+        log.debug("createSwitchRange - _hideUnconnected = {}", _hideUnconnected);
         String name;
         BeanSwitch _switch;
         NamedBean nb;
         if (memo == null) {
-            log.error("null memo, can't create range");
+            log.error("createSwitchRange - null memo, can't create range");
             return;
         }
         String prefix = memo.getSystemPrefix();
         // TODO handling of non-numeric system names such as MERG, C/MRI using validator textField
         // if (!startAddress.equals("")) { // use as start address, spinners are only for the number of items
-        log.debug("_manuprefix={} beanType={}", prefix, beanType);
+        log.debug("createSwitchRange - _manuprefix={} beanType={}", prefix, beanType);
         // use validated bean names
         for (int i = min; i <= max; i++) {
             switch (beanType) {
@@ -574,15 +571,17 @@ public class SwitchboardEditor extends Editor {
                     nb = jmri.InstanceManager.getDefault(TurnoutManager.class).getTurnout(name);
                     break;
                 case 1:
+                    log.debug("CASE SensorManager is {} for memo {}", (memo.get(SensorManager.class) == null ? "NULL" : "not null"), memo.getUserName());
                     try {
-                        name = ((SensorManager)memo.get(SensorManager.class)).createSystemName(i + "", prefix);
+                        name = InstanceManager.getNullableDefault(SensorManager.class).createSystemName(i + "", prefix);
+                        //name = ((SensorManager)memo.get(SensorManager.class)).createSystemName(i + "", prefix);
                     } catch (jmri.JmriException | NullPointerException ex) {
                         log.trace("Error creating range at sensor {}. Connection {}", i, memo.getUserName(), ex);
                         return;
                     }
                     nb = jmri.InstanceManager.getDefault(SensorManager.class).getSensor(name);
                     break;
-                case 2: // calling InstanceManager.getDefault(SensorManager.class) often fails 1st time, useless for test
+                case 2:
                     try {
                         name = ((LightManager)memo.get(LightManager.class)).createSystemName(i + "", prefix);
                     } catch (jmri.JmriException ex) {
@@ -875,6 +874,7 @@ public class SwitchboardEditor extends Editor {
                     }
                 }
                 defaultTextColor = desiredColor;
+                border.setTitleColor(desiredColor);
                 setDirty(true);
                 JmriColorChooser.addRecentColor(desiredColor);
                 updatePressed();
@@ -895,6 +895,7 @@ public class SwitchboardEditor extends Editor {
                             new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonInvert"), Bundle.getMessage("ButtonCancel")}, null);
                     if (retval == 1) { // invert the other color
                         defaultTextColor = contrast(defaultTextColor);
+                        border.setTitleColor(defaultTextColor);
                     } else if (retval != 0) {
                         return; // cancel
                     }
@@ -942,6 +943,7 @@ public class SwitchboardEditor extends Editor {
 
     public void setDefaultTextColor(Color color) {
         defaultTextColor = color;
+        border.setTitleColor(color);
     }
 
     /**
@@ -1708,26 +1710,38 @@ public class SwitchboardEditor extends Editor {
         // TODO store current selection in prefman
 
     /**
-     * Show only one of the manafger combo boxes.
+     * Show only one of the manuf (manager) combo boxes.
      *
      * @param type one of the three NamedBean types as String
      */
     protected void displayManagerComboBoxes(String type) {
         if (type.equals(LIGHT)) {
+            Manager<Light> manager = lightManComboBox.getSelectedItem();
+            if (manager != null) {
+                memo = manager.getMemo();
+            }
             turnoutManComboBox.setVisible(false);
             sensorManComboBox.setVisible(false);
             lightManComboBox.setVisible(true);
-            log.debug("BOX set for LightManager. LightManComboVisible={}", lightManComboBox.isVisible());
+            log.debug("BOX for LightManager set. LightManComboVisible={}", lightManComboBox.isVisible());
         } else if (type.equals(SENSOR)) {
-            turnoutManComboBox.setVisible(true);
-            sensorManComboBox.setVisible(false);
-            lightManComboBox.setVisible(false);
-            log.debug("BOX set for TurnoutManager. TurnoutManComboVisible={}", turnoutManComboBox.isVisible());
-        } else { // TURNOUT
+            Manager<Sensor> manager = sensorManComboBox.getSelectedItem();
+            if (manager != null) {
+                memo = manager.getMemo();
+            }
             turnoutManComboBox.setVisible(false);
             sensorManComboBox.setVisible(true);
             lightManComboBox.setVisible(false);
-            log.debug("BOX set for TurnoutManager. TurnoutManComboVisible={}", turnoutManComboBox.isVisible());
+            log.debug("BOX for SensorManager set. SensorManComboVisible={}", sensorManComboBox.isVisible());
+        } else { // TURNOUT
+            Manager<Turnout> manager = turnoutManComboBox.getSelectedItem();
+            if (manager != null) {
+                memo = manager.getMemo();
+            }
+            turnoutManComboBox.setVisible(true);
+            sensorManComboBox.setVisible(false);
+            lightManComboBox.setVisible(false);
+            log.debug("BOX for TurnoutManager set. TurnoutManComboVisible={}", turnoutManComboBox.isVisible());
         }
     }
 

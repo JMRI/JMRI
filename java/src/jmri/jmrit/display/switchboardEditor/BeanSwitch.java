@@ -11,6 +11,7 @@ import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import javafx.scene.paint.RadialGradient;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Light;
@@ -179,14 +180,15 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     }
                 });
                 beanButton.addMouseListener(new MouseAdapter() { // pass on mouseEvents
+                    @Override
                     public void mouseClicked(MouseEvent e) {
                         redispatchToParent(e);
                     }
-
+                    @Override
                     public void mouseReleased(MouseEvent e) {
                         redispatchToParent(e);
                     }
-
+                    @Override
                     public void mousePressed(MouseEvent e) {
                         redispatchToParent(e);
                     }
@@ -1174,16 +1176,18 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 // key, same shape for all beanTypes (S, T, L)
                 // red = upper rounded rect
                 g.setColor(_state == 2 ? defaultActiveColor : SwitchboardEditor.darkActiveColor); // simple change in color
-                g2d.fillRoundRect(-r/2, -2*r/3, r, r/3, r/8, r/8);
+                g2d.fillRoundRect(-r/3, -2*r/3, 2*r/3, r/3, r/8, r/8);
                 // green = lower rounded rect
                 g.setColor(_state == 4 ? defaultInactiveColor : SwitchboardEditor.darkInactiveColor); // simple change in color
-                g2d.fillRoundRect(-r/2, r/6, r, r/3, r/8, r/8);
-                // add round LED at top
-                Point2D center = new Point2D.Float(-0.1f*r, -1.4f*r);
-                float radius = r/8.0f;
-                float[] dist = {0.0f, 1.0f};
-                Color[] colors = {Color.WHITE, (_state == 2 ? defaultActiveColor : SwitchboardEditor.darkActiveColor)};
-                RadialGradientPaint p =new RadialGradientPaint(center, radius, dist, colors);
+                g2d.fillRoundRect(-r/3, r/6, 2*r/3, r/3, r/8, r/8);
+                // add round LED at top (only part defined as floats)
+                Point2D center = new Point2D.Float(0.05f*r, -7.0f*r/8.0f);
+                float radius = r/6.0f;
+                float[] dist = {0.0f, 0.8f};
+                Color[] colors = {Color.WHITE, (_state == 2 ? defaultActiveColor : Color.GRAY)};
+                RadialGradientPaint pnt = new RadialGradientPaint(center, radius, dist, colors);
+                g2d.setPaint(pnt);
+                g2d.fillOval(-r/8, -r, r/4, r/4);
                 // with black outline
                 g.setColor(Color.BLACK);
                 g2d.drawOval(-r/8, -r, r/4, r/4);
