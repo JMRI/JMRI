@@ -4,7 +4,9 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
+import jmri.jmrit.logixng.LogixNG_Manager;
 
 /**
  *
@@ -12,21 +14,24 @@ import jmri.jmrit.logixng.Base;
  */
 public class ErrorHandlingDialog {
     
+    private Base _item;
     private JDialog _selectItemTypeDialog;
     
     private final JCheckBox _disableConditionalNGCheckBox =
-            new JCheckBox(Bundle.getMessage("ErrorHandlingDialog_DisableConditionalNG") + ":");   // NOI18N
+            new JCheckBox(Bundle.getMessage("ErrorHandlingDialog_DisableConditionalNG"));   // NOI18N
     
     private final JCheckBox _disableLogixNGCheckBox =
-            new JCheckBox(Bundle.getMessage("ErrorHandlingDialog_DisableLogixNG") + ":");   // NOI18N
+            new JCheckBox(Bundle.getMessage("ErrorHandlingDialog_DisableLogixNG"));   // NOI18N
     
-    private final JCheckBox _disableAllLogixNGCheckBox =
-            new JCheckBox(Bundle.getMessage("ErrorHandlingDialog_DisableAllLogixNG") + ":");   // NOI18N
+    private final JCheckBox _stopAllLogixNGCheckBox =
+            new JCheckBox(Bundle.getMessage("ErrorHandlingDialog_StopAllLogixNGs"));   // NOI18N
     
     private boolean _abortExecution = false;
     
     
     public boolean showDialog(Base item, String errorMessage) {
+        
+        _item = item;
         
         _selectItemTypeDialog  = new JDialog(
                 (JDialog)null,
@@ -42,12 +47,11 @@ public class ErrorHandlingDialog {
         contentPanel.add(new JLabel(errorMessage));
         
         contentPanel.add(_disableConditionalNGCheckBox);
-        contentPanel.add(_disableConditionalNGCheckBox);
         _disableConditionalNGCheckBox.setAlignmentX(Component.LEFT_ALIGNMENT);
         contentPanel.add(_disableLogixNGCheckBox);
         _disableLogixNGCheckBox.setAlignmentX(Component.LEFT_ALIGNMENT);
-        contentPanel.add(_disableAllLogixNGCheckBox);
-        _disableAllLogixNGCheckBox.setAlignmentX(Component.LEFT_ALIGNMENT);
+        contentPanel.add(_stopAllLogixNGCheckBox);
+        _stopAllLogixNGCheckBox.setAlignmentX(Component.LEFT_ALIGNMENT);
         
         // set up message
         JPanel panel3 = new JPanel();
@@ -105,17 +109,31 @@ public class ErrorHandlingDialog {
         return _abortExecution;
     }
     
+    private void handleCheckBoxes() {
+        if (_disableConditionalNGCheckBox.isSelected()) {
+            _item.getConditionalNG().setEnabled(false);
+        }
+        if (_disableLogixNGCheckBox.isSelected()) {
+            _item.getLogixNG().setEnabled(false);
+        }
+        if (_stopAllLogixNGCheckBox.isSelected()) {
+            InstanceManager.getDefault(LogixNG_Manager.class).deActivateAllLogixNGs();
+        }
+    }
+    
     private void abortPressed(ActionEvent e) {
         _selectItemTypeDialog.setVisible(false);
         _selectItemTypeDialog.dispose();
         _selectItemTypeDialog = null;
         _abortExecution = true;
+        handleCheckBoxes();
     }
     
     private void continuePressed(ActionEvent e) {
         _selectItemTypeDialog.setVisible(false);
         _selectItemTypeDialog.dispose();
         _selectItemTypeDialog = null;
+        handleCheckBoxes();
     }
     
 }
