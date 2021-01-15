@@ -30,6 +30,20 @@ public class DecoderFile extends XmlFile {
     public DecoderFile() {
     }
 
+    /**
+     * Create a mechanism to manipulate a decoder definition.
+     *
+     * @param mfg manufacturer name
+     * @param mfgID manufacturer's NMRA manufacturer number, typically a "CV8" value
+     * @param model decoder model designation
+     * @param lowVersionID decoder version low byte, where applicable
+     * @param highVersionID decoder version high byte, where applicable
+     * @param family decoder family name, where applicable
+     * @param filename filename of decoder XML definition
+     * @param numFns decoder's number of available functions
+     * @param numOuts decoder's number of available function outputs
+     * @param decoder Element containing decoder XML definition
+     */
     public DecoderFile(String mfg, String mfgID, String model, String lowVersionID,
             String highVersionID, String family, String filename,
             int numFns, int numOuts, Element decoder) {
@@ -48,6 +62,22 @@ public class DecoderFile extends XmlFile {
         setVersionRange(lowVersionID, highVersionID);
     }
 
+    /**
+     * Create a mechanism to manipulate a decoder definition.
+     *
+     * @param mfg manufacturer name
+     * @param mfgID manufacturer's NMRA manufacturer number, typically a "CV8" value
+     * @param model decoder model designation
+     * @param lowVersionID decoder version low byte, where applicable
+     * @param highVersionID decoder version high byte, where applicable
+     * @param family decoder family name, where applicable
+     * @param filename filename of decoder XML definition
+     * @param numFns decoder's number of available functions
+     * @param numOuts decoder's number of available function outputs
+     * @param decoder Element containing decoder XML definition
+     * @param replacementModel name of decoder file (which replaces this one?)
+     * @param replacementFamily name of decoder family (which replaces this one?)
+     */
     public DecoderFile(String mfg, String mfgID, String model, String lowVersionID,
             String highVersionID, String family, String filename,
             int numFns, int numOuts, Element decoder, String replacementModel, String replacementFamily) {
@@ -57,21 +87,63 @@ public class DecoderFile extends XmlFile {
         _replacementModel = replacementModel;
         _replacementFamily = replacementFamily;
         _developerID = "-1";
+        if (mfgID.compareTo("") != 0) {
+            // do not have manufacturerID, so take mfgID (which might not be set!)
+            _manufacturerID = mfgID;
+        } else {
+            _manufacturerID = "-1";
+        }
+        _productID = "-1";
     }
 
+    /**
+     * Create a mechanism to manipulate a decoder definition.
+     *
+     * @param mfg manufacturer name
+     * @param mfgID manufacturer's NMRA manufacturer number, typically a "CV8" value
+     * @param model decoder model designation
+     * @param lowVersionID decoder version low byte, where applicable
+     * @param highVersionID decoder version high byte, where applicable
+     * @param family decoder family name, where applicable
+     * @param filename filename of decoder XML definition
+     * @param developerID SV2 developerID number (8 bits)
+     * @param manufacturerID SV2 manufacturerID number (8 bits)
+     * @param productID (typically) SV2 product ID number (16 bits)
+     * @param numFns decoder's number of available functions
+     * @param numOuts decoder's number of available function outputs
+     * @param decoder Element containing decoder XML definition
+     * @param replacementModel name of decoder file (which replaces this one?)
+     * @param replacementFamily name of decoder family (which replaces this one?)
+     */
     public DecoderFile(String mfg, String mfgID, String model, String lowVersionID,
-            String highVersionID, String family, String filename, String developerID,
-            int numFns, int numOuts, Element decoder, String replacementModel, String replacementFamily) {
+            String highVersionID, String family, String filename,
+            String developerID, String manufacturerID, String productID,
+            int numFns, int numOuts, Element decoder, String replacementModel,
+            String replacementFamily) {
         this(mfg, mfgID, model, lowVersionID,
                 highVersionID, family, filename,
                 numFns, numOuts, decoder);
         _replacementModel = replacementModel;
         _replacementFamily = replacementFamily;
         _developerID = developerID;
+        if (mfgID == null) {
+            log.error("mfgID missing for decoder file {}", filename);
+        }
+        if ((manufacturerID.length() > 0) && (manufacturerID.compareTo("-1") != 0)) {
+            // prefer manufacturerID over mfgID
+            _manufacturerID = manufacturerID;
+        } else if ((mfgID != null) && (mfgID.compareTo("") != 0)) {
+            // do not have manufacturerID, so take mfgID (which might not be set!)
+            _manufacturerID = mfgID;
+        } else {
+            _manufacturerID = "-1";
+        }
+
+        _productID = productID;
     }
 
     // store acceptable version numbers
-    boolean versions[] = new boolean[256];
+    boolean[] versions = new boolean[256];
 
     public void setOneVersion(int i) {
         versions[i] = true;
@@ -100,7 +172,7 @@ public class DecoderFile extends XmlFile {
             if (highVersionID != null) {
                 // low version null, but high is not null
                 setOneVersion(Integer.parseInt(highVersionID));
-            } else {
+            //} else {
                 // both low and high version are null; do nothing
             }
         }
@@ -178,6 +250,7 @@ public class DecoderFile extends XmlFile {
     String _replacementModel = null;
     String _replacementFamily = null;
     String _developerID = null;
+    String _manufacturerID = null;
 
     int _numFns = -1;
     int _numOuts = -1;
@@ -191,8 +264,27 @@ public class DecoderFile extends XmlFile {
         return _mfgID;
     }
 
+    /**
+     * Get the SV2 "Developer ID" number.
+     *
+     * This value is assigned by the device
+     * manufacturer and is an 8-bit number.
+     * @return the developerID number
+     */
     public String getDeveloperID() {
         return _developerID;
+    }
+
+    /**
+     * Get the SV2 "Manufacturer ID" number.
+     *
+     * This value typically matches the NMRA
+     * manufacturer ID number and is an 8-bit number.
+     *
+     * @return the manufacturer number
+     */
+    public String getManufacturerID() {
+        return _manufacturerID;
     }
 
     public String getModel() {
@@ -249,6 +341,18 @@ public class DecoderFile extends XmlFile {
         return ((Element) _element.getParent()).getAttributeValue("comment");
     }
 
+    /**
+     * Get the "Product ID" value.
+     *
+     * When applied to LocoNet devices programmed using the SV2 or the LNCV protocol,
+     * this is a 16-bit value, and is used in identifying the decoder definition
+     * file that matches an SV2 or LNCV device.
+     *
+     * Decoders which do not support LocoNet SV2 or LNCV programming may use the Product ID
+     * value for other purposes.
+     *
+     * @return the productID number
+     */
     public String getProductID() {
         _productID = _element.getAttributeValue("productID");
         return _productID;
@@ -354,6 +458,13 @@ public class DecoderFile extends XmlFile {
         return false;
     }
 
+    /**
+     * Load a VariableTableModel for a given decoder Element, for the purposes of
+     * programming.
+     *
+     * @param decoderElement element which corresponds to the decoder
+     * @param variableModel resulting VariableTableModel
+     */
     // use the decoder Element from the file to load a VariableTableModel for programming.
     public void loadVariableModel(Element decoderElement,
             VariableTableModel variableModel) {

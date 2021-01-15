@@ -6,6 +6,8 @@ import java.util.regex.PatternSyntaxException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.configurexml.AbstractXmlAdapter;
+
 /**
  * Represents a single response from the DCC++ system.
  *
@@ -44,7 +46,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
     protected String myRegex;
     protected StringBuilder myReply;
-
+   
     // Create a new reply.
     public DCCppReply() {
         super();
@@ -183,6 +185,12 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             case DCCppConstants.CURRENT_REPLY:
                 text = "Current: " + getCurrentString() + " / 1024";
                 break;
+            case DCCppConstants.METER_REPLY:
+                text = String.format("Meter reply: name %s, value %.2f, type %s, unit %s, min %.2f, max %.2f, resolution %.2f", 
+                        getMeterName(), getMeterValue(), getMeterType(),  
+                        getMeterUnit(), getMeterMinValue(), getMeterMaxValue(), 
+                        getMeterResolution());
+                break;
             // case DCCppConstants.LISTPACKET_REPLY:
             //     // TODO: Implement this fully
             //     text = "List Packet Reply...\n";
@@ -194,11 +202,6 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 text += "Sensors: " + getValueString(2) + ", ";
                 text += "Outputs: " + getValueString(3);
                 break;
-//            case DCCppConstants.MEMORY_REPLY:
-//                // TODO: Implement this fully
-//                text = "Memory Reply... ";
-//                text += "Free Memory: " + getFreeMemoryString();
-//                break;
             case DCCppConstants.COMM_TYPE_REPLY:
                 text = "Comm Type Reply ";
                 text += "Type: " + Integer.toString(getCommTypeInt());
@@ -315,6 +318,11 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     r.myRegex = DCCppConstants.CURRENT_REPLY_REGEX;
                 }
                 return(r);
+            case DCCppConstants.METER_REPLY:
+                if (s.matches(DCCppConstants.METER_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.METER_REPLY_REGEX;
+                }
+                return(r);
             case DCCppConstants.MAXNUMSLOTS_REPLY:
                 if (s.matches(DCCppConstants.MAXNUMSLOTS_REPLY_REGEX)) {
                     r.myRegex = DCCppConstants.MAXNUMSLOTS_REPLY_REGEX;
@@ -325,11 +333,6 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     r.myRegex = DCCppConstants.WRITE_EEPROM_REPLY_REGEX;
                 }
                 return(r);
-//            case DCCppConstants.MEMORY_REPLY:
-//                if (s.matches(DCCppConstants.FREE_MEMORY_REPLY_REGEX)) {
-//                    r.myRegex = DCCppConstants.FREE_MEMORY_REPLY_REGEX;
-//                }
-//                return(r);
             case DCCppConstants.SENSOR_REPLY_H:
                 if (s.matches(DCCppConstants.SENSOR_INACTIVE_REPLY_REGEX)) {
                     r.myRegex = DCCppConstants.SENSOR_INACTIVE_REPLY_REGEX;
@@ -469,6 +472,19 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         } else {
             log.error("DCCppReply int value index too big. idx = {} msg = {}", idx, this.toString());
             return(0);
+        }
+    }
+
+    public double getValueDouble(int idx) {
+        Matcher m = DCCppReply.match(myReply.toString(), myRegex, "gvd");
+        if (m == null) {
+            log.error("DCCppReply '{}' not matched by '{}'", this.toString(), myRegex);
+            return(0.0);
+        } else if (idx <= m.groupCount()) {
+            return(Double.parseDouble(m.group(idx)));
+        } else {
+            log.error("DCCppReply double value index too big. idx = {} msg = {}", idx, this.toString());
+            return(0.0);
         }
     }
 
@@ -871,11 +887,93 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         return(Integer.parseInt(this.getCurrentString()));
     }
 
+    public String getMeterName() {
+        if (this.isMeterReply()) {
+            return(this.getValueString(1));
+        } else {
+            log.error("MeterReply Parser called on non-MeterReply message type '{}' message '{}'", this.getOpCodeChar(), this.toString());
+            return("");
+        }
+    }
+    public double getMeterValue() {
+        if (this.isMeterReply()) {
+            return(this.getValueDouble(2));
+        } else {
+            log.error("MeterReply Parser called on non-MeterReply message type '{}' message '{}'", this.getOpCodeChar(), this.toString());
+            return(0.0);
+        }
+    }
+    public String getMeterType() {
+        if (this.isMeterReply()) {
+            String t = getValueString(3);
+            if (t.equals(DCCppConstants.VOLTAGE) || t.equals(DCCppConstants.CURRENT)) {
+                return(t);                
+            } else {
+                log.warn("Meter Type '{}' is not valid type in message '{}'", t, this.toString());
+                return("");                
+            }
+        } else {
+            log.error("MeterReply Parser called on non-MeterReply message type '{}' message '{}'", this.getOpCodeChar(), this.toString());
+            return("");
+        }
+    }
+    public jmri.Meter.Unit getMeterUnit() {
+        if (this.isMeterReply()) {
+            String us = this.getValueString(4);
+            AbstractXmlAdapter.EnumIO<jmri.Meter.Unit> map = new AbstractXmlAdapter.EnumIoNames<>(jmri.Meter.Unit.class);
+            jmri.Meter.Unit u = map.inputFromString(us);
+            return(u);
+        } else {
+            log.error("MeterReply Parser called on non-MeterReply message type '{}' message '{}'", this.getOpCodeChar(), this.toString());
+            return(jmri.Meter.Unit.NoPrefix);
+        }
+    }
+    public double getMeterMinValue() {
+        if (this.isMeterReply()) {
+            return(this.getValueDouble(5));
+        } else {
+            log.error("MeterReply Parser called on non-MeterReply message type '{}' message '{}'", this.getOpCodeChar(), this.toString());
+            return(0.0);
+        }
+    }
+    public double getMeterMaxValue() {
+        if (this.isMeterReply()) {
+            return(this.getValueDouble(6));
+        } else {
+            log.error("MeterReply Parser called on non-MeterReply message type '{}' message '{}'", this.getOpCodeChar(), this.toString());
+            return(0.0);
+        }
+    }
+    public double getMeterResolution() {
+        if (this.isMeterReply()) {
+            return(this.getValueDouble(7));
+        } else {
+            log.error("MeterReply Parser called on non-MeterReply message type '{}' message '{}'", this.getOpCodeChar(), this.toString());
+            return(0.0);
+        }
+    }
+    public boolean isMeterTypeVolt() {
+        if (this.isMeterReply()) {
+            return(this.getMeterType().equals(DCCppConstants.VOLTAGE));
+        } else {
+            log.error("MeterReply Parser called on non-MeterReply message type '{}' message '{}'", this.getOpCodeChar(), this.toString());
+            return(false);
+        }
+    }
+    public boolean isMeterTypeCurrent() {
+        if (this.isMeterReply()) {
+            return(this.getMeterType().equals(DCCppConstants.CURRENT));
+        } else {
+            log.error("MeterReply Parser called on non-MeterReply message type '{}' message '{}'", this.getOpCodeChar(), this.toString());
+            return(false);
+        }
+    }
+
     public boolean getPowerBool() {
         if (this.isPowerReply()) {
             return(this.getValueString(1).equals(DCCppConstants.POWER_ON));
         } else {
-            log.error("CurrentReply Parser called on non-CurrentReply message type {} message {}", this.getOpCodeChar(), this.toString());
+            log.error("PowerReply Parser called on non-PowerReply message type {} message {}", this.getOpCodeChar(), this.toString());
             return(false);
         }
     }
@@ -1093,19 +1191,6 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         return(this.myRegex.equals(DCCppConstants.SENSOR_INACTIVE_REPLY_REGEX));
     }
 
-//    public String getFreeMemoryString() {
-//        if (this.isFreeMemoryReply()) {
-//            return(this.getValueString(1));
-//        } else {
-//            log.error("FreeMemoryReply Parser called on non-FreeMemoryReply message type {}", this.getOpCodeChar());
-//            return("0");
-//        }
-//    }
-//
-//    public int getFreeMemoryInt() {
-//        return(Integer.parseInt(this.getFreeMemoryString()));
-//    }
-//    
     public int getCommTypeInt() {
         if (this.isCommTypeReply()) {
             return(this.getValueInt(1));
@@ -1138,6 +1223,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean isMaxNumSlotsReply() { return(this.matches(DCCppConstants.MAXNUMSLOTS_REPLY_REGEX)); }
     public boolean isCurrentReply() { return (this.getOpCodeChar() == DCCppConstants.CURRENT_REPLY); }
     public boolean isNamedCurrentReply() { return(this.matches(DCCppConstants.CURRENT_REPLY_NAMED_REGEX)); }
+    public boolean isMeterReply()   { return (this.matches(DCCppConstants.METER_REPLY_REGEX)); }
     public boolean isMemoryReply() { return (this.getOpCodeChar() == DCCppConstants.MEMORY_REPLY); }
 //    public boolean isVersionReply() { return (this.getOpCodeChar() == DCCppConstants.STATUS_REPLY); }
 //    public boolean isListPacketRegsReply() { return (this.getOpCodeChar() == DCCppConstants.LISTPACKET_REPLY); }
@@ -1149,8 +1235,6 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean isMADCFailReply() { return(this.getOpCodeChar() == DCCppConstants.MADC_FAIL_REPLY); }
     public boolean isMADCSuccessReply() { return(this.getOpCodeChar() == DCCppConstants.MADC_SUCCESS_REPLY); }
     public boolean isStatusReply() { return(this.getOpCodeChar() == DCCppConstants.STATUS_REPLY); }
-//    public boolean isESPStatusReply() { return(this.matches(DCCppConstants.STATUS_REPLY_ESP32_REGEX)); }
-//    public boolean isFreeMemoryReply() { return(this.matches(DCCppConstants.FREE_MEMORY_REPLY_REGEX)); }
     public boolean isOutputListReply() { return(this.matches(DCCppConstants.OUTPUT_LIST_REPLY_REGEX)); }
     public boolean isOutputCmdReply() { return(this.matches(DCCppConstants.OUTPUT_REPLY_REGEX)); }
     public boolean isCommTypeReply() { return(this.matches(DCCppConstants.COMM_TYPE_REPLY_REGEX)); }
@@ -1166,6 +1250,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             (this.matches(DCCppConstants.TRACK_POWER_REPLY_NAMED_REGEX)) ||
             (this.matches(DCCppConstants.CURRENT_REPLY_REGEX)) ||
             (this.matches(DCCppConstants.CURRENT_REPLY_NAMED_REGEX)) ||
+            (this.matches(DCCppConstants.METER_REPLY_REGEX)) ||
             (this.matches(DCCppConstants.SENSOR_REPLY_REGEX)) ||
 //            (this.matches(DCCppConstants.BROKEN_SENSOR_REPLY_REGEX)) ||
             (this.matches(DCCppConstants.SENSOR_DEF_REPLY_REGEX)) ||

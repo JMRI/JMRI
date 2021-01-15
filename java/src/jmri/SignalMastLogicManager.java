@@ -152,4 +152,15 @@ public interface SignalMastLogicManager extends Manager<SignalMastLogic> {
      */
     public void setSignalLogicDelay(int l);
 
+    /**
+     * Iterate over the signal masts setting up direction Section sensors.
+     * @return error count
+     */
+    public int setupSignalMastsDirectionSensors();
+
+    /**
+     * Iterate over the signal masts setting up direction Section sensors.
+     */
+    public void removeSignalMastsDirectionSensors();
+
 }

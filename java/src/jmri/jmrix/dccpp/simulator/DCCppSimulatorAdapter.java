@@ -18,6 +18,7 @@ import jmri.jmrix.dccpp.DCCppPacketizer;
 import jmri.jmrix.dccpp.DCCppReply;
 import jmri.jmrix.dccpp.DCCppSimulatorPortController;
 import jmri.jmrix.dccpp.DCCppTrafficController;
+import jmri.jmrix.dccpp.network.DCCppEthernetAdapter;
 import jmri.util.ImmediatePipedOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +38,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender, Copyright (C) 2009-2010
  * @author Mark Underwood, Copyright (C) 2015
+ * @author M Steve Todd, 2021
  *
  * Based on {@link jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter}
  */
@@ -51,6 +53,9 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     // CV value, ignoring CVs[0].
     private int[] CVs = new int[DCCppConstants.MAX_DIRECT_CV + 1];
 
+    private java.util.TimerTask keepAliveTimer; // Timer used to periodically
+    private static final long keepAliveTimeoutValue = 30000; // Interval 
+    
     private Random rgen = null;
 
     public DCCppSimulatorAdapter() {
@@ -131,6 +136,26 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         new DCCppInitializationManager(this.getSystemConnectionMemo());
     }
 
+    /**
+     * Set up the keepAliveTimer, and start it.
+     */
+    private void keepAliveTimer() {
+        if (keepAliveTimer == null) {
+            keepAliveTimer = new java.util.TimerTask(){
+                    @Override
+                    public void run() {
+                        // If the timer times out, send a request for status
+                        DCCppSimulatorAdapter.this.getSystemConnectionMemo().getDCCppTrafficController()
+                            .sendDCCppMessage(jmri.jmrix.dccpp.DCCppMessage.makeCSStatusMsg(), null);
+                    }
+                };
+        } else {
+            keepAliveTimer.cancel();
+        }
+        jmri.util.TimerUtil.schedule(keepAliveTimer, keepAliveTimeoutValue, keepAliveTimeoutValue);
+    }
+    
+
     // base class methods for the DCCppSimulatorPortController interface
 
     /**
@@ -201,19 +226,16 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
         rgen = new Random();
 
+        keepAliveTimer();
+
         ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(), ConnectionStatus.CONNECTION_UP);
         for (;;) {
             DCCppMessage m = readMessage();
-            if (log.isDebugEnabled()) {
-                log.debug("Simulator Thread received message {}", m.toString());
-            }
+            log.debug("Simulator Thread received message '{}'", m);
             DCCppReply r = generateReply(m);
             // If generateReply() returns null, do nothing. No reply to send.
             if (r != null) {
                 writeReply(r);
-                if (log.isDebugEnabled()) {
-                    log.debug("Simulator Thread sent Reply {}", r.toString());
-                }
             }
 
             // Once every SENSOR_MSG_RATE loops, generate a random Sensor message.
@@ -263,7 +285,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     }
                     r = "T " + m.group(1) + " " + m.group(3) + " " + m.group(4);
                     reply = DCCppReply.parseDCCppReply(r);
-                    log.debug("Reply generated = {}", reply.toString());
+                    log.debug("Reply generated = '{}'", reply);
                 } catch (PatternSyntaxException e) {
                     log.error("Malformed pattern syntax! ");
                     return (null);
@@ -285,20 +307,20 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     r = "O";
                 } else if (msg.isListTurnoutsMessage()) {
                     log.debug("List Turnouts Message");
-                    r = "H 1 27 3 1";
+                    r = "H 1 27 3 1"; //TODO: do this for real
                 } else {
                     log.debug("TURNOUT_CMD detected");
                     r = "H" + msg.getTOIDString() + " " + Integer.toString(msg.getTOStateInt());
                 }
                 reply = DCCppReply.parseDCCppReply(r);
-                log.debug("Reply generated = {}", reply.toString());
+                log.debug("Reply generated = '{}'", reply);
                 break;
 
             case DCCppConstants.OUTPUT_CMD:
                 if (msg.isOutputCmdMessage()) {
                     log.debug("Output Command Message: '{}'", msg);
                     r = "Y" + msg.getOutputIDString() + " " + (msg.getOutputStateBool() ? "1" : "0");
-                    log.debug("Reply String: {}", r);
+                    log.debug("Reply String: '{}'", r);
                     reply = DCCppReply.parseDCCppReply(r);
                     log.debug("Reply generated = {}", reply.toString());
                 } else if (msg.isOutputAddMessage() || msg.isOutputDeleteMessage()) {
@@ -311,9 +333,8 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     log.error("Invalid Output Command: {}", msg.toString());
                     r = "Y 1 2";
                 }
-                //reply = DCCppReplyParser.parseReply(r);
                 reply = DCCppReply.parseDCCppReply(r);
-                log.debug("Reply generated = {}", reply.toString());
+                log.debug("Reply generated = '{}'", reply);
                 break;
 
             case DCCppConstants.SENSOR_CMD:
@@ -332,7 +353,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     r = "X";
                 }
                 reply = DCCppReply.parseDCCppReply(r);
-                log.debug("Reply generated = {}", reply.toString());
+                log.debug("Reply generated = '{}'", reply);
                 break;
 
             case DCCppConstants.PROG_WRITE_CV_BYTE:
@@ -439,23 +460,18 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             case DCCppConstants.TRACK_POWER_ON:
                 log.debug("TRACK_POWER_ON detected");
                 trackPowerState = true;
-                reply = DCCppReply.parseDCCppReply("p1");
-                log.debug("Reply generated = {}", reply.toString());
+                reply = DCCppReply.parseDCCppReply("p " + (trackPowerState ? "1" : "0"));
                 break;
 
             case DCCppConstants.TRACK_POWER_OFF:
                 log.debug("TRACK_POWER_OFF detected");
                 trackPowerState = false;
-                reply = DCCppReply.parseDCCppReply("p0");
-                log.debug("Reply generated = {}", reply.toString());
+                reply = DCCppReply.parseDCCppReply("p " + (trackPowerState ? "1" : "0"));
                 break;
 
             case DCCppConstants.READ_TRACK_CURRENT:
                 log.debug("READ_TRACK_CURRENT detected");
-                int randint = 480 + rgen.nextInt(64);
-                String rs = "a " + (trackPowerState ? Integer.toString(randint) : "0");
-                reply = DCCppReply.parseDCCppReply(rs);
-                log.debug("Reply generated = '{}'", reply);
+                generateMeterReplies();
                 break;
 
             case DCCppConstants.READ_CS_STATUS:
@@ -480,34 +496,36 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         return (reply);
     }
 
+    /* 's'tatus message gets multiple reply messages */
     private void generateReadCSStatusReply() {
-        /*
-          String s = new String("<p" + (TrackPowerState ? "1" : "0") + ">");
-          DCCppReply r = new DCCppReply(s);
-          writeReply(r);
-          if (log.isDebugEnabled()) {
-          log.debug("Simulator Thread sent Reply {}", r.toString());
-          }
-        */
-
-        DCCppReply r = DCCppReply.parseDCCppReply("iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
+        DCCppReply r = new DCCppReply("p " + (trackPowerState ? "1" : "0"));
         writeReply(r);
-        if (log.isDebugEnabled()) {
-            log.debug("Simulator Thread sent Reply {}", r.toString());
-        }
-        r = DCCppReply.parseDCCppReply("N0: SERIAL");
+        r = DCCppReply.parseDCCppReply("iDCC-EX V-3.0.2 / MEGA / STANDARD_MOTOR_SHIELD G-9db6d36");
         writeReply(r);
-        if (log.isDebugEnabled()) {
-            log.debug("Simulator Thread sent Reply {}", r.toString());
-        }
+        r = DCCppReply.parseDCCppReply("H 1 1"); //TODO: generate the actual turnout state list
+        writeReply(r);
 
         // Generate the other messages too...
+    }
+
+    /* 'c' current request message gets multiple reply messages */
+    private void generateMeterReplies() {
+        int currentmA = 1100 + rgen.nextInt(64);
+        double voltageV = 14.5 + rgen.nextInt(10)/10.0; 
+        String rs = "c CurrentMAIN " + (trackPowerState ? Double.toString(currentmA) : "0") + " C Milli 0 1997 1";
+        DCCppReply r = new DCCppReply(rs);
+        writeReply(r);       
+        r = new DCCppReply("c VoltageMAIN " + Double.toString(voltageV) + " V NoPrefix 0 18.0 0.1");
+        writeReply(r);
+        rs = "a " + (trackPowerState ? Integer.toString((1997/currentmA)*100) : "0");
+        r = DCCppReply.parseDCCppReply(rs);
+        writeReply(r);
     }
 
     private void generateRandomSensorReply() {
         // Pick a random sensor number between 0 and 10;
         Random sNumGenerator = new Random();
-        int sensorNum = sNumGenerator.nextInt(10); // Generate a random sensor number between 0 and 9
+        int sensorNum = sNumGenerator.nextInt(10)+1; // Generate a random sensor number between 1 and 10
         Random valueGenerator = new Random();
         int value = valueGenerator.nextInt(2); // Generate state value between 0 and 1
 
@@ -515,12 +533,10 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
         DCCppReply r = DCCppReply.parseDCCppReply(reply);
         writeReply(r);
-        if (log.isDebugEnabled()) {
-            log.debug("Simulator Thread sent Reply {}", r.toString());
-        }
     }
 
     private void writeReply(DCCppReply r) {
+        log.debug("Simulator Thread sending Reply '{}'", r);
         int i;
         int len = r.getLength();  // opCode+Nbytes+ECC
         // If r == null, there is no reply to be sent.
