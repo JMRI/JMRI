@@ -163,7 +163,7 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
         self.activeTrain = activeTrain
         self.activeTrainName = activeTrainName
         #trains_being_simulated.append(activeTrainName)
-        self.logLevel = 1
+        self.logLevel = 0
         if self.logLevel > 0: print 'Simulate_instance' + activeTrainName + activeTrain.getTrainName() + activeTrain.getActiveTrainName()
 
     def setup(self):

@@ -354,7 +354,7 @@
       <li>If however a train is set up from main line siding to flask siding it will wait correctly. The main line section is between Main line siding and the transit.</li>
       </ul>
       <p>Note that all the dispatches have a transit, and the dispatch starts from a section outside the transit</p>
-      <p>It is hoped that dispatcher will be modified to eliminate this fault fairly soon, but don't hold your breath!</p>
+      <p>It is hoped that dispatcher will be modified to eliminate this fault fairly soon.</p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

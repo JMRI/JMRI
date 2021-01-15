@@ -5,17 +5,20 @@
 
 #
 # NOTE: Currently the automatic method to build signal logic 
-# is faulty. This script:
+# does not work in some circumstances. This script:
 # - Deletes all existing Transits, Sections and Signal Logic
 # - Runs the standard auto signal logic builder
-# - corrects the results
+# - allows the option to replace auto signal logic as needed
 # - builds Sections
 #
 # To correct the standard auto signal logic builder it uses 
 # other standard code found elsewhere in JMRI
 #
-# All signal logic for a route that passes through a turnout 
-# is replaced with corrected 'manual' logic
+# The user can 
+# - use standard signal logic
+# - replace signal logic for a particular signal mast
+# - replace all signal logic for routes that pass through a turnout 
+#
 
 
 import jmri
@@ -29,7 +32,28 @@ class Update_Signal_Logic():
     # order of calling
     # - create_sections()
     # - create_transits()
-    # - Update_logic()
+    # - Update_logic
+    
+    def customQuestionMessage3(self, msg, title, opt1, opt2, opt3):
+        self.CLOSED_OPTION = False
+        options = [opt1, opt2, opt3]
+        s = JOptionPane.showOptionDialog(None,
+        msg,
+        title,
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE,
+        None,
+        options,
+        options[0])
+        if s == JOptionPane.CLOSED_OPTION:
+            s1 = "cancelled"
+        elif s == JOptionPane.YES_OPTION:
+            s1 = opt1
+        elif s == JOptionPane.NO_OPTION:
+            s1 = opt2
+        else:
+            s1 = opt3
+        return s1 
     
     def create_autologic_and_sections(self):
         self.msg = "About to create all signal logic and sections\nrequired for dispatcher operation"
@@ -121,154 +145,209 @@ class Update_Signal_Logic():
         EntryExitPairs.automaticallyDiscoverEntryExitPairs(self.layout_editor, method)
         
     def create_sections(self):
-        (jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager)).generateSection()
+        (jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager)).generateSection()          
             
+        
     def update_auto_signal_mast_logic(self):
-        pass
-        #jmri.jmrit.display.layoutEditor.ConnectivityUtil.getLayoutTurnoutsThisBlock(Block)
-        # can list turnouts
-        # get layout turnouts
-        #jmri.jmrit.display.layoutEditor.LayoutEditorFindItems.findLayoutTurnoutByTurnoutName(String)
-        # if have layout turnout
-        # get layout turnout block
-        # through paths going through a block
-        # => start block, block , end block  turnout settings
-        # => correspomding layout blocks
         
-        
-        #a we get the blocks either side of the turnout
-        turnout_dict = {}
-        turnout_dict1 = {}
-        for turnout in turnouts.getNamedBeanSet():
-            #if turnout.getUserName() == "Bd3Turnout3" or turnout.getUserName() == "Bd1Turnout1":
-            layout_turnout = jmri.jmrit.display.layoutEditor.LayoutEditorFindItems(self.layout_editor).findLayoutTurnoutByTurnoutName(turnout.getUserName())
-            if layout_turnout != None:
-                layout_block = layout_turnout.getLayoutBlock()
-                # layout_block_B = layout_turnout.getLayoutBlockB()         #do not need Bor C (path threough A goes through B or C
-                # layout_block_C = layout_turnout.getLayoutBlockC()
-                # layout_block_D = layout_turnout.getLayoutBlockD()         #need to check for D
-                routes = self.get_routes(layout_block)
-                if self.loglevel > 0:  print "++++++*****"
-                if self.loglevel > 0:  print "routes" , routes
-                if self.loglevel > 0:  print "++++"
-                
-                routes_names = [[str(r.getUserName()) for r in route] for route in routes ]
-                if self.loglevel > 0:  print routes_names
-                if self.loglevel > 0:  print "@@@@@"
-                turnout_dict[turnout.getUserName()] = tuple(routes)
+        # determine whether we wish to
+        # - not replace the logic
+        # - selectively replace the logic
+        # - replace the logic
+        opt1 = "use auto logic"
+        opt2 = "replace logic for selected masts"
+        opt3 = "replace all logic"
+        title = "Replacing auto-logic"
+        msg = "Provision is made to replace auto-logic with so-called manual-logic\n\nYou should use standard auto logic wherever possible\n\nWhere auto logic needs replacing do it selectively\nby marking in the appropriate signal mast comment field 'replace logic'\nand clicking 'replace logic for selected masts'\n\nUse 'replace all logic' with great caution"
 
+        self.update_flag = self.customQuestionMessage3(msg, title, opt1, opt2, opt3)  #returns cancelled or opt1, opt2 opt3 text
+        
+        if self.update_flag == opt2 or self.update_flag == opt3:
 
-        #        % block turnout %
-        #a         block turnout   block    turnout
-        #b block   block turnout            autoblock
         
-        #   % block trunout block %
-        #a    block turnout block
-        #b    block turnout block   block
         
-        #        % block turnout turnout %
-        # a       
-        
-        # a must be a subset of b
-        # turnout must be a subset of autoblock
-       
-        # b we get the blocks between the signalmasts and the end block
-        signal_mast_dict = {}
-        signal_mast_orig_dict = {}
-        SignalMastManager = jmri.InstanceManager.getDefault(jmri.SignalMastManager)
-        for sm_source in SignalMastManager.getNamedBeanSet():
-            SignalMastLogicManager = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager)
-            #if sm_source.getUserName() == "1AtoPT33" or  sm_source.getUserName() == "Board2toPT11":
-            if self.loglevel > 0:  print "sm_source =", sm_source.getUserName()
-            sml = SignalMastLogicManager.getSignalMastLogic(sm_source)
-            if sml != None:
-                if self.loglevel > 0:  print "sml not none"
-                sm_dest_list = sml.getDestinationList()
-                for sm_dest in sm_dest_list:
-                    if self.loglevel > 0:  print "sm_dest", sm_dest.getUserName()
-                    # get blocks in path
-                    autoblocks_orig = sml.getAutoBlocksBetweenMasts(sm_dest)
-                    autoblocks = sml.getAutoBlocksBetweenMasts(sm_dest)
-                    if self.loglevel > 0:  print "autoblocks_orig", [a.getUserName() for a in autoblocks], autoblocks
-                    #add facing block
-                    facing_block = sml.getFacingBlock()
-                    if facing_block != None:
-                        autoblocks.append(facing_block)
-                    else:
-                        if self.loglevel > 0:  print("facing block None", sm_dest.getUserName(), last_block.getUserName())
-                    #add on the block after dest for uniqueness
-                    last_block = autoblocks[-1]
-                    afterdest_block = self.getBlockAfterDestMast(sm_dest, last_block)
-                    if afterdest_block != None:
-                        autoblocks.append(afterdest_block)
-                    else:
-                        if self.loglevel > 0:  print("facing block None", sm_dest.getUserName(), last_block.getUserName())
-                        
-                    if self.loglevel > 0:  print "autoblocks", [a.getUserName() for a in autoblocks], autoblocks
-                    signal_mast_dict[autoblocks] = (sm_source.getUserName(), sm_dest.getUserName(), sml, autoblocks_orig)
-        if self.loglevel > 0:  print "!!!!!!!"
-        
-        # number_autoblocks = 0
-        # for autoblocks in signal_mast_dict.keys():
-            # number_autoblocks += 1
+            #jmri.jmrit.display.layoutEditor.ConnectivityUtil.getLayoutTurnoutsThisBlock(Block)
+            # can list turnouts
+            # get layout turnouts
+            #jmri.jmrit.display.layoutEditor.LayoutEditorFindItems.findLayoutTurnoutByTurnoutName(String)
+            # if have layout turnout
+            # get layout turnout block
+            # through paths going through a block
+            # => start block, block , end block  turnout settings
+            # => correspomding layout blocks
             
-        # progress = 0
-        # final = 30
-        # interval_percent = int(10)
-        # print "interval" , interval_percent, "progress", progress, "number_autoblocks", number_autoblocks
-        # divisor = (final - progress) / interval_percent       
-        # interval_count = int(number_autoblocks/divisor)
-        # interval_count_total = interval_count
-
-        # dpg=DisplayProgress_global()
-        # dpg.Update(str(progress)+ "% complete")                  
-        # find route corresponding to autoblocks
-
-        # i = 0    
-        for autoblocks in signal_mast_dict.keys():  #go through all the signal mast paths
-            # i += 1
-            # if  i > interval_count_total:
-                # interval_count_total = interval_count_total + interval_count
-                # progress = int(progress + interval_percent)
-                # print progress, i
-                # p = int(min(progress, 100))
-                # print "p" , p
-                # dpg.Update(str(progress)+ "% complete")
-        
-            ab_names = [b.getUserName() for b in autoblocks]
-            sm = signal_mast_dict[autoblocks]
-            sm_source, sm_dest, sml, autoblocks_orig = sm
-            routes_in_autoblocks = []
-            route_names_is_subset = False
-            for turnout in turnout_dict.keys():  #
-                #if self.loglevel > 0:  print "*****************"
-                #if self.loglevel > 0:  print turnout
-                td = turnout_dict[turnout]
-                if self.loglevel > 0:  print td
-                y = [ [x.getUserName() for x in t]   for t in td]
-                routes = turnout_dict[turnout]
-                if self.loglevel > 0:  print "routes", routes
-                for route in routes:
-                    route_names = [r.getUserName() for r in route]
-                    # if self.loglevel > 0:  print "qwerty"
-                    # if self.loglevel > 0:  print "set_routes", set(route_names) 
+            
+            #a we get the blocks either side of the turnout
+            turnout_dict = {}
+            turnout_dict1 = {}
+            for turnout in turnouts.getNamedBeanSet():
+                layout_turnout = jmri.jmrit.display.layoutEditor.LayoutEditorFindItems(self.layout_editor).findLayoutTurnoutByTurnoutName(turnout.getUserName())
+                if layout_turnout != None:
+                    layout_block = layout_turnout.getLayoutBlock()
+                    # layout_block_B = layout_turnout.getLayoutBlockB()         #do not need Bor C (path threough A goes through B or C
+                    # layout_block_C = layout_turnout.getLayoutBlockC()
+                    # layout_block_D = layout_turnout.getLayoutBlockD()         #need to check for D
+                    routes = self.get_routes(layout_block)
+                    if self.loglevel > 0:  print "++++++*****"
+                    if self.loglevel > 0:  print "routes" , routes
+                    if self.loglevel > 0:  print "++++"
                     
-                    # if self.loglevel > 0:  print "ab_names", set(ab_names), "from", sm_source, "to", sm_dest
-                    # if self.loglevel > 0:  print "qwerty"
-                    if set(route_names).issubset(ab_names):
-                        if self.loglevel > 0:  print "success"
-                        if self.loglevel > 0:  print "ab_names = ", ab_names
-                        if self.loglevel > 0:  print "routes",routes
-                        if self.loglevel > 0:  print "route",[str(x.getUserName()) for x in route]
-                        if self.loglevel > 0:  print "autoblocks",[str(x.getUserName()) for x in autoblocks],str(sm_source), str(sm_dest)
-                        routes_in_autoblocks.append(route)
-                        route_names_is_subset = True
-            #if any of the turnouts ar on the signal mast path we have stored the appropriate route in routes_in_autoblocks            
-            if route_names_is_subset == True:
-                self.update_signal_logic(sm, routes_in_autoblocks)
+                    routes_names = [[str(r.getUserName()) for r in route] for route in routes ]
+                    if self.loglevel > 0:  print routes_names
+                    if self.loglevel > 0:  print "@@@@@"
+                    turnout_dict[turnout.getUserName()] = tuple(routes)
+
+            # What we do:
+            
+            # 0a) For each turnout we get the turnouts on the panel
+            # 0b) we get the routes through the turnout
+            # 0c) We store the results 
+            #     turnout_dict[turnout.getUserName()] = tuple(routes)
+            
+            # 1a) For each sml we get the source and destination block
+            # 1b) We get the blocks in the path between the source and destination autoblocks_orig
+            # 1c) We append the facing block to the autoblocks
+            # 1d) and add the last end block for uniqueness to autoblocks
+            # 1e) We store the the results 
+            #     signal_mast_dict[autoblocks] = (sm_source.getUserName(), sm_dest.getUserName(), sml, autoblocks_orig) 
+            
+            # 2a) We get: 
+            #   ab_names the set of names of the blocks in auto_blocks for each source - destination pair
+            #         note: sm = signal_mast_dict[autoblocks]
+            #   route_names the set of blocks in a route through each turnout
+            #         note: routes_in_autoblocks contains the blocks in route
+            # 2b) if route_names is included in ab_names then we have a match and we can update the signal logic calling
+            #    self.update_signal_logic(sm, routes_in_autoblocks
+            
+            # 3a) To update the signal logic we call update_signal_logic(self, signal_masts, routes_in_autoblocks):
+            #   prepare the blocks hashtable from signal_masts
+            #       note: sm_source_name, sm_dest_name, sml, autoblocks = signal_masts
+            #       note signal_masts = 
+            #   prepare the turnout hashtable from routes_in_autoblocks
+            #       note turnouts = 
+            # 3b) 
+            
+            
+                
+
+            #        % block turnout %
+            #a         block turnout   block    turnout
+            #b block   block turnout            autoblock
+            
+            #   % block turnout block %
+            #a    block turnout block
+            #b    block turnout block   block
+            
+            #        % block turnout turnout %
+            # a       
+            
+            # a must be a subset of b
+            # turnout must be a subset of autoblock
+           
+            # b we get the blocks between the signalmasts and the end block
+            signal_mast_dict = {}
+            signal_mast_orig_dict = {}
+            SignalMastManager = jmri.InstanceManager.getDefault(jmri.SignalMastManager)
+            for sm_source in SignalMastManager.getNamedBeanSet():
+                SignalMastLogicManager = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager)
+                #if sm_source.getUserName() == "1AtoPT33" or  sm_source.getUserName() == "Board2toPT11":
+                if self.loglevel > 0:  print "sm_source =", sm_source.getUserName()
+                sml = SignalMastLogicManager.getSignalMastLogic(sm_source)
+                if sml != None:
+                    if self.loglevel > 0:  print "sml not none"
+                    sm_dest_list = sml.getDestinationList()
+                    for sm_dest in sm_dest_list:
+                        if self.loglevel > 0:  print "sm_dest", sm_dest.getUserName()
+                        # get blocks in path
+                        autoblocks_orig = sml.getAutoBlocksBetweenMasts(sm_dest)
+                        autoblocks = sml.getAutoBlocksBetweenMasts(sm_dest)
+                        if self.loglevel > 0:  print "autoblocks_orig", [a.getUserName() for a in autoblocks], autoblocks
+                        #add facing block
+                        facing_block = sml.getFacingBlock()
+                        if facing_block != None:
+                            autoblocks.append(facing_block)
+                        else:
+                            if self.loglevel > 0:  print("facing block None", sm_dest.getUserName(), last_block.getUserName())
+                        #add on the block after dest for uniqueness
+                        last_block = autoblocks[-1]
+                        afterdest_block = self.getBlockAfterDestMast(sm_dest, last_block)
+                        if afterdest_block != None:
+                            autoblocks.append(afterdest_block)
+                        else:
+                            if self.loglevel > 0:  print("facing block None", sm_dest.getUserName(), last_block.getUserName())
+                            
+                        if self.loglevel > 0:  print "autoblocks", [a.getUserName() for a in autoblocks], autoblocks
+                        # replace selectively (opt2) or all (opt3)
+                        if self.update_flag == opt2:
+                            sm_source_comment = sm_source.getComment()
+                            sm_dest_comment = sm_dest.getComment()
+                            if sm_source_comment == "replace logic" or sm_dest_comment == "replace logic":
+                                signal_mast_dict[autoblocks] = (sm_source.getUserName(), sm_dest.getUserName(), sml, autoblocks_orig)
+                        else:
+                            signal_mast_dict[autoblocks] = (sm_source.getUserName(), sm_dest.getUserName(), sml, autoblocks_orig)
+            if self.loglevel > 0:  print "!!!!!!!"
+            
+            # number_autoblocks = 0
+            # for autoblocks in signal_mast_dict.keys():
+                # number_autoblocks += 1
+                
+            # progress = 0
+            # final = 30
+            # interval_percent = int(10)
+            # print "interval" , interval_percent, "progress", progress, "number_autoblocks", number_autoblocks
+            # divisor = (final - progress) / interval_percent       
+            # interval_count = int(number_autoblocks/divisor)
+            # interval_count_total = interval_count
+
+            # dpg=DisplayProgress_global()
+            # dpg.Update(str(progress)+ "% complete")                  
+            # find route corresponding to autoblocks
+
+            # i = 0    
+            for autoblocks in signal_mast_dict.keys():  #go through all the signal mast paths
+                # i += 1
+                # if  i > interval_count_total:
+                    # interval_count_total = interval_count_total + interval_count
+                    # progress = int(progress + interval_percent)
+                    # print progress, i
+                    # p = int(min(progress, 100))
+                    # print "p" , p
+                    # dpg.Update(str(progress)+ "% complete")
+            
+                ab_names = [b.getUserName() for b in autoblocks]
+                sm = signal_mast_dict[autoblocks]
+                sm_source, sm_dest, sml, autoblocks_orig = sm
+                routes_in_autoblocks = []
+                route_names_is_subset = False
+                for turnout in turnout_dict.keys():  #
+                    #if self.loglevel > 0:  print "*****************"
+                    #if self.loglevel > 0:  print turnout
+                    td = turnout_dict[turnout]
+                    if self.loglevel > 0:  print td
+                    y = [ [x.getUserName() for x in t]   for t in td]
+                    routes = turnout_dict[turnout]
+                    if self.loglevel > 0:  print "routes", routes
+                    for route in routes:
+                        route_names = [r.getUserName() for r in route]
+                        # if self.loglevel > 0:  print "qwerty"
+                        # if self.loglevel > 0:  print "set_routes", set(route_names) 
+                        
+                        # if self.loglevel > 0:  print "ab_names", set(ab_names), "from", sm_source, "to", sm_dest
+                        # if self.loglevel > 0:  print "qwerty"
+                        if set(route_names).issubset(ab_names):
+                            if self.loglevel > 0:  print "success"
+                            if self.loglevel > 0:  print "ab_names = ", ab_names
+                            if self.loglevel > 0:  print "routes",routes
+                            if self.loglevel > 0:  print "route",[str(x.getUserName()) for x in route]
+                            if self.loglevel > 0:  print "autoblocks",[str(x.getUserName()) for x in autoblocks],str(sm_source), str(sm_dest)
+                            routes_in_autoblocks.append(route)
+                            route_names_is_subset = True
+                #if any of the turnouts are on the signal mast path we have stored the appropriate route in routes_in_autoblocks            
+                if route_names_is_subset == True:
+                    self.update_signal_logic(sm, routes_in_autoblocks)
                 
         #dpg.killLabel()
-        msg = "Logic replaced"
+        msg = "update of logic completed"
         JOptionPane.showMessageDialog(None, msg, 'information', JOptionPane.INFORMATION_MESSAGE)
         
     def get_routes(self, LayoutBlock):
@@ -306,6 +385,11 @@ class Update_Signal_Logic():
         return None                      
                         
     def update_signal_logic(self, signal_masts, routes_in_autoblocks):
+    
+        # signal_masts
+        
+        # routes_in_autoblocks
+    
         if self.loglevel > 0: print "in update signal logic"
         #preliminary
         sm_source_name, sm_dest_name, sml, autoblocks = signal_masts
