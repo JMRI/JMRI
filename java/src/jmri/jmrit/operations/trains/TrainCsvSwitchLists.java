@@ -317,11 +317,10 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
         // this location
         try (PrintWriter fileOut = new PrintWriter(
                 new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)), true)) {
-            try {
-                File backupFile = new File(
-                        InstanceManager.getDefault(TrainManagerXml.class).backupFileName(file.getAbsolutePath()));
-                BufferedReader in = new BufferedReader(
-                        new InputStreamReader(new FileInputStream(backupFile), StandardCharsets.UTF_8));
+            File backupFile = new File(
+                    InstanceManager.getDefault(TrainManagerXml.class).backupFileName(file.getAbsolutePath()));
+            try (BufferedReader in = new BufferedReader(
+                        new InputStreamReader(new FileInputStream(backupFile), StandardCharsets.UTF_8))) {
                 while (true) {
                     String line = in.readLine();
                     if (line == null) {

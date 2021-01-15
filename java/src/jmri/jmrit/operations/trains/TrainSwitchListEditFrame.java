@@ -334,6 +334,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         InstanceManager.getDefault(TrainManager.class).setTrainsSwitchListStatus(Train.PRINTED);
     }
 
+    @SuppressFBWarnings(value = { "UC_USELESS_CONDITION", "RpC_REPEATED_CONDITIONAL_TEST" }, // NOI18N
+            justification = "isChanged value is dependent on which user button is activated") // NOI18N
     private void buildCsvSwitchList(boolean isChanged) {
         if (Setup.isGenerateCsvSwitchListEnabled()) {
             TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
