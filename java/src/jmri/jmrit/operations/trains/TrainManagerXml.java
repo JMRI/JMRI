@@ -334,7 +334,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
      * @return CSV switch list File.
      */
     public File createCsvSwitchListFile(String name) {
-        return createFile(getDefaultCsvSwitchListFileName(name), false); // don't backup
+        return createFile(getDefaultCsvSwitchListFileName(name), true); // create backup
     }
 
     public File getCsvSwitchListFile(String name) {

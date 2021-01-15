@@ -3,7 +3,9 @@ package jmri.jmrit.operations.automation.actions;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainCsvSwitchLists;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainSwitchLists;
 
@@ -30,10 +32,16 @@ public class PrintSwitchListAction extends Action {
         if (getAutomationItem() != null) {
             setRunning(true);
             TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
+            TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
             for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
                 if (location.isSwitchListEnabled()) {
                     trainSwitchLists.buildSwitchList(location);
-                    trainSwitchLists.printSwitchList(location, InstanceManager.getDefault(TrainManager.class).isPrintPreviewEnabled());
+                    // also build the CSV switch lists to set the append
+                    if (!Setup.isSwitchListRealTime()) {
+                        trainCsvSwitchLists.buildSwitchList(location);
+                    }
+                    trainSwitchLists.printSwitchList(location,
+                            InstanceManager.getDefault(TrainManager.class).isPrintPreviewEnabled());
                 }
             }
             // set trains switch lists printed
@@ -44,6 +52,6 @@ public class PrintSwitchListAction extends Action {
 
     @Override
     public void cancelAction() {
-        // no cancel for this action     
+        // no cancel for this action
     }
 }

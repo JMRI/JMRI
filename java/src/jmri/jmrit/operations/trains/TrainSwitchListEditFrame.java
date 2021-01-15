@@ -102,12 +102,12 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         // options
         JPanel pSwitchListOptions = new JPanel();
         pSwitchListOptions.setLayout(new GridBagLayout());
-        pSwitchListOptions.setBorder(BorderFactory.createTitledBorder(Bundle
-                .getMessage("BorderLayoutSwitchListOptions")));
+        pSwitchListOptions
+                .setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutSwitchListOptions")));
 
         JPanel pSwitchListPageFormat = new JPanel();
-        pSwitchListPageFormat.setBorder(BorderFactory.createTitledBorder(Bundle
-                .getMessage("BorderLayoutSwitchListPageFormat")));
+        pSwitchListPageFormat
+                .setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutSwitchListPageFormat")));
         pSwitchListPageFormat.add(switchListPageComboBox);
 
         addItem(pSwitchListOptions, switchListAllTrainsCheckBox, 1, 0);
@@ -190,7 +190,6 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
     private static final boolean IS_PREVIEW = true;
     private static final boolean IS_CHANGED = true;
-    private static final boolean IS_CSV = true;
     private static final boolean IS_UPDATE = true;
 
     // Buttons
@@ -203,22 +202,22 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
             selectCheckboxes(true);
         }
         if (ae.getSource() == previewButton) {
-            buildSwitchList(IS_PREVIEW, !IS_CHANGED, !IS_CSV, !IS_UPDATE);
+            buildSwitchList(IS_PREVIEW, !IS_CHANGED, !IS_UPDATE);
         }
         if (ae.getSource() == printButton) {
-            buildSwitchList(!IS_PREVIEW, !IS_CHANGED, !IS_CSV, !IS_UPDATE);
+            buildSwitchList(!IS_PREVIEW, !IS_CHANGED, !IS_UPDATE);
         }
         if (ae.getSource() == printChangesButton) {
-            buildSwitchList(!IS_PREVIEW, IS_CHANGED, !IS_CSV, !IS_UPDATE);
-        }
-        if (ae.getSource() == csvGenerateButton) {
-            buildSwitchList(!IS_PREVIEW, !IS_CHANGED, IS_CSV, !IS_UPDATE);
-        }
-        if (ae.getSource() == csvChangeButton) {
-            buildSwitchList(!IS_PREVIEW, IS_CHANGED, IS_CSV, !IS_UPDATE);
+            buildSwitchList(!IS_PREVIEW, IS_CHANGED, !IS_UPDATE);
         }
         if (ae.getSource() == updateButton) {
-            buildSwitchList(IS_PREVIEW, !IS_CHANGED, !IS_CSV, IS_UPDATE);
+            buildSwitchList(IS_PREVIEW, !IS_CHANGED, IS_UPDATE);
+        }
+        if (ae.getSource() == csvGenerateButton) {
+            buildCsvSwitchList(!IS_CHANGED);
+        }
+        if (ae.getSource() == csvChangeButton) {
+            buildCsvSwitchList(IS_CHANGED);
         }
         if (ae.getSource() == runButton) {
             runCustomSwitchLists(!IS_CHANGED);
@@ -247,15 +246,18 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         enableSaveButton(true);
     }
 
-    // Remove all terminated or reset trains from the switch lists for selected locations
+    // Remove all terminated or reset trains from the switch lists for selected
+    // locations
     private void reset() {
-        // Confirm that user really wants to delete all terminated and reset trains from the switch lists
+        // Confirm that user really wants to delete all terminated and reset trains from
+        // the switch lists
         if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("DoYouReallyWantDeleteSwitchListData"),
-                 Bundle.getMessage("ResetSwitchLists"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                Bundle.getMessage("ResetSwitchLists"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
             return;
         }
-        
-        // this for loop prevents ConcurrentModificationException when printing and status changes
+
+        // this for loop prevents ConcurrentModificationException when printing and
+        // status changes
         for (JCheckBox checkbox : new ArrayList<>(locationCheckBoxes)) {
             String locationName = checkbox.getName();
             Location location = locationManager.getLocationByName(locationName);
@@ -265,13 +267,15 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
                 location.setStatus(Location.MODIFIED);
             }
         }
-        // set trains switch lists unknown, any built trains should remain on the switch lists
+        // set trains switch lists unknown, any built trains should remain on the switch
+        // lists
         InstanceManager.getDefault(TrainManager.class).setTrainsSwitchListStatus(Train.UNKNOWN);
     }
 
     // save printer selection
     private void save() {
-        // this for loop prevents ConcurrentModificationException when printing and status changes
+        // this for loop prevents ConcurrentModificationException when printing and
+        // status changes
         for (int i = 0; i < locationCheckBoxes.size(); i++) {
             String locationName = locationCheckBoxes.get(i).getName();
             Location location = locationManager.getLocationByName(locationName);
@@ -300,40 +304,55 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
      *
      * @param isPreview true if print preview
      * @param isChanged true if only print changes was requested
-     * @param isCsv true if building a CSV switch list files
-     * @param isUpdate true if only updating switch lists (no printing or
-     *            preview)
+     * @param isUpdate  true if only updating switch lists (no printing or preview)
      */
-    @SuppressFBWarnings(
-            value = {"UC_USELESS_CONDITION", "RpC_REPEATED_CONDITIONAL_TEST"}, // NOI18N
+    @SuppressFBWarnings(value = { "UC_USELESS_CONDITION", "RpC_REPEATED_CONDITIONAL_TEST" }, // NOI18N
             justification = "isChanged value is dependent on which user button is activated") // NOI18N
-    private void buildSwitchList(boolean isPreview, boolean isChanged, boolean isCsv, boolean isUpdate) {
+    private void buildSwitchList(boolean isPreview, boolean isChanged, boolean isUpdate) {
         TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
-        // this for loop prevents ConcurrentModificationException when printing and status changes
+        TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
+        // this for loop prevents ConcurrentModificationException when printing and
+        // status changes
         for (JCheckBox checkbox : new ArrayList<>(locationCheckBoxes)) {
             String locationName = checkbox.getName();
             Location location = locationManager.getLocationByName(locationName);
             if (location.isSwitchListEnabled()) {
-                if (!isCsv) {
-                    // update switch list
-                    trainSwitchLists.buildSwitchList(location);
-                    // print or only print changes
-                    if (!isUpdate &&
-                            (!isChanged ||
-                                    (isChanged &&
-                                            (location.getStatus().equals(Location.MODIFIED) ||
-                                                    location.getStatus().equals(Location.UPDATED))))) {
-                        trainSwitchLists.printSwitchList(location, isPreview);
-                    }
-                } else if (Setup.isGenerateCsvSwitchListEnabled() &&
-                        (!isChanged || (isChanged && location.getStatus().equals(Location.MODIFIED)))) {
-                    TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
-                    trainCsvSwitchLists.buildSwitchList(location);
+                // update switch lists
+                trainSwitchLists.buildSwitchList(location);
+                trainCsvSwitchLists.buildSwitchList(location);
+                // print or only print changes
+                if (!isUpdate &&
+                        (!isChanged ||
+                                (isChanged &&
+                                        (location.getStatus().equals(Location.MODIFIED) ||
+                                                location.getStatus().equals(Location.UPDATED))))) {
+                    trainSwitchLists.printSwitchList(location, isPreview);
                 }
             }
         }
         // set trains switch lists printed
         InstanceManager.getDefault(TrainManager.class).setTrainsSwitchListStatus(Train.PRINTED);
+    }
+
+    private void buildCsvSwitchList(boolean isChanged) {
+        if (Setup.isGenerateCsvSwitchListEnabled()) {
+            TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
+            TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
+            // this for loop prevents ConcurrentModificationException when printing and
+            // status changes
+            for (JCheckBox checkbox : new ArrayList<>(locationCheckBoxes)) {
+                String locationName = checkbox.getName();
+                Location location = locationManager.getLocationByName(locationName);
+                if (location.isSwitchListEnabled()) {
+                    if (!isChanged || (isChanged && location.getStatus().equals(Location.MODIFIED))) {
+                        trainSwitchLists.buildSwitchList(location);
+                        trainCsvSwitchLists.buildSwitchList(location);
+                    }
+                }
+            }
+            // set trains switch lists printed
+            InstanceManager.getDefault(TrainManager.class).setTrainsSwitchListStatus(Train.PRINTED);
+        }
     }
 
     private void selectCheckboxes(boolean enable) {
@@ -346,8 +365,10 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         saveButton.setEnabled(true);
     }
 
-    // TODO there's a ConcurrentModificationException when the printer status changes
-    // when printing. This routine rebuilds the locationCheckBoxes during the update.
+    // TODO there's a ConcurrentModificationException when the printer status
+    // changes
+    // when printing. This routine rebuilds the locationCheckBoxes during the
+    // update.
     // A better solution would only update the status for a location.
     // name change or number of locations has changed
     private void updateLocationCheckboxes() {
@@ -435,15 +456,14 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     }
 
     /**
-     * Creates custom switch lists using an external program like MS Excel.
-     * Switch lists are created for locations that have switch lists enabled.
+     * Creates custom switch lists using an external program like MS Excel. Switch
+     * lists are created for locations that have switch lists enabled.
      * 
      * @param isChanged when true, only create custom switch list for enabled
-     *            locations that have changes. When isChanged is false, create
-     *            custom switch lists for all enabled locations.
+     *                  locations that have changes. When isChanged is false, create
+     *                  custom switch lists for all enabled locations.
      */
-    @SuppressFBWarnings(
-            value = {"UC_USELESS_CONDITION", "RpC_REPEATED_CONDITIONAL_TEST"}, // NOI18N
+    @SuppressFBWarnings(value = { "UC_USELESS_CONDITION", "RpC_REPEATED_CONDITIONAL_TEST" }, // NOI18N
             justification = "isChanged value is dependent on which user button is activated") // NOI18N
     private void runCustomSwitchLists(boolean isChanged) {
         if (!Setup.isGenerateCsvSwitchListEnabled()) {
@@ -452,7 +472,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         log.debug("run custom switch lists");
         TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
         TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
-        // this for loop prevents ConcurrentModificationException when printing and status changes
+        // this for loop prevents ConcurrentModificationException when printing and
+        // status changes
         for (JCheckBox checkbox : new ArrayList<>(locationCheckBoxes)) {
             String locationName = checkbox.getName();
             Location location = locationManager.getLocationByName(locationName);
@@ -474,12 +495,12 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         // Processes the CSV Manifest files using an external custom program.
         if (!InstanceManager.getDefault(TrainCustomSwitchList.class).excelFileExists()) {
             log.warn("Manifest creator file not found!, directory name: {}, file name: {}",
-                    InstanceManager.getDefault(TrainCustomSwitchList.class)
-                            .getDirectoryName(),
+                    InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryName(),
                     InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName());
-            JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LoadDirectoryNameFileName"),
-                    new Object[]{InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryName(),
-                            InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName()}),
+            JOptionPane.showMessageDialog(this,
+                    MessageFormat.format(Bundle.getMessage("LoadDirectoryNameFileName"),
+                            new Object[] { InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryName(),
+                                    InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName() }),
                     Bundle.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -493,7 +514,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         saveButton.setEnabled(enable);
         // these get the inverse
         previewButton.setEnabled(!enable);
-        printButton.setEnabled(!enable && (!Control.disablePrintingIfCustom || !Setup.isGenerateCsvSwitchListEnabled()));
+        printButton
+                .setEnabled(!enable && (!Control.disablePrintingIfCustom || !Setup.isGenerateCsvSwitchListEnabled()));
         resetButton.setEnabled(!enable);
         csvGenerateButton.setEnabled(!enable);
         runButton.setEnabled(!enable);
@@ -514,7 +536,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         updateButton.setEnabled(false);
         for (Location location : locationManager.getLocationsByNameList()) {
             if (location.getStatus().equals(Location.MODIFIED) && location.isSwitchListEnabled()) {
-                printChangesButton.setEnabled((!Control.disablePrintingIfCustom || !Setup.isGenerateCsvSwitchListEnabled()));
+                printChangesButton
+                        .setEnabled((!Control.disablePrintingIfCustom || !Setup.isGenerateCsvSwitchListEnabled()));
                 csvChangeButton.setEnabled(true);
                 runChangeButton.setEnabled(true);
                 updateButton.setEnabled(true);
@@ -586,8 +609,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
-            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
-                    .getNewValue());
+            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(),
+                    e.getNewValue());
         }
         if (e.getPropertyName().equals(Location.SWITCHLIST_CHANGED_PROPERTY)) {
             changeLocationCheckboxes(e);
