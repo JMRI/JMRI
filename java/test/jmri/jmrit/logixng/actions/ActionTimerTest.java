@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.actions;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.ToDo;
@@ -303,8 +304,8 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         _isExternal = false;
         
         _logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        _conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("A conditionalNG");  // NOI18N
+        _conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
+        InstanceManager.getDefault(ConditionalNG_Manager.class).register(_conditionalNG);
         _conditionalNG.setEnabled(true);
         _conditionalNG.setRunDelayed(false);
         _logixNG.addConditionalNG(_conditionalNG);
@@ -315,14 +316,8 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         _base = _actionTimer;
         _baseMaleSocket = maleSocket;
         
-        DefaultSymbolTable newSymbolTable = new DefaultSymbolTable();
-        InstanceManager.getDefault(LogixNG_Manager.class).setSymbolTable(newSymbolTable);
-        
         _logixNG.setParentForAllChildren();
         _logixNG.setEnabled(false);
-        
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @After

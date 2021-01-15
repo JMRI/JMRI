@@ -21,6 +21,8 @@ public interface Module extends Base, NamedBean {
     
     public FemaleSocket getRootSocket();
     
+    public void setCurrentConditionalNG(ConditionalNG conditionalNG);
+    
     public void addParameter(String name, boolean isInput, boolean isOutput);
     
     public void addParameter(Parameter parameter);

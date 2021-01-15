@@ -33,10 +33,19 @@ public class DefaultFemaleDigitalExpressionSocket extends AbstractFemaleSocket
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() throws JmriException {
+        System.out.format("AAA%n");
         if (isConnected()) {
+            System.out.format("BBB: %s%n", ((MaleDigitalExpressionSocket)getConnectedSocket()).getLongDescription());
+            System.out.format("bbb: %s%n", ((MaleDigitalExpressionSocket)getConnectedSocket()).getClass().getName());
+            System.out.format("vvv: %s%n", ((MaleDigitalExpressionSocket)getConnectedSocket()).getObject().getClass().getName());
+            System.out.format("yyy: %s%n", ((MaleDigitalExpressionSocket)getConnectedSocket()).getObject().getLongDescription());
+            System.out.format("CCC: %b%n", ((MaleDigitalExpressionSocket)getConnectedSocket()).evaluate());
+//            System.out.format("ccc: %b%n", ((jmri.jmrit.logixng.expressions.ExpressionTurnout) ((MaleDigitalExpressionSocket)getConnectedSocket()).getObject()).evaluate());
+            System.out.format("ddddd%n");
             return ((MaleDigitalExpressionSocket)getConnectedSocket())
                     .evaluate();
         } else {
+            System.out.format("DDD%n");
             return false;
         }
     }

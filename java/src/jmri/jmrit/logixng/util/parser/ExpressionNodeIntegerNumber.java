@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.util.parser;
 
+import jmri.jmrit.logixng.SymbolTable;
+
 /**
  * A parsed expression
  */
@@ -14,7 +16,7 @@ public class ExpressionNodeIntegerNumber implements ExpressionNode {
     }
     
     @Override
-    public Object calculate() {
+    public Object calculate(SymbolTable symbolTable) {
         return _value;
     }
     

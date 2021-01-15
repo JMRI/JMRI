@@ -359,17 +359,19 @@ public class ActionSignalMast extends AbstractDigitalAction
                 return _signalMastAspect;
                 
             case Reference:
-                return ReferenceUtil.getReference(_aspectReference);
+                return ReferenceUtil.getReference(
+                        getConditionalNG().getSymbolTable(), _aspectReference);
                 
             case LocalVariable:
-                SymbolTable symbolTable =
-                        InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
+                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
                 return TypeConversionUtil
                         .convertToString(symbolTable.getValue(_aspectLocalVariable), false);
                 
             case Formula:
                 return _aspectExpressionNode != null
-                        ? TypeConversionUtil.convertToString(_aspectExpressionNode.calculate(), false)
+                        ? TypeConversionUtil.convertToString(
+                                _aspectExpressionNode.calculate(
+                                        getConditionalNG().getSymbolTable()), false)
                         : "";
                 
             default:
@@ -386,19 +388,21 @@ public class ActionSignalMast extends AbstractDigitalAction
                     return _operationType;
                     
                 case Reference:
-                    oper = ReferenceUtil.getReference(_operationReference);
+                    oper = ReferenceUtil.getReference(
+                            getConditionalNG().getSymbolTable(), _operationReference);
                     return OperationType.valueOf(oper);
                     
                 case LocalVariable:
-                    SymbolTable symbolTable =
-                            InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
+                    SymbolTable symbolTable = getConditionalNG().getSymbolTable();
                     oper = TypeConversionUtil
                             .convertToString(symbolTable.getValue(_operationLocalVariable), false);
                     return OperationType.valueOf(oper);
                     
                 case Formula:
                     if (_aspectExpressionNode != null) {
-                        oper = TypeConversionUtil.convertToString(_operationExpressionNode.calculate(), false);
+                        oper = TypeConversionUtil.convertToString(
+                                _operationExpressionNode.calculate(
+                                        getConditionalNG().getSymbolTable()), false);
                         return OperationType.valueOf(oper);
                     } else {
                         return null;
@@ -424,14 +428,14 @@ public class ActionSignalMast extends AbstractDigitalAction
                 break;
                 
             case Reference:
-                String ref = ReferenceUtil.getReference(_reference);
+                String ref = ReferenceUtil.getReference(
+                        getConditionalNG().getSymbolTable(), _reference);
                 signalMast = InstanceManager.getDefault(SignalMastManager.class)
                         .getNamedBean(ref);
                 break;
                 
             case LocalVariable:
-                SymbolTable symbolTable =
-                        InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
+                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
                 signalMast = InstanceManager.getDefault(SignalMastManager.class)
                         .getNamedBean(TypeConversionUtil
                                 .convertToString(symbolTable.getValue(_localVariable), false));
@@ -441,7 +445,8 @@ public class ActionSignalMast extends AbstractDigitalAction
                 signalMast = _expressionNode != null ?
                         InstanceManager.getDefault(SignalMastManager.class)
                                 .getNamedBean(TypeConversionUtil
-                                        .convertToString(_expressionNode.calculate(), false))
+                                        .convertToString(_expressionNode.calculate(
+                                                getConditionalNG().getSymbolTable()), false))
                         : null;
                 break;
                 

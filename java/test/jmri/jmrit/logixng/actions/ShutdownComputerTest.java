@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.actions;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.managers.DefaultShutDownManager;
 import jmri.util.*;
@@ -134,8 +135,8 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         _isExternal = true;
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("A conditionalNG");  // NOI18N
+        conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
+        InstanceManager.getDefault(ConditionalNG_Manager.class).register(conditionalNG);
         conditionalNG.setEnabled(true);
         conditionalNG.setRunDelayed(false);
         logixNG.addConditionalNG(conditionalNG);
@@ -148,9 +149,6 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
-        
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .setSymbolTable(new DefaultSymbolTable());
     }
     
     @After

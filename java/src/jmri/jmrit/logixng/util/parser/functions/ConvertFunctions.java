@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import jmri.JmriException;
+import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.jmrit.logixng.util.parser.Function;
 import jmri.jmrit.logixng.util.parser.FunctionFactory;
@@ -49,11 +50,14 @@ public class ConvertFunctions implements FunctionFactory {
         }
         
         @Override
-        public Object calculate(List<ExpressionNode> parameterList) throws JmriException {
+        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                throws JmriException {
+            
             if (parameterList.size() != 1) {
                 throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
             }
-            return (int) TypeConversionUtil.convertToLong(parameterList.get(0).calculate());
+            return (int) TypeConversionUtil.convertToLong(
+                    parameterList.get(0).calculate(symbolTable));
         }
         
         @Override
@@ -76,13 +80,17 @@ public class ConvertFunctions implements FunctionFactory {
         }
         
         @Override
-        public Object calculate(List<ExpressionNode> parameterList) throws JmriException {
+        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                throws JmriException {
+            
             switch (parameterList.size()) {
                 case 1:
-                    return TypeConversionUtil.convertToString(parameterList.get(0).calculate(), false);
+                    return TypeConversionUtil.convertToString(parameterList.get(0).calculate(symbolTable), false);
                 case 2:
-                    boolean do_i18n = TypeConversionUtil.convertToBoolean(parameterList.get(0).calculate(), false);
-                    return TypeConversionUtil.convertToString(parameterList.get(0).calculate(), do_i18n);
+                    boolean do_i18n = TypeConversionUtil.convertToBoolean(
+                            parameterList.get(0).calculate(symbolTable), false);
+                    return TypeConversionUtil.convertToString(
+                            parameterList.get(0).calculate(symbolTable), do_i18n);
                 default:
                     throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
             }

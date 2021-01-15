@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.AnalogExpressionMemory;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -25,6 +26,7 @@ import org.junit.rules.ExpectedException;
  */
 public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBase {
 
+    private ConditionalNG _conditionalNG;
     private String _memorySystemName;
     private Memory _memory;
     private MyAnalogExpressionMemory _expression;
@@ -115,8 +117,7 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
         
-        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("A conditionalNG");  // NOI18N
+        _conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();
         _memorySystemName = "IM1";
@@ -127,7 +128,7 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
         manager = InstanceManager.getDefault(AnalogExpressionManager.class);
         maleSocket = ((AnalogExpressionManager)manager).registerExpression(_expression);
         otherMaleSocket = ((AnalogExpressionManager)manager).registerExpression(otherExpression);
-        _femaleSocket = new DefaultFemaleAnalogExpressionSocket(conditionalNG, new FemaleSocketListener() {
+        _femaleSocket = new DefaultFemaleAnalogExpressionSocket(_conditionalNG, new FemaleSocketListener() {
             @Override
             public void connected(FemaleSocket socket) {
                 flag.set(true);
@@ -138,13 +139,11 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
                 flag.set(true);
             }
         }, "E1");
-        
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @After
     public void tearDown() {
+        JUnitAppender.clearBacklog();   // REMOVE THIS!!!!
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }

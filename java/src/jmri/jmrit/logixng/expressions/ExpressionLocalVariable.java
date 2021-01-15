@@ -294,8 +294,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     public boolean evaluate() {
         if (_variableName == null) return false;
         
-        String variableValue = getString(
-                InstanceManager.getDefault(LogixNG_Manager.class)
+        String variableValue = getString(getConditionalNG()
                         .getSymbolTable().getValue(_variableName));
         String otherValue = null;
         boolean result;

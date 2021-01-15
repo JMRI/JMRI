@@ -370,17 +370,19 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
                 return _signalHeadAppearance;
                 
             case Reference:
-                return getAppearanceFromName(ReferenceUtil.getReference(_appearanceReference));
+                return getAppearanceFromName(ReferenceUtil.getReference(
+                        getConditionalNG().getSymbolTable(), _appearanceReference));
                 
             case LocalVariable:
-                SymbolTable symbolTable =
-                        InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
+                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
                 return getAppearanceFromName(TypeConversionUtil
                         .convertToString(symbolTable.getValue(_appearanceLocalVariable), false));
                 
             case Formula:
                 return _appearanceExpressionNode != null
-                        ? getAppearanceFromName(TypeConversionUtil.convertToString(_appearanceExpressionNode.calculate(), false))
+                        ? getAppearanceFromName(TypeConversionUtil.convertToString(
+                                _appearanceExpressionNode.calculate(
+                                        getConditionalNG().getSymbolTable()), false))
                         : -1;
                 
             default:
@@ -397,19 +399,22 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
                     return _queryType;
                     
                 case Reference:
-                    oper = ReferenceUtil.getReference(_queryReference);
+                    oper = ReferenceUtil.getReference(
+                            getConditionalNG().getSymbolTable(), _queryReference);
                     return QueryType.valueOf(oper);
                     
                 case LocalVariable:
                     SymbolTable symbolTable =
-                            InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
+                            getConditionalNG().getSymbolTable();
                     oper = TypeConversionUtil
                             .convertToString(symbolTable.getValue(_queryLocalVariable), false);
                     return QueryType.valueOf(oper);
                     
                 case Formula:
                     if (_appearanceExpressionNode != null) {
-                        oper = TypeConversionUtil.convertToString(_queryExpressionNode.calculate(), false);
+                        oper = TypeConversionUtil.convertToString(
+                                _queryExpressionNode.calculate(
+                                        getConditionalNG().getSymbolTable()), false);
                         return QueryType.valueOf(oper);
                     } else {
                         return null;
@@ -433,14 +438,14 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
                 break;
                 
             case Reference:
-                String ref = ReferenceUtil.getReference(_reference);
+                String ref = ReferenceUtil.getReference(
+                        getConditionalNG().getSymbolTable(), _reference);
                 signalHead = InstanceManager.getDefault(SignalHeadManager.class)
                         .getNamedBean(ref);
                 break;
                 
             case LocalVariable:
-                SymbolTable symbolTable =
-                        InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
+                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
                 signalHead = InstanceManager.getDefault(SignalHeadManager.class)
                         .getNamedBean(TypeConversionUtil
                                 .convertToString(symbolTable.getValue(_localVariable), false));
@@ -450,7 +455,8 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
                 signalHead = _expressionNode != null ?
                         InstanceManager.getDefault(SignalHeadManager.class)
                                 .getNamedBean(TypeConversionUtil
-                                        .convertToString(_expressionNode.calculate(), false))
+                                        .convertToString(_expressionNode.calculate(
+                                                getConditionalNG().getSymbolTable()), false))
                         : null;
                 break;
                 

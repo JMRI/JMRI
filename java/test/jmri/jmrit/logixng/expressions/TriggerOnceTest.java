@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import jmri.jmrit.logixng.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.actions.IfThenElse;
+import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 
 /**
@@ -298,8 +299,8 @@ public class TriggerOnceTest extends AbstractDigitalExpressionTestBase {
         _isExternal = false;
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("A conditionalNG");  // NOI18N
+        conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
+        InstanceManager.getDefault(ConditionalNG_Manager.class).register(conditionalNG);
         conditionalNG.setRunDelayed(false);
         conditionalNG.setEnabled(true);
         logixNG.addConditionalNG(conditionalNG);
@@ -323,9 +324,6 @@ public class TriggerOnceTest extends AbstractDigitalExpressionTestBase {
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
-        
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @After

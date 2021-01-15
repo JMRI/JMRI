@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import jmri.JmriException;
+import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.util.parser.CalculateException;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.jmrit.logixng.util.parser.Function;
@@ -50,18 +51,23 @@ public class MathFunctions implements FunctionFactory {
         }
         
         @Override
-        public Object calculate(List<ExpressionNode> parameterList) throws CalculateException, JmriException {
+        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                throws CalculateException, JmriException {
+            
             double min;
             double max;
             switch (parameterList.size()) {
                 case 0:
                     return Math.random();
                 case 1:
-                    max = TypeConversionUtil.convertToDouble(parameterList.get(0).calculate(), false);
+                    max = TypeConversionUtil.convertToDouble(
+                            parameterList.get(0).calculate(symbolTable), false);
                     return Math.random() * max;
                 case 2:
-                    min = TypeConversionUtil.convertToDouble(parameterList.get(0).calculate(), false);
-                    max = TypeConversionUtil.convertToDouble(parameterList.get(1).calculate(), false);
+                    min = TypeConversionUtil.convertToDouble(
+                            parameterList.get(0).calculate(symbolTable), false);
+                    max = TypeConversionUtil.convertToDouble(
+                            parameterList.get(1).calculate(symbolTable), false);
                     return min + Math.random() * (max-min);
                 default:
                     throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
@@ -88,13 +94,17 @@ public class MathFunctions implements FunctionFactory {
         }
         
         @Override
-        public Object calculate(List<ExpressionNode> parameterList) throws JmriException {
+        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                throws JmriException {
+            
             if (parameterList.size() == 1) {
-                double param = TypeConversionUtil.convertToDouble(parameterList.get(0).calculate(), false);
+                double param = TypeConversionUtil.convertToDouble(
+                        parameterList.get(0).calculate(symbolTable), false);
                 return Math.sin(param);
             } else if (parameterList.size() >= 2) {
-                double param0 = TypeConversionUtil.convertToDouble(parameterList.get(0).calculate(), false);
-                Object param1 = parameterList.get(1).calculate();
+                double param0 = TypeConversionUtil.convertToDouble(
+                        parameterList.get(0).calculate(symbolTable), false);
+                Object param1 = parameterList.get(1).calculate(symbolTable);
                 double result;
                 if (param1 instanceof String) {
                     switch ((String)param1) {
@@ -119,8 +129,10 @@ public class MathFunctions implements FunctionFactory {
                     case 2:
                         return result;
                     case 4:
-                        double min = TypeConversionUtil.convertToDouble(parameterList.get(2).calculate(), false);
-                        double max = TypeConversionUtil.convertToDouble(parameterList.get(3).calculate(), false);
+                        double min = TypeConversionUtil.convertToDouble(
+                                parameterList.get(2).calculate(symbolTable), false);
+                        double max = TypeConversionUtil.convertToDouble(
+                                parameterList.get(3).calculate(symbolTable), false);
                         return result * (max-min) + min;
                     default:
                         throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));

@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import jmri.jmrit.logixng.SymbolTable;
+import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
+import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.jmrit.logixng.util.parser.ExpressionNodeFloatingNumber;
 import jmri.jmrit.logixng.util.parser.ExpressionNodeString;
@@ -66,21 +70,23 @@ public class ConvertFunctionsTest {
         
         AtomicBoolean hasThrown = new AtomicBoolean(false);
         
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        
         // Test unsupported token type
         hasThrown.set(false);
         try {
-            intFunction.calculate(getParameterList());
+            intFunction.calculate(symbolTable, getParameterList());
         } catch (WrongNumberOfParametersException e) {
             hasThrown.set(true);
         }
         Assert.assertTrue("exception is thrown", hasThrown.get());
         
-        Assert.assertEquals("numbers are equal", 12, intFunction.calculate(getParameterList(expr12_34)));
+        Assert.assertEquals("numbers are equal", 12, intFunction.calculate(symbolTable, getParameterList(expr12_34)));
         
         // Test unsupported token type
         hasThrown.set(false);
         try {
-            intFunction.calculate(getParameterList(expr12_34, expr25_46));
+            intFunction.calculate(symbolTable, getParameterList(expr12_34, expr25_46));
         } catch (WrongNumberOfParametersException e) {
             hasThrown.set(true);
         }
@@ -94,6 +100,7 @@ public class ConvertFunctionsTest {
 
     @After
     public void tearDown() {
+        LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
     

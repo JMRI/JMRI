@@ -4,6 +4,7 @@ import java.util.List;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.jmrit.logixng.SymbolTable;
 
 /**
  * A parsed expression
@@ -30,8 +31,8 @@ public class ExpressionNodeFunction implements ExpressionNode {
     }
     
     @Override
-    public Object calculate() throws JmriException {
-        return _function.calculate(_parameterList);
+    public Object calculate(SymbolTable symbolTable) throws JmriException {
+        return _function.calculate(symbolTable, _parameterList);
     }
     
     /** {@inheritDoc} */

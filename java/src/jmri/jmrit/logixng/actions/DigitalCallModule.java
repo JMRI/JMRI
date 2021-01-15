@@ -156,7 +156,12 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
     public void execute() throws JmriException {
         if (_moduleHandle == null) return;
         
+        System.out.format("CallModule: %d, conditionalNG: %s%n", Thread.currentThread().getId(), getConditionalNG().getSystemName());
+        
         Module module = _moduleHandle.getBean();
+        
+        ConditionalNG oldConditionalNG = getConditionalNG();
+        module.setCurrentConditionalNG(getConditionalNG());
         
         FemaleSocket femaleSocket = module.getRootSocket();
         
@@ -165,20 +170,24 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
             return;
         }
         
-        int currentStackPos = InstanceManager.getDefault(LogixNG_Manager.class).getStack().getCount();
+        ConditionalNG conditionalNG = getConditionalNG();
         
-        DefaultSymbolTable newSymbolTable = new DefaultSymbolTable();
+        int currentStackPos = conditionalNG.getStack().getCount();
+        
+        DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(conditionalNG);
         newSymbolTable.createSymbols(_parameterData);
         newSymbolTable.createSymbols(module.getLocalVariables());
-        InstanceManager.getDefault(LogixNG_Manager.class).setSymbolTable(newSymbolTable);
+        conditionalNG.setSymbolTable(newSymbolTable);
         
         ((FemaleDigitalActionSocket)femaleSocket).execute();
         
         returnSymbols(newSymbolTable, _parameterData);
         
-        InstanceManager.getDefault(LogixNG_Manager.class).getStack().setCount(currentStackPos);
+        conditionalNG.getStack().setCount(currentStackPos);
         
-        InstanceManager.getDefault(LogixNG_Manager.class).setSymbolTable(newSymbolTable.getPrevSymbolTable());
+        conditionalNG.setSymbolTable(newSymbolTable.getPrevSymbolTable());
+        
+        module.setCurrentConditionalNG(oldConditionalNG);
     }
 
     @Override

@@ -2,6 +2,10 @@ package jmri.jmrit.logixng.util.parser;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import jmri.jmrit.logixng.SymbolTable;
+import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
+import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -79,22 +83,24 @@ public class ExpressionNodeTernaryOperatorTest {
         ExpressionNode expr12_34 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "12.34", 0));
         ExpressionNode expr25_46 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "25.46", 0));
         
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        
         Assert.assertEquals("calculate() gives the correct value",
                 12.34,
-                (double)new ExpressionNodeTernaryOperator(expr1, expr12_34, expr25_46).calculate(),
+                (double)new ExpressionNodeTernaryOperator(expr1, expr12_34, expr25_46).calculate(symbolTable),
                 0.00000001);
         Assert.assertEquals("calculate() gives the correct value",
                 25.46,
-                (double)new ExpressionNodeTernaryOperator(expr0, expr12_34, expr25_46).calculate(),
+                (double)new ExpressionNodeTernaryOperator(expr0, expr12_34, expr25_46).calculate(symbolTable),
                 0.00000001);
         
         Assert.assertEquals("calculate() gives the correct value",
                 12.34,
-                (double)new ExpressionNodeTernaryOperator(exprTrue, expr12_34, expr25_46).calculate(),
+                (double)new ExpressionNodeTernaryOperator(exprTrue, expr12_34, expr25_46).calculate(symbolTable),
                 0.00000001);
         Assert.assertEquals("calculate() gives the correct value",
                 25.46,
-                (double)new ExpressionNodeTernaryOperator(exprFalse, expr12_34, expr25_46).calculate(),
+                (double)new ExpressionNodeTernaryOperator(exprFalse, expr12_34, expr25_46).calculate(symbolTable),
                 0.00000001);
     }
     
@@ -106,6 +112,7 @@ public class ExpressionNodeTernaryOperatorTest {
 
     @After
     public void tearDown() {
+        LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
     

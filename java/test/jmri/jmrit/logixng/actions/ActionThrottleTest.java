@@ -17,7 +17,9 @@ import jmri.jmrit.logixng.expressions.AnalogExpressionConstant;
 import jmri.jmrit.logixng.expressions.AnalogExpressionMemory;
 import jmri.jmrit.logixng.expressions.ExpressionMemory;
 import jmri.jmrit.logixng.expressions.ExpressionSensor;
+import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.ToDo;
 
@@ -581,6 +583,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         logixNG.setEnabled(false);
         ConditionalNG conditionalNG_2 = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A second conditionalNG");  // NOI18N
+        conditionalNG_2.setRunDelayed(false);
         logixNG.addConditionalNG(conditionalNG_2);
         ActionThrottle actionThrottle2 = new ActionThrottle("IQDA999", null);
         MaleSocket maleSocket2 =
@@ -626,7 +629,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals("Throttle is used 1 times", 1, tm.getThrottleUsageCount(locoAddress));
         
         // Test execute when loco address socket is connected
-        actionThrottle2.execute();
+        conditionalNG_2.execute();
         Assert.assertEquals("loco speed is correct", 0.0, myThrottleRef.get().getSpeedSetting(), 0.0001);
         
         Assert.assertEquals("Throttle is used 2 times", 2, tm.getThrottleUsageCount(locoAddress));
@@ -717,8 +720,8 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         _isExternal = true;
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("A conditionalNG");  // NOI18N
+        conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
+        InstanceManager.getDefault(ConditionalNG_Manager.class).register(conditionalNG);
         conditionalNG.setEnabled(true);
         conditionalNG.setRunDelayed(false);
         logixNG.addConditionalNG(conditionalNG);
@@ -731,9 +734,6 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
-        
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @After

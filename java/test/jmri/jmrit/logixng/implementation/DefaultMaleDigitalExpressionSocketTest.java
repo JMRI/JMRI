@@ -44,10 +44,15 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
     
     @Test
     public void testEvaluate() throws JmriException {
+        ConditionalNG conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
+        
         MyDigitalExpression expression = new MyDigitalExpression("IQDE321");
+        expression.setParent(conditionalNG);
+        
         DefaultMaleDigitalExpressionSocket socket = new DefaultMaleDigitalExpressionSocket(manager, expression);
         Assert.assertNotNull("exists", socket);
         
+        socket.setParent(conditionalNG);
         socket.setEnabled(true);
         socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
         
@@ -167,9 +172,6 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
                 InstanceManager.getDefault(DigitalExpressionManager.class)
                         .registerExpression(expressionB);
         Assert.assertNotNull("exists", maleSocketB);
-        
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @AfterEach

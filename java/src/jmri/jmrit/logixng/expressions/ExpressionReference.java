@@ -101,7 +101,8 @@ public class ExpressionReference extends AbstractDigitalExpression
         if (_reference == null) return false;
         
         boolean result;
-        String ref = ReferenceUtil.getReference(_reference);
+        String ref = ReferenceUtil.getReference(
+                getConditionalNG().getSymbolTable(), _reference);
         NamedBean t;
 
         switch (_pointsTo) {

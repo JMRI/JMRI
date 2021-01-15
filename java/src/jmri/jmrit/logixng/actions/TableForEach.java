@@ -78,8 +78,7 @@ public class TableForEach extends AbstractDigitalAction
             return;
         }
         
-        SymbolTable symbolTable =
-                InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
+        SymbolTable symbolTable = getConditionalNG().getSymbolTable();
         
         NamedTable table = _tableHandle.getBean();
         

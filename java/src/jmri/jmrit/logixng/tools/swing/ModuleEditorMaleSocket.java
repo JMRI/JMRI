@@ -103,7 +103,7 @@ class ModuleEditorMaleSocket extends AbstractMaleSocket {
     public String getLongDescription(Locale locale) {
         return _module.getLongDescription(locale);
     }
-
+/*
     @Override
     public ConditionalNG getConditionalNG() {
         return null;
@@ -113,7 +113,7 @@ class ModuleEditorMaleSocket extends AbstractMaleSocket {
     public LogixNG getLogixNG() {
         return null;
     }
-
+*/
     @Override
     public Base getRoot() {
         return _module.getRoot();

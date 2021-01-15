@@ -6,6 +6,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Memory;
 import jmri.MemoryManager;
+import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.jmrit.logixng.util.parser.Function;
@@ -58,12 +59,14 @@ public class NamedBeanFunctions implements FunctionFactory {
         }
         
         @Override
-        public Object calculate(List<ExpressionNode> parameterList) throws JmriException {
+        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                throws JmriException {
+            
             if (parameterList.size() != 1) {
                 throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
             }
             
-            Object value = parameterList.get(0).calculate();
+            Object value = parameterList.get(0).calculate(symbolTable);
             if (value == null) return null;
             
             String s = TypeConversionUtil.convertToString(value, false);
@@ -102,12 +105,14 @@ public class NamedBeanFunctions implements FunctionFactory {
         }
         
         @Override
-        public Object calculate(List<ExpressionNode> parameterList) throws JmriException {
+        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                throws JmriException {
+            
             if (parameterList.size() != 1) {
                 throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
             }
             
-            Object value = parameterList.get(0).calculate();
+            Object value = parameterList.get(0).calculate(symbolTable);
             if (value == null) return null;
             
             String s = TypeConversionUtil.convertToString(value, false);
@@ -118,7 +123,7 @@ public class NamedBeanFunctions implements FunctionFactory {
             value = m.getValue();
             
             if ((value instanceof String) && ReferenceUtil.isReference((String)value)) {
-                return ReferenceUtil.getReference((String)value);
+                return ReferenceUtil.getReference(symbolTable, (String)value);
             }
             
             s = TypeConversionUtil.convertToString(value, false);
@@ -126,7 +131,7 @@ public class NamedBeanFunctions implements FunctionFactory {
             Map<String, Variable> variables = new HashMap<>();
             RecursiveDescentParser parser = new RecursiveDescentParser(variables);
             ExpressionNode expressionNode = parser.parseExpression(s);
-            return expressionNode.calculate();
+            return expressionNode.calculate(symbolTable);
         }
         
         @Override

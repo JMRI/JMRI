@@ -25,6 +25,7 @@ import org.junit.rules.ExpectedException;
  */
 public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBase {
 
+    private ConditionalNG _conditionalNG;
     private String _memorySystemName;
     private Memory _memory;
     private MyStringExpressionMemory _expression;
@@ -115,8 +116,7 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
         
-        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("A conditionalNG");  // NOI18N
+        _conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();
         _memorySystemName = "IM1";
@@ -127,7 +127,7 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
         manager = InstanceManager.getDefault(StringExpressionManager.class);
         maleSocket = ((StringExpressionManager)manager).registerExpression(_expression);
         otherMaleSocket = ((StringExpressionManager)manager).registerExpression(otherExpression);
-        _femaleSocket = new DefaultFemaleStringExpressionSocket(conditionalNG, new FemaleSocketListener() {
+        _femaleSocket = new DefaultFemaleStringExpressionSocket(_conditionalNG, new FemaleSocketListener() {
             @Override
             public void connected(FemaleSocket socket) {
                 flag.set(true);
@@ -138,9 +138,6 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
                 flag.set(true);
             }
         }, "E1");
-        
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @After

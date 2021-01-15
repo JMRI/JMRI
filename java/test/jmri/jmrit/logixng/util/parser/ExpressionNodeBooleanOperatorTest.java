@@ -2,6 +2,10 @@ package jmri.jmrit.logixng.util.parser;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import jmri.jmrit.logixng.SymbolTable;
+import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
+import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -92,46 +96,49 @@ public class ExpressionNodeBooleanOperatorTest {
         ExpressionNode exprFalse3 = new ExpressionNodeIntegerNumber(new Token(TokenType.NONE, "0", 0));
         ExpressionNode expr12_34 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "12.34", 0));
         ExpressionNode expr25_46 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "25.46", 0));
+       
+        
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
         
         Assert.assertFalse("calculate() gives the correct value",
-                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_NOT, null, exprTrue1).calculate());
+                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_NOT, null, exprTrue1).calculate(symbolTable));
         Assert.assertTrue("calculate() gives the correct value",
-                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_NOT, null, exprFalse1).calculate());
+                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_NOT, null, exprFalse1).calculate(symbolTable));
         
         Assert.assertTrue("calculate() gives the correct value",
-                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_AND, exprTrue1, exprTrue2).calculate());
+                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_AND, exprTrue1, exprTrue2).calculate(symbolTable));
         Assert.assertFalse("calculate() gives the correct value",
-                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_AND, exprTrue1, exprFalse1).calculate());
+                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_AND, exprTrue1, exprFalse1).calculate(symbolTable));
         Assert.assertFalse("calculate() gives the correct value",
-                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_AND, exprFalse1, exprFalse2).calculate());
+                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_AND, exprFalse1, exprFalse2).calculate(symbolTable));
         Assert.assertFalse("calculate() gives the correct value",
-                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_AND, exprFalse1, exprTrue1).calculate());
+                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_AND, exprFalse1, exprTrue1).calculate(symbolTable));
         
         Assert.assertTrue("calculate() gives the correct value",
-                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_OR, exprTrue1, exprTrue2).calculate());
+                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_OR, exprTrue1, exprTrue2).calculate(symbolTable));
         Assert.assertTrue("calculate() gives the correct value",
-                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_OR, exprTrue1, exprFalse1).calculate());
+                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_OR, exprTrue1, exprFalse1).calculate(symbolTable));
         Assert.assertFalse("calculate() gives the correct value",
-                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_OR, exprFalse1, exprFalse1).calculate());
+                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_OR, exprFalse1, exprFalse1).calculate(symbolTable));
         Assert.assertTrue("calculate() gives the correct value",
-                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_OR, exprFalse1, exprTrue1).calculate());
+                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_OR, exprFalse1, exprTrue1).calculate(symbolTable));
         
         // Test non boolean operands
         Assert.assertTrue("calculate() gives the correct value",
-                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_OR, exprTrue3, exprTrue2).calculate());
+                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_OR, exprTrue3, exprTrue2).calculate(symbolTable));
         Assert.assertTrue("calculate() gives the correct value",
-                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_OR, exprTrue3, exprFalse3).calculate());
+                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_OR, exprTrue3, exprFalse3).calculate(symbolTable));
         Assert.assertFalse("calculate() gives the correct value",
-                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_OR, exprFalse1, exprFalse3).calculate());
+                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_OR, exprFalse1, exprFalse3).calculate(symbolTable));
         Assert.assertTrue("calculate() gives the correct value",
-                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_OR, exprFalse3, exprTrue3).calculate());
+                (Boolean)new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_OR, exprFalse3, exprTrue3).calculate(symbolTable));
         
         AtomicBoolean hasThrown = new AtomicBoolean(false);
         
         // ExpressionNodeBooleanOperator requires two operands that can be booleans
         hasThrown.set(false);
         try {
-            new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_OR, exprFalse1, expr25_46).calculate();
+            new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_OR, exprFalse1, expr25_46).calculate(symbolTable);
         } catch (CalculateException e) {
             hasThrown.set(true);
         }
@@ -140,7 +147,7 @@ public class ExpressionNodeBooleanOperatorTest {
         // ExpressionNodeBooleanOperator requires two operands that can be booleans
         hasThrown.set(false);
         try {
-            new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_OR, expr12_34, exprFalse1).calculate();
+            new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_OR, expr12_34, exprFalse1).calculate(symbolTable);
         } catch (CalculateException e) {
             hasThrown.set(true);
         }
@@ -151,7 +158,7 @@ public class ExpressionNodeBooleanOperatorTest {
         try {
             ExpressionNode en = new ExpressionNodeBooleanOperator(TokenType.BOOLEAN_OR, exprTrue1, exprTrue2);
             jmri.util.ReflectionUtilScaffold.setField(en, "_tokenType", TokenType.COMMA);
-            en.calculate();
+            en.calculate(symbolTable);
         } catch (CalculateException e) {
             hasThrown.set(true);
         }
@@ -231,6 +238,7 @@ public class ExpressionNodeBooleanOperatorTest {
 
     @After
     public void tearDown() {
+        LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
     

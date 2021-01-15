@@ -10,6 +10,7 @@ import jmri.jmrit.logixng.Module.ReturnValueType;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanReference;
 import jmri.jmrit.logixng.expressions.ExpressionLocalVariable;
+import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -30,23 +31,25 @@ public class RecursiveModuleTest {
     
     @Test
     public void testFibonacci() {
-        InstanceManager.getDefault(LogixNG_Manager.class).setSymbolTable(null);
-        Stack stack = InstanceManager.getDefault(LogixNG_Manager.class).getStack();
-        while (stack.getCount() > 0) stack.pop();
-        
+        result.setValue("BlahaBlahaBlaha");
         n.setValue(0);
+        System.out.format("aaa 0: result.value: %s%n", result.getValue());
         Assert.assertEquals(Long.valueOf(1), result.getValue());
         
         n.setValue(1);
+        System.out.format("aaa 1: result.value: %s%n", result.getValue());
         Assert.assertEquals(Long.valueOf(1), result.getValue());
         
         n.setValue(2);
+        System.out.format("aaa 2: result.value: %s%n", result.getValue());
         Assert.assertEquals(Long.valueOf(2), result.getValue());
         
         n.setValue(3);
+        System.out.format("aaa 3: result.value: %s%n", result.getValue());
         Assert.assertEquals(Long.valueOf(3), result.getValue());
         
         n.setValue(4);
+        System.out.format("aaa 4: result.value: %s%n", result.getValue());
         Assert.assertEquals(Long.valueOf(5), result.getValue());
         
         n.setValue(5);
@@ -78,17 +81,6 @@ public class RecursiveModuleTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
-        
-//        Map<String, FemaleSocketManager.SocketType> socketTypes = InstanceManager.getDefault(FemaleSocketManager.class).getSocketTypes();
-        
-//        for (FemaleSocketManager.SocketType socketType : socketTypes.values()) {
-//            System.out.format("Socket: %s, %s, %s%n", socketType.getName(), socketType.getDescr(), socketType.getClass());
-//        }
-        
-//        InstanceManager.getDefault(NamedTableManager.class).newStack("IQT1", null);
-        
-        
-        
         
         n = InstanceManager.getDefault(MemoryManager.class).provide("IMN");
         n.setValue(1);
@@ -193,17 +185,12 @@ public class RecursiveModuleTest {
         
         
         
-        
-        
-        
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("A conditionalNG");  // NOI18N
+        conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
+        InstanceManager.getDefault(ConditionalNG_Manager.class).register(conditionalNG);
         conditionalNG.setRunDelayed(false);
         conditionalNG.setEnabled(true);
         logixNG.addConditionalNG(conditionalNG);
-        
-//        conditionalNG.addLocalVariable("n", InitialValueType.Memory, "IMN");
         
         DigitalMany many = new DigitalMany("IQDA1", null);
         MaleSocket manySocket =
@@ -227,21 +214,6 @@ public class RecursiveModuleTest {
         MaleSocket maleSocket2 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(moduleDigitalAction);
         manySocket.getChild(1).connect(maleSocket2);
-/*        
-        // Store the sum in IMRESULT
-        ActionMemory actionMemory = new ActionMemory("IQDA5", null);
-        actionMemory.setMemory("IMRESULT");
-        actionMemory.setData("result");
-        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.COPY_VARIABLE_TO_MEMORY);
-        MaleSocket maleSocket3 =
-                InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionMemory);
-        manySocket.getChild(2).connect(maleSocket3);
-*/        
-        
-        
-        
-        
-        
 /*        
         final String treeIndent = "   ";
         

@@ -243,17 +243,19 @@ public class ExpressionSensor extends AbstractDigitalExpression
         
         switch (_stateAddressing) {
             case Reference:
-                return ReferenceUtil.getReference(_stateReference);
+                return ReferenceUtil.getReference(
+                        getConditionalNG().getSymbolTable(), _stateReference);
                 
             case LocalVariable:
-                SymbolTable symbolTable =
-                        InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
+                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
                 return TypeConversionUtil
                         .convertToString(symbolTable.getValue(_stateLocalVariable), false);
                 
             case Formula:
                 return _stateExpressionNode != null
-                        ? TypeConversionUtil.convertToString(_stateExpressionNode.calculate(), false)
+                        ? TypeConversionUtil.convertToString(
+                                _stateExpressionNode.calculate(
+                                        getConditionalNG().getSymbolTable()), false)
                         : null;
                 
             default:
@@ -274,14 +276,14 @@ public class ExpressionSensor extends AbstractDigitalExpression
                 break;
                 
             case Reference:
-                String ref = ReferenceUtil.getReference(_reference);
+                String ref = ReferenceUtil.getReference(
+                        getConditionalNG().getSymbolTable(), _reference);
                 sensor = InstanceManager.getDefault(SensorManager.class)
                         .getNamedBean(ref);
                 break;
                 
             case LocalVariable:
-                SymbolTable symbolTable =
-                        InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
+                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
                 sensor = InstanceManager.getDefault(SensorManager.class)
                         .getNamedBean(TypeConversionUtil
                                 .convertToString(symbolTable.getValue(_localVariable), false));
@@ -291,7 +293,8 @@ public class ExpressionSensor extends AbstractDigitalExpression
                 sensor = _expressionNode != null ?
                         InstanceManager.getDefault(SensorManager.class)
                                 .getNamedBean(TypeConversionUtil
-                                        .convertToString(_expressionNode.calculate(), false))
+                                        .convertToString(_expressionNode.calculate(
+                                                getConditionalNG().getSymbolTable()), false))
                         : null;
                 break;
                 

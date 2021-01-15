@@ -126,8 +126,7 @@ public class DefaultFemaleGenericDigitalExpressionSocketTest extends FemaleSocke
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
         
-        _conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("A conditionalNG");  // NOI18N
+        _conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();
         _expression = new MyExpressionTurnout("IQDE321");
@@ -164,9 +163,6 @@ public class DefaultFemaleGenericDigitalExpressionSocketTest extends FemaleSocke
                 };
         
         _femaleSocket  = femaleGenericSocket.getDigitalSocket(_conditionalNG);
-        
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @After

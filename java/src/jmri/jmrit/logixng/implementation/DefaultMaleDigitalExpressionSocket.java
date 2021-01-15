@@ -31,18 +31,6 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
 
     /** {@inheritDoc} */
     @Override
-    public final ConditionalNG getConditionalNG() {
-        return _expression.getConditionalNG();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public final LogixNG getLogixNG() {
-        return _expression.getLogixNG();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public final Base getRoot() {
         return _expression.getRoot();
     }
@@ -96,12 +84,12 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
             return lastEvaluationResult;
         }
         
-        int currentStackPos = InstanceManager.getDefault(LogixNG_Manager.class).getStack().getCount();
+        ConditionalNG conditionalNG = getConditionalNG();
+        
+        int currentStackPos = conditionalNG.getStack().getCount();
         
         try {
-            InstanceManager.getDefault(LogixNG_Manager.class)
-                    .getSymbolTable().createSymbols(_localVariables);
-            
+            conditionalNG.getSymbolTable().createSymbols(_localVariables);
             lastEvaluationResult = _expression.evaluate();
         } catch (JmriException e) {
             handleError(this, Bundle.getMessage("ExceptionEvaluateExpression", e), e, log);
@@ -111,9 +99,8 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
             return false;
         }
         
-        InstanceManager.getDefault(LogixNG_Manager.class).getStack().setCount(currentStackPos);
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .getSymbolTable().removeSymbols(_localVariables);
+        conditionalNG.getStack().setCount(currentStackPos);
+        conditionalNG.getSymbolTable().removeSymbols(_localVariables);
         
         return lastEvaluationResult;
     }

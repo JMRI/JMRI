@@ -29,18 +29,6 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
 
     /** {@inheritDoc} */
     @Override
-    public final ConditionalNG getConditionalNG() {
-        return _expression.getConditionalNG();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public final LogixNG getLogixNG() {
-        return _expression.getLogixNG();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public final Base getRoot() {
         return _expression.getRoot();
     }
@@ -111,13 +99,13 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
             return ((AnalogExpressionDebugConfig)_debugConfig)._result;
         }
         
-        int currentStackPos = InstanceManager.getDefault(LogixNG_Manager.class).getStack().getCount();
+        ConditionalNG conditionalNG = getConditionalNG();
+        
+        int currentStackPos = conditionalNG.getStack().getCount();
         
         double result = 0.0;
         try {
-            InstanceManager.getDefault(LogixNG_Manager.class)
-                    .getSymbolTable().createSymbols(_localVariables);
-            
+            conditionalNG.getSymbolTable().createSymbols(_localVariables);
             result = internalEvaluate();
         } catch (JmriException e) {
             handleError(this, Bundle.getMessage("ExceptionEvaluate", e), e, log);
@@ -125,9 +113,8 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
             handleError(this, Bundle.getMessage("ExceptionEvaluate", e), e, log);
         }
         
-        InstanceManager.getDefault(LogixNG_Manager.class).getStack().setCount(currentStackPos);
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .getSymbolTable().removeSymbols(_localVariables);
+        conditionalNG.getStack().setCount(currentStackPos);
+        conditionalNG.getSymbolTable().removeSymbols(_localVariables);
         
         return result;
     }

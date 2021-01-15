@@ -147,7 +147,8 @@ public class StringFormula extends AbstractStringExpression implements FemaleSoc
             return "";
         }
         
-        return TypeConversionUtil.convertToString(_expressionNode.calculate(), false);
+        return TypeConversionUtil.convertToString(_expressionNode.calculate(
+                getConditionalNG().getSymbolTable()), false);
     }
     
     @Override

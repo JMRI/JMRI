@@ -51,15 +51,15 @@ public class ModuleEditor extends TreeEditor implements AbstractLogixNGEditor<Mo
         
         this.beanTableDataModel = m;
         
-        if (!_femaleRootSocket.isConnected()) {
+        if (!_treePane._femaleRootSocket.isConnected()) {
             // This should never happen
             throw new RuntimeException("Module is not connected");
         }
-        if (!(_femaleRootSocket.getConnectedSocket().getObject() instanceof Module)) {
+        if (!(_treePane._femaleRootSocket.getConnectedSocket().getObject() instanceof Module)) {
             // This should never happen
             throw new RuntimeException("Connected socket is not a Module");
         }
-        _module = (Module) _femaleRootSocket.getConnectedSocket().getObject();
+        _module = (Module) _treePane._femaleRootSocket.getConnectedSocket().getObject();
     }
     
     private static FemaleSocket setupRootSocket(Base parent, String sName) {

@@ -29,6 +29,7 @@ import jmri.jmrit.logixng.StringAction;
 import jmri.jmrit.logixng.StringExpression;
 import jmri.jmrit.logixng.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.actions.IfThenElse;
+import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -446,8 +447,8 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         _isExternal = true;
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("A conditionalNG");  // NOI18N
+        conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
+        InstanceManager.getDefault(ConditionalNG_Manager.class).register(conditionalNG);
         conditionalNG.setRunDelayed(false);
         logixNG.setEnabled(false);
         logixNG.addConditionalNG(conditionalNG);
@@ -475,9 +476,6 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(true);
         maleSocket.setEnabled(true);
         logixNG.setParentForAllChildren();
-        
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @After

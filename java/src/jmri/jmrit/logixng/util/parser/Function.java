@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.util.parser;
 import java.util.List;
 
 import jmri.JmriException;
+import jmri.jmrit.logixng.SymbolTable;
 
 /**
  * Definition of a function used in expressions.
@@ -25,11 +26,13 @@ public interface Function {
     
     /**
      * Calculate the function
+     * @param symbolTable the symbol table
      * @param parameterList a list of parameters for the function
      * @return the result
      * @throws JmriException in case of an error
      */
-    public Object calculate(List<ExpressionNode> parameterList) throws JmriException;
+    public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+            throws JmriException;
     
     /**
      * Get the description of the function in Markdown format

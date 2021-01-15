@@ -3,9 +3,11 @@ package jmri.jmrit.logixng.util;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
-import jmri.jmrit.logixng.NamedTable;
-import jmri.jmrit.logixng.NamedTableManager;
+import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -67,27 +69,29 @@ public class ReferenceUtilTest {
         Memory m2 = _memoryManager.newMemory("IM2", "Memory 2");
         Memory m3 = _memoryManager.newMemory("IM3", "Memory 3");
         
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        
         // Test references
         m1.setValue("Turnout 1");
         Assert.assertEquals("Reference is correct",
                 "Turnout 1",
-                ReferenceUtil.getReference("{IM1}"));
+                ReferenceUtil.getReference(symbolTable, "{IM1}"));
         
         m2.setValue("IM1");
         Assert.assertEquals("Reference is correct",
                 "IM1",
-                ReferenceUtil.getReference("{IM2}"));
+                ReferenceUtil.getReference(symbolTable, "{IM2}"));
         Assert.assertEquals("Reference is correct",
                 "Turnout 1",
-                ReferenceUtil.getReference("{{IM2}}"));
+                ReferenceUtil.getReference(symbolTable, "{{IM2}}"));
         
         m3.setValue("IM2");
         Assert.assertEquals("Reference is correct",
                 "IM2",
-                ReferenceUtil.getReference("{IM3}"));
+                ReferenceUtil.getReference(symbolTable, "{IM3}"));
         Assert.assertEquals("Reference is correct",
                 "Turnout 1",
-                ReferenceUtil.getReference("{{{IM3}}}"));
+                ReferenceUtil.getReference(symbolTable, "{{{IM3}}}"));
     }
     
     @Test
@@ -97,22 +101,24 @@ public class ReferenceUtilTest {
         Memory m15 = _memoryManager.newMemory("IM15", "Memory 15");
         Memory m333 = _memoryManager.newMemory("IM333", "Memory 333");
         
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        
         yardTable.setCell(null, "Other turnout");
         Assert.assertNull("Reference is correct",
-                ReferenceUtil.getReference("{Yard table[Other turnout]}"));
+                ReferenceUtil.getReference(symbolTable, "{Yard table[Other turnout]}"));
         Assert.assertNull("Reference is correct",
-                ReferenceUtil.getReference("{Yard table[Other turnout,North yard]}"));
+                ReferenceUtil.getReference(symbolTable, "{Yard table[Other turnout,North yard]}"));
         
         m1.setValue("Turnout 1");
         Assert.assertEquals("Reference is correct",
                 "Turnout 111",
-                ReferenceUtil.getReference("{Yard table[Left turnout]}"));
+                ReferenceUtil.getReference(symbolTable, "{Yard table[Left turnout]}"));
         Assert.assertEquals("Reference is correct",
                 "IT302",
-                ReferenceUtil.getReference("{Yard table[Rightmost turnout,South yard]}"));
+                ReferenceUtil.getReference(symbolTable, "{Yard table[Rightmost turnout,South yard]}"));
         Assert.assertEquals("Reference is correct",
                 "Turnout 222",
-                ReferenceUtil.getReference("{Yard table[Rightmost turnout,North yard]}"));
+                ReferenceUtil.getReference(symbolTable, "{Yard table[Rightmost turnout,North yard]}"));
         
         // The line below reads 'Yard table[Rightmost turnout,East yard]' which
         // has the value IM15. And then reads the memory IM15 which has the value
@@ -120,7 +126,7 @@ public class ReferenceUtilTest {
         m15.setValue("Chicago north east");
         Assert.assertEquals("Reference is correct",
                 "Chicago north east",
-                ReferenceUtil.getReference("{{Yard table[Rightmost turnout,East yard]}}"));
+                ReferenceUtil.getReference(symbolTable, "{{Yard table[Rightmost turnout,East yard]}}"));
         
         // The line below reads the reference '{Turnout table[Yellow turnout]}'
         // which has the value 'Right turnout'. It then reads the reference
@@ -132,7 +138,7 @@ public class ReferenceUtilTest {
         m333.setValue("Blue turnout");
         Assert.assertEquals("Reference is correct",
                 "Blue turnout",
-                ReferenceUtil.getReference(
+                ReferenceUtil.getReference(symbolTable, 
                         "{{Yard table[{Turnout table[Yellow turnout]},{Other yard table[Turnouts,Green yard]}]}}"));
     }
     
@@ -140,29 +146,31 @@ public class ReferenceUtilTest {
     @SuppressWarnings("ResultOfMethodCallIgnored")  // This method test thrown exceptions
     public void testExceptions() {
         
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        
         // Test exceptions
         expectException(() -> {
-            ReferenceUtil.getReference("abc");
+            ReferenceUtil.getReference(symbolTable, "abc");
         }, IllegalArgumentException.class, "Reference 'abc' is not a valid reference");
         
         // Test exceptions
         expectException(() -> {
-            ReferenceUtil.getReference("{}");
+            ReferenceUtil.getReference(symbolTable, "{}");
         }, IllegalArgumentException.class, "Reference '{}' is not a valid reference");
         
         expectException(() -> {
-            ReferenceUtil.getReference("{IM999}");
+            ReferenceUtil.getReference(symbolTable, "{IM999}");
         }, IllegalArgumentException.class, "Memory 'IM999' is not found");
         
         Memory m999 = _memoryManager.newMemory("IM999", "Memory 999");
         expectException(() -> {
-            ReferenceUtil.getReference("{IM999}");
+            ReferenceUtil.getReference(symbolTable, "{IM999}");
         }, IllegalArgumentException.class, "Memory 'IM999' has no value");
         
         m999.setValue("Turnout 1");
         Assert.assertEquals("Reference is correct",
                 "Turnout 1",
-                ReferenceUtil.getReference("{IM999}"));
+                ReferenceUtil.getReference(symbolTable, "{IM999}"));
     }
     
     @Test
@@ -171,6 +179,8 @@ public class ReferenceUtilTest {
         
         ReferenceUtil.IntRef endRef = new ReferenceUtil.IntRef();
         
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        
         // Test exceptions
         expectException(() -> {
             ReferenceUtil.getValue("", 0, endRef);
@@ -178,27 +188,27 @@ public class ReferenceUtilTest {
         
         // Test exceptions
         expectException(() -> {
-            ReferenceUtil.getReference("abc", 0, endRef);
+            ReferenceUtil.getReference(symbolTable, "abc", 0, endRef);
         }, IllegalArgumentException.class, "Reference 'abc' is not a valid reference");
         
         // Test exceptions
         expectException(() -> {
-            ReferenceUtil.getReference("{aaa", 0, endRef);
+            ReferenceUtil.getReference(symbolTable, "{aaa", 0, endRef);
         }, IllegalArgumentException.class, "Reference '{aaa' is not a valid reference");
         
         // Test exceptions
         expectException(() -> {
-            ReferenceUtil.getReference("{abc[1]1", 0, endRef);
+            ReferenceUtil.getReference(symbolTable, "{abc[1]1", 0, endRef);
         }, IllegalArgumentException.class, "Reference '{abc[1]1' is not a valid reference");
         
         // Test exceptions
         expectException(() -> {
-            ReferenceUtil.getReference("{Some other table[1]}", 0, endRef);
+            ReferenceUtil.getReference(symbolTable, "{Some other table[1]}", 0, endRef);
         }, IllegalArgumentException.class, "Table 'Some other table' is not found");
         
         // Test exceptions
         expectException(() -> {
-            ReferenceUtil.getReference("{Some other table[1,2]}", 0, endRef);
+            ReferenceUtil.getReference(symbolTable, "{Some other table[1,2]}", 0, endRef);
         }, IllegalArgumentException.class, "Table 'Some other table' is not found");
     }
     
@@ -221,49 +231,51 @@ public class ReferenceUtilTest {
         Memory m97 = _memoryManager.newMemory("IM97", "Memory ");
         m97.setValue("Turnout 97");
         
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        
         // Test special characters. Special characters must be escaped.
         Assert.assertEquals("Reference is correct",
                 "Turnout 91",
-                ReferenceUtil.getReference("{Memory \\, abc}"));
+                ReferenceUtil.getReference(symbolTable, "{Memory \\, abc}"));
         expectException(() -> {
-            ReferenceUtil.getReference("{Memory , abc}");
+            ReferenceUtil.getReference(symbolTable, "{Memory , abc}");
         }, IllegalArgumentException.class, "Reference '{Memory , abc}' is not a valid reference");
         
         Assert.assertEquals("Reference is correct",
                 "Turnout 92",
-                ReferenceUtil.getReference("{Memory \\[ abc}"));
+                ReferenceUtil.getReference(symbolTable, "{Memory \\[ abc}"));
         expectException(() -> {
-            ReferenceUtil.getReference("{Memory [ abc}");
+            ReferenceUtil.getReference(symbolTable, "{Memory [ abc}");
         }, IllegalArgumentException.class, "Reference '{Memory [ abc}' is not a valid reference");
         
         Assert.assertEquals("Reference is correct",
                 "Turnout 93",
-                ReferenceUtil.getReference("{Memory \\] abc}"));
+                ReferenceUtil.getReference(symbolTable, "{Memory \\] abc}"));
         expectException(() -> {
-            ReferenceUtil.getReference("{Memory ] abc}");
+            ReferenceUtil.getReference(symbolTable, "{Memory ] abc}");
         }, IllegalArgumentException.class, "Reference '{Memory ] abc}' is not a valid reference");
         
         Assert.assertEquals("Reference is correct",
                 "Turnout 94",
-                ReferenceUtil.getReference("{Memory \\{ abc}"));
+                ReferenceUtil.getReference(symbolTable, "{Memory \\{ abc}"));
         expectException(() -> {
-            ReferenceUtil.getReference("{Memory { abc}");
+            ReferenceUtil.getReference(symbolTable, "{Memory { abc}");
         }, IllegalArgumentException.class, "Reference '{Memory { abc}' is not a valid reference");
         
         // This will try to find the "Memory ", which exists.
         Assert.assertEquals("Reference is correct",
                 "Turnout 95",
-                ReferenceUtil.getReference("{Memory \\} abc}"));
+                ReferenceUtil.getReference(symbolTable, "{Memory \\} abc}"));
         expectException(() -> {
-            ReferenceUtil.getReference("{Memory } abc}");
+            ReferenceUtil.getReference(symbolTable, "{Memory } abc}");
         }, IllegalArgumentException.class, "Reference '{Memory } abc}' is not a valid reference");
         
         Assert.assertEquals("Reference is correct",
                 "Turnout 96",
-                ReferenceUtil.getReference("{Memory \\\\ abc}"));
+                ReferenceUtil.getReference(symbolTable, "{Memory \\\\ abc}"));
         // Note that 'Memory \ abc' has an escaped space, so the backspace disappears.
         expectException(() -> {
-            ReferenceUtil.getReference("{Memory \\ abc}");
+            ReferenceUtil.getReference(symbolTable, "{Memory \\ abc}");
         }, IllegalArgumentException.class, "Memory 'Memory  abc' is not found");
     }
     

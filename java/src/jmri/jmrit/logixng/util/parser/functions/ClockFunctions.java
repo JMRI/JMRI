@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.*;
 
 import jmri.*;
+import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.util.parser.CalculateException;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.jmrit.logixng.util.parser.Function;
@@ -49,13 +50,15 @@ public class ClockFunctions implements FunctionFactory {
         
         @Override
         @SuppressWarnings("deprecation")        // Date.getMinutes, Date.getHours
-        public Object calculate(List<ExpressionNode> parameterList) throws CalculateException, JmriException {
+        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                throws CalculateException, JmriException {
+            
             Date currentTime = Date.from(Instant.now());
             
             if (parameterList.isEmpty()) {  // Num minutes since midnight
                 return (currentTime.getHours() * 60) + currentTime.getMinutes();
             } else if (parameterList.size() == 1) {
-                Object param = parameterList.get(0).calculate();
+                Object param = parameterList.get(0).calculate(symbolTable);
                 if (param instanceof String) {
                     switch ((String)param) {
                         case "hour":
@@ -101,13 +104,15 @@ public class ClockFunctions implements FunctionFactory {
         
         @Override
         @SuppressWarnings("deprecation")        // Date.getMinutes, Date.getHours
-        public Object calculate(List<ExpressionNode> parameterList) throws JmriException {
+        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                throws JmriException {
+            
             Date currentTime = _fastClock.getTime();
             
             if (parameterList.isEmpty()) {  // Num minutes since midnight
                 return (currentTime.getHours() * 60) + currentTime.getMinutes();
             } else if (parameterList.size() == 1) {
-                Object param = parameterList.get(0).calculate();
+                Object param = parameterList.get(0).calculate(symbolTable);
                 if (param instanceof String) {
                     switch ((String)param) {
                         case "hour":

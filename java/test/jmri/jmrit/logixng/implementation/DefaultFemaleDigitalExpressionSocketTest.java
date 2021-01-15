@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionTurnout;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -25,6 +26,7 @@ import org.junit.rules.ExpectedException;
  */
 public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBase {
 
+    private ConditionalNG _conditionalNG;
     private MyExpressionTurnout _expression;
     
     @Rule
@@ -73,6 +75,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         Assert.assertFalse("result is false", ((DefaultFemaleDigitalExpressionSocket)_femaleSocket).evaluate());
         // Test evaluate() when connected
         _femaleSocket.connect(maleSocket);
+        _conditionalNG.setParentForAllChildren();
         Turnout t = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
         _expression.setTurnout(t);
         _expression.setBeanState(ExpressionTurnout.TurnoutState.Thrown);
@@ -135,8 +138,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
         
-        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("A conditionalNG");  // NOI18N
+        _conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();
         _expression = new MyExpressionTurnout("IQDE321");
@@ -144,7 +146,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         manager = InstanceManager.getDefault(DigitalExpressionManager.class);
         maleSocket = ((DigitalExpressionManager)manager).registerExpression(_expression);
         otherMaleSocket = ((DigitalExpressionManager)manager).registerExpression(otherExpression);
-        _femaleSocket = new DefaultFemaleDigitalExpressionSocket(conditionalNG, new FemaleSocketListener() {
+        _femaleSocket = new DefaultFemaleDigitalExpressionSocket(_conditionalNG, new FemaleSocketListener() {
             @Override
             public void connected(FemaleSocket socket) {
                 flag.set(true);
@@ -155,13 +157,11 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
                 flag.set(true);
             }
         }, "E1");
-        
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @After
     public void tearDown() {
+        JUnitAppender.clearBacklog();   // REMOVE THIS!!!
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }

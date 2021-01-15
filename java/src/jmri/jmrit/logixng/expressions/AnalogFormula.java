@@ -147,7 +147,8 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
             return 0.0;
         }
         
-        return TypeConversionUtil.convertToDouble(_expressionNode.calculate(), false);
+        return TypeConversionUtil.convertToDouble(_expressionNode.calculate(
+                getConditionalNG().getSymbolTable()), false);
     }
     
     @Override

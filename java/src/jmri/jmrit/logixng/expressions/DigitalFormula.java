@@ -147,7 +147,8 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
             return false;
         }
         
-        return TypeConversionUtil.convertToBoolean(_expressionNode.calculate(), false);
+        return TypeConversionUtil.convertToBoolean(_expressionNode.calculate(
+                getConditionalNG().getSymbolTable()), false);
     }
     
     @Override

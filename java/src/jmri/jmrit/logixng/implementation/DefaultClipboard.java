@@ -282,7 +282,7 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
         public String getLongDescription(Locale locale) {
             return _clipboardItems.getLongDescription(locale);
         }
-
+/*
         @Override
         public ConditionalNG getConditionalNG() {
             return null;
@@ -292,7 +292,7 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
         public LogixNG getLogixNG() {
             return null;
         }
-
+*/
         @Override
         public Base getRoot() {
             return this;

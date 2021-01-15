@@ -42,10 +42,15 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
     
     @Test
     public void testSetValue() throws JmriException {
+        ConditionalNG conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
+        
         MyAnalogAction action = new MyAnalogAction("IQAA321");
+        action.setParent(conditionalNG);
+        
         DefaultMaleAnalogActionSocket socket = new DefaultMaleAnalogActionSocket(manager, action);
         Assert.assertNotNull("exists", socket);
         
+        socket.setParent(conditionalNG);
         socket.setEnabled(true);
         socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
         
@@ -102,10 +107,15 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
     
     @Test
     public void testEvaluateErrors() {
+        ConditionalNG conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
+        
         MyAnalogAction action = new MyAnalogAction("IQAA321");
+        action.setParent(conditionalNG);
+        
         DefaultMaleAnalogActionSocket socket = new DefaultMaleAnalogActionSocket(manager, action);
         Assert.assertNotNull("exists", socket);
         
+        socket.setParent(conditionalNG);
         socket.setEnabled(true);
         socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
         
@@ -200,9 +210,6 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
                 InstanceManager.getDefault(AnalogActionManager.class)
                         .registerAction(actionB);
         Assert.assertNotNull("exists", maleSocketB);
-        
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @AfterEach

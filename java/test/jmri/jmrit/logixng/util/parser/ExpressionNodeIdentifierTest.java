@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.util.parser;
 import java.util.HashMap;
 import java.util.Map;
 
+import jmri.jmrit.logixng.SymbolTable;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -28,12 +29,12 @@ public class ExpressionNodeIdentifierTest {
             }
             
             @Override
-            public Object getValue() {
+            public Object getValue(SymbolTable symbolTable) {
                 return "0";
             }
             
             @Override
-            public void setValue(Object value) {
+            public void setValue(SymbolTable symbolTable, Object value) {
                 throw new UnsupportedOperationException("Not supported");
             }
         });

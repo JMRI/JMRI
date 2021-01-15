@@ -30,6 +30,7 @@ public class DefaultModule extends AbstractBase
     private final List<Parameter> _parameters = new ArrayList<>();
     private final List<VariableData> _localVariables = new ArrayList<>();
     private Lock _lock = Lock.NONE;
+    private final Map<Thread, ConditionalNG> _currentConditionalNG = new HashMap<>();
     
     
     public DefaultModule(String sys, String user, FemaleSocketManager.SocketType socketType)
@@ -48,6 +49,18 @@ public class DefaultModule extends AbstractBase
         if (isNameValid != Manager.NameValidity.VALID) {
             throw new IllegalArgumentException("system name is not valid");
         }
+    }
+    
+    @Override
+    public void setCurrentConditionalNG(ConditionalNG conditionalNG) {
+        System.out.format("Set: Current thread: %d, conditionalNG: %s%n", Thread.currentThread().getId(), conditionalNG.getSystemName());
+        _currentConditionalNG.put(Thread.currentThread(), conditionalNG);
+    }
+    
+    @Override
+    public ConditionalNG getConditionalNG() {
+        System.out.format("Get: Current thread: %d, conditionalNG: %s%n", Thread.currentThread().getId(), _currentConditionalNG.get(Thread.currentThread()).getSystemName());
+        return _currentConditionalNG.get(Thread.currentThread());
     }
     
     /** {@inheritDoc} */

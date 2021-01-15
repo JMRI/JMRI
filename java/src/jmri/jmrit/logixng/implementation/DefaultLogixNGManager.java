@@ -24,8 +24,6 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     
     private final Map<String, Manager<? extends MaleSocket>> _managers = new HashMap<>();
     private final Clipboard _clipboard = new DefaultClipboard();
-    private final Stack _stack = new DefaultStack();
-    private SymbolTable _symbolTable;
     private boolean _isActive = false;
     
     
@@ -237,24 +235,6 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     @Override
     public Clipboard getClipboard() {
         return _clipboard;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Stack getStack() {
-        return _stack;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public SymbolTable getSymbolTable() {
-        return _symbolTable;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void setSymbolTable(SymbolTable symbolTable) {
-        _symbolTable = symbolTable;
     }
     
     /** {@inheritDoc} */

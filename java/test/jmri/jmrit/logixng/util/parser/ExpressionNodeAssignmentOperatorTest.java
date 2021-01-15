@@ -7,6 +7,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.SymbolTable;
+import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
 
@@ -60,18 +61,22 @@ public class ExpressionNodeAssignmentOperatorTest {
         Assert.assertTrue("exception is thrown", hasThrown.get());
     }
     
-    private Object getVariable(String name) {
-        return InstanceManager.getDefault(LogixNG_Manager.class)
-                .getSymbolTable().getValue(name);
+    private Object getVariable(SymbolTable symbolTable, String name) {
+        return symbolTable.getValue(name);
     }
     
-    private void setVariable(String name, Object value) {
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .getSymbolTable().setValue(name, value);
+    private void setVariable(SymbolTable symbolTable, String name, Object value) {
+        symbolTable.setValue(name, value);
     }
     
     @Test
     public void testCalculate() throws Exception {
+        
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        
+        List<SymbolTable.VariableData> localVariables = new ArrayList<>();
+        localVariables.add(new SymbolTable.VariableData("myVar", SymbolTable.InitialValueType.FloatingNumber, "42.11"));
+        symbolTable.createSymbols(localVariables);
         
         Map<String, Variable> variables = new HashMap<>();
         ExpressionNodeIdentifier exprIdent = new ExpressionNodeIdentifier(new Token(TokenType.NONE, "myVar", 0), variables);
@@ -79,59 +84,52 @@ public class ExpressionNodeAssignmentOperatorTest {
         ExpressionNode expr25_46 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "25.46", 0));
         ExpressionNode expr12 = new ExpressionNodeIntegerNumber(new Token(TokenType.NONE, "12", 0));
         
-        setVariable("myVar", 42.11);
+        setVariable(symbolTable, "myVar", 42.11);
         Assert.assertEquals("calculate() gives the correct value",
                 25.46,
-                (double)new ExpressionNodeAssignmentOperator(TokenType.ASSIGN, exprIdent, expr25_46).calculate(),
+                (double)new ExpressionNodeAssignmentOperator(TokenType.ASSIGN, exprIdent, expr25_46).calculate(symbolTable),
                 0.00000001);
-        Assert.assertEquals("The variable has correct value", 25.46, (Double)getVariable("myVar"), 0.00000001);
+        Assert.assertEquals("The variable has correct value", 25.46, (Double)getVariable(symbolTable, "myVar"), 0.00000001);
         
-        setVariable("myVar", 42.11);
+        setVariable(symbolTable, "myVar", 42.11);
         Assert.assertEquals("calculate() gives the correct value",
                 67.57,
-                (double)new ExpressionNodeAssignmentOperator(TokenType.ASSIGN_ADD, exprIdent, expr25_46).calculate(),
+                (double)new ExpressionNodeAssignmentOperator(TokenType.ASSIGN_ADD, exprIdent, expr25_46).calculate(symbolTable),
                 0.00000001);
-        Assert.assertEquals("The variable has correct value", 67.57, (Double)getVariable("myVar"), 0.00000001);
+        Assert.assertEquals("The variable has correct value", 67.57, (Double)getVariable(symbolTable, "myVar"), 0.00000001);
         
-        setVariable("myVar", 42.11);
+        setVariable(symbolTable, "myVar", 42.11);
         Assert.assertEquals("calculate() gives the correct value",
                 16.65,
-                (double)new ExpressionNodeAssignmentOperator(TokenType.ASSIGN_SUBTRACKT, exprIdent, expr25_46).calculate(),
+                (double)new ExpressionNodeAssignmentOperator(TokenType.ASSIGN_SUBTRACKT, exprIdent, expr25_46).calculate(symbolTable),
                 0.00000001);
-        Assert.assertEquals("The variable has correct value", 16.65, (Double)getVariable("myVar"), 0.00000001);
+        Assert.assertEquals("The variable has correct value", 16.65, (Double)getVariable(symbolTable, "myVar"), 0.00000001);
         
-        setVariable("myVar", 42.11);
+        setVariable(symbolTable, "myVar", 42.11);
         Assert.assertEquals("calculate() gives the correct value",
                 1072.1206,
-                (double)new ExpressionNodeAssignmentOperator(TokenType.ASSIGN_MULTIPLY, exprIdent, expr25_46).calculate(),
+                (double)new ExpressionNodeAssignmentOperator(TokenType.ASSIGN_MULTIPLY, exprIdent, expr25_46).calculate(symbolTable),
                 0.00000001);
-        Assert.assertEquals("The variable has correct value", 1072.1206, (Double)getVariable("myVar"), 0.00000001);
+        Assert.assertEquals("The variable has correct value", 1072.1206, (Double)getVariable(symbolTable, "myVar"), 0.00000001);
         
-        setVariable("myVar", 42.11);
+        setVariable(symbolTable, "myVar", 42.11);
         Assert.assertEquals("calculate() gives the correct value",
                 1.653967,
-                (double)new ExpressionNodeAssignmentOperator(TokenType.ASSIGN_DIVIDE, exprIdent, expr25_46).calculate(),
+                (double)new ExpressionNodeAssignmentOperator(TokenType.ASSIGN_DIVIDE, exprIdent, expr25_46).calculate(symbolTable),
                 0.00000001);
-        Assert.assertEquals("The variable has correct value", 1.653967, (Double)getVariable("myVar"), 0.00000001);
+        Assert.assertEquals("The variable has correct value", 1.653967, (Double)getVariable(symbolTable, "myVar"), 0.00000001);
         
-        setVariable("myVar", 532);
+        setVariable(symbolTable, "myVar", 532);
         Assert.assertEquals("calculate() gives the correct value",
                 4,
-                (long)new ExpressionNodeAssignmentOperator(TokenType.ASSIGN_MODULO, exprIdent, expr12).calculate());
-        Assert.assertEquals("The variable has correct value", 4, (long)getVariable("myVar"));
+                (long)new ExpressionNodeAssignmentOperator(TokenType.ASSIGN_MODULO, exprIdent, expr12).calculate(symbolTable));
+        Assert.assertEquals("The variable has correct value", 4, (long)getVariable(symbolTable, "myVar"));
     }
     
     // The minimal setup for log4J
     @Before
     public void setUp() throws JmriException {
         JUnitUtil.setUp();
-        
-        List<SymbolTable.VariableData> localVariables = new ArrayList<>();
-        localVariables.add(new SymbolTable.VariableData("myVar", SymbolTable.InitialValueType.FloatingNumber, "42.11"));
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .setSymbolTable(new DefaultSymbolTable());
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .getSymbolTable().createSymbols(localVariables);
     }
 
     @After

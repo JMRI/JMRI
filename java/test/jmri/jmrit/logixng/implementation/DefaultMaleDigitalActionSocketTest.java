@@ -44,10 +44,15 @@ public class DefaultMaleDigitalActionSocketTest extends MaleSocketTestBase{
     
     @Test
     public void testExecute() throws JmriException {
+        ConditionalNG conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
+        
         MyDigitalAction action = new MyDigitalAction("IQDA321");
+        action.setParent(conditionalNG);
+        
         DefaultMaleDigitalActionSocket socket = new DefaultMaleDigitalActionSocket(manager, action);
         Assert.assertNotNull("exists", socket);
         
+        socket.setParent(conditionalNG);
         socket.setEnabled(true);
         socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
         
@@ -168,9 +173,6 @@ public class DefaultMaleDigitalActionSocketTest extends MaleSocketTestBase{
                 InstanceManager.getDefault(DigitalActionManager.class)
                         .registerAction(actionB);
         Assert.assertNotNull("exists", maleSocketB);
-        
-        DefaultSymbolTable newSymbolTable = new DefaultSymbolTable();
-        InstanceManager.getDefault(LogixNG_Manager.class).setSymbolTable(newSymbolTable);
     }
 
     @AfterEach

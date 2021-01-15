@@ -32,6 +32,8 @@ public class DefaultConditionalNG extends AbstractBase
     private Base.Lock _lock = Base.Lock.NONE;
     private final ExecuteLock executeLock = new ExecuteLock();
     private boolean _runDelayed = true;
+    private final Stack _stack = new DefaultStack();
+    private SymbolTable _symbolTable;
     
     
     public DefaultConditionalNG(String sys, String user)
@@ -123,10 +125,10 @@ public class DefaultConditionalNG extends AbstractBase
             runOnLogixNG_Thread(() -> {
                 while (executeLock.loop()) {
                     if (isEnabled()) {
-                        DefaultSymbolTable newSymbolTable = new DefaultSymbolTable();
+                        DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(this);
                         
                         try {
-                            InstanceManager.getDefault(LogixNG_Manager.class).setSymbolTable(newSymbolTable);
+                            setSymbolTable(newSymbolTable);
                             
                             _femaleSocket.execute();
                         } catch (JmriException | RuntimeException e) {
@@ -149,11 +151,29 @@ public class DefaultConditionalNG extends AbstractBase
                             }
                         }
                         
-                        InstanceManager.getDefault(LogixNG_Manager.class).setSymbolTable(newSymbolTable.getPrevSymbolTable());
+                        setSymbolTable(newSymbolTable.getPrevSymbolTable());
                     }
                 }
             });
         }
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public Stack getStack() {
+        return _stack;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public SymbolTable getSymbolTable() {
+        return _symbolTable;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void setSymbolTable(SymbolTable symbolTable) {
+        _symbolTable = symbolTable;
     }
     
     @Override

@@ -243,17 +243,19 @@ public class ExpressionTurnout extends AbstractDigitalExpression
         
         switch (_stateAddressing) {
             case Reference:
-                return ReferenceUtil.getReference(_stateReference);
+                return ReferenceUtil.getReference(
+                        getConditionalNG().getSymbolTable(), _stateReference);
                 
             case LocalVariable:
-                SymbolTable symbolTable =
-                        InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
+                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
                 return TypeConversionUtil
                         .convertToString(symbolTable.getValue(_stateLocalVariable), false);
                 
             case Formula:
                 return _stateExpressionNode != null
-                        ? TypeConversionUtil.convertToString(_stateExpressionNode.calculate(), false)
+                        ? TypeConversionUtil.convertToString(
+                                _stateExpressionNode.calculate(
+                                        getConditionalNG().getSymbolTable()), false)
                         : null;
                 
             default:
@@ -266,7 +268,7 @@ public class ExpressionTurnout extends AbstractDigitalExpression
     public boolean evaluate() throws JmriException {
         Turnout turnout;
         
-//        System.out.format("ExpressionTurnout.execute: %s%n", getLongDescription());
+//        System.out.format("ExpressionTurnout.evaluate: %s%n", getLongDescription());
         
         switch (_addressing) {
             case Direct:
@@ -274,14 +276,14 @@ public class ExpressionTurnout extends AbstractDigitalExpression
                 break;
                 
             case Reference:
-                String ref = ReferenceUtil.getReference(_reference);
+                String ref = ReferenceUtil.getReference(
+                        getConditionalNG().getSymbolTable(), _reference);
                 turnout = InstanceManager.getDefault(TurnoutManager.class)
                         .getNamedBean(ref);
                 break;
                 
             case LocalVariable:
-                SymbolTable symbolTable =
-                        InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
+                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
                 turnout = InstanceManager.getDefault(TurnoutManager.class)
                         .getNamedBean(TypeConversionUtil
                                 .convertToString(symbolTable.getValue(_localVariable), false));
@@ -291,7 +293,8 @@ public class ExpressionTurnout extends AbstractDigitalExpression
                 turnout = _expressionNode != null ?
                         InstanceManager.getDefault(TurnoutManager.class)
                                 .getNamedBean(TypeConversionUtil
-                                        .convertToString(_expressionNode.calculate(), false))
+                                        .convertToString(_expressionNode.calculate(
+                                                getConditionalNG().getSymbolTable()), false))
                         : null;
                 break;
                 
@@ -299,7 +302,7 @@ public class ExpressionTurnout extends AbstractDigitalExpression
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
         
-//        System.out.format("ExpressionTurnout.execute: turnout: %s%n", turnout);
+//        System.out.format("ExpressionTurnout.evaluate: turnout: %s%n", turnout);
         
         if (turnout == null) {
 //            log.warn("turnout is null");

@@ -6,6 +6,9 @@ import java.util.*;
 import javax.script.*;
 
 import jmri.JmriException;
+import jmri.jmrit.logixng.SymbolTable;
+import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -34,10 +37,10 @@ public class JythonFunctionsTest {
                 + "  def getName(self):\n"
                 + "    return \"jythonTest\"\n"
                 + "  \n"
-                + "  def calculate(self, parameterList):\n"
+                + "  def calculate(self, symbolTable, parameterList):\n"
                 + "    if (parameterList.size() != 1):"
                 + "      raise jmri.jmrit.logixng.util.parser.WrongNumberOfParametersException(\"Function requires one parameter\")\n"
-                + "    return parameterList.get(0).calculate() * 3.4\n"
+                + "    return parameterList.get(0).calculate(symbolTable) * 3.4\n"
                 + "  \n"
                 + "  def getDescription(self):\n"
                 + "    return \"Example of function defined in Jython\"\n"
@@ -50,6 +53,8 @@ public class JythonFunctionsTest {
         AtomicBoolean exceptionIsThrown = new AtomicBoolean(false);
         Map<String, Variable> _variables = new HashMap<>();
         RecursiveDescentParser t = new RecursiveDescentParser(_variables);
+        
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
         
         try {
             t.parseExpression("jythonTest(8)");
@@ -65,11 +70,11 @@ public class JythonFunctionsTest {
         
         ExpressionNode exprNode = t.parseExpression("jythonTest(8)");
         Assert.assertEquals("expression matches", "Function:jythonTest(IntNumber:8)", exprNode.getDefinitionString());
-        Assert.assertEquals("calculate is correct", 27.2, (Double)exprNode.calculate(), 0.00001);
+        Assert.assertEquals("calculate is correct", 27.2, (Double)exprNode.calculate(symbolTable), 0.00001);
         
         exceptionIsThrown.set(false);
         try {
-            t.parseExpression("jythonTest()").calculate();
+            t.parseExpression("jythonTest()").calculate(symbolTable);
         } catch (WrongNumberOfParametersException e) {
 //            System.err.format("Error message: %s%n", e.getMessage());
             Assert.assertTrue("exception message matches", "Function requires one parameter".equals(e.getMessage()));
@@ -79,7 +84,7 @@ public class JythonFunctionsTest {
         
         exceptionIsThrown.set(false);
         try {
-            t.parseExpression("jythonTest(8,\"Hello\")").calculate();
+            t.parseExpression("jythonTest(8,\"Hello\")").calculate(symbolTable);
         } catch (WrongNumberOfParametersException e) {
 //            System.err.format("Error message: %s%n", e.getMessage());
             Assert.assertTrue("exception message matches", "Function requires one parameter".equals(e.getMessage()));

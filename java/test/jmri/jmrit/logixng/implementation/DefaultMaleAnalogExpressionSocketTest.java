@@ -44,10 +44,15 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
     
     @Test
     public void testEvaluate() throws JmriException {
+        ConditionalNG conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
+        
         MyAnalogExpression expression = new MyAnalogExpression("IQAE321");
-        MaleAnalogExpressionSocket socket = ((AnalogExpressionManager)manager).registerExpression(expression);
+        expression.setParent(conditionalNG);
+        
+        DefaultMaleAnalogExpressionSocket socket = new DefaultMaleAnalogExpressionSocket(manager, expression);
         Assert.assertNotNull("exists", socket);
         
+        socket.setParent(conditionalNG);
         socket.setEnabled(true);
         socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
         
@@ -102,10 +107,15 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
     
     @Test
     public void testEvaluateErrors() {
+        ConditionalNG conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
+        
         MyAnalogExpression expression = new MyAnalogExpression("IQAE321");
-        MaleAnalogExpressionSocket socket = ((AnalogExpressionManager)manager).registerExpression(expression);
+        expression.setParent(conditionalNG);
+        
+        DefaultMaleAnalogExpressionSocket socket = new DefaultMaleAnalogExpressionSocket(manager, expression);
         Assert.assertNotNull("exists", socket);
         
+        socket.setParent(conditionalNG);
         socket.setEnabled(true);
         socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
         
@@ -136,7 +146,11 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
     
     @Test
     public void testVetoableChange() {
+        ConditionalNG conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
+        
         MyAnalogExpression expression = new MyAnalogExpression("IQAE321");
+        expression.setParent(conditionalNG);
+        
         MaleSocket socket = ((AnalogExpressionManager)manager).registerExpression(expression);
         Assert.assertNotNull("exists", socket);
         
@@ -203,9 +217,6 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
                 InstanceManager.getDefault(AnalogExpressionManager.class)
                         .registerExpression(expressionB);
         Assert.assertNotNull("exists", maleSocketB);
-        
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @AfterEach

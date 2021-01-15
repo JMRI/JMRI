@@ -172,8 +172,7 @@ public class ActionLocalVariable extends AbstractDigitalAction implements Vetoab
     public void execute() throws JmriException {
         if (_variableName == null) return;
         
-        SymbolTable symbolTable =
-                InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
+        SymbolTable symbolTable = getConditionalNG().getSymbolTable();
         
         AtomicReference<JmriException> ref = new AtomicReference<>();
         
@@ -189,8 +188,7 @@ public class ActionLocalVariable extends AbstractDigitalAction implements Vetoab
                     break;
                     
                 case CopyVariableToVariable:
-                    Object variableValue =
-                            InstanceManager.getDefault(LogixNG_Manager.class)
+                    Object variableValue = getConditionalNG()
                                     .getSymbolTable().getValue(_data);
                     
                     symbolTable.setValue(_variableName, variableValue);
@@ -212,7 +210,9 @@ public class ActionLocalVariable extends AbstractDigitalAction implements Vetoab
                             if (_expressionNode == null) {
                                 return;
                             }
-                            symbolTable.setValue(_variableName, _expressionNode.calculate());
+                            symbolTable.setValue(_variableName,
+                                    _expressionNode.calculate(
+                                            getConditionalNG().getSymbolTable()));
                         } catch (JmriException e) {
                             // Throw exception
                             ref.set(e);

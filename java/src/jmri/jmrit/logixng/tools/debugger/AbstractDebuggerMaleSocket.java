@@ -101,19 +101,9 @@ public class AbstractDebuggerMaleSocket extends AbstractMaleSocket {
     }
 
     @Override
-    public final ConditionalNG getConditionalNG() {
-        return _maleSocket.getConditionalNG();
-    }
-
-    @Override
     public void setParent(Base parent) {
         super.setParent(parent);
         _maleSocket.setParent(this);
-    }
-
-    @Override
-    public final LogixNG getLogixNG() {
-        return _maleSocket.getLogixNG();
     }
 
     @Override

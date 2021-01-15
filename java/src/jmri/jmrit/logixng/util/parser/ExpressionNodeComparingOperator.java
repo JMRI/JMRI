@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.util.parser;
 
 import jmri.JmriException;
+import jmri.jmrit.logixng.SymbolTable;
 
 /**
  * A parsed expression
@@ -63,9 +64,9 @@ public class ExpressionNodeComparingOperator implements ExpressionNode {
     }
     
     @Override
-    public Object calculate() throws JmriException {
-        Object left = _leftSide.calculate();
-        Object right = _rightSide.calculate();
+    public Object calculate(SymbolTable symbolTable) throws JmriException {
+        Object left = _leftSide.calculate(symbolTable);
+        Object right = _rightSide.calculate(symbolTable);
         
         if ((left == null) || (right == null)) return calculateNull(left, right);
         

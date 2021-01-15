@@ -82,21 +82,23 @@ public class ReferenceUtil {
     }
     
     /**
-     * Get the reference or the value.
-     * The value ends either with end of string, or with any of the characters
-     * comma, left square bracket, right square bracket or right curly bracket.
+     * Get the reference or the value.The value ends either with end of string,
+     * or with any of the characters comma, left square bracket, right square
+     * bracket or right curly bracket.
      * These characters may be escaped and should then be ignored.
+     * 
+     * @param symbolTable the symbol table
      * @param reference the reference
      * @param startIndex where in the string the value starts, since the
      * reference string may contain several references.
      * @param endIndex index of the end of the value. This is an output parameter.
      * @return the value
      */
-    static protected String getReferenceOrValue(String reference, int startIndex, IntRef endIndex) {
+    static protected String getReferenceOrValue(SymbolTable symbolTable, String reference, int startIndex, IntRef endIndex) {
         
         // Do we have a new reference?
         if (reference.charAt(startIndex) == '{') {
-            return getReference(reference, startIndex, endIndex);
+            return getReference(symbolTable, reference, startIndex, endIndex);
         } else {
             return getValue(reference, startIndex, endIndex);
         }
@@ -104,13 +106,15 @@ public class ReferenceUtil {
     
     /**
      * Get the value of a reference
+     * @param symbolTable the symbol table
      * @param reference the reference
      * @param startIndex where in the string the reference starts, since the
      * reference string may contain several references.
      * @param endIndex index of the end of the reference. This is an output parameter.
      * @return the value of the reference
      */
-    static protected String getReference(String reference, int startIndex, IntRef endIndex) {
+    static protected String getReference(
+            SymbolTable symbolTable, String reference, int startIndex, IntRef endIndex) {
         
         // A reference must start with the char {
         if (reference.charAt(startIndex) != '{') {
@@ -123,7 +127,7 @@ public class ReferenceUtil {
         
         startIndex++;
         
-        leftValue = getReferenceOrValue(reference, startIndex, endIndex);
+        leftValue = getReferenceOrValue(symbolTable, reference, startIndex, endIndex);
         
         if (endIndex.v == reference.length()) {
             throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
@@ -139,8 +143,8 @@ public class ReferenceUtil {
 //        if ((endIndex.v == reference.length()) || (reference.charAt(endIndex.v-1) != '[')) {
         if ((endIndex.v == reference.length()) || (reference.charAt(endIndex.v-1) == '}')) {
             
-            SymbolTable symbolTable =
-                    InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
+//            SymbolTable symbolTable =
+//                    getCurrentConditionalNG().getSymbolTable();
             
             if ((symbolTable != null) && symbolTable.hasValue(leftValue)) {
                 return TypeConversionUtil.convertToString(symbolTable.getValue(leftValue), false);
@@ -161,7 +165,7 @@ public class ReferenceUtil {
         
         
         // If we are here, we have a table reference. Find out column and row.
-        row = getReferenceOrValue(reference, endIndex.v, endIndex);
+        row = getReferenceOrValue(symbolTable, reference, endIndex.v, endIndex);
         
         endIndex.v++;
         
@@ -197,7 +201,7 @@ public class ReferenceUtil {
         
 //        endIndex.v++;
         
-        column = getReferenceOrValue(reference, endIndex.v, endIndex);
+        column = getReferenceOrValue(symbolTable, reference, endIndex.v, endIndex);
         if (endIndex.v == reference.length() || reference.charAt(endIndex.v) != ']') {
             throw new IllegalArgumentException("7Reference '"+reference+"' is not a valid reference");
         }
@@ -229,13 +233,13 @@ public class ReferenceUtil {
     
     @CheckReturnValue
     @Nonnull
-    static public String getReference(String reference) {
+    static public String getReference(SymbolTable symbolTable, String reference) {
         if (!isReference(reference)) {
             throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
         }
         
         IntRef endIndex = new IntRef();
-        String ref = getReference(reference, 0, endIndex);
+        String ref = getReference(symbolTable, reference, 0, endIndex);
         
         if (endIndex.v != reference.length()) {
             throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");

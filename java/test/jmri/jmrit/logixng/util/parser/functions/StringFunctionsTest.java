@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import jmri.jmrit.logixng.SymbolTable;
+import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
+import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.jmrit.logixng.util.parser.ExpressionNodeFloatingNumber;
 import jmri.jmrit.logixng.util.parser.ExpressionNodeIntegerNumber;
@@ -54,26 +58,28 @@ public class StringFunctionsTest {
         
         AtomicBoolean hasThrown = new AtomicBoolean(false);
         
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        
         // Test unsupported token type
         hasThrown.set(false);
         try {
-            formatFunction.calculate(getParameterList());
+            formatFunction.calculate(symbolTable, getParameterList());
         } catch (WrongNumberOfParametersException e) {
             hasThrown.set(true);
         }
         Assert.assertTrue("exception is thrown", hasThrown.get());
         
         Assert.assertEquals("Strings are equal", "A format string",
-                formatFunction.calculate(getParameterList(new ExpressionNodeString(
+                formatFunction.calculate(symbolTable, getParameterList(new ExpressionNodeString(
                         new Token(TokenType.NONE, "A format string", 0)))));
         
         Assert.assertEquals("Strings are equal", "Number: 12, String: hello",
-                formatFunction.calculate(getParameterList(new ExpressionNodeString(
+                formatFunction.calculate(symbolTable, getParameterList(new ExpressionNodeString(
                         new Token(TokenType.NONE, "Number: %d, String: %s", 0)),
                         expr12, expr_str_HELLO)));
         
         Assert.assertEquals("Strings are equal", "Number: 012, String:   hello, Float:  0.9500",
-                formatFunction.calculate(getParameterList(new ExpressionNodeString(
+                formatFunction.calculate(symbolTable, getParameterList(new ExpressionNodeString(
                         new Token(TokenType.NONE, "Number: %03d, String: %7s, Float: %7.4f", 0)),
                         expr12, expr_str_HELLO, expr0_95)));
     }
@@ -86,6 +92,7 @@ public class StringFunctionsTest {
 
     @After
     public void tearDown() {
+        LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
     

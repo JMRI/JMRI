@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.implementation;
 import java.util.*;
 
 import jmri.*;
+import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.Module.Parameter;
@@ -25,9 +26,9 @@ public class DefaultSymbolTable implements SymbolTable {
     private final Map<String, Symbol> _symbols = new HashMap<>();
     
     
-    public DefaultSymbolTable() {
-        _prevSymbolTable = InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
-        _stack = InstanceManager.getDefault(LogixNG_Manager.class).getStack();
+    public DefaultSymbolTable(ConditionalNG currentConditionalNG) {
+        _prevSymbolTable = currentConditionalNG.getSymbolTable();
+        _stack = currentConditionalNG.getStack();
         _firstSymbolIndex = _stack.getCount();
     }
     
@@ -83,16 +84,12 @@ public class DefaultSymbolTable implements SymbolTable {
     
     private RecursiveDescentParser createParser() throws ParserException {
         Map<String, Variable> variables = new HashMap<>();
-
-        SymbolTable symbolTable =
-                InstanceManager.getDefault(LogixNG_Manager.class)
-                        .getSymbolTable();
-
-        for (SymbolTable.Symbol symbol : symbolTable.getSymbols().values()) {
+        
+        for (SymbolTable.Symbol symbol : getSymbols().values()) {
             variables.put(symbol.getName(),
                     new LocalVariableExpressionVariable(symbol.getName()));
         }
-
+        
         return new RecursiveDescentParser(variables);
     }
     
@@ -135,7 +132,8 @@ public class DefaultSymbolTable implements SymbolTable {
                     
                 case Reference:
                     if (ReferenceUtil.isReference(variable.getInitialValueData())) {
-                        initialValue = ReferenceUtil.getReference(variable.getInitialValueData());
+                        initialValue = ReferenceUtil.getReference(
+                                this, variable.getInitialValueData());
                     } else {
                         log.error("\"{}\" is not a reference", variable.getInitialValueData());
                     }
@@ -143,8 +141,9 @@ public class DefaultSymbolTable implements SymbolTable {
                     
                 case Formula:
                     RecursiveDescentParser parser = createParser();
-                    ExpressionNode expressionNode = parser.parseExpression(variable.getInitialValueData());
-                    initialValue = expressionNode.calculate();
+                    ExpressionNode expressionNode = parser.parseExpression(
+                            variable.getInitialValueData());
+                    initialValue = expressionNode.calculate(this);
                     break;
                     
                 default:

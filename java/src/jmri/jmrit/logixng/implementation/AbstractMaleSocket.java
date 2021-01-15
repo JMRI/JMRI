@@ -83,6 +83,18 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         _parent = parent;
     }
     
+    @Override
+    public final ConditionalNG getConditionalNG() {
+        if (getParent() == null) return null;
+        return getParent().getConditionalNG();
+    }
+    
+    @Override
+    public final LogixNG getLogixNG() {
+        if (getParent() == null) return null;
+        return getParent().getLogixNG();
+    }
+    
     /** {@inheritDoc} */
     @Override
     public final void setParentForAllChildren() {

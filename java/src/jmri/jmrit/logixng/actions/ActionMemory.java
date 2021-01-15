@@ -233,8 +233,7 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
                     break;
                     
                 case CopyVariableToMemory:
-                    Object variableValue =
-                            InstanceManager.getDefault(LogixNG_Manager.class)
+                    Object variableValue = getConditionalNG()
                                     .getSymbolTable().getValue(_data);
                     memory.setValue(variableValue);
                     break;
@@ -255,7 +254,8 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
                             if (_expressionNode == null) {
                                 return;
                             }
-                            memory.setValue(_expressionNode.calculate());
+                            memory.setValue(_expressionNode.calculate(
+                                    getConditionalNG().getSymbolTable()));
                         } catch (JmriException e) {
                             ref.set(e);
                         }

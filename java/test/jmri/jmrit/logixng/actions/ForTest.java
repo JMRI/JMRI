@@ -9,6 +9,7 @@ import java.util.Map;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.DigitalFormula;
+import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.JUnitAppender;
@@ -407,8 +408,8 @@ public class ForTest extends AbstractDigitalActionTestBase {
         _isExternal = false;
         
         _logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        _conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("A conditionalNG");  // NOI18N
+        _conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
+        InstanceManager.getDefault(ConditionalNG_Manager.class).register(_conditionalNG);
         _conditionalNG.setEnabled(true);
         _conditionalNG.setRunDelayed(false);
         _logixNG.addConditionalNG(_conditionalNG);
@@ -423,14 +424,8 @@ public class ForTest extends AbstractDigitalActionTestBase {
                 .registerAction(new DigitalMany(
                         InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null)));
         
-        DefaultSymbolTable newSymbolTable = new DefaultSymbolTable();
-        InstanceManager.getDefault(LogixNG_Manager.class).setSymbolTable(newSymbolTable);
-        
         _logixNG.setParentForAllChildren();
         _logixNG.setEnabled(false);
-        
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @After

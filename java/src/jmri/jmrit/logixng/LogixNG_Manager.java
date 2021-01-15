@@ -168,24 +168,6 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
     public Clipboard getClipboard();
     
     /**
-     * Get the stack
-     * @return the stack
-     */
-    public Stack getStack();
-    
-    /**
-     * Get the current symbol table
-     * @return the symbol table
-     */
-    public SymbolTable getSymbolTable();
-    
-    /**
-     * Set the current symbol table
-     * @param symbolTable the symbol table
-     */
-    public void setSymbolTable(SymbolTable symbolTable);
-    
-    /**
      * Register a manager for later retrieval by getManager()
      * @param manager the manager
      */

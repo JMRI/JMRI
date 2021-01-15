@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.util.parser;
 
 import jmri.JmriException;
+import jmri.jmrit.logixng.SymbolTable;
 import jmri.util.TypeConversionUtil;
 
 /**
@@ -42,9 +43,9 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
     }
     
     @Override
-    public Object calculate() throws JmriException {
+    public Object calculate(SymbolTable symbolTable) throws JmriException {
         
-        Object rightValue = _rightSide.calculate();
+        Object rightValue = _rightSide.calculate(symbolTable);
         if (!(rightValue instanceof Boolean)) {
             if (TypeConversionUtil.isIntegerNumber(rightValue)) {
                 // Convert to true or false
@@ -59,7 +60,7 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
             return ! right;
         }
         
-        Object leftValue = _leftSide.calculate();
+        Object leftValue = _leftSide.calculate(symbolTable);
         if (!(leftValue instanceof Boolean)) {
             if (TypeConversionUtil.isIntegerNumber(leftValue)) {
                 // Convert to true or false

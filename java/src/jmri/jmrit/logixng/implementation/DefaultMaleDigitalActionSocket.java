@@ -34,18 +34,6 @@ public class DefaultMaleDigitalActionSocket
     
     /** {@inheritDoc} */
     @Override
-    public final ConditionalNG getConditionalNG() {
-        return _action.getConditionalNG();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public final LogixNG getLogixNG() {
-        return _action.getLogixNG();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public final Base getRoot() {
         return _action.getRoot();
     }
@@ -86,11 +74,12 @@ public class DefaultMaleDigitalActionSocket
             return;
         }
         
-        int currentStackPos = InstanceManager.getDefault(LogixNG_Manager.class).getStack().getCount();
+        ConditionalNG conditionalNG = getConditionalNG();
+        
+        int currentStackPos = conditionalNG.getStack().getCount();
         
         try {
-            InstanceManager.getDefault(LogixNG_Manager.class)
-                    .getSymbolTable().createSymbols(_localVariables);
+            conditionalNG.getSymbolTable().createSymbols(_localVariables);
             
             _action.execute();
         } catch (JmriException e) {
@@ -98,10 +87,9 @@ public class DefaultMaleDigitalActionSocket
         } catch (RuntimeException e) {
             handleError(this, Bundle.getMessage("ExceptionExecuteAction", e), e, log);
         }
-        
-        InstanceManager.getDefault(LogixNG_Manager.class).getStack().setCount(currentStackPos);
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .getSymbolTable().removeSymbols(_localVariables);
+
+        conditionalNG.getStack().setCount(currentStackPos);
+        conditionalNG.getSymbolTable().removeSymbols(_localVariables);
     }
 
     @Override

@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import jmri.jmrit.logixng.SymbolTable;
+import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
+import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.jmrit.logixng.util.parser.CalculateException;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.jmrit.logixng.util.parser.ExpressionNodeFloatingNumber;
@@ -64,41 +68,43 @@ public class MathFunctionsTest {
         MathFunctions.SinFunction sinFunction = new MathFunctions.SinFunction();
         Assert.assertEquals("strings matches", "sin", sinFunction.getName());
         
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        
         // Test sin(x)
-        Assert.assertEquals("numbers are equal", (Double)0.3334870921408144, (Double)sinFunction.calculate(getParameterList(expr0_34)), 0.0000001d);
-        Assert.assertEquals("numbers are equal", (Double)0.8134155047893737, (Double)sinFunction.calculate(getParameterList(expr0_95)), 0.0000001d);
-        Assert.assertEquals("numbers are equal", (Double)(-0.22444221895185537), (Double)sinFunction.calculate(getParameterList(expr12_34)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)0.3334870921408144, (Double)sinFunction.calculate(symbolTable, getParameterList(expr0_34)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)0.8134155047893737, (Double)sinFunction.calculate(symbolTable, getParameterList(expr0_95)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)(-0.22444221895185537), (Double)sinFunction.calculate(symbolTable, getParameterList(expr12_34)), 0.0000001d);
         
         // Test sin(x) with a string as parameter
-        Assert.assertEquals("numbers are equal", (Double)0.3334870921408144, (Double)sinFunction.calculate(getParameterList(expr0_34)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)0.3334870921408144, (Double)sinFunction.calculate(symbolTable, getParameterList(expr0_34)), 0.0000001d);
         
         AtomicBoolean hasThrown = new AtomicBoolean(false);
         
         // Test sin(x,"rad"), sin(x,"deg"), sin(x,"hello"), sin(x, true)
-        Assert.assertEquals("numbers are equal", (Double)0.3334870921408144, (Double)sinFunction.calculate(getParameterList(expr0_34, expr_str_RAD)), 0.0000001d);
-        Assert.assertEquals("numbers are equal", (Double)0.21371244079399437, (Double)sinFunction.calculate(getParameterList(expr12_34, expr_str_DEG)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)0.3334870921408144, (Double)sinFunction.calculate(symbolTable, getParameterList(expr0_34, expr_str_RAD)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)0.21371244079399437, (Double)sinFunction.calculate(symbolTable, getParameterList(expr12_34, expr_str_DEG)), 0.0000001d);
         hasThrown.set(false);
         try {
-            sinFunction.calculate(getParameterList(expr12_34, expr_str_HELLO));
+            sinFunction.calculate(symbolTable, getParameterList(expr12_34, expr_str_HELLO));
         } catch (CalculateException e) {
             hasThrown.set(true);
         }
         Assert.assertTrue("exception is thrown", hasThrown.get());
         hasThrown.set(false);
         try {
-            sinFunction.calculate(getParameterList(expr12_34, expr_boolean_true));
+            sinFunction.calculate(symbolTable, getParameterList(expr12_34, expr_boolean_true));
         } catch (CalculateException e) {
             hasThrown.set(true);
         }
         Assert.assertTrue("exception is thrown", hasThrown.get());
         
         // Test sin(x,"deg", 12, 23)
-        Assert.assertEquals("numbers are equal", (Double)14.350836848733938, (Double)sinFunction.calculate(getParameterList(expr12_34, expr_str_DEG, expr12, expr23)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)14.350836848733938, (Double)sinFunction.calculate(symbolTable, getParameterList(expr12_34, expr_str_DEG, expr12, expr23)), 0.0000001d);
         
         // Test sin()
         hasThrown.set(false);
         try {
-            sinFunction.calculate(getParameterList());
+            sinFunction.calculate(symbolTable, getParameterList());
         } catch (WrongNumberOfParametersException e) {
             hasThrown.set(true);
         }
@@ -113,6 +119,7 @@ public class MathFunctionsTest {
 
     @After
     public void tearDown() {
+        LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
     

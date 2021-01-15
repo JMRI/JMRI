@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.util.parser;
 import java.util.Map;
 
 import jmri.JmriException;
+import jmri.jmrit.logixng.SymbolTable;
 
 /**
  * A parsed expression
@@ -31,8 +32,8 @@ public class ExpressionNodeIdentifier implements ExpressionNode {
     }
     
     @Override
-    public Object calculate() throws JmriException {
-        return _variable.getValue();
+    public Object calculate(SymbolTable symbolTable) throws JmriException {
+        return _variable.getValue(symbolTable);
     }
     
     /** {@inheritDoc} */
@@ -46,9 +47,9 @@ public class ExpressionNodeIdentifier implements ExpressionNode {
     
     /** {@inheritDoc} */
     @Override
-    public void assignValue(Object value) throws JmriException {
+    public void assignValue(SymbolTable symbolTable, Object value) throws JmriException {
         if (_variable != null) {
-            _variable.setValue(value);
+            _variable.setValue(symbolTable, value);
         }
     }
     

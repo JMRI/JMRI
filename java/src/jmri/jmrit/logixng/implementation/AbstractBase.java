@@ -50,22 +50,18 @@ public abstract class AbstractBase
     
     /** {@inheritDoc} */
     @Override
-    public final ConditionalNG getConditionalNG() {
-        Base item = this;
-        while ((item != null) && !(item instanceof ConditionalNG)) {
-            item = item.getParent();
-        }
-        return (ConditionalNG)item;
+    public ConditionalNG getConditionalNG() {
+        if (this instanceof ConditionalNG) return (ConditionalNG)this;
+        if (getParent() == null) return null;
+        return getParent().getConditionalNG();
     }
     
     /** {@inheritDoc} */
     @Override
     public final LogixNG getLogixNG() {
-        Base item = this;
-        while ((item != null) && !(item instanceof LogixNG)) {
-            item = item.getParent();
-        }
-        return (LogixNG)item;
+        if (this instanceof LogixNG) return (LogixNG)this;
+        if (getParent() == null) return null;
+        return getParent().getLogixNG();
     }
     
     /** {@inheritDoc} */

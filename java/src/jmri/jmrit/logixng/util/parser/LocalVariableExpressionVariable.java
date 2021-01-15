@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.util.parser;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.logixng.SymbolTable;
 
 /**
  * A variable that evaluates a local variable
@@ -21,15 +22,13 @@ public class LocalVariableExpressionVariable implements Variable {
     }
 
     @Override
-    public Object getValue() throws JmriException {
-        return InstanceManager.getDefault(LogixNG_Manager.class)
-                .getSymbolTable().getValue(_name);
+    public Object getValue(SymbolTable symbolTable) throws JmriException {
+        return symbolTable.getValue(_name);
     }
 
     @Override
-    public void setValue(Object value) throws JmriException {
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .getSymbolTable().setValue(_name, value);
+    public void setValue(SymbolTable symbolTable, Object value) throws JmriException {
+        symbolTable.setValue(_name, value);
     }
 
 }
