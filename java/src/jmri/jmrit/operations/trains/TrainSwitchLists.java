@@ -62,9 +62,6 @@ public class TrainSwitchLists extends TrainCommon {
                 return; // nothing to add
             }
             append = location.getSwitchListState() == Location.SW_APPEND;
-            if (location.getSwitchListState() != Location.SW_APPEND) {
-                location.setSwitchListState(Location.SW_APPEND);
-            }
             location.setStatus(Location.UPDATED);
         }
 
@@ -91,6 +88,8 @@ public class TrainSwitchLists extends TrainCommon {
                 if (!location.getSwitchListComment().equals(Location.NONE)) {
                     newLine(fileOut, location.getSwitchListComment());
                 }
+            } else {
+                newLine(fileOut);
             }
 
             String valid = MessageFormat.format(messageFormatText = TrainManifestText.getStringValid(),
