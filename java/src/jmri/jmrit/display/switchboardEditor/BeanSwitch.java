@@ -666,6 +666,9 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
 
     /**
      * Edit user name on a switch.
+     *
+     * @param newUserName string to use as user name replacement
+     * @param oldName current user name (used to prevent useless change)
      */
     protected void renameBean(String newUserName, String oldName) {
         NamedBean nb;
