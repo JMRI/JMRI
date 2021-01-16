@@ -511,13 +511,13 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
                 reply += Bundle.getMessage("LNCV_WRITE_CONFIRMED", moduleProgRunning) + "\n";
             } else if (l.getElement(2) == 1) {
                 valueField.setBackground(Color.RED);
-                reply += Bundle.getMessage("LNCV_WRITE_CV_NOTSUPPORTED", moduleProgRunning) + "\n";
+                reply += Bundle.getMessage("LNCV_WRITE_CV_NOTSUPPORTED", moduleProgRunning, cv) + "\n";
             } else if (l.getElement(2) == 2) {
                 valueField.setBackground(Color.RED);
-                reply += Bundle.getMessage("LNCV_WRITE_CV_READONLY", moduleProgRunning) + "\n";
+                reply += Bundle.getMessage("LNCV_WRITE_CV_READONLY", moduleProgRunning, cv) + "\n";
             } else if (l.getElement(2) == 3) {
                 valueField.setBackground(Color.RED);
-                reply += Bundle.getMessage("LNCV_WRITE_CV_OUTOFBOUNDS", moduleProgRunning) + "\n";
+                reply += Bundle.getMessage("LNCV_WRITE_CV_OUTOFBOUNDS", moduleProgRunning, val) + "\n";
             }
         }
         if (LncvMessageContents.extractMessageType(l) == LncvMessageContents.LncvCommand.LNCV_WRITE) {
@@ -536,7 +536,10 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
             if ((msgCv == 0) || (msgArt == art)) { // trust last used address. to be sure, check against Article (hardware class) number
                 msgAdr = msgVal; // if cvNum = 0, this is the LNCV module address
             }
-            String foundMod = "(LNCV) art:" + art + " address:" + msgAdr + " cv:" + msgCv + " value:" + msgVal + "\n";
+            String foundMod = "(LNCV) " + Bundle.getMessage("LabelArticle") +  art + " "
+                    + Bundle.getMessage("LabelAddress") + msgAdr + " "
+                    + Bundle.getMessage("LabelCv") + msgCv + " "
+                    + Bundle.getMessage("LabelValue")+ msgVal + "\n";
             reply += foundMod;
             // store Module in list using write reply is handled by loconet.LncvDevicesManager
 
