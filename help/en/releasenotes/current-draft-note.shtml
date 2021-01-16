@@ -147,7 +147,8 @@
 
         <h4>Uhlenbrock Intellibox</h4>
             <ul>
-                <li></li>
+                <li>Added hardware connection support for the (LocoNet) Uhlenbrock USB Adapter part #63120.
+                  Manufacturer states their USB drivers only support Windows OS.</li>
             </ul>
 
         <h4>Zimo MXULF</h4>
