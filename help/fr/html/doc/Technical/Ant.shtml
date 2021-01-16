@@ -1,85 +1,126 @@
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Blorec Herv&#233; le 2013-09-03-->
 
-<html lang="fr">
+<html lang="en">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Construction de JMRI avec Ant</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <title>JMRI: Building with Command Line Tools</title>
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code ant">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+  <!-- or change them to reflect your alternative logo -->
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  "text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+  <!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-      <h1>Construction de JMRI avec Ant</h1>Pour ceux d'entre vous
-      qui pr&eacute;f&egrave;rent une approche en ligne de commande
-      il conviendrait d'examiner "Ant", un des meilleurs
-      utilitaires pour faire les projets Java. Ant est disponible
-      en t&eacute;l&eacute;chargement &agrave; <a href=
-      "http://jakarta.apache.org/ant/index.html">http://jakarta.apache.org/ant/index.html/</a>
-      . Installez-le, puis:
+
+      <h1>Code JMRI : Construire avec les outils de la ligne de commande</h1>
+
+      Ceux d'entre vous qui pr&#233;f&#232;rent une approche en ligne de commande pourraient
+      explorer <cite><a href="#ant">ant</a></cite> et
+      <cite><a href="#maven">maven</a><</cite>, construire des utilitaires pour des
+      Projets Java. Dans le contexte de d&#233;veloppement de JMRI, ces deux outils
+      se compl&#232;tent mutuellement, chacun offrant des capacit&#233;s uniques que 
+      l'autre outil n'offre pass.
+
+      <h2 id="ant">Ant</h2>
+      Il est possible que votre ordinateur ait d&#233;j&#224; install&#233; Ant dans le cadre d'
+      un ensemble d'outils pour les d&#233;veloppeurs.  Essayez <code>ant -version</code>
+      pour v&#233;rifier.  JMRI n&#233;cessite au moins la version 1.10.6, et 
+      devrait fonctionner avec toute version ult&#233;rieure. 
+      <p>
+      Si vous avez besoin de l'installer, Ant peut &#234;tre t&#233;l&#233;charg&#233; &#224; l'adresse suivante
+      <a href="http://ant.apache.org/">http://ant.apache.org/</a>
+      ou via les gestionnaires de package habituels.
 
       <ul>
-        <li>Cr&eacute;er un r&eacute;pertoire pour contenir votre
-        projet.</li>
+        <li>Cr&#233;ez un r&#233;pertoire pour contenir votre projet.</li>
 
-        <li>Dans ce r&eacute;pertoire de projet, faire un <a href=
-        "http://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">
-        checkout Git</a> de "All" les module &agrave; partir de
-        notre r&eacute;f&eacute;rentiel (Repository). Cela va
-        cr&eacute;er un sous-r&eacute;pertoire "jmri" o&ugrave; Ant
-        s'ex&eacute;cute, et le charge avec la source, des tests et
-        des ressources. Il cr&eacute;era et peuplera aussi les
-        r&eacute;pertoires pour les fichiers xml,
-        biblioth&egrave;ques, etc dans le "project directory".</li>
+        <li>Dans ce r&#233;pertoire de projets, <a href=
+        "https://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">
+        obtenir le code de GitHub</a>. Cela cr&#233;era un
+        <tt>jmri</tt> sous-r&#233;pertoire o&#249; Ant s'ex&#233;cutera, et le charger
+        avec la source, les tests et les ressources. Il cr&#233;era &#233;galement et
+        remplir les r&#233;pertoires pour les xml, les biblioth&#232;ques, etc. dans le
+        r&#233;pertoire du projet.</li>
 
-        <li>Changer pour le sous-r&eacute;pertoire "jmri"
-        nouvellement cr&eacute;&eacute;. Pour compiler, tapez "ant
-        debug".</li>
+        <li>Passer au sous-r&#233;pertoire <tt>jmri</tt> nouvellement cr&#233;&#233;.
+        Pour compiler, tapez <tt>ant debug</tt>.</li>
 
-        <li>Pour ex&eacute;cuter le programme, tapez "ant
-        DecoderPro&raquo;ou &laquo; ant panelpro ", asseyez-vous et
-        regarder ce qui se passe.</li>
+        <li> Pour ex&#233;cuter le programme, tapez <tt>ant decoderpro</tt> ou
+        <tt>ant panelpro</tt>, et s'asseoir pour le regarder partir.</li>
 
-        <li>Pour ex&eacute;cuter la suite de tests, tapez "ant
-        alltest".</li>
+        <li> Pour ex&#233;cuter la suite de tests, tapez <tt>ant alltest</tt>.</li>
 
-        <li>Pour cr&eacute;er un fichier jmri.jar, type "ant dist".
-        Notez que vous n'avez pas &agrave; cr&eacute;er le fichier
-        "jmri.jar" pour ex&eacute;cuter le programme.</li>
+        <li>Pour construire un fichier jmri.jar, tapez <tt>ant dist</tt>. Notez
+        que vous n'avez pas &#224; cr&#233;er le fichier <tt>jmri.jar</tt> pour
+        ex&#233;cuter le programme.</li>
 
-        <li>Pour effacer tous les r&eacute;sultats
-        pr&eacute;c&eacute;demment compil&eacute;s et forcer le
-        programme &agrave; &ecirc;tre enti&egrave;rement construit
-        &agrave; partir de z&eacute;ro, tapez "ant clean".</li>
+        <li>Pour effacer tous les r&#233;sultats pr&#233;c&#233;demment compil&#233;s et forcer le
+        programme &#224; construire enti&#232;rement &#224; partir de z&#233;ro, tapez <tt>ant
+        clean</tt>.</li>
       </ul>
 
-      <p>Pour s'assurer que tout fonctionne, par exemple, avant
-      d'engager un Retour vers CVS, s'il vous pla&icirc;t
-      faire:</p>
-      <pre>
-<code>ant clean
-ant alltests
-</code>
-</pre>et s'assurer que les tests soient effectu&eacute;s
-proprement. <!--#include virtual="/Footer" -->
+      <p>Pour s'assurer que tout fonctionne, avant par exemple de valider
+      votre code de retour, veuillez faire:</p>
+      <code>ant clean alltest</code>
+      <p> et s'assurer que les tests se d&#233;roulent correctement. </p>
+
+      <p>Une nouvelle caisse JMRI devrait &#234;tre construite proprement. Si ce n'est pas le cas, veuillez
+      v&#233;rifier avec les listes de diffusion JMRIusers ou jmri-developers
+      pour obtenir de l'aide.</p>
+
+      <h2 id="maven">Maven</h2>
+      Maven est un outil de construction extensible bas&#233; sur des plugins pour le d&#233;veloppement Java.
+      Maven est disponible en t&#233;l&#233;chargement &#224; l'adresse suivante
+      <a href="http://maven.apache.org/">http://maven.apache.org/</a>. Maven
+      t&#233;l&#233;chargera les plugins et d&#233;pendances appropri&#233;s selon les besoins.
+      Apr&#232;s l'installation, les op&#233;rations suivantes peuvent &#234;tre effectu&#233;es &#224; partir de votre copie de travail de JMRI
+      (voir <a href="https://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">Obtenir le code</a>
+      pour obtenir des instructions sur la cr&#233;ation d'une copie de travail) :
+
+      <dl>
+        <dt>Ex&#233;cution des tests unitaires et d'int&#233;gration</dt>
+        <dd><code>mvn test</code><br>Utiliser <code>mvn test -Dtest=PATTERN</code> to
+          effectuer des tests sp&#233;cifiques. Voir
+          <a href="https://maven.apache.org/surefire/maven-surefire-plugin/examples/single-test.html">Ex&#233;cution d'un test unique</a>
+        pour plus de d&#233;tails, y compris l'ex&#233;cution d'une seule m&#233;thode d'essai.</dd>
+        <dt>V&#233;rifier les vuln&#233;rabilit&#233;s dans les d&#233;pendances de JMRI</dt>
+        <dd><code>mvn compile net.ossindex:ossindex-maven-plugin:audit</code></dd>
+        <dt>V&#233;rifier les nouvelles versions des d&#233;pendances de JMRI</dt>
+        <dd><code>mvn versions:display-dependency-updates</code></dd>
+        <dt>V&#233;rifier les nouvelles versions des plugins maven</dt>
+        <dd><code>mvn versions:display-plugin-updates</code></dd>
+        <dt>Ex&#233;cuter d&#233;codeurPro</dt>
+        <dd><code>mvn antrun:run -Danttarget=decoderpro</code></dd>
+        <dt>Ex&#233;cuter PanelPro</dt>
+        <dd><code>mvn antrun:run -Danttarget=panelpro</code></dd>
+      </dl>
+
+      Le <code>scripts/mvn-test</code> comprend toutes les options 
+      n&#233;cessaire pour effectuer le test de l'IC Travis Maven job &#224; partir de votre
+      ligne de commande locale.
+      
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
