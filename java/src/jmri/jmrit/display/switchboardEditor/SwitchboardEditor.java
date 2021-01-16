@@ -710,13 +710,13 @@ public class SwitchboardEditor extends Editor {
         return (Integer) maxSpinner.getValue();
     }
 
-    private void setMinSpinner(int value) {
+    protected void setMinSpinner(int value) {
         if (value >= rangeBottom && value < rangeTop) { // allows to set above MaxSpinner temporarily
             minSpinner.setValue(value);
         }
     }
 
-    private void setMaxSpinner(int value) {
+    protected void setMaxSpinner(int value) {
         if (value > rangeBottom && value <= rangeTop) { // allows to set above MinSpinner temporarily
             maxSpinner.setValue(value);
         }
@@ -1292,8 +1292,9 @@ public class SwitchboardEditor extends Editor {
                 turnoutManComboBox.setSelectedItem(memo.get(TurnoutManager.class));
                 log.debug("turnoutManComboBox set to {} for {}", memo.getUserName(), manuPrefix);
             }
-            if (memo.get(TurnoutManager.class) != null) { // we expect the users has same preference for the other types
+            if (memo.get(SensorManager.class) != null) { // we expect the user has same preference for the other types
                 sensorManComboBox.setSelectedItem(memo.get(SensorManager.class));
+                // TODO LocoNet does not provide a sensormanager via the memo
                 log.debug("sensorManComboBox set to {} for {}", memo.getUserName(), manuPrefix);
             }
             if (memo.get(LightManager.class) != null) { // so we set them the same (only 1 value stored as set on store)
@@ -1634,9 +1635,6 @@ public class SwitchboardEditor extends Editor {
 
     /**
      * Create popup for a Positionable object.
-     * <p>
-     * Popup items common to all positionable objects are done before and after
-     * the items that pertain only to specific Positionable types.
      * <p>
      * Not used on switchboards but has to override Editor.
      *

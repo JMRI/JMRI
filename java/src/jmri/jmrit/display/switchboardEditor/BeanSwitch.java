@@ -262,6 +262,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     getLight().addPropertyChangeListener(this, _switchSysName, "Switchboard Editor Light Switch");
                 // Lights do not support Invert
             }
+            displayState(bean.getState());
         }
         // from finishClone
         setTristate(getTristate());
@@ -448,7 +449,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     log.debug("Switch label {} state: {}, connected", switchLabel, state);
             }
         }
-        if (isText() && !isIcon()) { // to allow text buttons on web switchboard. always add graphic switches on web
+        if (isText() && !isIcon()) { // to allow text buttons on web switchboard.
             log.debug("Label = {}", getSwitchButtonLabel(switchLabel));
             beanButton.setText(getSwitchButtonLabel(switchLabel));
             beanButton.setBackground(switchColor); // only the color is visible TODO get access to bg color of JButton?
@@ -631,7 +632,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     void addEditUserName(JPopupMenu popup) {
         editItem = new javax.swing.JMenuItem(Bundle.getMessage("EditNameTitle", "..."));
         popup.add(editItem);
-        editItem.addActionListener((java.awt.event.ActionEvent e) -> renameBean());
+        editItem.addActionListener((java.awt.event.ActionEvent e) -> renameBeanDialog());
     }
 
     javax.swing.JCheckBoxMenuItem invertItem = null;
@@ -646,13 +647,10 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     /**
      * Edit user name on a switch.
      */
-    public void renameBean() {
-        NamedBean nb;
+    public void renameBeanDialog() {
         String oldName = _uName;
         // show input dialog
-        String newUserName = (String) JOptionPane.showInputDialog(null,
-                Bundle.getMessage("EnterNewName", _switchSysName),
-                Bundle.getMessage("EditNameTitle", ""), JOptionPane.PLAIN_MESSAGE, null, null, oldName);
+        String newUserName = (String) JOptionPane.showInputDialog(null, Bundle.getMessage("EnterNewName", _switchSysName), Bundle.getMessage("EditNameTitle", ""), JOptionPane.PLAIN_MESSAGE, null, null, oldName);
         if (newUserName == null) { // user cancelled
             log.debug("NewName dialog returned Null, cancelled");
             return;
@@ -660,12 +658,17 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         log.debug("New name: {}", newUserName);
         if (newUserName.length() == 0) {
             log.debug("new user name is empty");
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningEmptyUserName"),
-                    Bundle.getMessage("WarningTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningEmptyUserName"), Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
+        renameBean(newUserName, oldName);
+    }
 
+    /**
+     * Edit user name on a switch.
+     */
+    protected void renameBean(String newUserName, String oldName) {
+        NamedBean nb;
         if (newUserName.equals(oldName)) { // name was not changed by user
             return;
         } else { // check if name is already in use
@@ -713,7 +716,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         } else {
             nbhm.renameBean(oldName, newUserName, _bname); // will pick up name change in label
         }
-        _editor.updatePressed(); // but we must redraw whole board
+        _editor.updatePressed(); // but we redraw whole switchboard
     }
 
     private boolean inverted = false;
@@ -856,7 +859,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
      */
     protected void connectNew(String systemName) {
         log.debug("Request new bean");
-        userName.setText(""); // this method is only available on unconnected switches, so no useful content yet
+        userName.setText(""); // this method is only available on unconnected switches, so no useful content to fill in yet
         // provide etc.
         if (addFrame == null) {
             addFrame = new JmriJFrame(Bundle.getMessage("ConnectNewMenu", ""), false, true);
@@ -990,8 +993,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     }
 
     String rootPath = "resources/icons/misc/switchboard/";
-    String keyOffPath = rootPath + "markl-off-s.png";
-    String keyOnPath = rootPath + "markl-on-s.png";
     String symbolOffPath; // default for Turnout, replace T by S or L
     String symbolOnPath; // = rootPath + "T-on-s.png";
 
@@ -1023,10 +1024,12 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         /**
          * Create an icon from 2 alternating png images.
          *
+         * @param shape choice for switchboard icon shape (button=0, slider=1 etc)
          * @param filepath1 the ON image
          * @param filepath2 the OFF image
          * @param drawingRadius max distance in px from center of switch canvas, unit used for relative scaling
          * @param iconScale percentage to resize, 100 to copy as is
+         * @param back background color of switchboard, passed to (resized) icons
          */
         public IconSwitch(int shape, String filepath1, String filepath2, int drawingRadius, int iconScale, Color back) {
             // load image files
@@ -1230,6 +1233,8 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
      *
      * @param image the image to rescale
      * @param scale scale percentage as int (will be divided by 100 in operation)
+     * @param background background color to paint on resized image, prevents null value (black)
+     * @return a reduced/enlarged pixel image
      */
     public static BufferedImage resizeImage(final Image image, int scale, Color background) {
         int newWidth = scale*(image.getWidth(null))/100;
