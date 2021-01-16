@@ -2,9 +2,10 @@ package jmri.jmrit.operations.trains;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -19,6 +20,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 
 /**
@@ -30,53 +32,114 @@ public class TrainCsvSwitchListsTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         TrainCsvSwitchLists t = new TrainCsvSwitchLists();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
-    
+
     @Test
-    public void testCreateCsvSwtichList() {
+    public void testCreateCsvSwtichList() throws IOException {
         TrainCsvSwitchLists tcs = new TrainCsvSwitchLists();
-        Assert.assertNotNull("exists",tcs);
-        
+        Assert.assertNotNull("exists", tcs);
+
         JUnitOperationsUtil.initOperationsData();
         LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
-        
+
         // test two switch lists, departure and terminate locations
         Location depart_location = lmanager.getLocationByName("North End Staging");
         Assert.assertNotNull(depart_location);
         Location terminate_location = lmanager.getLocationByName("South End Staging");
         Assert.assertNotNull(terminate_location);
-        
+
         // create some work
         Train train1 = InstanceManager.getDefault(TrainManager.class).getTrainById("1");
         Assert.assertTrue(train1.build());
-                       
+
         File file = tcs.buildSwitchList(depart_location);
         Assert.assertTrue(file.exists());
-        
+
         file = tcs.buildSwitchList(terminate_location);
         Assert.assertTrue(file.exists());
-        
-        File switchListFileDepart = InstanceManager.getDefault(TrainManagerXml.class).getCsvSwitchListFile(depart_location.getName());
+
+        File switchListFileDepart = InstanceManager.getDefault(TrainManagerXml.class)
+                .getCsvSwitchListFile(depart_location.getName());
         Assert.assertTrue(switchListFileDepart.exists());
 
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(switchListFileDepart);
         Assert.assertEquals("confirm number of lines in switch list", 26, in.lines().count());
-        
-        File switchListFileTerminate = InstanceManager.getDefault(TrainManagerXml.class).getCsvSwitchListFile(terminate_location.getName());
+
+        File switchListFileTerminate = InstanceManager.getDefault(TrainManagerXml.class)
+                .getCsvSwitchListFile(terminate_location.getName());
         Assert.assertTrue(switchListFileTerminate.exists());
 
         in = JUnitOperationsUtil.getBufferedReader(switchListFileTerminate);
         Assert.assertEquals("confirm number of lines in switch list", 22, in.lines().count());
-        
+        in.close();
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
-    
+
+    @Test
+    public void testSwitchListNotRealTime() throws IOException {
+
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+
+        Setup.setSwitchListRealTime(false);
+        loadLocationsEnginesAndCars();
+
+        Train train = tmanager.newTrain("Test switchlists train");
+        Route route = rmanager.newRoute("Test switchlists route");
+        Location locationA = lmanager.getLocationByName("Test Location A");
+
+        route.addLocation(locationA);
+        train.setRoute(route);
+
+        Train train2 = tmanager.newTrain("Test switchlists train 2");
+        train2.setRoute(route); // use the same route
+
+        TrainCsvSwitchLists tsl = new TrainCsvSwitchLists();
+
+        // test no new work
+        tsl.buildSwitchList(locationA);
+        InstanceManager.getDefault(TrainManager.class).setTrainsSwitchListStatus(Train.PRINTED);
+        
+        File switchListFileA = InstanceManager.getDefault(TrainManagerXml.class).getCsvSwitchListFile(locationA.getName());
+        Assert.assertTrue(switchListFileA.exists());
+
+        BufferedReader inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
+        Assert.assertEquals("confirm number of lines in switch list 1", 15, inA.lines().count());
+        inA.close();
+
+        // now create some work
+        Assert.assertTrue(train.build());
+        tsl.buildSwitchList(locationA);
+        InstanceManager.getDefault(TrainManager.class).setTrainsSwitchListStatus(Train.PRINTED);
+
+        inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
+        Assert.assertEquals("confirm number of lines in switch list 2", 27, inA.lines().count());
+        inA.close();
+
+        // now append new work to file
+        Assert.assertTrue(train2.build());
+
+        Assert.assertEquals("Confirm append mode", Location.SW_APPEND, locationA.getSwitchListState());
+        tsl.buildSwitchList(locationA);
+        InstanceManager.getDefault(TrainManager.class).setTrainsSwitchListStatus(Train.PRINTED);
+
+        inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
+        Assert.assertEquals("confirm number of lines in switch list 3", 35, inA.lines().count());
+        inA.close();
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
     /**
      * Creates a switch list for a train that visits a location twice
+     * 
+     * @throws IOException for switch lists
      */
     @Test
-    public void testSwitchListTrainTurn() {
+    public void testSwitchListTrainTurn() throws IOException {
 
         loadLocationsEnginesAndCars();
 
@@ -84,7 +147,7 @@ public class TrainCsvSwitchListsTest extends OperationsTestCase {
         Train train = tmanager.newTrain("Test switchlists train");
         RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
         Route route = rmanager.newRoute("Test switchlists route");
-        
+
         // disable build messages
         tmanager.setBuildMessagesEnabled(false);
         // disable build reports
@@ -136,23 +199,31 @@ public class TrainCsvSwitchListsTest extends OperationsTestCase {
         // improve test coverage, switch list for a location without work
         tsl.buildSwitchList(locationD);
 
-        File switchListFileA = InstanceManager.getDefault(TrainManagerXml.class).getCsvSwitchListFile(locationA.getName());
+        File switchListFileA = InstanceManager.getDefault(TrainManagerXml.class)
+                .getCsvSwitchListFile(locationA.getName());
         Assert.assertTrue(switchListFileA.exists());
-        File switchListFileB = InstanceManager.getDefault(TrainManagerXml.class).getCsvSwitchListFile(locationB.getName());
+        File switchListFileB = InstanceManager.getDefault(TrainManagerXml.class)
+                .getCsvSwitchListFile(locationB.getName());
         Assert.assertTrue(switchListFileB.exists());
-        File switchListFileC = InstanceManager.getDefault(TrainManagerXml.class).getCsvSwitchListFile(locationC.getName());
+        File switchListFileC = InstanceManager.getDefault(TrainManagerXml.class)
+                .getCsvSwitchListFile(locationC.getName());
         Assert.assertTrue(switchListFileC.exists());
-        File switchListFileD = InstanceManager.getDefault(TrainManagerXml.class).getCsvSwitchListFile(locationD.getName());
+        File switchListFileD = InstanceManager.getDefault(TrainManagerXml.class)
+                .getCsvSwitchListFile(locationD.getName());
         Assert.assertTrue(switchListFileD.exists());
 
         BufferedReader inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 29, inA.lines().count());
+        inA.close();
         BufferedReader inB = JUnitOperationsUtil.getBufferedReader(switchListFileB);
         Assert.assertEquals("confirm number of lines in switch list", 28, inB.lines().count());
+        inB.close();
         BufferedReader inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
         Assert.assertEquals("confirm number of lines in switch list", 26, inC.lines().count());
+        inC.close();
         BufferedReader inD = JUnitOperationsUtil.getBufferedReader(switchListFileD);
         Assert.assertEquals("confirm number of lines in switch list", 23, inD.lines().count());
+        inD.close();
 
         train.move(); // move train to B
 
@@ -163,12 +234,16 @@ public class TrainCsvSwitchListsTest extends OperationsTestCase {
 
         inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 23, inA.lines().count());
+        inA.close();
         inB = JUnitOperationsUtil.getBufferedReader(switchListFileB);
         Assert.assertEquals("confirm number of lines in switch list", 26, inB.lines().count());
+        inB.close();
         inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
         Assert.assertEquals("confirm number of lines in switch list", 24, inC.lines().count());
+        inC.close();
         inD = JUnitOperationsUtil.getBufferedReader(switchListFileD);
         Assert.assertEquals("confirm number of lines in switch list", 21, inD.lines().count());
+        inD.close();
 
         train.move(rlc); // move train to C
         Assert.assertEquals("current train location", "Test Location C", train.getCurrentRouteLocation().getName());
@@ -180,12 +255,16 @@ public class TrainCsvSwitchListsTest extends OperationsTestCase {
 
         inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 23, inA.lines().count());
+        inA.close();
         inB = JUnitOperationsUtil.getBufferedReader(switchListFileB);
         Assert.assertEquals("confirm number of lines in switch list", 27, inB.lines().count());
+        inB.close();
         inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
         Assert.assertEquals("confirm number of lines in switch list", 24, inC.lines().count());
+        inC.close();
         inD = JUnitOperationsUtil.getBufferedReader(switchListFileD);
         Assert.assertEquals("confirm number of lines in switch list", 21, inD.lines().count());
+        inD.close();
 
         train.move(); // move train to D
         Assert.assertEquals("current train location", "Test Location D", train.getCurrentRouteLocation().getName());
@@ -199,12 +278,16 @@ public class TrainCsvSwitchListsTest extends OperationsTestCase {
 
         inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 23, inA.lines().count());
+        inA.close();
         inB = JUnitOperationsUtil.getBufferedReader(switchListFileB);
         Assert.assertEquals("confirm number of lines in switch list", 27, inB.lines().count());
+        inB.close();
         inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
         Assert.assertEquals("confirm number of lines in switch list", 23, inC.lines().count());
+        inC.close();
         inD = JUnitOperationsUtil.getBufferedReader(switchListFileD);
         Assert.assertEquals("confirm number of lines in switch list", 19, inD.lines().count());
+        inD.close();
 
         train.move(); // move train to C
         Assert.assertEquals("current train location", "Test Location C", train.getCurrentRouteLocation().getName());
@@ -216,12 +299,16 @@ public class TrainCsvSwitchListsTest extends OperationsTestCase {
 
         inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 23, inA.lines().count());
+        inA.close();
         inB = JUnitOperationsUtil.getBufferedReader(switchListFileB);
         Assert.assertEquals("confirm number of lines in switch list", 27, inB.lines().count());
+        inB.close();
         inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
         Assert.assertEquals("confirm number of lines in switch list", 23, inC.lines().count());
+        inC.close();
         inD = JUnitOperationsUtil.getBufferedReader(switchListFileD);
         Assert.assertEquals("confirm number of lines in switch list", 19, inD.lines().count());
+        inD.close();
 
         train.move(); // move train to B
         Assert.assertEquals("current train location", "Test Location B", train.getCurrentRouteLocation().getName());
@@ -233,12 +320,16 @@ public class TrainCsvSwitchListsTest extends OperationsTestCase {
 
         inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 23, inA.lines().count());
+        inA.close();
         inB = JUnitOperationsUtil.getBufferedReader(switchListFileB);
         Assert.assertEquals("confirm number of lines in switch list", 27, inB.lines().count());
+        inB.close();
         inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
         Assert.assertEquals("confirm number of lines in switch list", 23, inC.lines().count());
+        inC.close();
         inD = JUnitOperationsUtil.getBufferedReader(switchListFileD);
         Assert.assertEquals("confirm number of lines in switch list", 19, inD.lines().count());
+        inD.close();
 
         train.move(); // move train to A
         Assert.assertEquals("current train location", "Test Location A", train.getCurrentRouteLocation().getName());
@@ -250,12 +341,16 @@ public class TrainCsvSwitchListsTest extends OperationsTestCase {
 
         inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 23, inA.lines().count());
+        inA.close();
         inB = JUnitOperationsUtil.getBufferedReader(switchListFileB);
         Assert.assertEquals("confirm number of lines in switch list", 25, inB.lines().count());
+        inB.close();
         inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
         Assert.assertEquals("confirm number of lines in switch list", 23, inC.lines().count());
+        inC.close();
         inD = JUnitOperationsUtil.getBufferedReader(switchListFileD);
         Assert.assertEquals("confirm number of lines in switch list", 19, inD.lines().count());
+        inD.close();
 
         train.move(); // terminate train
 
@@ -266,19 +361,23 @@ public class TrainCsvSwitchListsTest extends OperationsTestCase {
 
         inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 10, inA.lines().count());
+        inA.close();
         inB = JUnitOperationsUtil.getBufferedReader(switchListFileB);
         Assert.assertEquals("confirm number of lines in switch list", 13, inB.lines().count());
+        inB.close();
         inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
         Assert.assertEquals("confirm number of lines in switch list", 10, inC.lines().count());
+        inC.close();
         inD = JUnitOperationsUtil.getBufferedReader(switchListFileD);
         Assert.assertEquals("confirm number of lines in switch list", 9, inD.lines().count());
+        inD.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
-    
+
     /**
-     * Unique data for this test. Any changes below can affect the number of
-     * lines in the switch list file
+     * Unique data for this test. Any changes below can affect the number of lines
+     * in the switch list file
      */
     private void loadLocationsEnginesAndCars() {
 
@@ -310,6 +409,7 @@ public class TrainCsvSwitchListsTest extends OperationsTestCase {
         Assert.assertEquals("Place engine on track", Track.OKAY, e1.setLocation(locationA, yardA));
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainCsvSwitchListsTest.class);
+    // private final static Logger log =
+    // LoggerFactory.getLogger(TrainCsvSwitchListsTest.class);
 
 }

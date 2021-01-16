@@ -203,7 +203,7 @@ public class NXFrame extends WarrantRoute {
         try {
             num =  formatter.parse(_maxThrottleBox.getText()).floatValue();
             num = Math.min(100.0f, Math.max(num,  0.f));
-            _maxThrottleBox.setText(""+num);
+            _maxThrottleBox.setText(formatter.format(num));
         } catch (java.text.ParseException pe) {
             _maxThrottleBox.setText(null);
             _maxSpeedBox.setText(null);

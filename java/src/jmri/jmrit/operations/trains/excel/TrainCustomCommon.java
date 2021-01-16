@@ -39,8 +39,10 @@ public abstract class TrainCustomCommon {
     }
 
     public void setFileName(String name) {
-        mcAppName = name;
-        InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
+        if (!getFileName().equals(name)) {
+            mcAppName = name;
+            InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
+        }
     }
 
     public String getCommonFileName() {

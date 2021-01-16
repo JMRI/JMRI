@@ -2,6 +2,7 @@ package jmri.jmrit.operations.trains;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -5738,9 +5739,10 @@ public class TrainBuilderTest extends OperationsTestCase {
 
     /**
      * Tests the creation of the CSV manifest file
+     * @throws IOException close BufferedReader
      */
     @Test
-    public void testCreateCsvManifest() {
+    public void testCreateCsvManifest() throws IOException {
 
         Setup.setGenerateCsvManifestEnabled(true);
 
@@ -5757,6 +5759,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(csvManifestFile);
         Assert.assertEquals("confirm number of lines in csv manifest", 39, in.lines().count());
+        in.close();
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
@@ -5765,10 +5768,11 @@ public class TrainBuilderTest extends OperationsTestCase {
     /**
      * Tests DISPLAY_CAR_LIMIT_20 which controls how many cars in staging are
      * displayed in the build report.
+     * @throws IOException close BufferedReader
      * 
      */
     @Test
-    public void testDisplayLimit20() {
+    public void testDisplayLimit20() throws IOException {
 
         Assert.assertEquals("Confirm number of cars to display", 20, TrainBuilder.DISPLAY_CAR_LIMIT_20);
 
@@ -5802,18 +5806,18 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // any changes to the build report could cause this to fail
         Assert.assertEquals("confirm number of lines in build report", 461, in.lines().count());
+        in.close();
         
-
-
         //TODO search and confirm limit message in build report
     }
 
     /**
      * Tests DISPLAY_CAR_LIMIT_50 which controls how many cars are displayed per
      * location in the build report.
+     * @throws IOException BufferReader close
      */
     @Test
-    public void testDisplayLimit50() {
+    public void testDisplayLimit50() throws IOException {
 
         Assert.assertEquals("Confirm number of cars to display", 50, TrainBuilder.DISPLAY_CAR_LIMIT_50);
 
@@ -5840,6 +5844,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // any changes to the build report could cause this to fail
         Assert.assertEquals("confirm number of lines in build report", 252, in.lines().count());
+        in.close();
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
@@ -5854,9 +5859,10 @@ public class TrainBuilderTest extends OperationsTestCase {
      * that the train won't serve. And at the completion of finding destinations
      * for cars, lists how many cars were ignored due to move counts being used
      * up.
+     * @throws IOException close BufferedReader
      */
     @Test
-    public void testDisplayLimit100() {
+    public void testDisplayLimit100() throws IOException {
 
         Assert.assertEquals("Confirm number of cars to display", 100, TrainBuilder.DISPLAY_CAR_LIMIT_100);
 
@@ -5893,6 +5899,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // any changes to the build report could cause this to fail
         Assert.assertEquals("confirm number of lines in build report", 377, in.lines().count());
+        in.close();
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
