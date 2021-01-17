@@ -49,6 +49,8 @@ public class TreeEditor extends TreeViewer {
     private final JTextField _addUserName = new JTextField(20);
     private final JTextField _addComment = new JTextField(50);
     
+    private boolean _showReminder = false;
+    
     private final Comparator<SwingConfiguratorInterface> _swingConfiguratorComboBoxComparator
             = (SwingConfiguratorInterface o1, SwingConfiguratorInterface o2) -> o1.toString().compareTo(o2.toString());
     
