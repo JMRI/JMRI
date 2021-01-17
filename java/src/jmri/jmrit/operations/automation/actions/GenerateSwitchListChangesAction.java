@@ -41,12 +41,11 @@ public class GenerateSwitchListChangesAction extends Action {
      * <p>
      * common code see GenerateSwitchListAction.java
      *
-     * @param isChanged if set true only locations with changes will get a
-     *                  custom switch list.
+     * @param isChanged if set true only locations with changes will get a custom
+     *                  switch list.
      */
-    @SuppressFBWarnings(
-            value = {"UC_USELESS_CONDITION", "RpC_REPEATED_CONDITIONAL_TEST"},
-            justification = "isChanged = false when called from GenerateSwitchListAction")
+    @SuppressFBWarnings(value = { "UC_USELESS_CONDITION",
+            "RpC_REPEATED_CONDITIONAL_TEST" }, justification = "isChanged = false when called from GenerateSwitchListAction")
     protected void doAction(boolean isChanged) {
         if (getAutomationItem() != null) {
             if (!Setup.isGenerateCsvSwitchListEnabled()) {
@@ -57,15 +56,12 @@ public class GenerateSwitchListChangesAction extends Action {
             setRunning(true);
             TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
             TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
-
             for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
-                if (location.isSwitchListEnabled()
-                        && (!isChanged || (isChanged && location.getStatus().equals(Location.MODIFIED)))) {
-                    // also build the regular switch lists so they can be used
-                    if (!Setup.isSwitchListRealTime()) {
-                        trainSwitchLists.buildSwitchList(location);
-                    }
+                if (location.isSwitchListEnabled() &&
+                        (!isChanged || (isChanged && location.getStatus().equals(Location.MODIFIED)))) {
                     File csvFile = trainCsvSwitchLists.buildSwitchList(location);
+                    // also build the regular switch lists so they can be used
+                    trainSwitchLists.buildSwitchList(location);
                     if (csvFile == null || !csvFile.exists()) {
                         log.error("CSV switch list file was not created for location {}", location.getName());
                         finishAction(false);

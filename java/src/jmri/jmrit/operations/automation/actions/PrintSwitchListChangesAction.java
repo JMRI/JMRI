@@ -1,9 +1,9 @@
 package jmri.jmrit.operations.automation.actions;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCsvSwitchLists;
 import jmri.jmrit.operations.trains.TrainManager;
@@ -12,6 +12,7 @@ import jmri.jmrit.operations.trains.TrainSwitchLists;
 public class PrintSwitchListChangesAction extends Action {
 
     private static final int _code = ActionCodes.PRINT_SWITCHLIST_CHANGES;
+    protected static final boolean IS_CHANGED = true;
 
     @Override
     public int getCode() {
@@ -29,17 +30,22 @@ public class PrintSwitchListChangesAction extends Action {
 
     @Override
     public void doAction() {
+        doAction(IS_CHANGED);
+    }
+
+    @SuppressFBWarnings(value = { "UC_USELESS_CONDITION",
+            "RpC_REPEATED_CONDITIONAL_TEST" }, justification = "isChanged = false when called from PrintSwitchListAction")
+    protected void doAction(boolean isChanged) {
         if (getAutomationItem() != null) {
             setRunning(true);
             TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
             TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
             for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
-                if (location.isSwitchListEnabled() && location.getStatus().equals(Location.MODIFIED)) {
+                if (location.isSwitchListEnabled() &&
+                        (!isChanged || (isChanged && location.getStatus().equals(Location.MODIFIED)))) {
+                    // also build the CSV switch lists
+                    trainCsvSwitchLists.buildSwitchList(location);
                     trainSwitchLists.buildSwitchList(location);
-                    // also build the CSV switch lists to set the append
-                    if (!Setup.isSwitchListRealTime()) {
-                        trainCsvSwitchLists.buildSwitchList(location);
-                    }
                     trainSwitchLists.printSwitchList(location,
                             InstanceManager.getDefault(TrainManager.class).isPrintPreviewEnabled());
                 }
