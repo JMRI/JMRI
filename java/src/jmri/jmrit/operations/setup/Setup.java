@@ -803,11 +803,11 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         return getDefault().switchListSameManifest;
     }
 
-    public static void setTrackSummaryEnabled(boolean b) {
+    public static void setPrintTrackSummaryEnabled(boolean b) {
         getDefault().trackSummary = b;
     }
 
-    public static boolean isTrackSummaryEnabled() {
+    public static boolean isPrintTrackSummaryEnabled() {
         return getDefault().trackSummary;
     }
 
@@ -861,11 +861,11 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         return getDefault().switchListPageFormat;
     }
 
-    public static void setTruncateManifestEnabled(boolean b) {
+    public static void setPrintTruncateManifestEnabled(boolean b) {
         getDefault().manifestTruncated = b;
     }
 
-    public static boolean isTruncateManifestEnabled() {
+    public static boolean isPrintTruncateManifestEnabled() {
         return getDefault().manifestTruncated;
     }
 
@@ -1882,7 +1882,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         values.setAttribute(Xml.PAGE_FORMAT, format);
 
         values.setAttribute(Xml.PRINT_ROUTE_LOCATION, isSwitchListRouteLocationCommentEnabled() ? Xml.TRUE : Xml.FALSE);
-        values.setAttribute(Xml.TRACK_SUMMARY, isTrackSummaryEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.TRACK_SUMMARY, isPrintTrackSummaryEnabled() ? Xml.TRUE : Xml.FALSE);
 
         e.addContent(values = new Element(Xml.SWITCH_LIST_PICKUP_CAR_FORMAT));
         storeXmlMessageFormat(values, getSwitchListPickupCarPrefix(), getPickupSwitchListMessageFormat());
@@ -1928,7 +1928,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         values.setAttribute(Xml.PRINT_VALID, isPrintValidEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.SORT_BY_TRACK, isSortByTrackNameEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_HEADERS, isPrintHeadersEnabled() ? Xml.TRUE : Xml.FALSE);
-        values.setAttribute(Xml.TRUNCATE, isTruncateManifestEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.TRUNCATE, isPrintTruncateManifestEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.USE_DEPARTURE_TIME, isUseDepartureTimeEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.USE_EDITOR, isManifestEditorEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_CABOOSE_LOAD, isPrintCabooseLoadEnabled() ? Xml.TRUE : Xml.FALSE);
@@ -2335,7 +2335,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
             if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.TRACK_SUMMARY)) != null) {
                 String b = a.getValue();
                 log.debug("track summary: {}", b);
-                setTrackSummaryEnabled(b.equals(Xml.TRUE));
+                setPrintTrackSummaryEnabled(b.equals(Xml.TRUE));
             }
         }
         if (operations.getChild(Xml.SWITCH_LIST_PICKUP_CAR_FORMAT) != null) {
@@ -2520,7 +2520,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.TRUNCATE)) != null) {
                 String enable = a.getValue();
                 log.debug("manifest truncate: {}", enable);
-                setTruncateManifestEnabled(enable.equals(Xml.TRUE));
+                setPrintTruncateManifestEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.USE_DEPARTURE_TIME)) != null) {
                 String enable = a.getValue();

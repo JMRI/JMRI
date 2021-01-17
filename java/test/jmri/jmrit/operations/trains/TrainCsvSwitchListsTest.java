@@ -37,6 +37,7 @@ public class TrainCsvSwitchListsTest extends OperationsTestCase {
 
     @Test
     public void testCreateCsvSwtichList() throws IOException {
+        Setup.setGenerateCsvSwitchListEnabled(true);
         TrainCsvSwitchLists tcs = new TrainCsvSwitchLists();
         Assert.assertNotNull("exists", tcs);
 
@@ -76,10 +77,32 @@ public class TrainCsvSwitchListsTest extends OperationsTestCase {
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
+    
+    @Test
+    public void testCsvSwtichListDisabled() throws IOException {       
+        Assert.assertEquals("confirm default", false, Setup.isGenerateCsvSwitchListEnabled());
+        TrainCsvSwitchLists tcsl = new TrainCsvSwitchLists();
+        Assert.assertNotNull("exists", tcsl);
+
+        JUnitOperationsUtil.initOperationsData();
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+
+        Location depart_location = lmanager.getLocationByName("North End Staging");
+        Assert.assertNotNull(depart_location);
+
+        // create some work
+        Train train1 = InstanceManager.getDefault(TrainManager.class).getTrainById("1");
+        Assert.assertTrue(train1.build());
+
+        File file = tcsl.buildSwitchList(depart_location);
+        Assert.assertNull(file);
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
 
     @Test
     public void testSwitchListNotRealTime() throws IOException {
-
+        Setup.setGenerateCsvSwitchListEnabled(true);
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
         LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
@@ -97,37 +120,38 @@ public class TrainCsvSwitchListsTest extends OperationsTestCase {
         Train train2 = tmanager.newTrain("Test switchlists train 2");
         train2.setRoute(route); // use the same route
 
-        TrainCsvSwitchLists tsl = new TrainCsvSwitchLists();
+        TrainCsvSwitchLists tcsl = new TrainCsvSwitchLists();
 
         // test no new work
-        tsl.buildSwitchList(locationA);
+        tcsl.buildSwitchList(locationA);
         InstanceManager.getDefault(TrainManager.class).setTrainsSwitchListStatus(Train.PRINTED);
         
         File switchListFileA = InstanceManager.getDefault(TrainManagerXml.class).getCsvSwitchListFile(locationA.getName());
         Assert.assertTrue(switchListFileA.exists());
 
         BufferedReader inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
-        Assert.assertEquals("confirm number of lines in switch list 1", 15, inA.lines().count());
+        Assert.assertEquals("confirm number of lines in switch list 1", 9, inA.lines().count());
         inA.close();
 
         // now create some work
         Assert.assertTrue(train.build());
-        tsl.buildSwitchList(locationA);
+        tcsl.buildSwitchList(locationA);
         InstanceManager.getDefault(TrainManager.class).setTrainsSwitchListStatus(Train.PRINTED);
 
         inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
-        Assert.assertEquals("confirm number of lines in switch list 2", 27, inA.lines().count());
+        Assert.assertEquals("confirm number of lines in switch list 2", 25, inA.lines().count());
         inA.close();
 
         // now append new work to file
         Assert.assertTrue(train2.build());
 
-        Assert.assertEquals("Confirm append mode", Location.SW_APPEND, locationA.getSwitchListState());
-        tsl.buildSwitchList(locationA);
+        locationA.setSwitchListState(Location.SW_APPEND);
+        
+        tcsl.buildSwitchList(locationA);
         InstanceManager.getDefault(TrainManager.class).setTrainsSwitchListStatus(Train.PRINTED);
 
         inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
-        Assert.assertEquals("confirm number of lines in switch list 3", 35, inA.lines().count());
+        Assert.assertEquals("confirm number of lines in switch list 3", 34, inA.lines().count());
         inA.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
@@ -140,7 +164,7 @@ public class TrainCsvSwitchListsTest extends OperationsTestCase {
      */
     @Test
     public void testSwitchListTrainTurn() throws IOException {
-
+        Setup.setGenerateCsvSwitchListEnabled(true);
         loadLocationsEnginesAndCars();
 
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
