@@ -45,6 +45,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     LogixNG _curLogixNG = null;
     
     ConditionalNGEditor _treeEdit = null;
+    ConditionalNGDebugger _debugger = null;
     
     int _numConditionalNGs = 0;
     boolean _inEditMode = false;
@@ -104,7 +105,6 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     // ------------ Edit ConditionalNG Variables ------------
     boolean _inEditConditionalNGMode = false;
     JmriJFrame _editConditionalNGFrame = null;
-    JTextField _conditionalUserName = new JTextField(22);
     JRadioButton _triggerOnChangeButton;
 
     // ------------ Methods for Edit LogixNG Pane ------------
@@ -622,9 +622,6 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
      * the Edit Logix window.
      */
     void makeEditConditionalNGWindow() {
-        // deactivate this Logix
-        _conditionalUserName.setText(_curConditionalNG.getUserName());
-        
         // Create a new LogixNG edit view, add the listener.
         _treeEdit = new ConditionalNGEditor(_curConditionalNG);
         _treeEdit.initComponents();
@@ -633,6 +630,24 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
 
         final LogixNGEditor logixNGEditor = this;
         _treeEdit.addLogixNGEventListener(new LogixNGEventListenerImpl(logixNGEditor));
+    }
+    
+    /**
+     * Create and/or initialize the Edit Conditional window.
+     * <p>
+     * Note: you can get here via the New Conditional button
+     * (newConditionalPressed) or via an Edit button in the Conditional table of
+     * the Edit Logix window.
+     */
+    void makeDebugConditionalNGWindow() {
+        // Create a new LogixNG edit view, add the listener.
+        _debugger = new ConditionalNGDebugger(_curConditionalNG);
+        _debugger.initComponents();
+        _debugger.setVisible(true);
+        _inEditMode = true;
+
+        final LogixNGEditor logixNGEditor = this;
+        _debugger.addLogixNGEventListener(new LogixNG_DebuggerEventListenerImpl(logixNGEditor));
     }
     
     // ------------ Methods for Edit ConditionalNG Pane ------------
@@ -660,6 +675,31 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         _conditionalRowNumber = rx;
         // get action variables
         makeEditConditionalNGWindow();
+    }
+
+    /**
+     * Respond to Edit Button in the ConditionalNG table of the Edit LogixNG Window.
+     *
+     * @param rx index (row number) of ConditionalNG to be edited
+     */
+    void debugConditionalNGPressed(int rx) {
+        if (_inEditConditionalNGMode) {
+            // Already editing a ConditionalNG, ask for completion of that edit
+            JOptionPane.showMessageDialog(_editConditionalNGFrame,
+                    Bundle.getMessage("Error34", _curConditionalNG.getSystemName()),
+                    Bundle.getMessage("ErrorTitle"), // NOI18N
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        // get ConditionalNG to edit
+        _curConditionalNG = _curLogixNG.getConditionalNG(rx);
+        if (_curConditionalNG == null) {
+            log.error("Attempted edit of non-existant conditional.");  // NOI18N
+            return;
+        }
+        _conditionalRowNumber = rx;
+        // get action variables
+        makeDebugConditionalNGWindow();
     }
 
     /**
@@ -728,7 +768,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         public static final int UNAME_COLUMN = SNAME_COLUMN + 1;
         public static final int THREAD_COLUMN = UNAME_COLUMN + 1;
         public static final int BUTTON_COLUMN = THREAD_COLUMN + 1;
-        public static final int BUTTON_DELETE_COLUMN = BUTTON_COLUMN + 1;
+        public static final int BUTTON_DEBUG_COLUMN = BUTTON_COLUMN + 1;
+        public static final int BUTTON_DELETE_COLUMN = BUTTON_DEBUG_COLUMN + 1;
         public static final int BUTTON_EDIT_THREADS_COLUMN = BUTTON_DELETE_COLUMN + 1;
         public static final int NUM_COLUMNS = BUTTON_EDIT_THREADS_COLUMN + 1;
         
@@ -794,7 +835,10 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
 
         @Override
         public Class<?> getColumnClass(int c) {
-            if ((c == BUTTON_COLUMN) || (c == BUTTON_DELETE_COLUMN) || (c == BUTTON_EDIT_THREADS_COLUMN)) {
+            if ((c == BUTTON_COLUMN)
+                    || (c == BUTTON_DEBUG_COLUMN)
+                    || (c == BUTTON_DELETE_COLUMN)
+                    || (c == BUTTON_EDIT_THREADS_COLUMN)) {
                 return JButton.class;
             }
             return String.class;
@@ -813,8 +857,11 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         @Override
         public boolean isCellEditable(int r, int c) {
             if (!_inReorderMode) {
-                return ((c == UNAME_COLUMN) || (c == BUTTON_COLUMN)
-                        || (c == BUTTON_DELETE_COLUMN) || (c == BUTTON_EDIT_THREADS_COLUMN));
+                return ((c == UNAME_COLUMN)
+                        || (c == BUTTON_COLUMN)
+                        || (c == BUTTON_DEBUG_COLUMN)
+                        || (c == BUTTON_DELETE_COLUMN)
+                        || (c == BUTTON_EDIT_THREADS_COLUMN));
             } else if (c == BUTTON_COLUMN) {
                 if (r >= _nextInOrder) {
                     return (true);
@@ -833,6 +880,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 case THREAD_COLUMN:
                     return Bundle.getMessage("ConditionalNG_Table_ColumnThreadName");  // NOI18N
                 case BUTTON_COLUMN:
+                    return ""; // no label
+                case BUTTON_DEBUG_COLUMN:
                     return ""; // no label
                 case BUTTON_DELETE_COLUMN:
                     return ""; // no label
@@ -854,6 +903,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 case THREAD_COLUMN:
                     return new JTextField(10).getPreferredSize().width;
                 case BUTTON_COLUMN:
+                    return new JTextField(6).getPreferredSize().width;
+                case BUTTON_DEBUG_COLUMN:
                     return new JTextField(6).getPreferredSize().width;
                 case BUTTON_DELETE_COLUMN:
                     return new JTextField(6).getPreferredSize().width;
@@ -881,6 +932,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                     } else {
                         return Integer.toString(rx + 1);
                     }
+                case BUTTON_DEBUG_COLUMN:
+                    return Bundle.getMessage("ConditionalNG_Table_ButtonDebug");  // NOI18N
                 case BUTTON_DELETE_COLUMN:
                     return Bundle.getMessage("ButtonDelete");  // NOI18N
                 case BUTTON_EDIT_THREADS_COLUMN:
@@ -924,6 +977,29 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                     @Override
                     public void run() {
                         editConditionalNGPressed(row);
+                    }
+                }
+                WindowMaker t = new WindowMaker(row);
+                javax.swing.SwingUtilities.invokeLater(t);
+            }
+        }
+        
+        private void buttomDebugClicked(int row, int col) {
+            if (_inReorderMode) {
+                swapConditionalNG(row);
+            } else {
+                // Use separate Runnable so window is created on top
+                class WindowMaker implements Runnable {
+
+                    int row;
+
+                    WindowMaker(int r) {
+                        row = r;
+                    }
+
+                    @Override
+                    public void run() {
+                        debugConditionalNGPressed(row);
                     }
                 }
                 WindowMaker t = new WindowMaker(row);
@@ -980,6 +1056,9 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             switch (col) {
                 case BUTTON_COLUMN:
                     buttomColumnClicked(row, col);
+                    break;
+                case BUTTON_DEBUG_COLUMN:
+                    buttomDebugClicked(row, col);
                     break;
                 case BUTTON_DELETE_COLUMN:
                     deleteConditionalNG(row);
@@ -1075,8 +1154,6 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGEditor.class);
-
     private class LogixNGEventListenerImpl implements ConditionalNGEditor.ConditionalNGEventListener {
 
         private final LogixNGEditor _logixNGEditor;
@@ -1091,6 +1168,39 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             _treeEdit.logixNGData.forEach((key, value) -> {
                 if (key.equals("Finish")) {                  // NOI18N
                     _treeEdit = null;
+                    _inEditMode = false;
+                    _logixNGEditor.bringToFront();
+                } else if (key.equals("Delete")) {           // NOI18N
+                    deletePressed();
+                } else if (key.equals("chgUname")) {         // NOI18N
+                    LogixNG x = _logixNG_Manager.getBySystemName(lgxName);
+                    if (x == null) {
+                        log.error("Found no logixNG for name {} when changing user name (2)", lgxName);
+                        return;
+                    }
+                    x.setUserName(value);
+                    beanTableDataModel.fireTableDataChanged();
+                }
+            });
+        }
+    }
+    
+    
+    private class LogixNG_DebuggerEventListenerImpl
+            implements ConditionalNGDebugger.ConditionalNGEventListener {
+
+        private final LogixNGEditor _logixNGEditor;
+        
+        public LogixNG_DebuggerEventListenerImpl(LogixNGEditor logixNGEditor) {
+            this._logixNGEditor = logixNGEditor;
+        }
+        
+        @Override
+        public void conditionalNGEventOccurred() {
+            String lgxName = _curLogixNG.getSystemName();
+            _debugger.logixNGData.forEach((key, value) -> {
+                if (key.equals("Finish")) {                  // NOI18N
+                    _debugger = null;
                     _inEditMode = false;
                     _logixNGEditor.bringToFront();
                 } else if (key.equals("Delete")) {           // NOI18N
@@ -1298,4 +1408,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         }
     }
     
+    
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGEditor.class);
+
 }
