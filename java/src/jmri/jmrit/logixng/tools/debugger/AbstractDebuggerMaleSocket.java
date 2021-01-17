@@ -3,16 +3,18 @@ package jmri.jmrit.logixng.tools.debugger;
 import java.beans.*;
 import java.util.*;
 
+import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 
 /**
- *
- * @author daniel
+ * Abstract debugger male socket
+ * @author Daniel Bergqvist 2020
  */
 public class AbstractDebuggerMaleSocket extends AbstractMaleSocket {
     
+    private final Debugger _debugger = InstanceManager.getDefault(Debugger.class);
     protected final MaleSocket _maleSocket;
     
     public AbstractDebuggerMaleSocket(BaseManager<? extends MaleSocket> manager, MaleSocket maleSocket) {
@@ -20,6 +22,23 @@ public class AbstractDebuggerMaleSocket extends AbstractMaleSocket {
         _maleSocket = maleSocket;
     }
 
+    protected boolean isDebuggerActive() {
+        return _debugger.isDebuggerActive()
+                && (_debugger.getDebugConditionalNG() == this.getConditionalNG());
+    }
+    
+    protected void before() {
+        if (isDebuggerActive()) {
+            System.out.format("Before: %s%n", getLongDescription());
+        }
+    }
+    
+    protected void after() {
+        if (isDebuggerActive()) {
+            System.out.format("After: %s%n", getLongDescription());
+        }
+    }
+    
     @Override
     protected final void registerListenersForThisClass() {
         _maleSocket.registerListeners();

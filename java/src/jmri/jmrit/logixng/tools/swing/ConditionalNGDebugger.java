@@ -13,6 +13,7 @@ import javax.swing.*;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.tools.debugger.Debugger;
 import jmri.util.JmriJFrame;
 
 /**
@@ -24,6 +25,8 @@ public class ConditionalNGDebugger extends JmriJFrame {
 
     private static final int panelWidth = 700;
     private static final int panelHeight = 500;
+    
+    private final Debugger _debugger = InstanceManager.getDefault(Debugger.class);
     
     private final TreePane _treePane;
     
@@ -109,6 +112,8 @@ public class ConditionalNGDebugger extends JmriJFrame {
         getContentPane().add(mainSplitPane);
         
         initMinimumSize(new Dimension(panelWidth, panelHeight));
+        
+        _debugger.activateDebugger(conditionalNG);
     }
     
     public void initMinimumSize(Dimension dimension) {
@@ -120,6 +125,7 @@ public class ConditionalNGDebugger extends JmriJFrame {
     /** {@inheritDoc} */
     @Override
     public void windowClosed(WindowEvent e) {
+        _debugger.deActivateDebugger();
         logixNGData.clear();
         logixNGData.put("Finish", _conditionalNG.getSystemName());  // NOI18N
         fireLogixNGEvent();
