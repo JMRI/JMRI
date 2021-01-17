@@ -174,60 +174,46 @@ public class ActionLocalVariable extends AbstractDigitalAction implements Vetoab
         
         SymbolTable symbolTable = getConditionalNG().getSymbolTable();
         
-        AtomicReference<JmriException> ref = new AtomicReference<>();
-        
-        ThreadingUtil.runOnLayout(() -> {
-            
-            switch (_variableOperation) {
-                case SetToNull:
+        switch (_variableOperation) {
+            case SetToNull:
+                symbolTable.setValue(_variableName, null);
+                break;
+
+            case SetToString:
+                symbolTable.setValue(_variableName, _data);
+                break;
+
+            case CopyVariableToVariable:
+                Object variableValue = getConditionalNG()
+                                .getSymbolTable().getValue(_data);
+
+                symbolTable.setValue(_variableName, variableValue);
+                break;
+
+            case CopyMemoryToVariable:
+                if (_memoryHandle != null) {
+                    symbolTable.setValue(_variableName, _memoryHandle.getBean().getValue());
+                } else {
+                    log.warn("setLocalVariable should copy memory to variable but memory is null");
+                }
+                break;
+
+            case CalculateFormula:
+                if (_data.isEmpty()) {
                     symbolTable.setValue(_variableName, null);
-                    break;
+                } else {
+                    if (_expressionNode == null) return;
                     
-                case SetToString:
-                    symbolTable.setValue(_variableName, _data);
-                    break;
-                    
-                case CopyVariableToVariable:
-                    Object variableValue = getConditionalNG()
-                                    .getSymbolTable().getValue(_data);
-                    
-                    symbolTable.setValue(_variableName, variableValue);
-                    break;
-                    
-                case CopyMemoryToVariable:
-                    if (_memoryHandle != null) {
-                        symbolTable.setValue(_variableName, _memoryHandle.getBean().getValue());
-                    } else {
-                        log.warn("setLocalVariable should copy memory to variable but memory is null");
-                    }
-                    break;
-                    
-                case CalculateFormula:
-                    if (_data.isEmpty()) {
-                        symbolTable.setValue(_variableName, null);
-                    } else {
-                        try {
-                            if (_expressionNode == null) {
-                                return;
-                            }
-                            symbolTable.setValue(_variableName,
-                                    _expressionNode.calculate(
-                                            getConditionalNG().getSymbolTable()));
-                        } catch (JmriException e) {
-                            // Throw exception
-                            ref.set(e);
-                        }
-                    }
-                    break;
-                    
-                default:
-                    // Throw exception
-                    ref.set(new JmriException(
-                            new IllegalArgumentException("_memoryOperation has invalid value: {}" + _variableOperation.name())));
-            }
-        });
-        
-        if (ref.get() != null) throw ref.get();
+                    symbolTable.setValue(_variableName,
+                            _expressionNode.calculate(
+                                    getConditionalNG().getSymbolTable()));
+                }
+                break;
+
+            default:
+                // Throw exception
+                throw new IllegalArgumentException("_memoryOperation has invalid value: {}" + _variableOperation.name());
+        }
     }
 
     @Override

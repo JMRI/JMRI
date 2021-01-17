@@ -161,7 +161,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
 
     @After
     public void tearDown() {
-        JUnitAppender.clearBacklog();   // REMOVE THIS!!!
+//        JUnitAppender.clearBacklog();   // REMOVE THIS!!!
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }

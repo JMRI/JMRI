@@ -31,25 +31,19 @@ public class RecursiveModuleTest {
     
     @Test
     public void testFibonacci() {
-        result.setValue("BlahaBlahaBlaha");
         n.setValue(0);
-        System.out.format("aaa 0: result.value: %s%n", result.getValue());
         Assert.assertEquals(Long.valueOf(1), result.getValue());
         
         n.setValue(1);
-        System.out.format("aaa 1: result.value: %s%n", result.getValue());
         Assert.assertEquals(Long.valueOf(1), result.getValue());
         
         n.setValue(2);
-        System.out.format("aaa 2: result.value: %s%n", result.getValue());
         Assert.assertEquals(Long.valueOf(2), result.getValue());
         
         n.setValue(3);
-        System.out.format("aaa 3: result.value: %s%n", result.getValue());
         Assert.assertEquals(Long.valueOf(3), result.getValue());
         
         n.setValue(4);
-        System.out.format("aaa 4: result.value: %s%n", result.getValue());
         Assert.assertEquals(Long.valueOf(5), result.getValue());
         
         n.setValue(5);

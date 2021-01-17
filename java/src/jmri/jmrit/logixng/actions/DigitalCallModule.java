@@ -156,8 +156,6 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
     public void execute() throws JmriException {
         if (_moduleHandle == null) return;
         
-        System.out.format("CallModule: %d, conditionalNG: %s%n", Thread.currentThread().getId(), getConditionalNG().getSystemName());
-        
         Module module = _moduleHandle.getBean();
         
         ConditionalNG oldConditionalNG = getConditionalNG();
@@ -175,7 +173,7 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
         int currentStackPos = conditionalNG.getStack().getCount();
         
         DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(conditionalNG);
-        newSymbolTable.createSymbols(_parameterData);
+        newSymbolTable.createSymbols(conditionalNG.getSymbolTable(), _parameterData);
         newSymbolTable.createSymbols(module.getLocalVariables());
         conditionalNG.setSymbolTable(newSymbolTable);
         

@@ -53,14 +53,16 @@ public class DefaultModule extends AbstractBase
     
     @Override
     public void setCurrentConditionalNG(ConditionalNG conditionalNG) {
-        System.out.format("Set: Current thread: %d, conditionalNG: %s%n", Thread.currentThread().getId(), conditionalNG.getSystemName());
-        _currentConditionalNG.put(Thread.currentThread(), conditionalNG);
+        synchronized(this) {
+            _currentConditionalNG.put(Thread.currentThread(), conditionalNG);
+        }
     }
     
     @Override
     public ConditionalNG getConditionalNG() {
-        System.out.format("Get: Current thread: %d, conditionalNG: %s%n", Thread.currentThread().getId(), _currentConditionalNG.get(Thread.currentThread()).getSystemName());
-        return _currentConditionalNG.get(Thread.currentThread());
+        synchronized(this) {
+            return _currentConditionalNG.get(Thread.currentThread());
+        }
     }
     
     /** {@inheritDoc} */

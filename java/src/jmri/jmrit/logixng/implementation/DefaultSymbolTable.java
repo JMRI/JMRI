@@ -96,6 +96,15 @@ public class DefaultSymbolTable implements SymbolTable {
     /** {@inheritDoc} */
     @Override
     public void createSymbols(Collection<? extends SymbolTable.VariableData> symbolDefinitions) throws JmriException {
+        createSymbols(this, symbolDefinitions);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void createSymbols(SymbolTable symbolTable,
+            Collection<? extends SymbolTable.VariableData> symbolDefinitions)
+            throws JmriException {
+        
         for (SymbolTable.VariableData variable : symbolDefinitions) {
             Symbol symbol = new DefaultSymbol(variable.getName(), _stack.getCount() - _firstSymbolIndex);
             Object initialValue = null;
@@ -121,7 +130,7 @@ public class DefaultSymbolTable implements SymbolTable {
                     break;
                     
                 case LocalVariable:
-                    initialValue = getValue(variable.getInitialValueData());
+                    initialValue = symbolTable.getValue(variable.getInitialValueData());
 //                    initialValue = _prevSymbolTable.getValue(variable.getInitialValueData());
                     break;
                     
@@ -133,7 +142,7 @@ public class DefaultSymbolTable implements SymbolTable {
                 case Reference:
                     if (ReferenceUtil.isReference(variable.getInitialValueData())) {
                         initialValue = ReferenceUtil.getReference(
-                                this, variable.getInitialValueData());
+                                symbolTable, variable.getInitialValueData());
                     } else {
                         log.error("\"{}\" is not a reference", variable.getInitialValueData());
                     }
@@ -143,7 +152,7 @@ public class DefaultSymbolTable implements SymbolTable {
                     RecursiveDescentParser parser = createParser();
                     ExpressionNode expressionNode = parser.parseExpression(
                             variable.getInitialValueData());
-                    initialValue = expressionNode.calculate(this);
+                    initialValue = expressionNode.calculate(symbolTable);
                     break;
                     
                 default:

@@ -69,6 +69,7 @@ public class DefaultConditionalNGTest {
         MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class)
                 .registerAction(action);
         conditionalNG.getChild(0).connect(socket);
+        conditionalNG.setParentForAllChildren();
         
         socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
         
@@ -169,37 +170,37 @@ public class DefaultConditionalNGTest {
 
         @Override
         public String getShortDescription(Locale locale) {
-            throw new UnsupportedOperationException("Not supported");
+            return "MyDigitalAction";
         }
 
         @Override
         public String getLongDescription(Locale locale) {
-            throw new UnsupportedOperationException("Not supported");
+            return "MyDigitalAction";
         }
 
         @Override
         public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
-            throw new UnsupportedOperationException("Not supported");
+            throw new UnsupportedOperationException("Not supported6");
         }
 
         @Override
         public int getChildCount() {
-            throw new UnsupportedOperationException("Not supported");
+            return 0;
         }
 
         @Override
         public Category getCategory() {
-            throw new UnsupportedOperationException("Not supported");
+            throw new UnsupportedOperationException("Not supported7");
         }
 
         @Override
         public boolean isExternal() {
-            throw new UnsupportedOperationException("Not supported");
+            throw new UnsupportedOperationException("Not supported8");
         }
 
         @Override
         public void setup() {
-            throw new UnsupportedOperationException("Not supported");
+            throw new UnsupportedOperationException("Not supported9");
         }
 
         @Override

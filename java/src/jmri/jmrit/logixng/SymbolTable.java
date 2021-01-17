@@ -48,6 +48,20 @@ public interface SymbolTable {
             throws JmriException;
     
     /**
+     * Add new symbols to the symbol table.
+     * This method is used for parameters, when new symbols might be created
+     * that uses symbols from a previous symbol table.
+     * 
+     * @param symbolTable the symbol table to get existing symbols from
+     * @param symbolDefinitions the definitions of the new symbols
+     * @throws JmriException if an exception is thrown
+     */
+    public void createSymbols(
+            SymbolTable symbolTable,
+            Collection<? extends VariableData> symbolDefinitions)
+            throws JmriException;
+    
+    /**
      * Removes symbols from the symbol table
      * @param symbolDefinitions the definitions of the symbols to be removed
      * @throws JmriException if an exception is thrown
