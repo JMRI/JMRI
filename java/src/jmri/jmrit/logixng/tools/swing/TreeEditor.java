@@ -464,7 +464,7 @@ public class TreeEditor extends TreeViewer {
                         }
 
                         femaleSocket.forEntireTree((Base b) -> {
-                            b.addPropertyChangeListener(this);
+                            b.addPropertyChangeListener(_treePane);
                         });
 
                         ThreadingUtil.runOnGUIEventually(() -> {
@@ -1281,7 +1281,7 @@ public class TreeEditor extends TreeViewer {
                                     InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
                             clipboard.add(_currentFemaleSocket.getConnectedSocket());
                             _currentFemaleSocket.disconnect();
-                            updateTree(_currentFemaleSocket, _currentPath.getPath());
+                            _treePane.updateTree(_currentFemaleSocket, _currentPath.getPath());
                         });
                         _treePane._femaleRootSocket.registerListeners();
                    } else {
@@ -1329,7 +1329,7 @@ public class TreeEditor extends TreeViewer {
                                 _currentFemaleSocket.connect(clipboard.fetchTopItem());
                                 _currentFemaleSocket.setParentForAllChildren();
                                 ThreadingUtil.runOnGUIEventually(() -> {
-                                    updateTree(_currentFemaleSocket, _currentPath.getPath());
+                                    _treePane.updateTree(_currentFemaleSocket, _currentPath.getPath());
                                 });
                             } catch (SocketAlreadyConnectedException ex) {
                                 log.error("item cannot be connected", ex);
@@ -1574,7 +1574,7 @@ public class TreeEditor extends TreeViewer {
             } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
                 log.error("Exception while deleting bean", e);
             }
-            updateTree(_currentFemaleSocket, _currentPath.getPath());
+            _treePane.updateTree(_currentFemaleSocket, _currentPath.getPath());
         }
     }
     

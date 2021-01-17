@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.tools.swing;
 
+import java.awt.Dimension;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.EventListener;
@@ -7,20 +8,26 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+import javax.swing.*;
 
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
+import jmri.util.JmriJFrame;
 
 /**
  * Editor of ConditionalNG
  * 
  * @author Daniel Bergqvist 2018
  */
-public class ConditionalNGDebugger extends TreeEditor {
+public class ConditionalNGDebugger extends JmriJFrame {
 
-    protected final ConditionalNG _conditionalNG;
+    private static final int panelWidth = 700;
+    private static final int panelHeight = 500;
     
+    private final TreePane _treePane;
+    
+    protected final ConditionalNG _conditionalNG;
     
     /**
      * Maintain a list of listeners -- normally only one.
@@ -33,14 +40,14 @@ public class ConditionalNGDebugger extends TreeEditor {
      */
     final HashMap<String, String> logixNGData = new HashMap<>();
     
-    /**
+    /*.*
      * Construct a ConditionalEditor.
      * <p>
      * This is used by JmriUserPreferencesManager since it tries to create an
      * instance of this class.
-     */
+     *./
     public ConditionalNGDebugger() {
-        super(InstanceManager.getDefault(DigitalActionManager.class).createFemaleSocket(null, new FemaleSocketListener(){
+        _treePane = new TreePane(InstanceManager.getDefault(DigitalActionManager.class).createFemaleSocket(null, new FemaleSocketListener(){
             @Override
             public void connected(FemaleSocket socket) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -50,7 +57,7 @@ public class ConditionalNGDebugger extends TreeEditor {
             public void disconnected(FemaleSocket socket) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
-        }, "A"), false, false);
+        }, "A"));
         _conditionalNG = null;
     }
     
@@ -60,7 +67,8 @@ public class ConditionalNGDebugger extends TreeEditor {
      * @param conditionalNG the ConditionalNG to be edited
      */
     public ConditionalNGDebugger(@Nonnull ConditionalNG conditionalNG) {
-        super(conditionalNG.getFemaleSocket(), true, false);
+        _treePane = new TreePane(conditionalNG.getFemaleSocket());
+        _treePane.initComponents();
         
         _conditionalNG = conditionalNG;
         
@@ -69,6 +77,44 @@ public class ConditionalNGDebugger extends TreeEditor {
         } else {
             setTitle(Bundle.getMessage("TitleEditConditionalNG2", _conditionalNG.getSystemName(), _conditionalNG.getUserName()));
         }
+        
+        JPanel variablePanel = new JPanel();
+        JScrollPane variableScrollPane = new JScrollPane(variablePanel);
+        
+        JPanel watchPanel = new JPanel();
+        JScrollPane watchScrollPane = new JScrollPane(watchPanel);
+        
+        JSplitPane watchSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+                           variableScrollPane, watchScrollPane);
+        watchSplitPane.setOneTouchExpandable(true);
+        watchSplitPane.setDividerLocation(150);
+        
+        // Provide minimum sizes for the two components in the split pane
+        Dimension minimumWatchSize = new Dimension(100, 50);
+        variableScrollPane.setMinimumSize(minimumWatchSize);
+        watchScrollPane.setMinimumSize(minimumWatchSize);
+        
+        JSplitPane mainSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+                           _treePane, watchSplitPane);
+        mainSplitPane.setOneTouchExpandable(true);
+        mainSplitPane.setDividerLocation(150);
+        
+        // Provide minimum sizes for the two components in the split pane
+        Dimension minimumMainSize = new Dimension(100, 50);
+        _treePane.setMinimumSize(minimumMainSize);
+        watchSplitPane.setMinimumSize(minimumMainSize);
+        
+        // add panels
+        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        getContentPane().add(mainSplitPane);
+        
+        initMinimumSize(new Dimension(panelWidth, panelHeight));
+    }
+    
+    public void initMinimumSize(Dimension dimension) {
+        setMinimumSize(dimension);
+        pack();
+        setVisible(true);
     }
     
     /** {@inheritDoc} */
@@ -99,6 +145,6 @@ public class ConditionalNGDebugger extends TreeEditor {
     }
     
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConditionalNGEditor.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConditionalNGDebugger.class);
 
 }
