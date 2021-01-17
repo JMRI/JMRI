@@ -56,38 +56,22 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
             return;
         }
         if (adapter.getSystemConnectionMemo() != null) {
-            systemPrefixField.addActionListener((ActionEvent e) -> {
-                if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) { // not normalized
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
-                    systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
-                }
-            });
+            systemPrefixField.addActionListener((ActionEvent e) -> checkPrefixEntry(adapter));
             systemPrefixField.addFocusListener(new FocusListener() {
                 @Override
                 public void focusLost(FocusEvent e) {
-                    if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) { // not normalized
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
-                        systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
-                    }
+                    checkPrefixEntry(adapter);
                 }
 
                 @Override
                 public void focusGained(FocusEvent e) {
                 }
             });
-            connectionNameField.addActionListener((ActionEvent e) -> {
-                if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionNameDialog", connectionNameField.getText()));
-                    connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
-                }
-            });
+            connectionNameField.addActionListener((ActionEvent e) -> checkNameEntry(adapter));
             connectionNameField.addFocusListener(new FocusListener() {
                 @Override
                 public void focusLost(FocusEvent e) {
-                    if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionNameDialog", connectionNameField.getText()));
-                        connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
-                    }
+                    checkNameEntry(adapter);
                 }
 
                 @Override
@@ -102,7 +86,7 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
     @Override
     public void updateAdapter() {
         if (adapter.getSystemConnectionMemo() != null && !adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
+            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
         }
     }
@@ -120,7 +104,7 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
         setInstance();
         if (!init) {
             if (adapter.getSystemConnectionMemo() != null) {
-                systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
+                systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
                 connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                 NUMOPTIONS = NUMOPTIONS + 2;
             }
