@@ -37,17 +37,19 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
      *
      * @return File
      */
-    public File buildSwitchList(Location location) {
+    public File buildSwitchList(Location location) {      
+        if (!Setup.isGenerateCsvSwitchListEnabled()) {
+            return null; // done, not enabled
+        }
         
         // Append switch list data if not operating in real time
         boolean append = false; // add text to end of file when true
 
         if (!Setup.isSwitchListRealTime()) {
-            if (location.getStatus().equals(Location.CSV_GENERATED)) {
+            if (location.getStatus().equals(Location.UPDATED)) {
                 return null; // nothing to add
             }
             append = location.getSwitchListState() == Location.SW_APPEND;
-            location.setSwitchListState(Location.SW_APPEND);
         }
         // create CSV switch list file
         File file = InstanceManager.getDefault(TrainManagerXml.class).createCsvSwitchListFile(location.getName());
@@ -60,8 +62,9 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
             trimCvsFile(file, location);
         }
 
-        try (CSVPrinter fileOut = new CSVPrinter(new OutputStreamWriter(new FileOutputStream(file, append),
-                StandardCharsets.UTF_8), CSVFormat.DEFAULT)) {
+        try (CSVPrinter fileOut = new CSVPrinter(
+                new OutputStreamWriter(new FileOutputStream(file, append), StandardCharsets.UTF_8),
+                CSVFormat.DEFAULT)) {
             if (!append) {
                 // build header
                 printHeader(fileOut);
@@ -257,26 +260,28 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
             }
             printEnd(fileOut); // done with switch list
 
-            // now list hold cars
-            List<Car> rsByLocation = InstanceManager.getDefault(CarManager.class).getByLocationList();
-            List<Car> carList = new ArrayList<>();
-            for (Car rs : rsByLocation) {
-                if (rs.getLocation() != null &&
-                        splitString(rs.getLocation().getName()).equals(splitString(location.getName())) &&
-                        rs.getRouteLocation() == null) {
-                    carList.add(rs);
-                }
-            }
-            clearUtilityCarTypes(); // list utility cars by quantity
-            for (Car car : carList) {
-                int count = 0;
-                if (car.isUtility()) {
-                    count = countPickupUtilityCars(carList, car, !IS_MANIFEST);
-                    if (count == 0) {
-                        continue; // already done this set of utility cars
+            if (Setup.isSwitchListRealTime() && Setup.isPrintTrackSummaryEnabled()) {
+                // now list hold cars
+                List<Car> rsByLocation = InstanceManager.getDefault(CarManager.class).getByLocationList();
+                List<Car> carList = new ArrayList<>();
+                for (Car rs : rsByLocation) {
+                    if (rs.getLocation() != null &&
+                            splitString(rs.getLocation().getName()).equals(splitString(location.getName())) &&
+                            rs.getRouteLocation() == null) {
+                        carList.add(rs);
                     }
                 }
-                printCar(fileOut, car, "HOLD", Bundle.getMessage("csvHoldCar"), count);
+                clearUtilityCarTypes(); // list utility cars by quantity
+                for (Car car : carList) {
+                    int count = 0;
+                    if (car.isUtility()) {
+                        count = countPickupUtilityCars(carList, car, !IS_MANIFEST);
+                        if (count == 0) {
+                            continue; // already done this set of utility cars
+                        }
+                    }
+                    printCar(fileOut, car, "HOLD", Bundle.getMessage("csvHoldCar"), count);
+                }
             }
             printEnd(fileOut); // done with hold cars
 
@@ -284,7 +289,6 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
             listCarsLocationUnknown(fileOut);
             fileOut.flush();
             fileOut.close();
-            location.setStatus(Location.CSV_GENERATED);
         } catch (IOException e) {
             log.error("Can not open CSV switch list file: {}", file.getName());
             return null;
@@ -321,7 +325,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
             File backupFile = new File(
                     InstanceManager.getDefault(TrainManagerXml.class).backupFileName(file.getAbsolutePath()));
             try (BufferedReader in = new BufferedReader(
-                        new InputStreamReader(new FileInputStream(backupFile), StandardCharsets.UTF_8))) {
+                    new InputStreamReader(new FileInputStream(backupFile), StandardCharsets.UTF_8))) {
                 while (true) {
                     String line = in.readLine();
                     if (line == null) {

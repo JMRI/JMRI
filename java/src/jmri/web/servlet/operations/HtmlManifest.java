@@ -222,7 +222,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                 // builder.append(pickupUtilityCars(cars, car, location, isManifest));
                 // } // use truncated format if there's a switch list
                 // else
-                if (isManifest && Setup.isTruncateManifestEnabled()
+                if (isManifest && Setup.isPrintTruncateManifestEnabled()
                         && location.getLocation().isSwitchListEnabled()) {
                     builder.append(pickUpCar(car, Setup.getPickupTruncatedManifestMessageFormat()));
                 } else {
@@ -236,7 +236,7 @@ public class HtmlManifest extends HtmlTrainCommon {
             // if (this.isUtilityCar(car)) {
             // builder.append(setoutUtilityCars(cars, car, location, isManifest));
             // } else
-            if (isManifest && Setup.isTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled() && !train.isLocalSwitcher()) {
+            if (isManifest && Setup.isPrintTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled() && !train.isLocalSwitcher()) {
                 // use truncated format if there's a switch list
                 builder.append(dropCar(car, Setup.getDropTruncatedManifestMessageFormat(), local));
             } else {
