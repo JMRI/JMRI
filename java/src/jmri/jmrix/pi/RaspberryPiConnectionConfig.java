@@ -55,31 +55,7 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
         if (init) {
             return;
         }
-        if (adapter.getSystemConnectionMemo() != null) {
-            systemPrefixField.addActionListener((ActionEvent e) -> checkPrefixEntry(adapter));
-            systemPrefixField.addFocusListener(new FocusListener() {
-                @Override
-                public void focusLost(FocusEvent e) {
-                    checkPrefixEntry(adapter);
-                }
-
-                @Override
-                public void focusGained(FocusEvent e) {
-                }
-            });
-            connectionNameField.addActionListener((ActionEvent e) -> checkNameEntry(adapter));
-            connectionNameField.addFocusListener(new FocusListener() {
-                @Override
-                public void focusLost(FocusEvent e) {
-                    checkNameEntry(adapter);
-                }
-
-                @Override
-                public void focusGained(FocusEvent e) {
-                }
-            });
-
-        }
+        addNameEntryCheckers(adapter);
         init = true;
     }
 

@@ -170,30 +170,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             }
         }
 
-        if (adapter.getSystemConnectionMemo() != null) {
-            systemPrefixField.addActionListener(e -> checkPrefixEntry(adapter));
-            systemPrefixField.addFocusListener(new FocusListener() {
-                @Override
-                public void focusLost(FocusEvent e) {
-                    checkPrefixEntry(adapter);
-                }
-
-                @Override
-                public void focusGained(FocusEvent e) {
-                }
-            });
-            connectionNameField.addActionListener(e -> checkNameEntry(adapter));
-            connectionNameField.addFocusListener(new FocusListener() {
-                @Override
-                public void focusLost(FocusEvent e) {
-                    checkNameEntry(adapter);
-                }
-
-                @Override
-                public void focusGained(FocusEvent e) {
-                }
-            });
-        }
+        addNameEntryCheckers(adapter);
 
         // set/change delay interval between (actually before) output (Turnout) commands
         outputIntervalSpinner.addChangeListener(e -> adapter.getSystemConnectionMemo().setOutputInterval((Integer) outputIntervalSpinner.getValue()));

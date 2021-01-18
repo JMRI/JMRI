@@ -3,6 +3,8 @@ package jmri.jmrix;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -248,7 +250,34 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
         }
     }
 
-    protected void checkPrefixEntry(@Nonnull PortAdapter adapter) {
+    protected void addNameEntryCheckers(@Nonnull PortAdapter adapter) {
+        if (adapter.getSystemConnectionMemo() != null) {
+            systemPrefixField.addActionListener(e -> checkPrefixEntry(adapter));
+            systemPrefixField.addFocusListener(new FocusListener() {
+                @Override
+                public void focusLost(FocusEvent e) {
+                    checkPrefixEntry(adapter);
+                }
+
+                @Override
+                public void focusGained(FocusEvent e) {
+                }
+            });
+            connectionNameField.addActionListener(e -> checkNameEntry(adapter));
+            connectionNameField.addFocusListener(new FocusListener() {
+                @Override
+                public void focusLost(FocusEvent e) {
+                    checkNameEntry(adapter);
+                }
+
+                @Override
+                public void focusGained(FocusEvent e) {
+                }
+            });
+        }
+    }
+
+    private void checkPrefixEntry(@Nonnull PortAdapter adapter) {
         if (!systemPrefixField.isValid()) { // invalid prefix format entry, actually can't lose focus until valid
             systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
         }
@@ -258,7 +287,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
         }
     }
 
-    protected void checkNameEntry(@Nonnull PortAdapter adapter) {
+    private void checkNameEntry(@Nonnull PortAdapter adapter) {
         if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
             JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionNameDialog", connectionNameField.getText()));
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());

@@ -57,40 +57,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
         if (init) {
             return;
         }
-
-        if (adapter.getSystemConnectionMemo() != null) {
-            systemPrefixField.addActionListener(e -> checkPrefixEntry(adapter));
-            systemPrefixField.addFocusListener(new FocusListener() {
-                @Override
-                public void focusLost(FocusEvent e) {
-                    checkPrefixEntry(adapter);
-                }
-
-                @Override
-                public void focusGained(FocusEvent e) {
-                }
-            });
-            connectionNameField.addActionListener(e -> checkNameEntry(adapter));
-            connectionNameField.addFocusListener(new FocusListener() {
-                @Override
-                public void focusLost(FocusEvent e) {
-                    checkNameEntry(adapter);
-                }
-
-                @Override
-                public void focusGained(FocusEvent e) {
-                }
-            });
-            for (Map.Entry<String, Option> entry : options.entrySet()) {
-                final String item = entry.getKey();
-                if (entry.getValue().getComponent() instanceof JComboBox) {
-                    ((JComboBox<?>) entry.getValue().getComponent()).addActionListener((ActionEvent e) -> {
-                        adapter.setOptionState(item, options.get(item).getItem());
-                    });
-                }
-            }
-
-        }
+        addNameEntryCheckers(adapter);
         init = true;
     }
 

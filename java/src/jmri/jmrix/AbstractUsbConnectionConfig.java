@@ -72,30 +72,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
     protected void checkInitDone() {
         log.debug("init called for {}", name());
         if (!init) {
-            if (adapter.getSystemConnectionMemo() != null) {
-                systemPrefixField.addActionListener(e -> checkPrefixEntry(adapter));
-                systemPrefixField.addFocusListener(new FocusListener() {
-                    @Override
-                    public void focusLost(FocusEvent e) {
-                        checkPrefixEntry(adapter);
-                    }
-
-                    @Override
-                    public void focusGained(FocusEvent e) {
-                    }
-                });
-                connectionNameField.addActionListener(e -> checkNameEntry(adapter));
-                connectionNameField.addFocusListener(new FocusListener() {
-                    @Override
-                    public void focusLost(FocusEvent e) {
-                        checkNameEntry(adapter);
-                    }
-
-                    @Override
-                    public void focusGained(FocusEvent e) {
-                    }
-                });
-            }
+            addNameEntryCheckers(adapter);
             portBox.addFocusListener(new FocusListener() {
                 @Override
                 public void focusGained(FocusEvent e) {
@@ -116,7 +93,6 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
                     });
                 }
             }
-
             init = true;
         }
     }
