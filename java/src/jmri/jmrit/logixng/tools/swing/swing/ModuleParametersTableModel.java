@@ -94,6 +94,8 @@ public class ModuleParametersTableModel extends AbstractTableModel {
     /** {@inheritDoc} */
     @Override
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
+        if (rowIndex >= _parameters.size()) return;
+        
         DefaultParameter parameter = _parameters.get(rowIndex);
         
         switch (columnIndex) {

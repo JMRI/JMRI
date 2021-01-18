@@ -17,6 +17,10 @@ public class AbstractDebuggerMaleSocket extends AbstractMaleSocket {
     private final Debugger _debugger = InstanceManager.getDefault(Debugger.class);
     protected final MaleSocket _maleSocket;
     
+    private boolean _breakpointBefore = false;
+    private boolean _breakpointAfter = false;
+    
+    
     public AbstractDebuggerMaleSocket(BaseManager<? extends MaleSocket> manager, MaleSocket maleSocket) {
         super(manager);
         _maleSocket = maleSocket;
@@ -30,12 +34,14 @@ public class AbstractDebuggerMaleSocket extends AbstractMaleSocket {
     protected void before() {
         if (isDebuggerActive()) {
             System.out.format("Before: %s%n", getLongDescription());
+            _debugger.firePropertyChange(Debugger.STEP_BEFORE, null, this);
         }
     }
     
     protected void after() {
         if (isDebuggerActive()) {
             System.out.format("After: %s%n", getLongDescription());
+            _debugger.firePropertyChange(Debugger.STEP_AFTER, null, this);
         }
     }
     

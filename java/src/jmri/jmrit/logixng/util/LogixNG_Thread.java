@@ -142,6 +142,10 @@ public class LogixNG_Thread {
         }
     }
     
+    public Thread getThread() {
+        return _logixNGThread;
+    }
+    
     public int getThreadId() {
         return _threadID;
     }

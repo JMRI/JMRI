@@ -78,7 +78,8 @@ public class DefaultModuleXml extends jmri.managers.configurexml.AbstractNamedBe
                 InstanceManager.getDefault(FemaleSocketManager.class)
                         .getSocketTypeByType(rootSocketTypeName);
         
-        DefaultModule h = new DefaultModule(sys, uname, socketType);
+        DefaultModule h = (DefaultModule) InstanceManager.getDefault(ModuleManager.class)
+                .createModule(sys, uname, socketType);
         
         loadCommon(h, shared);
         
@@ -101,7 +102,6 @@ public class DefaultModuleXml extends jmri.managers.configurexml.AbstractNamedBe
             h.setSocketSystemName(socketSystemName.getTextTrim());
         }
         
-        InstanceManager.getDefault(ModuleManager.class).register(h);
         return true;
     }
     

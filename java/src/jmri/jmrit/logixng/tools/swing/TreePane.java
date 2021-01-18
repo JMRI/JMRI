@@ -54,6 +54,10 @@ public class TreePane extends JPanel implements PropertyChangeListener {
     }
     
     public void initComponents() {
+        initComponents((FemaleSocket femaleSocket, JPanel panel) -> panel);
+    }
+    
+    public void initComponents(FemaleSocketDecorator decorator) {
         
         femaleSocketTreeModel = new FemaleSocketTreeModel(_femaleRootSocket);
         
@@ -61,7 +65,7 @@ public class TreePane extends JPanel implements PropertyChangeListener {
         _tree = new JTree();
         ToolTipManager.sharedInstance().registerComponent(_tree);
         _tree.setModel(femaleSocketTreeModel);
-        _tree.setCellRenderer(new FemaleSocketTreeRenderer());
+        _tree.setCellRenderer(new FemaleSocketTreeRenderer(decorator));
         
         _tree.setRootVisible(_rootVisible);
         _tree.setShowsRootHandles(true);
@@ -179,6 +183,14 @@ public class TreePane extends JPanel implements PropertyChangeListener {
         _tree.updateUI();
     }
     
+    public void updateTree(Base item) {
+            List<FemaleSocket> list = new ArrayList<>();
+            getPath(item, list);
+            
+            FemaleSocket femaleSocket = list.get(list.size()-1);
+            updateTree(femaleSocket, list.toArray());
+    }
+    
     public void dispose() {
         _femaleRootSocket.forEntireTree((Base b) -> {
             b.addPropertyChangeListener(TreePane.this);
@@ -192,16 +204,17 @@ public class TreePane extends JPanel implements PropertyChangeListener {
      */
     public static class FemaleSocketTreeModel implements TreeModel {
 
-        private final FemaleSocket root;
+        private final FemaleSocket _root;
         protected final List<TreeModelListener> listeners = new ArrayList<>();
-
+        
+        
         public FemaleSocketTreeModel(FemaleSocket root) {
-            this.root = root;
+            this._root = root;
         }
-
+        
         @Override
         public Object getRoot() {
-            return root;
+            return _root;
         }
 
         @Override
@@ -269,6 +282,13 @@ public class TreePane extends JPanel implements PropertyChangeListener {
     
     private static final class FemaleSocketTreeRenderer implements TreeCellRenderer {
 
+        private final FemaleSocketDecorator _decorator;
+        
+        
+        public FemaleSocketTreeRenderer(FemaleSocketDecorator decorator) {
+            this._decorator = decorator;
+        }
+        
         @Override
         public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
             
@@ -320,11 +340,15 @@ public class TreePane extends JPanel implements PropertyChangeListener {
             
             panel.add(connectedItemLabel);
             
-            return mainPanel;
+            return _decorator.decorate(socket, mainPanel);
         }
         
     }
     
+    
+    public interface FemaleSocketDecorator {
+        public JPanel decorate(FemaleSocket femaleSocket, JPanel panel);
+    }
     
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TreeViewer.class);
 
