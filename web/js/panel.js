@@ -2286,7 +2286,13 @@ var $drawWidgetSymbol = function(id, state) {
         // draw methods
         case "icon" : // slider, 1 shape for all switchtypes (S, T, L)
             ctx.beginPath(); // the sliderspace
-            ctx.strokeStyle = (state == "2" ? $inactiveColor : "darkgray");
+            if (state == "2") {
+                ctx.strokeStyle = $activeColor;
+            } else if (state == "4") {
+                ctx.strokeStyle = $inactiveColor;
+            } else {
+                ctx.strokeStyle = "darkgray";
+            }
             ctx.lineCap = "round";
             ctx.lineWidth = radius;
             ctx.moveTo(-radius/2, 0);

@@ -7,7 +7,6 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ChangeListener;
 
 //import com.alexandriasoftware.swing.Validation;
 import jmri.*;
@@ -15,7 +14,6 @@ import jmri.jmrit.display.CoordinateEdit;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableJComponent;
-import jmri.jmrit.display.ToolTip;
 import jmri.jmrix.SystemConnectionMemoManager;
 import jmri.swing.ManagerComboBox;
 //import jmri.swing.SystemNameValidator;
@@ -143,7 +141,6 @@ public class SwitchboardEditor extends Editor {
     private final JRadioButtonMenuItem sizeSmall = new JRadioButtonMenuItem(Bundle.getMessage("optionSmaller"));
     private final JRadioButtonMenuItem sizeDefault = new JRadioButtonMenuItem(Bundle.getMessage("optionDefault"));
     private final JRadioButtonMenuItem sizeLarge = new JRadioButtonMenuItem(Bundle.getMessage("optionLarger"));
-    private JSlider scaleSlider;
     final static int SIZE_MIN = 50;
     final static int SIZE_INIT = 100;
     final static int SIZE_MAX = 150;
@@ -195,7 +192,6 @@ public class SwitchboardEditor extends Editor {
             }
         });
         // make menus
-        JPanel sliderPane = getIconScaleSlider(new JPanel()); // move to menu creation when no longer in editor pane
         _menuBar = new JMenuBar();
         makeOptionMenu();
         makeFileMenu();
@@ -359,7 +355,6 @@ public class SwitchboardEditor extends Editor {
         allPane.add(allOffButton);
 
         JPanel updatePanel = new JPanel();
-        updatePanel.add(sliderPane);
         updatePanel.add(updateButton);
         updatePanel.add(allPane);
 
@@ -573,7 +568,7 @@ public class SwitchboardEditor extends Editor {
                 case 1:
                     log.debug("CASE SensorManager is {} for memo {}", (memo.get(SensorManager.class) == null ? "NULL" : "not null"), memo.getUserName());
                     try {
-                        name = InstanceManager.getNullableDefault(SensorManager.class).createSystemName(i + "", prefix);
+                        name = InstanceManager.getDefault(SensorManager.class).createSystemName(i + "", prefix);
                         //name = ((SensorManager)memo.get(SensorManager.class)).createSystemName(i + "", prefix);
                     } catch (jmri.JmriException | NullPointerException ex) {
                         log.trace("Error creating range at sensor {}. Connection {}", i, memo.getUserName(), ex);
@@ -844,7 +839,7 @@ public class SwitchboardEditor extends Editor {
         ButtonGroup sizeGroup = new ButtonGroup();
         sizeGroup.add(sizeSmall);
         iconSizeMenu.add(sizeSmall);
-        sizeDefault.addActionListener((ActionEvent event) -> setIconScale(SIZE_MIN));
+        sizeSmall.addActionListener((ActionEvent event) -> setIconScale(SIZE_MIN));
         sizeGroup.add(sizeDefault);
         iconSizeMenu.add(sizeDefault);
         sizeDefault.addActionListener((ActionEvent event) -> setIconScale(SIZE_INIT));
@@ -1301,7 +1296,7 @@ public class SwitchboardEditor extends Editor {
                 lightManComboBox.setSelectedItem(memo.get(LightManager.class));
                 log.debug("lightManComboBox set to {} for {}", memo.getUserName(), manuPrefix);
             }
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | NullPointerException e) {
             log.error("invalid connection [{}] in Switchboard", manuPrefix);
         }
     }
@@ -1355,10 +1350,6 @@ public class SwitchboardEditor extends Editor {
         } catch (IllegalArgumentException e) {
             log.error("invalid switch shape [{}] in Switchboard", shape);
         }
-    }
-
-    public void setBoardToolTip(ToolTip tip) {
-        setToolTip(tip);
     }
 
     /**
@@ -1745,59 +1736,19 @@ public class SwitchboardEditor extends Editor {
 
     public void setIconScale(int size) {
         _iconScale = size;
-        scaleSlider.setValue(size);
-        setScaleMenu(size);
+        // also set the scale radio menu items, all 3 are in sizeGroup so will auto deselect
+        if (size <100) {
+            sizeSmall.setSelected(true);
+        } else if (size > 100) {
+            sizeLarge.setSelected(true);
+        } else {
+            sizeDefault.setSelected(true);
+        }
+        updatePressed();
     }
 
     public int getIconScale() {
     return _iconScale;
-    }
-
-    // experimental UI to set icon scale (size), use as popup? now via simple 3 step menu
-    private JPanel getIconScaleSlider(JPanel pane) {
-        // as a slider
-        scaleSlider = new JSlider(JSlider.HORIZONTAL, SIZE_MIN, SIZE_MAX, SIZE_INIT);
-        scaleSlider.setPreferredSize(new Dimension(100, 35));
-        scaleSlider.setMajorTickSpacing(50);
-        scaleSlider.setMinorTickSpacing(10);
-        scaleSlider.setPaintTicks(true);
-        scaleSlider.setSnapToTicks(true);
-        //Create the label table
-        Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
-        labelTable.put(SIZE_MIN, new JLabel("50"));
-        labelTable.put(SIZE_INIT, new JLabel("100"));
-        labelTable.put(SIZE_MAX, new JLabel("150%"));
-        scaleSlider.setPaintLabels(true);
-        scaleSlider.setLabelTable( labelTable );
-        ChangeListener cl = e -> {
-            JSlider scale = (JSlider) e.getSource();
-            _iconScale = scale.getValue();
-            setScaleMenu(_iconScale);
-            log.debug("value is: {}", _iconScale);
-        };
-        scaleSlider.addChangeListener(cl);
-        pane.setLayout(new BoxLayout(pane, BoxLayout.PAGE_AXIS));
-        pane.add(new JLabel(Bundle.getMessage("MenuIconSize")));
-        pane.add(scaleSlider);
-        return pane;
-    }
-
-    private void setScaleMenu(int size) {
-        switch (size) { // also set the scale radio menu items
-            case (SIZE_MIN):
-                sizeSmall.setSelected(true);
-                break;
-            case (SIZE_MAX):
-                sizeLarge.setSelected(true);
-                break;
-            case (SIZE_INIT):
-                sizeDefault.setSelected(true);
-                break;
-            default: // not a standard value, all off
-                sizeSmall.setSelected(false);
-                sizeDefault.setSelected(false);
-                sizeLarge.setSelected(false);
-        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(SwitchboardEditor.class);

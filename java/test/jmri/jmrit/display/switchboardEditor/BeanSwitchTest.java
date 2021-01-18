@@ -107,7 +107,7 @@ public class BeanSwitchTest {
         dialog_thread1.setName("Connect new Sensor dialog");
         dialog_thread1.start();
 
-        t.connectNew("IS4"); // pops a dialog
+        t.connectNew(); // pops a dialog
 
         JUnitUtil.waitFor(()-> !(dialog_thread1.isAlive()), "Connect new Sensor dialog");
         JUnitAppender.assertWarnMessage("switch IS4 not found on panel");
