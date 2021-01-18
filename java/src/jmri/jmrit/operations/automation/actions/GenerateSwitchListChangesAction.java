@@ -5,7 +5,6 @@ import java.io.File;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -44,8 +43,6 @@ public class GenerateSwitchListChangesAction extends Action {
      * @param isChanged if set true only locations with changes will get a custom
      *                  switch list.
      */
-    @SuppressFBWarnings(value = { "UC_USELESS_CONDITION",
-            "RpC_REPEATED_CONDITIONAL_TEST" }, justification = "isChanged = false when called from GenerateSwitchListAction")
     protected void doAction(boolean isChanged) {
         if (getAutomationItem() != null) {
             if (!Setup.isGenerateCsvSwitchListEnabled()) {
@@ -58,7 +55,7 @@ public class GenerateSwitchListChangesAction extends Action {
             TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
             for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
                 if (location.isSwitchListEnabled() &&
-                        (!isChanged || (isChanged && location.getStatus().equals(Location.MODIFIED)))) {
+                        (!isChanged || location.getStatus().equals(Location.MODIFIED))) {
                     File csvFile = trainCsvSwitchLists.buildSwitchList(location);
                     // also build the regular switch lists so they can be used
                     trainSwitchLists.buildSwitchList(location);

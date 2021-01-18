@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.automation.actions;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -33,8 +32,6 @@ public class PrintSwitchListChangesAction extends Action {
         doAction(IS_CHANGED);
     }
 
-    @SuppressFBWarnings(value = { "UC_USELESS_CONDITION",
-            "RpC_REPEATED_CONDITIONAL_TEST" }, justification = "isChanged = false when called from PrintSwitchListAction")
     protected void doAction(boolean isChanged) {
         if (getAutomationItem() != null) {
             setRunning(true);
@@ -42,7 +39,7 @@ public class PrintSwitchListChangesAction extends Action {
             TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
             for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
                 if (location.isSwitchListEnabled() &&
-                        (!isChanged || (isChanged && location.getStatus().equals(Location.MODIFIED)))) {
+                        (!isChanged || location.getStatus().equals(Location.MODIFIED))) {
                     // also build the CSV switch lists
                     trainCsvSwitchLists.buildSwitchList(location);
                     trainSwitchLists.buildSwitchList(location);
