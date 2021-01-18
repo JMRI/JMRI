@@ -16,6 +16,7 @@ import javax.swing.*;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.tools.debugger.AbstractDebuggerMaleSocket;
 import jmri.jmrit.logixng.tools.debugger.Debugger;
 import jmri.util.JmriJFrame;
 
@@ -34,7 +35,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
     private final JMenuItem _stepOverItem;
     private final JMenuItem _stepIntoItem;
     protected final ConditionalNG _conditionalNG;
-    private MaleSocket _currentMaleSocket;
+    private AbstractDebuggerMaleSocket _currentMaleSocket;
     private State _currentState = State.None;
     
     private final Object _lock = new Object();
@@ -124,7 +125,8 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
         _stepIntoItem.setEnabled(false);
         
         _stepOverItem.addActionListener((ActionEvent e) -> {
-            MaleSocket maleSocket = _currentMaleSocket;
+            AbstractDebuggerMaleSocket maleSocket = _currentMaleSocket;
+            _currentMaleSocket.setStepInto(false);
             _currentMaleSocket = null;
             _currentState = State.None;
             _stepOverItem.setEnabled(false);
@@ -137,7 +139,8 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
         debugMenu.add(_stepOverItem);
         
         _stepIntoItem.addActionListener((ActionEvent e) -> {
-            MaleSocket maleSocket = _currentMaleSocket;
+            AbstractDebuggerMaleSocket maleSocket = _currentMaleSocket;
+            _currentMaleSocket.setStepInto(true);
             _currentMaleSocket = null;
             _currentState = State.None;
             _stepOverItem.setEnabled(false);
@@ -230,7 +233,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
                 || Debugger.STEP_AFTER.equals(evt.getPropertyName())) {
             
             jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
-                _currentMaleSocket = (MaleSocket) evt.getNewValue();
+                _currentMaleSocket = (AbstractDebuggerMaleSocket) evt.getNewValue();
                 switch (evt.getPropertyName()) {
                     case Debugger.STEP_BEFORE:
                         _currentState = State.Before;

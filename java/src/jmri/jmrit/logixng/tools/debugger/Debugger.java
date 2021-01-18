@@ -22,7 +22,7 @@ public class Debugger implements PropertyChangeProvider {
     public static final String STEP_AFTER = "StepAfter";
     
     private ConditionalNG _debugConditionalNG = null;
-    private boolean _break = false;
+    private boolean _break = true;
     
     private final PropertyChangeSupport _pcs = new PropertyChangeSupport(this);
     
