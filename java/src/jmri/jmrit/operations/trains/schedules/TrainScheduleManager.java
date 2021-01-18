@@ -258,11 +258,11 @@ public class TrainScheduleManager extends PropertyChangeSupport implements Insta
         String locationName = ""; // only create switch lists once for locations with similar names
         for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
             if (location.isSwitchListEnabled() && !locationName.equals(TrainCommon.splitString(location.getName()))) {
-                trainSwitchLists.buildSwitchList(location);
                 trainCsvSwitchLists.buildSwitchList(location);
+                trainSwitchLists.buildSwitchList(location);
                 locationName = TrainCommon.splitString(location.getName());
                 // print switch lists for locations that have changes
-                if (Setup.isSwitchListRealTime() && location.getStatus().equals(Location.CSV_GENERATED)) {
+                if (Setup.isSwitchListRealTime() && location.getStatus().equals(Location.UPDATED)) {
                     trainSwitchLists.printSwitchList(location, InstanceManager.getDefault(TrainManager.class).isPrintPreviewEnabled());
                 }
             }
