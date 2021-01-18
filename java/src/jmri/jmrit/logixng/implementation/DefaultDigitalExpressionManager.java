@@ -45,6 +45,10 @@ public class DefaultDigitalExpressionManager extends AbstractBaseManager<MaleDig
                 expressionClassList.get(entry.getKey()).add(entry.getValue());
             });
         }
+        
+        for (MaleDigitalExpressionSocketFactory maleSocketFactory : ServiceLoader.load(MaleDigitalExpressionSocketFactory.class)) {
+            _maleSocketFactories.add(maleSocketFactory);
+        }
     }
 
     /** {@inheritDoc} */

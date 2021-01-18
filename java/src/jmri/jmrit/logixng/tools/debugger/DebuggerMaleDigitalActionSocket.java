@@ -7,7 +7,6 @@ package jmri.jmrit.logixng.tools.debugger;
 
 import java.util.Set;
 
-import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.BaseManager;
