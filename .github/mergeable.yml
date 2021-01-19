@@ -47,11 +47,11 @@ mergeable: # see https://github.com/mergeability/mergeable
       - do: checks
         status: 'success'
   - when: pull_request.opened
-    name: 'Add label if *.properties modified'
+    name: 'Add label if any .properties file modified'
     validate:
       - do: changeset
         must_exclude:
-          regex: "*.properties"
+          regex: "\.properties$"
     pass:
       - do: checks
         status: 'success'
