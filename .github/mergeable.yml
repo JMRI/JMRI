@@ -51,7 +51,7 @@ mergeable: # see https://github.com/mergeability/mergeable
     validate:
       - do: changeset
         must_exclude:
-          regex: "\.properties$"
+          regex: '\.properties$'
     pass:
       - do: checks
         status: 'success'
