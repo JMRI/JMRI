@@ -39,7 +39,7 @@ public class BlockPathEditFrame extends JmriJFrame {
 
     private final BlockPathEditFrame frame = this;
     private boolean _newPath = false;
-    protected final OBlockManager obm = InstanceManager.getDefault(OBlockManager.class);
+    //protected final OBlockManager obm = InstanceManager.getDefault(OBlockManager.class);
     PortalManager pm;
     private final OBlock _block;
     private OPath _path;
@@ -71,8 +71,10 @@ public class BlockPathEditFrame extends JmriJFrame {
         // fill Portals combo
         pm = InstanceManager.getDefault(PortalManager.class);
         for (Portal pi : pm.getPortalSet()) {
-            fromPortalComboBox.addItem(pi.getName());
-            toPortalComboBox.addItem(pi.getName());
+            if (pi.getFromBlock() == _block || pi.getToBlock() == _block) { // show only relevant Portals
+                fromPortalComboBox.addItem(pi.getName()); // in both combos
+                toPortalComboBox.addItem(pi.getName());
+            }
         }
         layoutFrame();
         blockName.setText(_block.getDisplayName());
@@ -93,7 +95,7 @@ public class BlockPathEditFrame extends JmriJFrame {
         p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
 
         JPanel configGrid = new JPanel();
-        GridLayout layout = new GridLayout(5, 2, 10, 0); // (int rows, int cols, int hgap, int vgap)
+        GridLayout layout = new GridLayout(4, 2, 10, 0); // (int rows, int cols, int hgap, int vgap)
         configGrid.setLayout(layout);
 
         // row 1
@@ -124,16 +126,16 @@ public class BlockPathEditFrame extends JmriJFrame {
             if ((fromPortalComboBox.getItemCount() > 0) && (fromPortalComboBox.getSelectedItem() != null) &&
                     (toPortalComboBox.getSelectedItem() != null)
                     && (fromPortalComboBox.getSelectedItem().equals(toPortalComboBox.getSelectedItem()))) {
-                log.debug("resetting ToPortal");
+                log.debug("resetting FromPortal");
                 fromPortalComboBox.setSelectedIndex(0); // clear the other one
             }
         });
         configGrid.add(toPortalComboBox);
 
-        // row 5
-//        JPanel p3 = new JPanel();
-//        p3.setLayout(new BoxLayout(p3, BoxLayout.LINE_AXIS));
-//        p3.add(Box.createHorizontalGlue());
+        p.add(configGrid);
+
+        // Length
+        JPanel physical = new JPanel();
         // copied from beanedit, also in BlockPathEditFrame
         lengthSpinner.setModel(
                 new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(0f), Float.valueOf(1000f), Float.valueOf(0.01f)));
@@ -158,14 +160,14 @@ public class BlockPathEditFrame extends JmriJFrame {
             inch.setSelected(!cm.isSelected());
             updateLength();
         });
-        configGrid.add(p1);
+        physical.add(p1);
 
         JPanel p2 = new JPanel();
         p2.add(lengthSpinner);
         lengthSpinner.setToolTipText(Bundle.getMessage("LengthToolTip", Bundle.getMessage("Path")));
-        configGrid.add(p2);
+        physical.add(p2);
 
-        p.add(configGrid);
+        p.add(physical);
 
         JPanel totbl = new JPanel();
         totbl.setLayout(new BorderLayout(10, 10));
@@ -266,14 +268,14 @@ public class BlockPathEditFrame extends JmriJFrame {
             if (fromPortalComboBox.getSelectedIndex() <= 0) {
                 // 0 = empty choice, need at least 1 Portal
                 if (toPortalComboBox.getSelectedIndex() > 0) {
-                    _path.setFromPortal(null); // portal can be removed from path by setting to null but we want at least 1
+                    _path.setFromPortal(null); // portal can be removed from path by setting to null but we require at least 1
                 } else {
                     status(Bundle.getMessage("WarnPortalOnPath"), true);
                     return;
                 }
             } else {
                 String fromP = (String) fromPortalComboBox.getSelectedItem();
-                log.debug("looking for FromPortal {}", fromP);
+                log.debug("looking for FromPortal {} (item {})", fromP, fromPortalComboBox.getSelectedIndex());
                 Portal fromPortal = _block.getPortalByName(fromP);
                 if (fromPortal == null || pm.getPortal(fromP) == null) {
                     int val = _core.verifyWarning(Bundle.getMessage("BlockPortalConflict", fromP, _block.getDisplayName()));
@@ -306,7 +308,7 @@ public class BlockPathEditFrame extends JmriJFrame {
                 }
             } else {
                 String toP = (String) toPortalComboBox.getSelectedItem();
-                log.debug("looking for ToPortal {}", toP);
+                log.debug("looking for ToPortal {} (item {})", toP, toPortalComboBox.getSelectedIndex());
                 Portal toPortal = _block.getPortalByName(toP);
                 if (toPortal == null || pm.getPortal(toP) == null) {
                     int val = _core.verifyWarning(Bundle.getMessage("BlockPortalConflict", toP, _block.getDisplayName()));

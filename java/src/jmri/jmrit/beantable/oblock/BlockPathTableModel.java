@@ -215,7 +215,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
             switch (col) {
                 case NAME_COLUMN:
                     String strValue = (String)value;
-                    if (_block.getPathByName(strValue) != null) {
+                    if (_block.getPathByName(strValue) != null) { // check for duplicate Path name in this OBlock
                         msg = Bundle.getMessage("DuplPathName", strValue);
                         tempRow[col] = strValue;
                     } else {
@@ -244,7 +244,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                                 fireTableDataChanged();
                             }
                         } else {
-                            tempRow[NAME_COLUMN] = strValue;
+                            tempRow[NAME_COLUMN] = strValue; // initial entry of Path name in cell
                         }
                     }
                     break;

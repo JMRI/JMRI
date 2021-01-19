@@ -112,39 +112,50 @@ public class EditSignalFrame extends EditFrame {
             _parent._editor.highlight(null);
             _mastName.setText(null);
         });
+
         panel = new JPanel();
         panel.add(clearButton);
         signalPanel.add(panel);
         signalPanel.add(Box.createVerticalStrut(STRUT_SIZE / 2));
+
+        JPanel framingPanel = new JPanel();
+        JPanel mastConfigPanel = new JPanel();
+        // set border to group items in UI
+        mastConfigPanel.setBorder(BorderFactory.createEtchedBorder());
+        mastConfigPanel.setLayout(new BoxLayout(mastConfigPanel, BoxLayout.Y_AXIS));
 
         panel = new JPanel();
         _mastName = new JTextField();
         panel.add(CircuitBuilder.makeTextBoxPanel(false, _mastName, "mastName", true, null));
         _mastName.setPreferredSize(new Dimension(300, _mastName.getPreferredSize().height));
         _mastName.setToolTipText(Bundle.getMessage("ToolTipMastName", _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)));
-        signalPanel.add(panel);
+        mastConfigPanel.add(panel);
 
-        _lengthPanel = new LengthPanel(_homeBlock, LengthPanel.ENTRANCE_SPACE);
+        _lengthPanel = new LengthPanel(_homeBlock, LengthPanel.ENTRANCE_SPACE, "OffsetToolTip");
         _lengthPanel.changeUnits();
-        signalPanel.add(_lengthPanel);
+        mastConfigPanel.add(_lengthPanel);
 
-        panel = new JPanel();
+        JPanel buttonPanel = new JPanel();
         JButton addButton = new JButton(Bundle.getMessage("ButtonAddMast"));
         addButton.addActionListener((ActionEvent a) -> addMast());
         addButton.setToolTipText(Bundle.getMessage("ToolTipAddMast", _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)));
-        panel.add(addButton);
+        buttonPanel.add(addButton);
 /*
         JButton button = new JButton(Bundle.getMessage("buttonChangeName"));
         button.addActionListener((ActionEvent a) -> changeName(null));
         button.setToolTipText(Bundle.getMessage("ToolTipChangeName", _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)));
         panel.add(button);*/
 
-        JButton button = new JButton(Bundle.getMessage("ButtonRemoveMast"));
-        button.addActionListener((ActionEvent a) -> removeMast());
-        button.setToolTipText(Bundle.getMessage("ToolTipRemoveMast", _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)));
-        panel.add(button);
+        JButton buttonRemove = new JButton(Bundle.getMessage("ButtonRemoveMast"));
+        buttonRemove.addActionListener((ActionEvent a) -> removeMast());
+        buttonRemove.setToolTipText(Bundle.getMessage("ToolTipRemoveMast", _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)));
+        buttonPanel.add(buttonRemove);
 
-        signalPanel.add(panel);
+        mastConfigPanel.add(buttonPanel);
+        // border up to here
+        framingPanel.add(mastConfigPanel);
+        signalPanel.add(framingPanel);
+
         signalPanel.add(Box.createVerticalStrut(STRUT_SIZE));
 
         panel = new JPanel();
@@ -171,7 +182,7 @@ public class EditSignalFrame extends EditFrame {
         signalPanel.add(Box.createVerticalStrut(STRUT_SIZE / 2));
 
         panel = new JPanel();
-        l = new JLabel(Bundle.getMessage("recomendMasts"));
+        l = new JLabel(Bundle.getMessage("recommendMasts"));
         panel.add(l);
         signalPanel.add(panel);
         signalPanel.add(Box.createVerticalStrut(STRUT_SIZE / 2));
@@ -188,10 +199,10 @@ public class EditSignalFrame extends EditFrame {
         p.add(_pickMast.getButtonPanel());
         JPanel pp = new JPanel();
         pp.setLayout(new FlowLayout());
-        button = new JButton(Bundle.getMessage("ButtonCreateMast"));
-        button.addActionListener(_mastTableAction);
-        button.setToolTipText(Bundle.getMessage("ToolTipAddToTable"));
-        pp.add(button);
+        buttonRemove = new JButton(Bundle.getMessage("ButtonCreateMast"));
+        buttonRemove.addActionListener(_mastTableAction);
+        buttonRemove.setToolTipText(Bundle.getMessage("ToolTipAddToTable"));
+        pp.add(buttonRemove);
         p.add(pp);
         panel.add(p);
         
@@ -203,10 +214,10 @@ public class EditSignalFrame extends EditFrame {
         p.add(_pickHead.getButtonPanel());
         pp = new JPanel();
         pp.setLayout(new FlowLayout());
-        button = new JButton(Bundle.getMessage("ButtonCreateHead"));
-        button.addActionListener(_headTableAction);
-        button.setToolTipText(Bundle.getMessage("ToolTipAddToTable"));
-        pp.add(button);
+        buttonRemove = new JButton(Bundle.getMessage("ButtonCreateHead"));
+        buttonRemove.addActionListener(_headTableAction);
+        buttonRemove.setToolTipText(Bundle.getMessage("ToolTipAddToTable"));
+        pp.add(buttonRemove);
         p.add(pp);
         panel.add(p);
         signalPanel.add(panel);
@@ -749,7 +760,7 @@ public class EditSignalFrame extends EditFrame {
         dndPanel.add(p);
 
         JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
+        panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(),
                 Bundle.getMessage("signal")));
         try {
             _dragLabel = new IconDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
