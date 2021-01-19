@@ -5637,19 +5637,20 @@
    <h3>Custom Switch Lists</h3>
    You can if you wish create custom switch lists using an Excel program. You can configure where to
    find the Excel program for custom switch lists from the "Switch Lists by Location" window "Tools"
-   menu. Or go to <a href="#SettingsOptions">Options</a> and select the "Generate CSV Switch List"
-   to enable this feature. For more information see <a href="#SetupExcelProgram">Setup Excel
-    Program (Manifest Creator)</a>.
+   menu. Or go to
+   <a href="#SettingsOptions">Options</a> and select the "Generate CSV Switch List" to enable this
+   feature. For more information see
+   <a href="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</a>.
 
-   <p>Four new buttons will appear at the bottom of the "Switch Lists by Location" window,
-    "Generate CSV Switch Lists", "Generate CSV Switch Lists Changes", "Run", and "Run Changes". The
-    "Generate CSV Switch Lists" will create a comma separated values file for each of the selected locations. And the
-    "Generate CSV Switch Lists Changes" will only create new CSV files for locations that have have
-    been modified by a new train build. You can find the CSV files in the csvSwitchList directory.
-    The "Run" button is used to create custom switch lists for all of the selected locations by
-    executing an Excel program. The "Run" button will create the CSV files needed before asking the
-    Excel program to create and print a custom switch list. The "Run Changes" will only create new
-    switch lists for locations that have new work.</p>
+   <p>When the feature to generate CSV Switch Lists is enabled, the program will create a comma
+    separated values file for each of the selected locations. You can find the CSV files in the
+    csvSwitchList directory.</p>
+
+   <p>Two new buttons will appear at the bottom of the "Switch Lists by Location" window, "Run",
+    and "Run Changes". The "Run" button is used to create custom switch lists for all of the
+    selected locations by executing an Excel program. The "Run" button will if needed, create the
+    CSV files needed before asking the Excel program to create and print a custom switch list. The
+    "Run Changes" will only create new switch lists for locations that have new work.</p>
 
    <a name="TrainMove" id="TrainMove"></a>
    <h3>Moving Trains</h3>
