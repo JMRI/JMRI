@@ -43,7 +43,6 @@ public abstract class AbstractManagerXml extends jmri.managers.configurexml.Abst
                     element.addContent(e);
                 }
             } catch (RuntimeException e) {
-                System.out.format("Error storing maleSocket: %s%n", e);
                 log.error("Error storing maleSocket: {}", e, e);
             }
             

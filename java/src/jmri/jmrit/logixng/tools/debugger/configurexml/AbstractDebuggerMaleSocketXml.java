@@ -31,7 +31,7 @@ public class AbstractDebuggerMaleSocketXml
      */
     @Override
     public Element store(Object o) {
-        AbstractMaleSocket maleSocket = (AbstractMaleSocket) o;
+//        AbstractMaleSocket maleSocket = (AbstractMaleSocket) o;
         
         Element element = new Element("abstractDebuggerMaleSocket");
         element.setAttribute("class", this.getClass().getName());
