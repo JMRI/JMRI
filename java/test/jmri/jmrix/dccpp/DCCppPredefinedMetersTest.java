@@ -22,12 +22,12 @@ public class DCCppPredefinedMetersTest {
     public void testMeterReplies() {
         mm.message(DCCppReply.parseDCCppReply("a10")); // a syntactically valid current reply
         Meter m = InstanceManager.getDefault(MeterManager.class).getBySystemName("DVC_CurrentPct");
-        Assert.assertNotNull(m);
+        Assert.assertNotNull("verify meter was created", m);
         Assert.assertEquals("current level percentage 100.0 - 0.0", (10.0 / DCCppConstants.MAX_CURRENT) * 100, m.getKnownAnalogValue(), 0.05);
 
-        mm.message(DCCppReply.parseDCCppReply("c PROGVolts 18.2 V Milli 9.0 24.0 0.1")); // new meter reply
+        mm.message(DCCppReply.parseDCCppReply("c PROGVolts 18.2 V Milli 9.0 24.0 0.1 18")); // new meter reply
         m = InstanceManager.getDefault(MeterManager.class).getBySystemName("DVV_PROGVolts");       
-        Assert.assertNotNull(m);
+        Assert.assertNotNull("verify meter was created", m);
         Assert.assertEquals("verify value from meter reply", 18.2, m.getKnownAnalogValue(), 0.00001);
         Assert.assertEquals("DVV_PROGVolts", m.getSystemName());
         Assert.assertEquals(jmri.Meter.Unit.Milli, m.getUnit());
@@ -35,14 +35,14 @@ public class DCCppPredefinedMetersTest {
         Assert.assertEquals(24.0,  m.getMax(),   0.00001);
         Assert.assertEquals(0.1,   m.getResolution(), 0.00001);        
 
-        mm.message(DCCppReply.parseDCCppReply("c MAINVolts 25.2 V Milli 9.0 24.0 0.1")); // new meter reply, value exceeds max value
+        mm.message(DCCppReply.parseDCCppReply("c MAINVolts 25.2 V Milli 9.0 24.0 0.1 18")); // new meter reply, value exceeds max value
         m = InstanceManager.getDefault(MeterManager.class).getBySystemName("DVV_MAINVolts");       
-        Assert.assertNotNull(m);
+        Assert.assertNotNull("verify meter was created", m);
         Assert.assertEquals("verify value is capped at maxValue", 24.0, m.getKnownAnalogValue(), 0.00001);
 
-        mm.message(DCCppReply.parseDCCppReply("c My-Current_Meter#1 0.3 C NoPrefix 0.0 5.0 0.01"));
+        mm.message(DCCppReply.parseDCCppReply("c My-Current_Meter#1 0.3 C NoPrefix 0.0 5.0 0.01 4.9"));
         m = InstanceManager.getDefault(MeterManager.class).getBySystemName("DVC_My-Current_Meter#1");       
-        Assert.assertNotNull("use special chars in meter name", m);
+        Assert.assertNotNull("meter created with special chars in name", m);
 }
 
     @BeforeEach
