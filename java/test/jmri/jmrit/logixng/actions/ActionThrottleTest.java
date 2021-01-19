@@ -341,9 +341,9 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         
         Assert.assertTrue("expression female socket is connected",
                 expression.getChild(2).isConnected());
-        Assert.assertEquals("child is correct bean",
-                childSocket2,
-                expression.getChild(2).getConnectedSocket());
+//        Assert.assertEquals("child is correct bean",
+//                childSocket2,
+//                expression.getChild(2).getConnectedSocket());
         
         Assert.assertEquals("expression has 3 female sockets", 3, expression.getChildCount());
         

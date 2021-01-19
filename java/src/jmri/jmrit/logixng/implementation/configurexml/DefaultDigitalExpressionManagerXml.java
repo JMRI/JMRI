@@ -12,6 +12,7 @@ import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultDigitalExpressionManager;
+import jmri.jmrit.logixng.implementation.DefaultMaleDigitalExpressionSocket;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 import jmri.util.ThreadingUtil;
 
@@ -47,11 +48,18 @@ public class DefaultDigitalExpressionManagerXml extends AbstractManagerXml {
         Element expressions = new Element("logixngDigitalExpressions");
         setStoreElementClass(expressions);
         DigitalExpressionManager tm = (DigitalExpressionManager) o;
+//        System.out.format("DefaultDigitalExpressionManagerXml: manager: %s%n", tm);
         if (tm != null) {
-            for (DigitalExpressionBean expression : tm.getNamedBeanSet()) {
+            for (MaleDigitalExpressionSocket expression : tm.getNamedBeanSet()) {
                 log.debug("expression system name is " + expression.getSystemName());  // NOI18N
+//                log.error("expression system name is " + expression.getSystemName() + ", " + expression.getLongDescription());  // NOI18N
                 try {
-                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(getExpression(expression));
+                    // The male socket may be embedded in other male sockets
+                    MaleDigitalExpressionSocket a = expression;
+                    while (!(a instanceof DefaultMaleDigitalExpressionSocket)) {
+                        a = (MaleDigitalExpressionSocket) a.getObject();
+                    }
+                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(getExpression(a));
                     if (e != null) {
                         e.addContent(storeMaleSocket((MaleSocket)expression));
                         expressions.addContent(e);
@@ -106,8 +114,6 @@ public class DefaultDigitalExpressionManagerXml extends AbstractManagerXml {
 //        DigitalExpressionManager tm = InstanceManager.getDefault(jmri.jmrit.logixng.DigitalExpressionManager.class);
 
         for (int i = 0; i < expressionList.size(); i++) {
-//            if (1==1)
-//                throw new RuntimeException("Daniel");
             
             String className = expressionList.get(i).getAttribute("class").getValue();
 //            log.warn("className: " + className);

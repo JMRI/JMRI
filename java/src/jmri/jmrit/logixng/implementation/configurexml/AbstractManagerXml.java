@@ -1,9 +1,14 @@
 package jmri.jmrit.logixng.implementation.configurexml;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.SymbolTable.InitialValueType;
+import jmri.jmrit.logixng.configurexml.MaleSocketXml;
 
 import org.jdom2.Element;
 
@@ -16,6 +21,9 @@ import org.jdom2.Element;
  */
 public abstract class AbstractManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
+    private final Map<String, Class<?>> xmlClasses = new HashMap<>();
+    
+    
     /**
      * Store data for a MaleSocket
      *
@@ -24,33 +32,24 @@ public abstract class AbstractManagerXml extends jmri.managers.configurexml.Abst
      */
     public Element storeMaleSocket(MaleSocket maleSocket) {
         Element element = new Element("maleSocket");
-        element.addContent(new Element("errorHandling").addContent(maleSocket.getErrorHandlingType().name()));
-        for (SymbolTable.VariableData data : maleSocket.getLocalVariables()) {
-            Element elementVariable = new Element("localVariable");
-            elementVariable.addContent(new Element("name").addContent(data._name));
-            elementVariable.addContent(new Element("type").addContent(data._initalValueType.name()));
-            elementVariable.addContent(new Element("data").addContent(data._initialValueData));
-            element.addContent(elementVariable);
-        }
-/*
-        setStoreElementClass(actions);
-        DigitalActionManager tm = (DigitalActionManager) o;
-//        System.out.format("DefaultDigitalActionManagerXml: manager: %s%n", tm);
-        if (tm != null) {
-            for (DigitalActionBean action : tm.getNamedBeanSet()) {
-                log.debug("action system name is " + action.getSystemName());  // NOI18N
-//                log.error("action system name is " + action.getSystemName() + ", " + action.getLongDescription());  // NOI18N
-                try {
-                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(getAction(action));
-                    if (e != null) {
-                        actions.addContent(e);
-                    }
-                } catch (Exception e) {
-                    log.error("Error storing action: {}", e, e);
+        
+        Base m = maleSocket;
+        while (m instanceof MaleSocket) {
+            MaleSocket ms = (MaleSocket) m;
+            
+            try {
+                Element e = ConfigXmlManager.elementFromObject(ms);
+                if (e != null) {
+                    element.addContent(e);
                 }
+            } catch (RuntimeException e) {
+                System.out.format("Error storing maleSocket: %s%n", e);
+                log.error("Error storing maleSocket: {}", e, e);
             }
+            
+            m = ms.getObject();
         }
-*/
+        
         return (element);
     }
 
@@ -64,37 +63,70 @@ public abstract class AbstractManagerXml extends jmri.managers.configurexml.Abst
      */
     public void loadMaleSocket(Element element, MaleSocket maleSocket) {
         
+        Map<String, Map.Entry<MaleSocketXml, Element>> maleSocketXmlClasses = new HashMap<>();
+        
         Element elementMaleSocket = element.getChild("maleSocket");
         if (elementMaleSocket == null) {
             throw new IllegalArgumentException("maleSocket is null");
         }
         
-        Element errorHandlingElement = elementMaleSocket.getChild("errorHandling");
-        if (errorHandlingElement != null) {
-            maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType
-                    .valueOf(errorHandlingElement.getTextTrim()));
-        }
+        List<Element> children = elementMaleSocket.getChildren();
+        log.debug("Found " + children.size() + " male sockets");  // NOI18N
         
-        List<Element> localVariableList = elementMaleSocket.getChildren("localVariable");  // NOI18N
-        log.debug("Found " + localVariableList.size() + " male sockets");  // NOI18N
-        
-        for (Element e : localVariableList) {
-            Element elementName = e.getChild("name");
+        for (Element e : children) {
             
-            InitialValueType type = null;
-            Element elementType = e.getChild("type");
-            if (elementType != null) {
-                type = InitialValueType.valueOf(elementType.getTextTrim());
+            String className = e.getAttribute("class").getValue();
+//            log.error("className: " + className);
+            
+            Class<?> clazz = xmlClasses.get(className);
+            
+            if (clazz == null) {
+                try {
+                    clazz = Class.forName(className);
+                    xmlClasses.put(className, clazz);
+                } catch (ClassNotFoundException ex) {
+                    log.error("cannot load class " + className, ex);
+                }
             }
             
-            Element elementData = e.getChild("data");
-            
-            if (elementName == null) throw new IllegalArgumentException("Element 'name' does not exists");
-            if (type == null) throw new IllegalArgumentException("Element 'type' does not exists");
-            if (elementData == null) throw new IllegalArgumentException("Element 'data' does not exists");
-            
-            maleSocket.addLocalVariable(elementName.getTextTrim(), type, elementData.getTextTrim());
+            if (clazz != null) {
+                Constructor<?> c = null;
+                try {
+                    c = clazz.getConstructor();
+                } catch (NoSuchMethodException | SecurityException ex) {
+                    log.error("cannot create constructor", ex);
+                }
+                
+                if (c != null) {
+                    try {
+                        MaleSocketXml o = (MaleSocketXml)c.newInstance();
+                        
+                        Map.Entry<MaleSocketXml, Element> entry =
+                                new HashMap.SimpleEntry<>(o, e);
+                        maleSocketXmlClasses.put(className, entry);
+                    } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                        log.error("cannot create object", ex);
+                    }
+                }
+            }
         }
+        
+        Base m = maleSocket;
+        while (m instanceof MaleSocket) {
+            MaleSocket ms = (MaleSocket) m;
+            
+            String cName = ConfigXmlManager.adapterName(ms);
+            Map.Entry<MaleSocketXml, Element> entry = maleSocketXmlClasses.get(cName);
+            
+            try {
+                entry.getKey().load(entry.getValue(), ms);
+            } catch (RuntimeException ex) {
+                log.error("Error storing maleSocket: {}", ex, ex);
+            }
+
+            m = ms.getObject();
+        }
+        
     }
 
 

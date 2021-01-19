@@ -215,9 +215,9 @@ public class TriggerOnceTest extends AbstractDigitalExpressionTestBase {
                 "XYZ123", expression.getChild(0).getName());
         Assert.assertTrue("expression female socket is connected",
                 expression.getChild(0).isConnected());
-        Assert.assertEquals("child is correct bean",
-                childSocket,
-                expression.getChild(0).getConnectedSocket());
+//        Assert.assertEquals("child is correct bean",
+//                childSocket,
+//                expression.getChild(0).getConnectedSocket());
         
         Assert.assertEquals("expression has 1 female socket", 1, expression.getChildCount());
         
