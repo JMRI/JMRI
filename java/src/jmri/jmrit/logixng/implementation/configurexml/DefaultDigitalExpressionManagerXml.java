@@ -61,7 +61,7 @@ public class DefaultDigitalExpressionManagerXml extends AbstractManagerXml {
                     }
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(getExpression(a));
                     if (e != null) {
-                        e.addContent(storeMaleSocket((MaleSocket)expression));
+                        e.addContent(storeMaleSocket(expression));
                         expressions.addContent(e);
                     }
                 } catch (RuntimeException | IllegalAccessException | NoSuchFieldException e) {
