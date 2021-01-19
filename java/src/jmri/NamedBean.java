@@ -66,6 +66,11 @@ import jmri.beans.PropertyChangeProvider;
 public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider {
 
     /**
+     * Add something for test only.
+     */
+    public static final String DanielTest = "Some string";
+ 
+    /**
      * Constant representing an "unknown" state, indicating that the object's
      * state is not necessarily that of the actual layout hardware. This is the
      * initial state of a newly created object before communication with the
