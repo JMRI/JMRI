@@ -80,7 +80,7 @@ public class XBeeNodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.
     }
 
     /*
-     * Initilaize the address panel.
+     * Initialize the address panel.
      */
     @Override
     protected JPanel initAddressPanel(){
@@ -106,7 +106,7 @@ public class XBeeNodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.
     }
 
     /*
-     * Initilaize the Button panel.
+     * Initialize the Button panel.
      */
     @Override
     protected JPanel initButtonPanel(){
@@ -463,7 +463,7 @@ public class XBeeNodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.
         return true;
     }
 
-    // Initilize the drop down box for the address lists.
+    // Initialize the drop down box for the address lists.
     @Override
     protected void initAddressBoxes() {
         nodeField.removeAllItems();
@@ -522,7 +522,7 @@ public class XBeeNodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.
          initAddressBoxes();
        }
        // removing the listener here is causing a
-       // ConcurrentModificaitonException on an ArrayList in the library.
+       // ConcurrentModificationException on an ArrayList in the library.
        // xtc.getXBee().getNetwork().removeDiscoveryListener(this);
        discoverButton.setEnabled(true);
     }

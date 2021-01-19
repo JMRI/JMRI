@@ -794,7 +794,7 @@ public class EcosLocoToRoster implements EcosListener {
         if (temp.size() > 0) {
             updateForDecoderTypeID(temp);
         } else {
-            String mfg = InstanceManager.getDefault(DecoderIndexFile.class).mfgNameFromId(mfgID);
+            String mfg = InstanceManager.getDefault(DecoderIndexFile.class).mfgNameFromID(mfgID);
             int intMfgID = Integer.parseInt(mfgID);
             int intModelID = Integer.parseInt(modelID);
             if (mfg == null) {

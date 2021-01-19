@@ -140,7 +140,7 @@ public class LnHexFilePort extends LnPortController implements Runnable {
                 }
 
                 // here we're done processing the file
-                log.info("LnHexFDilePort.run: normal finish to file"); // NOI18N
+                log.info("LnHexFilePort.run: normal finish to file"); // NOI18N
 
             } catch (InterruptedException e) {
                 if (sFile != null) { // changed in another thread before the interrupt
@@ -266,8 +266,10 @@ public class LnHexFilePort extends LnPortController implements Runnable {
      * @return the options
      */
     public String[] validOption3() {
-        return new String[]{Bundle.getMessage("HandleNormal"), Bundle.getMessage("HandleSpread"), Bundle.getMessage("HandleOneOnly"), Bundle.getMessage("HandleBoth")}; // I18N
-
+        return new String[]{Bundle.getMessage("HandleNormal"),
+                Bundle.getMessage("HandleSpread"),
+                Bundle.getMessage("HandleOneOnly"),
+                Bundle.getMessage("HandleBoth")}; // I18N
     }
 
     /**

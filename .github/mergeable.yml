@@ -46,6 +46,25 @@ mergeable: # see https://github.com/mergeability/mergeable
             Thanks for the PR. Please consider adding a release note in the help/en/releasenotes/current-draft-note.shtml file.
       - do: checks
         status: 'success'
+  - when: pull_request.opened
+    name: 'Add label if any .properties file modified'
+    validate:
+      - do: changeset
+        must_exclude:
+          regex: '\.properties$'
+    pass:
+      - do: checks
+        status: 'success'
+    fail:
+      - do: comment
+        payload:
+          body: > 
+            Thanks for the PR. It includes changes to properties files, so the 'Needs I18N' label has been added"
+      - do: labels
+        labels: [ 'Needs I18N' ]
+        mode: 'add'
+      - do: checks
+        status: 'success'
   - when: schedule.repository
     name: 'Allow merge after one day'
     validate:
