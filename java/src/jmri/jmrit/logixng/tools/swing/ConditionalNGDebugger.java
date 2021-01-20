@@ -39,6 +39,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
     private AbstractDebuggerMaleSocket _currentMaleSocket;
     private State _currentState = State.None;
     private boolean _run = false;
+    private MaleSocket _rootSocket;
     
     private final Object _lock = new Object();
     
@@ -134,6 +135,9 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
         
         _stepOverItem.addActionListener((ActionEvent e) -> {
             AbstractDebuggerMaleSocket maleSocket = _currentMaleSocket;
+            if ((_currentState == State.After) && (_rootSocket == _currentMaleSocket)) {
+                _run = false;
+            }
             _currentMaleSocket.setStepInto(false);
             _currentMaleSocket = null;
             _currentState = State.None;
@@ -148,6 +152,9 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
         
         _stepIntoItem.addActionListener((ActionEvent e) -> {
             AbstractDebuggerMaleSocket maleSocket = _currentMaleSocket;
+            if ((_currentState == State.After) && (_rootSocket == _currentMaleSocket)) {
+                _run = false;
+            }
             _currentMaleSocket.setStepInto(true);
             _currentMaleSocket = null;
             _currentState = State.None;
@@ -165,6 +172,9 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
             
             if (_currentMaleSocket != null) {
                 AbstractDebuggerMaleSocket maleSocket = _currentMaleSocket;
+                if ((_currentState == State.After) && (_rootSocket == _currentMaleSocket)) {
+                    _run = false;
+                }
                 _currentMaleSocket.setStepInto(false);
                 _currentMaleSocket = null;
                 _currentState = State.None;
@@ -264,16 +274,19 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
             
             switch (evt.getPropertyName()) {
                 case Debugger.STEP_BEFORE:
-//                    if (!_run || _currentMaleSocket.getBreakpointBefore()) {
+                    if (!_run || _currentMaleSocket.getBreakpointBefore()) {
                         _currentState = State.Before;
-//                    }
+                    } else {
+                        _currentState = State.None;
+                    }
                     break;
                 case Debugger.STEP_AFTER:
-//                    if (!_run || _currentMaleSocket.getBreakpointBefore()) {
+                    if (!_run || _currentMaleSocket.getBreakpointBefore()) {
                         _currentState = State.After;
-//                    } else {
-//                        _currentState = State.None;
-//                    }
+                    } else {
+                        if (_rootSocket == _currentMaleSocket) _run = false;
+                        _currentState = State.None;
+                    }
                     break;
                 default:
                     _currentState = State.None;
@@ -293,6 +306,8 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
                 log.error("LogixNG thread was interrupted: {}", _conditionalNG.getCurrentThread().getThreadName());
                 Thread.currentThread().interrupt();
             }
+            
+            if (_rootSocket == null) _rootSocket = _currentMaleSocket;
         }
     }
     
