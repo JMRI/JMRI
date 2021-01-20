@@ -36,7 +36,7 @@ public class AbstractDebuggerMaleSocket extends AbstractMaleSocket {
     
     protected void before() {
         _lastDoBreak = _debugger.getBreak();
-        if (isDebuggerActive() && _debugger.getBreak()) {
+        if (isDebuggerActive() && (_debugger.getBreak() || _breakpointBefore)) {
             System.out.format("Before: %s%n", getLongDescription());
             _debugger.firePropertyChange(Debugger.STEP_BEFORE, null, this);
             _debugger.setBreak(_stepInto);
@@ -46,7 +46,7 @@ public class AbstractDebuggerMaleSocket extends AbstractMaleSocket {
     protected void after() {
         if (isDebuggerActive()) {
             _debugger.setBreak(_lastDoBreak);
-            if (_debugger.getBreak()) {
+            if (_debugger.getBreak() || _breakpointAfter) {
                 System.out.format("After: %s%n", getLongDescription());
                 _debugger.firePropertyChange(Debugger.STEP_AFTER, null, this);
             }
@@ -55,6 +55,22 @@ public class AbstractDebuggerMaleSocket extends AbstractMaleSocket {
     
     public void setStepInto(boolean value) {
         _stepInto = value;
+    }
+    
+    public void setBreakpointBefore(boolean value) {
+        _breakpointBefore = value;
+    }
+    
+    public boolean getBreakpointBefore() {
+        return _breakpointBefore;
+    }
+    
+    public void setBreakpointAfter(boolean value) {
+        _breakpointAfter = value;
+    }
+    
+    public boolean getBreakpointAfter() {
+        return _breakpointAfter;
     }
     
     @Override

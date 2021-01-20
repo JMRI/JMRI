@@ -96,4 +96,27 @@ public interface MaleSocket extends Debugable {
         getObject().setup();
     }
 
+    /**
+     * Find a male socket of a particular type.
+     * Male sockets can be stacked and this method travels thru the stacked
+     * male sockets to find the desired male socket.
+     * @param clazz the type of the male socket we are looking for
+     * @return the found male socket or null if not found
+     */
+    public default MaleSocket find(Class clazz) {
+        
+        if (! MaleSocket.class.isAssignableFrom(clazz)) {
+            throw new IllegalArgumentException("clazz is not a MaleSocket");
+        }
+        
+        Base item = this;
+        
+        while ((item instanceof MaleSocket) && !clazz.isInstance(item)) {
+            item = item.getParent();
+        }
+        
+        if (clazz.isInstance(item)) return (MaleSocket)item;
+        else return null;
+    }
+
 }
