@@ -572,7 +572,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
     private JComboBox<String> prefixBox = new JComboBox<String>();
     private JLabel prefixBoxLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("DCCSystem")));
 
-    private JLabel stateLabel1 = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")));
+    private JLabel stateLabel1 = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("TurnoutState")));
     private JLabel stateLabel2 = new JLabel(stateLabel1.getText()); // faster than Bundle?
     private JLabel stateLabel3 = new JLabel(stateLabel1.getText());
     private JLabel stateLabel4 = new JLabel(stateLabel1.getText());

@@ -25,12 +25,14 @@ public class DCCppPredefinedMeters implements DCCppListener {
     private DCCppTrafficController tc = null;
     private final MeterUpdateTask updateTask;
     private String systemPrefix = null;
+    private char beanType;
     private HashMap<String, Meter> meters = new HashMap<String, Meter>(2); //keep track of defined meters
 
     public DCCppPredefinedMeters(DCCppSystemConnectionMemo memo) {
         log.debug("Constructor called");
 
         systemPrefix = memo.getSystemPrefix();
+        beanType = InstanceManager.getDefault(MeterManager.class).typeLetter();        
         tc = memo.getDCCppTrafficController();
 
         updateTask = new MeterUpdateTask(3000, 10000) {
@@ -55,8 +57,9 @@ public class DCCppPredefinedMeters implements DCCppListener {
 
     /* handle new Meter replies and original current replies 
      *   creates meters if first time this name is encountered
-     *   builds original "current percent" meter or as defined in 
-     *   new MeterReply message format                               */
+     *   uses new MeterReply message format from DCC-EX 
+     *   also supports original "current percent" meter from 
+     *   older DCC++                                           */
     @Override
     public void message(DCCppReply r) {
 
@@ -73,6 +76,7 @@ public class DCCppPredefinedMeters implements DCCppListener {
         double minValue = 0.0;
         double maxValue = 100.0;
         double resolution = 0.1;
+        double warnValue = 100.0; //TODO: use when Meter updated to take advantage of it
 
         //use settings from message if Meter reply
         if (r.isMeterReply()) {
@@ -83,13 +87,14 @@ public class DCCppPredefinedMeters implements DCCppListener {
             maxValue  = r.getMeterMaxValue();
             resolution= r.getMeterResolution();
             meterUnit = r.getMeterUnit();
+            warnValue = r.getMeterWarnValue();
         }
                 
         //create, store and register the meter if not yet defined
         if (!meters.containsKey(meterName)) {
-            log.debug("Adding new meter '{}' of type '{}' with unit '{}'" , meterName, meterType, meterUnit);
+            log.debug("Adding new meter '{}' of type '{}' with unit '{}'" , meterName, meterType, meterUnit, warnValue);
             Meter newMeter;
-            String sysName = systemPrefix + "V" + meterType + "_" + meterName; 
+            String sysName = systemPrefix + beanType + meterType + "_" + meterName; 
             if (meterType.equals(DCCppConstants.VOLTAGE)) {
                 newMeter = new DefaultMeter.DefaultVoltageMeter(
                         sysName, meterUnit, minValue, maxValue, resolution, updateTask);
