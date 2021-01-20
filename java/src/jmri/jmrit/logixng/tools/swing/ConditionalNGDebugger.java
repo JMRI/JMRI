@@ -122,10 +122,13 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
         JMenu debugMenu = new JMenu(Bundle.getMessage("Debug_MenuDebug"));
         
         _runItem = new JMenuItem(Bundle.getMessage("Debug_MenuItem_Run"));
+        _runItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, ActionEvent.CTRL_MASK));
         debugMenu.add(_runItem);
         
         _stepOverItem = new JMenuItem(Bundle.getMessage("Debug_MenuItem_StepOver"));
+        _stepOverItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, ActionEvent.SHIFT_MASK));
         _stepIntoItem = new JMenuItem(Bundle.getMessage("Debug_MenuItem_StepInto"));
+        _stepIntoItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, 0));
         _stepOverItem.setEnabled(false);
         _stepIntoItem.setEnabled(false);
         
@@ -161,12 +164,13 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
             _run = true;
             
             if (_currentMaleSocket != null) {
+                AbstractDebuggerMaleSocket maleSocket = _currentMaleSocket;
                 _currentMaleSocket.setStepInto(false);
                 _currentMaleSocket = null;
                 _currentState = State.None;
                 _stepOverItem.setEnabled(false);
                 _stepIntoItem.setEnabled(false);
-                _treePane.updateTree(_currentMaleSocket);
+                _treePane.updateTree(maleSocket);
                 synchronized(_lock) {
                     _lock.notify();
                 }
