@@ -18,7 +18,6 @@ import jmri.jmrit.logixng.expressions.AnalogExpressionMemory;
 import jmri.jmrit.logixng.expressions.ExpressionMemory;
 import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
-import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.ToDo;
@@ -283,7 +282,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         
         MaleSocket childSocket0 = m0.registerExpression(new AnalogExpressionMemory("IQAE52", null));
         MaleSocket childSocket1 = m0.registerExpression(new AnalogExpressionMemory("IQAE554", null));
-        MaleSocket childSocket2 = m2.registerExpression(new ExpressionMemory("IQDE594", null));
+        m2.registerExpression(new ExpressionMemory("IQDE594", null));
         
         ActionThrottle expression = new ActionThrottle("IQDA321", null);
         Assert.assertNotNull("exists", expression);

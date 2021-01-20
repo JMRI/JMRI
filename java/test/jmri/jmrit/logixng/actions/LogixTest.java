@@ -194,7 +194,7 @@ public class LogixTest extends AbstractDigitalActionTestBase {
         DigitalExpressionManager m0 = InstanceManager.getDefault(DigitalExpressionManager.class);
         DigitalBooleanActionManager m1 = InstanceManager.getDefault(DigitalBooleanActionManager.class);
         
-        MaleSocket childSocket0 = m0.registerExpression(new ExpressionMemory("IQDE52", null));
+        m0.registerExpression(new ExpressionMemory("IQDE52", null));
         MaleSocket childSocket1 = m1.registerAction(new DigitalBooleanOnChange("IQDB554", null, DigitalBooleanOnChange.Trigger.CHANGE));
         
         Logix expression = new Logix("IQDA321", null);

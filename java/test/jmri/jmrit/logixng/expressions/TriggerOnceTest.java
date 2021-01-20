@@ -191,7 +191,7 @@ public class TriggerOnceTest extends AbstractDigitalExpressionTestBase {
     public void testCtorAndSetup3() {
         DigitalExpressionManager m = InstanceManager.getDefault(DigitalExpressionManager.class);
         
-        MaleSocket childSocket = m.registerExpression(new ExpressionMemory("IQDE52", null));
+        m.registerExpression(new ExpressionMemory("IQDE52", null));
         
         TriggerOnce expression = new TriggerOnce("IQDE321", null);
         Assert.assertNotNull("exists", expression);

@@ -234,8 +234,8 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
     public void testCtorAndSetup3() {
         DigitalExpressionManager m = InstanceManager.getDefault(DigitalExpressionManager.class);
         
-        MaleSocket childSocket0 = m.registerExpression(new ExpressionMemory("IQDE52", null));
-        MaleSocket childSocket1 = m.registerExpression(new ExpressionMemory("IQDE554", null));
+        m.registerExpression(new ExpressionMemory("IQDE52", null));
+        m.registerExpression(new ExpressionMemory("IQDE554", null));
         
         Hold expression = new Hold("IQDE321", null);
         Assert.assertNotNull("exists", expression);
