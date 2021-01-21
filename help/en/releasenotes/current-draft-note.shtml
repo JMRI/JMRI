@@ -371,7 +371,10 @@
     <h3>Dispatcher System</h3>
         <a id="Dispatcher_System" name="Dispatcher_System"></a>
         <ul>
-             <li></li>
+             <li>In addition to running trains by Signal Masts or Signal Heads you may now run trains by No Signals
+             This is most useful for Automatic engineer, and works best with fast throw switchs, such as snap switchs, as
+             it works solely on whether a section is allocated. If you need to check switch sensors for position you must
+             continue to use SSL or SML signals.</li>
         </ul>
 
    <h3>Internationalization</h3>
