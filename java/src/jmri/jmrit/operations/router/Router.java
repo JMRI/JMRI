@@ -35,6 +35,8 @@ import jmri.jmrit.operations.trains.TrainManager;
  * @author Daniel Boudreau Copyright (C) 2010, 2011, 2012, 2013, 2015
  */
 public class Router extends TrainCommon implements InstanceManagerAutoDefault {
+    
+    TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
 
     private final List<Track> _nextLocationTracks = new ArrayList<>();
     private final List<Track> _lastLocationTracks = new ArrayList<>();
@@ -247,7 +249,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 addLine(_buildReport, SEVEN, _train.getServiceStatus());
             }
         } else if (!trainServicesCar) {
-            testTrain = InstanceManager.getDefault(TrainManager.class).getTrainForCar(clone, _train, _buildReport);
+            testTrain = tmanager.getTrainForCar(clone, _train, _buildReport);
         }
         if (testTrain != null &&
                 _train != null &&
@@ -470,8 +472,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             // test to see if there's a train that can deliver the car to its final location
             testCar.setTrack(track);
             testCar.setDestination(car.getFinalDestination());
-            testCar.setDestinationTrack(car.getFinalDestinationTrack());
-            Train secondTrain = InstanceManager.getDefault(TrainManager.class).getTrainForCar(testCar, _buildReport);
+            testCar.setDestinationTrack(car.getFinalDestinationTrack()); // can be null
+            Train secondTrain = tmanager.getTrainForCar(testCar, _buildReport);
             if (secondTrain == null) {
                 if (debugFlag) {
                     log.debug("Could not find a train to service car from {} ({}, {}) to destination ({}, {})",
@@ -520,7 +522,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                                         track.getName(), _train.getServiceStatus() }));
                 foundRoute = true; // however, the issue is route moves or train length
             } else {
-                firstTrain = InstanceManager.getDefault(TrainManager.class).getTrainForCar(testCar, _buildReport);
+                firstTrain = tmanager.getTrainForCar(testCar, _buildReport);
             }
             if (firstTrain == null && _addtoReport) {
                 addLine(_buildReport, SEVEN,
@@ -700,11 +702,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             log.debug("Try to find route using 3 trains");
         }
         for (Track nlt : _nextLocationTracks) {
-            testCar.setTrack(nlt); // set car to this location and track
             for (Track llt : _lastLocationTracks) {
-                testCar.setDestinationTrack(llt); // set car to this destination and track
                 // does a train service these two locations?
-                Train middleTrain = InstanceManager.getDefault(TrainManager.class).getTrainForCar(testCar, null);
+                Train middleTrain = getTrainForCar(testCar, nlt, llt);
                 if (middleTrain != null) {
                     log.debug("Found 3 train route, setting car destination ({}, {})", testCar.getLocationName(),
                             testCar.getTrackName());
@@ -730,10 +730,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 new Object[] { car.getFinalDestinationName() }));
         for (Track nlt : _nextLocationTracks) {
             otherloop: for (Track mlt : _otherLocationTracks) {
-                testCar.setTrack(nlt); // set car to this location and track
-                testCar.setDestinationTrack(mlt); // set car to this destination and track
-                // does a train service these two locations?
-                Train middleTrain2 = InstanceManager.getDefault(TrainManager.class).getTrainForCar(testCar, null);
+                Train middleTrain2 = getTrainForCar(testCar, nlt, mlt);
                 if (middleTrain2 != null) {
                     if (debugFlag) {
                         log.debug("Train 2 ({}) services car from ({}) to ({}, {})", middleTrain2.getName(),
@@ -741,11 +738,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                                 testCar.getDestinationTrackName());
                     }
                     for (Track llt : _lastLocationTracks) {
-                        testCar.setTrack(mlt); // set car to this location and track
-                        testCar.setDestinationTrack(llt); // set car to this destination and track
-                        Train middleTrain3 = InstanceManager.getDefault(TrainManager.class).getTrainForCar(testCar,
-                                null); // don't add to
-                        // report
+                        Train middleTrain3 = getTrainForCar(testCar, mlt, llt);
                         if (middleTrain3 != null) {
                             log.debug("Found 4 train route, setting car destination ({}, {})",
                                     nlt.getLocation().getName(), nlt.getName());
@@ -773,10 +766,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 new Object[] { car.getFinalDestinationName() }));
         for (Track nlt : _nextLocationTracks) {
             otherloop: for (Track mlt1 : _otherLocationTracks) {
-                testCar.setTrack(nlt); // set car to this location and track
-                testCar.setDestinationTrack(mlt1); // set car to this destination and track
-                // does a train service these two locations?
-                Train middleTrain2 = InstanceManager.getDefault(TrainManager.class).getTrainForCar(testCar, null);
+                Train middleTrain2 = getTrainForCar(testCar, nlt, mlt1);
                 if (middleTrain2 != null) {
                     if (debugFlag) {
                         log.debug("Train 2 ({}) services car from ({}) to ({}, {})", middleTrain2.getName(),
@@ -787,12 +777,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                         if (mlt1 == mlt2) {
                             continue;
                         }
-                        testCar.setTrack(mlt1); // set car to this location and track
-                        testCar.setDestinationTrack(mlt2); // set car to this destination and track
-                        // does a train service these two locations?
-                        Train middleTrain3 = InstanceManager.getDefault(TrainManager.class).getTrainForCar(testCar,
-                                null); // don't add to
-                        // report
+                        Train middleTrain3 = getTrainForCar(testCar, mlt1, mlt2);
                         if (middleTrain3 != null) {
                             if (debugFlag) {
                                 log.debug("Train 3 ({}) services car from ({}) to ({}, {})", middleTrain3.getName(),
@@ -800,11 +785,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                                         testCar.getDestinationTrackName());
                             }
                             for (Track llt : _lastLocationTracks) {
-                                testCar.setTrack(mlt2); // set car to this location and track
-                                testCar.setDestinationTrack(llt); // set car to this destination and track
                                 // does a train service these two locations?
-                                Train middleTrain4 = InstanceManager.getDefault(TrainManager.class)
-                                        .getTrainForCar(testCar, null); // don't add to report
+                                Train middleTrain4 = getTrainForCar(testCar, mlt2, llt);
                                 if (middleTrain4 != null) {
                                     log.debug("Found 5 train route, setting car destination ({}, {})",
                                             nlt.getLocation().getName(), nlt.getName());
@@ -830,6 +812,13 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         }
         log.debug("Using 5 trains to route car to ({}) was unsuccessful", car.getFinalDestinationName());
         return foundRoute;
+    }
+    
+    private Train getTrainForCar(Car testCar, Track from, Track to) {
+        testCar.setTrack(from); // set car to this location and track
+        testCar.setDestinationTrack(to); // set car to this destination and track
+        // does a train service these two locations?
+        return tmanager.getTrainForCar(testCar, null);
     }
 
     private void showRoute(Car car, List<Train> trains, List<Track> tracks) {
@@ -934,7 +923,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             if (specified.equals(YES) || specified.equals(NOT_NOW)) {
                 train = _train;
             } else {
-                train = InstanceManager.getDefault(TrainManager.class).getTrainForCar(testCar, null);
+                train = tmanager.getTrainForCar(testCar, null);
             }
             // Can specified train carry this car out of staging?
             if (car.getTrack().isStaging() && !specified.equals(YES)) {
