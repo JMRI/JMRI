@@ -42,6 +42,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
     private MaleSocket _rootSocket;
     
     private final Object _lock = new Object();
+    private boolean _continue = false;
     
     /**
      * Maintain a list of listeners -- normally only one.
@@ -124,6 +125,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
         
         _runItem = new JMenuItem(Bundle.getMessage("Debug_MenuItem_Run"));
         _runItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, ActionEvent.CTRL_MASK));
+        _runItem.setEnabled(false);
         debugMenu.add(_runItem);
         
         _stepOverItem = new JMenuItem(Bundle.getMessage("Debug_MenuItem_StepOver"));
@@ -137,6 +139,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
             AbstractDebuggerMaleSocket maleSocket = _currentMaleSocket;
             if ((_currentState == State.After) && (_rootSocket == _currentMaleSocket)) {
                 _run = false;
+                _runItem.setEnabled(false);
             }
             _currentMaleSocket.setStepInto(false);
             _currentMaleSocket = null;
@@ -145,6 +148,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
             _stepIntoItem.setEnabled(false);
             _treePane.updateTree(maleSocket);
             synchronized(_lock) {
+                _continue = true;
                 _lock.notify();
             }
         });
@@ -154,6 +158,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
             AbstractDebuggerMaleSocket maleSocket = _currentMaleSocket;
             if ((_currentState == State.After) && (_rootSocket == _currentMaleSocket)) {
                 _run = false;
+                _runItem.setEnabled(false);
             }
             _currentMaleSocket.setStepInto(true);
             _currentMaleSocket = null;
@@ -162,6 +167,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
             _stepIntoItem.setEnabled(false);
             _treePane.updateTree(maleSocket);
             synchronized(_lock) {
+                _continue = true;
                 _lock.notify();
             }
         });
@@ -174,6 +180,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
                 AbstractDebuggerMaleSocket maleSocket = _currentMaleSocket;
                 if ((_currentState == State.After) && (_rootSocket == _currentMaleSocket)) {
                     _run = false;
+                    _runItem.setEnabled(false);
                 }
                 _currentMaleSocket.setStepInto(false);
                 _currentMaleSocket = null;
@@ -182,6 +189,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
                 _stepIntoItem.setEnabled(false);
                 _treePane.updateTree(maleSocket);
                 synchronized(_lock) {
+                    _continue = true;
                     _lock.notify();
                 }
             }
@@ -272,6 +280,8 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
             
             _currentMaleSocket = (AbstractDebuggerMaleSocket) evt.getNewValue();
             
+//            System.out.format("propertyChange: %s, %s, run: %b, currentState: %s, BP before: %b, BP after: %b%n", evt.getPropertyName(), ((MaleSocket)evt.getNewValue()).getLongDescription(), _run, _currentState.name(), _currentMaleSocket.getBreakpointBefore(), _currentMaleSocket.getBreakpointAfter());
+            
             switch (evt.getPropertyName()) {
                 case Debugger.STEP_BEFORE:
                     if (!_run || _currentMaleSocket.getBreakpointBefore()) {
@@ -281,7 +291,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
                     }
                     break;
                 case Debugger.STEP_AFTER:
-                    if (!_run || _currentMaleSocket.getBreakpointBefore()) {
+                    if (!_run || _currentMaleSocket.getBreakpointAfter()) {
                         _currentState = State.After;
                     } else {
                         if (_rootSocket == _currentMaleSocket) _run = false;
@@ -293,19 +303,27 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
             }
             
             jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
+                _runItem.setEnabled(true);
                 _stepOverItem.setEnabled(true);
                 _stepIntoItem.setEnabled(true);
                 _treePane.updateTree(_currentMaleSocket);
             });
             
-            try {
-                synchronized(_lock) {
-                    _lock.wait();
+//            System.out.format("propertyChange middle: %s, %s, run: %b, currentState: %s%n", evt.getPropertyName(), ((MaleSocket)evt.getNewValue()).getLongDescription(), _run, _currentState.name());
+            
+            if (_currentState != State.None) {
+                try {
+                    synchronized(_lock) {
+                        _continue = false;
+                        while (!_continue) _lock.wait();
+                    }
+                } catch (InterruptedException e) {
+                    log.error("LogixNG thread was interrupted: {}", _conditionalNG.getCurrentThread().getThreadName());
+                    Thread.currentThread().interrupt();
                 }
-            } catch (InterruptedException e) {
-                log.error("LogixNG thread was interrupted: {}", _conditionalNG.getCurrentThread().getThreadName());
-                Thread.currentThread().interrupt();
             }
+            
+//            System.out.format("propertyChange done: %s, %s, run: %b, currentState: %s%n", evt.getPropertyName(), ((MaleSocket)evt.getNewValue()).getLongDescription(), _run, _currentState.name());
             
             if (_rootSocket == null) _rootSocket = _currentMaleSocket;
         }
