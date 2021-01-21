@@ -506,6 +506,13 @@
           </ul>
         </dd>
       </dl>
+      
+            <h2>Logix Documentation Pages Logically Listed</h2>
+
+      <!--#include virtual="LogixDocList.shtml" -->
+
+
+      
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
