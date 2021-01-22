@@ -9,8 +9,7 @@ import java.io.InputStreamReader;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
-import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-import jmri.jmrix.loconet.LnPortController;
+import jmri.jmrix.loconet.*;
 import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
 import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
 import org.slf4j.Logger;
@@ -157,10 +156,10 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
                         // flush the pipe so other threads can see the message
                         outpipe.flush();
 
-                    // finished that line, wait
-                    Thread.sleep(delay);
+                        // finished that line, wait
+                        Thread.sleep(delay);
+                    }
                 }
-
                 // here we're done processing the file
                 log.info("LnHexFilePort.run: normal finish to file"); // NOI18N
 
