@@ -32,6 +32,7 @@
         <h4>DCC-EX</h4>
             <ul>
                 <li>messaging enhancements and cleanup, retry some failed messages</li>
+                <li>allow user to define meters in DCC-EX that display in JMRI</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -371,7 +372,10 @@
     <h3>Dispatcher System</h3>
         <a id="Dispatcher_System" name="Dispatcher_System"></a>
         <ul>
-             <li></li>
+             <li>In addition to running trains by Signal Masts or Signal Heads you may now run trains by No Signals
+             This is most useful for Automatic engineer, and works best with fast throw switchs, such as snap switchs, as
+             it works solely on whether a section is allocated. If you need to check switch sensors for position you must
+             continue to use SSL or SML signals.</li>
         </ul>
 
    <h3>Internationalization</h3>
@@ -400,7 +404,7 @@
     <h3>Meters and MeterFrames</h3>
         <a id="Meters" name="Meters"></a>
         <ul>
-            <li></li>
+            <li>default meter digits based on max and resolution of defined meter</li>
         </ul>
 
     <h3>Operations</h3>

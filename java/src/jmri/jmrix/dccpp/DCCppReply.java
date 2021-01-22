@@ -186,10 +186,10 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 text = "Current: " + getCurrentString() + " / 1024";
                 break;
             case DCCppConstants.METER_REPLY:
-                text = String.format("Meter reply: name %s, value %.2f, type %s, unit %s, min %.2f, max %.2f, resolution %.2f", 
+                text = String.format("Meter reply: name %s, value %.2f, type %s, unit %s, min %.2f, max %.2f, resolution %.2f, warn %.2f", 
                         getMeterName(), getMeterValue(), getMeterType(),  
                         getMeterUnit(), getMeterMinValue(), getMeterMaxValue(), 
-                        getMeterResolution());
+                        getMeterResolution(), getMeterWarnValue());
                 break;
             // case DCCppConstants.LISTPACKET_REPLY:
             //     // TODO: Implement this fully
@@ -947,6 +947,14 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public double getMeterResolution() {
         if (this.isMeterReply()) {
             return(this.getValueDouble(7));
+        } else {
+            log.error("MeterReply Parser called on non-MeterReply message type '{}' message '{}'", this.getOpCodeChar(), this.toString());
+            return(0.0);
+        }
+    }
+    public double getMeterWarnValue() {
+        if (this.isMeterReply()) {
+            return(this.getValueDouble(8));
         } else {
             log.error("MeterReply Parser called on non-MeterReply message type '{}' message '{}'", this.getOpCodeChar(), this.toString());
             return(0.0);
