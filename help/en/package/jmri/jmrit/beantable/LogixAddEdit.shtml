@@ -108,7 +108,36 @@
 
       <p>For more information, consult the <a href=
       "../../../../html/tools/Logix.shtml">main Logix
-      documentation</a>.</p><!--#include virtual="/Footer.shtml" -->
+      documentation</a>.</p>
+      
+      <h2>Logix Documentation Pages Logically Listed</h2>
+      
+      <p>
+        Logix documentation is divided into eight different help pages.  While these are referenced via links in various places,
+        not all are easy to find (perhaps three links down).  They are additionally listed here for convenience.
+        </p>
+
+      <ul>
+        <li><a href="../../../../html/tools/Logix.shtml">Main Logix description and explanation</a></li>
+
+        <li><a href="../../../../html/tools/Logix.shtml#notes">FAQ</a></li>
+
+        <li><a href="LogixTable.shtml">Description of Logix Table contents and usage</a></li>
+
+        <li><a href="LogixAddEdit.shtml">Logix Table add and edit action description</a> [this page]</li>
+
+        <li><a href="../conditional/StateVariableActionList.shtml">Enumeration of Logix conditionals state variables and actions</a></li>
+
+        <li><a href="../conditional/ConditionalListEditor.shtml">Logix conditionals list editor instructions</a></li>
+
+        <li><a href="../conditional/ConditionalTreeEditor.shtml">Logix conditionals tree editor instructions</a></li>
+
+        <li><a href="../conditional/ConditionalCopy.shtml">Logix conditionals copy instructions</a></li>
+
+      </ul>
+    
+      
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

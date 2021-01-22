@@ -512,10 +512,10 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     private void generateMeterReplies() {
         int currentmA = 1100 + rgen.nextInt(64);
         double voltageV = 14.5 + rgen.nextInt(10)/10.0; 
-        String rs = "c CurrentMAIN " + (trackPowerState ? Double.toString(currentmA) : "0") + " C Milli 0 1997 1";
+        String rs = "c CurrentMAIN " + (trackPowerState ? Double.toString(currentmA) : "0") + " C Milli 0 1997 1 1997";
         DCCppReply r = new DCCppReply(rs);
         writeReply(r);       
-        r = new DCCppReply("c VoltageMAIN " + Double.toString(voltageV) + " V NoPrefix 0 18.0 0.1");
+        r = new DCCppReply("c VoltageMAIN " + Double.toString(voltageV) + " V NoPrefix 0 18.0 0.1 16.0");
         writeReply(r);
         rs = "a " + (trackPowerState ? Integer.toString((1997/currentmA)*100) : "0");
         r = DCCppReply.parseDCCppReply(rs);

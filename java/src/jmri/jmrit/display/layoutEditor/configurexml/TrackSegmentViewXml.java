@@ -51,11 +51,11 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
         element.setAttribute("type1", "" + htpMap.outputFromEnum(trk.getType1()) );
         element.setAttribute("connect2name", trk.getConnect2Name());
         element.setAttribute("type2", "" + htpMap.outputFromEnum(trk.getType2()) );
-        
+
         element.setAttribute("dashed",      (view.isDashed() ? "yes" : "no"));
         element.setAttribute("mainline",    (trk.isMainline() ? "yes" : "no"));
         element.setAttribute("hidden",      (view.isHidden() ? "yes" : "no"));
-        
+
         if (view.isArc()) {
             element.setAttribute("arc",         "yes");
             element.setAttribute("flip",        (view.isFlip() ? "yes" : "no"));
@@ -192,7 +192,7 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
         }
 
         //element.setAttribute("class", getClass().getName());
-        log.info("storing old fixed class name for TrackSegment");
+        log.debug("storing old fixed class name for TrackSegment");
         element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml");
 
         return element;
@@ -225,9 +225,9 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
         String con1Name = element.getAttribute("connect1name").getValue();
         String con2Name = element.getAttribute("connect2name").getValue();
 
-        
+
         HitPointType type1 = htpMap.inputFromAttribute(element.getAttribute("type1"));
-        
+
         HitPointType type2 = htpMap.inputFromAttribute(element.getAttribute("type2"));
 
         // create the new TrackSegment and view
@@ -236,7 +236,7 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
                 main, p);
         TrackSegmentView lv = new TrackSegmentView(lt, p);
         lv.setHidden(hide);
-        
+
         lv.setDashed(dash);
         lv.setArc( getAttributeBooleanValue(element, "arc", false) );
 
@@ -553,6 +553,6 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
     }
 
     static final EnumIO<HitPointType> htpMap = new EnumIoNamesNumbers<>(HitPointType.class);
-    
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegmentViewXml.class);
 }

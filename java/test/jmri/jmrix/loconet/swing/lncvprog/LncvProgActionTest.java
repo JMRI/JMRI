@@ -1,18 +1,8 @@
 package jmri.jmrix.loconet.swing.lncvprog;
 
-import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase;
-import jmri.jmrix.loconet.LnTrafficController;
-import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-import jmri.jmrix.loconet.SlotManager;
-import jmri.jmrix.loconet.hexfile.LnHexFileAction;
-import jmri.jmrix.loconet.swing.LnNamedPaneAction;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.awt.*;
 
@@ -22,12 +12,9 @@ class LncvProgActionTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        // LnTrafficController lnis = new LocoNetInterfaceScaffold();
-        // SlotManager slotmanager = new SlotManager(lnis);
-        // LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis, slotmanager);
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         LncvProgAction t = new LncvProgAction();
-        Assert.assertNotNull("exists", t);
+        assertNotNull(t, "exists");
     }
 
     @BeforeEach

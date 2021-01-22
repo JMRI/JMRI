@@ -622,6 +622,8 @@
 
    <tocitem text="Firmware Downloader Tool " target="package.jmri.jmrix.loconet.downloader.LoaderFrame"/>
 
+   <tocitem text="LNCV Programmer " target="package.jmri.jmrix.loconet.swing.lncvprog.LncvProgPane"/>
+
    <tocitem text="LocoIO Configuration Tool " target="package.jmri.jmrix.loconet.locoio.LocoIOFrame"/>
 
    <tocitem text="LocoNet Addresses " target="html.hardware.loconet.Addressing"/>

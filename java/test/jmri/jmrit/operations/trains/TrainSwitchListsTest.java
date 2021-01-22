@@ -465,7 +465,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         // now append new work to file
         Assert.assertTrue(train2.build());
 
-        locationA.setSwitchListState(Location.SW_APPEND);
+        Assert.assertEquals("Confirm append mode", Location.SW_APPEND, locationA.getSwitchListState());
         tsl.buildSwitchList(locationA);
 
         File switchListFileA = InstanceManager.getDefault(TrainManagerXml.class).getSwitchListFile(locationA.getName());

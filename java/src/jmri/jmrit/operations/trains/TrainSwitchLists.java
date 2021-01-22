@@ -53,16 +53,17 @@ public class TrainSwitchLists extends TrainCommon {
      * @param location The Location needing a switch list
      */
     public void buildSwitchList(Location location) {
-        // Append switch list data if not operating in real time
-        boolean newTrainsOnly = !Setup.isSwitchListRealTime();
+
         boolean append = false; // add text to end of file when true
         boolean checkFormFeed = true; // used to determine if FF needed between trains
-        if (newTrainsOnly) {
+        
+        // Append switch list data if not operating in real time
+        if (!Setup.isSwitchListRealTime()) {
             if (!location.getStatus().equals(Location.MODIFIED) && !Setup.isSwitchListAllTrainsEnabled()) {
                 return; // nothing to add
             }
             append = location.getSwitchListState() == Location.SW_APPEND;
-            location.setStatus(Location.UPDATED);
+            location.setSwitchListState(Location.SW_APPEND);
         }
 
         log.debug("Append: {} for location ({})", append, location.getName());
@@ -104,7 +105,7 @@ public class TrainSwitchLists extends TrainCommon {
             // get a list of built trains sorted by arrival time
             List<Train> trains = trainManager.getTrainsArrivingThisLocationList(location);
             for (Train train : trains) {
-                if (newTrainsOnly && train.getSwitchListStatus().equals(Train.PRINTED)) {
+                if (!Setup.isSwitchListRealTime() && train.getSwitchListStatus().equals(Train.PRINTED)) {
                     continue; // already printed this train
                 }
                 Route route = train.getRoute();
@@ -318,7 +319,7 @@ public class TrainSwitchLists extends TrainCommon {
             }
 
             // now report car movement by tracks at location
-            if (Setup.isTrackSummaryEnabled() && Setup.isSwitchListRealTime()) {
+            if (Setup.isPrintTrackSummaryEnabled() && Setup.isSwitchListRealTime()) {
                 clearUtilityCarTypes(); // list utility cars by quantity
                 if (Setup.getSwitchListPageFormat().equals(Setup.PAGE_NORMAL)) {
                     newLine(fileOut);
@@ -442,6 +443,7 @@ public class TrainSwitchLists extends TrainCommon {
         addCarsLocationUnknown(fileOut, !IS_MANIFEST);
         fileOut.flush();
         fileOut.close();
+        location.setStatus(Location.UPDATED);
     }
 
     public void printSwitchList(Location location, boolean isPreview) {
