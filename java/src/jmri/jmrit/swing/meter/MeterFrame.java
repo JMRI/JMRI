@@ -174,7 +174,12 @@ public class MeterFrame extends JmriJFrame {
             lastSelectedMeterMenuItem = menuItem;
 
             updateMenuUnits();
-            initSelectedUnit();
+
+            //set Units and Digits, except for restored settings
+            if (!getInitialMeterName().equals(m.getSystemName())) {
+                initSettingsMenu();
+                setInitialMeterName(""); //clear out saved name after first use
+            }
         }
 
         if (meter instanceof VoltageMeter) {
@@ -183,8 +188,10 @@ public class MeterFrame extends JmriJFrame {
             setTitle(Bundle.getMessage("CurrentMeterTitle2", m.getDisplayName()));
         }
     }
+    
     JMenu voltageMetersMenu = null;
     JMenu currentMetersMenu = null;
+    
     @Override
     public void initComponents() {
         MeterManager mm = InstanceManager.getNullableDefault(MeterManager.class);
@@ -340,7 +347,7 @@ public class MeterFrame extends JmriJFrame {
         }
 
         updateMenuUnits();
-        initSelectedUnit();
+        initSettingsMenu();
 
         // Request callback to update time
         propertyChangeListener = (java.beans.PropertyChangeEvent e) -> {
@@ -369,7 +376,10 @@ public class MeterFrame extends JmriJFrame {
         frameIsInitialized = true;
     }
 
-    private void initSelectedUnit() {
+    /* set default Units, Digits and Decimals for Settings menu 
+     *   based on selected meter configuration                   */
+    private void initSettingsMenu() {
+        
         boolean isPercent = (meter != null) && (meter.getUnit() == Meter.Unit.Percent);
         boolean isVoltage = (meter != null) && (meter instanceof VoltageMeter) && !isPercent;
         boolean isCurrent = (meter != null) && (meter instanceof CurrentMeter) && !isPercent;
@@ -385,7 +395,24 @@ public class MeterFrame extends JmriJFrame {
 
         units_MenuItemMap.get(selectedUnit).setSelected(true);
         unitLabels.get(selectedUnit).setVisible(true);
+        log.debug("selectedUnit set to '{}' for '{}'", selectedUnit, uuid);               
         update();
+
+        if (meter == null) return; //skip if meter not set 
+        
+        double max = meter.getMax();
+        int iDigits = (int) (Math.log10(max) + 1);
+        log.debug("integer digits set to {} for max={} for '{}'", iDigits, max, uuid);               
+        setNumIntegerDigits(iDigits);
+        
+        double res = meter.getResolution();
+        int dDigits = 0; //assume no decimals
+        if (res % 1 != 0) { //not a whole number
+          dDigits = new java.math.BigDecimal(String.valueOf(res)).scale(); //get decimal places used by resolution
+        }
+        log.debug("decimal digits set to {} for resolution={} for '{}'", dDigits, res, uuid);               
+        setNumDecimalDigits(dDigits);
+
     }
 
     // Added method to scale the clock digit images to fit the
