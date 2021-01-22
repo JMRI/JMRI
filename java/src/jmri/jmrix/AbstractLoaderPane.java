@@ -90,7 +90,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
 
         {
             /* Create panels for displaying a filename and for providing a file 
-             * seleciton pushbutton
+             * selection pushbutton
              */
             inputFileNamePanel = new JPanel();
             inputFileNamePanel.setLayout(new FlowLayout());

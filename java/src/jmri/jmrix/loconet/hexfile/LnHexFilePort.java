@@ -9,10 +9,10 @@ import java.io.InputStreamReader;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
-import jmri.jmrix.loconet.*;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.jmrix.loconet.LnPortController;
 import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
 import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -157,12 +157,13 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
                         // flush the pipe so other threads can see the message
                         outpipe.flush();
 
-                        // finished that line, wait
-                        Thread.sleep(delay);
-                    }
-                    // here we're done processing the file
-                    log.info("LnHexFilePort.run: normal finish to file"); // NOI18N
+                    // finished that line, wait
+                    Thread.sleep(delay);
                 }
+
+                // here we're done processing the file
+                log.info("LnHexFilePort.run: normal finish to file"); // NOI18N
+
             } catch (InterruptedException e) {
                 if (sFile != null || message != null) { // changed in another thread before the interrupt
                     log.info("LnHexFilePort.run: user selected new file"); // NOI18N
@@ -183,7 +184,7 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
      * Provide a new message delay value, but don't allow it to go below 2 msec.
      *
      * @param newDelay delay, in milliseconds
-     */
+     **/
     public void setDelay(int newDelay) {
         delay = Math.max(2, newDelay);
     }
@@ -192,7 +193,7 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
 
     /**
      * {@inheritDoc}
-     */
+     **/
     @Override
     public DataInputStream getInputStream() {
         if (pin == null) {
@@ -203,7 +204,7 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
 
     /**
      * {@inheritDoc}
-     */
+     **/
     @Override
     public DataOutputStream getOutputStream() {
         if (pout == null) {
@@ -214,7 +215,7 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
 
     /**
      * {@inheritDoc}
-     */
+     **/
     @Override
     public boolean status() {
         return (pout != null) && (pin != null);
@@ -287,8 +288,10 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
      * @return the options
      */
     public String[] validOption3() {
-        return new String[]{Bundle.getMessage("HandleNormal"), Bundle.getMessage("HandleSpread"), Bundle.getMessage("HandleOneOnly"), Bundle.getMessage("HandleBoth")}; // I18N
-
+        return new String[]{Bundle.getMessage("HandleNormal"),
+                Bundle.getMessage("HandleSpread"),
+                Bundle.getMessage("HandleOneOnly"),
+                Bundle.getMessage("HandleBoth")}; // I18N
     }
 
     /**

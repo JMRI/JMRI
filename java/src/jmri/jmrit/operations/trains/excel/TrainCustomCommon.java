@@ -39,8 +39,10 @@ public abstract class TrainCustomCommon {
     }
 
     public void setFileName(String name) {
-        mcAppName = name;
-        InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
+        if (!getFileName().equals(name)) {
+            mcAppName = name;
+            InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
+        }
     }
 
     public String getCommonFileName() {
@@ -265,7 +267,7 @@ public abstract class TrainCustomCommon {
     }
 
     public void store(Element options) {
-        Element mc = new Element(Xml.MANIFEST_CREATOR);
+        Element mc = new Element(xmlElement);
         Element file = new Element(Xml.RUN_FILE);
         file.setAttribute(Xml.NAME, getFileName());
         Element directory = new Element(Xml.DIRECTORY);

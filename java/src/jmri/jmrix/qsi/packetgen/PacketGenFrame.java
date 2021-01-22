@@ -67,7 +67,9 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.q
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        _memo.getQsiTrafficController().sendQsiMessage(createPacket(packetTextField.getText()), this);
+        String input = packetTextField.getText();
+        // TODO check input + feedback on error. Too easy to cause NPE
+        _memo.getQsiTrafficController().sendQsiMessage(createPacket(input), this);
     }
 
     /**

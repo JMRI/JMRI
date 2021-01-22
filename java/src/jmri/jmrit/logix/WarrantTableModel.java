@@ -61,7 +61,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
         _frame = frame;
         _manager = InstanceManager
                 .getDefault(jmri.jmrit.logix.WarrantManager.class);
-        // _manager.addPropertyChangeListener(this); // for adds and deletes
+        _manager.addPropertyChangeListener(this); // for adds and deletes
         _warList = new ArrayList<>();
         _warNX = new ArrayList<>();
     }

@@ -97,11 +97,12 @@ public class Mx1PacketGenPanel extends jmri.jmrix.zimo.swing.Mx1Panel {
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-
-        /*Mx1Message m = new Mx1Message(packetTextField.getText().length());
-         for (int i = 0; i < packetTextField.getText().length(); i++)
-         m.setElement(i, packetTextField.getText().charAt(i));*/
-        tc.sendMx1Message(createPacket(packetTextField.getText()), null);
+        String input = packetTextField.getText();
+        // TODO check input + feedback on error. Too easy to cause NPE
+        /*Mx1Message m = new Mx1Message(input.length());
+         for (int i = 0; i < input.length(); i++)
+         m.setElement(i, input.charAt(i));*/
+        tc.sendMx1Message(createPacket(input), null);
     }
 
     Mx1Message createPacket(String s) {

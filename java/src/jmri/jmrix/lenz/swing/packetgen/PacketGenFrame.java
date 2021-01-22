@@ -29,7 +29,9 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
      */
     @Override
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        tc.sendXNetMessage(createPacket(packetTextField.getSelectedItem().toString()), null);
+        if (packetTextField.getSelectedItem() != null) {
+            tc.sendXNetMessage(createPacket(packetTextField.getSelectedItem().toString()), null);
+        }
     }
 
     XNetMessage createPacket(String s) {

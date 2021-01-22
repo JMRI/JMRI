@@ -23,7 +23,7 @@
 
   <tocitem text="USB input " target="package.jmri.jmrix.jinput.treemodel.TreeFrame"/>
 
-  <tocitem text="Error Codes " target="html.setup.Errors"/>
+  <tocitem text="Error Codes " target="html.apps.Errors"/>
 
   <tocitem text="InstallTest (Windows) " target="package.apps.InstallTest.InstallTest"/>
 
@@ -621,6 +621,8 @@
    <tocitem text="Duplex Network Configuration Tool " target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel"/>
 
    <tocitem text="Firmware Downloader Tool " target="package.jmri.jmrix.loconet.downloader.LoaderFrame"/>
+
+   <tocitem text="LNCV Programmer " target="package.jmri.jmrix.loconet.swing.lncvprog.LncvProgPane"/>
 
    <tocitem text="LocoIO Configuration Tool " target="package.jmri.jmrix.loconet.locoio.LocoIOFrame"/>
 
