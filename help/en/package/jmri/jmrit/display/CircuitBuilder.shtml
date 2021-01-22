@@ -358,7 +358,7 @@
     from the value of what was entered for the length of the OBlock circuit.  If the length of the
     path is significantly different from the OBlock length (i.e. by more than 10%), enter a length
     for the path. <b>Note:</b> Path lengths are needed for a warrant to calculate where to begin
-    a speed change required by a signal aspect or block occupation ahead of the train.
+      a speed change required by a signal aspect or block occupation ahead of the train.</p>
     <ul>
         <li>The Edit Paths window has a list of the paths already defined for the track circuit
         	and a text field to name paths to be created.</li>
@@ -380,7 +380,7 @@
         <li>To delete a path, select it from the list and press the <b>Delete Path</b> button.</li>
     </ul>
 
-    When exiting the Add/Edit Path window the Path is checked for any possible deficiencies. If
+    <p>When exiting the Add/Edit Path window the Path is checked for any possible deficiencies. If
     any are detected you will be prompted and given the option to return to the window or 
     continue to close it.</p>
     
@@ -410,6 +410,7 @@
 	<a name="Signals" id="Signals"></a>
     <h3>Signals - Edit Signal Masts</h3>
      <span class="since">Since 4.17.3</span><br>
+     <img src="images/CircuitBuilderSignalEditPane.png" alt="Edit Signal (on Portal) panel" align="right">
      Use this window to configure a Signal Head or Signal Mast to protect the OBlock. 
      The track circuit icons are highlighted in blue and the portal icons are
      shown with a red circle highlighted in blue.
@@ -431,7 +432,7 @@
     translated to speed names according to to a table in Warrant Preferences. Then,
     as above, the speed name is used to regulate train speed.
 	</p><p>
-	The signal add/edit window has the following items.
+      The signal add/edit window has the following items.</p>
     <ul>
     	<li>A list of the portals into the OBlock. Select a portal to add or remove the 
     		block protection by a signal. If a signal already protects at the selected
@@ -446,12 +447,13 @@
     		must be completed before entering the block.)  The number is an offset
     		from the portal entrance point to the block. It may be positive or negative.</li>
     </ul>
-	Selecting a signal icon will select the portal if it protects the block there.
+	<p>Selecting a signal icon will select the portal if it protects the block there.
 	Otherwise a dialog windows opens to configure or replace protection.</p>
     
     <h2>Further Reference</h2>
     <ul>
         <li>For a step-by-step instruction on Warrants and Circuit Builder, check out the
+        (somewhat outdated but still a great way to get introduced to the concept of Warrants)
         <a href="https://jmri.org/community/clinics/">clinic</a> presentation by Dick Bronson on <a
         href="http://www.rr-cirkits.com/Clinics/Clinics.html">JMRI 2014 Control Panel Editor
             plus Warrants</a>.</li>
