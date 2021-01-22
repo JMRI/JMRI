@@ -37,7 +37,7 @@ public class AbstractDebuggerMaleSocket extends AbstractMaleSocket {
     protected void before() {
         _lastDoBreak = _debugger.getBreak();
         if (isDebuggerActive() && (_debugger.getBreak() || _breakpointBefore)) {
-            System.out.format("Before: %s%n", getLongDescription());
+//            System.out.format("Before: %s%n", getLongDescription());
             _debugger.firePropertyChange(Debugger.STEP_BEFORE, null, this);
             _debugger.setBreak(_stepInto);
         }
@@ -47,7 +47,7 @@ public class AbstractDebuggerMaleSocket extends AbstractMaleSocket {
         if (isDebuggerActive()) {
             _debugger.setBreak(_lastDoBreak);
             if (_debugger.getBreak() || _breakpointAfter) {
-                System.out.format("After: %s%n", getLongDescription());
+//                System.out.format("After: %s%n", getLongDescription());
                 _debugger.firePropertyChange(Debugger.STEP_AFTER, null, this);
             }
         }
