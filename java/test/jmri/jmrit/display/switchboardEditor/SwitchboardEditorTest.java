@@ -6,8 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
 
-import org.junit.Assert;
-import org.junit.Assume;
+import org.junit.Ignore;
 import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.JMenuBarOperator;
 import org.netbeans.jemmy.operators.JMenuOperator;
@@ -19,18 +18,22 @@ import jmri.util.ColorUtil;
 import jmri.util.JUnitUtil;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 
-import javax.swing.*;
-
 /**
  * Test simple functioning of SwitchboardEditor
  *
  * @author Paul Bender Copyright (C) 2016
- * @author Egbert Broerse Copyright (C) 2017, 2020
+ * @author Egbert Broerse Copyright (C) 2017, 2020, 2021
  */
 //@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEditor> {
 
     // SwitchboardEditor e is already present in super
+
+    @Override
+    @Ignore("ChangeView is not applicable to SwitchBoards")
+    @Test
+    public void testChangeView() {
+    }
 
     @Test
     public void testDefaultCtor() {

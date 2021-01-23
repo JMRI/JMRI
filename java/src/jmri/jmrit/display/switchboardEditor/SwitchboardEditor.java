@@ -1600,6 +1600,15 @@ public class SwitchboardEditor extends Editor {
     }
 
     /**
+     * changeView is not supported by SwitchBoards.
+     * {@inheritDoc}
+     */
+    @Override
+    protected Editor changeView(String className) {
+        return null;
+    }
+
+    /**
      * Create sequence of panels, etc. for switches: JFrame contains its
      * ContentPane which contains a JPanel with BoxLayout (p1) which contains a
      * JScrollPane (js) which contains the targetPane.
