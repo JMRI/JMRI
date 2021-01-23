@@ -1824,7 +1824,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     /**
-     * Returns the statusCode of the "services(Car)" routine. There are two statusCodes that need special consideration
+     * Returns the statusCode of the "isServiceable(Car)" routine. There are two statusCodes that need special consideration
      * when the train is being built, the moves in a train's route and the maximum train length. NOTE: The code using
      * getServiceStatus() currently assumes that if there's a service status that the issue is either route moves or
      * maximum train length.
