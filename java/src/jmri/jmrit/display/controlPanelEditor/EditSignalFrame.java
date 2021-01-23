@@ -1,6 +1,5 @@
 package jmri.jmrit.display.controlPanelEditor;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.datatransfer.DataFlavor;
@@ -12,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.annotation.Nonnull;
@@ -199,10 +197,10 @@ public class EditSignalFrame extends EditFrame {
         p.add(_pickMast.getButtonPanel());
         JPanel pp = new JPanel();
         pp.setLayout(new FlowLayout());
-        buttonRemove = new JButton(Bundle.getMessage("ButtonCreateMast"));
-        buttonRemove.addActionListener(_mastTableAction);
-        buttonRemove.setToolTipText(Bundle.getMessage("ToolTipAddToTable"));
-        pp.add(buttonRemove);
+        JButton buttonCreate = new JButton(Bundle.getMessage("ButtonCreateMast"));
+        buttonCreate.addActionListener(_mastTableAction);
+        buttonCreate.setToolTipText(Bundle.getMessage("ToolTipAddToTable"));
+        pp.add(buttonCreate);
         p.add(pp);
         panel.add(p);
         
@@ -214,10 +212,10 @@ public class EditSignalFrame extends EditFrame {
         p.add(_pickHead.getButtonPanel());
         pp = new JPanel();
         pp.setLayout(new FlowLayout());
-        buttonRemove = new JButton(Bundle.getMessage("ButtonCreateHead"));
-        buttonRemove.addActionListener(_headTableAction);
-        buttonRemove.setToolTipText(Bundle.getMessage("ToolTipAddToTable"));
-        pp.add(buttonRemove);
+        buttonCreate = new JButton(Bundle.getMessage("ButtonCreateHead"));
+        buttonCreate.addActionListener(_headTableAction);
+        buttonCreate.setToolTipText(Bundle.getMessage("ToolTipAddToTable"));
+        pp.add(buttonCreate);
         p.add(pp);
         panel.add(p);
         signalPanel.add(panel);
@@ -450,7 +448,7 @@ public class EditSignalFrame extends EditFrame {
     // ConfigureButton -    addMast(portal, mast); portal from portal list, mast from name field
     private void addMast(@Nonnull Portal portal, @Nonnull NamedBean newMast) {
         if (log.isDebugEnabled()) {
-            log.debug("addMast \"{}\" icon ={}", newMast.getDisplayName());
+            log.debug("addMast \"{}\"", newMast.getDisplayName());
         }
         if (newMast instanceof SignalMast) {
             SignalMast mast = (SignalMast)newMast;
@@ -714,7 +712,7 @@ public class EditSignalFrame extends EditFrame {
                 for (List<PositionableIcon> ia : icons.values()) {
                     if (!ia.isEmpty()) {
                         PositionableIcon pos = ia.get(0);
-                        if (pos != null && pos instanceof SignalHeadIcon) {
+                        if (pos instanceof SignalHeadIcon) {
                             _dragHeadIcon = (SignalHeadIcon)pos;
                             break;
                         }
@@ -729,9 +727,7 @@ public class EditSignalFrame extends EditFrame {
             if (maps.isEmpty()) {
                 log.error("SignalHead icon cannot be found for {}", mast.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME));
             } else {
-                java.util.Iterator<Map.Entry<String, HashMap<String, NamedIcon>>> iter = maps.entrySet().iterator();
-                while (iter.hasNext()) {
-                    Map.Entry<String, HashMap<String, NamedIcon>> entry = iter.next();
+                for (Entry<String, HashMap<String, NamedIcon>> entry : maps.entrySet()) {
                     HashMap<String, NamedIcon> map = entry.getValue();
                     for (Entry<String, NamedIcon> ent : map.entrySet()) {
                         _dragHeadIcon.setIcon(ent.getKey(), new NamedIcon(ent.getValue()));
@@ -849,4 +845,5 @@ public class EditSignalFrame extends EditFrame {
     }
 
     private final static Logger log = LoggerFactory.getLogger(EditSignalFrame.class);
+
 }
