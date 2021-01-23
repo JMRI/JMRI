@@ -78,7 +78,9 @@ module has its own Java class. Each function is its own class that implements th
 <h3>Add new function with Jython</h3>
 
 It's possible to create a new function i Jython to be used by formula. The code below gives an example that you can use
-as a start. A new function is added by creating a new class that extends <b>Function</b> and that implements these methods:
+as a template. A new function is added by creating a new class that extends the class <b>Function</b> and that
+implements these methods:
+<p>
 <table border="1" cellspacing="0" cellpadding="2">
 <tr><th>Method</th><th>Description</th></tr>
 <tr><td>getModule</td><td>The name of the module that the function belongs to</td></tr>
@@ -89,6 +91,8 @@ as a start. A new function is added by creating a new class that extends <b>Func
 
 <p>
 
+Example Jython script that defines the function <b>jythonTest</b> that takes one floating point parameter:
+<p>
 <table border="1" cellspacing="0" cellpadding="2">
 <tr><td>
 <pre>
@@ -126,6 +130,16 @@ the method <b>calculate</b> on each argument we want to use.
 <p>
 We then do the calculation, which in this case multiplies the first argument with 3.4 and then returns the value.
 
+<h3>Important!</h3>
+
+A function may set turnouts, sensors, and other things on the layout. You may for example create the function
+<b>setTurnout(turnout, newState)</b>. But it's important to remember that a ConditionalNG runs on a separate thread so
+if you set a turnout or a sensor, you must do that on the layout thread. Formula is always run on the thread that the
+ConditionalNG is run on, so if a function updates the layout or the GUI, it needs to do it on the layout thread or the
+GUI thread.
+<p>
+See chapter <a href="chapter13.html">Chapter 13 - Threads</a> for more information of LogixNG threads.
+<p>
 </td>
 </tr>
 </table>

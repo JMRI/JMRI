@@ -9,61 +9,6 @@
 <tr>
 <td>
 
-
-<h1>Notes - REMOVE THIS</h1>
-
-LogixNG has four main building blocks. `Actions` that does something. `Expressions` that evaluates to something. `Female sockets` that something can be connected to. `Male sockets` that encapsulate an action or expression so that it can be connected to a female socket.
-
-All actions, expressions and male sockets has a well defined type, for exampe the ExpressionTurnout evaluates the state of a turnout and returns true/false. And the AnalogExpressionConstant returns a constant value that is a floating point number.
-
-But in some cases, the user might want to mix different types of expressions. The user might for example add a string to a number, 
-
-<hr>
-
-HandleDelayedAction
-
-public Data ConditionalNG.getData(String className);
-
-Ha en generell klass som hanterar delayed action för alla NamedBean.
-
-<hr>
-
-Tutorial
-
-Note for developers
-
-Hidden text. Man klickar på länken "Note for developers" och då visas denna paragraf.
-
-<hr>
-
-AAA = a+b
-AAA = {a}
-AAA = "Kalle"
-
-<hr>
-
-Sensor ska kunna hålla resultatet tills det läses av. Prova med timer på 10 sek.
-
-<hr>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <h1>LogixNG Tutorial</h1>
 
 This tutorial has an <a href="logixngpreview.jmri.zip">example profile</a>.
@@ -110,6 +55,26 @@ Some chapters has a panel and the panels has names like "Chapter 1", that tells 
 <a href="chapter13.html">Chapter 13 - Threads</a>
 <p>
 <a href="chapter14.html">Chapter 14 - The debugger</a>
+<p>
+<hr>
+
+<h2>Notes for developers</h2>
+
+The rest of the chapters are aimed at developers of JMRI. These chapters explains the internals of LogixNG and how to
+use LogixNG from other parts of JMRI.
+
+<p>
+
+<a href="chapter21.html">Chapter 13 - Adding a new action or expression</a>
+<p>
+<a href="chapter22.html">Chapter 14 - The future of LogixNG - Expanding it further</a>
+<p>
+<a href="chapter23.html">Chapter 15 - Using LogixNG in other parts of JMRI or by third party software</a>
+If you are developing some tool, for example something similat to SSL or SSM, and you want to use LogixNG as the
+engine, there are some things that's good to know.
+<p>
+<p>
+<a href="chapter99.html">Chapter 99 - Note to reviewers of JMRI. When to merge LogixNG?</a>
 <p>
 
 
@@ -166,22 +131,6 @@ LogixNG is designed to be modular and flexible with small classes with well defi
 <hr>
 <hr>
 
-
-<h2>Notes for developers</h2>
-
-The rest of the chapters are aimed at developers of JMRI. These chapters explains the internals of LogixNG and how to
-use LogixNG from other parts of JMRI.
-
-<p>
-
-<a href="chapter13.html">Chapter 13 - Adding a new action or expression</a>
-<p>
-<a href="chapter14.html">Chapter 14 - The future of LogixNG - Expanding it further</a>
-<p>
-<a href="chapter15.html">Chapter 15 - Using LogixNG in other parts of JMRI or by third party software</a>
-If you are developing some tool, for example something similat to SSL or SSM, and you want to use LogixNG as the
-engine, there are some things that's good to know.
-<p>
 LogixNG has a reserved group of system names for items created by other parts of JMRI. IQDA:JMRI:aaaa. The purpose of
 these special system names is to guarantee that there will never be any collission between JMRI system names and system
 names created by the user.

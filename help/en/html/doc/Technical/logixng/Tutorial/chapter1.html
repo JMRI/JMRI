@@ -12,47 +12,12 @@
 <tr>
 <td>
 
-
-<h1>DANIEL DANIEL DANIEL</h1>
-
-
-
-LogixNG tables
-<p>
-External table (external CSV file)
-<br>
-Internal table (stored in panel file)
-<p>
-External: CSV file name. Read-only.
-<br>
-Internal: x columns, y rows. Column and row headers. Constant/variable size.
-
-
-<p>
-------------------------------------------
-<p>
-
-LogixNGs ska kunna enable/disable. Checkbox i table.
-<p>
-LogixNG ska kunna aktiveras vid start. Slå på/av under körning.
-<p>
-Alla LogixNG behöver pekare till LogixNG_Manager.
-<p>
-LogixNG_Manager.isActive()
-
-<p>
-
-
-
-
-
-
 <h1>LogixNG Tutorial - Chapter 1</h1>
 
 <h2>LogixNG - What is it?</h2>
 
-LogixNG is similar to Logix. It's a way to define rules, like "If sensor IS1 is Active, then set turnout IT2 to
-Thrown". It borrows some concepts from Logix, but it's a complete new design and it can work side by side with
+LogixNG is similar to Logix. It's a way to define rules, like <i>"If sensor IS1 is Active, then set turnout IT2 to
+Thrown"</i>. It borrows some concepts from Logix, but it's a complete new design and it can work side by side with
 Logix.
 <p>
 <h2>Setting up a LogixNG and a ConditionalNG</h2>
@@ -90,7 +55,7 @@ copy, but since actions and expressions build a tree, a copy can be of many acti
 
 LogixNG has two basic building blocks: Actions and Expressions. Actions do something, for example throw a turnout or
 sets a signal mast. Expressions ask something, for example if a sensor is active or if a signal head has a particular
-appearance. The actions and expressions forms a tree and a complex logix can be built.
+appearance. The actions and expressions form a tree and a complex logix can be built with them.
 
 <h3>Categories</h3>
 
@@ -119,7 +84,7 @@ tutorial.
 <h4>Why is "Delayed Set Turnout" missing?</h4>
 
 Logix has the features "Delayed Set Turnout", "Cancel Timers for Turnout" and "Reset Delayed Set Turnout". These
-features are currently not implemented in LogixNG. The reason is that the creator of LogixNG, Daniel Bergqvist, does
+features are currently not implemented in LogixNG. The reason is that the creator of LogixNG, Daniel Bergqvist, did
 not fully understand how the end users want to use this feature. He then had three options:
 <ol type="1">
 <li>Implement an exact copy of the feature in Logix.</li>
@@ -128,10 +93,6 @@ not fully understand how the end users want to use this feature. He then had thr
 what they really want.</li>
 </ol>
 He chose the third option.
-<p>
-Then the automobile was first created, it was a horse-drawn carriage there the engine had replaced the horse. After a
-while when the engineers had learn more of the possibilities of the engine, they realized that they didn't need to
-adapt the cab after the horse, so the modern car was born.
 <p>
 Maybe the developers and the end users find that the Logix solution with "Delayed Set Turnout" is best. If so, then we
 will add that feature. Maybe the developers and the end users find that there is a better way to do it in LogixNG and
@@ -148,42 +109,6 @@ action and then paste the IfThenElse action back.
 
 
 <h3>Cut the IfThenElse action, add a Many action and paste the IfThenElse action.</h3>
-
-
-
-
-
-<h2>Using the clipboard</h2>
-
-While editing a ConditionalNG, it can be useful to cut out something and leave it, editing something else, and then
-paste it back. For this purpose, LogixNG has a clipboard. Each time you cut an action or expression, it is moved to the
-clipboard.
-<p>
-The clipboard editor works the same way as the ConditionalNG editor, with the exceptions that actions and expressions
-are never active while on the clipboard.
-<p>
-When an action or expression is cut, it will always be put on the first row in the clipboard. This is true even when
-you cut an item on the clipboard itself. If you cut an item on the clipboard, that item will be removed from its
-current place in the tree and moved to the first row in the tree.
-<p>
-Note that you can cut an item on any level in the clipboard tree. While editing a ConditionalNG, you may cut a big tree
-from the ConditionalNG and you then wants to take only a small sub tree and paste back to the ConditionalNG.
-<p>
-Example:
-* Many
-  * IfThenElse
-    * If sensor
-	* Throw turnout
-<p>
-You can cut the Many action from the ConditionalNG, then go to the clipboard and expand the Many action and then cut
-the IfThenElse action. The IfThenElse action will then be moved to the first row on the clipboard. Now you can go back
-to the ConditionalNG and paste the IfThenElse action to the ConditionalNG.
-<p>
-You can also use the clipbord to move items from one ConditionalNG to another.
-<p>
-If the popup menu is opened on an item that can be copied, the menu item Copy is enabled. If "Copy" is selected, the
-item and its sub tree are copied to the clipboard. Each item gets an auto system name and no user name.
-
 
 
 <h2>Stop the power during lunch</h2>
