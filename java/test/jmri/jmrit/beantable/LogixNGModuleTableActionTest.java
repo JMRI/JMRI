@@ -105,7 +105,7 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
         JMenuItem findMenuItem = (JMenuItem) jpm.getComponent(0);
         Assert.assertEquals(findMenuItem.getText(), "Close window");
         new JMenuItemOperator(findMenuItem).doClick();
-        
+/*        
         // Test that we can open the LogixNGEdtior window twice
         logixNGModuleTable.editPressed("IQM101");  // NOI18N
         // Click button "Done" on the EditLogixNG frame
@@ -114,7 +114,7 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
         jf2 = new JFrameOperator(frame);
         jf2.dispose();
         JUnitUtil.dispose(frame);
-        
+*/        
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
         
