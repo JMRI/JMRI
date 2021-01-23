@@ -1931,6 +1931,18 @@ public class StoreAndLoadTest {
 //                throw new RuntimeException("Failed to load panel");
             }
         }
+        
+        JUnitAppender.assertWarnMessage("destinationPoints \"Something\" is not found");
+        JUnitAppender.assertWarnMessage("destinationPoints \"Something\" is not found");
+        JUnitAppender.assertWarnMessage("destinationPoints \"Something\" is not found");
+        JUnitAppender.assertWarnMessage("destinationPoints \"Something\" is not found");
+        JUnitAppender.assertWarnMessage("script has not initialized params._scriptClass");
+        JUnitAppender.assertWarnMessage("warrant \"Something\" is not found");
+        JUnitAppender.assertWarnMessage("warrant \"Something\" is not found");
+        JUnitAppender.assertWarnMessage("warrant \"Something\" is not found");
+        JUnitAppender.assertWarnMessage("warrant \"Something\" is not found");
+        JUnitAppender.assertErrorMessage("systemName is already registered: IH1");
+        JUnitAppender.assertErrorMessage("systemName is already registered: IH2");
     }
     
     
@@ -1984,21 +1996,8 @@ public class StoreAndLoadTest {
 
     @After
     public void tearDown() {
-        JUnitAppender.clearBacklog();    // REMOVE THIS!!!
+//        JUnitAppender.clearBacklog();    // REMOVE THIS!!!
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
-/*        
-        JUnitAppender.assertWarnMessage("destinationPoints \"Something\" is not found");
-        JUnitAppender.assertWarnMessage("destinationPoints \"Something\" is not found");
-        JUnitAppender.assertWarnMessage("destinationPoints \"Something\" is not found");
-        JUnitAppender.assertWarnMessage("destinationPoints \"Something\" is not found");
-        JUnitAppender.assertWarnMessage("script has not initialized params._scriptClass");
-        JUnitAppender.assertWarnMessage("warrant \"Something\" is not found");
-        JUnitAppender.assertWarnMessage("warrant \"Something\" is not found");
-        JUnitAppender.assertWarnMessage("warrant \"Something\" is not found");
-        JUnitAppender.assertWarnMessage("warrant \"Something\" is not found");
-        JUnitAppender.assertErrorMessage("systemName is already registered: IH1");
-        JUnitAppender.assertErrorMessage("systemName is already registered: IH2");
-*/
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
