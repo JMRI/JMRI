@@ -186,6 +186,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
         initMinimumSize(new Dimension(panelWidth, panelHeight));
         
         _debugger.addPropertyChangeListener(this);
+        _debugger.setBreak(true);
         _debugger.activateDebugger(conditionalNG);
         
         PopupMenu popup = new PopupMenu();
@@ -231,9 +232,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
     private void doRun() {
         _run = true;
         
-//        System.out.format("doRun: aaa%n");
         if (_currentMaleSocket != null) {
-//            System.out.format("doRun: bbb%n");
             AbstractDebuggerMaleSocket maleSocket = _currentMaleSocket;
             if ((_currentState == State.After) && (_rootSocket == _currentMaleSocket)) {
                 _run = false;
@@ -246,14 +245,10 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
             _stepIntoItem.setEnabled(false);
             _treePane.updateTree(maleSocket);
             synchronized(_lock) {
-//                System.out.format("doRun: ccc%n");
                 _continue = true;
                 _lock.notify();
-//                System.out.format("doRun: ddd%n");
             }
-//            System.out.format("doRun: eee%n");
         }
-//        System.out.format("doRun: fff%n");
     }
     
     public void initMinimumSize(Dimension dimension) {
@@ -265,10 +260,8 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
     /** {@inheritDoc} */
     @Override
     public void windowClosed(WindowEvent e) {
-//        System.out.format("windowClosed%n");
         doRun();    // Ensure the ConditionalNG is not waiting for us
-//        System.out.format("windowClosed done%n");
-        
+        _debugger.removePropertyChangeListener(this);
         _debugger.deActivateDebugger();
         logixNGData.clear();
         logixNGData.put("Finish", _conditionalNG.getSystemName());  // NOI18N
@@ -313,19 +306,15 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
                     if (!_run || _currentMaleSocket.getBreakpointAfter()) {
                         _currentState = State.After;
                     } else {
-//                        System.out.format("AAA propertyChange: current: %s, root: %s%n", _currentMaleSocket, _rootSocket);
                         if (_rootSocket == _currentMaleSocket) {
-//                            System.out.format("BBB propertyChange: current: %s, root: %s%n", _currentMaleSocket, _rootSocket);
                             _run = false;
                             jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
-//                                System.out.format("_runItem.setEnabled(false)%n");
                                 _runItem.setEnabled(false);
                                 _stepOverItem.setEnabled(false);
                                 _stepIntoItem.setEnabled(false);
                                 enableMenuItems.set(false);
                             });
                         }
-//                        System.out.format("CCC propertyChange: current: %s, root: %s%n", _currentMaleSocket, _rootSocket);
                         _currentState = State.None;
                     }
                     break;
@@ -334,7 +323,6 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
             }
             
             jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
-//                System.out.format("_runItem.setEnabled(true)%n");
                 if (enableMenuItems.get()) {
                     _runItem.setEnabled(true);
                     _stepOverItem.setEnabled(true);
@@ -358,10 +346,6 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
             }
             
 //            System.out.format("propertyChange done: %s, %s, run: %b, currentState: %s%n", evt.getPropertyName(), ((MaleSocket)evt.getNewValue()).getLongDescription(), _run, _currentState.name());
-            
-//            System.out.format("aaa: %s, %s%n", _rootSocket, _currentMaleSocket);
-//            if (_rootSocket == null) _rootSocket = _currentMaleSocket;
-//            System.out.format("aaa: %s, %s%n", _rootSocket, _currentMaleSocket);
         }
     }
     
