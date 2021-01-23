@@ -57,9 +57,8 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     private NamedBeanHandle<?> namedBean = null; // can be Turnout, Sensor or Light
     protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
     private final char beanTypeChar;
-    private final Color defaultActiveColor = Color.RED;
-    private final Color defaultInactiveColor = Color.GREEN;
-    //private final Color defaultUnknownColor = Color.WHITE; // often hard to see
+    private final Color activeColor;
+    private final Color inactiveColor;
 
     private final SwitchboardEditor _editor;
 
@@ -79,6 +78,8 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         sysNameTextBox.setText(switchName); // setting name here allows test of AddNew()
         _editor = editor;
         _bname = bean;
+        activeColor = editor.getActiveColorAsColor();
+        inactiveColor = editor.getInactiveColorAsColor();
         showUserName = (_editor.showUserName().equals("yes"));
         if (bean != null) {
             _uName = bean.getUserName();
@@ -435,11 +436,11 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     break;
                 case 2:
                     switchLabel = getActiveText();
-                    switchColor = defaultActiveColor;
+                    switchColor = activeColor;
                     break;
                 case 4:
                     switchLabel = getInactiveText();
-                    switchColor = defaultInactiveColor;
+                    switchColor = inactiveColor;
                     break;
                 default:
                     switchLabel = getInconsistentText();
@@ -1151,9 +1152,9 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 // see panel.js for vector drawing: var $drawWidgetSymbol = function(id, state), ctx is same as g2d
                 //  clear for alternating text and 'moving' items not covered by new paint
                 if (_state == 4) {
-                    g.setColor(defaultInactiveColor); // simple change in color
+                    g.setColor(inactiveColor); // simple change in color
                 } else if (_state == 2) {
-                    g.setColor(defaultActiveColor);
+                    g.setColor(activeColor);
                 } else {
                     g.setColor(Color.GRAY);
                 }
@@ -1172,16 +1173,16 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             } else if (_shape == SwitchboardEditor.KEY) {
                 // key, same shape for all beanTypes (S, T, L)
                 // red = upper rounded rect
-                g.setColor(_state == 2 ? defaultActiveColor : SwitchboardEditor.darkActiveColor); // simple change in color
+                g.setColor(_state == 2 ? activeColor : SwitchboardEditor.darkActiveColor); // simple change in color
                 g2d.fillRoundRect(-3*r/8, -2*r/3, 3*r/4, r/3, r/6, r/6);
                 // green = lower rounded rect
-                g.setColor(_state == 4 ? defaultInactiveColor : SwitchboardEditor.darkInactiveColor); // simple change in color
+                g.setColor(_state == 4 ? inactiveColor : SwitchboardEditor.darkInactiveColor); // simple change in color
                 g2d.fillRoundRect(-3*r/8, r/3, 3*r/4, r/3, r/6, r/6);
                 // add round LED at top (only part defined as floats)
                 Point2D center = new Point2D.Float(0.05f*r, -7.0f*r/8.0f);
                 float radius = r/6.0f;
                 float[] dist = {0.0f, 0.8f};
-                Color[] colors = {Color.WHITE, (_state == 2 ? defaultActiveColor : Color.GRAY)};
+                Color[] colors = {Color.WHITE, (_state == 2 ? activeColor : Color.GRAY)};
                 RadialGradientPaint pnt = new RadialGradientPaint(center, radius, dist, colors);
                 g2d.setPaint(pnt);
                 g2d.fillOval(-r/8, -r, r/4, r/4);

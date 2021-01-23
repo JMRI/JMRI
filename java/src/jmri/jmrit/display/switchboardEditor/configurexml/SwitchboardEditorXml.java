@@ -43,15 +43,10 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         Element panel = new Element("switchboardeditor");
 
         JFrame frame = p.getTargetFrame();
-        //Dimension size = frame.getSize();
-        //Point posn = frame.getLocation();
 
         panel.setAttribute("class", "jmri.jmrit.display.switchboardEditor.configurexml.SwitchboardEditorXml");
         panel.setAttribute("name", "" + frame.getTitle());
-        //panel.setAttribute("x", "" + posn.x); // managed vie Prefsmanager
-        //panel.setAttribute("y", "" + posn.y);
-        //panel.setAttribute("height", "" + size.height);
-        //panel.setAttribute("width", "" + size.width);
+        // size and position are managed by Prefsmanager
         panel.setAttribute("editable", "" + (p.isEditable() ? "yes" : "no"));
         panel.setAttribute("showtooltips", "" + (p.showToolTip() ? "yes" : "no"));
         panel.setAttribute("controlling", "" + (p.allControlling() ? "yes" : "no"));
@@ -70,8 +65,8 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("showusername", "" + p.showUserName());
         panel.setAttribute("iconscale", "" + p.getIconScale());
         panel.setAttribute("defaulttextcolor", p.getDefaultTextColor());
-//        panel.setAttribute("activecolor", p.getActiveSwitchColor()); not needed, fetched directly from Editor by Servlet
-//        panel.setAttribute("inactivecolor", p.getInactiveSwitchColor()); / not user-settable
+        panel.setAttribute("activecolor", p.getActiveSwitchColor()); // fetched directly from Editor by Servlet
+        panel.setAttribute("inactivecolor", p.getInactiveSwitchColor()); // user-settable since 4.21.3
         if (p.getBackgroundColor() != null) {
             panel.setAttribute("redBackground", "" + p.getBackgroundColor().getRed());
             panel.setAttribute("greenBackground", "" + p.getBackgroundColor().getGreen());
@@ -288,12 +283,33 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             int red = shared.getAttribute("redBackground").getIntValue();
             int blue = shared.getAttribute("blueBackground").getIntValue();
             int green = shared.getAttribute("greenBackground").getIntValue();
-            //panel.setBackground(new Color(red, green, blue));
             panel.setDefaultBackgroundColor(new Color(red, green, blue));
         } catch (org.jdom2.DataConversionException e) {
             log.warn("Could not parse color attributes!");
         } catch (NullPointerException e) {  // considered normal if the attributes are not present
         }
+        // activecolor
+        Color activeColor = Color.RED;
+        if (shared.getAttribute("activecolor") != null) {
+            String color = shared.getAttribute("activecolor").getValue();
+            try {
+                activeColor = ColorUtil.stringToColor(color);
+            } catch (IllegalArgumentException ex) {
+                log.error("Invalid activecolor {} using red", color);
+            }
+        }
+        panel.setDefaultActiveColor(activeColor);
+        // inactivecolor
+        Color inactiveColor = Color.GREEN;
+        if (shared.getAttribute("inactivecolor") != null) {
+            String color = shared.getAttribute("inactivecolor").getValue();
+            try {
+                inactiveColor = ColorUtil.stringToColor(color);
+            } catch (IllegalArgumentException ex) {
+                log.error("Invalid inactivecolor {} using green", color);
+            }
+        }
+        panel.setDefaultInactiveColor(inactiveColor);
         // set the (global) editor display widgets to their flag settings
         panel.initView();
 

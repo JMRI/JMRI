@@ -42,6 +42,8 @@ import static jmri.util.ColorUtil.contrast;
  * No DnD as panels will be automatically populated in order of the DCC address.
  * New beans may be created from the Switchboard by right clicking an
  * unconnected switch.
+ * TODO allow user entry of connection specific starting name, validated in manager
+ * using hardwareAddressValidator
  *
  * @author Pete Cressman Copyright (c) 2009, 2010, 2011
  * @author Egbert Broerse Copyright (c) 2017, 2018, 2021
@@ -106,10 +108,9 @@ public class SwitchboardEditor extends Editor {
 
     // editor items (adapted from LayoutEditor toolbar)
     private Color defaultTextColor = Color.BLACK;
-    private final Color defaultActiveColor = Color.RED;
-    private final Color defaultInactiveColor = Color.GREEN;
-    private final Color defaultUnknownColor = Color.WHITE;
+    private Color defaultActiveColor = Color.RED; // user configurable since 4.21.3
     protected final static Color darkActiveColor = new Color(180, 50, 50);
+    private Color defaultInactiveColor = Color.GREEN; // user configurable since 4.21.3
     protected final static Color darkInactiveColor = new Color(40, 150, 30);
     private boolean _hideUnconnected = false;
     private boolean _autoItemRange = true;
@@ -902,6 +903,56 @@ public class SwitchboardEditor extends Editor {
                 updatePressed();
             }
         });
+        // add ActiveColor menu item
+        JMenuItem activeColorMenuItem = new JMenuItem(Bundle.getMessage("SetActiveColor", "..."));
+        colorMenu.add(activeColorMenuItem);
+        activeColorMenuItem.addActionListener((ActionEvent event) -> {
+            Color desiredColor = JmriColorChooser.showDialog(this,
+                    Bundle.getMessage("SetActiveColor", ""),
+                    defaultActiveColor);
+            if (desiredColor != null && !defaultActiveColor.equals(desiredColor)) {
+                // if new ActiveColor matches InactiveColor, ask user as state will become unreadable
+                if (desiredColor.equals(defaultInactiveColor)) {
+                    int retval = JOptionPane.showOptionDialog(null,
+                            Bundle.getMessage("ColorIdenticalWarningF"), Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                            new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonInvert"), Bundle.getMessage("ButtonCancel")}, null);
+                    if (retval == 1) { // invert the other color
+                        setDefaultInactiveColor(contrast(defaultInactiveColor));
+                    } else if (retval != 0) {
+                        return; // cancel
+                    }
+                }
+                defaultActiveColor = desiredColor;
+                setDirty(true);
+                JmriColorChooser.addRecentColor(desiredColor);
+                updatePressed();
+            }
+        });
+        // add ActiveColor menu item
+        JMenuItem inactiveColorMenuItem = new JMenuItem(Bundle.getMessage("SetInactiveColor", "..."));
+        colorMenu.add(inactiveColorMenuItem);
+        inactiveColorMenuItem.addActionListener((ActionEvent event) -> {
+            Color desiredColor = JmriColorChooser.showDialog(this,
+                    Bundle.getMessage("SetInactiveColor", ""),
+                    defaultInactiveColor);
+            if (desiredColor != null && !defaultInactiveColor.equals(desiredColor)) {
+                // if new InactiveColor matches ActiveColor, ask user as state will become unreadable
+                if (desiredColor.equals(defaultInactiveColor)) {
+                    int retval = JOptionPane.showOptionDialog(null,
+                            Bundle.getMessage("ColorIdenticalWarningF"), Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                            new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonInvert"), Bundle.getMessage("ButtonCancel")}, null);
+                    if (retval == 1) { // invert the other color
+                        setDefaultActiveColor(contrast(defaultActiveColor));
+                    } else if (retval != 0) {
+                        return; // cancel
+                    }
+                }
+                defaultInactiveColor = desiredColor;
+                setDirty(true);
+                JmriColorChooser.addRecentColor(desiredColor);
+                updatePressed();
+            }
+        });
     }
 
     private void makeFileMenu() {
@@ -961,13 +1012,21 @@ public class SwitchboardEditor extends Editor {
     public String getActiveSwitchColor() {
         return ColorUtil.colorToColorName(defaultActiveColor);
     }
+    public Color getActiveColorAsColor() {
+        return defaultActiveColor;
+    }
+        public void setDefaultActiveColor(Color color) {
+        defaultActiveColor = color;
+    }
 
     public String getInactiveSwitchColor() {
         return ColorUtil.colorToColorName(defaultInactiveColor);
     }
-
-    public String getUnknownSwitchColor() {
-        return ColorUtil.colorToColorName(defaultUnknownColor);
+    public Color getInactiveColorAsColor() {
+        return defaultInactiveColor;
+    }
+        public void setDefaultInactiveColor(Color color) {
+        defaultActiveColor = color;
     }
 
     /**
