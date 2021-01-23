@@ -60,6 +60,12 @@ public class ModuleEditor extends TreeEditor implements AbstractLogixNGEditor<Mo
             throw new RuntimeException("Connected socket is not a Module");
         }
         _module = (Module) _treePane._femaleRootSocket.getConnectedSocket().getObject();
+        
+        if (_module.getUserName() == null) {
+            setTitle(Bundle.getMessage("TitleEditModule", _module.getSystemName()));
+        } else {
+            setTitle(Bundle.getMessage("TitleEditModule2", _module.getSystemName(), _module.getUserName()));
+        }
     }
     
     private static FemaleSocket setupRootSocket(Base parent, String sName) {
@@ -87,44 +93,6 @@ public class ModuleEditor extends TreeEditor implements AbstractLogixNGEditor<Mo
         return socket;
     }
 
-    /*.*
-     * Construct a ModuleEditor.
-     * <p>
-     * This is used by JmriUserPreferencesManager since it tries to create an
-     * instance of this class.
-     *./
-    public ModuleEditor() {
-        super(InstanceManager.getDefault(DigitalActionManager.class).createFemaleSocket(null, new FemaleSocketListener(){
-            @Override
-            public void connected(FemaleSocket socket) {
-                throw new UnsupportedOperationException("Not supported");
-            }
-
-            @Override
-            public void disconnected(FemaleSocket socket) {
-                throw new UnsupportedOperationException("Not supported");
-            }
-        }, "A"), false);
-        _module = null;
-    }
-    
-    /*.*
-     * Construct a ConditionalEditor.
-     *
-     * @param module the Module to be edited
-     *./
-    public ModuleEditor(@Nonnull jmri.jmrit.logixng.Module module) {
-        super(module.getRootSocket(), true);
-        
-        _module = module;
-        
-        if (_module.getUserName() == null) {
-            setTitle(Bundle.getMessage("TitleEditModule", _module.getSystemName()));
-        } else {
-            setTitle(Bundle.getMessage("TitleEditModule2", _module.getSystemName(), _module.getUserName()));
-        }
-    }
-    
     /** {@inheritDoc} */
     @Override
     public void windowClosed(WindowEvent e) {

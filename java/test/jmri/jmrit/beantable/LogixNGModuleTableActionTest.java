@@ -15,6 +15,7 @@ import jmri.jmrit.logixng.tools.swing.ConditionalNGEditor;
 
 import jmri.util.*;
 import jmri.util.junit.rules.*;
+import jmri.util.swing.JemmyUtil;
 
 import org.junit.Assert;
 import org.junit.Assume;
@@ -23,6 +24,7 @@ import org.junit.jupiter.api.*;
 import org.junit.rules.Timeout;
 
 import org.netbeans.jemmy.operators.*;
+import org.netbeans.jemmy.util.NameComponentChooser;
 
 
 /*
@@ -63,10 +65,61 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
         Assert.assertEquals("LogixNG Table Action class description", Bundle.getMessage("TitleLogixNGTable"), a.getClassDescription());  // NOI18N
     }
 
-    @Disabled("Fix later")
     @Test
     @Override
     public void testAddThroughDialog() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        AbstractLogixNGTableAction logixNGModuleTable = (AbstractLogixNGTableAction) a;
+        a.actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+        
+        Module module = InstanceManager.getDefault(ModuleManager.class).getBySystemName("IQM1");
+        Assert.assertNull("LogixNG Module does not exist", module);
+        
+        // find the "Add... " button and press it.
+        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+        JFrameOperator jf = new JFrameOperator(f1);
+        //disable "Auto System Name" via checkbox
+        JCheckBoxOperator jcbo = new JCheckBoxOperator(jf,Bundle.getMessage("LabelAutoSysName"));
+        jcbo.doClick();
+        //Enter IQ1 in the text field labeled "System Name:"
+        JLabelOperator jlo = new JLabelOperator(jf, "LogixNG" + " " + Bundle.getMessage("ColumnSystemName") + ":");
+//        JLabelOperator jlo = new JLabelOperator(jf,Bundle.getMessage("LabelSystemName"));
+        ((JTextField)jlo.getLabelFor()).setText("IQM1");
+        //and press create
+        jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+        
+        // Click button "Done" on the EditLogixNG frame
+        String title = String.format("Edit Module %s", "IQM1");
+        JFrame frame = JFrameOperator.waitJFrame(title, true, true);  // NOI18N
+        JFrameOperator jf2 = new JFrameOperator(frame);
+        
+        JMenuBarOperator mainbar = new JMenuBarOperator(jf2);
+        mainbar.pushMenu(Bundle.getMessage("MenuFile")); // stops at top level
+        JMenuOperator jmo = new JMenuOperator(mainbar, Bundle.getMessage("MenuFile"));
+        JPopupMenu jpm = jmo.getPopupMenu();
+        
+        // Menu AutoCreate
+        JMenuItem findMenuItem = (JMenuItem) jpm.getComponent(0);
+        Assert.assertEquals(findMenuItem.getText(), "Close window");
+        new JMenuItemOperator(findMenuItem).doClick();
+        
+        // Test that we can open the LogixNGEdtior window twice
+        logixNGModuleTable.editPressed("IQM101");  // NOI18N
+        // Click button "Done" on the EditLogixNG frame
+        title = String.format("Edit Module %s - %s", "IQM101", "Module 101");
+        frame = JFrameOperator.waitJFrame(title, true, true);  // NOI18N
+        jf2 = new JFrameOperator(frame);
+        jf2.dispose();
+        JUnitUtil.dispose(frame);
+        
+        JUnitUtil.dispose(f1);
+        JUnitUtil.dispose(f);
+        
+        module = InstanceManager.getDefault(ModuleManager.class).getBySystemName("IQM1");
+        Assert.assertNotNull("LogixNG Module has been created", module);
     }
     
     @Disabled("Fix later")
@@ -515,10 +568,12 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
         InstanceManager.getDefault(UserPreferencesManager.class)
                 .setSimplePreferenceState(ConditionalNGEditor.class.getName()+".AutoSystemName", true);
         
-        InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("IQ101", "LogixNG 101");
-        InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("IQ102", "LogixNG 102");
-        InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("IQ103", "LogixNG 103");
-        InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("IQ104", "LogixNG 104");
+        FemaleSocketManager.SocketType socketType = InstanceManager.getDefault(FemaleSocketManager.class)
+                .getSocketTypeByType("DefaultFemaleDigitalActionSocket");
+        InstanceManager.getDefault(ModuleManager.class).createModule("IQM101", "Module 101", socketType);
+        InstanceManager.getDefault(ModuleManager.class).createModule("IQM102", "Module 102", socketType);
+        InstanceManager.getDefault(ModuleManager.class).createModule("IQM103", "Module 103", socketType);
+        InstanceManager.getDefault(ModuleManager.class).createModule("IQM104", "Module 104", socketType);
 
         helpTarget = "package.jmri.jmrit.beantable.LogixNGTable"; 
         a = new LogixNGModuleTableAction();

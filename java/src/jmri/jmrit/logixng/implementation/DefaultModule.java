@@ -16,7 +16,7 @@ import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.SymbolTable.VariableData;
 
 /**
- * The default implementation of LogixNG.
+ * The default implementation of Module.
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
