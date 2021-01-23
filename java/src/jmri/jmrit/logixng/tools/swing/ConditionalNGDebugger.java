@@ -45,7 +45,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
     private final Object _lock = new Object();
     private boolean _continue = false;
     
-    private DebuggerSymbolTableModel _symbolTableModel;
+    private final DebuggerSymbolTableModel _symbolTableModel;
     
     /**
      * Maintain a list of listeners -- normally only one.

@@ -113,7 +113,8 @@ public interface SymbolTable {
             _descr = descr;
         }
         
-        public String getDescr() {
+        @Override
+        public String toString() {
             return _descr;
         }
     }

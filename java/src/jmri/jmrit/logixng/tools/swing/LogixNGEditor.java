@@ -626,7 +626,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         _treeEdit = new ConditionalNGEditor(_curConditionalNG);
         _treeEdit.initComponents();
         _treeEdit.setVisible(true);
-        _inEditMode = true;
+        _inEditConditionalNGMode = true;
+        _editConditionalNGFrame = _treeEdit;
 
         final LogixNGEditor logixNGEditor = this;
         _treeEdit.addLogixNGEventListener(new LogixNGEventListenerImpl(logixNGEditor));
@@ -644,7 +645,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         _debugger = new ConditionalNGDebugger(_curConditionalNG);
         _debugger.initComponents();
         _debugger.setVisible(true);
-        _inEditMode = true;
+        _inEditConditionalNGMode = true;
+        _editConditionalNGFrame = _debugger;
 
         final LogixNGEditor logixNGEditor = this;
         _debugger.addLogixNGEventListener(new LogixNG_DebuggerEventListenerImpl(logixNGEditor));
@@ -658,12 +660,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
      * @param rx index (row number) of ConditionalNG to be edited
      */
     void editConditionalNGPressed(int rx) {
-        if (_inEditConditionalNGMode) {
-            // Already editing a ConditionalNG, ask for completion of that edit
-            JOptionPane.showMessageDialog(_editConditionalNGFrame,
-                    Bundle.getMessage("Error34", _curConditionalNG.getSystemName()),
-                    Bundle.getMessage("ErrorTitle"), // NOI18N
-                    JOptionPane.ERROR_MESSAGE);
+        if (checkEditConditionalNG()) {
             return;
         }
         // get ConditionalNG to edit
@@ -683,12 +680,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
      * @param rx index (row number) of ConditionalNG to be edited
      */
     void debugConditionalNGPressed(int rx) {
-        if (_inEditConditionalNGMode) {
-            // Already editing a ConditionalNG, ask for completion of that edit
-            JOptionPane.showMessageDialog(_editConditionalNGFrame,
-                    Bundle.getMessage("Error34", _curConditionalNG.getSystemName()),
-                    Bundle.getMessage("ErrorTitle"), // NOI18N
-                    JOptionPane.ERROR_MESSAGE);
+        if (checkEditConditionalNG()) {
             return;
         }
         // get ConditionalNG to edit
@@ -707,11 +699,11 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
      *
      * @return true if this is the case, after showing dialog to user
      */
-    boolean checkEditConditionalNG() {
+    private boolean checkEditConditionalNG() {
         if (_inEditConditionalNGMode) {
             // Already editing a ConditionalNG, ask for completion of that edit
             JOptionPane.showMessageDialog(_editConditionalNGFrame,
-                    Bundle.getMessage("Error35", _curConditionalNG.getSystemName()), // NOI18N
+                    Bundle.getMessage("Error_ConditionalNGInEditMode", _curConditionalNG.getSystemName()), // NOI18N
                     Bundle.getMessage("ErrorTitle"), // NOI18N
                     JOptionPane.ERROR_MESSAGE);
             return true;
@@ -1168,7 +1160,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             _treeEdit.logixNGData.forEach((key, value) -> {
                 if (key.equals("Finish")) {                  // NOI18N
                     _treeEdit = null;
-                    _inEditMode = false;
+                    _inEditConditionalNGMode = false;
                     _logixNGEditor.bringToFront();
                 } else if (key.equals("Delete")) {           // NOI18N
                     deletePressed();
@@ -1201,7 +1193,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             _debugger.logixNGData.forEach((key, value) -> {
                 if (key.equals("Finish")) {                  // NOI18N
                     _debugger = null;
-                    _inEditMode = false;
+                    _inEditConditionalNGMode = false;
                     _logixNGEditor.bringToFront();
                 } else if (key.equals("Delete")) {           // NOI18N
                     deletePressed();

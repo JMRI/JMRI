@@ -130,55 +130,10 @@ child, you can let the children throw the error.
 <hr>
 
 
-<h2>Threads</h2>
-
-The ConditionalNGs run in a separate thread from the rest of JMRI. But it's possible to use several threads for
-LogixNG, to let some ConditionalNGs run on one thread and other ConditionalNGs run on another thread. You might have
-one ConditionalNG that is slow and other ConditionalNGs that needs to respond quickly. It could then be useful to move
-the slow ConditionalNG to a different thread.
-<p>
-Note that if a ConditionalNG is too slow, it will be difficult to edit that ConditionalNG since the editor needs to
-wait on the ConditionalNG to finish execution before the editor can update it.
-<p>
-If you want to move a ConditionalNG from one thread to another, you need to restart JMRI for the change to take effect.
-<p>
-The main reason to use different threads for different ConditionalNGs is the debugger (se chapter 14). When you debug a
-ConditionalNG step by step, the debugger stops the thread that the ConditionalNG is running on. If there are other
-ConditionalNGs running on the same thread, those are stopped as well. Therefore it's often useful to move the
-ConditionalNG that you want to debug to its own thread before you start debugging it. To simplify this, there is an
-extra thread, called the debug thread, that you can use for this purpose. But every thread might be used for debugging.
-
 
 <hr>
 
-
-<h2>The debugger</h2>
-
-Creating computer programs is an art. Good development tools help, but things doesn't always work as you expect. And
-LogixNG is no exception. Sometimes, the rules you set up doesn't work. To help with this, LogixNG has a debugger.
-
-<h3>Debug step by step</h3>
-
-<h3>Adding break points</h3>
-
-<h3>Watch items</h3>
-
-Currently, the following items can be watched:
-
-<ul>
-<li>Local variables</li>
-<li>Memories</li>
-<li>Turnouts</li>
-<li>...</li>
-</ul>
-
-<h3>For JMRI developers: How does the debugger works internally?</h3>
-
-
-
-
-<hr>
-
+<!--
 
 <h2>Replay a ConditionalNG</h2>
 
@@ -205,6 +160,7 @@ LogixNG is designed to be modular and flexible with small classes with well defi
 <li>Debug male socket - Debug a session. Handle step by step debugging and breakpoints.</li>
 </ol>
 
+-->
 
 <hr>
 <hr>

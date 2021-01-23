@@ -191,7 +191,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                 locale,
                 "PrintLocalVariable",
                 localVariable._name,
-                localVariable._initalValueType.getDescr(),
+                localVariable._initalValueType.toString(),
                 localVariable._initialValueData));
         writer.println();
     }

@@ -178,7 +178,7 @@ public class LocalVariableTableModel extends AbstractTableModel {
             if (! (value instanceof InitialValueType)) {
                 throw new IllegalArgumentException("value is not an InitialValueType: " + value.getClass().getName());
             }
-            setText(((InitialValueType) value).getDescr());
+            setText(((InitialValueType) value).toString());
             return this;
         }
     }
