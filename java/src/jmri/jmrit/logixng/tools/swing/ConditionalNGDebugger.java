@@ -45,6 +45,8 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
     private final Object _lock = new Object();
     private boolean _continue = false;
     
+    private DebuggerSymbolTableModel _symbolTableModel;
+    
     /**
      * Maintain a list of listeners -- normally only one.
      */
@@ -153,8 +155,14 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
             setTitle(Bundle.getMessage("TitleEditConditionalNG2", _conditionalNG.getSystemName(), _conditionalNG.getUserName()));
         }
         
-        JPanel variablePanel = new JPanel();
-        JScrollPane variableScrollPane = new JScrollPane(variablePanel);
+        JPanel symbolPanel = new JPanel();
+        JScrollPane variableScrollPane = new JScrollPane(symbolPanel);
+        JTable table = new JTable();
+        _symbolTableModel = new DebuggerSymbolTableModel(_conditionalNG);
+        table.setModel(_symbolTableModel);
+        JScrollPane scrollpane = new JScrollPane(table);
+        scrollpane.setPreferredSize(new Dimension(400, 200));
+        symbolPanel.add(scrollpane, BorderLayout.CENTER);
         
         JPanel watchPanel = new JPanel();
         JScrollPane watchScrollPane = new JScrollPane(watchPanel);
@@ -329,6 +337,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
                     _stepIntoItem.setEnabled(true);
                 }
                 _treePane.updateTree(_currentMaleSocket);
+                _symbolTableModel.update();
             });
             
 //            System.out.format("propertyChange middle: %s, %s, run: %b, currentState: %s%n", evt.getPropertyName(), ((MaleSocket)evt.getNewValue()).getLongDescription(), _run, _currentState.name());
