@@ -1579,9 +1579,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         AllocationRequest ar = findAllocationRequestInQueue(section, seqNumber, direction, activeTrain);
         if (ar == null) {
             ar = new AllocationRequest(section, seqNumber, direction, activeTrain);
+            if (seqNumber != 0) {
             allocationRequests.add(ar);
             if (_AutoAllocate) {
                 queueScanOfAllocationRequests();
+            }
             }
         }
         activeTrainsTableModel.fireTableDataChanged();
