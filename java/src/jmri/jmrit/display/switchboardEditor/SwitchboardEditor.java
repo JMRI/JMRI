@@ -515,7 +515,6 @@ public class SwitchboardEditor extends Editor {
         help3.setVisible(switchesOnBoard.size() == 0); // show/hide help3 warning
         help2.setVisible(switchesOnBoard.size() != 0); // hide help2 when help3 is shown vice versa (as no items are dimmed or not)
         pack();
-        switchboardLayeredPane.repaint();
         // hide AllOn/Off buttons unless type is Light and control is allowed
         allOnButton.setVisible((beanTypeList.getSelectedIndex() == 2) && allControlling());
         allOffButton.setVisible((beanTypeList.getSelectedIndex() == 2) && allControlling());

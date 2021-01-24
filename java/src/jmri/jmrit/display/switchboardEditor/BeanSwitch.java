@@ -21,6 +21,7 @@ import jmri.Turnout;
 import jmri.jmrit.beantable.AddNewDevicePanel;
 import jmri.jmrit.display.Positionable;
 import jmri.util.JmriJFrame;
+import jmri.util.SystemType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1100,6 +1101,18 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
+            // set antialiasing hint for macOS and Windows
+            // note: antialiasing has performance problems on some variants of Linux (Raspberry pi)
+            if (SystemType.isMacOSX() || SystemType.isWindows()) {
+                g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
+                        RenderingHints.VALUE_RENDER_QUALITY);
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                        RenderingHints.VALUE_ANTIALIAS_ON);
+                g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
+                        RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+                g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                        RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            }
             // now the image
             g.translate(r, r); // set origin to center
             if (_shape == SwitchboardEditor.SLIDER) { // slider
@@ -1158,9 +1171,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             }
 
             g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, textSize));
-            g2d.setRenderingHint( // smoother text display
-                RenderingHints.KEY_TEXT_ANTIALIASING,
-                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
             if (Math.abs(textAlign - Component.CENTER_ALIGNMENT) < .0001) {
                 FontMetrics metrics = g.getFontMetrics(); // figure out where the center of the string is
                 labelX = metrics.stringWidth(tag)/-2;
@@ -1175,7 +1186,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 }
                 g.drawString(subTag, subLabelX, subLabelY); // draw user name at bottom
             }
-            this.repaint();
         }
     }
 
