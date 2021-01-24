@@ -17,13 +17,12 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
 
     public static final String START_LOGIXNG_ON_LOAD = "startLogixNGOnStartup";
     public static final String USE_GENERIC_FEMALE_SOCKETS = "useGenericFemaleSockets";
-    public static final String ALLOW_DEBUG_MODE = "allowDebugMode";
+    public static final String INSTALL_DEBUGGER = "installDebugger";
     public static final String SHOW_SYSTEM_USER_NAMES = "showSystemUserNames";
     public static final String ERROR_HANDLING_TYPE = "errorHandlingType";
     
     private boolean _startLogixNGOnLoad = true;
     private boolean _useGenericFemaleSockets = false;
-    private boolean _allowDebugMode = false;
     private boolean _showSystemUserNames = false;
     private boolean _installDebugger = true;
     private ErrorHandlingType _errorHandlingType = ErrorHandlingType.ShowDialogBox;
@@ -40,7 +39,7 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
     private void readPreferences(Preferences sharedPreferences) {
         _startLogixNGOnLoad = sharedPreferences.getBoolean(START_LOGIXNG_ON_LOAD, _startLogixNGOnLoad);
         _useGenericFemaleSockets = sharedPreferences.getBoolean(USE_GENERIC_FEMALE_SOCKETS, _useGenericFemaleSockets);
-        _allowDebugMode = sharedPreferences.getBoolean(ALLOW_DEBUG_MODE, _allowDebugMode);
+        _installDebugger = sharedPreferences.getBoolean(INSTALL_DEBUGGER, _installDebugger);
         _showSystemUserNames = sharedPreferences.getBoolean(SHOW_SYSTEM_USER_NAMES, _showSystemUserNames);
         _errorHandlingType = ErrorHandlingType.valueOf(
                 sharedPreferences.get(ERROR_HANDLING_TYPE, _errorHandlingType.name()));
@@ -81,7 +80,7 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
         if (getStartLogixNGOnStartup() != prefs.getStartLogixNGOnStartup()) {
             return true;
         }
-        if (getAllowDebugMode() != prefs.getAllowDebugMode()) {
+        if (getInstallDebugger() != prefs.getInstallDebugger()) {
             return true;
         }
         if (getShowSystemUserNames() != prefs.getShowSystemUserNames()) {
@@ -97,7 +96,7 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
     public void apply(LogixNGPreferences prefs) {
         setStartLogixNGOnStartup(prefs.getStartLogixNGOnStartup());
         setUseGenericFemaleSockets(prefs.getUseGenericFemaleSockets());
-        setAllowDebugMode(prefs.getAllowDebugMode());
+        setInstallDebugger(prefs.getInstallDebugger());
         setShowSystemUserNames(prefs.getShowSystemUserNames());
         this.setErrorHandlingType(prefs.getErrorHandlingType());
     }
@@ -107,7 +106,7 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
         Preferences sharedPreferences = ProfileUtils.getPreferences(this.getProfile(), this.getClass(), true);
         sharedPreferences.putBoolean(START_LOGIXNG_ON_LOAD, this.getStartLogixNGOnStartup());
         sharedPreferences.putBoolean(USE_GENERIC_FEMALE_SOCKETS, this.getUseGenericFemaleSockets());
-        sharedPreferences.putBoolean(ALLOW_DEBUG_MODE, this.getAllowDebugMode());
+        sharedPreferences.putBoolean(INSTALL_DEBUGGER, this.getInstallDebugger());
         sharedPreferences.putBoolean(SHOW_SYSTEM_USER_NAMES, this.getShowSystemUserNames());
         sharedPreferences.put(ERROR_HANDLING_TYPE, this.getErrorHandlingType().name());
 /*        
@@ -160,17 +159,6 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
     @Override
     public boolean getUseGenericFemaleSockets() {
         return _useGenericFemaleSockets;
-    }
-
-    @Override
-    public void setAllowDebugMode(boolean value) {
-        _allowDebugMode = value;
-        setIsDirty(true);
-    }
-
-    @Override
-    public boolean getAllowDebugMode() {
-        return _allowDebugMode;
     }
 
     @Override

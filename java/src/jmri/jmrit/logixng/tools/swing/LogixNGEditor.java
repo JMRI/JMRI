@@ -851,7 +851,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             if (!_inReorderMode) {
                 return ((c == UNAME_COLUMN)
                         || (c == BUTTON_COLUMN)
-                        || (c == BUTTON_DEBUG_COLUMN)
+                        || ((c == BUTTON_DEBUG_COLUMN) && InstanceManager.getDefault(LogixNGPreferences.class).getInstallDebugger())
                         || (c == BUTTON_DELETE_COLUMN)
                         || (c == BUTTON_EDIT_THREADS_COLUMN));
             } else if (c == BUTTON_COLUMN) {

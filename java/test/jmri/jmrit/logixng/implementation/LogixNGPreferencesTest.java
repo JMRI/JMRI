@@ -23,11 +23,11 @@ public class LogixNGPreferencesTest {
         Assert.assertFalse("prefs are equal", prefsA.compareValuesDifferent(prefsB));
         Assert.assertFalse("prefs are equal", prefsB.compareValuesDifferent(prefsA));
         
-        prefsA.setAllowDebugMode(false);
-        prefsB.setAllowDebugMode(true);
+        prefsA.setInstallDebugger(false);
+        prefsB.setInstallDebugger(true);
         Assert.assertTrue("prefs are not equal", prefsA.compareValuesDifferent(prefsB));
         Assert.assertTrue("prefs are not equal", prefsB.compareValuesDifferent(prefsA));
-        prefsB.setAllowDebugMode(false);
+        prefsB.setInstallDebugger(false);
         
         prefsA.setStartLogixNGOnStartup(false);
         prefsB.setStartLogixNGOnStartup(true);
@@ -58,11 +58,11 @@ public class LogixNGPreferencesTest {
         prefs.setUseGenericFemaleSockets(false);
         Assert.assertFalse(prefs.getUseGenericFemaleSockets());
         
-        prefs.setAllowDebugMode(true);
-        Assert.assertTrue(prefs.getAllowDebugMode());
+        prefs.setInstallDebugger(true);
+        Assert.assertTrue(prefs.getInstallDebugger());
         
-        prefs.setAllowDebugMode(false);
-        Assert.assertFalse(prefs.getAllowDebugMode());
+        prefs.setInstallDebugger(false);
+        Assert.assertFalse(prefs.getInstallDebugger());
     }
     
     @Test
@@ -98,19 +98,19 @@ public class LogixNGPreferencesTest {
         prefsA.apply(prefsB);
         Assert.assertFalse(prefsA.getUseGenericFemaleSockets());
         
-        prefsA.setAllowDebugMode(false);
-        prefsB.setAllowDebugMode(true);
-        Assert.assertFalse(prefsA.getAllowDebugMode());
-        Assert.assertTrue(prefsB.getAllowDebugMode());
+        prefsA.setInstallDebugger(false);
+        prefsB.setInstallDebugger(true);
+        Assert.assertFalse(prefsA.getInstallDebugger());
+        Assert.assertTrue(prefsB.getInstallDebugger());
         prefsA.apply(prefsB);
-        Assert.assertTrue(prefsA.getAllowDebugMode());
+        Assert.assertTrue(prefsA.getInstallDebugger());
         
-        prefsA.setAllowDebugMode(true);
-        prefsB.setAllowDebugMode(false);
-        Assert.assertTrue(prefsA.getAllowDebugMode());
-        Assert.assertFalse(prefsB.getAllowDebugMode());
+        prefsA.setInstallDebugger(true);
+        prefsB.setInstallDebugger(false);
+        Assert.assertTrue(prefsA.getInstallDebugger());
+        Assert.assertFalse(prefsB.getInstallDebugger());
         prefsA.apply(prefsB);
-        Assert.assertFalse(prefsA.getAllowDebugMode());
+        Assert.assertFalse(prefsA.getInstallDebugger());
     }
     
     @Test
@@ -138,15 +138,15 @@ public class LogixNGPreferencesTest {
         prefsB = new DefaultLogixNGPreferences();
         Assert.assertTrue(prefsB.getUseGenericFemaleSockets());
         
-        prefsA.setAllowDebugMode(false);
+        prefsA.setInstallDebugger(false);
         prefsA.save();
         prefsB = new DefaultLogixNGPreferences();
-        Assert.assertFalse(prefsB.getAllowDebugMode());
+        Assert.assertFalse(prefsB.getInstallDebugger());
         
-        prefsA.setAllowDebugMode(true);
+        prefsA.setInstallDebugger(true);
         prefsA.save();
         prefsB = new DefaultLogixNGPreferences();
-        Assert.assertTrue(prefsB.getAllowDebugMode());
+        Assert.assertTrue(prefsB.getInstallDebugger());
     }
     
     // The minimal setup for log4J

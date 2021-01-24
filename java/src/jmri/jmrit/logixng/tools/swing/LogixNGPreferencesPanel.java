@@ -26,7 +26,7 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
     private final DefaultLogixNGPreferences preferences;
     
     JCheckBox _startLogixNGOnLoadCheckBox;
-    JCheckBox _allowDebugModeCheckBox;
+    JCheckBox _installDebuggerCheckBox;
     JCheckBox _showSystemUserNamesCheckBox;
     private JComboBox<ErrorHandlingType> errorHandlingComboBox;
     
@@ -65,7 +65,7 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
     private boolean setValues() {
         boolean didSet = true;
         preferences.setStartLogixNGOnStartup(_startLogixNGOnLoadCheckBox.isSelected());
-        preferences.setAllowDebugMode(_allowDebugModeCheckBox.isSelected());
+        preferences.setInstallDebugger(_installDebuggerCheckBox.isSelected());
         preferences.setShowSystemUserNames(_showSystemUserNamesCheckBox.isSelected());
         preferences.setErrorHandlingType(errorHandlingComboBox.getItemAt(errorHandlingComboBox.getSelectedIndex()));
         return didSet;
@@ -77,8 +77,8 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
         _startLogixNGOnLoadCheckBox = new JCheckBox(Bundle.getMessage("LabelStartLogixNGOnLoad"));
         _startLogixNGOnLoadCheckBox.setToolTipText(Bundle.getMessage("ToolTipStartLogixNGOnLoad"));
 
-        _allowDebugModeCheckBox = new JCheckBox(Bundle.getMessage("LabelAllowDebugMode"));
-        _allowDebugModeCheckBox.setToolTipText(Bundle.getMessage("ToolTipLabelAllowDebugMode"));
+        _installDebuggerCheckBox = new JCheckBox(Bundle.getMessage("LabelInstallDebugger"));
+        _installDebuggerCheckBox.setToolTipText(Bundle.getMessage("ToolTipLabelInstallDebugger"));
 
         _showSystemUserNamesCheckBox = new JCheckBox(Bundle.getMessage("LabelShowSystemUserNames"));
         _showSystemUserNamesCheckBox.setToolTipText(Bundle.getMessage("ToolTipLabeShowSystemUserNames"));
@@ -86,11 +86,11 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
         JPanel gridPanel = new JPanel(new GridLayout(0, 1));
         
         gridPanel.add(_startLogixNGOnLoadCheckBox);
-        gridPanel.add(_allowDebugModeCheckBox);
+        gridPanel.add(_installDebuggerCheckBox);
         gridPanel.add(_showSystemUserNamesCheckBox);
         
         _startLogixNGOnLoadCheckBox.setSelected(preferences.getStartLogixNGOnStartup());
-        _allowDebugModeCheckBox.setSelected(preferences.getAllowDebugMode());
+        _installDebuggerCheckBox.setSelected(preferences.getInstallDebugger());
         _showSystemUserNamesCheckBox.setSelected(preferences.getShowSystemUserNames());
         
         errorHandlingComboBox = new JComboBox<>();

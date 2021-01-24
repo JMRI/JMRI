@@ -56,18 +56,6 @@ public interface LogixNGPreferences {
     public boolean getUseGenericFemaleSockets();
 
     /**
-     * Set whenether debug mode is allowed.
-     * @param value true if debug mode is allowed, false otherwise
-     */
-    public void setAllowDebugMode(boolean value);
-
-    /**
-     * Get whenether debug mode is allowed.
-     * @return true if debug mode is allowed, false otherwise
-     */
-    public boolean getAllowDebugMode();
-
-    /**
      * Set whenether system names and user names should be visible for actions
      * and expressions.
      * @param value true if names should be visible, false otherwise
