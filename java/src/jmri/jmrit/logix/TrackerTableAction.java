@@ -595,7 +595,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
 
         private JPanel makeButtonPanel() {
             JPanel panel = new JPanel();
-            JButton button = new JButton(Bundle.getMessage("MenuNewTracker"));
+            JButton button = new JButton(Bundle.getMessage("MenuNewTracker", "..."));
             button.addActionListener((ActionEvent a) -> newTrackerDialog());
             panel.add(button);
 
@@ -643,7 +643,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
         }
 
         private void newTrackerDialog() {
-            _dialog = new JDialog(this, Bundle.getMessage("MenuNewTracker"), false);
+            _dialog = new JDialog(this, Bundle.getMessage("MenuNewTracker", ""), false);
             JPanel panel = new JPanel();
             panel.setLayout(new BorderLayout(10, 10));
             JPanel mainPanel = new JPanel();
@@ -687,8 +687,10 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
             c.weightx = 1.0;
             c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
             p.add(_trainNameBox, c);
+            _trainNameBox.setToolTipText(Bundle.getMessage("TrackerNameTip"));
             c.gridy = 1;
             p.add(_trainLocationBox, c);
+            _trainLocationBox.setToolTipText(Bundle.getMessage("TrackerLocTip"));
             namePanel.add(p);
             return namePanel;
         }
@@ -698,7 +700,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
             JPanel panel0 = new JPanel();
             panel0.setLayout(new FlowLayout());
             JButton doneButton;
-            doneButton = new JButton(Bundle.getMessage("ButtonDone"));
+            doneButton = new JButton(Bundle.getMessage("ButtonCreate"));
             doneButton.addActionListener((ActionEvent a) -> {
                     if (doDoneAction()) {
                         _dialog.dispose();

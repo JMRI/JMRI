@@ -5,8 +5,6 @@ import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  *
@@ -16,10 +14,10 @@ public class OBlockTableModelTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         TableFrames tf = new TableFrames();
         OBlockTableModel obtm = new OBlockTableModel(tf);
-        Assert.assertNotNull("exists", obtm);
+        Assertions.assertNotNull(obtm, "exists");
     }
 
     @BeforeEach
