@@ -11,9 +11,9 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.AbstractListModel;
 import javax.swing.Box;
@@ -66,8 +66,8 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
 
     static int STRUT_SIZE = 10;
 
-    private ArrayList<Tracker> _trackerList = new ArrayList<>();
-    private HashMap<OBlock, ArrayList<Tracker>> _trackerBlocks = new HashMap<>();
+    private final ArrayList<Tracker> _trackerList = new ArrayList<>();
+    private final HashMap<OBlock, ArrayList<Tracker>> _trackerBlocks = new HashMap<>();
     protected TableFrame _frame;
     private ChooseTracker _trackerChooser;
     private boolean _requirePaths;
@@ -220,9 +220,8 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
      */
     protected void addBlockListeners(Tracker tracker) {
         List<OBlock> range = tracker.makeRange();
-        Iterator<OBlock> iter = range.iterator();
-        while (iter.hasNext()) {
-            addBlockListener(iter.next(), tracker);
+        for (OBlock oBlock : range) {
+            addBlockListener(oBlock, tracker);
         }
     }
 
@@ -508,14 +507,13 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
 
     /**
      * Holds a table of Trackers that follow adjacent occupancy. Needs to be a
-     * singleton to be opened and closed for trackers to report to it
+     * singleton to be opened and closed for trackers to report to it.
      *
      * @author Peter Cressman
-     *
      */
     class TableFrame extends JmriJFrame implements MouseListener {
 
-        private TrackerTableModel _model;
+        private final TrackerTableModel _model;
         private JmriJFrame _pickFrame;
         JDialog _dialog;
         JTextField _trainNameBox = new JTextField(30);
@@ -887,6 +885,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
     public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
+        @Nonnull
         public <T> Object getDefault(Class<T> type) {
             if (type.equals(TrackerTableAction.class)) {
                 return new TrackerTableAction(Bundle.getMessage("MenuTrackers"));
@@ -895,6 +894,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
         }
 
         @Override
+        @Nonnull
         public Set<Class<?>> getInitalizes() {
             Set<Class<?>> set = super.getInitalizes();
             set.add(TrackerTableAction.class);

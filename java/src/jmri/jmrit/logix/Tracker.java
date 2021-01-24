@@ -38,16 +38,16 @@ public class Tracker {
 
     private static final String TRACKER_NO_CURRENT_BLOCK = "TrackerNoCurrentBlock";
     TrackerTableAction _parent;
-    private String _trainName;
+    private final String _trainName;
     private ArrayList<OBlock> _headRange; // blocks reachable from head block
     private ArrayList<OBlock> _tailRange; // blocks reachable from tail block
-    private ArrayList<OBlock> _lostRange = new ArrayList<>(); // blocks that lost detection
-    private LinkedList<OBlock> _occupies = new LinkedList<>();     // blocks occupied by train
+    private final ArrayList<OBlock> _lostRange = new ArrayList<>(); // blocks that lost detection
+    private final LinkedList<OBlock> _occupies = new LinkedList<>();     // blocks occupied by train
     long _startTime;
     String _statusMessage;
-    private Color _markerForeground;
-    private Color _markerBackground;
-    private Font _markerFont;
+    private final Color _markerForeground;
+    private final Color _markerBackground;
+    private final Font _markerFont;
     private OBlock _darkBlock = null;
     enum PathSet {NOWAY, NOTSET, PARTIAL, SET}
 
