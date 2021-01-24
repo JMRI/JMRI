@@ -21,7 +21,7 @@ public class LengthPanelTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         OBlock ob1 = blkMgr.createNewOBlock("OB1", "a");
-        LengthPanel panel = new LengthPanel(ob1, "blockLength");
+        LengthPanel panel = new LengthPanel(ob1, "blockLength", "TooltipPathLength");
         Assert.assertNotNull("exists", panel);
     }
 

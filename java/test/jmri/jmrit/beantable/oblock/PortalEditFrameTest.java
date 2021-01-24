@@ -2,11 +2,7 @@ package jmri.jmrit.beantable.oblock;
 
 import jmri.jmrit.logix.Portal;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.awt.*;
 
@@ -19,17 +15,17 @@ public class PortalEditFrameTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         PortalEditFrame pef = new PortalEditFrame(
                 "New Portal",
                 null,
                 null);
-        Assert.assertNotNull("New PEF exists", pef);
+        Assertions.assertNotNull(pef, "New PEF exists");
     }
 
     @Test
     public void testPortalCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         Portal p = new Portal("portal-1");
         //TableFrames tf = new TableFrames();
         //PortalTableModel model = new PortalTableModel(tf);
@@ -37,7 +33,7 @@ public class PortalEditFrameTest {
                 "Edit Portal-1",
                 p,
                 null);
-        Assert.assertNotNull("Portal PEF exists", pef);
+        Assertions.assertNotNull(pef, "Portal PEF exists");
     }
 
     @BeforeEach
