@@ -295,7 +295,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             try {
                 activeColor = ColorUtil.stringToColor(color);
             } catch (IllegalArgumentException ex) {
-                log.error("Invalid activecolor {} using red", color);
+                log.error("Invalid activecolor {}, using red", color);
             }
         }
         panel.setDefaultActiveColor(activeColor);
@@ -306,7 +306,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             try {
                 inactiveColor = ColorUtil.stringToColor(color);
             } catch (IllegalArgumentException ex) {
-                log.error("Invalid inactivecolor {} using green", color);
+                log.error("Invalid inactivecolor {}, using green", color);
             }
         }
         panel.setDefaultInactiveColor(inactiveColor);

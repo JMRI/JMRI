@@ -1027,6 +1027,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
          * @param filepath2 the OFF image
          * @param drawingRadius max distance in px from center of switch canvas, unit used for relative scaling
          * @param iconScale percentage to resize, 100 to copy as is
+         * @param back the background color set on the Switchboard, used to fill in empty parts of rescaled image
          */
         public IconSwitch(String filepath1, String filepath2, int drawingRadius, int iconScale, Color back) {
             // load image files

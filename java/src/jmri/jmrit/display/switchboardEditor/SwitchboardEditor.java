@@ -1015,7 +1015,7 @@ public class SwitchboardEditor extends Editor {
     public Color getActiveColorAsColor() {
         return defaultActiveColor;
     }
-        public void setDefaultActiveColor(Color color) {
+    public void setDefaultActiveColor(Color color) {
         defaultActiveColor = color;
     }
 
@@ -1025,8 +1025,8 @@ public class SwitchboardEditor extends Editor {
     public Color getInactiveColorAsColor() {
         return defaultInactiveColor;
     }
-        public void setDefaultInactiveColor(Color color) {
-        defaultActiveColor = color;
+    public void setDefaultInactiveColor(Color color) {
+        defaultInactiveColor = color;
     }
 
     /**
