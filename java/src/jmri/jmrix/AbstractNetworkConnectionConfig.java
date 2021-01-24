@@ -115,8 +115,8 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         mqttPasswordField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                adapter.setMqttPassword(mqttPasswordField.getText());
-                p.setComboBoxLastSelection(adapter.getClass().getName() + ".mqttpassword", mqttPasswordField.getText());
+                adapter.setMqttPassword(String.valueOf(mqttPasswordField.getPassword()));
+                p.setComboBoxLastSelection(adapter.getClass().getName() + ".mqttpassword", String.valueOf(mqttPasswordField.getPassword()));
             }
         });
         mqttPasswordField.addKeyListener(new KeyListener() {
@@ -126,8 +126,8 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
 
             @Override
             public void keyReleased(KeyEvent keyEvent) {
-                adapter.setMqttPassword(mqttPasswordField.getText());
-                p.setComboBoxLastSelection(adapter.getClass().getName() + ".mqttpassword", mqttPasswordField.getText());
+                adapter.setMqttPassword(String.valueOf(mqttPasswordField.getPassword()));
+                p.setComboBoxLastSelection(adapter.getClass().getName() + ".mqttpassword", String.valueOf(mqttPasswordField.getPassword()));
             }
 
             @Override
@@ -446,7 +446,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         mqttPasswordField.setToolTipText(Bundle.getMessage("MqttPasswordToolTip"));
         if (adapter.getMqttPassword() != null || adapter.getMqttPassword() != "") {
             mqttPasswordField.setText(p.getComboBoxLastSelection(adapter.getClass().getName() + ".mqttpassword"));
-            adapter.setMqttPassword(mqttPasswordField.getText());
+            adapter.setMqttPassword(String.valueOf(mqttPasswordField.getPassword()));
         }
 
         adNameField.setToolTipText(Bundle.getMessage("AdNameFieldToolTip"));
