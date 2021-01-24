@@ -74,6 +74,10 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     @Test
     public void testTurnoutSwitchPopup() {
         Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assertions.assertEquals("I", e.getSwitchManu(), "Internal connection default at startup");
+        Assertions.assertEquals(1, e.getPanelMenuRangeMin(), "MinSpinner=1 default at startup");
+        Assertions.assertEquals(24, e.getPanelMenuRangeMax(), "MaxSpinner=24 default at startup");
+        Assertions.assertEquals("Turnouts", e.getSwitchTypeName(), "Type=Turnout default at startup");
         BeanSwitch sw = e.getSwitch("IT1");
         Assertions.assertNotNull(sw, "Found BeanSwitch IT1");
         sw.showPopUp(new MouseEvent(sw, 1, 0, 0, 0, 0, 1, false));

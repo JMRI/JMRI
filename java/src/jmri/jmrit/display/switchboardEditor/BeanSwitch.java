@@ -47,7 +47,8 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     protected boolean _text;
     protected boolean _icon = false;
     protected boolean _control = false;
-    protected String _state;
+    protected int _showingState = 0;
+    protected String _stateSign;
     protected String _color;
     protected String stateClosed = Bundle.getMessage("StateClosedShort");
     protected String stateThrown = Bundle.getMessage("StateThrownShort");
@@ -264,9 +265,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             }
             displayState(bean.getState());
         }
-        // from finishClone
-        setTristate(getTristate());
-        setMomentary(getMomentary());
         log.debug("Created switch {}", index);
     }
 
@@ -335,12 +333,12 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     public String getActiveText() {
         // fetch bean specific abbreviation
         if (beanTypeChar == 'T') {
-            _state = stateClosed; // +
+            _stateSign = stateClosed; // +
         } else {
             // Light, Sensor
-            _state = "+";         // 1 char abbreviation for StateOff not clear
+            _stateSign = "+";         // 1 char abbreviation for StateOff not clear
         }
-        return _switchSysName + ": " + _state;
+        return _switchSysName + ": " + _stateSign;
     }
 
     /**
@@ -352,12 +350,12 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     public String getInactiveText() {
         // fetch bean specific abbreviation
         if (beanTypeChar == 'T') {
-            _state = stateThrown; // +
+            _stateSign = stateThrown; // +
         } else {
             // Light, Sensor
-            _state = "-";         // 1 char abbreviation for StateOff not clear
+            _stateSign = "-";         // 1 char abbreviation for StateOff not clear
         }
-        return _switchSysName + ": " + _state;
+        return _switchSysName + ": " + _stateSign;
     }
 
     /**
@@ -417,19 +415,21 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
      * Drive the current state of the display from the state of the
      * connected bean.
      *
-     * @param state integer representing the new state e.g. Turnout.CLOSED
+     * @param newState integer representing the new state e.g. Turnout.CLOSED
      */
-    public void displayState(int state) {
+    public void displayState(int newState) {
         String switchLabel;
         Color switchColor;
-        log.debug("Change heard. STATE={}", state);
         if (getNamedBean() == null) {
             switchLabel = _switchSysName; // unconnected, doesn't show state using : and ?
             switchColor = Color.GRAY;
-            log.debug("Switch label {} state {}, disconnected", switchLabel, state);
+            log.debug("Switch label {} state {}, disconnected", switchLabel, newState);
         } else {
+            if (newState == _showingState) {
+                return; // prevent redrawing on repeated identical commands
+            }
             // display abbreviated name of state instead of state index, fine for unconnected switches too
-            switch (state) {
+            switch (newState) {
                 case 1:
                     switchLabel = getUnknownText();
                     switchColor = Color.GRAY;
@@ -446,18 +446,20 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     switchLabel = getInconsistentText();
                     switchColor = Color.WHITE;
                     //log.warn("SwitchState INCONSISTENT"); // normal for unconnected switchboard
-                    log.debug("Switch label {} state: {}, connected", switchLabel, state);
+                    log.debug("Switch label {} state: {}, connected", switchLabel, newState);
             }
         }
         if (isText() && !isIcon()) { // to allow text buttons on web switchboard.
             log.debug("Label = {}", getSwitchButtonLabel(switchLabel));
             beanButton.setText(getSwitchButtonLabel(switchLabel));
-            beanButton.setBackground(switchColor); // only the color is visible TODO get access to bg color of JButton?
+            beanButton.setBackground(switchColor); // only the color is visible on macOS
+            // TODO get access to bg color of JButton?
             beanButton.setOpaque(true);
         } else if (isIcon() && (iconSwitch != null)) {
-            iconSwitch.showSwitchIcon(state);
+            iconSwitch.showSwitchIcon(newState);
             iconSwitch.setLabels(switchLabel, _uLabel);
         }
+        _showingState = newState;
     }
 
     /**
@@ -483,20 +485,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     }
 
     /**
-     * Get current state of attached turnout.
-     *
-     * @return A state variable from a Turnout, e.g. Turnout.CLOSED
-     */
-    int turnoutState() {
-        if (namedBean != null) {
-            return getTurnout().getKnownState();
-        } else {
-            return Turnout.UNKNOWN;
-        }
-    }
-
-    /**
-     * Update switch as state of turnout changes.
+     * Update switch as state of bean changes.
      *
      * @param e the PropertyChangeEvent heard
      */
@@ -504,20 +493,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("property change: {} {} is now: {}", _switchSysName, e.getPropertyName(), e.getNewValue());
-        }
-        // when there's feedback, transition through inconsistent icon for better animation
-        if (getTristate()
-                && (getTurnout().getFeedbackMode() != Turnout.DIRECT)
-                && (e.getPropertyName().equals("CommandedState"))) {
-            if (getTurnout().getCommandedState() != getTurnout().getKnownState()) {
-                int now = Turnout.INCONSISTENT;
-                displayState(now);
-            }
-            // this takes care of the quick double click
-            if (getTurnout().getCommandedState() == getTurnout().getKnownState()) {
-                int now = ((Integer) e.getNewValue());
-                displayState(now);
-            }
         }
         if (e.getPropertyName().equals("KnownState")) {
             int now = ((Integer) e.getNewValue());
@@ -533,7 +508,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 if (newUserName == null || newUserName.equals("")) {
                     newUserName = Bundle.getMessage("NoUserName"); // longer for tooltip
                 }
-                iconSwitch.setToolTipText(_switchSysName + " (" + newUserName + ")");
+                setToolTipText(_switchSysName + " (" + newUserName + ")");
                 log.debug("User Name changed to {}", newUserName);
             }
         }
@@ -555,26 +530,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         namedBean = null;
     }
 
-    private boolean tristate = false;
-
-    public void setTristate(boolean set) {
-        tristate = set;
-    }
-
-    public boolean getTristate() {
-        return tristate;
-    }
-
-    boolean momentary = false;
-
-    public boolean getMomentary() {
-        return momentary;
-    }
-
-    public void setMomentary(boolean m) {
-        momentary = m;
-    }
-
     JPopupMenu switchPopup;
     JMenuItem connectNewMenu = new JMenuItem(Bundle.getMessage("ConnectNewMenu", "..."));
 
@@ -583,7 +538,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
      * (un)connected bean. Derived from
      * {@link jmri.jmrit.display.switchboardEditor.SwitchboardEditor#showPopUp(Positionable, MouseEvent)}
      *
-     * @param e unused
+     * @param e unused because we now our own location
      * @return true when pop up displayed
      */
     public boolean showPopUp(MouseEvent e) {
@@ -596,15 +551,14 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         switchPopup.add(getNameString());
 
         if (_editor.isEditable() && _editor.allControlling()) {
-            // add tristate option if turnout has feedback
             if (namedBean != null) {
-                //addTristateEntry(switchPopup); // beanswitches don't do anything with this property
                 addEditUserName(switchPopup);
                 switch (beanTypeChar) {
                     case 'T':
                         if (getTurnout().canInvert()) { // check whether supported by this turnout
                             addInvert(switchPopup);
                         }
+                        // tristate and momentary (see TurnoutIcon) can't be set per switch
                         break;
                     case 'S':
                         if (getSensor().canInvert()) { // check whether supported by this sensor

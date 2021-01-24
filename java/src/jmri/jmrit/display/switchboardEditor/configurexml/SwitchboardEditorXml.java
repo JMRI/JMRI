@@ -353,7 +353,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         // reset the size and position, in case the display caused it to change
         panel.getTargetFrame().setLocation(x, y);
         panel.getTargetFrame().setSize(width, height);
-        panel.updatePressed();
+        panel.updatePressed(); // required, picks up panel color
         log.debug("Switchboard ready");
         return result;
     }

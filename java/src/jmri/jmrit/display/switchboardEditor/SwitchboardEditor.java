@@ -176,8 +176,8 @@ public class SwitchboardEditor extends Editor {
      */
     @Override
     protected void init(String name) {
-        memo = SystemConnectionMemoManager.getDefault().getSystemConnectionMemoForUserName("Internal");
-        // always available (?) and supports all types
+        //memo = SystemConnectionMemoManager.getDefault().getSystemConnectionMemoForUserName("Internal");
+        // always available (?) and supports all types, not required now, will be set by listener
 
         Container contentPane = getContentPane(); // the actual Editor configuration pane
         setVisible(false);      // start with Editor window hidden
@@ -369,10 +369,10 @@ public class SwitchboardEditor extends Editor {
                 memo = manager.getMemo();
                 addressTextField.setText("");     // Reset input before switching managers
                 //hardwareAddressValidator.setManager(manager);
+                log.debug("Lbox set to {}. Updating", memo.getUserName());
+                updatePressed();
+                setDirty();
             }
-            log.debug("Lbox set to {}. Updating", memo.getUserName());
-            updatePressed();
-            setDirty();
         });
         sensorManComboBox.addActionListener((ActionEvent event) -> {
             Manager<Sensor> manager = sensorManComboBox.getSelectedItem();
@@ -380,10 +380,10 @@ public class SwitchboardEditor extends Editor {
                 memo = manager.getMemo();
                 addressTextField.setText("");     // Reset input before switching managers
                 //hardwareAddressValidator.setManager(manager);
+                log.debug("Sbox set to {}. Updating", memo.getUserName());
+                updatePressed();
+                setDirty();
             }
-            log.debug("Sbox set to {}. Updating", memo.getUserName());
-            updatePressed();
-            setDirty();
         });
         turnoutManComboBox.addActionListener((ActionEvent event) -> {
             Manager<Turnout> manager = turnoutManComboBox.getSelectedItem();
@@ -391,17 +391,17 @@ public class SwitchboardEditor extends Editor {
                 memo = manager.getMemo();
                 addressTextField.setText("");     // Reset input before switching managers
                 //hardwareAddressValidator.setManager(manager);
+                log.debug("Tbox set to {}. Updating", memo.getUserName());
+                updatePressed();
+                setDirty();
             }
-            log.debug("Tbox set to {}. Updating", memo.getUserName());
-            updatePressed();
-            setDirty();
         });
         turnoutManComboBox.setSelectedItem("Internal"); // defaults to Internal on init() wait till init completed
         lightManComboBox.setSelectedItem("Internal");
         sensorManComboBox.setSelectedItem("Internal");
         log.debug("boxes set to Internal, attaching listeners");
 
-        updatePressed();   // refresh default Switchboard, rebuilds and resizes all switches
+        updatePressed(); // refresh default Switchboard, rebuilds and resizes all switches, required for tests
 
         // component listener handles frame resizing event
         super.getTargetFrame().addComponentListener(new ComponentAdapter() {
@@ -425,7 +425,7 @@ public class SwitchboardEditor extends Editor {
             int oldRows = rows;
             rows = autoRows(cellProportion); // if it suggests a different value for rows, call updatePressed()
             if (rows != oldRows) {
-                //rowsSpinner.setValue(rows); // updatePressed will update rows spinner in  display, but will not propagate when disabled
+                //rowsSpinner.setValue(rows); // updatePressed will update rows spinner in display, but will not propagate when disabled
                 updatePressed(); // redraw if rows value changed
             }
         }
@@ -478,7 +478,8 @@ public class SwitchboardEditor extends Editor {
         log.debug("switchesOnBoard cleared, size is now: 0"); // always 0 at this point
         switchboardLayeredPane.setSize(width, height);
 
-        log.debug("creating range for manu index {}", memo.getUserName());
+        String memoName = (memo != null ? memo.getUserName() : "UNKNOWN");
+        log.debug("creating range for manu index {}", memoName);
 
 //        Validation.Type valid = hardwareAddressValidator.getValidation().getType();
         String startAddress = "";
@@ -508,7 +509,7 @@ public class SwitchboardEditor extends Editor {
 
         // update the title at the bottom of the switchboard to match (no) layout control
         if (beanTypeList.getSelectedIndex() >= 0) {
-            border.setTitle(memo.getUserName() + " " +
+            border.setTitle(memoName + " " +
                     beanTypeList.getSelectedItem() + " - " + (allControlling() ? interact : noInteract));
         }
         help3.setVisible(switchesOnBoard.size() == 0); // show/hide help3 warning
@@ -928,7 +929,7 @@ public class SwitchboardEditor extends Editor {
                 updatePressed();
             }
         });
-        // add ActiveColor menu item
+        // add InctiveColor menu item
         JMenuItem inactiveColorMenuItem = new JMenuItem(Bundle.getMessage("SetInactiveColor", "..."));
         colorMenu.add(inactiveColorMenuItem);
         inactiveColorMenuItem.addActionListener((ActionEvent event) -> {
