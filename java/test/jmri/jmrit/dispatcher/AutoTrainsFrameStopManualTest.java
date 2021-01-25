@@ -1,5 +1,6 @@
 package jmri.jmrit.dispatcher;
 
+import org.junit.Assume;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.JButtonOperator;
@@ -47,6 +48,8 @@ import java.nio.file.StandardCopyOption;
         public void testToManual() throws Exception {
              jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
             };
+            Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+
             WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
             // load layout file
