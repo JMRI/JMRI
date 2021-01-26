@@ -8,7 +8,7 @@ import jmri.jmrit.logixng.configurexml.MaleSocketXml;
 
 import org.jdom2.Element;
 
-import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
+// import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 
 /**
  * Handle XML configuration for ActionLightXml objects.
