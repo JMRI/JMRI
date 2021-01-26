@@ -80,12 +80,9 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             }
         });
 
-        mqttUsernameField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                adapter.setMqttUsername(mqttUsernameField.getText());
-                p.setComboBoxLastSelection(adapter.getClass().getName() + ".mqttusername", mqttUsernameField.getText());
-            }
+        mqttUsernameField.addActionListener((ActionEvent e) -> {
+            adapter.setMqttUsername(mqttUsernameField.getText());
+            p.setComboBoxLastSelection(adapter.getClass().getName() + ".mqttusername", mqttUsernameField.getText());
         });
         mqttUsernameField.addKeyListener(new KeyListener() {
             @Override
@@ -103,12 +100,9 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             }
         });
 
-        mqttPasswordField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                adapter.setMqttPassword(String.valueOf(mqttPasswordField.getPassword()));
-                p.setComboBoxLastSelection(adapter.getClass().getName() + ".mqttpassword", String.valueOf(mqttPasswordField.getPassword()));
-            }
+        mqttPasswordField.addActionListener((ActionEvent e) -> {
+            adapter.setMqttPassword(String.valueOf(mqttPasswordField.getPassword()));
+            p.setComboBoxLastSelection(adapter.getClass().getName() + ".mqttpassword", String.valueOf(mqttPasswordField.getPassword()));
         });
         mqttPasswordField.addKeyListener(new KeyListener() {
             @Override
