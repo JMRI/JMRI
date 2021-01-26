@@ -59,9 +59,9 @@ mergeable: # see https://github.com/mergeability/mergeable
       - do: comment
         payload:
           body: > 
-            Thanks for the PR. It includes changes to properties files, so the 'Needs I18N' label has been added"
+            Thanks for the PR. It includes changes to properties files, so the 'Needs L10N' label has been added"
       - do: labels
-        labels: [ 'Needs I18N' ]
+        labels: [ 'Needs L10N' ]
         mode: 'add'
       - do: checks
         status: 'success'
