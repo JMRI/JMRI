@@ -278,7 +278,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
                         return ((TurnoutManager) m).createSystemName(curAddress, prefix);
                     } else if (beanType == Sensor.class) {
                         return ((SensorManager) m).createSystemName(curAddress, prefix);
-                    } 
+                    }
                     else if (beanType == Light.class) {
                         return ((LightManager) m).createSystemName(curAddress, prefix);
                     }
