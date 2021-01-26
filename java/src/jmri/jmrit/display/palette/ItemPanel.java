@@ -348,8 +348,7 @@ public abstract class ItemPanel extends JPanel  {
         } else {
             scale = icon.reduceTo(CatalogPanel.ICON_WIDTH, CatalogPanel.ICON_HEIGHT, CatalogPanel.ICON_SCALE);
         }
-        String scaleText = java.text.MessageFormat.format(Bundle.getMessage("scale"),
-                new Object[]{CatalogPanel.printDbl(scale, 2)});
+        String scaleText = java.text.MessageFormat.format(Bundle.getMessage("scale"), CatalogPanel.printDbl(scale, 2));
         JLabel label = new JLabel(scaleText);
         JPanel sPanel = new JPanel();
         sPanel.setOpaque(false);
@@ -457,9 +456,9 @@ public abstract class ItemPanel extends JPanel  {
     }
 
     /**
-     * Different names for the same map
-     * @param key1
-     * @param key2
+     * Different names for the same icon map.
+     * @param key1 first name found for same map
+     * @param key2 second name found, default to delete
      * @return the name and map to discard
      */
     private String queryWhichToDelete(String key1, String key2) {
@@ -501,9 +500,9 @@ public abstract class ItemPanel extends JPanel  {
         if (panel instanceof FamilyItemPanel) {
             return new Dimension(23, 122);
         } else if (panel instanceof IconItemPanel) {
-            return new Dimension(15, 65);
+            return new Dimension(23, 65);
         }
-        return new Dimension(7, 48);
+        return new Dimension(23, 48);
     }
 
     static public GridBagConstraints itemGridBagConstraint() {

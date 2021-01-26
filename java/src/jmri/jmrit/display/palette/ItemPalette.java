@@ -12,12 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 import javax.annotation.Nonnull;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.tree.TreeNode;
@@ -151,6 +146,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     private static volatile HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> _iconMaps;
     // for now, special case 4 level maps since IndicatorTO is the only case.
     private static volatile HashMap<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>> _indicatorTOMaps;
+    private static int tabWidth;
     private ItemPanel _currentItemPanel;
 
     /**
@@ -353,7 +349,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
             }
             InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
         } catch (org.jdom2.JDOMException | java.io.IOException ex) {
-            log.error("error reading file \"defaultPanelIcons.xml\" due to: {}", ex);
+            log.error("error reading file \"defaultPanelIcons.xml\" due to: ", ex);
         }
     }
 
@@ -433,7 +429,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     public ItemPalette(String title, Editor ed) {
         super(title, ed);
         init();
-        setTitle(Bundle.getMessage("ItemPaletteTitle", Bundle.getMessage(ItemPanel.NAME_MAP.get("Turnout"))));
+        setTitle(Bundle.getMessage("ItemPaletteTitle"));
     }
 
     private void init() {
@@ -461,6 +457,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     static void buildTabPane(ItemPalette palette) {
         _tabPane = new JTabbedPane();
         _tabIndex = new HashMap<>();
+        tabWidth = getTabWidth();
 
         ItemPanel itemPanel = new TableItemPanel<>(palette, "Turnout", null,
                 PickListModel.turnoutPickModelInstance());
@@ -520,6 +517,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         itemPanel = new PortalItemPanel(palette, "Portal", null);
         addItemTab(itemPanel, "Portal", "BeanNamePortal");
 
+        setTabs();
         _tabPane.addChangeListener(palette);
     }
 
@@ -527,6 +525,22 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         JScrollPane scrollPane = new JScrollPane(itemPanel);
         _tabPane.add(Bundle.getMessage(tabTitle), scrollPane);
         _tabIndex.put(key, itemPanel);
+    }
+
+    static int getTabWidth() {
+        int maxTabWidth = 0;
+        for (Entry<String, String> t : ItemPanel.NAME_MAP.entrySet()) {
+            maxTabWidth = Math.max(maxTabWidth, new JLabel(Bundle.getMessage(t.getValue())).getWidth());
+        }
+        return maxTabWidth;
+    }
+
+    static void setTabs() {
+        JLabel lab = new JLabel();
+        lab.setPreferredSize(new Dimension(tabWidth, 30));
+        for (int i = 0 ; i == _tabPane.getTabCount() ; i++) {
+            _tabPane.setTabComponentAt(i, lab);
+        }
     }
 
     @Override
@@ -548,24 +562,28 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         p.init(); // (re)initialize tab pane
         p.invalidate();
         Dimension newTabDim = p.getPreferredSize();
-        Dimension oldTabDim = null;
+        Dimension oldTabDim;
         if (_currentItemPanel != null) {
             _currentItemPanel.closeDialogs();
-            oldTabDim = _currentItemPanel.getSize();
-        } else {
-            oldTabDim = newTabDim;
+//            oldTabDim = _currentItemPanel.getSize();
+//        } else {
+//            oldTabDim = newTabDim;
         }
-        setTitle(Bundle.getMessage("ItemPaletteTitle", Bundle.getMessage(ItemPanel.NAME_MAP.get(p._itemType))));
-        Dimension totalDim = _tabPane.getSize();
-        Dimension deltaDim;
-        if (log.isDebugEnabled()) {
-            deltaDim = new Dimension(totalDim.width - oldTabDim.width, totalDim.height - oldTabDim.height);
-            log.debug(" old _tabPane Dim= ({}, {}) oldType=({})= ({}, {})newType=({})= ({}, {}). diff= ({}, {})",
-                    totalDim.width, totalDim.height, _currentItemPanel._itemType, oldTabDim.width, oldTabDim.height,
-                    p._itemType, newTabDim.width, newTabDim.height, deltaDim.width, deltaDim.height);
-        }
-        deltaDim = p.shellDimension(p);
-        reSize(_tabPane, deltaDim, newTabDim);
+        //setTitle(Bundle.getMessage("ItemPaletteTitle", ""));
+        // UI Guidelines says frame title should remain static, selected tab signals current selection
+        //setTitle(Bundle.getMessage("ItemPaletteTitle", Bundle.getMessage(ItemPanel.NAME_MAP.get(p._itemType))));
+        // different tab widths cause jumping window, so right arrow does not stay below pointer
+        // all tabes same width since 4.21.4
+        //        Dimension totalDim = _tabPane.getSize();
+        //        Dimension deltaDim;
+        //        if (log.isDebugEnabled()) {
+        //            deltaDim = new Dimension(totalDim.width - oldTabDim.width, totalDim.height - oldTabDim.height);
+        //            log.debug(" old _tabPane Dim= ({}, {}) oldType=({})= ({}, {})newType=({})= ({}, {}). diff= ({}, {})",
+        //                    totalDim.width, totalDim.height, _currentItemPanel._itemType, oldTabDim.width, oldTabDim.height,
+        //                    p._itemType, newTabDim.width, newTabDim.height, deltaDim.width, deltaDim.height);
+        //        }
+        //        deltaDim = p.shellDimension(p);
+        //        reSize(_tabPane, deltaDim, newTabDim);
         _currentItemPanel = p;
     }
 
@@ -624,8 +642,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
             String f = it.next();
             if (family.equals(f)) {
                 JOptionPane.showMessageDialog(null,
-                        java.text.MessageFormat.format(Bundle.getMessage("DuplicateFamilyName"),
-                                new Object[]{family, type}),
+                        java.text.MessageFormat.format(Bundle.getMessage("DuplicateFamilyName"), family, type),
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return false;
             }
@@ -658,11 +675,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
      * @return map of families
      */
     static public @Nonnull HashMap<String, HashMap<String, NamedIcon>> getFamilyMaps(String type) {
-        HashMap<String, HashMap<String, NamedIcon>> families = _iconMaps.get(type);
-        if (families == null) {
-            families = new HashMap<>();
-            _iconMaps.put(type, families);
-        }
+        HashMap<String, HashMap<String, NamedIcon>> families = _iconMaps.computeIfAbsent(type, k -> new HashMap<>());
         return families;
     }
 
@@ -782,7 +795,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
      * @return usable UI display name
      */
     static public String convertText(String name) {
-        String cName = null;
+        String cName;
         try {
             // NOI18N
             cName = Bundle.getMessage(name);
