@@ -1006,7 +1006,7 @@ public class ActiveTrain {
             return null;
         }
         if (!InstanceManager.getDefault(DispatcherFrame.class).requestAllocation(this,
-                mNextSectionToAllocate, mNextSectionDirection, mNextSectionSeqNumber, true, null)) {
+                mNextSectionToAllocate, mNextSectionDirection, mNextSectionSeqNumber, true, null, true)) {
             log.error("Allocation request failed for first allocation of {}", getActiveTrainName());
         }
         if (InstanceManager.getDefault(DispatcherFrame.class).getRosterEntryInBlock() && getRosterEntry() != null) {
