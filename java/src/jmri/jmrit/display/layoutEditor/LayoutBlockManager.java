@@ -502,12 +502,18 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                                 return lt.getSignalHead(LayoutTurnout.Geometry.POINTA1);
                             }
                         } else {
-                            //neither track segment is in block 2 - should never get here unless layout turnout is
-                            //the only item in block 2
-                            if (!(lt.getBlockName().equals(protectedBlock.getUserName()))) {
-                                log.error("neither signal at A protects block {}, and turnout is not in block either",
-                                        protectedBlock.getDisplayName());
+                            // neither track segment is in block 2 - will get here when layout turnout is the only item in block 2
+                            // Return signal head based on turnout position
+                            int state = lt.getTurnout().getKnownState();
+                            if (((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.CLOSED))
+                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) { //continuing
+                                return lt.getSignalHead(LayoutTurnout.Geometry.POINTA1);
+                            } else if (((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.CLOSED))
+                                    || ((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.THROWN))) { //diverging
+                                return lt.getSignalHead(LayoutTurnout.Geometry.POINTA2);
                             }
+
+                            // Turnout state is unknown or inconsistent
                             return null;
                         }
                     }
@@ -2596,7 +2602,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      * upon if the routing protocol has stabilised or is under going a change.
      * @param pName sensor name, will be provided if not existing.
      * @throws jmri.JmriException if no sensor manager.
-     * 
+     *
      */
     public void setStabilisedSensor(@Nonnull String pName) throws jmri.JmriException {
         if (InstanceManager.getNullableDefault(jmri.SensorManager.class) != null) {

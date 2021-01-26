@@ -3,9 +3,7 @@ package jmri.jmrit.beantable.oblock;
 import jmri.jmrit.logix.OBlock;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 import java.awt.*;
 
@@ -19,16 +17,16 @@ public class BlockPathTableModelTest {
     @Test
     public void testCTor() {
         BlockPathTableModel bptm = new BlockPathTableModel();
-        Assert.assertNotNull("BP model exists", bptm);
+        Assertions.assertNotNull(bptm, "BP model exists");
     }
 
     @Test
     public void testTfCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         OBlock ob = new OBlock("OB1");
         TableFrames tf = new TableFrames();
         BlockPathTableModel bptm = new BlockPathTableModel(ob, tf);
-        Assert.assertNotNull("TF BP model exists", bptm);
+        Assertions.assertNotNull(bptm, "TF BP model exists");
     }
 
     @BeforeEach

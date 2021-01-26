@@ -9,16 +9,9 @@
   <title>JMRI: Logix Documentation</title>
   <meta name="author" content="David Duchamp">
   <meta name="keywords" content="java model railroad JMRI Logix">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+
+  <!--#include virtual="/Style.shtml" -->
+
 </head>
 
 <body>
@@ -87,6 +80,9 @@
         <li><a href="../../package/jmri/jmrit/conditional/ConditionalListEditor.shtml">Conditional List Editor</a> </li>
         <li><a href="../../package/jmri/jmrit/conditional/ConditionalTreeEditor.shtml">Conditional Tree Editor</a></li>
       </ul>
+      
+      <p><a href="#doclist">Logical listing of all Logix documentation pages</a></p>
+      
 
       <h2>Introduction to Logix and Conditionals</h2>
 
@@ -713,7 +709,7 @@
         state of each Logix is saved in the configuration file.</p>
 
       <a name="notes" id="notes"></a>
-      <h2>Additional Notes</h2>
+      <h2>FAQ/Additional Notes</h2>
 
       <p>This section contains questions and answers that normally
       are not needed by Logix users, but in some cases were
@@ -969,6 +965,34 @@
           loop without restarting the program.</p>
         </li>
       </ul>
+      
+      <a name="doclist" id="doclist"></a>
+      <h2>Logix Documentation Pages Logically Listed</h2>
+
+        <p>
+        Logix documentation is divided into eight different help pages.  While these are referenced via links in various places,
+        not all are easy to find (perhaps three links down).  They are additionally listed here for convenience.
+        </p>
+
+        <ul>
+        <li><a href="Logix.shtml">Main Logix description and explanation</a> [this page]</li>
+
+        <li><a href="Logix.shtml#notes">FAQ</a> [section on this page]</li>
+
+        <li><a href="../../package/jmri/jmrit/beantable/LogixTable.shtml">Description of Logix Table contents and usage</a></li>
+
+        <li><a href="../../package/jmri/jmrit/beantable/LogixAddEdit.shtml">Logix Table add and edit action description</a></li>
+
+        <li><a href="../../package/jmri/jmrit/conditional/StateVariableActionList.shtml">Enumeration of Logix conditionals state variables and actions</a></li>
+
+        <li><a href="../../package/jmri/jmrit/conditional/ConditionalListEditor.shtml">Logix conditionals list editor instructions</a></li>
+
+        <li><a href="../../package/jmri/jmrit/conditional/ConditionalTreeEditor.shtml">Logix conditionals tree editor instructions</a></li>
+
+        <li><a href="../../package/jmri/jmrit/conditional/ConditionalCopy.shtml">Logix conditionals copy instructions</a></li>
+
+        </ul>
+  
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

@@ -855,7 +855,7 @@ public class AutoActiveTrain implements ThrottleListener {
             }
         }
         float newSpeed = 0.0f;
-        log.info("[{}:SectionsAhead[{}]",_activeTrain.getActiveTrainName() ,sectionsAhead);
+        log.debug("[{}:SectionsAhead[{}]",_activeTrain.getActiveTrainName() ,sectionsAhead);
         switch (sectionsAhead) {
             case 0:
                 newSpeed = 0.0f;

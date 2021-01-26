@@ -30,7 +30,7 @@ public class LengthPanel extends JPanel
     public static final String ENTRANCE_SPACE = "entranceSpace" ;
     
 
-    LengthPanel(OBlock block, String label) {
+    LengthPanel(OBlock block, String label, String tip) {
         _block = block;
         _label = label ;
         
@@ -39,7 +39,7 @@ public class LengthPanel extends JPanel
 
         _lengthField.setText(_lenFormat.format(0f));
         pp.add(CircuitBuilder.makeTextBoxPanel(
-                false, _lengthField, _label, true, "TooltipPathLength"));
+                false, _lengthField, _label, true, tip));
         _lengthField.setPreferredSize(new Dimension(100, _lengthField.getPreferredSize().height));
         _units = new JToggleButton("", !_block.isMetric());
         _units.setToolTipText(Bundle.getMessage("TooltipPathUnitButton"));
