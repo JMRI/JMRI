@@ -623,7 +623,7 @@
       The Throttle Factor set here is a global default.</p>
 
       <p>For more information on Warrant speed parameters, see
-      <a href="../jmri/jmrit/logix/speedChanges.shtml">Modifying
+      <a href="../jmri/jmrit/logix/SpeedChanges.shtml">Modifying
       Warrant Speeds</a> and follow its links.</p>
 
       <h2>Merging Speed Profiles</h2>
