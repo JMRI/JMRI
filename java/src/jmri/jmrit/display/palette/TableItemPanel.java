@@ -119,8 +119,9 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
                 return new LightTableAction(Bundle.getMessage("CreateNewItem"));
             case "Reporter":
                 return new ReporterTableAction(Bundle.getMessage("CreateNewItem"));
+            default:
+                return null;
         }
-        return null;
     }
     /*
      * Top Panel.
@@ -344,7 +345,7 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
             if (bean == null) {
                 return null;
             }
-//            jmri.NamedBeanHandle<E> bh = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(bean.getDisplayName(), bean);
+            // jmri.NamedBeanHandle<E> bh = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(bean.getDisplayName(), bean);
 
             Editor editor = _frame.getEditor();
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
@@ -381,6 +382,8 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
                         l.setLight((jmri.Light) bean);
                         l.setLevel(Editor.LIGHTS);
                         return l;
+                    default:
+                        return null;
                 }
             } else if (DataFlavor.stringFlavor.equals(flavor)) {
                 return _itemType + " icons for \"" + bean.getDisplayName() + "\"";
