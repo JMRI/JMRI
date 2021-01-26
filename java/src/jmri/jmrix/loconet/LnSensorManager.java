@@ -224,6 +224,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                     curAddress, iName);
         } else {
             // Entered in using the old format
+            log.debug("LnSensorManager creating system name for {}", curAddress); // EBR
             try {
                 iName = Integer.parseInt(curAddress);
             } catch (NumberFormatException ex) {

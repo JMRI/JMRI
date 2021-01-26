@@ -100,18 +100,17 @@
       <span class="since">Since 4.21</span><br>
       Should all of the icon sets of a device type be deleted, a
       <b>Restore Defaults</b> button is displayed. This button
-      reinstalls the default icons listed in the file, 
-      JMRI/xml/defaultPanelIcons.xml.  Holding the keys <b>Ctrl</b>
+      reinstalls the default icons listed in the file
+      JMRI/xml/defaultPanelIcons.xml. Holding the keys <b>Ctrl</b>
       and <b>A</b> down while clicking the <b>New Icon Set</b>
       button will reinstall any missing default icon sets for that
       tab.
       <p>
-      Previously, the Indicator Turnout tab had additional buttons to
-      add and delete status icons when the <b>Edit Icons</b>
-	  button was pressed. Now
-      these buttons are displayed only if the keys <b>Ctrl</b>
-      and <b>A</b> are held down while clicking <b>Edit Icons</b>.
-      </p>
+      Before 4.21 the Indicator Turnout tab always showed buttons to
+      add and delete status icons when the <b>Edit Icons</b> button
+      was pressed. Now these (advanced) buttons are displayed only if
+      the keys <b>Ctrl</b> and <b>A</b> are held down while clicking
+      <b>Edit Icons</b>.</p>
 
       <h2>Item Palette Tabs</h2>
 
@@ -214,12 +213,12 @@
       have colors to display status of
       the track circuit they represent. When the track circuit is
       configured by an OBlock, and the Portals and Paths it
-      contains, the following status states are be displayed by
+      contains, the following status states will be displayed by
       color:
 
       <ul>
         <li><b>Clear</b> Indicates ready for use. More precisely,
-        the circuit is in a known state and none of other status
+        the circuit is in a known state and none of the other status
         apply.</li>
 
         <li><b>Occupied</b> (Yellow) The track is occupied by an
