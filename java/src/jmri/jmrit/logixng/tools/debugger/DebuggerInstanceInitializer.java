@@ -1,13 +1,10 @@
 package jmri.jmrit.logixng.tools.debugger;
 
-import jmri.jmrit.logixng.implementation.*;
-
 import java.util.Arrays;
 import java.util.Set;
 
 import jmri.InstanceInitializer;
 import jmri.implementation.AbstractInstanceInitializer;
-import jmri.jmrit.logixng.*;
 
 import org.openide.util.lookup.ServiceProvider;
 

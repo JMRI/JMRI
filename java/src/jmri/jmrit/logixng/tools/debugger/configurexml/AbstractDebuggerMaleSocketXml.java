@@ -11,7 +11,7 @@ import org.jdom2.Element;
 // import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 
 /**
- * Handle XML configuration for ActionLightXml objects.
+ * Handle XML configuration for AbstractDebuggerMaleSocket objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
  * @author Daniel Bergqvist Copyright (C) 2019
