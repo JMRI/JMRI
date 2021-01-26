@@ -94,7 +94,7 @@ public abstract class ItemPanel extends JPanel  {
             PortalIcon.TO_ARROW, PortalIcon.FROM_ARROW};
 
     protected static HashMap<String, String[]> STATE_MAP = new HashMap<>();
-    {
+    static {
         STATE_MAP.put("Turnout", TURNOUT);
         STATE_MAP.put("Sensor", SENSOR);
         STATE_MAP.put("SignalHead", SIGNALHEAD);
@@ -107,7 +107,7 @@ public abstract class ItemPanel extends JPanel  {
     }
 
     protected static HashMap<String, String> NAME_MAP = new HashMap<>();
-    {
+    static {
         NAME_MAP.put("Turnout", "BeanNameTurnout");
         NAME_MAP.put("Sensor", "BeanNameSensor");
         NAME_MAP.put("SignalHead", "BeanNameSignalHead");

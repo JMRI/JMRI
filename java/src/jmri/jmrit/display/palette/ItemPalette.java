@@ -462,7 +462,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         ItemPanel itemPanel = new TableItemPanel<>(palette, "Turnout", null,
                 PickListModel.turnoutPickModelInstance());
         addItemTab(itemPanel, "Turnout", "BeanNameTurnout");
-        itemPanel.init();  // show panel on start
+        // panel shown on start
 
         itemPanel = new TableItemPanel<>(palette, "Sensor", null,
                 PickListModel.sensorPickModelInstance());
@@ -525,6 +525,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         JScrollPane scrollPane = new JScrollPane(itemPanel);
         _tabPane.add(Bundle.getMessage(tabTitle), scrollPane);
         _tabIndex.put(key, itemPanel);
+        itemPanel.init();
     }
 
     static int getTabWidth() {
@@ -559,31 +560,10 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         JScrollPane sp = (JScrollPane) tp.getSelectedComponent();
         ItemPanel p = (ItemPanel) sp.getViewport().getView();
         p.closeDialogs();
-        p.init(); // (re)initialize tab pane
-        p.invalidate();
-        Dimension newTabDim = p.getPreferredSize();
-        Dimension oldTabDim;
+        p.revalidate();
         if (_currentItemPanel != null) {
             _currentItemPanel.closeDialogs();
-//            oldTabDim = _currentItemPanel.getSize();
-//        } else {
-//            oldTabDim = newTabDim;
         }
-        //setTitle(Bundle.getMessage("ItemPaletteTitle", ""));
-        // UI Guidelines says frame title should remain static, selected tab signals current selection
-        //setTitle(Bundle.getMessage("ItemPaletteTitle", Bundle.getMessage(ItemPanel.NAME_MAP.get(p._itemType))));
-        // different tab widths cause jumping window, so right arrow does not stay below pointer
-        // all tabes same width since 4.21.4
-        //        Dimension totalDim = _tabPane.getSize();
-        //        Dimension deltaDim;
-        //        if (log.isDebugEnabled()) {
-        //            deltaDim = new Dimension(totalDim.width - oldTabDim.width, totalDim.height - oldTabDim.height);
-        //            log.debug(" old _tabPane Dim= ({}, {}) oldType=({})= ({}, {})newType=({})= ({}, {}). diff= ({}, {})",
-        //                    totalDim.width, totalDim.height, _currentItemPanel._itemType, oldTabDim.width, oldTabDim.height,
-        //                    p._itemType, newTabDim.width, newTabDim.height, deltaDim.width, deltaDim.height);
-        //        }
-        //        deltaDim = p.shellDimension(p);
-        //        reSize(_tabPane, deltaDim, newTabDim);
         _currentItemPanel = p;
     }
 
@@ -675,8 +655,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
      * @return map of families
      */
     static public @Nonnull HashMap<String, HashMap<String, NamedIcon>> getFamilyMaps(String type) {
-        HashMap<String, HashMap<String, NamedIcon>> families = _iconMaps.computeIfAbsent(type, k -> new HashMap<>());
-        return families;
+        return _iconMaps.computeIfAbsent(type, k -> new HashMap<>());
     }
 
     /**
