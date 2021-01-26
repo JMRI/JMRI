@@ -522,10 +522,11 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     }
 
     static void addItemTab(ItemPanel itemPanel, String key, String tabTitle) {
+        itemPanel.init();
         JScrollPane scrollPane = new JScrollPane(itemPanel);
         _tabPane.add(Bundle.getMessage(tabTitle), scrollPane);
         _tabIndex.put(key, itemPanel);
-        itemPanel.init();
+        log.debug("_tabIndex.size()={}", _tabIndex.size());
     }
 
     static int getTabWidth() {
@@ -544,27 +545,25 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         }
     }
 
-    @Override
-    public void setPreviewBg(int index) {
-        super.setPreviewBg(index);
-        if (_currentItemPanel != null) {    // wait until tab panels are created
-            for (ItemPanel panel : _tabIndex.values()) {
-                panel.previewColorChange();
-            }
-        }
-    }
+//    @Override
+//    public void setPreviewBg(int index) {
+//        super.setPreviewBg(index);
+//        // introduced loop, deprecated and replaced by updating at the moment a tab is brought to front.
+//    }
 
     @Override
     public void stateChanged(ChangeEvent e) {
         JTabbedPane tp = (JTabbedPane) e.getSource();
         JScrollPane sp = (JScrollPane) tp.getSelectedComponent();
-        ItemPanel p = (ItemPanel) sp.getViewport().getView();
-        p.closeDialogs();
-        p.revalidate();
+        ItemPanel newItemPanel = (ItemPanel) sp.getViewport().getView();
+        newItemPanel.closeDialogs();
+        newItemPanel.previewColorChange();
+        newItemPanel.revalidate();
+        // elegantly close previous ItemPanel
         if (_currentItemPanel != null) {
             _currentItemPanel.closeDialogs();
         }
-        _currentItemPanel = p;
+        _currentItemPanel = newItemPanel;
     }
 
     private void makeMenus() {
@@ -633,9 +632,9 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     /**
      * Add a new Family of icons to the device type.
      *
-     * @param type type
-     * @param family family
-     * @param iconMap iconMap
+     * @param type type to retrieve
+     * @param family name for iconMap "family"
+     * @param iconMap icon HashMap providing the images
      * @return result
      */
     static protected boolean addFamily(String type, String family, HashMap<String, NamedIcon> iconMap) {

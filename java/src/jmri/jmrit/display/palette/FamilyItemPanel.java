@@ -269,10 +269,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
             if (mapFamily == null) {
                 _isUnstoredMap = true;
             } else {
-                if (log.isDebugEnabled()) {
-                    log.debug("getValidFamilyName: findFamilyOfMap {} found stored family \"{}\" for family \"{}\".",
-                            _itemType, mapFamily, family);
-                }
+                log.debug("getValidFamilyName: findFamilyOfMap {} found stored family \"{}\" for family \"{}\".",
+                        _itemType, mapFamily, family);
                 _isUnstoredMap = false;
                 if (family != null) {
                     return mapFamily;
@@ -285,7 +283,11 @@ public abstract class FamilyItemPanel extends ItemPanel {
         while (!nameOK) {
             if (mapFamily == null || mapFamily.isEmpty()) {
                 Component fr;
-                if (_dialog != null) fr = _dialog; else fr = this;
+                if (_dialog != null) {
+                    fr = _dialog;
+                } else {
+                    fr = this;
+                }
                 mapFamily = JOptionPane.showInputDialog(fr, Bundle.getMessage("EnterFamilyName"),
                         Bundle.getMessage("createNewFamily"), JOptionPane.QUESTION_MESSAGE);
                 if (mapFamily == null) { // user quit
@@ -855,6 +857,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
                 iconPanel.setImage(_frame.getPreviewBackground());
             }
         }
+        log.debug("FamilyItemPanel.super stores previewColorChange");
         super.previewColorChange();
     }
 

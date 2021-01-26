@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.display.DisplayFrame for class diagram for the palette package.
  *
  * @author Pete Cressman Copyright (c) 2010, 2020
- * @author Egbert Broerse Copyright 2017
+ * @author Egbert Broerse Copyright 2017, 2021
  */
 public abstract class ItemPanel extends JPanel  {
 
@@ -456,7 +456,7 @@ public abstract class ItemPanel extends JPanel  {
     }
 
     /**
-     * Different names for the same icon map.
+     * Ask user to choose from 2 different names for the same icon map.
      * @param key1 first name found for same map
      * @param key2 second name found, default to delete
      * @return the name and map to discard
@@ -473,17 +473,19 @@ public abstract class ItemPanel extends JPanel  {
         }
         return key2;
     }
-    // oldDim old panel size,
-    // totalDim old frame size
+
+    /**
+     * Resize frame to allow display/shrink after Icon map is dieplayed.
+     * @param isPalette selector for what to resize, true to resize parent tabbed frame
+     * @param oldDim old panel size
+     * @param frameDim old frame size
+     */
     protected void reSizeDisplay(boolean isPalette, Dimension oldDim, Dimension frameDim) {
         Dimension newDim = getPreferredSize();
         Dimension deltaDim = shellDimension(this);
         if (log.isDebugEnabled()) {
             // Gather data for additional dimensions needed to display new panel in the total frame
             Dimension frameDiffDim = new Dimension(frameDim.width - oldDim.width, frameDim.height - oldDim.height);
-            /*log.debug("resize {} {}. frameDim= ({}, {}) OldDim= ({}, {})",
-                    (isPalette?"tabPane":"update"), _itemType, frameDim.width, frameDim.height,
-                    oldDim.width, oldDim.height);*/
             log.debug("resize {} {}. frameDiffDim= ({}, {}) deltaDim= ({}, {}) prefDim= ({}, {}))",
                     (isPalette?"tabPane":"update"), _itemType,
                     frameDiffDim.width, frameDiffDim.height,
@@ -519,4 +521,5 @@ public abstract class ItemPanel extends JPanel  {
     }
 
     private final static Logger log = LoggerFactory.getLogger(ItemPanel.class);
+
 }
