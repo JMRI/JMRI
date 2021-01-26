@@ -78,7 +78,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     }
 
     // There are also "PR3 standalone programmer" and "Stand-alone LocoNet" in pr3/PR3Adapter
-    // and "PR2 standalone programmer" in pr2/Pr2Adaper
+    // and "PR2 standalone programmer" in pr2/Pr2Adapter
     /**
      * Set config info from a name, which needs to be one of the valid ones.
      * @param name the name of the command station type

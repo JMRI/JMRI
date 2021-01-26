@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.FontMetrics;
 import java.awt.event.*;
 import java.awt.MouseInfo;
 import java.awt.Point;
@@ -13,10 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
+import javax.swing.table.*;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import jmri.InstanceManager;
@@ -27,6 +25,7 @@ import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.logix.ThrottleSetting.Command;
 import jmri.jmrit.logix.ThrottleSetting.CommandValue;
 import jmri.jmrit.logix.ThrottleSetting.ValueType;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,7 +71,9 @@ public class WarrantFrame extends WarrantRoute {
     JPanel _commandPanel;
     JRadioButton _isSCWarrant = new JRadioButton(Bundle.getMessage("SmallLayoutTrainAutomater"), false);
     JRadioButton _isWarrant = new JRadioButton(Bundle.getMessage("NormalWarrant"), true);
-    JButton _addSpeeds = new JButton(Bundle.getMessage("AddTrackSpeeds"));
+    private DisplayButton _speedUnits;
+    private JLabel _unitsLabel;
+    private float _speedConversion;
     JCheckBox    _runForward = new JCheckBox(Bundle.getMessage("Forward"));
     JFormattedTextField _speedFactorTextField = new JFormattedTextField();
     JFormattedTextField _TTPtextField = new JFormattedTextField();
@@ -398,7 +399,6 @@ public class WarrantFrame extends WarrantRoute {
                 setPanelEnabled(learnPanel,false);
                 setPanelEnabled(paramsPanel,false);
                 setPanelEnabled(runPanel,false);
-                _addSpeeds.setVisible(false);
             }
         });
         if (_saveWarrant != null && _saveWarrant instanceof SCWarrant) {
@@ -406,7 +406,6 @@ public class WarrantFrame extends WarrantRoute {
             setPanelEnabled(learnPanel,false);
             setPanelEnabled(paramsPanel,false);
             setPanelEnabled(runPanel,false);
-            _addSpeeds.setEnabled(false);
             _isSCWarrant.setVisible(true);
         }
 
@@ -417,7 +416,6 @@ public class WarrantFrame extends WarrantRoute {
                 setPanelEnabled(learnPanel,true);
                 setPanelEnabled(paramsPanel,true);
                 setPanelEnabled(runPanel,true);
-                _addSpeeds.setVisible(_throttleCommands.size() > 1);
             }
         });
 
@@ -724,6 +722,44 @@ public class WarrantFrame extends WarrantRoute {
         _commandPanel.setVisible(setCmds);
     }
 
+    private void speedUnitsAction() {
+        switch (_displayPref) {
+            case MPH:
+                _displayPref = Display.KPH;
+                _speedConversion = _scale * 3.6f;
+                setFormatter("kph");
+                break;
+            case KPH:
+                _displayPref = Display.MMPS;
+                _speedConversion = 1000;
+                _unitsLabel.setText(Bundle.getMessage("trackSpeed"));
+                setFormatter("mmps");
+                break;
+            case MMPS:
+                _displayPref = Display.INPS;
+                _speedConversion = 39.37f;
+                setFormatter("inps");
+                break;
+            case INPS:
+            default:
+                _displayPref = Display.MPH;
+                _speedConversion = 2.23694f * _scale;
+                _unitsLabel.setText(Bundle.getMessage("scaleSpeed"));
+                setFormatter("mph");
+                break;
+            }
+            _speedUnits.setDisplayPref(_displayPref);
+            addSpeeds();
+    }
+
+    private void setFormatter(String title) {
+        JTableHeader header = _commandTable.getTableHeader();
+        TableColumnModel colMod = header.getColumnModel();
+        TableColumn tabCol = colMod.getColumn(ThrottleTableModel.SPEED_COLUMN);
+        tabCol.setHeaderValue(Bundle.getMessage(title));
+        header.repaint();
+    }
+
     private JPanel makeThrottleTablePanel() {
         _commandTable = new JTable(_commandModel);
         DefaultCellEditor ed = (DefaultCellEditor)_commandTable.getDefaultEditor(String.class);
@@ -772,10 +808,27 @@ public class WarrantFrame extends WarrantRoute {
         buttonPanel.add(deleteButton);
         buttonPanel.add(Box.createVerticalStrut(2*STRUT_SIZE));
 
-        buttonPanel.add(_addSpeeds);
-        _addSpeeds.addActionListener((ActionEvent evt)-> {
-            addSpeeds();
-        });
+        if (_displayPref.equals(Display.MMPS) || _displayPref.equals(Display.INPS)) {
+            _unitsLabel = new JLabel(Bundle.getMessage("trackSpeed"));
+        } else {
+            _unitsLabel = new JLabel(Bundle.getMessage("scaleSpeed"));
+        }
+        _unitsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        _speedUnits = new DisplayButton(_displayPref);
+        FontMetrics fm = _speedUnits.getFontMetrics(_speedUnits.getFont());
+        int width = Math.max(fm.stringWidth(Display.KPH.toString()), 
+                Math.max(fm.stringWidth(Display.MPH.toString()), 
+                        fm.stringWidth(Display.MMPS.toString())));
+        Dimension d = _speedUnits.getPreferredSize();
+        d.width = width + 40;
+        _speedUnits.setMaximumSize(d);
+        _speedUnits.setMinimumSize(d);
+        _speedUnits.setPreferredSize(d);
+        _speedUnits.addActionListener((ActionEvent evt)-> speedUnitsAction());
+
+        buttonPanel.add(_unitsLabel);
+        buttonPanel.add(_speedUnits);
 
         _commandPanel = new JPanel();
         _commandPanel.setLayout(new BoxLayout(_commandPanel, BoxLayout.PAGE_AXIS));
@@ -969,7 +1022,7 @@ public class WarrantFrame extends WarrantRoute {
                                     i+1, cmd.toString(), valType.toString());
                         }
                         float f = ts.getValue().getFloat();
-                        if (f > 1.0F) {
+                        if (f > 1 || f < 0) {
                             return Bundle.getMessage("badSpeed", f);
                         }
                         break;
@@ -1881,6 +1934,8 @@ public class WarrantFrame extends WarrantRoute {
         }
     }
 
+    static java.text.DecimalFormat twoDigit = new java.text.DecimalFormat("0.00");
+
     /************************* Throttle Table ******************************/
     class ThrottleTableModel extends AbstractTableModel {
 
@@ -1891,7 +1946,6 @@ public class WarrantFrame extends WarrantRoute {
         public static final int BLOCK_COLUMN = 4;
         public static final int SPEED_COLUMN = 5;
         public static final int NUMCOLS = 6;
-        java.text.DecimalFormat threeDigit = new java.text.DecimalFormat("0.000");
 
         JComboBox<Integer> keyNums = new JComboBox<>();
 
@@ -1958,16 +2012,14 @@ public class WarrantFrame extends WarrantRoute {
                     return new JTextField(8).getPreferredSize().width;
                 case COMMAND_COLUMN:
                 case VALUE_COLUMN:
-                    return new JTextField(15).getPreferredSize().width;
+                    return new JTextField(18).getPreferredSize().width;
                 case BLOCK_COLUMN:
-                    return new JTextField(35).getPreferredSize().width;
+                    return new JTextField(45).getPreferredSize().width;
                 case SPEED_COLUMN:
-                    return new JTextField(12).getPreferredSize().width;
+                    return new JTextField(10).getPreferredSize().width;
                 default:
-                    // fall through
-                    break;
+                    return new JTextField(12).getPreferredSize().width;
             }
-            return new JTextField(12).getPreferredSize().width;
         }
 
         @Override
@@ -1999,7 +2051,7 @@ public class WarrantFrame extends WarrantRoute {
                 case BLOCK_COLUMN:
                     return ts.getBeanDisplayName();
                 case SPEED_COLUMN:
-                    return threeDigit.format(ts.getTrackSpeed() * 1000);
+                    return twoDigit.format(ts.getTrackSpeed() * _speedConversion);
                 default:
                     return "";
             }
@@ -2008,6 +2060,9 @@ public class WarrantFrame extends WarrantRoute {
         @Override
         @SuppressFBWarnings(value="DB_DUPLICATE_SWITCH_CLAUSES", justification="put least likely cases last for efficiency")
         public void setValueAt(Object value, int row, int col) {
+            if (row >= _throttleCommands.size()) {
+                return;
+            }
             ThrottleSetting ts = _throttleCommands.get(row);
             String msg = null;
             switch (col) {
