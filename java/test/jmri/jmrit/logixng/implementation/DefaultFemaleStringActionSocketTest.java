@@ -98,9 +98,6 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
         classes = new ArrayList<>();
         map.put(Category.OTHER, classes);
         
-        classes = new ArrayList<>();
-        map.put(Category.EXRAVAGANZA, classes);
-        
         Assert.assertTrue("maps are equal",
                 isConnectionClassesEquals(map, _femaleSocket.getConnectableClasses()));
     }

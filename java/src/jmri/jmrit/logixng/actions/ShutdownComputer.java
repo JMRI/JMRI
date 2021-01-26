@@ -33,7 +33,7 @@ public class ShutdownComputer extends AbstractDigitalAction {
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
-        return Category.EXRAVAGANZA;
+        return Category.OTHER;
     }
 
     /** {@inheritDoc} */

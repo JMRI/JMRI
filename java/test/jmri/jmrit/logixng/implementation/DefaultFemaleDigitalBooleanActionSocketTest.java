@@ -95,11 +95,8 @@ public class DefaultFemaleDigitalBooleanActionSocketTest extends FemaleSocketTes
         map.put(Category.COMMON, classes);
         
         classes = new ArrayList<>();
-        map.put(Category.OTHER, classes);
-        
-        classes = new ArrayList<>();
 //        classes.add(jmri.jmrit.logixng.actions.ShutdownComputer.class);
-        map.put(Category.EXRAVAGANZA, classes);
+        map.put(Category.OTHER, classes);
         
         Assert.assertTrue("maps are equal",
                 isConnectionClassesEquals(map, _femaleSocket.getConnectableClasses()));

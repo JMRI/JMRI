@@ -436,7 +436,6 @@ public class LogixNGTest {
         Assert.assertTrue("isChangeableByUser is correct", "Item".equals(Category.ITEM.toString()));
         Assert.assertTrue("isChangeableByUser is correct", "Common".equals(Category.COMMON.toString()));
         Assert.assertTrue("isChangeableByUser is correct", "Other".equals(Category.OTHER.toString()));
-        Assert.assertTrue("isChangeableByUser is correct", "Extravaganza".equals(Category.EXRAVAGANZA.toString()));
     }
     
     public void setupInitialConditionalNGTree(ConditionalNG conditionalNG) {

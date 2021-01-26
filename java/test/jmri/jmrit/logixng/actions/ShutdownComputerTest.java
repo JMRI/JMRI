@@ -85,7 +85,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.EXRAVAGANZA == _base.getCategory());
+        Assert.assertTrue("Category matches", Category.OTHER == _base.getCategory());
     }
     
     @Test
@@ -131,7 +131,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         mockShutDownManager = new MockShutDownManager();
         InstanceManager.setDefault(ShutDownManager.class, mockShutDownManager);
         
-        _category = Category.EXRAVAGANZA;
+        _category = Category.OTHER;
         _isExternal = true;
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N

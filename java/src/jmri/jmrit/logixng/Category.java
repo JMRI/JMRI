@@ -34,12 +34,6 @@ public abstract class Category implements Comparable<Category> {
     public static final Other OTHER = new Other();
     
     /**
-     * Extravaganza. Things seldom used, included mostly for fun, but maybe
-     * useful in some cases.
-     */
-    public static final Extravaganza EXRAVAGANZA = new Extravaganza();
-    
-    /**
      * Get all the registered Categories
      * @return a list of categories
      */
@@ -52,7 +46,6 @@ public abstract class Category implements Comparable<Category> {
                     registerCategory(ITEM);
                     registerCategory(COMMON);
                     registerCategory(OTHER);
-                    registerCategory(EXRAVAGANZA);
                 }
             }
         }
