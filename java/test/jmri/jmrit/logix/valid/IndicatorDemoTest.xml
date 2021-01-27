@@ -4344,6 +4344,7 @@
         <path>OutOfInfinity</path>
       </paths>
     </indicatorturnouticon>
+    <!-- next element logs: WARN  - getIconMap failed. family "null" not found in item type "Portal" Be sure to assertWarnMessage in TrackerTest test -->
     <PortalIcon x="31" y="132" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="WayFarAwayWest" toBlockName="Infinity&amp;Beyond" fromBlockName="WayFarAway" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>Portal "WayFarAwayWest" between OBlocks "WayFarAway" and "null"</tooltip>
     </PortalIcon>

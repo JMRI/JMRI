@@ -8,7 +8,7 @@ import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.controlPanelEditor.PortalIcon;
 
 /**
- * ItemPanel for for PortalIcons.
+ * ItemPanel for PortalIcons.
  * 
 * @author Pete Cressman Copyright (c) 2013, 2020
  */
