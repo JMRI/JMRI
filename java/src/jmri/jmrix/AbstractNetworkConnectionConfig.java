@@ -358,7 +358,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         mqttUsernameField.setText(adapter.getMqttUsername());
         mqttUsernameFieldLabel = new JLabel(Bundle.getMessage("MqttUsernameFieldLabel"));
         mqttUsernameField.setToolTipText(Bundle.getMessage("MqttUsernameToolTip"));
-        if (adapter.getMqttUsername() != null || adapter.getMqttUsername() != "") {
+        if (adapter.getMqttUsername() != null || ! "".equals(adapter.getMqttPassword())) {
             mqttUsernameField.setText(p.getComboBoxLastSelection(adapter.getClass().getName() + ".mqttusername"));
             adapter.setMqttUsername(mqttUsernameField.getText());
         }
@@ -366,7 +366,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         mqttPasswordField.setText(adapter.getMqttPassword());
         mqttPasswordFieldLabel = new JLabel(Bundle.getMessage("MqttPasswordFieldLabel"));
         mqttPasswordField.setToolTipText(Bundle.getMessage("MqttPasswordToolTip"));
-        if (adapter.getMqttPassword() != null || adapter.getMqttPassword() != "") {
+        if (adapter.getMqttPassword() != null || ! "".equals(adapter.getMqttPassword())) {
             mqttPasswordField.setText(p.getComboBoxLastSelection(adapter.getClass().getName() + ".mqttpassword"));
             adapter.setMqttPassword(String.valueOf(mqttPasswordField.getPassword()));
         }
