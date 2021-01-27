@@ -3,9 +3,7 @@ package jmri.jmrit.logixng.implementation.configurexml;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -31,7 +29,9 @@ public class DefaultDigitalActionManagerXml extends AbstractManagerXml {
     public DefaultDigitalActionManagerXml() {
     }
 
-    private DigitalActionBean getAction(DigitalActionBean action) throws IllegalAccessException, IllegalArgumentException, NoSuchFieldException {
+    private DigitalActionBean getAction(DigitalActionBean action)
+            throws IllegalAccessException, IllegalArgumentException, NoSuchFieldException {
+        
         Field f = action.getClass().getDeclaredField("_action");
         f.setAccessible(true);
         return (DigitalActionBean) f.get(action);
@@ -54,15 +54,20 @@ public class DefaultDigitalActionManagerXml extends AbstractManagerXml {
                 log.debug("action system name is " + action.getSystemName());  // NOI18N
 //                log.error("action system name is " + action.getSystemName() + ", " + action.getLongDescription());  // NOI18N
                 try {
+                    List<Element> elements = new ArrayList<>();
                     // The male socket may be embedded in other male sockets
                     MaleDigitalActionSocket a = action;
                     while (!(a instanceof DefaultMaleDigitalActionSocket)) {
+                        elements.add(storeMaleSocket(a));
                         a = (MaleDigitalActionSocket) a.getObject();
                     }
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(getAction(a));
                     if (e != null) {
-                        e.addContent(storeMaleSocket(a));
+                        for (Element ee : elements) e.addContent(ee);
+//                        e.addContent(storeMaleSocket(a));
                         actions.addContent(e);
+                    } else {
+                        throw new RuntimeException("Cannot load xml configurator for " + getAction(a).getClass().getName());
                     }
                 } catch (RuntimeException | IllegalAccessException | NoSuchFieldException e) {
                     log.error("Error storing action: {}", e, e);

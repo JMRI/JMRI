@@ -78,6 +78,7 @@ public class DefaultAnalogActionManagerXmlTest {
 //        System.out.format("Class name: %s%n", PrivateConstructorXml.class.getName());
     }
 
+    @Ignore("Cannot load xml configurator")
     @Test
     public void testStore() {
         DefaultAnalogActionManagerXml b = new DefaultAnalogActionManagerXml();

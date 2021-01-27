@@ -3,15 +3,14 @@ package jmri.jmrit.logixng.implementation.configurexml;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultDigitalBooleanActionManager;
+import jmri.jmrit.logixng.implementation.DefaultMaleDigitalBooleanActionSocket;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 import jmri.util.ThreadingUtil;
 
@@ -39,9 +38,9 @@ public class DefaultDigitalBooleanActionManagerXml extends AbstractManagerXml {
     }
     
     /**
-     * Default implementation for storing the contents of a DigitalActionManager
+     * Default implementation for storing the contents of a DigitalBooleanActionManager
      *
-     * @param o Object to store, of type DigitalActionManager
+     * @param o Object to store, of type DigitalBooleanActionManager
      * @return Element containing the complete info
      */
     @Override
@@ -49,15 +48,26 @@ public class DefaultDigitalBooleanActionManagerXml extends AbstractManagerXml {
         Element actions = new Element("logixngDigitalBooleanActions");
         setStoreElementClass(actions);
         DigitalBooleanActionManager tm = (DigitalBooleanActionManager) o;
+//        System.out.format("DefaultDigitalBooleanActionManagerXml: manager: %s%n", tm);
         if (tm != null) {
-            for (DigitalBooleanActionBean action : tm.getNamedBeanSet()) {
+            for (MaleDigitalBooleanActionSocket action : tm.getNamedBeanSet()) {
                 log.debug("action system name is " + action.getSystemName());  // NOI18N
 //                log.error("action system name is " + action.getSystemName() + ", " + action.getLongDescription());  // NOI18N
                 try {
-                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(getAction(action));
+                    List<Element> elements = new ArrayList<>();
+                    // The male socket may be embedded in other male sockets
+                    MaleDigitalBooleanActionSocket a = action;
+                    while (!(a instanceof DefaultMaleDigitalBooleanActionSocket)) {
+                        elements.add(storeMaleSocket(a));
+                        a = (MaleDigitalBooleanActionSocket) a.getObject();
+                    }
+                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(getAction(a));
                     if (e != null) {
-                        e.addContent(storeMaleSocket((MaleSocket)action));
+                        for (Element ee : elements) e.addContent(ee);
+//                        e.addContent(storeMaleSocket(a));
                         actions.addContent(e);
+                    } else {
+                        throw new RuntimeException("Cannot load xml configurator for " + getAction(a).getClass().getName());
                     }
                 } catch (RuntimeException | IllegalAccessException | NoSuchFieldException e) {
                     log.error("Error storing action: {}", e, e);
@@ -79,7 +89,7 @@ public class DefaultDigitalBooleanActionManagerXml extends AbstractManagerXml {
     }
 
     /**
-     * Create a DigitalActionManager object of the correct class, then register
+     * Create a DigitalBooleanActionManager object of the correct class, then register
      * and fill it.
      *
      * @param sharedAction  Shared top level Element to unpack.
@@ -96,11 +106,11 @@ public class DefaultDigitalBooleanActionManagerXml extends AbstractManagerXml {
     }
 
     /**
-     * Utility method to load the individual DigitalActionBean objects. If
+     * Utility method to load the individual DigitalBooleanActionBean objects. If
      * there's no additional info needed for a specific action type, invoke
-     * this with the parent of the set of DigitalActionBean elements.
+     * this with the parent of the set of DigitalBooleanActionBean elements.
      *
-     * @param actions Element containing the DigitalActionBean elements to load.
+     * @param actions Element containing the DigitalBooleanActionBean elements to load.
      */
     public void loadActions(Element actions) {
         
@@ -153,7 +163,7 @@ public class DefaultDigitalBooleanActionManagerXml extends AbstractManagerXml {
     }
 
     /**
-     * Replace the current DigitalActionManager, if there is one, with one newly
+     * Replace the current DigitalBooleanActionManager, if there is one, with one newly
      * created during a load operation. This is skipped if they are of the same
      * absolute type.
      */

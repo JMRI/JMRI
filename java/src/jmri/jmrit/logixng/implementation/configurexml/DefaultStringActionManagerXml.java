@@ -3,14 +3,13 @@ package jmri.jmrit.logixng.implementation.configurexml;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.DefaultMaleStringActionSocket;
 import jmri.jmrit.logixng.implementation.DefaultStringActionManager;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 import jmri.util.ThreadingUtil;
@@ -48,13 +47,24 @@ public class DefaultStringActionManagerXml extends AbstractManagerXml {
         setStoreElementClass(actions);
         StringActionManager tm = (StringActionManager) o;
         if (tm != null) {
-            for (StringActionBean action : tm.getNamedBeanSet()) {
+            for (MaleStringActionSocket action : tm.getNamedBeanSet()) {
                 log.debug("action system name is " + action.getSystemName());  // NOI18N
+//                log.error("action system name is " + action.getSystemName() + ", " + action.getLongDescription());  // NOI18N
                 try {
-                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(getAction(action));
+                    List<Element> elements = new ArrayList<>();
+                    // The male socket may be embedded in other male sockets
+                    MaleStringActionSocket a = action;
+                    while (!(a instanceof DefaultMaleStringActionSocket)) {
+                        elements.add(storeMaleSocket(a));
+                        a = (MaleStringActionSocket) a.getObject();
+                    }
+                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(getAction(a));
                     if (e != null) {
-                        e.addContent(storeMaleSocket((MaleSocket)action));
+                        for (Element ee : elements) e.addContent(ee);
+//                        e.addContent(storeMaleSocket(a));
                         actions.addContent(e);
+                    } else {
+                        throw new RuntimeException("Cannot load xml configurator for " + getAction(a).getClass().getName());
                     }
                 } catch (RuntimeException | IllegalAccessException | NoSuchFieldException e) {
                     log.error("Error storing action: {}", e, e);

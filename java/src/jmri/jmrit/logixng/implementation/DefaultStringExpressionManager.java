@@ -46,6 +46,10 @@ public class DefaultStringExpressionManager extends AbstractBaseManager<MaleStri
                 expressionClassList.get(entry.getKey()).add(entry.getValue());
             });
         }
+        
+        for (MaleStringExpressionSocketFactory maleSocketFactory : ServiceLoader.load(MaleStringExpressionSocketFactory.class)) {
+            _maleSocketFactories.add(maleSocketFactory);
+        }
     }
 
     /** {@inheritDoc} */

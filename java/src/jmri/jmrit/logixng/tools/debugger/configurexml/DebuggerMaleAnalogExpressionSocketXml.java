@@ -6,6 +6,6 @@ package jmri.jmrit.logixng.tools.debugger.configurexml;
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
  * @author Daniel Bergqvist Copyright (C) 2020
  */
-public class DebuggerMaleDigitalExpressionSocketXml extends AbstractDebuggerMaleSocketXml {
+public class DebuggerMaleAnalogExpressionSocketXml extends AbstractDebuggerMaleSocketXml {
 
 }

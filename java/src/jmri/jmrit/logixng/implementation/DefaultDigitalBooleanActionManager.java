@@ -11,7 +11,8 @@ import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
 import jmri.jmrit.logixng.*;
-import jmri.util.*;
+import jmri.util.LoggingUtil;
+import jmri.util.ThreadingUtil;
 
 /**
  * Class providing the basic logic of the DigitalBooleanActionManager interface.
@@ -42,6 +43,10 @@ public class DefaultDigitalBooleanActionManager extends AbstractBaseManager<Male
 //                System.out.format("Add action: %s, %s%n", entry.getKey().name(), entry.getValue().getName());
                 actionClassList.get(entry.getKey()).add(entry.getValue());
             });
+        }
+        
+        for (MaleDigitalBooleanActionSocketFactory maleSocketFactory : ServiceLoader.load(MaleDigitalBooleanActionSocketFactory.class)) {
+            _maleSocketFactories.add(maleSocketFactory);
         }
     }
 

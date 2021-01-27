@@ -43,6 +43,10 @@ public class DefaultAnalogActionManager extends AbstractBaseManager<MaleAnalogAc
                 actionClassList.get(entry.getKey()).add(entry.getValue());
             });
         }
+        
+        for (MaleAnalogActionSocketFactory maleSocketFactory : ServiceLoader.load(MaleAnalogActionSocketFactory.class)) {
+            _maleSocketFactories.add(maleSocketFactory);
+        }
     }
 
     /** {@inheritDoc} */

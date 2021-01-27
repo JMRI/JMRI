@@ -15,7 +15,8 @@ import jmri.jmrit.logixng.*;
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket implements MaleDigitalBooleanActionSocket {
+public class DefaultMaleDigitalBooleanActionSocket
+        extends AbstractMaleSocket implements MaleDigitalBooleanActionSocket {
 
     private final DigitalBooleanActionBean _action;
     private DebugConfig _debugConfig = null;
@@ -69,12 +70,12 @@ public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket im
             return;
         }
         
-        ConditionalNG currentConditionalNG = getConditionalNG();
+        ConditionalNG conditionalNG = getConditionalNG();
         
-        int currentStackPos = currentConditionalNG.getStack().getCount();
+        int currentStackPos = conditionalNG.getStack().getCount();
         
         try {
-            currentConditionalNG.getSymbolTable().createSymbols(_localVariables);
+            conditionalNG.getSymbolTable().createSymbols(_localVariables);
             _action.execute(hasChangedToTrue);
         } catch (JmriException e) {
             handleError(this, Bundle.getMessage("ExceptionExecuteBooleanAction", e), e, log);
@@ -82,8 +83,8 @@ public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket im
             handleError(this, Bundle.getMessage("ExceptionExecuteBooleanAction", e), e, log);
         }
         
-        currentConditionalNG.getStack().setCount(currentStackPos);
-        currentConditionalNG.getSymbolTable().removeSymbols(_localVariables);
+        conditionalNG.getStack().setCount(currentStackPos);
+        conditionalNG.getSymbolTable().removeSymbols(_localVariables);
     }
 
     @Override

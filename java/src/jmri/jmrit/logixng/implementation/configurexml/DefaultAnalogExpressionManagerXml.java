@@ -3,15 +3,14 @@ package jmri.jmrit.logixng.implementation.configurexml;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultAnalogExpressionManager;
+import jmri.jmrit.logixng.implementation.DefaultMaleAnalogExpressionSocket;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 import jmri.util.ThreadingUtil;
 
@@ -48,13 +47,24 @@ public class DefaultAnalogExpressionManagerXml extends AbstractManagerXml {
         setStoreElementClass(expressions);
         AnalogExpressionManager tm = (AnalogExpressionManager) o;
         if (tm != null) {
-            for (AnalogExpressionBean expression : tm.getNamedBeanSet()) {
+            for (MaleAnalogExpressionSocket expression : tm.getNamedBeanSet()) {
                 log.debug("expression system name is " + expression.getSystemName());  // NOI18N
+//                log.error("expression system name is " + expression.getSystemName() + ", " + expression.getLongDescription());  // NOI18N
                 try {
-                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(getExpression(expression));
+                    List<Element> elements = new ArrayList<>();
+                    // The male socket may be embedded in other male sockets
+                    MaleAnalogExpressionSocket a = expression;
+                    while (!(a instanceof DefaultMaleAnalogExpressionSocket)) {
+                        elements.add(storeMaleSocket(a));
+                        a = (MaleAnalogExpressionSocket) a.getObject();
+                    }
+                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(getExpression(a));
                     if (e != null) {
-                        e.addContent(storeMaleSocket((MaleSocket)expression));
+                        for (Element ee : elements) e.addContent(ee);
+//                        e.addContent(storeMaleSocket(expression));
                         expressions.addContent(e);
+                    } else {
+                        throw new RuntimeException("Cannot load xml configurator for " + getExpression(a).getClass().getName());
                     }
                 } catch (RuntimeException | IllegalAccessException | NoSuchFieldException e) {
                     log.error("Error storing action: {}", e, e);

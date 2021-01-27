@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.implementation.configurexml;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,18 +52,23 @@ public class DefaultDigitalExpressionManagerXml extends AbstractManagerXml {
 //        System.out.format("DefaultDigitalExpressionManagerXml: manager: %s%n", tm);
         if (tm != null) {
             for (MaleDigitalExpressionSocket expression : tm.getNamedBeanSet()) {
-                log.debug("expression system name is " + expression.getSystemName());  // NOI18N
-//                log.error("expression system name is " + expression.getSystemName() + ", " + expression.getLongDescription());  // NOI18N
+                log.debug("action system name is " + expression.getSystemName());  // NOI18N
+//                log.error("action system name is " + action.getSystemName() + ", " + action.getLongDescription());  // NOI18N
                 try {
+                    List<Element> elements = new ArrayList<>();
                     // The male socket may be embedded in other male sockets
                     MaleDigitalExpressionSocket a = expression;
                     while (!(a instanceof DefaultMaleDigitalExpressionSocket)) {
+                        elements.add(storeMaleSocket(a));
                         a = (MaleDigitalExpressionSocket) a.getObject();
                     }
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(getExpression(a));
                     if (e != null) {
-                        e.addContent(storeMaleSocket(expression));
+                        for (Element ee : elements) e.addContent(ee);
+//                        e.addContent(storeMaleSocket(a));
                         expressions.addContent(e);
+                    } else {
+                        throw new RuntimeException("Cannot load xml configurator for " + getExpression(a).getClass().getName());
                     }
                 } catch (RuntimeException | IllegalAccessException | NoSuchFieldException e) {
                     log.error("Error storing action: {}", e, e);

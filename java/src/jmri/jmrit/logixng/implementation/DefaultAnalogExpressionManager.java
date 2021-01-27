@@ -45,6 +45,10 @@ public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnal
                 expressionClassList.get(entry.getKey()).add(entry.getValue());
             });
         }
+        
+        for (MaleAnalogExpressionSocketFactory maleSocketFactory : ServiceLoader.load(MaleAnalogExpressionSocketFactory.class)) {
+            _maleSocketFactories.add(maleSocketFactory);
+        }
     }
 
     /** {@inheritDoc} */

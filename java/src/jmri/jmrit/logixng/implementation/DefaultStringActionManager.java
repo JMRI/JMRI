@@ -43,6 +43,10 @@ public class DefaultStringActionManager extends AbstractBaseManager<MaleStringAc
                 actionClassList.get(entry.getKey()).add(entry.getValue());
             });
         }
+        
+        for (MaleStringActionSocketFactory maleSocketFactory : ServiceLoader.load(MaleStringActionSocketFactory.class)) {
+            _maleSocketFactories.add(maleSocketFactory);
+        }
     }
 
     /** {@inheritDoc} */

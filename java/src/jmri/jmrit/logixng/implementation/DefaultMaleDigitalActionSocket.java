@@ -5,10 +5,6 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.util.*;
 
-import jmri.JmriException;
-import jmri.NamedBean;
-import jmri.jmrit.logixng.Category;
-
 import javax.annotation.Nonnull;
 
 import jmri.*;
@@ -80,7 +76,6 @@ public class DefaultMaleDigitalActionSocket
         
         try {
             conditionalNG.getSymbolTable().createSymbols(_localVariables);
-            
             _action.execute();
         } catch (JmriException e) {
             handleError(this, Bundle.getMessage("ExceptionExecuteAction", e), e, log);

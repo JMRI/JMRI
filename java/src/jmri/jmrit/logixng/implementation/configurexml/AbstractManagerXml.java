@@ -41,6 +41,8 @@ public abstract class AbstractManagerXml extends jmri.managers.configurexml.Abst
                 Element e = ConfigXmlManager.elementFromObject(ms);
                 if (e != null) {
                     element.addContent(e);
+                } else {
+                    throw new RuntimeException("Cannot load xml configurator for " + ms.getClass().getName());
                 }
             } catch (RuntimeException e) {
                 log.error("Error storing maleSocket: {}", e, e);
