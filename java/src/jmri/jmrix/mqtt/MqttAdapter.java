@@ -85,7 +85,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         mqttConnOpts.setUserName(getMqttUsername());
         mqttConnOpts.setPassword(getMqttPassword().toCharArray());
 
-	return mqttConnOpts;	
+        return mqttConnOpts;
     }
 
     @Override
@@ -130,9 +130,9 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
                                         clientID,
                                         new MqttDefaultFilePersistence(tempdirName));
 
-	    if ( getMqttUsername() != null || ! "".equals(getMqttUsername())) {
-	        mqttClient.connect(getMqttConnectionOptions());
-	    } else {
+            if ( getMqttUsername() != null || ! "".equals(getMqttUsername())) {
+                mqttClient.connect(getMqttConnectionOptions());
+            } else {
                 mqttClient.connect();
             }
 
