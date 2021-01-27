@@ -70,6 +70,7 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
         return prefix + typeLetter() + curAddress;
     }

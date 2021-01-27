@@ -159,7 +159,7 @@ public final class InstanceManager {
         log.debug("Remove item type {}", type.getName());
         List<T> l = getList(type);
         int index = l.indexOf(item);
-        if (index != -1) { // -1 means items was not in list, and therefor, not registered
+        if (index != -1) { // -1 means items was not in list, and therefore, not registered
             l.remove(item);
             if (item instanceof Disposable) {
                 dispose((Disposable) item);
@@ -169,7 +169,7 @@ public final class InstanceManager {
         if (l.isEmpty()) {
             setInitializationState(type, InitializationState.NOTSET);
         }
-        if (index != -1) { // -1 means items was not in list, and therefor, not registered
+        if (index != -1) { // -1 means items was not in list, and therefore, not registered
             // fire property change last
             pcs.fireIndexedPropertyChange(getListPropertyName(type), index, item, null);
         }
