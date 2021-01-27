@@ -1,5 +1,6 @@
 package jmri.jmrit.dispatcher;
 
+import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
@@ -14,6 +15,7 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.SignalMastManager;
 import jmri.implementation.SignalSpeedMap;
+import jmri.jmrit.dispatcher.TaskAllocateRelease.TaskAction;
 import jmri.jmrit.logix.WarrantPreferences;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
@@ -42,6 +44,13 @@ import java.nio.file.StandardCopyOption;
 
         // Only one aat at a time
         private AutoActiveTrain aat = null;
+
+        @Test
+        public void testTaskAllocateRelease() {
+            TaskAllocateRelease t = new TaskAllocateRelease(TaskAction.SCAN_REQUESTS);
+            Assert.assertNotNull(t);
+            Assert.assertEquals(TaskAction.SCAN_REQUESTS, t.getAction());
+        }
 
         @SuppressWarnings("null")  // spec says cannot happen, everything defined in test data.
         @Test
