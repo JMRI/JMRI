@@ -189,8 +189,8 @@ public class DoAnalogActionTest extends AbstractDigitalActionTestBase {
         AnalogExpressionManager m0 = InstanceManager.getDefault(AnalogExpressionManager.class);
         AnalogActionManager m1 = InstanceManager.getDefault(AnalogActionManager.class);
         
-        MaleSocket childSocket0 = m0.registerExpression(new AnalogExpressionMemory("IQAE52", null));
-        MaleSocket childSocket1 = m1.registerAction(new AnalogActionMemory("IQAA554", null));
+        m0.registerExpression(new AnalogExpressionMemory("IQAE52", null));
+        m1.registerAction(new AnalogActionMemory("IQAA554", null));
         
         DoAnalogAction expression = new DoAnalogAction("IQDA321", null);
         Assert.assertNotNull("exists", expression);

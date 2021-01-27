@@ -189,8 +189,8 @@ public class DoStringActionTest extends AbstractDigitalActionTestBase {
         StringExpressionManager m0 = InstanceManager.getDefault(StringExpressionManager.class);
         StringActionManager m1 = InstanceManager.getDefault(StringActionManager.class);
         
-        MaleSocket childSocket0 = m0.registerExpression(new StringExpressionMemory("IQSE52", null));
-        MaleSocket childSocket1 = m1.registerAction(new StringActionMemory("IQSA554", null));
+        m0.registerExpression(new StringExpressionMemory("IQSE52", null));
+        m1.registerAction(new StringActionMemory("IQSA554", null));
         
         DoStringAction expression = new DoStringAction("IQDA321", null);
         Assert.assertNotNull("exists", expression);

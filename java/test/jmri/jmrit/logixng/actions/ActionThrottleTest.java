@@ -280,8 +280,8 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         AnalogExpressionManager m0 = InstanceManager.getDefault(AnalogExpressionManager.class);
         DigitalExpressionManager m2 = InstanceManager.getDefault(DigitalExpressionManager.class);
         
-        MaleSocket childSocket0 = m0.registerExpression(new AnalogExpressionMemory("IQAE52", null));
-        MaleSocket childSocket1 = m0.registerExpression(new AnalogExpressionMemory("IQAE554", null));
+        m0.registerExpression(new AnalogExpressionMemory("IQAE52", null));
+        m0.registerExpression(new AnalogExpressionMemory("IQAE554", null));
         m2.registerExpression(new ExpressionMemory("IQDE594", null));
         
         ActionThrottle expression = new ActionThrottle("IQDA321", null);
