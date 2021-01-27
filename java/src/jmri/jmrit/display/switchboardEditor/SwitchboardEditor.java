@@ -567,10 +567,8 @@ public class SwitchboardEditor extends Editor {
                     nb = jmri.InstanceManager.getDefault(TurnoutManager.class).getTurnout(name);
                     break;
                 case 1:
-                    log.debug("CASE SensorManager is {} for memo {}", (memo.get(SensorManager.class) == null ? "NULL" : "not null"), memo.getUserName());
                     try {
-                        name = InstanceManager.getDefault(SensorManager.class).createSystemName(i + "", prefix);
-                        //name = ((SensorManager)memo.get(SensorManager.class)).createSystemName(i + "", prefix);
+                        name = ((SensorManager)memo.get(SensorManager.class)).createSystemName(i + "", prefix);
                     } catch (jmri.JmriException | NullPointerException ex) {
                         log.trace("Error creating range at sensor {}. Connection {}", i, memo.getUserName(), ex);
                         return;
