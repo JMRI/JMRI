@@ -2286,14 +2286,20 @@ var $drawWidgetSymbol = function(id, state) {
         // draw methods
         case "icon" : // slider, 1 shape for all switchtypes (S, T, L)
             ctx.beginPath(); // the sliderspace
-            ctx.strokeStyle = (state == "2" ? $inactiveColor : "darkgray");
+            if (state == "2") {
+                ctx.strokeStyle = $activeColor;
+            } else if (state == "4") {
+                ctx.strokeStyle = $inactiveColor;
+            } else {
+                ctx.strokeStyle = "darkgray";
+            }
             ctx.lineCap = "round";
             ctx.lineWidth = radius;
             ctx.moveTo(-radius/2, 0);
             ctx.lineTo(radius/2, 0);
             ctx.stroke();
             ctx.beginPath(); // the knob
-            var knobX = (state == "2" ? radius/2 : -radius/2)
+            var knobX = (state == "2" ? radius/2 : -radius/2);
             ctx.arc(knobX, 0, radius/2, 0, 2 * Math.PI);
             ctx.fillStyle = "white";
             ctx.fill();
