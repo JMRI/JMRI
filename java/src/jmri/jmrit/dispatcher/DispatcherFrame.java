@@ -1729,7 +1729,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
             } else if (secList.size() > 1) {
                 if (_AutoAllocate) {
-                    nextSection = autoChoice(secList, ar, nextSectionSeqNo);
+                    nextSection = autoChoice(secList, ar, seqNum);
                 } else {
                     nextSection = dispatcherChoice(secList, ar);
                 }
