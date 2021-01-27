@@ -130,7 +130,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
                                         clientID,
                                         new MqttDefaultFilePersistence(tempdirName));
 
-	    if ( getMqttUsername() != null || getMqttUsername() != "" ) {
+	    if ( getMqttUsername() != null || ! "".equals(getMqttUsername())) {
 	        mqttClient.connect(getMqttConnectionOptions());
 	    } else {
                 mqttClient.connect();
@@ -233,7 +233,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         if (this.allowConnectionRecovery) {
             log.info("...trying to reconnect");
             try {
-                if ( getMqttUsername() != null || getMqttUsername() != "" ) {
+                if ( getMqttUsername() != null || ! "".equals(getMqttUsername())) {
                     mqttClient.connect(getMqttConnectionOptions());
                 } else {
                     mqttClient.connect();
