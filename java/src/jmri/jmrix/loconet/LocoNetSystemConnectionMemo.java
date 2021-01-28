@@ -284,7 +284,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         if (getDisabled()) {
             return null;
         }
-        return (LnSensorManager) classObjectMap.computeIfAbsent(LnSensorManager.class, (Class c) -> new LnSensorManager(this));
+        return (LnSensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class c) -> new LnSensorManager(this));
     }
 
     public LnLightManager getLightManager() {
