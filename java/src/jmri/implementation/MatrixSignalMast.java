@@ -325,8 +325,8 @@ public class MatrixSignalMast extends AbstractSignalMast {
         //list = outputsToBeans.keySet();
         
         int index = 1;
-        while (outputsToBeans.containsKey("output"+index)) {
-            outputlist.add(outputsToBeans.get("output"+index).getName());
+        while (outputsToBeans.containsKey("output" + index)) {
+            outputlist.add(outputsToBeans.get("output" + index).getName());
             index++;
         }
         return outputlist;
@@ -385,7 +385,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
                     log.debug("Element {} not converted to state for output #{}", bits[i], i);
                 }
                 // wait mast specific delay before sending each (valid) state change to a (valid) output
-                if (newState >= 0) {
+                if (newState >= 0 && t != null) { // t!=null check required
                     final int toState = newState;
                     final Turnout setTurnout = t;
                     ThreadingUtil.runOnLayoutEventually(() -> {   // eventually, even though we have timing here, should be soon
