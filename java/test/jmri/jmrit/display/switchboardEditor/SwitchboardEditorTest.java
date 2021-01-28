@@ -74,6 +74,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     @Test
     public void testTurnoutSwitchPopup() {
         Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
+        // initially selected connection should be Internal
         Assertions.assertEquals("I", e.getSwitchManu(), "Internal connection default at startup");
         Assertions.assertEquals(1, e.getPanelMenuRangeMin(), "MinSpinner=1 default at startup");
         Assertions.assertEquals(24, e.getPanelMenuRangeMax(), "MaxSpinner=24 default at startup");
@@ -129,6 +130,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     @Test
     public void testSwitchRangeTurnouts() {
         Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
+        e.setSwitchManu("I"); // set explicitly
         Assertions.assertEquals("T", e.getSwitchType(), "Default Switch Type Turnouts");
         Assertions.assertEquals("button", e.getSwitchShape(), "Default Switch Shape Button");
         Assertions.assertEquals(0, e.getRows(), "Default Rows 0"); // autoRows on
@@ -139,7 +141,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
         e.setSwitchShape("symbol");
         Assertions.assertEquals("symbol", e.getSwitchShape(), "Switch shape set to 'symbol'");
         ((TurnoutManager) e.getManager('T')).provideTurnout("IT9"); // connect to item 1
-        e.getSwitch("IT8").okAddPressed(new ActionEvent(e, ActionEvent.ACTION_PERFORMED, "test")); // to item 2
+        e.getSwitch("IT8").okAddPressed(new ActionEvent(e, ActionEvent.ACTION_PERFORMED, "test")); // and to item 2
         e.setHideUnconnected(true); // speed up redraw
         e.updatePressed(); // rebuild for new Turnouts + symbol shape
         Assertions.assertEquals(2, e.getTotal(), "2 connected switches shown");
@@ -149,30 +151,44 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     public void testSwitchInvertSensors() {
         Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setSwitchType("S");
-        e.updatePressed(); // rebuild for Sensors
+        // initially selected connection should be Internal but is not 100% predictable (after type is changed?)
+        e.setSwitchManu("I"); // so set explicitly
+        e.updatePressed();    // rebuild for Sensors
         Sensor sensor20 = ((SensorManager) e.getManager('S')).provideSensor("IS20");
         Assertions.assertNotNull(jmri.InstanceManager.sensorManagerInstance().getSensor("IS20"));
         Objects.requireNonNull(InstanceManager.sensorManagerInstance().getSensor("IS20")).setUserName("twenty"); // make it harder to fetch label
-        e.setHideUnconnected(true); // speed up redraw
-        e.updatePressed(); // connect switch IS20 to Sensor IS20
-        Assertions.assertEquals(Sensor.UNKNOWN, sensor20.getState(), "IS20 is Unknown");
+        e.updatePressed(); // recreate to connect switch "IS20" to Sensor sensor20
+        Assertions.assertEquals(24, e.getSwitches().size(), "24 (connected) item displayed");
+        Assertions.assertEquals(Sensor.UNKNOWN, sensor20.getState(), "sensor20 state is Unknown");
         Assertions.assertNotNull(e.getSwitch("IS20"));
-        Assertions.assertEquals("IS20: ?", e.getSwitch("IS20").getIconLabel(), "IS20 is Inactive");
+        Assertions.assertEquals("IS20: ?", e.getSwitch("IS20").getIconLabel(), "IS20 displays Unknown");
         sensor20.setCommandedState(Sensor.ACTIVE);
-        e.updatePressed(); // connect switch IS20 to Sensor IS20
+        // should follow state
         Assertions.assertEquals("IS20: +", e.getSwitch("IS20").getIconLabel(), "IS20 displays Active");
         e.getSwitch("IS20").doMouseClicked(new MouseEvent(e, 1, 0, 0, 0, 0, 1, false));
-        Assertions.assertEquals(Sensor.INACTIVE, sensor20.getState(), "IS20 is Inactive");
+        Assertions.assertEquals(Sensor.INACTIVE, sensor20.getState(), "sensor20 state is Inactive");
         Assertions.assertEquals("IS20: -", e.getSwitch("IS20").getIconLabel(), "IS20 displays Inactive");
         e.getSwitch("IS20").setBeanInverted(true);
-        Assertions.assertEquals(Sensor.ACTIVE, sensor20.getState(), "IS20 is Active");
+        Assertions.assertEquals(Sensor.ACTIVE, sensor20.getState(), "sensor20 state is Active");
         Assertions.assertEquals("IS20: +", e.getSwitch("IS20").getIconLabel(), "IS20 displays Active");
+    }
+
+    @Test
+    public void testHideUnconnected() {
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
+        // initially selected connection should be Internal but is not 100% predictable (after type is changed?)
+        e.setSwitchManu("I"); // so set explicitly
+        ((TurnoutManager) e.getManager('T')).provideTurnout("IT24"); // connect to item 1
+        e.setHideUnconnected(true);
+        e.updatePressed(); // setHideUnconnected will not invoke updatePressed
+        Assertions.assertEquals(1, e.getTotal(), "1 connected switch shown");
     }
 
     @Test
     public void testSwitchAllLights() {
         Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setSwitchType("L");
+        e.setSwitchManu("I"); // so set explicitly as LightManager
         e.updatePressed(); // rebuild for Lights
         e.getSwitch("IL1").doMouseClicked(null); // no result, so nothing to test
         Assertions.assertNull(e.getSwitch("IL1").getLight(), "Click on unconnected switch");

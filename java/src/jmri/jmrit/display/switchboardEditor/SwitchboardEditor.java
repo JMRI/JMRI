@@ -149,7 +149,7 @@ public class SwitchboardEditor extends Editor {
     /**
      * To count number of displayed beanswitches, this array holds all beanswitches to be displayed
      * until the GridLayout is configured, used to determine the total number of items to be placed.
-     * Accounts for "hide unconnected" setting, so it can be empty.
+     * Accounts for "hide unconnected" setting, so it can be empty. Synchronized.
      */
     private final LinkedHashMap<String, BeanSwitch> switchesOnBoard = new LinkedHashMap<>();
 
@@ -310,7 +310,9 @@ public class SwitchboardEditor extends Editor {
         hideUnconnected.addActionListener((ActionEvent event) -> {
             setHideUnconnected(hideUnconnected.isSelected());
             hideUnconnectedBox.setSelected(_hideUnconnected); // also (un)check the box on the menu
-            help2.setVisible(!_hideUnconnected && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
+            synchronized (this) {
+                help2.setVisible(!_hideUnconnected && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
+            }
             updatePressed();
             setDirty();
         });
@@ -396,10 +398,10 @@ public class SwitchboardEditor extends Editor {
                 setDirty();
             }
         });
-        turnoutManComboBox.setSelectedItem("Internal"); // defaults to Internal on init() wait till init completed
-        lightManComboBox.setSelectedItem("Internal");
-        sensorManComboBox.setSelectedItem("Internal");
-        log.debug("boxes set to Internal, attaching listeners");
+        turnoutManComboBox.setSelectedItem("Internal"); // order of items in combo may vary on init() wait till now for init completed
+        lightManComboBox.setSelectedItem("Internal"); // NOI18N
+        sensorManComboBox.setSelectedItem("Internal"); // NOI18N
+        log.debug("boxes are set to Internal, attaching listeners");
 
         updatePressed(); // refresh default Switchboard, rebuilds and resizes all switches, required for tests
 
@@ -438,7 +440,7 @@ public class SwitchboardEditor extends Editor {
      * from XML (with all saved options set).
      * Switchboard JPanel WindowResize() event is handled by resizeInFrame()
      */
-    public void updatePressed() {
+    public synchronized void updatePressed() {
         log.debug("updatePressed START _tileSize = {}", _tileSize);
 
         if (_autoItemRange && !autoItemRange.isSelected()) {
@@ -469,6 +471,9 @@ public class SwitchboardEditor extends Editor {
         }
         // if range is confirmed, go ahead with switchboard update
         for (int i = switchesOnBoard.size() - 1; i >= 0; i--) {
+            if (i > switchboardLayeredPane.getComponentCount()) {
+                break;
+            }
             // remove listeners before removing switches from JLayeredPane
             ((BeanSwitch) switchboardLayeredPane.getComponent(i)).cleanup();
             // deleting items starting from 0 will result in skipping the even numbered items
@@ -514,11 +519,10 @@ public class SwitchboardEditor extends Editor {
         }
         help3.setVisible(switchesOnBoard.size() == 0); // show/hide help3 warning
         help2.setVisible(switchesOnBoard.size() != 0); // hide help2 when help3 is shown vice versa (as no items are dimmed or not)
-        pack();
         // hide AllOn/Off buttons unless type is Light and control is allowed
         allOnButton.setVisible((beanTypeList.getSelectedIndex() == 2) && allControlling());
         allOffButton.setVisible((beanTypeList.getSelectedIndex() == 2) && allControlling());
-
+        pack();
         // must repaint again to fit inside frame
         Dimension frSize = super.getTargetFrame().getSize(); // 5 px for border, 25 px for footer, autoRows(int)
         switchboardLayeredPane.setSize(new Dimension((int) frSize.getWidth() - 6, (int) frSize.getHeight() - 25));
@@ -599,12 +603,14 @@ public class SwitchboardEditor extends Editor {
                 // set switch to display current bean state
                 _switch.displayState(nb.getState());
             }
-            switchesOnBoard.put(name, _switch); // add to LinkedHashMap of switches for later placement on JLayeredPane
-            log.debug("Added switch {}", name);
-            // keep total number of switches below practical total of 400 (20 x 20 items)
-            if (switchesOnBoard.size() >= unconnectedRangeLimit) {
-                log.warn("switchboards are limited to {} items", unconnectedRangeLimit);
-                break;
+            synchronized (this) {
+                switchesOnBoard.put(name, _switch); // add to LinkedHashMap of switches for later placement on JLayeredPane
+                log.debug("Added switch {}", name);
+                // keep total number of switches below practical total of 400 (20 x 20 items)
+                if (switchesOnBoard.size() >= unconnectedRangeLimit) {
+                    log.warn("switchboards are limited to {} items", unconnectedRangeLimit);
+                    break;
+                }
             }
             // was already checked in first counting loop in init()
         }
@@ -810,7 +816,9 @@ public class SwitchboardEditor extends Editor {
         hideUnconnectedBox.addActionListener((ActionEvent event) -> {
             setHideUnconnected(hideUnconnectedBox.isSelected());
             hideUnconnected.setSelected(_hideUnconnected); // also (un)check the box on the editor
-            help2.setVisible(!_hideUnconnected && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
+            synchronized (this) {
+                help2.setVisible(!_hideUnconnected && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
+            }
             updatePressed();
             setDirty();
         });
@@ -1353,8 +1361,10 @@ public class SwitchboardEditor extends Editor {
                 lightManComboBox.setSelectedItem(memo.get(LightManager.class));
                 log.debug("lightManComboBox set to {} for {}", memo.getUserName(), manuPrefix);
             }
-        } catch (IllegalArgumentException | NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             log.error("invalid connection [{}] in Switchboard", manuPrefix);
+        } catch (NullPointerException e) {
+            log.error("NPE setting prefix to [{}] in Switchboard", manuPrefix);
         }
     }
 
@@ -1463,7 +1473,7 @@ public class SwitchboardEditor extends Editor {
      *
      * @return the total number of switches displayed
      */
-    public int getTotal() {
+    public synchronized int getTotal() {
         return switchesOnBoard.size();
     }
 
@@ -1647,11 +1657,11 @@ public class SwitchboardEditor extends Editor {
      * @param sName name of switch label/connected bean
      * @return BeanSwitch switch object with the given name
      */
-    protected BeanSwitch getSwitch(String sName) {
+    protected synchronized BeanSwitch getSwitch(String sName) {
         if (switchesOnBoard.containsKey(sName)) {
             return switchesOnBoard.get(sName);
         }
-        log.warn("switch {} not found on panel", sName);
+        log.warn("Switch {} not found on panel. Number of switches displayed: {}", sName, switchesOnBoard.size());
         return null;
     }
 
@@ -1661,7 +1671,7 @@ public class SwitchboardEditor extends Editor {
      *
      * @return list of all BeanSwitch switch object
      */
-    public List<BeanSwitch> getSwitches() {
+    public synchronized List<BeanSwitch> getSwitches() {
         ArrayList<BeanSwitch> _switches = new ArrayList<>();
         log.debug("N = {}", switchesOnBoard.size());
         for (Map.Entry<String, BeanSwitch> bs : switchesOnBoard.entrySet()) {
@@ -1728,7 +1738,7 @@ public class SwitchboardEditor extends Editor {
      *
      * @param on state to set Light.ON or Light.OFF
      */
-    public void switchAllLights(int on) {
+    public synchronized void switchAllLights(int on) {
         for (BeanSwitch bs : switchesOnBoard.values()) {
                 bs.switchLight(on);
             }

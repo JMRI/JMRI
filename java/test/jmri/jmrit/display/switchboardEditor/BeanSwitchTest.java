@@ -110,7 +110,7 @@ public class BeanSwitchTest {
         t.connectNew(); // pops a dialog
 
         JUnitUtil.waitFor(()-> !(dialog_thread1.isAlive()), "Connect new Sensor dialog");
-        JUnitAppender.assertWarnMessage("switch IS4 not found on panel");
+        JUnitAppender.assertWarnMessage("Switch IS4 not found on panel. Number of switches displayed: 24");
         JUnitAppender.assertWarnMessage("failed to update switch to state of IS4");
         // can't recreate this BeanSwitch to include a connection, so we just check it was created and available in the manager
         Assertions.assertNotNull(jmri.InstanceManager.getDefault(SensorManager.class).provideSensor("IS4"), "Sensor IS4 created");
@@ -124,6 +124,7 @@ public class BeanSwitchTest {
         JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             swe = new SwitchboardEditor("Bean Switch Test Switchboard");
+            swe.setSwitchManu("I"); // set explicitly
         }
     }
 
