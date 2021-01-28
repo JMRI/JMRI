@@ -9,9 +9,7 @@ import jmri.jmrit.logix.OPath;
 import jmri.util.JUnitUtil;
 
 import jmri.util.gui.GuiLafPreferencesManager;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 import javax.swing.*;
@@ -27,7 +25,7 @@ public class PathTurnoutTableModelTest {
     @Test
     public void testCTor() {
         PathTurnoutTableModel t = new PathTurnoutTableModel();
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @Test
@@ -35,7 +33,7 @@ public class PathTurnoutTableModelTest {
         OBlock ob1 = new OBlock("OB1");
         OPath p1 = new OPath(ob1, "OP1");
         PathTurnoutTableModel t = new PathTurnoutTableModel(p1);
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @Test
@@ -45,12 +43,12 @@ public class PathTurnoutTableModelTest {
         TableFrames tf = new TableFrames();
         TableFrames.PathTurnoutFrame ptf = tf.makePathTurnoutFrame(ob1, "OP1");
         PathTurnoutTableModel pttm = new PathTurnoutTableModel(p1, ptf);
-        Assert.assertNotNull("exists", pttm);
+        Assertions.assertNotNull(pttm, "exists");
     }
 
     @Test
     public void testBlockPathTurnoutPanel() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         Turnout t1 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
         OBlock ob1 = new OBlock("OB1");
         OPath p1 = new OPath(ob1, "OP1");
@@ -64,7 +62,7 @@ public class PathTurnoutTableModelTest {
         pttf.add(pttt);
         pttf.setSize(new Dimension(300, 100));
         pttf.setVisible(true);
-        Assert.assertNotNull("PtToTabledisplay exists", pttf);
+        Assertions.assertNotNull(pttf, "PtToTabledisplay exists");
 //        // Find Add Turnout pane by name (copied from TurnoutTableWindowTest)
         JFrameOperator afo = new JFrameOperator("Test");
 //        // Ask to close Add pane
@@ -84,7 +82,7 @@ public class PathTurnoutTableModelTest {
 
     @Test
     public void testBlockPathTurnoutCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         Turnout t1 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
         OBlock ob1 = new OBlock("OB1");
         OPath p1 = new OPath(ob1, "OP1");
@@ -93,7 +91,7 @@ public class PathTurnoutTableModelTest {
         TableFrames tf = new TableFrames();
         TableFrames.PathTurnoutFrame ptf = tf.makePathTurnoutFrame(ob1, "OP1");
         PathTurnoutTableModel pttm = new PathTurnoutTableModel(p1, ptf);
-        Assert.assertNotNull("exists", pttm);
+        Assertions.assertNotNull(pttm, "exists");
     }
 
     @BeforeEach
