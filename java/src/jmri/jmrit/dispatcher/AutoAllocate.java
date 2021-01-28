@@ -516,6 +516,7 @@ public class AutoAllocate implements Runnable {
      *
      * @param sList the possible next Sections
      * @param ar    the section being allocated when a choice is needed
+     * @param sectionSeqNo transit sequence number attempting to be allocated
      * @return the allocated section
      */
     protected Section autoNextSectionChoice(List<Section> sList, AllocationRequest ar, int sectionSeqNo) {
