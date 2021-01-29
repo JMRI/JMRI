@@ -87,7 +87,7 @@
     
 
       <dl class="faq">
-        <dt class="on" id="canuse"><strong>Can I use JMRI to...</strong></dt>
+        <dt class="on" id="canuse"><strong>Can I use JMRI to...</dt>
 
         <dd>
         <ul>
@@ -116,7 +116,7 @@
         </ul>
         </dd>
 
-        <dt id="wherestart">JMRI has so many features, where do I start?/dt>
+        <dt id="wherestart">JMRI has so many features, where do I start?</dt>
 
         <dd>Many people start by connecting their DCC system controller and registering their
         locomotives using <a href="apps/DecoderPro/index.shtml">DecoderPro </a>.  You can then start running trains using a throttle 
@@ -138,10 +138,10 @@
         <dt id="apps">What is the difference between using PanelPro, DecoderPro, and the other JMRI modules?</dt>
 
         <dd>
-         The JMRI application is a series of functions and user interfaces operating on a common linked data structure.  
+         The JMRI application is a series of functions and user interfaces operating on a common linked set of data.  
          While <a href="apps/DecoderPro/index.shtml">DecoderPro </a>, <a href="apps/PanelPro/index.shtml">PanelPro </a>,<a href="apps/DispatcherPro/index.shtml"> DispatcherPro, </a>
          <a href="../package/jmri/jmrit/operations/Operations.shtml">OperationsPro,</a>
-         <a href="apps/SoundPro/SoundPro.shtml"> and SoundPro </a> serve different purposes, all use the same data collection.
+         <a href="apps/SoundPro/SoundPro.shtml"> and SoundPro </a> serve different purposes, all use the same set of data.
          For example, when opening PanelPro, you get a main window with pulldowns that include all the functions of DecoderPro.
          If you start by opening DecoderPro, you get a roster window with pulldowns that include all the functions of PanelPro. 
         </dd>
@@ -151,7 +151,7 @@
         <dd>
         None - to use most of the functions of JMRI.  Advanced JMRI capabilities use programming-like logic
         (such as the <a href="tools/Logix.shtml">Logix </a>tool), but basic capabilities necessary to run your railroad are always available with a simpler 
-        interface (such as the <a href="tools/Routes.shtml">Routes </a>and <a href="tools/LRoutes.shtml">LRoutes </a>tools).  Those with computer programming can write <a href="tools/scripting/index.shtml">
+        interface (such as the <a href="tools/Routes.shtml">Routes </a>and <a href="tools/LRoutes.shtml">LRoutes </a>tools).  Those with computer programming knowledge can write <a href="tools/scripting/index.shtml">
         “scripts” </a> and even develop complete applications that use the underlying JMRI functions
         (for example, <a href="http://cats4ctc.wikidot.com/" target="_blank">CATS </a> and <a href="apps/index.shtml#addapp">many others</a>).
         </dd>
@@ -211,8 +211,8 @@
         We do!  JMRI is open source and community maintained.  There are over 300 model railroaders who have already made
         contributions to the effort since 2005 (see their names on the 
         <a href="../Acknowledgements.shtml">Acknowledgements</a> page). Anyone with knowledge of Java
-        (to maintain the programs), HTML (to maintain the documentation), or XML (to maintain decoder definitions) can join in. Encourage you to
-        become one of the almost 10,000 registered JMRI Users on the groups.io forum  asking your questions and answering the questions of others.  
+        (to maintain the programs), HTML (to maintain help documentation), or XML (to maintain decoder definitions) can join in. 
+        Become one of the almost 10,000 registered JMRI Users on the groups.io forum, asking your questions and answering the questions of others.  
         </dd>
         
         <dt id="wanttohelp">I don't have the skills to help maintain JMRI but I still want to help.  What can I do to help?</dt>
