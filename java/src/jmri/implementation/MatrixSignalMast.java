@@ -101,7 +101,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
     */
     public synchronized void setBitsForAspect(String aspect, char[] bitArray) {
         if (aspectToOutput.containsKey(aspect)) {
-            log.debug("Aspect {} is already defined as {}", aspect, java.util.Arrays.toString(aspectToOutput.get(aspect)));
+            if (log.isDebugEnabled()) log.debug("Aspect {} is already defined as {}", aspect, java.util.Arrays.toString(aspectToOutput.get(aspect)));
             aspectToOutput.remove(aspect);
         }
         aspectToOutput.put(aspect, bitArray); // store keypair aspectname - bitArray in hashmap
