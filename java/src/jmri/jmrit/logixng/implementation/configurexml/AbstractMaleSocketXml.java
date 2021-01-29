@@ -34,6 +34,7 @@ public class AbstractMaleSocketXml
         AbstractMaleSocket maleSocket = (AbstractMaleSocket) o;
         
         Element element = new Element("abstractMaleSocket");
+        element.setAttribute("enabled", maleSocket.isEnabled() ? "yes" : "no");  // NOI18N
         element.setAttribute("class", this.getClass().getName());
         
         element.addContent(new Element("errorHandling").addContent(maleSocket.getErrorHandlingType().name()));
@@ -55,6 +56,16 @@ public class AbstractMaleSocketXml
     
     @Override
     public boolean load(Element maleSocketElement, MaleSocket maleSocket) {
+        if (!(maleSocket instanceof AbstractMaleSocket)) {
+            throw new IllegalArgumentException("maleSocket is not an AbstractMaleSocket: "+maleSocket.getClass().getName());
+        }
+        
+        String enabled = "yes";
+        if (maleSocketElement.getAttribute("enabled") != null) {  // NOI18N
+            enabled = maleSocketElement.getAttribute("enabled").getValue();  // NOI18N
+        }
+        ((AbstractMaleSocket)maleSocket).setEnabledFlag("yes".equals(enabled));
+        
         Element errorHandlingElement = maleSocketElement.getChild("errorHandling");
         if (errorHandlingElement != null) {
             maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType

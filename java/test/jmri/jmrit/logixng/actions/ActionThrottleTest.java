@@ -61,11 +61,11 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
     public String getExpectedPrintedTree() {
         return String.format(
                 "Throttle ::: Log error%n" +
-                "   ?~ E1%n" +
+                "   ?~ Address%n" +
                 "      Socket not connected%n" +
-                "   ?~ E2%n" +
+                "   ?~ Speed%n" +
                 "      Socket not connected%n" +
-                "   ? E3%n" +
+                "   ? Direction%n" +
                 "      Socket not connected%n");
     }
     
@@ -76,11 +76,11 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
                 "         Throttle ::: Log error%n" +
-                "            ?~ E1%n" +
+                "            ?~ Address%n" +
                 "               Socket not connected%n" +
-                "            ?~ E2%n" +
+                "            ?~ Speed%n" +
                 "               Socket not connected%n" +
-                "            ? E3%n" +
+                "            ? Direction%n" +
                 "               Socket not connected%n");
     }
     

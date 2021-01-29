@@ -224,6 +224,11 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
         }
 
         @Override
+        public void setEnabledFlag(boolean enable) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
         public boolean isEnabled() {
             return _clipboardItems.isEnabled();
         }

@@ -72,7 +72,10 @@ public class TreePane extends JPanel implements PropertyChangeListener {
         
         // Expand the entire tree
         for (int i = 0; i < _tree.getRowCount(); i++) {
-            _tree.expandRow(i);
+            FemaleSocket femaleSocket = (FemaleSocket) _tree.getPathForRow(i).getLastPathComponent();
+            if (femaleSocket.isConnected() && femaleSocket.getConnectedSocket().isEnabled()) {
+                _tree.expandRow(i);
+            }
         }
         
         // The JTree can get big, so allow it to scroll
@@ -323,7 +326,11 @@ public class TreePane extends JPanel implements PropertyChangeListener {
             JLabel connectedItemLabel = new JLabel();
             if (socket.isConnected()) {
                 MaleSocket connectedSocket = socket.getConnectedSocket();
-                connectedItemLabel.setText(connectedSocket.getLongDescription());
+                String label = connectedSocket.getLongDescription();
+                if (!connectedSocket.isEnabled()) {
+                    label = "<html><strike>" + label + "</strike></html>";
+                }
+                connectedItemLabel.setText(label);
                 if (connectedSocket.getComment() != null) {
                     panel.setToolTipText(connectedSocket.getComment());
                 }

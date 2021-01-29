@@ -327,6 +327,12 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket
     
     /** {@inheritDoc} */
     @Override
+    public void setEnabledFlag(boolean enable) {
+        _enabled = enable;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     public boolean isEnabled() {
         return _enabled;
     }

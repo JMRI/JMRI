@@ -39,7 +39,7 @@ public class ActionThrottle extends AbstractDigitalAction
     public static final int LOCO_SPEED_SOCKET = 1;
     public static final int LOCO_DIRECTION_SOCKET = 2;
     
-    // The throttle if we have anyone or if a request is sent, null otherwise
+    // The throttle if we have one or if a request is sent, null otherwise
     private DccThrottle _throttle;
     private ThrottleListener _throttleListener;
     
@@ -55,11 +55,11 @@ public class ActionThrottle extends AbstractDigitalAction
     public ActionThrottle(String sys, String user) {
         super(sys, user);
         _locoAddressSocket = InstanceManager.getDefault(AnalogExpressionManager.class)
-                .createFemaleSocket(this, this, "E1");
+                .createFemaleSocket(this, this, Bundle.getMessage("ActionThrottle_SocketName_Address"));
         _locoSpeedSocket = InstanceManager.getDefault(AnalogExpressionManager.class)
-                .createFemaleSocket(this, this, "E2");
+                .createFemaleSocket(this, this, Bundle.getMessage("ActionThrottle_SocketName_Speed"));
         _locoDirectionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, "E3");
+                .createFemaleSocket(this, this, Bundle.getMessage("ActionThrottle_SocketName_Direction"));
     }
     
     @Override
@@ -242,12 +242,12 @@ public class ActionThrottle extends AbstractDigitalAction
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "Throttle_Short");
+        return Bundle.getMessage(locale, "ActionThrottle_Short");
     }
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "Throttle_Long", _locoAddressSocket.getName());
+        return Bundle.getMessage(locale, "ActionThrottle_Long", _locoAddressSocket.getName());
     }
 
     public FemaleAnalogExpressionSocket getLocoAddressSocket() {

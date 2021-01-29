@@ -473,6 +473,11 @@ public abstract class FemaleSocketTestBase {
         }
 
         @Override
+        public void setEnabledFlag(boolean enable) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
         public boolean isEnabled() {
             throw new UnsupportedOperationException("Not supported.");
         }

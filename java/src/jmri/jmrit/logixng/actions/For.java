@@ -142,8 +142,8 @@ public class For extends AbstractDigitalAction
     @Override
     public String getLongDescription(Locale locale) {
         return Bundle.getMessage(locale, "For_Long",
-                _whileExpressionSocket.getName(),
                 _initActionSocket.getName(),
+                _whileExpressionSocket.getName(),
                 _afterEachActionSocket.getName(),
                 _doActionSocket.getName());
     }

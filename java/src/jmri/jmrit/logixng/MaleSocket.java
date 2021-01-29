@@ -44,6 +44,16 @@ public interface MaleSocket extends Debugable {
     public void setEnabled(boolean enable);
     
     /**
+     * Set whenether this male socket is enabled or disabled, without activating
+     * the male socket. This is used when loading the xml file.
+     * <P>
+     * This method must call registerListeners() / unregisterListeners().
+     * 
+     * @param enable true if this male socket should be enabled, false otherwise
+     */
+    public void setEnabledFlag(boolean enable);
+    
+    /**
      * Determines whether this male socket is enabled.
      * 
      * @return true if the male socket is enabled, false otherwise

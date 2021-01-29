@@ -1074,6 +1074,8 @@ public class TreeEditor extends TreeViewer {
         private static final String ACTION_COMMAND_CUT = "cut";
         private static final String ACTION_COMMAND_COPY = "copy";
         private static final String ACTION_COMMAND_PASTE = "paste";
+        private static final String ACTION_COMMAND_ENABLE = "enable";
+        private static final String ACTION_COMMAND_DISABLE = "disable";
         private static final String ACTION_COMMAND_LOCK = "lock";
         private static final String ACTION_COMMAND_UNLOCK = "unlock";
         private static final String ACTION_COMMAND_LOCAL_VARIABLES = "local_variables";
@@ -1093,6 +1095,8 @@ public class TreeEditor extends TreeViewer {
         private JMenuItem menuItemPaste;
         private final Map<FemaleSocketOperation, JMenuItem> menuItemFemaleSocketOperation
                 = new HashMap<>();
+        private JMenuItem menuItemEnable;
+        private JMenuItem menuItemDisable;
         private JMenuItem menuItemLock;
         private JMenuItem menuItemUnlock;
         private JMenuItem menuItemLocalVariables;
@@ -1146,6 +1150,14 @@ public class TreeEditor extends TreeViewer {
             }
             
             addSeparator();
+            menuItemEnable = new JMenuItem(Bundle.getMessage("PopupMenuEnable"));
+            menuItemEnable.addActionListener(this);
+            menuItemEnable.setActionCommand(ACTION_COMMAND_ENABLE);
+            add(menuItemEnable);
+            menuItemDisable = new JMenuItem(Bundle.getMessage("PopupMenuDisable"));
+            menuItemDisable.addActionListener(this);
+            menuItemDisable.setActionCommand(ACTION_COMMAND_DISABLE);
+            add(menuItemDisable);
             menuItemLock = new JMenuItem(Bundle.getMessage("PopupMenuLock"));
             menuItemLock.addActionListener(this);
             menuItemLock.setActionCommand(ACTION_COMMAND_LOCK);
@@ -1229,6 +1241,14 @@ public class TreeEditor extends TreeViewer {
             menuItemCut.setEnabled(isConnected && !disableForRoot);
             menuItemCopy.setEnabled(isConnected && !disableForRoot);
             menuItemPaste.setEnabled(!isConnected && canConnectFromClipboard);
+            
+            if (isConnected && !disableForRoot) {
+                menuItemEnable.setEnabled(!femaleSocket.getConnectedSocket().isEnabled());
+                menuItemDisable.setEnabled(femaleSocket.getConnectedSocket().isEnabled());
+            } else {
+                menuItemEnable.setEnabled(false);
+                menuItemDisable.setEnabled(false);
+            }
             
             for (FemaleSocketOperation oper : FemaleSocketOperation.values()) {
                 JMenuItem menuItem = menuItemFemaleSocketOperation.get(oper);
@@ -1339,6 +1359,32 @@ public class TreeEditor extends TreeViewer {
                     } else {
                         log.error("_currentFemaleSocket is connected");
                     }
+                    break;
+                    
+                case ACTION_COMMAND_ENABLE:
+                    _currentFemaleSocket.getConnectedSocket().setEnabled(true);
+                    runOnConditionalNGThreadOrGUIThread(
+                            _treePane._femaleRootSocket.getConditionalNG(),
+                            () -> {
+                        _treePane._femaleRootSocket.unregisterListeners();
+                        ThreadingUtil.runOnGUIEventually(() -> {
+                            _treePane.updateTree(_currentFemaleSocket, _currentPath.getPath());
+                        });
+                        _treePane._femaleRootSocket.registerListeners();
+                    });
+                    break;
+                    
+                case ACTION_COMMAND_DISABLE:
+                    _currentFemaleSocket.getConnectedSocket().setEnabled(false);
+                    runOnConditionalNGThreadOrGUIThread(
+                            _treePane._femaleRootSocket.getConditionalNG(),
+                            () -> {
+                        _treePane._femaleRootSocket.unregisterListeners();
+                        ThreadingUtil.runOnGUIEventually(() -> {
+                            _treePane.updateTree(_currentFemaleSocket, _currentPath.getPath());
+                        });
+                        _treePane._femaleRootSocket.registerListeners();
+                    });
                     break;
                     
                 case ACTION_COMMAND_LOCK:

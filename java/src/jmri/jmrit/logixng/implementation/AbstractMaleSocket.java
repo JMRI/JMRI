@@ -175,6 +175,10 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             }
             writer.append(" ::: ");
             writer.append(getErrorHandlingType().toString());
+            if (!isEnabled()) {
+                writer.append(" ::: ");
+                writer.append(Bundle.getMessage("Disabled"));
+            }
             writer.println();
         }
     }

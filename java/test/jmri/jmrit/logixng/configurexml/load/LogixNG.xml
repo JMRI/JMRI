@@ -73,7 +73,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="2:04 AM">
+    <memory value="2:12 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -112,7 +112,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed Jan 27 02:04:09 CET 2021" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Jan 29 02:11:17 CET 2021" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <logixngs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <thread>
       <id>0</id>
@@ -123,7 +123,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <name>My logixng thread</name>
     </thread>
     <thread>
-      <id>55</id>
+      <id>54</id>
       <name>My other logixng thread</name>
     </thread>
     <logixng enabled="no">
@@ -211,7 +211,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <conditionalng enabled="no">
       <systemName>IQC:AUTO:0004</systemName>
       <userName>A fourth empty conditionalNG</userName>
-      <thread>55</thread>
+      <thread>54</thread>
       <socket>
         <socketName>A</socketName>
       </socket>
@@ -244,7 +244,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </expressions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -299,7 +299,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </expressions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -354,7 +354,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </expressions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -409,7 +409,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </expressions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -464,7 +464,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </expressions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -519,7 +519,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </expressions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -574,7 +574,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </expressions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -627,7 +627,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <constant />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -685,7 +685,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </expressions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -1028,7 +1028,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </expressions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -1083,7 +1083,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </expressions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>AbortExecution</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -1138,7 +1138,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </expressions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>Default</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -1194,7 +1194,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </expressions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -1249,7 +1249,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </expressions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogErrorOnce</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -1304,7 +1304,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </expressions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>ShowDialogBox</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -1359,7 +1359,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </expressions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>ThrowException</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -1412,7 +1412,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <endTime>0</endTime>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -1466,7 +1466,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <endTime>20</endTime>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -1517,7 +1517,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <conditionalState>True</conditionalState>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -1570,7 +1570,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <conditionalState>False</conditionalState>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -1629,7 +1629,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -1689,7 +1689,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -1749,7 +1749,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -1809,7 +1809,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -1869,7 +1869,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -1928,7 +1928,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -1989,7 +1989,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -2050,7 +2050,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -2111,7 +2111,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -2172,7 +2172,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -2225,7 +2225,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <constant />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -2279,7 +2279,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <constant>10</constant>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -2335,7 +2335,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <constant />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -2388,7 +2388,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <constant />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -2443,7 +2443,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <constant>10</constant>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -2499,7 +2499,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <constant />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -2558,7 +2558,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -2619,7 +2619,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -2680,7 +2680,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -2741,7 +2741,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -2802,7 +2802,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -2854,7 +2854,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <pointsTo>LogixNGTable</pointsTo>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -2907,7 +2907,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <pointsTo>Light</pointsTo>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -2956,7 +2956,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDE:AUTO:0044</systemName>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -3006,7 +3006,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -3065,7 +3065,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -3126,7 +3126,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -3187,7 +3187,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -3248,7 +3248,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -3309,7 +3309,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -3372,7 +3372,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <appearanceFormula />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -3438,7 +3438,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <exampleSignalHead>IH2</exampleSignalHead>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -3503,7 +3503,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <appearanceFormula>"IT"+index3</appearanceFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -3568,7 +3568,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <appearanceFormula>"IT"+index3</appearanceFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -3633,7 +3633,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <appearanceFormula>"IT"+index3</appearanceFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -3696,7 +3696,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <aspectFormula />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -3762,7 +3762,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <exampleSignalMast>IF$shsm:AAR-1946:CPL(IH1)</exampleSignalMast>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -3827,7 +3827,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <aspectFormula>"IT"+index3</aspectFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -3892,7 +3892,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <aspectFormula>"IT"+index3</aspectFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -3957,7 +3957,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <aspectFormula>"IT"+index3</aspectFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -4016,7 +4016,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -4077,7 +4077,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -4138,7 +4138,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -4199,7 +4199,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -4260,7 +4260,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -4319,7 +4319,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -4379,7 +4379,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -4439,7 +4439,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -4499,7 +4499,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -4559,7 +4559,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -4608,7 +4608,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDE:AUTO:0071</systemName>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -4658,7 +4658,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -4713,7 +4713,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <formula />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -4769,7 +4769,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <formula>n + 1</formula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -4824,7 +4824,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </triggerSocket>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -4880,7 +4880,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </triggerSocket>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -4934,7 +4934,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </expressions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -4989,7 +4989,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </expressions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -5041,7 +5041,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </socket>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -5094,7 +5094,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </socket>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -5143,7 +5143,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDE:AUTO:0081</systemName>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -5193,7 +5193,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -5249,7 +5249,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </actions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
         </abstractMaleSocket>
       </maleSocket>
@@ -5519,7 +5519,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </actions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -5577,7 +5577,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -5635,7 +5635,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -5695,7 +5695,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>AbortExecution</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -5755,7 +5755,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -5815,7 +5815,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogErrorOnce</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -5875,7 +5875,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>ShowDialogBox</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -5933,7 +5933,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>ThrowException</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -5982,7 +5982,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDA:AUTO:0009</systemName>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -6032,7 +6032,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -6083,7 +6083,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <data />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -6136,7 +6136,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <data>1</data>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -6187,7 +6187,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <data />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -6241,7 +6241,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <data />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -6294,7 +6294,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <data>n + 3</data>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -6343,7 +6343,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDA:AUTO:0016</systemName>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -6393,7 +6393,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -6451,7 +6451,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -6511,7 +6511,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -6571,7 +6571,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -6631,7 +6631,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -6691,7 +6691,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -6754,7 +6754,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <appearanceFormula />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -6820,7 +6820,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <exampleSignalHead>IH2</exampleSignalHead>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -6885,7 +6885,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <appearanceFormula>"IT"+index3</appearanceFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -6950,7 +6950,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <appearanceFormula>"IT"+index3</appearanceFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -7015,7 +7015,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <appearanceFormula>"IT"+index3</appearanceFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -7078,7 +7078,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <aspectFormula />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -7144,7 +7144,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <exampleSignalMast>IF$shsm:AAR-1946:CPL(IH1)</exampleSignalMast>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -7209,7 +7209,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <aspectFormula>"IT"+index3</aspectFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -7274,7 +7274,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <aspectFormula>"IT"+index3</aspectFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -7339,7 +7339,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <aspectFormula>"IT"+index3</aspectFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -7397,7 +7397,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </locoDirectionSocket>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -7456,7 +7456,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </locoDirectionSocket>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -7520,7 +7520,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <unit>MilliSeconds</unit>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -7585,7 +7585,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <unit>MilliSeconds</unit>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -7658,7 +7658,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <unit>MilliSeconds</unit>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -7713,7 +7713,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </actions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -7768,7 +7768,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </actions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -7826,7 +7826,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -7886,7 +7886,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -7946,7 +7946,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -8006,7 +8006,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -8066,7 +8066,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <stateFormula>"IT"+index2</stateFormula>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -8116,7 +8116,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <parameters />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -8225,7 +8225,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </parameters>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -8274,7 +8274,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDA:AUTO:0047</systemName>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -8324,7 +8324,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -8373,7 +8373,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDA:AUTO:0049</systemName>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -8423,7 +8423,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -8484,7 +8484,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </doSocket>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -8546,7 +8546,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </doSocket>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -8604,7 +8604,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </elseSocket>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -8663,7 +8663,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </elseSocket>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -8718,7 +8718,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </actionSocket>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -8775,7 +8775,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </actionSocket>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -8829,7 +8829,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </actions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -8884,7 +8884,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </actions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -8954,7 +8954,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <runContinuously>no</runContinuously>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -9038,7 +9038,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <runContinuously>yes</runContinuously>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -9093,7 +9093,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </actions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -9148,7 +9148,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </actions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -9197,7 +9197,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDA:AUTO:0063</systemName>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -9247,7 +9247,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -9302,7 +9302,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </socket>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -9360,7 +9360,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </socket>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -9414,7 +9414,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </actions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -9472,7 +9472,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </socket>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -9526,7 +9526,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </actions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -9588,7 +9588,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </locoDirectionSocket>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -9648,7 +9648,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </elseSocket>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -9716,7 +9716,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </actions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalBooleanActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalBooleanActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalBooleanActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -9771,7 +9771,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </actions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalBooleanActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalBooleanActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalBooleanActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -9823,7 +9823,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </socket>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalBooleanActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalBooleanActionSocketXml">
+        <abstractMaleSocket enabled="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalBooleanActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -9876,7 +9876,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </socket>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalBooleanActionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalBooleanActionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalBooleanActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -9927,7 +9927,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQAE:AUTO:0001</systemName>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -9976,7 +9976,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQAE:AUTO:0002</systemName>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogExpressionSocketXml" />
-        <abstractMaleSocket class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogExpressionSocketXml">
+        <abstractMaleSocket enabled="yes" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogExpressionSocketXml">
           <errorHandling>LogError</errorHandling>
           <localVariable>
             <name>A1</name>
@@ -10028,9 +10028,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Wed Jan 27 02:04:11 CET 2021</date>
+      <date>Fri Jan 29 02:12:34 CET 2021</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.21.4ish+daniel+2021-01-27T00:58:50Z+RUNKNOWN on Wed Jan 27 02:04:11 CET 2021-->
+  <!--Written by JMRI version 4.21.4ish+daniel+2021-01-29T01:08:04Z+RUNKNOWN on Fri Jan 29 02:12:34 CET 2021-->
 </layout-config>
