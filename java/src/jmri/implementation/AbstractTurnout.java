@@ -894,11 +894,16 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                     return;
                 }
                 // OK, now handle it
-                int mode = (Integer) evt.getNewValue();
-                if (mode == Sensor.ACTIVE) {
-                    newKnownState(THROWN);
-                } else if (mode == Sensor.INACTIVE) {
-                    newKnownState(CLOSED);
+                switch ((Integer) evt.getNewValue()) {
+                    case Sensor.ACTIVE:
+                        newKnownState(THROWN);
+                        break;
+                    case Sensor.INACTIVE:
+                        newKnownState(CLOSED);
+                        break;
+                    default:
+                        newKnownState(UNKNOWN);
+                        break;
                 }
             } else {
                 // unexpected mismatch

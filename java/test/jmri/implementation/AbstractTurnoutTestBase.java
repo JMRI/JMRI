@@ -236,6 +236,19 @@ public abstract class AbstractTurnoutTestBase {
         s1.setKnownState(Sensor.ACTIVE);
         Assert.assertEquals("listener notified of change for ONESENSOR feedback", Turnout.THROWN,listenStatus);
         Assert.assertEquals("known state for ONESENSOR feedback active", Turnout.THROWN, t.getKnownState());
+        
+        s1.setKnownState(Sensor.UNKNOWN);
+        Assert.assertEquals("unknown state for ONESENSOR feedback ", Turnout.UNKNOWN, t.getKnownState());
+        Assert.assertEquals("listener notified of change for ONESENSOR feedback unknown", Turnout.UNKNOWN,listenStatus);
+        
+        s1.setKnownState(Sensor.INACTIVE);
+        Assert.assertEquals("known state for ONESENSOR feedback Inactive", Turnout.CLOSED, t.getKnownState());
+        Assert.assertEquals("listener notified of change for ONESENSOR feedback reset", Turnout.CLOSED,listenStatus);
+        
+        s1.setKnownState(Sensor.INCONSISTENT);
+        Assert.assertEquals("listener notified of change for ONESENSOR feedback INCONSISTENT", Turnout.UNKNOWN,listenStatus);
+        Assert.assertEquals("INCONSISTENT state for ONESENSOR feedback", Turnout.UNKNOWN, t.getKnownState());
+        
     }
 
     @Test
@@ -269,9 +282,80 @@ public abstract class AbstractTurnoutTestBase {
 
         Assert.assertEquals("listener notified of change for TWOSENSOR feedback ", Turnout.CLOSED,listenStatus);
 
-        s1.setKnownState(Sensor.ACTIVE);
+        s1.setKnownState(Sensor.UNKNOWN);
+        s2.setKnownState(Sensor.UNKNOWN);
+        Assert.assertEquals("state changed by TWOSENSOR feedback (UNKNOWN, UNKNOWN)", t.describeState(Turnout.UNKNOWN), t.describeState(t.getKnownState()));
+        
+        
+        // reset TO
+        s1.setKnownState(Sensor.INACTIVE);
         s2.setKnownState(Sensor.ACTIVE);
-        Assert.assertEquals("state changed by TWOSENSOR feedback (Active, Active)", Turnout.INCONSISTENT, t.getKnownState());
+        Assert.assertEquals("state changed by TWOSENSOR feedback (Inactive, Active)", Turnout.CLOSED, t.getKnownState());
+
+        s1.setKnownState(Sensor.INCONSISTENT);
+        s2.setKnownState(Sensor.INCONSISTENT);
+        Assert.assertEquals("state changed by TWOSENSOR feedback (INCONSISTENT, INCONSISTENT)", t.describeState(Turnout.UNKNOWN), t.describeState(t.getKnownState()));
+
+        
+        // reset TO
+        s1.setKnownState(Sensor.INACTIVE);
+        s2.setKnownState(Sensor.ACTIVE);
+        Assert.assertEquals("state changed by TWOSENSOR feedback (Inactive, Active)", Turnout.CLOSED, t.getKnownState());
+        
+        s1.setKnownState(Sensor.UNKNOWN);
+        s2.setKnownState(Sensor.INCONSISTENT);
+        Assert.assertEquals("state changed by TWOSENSOR feedback (UNKNOWN, INCONSISTENT)", t.describeState(Turnout.UNKNOWN), t.describeState(t.getKnownState()));
+        
+        
+        // reset TO
+        s1.setKnownState(Sensor.INACTIVE);
+        s2.setKnownState(Sensor.ACTIVE);
+        Assert.assertEquals("state changed by TWOSENSOR feedback (Inactive, Active)", Turnout.CLOSED, t.getKnownState());
+        
+        s1.setKnownState(Sensor.INCONSISTENT);
+        s2.setKnownState(Sensor.UNKNOWN);
+        Assert.assertEquals("state changed by TWOSENSOR feedback (INCONSISTENT, UNKNOWN)", t.describeState(Turnout.UNKNOWN), t.describeState(t.getKnownState()));
+        
+        
+        // reset TO
+        s1.setKnownState(Sensor.INACTIVE);
+        s2.setKnownState(Sensor.ACTIVE);
+        Assert.assertEquals("state changed by TWOSENSOR feedback (Inactive, Active)", Turnout.CLOSED, t.getKnownState());
+        
+        s1.setKnownState(Sensor.ACTIVE);
+        s2.setKnownState(Sensor.UNKNOWN);
+        Assert.assertEquals("state changed by TWOSENSOR feedback (ACTIVE, UNKNOWN)", t.describeState(Turnout.UNKNOWN), t.describeState(t.getKnownState()));
+        
+        
+        // reset TO
+        s1.setKnownState(Sensor.INACTIVE);
+        s2.setKnownState(Sensor.ACTIVE);
+        Assert.assertEquals("state changed by TWOSENSOR feedback (Inactive, Active)", Turnout.CLOSED, t.getKnownState());
+
+        s1.setKnownState(Sensor.INACTIVE);
+        s2.setKnownState(Sensor.UNKNOWN);
+        Assert.assertEquals("state changed by TWOSENSOR feedback (INACTIVE, UNKNOWN)", t.describeState(Turnout.UNKNOWN), t.describeState(t.getKnownState()));
+        
+        
+        // reset TO
+        s1.setKnownState(Sensor.INACTIVE);
+        s2.setKnownState(Sensor.ACTIVE);
+        Assert.assertEquals("state changed by TWOSENSOR feedback (Inactive, Active)", Turnout.CLOSED, t.getKnownState());
+
+        s1.setKnownState(Sensor.UNKNOWN);
+        s2.setKnownState(Sensor.ACTIVE);
+        Assert.assertEquals("state changed by TWOSENSOR feedback (UNKNOWN, ACTIVE)", t.describeState(Turnout.UNKNOWN), t.describeState(t.getKnownState()));
+        
+        
+        // reset TO
+        s1.setKnownState(Sensor.INACTIVE);
+        s2.setKnownState(Sensor.ACTIVE);
+        Assert.assertEquals("state changed by TWOSENSOR feedback (Inactive, Active)", Turnout.CLOSED, t.getKnownState());
+
+        s1.setKnownState(Sensor.UNKNOWN);
+        s2.setKnownState(Sensor.INACTIVE);
+        Assert.assertEquals("state changed by TWOSENSOR feedback (UNKNOWN, INACTIVE)", t.describeState(Turnout.INCONSISTENT), t.describeState(t.getKnownState()));
+        
     }
 
     @Test 
