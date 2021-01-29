@@ -40,7 +40,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         this.sm = sm; // doesn't full register, but fine for this purpose.
 
         // self-registration is deferred until the command station type is set below
-                
+
         // create and register the ComponentFactory for the GUI
         InstanceManager.store(cf = new LnComponentFactory(this),
                 ComponentFactory.class);
@@ -209,7 +209,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         }
 
         InstanceManager.setReporterManager(getReporterManager());
-        
+
         InstanceManager.setDefault(CabSignalManager.class,getCabSignalManager());
 
         setConsistManager(new LocoNetConsistManager(this));

@@ -4,15 +4,14 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
@@ -37,20 +36,24 @@ public class TrackerTableActionTest {
 
     @Test
     public void testTracking1() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assumptions.assumeFalse(Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        // clear IconFamily warning
+        JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 1 Editor");
+        assert panel != null;
         panel.setVisible(false);
 
         TrackerTableAction tta = jmri.InstanceManager.getDefault(TrackerTableAction.class);
         assertThat(tta).withFailMessage("TrackerTableAction not found").isNotNull();
 
         OBlock Middle = _OBlockMgr.getByUserName("Middle");
+        assert Middle != null;
         Sensor sMiddle = Middle.getSensor();
         assertThat(sMiddle).withFailMessage("Senor sMiddle not found").isNotNull();
         NXFrameTest.setAndConfirmSensorAction(sMiddle, Sensor.ACTIVE, Middle);
@@ -65,6 +68,7 @@ public class TrackerTableActionTest {
         assertThat(occupied.size()).withFailMessage("Tkr1 Blocks Occupied").isEqualTo(1);
         
         OBlock FarEast = _OBlockMgr.getByUserName("FarEast");
+        assert FarEast != null;
         Sensor sFarEast = FarEast.getSensor();
         assertThat(sFarEast).withFailMessage("Senor FarEast not found").isNotNull();
         NXFrameTest.setAndConfirmSensorAction(sFarEast, Sensor.ACTIVE, FarEast);
@@ -72,6 +76,7 @@ public class TrackerTableActionTest {
         assertThat(occupied.size()).withFailMessage("Tkr1 2 Blocks Occupied").isEqualTo(2);
 
         OBlock East = _OBlockMgr.getByUserName("East");
+        assert East != null;
         Sensor sEast = East.getSensor();
         NXFrameTest.setAndConfirmSensorAction(sEast, Sensor.ACTIVE, East);
         occupied = Tkr1.getBlocksOccupied();
@@ -92,20 +97,24 @@ public class TrackerTableActionTest {
 
     @Test
     public void testTrackingDark() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assumptions.assumeFalse(Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        // clear IconFamily warning
+        JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 1 Editor");
+        assert panel != null;
         panel.setVisible(false);
 
         TrackerTableAction tta = jmri.InstanceManager.getDefault(TrackerTableAction.class);
         assertThat(tta).withFailMessage("TrackerTableAction not found").isNotNull();
 
         OBlock Main = _OBlockMgr.getByUserName("Main");
+        assert Main != null;
         Sensor sMain = Main.getSensor();
         assertThat(sMain).withFailMessage("Senor sMain found").isNotNull();
         NXFrameTest.setAndConfirmSensorAction(sMain, Sensor.ACTIVE, Main);
@@ -117,6 +126,7 @@ public class TrackerTableActionTest {
 
         // passes through dark block "West Yard"
         OBlock FarWest = _OBlockMgr.getByUserName("FarWest");
+        assert FarWest != null;
         Sensor sFarWest = FarWest.getSensor();
         NXFrameTest.setAndConfirmSensorAction(sFarWest, Sensor.ACTIVE, FarWest);
         occupied = TkrD.getBlocksOccupied();
@@ -132,20 +142,24 @@ public class TrackerTableActionTest {
 
     @Test
     public void testMultipleTrackers() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assumptions.assumeFalse(Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        // clear IconFamily warning
+        JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 1 Editor");
+        assert panel != null;
         panel.setVisible(false);
 
         TrackerTableAction tta = jmri.InstanceManager.getDefault(TrackerTableAction.class);
         assertThat(tta).withFailMessage("TrackerTableAction not found").isNotNull();
 
         OBlock West = _OBlockMgr.getByUserName("West");
+        assert West != null;
         Sensor sWest = West.getSensor();
         assertThat(sWest).withFailMessage("Senor sWest found").isNotNull();
         NXFrameTest.setAndConfirmSensorAction(sWest, Sensor.ACTIVE, West);
@@ -154,6 +168,7 @@ public class TrackerTableActionTest {
         assertThat(TkrW).withFailMessage("Tracker TkrW found").isNotNull();
         
         OBlock East = _OBlockMgr.getByUserName("East");
+        assert East != null;
         Sensor sEast = East.getSensor();
         assertThat(sEast).withFailMessage("Senor sEast found").isNotNull();
         NXFrameTest.setAndConfirmSensorAction(sEast, Sensor.ACTIVE, East);
@@ -162,6 +177,7 @@ public class TrackerTableActionTest {
         assertThat(TkrE).withFailMessage("Tracker TkrE found").isNotNull();
 
         OBlock Main = _OBlockMgr.getByUserName("Main");
+        assert Main != null;
         Sensor sMain = Main.getSensor();
         assertThat(sMain).withFailMessage("Senor sMain found").isNotNull();
         NXFrameTest.setAndConfirmSensorAction(sMain, Sensor.ACTIVE, Main);
