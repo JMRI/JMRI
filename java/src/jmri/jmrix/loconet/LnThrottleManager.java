@@ -214,7 +214,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
             // is the throttle ID the same as for this JMRI instance?  If not, do not accept the slot.
             if ((s.id() != 0) && s.id() != throttleID) {
                 // notify the LnThrottleManager about failure of acquisition.
-                // NEED TO TRIGGER THE NEW "STEAL REQUIRED" FUNCIONALITY HERE
+                // NEED TO TRIGGER THE NEW "STEAL REQUIRED" FUNCTIONALITY HERE
                 //note: throttle listener expects to have "callback" method notifyDecisionRequired
                 //invoked if a "steal" is required.  Make that happen as part of the "acquisition" process
                 synchronized (this) {
