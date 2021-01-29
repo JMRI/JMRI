@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -406,12 +407,11 @@ public class PreviewDialog extends JDialog {
                 total += CHUNK;
             }
         } catch (OutOfMemoryError me) {
-            for (int i = 0; i < memoryTest.size(); i++) {
-                memoryTest.remove(i);
+            for (Iterator<byte[]> iterator = memoryTest.iterator(); iterator.hasNext();) {
+                // Safely remove the current element from the iterator and the list
+                iterator.remove();
             }
-            if (log.isDebugEnabled()) {
-                log.debug("availableMemory= {}", total);
-            }
+            log.debug("availableMemory= {}", total);
         }
         return total;
     }
