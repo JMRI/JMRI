@@ -355,28 +355,62 @@
 
         <dt>ONESENSOR</dt>
 
-        <dd>The Turnout watches the Sensor defined by the "Sensor
-        1" column, which is probably hooked to a microswitch on the
-        turnout or similar. When the Sensor is "Active", the
+        <dd>The Turnout monitors the Sensor defined by the "Sensor
+        1" column, which could be the input from a microswitch on the
+        turnout or similar.
+        <br>When the Sensor is "Active", the
         turnout is known to be in the "Thrown" position. When it's
         "Inactive", the turnout is known to be in the "Closed"
-        position.</dd>
+        position.
+        
+        <table style="border: 1px solid gray;" cellpadding="5" cellspacing="5">
+        <thead>
+        <tr>
+        <th>Sensor 1</th>
+        <th>Feedback (known) State</th>
+        </tr>
+        </thead>
+        
+        <tbody>
+        <tr>
+        <td>Active</td>
+        <td>Thrown</td>
+        </tr>
+        
+        <tr>
+        <td>Inactive</td>
+        <td>Closed</td>
+        </tr>
+        
+        <tr>
+        <td>Unknown</td>
+        <td>Unknown</td>
+        </tr>
+        
+        <tr>
+        <td>Inconsistent</td>
+        <td>Unknown</td>
+        </tr>
+        
+        </tbody>
+        </table>
+        </dd>
 
         <dt>TWOSENSOR</dt>
 
-        <dd>The Turnout watches two Sensors defined by the "Sensor
-        1" and "Sensor 2" columns, which could be from
+        <dd>The Turnout monitors two Sensors defined by the "Sensor
+        1" and "Sensor 2" columns, which could be inputs from
         microswitches at either end of the turnout's throw bar
-        or inputs from servo travel events.<br>
+        or from servo travel events.<br>
         
-        The feedback state is determined by both Sensors:
+        The Turnout feedback state is determined by both Sensors:
         
-        <table>
+        <table style="border: 1px solid gray;" cellpadding="5" cellspacing="5">
         <thead>
         <tr>
         <th>Sensor 1</th>
         <th>Sensor 2</th>
-        <th>Feedback State</th>
+        <th>Feedback (known) State</th>
         </tr>
         </thead>
         
@@ -415,25 +449,25 @@
         <tr>
         <td>Inconsistent</td>
         <td>Inconsistent</td>
-        <td>Inconsistent</td>
+        <td>Unknown</td>
         </tr>
         
         <tr>
         <td>Inconsistent</td>
         <td>Unknown</td>
-        <td>Inconsistent</td>
+        <td>Unknown</td>
         </tr>
         
         <tr>
         <td>Active</td>
         <td>Unknown</td>
-        <td>Inconsistent</td>
+        <td>Unknown</td>
         </tr>
         
         <tr>
         <td>Inactive</td>
         <td>Unknown</td>
-        <td>Inconsistent</td>
+        <td>Unknown</td>
         </tr>
         
         <tr>
