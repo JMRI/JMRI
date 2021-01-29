@@ -190,11 +190,7 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
                 sh.setLevel(Editor.SIGNALS);
                 return sh;
             } else if (DataFlavor.stringFlavor.equals(flavor)) {
-                StringBuilder sb = new StringBuilder(_itemType);
-                sb.append(" icons for \"");
-                sb.append(bean.getDisplayName());
-                sb.append("\"");
-                return  sb.toString();
+                return _itemType + " icons for \"" + bean.getDisplayName() + "\"";
             }
             return null;
         }
