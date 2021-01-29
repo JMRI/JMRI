@@ -15,7 +15,6 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -400,16 +399,15 @@ public class PreviewDialog extends JDialog {
 
     private long availableMemory() {
         long total = 0;
-        ArrayList<byte[]> memoryTest = new ArrayList<byte[]>();
+        ArrayList<byte[]> memoryTest = new ArrayList<>();
         try {
             while (true) {
                 memoryTest.add(new byte[CHUNK]);
                 total += CHUNK;
             }
         } catch (OutOfMemoryError me) {
-            for (Iterator<byte[]> iterator = memoryTest.iterator(); iterator.hasNext();) {
-                // Safely remove the current element from the iterator and the list
-                iterator.remove();
+            for (int i = memoryTest.size() - 1; i >= 0; i--) { // safe direction to remove
+                memoryTest.remove(i);
             }
             log.debug("availableMemory= {}", total);
         }
