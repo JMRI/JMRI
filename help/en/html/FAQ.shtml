@@ -116,7 +116,7 @@
         </ul>
         </dd>
 
-        <dt id="wherestart"><strong>JMRI has so many features, where do I start?</strong></dt>
+        <dt id="wherestart">JMRI has so many features, where do I start?/dt>
 
         <dd>Many people start by connecting their DCC system controller and registering their
         locomotives using <a href="apps/DecoderPro/index.shtml">DecoderPro </a>.  You can then start running trains using a throttle 
