@@ -212,7 +212,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         }
 
         InstanceManager.setReporterManager(getReporterManager());
-        
+
         InstanceManager.setDefault(CabSignalManager.class,getCabSignalManager());
 
         setConsistManager(new LocoNetConsistManager(this));
@@ -287,7 +287,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         if (getDisabled()) {
             return null;
         }
-        return (LnSensorManager) classObjectMap.computeIfAbsent(LnSensorManager.class, (Class c) -> new LnSensorManager(this));
+        return (LnSensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class c) -> new LnSensorManager(this));
     }
 
     public LnLightManager getLightManager() {
