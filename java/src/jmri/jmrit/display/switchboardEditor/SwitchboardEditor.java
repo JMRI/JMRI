@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.util.*;
 import java.util.List;
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.GuardedBy;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
@@ -149,8 +150,9 @@ public class SwitchboardEditor extends Editor {
     /**
      * To count number of displayed beanswitches, this array holds all beanswitches to be displayed
      * until the GridLayout is configured, used to determine the total number of items to be placed.
-     * Accounts for "hide unconnected" setting, so it can be empty. Synchronized.
+     * Accounts for "hide unconnected" setting, so it can be empty.
      */
+    @GuardedBy("this")
     private final LinkedHashMap<String, BeanSwitch> switchesOnBoard = new LinkedHashMap<>();
 
     /**
