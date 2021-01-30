@@ -575,14 +575,14 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
                 // Need to know if destination name changes so we can forward to listeners
                 _trackDestination.addPropertyChangeListener(this);
             } else {
-                // rolling stock has been terminated or reset, bump rolling stock moves
+                // rolling stock has been terminated or reset
                 if (getTrain() != null && getTrain().getRoute() != null) {
                     setLastRouteId(getTrain().getRoute().getId());
                 }
-                if (getRouteDestination() != null) {
-                    setMoves(getMoves() + 1);
-                    setLastDate(java.util.Calendar.getInstance().getTime());
-                }
+//                if (getRouteDestination() != null) {
+//                    setMoves(getMoves() + 1);
+//                    setLastDate(java.util.Calendar.getInstance().getTime());
+//                }
                 setRouteLocation(null);
                 setRouteDestination(null);
             }
@@ -1192,6 +1192,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
 
     protected void moveRollingStock(RouteLocation current, RouteLocation next) {
         if (current == getRouteLocation()) {
+            setLastDate(java.util.Calendar.getInstance().getTime());
             // Arriving at destination?
             if (getRouteLocation() == getRouteDestination() || next == null) {
                 if (getRouteLocation() == getRouteDestination()) {
@@ -1202,6 +1203,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
                 setLocation(getDestination(), getDestinationTrack(), RollingStock.FORCE); // force RS to destination
                 setDestination(null, null); // this also clears the route locations
                 setTrain(null); // this must come after setDestination (route id is set)
+                setMoves(getMoves() + 1); // bump count
             } else {
                 log.debug("Rolling stock ({}) is in train ({}) leaves location ({}) destination ({})", this,
                         getTrainName(), current.getName(), next.getName());

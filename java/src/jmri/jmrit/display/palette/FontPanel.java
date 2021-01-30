@@ -9,6 +9,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrit.display.PositionablePopupUtil;
 
 public class FontPanel extends JPanel implements ItemListener {
@@ -38,7 +40,6 @@ public class FontPanel extends JPanel implements ItemListener {
     PositionablePopupUtil _util;
     ActionListener _callBack;
 
-    @SuppressWarnings("unchecked")
     static class AJComboBox<T> extends JComboBox<T> {
         int _which;
 
@@ -63,7 +64,6 @@ public class FontPanel extends JPanel implements ItemListener {
         return panel;
     }
 
-    @SuppressWarnings("unchecked")
     private void makeFontPanels() {
         
         JPanel fontPanel = new JPanel();
@@ -81,16 +81,16 @@ public class FontPanel extends JPanel implements ItemListener {
                 }
             };
         }
-        _fontFaceBox = new AJComboBox<Font>(fonts, FACE);
+        _fontFaceBox = new AJComboBox<>(fonts, FACE);
         fontPanel.add(makeBoxPanel("EditFont", _fontFaceBox)); // NOI18N
 
-        _fontSizeBox = new AJComboBox<String>(FONTSIZE, SIZE);
+        _fontSizeBox = new AJComboBox<>(FONTSIZE, SIZE);
         fontPanel.add(makeBoxPanel("FontSize", _fontSizeBox)); // NOI18N
 
-        _fontStyleBox = new AJComboBox<String>(STYLES, STYLE);
+        _fontStyleBox = new AJComboBox<>(STYLES, STYLE);
         fontPanel.add(makeBoxPanel("FontStyle", _fontStyleBox)); // NOI18N
 
-        _fontJustBox = new AJComboBox<String>(JUSTIFICATION, JUST);
+        _fontJustBox = new AJComboBox<>(JUSTIFICATION, JUST);
         fontPanel.add(makeBoxPanel("Justification", _fontJustBox)); // NOI18N
         this.add(fontPanel);
     }
@@ -121,62 +121,65 @@ public class FontPanel extends JPanel implements ItemListener {
         _callBack.actionPerformed(null);
     }
 
+    @SuppressFBWarnings(value = "Raw use of parameterized class", justification="AJComboBox is checked")
     @Override
     public void itemStateChanged(ItemEvent e) {
-        AJComboBox comboBox = (AJComboBox)e.getSource();
-        switch (comboBox._which) {
-            case SIZE:
-                String size = (String) comboBox.getSelectedItem();
-                _util.setFontSize(Float.parseFloat(size));
-                break;
-            case STYLE:
-                int style = 0;
-                switch (comboBox.getSelectedIndex()) {
-                    case 0:
-                        style = Font.PLAIN;
-                        break;
-                    case 1:
-                        style = Font.BOLD;
-                        break;
-                    case 2:
-                        style = Font.ITALIC;
-                        break;
-                    case 3:
-                        style = (Font.BOLD | Font.ITALIC);
-                        break;
-                    default:
-                        log.warn("Unexpected index {}  in itemStateChanged", comboBox.getSelectedIndex());
-                        break;
-                }
-                _util.setFontStyle(style);
-                break;
-            case JUST:
-                int just = 0;
-                switch (comboBox.getSelectedIndex()) {
-                    case 0:
-                        just = PositionablePopupUtil.LEFT;
-                        break;
-                    case 1:
-                        just = PositionablePopupUtil.CENTRE;
-                        break;
-                    case 2:
-                        just = PositionablePopupUtil.RIGHT;
-                        break;
-                    default:
-                        log.warn("Unexpected index {}  in itemStateChanged", comboBox.getSelectedIndex());
-                        break;
-                }
-                _util.setJustification(just);
-                break;
-            case FACE:
-                Font font = (Font) comboBox.getSelectedItem();
-                _util.setFont(font);
-               break;
-            default:
-                log.warn("Unexpected _which {}  in itemStateChanged", comboBox._which);
-                break;
+        if (e.getSource() instanceof AJComboBox) {
+            AJComboBox comboBox = (AJComboBox) e.getSource();
+            switch (comboBox._which) {
+                case SIZE:
+                    String size = (comboBox.getSelectedItem() != null ? (String) comboBox.getSelectedItem() : "10");
+                    _util.setFontSize(Float.parseFloat(size));
+                    break;
+                case STYLE:
+                    int style = 0;
+                    switch (comboBox.getSelectedIndex()) {
+                        case 0:
+                            style = Font.PLAIN;
+                            break;
+                        case 1:
+                            style = Font.BOLD;
+                            break;
+                        case 2:
+                            style = Font.ITALIC;
+                            break;
+                        case 3:
+                            style = (Font.BOLD | Font.ITALIC);
+                            break;
+                        default:
+                            log.warn("Unexpected index {}  in itemStateChanged", comboBox.getSelectedIndex());
+                            break;
+                    }
+                    _util.setFontStyle(style);
+                    break;
+                case JUST:
+                    int just = 0;
+                    switch (comboBox.getSelectedIndex()) {
+                        case 0:
+                            just = PositionablePopupUtil.LEFT;
+                            break;
+                        case 1:
+                            just = PositionablePopupUtil.CENTRE;
+                            break;
+                        case 2:
+                            just = PositionablePopupUtil.RIGHT;
+                            break;
+                        default:
+                            log.warn("Unexpected index {}  in itemStateChanged", comboBox.getSelectedIndex());
+                            break;
+                    }
+                    _util.setJustification(just);
+                    break;
+                case FACE:
+                    Font font = (comboBox.getSelectedItem() != null ? (Font) comboBox.getSelectedItem() : (Font) comboBox.getItemAt(0));
+                    _util.setFont(font);
+                    break;
+                default:
+                    log.warn("Unexpected _which {}  in itemStateChanged", comboBox._which);
+                    break;
             }
-        _callBack.actionPerformed(null);
+            _callBack.actionPerformed(null);
+        }
     }
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FontPanel.class);
