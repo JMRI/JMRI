@@ -425,7 +425,7 @@ public class DefaultLogix extends AbstractNamedBean
     }
 
     /**
-     * Assembles a list of Listeners needed to activate this Logix
+     * Assemble a list of Listeners needed to activate this Logix.
      */
     private void assembleListenerList() {
         // initialize
@@ -434,7 +434,8 @@ public class DefaultLogix extends AbstractNamedBean
         }
         _listeners = new ArrayList<JmriSimplePropertyListener>();
         // cycle thru Conditionals to find objects to listen to
-        for (int i = 0; i < _conditionalSystemNames.size(); i++) {
+        // start from end down to safely delete preventing concurrent modification ex
+        for (int i = _conditionalSystemNames.size() - 1; i >= 0; i--) {
             Conditional conditional = getConditional(_conditionalSystemNames.get(i));
             if (conditional != null) {
                 List<ConditionalVariable> variableList = conditional.getCopyOfStateVariables();
@@ -679,7 +680,6 @@ public class DefaultLogix extends AbstractNamedBean
             } else {
                 log.error("invalid conditional system name in Logix \"{}\" assembleListenerList DELETING {} from Conditional list.", getSystemName(), _conditionalSystemNames.get(i));  // NOI18N
                 _conditionalSystemNames.remove(i);
-
             }
         }
     }
