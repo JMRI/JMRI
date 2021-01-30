@@ -26,7 +26,8 @@ public class BeanSwitchTest {
     @Test
     public void testCTor() {
         Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
-        BeanSwitch t = new BeanSwitch(1,null,"IT1",0, swe);
+        SwitchboardEditor swe2 = new SwitchboardEditor("Bean Switch Default Switchboard");
+        BeanSwitch t = new BeanSwitch(1,null,"IT1",0, swe2);
         Assertions.assertNotNull(t, "exists");
     }
 
@@ -84,6 +85,7 @@ public class BeanSwitchTest {
         Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         NamedBean nb = jmri.InstanceManager.getDefault(LightManager.class).provideLight("IL4");
         nb.setUserName("intLightFour");
+        swe.setSwitchType("L");
         BeanSwitch t = new BeanSwitch(1, nb, "IL4", SwitchboardEditor.KEY, swe);
         Assertions.assertNotNull(t, "exists");
         Assertions.assertNotNull(t.getIconLabel());
@@ -98,6 +100,7 @@ public class BeanSwitchTest {
     @Test
     public void testSensorSymbolUnconnected() {
         Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
+        swe.setSwitchType("S");
         BeanSwitch t = new BeanSwitch(1, null, "IS4", SwitchboardEditor.SYMBOL, swe);
         Assertions.assertNotNull(t, "exists");
         Thread dialog_thread1 = new Thread(() -> {
@@ -110,8 +113,8 @@ public class BeanSwitchTest {
         t.connectNew(); // pops a dialog
 
         JUnitUtil.waitFor(()-> !(dialog_thread1.isAlive()), "Connect new Sensor dialog");
-        JUnitAppender.assertWarnMessage("Switch IS4 not found on panel. Number of switches displayed: 24");
-        JUnitAppender.assertWarnMessage("failed to update switch to state of IS4");
+//        JUnitAppender.assertWarnMessage("Switch IS4 not found on panel. Number of switches displayed: 24");
+//        JUnitAppender.assertWarnMessage("failed to update switch to state of IS4");
         // can't recreate this BeanSwitch to include a connection, so we just check it was created and available in the manager
         Assertions.assertNotNull(jmri.InstanceManager.getDefault(SensorManager.class).provideSensor("IS4"), "Sensor IS4 created");
         t.displayState(4);
