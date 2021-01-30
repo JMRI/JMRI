@@ -238,16 +238,17 @@ public abstract class AbstractTurnoutTestBase {
         Assert.assertEquals("known state for ONESENSOR feedback active", Turnout.THROWN, t.getKnownState());
         
         s1.setKnownState(Sensor.UNKNOWN);
-        Assert.assertEquals("unknown state for ONESENSOR feedback ", Turnout.UNKNOWN, t.getKnownState());
-        Assert.assertEquals("listener notified of change for ONESENSOR feedback unknown", Turnout.UNKNOWN,listenStatus);
+        
+        Assert.assertEquals("unknown state for ONESENSOR feedback ", t.describeState(Turnout.INCONSISTENT), t.describeState(t.getKnownState()));
+        Assert.assertEquals("listener notified of change for ONESENSOR feedback unknown", Turnout.INCONSISTENT,listenStatus);
         
         s1.setKnownState(Sensor.INACTIVE);
         Assert.assertEquals("known state for ONESENSOR feedback Inactive", Turnout.CLOSED, t.getKnownState());
         Assert.assertEquals("listener notified of change for ONESENSOR feedback reset", Turnout.CLOSED,listenStatus);
         
         s1.setKnownState(Sensor.INCONSISTENT);
-        Assert.assertEquals("listener notified of change for ONESENSOR feedback INCONSISTENT", Turnout.UNKNOWN,listenStatus);
-        Assert.assertEquals("INCONSISTENT state for ONESENSOR feedback", Turnout.UNKNOWN, t.getKnownState());
+        Assert.assertEquals("listener notified of change for ONESENSOR feedback INCONSISTENT", Turnout.INCONSISTENT,listenStatus);
+        Assert.assertEquals("INCONSISTENT state for ONESENSOR feedback", Turnout.INCONSISTENT, t.getKnownState());
         
     }
 

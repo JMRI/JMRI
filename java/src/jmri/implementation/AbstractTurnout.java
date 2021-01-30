@@ -902,7 +902,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                         newKnownState(CLOSED);
                         break;
                     default:
-                        newKnownState(UNKNOWN);
+                        newKnownState(INCONSISTENT);
                         break;
                 }
             } else {
