@@ -1,6 +1,7 @@
 package jmri.jmrit.conditional;
 
 import java.awt.event.ActionEvent;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.Box;
@@ -102,18 +103,10 @@ public class ConditionalFrame extends JmriJFrame {
      */
     boolean updateConditionalPressed(ActionEvent e) {
         log.debug("updateConditionalPressed");
-        for (int i = 0; i < _variableList.size(); i++) {
-            if (_variableList.get(i).getType() == Conditional.Type.NONE) {
-                if (!_variableList.get(i).getName().equals("IX:RTXINITIALIZER")) {  // The IX:RTXINITIALIZER keyword has a type of NONE
-                    _variableList.remove(i);
-                }
-            }
-        }
-        for (int i = 0; i < _actionList.size(); i++) {
-            if (_actionList.get(i).getType() == Conditional.Action.NONE) {
-                _actionList.remove(i);
-            }
-        }
+        // The IX:RTXINITIALIZER keyword has a type of NONE
+        // Safely remove elements from the list
+        _variableList.removeIf(cvar -> cvar.getType() == Conditional.Type.NONE && !cvar.getName().equals("IX:RTXINITIALIZER"));
+        _actionList.removeIf(cact -> cact.getType() == Conditional.Action.NONE);
         if (_parent.updateConditional(_conditionalUserName.getText(), _logicType, _trigger, _antecedent)) {
             if (_dataChanged) {
                 _parent._showReminder = true;
