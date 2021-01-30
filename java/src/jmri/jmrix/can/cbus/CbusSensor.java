@@ -92,29 +92,32 @@ public class CbusSensor extends AbstractSensor implements CanListener, CbusEvent
     @Override
     public void setKnownState(int s) throws jmri.JmriException {
         CanMessage m;
-        if (s == Sensor.ACTIVE) {
-            if (getInverted()){
-                m = addrInactive.makeMessage(tc.getCanid());
-                setOwnState(Sensor.ACTIVE);
-            } else {
-                m = addrActive.makeMessage(tc.getCanid());
-                setOwnState(Sensor.ACTIVE);
-            }
-            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-            tc.sendCanMessage(m, this);
-        } else if (s == Sensor.INACTIVE) {
-            if (getInverted()){
-                m = addrActive.makeMessage(tc.getCanid());
-                setOwnState(Sensor.INACTIVE);                
-            } else {
-                m = addrInactive.makeMessage(tc.getCanid());
-                setOwnState(Sensor.INACTIVE);
-            }
-            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-            tc.sendCanMessage(m, this);
-        }
-        if (s == Sensor.UNKNOWN){
-            setOwnState(Sensor.UNKNOWN);
+        switch (s) {
+            case Sensor.ACTIVE:
+                if (getInverted()){
+                    m = addrInactive.makeMessage(tc.getCanid());
+                    setOwnState(Sensor.ACTIVE);
+                } else {
+                    m = addrActive.makeMessage(tc.getCanid());
+                    setOwnState(Sensor.ACTIVE);
+                }
+                CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
+                tc.sendCanMessage(m, this);
+                break;
+            case Sensor.INACTIVE:
+                if (getInverted()){
+                    m = addrActive.makeMessage(tc.getCanid());
+                    setOwnState(Sensor.INACTIVE);
+                } else {
+                    m = addrInactive.makeMessage(tc.getCanid());
+                    setOwnState(Sensor.INACTIVE);
+                }
+                CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
+                tc.sendCanMessage(m, this);
+                break;
+            default:
+                setOwnState(s);
+                break;
         }
     }
     
