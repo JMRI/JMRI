@@ -139,7 +139,7 @@ public class PortalIconXml extends PositionableLabelXml {
         if ((a = element.getAttribute("arrowSwitch")) != null && a.getValue().equals("no")) {
             value = false;
         }
-        l.setArrowOrientatuon(value);
+        l.setArrowOrientation(value);
         value = false;
         if ((a = element.getAttribute("arrowHide")) != null && a.getValue().equals("yes")) {
             value = true;
