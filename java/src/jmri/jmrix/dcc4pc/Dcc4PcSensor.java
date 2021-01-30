@@ -51,6 +51,9 @@ public class Dcc4PcSensor extends AbstractSensor {
             case ORIENTB:
                 stateConvert = ACTIVE;
                 break; //"Occupied RailComm Orientation B"
+            case INCONSISTENT:
+                stateConvert = INCONSISTENT;
+                break;
             default:
                 stateConvert = UNKNOWN;
                 break;
