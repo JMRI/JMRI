@@ -198,7 +198,7 @@ public class ActionScript extends AbstractDigitalAction {
         public final DigitalAction _parentAction;
         
         public ScriptParams(DigitalAction parentExpression) {
-            _parentAction  = parentExpression;
+            _parentAction = parentExpression;
         }
     }
     

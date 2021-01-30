@@ -308,6 +308,18 @@ public class StoreAndLoadTest {
         actionManySocket.getChild(index++).connect(maleSocket);
         
         
+        ActionSimpleScript actionSimpleScript = new ActionSimpleScript(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionSimpleScript);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        actionSimpleScript = new ActionSimpleScript(digitalActionManager.getAutoSystemName(), null);
+        actionSimpleScript.setComment("A comment");
+        actionSimpleScript.setScript("import java\n");
+        maleSocket = digitalActionManager.registerAction(actionSimpleScript);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        
         ActionSensor actionSensor = new ActionSensor(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionSensor);
         maleSocket.setEnabled(false);
