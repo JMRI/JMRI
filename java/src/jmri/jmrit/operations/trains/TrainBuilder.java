@@ -69,7 +69,6 @@ public class TrainBuilder extends TrainCommon {
     PrintWriter _buildReport; // build report for this train
     List<Car> _notRoutable = new ArrayList<>(); // list of cars that couldn't be routed
     List<Location> _modifiedLocations = new ArrayList<>(); // list of locations that have been modified
-    boolean _trainLengthIssue = false; // true if there's an issue with the train length
 
     // managers
     CarManager carManager = InstanceManager.getDefault(CarManager.class);
@@ -162,8 +161,7 @@ public class TrainBuilder extends TrainCommon {
         showIfLocalSwitcher(); // show if this train a switcher, a train that works only one location
         determineEngineRequirements(); // determine how many engines need to be assigned to train
         showTrainRequirements(); // show how many engines, caboose, car with FRED and changes in the route
-        showTrainServices(); // show which roads, owners, built dates, engine types that the train will
-                             // service
+        showTrainServices(); // show which roads, owners, built dates, and engine types
         getAndRemoveEnginesFromList(); // get a list of available engines
         determineIfTrainTerminatesIntoStaging(); // find a terminus track in staging for this train
         determineIfTrainDepartsStagingAndAddEngines(); // assign engines to train if departing staging
@@ -2285,7 +2283,7 @@ public class TrainBuilder extends TrainCommon {
      * @throws BuildFailedException
      */
     private void secondAttemptNormalBuild() throws BuildFailedException {
-        if (Setup.isStagingTryNormalBuildEnabled() && _trainLengthIssue && isCarStuckStaging(100)) {
+        if (Setup.isStagingTryNormalBuildEnabled() && isCarStuckStaging(100)) {
             addLine(_buildReport, ONE, Bundle.getMessage("buildFailedTryNormalMode"));
             addLine(_buildReport, ONE, BLANK_LINE);
             _train.reset();
@@ -2297,8 +2295,7 @@ public class TrainBuilder extends TrainCommon {
             loadRemoveAndListCars();
             addCabooseOrFredToTrain();
             removeCaboosesAndCarsWithFred();
-            saveCarFinalDestinations(); // save car's final destination and
-                                        // schedule id in case of train reset
+            saveCarFinalDestinations(); // save final destination and schedule id
             blockCarsFromStaging(); // block cars from staging
             placeCars(100, false); // try normal build one pass
         }
@@ -2770,8 +2767,6 @@ public class TrainBuilder extends TrainCommon {
     private void finishAddRsToTrain(RollingStock rs, RouteLocation rl, RouteLocation rld, int length, int weightTons) {
         // notify that locations have been modified when build done
         // allows automation actions to run properly
-        // rl.getLocation().setStatusModified();
-        // rld.getLocation().setStatusModified();
         if (!_modifiedLocations.contains(rl.getLocation())) {
             _modifiedLocations.add(rl.getLocation());
         }
@@ -2792,7 +2787,7 @@ public class TrainBuilder extends TrainCommon {
                 break;
             }
             if (inTrain) {
-                routeLocation.setTrainLength(routeLocation.getTrainLength() + length); // couplers are included
+                routeLocation.setTrainLength(routeLocation.getTrainLength() + length); // includes couplers
                 routeLocation.setTrainWeight(routeLocation.getTrainWeight() + weightTons);
             }
         }
@@ -2883,7 +2878,6 @@ public class TrainBuilder extends TrainCommon {
                                 new Object[] { rlt.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase(),
                                         rlt.getTrainLength() + length - rlt.getMaxTrainLength(), rlt.getName(),
                                         rlt.getId() }));
-                _trainLengthIssue = true;
                 return false;
             }
         }
@@ -5191,8 +5185,7 @@ public class TrainBuilder extends TrainCommon {
                 break;
             }
             if (inTrain) {
-                routeLocation.setTrainLength(routeLocation.getTrainLength() - rs.getTotalLength()); // couplers are
-                                                                                                    // included
+                routeLocation.setTrainLength(routeLocation.getTrainLength() - rs.getTotalLength()); // includes couplers
                 routeLocation.setTrainWeight(routeLocation.getTrainWeight() - rs.getAdjustedWeightTons());
             }
         }
