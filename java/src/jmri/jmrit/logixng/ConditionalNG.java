@@ -38,7 +38,7 @@ public interface ConditionalNG extends Base, NamedBean {
      * Get the female socket of this ConditionalNG.
      * @return the female socket
      */
-    public FemaleSocket getFemaleSocket();
+    public FemaleDigitalActionSocket getFemaleSocket();
     
     /**
      * Set whenether this ConditionalNG is enabled or disabled.
@@ -79,6 +79,12 @@ public interface ConditionalNG extends Base, NamedBean {
      * Execute the ConditionalNG.
      */
     public void execute();
+    
+    /**
+     * Execute the female socket.
+     * @param socket the female socket
+     */
+    public void execute(FemaleDigitalActionSocket socket);
     
     /**
      * Get the stack

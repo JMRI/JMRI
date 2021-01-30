@@ -30,7 +30,7 @@ public class DefaultConditionalNG extends AbstractBase
     private final FemaleDigitalActionSocket _femaleSocket;
     private boolean _enabled = true;
     private Base.Lock _lock = Base.Lock.NONE;
-    private final ExecuteLock executeLock = new ExecuteLock();
+    private final ExecuteLock _executeLock = new ExecuteLock();
     private boolean _runDelayed = true;
     private final Stack _stack = new DefaultStack();
     private SymbolTable _symbolTable;
@@ -94,7 +94,7 @@ public class DefaultConditionalNG extends AbstractBase
     
     /** {@inheritDoc} */
     @Override
-    public FemaleSocket getFemaleSocket() {
+    public FemaleDigitalActionSocket getFemaleSocket() {
         return _femaleSocket;
     }
 
@@ -121,27 +121,56 @@ public class DefaultConditionalNG extends AbstractBase
     /** {@inheritDoc} */
     @Override
     public void execute() {
-        if (executeLock.once()) {
-            runOnLogixNG_Thread(() -> {
-                while (executeLock.loop()) {
-                    if (isEnabled()) {
-                        DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(this);
-                        
-                        try {
-                            setSymbolTable(newSymbolTable);
-                            _femaleSocket.execute();
-                        } catch (JmriException | RuntimeException e) {
+        if (_executeLock.once()) {
+            runOnLogixNG_Thread(new ExecuteTask(this, _executeLock, null));
+        }
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void execute(FemaleDigitalActionSocket socket) {
+        if (_executeLock.once()) {
+            runOnLogixNG_Thread(new ExecuteTask(this, _executeLock, socket));
+        }
+    }
+    
+    private static class ExecuteTask implements ThreadingUtil.ThreadAction {
+        
+        private final ConditionalNG _conditionalNG;
+        private final ExecuteLock _executeLock;
+        private final FemaleDigitalActionSocket _localFemaleSocket;
+        
+        public ExecuteTask(ConditionalNG conditionalNG, ExecuteLock executeLock, FemaleDigitalActionSocket femaleSocket) {
+            _conditionalNG = conditionalNG;
+            _executeLock = executeLock;
+            _localFemaleSocket = femaleSocket;
+        }
+        
+        @Override
+        public void run() {
+            while (_executeLock.loop()) {
+                if (_conditionalNG.isEnabled()) {
+                    DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(_conditionalNG);
+                    
+                    try {
+                        _conditionalNG.setSymbolTable(newSymbolTable);
+                        if (_localFemaleSocket != null) {
+                            _localFemaleSocket.execute();
+                        } else {
+                            _conditionalNG.getFemaleSocket().execute();
+                        }
+                    } catch (JmriException | RuntimeException e) {
 //                            LoggingUtil.warnOnce(log, "ConditionalNG {} got an exception during execute: {}",
 //                                    getSystemName(), e, e);
-                            log.warn("ConditionalNG {} got an exception during execute: {}",
-                                    getSystemName(), e, e);
-                        }
-                        
-                        setSymbolTable(newSymbolTable.getPrevSymbolTable());
+                        log.warn("ConditionalNG {} got an exception during execute: {}",
+                                _conditionalNG.getSystemName(), e, e);
                     }
+                    
+                    _conditionalNG.setSymbolTable(newSymbolTable.getPrevSymbolTable());
                 }
-            });
+            }
         }
+        
     }
     
     /** {@inheritDoc} */
