@@ -154,9 +154,10 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
         // initially selected connection should be Internal but is not 100% predictable (after type is changed?)
         e.setSwitchManu("I"); // so set explicitly
         e.updatePressed();    // rebuild for Sensors
-        Sensor sensor20 = ((SensorManager) e.getManager('S')).provideSensor("IS20");
-        Assertions.assertNotNull(jmri.InstanceManager.sensorManagerInstance().getSensor("IS20"));
-        Objects.requireNonNull(InstanceManager.sensorManagerInstance().getSensor("IS20")).setUserName("twenty"); // make it harder to fetch label
+        SensorManager sm = ((SensorManager) e.getManager('S'));
+        Sensor sensor20 = sm.provideSensor("IS20");
+        Assertions.assertNotNull(sm.getSensor("IS20"));
+        Objects.requireNonNull(sm.getSensor("IS20")).setUserName("twenty"); // make it harder to fetch label
         e.updatePressed(); // recreate to connect switch "IS20" to Sensor sensor20
         Assertions.assertEquals(24, e.getSwitches().size(), "24 (connected) item displayed");
         Assertions.assertEquals(Sensor.UNKNOWN, sensor20.getState(), "sensor20 state is Unknown");
@@ -178,7 +179,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
         Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         // initially selected connection should be Internal but is not 100% predictable (after type is changed?)
         e.setSwitchManu("I"); // so set explicitly
-        ((TurnoutManager) e.getManager('T')).provideTurnout("IT24"); // connect to item 1
+        ((TurnoutManager) e.getManager()).provideTurnout("IT24"); // active manager should be a TurnoutManager, connect to item 1
         e.setHideUnconnected(true);
         e.updatePressed(); // setHideUnconnected will not invoke updatePressed
         Assertions.assertEquals(1, e.getTotal(), "1 connected switch shown");

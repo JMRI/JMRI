@@ -80,7 +80,7 @@ public class SwitchboardEditor extends Editor {
     static final String LIGHT = Bundle.getMessage("Lights");
     private final String[] beanTypeStrings = {TURNOUT, SENSOR, LIGHT};
     private JComboBox<String> beanTypeList;
-    private String type = TURNOUT;
+    private String _type = TURNOUT;
     private final String[] switchShapeStrings = {
         Bundle.getMessage("Buttons"),
         Bundle.getMessage("Sliders"),
@@ -1306,28 +1306,28 @@ public class SwitchboardEditor extends Editor {
      * @return bean type name
      */
     public String getSwitchTypeName() {
-        return type;
+        return _type;
     }
 
     /**
-     * Load bean type.
+     * Load bean type from xml.
      *
      * @param prefix the bean type prefix
      */
     public void setSwitchType(String prefix) {
         switch (prefix) {
             case "L":
-                type = LIGHT;
+                _type = LIGHT;
                 break;
             case "S":
-                type = SENSOR;
+                _type = SENSOR;
                 break;
             case "T":
             default:
-                type = TURNOUT;
+                _type = TURNOUT;
         }
         try {
-            beanTypeList.setSelectedItem(type);
+            beanTypeList.setSelectedItem(_type);
         } catch (IllegalArgumentException e) {
             log.error("invalid bean type [{}] in Switchboard", prefix);
         }
@@ -1527,6 +1527,24 @@ public class SwitchboardEditor extends Editor {
             default:
                 log.error("Unsupported bean type character \"{}\" found.", typeChar);
                 return null;
+        }
+    }
+
+    /**
+     * Get the currently active manager.
+     *
+     * @return manager in use for the currently selected bean type and connection
+     */
+    protected Manager<?> getManager() {
+        if (_type.equals(TURNOUT)) {
+            return turnoutManComboBox.getSelectedItem();
+        } else if (_type.equals(SENSOR)) {
+                return sensorManComboBox.getSelectedItem();
+        } else if (_type.equals(LIGHT)) {
+            return lightManComboBox.getSelectedItem();
+        } else {
+            log.error("Unsupported bean type character \"{}\" found.", _type);
+            return null;
         }
     }
 
@@ -1782,6 +1800,7 @@ public class SwitchboardEditor extends Editor {
      * @param type one of the three NamedBean types as String
      */
     protected void displayManagerComboBoxes(String type) {
+        _type = type;
         if (type.equals(LIGHT)) {
             Manager<Light> manager = lightManComboBox.getSelectedItem();
             if (manager != null) {
