@@ -75,6 +75,9 @@ public class LnSensor extends AbstractSensor  {
         l.setElement(2, l.getElement(2) | 0x40);
         // send
         tc.sendLocoNetMessage(l);
+        
+        // and do internal operations
+        setOwnState(s);
     }
 
     /**
