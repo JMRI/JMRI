@@ -28,13 +28,15 @@ public class ShutdownComputerXml extends jmri.managers.configurexml.AbstractName
     @Override
     public Element store(Object o) {
         ShutdownComputer p = (ShutdownComputer) o;
-
+        
         Element element = new Element("shutdown-computer");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
         storeCommon(p, element);
-
+        
+        element.addContent(new Element("operation").addContent(p.getOperation().name()));
+        
         return element;
     }
     
@@ -43,10 +45,15 @@ public class ShutdownComputerXml extends jmri.managers.configurexml.AbstractName
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         
-        DigitalActionBean h = new ShutdownComputer(sys, uname);
-
+        ShutdownComputer h = new ShutdownComputer(sys, uname);
+        
         loadCommon(h, shared);
-
+        
+        Element operation = shared.getChild("operation");
+        if (operation != null) {
+            h.setOperation(ShutdownComputer.Operation.valueOf(operation.getTextTrim()));
+        }
+        
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }

@@ -14,6 +14,9 @@ import jmri.jmrit.logixng.*;
  */
 public class ShutdownComputer extends AbstractDigitalAction {
 
+    private Operation _operation = Operation.ShutdownJMRI;
+    
+    
     public ShutdownComputer(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
@@ -27,7 +30,16 @@ public class ShutdownComputer extends AbstractDigitalAction {
         if (sysName == null) sysName = manager.getAutoSystemName();
         ShutdownComputer copy = new ShutdownComputer(sysName, userName);
         copy.setComment(getComment());
+        copy.setOperation(_operation);
         return manager.registerAction(copy);
+    }
+    
+    public void setOperation(Operation operation) {
+        _operation = operation;
+    }
+    
+    public Operation getOperation() {
+        return _operation;
     }
     
     /** {@inheritDoc} */
@@ -46,7 +58,26 @@ public class ShutdownComputer extends AbstractDigitalAction {
     @Override
     public void execute() {
         jmri.util.ThreadingUtil.runOnGUI(() -> {
-            InstanceManager.getDefault(ShutDownManager.class).shutdownOS();
+            switch (_operation) {
+                case ShutdownComputer:
+                    InstanceManager.getDefault(ShutDownManager.class).shutdownOS();
+                    break;
+                    
+                case RebootComputer:
+                    InstanceManager.getDefault(ShutDownManager.class).restartOS();
+                    break;
+                    
+                case ShutdownJMRI:
+                    InstanceManager.getDefault(ShutDownManager.class).shutdown();
+                    break;
+                    
+                case RebootJMRI:
+                    InstanceManager.getDefault(ShutDownManager.class).restart();
+                    break;
+                    
+                default:
+                    throw new RuntimeException("_operation has invalid value: "+_operation.name());
+            }
         });
 
         // If we are here, shutdown has failed
@@ -70,7 +101,7 @@ public class ShutdownComputer extends AbstractDigitalAction {
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "ShutdownComputer_Long");
+        return Bundle.getMessage(locale, "ShutdownComputer_Long", _operation._text);
     }
     
     /** {@inheritDoc} */
@@ -93,7 +124,28 @@ public class ShutdownComputer extends AbstractDigitalAction {
     @Override
     public void disposeMe() {
     }
-
+    
+    
+    
+    public enum Operation {
+        ShutdownComputer(Bundle.getMessage("ShutdownComputer_ShutdownComputer")),
+        RebootComputer(Bundle.getMessage("ShutdownComputer_RebootComputer")),
+        ShutdownJMRI(Bundle.getMessage("ShutdownComputer_ShutdownJMRI")),
+        RebootJMRI(Bundle.getMessage("ShutdownComputer_RebootJMRI"));
+        
+        private final String _text;
+        
+        private Operation(String text) {
+            this._text = text;
+        }
+        
+        @Override
+        public String toString() {
+            return _text;
+        }
+        
+    }
+    
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ShutdownComputer.class);
 }

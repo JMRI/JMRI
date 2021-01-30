@@ -844,6 +844,25 @@ public class StoreAndLoadTest {
         
         shutdownComputer = new ShutdownComputer(digitalActionManager.getAutoSystemName(), null);
         shutdownComputer.setComment("A comment");
+        shutdownComputer.setOperation(ShutdownComputer.Operation.ShutdownComputer);
+        maleSocket = digitalActionManager.registerAction(shutdownComputer);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        shutdownComputer = new ShutdownComputer(digitalActionManager.getAutoSystemName(), null);
+        shutdownComputer.setComment("A comment");
+        shutdownComputer.setOperation(ShutdownComputer.Operation.RebootComputer);
+        maleSocket = digitalActionManager.registerAction(shutdownComputer);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        shutdownComputer = new ShutdownComputer(digitalActionManager.getAutoSystemName(), null);
+        shutdownComputer.setComment("A comment");
+        shutdownComputer.setOperation(ShutdownComputer.Operation.ShutdownJMRI);
+        maleSocket = digitalActionManager.registerAction(shutdownComputer);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        shutdownComputer = new ShutdownComputer(digitalActionManager.getAutoSystemName(), null);
+        shutdownComputer.setComment("A comment");
+        shutdownComputer.setOperation(ShutdownComputer.Operation.RebootJMRI);
         maleSocket = digitalActionManager.registerAction(shutdownComputer);
         actionManySocket.getChild(index++).connect(maleSocket);
         

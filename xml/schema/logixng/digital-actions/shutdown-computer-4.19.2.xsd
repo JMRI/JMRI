@@ -40,6 +40,17 @@
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
 
+              <xs:element name="operation" minOccurs="0" maxOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:token">
+                    <xs:enumeration value="ShutdownComputer"/>
+                    <xs:enumeration value="RebootComputer"/>
+                    <xs:enumeration value="ShutdownJMRI"/>
+                    <xs:enumeration value="RebootJMRI"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
               <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>

@@ -35,7 +35,7 @@ public class ActionLightSwing extends AbstractDigitalActionSwing {
     private JTextField _lightFormulaTextField;
     
     private JTabbedPane _tabbedPaneLightState;
-    private JComboBox<ActionLight.LightState> stateComboBox;
+    private JComboBox<ActionLight.LightState> _stateComboBox;
     private JPanel _panelLightStateDirect;
     private JPanel _panelLightStateReference;
     private JPanel _panelLightStateLocalVariable;
@@ -89,12 +89,12 @@ public class ActionLightSwing extends AbstractDigitalActionSwing {
         _tabbedPaneLightState.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelLightStateLocalVariable);
         _tabbedPaneLightState.addTab(NamedBeanAddressing.Formula.toString(), _panelLightStateFormula);
         
-        stateComboBox = new JComboBox<>();
+        _stateComboBox = new JComboBox<>();
         for (ActionLight.LightState e : ActionLight.LightState.values()) {
-            stateComboBox.addItem(e);
+            _stateComboBox.addItem(e);
         }
         
-        _panelLightStateDirect.add(stateComboBox);
+        _panelLightStateDirect.add(_stateComboBox);
         
         _lightStateReferenceTextField = new JTextField();
         _lightStateReferenceTextField.setColumns(30);
@@ -131,7 +131,7 @@ public class ActionLightSwing extends AbstractDigitalActionSwing {
                 case Formula: _tabbedPaneLightState.setSelectedComponent(_panelLightStateFormula); break;
                 default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
             }
-            stateComboBox.setSelectedItem(action.getBeanState());
+            _stateComboBox.setSelectedItem(action.getBeanState());
             _lightStateReferenceTextField.setText(action.getStateReference());
             _lightStateLocalVariableTextField.setText(action.getStateLocalVariable());
             _lightStateFormulaTextField.setText(action.getStateFormula());
@@ -236,7 +236,7 @@ public class ActionLightSwing extends AbstractDigitalActionSwing {
             
             if (_tabbedPaneLightState.getSelectedComponent() == _panelLightStateDirect) {
                 action.setStateAddressing(NamedBeanAddressing.Direct);
-                action.setBeanState((ActionLight.LightState)stateComboBox.getSelectedItem());
+                action.setBeanState(_stateComboBox.getItemAt(_stateComboBox.getSelectedIndex()));
             } else if (_tabbedPaneLightState.getSelectedComponent() == _panelLightStateReference) {
                 action.setStateAddressing(NamedBeanAddressing.Reference);
                 action.setStateReference(_lightStateReferenceTextField.getText());

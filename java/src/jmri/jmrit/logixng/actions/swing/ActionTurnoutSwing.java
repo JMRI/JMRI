@@ -35,7 +35,7 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
     private JTextField _turnoutFormulaTextField;
     
     private JTabbedPane _tabbedPaneTurnoutState;
-    private JComboBox<TurnoutState> stateComboBox;
+    private JComboBox<TurnoutState> _stateComboBox;
     private JPanel _panelTurnoutStateDirect;
     private JPanel _panelTurnoutStateReference;
     private JPanel _panelTurnoutStateLocalVariable;
@@ -89,12 +89,12 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
         _tabbedPaneTurnoutState.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelTurnoutStateLocalVariable);
         _tabbedPaneTurnoutState.addTab(NamedBeanAddressing.Formula.toString(), _panelTurnoutStateFormula);
         
-        stateComboBox = new JComboBox<>();
+        _stateComboBox = new JComboBox<>();
         for (TurnoutState e : TurnoutState.values()) {
-            stateComboBox.addItem(e);
+            _stateComboBox.addItem(e);
         }
         
-        _panelTurnoutStateDirect.add(stateComboBox);
+        _panelTurnoutStateDirect.add(_stateComboBox);
         
         _turnoutStateReferenceTextField = new JTextField();
         _turnoutStateReferenceTextField.setColumns(30);
@@ -131,7 +131,7 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
                 case Formula: _tabbedPaneTurnoutState.setSelectedComponent(_panelTurnoutStateFormula); break;
                 default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
             }
-            stateComboBox.setSelectedItem(action.getBeanState());
+            _stateComboBox.setSelectedItem(action.getBeanState());
             _turnoutStateReferenceTextField.setText(action.getStateReference());
             _turnoutStateLocalVariableTextField.setText(action.getStateLocalVariable());
             _turnoutStateFormulaTextField.setText(action.getStateFormula());
@@ -236,7 +236,7 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
             
             if (_tabbedPaneTurnoutState.getSelectedComponent() == _panelTurnoutStateDirect) {
                 action.setStateAddressing(NamedBeanAddressing.Direct);
-                action.setBeanState((TurnoutState)stateComboBox.getSelectedItem());
+                action.setBeanState(_stateComboBox.getItemAt(_stateComboBox.getSelectedIndex()));
             } else if (_tabbedPaneTurnoutState.getSelectedComponent() == _panelTurnoutStateReference) {
                 action.setStateAddressing(NamedBeanAddressing.Reference);
                 action.setStateReference(_turnoutStateReferenceTextField.getText());

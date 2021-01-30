@@ -42,7 +42,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Shutdown computer ::: Log error%n");
+        return String.format("Shutdown computer: Shut down JMRI ::: Log error%n");
     }
     
     @Override
@@ -51,7 +51,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Shutdown computer ::: Log error%n");
+                "         Shutdown computer: Shut down JMRI ::: Log error%n");
     }
     
     @Override
@@ -112,8 +112,25 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
     @Test
     public void testExecute() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         ShutdownComputer action = new ShutdownComputer("IQDA321", null);
+        
+        action.setOperation(ShutdownComputer.Operation.ShutdownComputer);
         action.execute();
         Assert.assertEquals(MockShutDownManager.Result.SHUTDOWN_OS, mockShutDownManager.result);
+        JUnitAppender.assertErrorMessage("Shutdown failed");
+        
+        action.setOperation(ShutdownComputer.Operation.RebootComputer);
+        action.execute();
+        Assert.assertEquals(MockShutDownManager.Result.RESTART_OS, mockShutDownManager.result);
+        JUnitAppender.assertErrorMessage("Shutdown failed");
+        
+        action.setOperation(ShutdownComputer.Operation.ShutdownJMRI);
+        action.execute();
+        Assert.assertEquals(MockShutDownManager.Result.SHUTDOWN_JMRI, mockShutDownManager.result);
+        JUnitAppender.assertErrorMessage("Shutdown failed");
+        
+        action.setOperation(ShutdownComputer.Operation.RebootJMRI);
+        action.execute();
+        Assert.assertEquals(MockShutDownManager.Result.RESTART_JMRI, mockShutDownManager.result);
         JUnitAppender.assertErrorMessage("Shutdown failed");
     }
     
@@ -163,9 +180,9 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
     private static class MockShutDownManager extends DefaultShutDownManager {
         
         public enum Result {
-            SHUTDOWN,
+            SHUTDOWN_JMRI,
             SHUTDOWN_OS,
-            RESTART,
+            RESTART_JMRI,
             RESTART_OS,
         }
         
@@ -173,13 +190,13 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         
         @Override
         public boolean shutdown() {
-            result = Result.SHUTDOWN;
+            result = Result.SHUTDOWN_JMRI;
             return true;
         }
 
         @Override
         public boolean restart() {
-            result = Result.RESTART;
+            result = Result.RESTART_JMRI;
             return true;
         }
 

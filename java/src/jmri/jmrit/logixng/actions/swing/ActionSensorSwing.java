@@ -241,7 +241,7 @@ public class ActionSensorSwing extends AbstractDigitalActionSwing {
             
             if (_tabbedPaneSensorState.getSelectedComponent() == _panelSensorStateDirect) {
                 action.setStateAddressing(NamedBeanAddressing.Direct);
-                action.setBeanState((ActionSensor.SensorState)_stateComboBox.getSelectedItem());
+                action.setBeanState(_stateComboBox.getItemAt(_stateComboBox.getSelectedIndex()));
             } else if (_tabbedPaneSensorState.getSelectedComponent() == _panelSensorStateReference) {
                 action.setStateAddressing(NamedBeanAddressing.Reference);
                 action.setStateReference(_sensorStateReferenceTextField.getText());
