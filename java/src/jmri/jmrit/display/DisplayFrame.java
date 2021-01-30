@@ -16,8 +16,8 @@ import org.slf4j.LoggerFactory;
  * <p>
  * <a href="doc-files/DisplayFrame-ClassDiagram.png"><img src="doc-files/DisplayFrame-ClassDiagram.png" alt="UML Class diagram" height="50%" width="50%"></a>
  *
- * @author Egbert Broerse Copyright (c) 2017
- */
+ * @author Egbert Broerse Copyright (c) 2017, 2021
+ **/
 /*
 @startuml jmri/jmrit/display/doc-files/DisplayFrame-ClassDiagram.png
 
@@ -139,6 +139,7 @@ public class DisplayFrame extends JmriJFrame {
      * when the preview color has changed.
      * Children of this class should override if there are several other
      * members with separate preview panels.  e.g. ItemPalette
+     * But prevent a loop when calling super in that process (bug in 4.21.3; fixed in 4.21.4)
      * 
      * @param index index of selection in _backgrounds array
      */
@@ -212,6 +213,7 @@ public class DisplayFrame extends JmriJFrame {
     /**
      * Resizes this frame to accommodate the size of the tab panel when tab is changed.
      * Otherwise it may force the tab panel to use scrollbars or be far oversized.
+     * As a trade off to keep right mouse arrow in same place for ItemPalette accept frame is wider in few cases.
      * 
      * @param container Container to be resized
      * @param deltaDim Size difference of container with old contents
