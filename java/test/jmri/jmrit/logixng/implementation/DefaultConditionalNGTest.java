@@ -78,29 +78,10 @@ public class DefaultConditionalNGTest {
         conditionalNG.execute();
         Assert.assertTrue("Action is executed", action.hasExecuted);
         
-//        action.throwOnExecute = true;
-//        action.hasExecuted = false;
-//        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.SHOW_DIALOG_BOX);
-//        conditionalNG.execute();
-//        JUnitAppender.assertErrorMessage("An exception has occured during execute: IQC123");
-        
         action.throwOnExecute = true;
         action.hasExecuted = false;
-        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogError);
-        conditionalNG.execute();
-        JUnitAppender.assertErrorMessage("ConditionalNG IQC123 got an exception during execute: jmri.JmriException: An error has occured");
-        
-        action.throwOnExecute = true;
-        action.hasExecuted = false;
-        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogErrorOnce);
         conditionalNG.execute();
         JUnitAppender.assertWarnMessage("ConditionalNG IQC123 got an exception during execute: jmri.JmriException: An error has occured");
-        
-        action.throwOnExecute = true;
-        action.hasExecuted = false;
-        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
-        conditionalNG.execute();
-        JUnitAppender.assertErrorMessage("ConditionalNG IQC123 got an exception during execute: jmri.JmriException: An error has occured");
     }
     
     @Test
@@ -108,20 +89,6 @@ public class DefaultConditionalNGTest {
         DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
         Assert.assertEquals("Short description is correct", "ConditionalNG: IQC123", conditionalNG.getShortDescription());
         Assert.assertEquals("Long description is correct", "ConditionalNG: IQC123", conditionalNG.getLongDescription());
-    }
-    
-    @Test
-    public void testErrorHandlingType() {
-        DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
-        Assert.assertEquals("Error handling type is correct", MaleSocket.ErrorHandlingType.LogError, conditionalNG.getErrorHandlingType());
-        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.ShowDialogBox);
-        Assert.assertEquals("Error handling type is correct", MaleSocket.ErrorHandlingType.ShowDialogBox, conditionalNG.getErrorHandlingType());
-        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogError);
-        Assert.assertEquals("Error handling type is correct", MaleSocket.ErrorHandlingType.LogError, conditionalNG.getErrorHandlingType());
-        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogErrorOnce);
-        Assert.assertEquals("Error handling type is correct", MaleSocket.ErrorHandlingType.LogErrorOnce, conditionalNG.getErrorHandlingType());
-        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
-        Assert.assertEquals("Error handling type is correct", MaleSocket.ErrorHandlingType.ThrowException, conditionalNG.getErrorHandlingType());
     }
     
     // The minimal setup for log4J

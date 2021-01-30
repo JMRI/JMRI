@@ -27,9 +27,19 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     private final BaseManager<? extends NamedBean> _manager;
     private Base _parent;
     private ErrorHandlingType _errorHandlingType = ErrorHandlingType.LogError;
+    private boolean _catchAbortExecution;
     
     public AbstractMaleSocket(BaseManager<? extends NamedBean> manager) {
         _manager = manager;
+    }
+    
+    public boolean getCatchAbortExecution() {
+        return _catchAbortExecution;
+    }
+    
+    public void setCatchAbortExecution(boolean catchAbortExecution)
+    {
+        _catchAbortExecution = catchAbortExecution;
     }
     
     @Override
@@ -282,7 +292,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     public void handleError(Base item, String message, JmriException e, Logger log) throws JmriException {
         
         // Always throw AbortConditionalNGExecutionException exceptions
-        if (e instanceof AbortConditionalNGExecutionException) throw e;
+        if (!_catchAbortExecution && (e instanceof AbortConditionalNGExecutionException)) throw e;
         
         ErrorHandlingType errorHandlingType = _errorHandlingType;
         if (errorHandlingType == ErrorHandlingType.Default) {

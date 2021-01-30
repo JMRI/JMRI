@@ -688,16 +688,14 @@ public class TreeEditor extends TreeViewer {
         panel5.setLayout(new FlowLayout());
         
         // Get panel for the item
-        JPanel panel33;
-        JPanel panel34 = new JPanel();
-        panel34.setLayout(new BoxLayout(panel34, BoxLayout.Y_AXIS));
         _swingConfiguratorInterfaceList.clear();
+        List<JPanel> panels = new ArrayList<>();
         if (femaleSocket.isConnected()) {
             Base object = femaleSocket.getConnectedSocket();
             while (object instanceof MaleSocket) {
                 SwingConfiguratorInterface swi =
                         SwingTools.getSwingConfiguratorForClass(object.getClass());
-                panel34.add(swi.getConfigPanel(object, panel5));
+                panels.add(swi.getConfigPanel(object, panel5));
                 _swingConfiguratorInterfaceList.add(new HashMap.SimpleEntry<>(swi, object));
                 object = ((MaleSocket)object).getObject();
             }
@@ -705,24 +703,33 @@ public class TreeEditor extends TreeViewer {
                 _editSwingConfiguratorInterface =
                         SwingTools.getSwingConfiguratorForClass(object.getClass());
                 _editSwingConfiguratorInterface.setFrame(this);
-                panel33 = _editSwingConfiguratorInterface.getConfigPanel(object, panel5);
+                panels.add(_editSwingConfiguratorInterface.getConfigPanel(object, panel5));
                 _swingConfiguratorInterfaceList.add(new HashMap.SimpleEntry<>(_editSwingConfiguratorInterface, object));
             } else {
                 // 'object' should be an action or expression but is null
-                panel33 = new JPanel();
-                panel33.add(new JLabel("Error: femaleSocket.getConnectedSocket().getObject().getObject()....getObject() doesn't return a non MaleSocket"));
+                JPanel panel = new JPanel();
+                panel.add(new JLabel("Error: femaleSocket.getConnectedSocket().getObject().getObject()....getObject() doesn't return a non MaleSocket"));
+                panels.add(panel);
                 log.error("femaleSocket.getConnectedSocket().getObject().getObject()....getObject() doesn't return a non MaleSocket");
             }
         } else {
-            panel33 = _addSwingConfiguratorInterface.getConfigPanel(panel5);
+            panels.add(_addSwingConfiguratorInterface.getConfigPanel(panel5));
             
             Class<? extends MaleSocket> maleSocketClass =
                     _addSwingConfiguratorInterface.getManager().getMaleSocketClass();
             _addSwingConfiguratorInterfaceMaleSocket =
                     SwingTools.getSwingConfiguratorForClass(maleSocketClass);
-            panel34 = _addSwingConfiguratorInterfaceMaleSocket.getConfigPanel(panel5);
+            panels.add(_addSwingConfiguratorInterfaceMaleSocket.getConfigPanel(panel5));
         }
-        panel3.add(panel33);
+        JPanel panel34 = new JPanel();
+        panel34.setLayout(new BoxLayout(panel34, BoxLayout.Y_AXIS));
+        for (int i = panels.size()-1; i >= 0; i--) {
+            JPanel panel = panels.get(i);
+            if (panel.getComponentCount() > 0) {
+                panel34.add(Box.createVerticalStrut(30));
+                panel34.add(panel);
+            }
+        }
         panel3.add(panel34);
         contentPanel.add(panel3);
         

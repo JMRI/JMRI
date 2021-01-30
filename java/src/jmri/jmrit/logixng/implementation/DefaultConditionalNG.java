@@ -11,6 +11,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.swing.ErrorHandlingDialog;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.*;
 
@@ -24,7 +25,6 @@ public class DefaultConditionalNG extends AbstractBase
     
     private final LogixNG_Thread _thread;
     private int _startupThreadId;
-    private MaleSocket.ErrorHandlingType _errorHandlingType = MaleSocket.ErrorHandlingType.LogError;
     private Base _parent = null;
     private String _socketSystemName = null;
     private final FemaleDigitalActionSocket _femaleSocket;
@@ -129,26 +129,12 @@ public class DefaultConditionalNG extends AbstractBase
                         
                         try {
                             setSymbolTable(newSymbolTable);
-                            
                             _femaleSocket.execute();
                         } catch (JmriException | RuntimeException e) {
-                            switch (_errorHandlingType) {
-                                case LogErrorOnce:
-                                    LoggingUtil.warnOnce(log, "ConditionalNG {} got an exception during execute: {}",
-                                            getSystemName(), e, e);
-                                    break;
-                                    
-//                                case SHOW_DIALOG_BOX:
-//                                    InstanceManager.getDefault(ErrorHandlerManager.class)
-//                                            .notifyError(this, Bundle.getMessage("ExceptionExecute", getSystemName(), e), e);
-//                                    break;
-                                    
-                                case LogError:
-                                    // fall through
-                                default:
-                                    log.error("ConditionalNG {} got an exception during execute: {}",
-                                            getSystemName(), e, e);
-                            }
+//                            LoggingUtil.warnOnce(log, "ConditionalNG {} got an exception during execute: {}",
+//                                    getSystemName(), e, e);
+                            log.warn("ConditionalNG {} got an exception during execute: {}",
+                                    getSystemName(), e, e);
                         }
                         
                         setSymbolTable(newSymbolTable.getPrevSymbolTable());
@@ -262,15 +248,6 @@ public class DefaultConditionalNG extends AbstractBase
         return 1;
     }
 
-    public MaleSocket.ErrorHandlingType getErrorHandlingType() {
-        return _errorHandlingType;
-    }
-    
-    public void setErrorHandlingType(MaleSocket.ErrorHandlingType errorHandlingType)
-    {
-        _errorHandlingType = errorHandlingType;
-    }
-    
     @Override
     public Category getCategory() {
         throw new UnsupportedOperationException("Not supported.");
