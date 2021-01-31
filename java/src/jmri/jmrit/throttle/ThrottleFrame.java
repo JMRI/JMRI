@@ -17,9 +17,11 @@ import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
@@ -28,6 +30,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
+
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
@@ -40,6 +43,7 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.iharder.dnd.URIDrop;
 import jmri.util.iharder.dnd.URIDrop.Listener;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -392,10 +396,10 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         // #JYNSTRUMENT# Bellow prepare drag'n drop receptacle:
         new URIDrop(this, new Listener() {
             @Override
-            public void URIsDropped(java.net.URI[] files) {
+            public void URIsDropped(URI[] uris) {
                 if (isEditMode) {
-                    for (java.net.URI file : files) {
-                        ynstrument(file.getPath());
+                    for (URI uri : uris ) {
+                        ynstrument(new File(uri).getPath());
                     }
                 }
             }

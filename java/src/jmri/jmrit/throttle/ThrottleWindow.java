@@ -11,9 +11,12 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
@@ -22,6 +25,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
@@ -32,6 +36,7 @@ import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.iharder.dnd.URIDrop;
 import jmri.util.iharder.dnd.URIDrop.Listener;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -290,9 +295,9 @@ public class ThrottleWindow extends JmriJFrame {
         // Receptacle for Jynstruments
         new URIDrop(throttleToolBar, new Listener() {
             @Override
-            public void URIsDropped(java.net.URI[] files) {
-                for (int i = 0; i < files.length; i++) {
-                    ynstrument(files[i].getPath());
+            public void URIsDropped(URI[] uris) {
+                for (URI uri : uris ) {
+                    ynstrument(new File(uri).getPath());
                 }
             }
         });
