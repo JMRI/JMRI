@@ -384,12 +384,12 @@
         
         <tr>
         <td>Unknown</td>
-        <td>Inconsistent</td>
+        <td>Inconsistent <span class="since">since 4.21.5</span></td>
         </tr>
         
         <tr>
         <td>Inconsistent</td>
-        <td>Inconsistent</td>
+        <td>Inconsistent <span class="since">since 4.21.5</span></td>
         </tr>
         
         </tbody>
@@ -404,6 +404,8 @@
         or from servo travel events.<br>
         
         The Turnout feedback state is determined by both Sensors:
+        
+        <-- Table in same order as 2 Sensor Feedback Unit Tests within AbstractTurnoutTestBase -->
         
         <table style="border: 1px solid gray;" cellpadding="5" cellspacing="5">
         <thead>
@@ -429,51 +431,30 @@
         </tr>
         
         <tr>
-        <td>Active</td>
-        <td>Active</td>
-        <td>Inconsistent</td>
-        </tr>
-        
-        <tr>
         <td>Inactive</td>
         <td>Inactive</td>
         <td>Inconsistent</td>
+        <td>Typical condition for a Turnout mid-throw</td>
         </tr>
         
         <tr>
         <td>Unknown</td>
         <td>Unknown</td>
         <td>Unknown</td>
-        </tr>
-        
-        <tr>
-        <td>Inconsistent</td>
-        <td>Inconsistent</td>
-        <td>Unknown</td>
-        </tr>
-        
-        <tr>
-        <td>Inconsistent</td>
-        <td>Unknown</td>
-        <td>Unknown</td>
+        <td>Typical startup condition</td>
         </tr>
         
         <tr>
         <td>Active</td>
-        <td>Unknown</td>
-        <td>Unknown</td>
-        </tr>
-        
-        <tr>
-        <td>Inactive</td>
-        <td>Unknown</td>
-        <td>Unknown</td>
+        <td>Active</td>
+        <td>Inconsistent</td>
         </tr>
         
         <tr>
         <td>Active</td>
         <td>Inconsistent</td>
         <td>Inconsistent</td>
+        <td>Changed from Unknown > Inconsistent 4.21.5</td>
         </tr>
         
         <tr>
@@ -481,6 +462,65 @@
         <td>Inconsistent</td>
         <td>Inconsistent</td>
         </tr>
+        
+        <tr>
+        <td>Inconsistent</td>
+        <td>Active</td>
+        <td>Inconsistent</td>
+        </tr>
+        
+        <tr>
+        <td>Inconsistent</td>
+        <td>Inactive</td>
+        <td>Inconsistent</td>
+        </tr>
+        
+        <tr>
+        <td>Unknown</td>
+        <td>Active</td>
+        <td>Inconsistent</td>
+        </tr>
+        
+        <tr>
+        <td>Unknown</td>
+        <td>Inactive</td>
+        <td>Inconsistent</td>
+        </tr>
+        
+        <tr>
+        <td>Unknown</td>
+        <td>Inconsistent</td>
+        <td>Inconsistent</td>
+        </tr>
+        
+        <tr>
+        <td>Inconsistent</td>
+        <td>Unknown</td>
+        <td>Inconsistent</td>
+        <td>Changed from Unknown > Inconsistent 4.21.5</td>
+        </tr>
+        
+        
+        
+        <tr>
+        <td>Active</td>
+        <td>Unknown</td>
+        <td>Inconsistent</td>
+        </tr>
+        
+        <tr>
+        <td>Inactive</td>
+        <td>Unknown</td>
+        <td>Inconsistent</td>
+        </tr>
+        
+        <tr>
+        <td>Inconsistent</td>
+        <td>Inconsistent</td>
+        <td>Inconsistent</td>
+        <td>Changed from Unknown > Inconsistent 4.21.5</td>
+        </tr>
+        
         
         </tbody>
         </table>
