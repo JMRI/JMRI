@@ -531,8 +531,6 @@ public class TreeEditor extends TreeViewer {
                         _treePane._femaleRootSocket.getConditionalNG(),
                         () -> {
                             
-                    _treePane._femaleRootSocket.unregisterListeners();
-                    
                     List<String> errorMessages = new ArrayList<>();
                     
                     boolean isValid = true;
@@ -551,6 +549,8 @@ public class TreeEditor extends TreeViewer {
                     
                     if (isValid) {
                         ThreadingUtil.runOnGUIEventually(() -> {
+                            femaleSocket.unregisterListeners();
+                            
                             Base object = femaleSocket.getConnectedSocket().getObject();
                             ((NamedBean)object).setUserName(_addUserName.getText());
                             ((NamedBean)object).setComment(_addComment.getText());
@@ -568,6 +568,8 @@ public class TreeEditor extends TreeViewer {
                             _editActionExpressionDialog.dispose();
                             _editActionExpressionDialog = null;
                             _treePane._tree.updateUI();
+                            
+                            if (femaleSocket.isActive()) femaleSocket.registerListeners();
                         });
                     } else {
                         StringBuilder errorMsg = new StringBuilder();
@@ -581,9 +583,6 @@ public class TreeEditor extends TreeViewer {
                                     Bundle.getMessage("ValidateErrorTitle"),
                                     JOptionPane.ERROR_MESSAGE);
                         });
-                    }
-                    if (_treePane._femaleRootSocket.isActive()) {
-                        _treePane._femaleRootSocket.registerListeners();
                     }
                 });
             });

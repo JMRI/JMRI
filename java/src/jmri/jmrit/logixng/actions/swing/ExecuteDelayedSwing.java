@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.actions.swing;
 
+import java.awt.GridBagConstraints;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
@@ -18,8 +19,11 @@ import jmri.jmrit.logixng.util.TimerUnit;
  */
 public class ExecuteDelayedSwing extends AbstractDigitalActionSwing {
 
-    private JFormattedTextField _timerDelay;
+    private final JLabel _unitLabel = new JLabel(Bundle.getMessage("ExecuteDelayedSwing_Unit"));
     private JComboBox<TimerUnit> _unit;
+    private final JLabel _timerDelayLabel = new JLabel(Bundle.getMessage("ExecuteDelayedSwing_TimerDelay"));
+    private JFormattedTextField _timerDelay;
+    private final JLabel _resetIfAlreadyStartedLabel = new JLabel(Bundle.getMessage("ExecuteDelayedSwing_ResetIfAlreadyStarted"));
     private JCheckBox _resetIfAlreadyStarted;
     
     @Override
@@ -31,32 +35,43 @@ public class ExecuteDelayedSwing extends AbstractDigitalActionSwing {
         ExecuteDelayed action = (ExecuteDelayed)object;
         
         panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setLayout(new java.awt.GridBagLayout());
+        java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.anchor = java.awt.GridBagConstraints.EAST;
+        panel.add(_unitLabel, c);
         
+        c.gridx = 1;
         _unit = new JComboBox<>();
         for (TimerUnit u : TimerUnit.values()) _unit.addItem(u);
         if (action != null) _unit.setSelectedItem(action.getUnit());
+        panel.add(_unit, c);
         
-        panel.add(_unit);
+        c.gridx = 0;
+        c.gridy = 1;
+        panel.add(_timerDelayLabel, c);
         
-        JPanel timerDelaysPanel = new JPanel();
-        timerDelaysPanel.setLayout(new BoxLayout(timerDelaysPanel, BoxLayout.Y_AXIS));
-        timerDelaysPanel.add(new JLabel(Bundle.getMessage("ExecuteDelayedSwing_TimerDelay")));
-        
+        c.gridx = 1;
+        c.fill = GridBagConstraints.HORIZONTAL;
         _timerDelay = new JFormattedTextField("0");
         _timerDelay.setColumns(7);
         if (action != null) _timerDelay.setText(Integer.toString(action.getDelay()));
-        timerDelaysPanel.add(_timerDelay);
-        panel.add(timerDelaysPanel);
+        _resetIfAlreadyStartedLabel.setLabelFor(_timerDelay);
+        panel.add(_timerDelay, c);
         
-        JPanel resetIfAlreadyStartedPanel = new JPanel();
-        resetIfAlreadyStartedPanel.setLayout(new BoxLayout(resetIfAlreadyStartedPanel, BoxLayout.Y_AXIS));
-        resetIfAlreadyStartedPanel.add(new JLabel(Bundle.getMessage("ExecuteDelayedSwing_ResetIfAlreadyStarted")));
+        c.gridx = 0;
+        c.gridy = 2;
+        panel.add(_resetIfAlreadyStartedLabel, c);
         
+        c.gridx = 1;
+        c.fill = GridBagConstraints.HORIZONTAL;
         _resetIfAlreadyStarted = new JCheckBox();
         if (action != null) _resetIfAlreadyStarted.setSelected(action.getResetIfAlreadyStarted());
-        resetIfAlreadyStartedPanel.add(_resetIfAlreadyStarted);
-        panel.add(resetIfAlreadyStartedPanel);
+        _resetIfAlreadyStartedLabel.setLabelFor(_resetIfAlreadyStarted);
+        panel.add(_resetIfAlreadyStarted, c);
     }
     
     /** {@inheritDoc} */

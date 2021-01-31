@@ -69,11 +69,14 @@ public class ExecuteDelayed
             @Override
             public void execute() {
                 try {
-                    long currentTimerTime = System.currentTimeMillis() - _timerStart;
-                    if (currentTimerTime < _timerDelay) {
-                        scheduleTimer(_timerDelay - currentTimerTime);
-                    } else {
-                        getConditionalNG().execute(_socket);
+                    synchronized(ExecuteDelayed.this) {
+                        _timerTask = null;
+                        long currentTimerTime = System.currentTimeMillis() - _timerStart;
+                        if (currentTimerTime < _timerDelay) {
+                            scheduleTimer(_timerDelay - currentTimerTime);
+                        } else {
+                            getConditionalNG().execute(_socket);
+                        }
                     }
                 } catch (Exception e) {
                     log.error("Exception thrown", e);
@@ -91,7 +94,6 @@ public class ExecuteDelayed
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        if (getConditionalNG() == null) throw new RuntimeException("Daniel AAAA");
         synchronized(this) {
             if (_timerTask != null) {
                 if (_resetIfAlreadyStarted) _timerTask.stopTimer();
