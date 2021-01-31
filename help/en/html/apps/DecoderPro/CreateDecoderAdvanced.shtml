@@ -963,7 +963,7 @@ selects the different algorithm needed here.
     &lt;/variable&gt;
       </pre>
 
-      Note that if only one mask is specified, it wall apply to all CVs. 
+      Note that if only one mask is specified, it will apply to all CVs. 
       If fewer masks than CVs are specified, the last mask will apply to the remaining CVs. 
 
       <a name="splitvalExample" id="splitvalExample"></a>
