@@ -516,9 +516,10 @@ public class AutoAllocate implements Runnable {
      *
      * @param sList the possible next Sections
      * @param ar    the section being allocated when a choice is needed
+     * @param sectionSeqNo transit sequence number attempting to be allocated
      * @return the allocated section
      */
-    protected Section autoNextSectionChoice(List<Section> sList, AllocationRequest ar) {
+    protected Section autoNextSectionChoice(List<Section> sList, AllocationRequest ar, int sectionSeqNo) {
         // check if AutoAllocate has prepared for this question
         if ((savedAR != null) && (savedAR == ar)) {
             for (int j = 0; j < sList.size(); j++) {
@@ -556,7 +557,8 @@ public class AutoAllocate implements Runnable {
         // primary is unoccupied, the search will select the primary and
         // we wind up skipping right over our end section.
         for (int i = 0; i < sList.size(); i++) {
-            if (at.getEndBlockSection().getSystemName().equals(sList.get(i).getSystemName())) {
+            if (at.getEndBlockSectionSequenceNumber() == sectionSeqNo
+                     && at.getEndBlockSection().getSystemName().equals(sList.get(i).getSystemName())) {
                 return sList.get(i);
             }
         }

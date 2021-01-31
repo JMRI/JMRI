@@ -55,7 +55,7 @@
     </layoutTrackDrawingOptions>
   </LayoutEditor>
   <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="Control Panel Editor Panel C" x="266" y="500" height="341" width="523" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255" state="0" shapeSelect="yes" />
-  <switchboardeditor class="jmri.jmrit.display.switchboardEditor.configurexml.SwitchboardEditorXml" name="Switchboard Panel D" editable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="none" hideunconnected="no" autoitemrange="yes" rangemin="1" rangemax="24" type="T" connection="I" shape="button" rows="4" total="24" showusername="no" defaulttextcolor="black" redBackground="255" greenBackground="255" blueBackground="255" />
+  <switchboardeditor class="jmri.jmrit.display.switchboardEditor.configurexml.SwitchboardEditorXml" name="Switchboard Panel D" editable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="none" hideunconnected="no" autoitemrange="yes" rangemin="1" rangemax="24" type="T" connection="I" shape="button" rows="4" total="24" showusername="no" iconscale="100" defaulttextcolor="black" activecolor="red" inactivecolor="green" redBackground="255" greenBackground="255" blueBackground="255" />
   <filehistory>
     <operation>
       <type>app</type>
