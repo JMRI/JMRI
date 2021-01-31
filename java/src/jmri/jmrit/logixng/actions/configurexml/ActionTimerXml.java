@@ -9,6 +9,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.ActionTimer;
+import jmri.jmrit.logixng.util.TimerUnit;
 
 import org.jdom2.Element;
 
@@ -69,7 +70,7 @@ public class ActionTimerXml extends jmri.managers.configurexml.AbstractNamedBean
         Element e = new Element("actions");
         for (int i=0; i < p.getNumActions(); i++) {
             e2 = new Element("socket");
-            e2.addContent(new Element("delay").addContent(Long.toString(p.getDelay(i))));
+            e2.addContent(new Element("delay").addContent(Integer.toString(p.getDelay(i))));
             e2.addContent(new Element("socketName").addContent(p.getActionSocket(i).getName()));
             socket = p.getActionSocket(i).getConnectedSocket();
             if (socket != null) {
@@ -157,7 +158,7 @@ public class ActionTimerXml extends jmri.managers.configurexml.AbstractNamedBean
         
         Element unit = shared.getChild("unit");
         if (unit != null) {
-            h.setUnit(ActionTimer.Unit.valueOf(unit.getTextTrim()));
+            h.setUnit(TimerUnit.valueOf(unit.getTextTrim()));
         }
         
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);

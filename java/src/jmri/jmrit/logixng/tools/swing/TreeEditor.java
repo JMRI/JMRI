@@ -713,13 +713,13 @@ public class TreeEditor extends TreeViewer {
                 log.error("femaleSocket.getConnectedSocket().getObject().getObject()....getObject() doesn't return a non MaleSocket");
             }
         } else {
-            panels.add(_addSwingConfiguratorInterface.getConfigPanel(panel5));
-            
             Class<? extends MaleSocket> maleSocketClass =
                     _addSwingConfiguratorInterface.getManager().getMaleSocketClass();
             _addSwingConfiguratorInterfaceMaleSocket =
                     SwingTools.getSwingConfiguratorForClass(maleSocketClass);
             panels.add(_addSwingConfiguratorInterfaceMaleSocket.getConfigPanel(panel5));
+            
+            panels.add(_addSwingConfiguratorInterface.getConfigPanel(panel5));
         }
         JPanel panel34 = new JPanel();
         panel34.setLayout(new BoxLayout(panel34, BoxLayout.Y_AXIS));
