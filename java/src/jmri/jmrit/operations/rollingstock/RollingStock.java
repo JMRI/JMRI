@@ -79,7 +79,6 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     public static final String ERROR_TRACK = "ERROR wrong track for location"; // checks for coding error // NOI18N
 
     public static final String TRACK_CHANGED_PROPERTY = "rolling stock track location"; // NOI18N
-    public static final String DESTINATION_CHANGED_PROPERTY = "rolling stock destination"; // NOI18N
     public static final String DESTINATION_TRACK_CHANGED_PROPERTY = "rolling stock track destination"; // NOI18N
     public static final String TRAIN_CHANGED_PROPERTY = "rolling stock train"; // NOI18N
     public static final String LENGTH_CHANGED_PROPERTY = "rolling stock length"; // NOI18N
@@ -566,7 +565,6 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
                     _location.addPickupRS();
                     _track.addPickupRS(this);
                 }
-
                 // Need to know if destination name changes so we can forward to listeners
                 _destination.addPropertyChangeListener(this);
             }
@@ -579,15 +577,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
                 if (getTrain() != null && getTrain().getRoute() != null) {
                     setLastRouteId(getTrain().getRoute().getId());
                 }
-//                if (getRouteDestination() != null) {
-//                    setMoves(getMoves() + 1);
-//                    setLastDate(java.util.Calendar.getInstance().getTime());
-//                }
                 setRouteLocation(null);
                 setRouteDestination(null);
             }
-
-            setDirtyAndFirePropertyChange(DESTINATION_CHANGED_PROPERTY, oldDestination, destination);
             setDirtyAndFirePropertyChange(DESTINATION_TRACK_CHANGED_PROPERTY, oldTrack, track);
         }
         return Track.OKAY;
@@ -717,7 +709,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     public void setTrain(Train train) {
         Train old = _train;
         _train = train;
-        if ((old != null && !old.equals(train)) || old != train) {
+        if (old != train) {
             if (old != null) {
                 old.removePropertyChangeListener(this);
             }
@@ -759,6 +751,10 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
     }
 
+    /**
+     * Where in a train's route this car resides
+     * @return the location in a train's route
+     */
     public RouteLocation getRouteLocation() {
         return _routeLocation;
     }
@@ -770,6 +766,10 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         return NONE;
     }
 
+    /**
+     * Used to determine which train delivered a car to an interchange track.
+     * @return the route id of the last train delivering this car.
+     */
     public String getLastRouteId() {
         return _routeId;
     }
@@ -990,7 +990,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      * Provides the last date when this rolling stock was moved, or was reset from a
      * built train, as a string.
      *
-     * @return date
+     * @return String MM/dd/yyyy HH:mm:ss
      */
     public String getLastDate() {
         if (_lastDate.equals((new java.util.GregorianCalendar()).getGregorianChange())) {
@@ -998,6 +998,21 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"); // NOI18N
         return format.format(_lastDate);
+    }
+    
+    /**
+     * Sets the last date when this rolling stock was moved, or was reset from a
+     * built train.
+     *
+     * @param date The Date when this rolling stock was last moved.
+     *
+     */
+    public void setLastDate(Date date) {
+        Date old = _lastDate;
+        _lastDate = date;
+        if (!old.equals(_lastDate)) {
+            setDirtyAndFirePropertyChange("rolling stock date", old, date); // NOI18N
+        }
     }
 
     /**
@@ -1042,21 +1057,6 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
                     _lastDate = oldDate; // set the date back to what it was before
                 }
             }
-        }
-    }
-
-    /**
-     * Sets the last date when this rolling stock was moved, or was reset from a
-     * built train.
-     *
-     * @param date The Date when this rolling stock was last moved.
-     *
-     */
-    public void setLastDate(Date date) {
-        Date old = _lastDate;
-        _lastDate = date;
-        if (!old.equals(_lastDate)) {
-            setDirtyAndFirePropertyChange("rolling stock date", old, date); // NOI18N
         }
     }
 
