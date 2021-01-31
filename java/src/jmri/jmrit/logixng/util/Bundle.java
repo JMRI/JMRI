@@ -26,8 +26,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrit.logixng.Bundle {
 
     @CheckForNull
-    private static final String name = null;
-//    private static final String name = "jmri.jmrit.logixng.tools.util.SwingBundle";
+    private static final String name = "jmri.jmrit.logixng.util.UtilBundle";
 
     //
     // below here is boilerplate to be copied exactly

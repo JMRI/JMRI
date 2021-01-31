@@ -74,10 +74,10 @@ public class LogixNG_Thread {
             if (thread == null) {
                 switch (threadID) {
                     case DEFAULT_LOGIXNG_THREAD:
-                        thread = createNewThread(DEFAULT_LOGIXNG_THREAD, Bundle.formatMessage("LogixNG_Thread"));
+                        thread = createNewThread(DEFAULT_LOGIXNG_THREAD, Bundle.getMessage("LogixNG_Thread"));
                         break;
                     case DEFAULT_LOGIXNG_DEBUG_THREAD:
-                        thread = createNewThread(DEFAULT_LOGIXNG_DEBUG_THREAD, Bundle.formatMessage("LogixNG_DebugThread"));
+                        thread = createNewThread(DEFAULT_LOGIXNG_DEBUG_THREAD, Bundle.getMessage("LogixNG_DebugThread"));
                         break;
                     default:
                         throw new IllegalArgumentException(String.format("Thread ID %d does not exists", threadID));

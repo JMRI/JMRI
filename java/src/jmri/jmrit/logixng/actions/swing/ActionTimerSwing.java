@@ -11,6 +11,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.AbstractDigitalAction;
 import jmri.jmrit.logixng.actions.ActionTimer;
+import jmri.jmrit.logixng.util.TimerUnit;
 
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
@@ -21,7 +22,7 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
     
     private JCheckBox _startImmediately;
     private JCheckBox _runContinuously;
-    private JComboBox<ActionTimer.Unit> _unit;
+    private JComboBox<TimerUnit> _unit;
     private JTextField _numTimers;
     private JButton _addTimer;
     private JButton _removeTimer;
@@ -59,7 +60,7 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
         _runContinuously = new JCheckBox(Bundle.getMessage("ActionTimerSwing_RunContinuously"));
         
         _unit = new JComboBox<>();
-        for (ActionTimer.Unit u : ActionTimer.Unit.values()) _unit.addItem(u);
+        for (TimerUnit u : TimerUnit.values()) _unit.addItem(u);
         _unit.setSelectedItem(action.getUnit());
         
         panel.add(_startImmediately);

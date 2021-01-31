@@ -719,6 +719,20 @@ public class StoreAndLoadTest {
         actionManySocket.getChild(index++).connect(maleSocket);
         
         
+        ExecuteDelayed executeDelayed = new ExecuteDelayed(digitalActionManager.getAutoSystemName(), null);
+        executeDelayed.setResetIfAlreadyStarted(false);
+        maleSocket = digitalActionManager.registerAction(executeDelayed);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        executeDelayed = new ExecuteDelayed(digitalActionManager.getAutoSystemName(), null);
+        executeDelayed.setComment("A comment");
+        executeDelayed.setDelay(100);
+        executeDelayed.setResetIfAlreadyStarted(true);
+        maleSocket = digitalActionManager.registerAction(executeDelayed);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        
         For actionFor =
                 new For(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionFor);

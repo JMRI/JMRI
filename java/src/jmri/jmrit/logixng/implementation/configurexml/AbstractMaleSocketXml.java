@@ -35,6 +35,7 @@ public class AbstractMaleSocketXml
         
         Element element = new Element("abstractMaleSocket");
         element.setAttribute("enabled", maleSocket.isEnabled() ? "yes" : "no");  // NOI18N
+        element.setAttribute("catchAbortExecution", maleSocket.getCatchAbortExecution()? "yes" : "no");  // NOI18N
         element.setAttribute("class", this.getClass().getName());
         
         element.addContent(new Element("errorHandling").addContent(maleSocket.getErrorHandlingType().name()));
@@ -65,6 +66,12 @@ public class AbstractMaleSocketXml
             enabled = maleSocketElement.getAttribute("enabled").getValue();  // NOI18N
         }
         ((AbstractMaleSocket)maleSocket).setEnabledFlag("yes".equals(enabled));
+        
+        String catchAbortExecution = "no";
+        if (maleSocketElement.getAttribute("catchAbortExecution") != null) {  // NOI18N
+            catchAbortExecution = maleSocketElement.getAttribute("catchAbortExecution").getValue();  // NOI18N
+        }
+        ((AbstractMaleSocket)maleSocket).setCatchAbortExecution("yes".equals(catchAbortExecution));
         
         Element errorHandlingElement = maleSocketElement.getChild("errorHandling");
         if (errorHandlingElement != null) {

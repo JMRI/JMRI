@@ -63,7 +63,7 @@ public class ActionSimpleScriptTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Execute script ::: Log error%n");
+                "Execute simple script ::: Log error%n");
     }
     
     @Override
@@ -76,7 +76,7 @@ public class ActionSimpleScriptTest extends AbstractDigitalActionTestBase {
                 "            ? If%n" +
                 "               Sensor IS1 is Active ::: Log error%n" +
                 "            ! Then%n" +
-                "               Execute script ::: Log error%n" +
+                "               Execute simple script ::: Log error%n" +
                 "            ! Else%n" +
                 "               Socket not connected%n");
     }
@@ -98,12 +98,12 @@ public class ActionSimpleScriptTest extends AbstractDigitalActionTestBase {
         action2 = new ActionSimpleScript("IQDA321", null);
         Assert.assertNotNull("object exists", action2);
         Assert.assertNull("Username matches", action2.getUserName());
-        Assert.assertEquals("String matches", "Execute script", action2.getLongDescription());
+        Assert.assertEquals("String matches", "Execute simple script", action2.getLongDescription());
         
         action2 = new ActionSimpleScript("IQDA321", "My action");
         Assert.assertNotNull("object exists", action2);
         Assert.assertEquals("Username matches", "My action", action2.getUserName());
-        Assert.assertEquals("String matches", "Execute script", action2.getLongDescription());
+        Assert.assertEquals("String matches", "Execute simple script", action2.getLongDescription());
         
         boolean thrown = false;
         try {
@@ -149,8 +149,8 @@ public class ActionSimpleScriptTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testDescription() {
-        Assert.assertTrue("Execute script".equals(actionScript.getShortDescription()));
-        Assert.assertTrue("Execute script".equals(actionScript.getLongDescription()));
+        Assert.assertTrue("Execute simple script".equals(actionScript.getShortDescription()));
+        Assert.assertTrue("Execute simple script".equals(actionScript.getLongDescription()));
     }
     
     @Test

@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import jmri.jmrit.logixng.util.TimerUnit;
+
 import java.util.*;
 
 import jmri.InstanceManager;
@@ -39,7 +41,7 @@ public class ActionTimer extends AbstractDigitalAction
     private TimerState _timerState = TimerState.Off;
     private boolean _startImmediately = false;
     private boolean _runContinuously = false;
-    private Unit _unit = Unit.MilliSeconds;
+    private TimerUnit _unit = TimerUnit.MilliSeconds;
     private long _currentTimerDelay = 0;
     private long _currentTimerStart = 0;
     
@@ -186,9 +188,9 @@ public class ActionTimer extends AbstractDigitalAction
             ActionEntry ae = _actionEntries.get(_currentTimer);
             if (ae._delay > 0) {
                 synchronized(this) {
-                    _currentTimerDelay = ae._delay * _unit._multiply;
+                    _currentTimerDelay = ae._delay * _unit.getMultiply();
                     _currentTimerStart = System.currentTimeMillis();
-                    scheduleTimer(ae._delay * _unit._multiply);
+                    scheduleTimer(ae._delay * _unit.getMultiply());
                 }
                 return;
             }
@@ -202,7 +204,7 @@ public class ActionTimer extends AbstractDigitalAction
     }
 
     /**
-     * Get the type.
+     * Get the delay.
      * @param actionSocket the socket
      * @return the delay
      */
@@ -211,7 +213,7 @@ public class ActionTimer extends AbstractDigitalAction
     }
     
     /**
-     * Set the type.
+     * Set the delay.
      * @param actionSocket the socket
      * @param delay the delay
      */
@@ -255,7 +257,7 @@ public class ActionTimer extends AbstractDigitalAction
      * Get the unit
      * @return the unit
      */
-    public Unit getUnit() {
+    public TimerUnit getUnit() {
         return _unit;
     }
     
@@ -263,7 +265,7 @@ public class ActionTimer extends AbstractDigitalAction
      * Set the unit
      * @param unit the unit
      */
-    public void setUnit(Unit unit) {
+    public void setUnit(TimerUnit unit) {
         _unit = unit;
     }
     
@@ -517,6 +519,7 @@ public class ActionTimer extends AbstractDigitalAction
         
     }
     
+    
     public static class ActionData {
         private int _delay;
         private String _socketName;
@@ -530,38 +533,13 @@ public class ActionTimer extends AbstractDigitalAction
     }
     
     
-    public enum Unit {
-        MilliSeconds(1, Bundle.getMessage("ActionTimer_UnitMilliSeconds")),
-        Seconds(1000, Bundle.getMessage("ActionTimer_UnitSeconds")),
-        Minutes(1000*60, Bundle.getMessage("ActionTimer_UnitMinutes")),
-        Hours(1000*60*60, Bundle.getMessage("ActionTimer_UnitHours"));
-        
-        private long _multiply;
-        private final String _text;
-        
-        private Unit(long multiply, String text) {
-            this._multiply = multiply;
-            this._text = text;
-        }
-        
-        public long getMultiply() {
-            return _multiply;
-        }
-        
-        @Override
-        public String toString() {
-            return _text;
-        }
-        
-    }
-    
-    
     private enum TimerState {
         Off,
         WaitToRun,
         Running,
         Completed,
     }
+    
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionTimer.class);
 
