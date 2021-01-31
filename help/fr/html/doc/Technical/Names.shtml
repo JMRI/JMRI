@@ -88,14 +88,14 @@ Dans le m&#234;me temps, nous avons besoin d'un nom raccourci, un identifiant vr
 pour nous parler des objets sp&#233;cifiques. &#231;a ne doit pas &#234;tre commode, mais
 nous devons avoir une caract&#233;ristiqu claire de nom pour l'objet et retour. Par exemple,
 nous avons besoin d'une mani&#232;re tr&#232;s sp&#233;cifique pour identifier les "Aiguillage LocoNet 23. 
-Nous appelons ceci "noms de syst&#232;me". Le Code JMRI caract&#233;risera ceux-ci vers et depuis 
+Nous appelons ceci "noms de syst&#232;me." Le Code JMRI caract&#233;risera ceux-ci vers et depuis 
 toutes les informationsdont le mat&#233;riel peut avoir besoin.
 
 <H2>Format du Nom Syst&#232;me</h2>
 
-Un nom syst&#232;me est form&#233; d'un pr&#233;fix court repr&#233;sentant le mat&#233;riel du syst&#232;me,
-suivie d'une seule lettre Majuscule indiquant le type,
-suivi par une cha&#238;ne syst&#232;me type et sp&#233;cifique.
+Un nom syst&#232;me est form&#233; d' un court "pr&#233;fixe de connexion repr&#233;sentant le mat&#233;riel du syst&#232;me,
+suivie d'une seule lettre Majuscule indiquant le type, (ensemble, le "pr&#233;fixe du nom du syst&#232;me")
+ suivi d'un "suffixe" sp&#233;cifique au syst&#232;me et au type identifiant un objet sp&#233;cifique.
 <ul>
         <li>Le pr&#233;fixe de connexion est une simple lettre majuscule ou minuscule, &#233;ventuellement suivie d'un
 	    ou plusieurs chiffres. Par cons&#233;quent, "S", "s", "S2" et "s2" sont tous des exemples de 
@@ -133,7 +133,7 @@ supposition que ceux-ci sont assign&#233;s par ordre num&#233;rique, c'est-&#224
 
 <a name="hardware" id="hardware"></a>
 <h3>Pr&#233;fix Connexion</h3>
-&#192; l'origine, le "pr&#233;fix mat&#233;riel" ( maintenant appel&#233; pr&#233;fix connexion)&#233;tait 
+&#192; l'origine, le "pr&#233;fix mat&#233;riel" ( maintenant appel&#233; pr&#233;fixe de connexion)&#233;tait 
 une simple lettre majuscule identifiant un simple syst&#232;me de connexion: L pour Loconet, N pour NCE, etc.
 Les lettres par d&#233;faut pour ceux-ci sont list&#233;es ci-dessous.
 Ceci est encore de loin l'utilisation la plus courante; La plupart des r&#233;seaux miniatures ont une simple
@@ -149,7 +149,7 @@ le voulez. Si vous avez en avez deux, vous pouvez en appelez un &quot;X&quot; et
 l'autre &quot;Y&quot;. Vous pouvez aussi utiliser une lettre majuscule suivie 
 par des digits, ex: &quot;N1&quot; et &quot;n2&quot;.
 
-<h4>Lettres Syst&#232;me par D&#233;faut</h4>
+<h4>Lettres Connexion par D&#233;faut</h4>
 Notez que certaines d'entre elles sont des espaces r&#233;serv&#233;s, et n'ont pas de mise en &#339;uvre sous-jacente.
 ( Liens avec les pages JMRI pour plus d'informations )
 <ul>
