@@ -22,7 +22,7 @@
 
     <h1><a name="top" id="top">Hardware Support: Using Arduinos with JMRI</a></h1>
     
-    <img src="http://www.motorhomesites.org.uk/railwayImg/JMRIArduinoTitlepic.jpg" 
+    <img src="images/JMRIArduinoTitlepicBrackstone.jpg" 
     alt="Benson Valley Railway" align="middle" height="192" width="360">
     <p style="font-size:60%">Picture Credit:<a href="http://www.motorhomesites.org.uk/railway/JMRI_Arduino_Setup.php" target="_blank">
     http://www.motorhomesites.org.uk</a></p>
@@ -35,7 +35,7 @@
     </p>
     
     <ul class="snav">
-        <li><a href="#intro">Intro</a></li>
+        <li><a href="#intro">Introduction</a></li>
         <li><a href="#connect">Connecting</a></li>
         <li><a href="#using">Using JMRI Features</a></li>
         <li><a href="#example-CMRI">Step-by-Step CMRI Node</a></li>
