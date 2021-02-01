@@ -679,11 +679,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     public String[] getTypeNames() {
-        String[] types = new String[_listTypes.size()];
-        for (int i = 0; i < _listTypes.size(); i++) {
-            types[i] = _listTypes.get(i);
-        }
-        return types;
+        return _listTypes.toArray(new String[0]);
     }
 
     private void setTypeNames(String[] types) {

@@ -44,11 +44,7 @@ public abstract class RollingStockAttribute extends PropertyChangeSupport {
         if (list.isEmpty()) {
             list.addAll(Arrays.asList(getDefaultNames().split(",")));
         }
-        String[] names = new String[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            names[i] = list.get(i);
-        }
-        return names;
+        return list.toArray(new String[0]);
     }
 
     protected String getDefaultNames() {
@@ -56,13 +52,12 @@ public abstract class RollingStockAttribute extends PropertyChangeSupport {
     }
 
     public void setNames(String[] names) {
-        if (names.length == 0) {
-            return;
-        }
-        java.util.Arrays.sort(names);
-        for (String name : names) {
-            if (!list.contains(name)) {
-                list.add(name);
+        if (names.length > 0) {
+            java.util.Arrays.sort(names);
+            for (String name : names) {
+                if (!list.contains(name)) {
+                    list.add(name);
+                }
             }
         }
     }
@@ -95,6 +90,10 @@ public abstract class RollingStockAttribute extends PropertyChangeSupport {
             }
         }
     }
+    
+    public void sort() {
+        java.util.Collections.sort(list);
+    }
 
     public void addName(String name) {
         if (name == null) {
@@ -103,8 +102,8 @@ public abstract class RollingStockAttribute extends PropertyChangeSupport {
         if (list.contains(name)) {
             return;
         }
-        // insert at start of list, sort on restart
-        list.add(0, name);
+        list.add(name);
+        sort();
         maxNameLength = 0; // reset maximum name length
         maxNameSubStringLength = 0;
     }
