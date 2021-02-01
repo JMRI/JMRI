@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+  <head>
+        <title>
+            JMRI: Profile Directory Tutorial
+        </title>
+        <meta name="author" content="YOUR NAME HERE">
+        <meta name="keywords" content="SOME KEYWORDS">
+
+        <!--#include virtual="/Style.shtml" -->
+  </head>
+  <body>
+        <!--#include virtual="/Header.shtml" -->
+        <div id="mBody">
+            <!--#include virtual="Sidebar.shtml" --> <!-- select the local or global Sidebar file -->
+            <div id="mainContent">
+
+      <h1>JMRI : Tutoriel sur le r&#233;pertoire des profils</h1>
+
+                <p>
+                    Cette page est un tutoriel sur la fa&#231;on dont JMRI stocke et acc&#232;de
+                    les pr&#233;f&#233;rences et les informations sur le profil.
+
+
+                <h2>Localisation et contenu</h2>
+                <dl>Emplacement des r&#233;glages (nom portable = "r&#233;glages :")</dt>
+                    <dd>
+                        C'est le seul emplacement fixe et il est d&#233;termin&#233; par le type de syst&#232;me d'exploitation sous-jacent et votre nom d'utilisateur connect&#233;.
+                        C'est un endroit connu où le programme JMRI peut toujours chercher et trouver les fichiers de configuration essentiels qui lui indiquent où se trouve tout le reste.
+                        <p></p>Les fichiers/dossiers suivants sont toujours situ&#233;s ici:</p>
+                        <dl>
+                            <dt>nodeIdentity.xml</dt>
+                            <dd>
+                                Ce fichier contient une cha&#238;ne nodeIdentity unique qui est g&#233;n&#233;r&#233;e la premi&#232;re fois que JMRI utilise cet emplacement de param&#232;tres,
+                                il ne change pas et sert &#224; distinguer d'autres lieux de r&#233;glage possibles
+                                (par exemple sous un autre nom d'utilisateur, sur une partition de syst&#232;me d'exploitation diff&#233;rente ou sur un autre ordinateur).
+                            </dd>
+                            <dt>profils.xml</dt>
+                            <dd>
+                                Ce fichier contient le nom de chaque dossier de profil connu de cette instance de JMRI et son emplacement.
+                                Il contient &#233;galement une liste de tous les chemins d'acc&#232;s que vous souhaitez utiliser pour rechercher des profils et le chemin d'acc&#232;s par d&#233;faut pour les profils nouvellement cr&#233;&#233;s.
+                                "settings :" est toujours recherch&#233; mais il n'est pas n&#233;cessaire qu'il soit le chemin par d&#233;faut.
+                            </dd>
+                            <dt>pr&#233;f&#233;rences</dt>
+                            <dd>
+                                Ce r&#233;pertoire contient les pr&#233;f&#233;rences qui sont conserv&#233;es sur l'ordinateur pour &#234;tre utilis&#233;es dans tous les profils d'application JMRI.
+                                S'il n'est pas pr&#233;sent, aucune pr&#233;f&#233;rence s'appliquant &#224; tous les profils n'a &#233;t&#233; &#233;crite.
+                            </dd>
+                            <dt>log</dt>
+                            <dd>Ce dossier contient les fichiers "session.log" et "messages.log", ainsi que plusieurs versions ant&#233;rieures de ces fichiers.
+                            </dd>
+                            <dt>DecoderProConfig3.properties</dt>
+                            <dt>PanelProConfig2.properties</dt>
+                            <dt>SoundProConfig2.properties</dt>
+                            <dd>
+                                Ces fichiers sont cr&#233;&#233;s lors de la premi&#232;re ex&#233;cution de chacune des applications et contiennent simplement trois &#233;l&#233;ments d'information :
+                                <ul>
+                                    <li>Le nom du dernier dossier de profil utilis&#233; par cette application.
+                                    <li>La raison pour laquelle vous souhaitez que l'application d&#233;marre automatiquement avec le dernier dossier de profil utilis&#233;
+                                    <li>Combien de temps pour afficher la case de s&#233;lection du profil si vous choisissez de ne pas d&#233;marrer automatiquement.
+                                </ul></dd>
+                            <dt>Autres fichiers/dossiers:</dt>
+                            <dd> Les &#233;l&#233;ments suivants peuvent &#234;tre pr&#233;sents, mais ne doivent pas n&#233;cessairement l'&#234;tre :
+                                <ul>
+                                    <li>Dossiers de profils vari&#233;s que vous avez cr&#233;&#233;s. À partir de la version 4.13.4, les dossiers de profil nouvellement cr&#233;&#233;s auront une extension ".jmri".
+                                    <li>Vos dossiers d'utilisateurs - panneaux etc.
+                                    <li>Votre dossier "roster" et son fichier (recr&#233;able) roster.xml.
+                                </ul></dd>
+                        </dl></dd>
+
+                    <dt>Lieu du profil (nom portable = "profil :")</dt>
+                    <dd>Ce dossier est celui choisi par le m&#233;canisme de s&#233;lection de profil pour la session JMRI en cours.
+                        <p>
+                            Le dossier "profile" &#224; l'emplacement "profile : location" contient les fichiers "profile.xml" et "profile.properties".
+                            et un ou plusieurs dossiers sp&#233;cifiques aux n&#339;uds qui commencent par "jmri-".
+                        </p>
+                        <p>
+                            Les dossiers sp&#233;cifiques aux n&#339;uds contiennent les versions locales de "profile.xml", "profile.properties" et "user-interface.xml".
+                            Le fichier "user-interface.xml" contient des informations sur la taille et la position des fen&#234;tres, la largeur des colonnes, etc.
+                        </p>
+
+                        <p>Autres fichiers/dossiers :
+                        <ul>
+                            <li>Autres dossiers de pr&#233;f&#233;rences sp&#233;cifiques (&#233;tranglement, etc.)
+                        </ul>
+                        Les personnes suivantes peuvent &#234;tre pr&#233;sentes, mais ne sont pas oblig&#233;es de l'&#234;tre :
+                        <ul>
+                            <li>Vos fichiers utilisateurs - panneaux etc.
+                            <li>Votre dossier "roster" et son fichier (recr&#233;able) roster.xml.
+                        </ul>
+                    </dd>
+
+                    <dt>User Files Location (portable name = "preference :")</dt>
+                    <dd>Ce lieu contient :
+                        <ul>
+                            <li>Vos fichiers utilisateurs - panneaux etc.
+                        </ul>
+                        Les personnes suivantes peuvent &#234;tre pr&#233;sentes, mais ne sont pas oblig&#233;es de l'&#234;tre :
+                        <ul>
+                            <li>Votre dossier "roster" et son fichier (recr&#233;able) roster.xml.
+                        </ul>
+                        <p>Vous &#234;tes libre de changer l'emplacement des fichiers utilisateur comme vous le souhaitez (Pr&#233;f&#233;rences->Lieux des fichiers).</p>
+                    </dd>
+
+                    <dt>Localisation du fichier</dt>
+                    <dd>Ce lieu contient :
+                        <ul>
+                            <li>
+                                Un fichier "roster.xml", qui est un index (recr&#233;able) des fichiers XML dans le dossier "roster".
+                                Vous devez cr&#233;er/recr&#233;er "roster.xml" (Actions->Recreate Roster Index) s'il est manquant ou si vous rencontrez des probl&#232;mes avec le fichier "roster".
+                            </li>
+                            <li>
+                                Votre dossier "Inventaire". Celui-ci contient :
+                                <ul>
+                                    <li> Un fichier XML pour chaque entr&#233;e de locomotive dans votre liste, avec les valeurs de CV enregistr&#233;es, etc.
+                                    <li> ".bak" fichiers, qui sont des versions de sauvegarde des entr&#233;es de votre fichier.</li>
+                                    <li>Un dossier "consist", qui stocke les informations sur les couplages que vous avez cr&#233;&#233;es &#224; l'aide des outils Consist dans JMRI.</li>
+                                    <li>
+                                        Copies des fichiers m&#233;dias que vous avez ajout&#233;s aux entr&#233;es de la liste, aux r&#233;gulateurs, etc.
+                                        <br>(Les anciennes versions de JMRI stockaient les images de la liste dans un dossier "resources" dans l'emplacement des fichiers utilisateur.
+                                        Si vous utilisez JMRI depuis longtemps, il se peut que vous ayez des images de la liste dans les deux emplacements).
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p> Par d&#233;faut, l'emplacement du fichier est le m&#234;me que (et suit) l'emplacement des fichiers utilisateur, &#224; moins que vous ne d&#233;finissiez explicitement un emplacement diff&#233;rent.</p>
+                        <p>Vous &#234;tes libre de changer l'emplacement de la liste comme vous le souhaitez (Pr&#233;f&#233;rences->Liste->Liste->Localisation Set/Reset).
+                            Le bouton R&#233;initialiser permet de faire en sorte que l'emplacement de la liste suive &#224; nouveau l'emplacement des fichiers utilisateur.
+                        </p>
+                    </dd>
+
+                    <dt>Localisation des scripts (nom portable = "scripts :")</dt>
+                    <dd>Cet emplacement correspond par d&#233;faut au dossier des scripts d'exemple "jython" situ&#233; dans votre emplacement de programme JMRI. Vous ne devez jamais stocker de fichiers cr&#233;&#233;s par l'utilisateur dans votre emplacement de programme, ils risquent d'&#234;tre perdus lors d'une mise &#224; jour de JMRI. 
+                        <p>Si vous cr&#233;ez vos propres scripts, vous pouvez modifier l'emplacement des scripts (Pr&#233;f&#233;rences->Emplacements).
+                    </dd>
+
+                    <dt>Lieu du programme (nom portable = "programme :")</dt>
+                    <dd>Cet emplacement est d&#233;fini lors de l'installation de JMRI et ne peut &#234;tre modifi&#233; que lors de l'installation du logiciel.
+                        Vous ne devez jamais stocker des fichiers cr&#233;&#233;s par l'utilisateur dans l'emplacement du programme, ils risquent d'&#234;tre perdus lors d'une mise &#224; jour de JMRI.
+                    </dd>
+                </dl>
+
+                <h2>Fichiers utilisateurs Emplacement par d&#233;faut et implications</h2>
+                Selon la date &#224; laquelle vous avez install&#233; JMRI sur votre ordinateur, l'emplacement des fichiers utilisateur par d&#233;faut sera diff&#233;rent : <ul>
+                    <li>Avant l'av&#232;nement des Profils (JMRI V3.8), l'emplacement par d&#233;faut des fichiers utilisateurs &#233;tait le m&#234;me que celui des param&#232;tres. Cet arrangement est rest&#233; en place lors de la mise &#224; jour.
+                    <li>Apr&#232;s l'impl&#233;mentation des profils (JMRI V3.8), l'emplacement par d&#233;faut des fichiers utilisateur pour les nouvelles installations est le m&#234;me que l'emplacement du profil.
+                </ul>
+
+                <h3>Implications de la localisation des fichiers utilisateurs avec les profils</h3>
+                <ul>
+                    <li>Si vous cr&#233;ez un nouveau profil, User Files Location = Profile Location. Cela signifie que le profil aura un ensemble de fichiers utilisateur initialement vides.
+                    <li>Si vous cr&#233;ez une copie d'un profil dont l'emplacement des fichiers utilisateur se trouve dans l'emplacement du profil, le nouveau profil aura une nouvelle copie priv&#233;e des fichiers utilisateur du profil source. Les deux ensembles ne seront pas connect&#233;s et les modifications apport&#233;es &#224; l'un n'affecteront pas l'autre.
+                    <li>Si vous cr&#233;ez une copie d'un profil dont l'emplacement des fichiers utilisateur est situ&#233; n'importe où sur l'ordinateur en dehors de l'emplacement du profil, le nouveau profil partagera les fichiers utilisateur avec le profil source. Les modifications seront donc visibles par les deux profils.
+                </ul>
+
+                <h3>Implications de la s&#233;paration de l'emplacement des fichiers utilisateurs et de l'emplacement de la liste</h3>
+                Si vous s&#233;parez l'emplacement des fichiers utilisateur de l'emplacement de la liste (comme indiqu&#233; ci-dessus), vous pouvez mettre en &#339;uvre un partage/s&#233;paration diff&#233;rent des deux, par exemple une seule liste partag&#233;e entre deux configurations diff&#233;rentes (chacune ayant son propre profil).
+
+                <h3>Partage des fichiers utilisateur entre ordinateurs</h3>
+                Comme les fichiers utilisateur peuvent &#234;tre d&#233;plac&#233;s compl&#232;tement en dehors du syst&#232;me de fichiers JMRI de l'utilisateur, le partage des fichiers utilisateur entre ordinateurs est facile :
+                <h4>Utilisation d'un simple partage de fichiers ou utilisation d'un NAS local ou d'un autre serveur de fichiers</h4>
+                Cette approche semble s&#233;duisante &#224; premi&#232;re vue. Cependant, elle pr&#233;sente des inconv&#233;nients et des risques consid&#233;rables.
+                <ul>
+                    <li>L'ordinateur h&#244;te ou le serveur doit toujours &#234;tre en ligne lorsqu'on utilise JMRI sur un ordinateur.
+                    <li>L'utilisation de JMRI sur un ordinateur portable hors du domicile ou de l'acc&#232;s &#224; Internet ne sera pas possible.
+                    <li>JMRI n'est pas con&#231;u pour l'acc&#232;s simultan&#233; &#224; des fichiers. Le risque de corruption de fichiers est tr&#232;s &#233;lev&#233;.
+                    <li>La r&#233;cup&#233;ration d'un fichier corrompu peut &#234;tre difficile, voire impossible, &#224; moins qu'une strat&#233;gie de sauvegarde incr&#233;mentielle tr&#232;s compl&#232;te ne soit utilis&#233;e et m&#234;me s'il est probable qu'il y ait une certaine perte de donn&#233;es.
+                </ul>
+                Voir le lien ci-dessous pour plus d'informations sur les questions relatives au simple partage de fichiers : 
+                <h4>Utilisation d'une solution de partage synchronis&#233; dans le nuage</h4>
+                Notez que dans ce contexte, nous ne parlons pas d'une approche de serveur en nuage où vos fichiers n'existent que sur un serveur distant. Nous parlons d'un service tel que Dropbox, Google Drive, OneDrive où des copies locales compl&#232;tes existent sur chaque ordinateur et où chaque copie est maintenue en synchronisation avec la copie centrale du Cloud.
+                <p>Cette approche pr&#233;sente des avantages consid&#233;rables.
+                <ul>
+                    <li>Un seul ordinateur doit &#234;tre allum&#233; &#224; la fois.
+                    <li> L'utilisation de JMRI sur un ordinateur portable hors de la maison ou d'un acc&#232;s &#224; Internet est acceptable. Les changements de fichiers seront synchronis&#233;s lors de votre prochaine connexion.
+                    <li>Ces services n'utilisent g&#233;n&#233;ralement pas l'acc&#232;s simultan&#233; aux fichiers. Le risque de corruption de fichiers est beaucoup plus faible. 
+                    <li>La r&#233;cup&#233;ration des modifications involontaires de fichiers est beaucoup plus facile. Par exemple, Dropbox conserve toutes les modifications enregistr&#233;es au cours des 30 derniers jours (m&#234;me si vous n'avez qu'un seul ordinateur) et permet de les r&#233;cup&#233;rer facilement.
+                </ul>
+                Nous avons tendance &#224; parler de Dropbox parce que c'est celui qui semble &#234;tre le plus utilis&#233; par les d&#233;veloppeurs et les utilisateurs de JMRI, dont certains le font depuis de nombreuses ann&#233;es. Pour de plus amples informations et des instructions de configuration (&#233;galement applicables aux services concurrents), voir
+                le 
+                <a href="https://jmri.org/help/en/html/setup/Dropbox.shtml">Page IRMJ sur l'utilisation des bo&#238;tes de d&#233;p&#244;t</a>.
+
+                <h3>Partage des profils entre ordinateurs</h3>
+                De la m&#234;me mani&#232;re que les fichiers des utilisateurs peuvent &#234;tre d&#233;plac&#233;s compl&#232;tement en dehors du syst&#232;me de fichiers JMRI de l'utilisateur et partag&#233;s entre ordinateurs, des profils entiers peuvent l'&#234;tre aussi. Dans Pr&#233;f&#233;rences->Configurer les profils->Chemin de recherche, vous pouvez ajouter un chemin de recherche dans un emplacement synchronis&#233;/partag&#233; et le d&#233;finir comme &#233;tant le chemin par d&#233;faut pour les profils nouvellement cr&#233;&#233;s. Il suffit ensuite de d&#233;placer manuellement chaque dossier de profil de l'emplacement des param&#232;tres vers votre nouveau dossier partag&#233;. Lorsque vous utilisez pour la premi&#232;re fois un profil partag&#233; sur un autre ordinateur, JMRI cr&#233;e un dossier sp&#233;cifique &#224; chaque n&#339;ud pour stocker les modifications des param&#232;tres (voir ci-dessus) qui sont sp&#233;cifiques &#224; la machine (par exemple, les noms de port COM).
+                <p>
+                    J'utilise &#224; la fois des fichiers utilisateurs partag&#233;s (un dossier "JMRI" dans mon dossier Dropbox) depuis de nombreuses ann&#233;es et des profils partag&#233;s (un dossier "JMRI Config Profiles" dans mon dossier Dropbox) depuis plus d'un an maintenant (et j'ai modifi&#233; un peu le code JMRI pour am&#233;liorer la diff&#233;renciation des n&#339;uds) sur plus d'une douzaine de machines/machines virtuelles, sous Mac, Windows et Linux.
+
+                <h2>Acc&#232;s aux fichiers portables dans JMRI</h2>
+                Le succ&#232;s du partage de fichiers et de profils dans JMRI d&#233;pend fortement de l'utilisation de notre sp&#233;cification Portable File Access dans les fichiers XML.
+                <p>En bref, il s'agit de pseudo-pr&#233;fixes URL (noms portables mentionn&#233;s ci-dessus) qui remplacent les chemins d'acc&#232;s aux r&#233;pertoires sp&#233;cifiques aux machines dans les sp&#233;cifications de fichiers par un ensemble de pr&#233;fixes relatifs &#224; des emplacements JMRI et machines connus. Ces pr&#233;fixes sont &#233;tendus par l'instance JMRI locale pour cr&#233;er une sp&#233;cification de fichier sp&#233;cifique &#224; la machine. Les s&#233;parateurs de composants sont normalis&#233;s sous la forme "/" et convertis localement.
+                <p>Pour plus d'informations, voir
+                    <a href="https://jmri.org/help/en/html/doc/Technical/FileNames.shtml">la page FileNames</a>.
+                    Pour une liste compl&#232;te des pr&#233;fixes, voir
+                    <a href="https://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html#getExternalFilename-java.lang.String-">les JavaDocs pour la classe FileUtil</a>.
+                    <p>derniere traduction 2021-02-01</p>
+                    <!--#include virtual="/Footer.shtml" -->
+
+            </div><!-- closes #mainContent-->
+        </div> <!-- closes #mBody, from before Sidebar -->
+    </body>
+</html>
