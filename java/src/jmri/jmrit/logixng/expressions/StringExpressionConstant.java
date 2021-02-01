@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.*;
  */
 public class StringExpressionConstant extends AbstractStringExpression {
 
-    private String _value;
+    private String _value = "";
     
     public StringExpressionConstant(String sys, String user)
             throws BadUserNameException, BadSystemNameException {

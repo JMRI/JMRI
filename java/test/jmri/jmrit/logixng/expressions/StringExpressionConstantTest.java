@@ -86,12 +86,12 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
         expression2 = new StringExpressionConstant("IQSE11", null);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", null, expression2.getUserName());
-        Assert.assertEquals("String matches", "Get string constant null", expression2.getLongDescription(Locale.ENGLISH));
+        Assert.assertEquals("String matches", "Get string constant \"\"", expression2.getLongDescription(Locale.ENGLISH));
         
         expression2 = new StringExpressionConstant("IQSE11", "My constant value");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", "My constant value", expression2.getUserName());
-        Assert.assertEquals("String matches", "Get string constant null", expression2.getLongDescription(Locale.ENGLISH));
+        Assert.assertEquals("String matches", "Get string constant \"\"", expression2.getLongDescription(Locale.ENGLISH));
         
         expression2 = new StringExpressionConstant("IQSE11", null);
         expression2.setValue("A value");

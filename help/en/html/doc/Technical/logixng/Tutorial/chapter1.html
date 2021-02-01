@@ -81,24 +81,14 @@ One thing one notices when creating an action or expression is that LogixNG is m
 we only use "Direct" when entering a turnout. We will look at Reference, Local variable and Formula later in this
 tutorial.
 
-<h4>Why is "Delayed Set Turnout" missing?</h4>
+<h4>Delayed Set Sensor/Turnout</h4>
 
-Logix has the features "Delayed Set Turnout", "Cancel Timers for Turnout" and "Reset Delayed Set Turnout". These
-features are currently not implemented in LogixNG. The reason is that the creator of LogixNG, Daniel Bergqvist, did
-not fully understand how the end users want to use this feature. He then had three options:
-<ol type="1">
-<li>Implement an exact copy of the feature in Logix.</li>
-<li>Try to improve the feature of Logix, but without knowing what the end user really wants.</li>
-<li>Wait for other developers and end users to start using LogixNG and learn how it works and to let them think thru
-what they really want.</li>
-</ol>
-He chose the third option.
-<p>
-Maybe the developers and the end users find that the Logix solution with "Delayed Set Turnout" is best. If so, then we
-will add that feature. Maybe the developers and the end users find that there is a better way to do it in LogixNG and
-if so, we will add that way instead. Or maybe some users want it the old way and some other users want it the new way
-and then we might add both solutions. But the point is that Daniel Bergqvist found it's best to wait a moment for other
-developers to learn LogixNG first and then have a discussion on how to move forward.
+Logix has the actions <b>Delayed Set Sensor</b>, <b>Reset Delayed Set Sensor</b>, <b>Delayed Set Turnout</b> and
+<b>Reset Delayed Set Turnout</b>. LogixNG has instead a generic solution, the action <b>Execute delayed</b>. You add
+the action <b>Execute delayed</b>, select the delay and whenever it should reset the timer or not, and then you add
+child actions to it, for example a ActionTurnout, ActionSensor or maybe the action Many which in turn can have several
+other actions.
+
 
 <h3>Remove the action and add the action IfThenElse.</h3>
 <h3>Add ExpressionSensor and ActionTurnout</h3>

@@ -201,7 +201,10 @@ public class ExecuteDelayed
         return Bundle.getMessage(locale,
                 "ExecuteDelayed_Long",
                 _socket.getName(),
-                _unit.getTimeWithUnit(_delay));
+                _unit.getTimeWithUnit(_delay),
+                _resetIfAlreadyStarted
+                        ? Bundle.getMessage("ExecuteDelayed_ResetRepeat")
+                        : Bundle.getMessage("ExecuteDelayed_IgnoreRepeat"));
     }
 
     public FemaleDigitalActionSocket getSocket() {

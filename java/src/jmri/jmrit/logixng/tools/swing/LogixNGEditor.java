@@ -706,6 +706,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                     Bundle.getMessage("Error_ConditionalNGInEditMode", _curConditionalNG.getSystemName()), // NOI18N
                     Bundle.getMessage("ErrorTitle"), // NOI18N
                     JOptionPane.ERROR_MESSAGE);
+            _editConditionalNGFrame.setVisible(true);
             return true;
         }
         return false;

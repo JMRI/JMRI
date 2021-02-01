@@ -26,6 +26,7 @@
         >
 
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/analog-actions/action-memory-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/analog-actions/many-4.19.2.xsd"/>
 
     <xs:complexType name="LogixNG_AnalogActionManagerType">
       <xs:annotation>
@@ -42,8 +43,7 @@
         <xs:choice minOccurs="0" maxOccurs="unbounded">
 
             <xs:element name="analog-action-memory"  type="LogixNG_AnalogAction_MemoryType" minOccurs="0" maxOccurs="unbounded" />
-
-            <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="many"                  type="LogixNG_DigitalAction_ManyType" minOccurs="0" maxOccurs="unbounded" />
 
         </xs:choice>
       </xs:sequence>

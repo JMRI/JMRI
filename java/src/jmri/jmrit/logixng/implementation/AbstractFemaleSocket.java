@@ -48,7 +48,6 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     }
     
     /** {@inheritDoc} */
-    @Nonnull
     @Override
     public Base getParent() {
         return _parent;
@@ -245,7 +244,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     /** {@inheritDoc} */
     @Override
     public final boolean isActive() {
-        return isEnabled() && ((getParent() == null) || getParent().isActive());
+        return isEnabled() && ((_parent == null) || _parent.isActive());
     }
     
     /** {@inheritDoc} */
