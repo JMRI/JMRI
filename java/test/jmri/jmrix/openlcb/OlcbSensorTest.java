@@ -5,7 +5,6 @@ import java.util.TreeSet;
 import java.util.regex.Pattern;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.jupiter.api.*;
 import org.openlcb.EventID;
 import org.openlcb.implementations.EventTable;
@@ -48,12 +47,14 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(ti.tc.rcvMessage));
     }
     
-    @Ignore("Test requires further setup")
+    @org.junit.jupiter.api.Disabled("Test requires further setup")
+    @jmri.util.junit.annotations.ToDo("Check checkActiveMsgSent() producing correct result")
     @Test
     @Override
     public void testCommandSentActive() {}
 
-    @Ignore("Test requires further setup")
+    @org.junit.jupiter.api.Disabled("Test requires further setup")
+    @jmri.util.junit.annotations.ToDo("Check checkInactiveMsgSent() producing correct result")
     @Test
     @Override
     public void testCommandSentInactive() {}
