@@ -1,0 +1,185 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//FR">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="author" content=
+  "Joseph A. Ellis - TesserAct Studios">
+  <meta name="Revised_By" content=
+  "Bob Blackwell - afticarr@sympatico.ca">
+  <meta name="Revised_By" content="Egbert Broerse">
+  <meta name="Revision" content=
+  "Updated instructions for GitHub instead of single file edit and ZIP">
+
+  <title>How to Update the JMRI Documentation</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
+
+      <h1>Comment mettre &#224; jour la documentation de JMRI</h1>
+
+      <div class="toc">
+        <ul>
+          <li><a href="#screenshots">Cr&#233;ation d'images &#224; partir de l'&#233;cran
+          Photos</a></li>
+
+          <li><a href="#sizing">Dimensionnement et sauvegarde de l'Images</a></li>
+
+          <li><a href="#submitpage">Soumission &#224; GitHub</a></li>
+        </ul>
+      </div>
+
+      <p>Les pages web et les &#233;crans d'aide de JMRI sont r&#233;dig&#233;s dans un
+      simple sous-ensemble de HTML, le langage qui alimente le web. 
+      La partie la plus importante du contenu est le texte simple que
+      les gens liront, et les informations suppl&#233;mentaires de formatage
+      est maintenue &#224; un niveau tr&#232;s minimal. Pour mettre &#224; jour une page web de JMRI, il faut modifier
+      directement sur GitHub web ou sur votre ordinateur avec un
+      &#233;diteur de texte.</p>
+
+      <p>Utiliser une application de traitement de texte comme MS Word ou Front Page
+      pour &#233;diter ces documents .shtml
+      n'est pas une bonne id&#233;e car ils ajouteront probablement leurs
+      propres codes de formatage propri&#233;taires qui vont tout g&#226;cher,
+      peut-&#234;tre m&#234;me au point d'&#234;tre inutilisable par JMRI. Aussi,
+      ne pas renommer les fichiers existants, ni apporter de modifications au
+      formatage des informations en haut ou en bas.<br>
+      Vous pouvez donc vous concentrer sur les modifications r&#233;dactionnelles &#224; apporter 
+      dans le corps principal d'un fichier, ce qui est en fait ce &#224; quoi
+      les lecteurs sont de toute fa&#231;on attentifs.</p>
+
+      <p> Pour commencer, vous pouvez fouiller dans les fichiers de votre ordinateur
+      Les fichiers du programme JMRI dans le dossier du manuel de DecoderPro.
+      Sur un syst&#232;me Windows, l'emplacement de ce dossier ressemble &#224;
+      quelque chose comme &#231;a...
+      <code>C:\ProgramFiles\JMRI\help\en\manual</code>. Dans ce 
+      dossier se trouve un fichier appel&#233; <code>index.shtml</code>. Ouvrez le
+      avec un &#233;diteur de texte et regardez autour de vous. Si vous changez
+      quelque chose, vous pouvez alors ouvrir la page dans le syst&#232;me d'aide JMRI
+      et voir &#224; quoi il ressemble (soit garder une copie de sauvegarde au cas o&#249; 
+      la page originale, ou vous pouvez r&#233;installer JMRI pour restaurer
+      la).</p>
+
+      <p>Les modifications les plus simples sont celles apport&#233;es au texte lui-m&#234;me :
+      Pour ajouter une phrase ou corriger une formulation, il suffit de le faire avec 
+      l'&#233;diteur. Pour ajouter une pause entre les paragraphes, par exemple pour en ajouter un nouveau
+      vous ins&#233;rez une "balise" qui indique &#224; JMRI ou &#224; un navigateur
+      d'ins&#233;rer un paragraphe avec une coupure.</p>
+
+      <h2><a name="screenshots" id="screenshots">Cr&#233;ation d'images
+      &#224; partir des captures d'&#233;cran</a></h2>
+
+      <h3>Pour Windows</h3>
+      Pour prendre une capture d'&#233;cran dans Windows, commencez par configurer la fen&#234;tre
+      qui contient ce que vous voulez capturer.  Faites en sorte qu'il prenne 
+      le moins de place possible sur votre &#233;cran pendant qu'il affiche ce que vous voulez. . 
+      Vous pouvez prendre une photo de la fen&#234;tre active
+      (au lieu de tout votre bureau), en appuyant sur la touche
+      <code>&lt;Alt&gt;</code> et la touche <code>&lt;Print
+      Screen&gt;</code> cl&#233; en m&#234;me temps. (Note : Selon 
+      votre clavier, vous devrez peut-&#234;tre appuyer sur la touche aussi sur
+      <code>&lt;Fn&gt;</code> ou <code>&lt;Function-Lock&gt;</code>
+      ). Cela met l'image sur votre "presse-papiers" et vous
+      pouvezle coller dans un programme d'&#233;dition d'images tel que Window's
+      Paint ou Photoshop.
+
+      <h3>Pour Linux</h3>
+      Si votre
+      distro n'a pas  d&#233;j&#224; une application par d&#233;faut qui prend en charge 
+      l'utilisation de l'&#233;cran d'impression de &lt;<code>Print Screen></code>&gt ; et 
+      &lt;<code>Alt + Print Screen</code>&gt;que vous pouvez installer
+      <a href="http://www.kde.org/" target="_blank">KSnapshot</a> ou votre pr&#233;f&#233;r&#233;
+      pour faire votre capture d'&#233;cran.
+
+      <h3>Pour macOS</h3>
+      Apr&#232;s avoir pr&#233;par&#233; votre capturer, maintenez la touche
+      <code>&lt;Pomme + Shift + 4&gt;</code> 
+      Lorsque vous les rel&#226;chez en m&#234;me temps, 
+      le curseur devient un signe plus, et vous pouvez le faire glisser autour de la
+      la zone que vous souhaitez. Lorsque vous l&#226;chez prise, vous aurez un fichier image
+      sur votre bureau.
+
+      <h3>Utilisation d'une application tierce</h3>
+      <p>Sur macOS, nous utilisons souvent Evernote aujourd'hui
+      <a href="https://evernote.com/intl/nl/products/skitch" target="_blank">Skitch</a>
+      pour saisir et retoucher les captures d'&#233;cran. Voici un exemple de ce style:<br>
+      <img src="../images/GitHubPencil.png" width="285" height="101" alt="GitHub Pencil">
+      </p>
+      <p>Nous aimons aussi <a href=
+      "http://www.irfanview.com" target="_blank">IrFanView</a>
+      pour les captures d'&#233;cran, et c'est gratuit. Avec elle, vous pouvez aussi
+      inclure le curseur de votre souris dans votre clich&#233;. Vous pouvez &#233;galement prendre
+      une s&#233;rie de plans facilement, et m&#234;me en faire un diaporama.
+      Vous pouvez lui indiquer le format de fichier que vous souhaitez pour les fichiers d'images
+       ET o&#249; vous voulez qu'elles soient sauvegard&#233;es avant de prendre la photo, 
+      et cela facilite le travail avec elles dans un programme
+      comme Paint ou Photoshop.</p>
+
+      <h2><a name="sizing" id="sizing">Dimensionnement et sauvegarde des 
+      Images</a></h2>
+      Toute modification de votre image doit &#234;tre effectu&#233;e avant d'utiliser Amaya pour
+      l'ins&#233;rer dans votre document. N'oubliez pas que si vous le modifiez,
+      il doit &#234;tre r&#233;ins&#233;r&#233;. Veillez &#224; enregistrer l'image sous
+      l'un des types de fichiers suivants : PNG, JPG, ou JPEG (pas BMP ou
+      TIF), et n'utilisez pas d'espaces ni de lettres majuscules dans le
+      nom du fichier d'image. En g&#233;n&#233;ral, une bonne taille pour la largeur d'un
+      l'image est de 500 pixels ou moins, &#224; une r&#233;solution web de 72 pixels
+      par pouce. Si vous savez comment redimensionner vos images, ce serait
+      tr&#232;s utile.
+
+      <h2><a name="submitpage" id="submitpage">Soumission
+      &#224; GitHub</a></h2>
+
+      <p>Si vous comprenez cela, vous
+      &#234;tes pr&#234;ts &#224; nous aider &#224; mettre &#224; jour les nombreux documents de JMRI 
+      pour le site web JMRI et pour les fichiers d'aide dans un
+      prochaine version du logiciel.</p>
+
+      <p>Lorsque vous soumettez vos changements pour &#234;tre inclus dans les futures JMRI
+      ils font l'objet d'un contr&#244;le rapide et sont ensuite fusionn&#233;s dans
+      le contenu pr&#233;c&#233;dent. La v&#233;rification se fait &#224; l'aide des outils GitHub
+      pour trouver les parties du fichier qui ont &#233;t&#233; modifi&#233;es.</p>
+
+      <h3>Pr&#233;parer les fichiers</h3>Le type de fichier &#224; utiliser pour JMRI
+      a l'extension .shtml. Si vous avez fait un (nouveau) .html ou
+      .htm, vous devez changer l'extension en .shtml. Ne pas
+      utilisez des espaces ou des majuscules dans vos noms de fichiers. Si vous &#234;tes
+      sans modifier ni ajouter d'images, il suffit d'enregistrer le fichier avec son
+      nom d'origine, c'est-&#224;-dire <span style=
+      "font-family : monospace">"index.shtml"</span>, dans un lieu
+      o&#249; vous pouvez les trouver facilement lorsque vous &#234;tes pr&#234;t &#224; les copier
+      &#224; GitHub.
+
+      <h3>Envoyer &#224; GitHub</h3>
+
+      <p>Vous pouvez consulter le <a href=
+      "https://github.com/JMRI/JMRI" target="_blank">D&#233;p&#244;t JMRI sur GitHub</a>.
+      Pour apprendre &#224; faire des changements pour se connecter &#224; GitHub et
+      contribuez vos changements, veuillez lire <a href=
+      "getgitcode.shtml">Utilisation de Git</a>.
+      </p>
+      <p>Traduction 2021-02-01</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+  </div>
+</body>
+</html>
+
+    
