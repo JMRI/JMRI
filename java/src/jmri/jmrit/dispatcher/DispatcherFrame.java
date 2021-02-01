@@ -1436,7 +1436,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
         }
         AllocationRequest ar = at.initializeFirstAllocation();
-        if (ar != null) {
+        if (ar == null) {
+            log.debug("First allocation returned null, normal for auotallocate");
+        }
+        // removed. initializeFirstAllocation already does this. 
+        /* if (ar != null) {
             if ((ar.getSection()).containsBlock(at.getStartBlock())) {
                 // Active Train is in the first Section, go ahead and allocate it
                 AllocatedSection als = allocateSection(ar, null);
@@ -1444,7 +1448,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     log.error("Problem allocating the first Section of the Active Train - {}", at.getActiveTrainName());
                 }
             }
-        }
+        } */
         activeTrainsTableModel.fireTableDataChanged();
         if (allocatedSectionTableModel != null) {
             allocatedSectionTableModel.fireTableDataChanged();
@@ -1589,13 +1593,15 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         AllocationRequest ar = findAllocationRequestInQueue(section, seqNumber, direction, activeTrain);
         if (ar == null) {
             ar = new AllocationRequest(section, seqNumber, direction, activeTrain);
-            if (!firstAllocation || !_AutoAllocate) {
+            if (!firstAllocation && _AutoAllocate) {
                 allocationRequests.add(ar);
                 if (_AutoAllocate) {
                     queueScanOfAllocationRequests();
                 }
-            } else {    
+            } else if (_AutoAllocate) {  // It is auto allocate and First section
                 queueAllocate(ar);
+            } else {
+                // manual
             }
         }
         activeTrainsTableModel.fireTableDataChanged();
@@ -1972,7 +1978,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             requestNextAllocation(at);
             queueScanOfAllocationRequests();
         }
-
         return as;
     }
 
