@@ -131,7 +131,7 @@
             </variable>  
             <variable item="ABC stop when moving backward (enabled) or forward (disabled)" CV="27" default="0" mask="VXXXXXXX">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-                <label>BC stop when moving backward (enabled) or forward (disabled)</label>
+                <label>ABC stop when moving backward (enabled) or forward (disabled)</label>
             </variable>   
 
             <variable item="RailCom channel 1 (Broadcast)" CV="28" mask="XXXXXXXV">
@@ -1585,8 +1585,8 @@
     </decoder>
     <!-- special panes -->
     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneRailcom.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneUhlenbrock.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneId2Advanced.xml"/><!-- IntelliDrive2, overrides some CVs set above -->
+    <xi:include href="http://jmri.org/xml/decoders/Piko/PanePiko2.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/Piko/PaneId2Advanced.xml"/><!-- IntelliDrive2, overrides some CVs set above -->
     <!--<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/fmapPane7outputs.xml"/>-->
     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneExtendedFmap.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/SoundPaneId2.xml"/>
