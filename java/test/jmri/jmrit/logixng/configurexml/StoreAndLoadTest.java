@@ -166,17 +166,17 @@ public class StoreAndLoadTest {
         
         
         
-        int index = 0;
+        int indexAction = 0;
         
         ActionLight actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
         MaleSocket maleSocket = digitalActionManager.registerAction(actionLight);
         maleSocket.setEnabled(false);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionLight);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.Default);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
         actionLight.setComment("A comment");
@@ -192,7 +192,7 @@ public class StoreAndLoadTest {
         actionLight.setStateReference("{IM2}");
         maleSocket = digitalActionManager.registerAction(actionLight);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.AbortExecution);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
         actionLight.setComment("A comment");
@@ -208,7 +208,7 @@ public class StoreAndLoadTest {
         actionLight.setStateReference("{IM2}");
         maleSocket = digitalActionManager.registerAction(actionLight);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogError);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
         actionLight.setComment("A comment");
@@ -224,7 +224,7 @@ public class StoreAndLoadTest {
         actionLight.setStateReference("{IM2}");
         maleSocket = digitalActionManager.registerAction(actionLight);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogErrorOnce);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
         actionLight.setComment("A comment");
@@ -240,44 +240,44 @@ public class StoreAndLoadTest {
         actionLight.setStateReference("{IM2}");
         maleSocket = digitalActionManager.registerAction(actionLight);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ShowDialogBox);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionLight);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
         ActionListenOnBeans actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         maleSocket.setEnabled(false);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
         actionListenOnBeans.addReference("light:IL1");
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
         ActionLocalVariable actionLocalVariable = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionLocalVariable);
         maleSocket.setEnabled(false);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionLocalVariable = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
         actionLocalVariable.setComment("A comment");
         actionLocalVariable.setVariable("result");
         actionLocalVariable.setData("1");
         maleSocket = digitalActionManager.registerAction(actionLocalVariable);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
         ActionMemory actionMemory = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionMemory);
         maleSocket.setEnabled(false);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionMemory = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
         actionMemory.setComment("A comment");
@@ -285,7 +285,7 @@ public class StoreAndLoadTest {
         actionMemory.setOtherMemory(memory2);
         actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.CopyMemoryToMemory);
         maleSocket = digitalActionManager.registerAction(actionMemory);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionMemory = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
         actionMemory.setComment("A comment");
@@ -293,37 +293,37 @@ public class StoreAndLoadTest {
         actionMemory.setData("n + 3");
         actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.CalculateFormula);
         maleSocket = digitalActionManager.registerAction(actionMemory);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
         ActionScript actionScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionScript);
         maleSocket.setEnabled(false);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
         actionScript.setComment("A comment");
         actionScript.setScript("import java\n");
         maleSocket = digitalActionManager.registerAction(actionScript);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
         ActionSimpleScript actionSimpleScript = new ActionSimpleScript(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionSimpleScript);
         maleSocket.setEnabled(false);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionSimpleScript = new ActionSimpleScript(digitalActionManager.getAutoSystemName(), null);
         actionSimpleScript.setComment("A comment");
         actionSimpleScript.setScript("import java\n");
         maleSocket = digitalActionManager.registerAction(actionSimpleScript);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
         ActionSensor actionSensor = new ActionSensor(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionSensor);
         maleSocket.setEnabled(false);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionSensor = new ActionSensor(digitalActionManager.getAutoSystemName(), null);
         actionSensor.setComment("A comment");
@@ -338,7 +338,7 @@ public class StoreAndLoadTest {
         actionSensor.setStateLocalVariable("index2");
         actionSensor.setStateReference("{IM2}");
         maleSocket = digitalActionManager.registerAction(actionSensor);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionSensor = new ActionSensor(digitalActionManager.getAutoSystemName(), null);
         actionSensor.setComment("A comment");
@@ -353,7 +353,7 @@ public class StoreAndLoadTest {
         actionSensor.setStateLocalVariable("index2");
         actionSensor.setStateReference("{IM2}");
         maleSocket = digitalActionManager.registerAction(actionSensor);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionSensor = new ActionSensor(digitalActionManager.getAutoSystemName(), null);
         actionSensor.setComment("A comment");
@@ -368,7 +368,7 @@ public class StoreAndLoadTest {
         actionSensor.setStateLocalVariable("index2");
         actionSensor.setStateReference("{IM2}");
         maleSocket = digitalActionManager.registerAction(actionSensor);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionSensor = new ActionSensor(digitalActionManager.getAutoSystemName(), null);
         actionSensor.setComment("A comment");
@@ -383,13 +383,13 @@ public class StoreAndLoadTest {
         actionSensor.setStateLocalVariable("index2");
         actionSensor.setStateReference("{IM2}");
         maleSocket = digitalActionManager.registerAction(actionSensor);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
         ActionSignalHead actionSignalHead = new ActionSignalHead(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionSignalHead);
         maleSocket.setEnabled(false);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionSignalHead = new ActionSignalHead(digitalActionManager.getAutoSystemName(), null);
         actionSignalHead.setComment("A comment");
@@ -409,7 +409,7 @@ public class StoreAndLoadTest {
         actionSignalHead.setAppearanceReference("{IM3}");
         actionSignalHead.setExampleSignalHead("IH2");
         maleSocket = digitalActionManager.registerAction(actionSignalHead);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionSignalHead = new ActionSignalHead(digitalActionManager.getAutoSystemName(), null);
         actionSignalHead.setComment("A comment");
@@ -428,7 +428,7 @@ public class StoreAndLoadTest {
         actionSignalHead.setAppearanceLocalVariable("index3");
         actionSignalHead.setAppearanceReference("{IM3}");
         maleSocket = digitalActionManager.registerAction(actionSignalHead);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionSignalHead = new ActionSignalHead(digitalActionManager.getAutoSystemName(), null);
         actionSignalHead.setComment("A comment");
@@ -447,7 +447,7 @@ public class StoreAndLoadTest {
         actionSignalHead.setAppearanceLocalVariable("index3");
         actionSignalHead.setAppearanceReference("{IM3}");
         maleSocket = digitalActionManager.registerAction(actionSignalHead);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionSignalHead = new ActionSignalHead(digitalActionManager.getAutoSystemName(), null);
         actionSignalHead.setComment("A comment");
@@ -466,13 +466,13 @@ public class StoreAndLoadTest {
         actionSignalHead.setAppearanceLocalVariable("index3");
         actionSignalHead.setAppearanceReference("{IM3}");
         maleSocket = digitalActionManager.registerAction(actionSignalHead);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
         ActionSignalMast actionSignalMast = new ActionSignalMast(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionSignalMast);
         maleSocket.setEnabled(false);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionSignalMast = new ActionSignalMast(digitalActionManager.getAutoSystemName(), null);
         actionSignalMast.setComment("A comment");
@@ -492,7 +492,7 @@ public class StoreAndLoadTest {
         actionSignalMast.setAspectReference("{IM3}");
         actionSignalMast.setExampleSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
         maleSocket = digitalActionManager.registerAction(actionSignalMast);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionSignalMast = new ActionSignalMast(digitalActionManager.getAutoSystemName(), null);
         actionSignalMast.setComment("A comment");
@@ -511,7 +511,7 @@ public class StoreAndLoadTest {
         actionSignalMast.setAspectLocalVariable("index3");
         actionSignalMast.setAspectReference("{IM3}");
         maleSocket = digitalActionManager.registerAction(actionSignalMast);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionSignalMast = new ActionSignalMast(digitalActionManager.getAutoSystemName(), null);
         actionSignalMast.setComment("A comment");
@@ -530,7 +530,7 @@ public class StoreAndLoadTest {
         actionSignalMast.setAspectLocalVariable("index3");
         actionSignalMast.setAspectReference("{IM3}");
         maleSocket = digitalActionManager.registerAction(actionSignalMast);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionSignalMast = new ActionSignalMast(digitalActionManager.getAutoSystemName(), null);
         actionSignalMast.setComment("A comment");
@@ -549,24 +549,24 @@ public class StoreAndLoadTest {
         actionSignalMast.setAspectLocalVariable("index3");
         actionSignalMast.setAspectReference("{IM3}");
         maleSocket = digitalActionManager.registerAction(actionSignalMast);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
         ActionThrottle actionThrottle = new ActionThrottle(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionThrottle);
         maleSocket.setEnabled(false);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionThrottle = new ActionThrottle(digitalActionManager.getAutoSystemName(), null);
         actionThrottle.setComment("A comment");
         maleSocket = digitalActionManager.registerAction(actionThrottle);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
         ActionTimer actionTimer = new ActionTimer(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionTimer);
         maleSocket.setEnabled(false);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionTimer = new ActionTimer(digitalActionManager.getAutoSystemName(), null);
         actionTimer.setComment("A comment");
@@ -574,7 +574,7 @@ public class StoreAndLoadTest {
         actionTimer.setStartImmediately(false);
         actionTimer.setRunContinuously(true);
         maleSocket = digitalActionManager.registerAction(actionTimer);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionTimer = new ActionTimer(digitalActionManager.getAutoSystemName(), null);
         actionTimer.setComment("A comment");
@@ -586,7 +586,7 @@ public class StoreAndLoadTest {
         actionTimer.setRunContinuously(false);
         actionTimer.setNumActions(2);
         maleSocket = digitalActionManager.registerAction(actionTimer);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         And andTemp1 = new And(digitalExpressionManager.getAutoSystemName(), null);
         andTemp1.setComment("Start expression");
@@ -614,7 +614,7 @@ public class StoreAndLoadTest {
         ActionTurnout actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionTurnout);
         maleSocket.setEnabled(false);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         actionTurnout.setComment("A comment");
@@ -629,7 +629,7 @@ public class StoreAndLoadTest {
         actionTurnout.setStateLocalVariable("index2");
         actionTurnout.setStateReference("{IM2}");
         maleSocket = digitalActionManager.registerAction(actionTurnout);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         actionTurnout.setComment("A comment");
@@ -644,7 +644,7 @@ public class StoreAndLoadTest {
         actionTurnout.setStateLocalVariable("index2");
         actionTurnout.setStateReference("{IM2}");
         maleSocket = digitalActionManager.registerAction(actionTurnout);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         actionTurnout.setComment("A comment");
@@ -659,7 +659,7 @@ public class StoreAndLoadTest {
         actionTurnout.setStateLocalVariable("index2");
         actionTurnout.setStateReference("{IM2}");
         maleSocket = digitalActionManager.registerAction(actionTurnout);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         actionTurnout.setComment("A comment");
@@ -674,13 +674,13 @@ public class StoreAndLoadTest {
         actionTurnout.setStateLocalVariable("index2");
         actionTurnout.setStateReference("{IM2}");
         maleSocket = digitalActionManager.registerAction(actionTurnout);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
         DigitalCallModule callModule = new DigitalCallModule(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(callModule);
         maleSocket.setEnabled(false);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         callModule = new DigitalCallModule(digitalActionManager.getAutoSystemName(), null);
         callModule.setComment("A comment");
@@ -694,79 +694,79 @@ public class StoreAndLoadTest {
         callModule.addParameter("Stu", InitialValueType.Reference, "{MyVar}", Module.ReturnValueType.LocalVariable, "SomeVar");
         callModule.addParameter("Vxy", InitialValueType.String, "Some string", Module.ReturnValueType.LocalVariable, "SomeVar");
         maleSocket = digitalActionManager.registerAction(callModule);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
         DoAnalogAction doAnalogAction = new DoAnalogAction(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(doAnalogAction);
         maleSocket.setEnabled(false);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         doAnalogAction = new DoAnalogAction(digitalActionManager.getAutoSystemName(), null);
         doAnalogAction.setComment("A comment");
         maleSocket = digitalActionManager.registerAction(doAnalogAction);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
         DoStringAction doStringAction = new DoStringAction(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(doStringAction);
         maleSocket.setEnabled(false);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         doStringAction = new DoStringAction(digitalActionManager.getAutoSystemName(), null);
         doStringAction.setComment("A comment");
         maleSocket = digitalActionManager.registerAction(doStringAction);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
         ExecuteDelayed executeDelayed = new ExecuteDelayed(digitalActionManager.getAutoSystemName(), null);
         executeDelayed.setResetIfAlreadyStarted(false);
         maleSocket = digitalActionManager.registerAction(executeDelayed);
         maleSocket.setEnabled(false);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         executeDelayed = new ExecuteDelayed(digitalActionManager.getAutoSystemName(), null);
         executeDelayed.setComment("A comment");
         executeDelayed.setDelay(100);
         executeDelayed.setResetIfAlreadyStarted(true);
         maleSocket = digitalActionManager.registerAction(executeDelayed);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
         For actionFor =
                 new For(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionFor);
         maleSocket.setEnabled(false);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionFor = new For(digitalActionManager.getAutoSystemName(), null);
         actionFor.setComment("A comment");
         maleSocket = digitalActionManager.registerAction(actionFor);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
         IfThenElse ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null, IfThenElse.Type.CONTINOUS_ACTION);
         maleSocket = digitalActionManager.registerAction(ifThenElse);
         maleSocket.setEnabled(false);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null, IfThenElse.Type.TRIGGER_ACTION);
         ifThenElse.setComment("A comment");
         ifThenElse.setType(IfThenElse.Type.TRIGGER_ACTION);
         maleSocket = digitalActionManager.registerAction(ifThenElse);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
         jmri.jmrit.logixng.actions.Logix logix =
                 new jmri.jmrit.logixng.actions.Logix(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(logix);
         maleSocket.setEnabled(false);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         logix = new jmri.jmrit.logixng.actions.Logix(digitalActionManager.getAutoSystemName(), null);
         logix.setComment("A comment");
         maleSocket = digitalActionManager.registerAction(logix);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
         DigitalBooleanMany booleanMany =
@@ -799,12 +799,12 @@ public class StoreAndLoadTest {
         DigitalMany many = new DigitalMany(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(many);
         maleSocket.setEnabled(false);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         many = new DigitalMany(digitalActionManager.getAutoSystemName(), null);
         many.setComment("A comment");
         maleSocket = digitalActionManager.registerAction(many);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
         Sequence sequence =
@@ -813,14 +813,14 @@ public class StoreAndLoadTest {
         sequence.setStartImmediately(true);
         maleSocket = digitalActionManager.registerAction(sequence);
         maleSocket.setEnabled(false);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         sequence = new Sequence(digitalActionManager.getAutoSystemName(), null);
         sequence.setComment("A comment");
         sequence.setRunContinuously(true);
         sequence.setStartImmediately(false);
         maleSocket = digitalActionManager.registerAction(sequence);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         And andTemp = new And(digitalExpressionManager.getAutoSystemName(), null);
         andTemp.setComment("Start expression");
@@ -866,38 +866,38 @@ public class StoreAndLoadTest {
                 new ShutdownComputer(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(shutdownComputer);
         maleSocket.setEnabled(false);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         shutdownComputer = new ShutdownComputer(digitalActionManager.getAutoSystemName(), null);
         shutdownComputer.setComment("A comment");
         shutdownComputer.setOperation(ShutdownComputer.Operation.ShutdownComputer);
         maleSocket = digitalActionManager.registerAction(shutdownComputer);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         shutdownComputer = new ShutdownComputer(digitalActionManager.getAutoSystemName(), null);
         shutdownComputer.setComment("A comment");
         shutdownComputer.setOperation(ShutdownComputer.Operation.RebootComputer);
         maleSocket = digitalActionManager.registerAction(shutdownComputer);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         shutdownComputer = new ShutdownComputer(digitalActionManager.getAutoSystemName(), null);
         shutdownComputer.setComment("A comment");
         shutdownComputer.setOperation(ShutdownComputer.Operation.ShutdownJMRI);
         maleSocket = digitalActionManager.registerAction(shutdownComputer);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         shutdownComputer = new ShutdownComputer(digitalActionManager.getAutoSystemName(), null);
         shutdownComputer.setComment("A comment");
         shutdownComputer.setOperation(ShutdownComputer.Operation.RebootJMRI);
         maleSocket = digitalActionManager.registerAction(shutdownComputer);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
         TableForEach tableForEach = new TableForEach(digitalActionManager.getAutoSystemName(), null);
         tableForEach.setTableRowOrColumn(TableForEach.TableRowOrColumn.Column);
         maleSocket = digitalActionManager.registerAction(tableForEach);
         maleSocket.setEnabled(false);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         tableForEach = new TableForEach(digitalActionManager.getAutoSystemName(), null);
         tableForEach.setComment("A comment");
@@ -906,7 +906,7 @@ public class StoreAndLoadTest {
         tableForEach.setTableRowOrColumn(TableForEach.TableRowOrColumn.Row);
         tableForEach.setRowOrColumnName("North yard");
         maleSocket = digitalActionManager.registerAction(tableForEach);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         maleSocket.getChild(0).connect(
                 digitalActionManager.registerAction(
                         new DigitalMany(digitalActionManager.getAutoSystemName(), null)));
@@ -918,7 +918,7 @@ public class StoreAndLoadTest {
         tableForEach.setTableRowOrColumn(TableForEach.TableRowOrColumn.Column);
         tableForEach.setRowOrColumnName("Second turnout");
         maleSocket = digitalActionManager.registerAction(tableForEach);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         maleSocket.getChild(0).connect(
                 digitalActionManager.registerAction(
                         new DigitalMany(digitalActionManager.getAutoSystemName(), null)));
@@ -928,7 +928,7 @@ public class StoreAndLoadTest {
         actionThrottle.setComment("A comment");
         maleSocket = digitalActionManager.registerAction(actionThrottle);
         maleSocket.setEnabled(false);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         maleSocket.getChild(0).connect(
                 analogExpressionManager.registerExpression(
@@ -948,7 +948,7 @@ public class StoreAndLoadTest {
         ifThenElse.setComment("A comment");
         ifThenElse.setType(IfThenElse.Type.TRIGGER_ACTION);
         maleSocket = digitalActionManager.registerAction(ifThenElse);
-        actionManySocket.getChild(index++).connect(maleSocket);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
         And and1 = new And(digitalExpressionManager.getAutoSystemName(), null);
@@ -962,41 +962,41 @@ public class StoreAndLoadTest {
         and1.getChild(0).connect(maleSocket);
         
         
-        index = 0;
+        int indexExpr = 0;
         
         
         Antecedent antecedent = new Antecedent(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(antecedent);
         maleSocket.setEnabled(false);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.AbortExecution);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         antecedent = new Antecedent(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(antecedent);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.Default);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         antecedent = new Antecedent(digitalExpressionManager.getAutoSystemName(), null);
         antecedent.setComment("A comment");
         antecedent.setAntecedent("R1 or R2");
         maleSocket = digitalExpressionManager.registerExpression(antecedent);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogError);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         antecedent = new Antecedent(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(antecedent);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogErrorOnce);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         antecedent = new Antecedent(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(antecedent);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ShowDialogBox);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         antecedent = new Antecedent(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(antecedent);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         
         ExpressionClock expressionClock = new ExpressionClock(digitalExpressionManager.getAutoSystemName(), null);
@@ -1004,7 +1004,7 @@ public class StoreAndLoadTest {
         expressionClock.set_Is_IsNot(Is_IsNot_Enum.Is);
         maleSocket = digitalExpressionManager.registerExpression(expressionClock);
         maleSocket.setEnabled(false);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionClock = new ExpressionClock(digitalExpressionManager.getAutoSystemName(), null);
         expressionClock.setComment("A comment");
@@ -1012,7 +1012,7 @@ public class StoreAndLoadTest {
         expressionClock.setType(ExpressionClock.Type.FastClock);
         expressionClock.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         maleSocket = digitalExpressionManager.registerExpression(expressionClock);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         
         ExpressionConditional expressionConditional = new ExpressionConditional(digitalExpressionManager.getAutoSystemName(), null);
@@ -1020,7 +1020,7 @@ public class StoreAndLoadTest {
         expressionConditional.set_Is_IsNot(Is_IsNot_Enum.Is);
         maleSocket = digitalExpressionManager.registerExpression(expressionConditional);
         maleSocket.setEnabled(false);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionConditional = new ExpressionConditional(digitalExpressionManager.getAutoSystemName(), null);
         expressionConditional.setComment("A comment");
@@ -1028,13 +1028,13 @@ public class StoreAndLoadTest {
         expressionConditional.setConditionalState(ExpressionConditional.ConditionalState.False);
         expressionConditional.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         maleSocket = digitalExpressionManager.registerExpression(expressionConditional);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         
         ExpressionEntryExit expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(expressionEntryExit);
         maleSocket.setEnabled(false);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         expressionEntryExit.setComment("A comment");
@@ -1050,7 +1050,7 @@ public class StoreAndLoadTest {
         expressionEntryExit.setStateLocalVariable("index2");
         expressionEntryExit.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionEntryExit);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         expressionEntryExit.setComment("A comment");
@@ -1066,7 +1066,7 @@ public class StoreAndLoadTest {
         expressionEntryExit.setStateLocalVariable("index2");
         expressionEntryExit.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionEntryExit);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         expressionEntryExit.setComment("A comment");
@@ -1082,7 +1082,7 @@ public class StoreAndLoadTest {
         expressionEntryExit.setStateLocalVariable("index2");
         expressionEntryExit.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionEntryExit);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         expressionEntryExit.setComment("A comment");
@@ -1098,13 +1098,13 @@ public class StoreAndLoadTest {
         expressionEntryExit.setStateLocalVariable("index2");
         expressionEntryExit.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionEntryExit);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         
         ExpressionLight expressionLight = new ExpressionLight(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(expressionLight);
         maleSocket.setEnabled(false);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionLight = new ExpressionLight(digitalExpressionManager.getAutoSystemName(), null);
         expressionLight.setComment("A comment");
@@ -1120,7 +1120,7 @@ public class StoreAndLoadTest {
         expressionLight.setStateLocalVariable("index2");
         expressionLight.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionLight);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionLight = new ExpressionLight(digitalExpressionManager.getAutoSystemName(), null);
         expressionLight.setComment("A comment");
@@ -1136,7 +1136,7 @@ public class StoreAndLoadTest {
         expressionLight.setStateLocalVariable("index2");
         expressionLight.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionLight);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionLight = new ExpressionLight(digitalExpressionManager.getAutoSystemName(), null);
         expressionLight.setComment("A comment");
@@ -1152,7 +1152,7 @@ public class StoreAndLoadTest {
         expressionLight.setStateLocalVariable("index2");
         expressionLight.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionLight);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionLight = new ExpressionLight(digitalExpressionManager.getAutoSystemName(), null);
         expressionLight.setComment("A comment");
@@ -1168,13 +1168,13 @@ public class StoreAndLoadTest {
         expressionLight.setStateLocalVariable("index2");
         expressionLight.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionLight);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         
         ExpressionLocalVariable expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
         maleSocket.setEnabled(false);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
         expressionLocalVariable.setComment("A comment");
@@ -1184,7 +1184,7 @@ public class StoreAndLoadTest {
         expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.Value);
         expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.GreaterThan);
         maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
         expressionLocalVariable.setComment("A comment");
@@ -1195,7 +1195,7 @@ public class StoreAndLoadTest {
         expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.Memory);
         expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.LessThan);
         maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         
         ExpressionMemory expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
@@ -1203,7 +1203,7 @@ public class StoreAndLoadTest {
         expressionMemory.setCompareTo(ExpressionMemory.CompareTo.Memory);
         maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
         maleSocket.setEnabled(false);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
         expressionMemory.setComment("A comment");
@@ -1213,7 +1213,7 @@ public class StoreAndLoadTest {
         expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.LessThan);
         expressionMemory.setCompareTo(ExpressionMemory.CompareTo.Value);
         maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
         expressionMemory.setComment("A comment");
@@ -1223,13 +1223,13 @@ public class StoreAndLoadTest {
         expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.GreaterThan);
         expressionMemory.setCompareTo(ExpressionMemory.CompareTo.Memory);
         maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         
         ExpressionOBlock expressionOBlock = new ExpressionOBlock(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(expressionOBlock);
         maleSocket.setEnabled(false);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionOBlock = new ExpressionOBlock(digitalExpressionManager.getAutoSystemName(), null);
         expressionOBlock.setComment("A comment");
@@ -1245,7 +1245,7 @@ public class StoreAndLoadTest {
         expressionOBlock.setStateLocalVariable("index2");
         expressionOBlock.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionOBlock);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionOBlock = new ExpressionOBlock(digitalExpressionManager.getAutoSystemName(), null);
         expressionOBlock.setComment("A comment");
@@ -1261,7 +1261,7 @@ public class StoreAndLoadTest {
         expressionOBlock.setStateLocalVariable("index2");
         expressionOBlock.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionOBlock);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionOBlock = new ExpressionOBlock(digitalExpressionManager.getAutoSystemName(), null);
         expressionOBlock.setComment("A comment");
@@ -1277,7 +1277,7 @@ public class StoreAndLoadTest {
         expressionOBlock.setStateLocalVariable("index2");
         expressionOBlock.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionOBlock);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionOBlock = new ExpressionOBlock(digitalExpressionManager.getAutoSystemName(), null);
         expressionOBlock.setComment("A comment");
@@ -1293,7 +1293,7 @@ public class StoreAndLoadTest {
         expressionOBlock.setStateLocalVariable("index2");
         expressionOBlock.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionOBlock);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         
         ExpressionReference expressionReference = new ExpressionReference(digitalExpressionManager.getAutoSystemName(), null);
@@ -1301,7 +1301,7 @@ public class StoreAndLoadTest {
         expressionReference.set_Is_IsNot(Is_IsNot_Enum.Is);
         maleSocket = digitalExpressionManager.registerExpression(expressionReference);
         maleSocket.setEnabled(false);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionReference = new ExpressionReference(digitalExpressionManager.getAutoSystemName(), null);
         expressionReference.setComment("A comment");
@@ -1309,26 +1309,26 @@ public class StoreAndLoadTest {
         expressionReference.setPointsTo(ExpressionReference.PointsTo.Light);
         expressionReference.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         maleSocket = digitalExpressionManager.registerExpression(expressionReference);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         
         ExpressionScript expressionScript = new ExpressionScript(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(expressionScript);
         maleSocket.setEnabled(false);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionScript = new ExpressionScript(digitalExpressionManager.getAutoSystemName(), null);
         expressionScript.setComment("A comment");
         expressionScript.setScript("import jmri\n");
         maleSocket = digitalExpressionManager.registerExpression(expressionScript);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         JUnitAppender.assertWarnMessage("script has not initialized params._scriptClass");
         
         
         ExpressionSensor expressionSensor = new ExpressionSensor(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(expressionSensor);
         maleSocket.setEnabled(false);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionSensor = new ExpressionSensor(digitalExpressionManager.getAutoSystemName(), null);
         expressionSensor.setComment("A comment");
@@ -1344,7 +1344,7 @@ public class StoreAndLoadTest {
         expressionSensor.setStateLocalVariable("index2");
         expressionSensor.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionSensor);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionSensor = new ExpressionSensor(digitalExpressionManager.getAutoSystemName(), null);
         expressionSensor.setComment("A comment");
@@ -1360,7 +1360,7 @@ public class StoreAndLoadTest {
         expressionSensor.setStateLocalVariable("index2");
         expressionSensor.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionSensor);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionSensor = new ExpressionSensor(digitalExpressionManager.getAutoSystemName(), null);
         expressionSensor.setComment("A comment");
@@ -1376,7 +1376,7 @@ public class StoreAndLoadTest {
         expressionSensor.setStateLocalVariable("index2");
         expressionSensor.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionSensor);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionSensor = new ExpressionSensor(digitalExpressionManager.getAutoSystemName(), null);
         expressionSensor.setComment("A comment");
@@ -1392,13 +1392,13 @@ public class StoreAndLoadTest {
         expressionSensor.setStateLocalVariable("index2");
         expressionSensor.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionSensor);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         
         ExpressionSignalHead expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
         maleSocket.setEnabled(false);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
         expressionSignalHead.setComment("A comment");
@@ -1418,7 +1418,7 @@ public class StoreAndLoadTest {
         expressionSignalHead.setAppearanceReference("{IM3}");
         expressionSignalHead.setExampleSignalHead("IH2");
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
         expressionSignalHead.setComment("A comment");
@@ -1437,7 +1437,7 @@ public class StoreAndLoadTest {
         expressionSignalHead.setAppearanceLocalVariable("index3");
         expressionSignalHead.setAppearanceReference("{IM3}");
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
         expressionSignalHead.setComment("A comment");
@@ -1456,7 +1456,7 @@ public class StoreAndLoadTest {
         expressionSignalHead.setAppearanceLocalVariable("index3");
         expressionSignalHead.setAppearanceReference("{IM3}");
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
         expressionSignalHead.setComment("A comment");
@@ -1475,13 +1475,13 @@ public class StoreAndLoadTest {
         expressionSignalHead.setAppearanceLocalVariable("index3");
         expressionSignalHead.setAppearanceReference("{IM3}");
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         
         ExpressionSignalMast expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
         maleSocket.setEnabled(false);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
         expressionSignalMast.setComment("A comment");
@@ -1501,7 +1501,7 @@ public class StoreAndLoadTest {
         expressionSignalMast.setAspectReference("{IM3}");
         expressionSignalMast.setExampleSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
         expressionSignalMast.setComment("A comment");
@@ -1520,7 +1520,7 @@ public class StoreAndLoadTest {
         expressionSignalMast.setAspectLocalVariable("index3");
         expressionSignalMast.setAspectReference("{IM3}");
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
         expressionSignalMast.setComment("A comment");
@@ -1539,7 +1539,7 @@ public class StoreAndLoadTest {
         expressionSignalMast.setAspectLocalVariable("index3");
         expressionSignalMast.setAspectReference("{IM3}");
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
         expressionSignalMast.setComment("A comment");
@@ -1558,13 +1558,13 @@ public class StoreAndLoadTest {
         expressionSignalMast.setAspectLocalVariable("index3");
         expressionSignalMast.setAspectReference("{IM3}");
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         
         ExpressionTurnout expressionTurnout = new ExpressionTurnout(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(expressionTurnout);
         maleSocket.setEnabled(false);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionTurnout = new ExpressionTurnout(digitalExpressionManager.getAutoSystemName(), null);
         expressionTurnout.setComment("A comment");
@@ -1580,7 +1580,7 @@ public class StoreAndLoadTest {
         expressionTurnout.setStateLocalVariable("index2");
         expressionTurnout.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionTurnout);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionTurnout = new ExpressionTurnout(digitalExpressionManager.getAutoSystemName(), null);
         expressionTurnout.setComment("A comment");
@@ -1596,7 +1596,7 @@ public class StoreAndLoadTest {
         expressionTurnout.setStateLocalVariable("index2");
         expressionTurnout.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionTurnout);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionTurnout = new ExpressionTurnout(digitalExpressionManager.getAutoSystemName(), null);
         expressionTurnout.setComment("A comment");
@@ -1612,7 +1612,7 @@ public class StoreAndLoadTest {
         expressionTurnout.setStateLocalVariable("index2");
         expressionTurnout.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionTurnout);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionTurnout = new ExpressionTurnout(digitalExpressionManager.getAutoSystemName(), null);
         expressionTurnout.setComment("A comment");
@@ -1628,13 +1628,13 @@ public class StoreAndLoadTest {
         expressionTurnout.setStateLocalVariable("index2");
         expressionTurnout.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionTurnout);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         
         ExpressionWarrant expressionWarrant = new ExpressionWarrant(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(expressionWarrant);
         maleSocket.setEnabled(false);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionWarrant = new ExpressionWarrant(digitalExpressionManager.getAutoSystemName(), null);
         expressionWarrant.setComment("A comment");
@@ -1650,7 +1650,7 @@ public class StoreAndLoadTest {
         expressionWarrant.setStateLocalVariable("index2");
         expressionWarrant.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionWarrant);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionWarrant = new ExpressionWarrant(digitalExpressionManager.getAutoSystemName(), null);
         expressionWarrant.setComment("A comment");
@@ -1666,7 +1666,7 @@ public class StoreAndLoadTest {
         expressionWarrant.setStateLocalVariable("index2");
         expressionWarrant.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionWarrant);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionWarrant = new ExpressionWarrant(digitalExpressionManager.getAutoSystemName(), null);
         expressionWarrant.setComment("A comment");
@@ -1682,7 +1682,7 @@ public class StoreAndLoadTest {
         expressionWarrant.setStateLocalVariable("index2");
         expressionWarrant.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionWarrant);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         expressionWarrant = new ExpressionWarrant(digitalExpressionManager.getAutoSystemName(), null);
         expressionWarrant.setComment("A comment");
@@ -1698,75 +1698,276 @@ public class StoreAndLoadTest {
         expressionWarrant.setStateLocalVariable("index2");
         expressionWarrant.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionWarrant);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         
         False false1 = new False(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(false1);
         maleSocket.setEnabled(false);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         false1 = new False(digitalExpressionManager.getAutoSystemName(), null);
         false1.setComment("A comment");
         maleSocket = digitalExpressionManager.registerExpression(false1);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         
         jmri.jmrit.logixng.expressions.DigitalFormula formula =
                 new jmri.jmrit.logixng.expressions.DigitalFormula(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(formula);
         maleSocket.setEnabled(false);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         formula = new jmri.jmrit.logixng.expressions.DigitalFormula(digitalExpressionManager.getAutoSystemName(), null);
         formula.setComment("A comment");
         formula.setFormula("n + 1");
         maleSocket = digitalExpressionManager.registerExpression(formula);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         
         Hold hold = new Hold(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(hold);
         maleSocket.setEnabled(false);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         hold = new Hold(digitalExpressionManager.getAutoSystemName(), null);
         hold.setComment("A comment");
         maleSocket = digitalExpressionManager.registerExpression(hold);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         
         Or or = new Or(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(or);
         maleSocket.setEnabled(false);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         or = new Or(digitalExpressionManager.getAutoSystemName(), null);
         or.setComment("A comment");
         maleSocket = digitalExpressionManager.registerExpression(or);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         
         TriggerOnce triggerOnce = new TriggerOnce(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(triggerOnce);
         maleSocket.setEnabled(false);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         triggerOnce = new TriggerOnce(digitalExpressionManager.getAutoSystemName(), null);
         triggerOnce.setComment("A comment");
         maleSocket = digitalExpressionManager.registerExpression(triggerOnce);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         
         True true1 = new True(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(true1);
         maleSocket.setEnabled(false);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
         
         true1 = new True(digitalExpressionManager.getAutoSystemName(), null);
         true1.setComment("A comment");
         maleSocket = digitalExpressionManager.registerExpression(true1);
-        and.getChild(index++).connect(maleSocket);
+        and.getChild(indexExpr++).connect(maleSocket);
+        
+        
+        
+        
+        doAnalogAction = new DoAnalogAction(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(doAnalogAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        AnalogExpressionConstant analogExpressionConstant = new AnalogExpressionConstant(analogExpressionManager.getAutoSystemName(), null);
+        maleSocket = analogExpressionManager.registerExpression(analogExpressionConstant);
+        maleSocket.setEnabled(false);
+        doAnalogAction.getChild(0).connect(maleSocket);
+        
+        AnalogActionMemory analogActionMemory = new AnalogActionMemory(analogActionManager.getAutoSystemName(), null);
+        maleSocket = analogActionManager.registerAction(analogActionMemory);
+        maleSocket.setEnabled(false);
+        doAnalogAction.getChild(1).connect(maleSocket);
+        
+        
+        doAnalogAction = new DoAnalogAction(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(doAnalogAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        analogExpressionConstant = new AnalogExpressionConstant(analogExpressionManager.getAutoSystemName(), null);
+        analogExpressionConstant.setComment("A comment");
+        analogExpressionConstant.setValue(12.44);
+        maleSocket = analogExpressionManager.registerExpression(analogExpressionConstant);
+        doAnalogAction.getChild(0).connect(maleSocket);
+        
+        analogActionMemory = new AnalogActionMemory(analogActionManager.getAutoSystemName(), null);
+        analogActionMemory.setComment("A comment");
+        analogActionMemory.setMemory(memory2);
+        analogActionMemory.setValue(10.22);
+        maleSocket = analogActionManager.registerAction(analogActionMemory);
+        doAnalogAction.getChild(1).connect(maleSocket);
+        
+        
+        doAnalogAction = new DoAnalogAction(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(doAnalogAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        AnalogExpressionMemory analogExpressionMemory = new AnalogExpressionMemory(analogExpressionManager.getAutoSystemName(), null);
+        maleSocket = analogExpressionManager.registerExpression(analogExpressionMemory);
+        maleSocket.setEnabled(false);
+        doAnalogAction.getChild(0).connect(maleSocket);
+        
+        AnalogMany analogMany = new AnalogMany(analogActionManager.getAutoSystemName(), null);
+        maleSocket = analogActionManager.registerAction(analogMany);
+        maleSocket.setEnabled(false);
+        doAnalogAction.getChild(1).connect(maleSocket);
+        
+        
+        doAnalogAction = new DoAnalogAction(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(doAnalogAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        analogExpressionMemory = new AnalogExpressionMemory(analogExpressionManager.getAutoSystemName(), null);
+        analogExpressionMemory.setComment("A comment");
+        analogExpressionMemory.setMemory(memory1);
+        maleSocket = analogExpressionManager.registerExpression(analogExpressionMemory);
+        doAnalogAction.getChild(0).connect(maleSocket);
+        
+        analogMany = new AnalogMany(analogActionManager.getAutoSystemName(), null);
+        analogMany.setComment("A comment");
+        maleSocket = analogActionManager.registerAction(analogMany);
+        doAnalogAction.getChild(1).connect(maleSocket);
+        
+        
+        doAnalogAction = new DoAnalogAction(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(doAnalogAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        AnalogFormula analogFormula = new AnalogFormula(analogExpressionManager.getAutoSystemName(), null);
+        maleSocket = analogExpressionManager.registerExpression(analogFormula);
+        maleSocket.setEnabled(false);
+        doAnalogAction.getChild(0).connect(maleSocket);
+        
+        
+        doAnalogAction = new DoAnalogAction(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(doAnalogAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        analogFormula = new AnalogFormula(analogExpressionManager.getAutoSystemName(), null);
+        analogFormula.setComment("A comment");
+        analogFormula.setFormula("sin(a)*2 + 14");
+        maleSocket = analogExpressionManager.registerExpression(analogFormula);
+        doAnalogAction.getChild(0).connect(maleSocket);
+        
+        
+        
+        
+        doStringAction = new DoStringAction(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(doStringAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        StringExpressionConstant stringExpressionConstant = new StringExpressionConstant(stringExpressionManager.getAutoSystemName(), null);
+        maleSocket = stringExpressionManager.registerExpression(stringExpressionConstant);
+        maleSocket.setEnabled(false);
+        doStringAction.getChild(0).connect(maleSocket);
+        
+        StringActionMemory stringActionMemory = new StringActionMemory(stringActionManager.getAutoSystemName(), null);
+        maleSocket = stringActionManager.registerAction(stringActionMemory);
+        maleSocket.setEnabled(false);
+        doStringAction.getChild(1).connect(maleSocket);
+        
+        
+        doStringAction = new DoStringAction(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(doStringAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        stringExpressionConstant = new StringExpressionConstant(stringExpressionManager.getAutoSystemName(), null);
+        stringExpressionConstant.setComment("A comment");
+        stringExpressionConstant.setValue("Some string");
+        maleSocket = stringExpressionManager.registerExpression(stringExpressionConstant);
+        doStringAction.getChild(0).connect(maleSocket);
+        
+        stringActionMemory = new StringActionMemory(stringActionManager.getAutoSystemName(), null);
+        stringActionMemory.setComment("A comment");
+        stringActionMemory.setMemory(memory2);
+        stringActionMemory.setValue("Hello");
+        maleSocket = stringActionManager.registerAction(stringActionMemory);
+        doStringAction.getChild(1).connect(maleSocket);
+        
+        
+        doStringAction = new DoStringAction(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(doStringAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        StringExpressionMemory stringExpressionMemory = new StringExpressionMemory(stringExpressionManager.getAutoSystemName(), null);
+        maleSocket = stringExpressionManager.registerExpression(stringExpressionMemory);
+        maleSocket.setEnabled(false);
+        doStringAction.getChild(0).connect(maleSocket);
+        
+        StringMany stringMany = new StringMany(stringActionManager.getAutoSystemName(), null);
+        maleSocket = stringActionManager.registerAction(stringMany);
+        maleSocket.setEnabled(false);
+        doStringAction.getChild(1).connect(maleSocket);
+        
+        
+        doStringAction = new DoStringAction(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(doStringAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        stringExpressionMemory = new StringExpressionMemory(stringExpressionManager.getAutoSystemName(), null);
+        stringExpressionMemory.setComment("A comment");
+        stringExpressionMemory.setMemory(memory1);
+        maleSocket = stringExpressionManager.registerExpression(stringExpressionMemory);
+        doStringAction.getChild(0).connect(maleSocket);
+        
+        stringMany = new StringMany(stringActionManager.getAutoSystemName(), null);
+        stringMany.setComment("A comment");
+        maleSocket = stringActionManager.registerAction(stringMany);
+        doStringAction.getChild(1).connect(maleSocket);
+        
+        
+        doStringAction = new DoStringAction(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(doStringAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        StringFormula stringFormula = new StringFormula(stringExpressionManager.getAutoSystemName(), null);
+        maleSocket = stringExpressionManager.registerExpression(stringFormula);
+        maleSocket.setEnabled(false);
+        doStringAction.getChild(0).connect(maleSocket);
+        
+        
+        doStringAction = new DoStringAction(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(doStringAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        stringFormula = new StringFormula(stringExpressionManager.getAutoSystemName(), null);
+        stringFormula.setComment("A comment");
+        stringFormula.setFormula("sin(a)*2 + 14");
+        maleSocket = stringExpressionManager.registerExpression(stringFormula);
+        doStringAction.getChild(0).connect(maleSocket);
+        
+        
+        
+        
+        // Check that we have actions/expressions in every managers
+        Assert.assertNotEquals(0, logixNG_Manager.getNamedBeanSet().size());
+        Assert.assertNotEquals(0, conditionalNGManager.getNamedBeanSet().size());
+        Assert.assertNotEquals(0, analogActionManager.getNamedBeanSet().size());
+        Assert.assertNotEquals(0, analogExpressionManager.getNamedBeanSet().size());
+        Assert.assertNotEquals(0, digitalActionManager.getNamedBeanSet().size());
+        Assert.assertNotEquals(0, digitalExpressionManager.getNamedBeanSet().size());
+        Assert.assertNotEquals(0, stringActionManager.getNamedBeanSet().size());
+        Assert.assertNotEquals(0, stringExpressionManager.getNamedBeanSet().size());
+        Assert.assertNotEquals(0, InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet().size());
+        Assert.assertNotEquals(0, InstanceManager.getDefault(NamedTableManager.class).getNamedBeanSet().size());
         
         
         
