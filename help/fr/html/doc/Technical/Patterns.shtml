@@ -1,6 +1,6 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- UpDated by Blorec Herv&#233; 2016-08-14-->
+  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+
 <html lang="fr">
 <head>
   <meta name="generator" content=
@@ -17,7 +17,7 @@
   <!-- or change them to reflect your alternative logo -->
   <!-- Style -->
   <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
+  "text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -76,90 +76,166 @@ votre code utilise les objets
 <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>
 pour g&#233;rer les r&#233;f&#233;rences pour NamedBeans. Ils automatisent le processus de renommage.
 
-<h2>Organisation du Code</h2>
-<p>
-Au plus haut niveau, nous s&#233;parons le code de test du code
-distribu&#233; en les mettant dans des r&#233;pertoires distincts
-dans le r&#233;pertoire de d&#233;veloppement: "test" et "src".
-Il est donc facile de compiler une version sans code de test,
-d'appliquer des outils diff&#233;rents pour les deux types de code, etc
+  <p>Pour ce faire, lorsque vous souhaitez stocker une r&#233;f&#233;rence &#224; 
+      NamedBean, par exemple pour se souvenir d'un capteur particulier, d'un aiguillage, d'un m&#226;t de signalisation, etc.
+      demander (par l'interm&#233;diaire de l'InstanceManager) au NamedBeanHandlerManager de vous donner un 
+      NamedBeanHandle :
+      <pre><code>
+      NamedBeanHandle&lt;Sensor&gt; handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(name, sensor) ;
+      </code></pre> 
+      o&#249; <code>nom</code> est le nom de la cha&#238;ne que l'utilisateur a fourni, soit un 
+      nom du syst&#232;me ou nom d'utilisateur, et <code>capteur</code> est l'objet particulier <code>capteur</code>.
+      en cours de stockage.   Lorsque vous avez besoin de r&#233;f&#233;rencer le capteur lui-m&#234;me, il suffit de faire
+      <pre><code>
+      capteur = handle.getBean() ;
+      </code></pre>
+      Veuillez utiliser <code>getBean()</code> chaque fois que vous devez acc&#233;der &#224; Bean.  Ne mettez pas en cache la
+      r&#233;f&#233;rence de <code>getBean()</code>.  De cette fa&#231;on, si quelqu'un effectue une op&#233;ration de "d&#233;placement" ou de "renommage",
+      le <code>NamedBeanHandle</code> sera mis &#224; jour et votre prochain appel <code>getBean()</code> obtiendra la
+      bonne r&#233;f&#233;rence.
 
-<p>
-Dans le code source lui-m&#234;me, nous s&#233;parons plusieurs types. 
+      <h3>Propri&#233;t&#233;s de Bean</h3>
 
-<dl>
-<dt>Le paquet jmri
-<dd>contient les interfaces de base pour le syst&#232;me.
-     Il doit contenir le code de mise en &#339;uvre minimale,
-     et pas de r&#233;f&#233;rences non-JMRI, en particulier le code Swing.
+      <p>les NamedBeans ont g&#233;n&#233;ralement un &#233;tat, par exemple un <code>Capteur</code> peut
+      &#234;tre actif ou inactif (ou inconnu ou incoh&#233;rent). Cet &#233;tat est
+      repr&#233;sent&#233; par une ou plusieurs propri&#233;t&#233;s du Java Bean. Code en Java et Jython
+      peut utiliser le
+      <a href="https://docs.oracle.com/javase/tutorial/uiswing/events/propertychangelistener.html">PropertyChangeListener
+      pattern</a> pour &#234;tre averti lorsqu'une propri&#233;t&#233; donn&#233;e change. A titre d'exemple,
+      lorsqu'un aiguillage est configur&#233; avec un capteur de r&#233;troaction,
+      l'objet <code>Turnout</code> s'enregistre en tant qu'auditeur de changement
+      lorsque la propri&#233;t&#233; d'&#233;tat du <code>Sensor</code> change, et met &#224; jour
+      la <code>Turnout</code>'s <code> "KnownState"</code> propri&#233;t&#233;.</p>
 
-<dt>Le paquet jmri.jmris 
-<dd>Contient tout le code pour la mise en &#339;uvre des serveurs pour les interfaces JMRI.
+      <p>Les propri&#233;t&#233;s disponibles de Bean sont d&#233;finies dans la classe de base abstraite
+      g&#233;n&#233;ralement, par exemple <code>AbstractTurnout</code>
+      d&#233;finit <code> "CommandedState"</code>,
+      <code> "KnownState"</code>, <code> "feedbackchange"</code>, <code> "locked"</code>
+      et d'autres encore au moment de la r&#233;daction du pr&#233;sent document. Ces propri&#233;t&#233;s ne sont pas
+      d&#233;pendant du syst&#232;me. Certaines des propri&#233;t&#233;s sont uniquement d'ex&#233;cution (par exemple, l'&#233;tat --
+      ), tandis que d'autres (par exemple, le retour d'information sur l'aiguillage
+      ) sont des param&#232;tres de configuration, s&#233;lectionn&#233;s par l'utilisateur et enregistr&#233;s entre
+      sessions.</p>
 
-<dt>Le paquet jmri.jmrit
-<dd>contient tout le code pour les outils JMRI non sp&#233;cifiques au syst&#232;me et extensions
-		La plupart des outils sont dans des sous-paquets, mais certains apparaissent directement dans le paquet
+      <h3>Edition et sauvegarde des NamedBeans</h3>
 
-<dt>Le paquet jmri.jmrix
-<dd>Contient tout le code pour se connecter &#224;
-     du mat&#233;riel sp&#233;cifique du r&#233;seau ferr&#233;.
+      <p>Les NamedBeans sont cr&#233;&#233;s et configur&#233;s par l'utilisateur &#224; l'aide d'actions. 
+      La majeure partie de l'UI pour ces actions se trouve dans
+      le <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/beantable/package-summary.html">jmri.jmrit.beantable</a>
+      en utilisant le tableau g&#233;n&#233;rique <code>BeanTable{Frame,Pane,Model}</code>
+      des classew sp&#233;cialis&#233;es pour le type particulier, par exemple dans la
+      <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/beantable/TurnoutTableAction.html"><code>TurnoutTableauAction</code></a>
+      classe. Les options de configuration pr&#233;sentes dans le tableau et le dialogue d'&#233;dition
+      sont sp&#233;cifiques au type (<code>Turnout</code>) mais pas au syst&#232;me.</p>
+      
+      <p>Les Beans avec les options configur&#233;es sont persistant dans le
+      Fichier XML de configuration (et de panel) lorsque l'utilisateur les enregistre. 
+      La persistance est g&#233;r&#233;e par le syst&#232;me et l'objet sp&#233;cifique ManagerXml
+      classe, par
+      exemple <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/configurexml/LnTurnoutManagerXml.html">LnTurnoutManagerXml</a>
+      ou <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/openlcb/configurexml/OlcbTurnoutManagerXml.html">OlcbTurnoutManagerXml</a>,
+      qui s'appuient fortement sur un code partag&#233;
+      dans <a href="https://jmri.org/JavaDoc/doc/jmri/managers/configurexml/AbstractTurnoutManagerConfigXML.html">AbstractTurnoutManagerConfigXML</a>,
+      mais peut introduire des fonctionnalit&#233;s sp&#233;cifiques au syst&#232;me et collaborer avec
+      le gestionnaire sp&#233;cifique au syst&#232;me et &#224; l'objet
+      (par exemple <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/openlcb/OlcbTurnoutManager.html">OlcbTurnoutManager</a>)
+      pour y parvenir.</p>
 
-<dt>Les paquetsjmri.managers et jmri.implementations  
-<dd>Ceux-ci fournissent des mises en &#339;uvres  par d&#233;faut pour les gestionnaires 
-		et les autres classes. Cela d&#233;place le code du paquet
- 		primaire JMRI. Ils ne doivent pas r&#233;pondre &#224; des applications, jmri.jmrix 
-		ou jmri.jmrit.
+      <p>La classe de base g&#232;re la persistance des param&#232;tres utilisateur qui ont &#233;t&#233; saisis
+      via la BeanTable.</p>
 
-<dt>paquet jmri.util 
-<dd>Autres mise en oeuvre courantes d'usage g&#233;n&#233;ral.
-     Ne devrait pas d&#233;pendre des paquets  jmri.jmrit ou jmri.jmrix.
-     Le sous-paquet jmri.util.swing fournit les utilitaires Swing 
+      <h3>Propri&#233;t&#233;s sp&#233;cifiques au syst&#232;me</h3>
+      
+      <p>Ajouter une propri&#233;t&#233; sp&#233;cifique au syst&#232;me n&#233;cessite l'utilisation d'une API g&#233;n&#233;rique,
+      parce que le code dans le paquet  <code>jmrit.beantable</code>
+       <a href="IntroStructure.shtml">ne peut pas d&#233;pendre</a> des 
+      jmrix.system-specific packages. Tous les NamedBeans ont
+      un <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBean.html#setProperty-java.lang.String-java.lang.Object-">setProperty</a>
+      et <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBean.html#getProperty-java.lang.String-">getProperty</a>
+      o&#249; des valeurs arbitraires peuvent &#234;tre enregistr&#233;es pour n'importe quelle cl&#233; de cha&#238;ne. Ces 
+      propri&#233;t&#233;s sont persistantes dans le fichier XML par la classe de base de
+      ManagerXml, donc aucun code n'a besoin d'&#234;tre &#233;crit pour lui. Une vari&#233;t&#233; de
+      types peut &#234;tre choisi pour la valeur de la propri&#233;t&#233;, tels que <code>Integer</code>
+      ou <code>Boolean</code>, et sera correctement persistant et r&#233;cup&#233;r&#233;
+      lors du chargement. Les types personnalis&#233;s peuvent fonctionner s'ils ont un <code>toString()</code>
+      et un constructeur qui ne prend qu'une <code>String</code> comme argument
+      et ceux-ci s&#233;rialisent et analysent correctement la valeur de la donn&#233;e.</p>
 
-<dt>paquet Apps 
-<dd>Pour rassembler une application, cela peut 
-		d&#233;pendre de n'importe quoi.
+      <p> Pour permettre &#224; l'utilisateur de modifier ces propri&#233;t&#233;s sp&#233;cifiques au syst&#232;me, un
+      <code>Manager</code> peut d&#233;clarer l'ensemble des propri&#233;t&#233;s prises en charge en retournant 
+      le formulaire dûment rempli
+      <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBeanPropertyDescriptor.html">NamedBeanPropertyDescriptor</a>
+      objets de
+      la <a href="https://jmri.org/JavaDoc/doc/jmri/Manager.html#getKnownBeanProperties--">getKnownBeanProperties</a>
+      m&#233;thode. Ce descripteur indique &#224; la BeanTable que des colonnes suppl&#233;mentaires doivent
+      &#234;tre cr&#233;&#233;es, le type de donn&#233;es que ces colonnes contiendront et ce qui devrait
+      &#234;tre les noms des colonnes (imprim&#233;s dans l'en-t&#234;te). Les colonnes sp&#233;cifiques au syst&#232;me
+      sont cach&#233;s par d&#233;faut &#224; l'utilisateur ; l'utilisateur doit cliquer sur une case &#224; cocher
+      dans la ligne inf&#233;rieure pour les afficher ; la case &#224; cocher n'appara&#238;t que s'il y a
+      des propri&#233;t&#233;s sp&#233;cifiques au syst&#232;me. Le nom de la colonne doit &#234;tre rempli avec un
+      cha&#238;ne localis&#233;e qui devrait sortir du
+      <code>Manager</code>'s <code>Bundle</code>.</p>
 
-<dt>Sous-r&#233;pertoires configurexml 
-<dd>Ceux-ci contiennent le code pour le
-		<a href="XmlPersistance.shtml"> syst&#232;me de configuration XML</a>
- 		les paquets de haut niveau, esp util & dependancies, apps.
+      <a id="SPI" name="SPI"></a>
+      <h2>Fournisseurs de services</h2>
+      Java fournit une ressource, en utilisant une "interface de fournisseur de services",
+      qui nous permet de r&#233;duire la complexit&#233; de notre code en faisant en sorte que le code 
+      lui-m&#234;me d&#233;couvre les &#233;l&#233;ments disponibles et &#224; installer.<br>
+      Pour en savoir plus, consultez les sections sur les tutoriels
+      "<a href="https://docs.oracle.com/javase/tutorial/ext/basics/spi.html">Cr&#233;ation d'applications extensibles</a>"
+      et
+      "<a href="https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html">Introduction aux interfaces des fournisseurs de services</a>".
+      
+      <p>
+      Par exemple, en annotant une classe avec
+      <pre><code>
+      @Fournisseur de services (service = PreferencesManager.class)
+      </code></pre> 
+      le syst&#232;me de pr&#233;f&#233;rences JMRI
+      d&#233;couvrira automatiquement que la classe utilise les pr&#233;f&#233;rences
+      et devrait &#234;tre connect&#233;e.  Cela signifie que nous n'avons pas &#224; 
+      modifier les classes de pr&#233;f&#233;rences pour rechercher chaque nouvelle classe &#224; l'aide de celles-ci, 
+      et que nous pouvons (&#233;ventuellement) construire et distribuer plus progressivement JMRI.
+      
+      <p>
+      Les mod&#232;les disponibles (les liens sont vers le JavaDoc de l'interface ou de la classe 
+      en pr&#233;cisant la fonctionnalit&#233;) :
+      <dl>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebManifest.html">ConnectionTypeList</a><</dt>
+      <dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServlet.html">HttpServlet</a><</dt>
+        <dd>(Notez que c'est une classe d&#233;finie par Java, pas une interface d&#233;finie par JMRI)</dd>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/InstanceInitializer.html">InstanceInitializer</a><</dt>
+        <dd>Fournit un moyen pour l JMRI InstanceManager de cr&#233;er une instance de la classe lorsqu'une demande est faite</dd>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory</a><</dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/spi/PreferencesManager.html">PreferencesManager</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/swing/PreferencesPanel.html">Panel des pr&#233;f&#233;rences</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/beantable/signalmast/SignalMastAddPane.html">SignalMastAddPane</a><</dt>
+        <dd>Fournir un panneau sp&#233;cifique au type utilis&#233; pour ajouter/modifier les informations dans un objet concret SignalMast</dd>
+      <dt><a href="https://jmri.org/JavaDoc/doc/apps/startup/StartupActionFactory.html">StartupActionFactory</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/apps/startup/StartupModelFactory.html">StartupModelFactory</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebManifest.html">WebManifest</a></dt>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebServerConfiguration.html">Configuration du serveur web</a></dt>
+      </dl>
 
-<dt>Sous-r&#233;pertoires swing
-<dd>Contient les outils Swing sp&#233;cifiques.
-    En particulier &#224; l'ext&#233;rieur du paquet jmri.jmrit,
-		nous essayons de s&#233;parer le code Swing du
-    code normal op&#233;rationnel.
-    Voir la <a href=""> page Swing</a>
-		pour plus d'informations.
-
-<dt>Help files (fichiers d'aide)
-<dd>La structure du fichier d'aide, 
-		les fichiers &#233;chos de la structure du code.
-    Pour plus d'informations, voir la page d'aide 
-		<a href="Help.shtml"> dans les pages JavaHelp</a>.
- 
-<dt>ResourceBundles
-<dd>Nous utilisons le regroupements de ressources pour <a href="I8N.shtml">l'internationalisation</a>.
-    Elles sont colocalis&#233;e avec le code qui les r&#233;f&#233;rence, 
-		mais nous nous dirigeons vers une nouvelle convention de d&#233;nomination.
-    Pour r&#233;duire le fardeau de chargement, nous nous dirigeons vers un 
-		mod&#232;le o&#249; le fichier jmri.foo.FooBundle.properties 
-		est adress&#233; par un &#233;l&#233;ment statique dans la 
-		classe jmri.foo.FooBundle, s&#233;par&#233; des 
-		propri&#233;t&#233;s du fichier lui m&#234;me. Cela r&#233;duit 
-		beaucoup le temps de chargement!    
-		<p>
-		Notez qu'il existe &#233;galement quelques 
-		regroupements de ressources qui sont utilis&#233;s &#224; d'autres fins, 
-		indiqu&#233;s dans leurs commentaires en t&#234;te.
-		</dl>
-		Le script outil de d&#233;veloppement "checkdepends.csh" 
-		est destin&#233; &#224; v&#233;rifier certaines des d&#233;pendances par inadvertance,
-		mais nous sommes loin de l'effacer.
-
-<!--#include virtual="/Footer" -->
-
-	</div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+      <p>
+      Les classes qui fournissent le SPI doivent &#233;galement &#234;tre enregistr&#233;es dans le syst&#232;me pour pouvoir &#234;tre retrouv&#233;es.
+      JMRI le fait avec des entr&#233;es
+      dans les fichiers du r&#233;pertoire <code>target/classes/META-INF/services/</code>.
+      Ces entr&#233;es sont cr&#233;&#233;es automatiquement pendant le processus de construction de JMRI &#224; partir des
+      annotations dans les fichiers sources.
+      JMRI les regroupe ensuite dans le niveau appropri&#233; du fichier <code>jmri.jar</code>, 
+      o&#249; ils seront finalement trouv&#233;s et o&#249; l'on agira.
+      
+      <p>
+      Pour y acc&#233;der :
+<pre style="font-family : monospace ;">
+            java.util.ServiceLoader.load(OurServiceClass.class).forEach((ourServiceObject) -> {
+                 // acc&#233;der &#224; l'objet de service via notreServiceObject
+            }) ;
+</pre>
+ Derni&#232;re traduction 2021-02-01
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
