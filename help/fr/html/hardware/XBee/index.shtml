@@ -1,0 +1,349 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI Hardware Support - Digi XBee Network</title>
+  <meta name="author" content="Paul Bender">
+  <meta name="keywords" content=
+  "XBee Configuration Information for JMRI">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+  <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
+    <!-- Page Body -->
+
+      <h1>Support mat&#233;riel : R&#233;seau Digi XBee </h1>
+
+      <ul class="snav">
+        <!-- TOC -->
+
+        <li><a href="#hardware">Mat&#233;riel</a></li>
+
+        <li><a href="#connecting">Connexion</a><</li>
+
+        <li><a href="#tools">Outils</a></li>
+
+        <li><a href="#documentation">Documentation</a></li>
+      </ul>
+
+      <p>Les <a href="http://www.digi.com/xbee">modules XBee deDigi International
+      </a> sont une famille de dispositifs de communication sans fil
+      qui ont leur propre microcontr&#244;leur et des broches d'E/S qui qui les 
+      rendent utiles pour de nombreux r&#233;seaux de commande distribu&#233;s, notamment
+      sur les chemins de fer miniatures.</p>
+
+      <a name="hardware" id="hardware"></a>
+      <h2>Mat&#233;riel support&#233;</h2>
+
+      <h3>Centralede commande</h3>
+
+      <p>JMRI peut communiquer avec les modules XBee Series 1 et XBee Series 2
+      .</p>
+
+      <h3>Interfaces informatiques</h3>
+
+      <p>Le support JMRI pour les appareils XBee comprend des interfaces s&#233;rie
+      aux r&#233;seaux XBee. La connexion &#224; l'ordinateur peut &#234;tre &#233;tablie
+      par tout adaptateur USB ou RS232 XBee. Les adaptateurs test&#233;s
+      incluent:</p>
+
+      <ul>
+        <li>Le Sparkfun Electronics <a href=
+        "https://www.sparkfun.com/products/8687">XBee Explorer
+        USB</a></li>
+
+        <li>Le Sparkfun Electronics <a href=
+        "https://www.sparkfun.com/products/9111">XBee Explorer
+        S&#233;rie</a></li>
+
+        <li>Le CISECO <a href=
+        "http://shop.ciseco.co.uk/slice-of-pi-add-on-for-raspberry-pi/">
+        Tranche de Pi</a> (en conjonction avec un Raspberry Pi)</li>
+      </ul>
+
+      <a name="connecting" id="connecting"></a>
+      <h2>Connexion</h2>
+
+      <h3>C&#226;blage</h3>
+
+      <p>JMRI peut communiquer avec les modules XBee Series 1 et XBee Series 2
+      .</p>
+
+      <p>Dans les versions de JMRI ant&#233;rieures &#224; 4.5.5, le support sous-jacent pour
+     la communication est assur&#233;e par 
+      <a href="https://github.com/andrewrapp/xbee-api">Andrew Rapp's
+      Biblioth&#232;que xbee-api pour Java</a>.</p>
+
+      <p>&#192; partir de la version 4.5.5 de  JMRI, le soutien sous-jacent pour
+     la communication est assur&#233;e par <a href="http://docs.digi.com/display/XBJLIB/XBee+Java+Library">La biblioth&#232;que Java Digi XBee</a>.
+
+      <p>Les deux biblioth&#232;ques exigent 
+      que le module XBee connect&#233; au PC soit configur&#233; pour l'API
+      mode avec &#233;chappements (mode 2).</p>
+
+      <p>Le soutien de JMRI pour les modules Digi XBee comprend actuellement
+      la capacit&#233; de lire passivement les entr&#233;es des capteurs num&#233;riques, comme les capteurs JMRI
+      , et d&#233;clenchement d'Aiguillage
+
+      <h3> Adressage du module XBee</h3>
+
+      <p>Chaque module XBee comporte 5 adresses dont nous devons &#234;tre inform&#233;s
+      :</p>
+
+      <ul>
+        <li>un Num&#233;ro de la cha&#238;ne</li>
+
+        <li>une adresse PAN 16 bit</li>
+
+        <li>une Adresse Utilisateur 16 bit</li>
+
+        <li>Une ID Global Unique 64 bit</li>
+
+        <li>une cha&#238;ne d'identification de n&#339;ud de forme libre</li>
+      </ul>
+
+      <p>Le num&#233;ro de canal IEEE 802.15.4 est d&#233;fini en configurant le
+       param&#232;tre CH de XBee. La valeur du param&#232;tre CH peut &#234;tre n'importe quelle
+      (hex) valeur de 0x0B &#224; 0x1A. Cela correspond aux valeurs d&#233;cimales
+       de 11 &#224; 26. Tous les modules XBee du r&#233;seau doivent &#234;tre d&#233;finis
+      au m&#234;me num&#233;ro de cha&#238;ne.</p>
+
+      <p>L'adresse PAN (Personal Area Network) de 16 bits est attribu&#233;e
+      en d&#233;finissant le param&#232;tre d'identification de la XBee. Tous les modules XBee 
+      doit &#234;tre configur&#233; pour utiliser le m&#234;me PAN.</p>
+
+      <p>L'adresse utilisateur 16 bits est d&#233;finie par le param&#232;tre MY de XBee
+      . Certains microprogrammes XBee d&#233;finissent automatiquement 
+      la valeur de MON adresse unique sur le r&#233;seau, mais d'autres
+      ne le font pas. Si le param&#232;tre "Mon" est configurable par l'utilisateur, il doit
+      &#234;tre une adresse unique.</p>
+
+      <p>L'identifiant unique global (GUID) de 64 bits est d&#233;fini en
+      usine. Cette valeur est la cha&#238;ne hexagonale imprim&#233;e 
+      sous chaque module XBee. Vous pouvez &#233;galement lire la valeur par
+      la lecture du SH (Serial Number High) et du SL (Serial Number
+      Low) des param&#232;tres de la XBee. L'utilisateur ne peut pas modifier 
+      les valeurs de param&#232;tres de SH et SL.</p>
+
+      <p> L'identificateur de n&#339;ud libre est une valeur de texte de 20 caract&#232;res
+      stock&#233;es dans le param&#232;tre NI de XBee. L'identificateur de n&#339;ud doit
+      &#234;tre unique, et peut &#234;tre lisible par l'homme.</p>
+
+      <p>Note : Vous devez &#234;tre inform&#233;s des autres appareils utilisant l'IEEE
+      802.15.4 les r&#233;seaux radio qui peuvent fonctionner dans la m&#234;me
+      r&#233;gion. Les r&#233;gulateurs Digitrax Duplex et la radio Roco MultiMaus Pro
+      utilisent la norme IEEE 802.15.4 comme protocole de couche pour le r&#233;seau sous-jacent
+      . Si ces appareils partagent un PAN et un canal avec
+      vos modules XBee, les appareils font tous partie du m&#234;me r&#233;seau
+      et l'adresse de l'utilisateur sur 16 bits doit &#234;tre unique.</p>
+
+      <h3>Adressage des broches d'entr&#233;e/sortie</h3>
+
+      <p>Lors de la cr&#233;ation d'entr&#233;es (capteurs) et de sorties (soit lumi&#232;res
+      ou Aiguillages) dans JMRI, les broches d'entr&#233;e-sortie de XBee peuvent &#234;tre individuellement
+      adress&#233;e. Pour acc&#233;der &#224; un seul bit, vous pouvez utiliser le formulaire:</p>
+
+      <p><code>ModuleAdresse:Pin</code></p>
+
+      <p>Lorsque l'adresse du module est l'une des adresses de n&#339;ud de 16 bits, 
+      l'adresse de noeud 64 bits,, ou la cha&#238;ne d'identification du n&#339;ud et la broche est
+      un num&#233;ro d'identification XBee IO.</p>
+
+      <p>Les aiguillages peuvent &#234;tre cr&#233;&#233;s en utilisant deux bits. Pour sp&#233;cifier un
+      aiguillage cr&#233;&#233; avec deux bits, vous utilisez le format qui suit
+      :</p>
+
+      <p><code>ModuleAdresse:Pin1:Pin2</code></p>
+
+      <p>Lorsque l'adresse du module est l'une des adresses de n&#339;ud de 16 bits, 
+      l'adresse de n&#339;ud de 64 bits, ou la cha&#238;ne d'identification du n&#339;ud et la pin1
+      et Pin2 sont des num&#233;ros de pin XBee IO. Les num&#233;ros d'identification n'ont pas 
+      besoin d' &#234;tre cons&#233;cutifs.</p>
+
+      <h3>Cr&#233;ation automatique de capteurs</h3>
+
+      <p>Quand un message de statut d'entr&#233;e XBee est re&#231;u indiquant
+      qu'un (ou plusieurs) des pins d'entr&#233;e XBee est utilis&#233; comme entr&#233;e, JMRI
+      cr&#233;era automatiquement un capteur pour chaque broche d'entr&#233;e si elle
+      n'existe pas encore.</p>
+
+      <p>Lorsque les capteurs sont cr&#233;&#233;s automatiquement, 
+       L'identificateur de n&#339;ud sera utilis&#233; pour le ModuleAddress s'il n'est pas
+      vierge. Si l'identificateur de n&#339;ud est vide, l'adresse MY sur 16 bits
+      sera utilis&#233; pour l'adresse du module, &#224; moins que le champadresse MY
+      contient une adresse de diffusion. Si ni le champ
+      ou l'adresse MY de 16 bits sont utilis&#233;s pour l
+      ModuleAddress, le GUID 64 bits sera utilis&#233; pour le
+      ModuleAdresse.</p>
+
+      <h3>Ajout d'un &#233;l&#233;ment au tableau</h3>
+      <p>Lorsque vous ajoutez un &#233;l&#233;ment &#224; l'un des tableaux, souvent vous ne
+        devez remplir les chiffres pour que JMRI construise
+        le nom syst&#232;me complet.<br>
+         Voici un r&#233;sum&#233;, en s&#233;parant les sorties (par exemple, 
+         les aiguillages) et entr&#233;es (par exemple, les capteurs):</p>
+
+      <table>
+        <tbody><tr>
+          <th>E/S</th>
+          <th>Entr&#233;e</th>
+          <th>Signification</th>
+          <th>donne le nom syst&#232;me</th>
+          <th>Masque</th>
+          <th>Equivalent</th>
+          <th>Minimum</th>
+          <th>Maximum</th>
+        </tr>
+        <tr>
+          <td>e</td>
+          <td>4:3</td>
+          <td>ModuleAdresse:Pin</td>
+          <td>ZS4:3</td>
+          <td>int : int</td>
+          <td> </td>
+          <td>pin : 0</td>
+          <td>pin : 7</td>
+        </tr>
+        <tr>
+          <td>s</td>
+          <td>4:3</td>
+          <td>ModuleAdresse:Pin</td>
+          <td>ZS4:3</td>
+          <td>int : int</td>
+          <td> </td>
+          <td>pin : 0</td>
+          <td>pin : 7</td>
+        </tr>
+        <tr>
+          <td>s (Aiguillage)</td>
+          <td>4:3:4</td>
+          <td>ModuleAdresse:Pin1:Pin2</td>
+          <td>ZT4:3:4</td>
+          <td>int : int : int</td>
+          <td> </td>
+          <td>pin : 0</td>
+          <td>pin : 7</td>
+        </tr>
+        </corps>
+      </table>
+      <!-- ce tableau est un extrait du tableau de l'aide/fr/html/doc/Technical/Names.shtml
+      sur la base des informations fournies dans les pages d'aide sur le mat&#233;riel
+      par Egbert Broerse @silverailscolo Juillet 2017 -->
+
+      <h3>Param&#232;tres du logiciel</h3>
+
+      <ol>
+        <li>Connectez votre adaptateur XBee en utilisant le
+        cable.</li>
+
+        <li>Les adaptateurs XBee connect&#233;s &#224; l'USB peuvent avoir besoin d'un pilote
+        install&#233;. Voir la documentation fournie par le
+        fabricant de votre adaptateur XBee.</li>
+
+        <li>Assurez-vous d'avoir la derni&#232;re version de JMRI, puis allez
+        au panneau de pr&#233;f&#233;rences d'un programme bas&#233; sur JMRI. Celui-ci
+        s'ouvre automatiquement la premi&#232;re fois qu'un programme est ex&#233;cut&#233;, ou vous
+        pouvez le s&#233;lectionner dans le menu "Edition"</li>.
+
+        <li>S&#233;lectionnez "R&#233;seau IEEE 802.15.4" dans la case 
+        de s&#233;lection du fabricant du syst&#232;me..</li>
+
+        <li>S&#233;lectionnez "XBee Network" dans la bo&#238;te de s&#233;lection connexion au syst&#232;me
+        .</li>
+
+        <li> Vous pouvez ensuite s&#233;lectionner le port s&#233;rie appropri&#233; dans la
+        Bo&#238;te de s&#233;lection du port s&#233;rie sous R&#233;glages.<br>
+        Notez que les adaptateurs USB XBee appara&#238;tront sous la forme d'un Port s&#233;rie
+        port.</li>
+
+        <li>Le "Pr&#233;fixe de connexion" est utilis&#233; pour aider JMRI &#224;
+        communiquer s&#233;par&#233;ment avec de multiples "connexions" au
+        mat&#233;riel du r&#233;seau. Chaque "connexion" doit avoir un  identifiant 
+        unique qui est sp&#233;cifi&#233; comme le "Pr&#233;fixe de connexion".
+        Par d&#233;faut, la premi&#232;re connexion XBee re&#231;oit le pr&#233;fixe
+        "Z", et les r&#233;seaux XBee suppl&#233;mentaires re&#231;oivent des pr&#233;fixes comme
+        "Z1", "Z2", ... La plupart des utilisateurs devraient &#234;tre en mesure d'utiliser la
+        valeur par d&#233;faut du "Pr&#233;fixe de connexion" fournie par les outils JMRI
+        </li>
+
+        <li>Quand un outil JMRI est configur&#233; pour plus d'une connexion,
+        chaque connexion re&#231;oit un &#233;l&#233;ment de menu dans la fen&#234;tre principale 
+        de l'outil JMRI. Pour aider les utilisateurs &#224; diff&#233;rencier leurs
+        diff&#233;rentes connexions, chaque connexion a un "Nom de Connexion
+        ", qui est utilis&#233; comme nom de l'&#233;l&#233;ment de menu associ&#233; dans la 
+        fen&#234;tre principale de l'outil JMRI. Les utilisateurs peuvent modifier l'&#233;l&#233;ment
+        "Nom de la connexion" pour toute connexion adapt&#233;e &#224; leur
+        besoins.</li>
+
+        <li>L'adaptateur XBee "Additional Connection Settings" (param&#232;tres de connexion suppl&#233;mentaires)
+        donne acc&#232;s &#224; :
+
+          <ul>
+            <li>La vitesse de transmission pour la connexion.<br>
+            Assurez-vous que le d&#233;bit en bauds s&#233;lectionn&#233; correspond au 
+            r&#233;glage de la vitesse du port de votre XBee.</li>
+            <li>Intervalle de sortie<br>
+            D&#233;faut : 250 millisecondes, destin&#233; au d&#233;bogage/aux
+            utilisateurs avertis</li>
+          </ul>
+        </li>
+
+        <li>Le bouton "Configure XBee Nodes" ouvre l'<a href=
+        "XBeeNodeConfigurationTool.shtml">outil de Configuration du n&#339;ud XBee
+        </a>. Si vous enregistrez les pr&#233;f&#233;rences apr&#232;s la cr&#233;ation des n&#339;uds,
+        les informations relatives aux adresses des n&#339;uds seront stock&#233;es dans les
+        Pr&#233;f&#233;rences JMRI.</li>
+
+        <li>Cliquez sur "Sauvegarder".  Il vous sera demand&#233; si vous souhaitez 
+        quitter le programme ; cliquez sur "Oui.</li>
+
+        <li>Red&#233;marrer le programme. Vous devriez &#234;tre op&#233;rationnel. </li>
+      </ol><a name="tools" id="tools"></a>
+
+      <h2>Outils JMRI XBee</h2>
+
+      <h4><a href="XBeeNodeConfigurationTool.shtml">Configuration N&#339;ud XBee</a></h4>
+
+      <p> L'outil de configuration du n&#339;ud XBee peut &#234;tre utilis&#233; pour ajouter des n&#339;uds XBee
+      dans une configuration JMRI. Vous pouvez acc&#233;der &#224; l'outil &#224; partir du
+      menu <strong>Xbee</strong> quand une <a href=
+      "index.shtml">connexion XBee</a> est active. Le bouton "Configurer
+      XBee Nodes" dans l'onglet Connexions en bas des pr&#233;f&#233;rences JMRI
+       ouvre &#233;galement l' <a href=
+      "XBeeNodeConfigurationTool.shtml">outil Configuration du n&#339;ud XBee
+      </a>. Si vous enregistrez les pr&#233;f&#233;rences apr&#232;s la cr&#233;ation des n&#339;uds,
+      les informations relatives aux adresses des n&#339;uds seront stock&#233;es dans les 
+      Pr&#233;f&#233;rences JMRI. <a name="documentation" id=
+      "documentation"></a></p>
+
+      <h2>Documentation</h2>
+
+      <h3>Information sur les tiers</h3>
+
+      <p><a href="http://www.digi.com/xbee">Digi Intl. XBee</a>site web
+     </p>
+     <p>Traduction 2021-02-02</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
+
+    
+
