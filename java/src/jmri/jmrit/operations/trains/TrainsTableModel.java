@@ -586,25 +586,21 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 e.getPropertyName().equals(TrainManager.TRAIN_ACTION_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(Train.DEPARTURETIME_CHANGED_PROPERTY) ||
                 (e.getPropertyName().equals(Train.BUILD_CHANGED_PROPERTY) && !isShowAll())) {
-            updateList();
             SwingUtilities.invokeLater(() -> {
+                updateList();
                 fireTableDataChanged();
             });
         } else if (e.getSource().getClass().equals(Train.class)) {
             Train train = ((Train) e.getSource());
-            int row;
             synchronized (this) {
-                row = sysList.indexOf(train);
-                if (Control.SHOW_PROPERTY) {
-                    log.debug("Update train table row: {} name: {}", row, train.getName());
-                }
-                if (row >= 0 && _table != null) {
-                    SwingUtilities.invokeLater(() -> {
+                SwingUtilities.invokeLater(() -> {
+                    int row = sysList.indexOf(train);
+                    if (row >= 0  && _table != null) {
                         fireTableRowsUpdated(row, row);
                         int viewRow = _table.convertRowIndexToView(row);
                         _table.scrollRectToVisible(_table.getCellRect(viewRow, 0, true));
-                    });
-                }
+                    }
+                });
             }
         }
     }
