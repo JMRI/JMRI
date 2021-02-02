@@ -691,6 +691,7 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
     
