@@ -100,13 +100,11 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
             if (!isShowAll()) {
                 // filter out trains not checked
-                SwingUtilities.invokeLater(() -> {
-                    for (int i = sysList.size() - 1; i >= 0; i--) {
-                        if (!sysList.get(i).isBuildEnabled()) {
-                            sysList.remove(i);
-                        }
+                for (int i = sysList.size() - 1; i >= 0; i--) {
+                    if (!sysList.get(i).isBuildEnabled()) {
+                        sysList.remove(i);
                     }
-                });
+                }
             }
         }
 
