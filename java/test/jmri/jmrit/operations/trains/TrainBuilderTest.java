@@ -9621,10 +9621,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         // should take car with FRED, FIFO c4 with FRED has the earliest date
         train1.setRequirements(Train.FRED);
         train1.reset();
-        // reload cars that were reset
-        c3.setLastDate(c3date);
-        c8.setLastDate(c8date);
-        c9.setLastDate(c9date);
         Assert.assertTrue("Build 2", new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After Build 2", true, train1.isBuilt());
         // check destinations
@@ -9647,11 +9643,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         // should take car with FRED, LIFO c7 with FRED has the oldest date
         harvardYard.setServiceOrder(Track.LIFO);
         train1.reset();
-        // reload cars that were reset
-        c3.setLastDate(c3date);
-        c4.setLastDate(c4date);
-        c8.setLastDate(c8date);
-        c9.setLastDate(c9date);
         Assert.assertTrue("Build 2", new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After Build 3", true, train1.isBuilt());
         // check destinations
@@ -9674,11 +9665,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         // should take car with FRED, LIFO c6 road SP with FRED has the oldest date
         train1.setCabooseRoad("SP");
         train1.reset();
-        // reload cars that were reset
-        c3.setLastDate(c3date);
-        c7.setLastDate(c7date);
-        c8.setLastDate(c8date);
-        c9.setLastDate(c9date);
         Assert.assertTrue("Build 2", new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After Build 4", true, train1.isBuilt());
         // check destinations
@@ -9701,11 +9687,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         // should take car with FRED, FIFO c5 road SP with FRED has the earliest date
         harvardYard.setServiceOrder(Track.FIFO);
         train1.reset();
-        // reload cars that were reset
-        c3.setLastDate(c3date);
-        c6.setLastDate(c6date);
-        c8.setLastDate(c8date);
-        c9.setLastDate(c9date);
         Assert.assertTrue("Build 6", new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After Build 6", true, train1.isBuilt());
         // check destinations
@@ -9740,7 +9721,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         Engine e1 = emanager.newRS("NH", "1");
         e1.setModel("GP40");
 
-        // note that a car's last moved date gets set after a train reset
         Calendar cal = java.util.Calendar.getInstance();
         cal.add(java.util.Calendar.HOUR, -2);
         Date c1date = cal.getTime();
@@ -9918,9 +9898,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         // now should take caboose, FIFO c2 has the earliest date
         train1.setRequirements(Train.CABOOSE);
         train1.reset();
-        // reload cars that were reset
-        c1.setLastDate(c1date);
-        c11.setLastDate(c11date);
         Assert.assertTrue("Build 2", new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After Build 2", true, train1.isBuilt());
         // check destinations
@@ -9943,10 +9920,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         // should take Caboose, LIFO c10 has the oldest date
         harvardYard.setServiceOrder(Track.LIFO);
         train1.reset();
-        // reload cars that were reset
-        c1.setLastDate(c1date);
-        c2.setLastDate(c2date);
-        c11.setLastDate(c11date);
         Assert.assertTrue("Build 3", new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After Build 3", true, train1.isBuilt());
         // check destinations
@@ -9969,10 +9942,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         // should take caboose, LIFO c5 road SP with FRED has the oldest date
         train1.setCabooseRoad("SP");
         train1.reset();
-        // reload cars that were reset
-        c1.setLastDate(c1date);
-        c10.setLastDate(c10date);
-        c11.setLastDate(c11date);
         Assert.assertTrue("Build 4", new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After Build 4", true, train1.isBuilt());
         // check destinations
@@ -9995,10 +9964,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         // should caboose, FIFO c3 road SP has the earliest date
         harvardYard.setServiceOrder(Track.FIFO);
         train1.reset();
-        // reload cars that were reset
-        c1.setLastDate(c1date);
-        c5.setLastDate(c5date);
-        c11.setLastDate(c11date);
         Assert.assertTrue("Build 5", new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After Build 5", true, train1.isBuilt());
         // check destinations
@@ -10019,10 +9984,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("e1 destination 5", "", e1.getDestinationTrackName());
         
         train1.reset();
-        // reload cars that were reset
-        c1.setLastDate(c1date);
-        c3.setLastDate(c3date);
-        c11.setLastDate(c11date);
         train1.setNumberEngines("1");
         Assert.assertTrue("Build 6", new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After Build 6", true, train1.isBuilt());
@@ -10044,10 +10005,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("e1 destination 6", "Boston Yard", e1.getDestinationTrackName());
         
         train1.reset();
-        // reload cars that were reset
-        c1.setLastDate(c1date);
-        c3.setLastDate(c3date);
-        c11.setLastDate(c11date);
         train1.setCabooseRoad(""); // engine road NH, c4 road NH
         Assert.assertTrue("Build 6", new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After Build 6", true, train1.isBuilt());
@@ -10070,11 +10027,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         
         harvardYard.setServiceOrder(Track.LIFO);
         train1.reset();
-        // reload cars that were reset
-        c1.setLastDate(c1date);
-        c4.setLastDate(c4date);
-        c11.setLastDate(c11date);
-        
         Assert.assertTrue("Build 8", new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After Build 8", true, train1.isBuilt());
         // check destinations
@@ -10095,11 +10047,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("e1 destination 8", "Boston Yard", e1.getDestinationTrackName());
         
         train1.reset();
-        // reload cars that were reset
-        c1.setLastDate(c1date);
-        c10.setLastDate(c10date);
-        c11.setLastDate(c11date);
-        
         // test "similar" names feature, c9 road name NH-2
         cmanager.deregister(c4); // eliminate NH 4
         cmanager.deregister(c10); // eliminate NH 10
@@ -10124,11 +10071,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("e1 destination 9", "Boston Yard", e1.getDestinationTrackName());
         
         train1.reset();
-        // reload cars that were reset
-        c1.setLastDate(c1date);
-        c9.setLastDate(c9date);
-        c11.setLastDate(c11date);
-        
         // c8 road NH-1 has the earliest date
         harvardYard.setServiceOrder(Track.FIFO);
         Assert.assertTrue("Build 10", new TrainBuilder().build(train1));
