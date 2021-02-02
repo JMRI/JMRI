@@ -19,14 +19,14 @@ import jmri.util.swing.BeanSelectCreatePanel;
 public class ExpressionConditionalSwing extends AbstractDigitalExpressionSwing {
 
     private JTabbedPane _tabbedPaneConditional;
-    private BeanSelectCreatePanel<Conditional> oblockBeanPanel;
+    private BeanSelectCreatePanel<Conditional> _conditionalBeanPanel;
     private JPanel _panelConditionalDirect;
     private JPanel _panelConditionalReference;
     private JPanel _panelConditionalLocalVariable;
     private JPanel _panelConditionalFormula;
-    private JTextField _oblockReferenceTextField;
-    private JTextField _oblockLocalVariableTextField;
-    private JTextField _oblockFormulaTextField;
+    private JTextField _conditionalReferenceTextField;
+    private JTextField _conditionalLocalVariableTextField;
+    private JTextField _conditionalFormulaTextField;
     
     private JComboBox<Is_IsNot_Enum> is_IsNot_ComboBox;
     
@@ -36,9 +36,9 @@ public class ExpressionConditionalSwing extends AbstractDigitalExpressionSwing {
     private JPanel _panelConditionalStateReference;
     private JPanel _panelConditionalStateLocalVariable;
     private JPanel _panelConditionalStateFormula;
-    private JTextField _oblockStateReferenceTextField;
-    private JTextField _oblockStateLocalVariableTextField;
-    private JTextField _oblockStateFormulaTextField;
+    private JTextField _conditionalStateReferenceTextField;
+    private JTextField _conditionalStateLocalVariableTextField;
+    private JTextField _conditionalStateFormulaTextField;
     
     
     @Override
@@ -58,20 +58,20 @@ public class ExpressionConditionalSwing extends AbstractDigitalExpressionSwing {
         _tabbedPaneConditional.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelConditionalLocalVariable);
         _tabbedPaneConditional.addTab(NamedBeanAddressing.Formula.toString(), _panelConditionalFormula);
         
-        oblockBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(ConditionalManager.class), null);
-        _panelConditionalDirect.add(oblockBeanPanel);
+        _conditionalBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(ConditionalManager.class), null);
+        _panelConditionalDirect.add(_conditionalBeanPanel);
         
-        _oblockReferenceTextField = new JTextField();
-        _oblockReferenceTextField.setColumns(30);
-        _panelConditionalReference.add(_oblockReferenceTextField);
+        _conditionalReferenceTextField = new JTextField();
+        _conditionalReferenceTextField.setColumns(30);
+        _panelConditionalReference.add(_conditionalReferenceTextField);
         
-        _oblockLocalVariableTextField = new JTextField();
-        _oblockLocalVariableTextField.setColumns(30);
-        _panelConditionalLocalVariable.add(_oblockLocalVariableTextField);
+        _conditionalLocalVariableTextField = new JTextField();
+        _conditionalLocalVariableTextField.setColumns(30);
+        _panelConditionalLocalVariable.add(_conditionalLocalVariableTextField);
         
-        _oblockFormulaTextField = new JTextField();
-        _oblockFormulaTextField.setColumns(30);
-        _panelConditionalFormula.add(_oblockFormulaTextField);
+        _conditionalFormulaTextField = new JTextField();
+        _conditionalFormulaTextField.setColumns(30);
+        _panelConditionalFormula.add(_conditionalFormulaTextField);
         
         
         is_IsNot_ComboBox = new JComboBox<>();
@@ -98,17 +98,17 @@ public class ExpressionConditionalSwing extends AbstractDigitalExpressionSwing {
         
         _panelConditionalStateDirect.add(_stateComboBox);
         
-        _oblockStateReferenceTextField = new JTextField();
-        _oblockStateReferenceTextField.setColumns(30);
-        _panelConditionalStateReference.add(_oblockStateReferenceTextField);
+        _conditionalStateReferenceTextField = new JTextField();
+        _conditionalStateReferenceTextField.setColumns(30);
+        _panelConditionalStateReference.add(_conditionalStateReferenceTextField);
         
-        _oblockStateLocalVariableTextField = new JTextField();
-        _oblockStateLocalVariableTextField.setColumns(30);
-        _panelConditionalStateLocalVariable.add(_oblockStateLocalVariableTextField);
+        _conditionalStateLocalVariableTextField = new JTextField();
+        _conditionalStateLocalVariableTextField.setColumns(30);
+        _panelConditionalStateLocalVariable.add(_conditionalStateLocalVariableTextField);
         
-        _oblockStateFormulaTextField = new JTextField();
-        _oblockStateFormulaTextField.setColumns(30);
-        _panelConditionalStateFormula.add(_oblockStateFormulaTextField);
+        _conditionalStateFormulaTextField = new JTextField();
+        _conditionalStateFormulaTextField.setColumns(30);
+        _panelConditionalStateFormula.add(_conditionalStateFormulaTextField);
         
         
         if (expression != null) {
@@ -120,11 +120,11 @@ public class ExpressionConditionalSwing extends AbstractDigitalExpressionSwing {
                 default: throw new IllegalArgumentException("invalid _addressing state: " + expression.getAddressing().name());
             }
             if (expression.getConditional() != null) {
-                oblockBeanPanel.setDefaultNamedBean(expression.getConditional().getBean());
+                _conditionalBeanPanel.setDefaultNamedBean(expression.getConditional().getBean());
             }
-            _oblockReferenceTextField.setText(expression.getReference());
-            _oblockLocalVariableTextField.setText(expression.getLocalVariable());
-            _oblockFormulaTextField.setText(expression.getFormula());
+            _conditionalReferenceTextField.setText(expression.getReference());
+            _conditionalLocalVariableTextField.setText(expression.getLocalVariable());
+            _conditionalFormulaTextField.setText(expression.getFormula());
             
             is_IsNot_ComboBox.setSelectedItem(expression.get_Is_IsNot());
             
@@ -136,9 +136,9 @@ public class ExpressionConditionalSwing extends AbstractDigitalExpressionSwing {
                 default: throw new IllegalArgumentException("invalid _addressing state: " + expression.getAddressing().name());
             }
             _stateComboBox.setSelectedItem(expression.getConditionalState());
-            _oblockStateReferenceTextField.setText(expression.getStateReference());
-            _oblockStateLocalVariableTextField.setText(expression.getStateLocalVariable());
-            _oblockStateFormulaTextField.setText(expression.getStateFormula());
+            _conditionalStateReferenceTextField.setText(expression.getStateReference());
+            _conditionalStateLocalVariableTextField.setText(expression.getStateLocalVariable());
+            _conditionalStateFormulaTextField.setText(expression.getStateFormula());
         }
         
         JComponent[] components = new JComponent[]{
@@ -160,7 +160,7 @@ public class ExpressionConditionalSwing extends AbstractDigitalExpressionSwing {
         
         try {
             if (_tabbedPaneConditional.getSelectedComponent() == _panelConditionalReference) {
-                expression.setReference(_oblockReferenceTextField.getText());
+                expression.setReference(_conditionalReferenceTextField.getText());
             }
         } catch (IllegalArgumentException e) {
             errorMessages.add(e.getMessage());
@@ -169,7 +169,7 @@ public class ExpressionConditionalSwing extends AbstractDigitalExpressionSwing {
         
         try {
             if (_tabbedPaneConditionalState.getSelectedComponent() == _panelConditionalStateReference) {
-                expression.setStateReference(_oblockStateReferenceTextField.getText());
+                expression.setStateReference(_conditionalStateReferenceTextField.getText());
             }
         } catch (IllegalArgumentException e) {
             errorMessages.add(e.getMessage());
@@ -177,7 +177,7 @@ public class ExpressionConditionalSwing extends AbstractDigitalExpressionSwing {
         }
         
         try {
-            expression.setFormula(_oblockFormulaTextField.getText());
+            expression.setFormula(_conditionalFormulaTextField.getText());
             if (_tabbedPaneConditional.getSelectedComponent() == _panelConditionalDirect) {
                 expression.setAddressing(NamedBeanAddressing.Direct);
             } else if (_tabbedPaneConditional.getSelectedComponent() == _panelConditionalReference) {
@@ -211,30 +211,30 @@ public class ExpressionConditionalSwing extends AbstractDigitalExpressionSwing {
         }
         ExpressionConditional expression = (ExpressionConditional)object;
         try {
-            if (!oblockBeanPanel.isEmpty() && (_tabbedPaneConditional.getSelectedComponent() == _panelConditionalDirect)) {
-                Conditional oblock = oblockBeanPanel.getNamedBean();
-                if (oblock != null) {
+            if (!_conditionalBeanPanel.isEmpty() && (_tabbedPaneConditional.getSelectedComponent() == _panelConditionalDirect)) {
+                Conditional conditional = _conditionalBeanPanel.getNamedBean();
+                if (conditional != null) {
                     NamedBeanHandle<Conditional> handle
                             = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(oblock.getDisplayName(), oblock);
+                                    .getNamedBeanHandle(conditional.getDisplayName(), conditional);
                     expression.setConditional(handle);
                 }
             }
         } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for oblock", ex);
+            log.error("Cannot get NamedBeanHandle for conditional", ex);
         }
         try {
             if (_tabbedPaneConditional.getSelectedComponent() == _panelConditionalDirect) {
                 expression.setAddressing(NamedBeanAddressing.Direct);
             } else if (_tabbedPaneConditional.getSelectedComponent() == _panelConditionalReference) {
                 expression.setAddressing(NamedBeanAddressing.Reference);
-                expression.setReference(_oblockReferenceTextField.getText());
+                expression.setReference(_conditionalReferenceTextField.getText());
             } else if (_tabbedPaneConditional.getSelectedComponent() == _panelConditionalLocalVariable) {
                 expression.setAddressing(NamedBeanAddressing.LocalVariable);
-                expression.setLocalVariable(_oblockLocalVariableTextField.getText());
+                expression.setLocalVariable(_conditionalLocalVariableTextField.getText());
             } else if (_tabbedPaneConditional.getSelectedComponent() == _panelConditionalFormula) {
                 expression.setAddressing(NamedBeanAddressing.Formula);
-                expression.setFormula(_oblockFormulaTextField.getText());
+                expression.setFormula(_conditionalFormulaTextField.getText());
             } else {
                 throw new IllegalArgumentException("_tabbedPaneConditional has unknown selection");
             }
@@ -246,13 +246,13 @@ public class ExpressionConditionalSwing extends AbstractDigitalExpressionSwing {
                 expression.setConditionalState((ExpressionConditional.ConditionalState)_stateComboBox.getSelectedItem());
             } else if (_tabbedPaneConditionalState.getSelectedComponent() == _panelConditionalStateReference) {
                 expression.setStateAddressing(NamedBeanAddressing.Reference);
-                expression.setStateReference(_oblockStateReferenceTextField.getText());
+                expression.setStateReference(_conditionalStateReferenceTextField.getText());
             } else if (_tabbedPaneConditionalState.getSelectedComponent() == _panelConditionalStateLocalVariable) {
                 expression.setStateAddressing(NamedBeanAddressing.LocalVariable);
-                expression.setStateLocalVariable(_oblockStateLocalVariableTextField.getText());
+                expression.setStateLocalVariable(_conditionalStateLocalVariableTextField.getText());
             } else if (_tabbedPaneConditionalState.getSelectedComponent() == _panelConditionalStateFormula) {
                 expression.setStateAddressing(NamedBeanAddressing.Formula);
-                expression.setStateFormula(_oblockStateFormulaTextField.getText());
+                expression.setStateFormula(_conditionalStateFormulaTextField.getText());
             } else {
                 throw new IllegalArgumentException("_tabbedPaneConditionalState has unknown selection");
             }

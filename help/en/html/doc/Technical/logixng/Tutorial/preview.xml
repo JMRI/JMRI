@@ -133,7 +133,7 @@
     </turnout>
   </turnouts>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="1:27 PM">
+    <memory value="5:27 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -380,6 +380,19 @@
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
+  <logixs class="jmri.managers.configurexml.DefaultLogixManagerXml">
+    <logix enabled="yes">
+      <systemName>IX:AUTO:0001</systemName>
+      <logixConditional systemName="IX:AUTO:0001C1" order="0" />
+    </logix>
+  </logixs>
+  <conditionals class="jmri.managers.configurexml.DefaultConditionalManagerXml">
+    <conditional systemName="IX:AUTO:0001C1" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IX:AUTO:0001C1</systemName>
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="IS_1_1" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="30" systemName=" " data="-1" delay="0" string="" />
+    </conditional>
+  </conditionals>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Nov 09 00:32:35 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <logixngs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <thread>
@@ -2132,11 +2145,20 @@
     </expression-memory>
     <expression-conditional class="jmri.jmrit.logixng.expressions.configurexml.ExpressionConditionalXml">
       <systemName>IQDE:AUTO:0088</systemName>
-      <is_isNot>Is</is_isNot>
-      <conditionalState>True</conditionalState>
+      <conditional>IX:AUTO:0001C1</conditional>
+      <addressing>Direct</addressing>
+      <reference />
+      <localVariable />
+      <formula />
+      <is_isNot>IsNot</is_isNot>
+      <stateAddressing>Direct</stateAddressing>
+      <conditionalState>False</conditionalState>
+      <stateReference />
+      <stateLocalVariable />
+      <stateFormula />
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket enabled="yes" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>Default</errorHandling>
         </abstractMaleSocket>
       </maleSocket>
@@ -2338,7 +2360,7 @@
     </and>
     <antecedent class="jmri.jmrit.logixng.expressions.configurexml.AntecedentXml">
       <systemName>IQDE:AUTO:0101</systemName>
-      <antecedent />
+      <antecedent>R1 and (R3 or R2)</antecedent>
       <expressions>
         <socket>
           <socketName>E1</socketName>
@@ -2346,7 +2368,7 @@
       </expressions>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
-        <abstractMaleSocket enabled="yes" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
+        <abstractMaleSocket enabled="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
           <errorHandling>Default</errorHandling>
         </abstractMaleSocket>
       </maleSocket>
@@ -7331,104 +7353,104 @@
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Sun Jan 31 13:26:34 CET 2021</date>
+      <date>Tue Feb 02 17:26:51 CET 2021</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Sun Jan 31 13:26:41 CET 2021</date>
+      <date>Tue Feb 02 17:26:57 CET 2021</date>
       <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Sun Jan 31 11:26:29 CET 2021</date>
+          <date>Tue Feb 02 17:23:58 CET 2021</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Sun Jan 31 11:26:38 CET 2021</date>
+          <date>Tue Feb 02 17:24:07 CET 2021</date>
           <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Sun Jan 31 10:41:08 CET 2021</date>
+              <date>Tue Feb 02 03:18:20 CET 2021</date>
               <filename>JMRI program</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Sun Jan 31 10:41:17 CET 2021</date>
+              <date>Tue Feb 02 03:18:28 CET 2021</date>
               <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
               <filehistory>
                 <operation>
                   <type>app</type>
-                  <date>Sun Jan 31 08:45:39 CET 2021</date>
+                  <date>Tue Feb 02 03:17:11 CET 2021</date>
                   <filename>JMRI program</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Sun Jan 31 08:45:46 CET 2021</date>
+                  <date>Tue Feb 02 03:17:19 CET 2021</date>
                   <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
                   <filehistory>
                     <operation>
                       <type>app</type>
-                      <date>Sun Jan 31 08:36:03 CET 2021</date>
+                      <date>Sun Jan 31 13:26:34 CET 2021</date>
                       <filename>JMRI program</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Sun Jan 31 08:36:13 CET 2021</date>
+                      <date>Sun Jan 31 13:26:41 CET 2021</date>
                       <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
                       <filehistory>
                         <operation>
                           <type>app</type>
-                          <date>Sat Jan 30 04:52:42 CET 2021</date>
+                          <date>Sun Jan 31 11:26:29 CET 2021</date>
                           <filename>JMRI program</filename>
                         </operation>
                         <operation>
                           <type>Load OK</type>
-                          <date>Sat Jan 30 04:52:48 CET 2021</date>
+                          <date>Sun Jan 31 11:26:38 CET 2021</date>
                           <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
                         </operation>
                         <operation>
                           <type>Store</type>
-                          <date>Sat Jan 30 04:55:07 CET 2021</date>
+                          <date>Sun Jan 31 11:32:41 CET 2021</date>
                           <filename />
                         </operation>
                       </filehistory>
                     </operation>
                     <operation>
                       <type>Store</type>
-                      <date>Sun Jan 31 08:45:14 CET 2021</date>
+                      <date>Sun Jan 31 13:27:24 CET 2021</date>
                       <filename />
                     </operation>
                   </filehistory>
                 </operation>
                 <operation>
                   <type>Store</type>
-                  <date>Sun Jan 31 08:47:47 CET 2021</date>
+                  <date>Tue Feb 02 03:17:52 CET 2021</date>
                   <filename />
                 </operation>
               </filehistory>
             </operation>
             <operation>
               <type>Store</type>
-              <date>Sun Jan 31 10:44:09 CET 2021</date>
+              <date>Tue Feb 02 03:21:04 CET 2021</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Sun Jan 31 11:32:41 CET 2021</date>
+          <date>Tue Feb 02 17:26:25 CET 2021</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sun Jan 31 13:27:24 CET 2021</date>
+      <date>Tue Feb 02 17:27:40 CET 2021</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.21.5ish+daniel+2021-01-31T12:26:18Z+RUNKNOWN on Sun Jan 31 13:27:24 CET 2021-->
+  <!--Written by JMRI version 4.21.5ish+daniel+2021-02-02T16:26:37Z+RUNKNOWN on Tue Feb 02 17:27:40 CET 2021-->
 </layout-config>
