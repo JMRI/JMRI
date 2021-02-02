@@ -16,16 +16,16 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
  */
 public class HexFileSystemConnectionMemo extends jmri.jmrix.loconet.LocoNetSystemConnectionMemo {
 
-    /* @Override
-    public jmri.jmrix.loconet.LnSensorManager getSensorManager() {
+    /**
+     * Use the simulation (hexfile) LocoNet sensor manager instead of the standard LocoNet sensor manager.
+     */
+    @Override
+    public LnSensorManager getSensorManager() {
         if (getDisabled()) {
             return null;
         }
-        if (sensorManager == null) {
-            sensorManager = new LnSensorManager(this);
-        }
-        return sensorManager;
-    }*/
+        return (LnSensorManager) classObjectMap.computeIfAbsent(jmri.SensorManager.class, (Class c) -> new LnSensorManager(this));
+    }
 
     /**
      * Substitute the jmri.progdebugger.DebugProgrammerManager when this connection
