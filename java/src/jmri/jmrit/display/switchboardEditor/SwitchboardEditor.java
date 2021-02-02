@@ -129,6 +129,7 @@ public class SwitchboardEditor extends Editor {
     private transient boolean savedControlLayout = true; // menu option to turn this off
     private final int height = 455;
     private final int width = 544;
+    private int verticalMargin = 55; // for Nimbus and CDE/Motif
 
     private final JCheckBoxMenuItem controllingBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxControlling"));
     private final JCheckBoxMenuItem hideUnconnectedBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxHideUnconnected"));
@@ -201,7 +202,12 @@ public class SwitchboardEditor extends Editor {
 
         setJMenuBar(_menuBar);
         addHelpMenu("package.jmri.jmrit.display.SwitchboardEditor", true);
-
+        // set GUI dependant margin if not Nimbus or CDE/Motif
+        if (UIManager.getLookAndFeel().getName().equals("Metal")) {
+            verticalMargin = 47;
+        } else if (UIManager.getLookAndFeel().getName().equals("Mac OS X")) {
+            verticalMargin = 25;
+        }
         switchboardLayeredPane = new TargetPane(); // extends JLayeredPane();
         switchboardLayeredPane.setPreferredSize(new Dimension(width, height));
         border = BorderFactory.createTitledBorder(
@@ -422,8 +428,10 @@ public class SwitchboardEditor extends Editor {
      * Fired on componentResized(e) event.
      */
     private void resizeInFrame() {
-        Dimension frSize = super.getTargetFrame().getSize(); // 5 px for border, 25 px for footer, autoRows(int)
-        switchboardLayeredPane.setSize(new Dimension((int) frSize.getWidth() - 6, (int) frSize.getHeight() - 25));
+        Dimension frSize = super.getTargetFrame().getSize(); // 5 px for border, var px for footer, autoRows(int)
+        // some GUIs include (wide) menu bar inside frame
+        switchboardLayeredPane.setSize(new Dimension((int) frSize.getWidth() - 6, (int) frSize.getHeight() - verticalMargin));
+
         switchboardLayeredPane.repaint();
         if (autoRowsBox.isSelected()) { // check if autoRows is active
             int oldRows = rows;
@@ -526,8 +534,8 @@ public class SwitchboardEditor extends Editor {
         allOffButton.setVisible((beanTypeList.getSelectedIndex() == 2) && allControlling());
         pack();
         // must repaint again to fit inside frame
-        Dimension frSize = super.getTargetFrame().getSize(); // 5 px for border, 25 px for footer, autoRows(int)
-        switchboardLayeredPane.setSize(new Dimension((int) frSize.getWidth() - 6, (int) frSize.getHeight() - 25));
+        Dimension frSize = super.getTargetFrame().getSize(); // 2x3 px for border, var px for footer + optional UI menubar, autoRows(int)
+        switchboardLayeredPane.setSize(new Dimension((int) frSize.getWidth() - 6, (int) frSize.getHeight() - verticalMargin));
         switchboardLayeredPane.repaint();
 
         log.debug("updatePressed END _tileSize = {}", _tileSize);
@@ -799,7 +807,7 @@ public class SwitchboardEditor extends Editor {
                 // calculate tile size
                 int colNum = (((getTotal() > 0) ? (getTotal()) : 1) + rows - 1) / rows;
                 int maxW = (super.getTargetFrame().getWidth() - 10)/colNum; // int division, subtract 2x3px for border
-                int maxH = (super.getTargetFrame().getHeight() - 25)/rows; // -25px for footer
+                int maxH = (super.getTargetFrame().getHeight() - verticalMargin)/rows; // for footer
                 _tileSize = Math.min(maxW, maxH); // store for tile graphics
             }
         });
@@ -1157,7 +1165,7 @@ public class SwitchboardEditor extends Editor {
         // find cell matrix that allows largest size icons
         double paneEffectiveWidth = Math.ceil((super.getTargetFrame().getWidth() - 6)/ cellProp); // -2x3px for border
         //log.debug("paneEffectiveWidth: {}", paneEffectiveWidth); // compare to resizeInFrame()
-        double paneHeight = super.getTargetFrame().getHeight() - 25; // -25px for footer
+        double paneHeight = super.getTargetFrame().getHeight() - verticalMargin; // for footer
         int columnsNum = 1;
         int rowsNum = 1;
         float tileSize = 0.1f; // start value

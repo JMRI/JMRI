@@ -830,6 +830,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             addFrame.add(switchConnect);
         }
         addFrame.pack();
+        addFrame.setLocationRelativeTo(this);
         addFrame.setVisible(true);
     }
 
