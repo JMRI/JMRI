@@ -316,13 +316,7 @@ public class SwitchboardEditor extends Editor {
         hideUnconnected.setSelected(_hideUnconnected);
         log.debug("hideUnconnectedBox set to {}", hideUnconnected.isSelected());
         hideUnconnected.addActionListener((ActionEvent event) -> {
-            setHideUnconnected(hideUnconnected.isSelected());
-            hideUnconnectedBox.setSelected(_hideUnconnected); // also (un)check the box on the menu
-            synchronized (this) {
-                help2.setVisible(!_hideUnconnected && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
-            }
-            updatePressed();
-            setDirty();
+            doHideUnconnected(hideUnconnected.isSelected());
         });
         checkboxPane.add(hideUnconnected);
         add(checkboxPane);
@@ -626,6 +620,22 @@ public class SwitchboardEditor extends Editor {
         }
     }
 
+    // update switchboard and setting
+    private void doHideUnconnected(boolean hide) {
+        setHideUnconnected(hide);
+        if (hideUnconnected.isSelected() != hide) {
+            hideUnconnected.setSelected(hide);
+        }
+        if (hideUnconnectedBox.isSelected() != hide) {
+            hideUnconnectedBox.setSelected(hide); // also (un)check the box on the menu
+        }
+        synchronized (this) {
+            help2.setVisible(!_hideUnconnected && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
+        }
+        updatePressed();
+        setDirty();
+    }
+
     /**
      * Create the setup pane for the top of the frame. From layeredpane demo.
      */
@@ -824,13 +834,7 @@ public class SwitchboardEditor extends Editor {
         _optionMenu.add(hideUnconnectedBox);
         hideUnconnectedBox.setSelected(_hideUnconnected);
         hideUnconnectedBox.addActionListener((ActionEvent event) -> {
-            setHideUnconnected(hideUnconnectedBox.isSelected());
-            hideUnconnected.setSelected(_hideUnconnected); // also (un)check the box on the editor
-            synchronized (this) {
-                help2.setVisible(!_hideUnconnected && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
-            }
-            updatePressed();
-            setDirty();
+            doHideUnconnected(hideUnconnectedBox.isSelected());
         });
 
         // Show/Hide Scroll Bars
