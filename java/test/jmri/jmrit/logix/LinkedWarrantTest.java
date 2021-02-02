@@ -96,6 +96,7 @@ public class LinkedWarrantTest {
         JFrameOperator jfo = new JFrameOperator(tableFrame);
         jfo.requestClose();
         // we may want to use jemmy to close the panel as well.
+        assert panel != null;
         panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }
 
@@ -111,7 +112,7 @@ public class LinkedWarrantTest {
 //        panel.setVisible(false);  // hide panel to prevent repaint.
 
         final Sensor sensor12 = _sensorMgr.getBySystemName("IS12");
-        assertThat(sensor12).withFailMessage("Senor IS12 not found").isNotNull();
+        assertThat(sensor12).withFailMessage("Sensor IS12 not found").isNotNull();
 
         Sensor sensor1 = _sensorMgr.getBySystemName("IS1");
         assertThat(sensor1).withFailMessage("Senor IS1 not found").isNotNull();
@@ -160,6 +161,7 @@ public class LinkedWarrantTest {
         JFrameOperator jfo = new JFrameOperator(tableFrame);
         jfo.requestClose();
         // we may want to use jemmy to close the panel as well.
+        assert panel != null;
         panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }
 
@@ -245,7 +247,8 @@ public class LinkedWarrantTest {
             JFrameOperator jfo = new JFrameOperator(tableFrame);
             jfo.requestClose();
             // we may want to use jemmy to close the panel as well.     
-            panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
+        assert panel != null;
+        panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }
 
     // Tests warrant launching 3 different warrants mid script - tinker to Evers to Chance (1910 Chicago Cubs)
@@ -324,6 +327,7 @@ public class LinkedWarrantTest {
         JFrameOperator jfo = new JFrameOperator(tableFrame);
         jfo.requestClose();
         // we may want to use jemmy to close the panel as well.
+        assert panel != null;
         panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }
 
