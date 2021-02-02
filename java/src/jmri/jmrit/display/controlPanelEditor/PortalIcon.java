@@ -52,6 +52,7 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
     static public HashMap<String, NamedIcon> getPaletteMap() {
         HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps("Portal");
         if (families.keySet().isEmpty()) {
+            log.debug("Adding missing PortalIconMap");
             ItemPalette.loadMissingItemType("Portal");
             families = ItemPalette.getFamilyMaps("Portal");
         }
@@ -62,7 +63,7 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
                 break;
             }
         }
-        // Don't return ItemPalette's map!
+        // return a copy, not ItemPalette's map!
         return cloneMap(iconMap, null);
     }
     
@@ -78,6 +79,15 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         setScale(getScale());
         rotate(deg);
         setIcon(_iconMap.get(HIDDEN));
+    }
+
+    /**
+     * PortalIcon family is managed by editor, ignoring per icon setting if any.
+     * @return the family name as set in editor.
+     */
+    @Override
+    public String getFamily() {
+        return ((ControlPanelEditor)_editor).getPortalIconFamily();
     }
 
     protected void setMap(HashMap<String, NamedIcon> map) {
