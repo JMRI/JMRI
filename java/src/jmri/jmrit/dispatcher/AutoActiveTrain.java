@@ -395,7 +395,7 @@ public class AutoActiveTrain implements ThrottleListener {
     private volatile Block _stoppingBlock = null;
     private boolean _resumingAutomatic = false;  // if true, resuming automatic mode after WORKING session
     private boolean _needSetSpeed = false;  // if true, train will set speed according to signal instead of stopping
-
+    private boolean waitingOnAllocation = false; //if true the train was stopped due to next section not allocated
     // keeps track of and restores previous speed
     private float _savedSpeed = 0.0f;
     private boolean _savedForward = true;
@@ -615,7 +615,9 @@ public class AutoActiveTrain implements ThrottleListener {
                 && isStopping() && (_activeTrain.getStatus() == ActiveTrain.RUNNING)) {
             _needSetSpeed = true;
         }
-        if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SECTIONSALLOCATED) {
+        if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SECTIONSALLOCATED
+                || waitingOnAllocation ) {
+            waitingOnAllocation = false;
             setSpeedBySignal();
         }
         
@@ -653,7 +655,7 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     /**
-     * Checks for a controlling signal
+     * checks for a controlling signal
      * @return true if there is one
      */
     protected boolean isCurrentSignal() {
@@ -837,14 +839,37 @@ public class AutoActiveTrain implements ThrottleListener {
             //   don't set speed based on controlling signal
             return;
         }
-        if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
-            setSpeedBySignalHead();
-        } else if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALMAST) {
-            setSpeedBySignalMast();
+        // only bother to check signal if the next allocation is ours.
+        if (checkAllocationsAhead()) {
+            if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
+                setSpeedBySignalHead();
+            } else if (InstanceManager.getDefault(DispatcherFrame.class)
+                    .getSignalType() == DispatcherFrame.SIGNALMAST) {
+                setSpeedBySignalMast();
+            } else {
+                log.trace("Set Speed by BlocksAllocated");
+                setSpeedBySectionsAllocated();
+            }
         } else {
-            log.trace("Set Speed by BlocksAllocated");
-            setSpeedBySectionsAllocated();
+            // This will stop it.
+             waitingOnAllocation = true;  // flag setSpeedBySignal reuired when another allocation made.
+             stopInCurrentSection(NO_TASK);
         }
+    }
+
+    /*
+     * Check at least the next section is allocated
+     */
+    private boolean checkAllocationsAhead() {
+        if (_nextSection != null) {
+            // Check that next section is allocated...
+            for (AllocatedSection allocatedSection : _activeTrain.getAllocatedSectionList()) {
+                if (allocatedSection.getSection() == _nextSection) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void setSpeedBySectionsAllocated() {
