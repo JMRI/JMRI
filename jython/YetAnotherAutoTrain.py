@@ -17,6 +17,8 @@
 #         Add the ability to create custom extensions.
 # Author:  Dave Sand copyright (c) 2018 - 2020
 
+# The following help content is also available at https://jmri.org/help/en/html/scripthelp/yaat/YAAT.shtml
+
 # Action Phrase Descriptions:
 #       <?? | ??> represent choices
 #       <????> require values, normally names or numbers

@@ -29,7 +29,7 @@ import jmri.jmrit.operations.setup.Setup;
 public class LocationsByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     LocationManager manager;
-    static final String EMPTY = "            ";
+    static final String EMPTY = "                 "; // padded out to make border visible
 
     // checkboxes have the location id or track id as the checkbox name
     ArrayList<JCheckBox> locationCheckBoxList = new ArrayList<>();
@@ -87,10 +87,16 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
         JPanel pCarType = new JPanel();
         pCarType.setLayout(new GridBagLayout());
         pCarType.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Type")));
+        
+        JPanel pCarCopy = new JPanel();
+        pCarCopy.setLayout(new GridBagLayout());
+        addItem(pCarCopy, textCarType, 0, 0);
+        pCarCopy.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("CopyType")));
 
         addItem(pCarType, typeComboBox, 0, 0);
         addItem(pCarType, copyCheckBox, 1, 0);
-        addItem(pCarType, textCarType, 2, 0);
+        addItem(pCarType, pCarCopy, 2, 0);
+        
         typeComboBox.setSelectedItem(carType);
         copyCheckBox.setToolTipText(Bundle.getMessage("TipCopyCarType"));
 
