@@ -29,10 +29,10 @@ import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 
 /**
- * Builds a train and creates the train's manifest.
+ * Builds a train and then creates the train's manifest.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
- *         2014, 2015
+ *         2014, 2015, 2021
  */
 public class TrainBuilder extends TrainCommon {
 
@@ -69,7 +69,6 @@ public class TrainBuilder extends TrainCommon {
     PrintWriter _buildReport; // build report for this train
     List<Car> _notRoutable = new ArrayList<>(); // list of cars that couldn't be routed
     List<Location> _modifiedLocations = new ArrayList<>(); // list of locations that have been modified
-    boolean _trainLengthIssue = false; // true if there's an issue with the train length
 
     // managers
     CarManager carManager = InstanceManager.getDefault(CarManager.class);
@@ -162,8 +161,7 @@ public class TrainBuilder extends TrainCommon {
         showIfLocalSwitcher(); // show if this train a switcher, a train that works only one location
         determineEngineRequirements(); // determine how many engines need to be assigned to train
         showTrainRequirements(); // show how many engines, caboose, car with FRED and changes in the route
-        showTrainServices(); // show which roads, owners, built dates, engine types that the train will
-                             // service
+        showTrainServices(); // show which roads, owners, built dates, and engine types
         getAndRemoveEnginesFromList(); // get a list of available engines
         determineIfTrainTerminatesIntoStaging(); // find a terminus track in staging for this train
         determineIfTrainDepartsStagingAndAddEngines(); // assign engines to train if departing staging
@@ -2285,7 +2283,7 @@ public class TrainBuilder extends TrainCommon {
      * @throws BuildFailedException
      */
     private void secondAttemptNormalBuild() throws BuildFailedException {
-        if (Setup.isStagingTryNormalBuildEnabled() && _trainLengthIssue && isCarStuckStaging(100)) {
+        if (Setup.isStagingTryNormalBuildEnabled() && isCarStuckStaging()) {
             addLine(_buildReport, ONE, Bundle.getMessage("buildFailedTryNormalMode"));
             addLine(_buildReport, ONE, BLANK_LINE);
             _train.reset();
@@ -2297,8 +2295,7 @@ public class TrainBuilder extends TrainCommon {
             loadRemoveAndListCars();
             addCabooseOrFredToTrain();
             removeCaboosesAndCarsWithFred();
-            saveCarFinalDestinations(); // save car's final destination and
-                                        // schedule id in case of train reset
+            saveCarFinalDestinations(); // save final destination and schedule id
             blockCarsFromStaging(); // block cars from staging
             placeCars(100, false); // try normal build one pass
         }
@@ -2434,9 +2431,9 @@ public class TrainBuilder extends TrainCommon {
                 addLine(_buildReport, FIVE, BLANK_LINE);
             }
 
-            _carIndex = 0; // see reportCarsNotMoved(rl, percent) below
+            _carIndex = 0; // see reportCarsNotMoved(rl) below
 
-            findDestinationsForCarsFromLocation(rl, routeIndex, false);
+            findDestinationsForCarsFromLocation(rl, false); // first pass
             // perform a another pass if aggressive and there are requested moves
             // this will perform local moves at this location, services off spot tracks
             // only in aggressive mode, and at least one car has a new destination
@@ -2446,15 +2443,14 @@ public class TrainBuilder extends TrainCommon {
                 if (_reqNumOfMoves < (rl.getMaxCarMoves() - rl.getCarMoves()) * percent / 200) {
                     _reqNumOfMoves = (rl.getMaxCarMoves() - rl.getCarMoves()) * percent / 200;
                 }
-                findDestinationsForCarsFromLocation(rl, routeIndex, true);
+                findDestinationsForCarsFromLocation(rl, true); // second pass
 
                 // we might have freed up space at a spur that has an alternate track
                 if (redirectCarsFromAlternateTrack()) {
                     addLine(_buildReport, SEVEN, BLANK_LINE);
                 }
             }
-
-            if (routeIndex == 0 && isCarStuckStaging(percent)) {
+            if (routeIndex == 0 && percent == 100 && isCarStuckStaging()) {
                 return; // report ASAP that there are stuck cars
             }
             addLine(_buildReport, ONE,
@@ -2465,20 +2461,21 @@ public class TrainBuilder extends TrainCommon {
                                     Integer.toString(_completedMoves), Integer.toString(saveReqMoves), rl.getName(),
                                     _train.getName() }));
 
-            reportCarsNotMoved(rl, percent);
+            if (_success && percent == 100) {
+                reportCarsNotMoved(rl);
+            }
         }
     }
 
     /**
      * Attempts to find a destinations for cars departing a specific route location.
      *
-     * @param rl           The route location.
-     * @param routeIndex   Where in the route to add cars to this train.
+     * @param rl           The route location where cars need destinations.
      * @param isSecondPass When true this is the second time we've looked at these
      *                     cars. Used to perform local moves.
      * @throws BuildFailedException
      */
-    private void findDestinationsForCarsFromLocation(RouteLocation rl, int routeIndex, boolean isSecondPass)
+    private void findDestinationsForCarsFromLocation(RouteLocation rl, boolean isSecondPass)
             throws BuildFailedException {
         if (_reqNumOfMoves <= 0) {
             return;
@@ -2488,9 +2485,8 @@ public class TrainBuilder extends TrainCommon {
         _success = false;
         for (_carIndex = 0; _carIndex < _carList.size(); _carIndex++) {
             Car car = _carList.get(_carIndex);
-            // second pass only cares about cars that have a final destination equal to this
-            // location
-            // so a local move can be made. This causes "off spots" to be serviced.
+            // second pass deals with cars that have a final destination equal to this location.
+            // therefore a local move can be made. This causes "off spots" to be serviced.
             if (isSecondPass && !car.getFinalDestinationName().equals(rl.getName())) {
                 continue;
             }
@@ -2543,14 +2539,14 @@ public class TrainBuilder extends TrainCommon {
             // destination for car
             if (checkCarForFinalDestination(car)) {
                 log.debug("Car ({}) has a final desination that can't be serviced by train", car.toString());
-            } else if (checkCarForDestinationAndTrack(car, rl, routeIndex)) {
+            } else if (checkCarForDestinationAndTrack(car, rl, _routeList.indexOf(rl))) {
                 // car had a destination, could have been added to train.
             } else {
-                findDestinationAndTrack(car, rl, routeIndex, _routeList.size());
+                findDestinationAndTrack(car, rl, _routeList.indexOf(rl), _routeList.size());
             }
             if (_success) {
                 // log.debug("done with location ("+destinationSave.getName()+")");
-                break;
+                break; // done
             }
             // build failure if car departing staging without a destination and a train
             // we'll just put out a warning message here so we can find out how many cars
@@ -2621,10 +2617,9 @@ public class TrainBuilder extends TrainCommon {
      * @return true if at least one car doesn't have a destination or train. false
      *         if all cars have a destination.
      */
-    private boolean isCarStuckStaging(int percent) {
-        if (percent != 100 || _departStageTrack == null) {
-            return false; // only check departure track after last pass is
-                          // complete
+    private boolean isCarStuckStaging() {
+        if (_departStageTrack == null) {
+            return false;
         }
         // confirm that all cars in staging are departing
         for (Car car : _carList) {
@@ -2770,8 +2765,6 @@ public class TrainBuilder extends TrainCommon {
     private void finishAddRsToTrain(RollingStock rs, RouteLocation rl, RouteLocation rld, int length, int weightTons) {
         // notify that locations have been modified when build done
         // allows automation actions to run properly
-        // rl.getLocation().setStatusModified();
-        // rld.getLocation().setStatusModified();
         if (!_modifiedLocations.contains(rl.getLocation())) {
             _modifiedLocations.add(rl.getLocation());
         }
@@ -2792,7 +2785,7 @@ public class TrainBuilder extends TrainCommon {
                 break;
             }
             if (inTrain) {
-                routeLocation.setTrainLength(routeLocation.getTrainLength() + length); // couplers are included
+                routeLocation.setTrainLength(routeLocation.getTrainLength() + length); // includes couplers
                 routeLocation.setTrainWeight(routeLocation.getTrainWeight() + weightTons);
             }
         }
@@ -2883,7 +2876,6 @@ public class TrainBuilder extends TrainCommon {
                                 new Object[] { rlt.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase(),
                                         rlt.getTrainLength() + length - rlt.getMaxTrainLength(), rlt.getName(),
                                         rlt.getId() }));
-                _trainLengthIssue = true;
                 return false;
             }
         }
@@ -5010,13 +5002,12 @@ public class TrainBuilder extends TrainCommon {
         }
         return redirected;
     }
-
-    // report any cars left at location
-    private void reportCarsNotMoved(RouteLocation rl, int percent) {
-        // only report if requested moves completed and final pass
-        if (!_success || percent != 100) {
-            return;
-        }
+    
+    /**
+     * report any cars left at route location
+     * @param rl route location
+     */
+    private void reportCarsNotMoved(RouteLocation rl) {
         if (_carIndex < 0) {
             _carIndex = 0;
         }
@@ -5029,7 +5020,6 @@ public class TrainBuilder extends TrainCommon {
                         new Object[] { numberCars, rl.getName() }));
                 break;
             }
-
             Car car = _carList.get(i);
             // find a car at this location that hasn't been given a destination
             if (!car.getLocationName().equals(rl.getName()) || car.getRouteDestination() != null) {
@@ -5191,8 +5181,7 @@ public class TrainBuilder extends TrainCommon {
                 break;
             }
             if (inTrain) {
-                routeLocation.setTrainLength(routeLocation.getTrainLength() - rs.getTotalLength()); // couplers are
-                                                                                                    // included
+                routeLocation.setTrainLength(routeLocation.getTrainLength() - rs.getTotalLength()); // includes couplers
                 routeLocation.setTrainWeight(routeLocation.getTrainWeight() - rs.getAdjustedWeightTons());
             }
         }

@@ -61,6 +61,17 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
             return;
         }
         addNameEntryCheckers(adapter);
+
+        // Add listeners for advanced options combo boxes.
+        for (Map.Entry<String, Option> entry : options.entrySet()) {
+            final String item = entry.getKey();
+            if (entry.getValue().getComponent() instanceof JComboBox) {
+                ((JComboBox<?>) entry.getValue().getComponent()).addActionListener((ActionEvent e) -> {
+                    adapter.setOptionState(item, options.get(item).getItem());
+                });
+            }
+        }
+
         init = true;
     }
 
