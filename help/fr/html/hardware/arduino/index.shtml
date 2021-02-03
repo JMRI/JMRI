@@ -24,7 +24,7 @@
 
     <h1><a name="top" id="top">Support mat&#233;riel : Utilisation d'Arduinos avec JMRI</a></h1>
     
-    <img src="http://www.motorhomesites.org.uk/wp-content/uploads/2018/01/JMRIArduinoTitlepic.jpg" 
+    <img src=images/JMRIArduinoTitlepicBrackstone.jpg" 
     alt="Benson Valley Railway" align="middle" height="192" width="360">
     <p style="font-size:60%">Cr&#233;dit photo:<a href="http://www.motorhomesites.org.uk/jmri-arduino-setup/" target="_blank">
     http://www.motorhomesites.org.uk/jmri-arduino-setup</a></p>
@@ -36,7 +36,7 @@
     </p>
     
     <ul class="snav">
-        <li><a href="#intro">Intro</a></li>
+        <li><a href="#intro">Introduction</a></li>
         <li><a href="#connect">Connexion</a></li>
         <li><a href="#using">Utilisation des fonctionnalit&#233;s de lJMRI</a></li>
         <li><a href="#exemple-CMRI">N&#339;ud CMRI &#233;tape par &#233;tape </a></li>
