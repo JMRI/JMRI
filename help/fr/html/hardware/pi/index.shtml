@@ -1,96 +1,205 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+iso-8859-1
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="fr">
 <head>
-<!-- translated by Herv&#233; BLOREC on 2017-02-06 -->	
-<title>JMRI Hardware Setup Support - Raspberry Pi GPIO</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<meta content="Paul Bender" name="Author">
-<meta name="keywords" content="Raspberry Pi GPIO Configuration Information for JMRI">
-
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI Hardware Setup Support - Raspberry Pi GPIO</title>
+  <meta name="author" content="Paul Bender">
+  <meta name="keywords" content=
+  "Raspberry Pi GPIO Configuration Information for JMRI">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+      <!--#include virtual="../SidebarUp.shtml" -->
+    <div id="mainContent">
 
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+      <h1>Support pour la configuration du mat&#233;riel : Raspberry Pi via GPIO</h1>
 
-<h1>Documentaion D&#233;marrage Mat&#233;riel: Raspberry Pi via GPIO</h1>	
-<p>Le <a href="http://www.raspberrypi.org">Raspberry Pi</a> est une famille peu 
-on&#233;reuse d'ordinateur de la taille d'une carte de cr&#233;dit qui ont de nombreuses 
-applications dans l'&#233;lectronique embarqu&#233;e. cette page d&#233;crit l'utilisation des 
-pins GPIO d'un Raspberry Pi sous JMRI. Puisque le Raspberry Pi s'ex&#233;cute nativement 
-sous Linux d'autres connexions sont aussi possibles par l'utilisation soit 
-d'une <a href="../USBtoSerial.shtml">connexion USB</a>  soit par les ports s&#233;rie int&#233;gr&#233; du Raspberry Pi</p>
+      <p>The <a href="http://www.raspberrypi.org" target="_blank">Raspberry Pi</a>
+      est une famille d'ordinateurs individuels bon march&#233; de la taille d'une 
+      carte de cr&#233;dit qui ont de nombreuses applications dans 
+      l'&#233;lectronique. Cette page d&#233;crit l'utilisation des  broches GPIO du Raspberry 
+      sous JMRI. Puisque le Raspberry Pi fonctionne sous Linux
+      nativement, d'autres connexions sont &#233;galement possibles en utilisant soit un
+      <a href="../USBtoSerial.shtml">connexion USB</a> ou via les 
+      ports s&#233;ries Raspberry Pi  .</p><img src=
+      "images/Pi2ModB1GB_-comp.jpg" alt=
+      "Framboise Pi2 mod&#232;le B (courtesy www.raspberrypi.org" width=
+      "528" height="300" align="right" title=
+      "Pi2 mod&#232;le B (&copy ; www.raspberrypi.org)"> <a name=
+      "hardware" id="hardware"></a>
 
-<img src="Pi2ModB1GB_-comp.jpg" alt="Raspberry Pi2 model B (courtesy www.raspberrypi.org" width="528" height="300" align="right" title="Pi2 model B (&copy; www.raspberrypi.org)">
-<a name="hardware"></a><h2>Mat&#233;riel pris en charge</h2>
-<p>Th&#233;oriquement, un Paspberry Pi pris en charge par <a href="http://pi4j.com/">Pi4J</a> est pris en charge par JMRI.<br>
-La prise en charge a &#233;t&#233; test&#233;e avec les mod&#232;les B, B+ et 2B; Il y a aussi une 
-<a href="http://jmri.org/install/Raspbian.shtml"> page d'aide JMRI pour installer le Pi</a>.</p>
+      <p class="noted">Voir <a href="../../../../../../install/Raspbian.shtml">ici pour information </a>
+      sur la fa&#231;on d'installer JMRI sur un Raspberry Pi sous le syst&#232;me d'exploitation Raspian.  Cela doit &#234;tre fait avant
+      d'utiliser des &#233;pingles GPIO Raspberry Pi avec des objets JMRI.</p>
 
-<a name="connecting"></a><h2>Connexion</h2>
-<p> la prise en charge sous-jacente des connexions GPIO de Raspberry Pi est fourni 
-dans la <a href="http://pi4j.com/">librairie Pi4J pour Java</a>.<br>
-<b><i>Cette librairie demande que les applications utilisant les pins GPIO soit ex&#233;cut&#233;es 
-en root (ou en utilisant <code>sudo</code></i></b>).</p>
-<p></p> Actuellement JMRI prend en charge les entr&#233;es ( Capteurs ) et les sorties ( Aiguillages ) via les pins GPIO du Raspberry Pi.</p>
+      <h2>Mat&#233;riel support&#233;</h2>
 
-<h4>Adressage des pins d'Entr&#233;e/Sortie</h4>
-<p>
-Actuellement JMRI utilise pour les pins la num&#233;rotation Pi4J par d&#233;faut. Les num&#233;ros des pins peuvent changer 
-sur chaque mod&#232;le de Pi. D'une mani&#232;re g&#233;n&#233;rale, les broches GPIO Broadcom de 0 &#224; 7 peuvent &#234;tre r&#233;f&#233;renc&#233;es 
-par ces num&#233;ros de broches dans JMRI. Ce n'est pas garanti pour &#234;tre le cas. Des num&#233;ros de broches plus &#233;lev&#233;s 
-sont disponibles, mais peuvent ne pas correspondre aux num&#233;ros de broche de Broadcom. Veuillez consulter le 
-<a href="http://pi4j.com/"> site Web Pi4J </a> pour obtenir des informations sur la num&#233;rotation des broches 
-sp&#233;cifiques au mod&#232;le.
-</p>
+      <p>Th&#233;oriquement, tout Raspberry Pi soutenu par <a href=
+      "http://pi4j.com/" target="_blank">Pi4J</a> est soutenu par JMRI.<br>
+      La prise en charge de JMRI a &#233;t&#233; test&#233;e avec les mod&#232;les B, B+, 2B et 3.
+      Il existe &#233;galement un <a href=
+      "../../../../install/Raspbian.shtml">JMRI install help
+      page d'aide JMRI pour l'installation de Pi</a>.</p>
+      
+      <a name="connecting" id="connecting"></a>
+      <h2>Connexion</h2>
 
-<h3>R&#233;glages</h3>
-	<ol>
-	<li>Assurez vous d'avoir la derni&#232;re version de JMRI, puis allez
-	au panneau des Pr&#233;f&#233;rences d'un programme JMRI. Celui-ci s'ouvre
-	automatiquement lors de la premi&#232;re ex&#233;cution du programme, ou vous pouvez
-	le s&#233;lectionner depuis le menu "&#201;dition".
-	<li>S&#233;lectionnez "Raspberry Pi Foundation" dans la fen&#234;tre Fabricant Syst&#232;me.
-	<li>S&#233;lectionnez "Raspberry Pi GPIO" dans la fen&#234;tre Connexion Syst&#232;me.</li></ol>
+      <p>Soutien sous-jacent aux connexions GPIO de Raspberry Pi
+      est fourni en utilisant la biblioth&#232;que <a href="http://pi4j.com/">Pi4J
+      pour Java</a>.</p>
+
+      <p><b>Version 1.0 de la biblioth&#232;que Pi4J, utilis&#233;e avec la version JMRI
+      4.5.4 et avant, <i>exigent que les applications utilisant des broches GPIO
+      soient ex&#233;cut&#233;es en tant que racine (ou en utilisant <code>sudo</code></i></b>).</p>
+
+      <p><b>&#192; partir de la version 4.5.5, JMRI utilise la version 1.1 de la 
+      Biblioth&#232;que Pi4J.  Version 1.1 de la biblioth&#232;que Pi4J, <i>lorsqu'elle est utilis&#233;e 
+      en conjonction avec Raspbian Jessie (et versions ult&#233;rieures)</i> permettent &#224;
+      l'utilisateur d'acc&#233;der aux broches GPIO sans &#234;tre administrateur.  Pour
+      pour des raisons de compatibilit&#233;, et pour permettre l'utilisation &#233;ventuelle des r&#233;sultats du PWM, 
+      JMRI a choisi de ne pas activer ce mode par d&#233;faut.</b></p>
+
+      <p><b><i>Pour permettre l'utilisation des broches GPIO par un non-administrateur
+      l'utilisateur doit d&#233;finir la variable d'environnement <code>WIRINGPI_GPIOMEM</code> 
+       comme suit:</i></b></p>
+
+      <p><code>export WIRINGPI_GPIOMEM=1</code></p>
+
+      <p><b>Cette variante d'environnement doit &#234;tre d&#233;finie avant l'ex&#233;cution 
+      JMRI</b></p>.  
+     <p>Pour plus d'informations, veuillez consulter les parties pertinentes de 
+     <a href="http://www.savagehomeautomation.com/projects/pi4j-now-supports-non-privileged-access-no-more-rootsudo.html" target="_blank">
+     la page web de pi4j</a>.</p>
+
+      <h3>Pi4j 1.1 et Raspbian Stretch</h3>
+
+      <p>Il a &#233;t&#233; port&#233; &#224; notre attention que le noyau linux utilis&#233; dans 
+      Raspbian Stretch et Pi4j version 1.1 ont une l&#233;g&#232;re incompatibilit&#233;.  
+      Cette incompatibilit&#233; est caus&#233;e par l'interface de Pi4J avec le mat&#233;riel qui 
+      ne reconna&#238;t pas le CPU signal&#233; par le noyau.  Cette section d&#233;crit
+      comment d&#233;terminer si vous &#234;tes confront&#233; &#224; ce probl&#232;me et comment corriger 
+      le probl&#232;me sur votre Raspberry Pi.</p> 
+      <h4>D&#233;terminer si l'incompatibilit&#233; est un probl&#232;me</h4>
+
+      <p>Si l'incompatibilit&#233; est un probl&#232;me, JMRI se bloquera en essayant de 
+      cr&#233;er une connexion Raspberry Pi  et le message d'erreur suivant 
+      apparaissent dans le journal de la console:</p> 
+
+<pre style="font-family : monospace ;">
+      Impossible de d&#233;terminer la version du mat&#233;riel. Je vois : Mat&#233;riel : BCM2835
+      ,
+      - en attendant le BCM2708 ou le BCM2709.
+      S'il s'agit d'une v&#233;ritable Raspberry Pi, veuillez le signaler
+      &#224; projects@drogon.net. Si ce n'est pas un Raspberry Pi, alors vous
+      &#234;tes  seul car le c&#226;blage Pi est con&#231;u pour soutenir le
+      Raspberry Pi UNIQUEMENT.
+</pre>
+
+      <h4>Comment corriger ce probl&#232;me</h4>
+
+      <p> Pour corriger ce probl&#232;me, vous devez suivre deux &#233;tapes. 
+      Tout d'abord, vous devez installer une version r&#233;cente de la biblioth&#232;que wiringPi, que
+      Pi4J a l'habitude de dialoguer avec le mat&#233;riel de Raspberry Pi .  Vous pouvez le faire 
+      en ex&#233;cutant la commande suivante dans un terminal:</p>
+
+      <p><code>sudo apt-get install wiringpi</code></p>
+
+      <p>deuxi&#232;mement, nous devons configurer Pi4j pour utiliser la biblioth&#232;que que vous venez d'installer
+      au lieu de celle qui est incluse avec Pi4j.  Pour indiquer &#224; JMRI d'utiliser Pi4j 
+      dans ce mode, nous allons devoir ex&#233;cuter la commande suivante dans un terminal en tant qu'utilisateur qui lance la ou les applications JMRI:</p>
+
+      <p><code>echo "default_options=\"-Dpi4j.linking=dynamic\"" > ~/.jmri/jmri.conf</code></p>
+
+      <p>Apr&#232;s avoir effectu&#233; ces &#233;tapes, JMRI pourra configurer et utiliser le mat&#233;riel Raspberry Pi normalement.</p>
+
+      <h3>C&#226;blage</h3>
+
+      <p>JMRI prend actuellement en charge les entr&#233;es (capteurs) et les sorties
+      (Aiguillages) via les pins GPIO de Raspberry Pi.</p>
+
+      <h4>Adressage des broches d'entr&#233;e/sortie</h4>
+
+      <p>JMRI utilise actuellement la num&#233;rotation par d&#233;faut du pin Pi4J. 
+      Les num&#233;ros des broches peuvent &#234;tre diff&#233;rents sur chaque mod&#232;le Pi. D'une mani&#232;re g&#233;n&#233;rale,
+      Les pins 0 &#224; 7 du GPIO Broadcom peuvent &#234;tre r&#233;f&#233;renc&#233;s par ces pins
+      dans JMRI. Il n'est pas garanti que ce soit le cas.
+      Des num&#233;ros de broche plus &#233;lev&#233;s sont disponibles, mais peuvent ne pas correspondre &#224;
+      la num&#233;rotation des broches Broadcom. Veuillez vous r&#233;f&#233;rer au <a href=
+      "http://pi4j.com/">Site web Pi4J</a>  pour des informations sur la num&#233;rotation des mod&#232;les sp&#233;cifiques.</p>
+
+      <h3>R&#233;glages</h3>
+
+      <ol>
+        <li>Veuillez vous assurer que vous avez la derni&#232;re version de JMRI
+        install&#233;, puis allez dans le panneau des pr&#233;f&#233;rences d'un programme bas&#233; sur JMRI
+        . Il s'ouvre automatiquement la premi&#232;re fois qu'un programme
+        est ex&#233;cut&#233;, ou vous pouvez le s&#233;lectionner dans le menu "Edition"</li>.
+
+        <li>S&#233;lectionner "Raspberry Pi Foundation" dans la bo&#238;te de 
+        s&#233;lection du fabricant du syst&#232;me.</li>
+
+        <li>S&#233;lectionnez "Raspberry Pi GPIO" dans la bo&#238;te de s&#233;lection 
+        de la connexion au syst&#232;me. 
+        
 <!--
-<li>Le "Prefix Connexion" est utilis&#233;pour aider JMRI &#224; communiquer
-	s&#233;paremment avec de multiples connexions au r&#233;seau mat&#233;riel. Chaque
-	"connexion" doit avoirun identifiant unique, qui est sp&#233;cifi&#233;comme
-	"Prefix Connexion". Par d&#233;faut, &#224; la premi&#232;re connexion XBee on 
-	lui donne le prefix "Pi" et aux r&#233;seau XBee suppl&#233;mentaires, on 
-	donne les prefix "Pi", "Pi2", ... La plupart des utilisateurs devrait 
-	&#234;tre capable d'utiliser les valeurs "Pr&#233;fix Connexion" fournis par l'outil JMRI.
-	
-	<li>Quand un outil JMRI est configur&#233; pour plus d'une connexion, 
-	chaque connexion re&#231;oit un &#233;l&#233;ment de menu sur la fen&#234;tre principale de l'outil JMRI. 
-	Pour aider les utilisateurs &#224; diff&#233;rencier leurs connexions, chaque connexion 
-	a un "Nom Connexion", qui est utilis&#233; comme nom de l'&#233;l&#233;ment de menu associ&#233; dans 
-	la fen&#234;tre principale de l'outil JMRI. Les utilisateurs peuvent modifier 
-	le «nom de connexion» pour toute connexion adapt&#233;e &#224; leurs besoins.
-	-->
-	</li> Cliquez "enregistrer. Si on vous demande si vous voulez quitter le programme 
-	cliquez, "Oui".</li>
-	<li>Red&#233;marrez le programme, vous &#234;tes op&#233;rationnel
-	</ol>
-	
-	<a name="documentation"></a><h2>Documentation</h2>
-<h3>Aide JMRI</h3>
-<p><a href="http://jmri.org/install/Raspbian.shtml">Installation de JMRI sur Pi/Raspbian</a>.
-<h3>Autre source d' info</h3>
-<p>Le <a href="http://pi4j.com/">site web Pi4J</a> fournit des informations d'E/S Java sp&#233;cifiques au mod&#232;le.
-<!--#include virtual="/Footer" -->
-   </div><!-- closes #mainContent-->
-  </div> <!-- closes #mBody-->
- </body>
-</html>
-	
+  <li> Le "Pr&#233;fixe de connexion" est utilis&#233; pour aider JMRI &#224; communiquer 
+  s&#233;par&#233;ment avec de multiples "connexions" au mat&#233;riel du r&#233;seau. Chaque 
+  "connexion" doit avoir un identifiant unique, qui est sp&#233;cifi&#233; comme
+  le "Pr&#233;fixe de connexion". Par d&#233;faut, la premi&#232;re connexion Pi est
+  avec le pr&#233;fixe "P", et des r&#233;seaux Pi suppl&#233;mentaires ont
+  des pr&#233;fixes comme "P1", "P2", ... La plupart des utilisateurs devraient pouvoir utiliser la 
+  valeur du "Pr&#233;fixe de connexion" fournie par les outils JMRI. 
 
+  <li>Quand un outil JMRI est configur&#233; pour plus d'une connexion, 
+  chaque connexion obtient un &#233;l&#233;ment de menu dans la fen&#234;tre principale de l'outil JMRI. Pour
+  aider les utilisateurs &#224; diff&#233;rencier leurs diff&#233;rentes connexions, chacune 
+  a un "nom de connexion", qui est utilis&#233; comme le nom de 
+  l'&#233;l&#233;ment de menu associ&#233; dans la fen&#234;tre principale de l'outil JMRI. Les utilisateurs peuvent 
+  changer le "Nom de la connexion" pour toute connexion afin de r&#233;pondre &#224; leurs besoins.
+--></li>
+
+        <li>Cliquez sur "Sauvegarder".  Il vous sera demand&#233; si vous voulez quitter 
+        le programme, cliquez sur "Oui".</li>
+
+        <li>Red&#233;marrer le programme. Vous devriez &#234;tre op&#233;rationnel. </li>
+      </ol>
+      
+      <a name="documentation" id="documentation"></a>
+      <h2>Documentation</h2>
+
+      <h3>Aide JMRI</h3>
+
+      <p><a href="../../../../../install/Raspbian.shtml">
+      Installation de JMRI sur Pi/Raspbian</a>.</p>
+
+      <h3>Information sur les tiers</h3>
+
+      <p>Le <a href="http://pi4j.com/" target="_blank">site web de Pi4J</a> fournit
+     les informations sur les E/S Java sp&#233;cifiques au mod&#232;le.
+      
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
+
+   
