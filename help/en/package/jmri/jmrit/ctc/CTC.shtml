@@ -1111,7 +1111,7 @@
       <p>
       CTC was upgraded after JMRI 4.20.  The primary change is that the CTC configuration data is no longer
       stored in the ProgramProperties.xml and CTCSystem.xml files.  The configuration data is included in
-      the standard PanelPro data files created by <strong>Panels &rArr; Store Panels...</strong>.  This
+      the standard PanelPro data files. This
       change insures that the CTC configuration and the JMRI tables are always consistent.
       </p>
 
