@@ -20,14 +20,14 @@
                     the layout, if suitable hardware is being used. Availability of meters
                     will depend on the hardware connection.</p>
 
-                <p>The Cbus meters listens for a fixed messages with ACON2 opcodes from node 65534.
+                <p>The Cbus meters listen for a fixed messages with ACON2 opcodes from node 65534.
                     An Event number (EN) of 1 indicates a current reading whilst and EN of 2 indicates a 
-                    voltage reading. This may change to being user configurable in future. </p>
+                    voltage reading. This may change to being user configurable in future.</p>
                 
                 <p>Depending on the hardware connection it may be neccessary to use a Node Variable (NV) or some
                     other mechanism to configure the hardware to send the current and/or voltage readings on the 
                     CBUS network. The frequency (update rate) of the readings is hardware dependent and not 
-                    mandated by JMRI or the CBUS specificiation.</p>
+                    mandated by JMRI or the CBUS specification.</p>
                 
                 <p>In PanelPro meters may be added from the tools menu or from the CBUS tools menu.
                     In DecoderPro3 the meters are currently only available from the CBUS tools menu.
