@@ -186,7 +186,7 @@
     <ul>
     <li><strong>Sensors</strong>: JMRI expects to receive sensor state on the "Sensor receive topic." It sends state on the "Sensor send topic" if a user changes sensor state
     by clicking on a panel or table.</li>
-    <li><strong>Turnouts</strong>: JMRI sends on the "Tunrout send topic" if a user commands a turnout change by clicking on a panel or table.  Additionally, if a Turnout has been
+    <li><strong>Turnouts</strong>: JMRI sends on the "Turnout send topic" if a user commands a turnout change by clicking on a panel or table.  Additionally, if a Turnout has been
     created in either the Direct mode or Monitoring mode (see <a href="../../../package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout_Feedback">turnout documentation</a>),
     JMRI expects to received turnout state on the "Turnout receive topic."</li>
     <li><strong>Lights</strong>: JMRI sends on the "Light send topic" if a user commands a Light change by clicking on a panel or table.   JMRI also acts on Light state messages sent
@@ -319,8 +319,8 @@
             
             <p>
             <a href="https://www.hivemq.com/blog/mqtt-essentials-part-8-retained-messages/" target="_blank">Retained Messages</a> indicates to the MQTT message
-            broker whether to retain the last message received for a certain topic.  JMRI publishes messages with the retain option on.  This allows any new s
-            ubscriber to automatically receive the last message send to a topic (often the state of a JMRI object) when that new subscriber starts up.
+            broker whether to retain the last message received for a certain topic.  JMRI publishes messages with the retain option on.  This allows any new
+            subscriber to automatically receive the last message send to a topic (often the state of a JMRI object) when that new subscriber starts up.
             </p>
             
             <p>
