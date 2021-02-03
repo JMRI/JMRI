@@ -63,7 +63,8 @@
       <ul>
         <li><b>New Panel</b></li>
 
-        <li><b>Store Panels...</b></li>
+        <li><b>Store Panels...</b> {Changed as of 4.23.1: Store ALL table content and panels}
+        See <a href="../../../../html/apps/StoringYourWork.shtml">Storing Your Work</a>.</li>
 
         <li><b>Store Image Index</b></li>
 

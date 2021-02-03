@@ -28,6 +28,11 @@
     <div id="mainContent">
 
       <h1>JMRI: PanelPro</h1>
+            <p class="noted">Note: The PanelPro main menu is being changed.  See
+            <a href="../../apps/StoringYourWork.shtml"> Storing Your Work</a> for details.
+            The menu references below are the for the old menu structure.
+            </p>
+
             <p>The JMRI libraries contain the PanelPro
             application for creating panels to control or follow your
             (virtual) model railroad. This page introduces the
@@ -120,7 +125,7 @@
             <p><a href=
             "http://quaker-valley.com/CTC/JMRI%20Panel%20Tutorial.gif">
             <img src="http://quaker-valley.com/CTC/JMRI%20Panel%20Tutorial.gif"
-            align="right" height="216" width="313"></a> Many people use
+            align="right" height="216" width="313" alt="Quaker Valley"></a> Many people use
             a combination of panel types, with the Layout Editor creating
             schematic panels to handle the actual configuration for
             signals and Panel Editor providing exactly the appearance
@@ -296,7 +301,7 @@
 
             <a href="../../../package/jmri/jmrit/display/images/Switchboard.png">
             <img src="../../../package/jmri/jmrit/display/images/Switchboard.png"
-            width="198" height="154" align="right" hspace="0" vspace="0"></a>
+            width="198" height="154" align="right" hspace="0" vspace="0" alt="Switchboard"></a>
 
             <h2><a name="swb" id="swb">The Switchboard Editor</a></h2>
             <p>Switchboards provide a visual control grid for your JMRI layout "out of the box".<br>
