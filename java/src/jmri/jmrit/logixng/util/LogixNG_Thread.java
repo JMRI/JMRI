@@ -31,6 +31,7 @@ public class LogixNG_Thread {
     public static final int DEFAULT_LOGIXNG_DEBUG_THREAD = 1;
     
     private static final Map<Integer, LogixNG_Thread> _threads = new HashMap<>();
+    private static final Map<String, LogixNG_Thread> _threadNames = new HashMap<>();
     private static int _highestThreadID = -1;
     
     private final int _threadID;
@@ -47,7 +48,6 @@ public class LogixNG_Thread {
         return createNewThread(-1, name);
     }
     
-//    @InvokeOnGuiThread
     public static LogixNG_Thread createNewThread(int threadID, String name) {
         synchronized (LogixNG_Thread.class) {
             if (threadID == -1) {
@@ -60,12 +60,20 @@ public class LogixNG_Thread {
                 throw new IllegalArgumentException(String.format("Thread ID %d already exists", threadID));
             }
             
+            if (_threadNames.containsKey(name)) {
+                throw new IllegalArgumentException(String.format("Thread name %s already exists", name));
+            }
             LogixNG_Thread thread = new LogixNG_Thread(threadID, name);
             _threads.put(threadID, thread);
+            _threadNames.put(name, thread);
             thread._logixNGThread.start();
             
             return thread;
         }
+    }
+    
+    public static boolean validateNewThreadName(String name) {
+        return _threadNames.containsKey(name);
     }
     
     public static LogixNG_Thread getThread(int threadID) {
@@ -105,6 +113,7 @@ public class LogixNG_Thread {
             if (aThread._threadInUse) throw new IllegalArgumentException("Thread is in use");
             
             _threads.remove(thread._threadID);
+            _threadNames.remove(thread._name);
         }
     }
     
@@ -320,6 +329,7 @@ public class LogixNG_Thread {
                     throw new RuntimeException("Could not stop logixNGThread. Current state: "+_logixNGThread.getState().name());
                 }
                 _threads.remove(_threadID);
+                _threadNames.remove(_name);
                 _stopThread = false;
             }
         }
