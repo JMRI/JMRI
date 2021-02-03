@@ -61,7 +61,7 @@ public class CbusPredefinedMetersTest {
     }
     
     public double getCurrentExtra() {
-        return InstanceManager.getDefault(MeterManager.class).getBySystemName("MV2CBUSCurrentMeter").getKnownAnalogValue();
+        return InstanceManager.getDefault(MeterManager.class).getBySystemName("MVCBUSCurrentMeter2").getKnownAnalogValue();
     }
     
     public double getVoltage() {

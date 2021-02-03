@@ -45,15 +45,15 @@ public class CbusPredefinedMeters implements CanListener {
         updateTask = new UpdateTask(-1);
         
         currentMeter = new DefaultMeter.DefaultCurrentMeter(
-                memo.getSystemPrefix() + "V" + "CBUSCurrentMeter",
+                memo.getSystemPrefix() + InstanceManager.getDefault(MeterManager.class).typeLetter() + "CBUSCurrentMeter",
                 Meter.Unit.Milli, 0, 65535.0, 1.0, updateTask);
         
         currentMeterExtra = new DefaultMeter.DefaultCurrentMeter(
-                memo.getSystemPrefix() + "V2" + "CBUSCurrentMeter",
+                memo.getSystemPrefix() + InstanceManager.getDefault(MeterManager.class).typeLetter() + "CBUSCurrentMeter2",
                 Meter.Unit.Milli, 0, 65535.0, 1.0, updateTask);
         
         voltageMeter = new DefaultMeter.DefaultVoltageMeter(
-                memo.getSystemPrefix() + "V" + "CBUSVoltageMeter",
+                memo.getSystemPrefix() + InstanceManager.getDefault(MeterManager.class).typeLetter() + "CBUSVoltageMeter",
                 Meter.Unit.NoPrefix, 0, 6553.5, 0.1, updateTask);
         
         InstanceManager.getDefault(MeterManager.class).register(currentMeter);
