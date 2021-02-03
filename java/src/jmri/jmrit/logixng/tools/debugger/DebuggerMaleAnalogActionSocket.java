@@ -13,14 +13,29 @@ import jmri.jmrit.logixng.MaleAnalogActionSocket;
  */
 public class DebuggerMaleAnalogActionSocket extends AbstractDebuggerMaleSocket implements MaleAnalogActionSocket {
     
+    double _nextValue;
+    
     public DebuggerMaleAnalogActionSocket(BaseManager<MaleAnalogActionSocket> manager, MaleAnalogActionSocket maleSocket) {
         super(manager, maleSocket);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public String getBeforeInfo() {
+        return Bundle.getMessage("AnalogAction_InfoBefore", _nextValue);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public String getAfterInfo() {
+        return Bundle.getMessage("AnalogAction_InfoAfter");
+    }
+    
     @Override
     public void setValue(double value) throws JmriException {
+        _nextValue = value;
         before();
-        ((MaleAnalogActionSocket) _maleSocket).setValue(value);
+        ((MaleAnalogActionSocket) _maleSocket).setValue(_nextValue);
         after();
     }
 

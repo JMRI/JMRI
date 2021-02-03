@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.jmrit.logixng.tools.debugger;
 
 import java.util.Set;
@@ -18,16 +13,30 @@ import jmri.jmrit.logixng.MaleDigitalExpressionSocket;
  */
 public class DebuggerMaleDigitalExpressionSocket extends AbstractDebuggerMaleSocket implements MaleDigitalExpressionSocket {
     
+    private boolean _lastResult;
+    
     public DebuggerMaleDigitalExpressionSocket(BaseManager<MaleDigitalExpressionSocket> manager, MaleDigitalExpressionSocket maleSocket) {
         super(manager, maleSocket);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public String getBeforeInfo() {
+        return Bundle.getMessage("AnalogExpression_InfoBefore");
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public String getAfterInfo() {
+        return Bundle.getMessage("AnalogExpression_InfoAfter", _lastResult ? Bundle.getMessage("True") : Bundle.getMessage("False"));
+    }
+    
     @Override
     public boolean evaluate() throws JmriException {
         before();
-        boolean result = ((MaleDigitalExpressionSocket) _maleSocket).evaluate();
+        _lastResult = ((MaleDigitalExpressionSocket) _maleSocket).evaluate();
         after();
-        return result;
+        return _lastResult;
     }
 
     @Override

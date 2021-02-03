@@ -73,7 +73,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="4:29 PM">
+    <memory value="12:52 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -112,7 +112,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue Feb 02 16:29:03 CET 2021" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed Feb 03 12:52:20 CET 2021" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <logixngs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <thread>
       <id>0</id>
@@ -5027,12 +5027,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </formula>
     <hold class="jmri.jmrit.logixng.expressions.configurexml.HoldXml">
       <systemName>IQDE:AUTO:0078</systemName>
-      <holdSocket>
-        <socketName>E1</socketName>
-      </holdSocket>
       <triggerSocket>
-        <socketName>E2</socketName>
+        <socketName>Trigger</socketName>
       </triggerSocket>
+      <holdSocket>
+        <socketName>Hold</socketName>
+      </holdSocket>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <abstractMaleSocket enabled="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
@@ -5083,12 +5083,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <hold class="jmri.jmrit.logixng.expressions.configurexml.HoldXml">
       <systemName>IQDE:AUTO:0079</systemName>
       <comment>A comment</comment>
-      <holdSocket>
-        <socketName>E1</socketName>
-      </holdSocket>
       <triggerSocket>
-        <socketName>E2</socketName>
+        <socketName>Trigger</socketName>
       </triggerSocket>
+      <holdSocket>
+        <socketName>Hold</socketName>
+      </holdSocket>
       <maleSocket>
         <abstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <abstractMaleSocket enabled="yes" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml">
@@ -12333,9 +12333,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Tue Feb 02 16:29:16 CET 2021</date>
+      <date>Wed Feb 03 12:52:34 CET 2021</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.21.5ish+daniel+2021-02-02T15:26:25Z+RUNKNOWN on Tue Feb 02 16:29:16 CET 2021-->
+  <!--Written by JMRI version 4.21.5ish+daniel+2021-02-03T11:49:27Z+RUNKNOWN on Wed Feb 03 12:52:34 CET 2021-->
 </layout-config>

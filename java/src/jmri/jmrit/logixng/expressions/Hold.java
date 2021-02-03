@@ -70,9 +70,10 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
     @Override
     public boolean evaluate() throws JmriException {
         if (_isActive) {
-            _isActive = _holdExpressionSocket.evaluate();
+            _isActive = _holdExpressionSocket.evaluate()
+                    || _triggerExpressionSocket.evaluate();
         } else {
-            _isActive = _holdExpressionSocket.evaluate() && _triggerExpressionSocket.evaluate();
+            _isActive = _triggerExpressionSocket.evaluate();
         }
         return _isActive;
     }
