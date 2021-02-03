@@ -179,6 +179,11 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         if (!(getObject() instanceof AbstractMaleSocket)) {
             writer.append(currentIndent);
             writer.append(getLongDescription(locale));
+            if (getUserName() != null) {
+                writer.append(" ::: ");
+                writer.append(Bundle.getMessage("LabelUserName"));
+                writer.append(getUserName());
+            }
             if (getComment() != null) {
                 writer.append(" ::: ");
                 writer.append(getComment());

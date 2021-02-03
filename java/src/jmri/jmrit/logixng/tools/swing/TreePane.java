@@ -327,6 +327,9 @@ public class TreePane extends JPanel implements PropertyChangeListener {
             if (socket.isConnected()) {
                 MaleSocket connectedSocket = socket.getConnectedSocket();
                 String label = connectedSocket.getLongDescription();
+                if (connectedSocket.getUserName() != null) {
+                    label += " ::: " + connectedSocket.getUserName();
+                }
                 if (!connectedSocket.isEnabled()) {
                     label = "<html><strike>" + label + "</strike></html>";
                 }

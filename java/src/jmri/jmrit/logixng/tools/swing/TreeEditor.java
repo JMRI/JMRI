@@ -44,10 +44,12 @@ public class TreeEditor extends TreeViewer {
     private JDialog _addItemDialog = null;
     private JDialog _editActionExpressionDialog = null;
     private JDialog _editLocalVariablesDialog = null;
+    private JDialog _changeUsernameDialog = null;
     private final JTextField _socketNameTextField = new JTextField(20);
     private final JTextField _systemName = new JTextField(20);
     private final JTextField _addUserName = new JTextField(20);
     private final JTextField _addComment = new JTextField(50);
+    private final JTextField _usernameField = new JTextField(50);
     
     protected boolean _showReminder = false;
     
@@ -946,6 +948,141 @@ public class TreeEditor extends TreeViewer {
     }
 
     /**
+     * Respond to the Change user name menu choice in the popup menu.
+     *
+     * @param femaleSocket the female socket
+     * @param path the path to the item the user has clicked on
+     */
+    final protected void changeUsername(FemaleSocket femaleSocket, TreePath path) {
+        // possible change
+        _showReminder = true;
+        // make an Edit Frame
+        if (_changeUsernameDialog == null) {
+            MaleSocket maleSocket = femaleSocket.getConnectedSocket();
+            
+            // Edit ConditionalNG
+            _edit = new JButton(Bundle.getMessage("ButtonOK"));  // NOI18N
+            _edit.addActionListener((ActionEvent e) -> {
+                
+                boolean hasErrors = false;
+                if (hasErrors) {
+                    String errorMsg = "";
+                    JOptionPane.showMessageDialog(null,
+                            Bundle.getMessage("ValidateErrorMessage", errorMsg),
+                            Bundle.getMessage("ValidateErrorTitle"),
+                            JOptionPane.ERROR_MESSAGE);
+                    
+                } else {
+                    runOnConditionalNGThreadOrGUIThread(
+                            _treePane._femaleRootSocket.getConditionalNG(),
+                            () -> {
+                        _treePane._femaleRootSocket.unregisterListeners();
+                        
+                        String username = _usernameField.getText();
+                        if (username.equals("")) username = null;
+                        
+                        // Only change user name if it's changed
+                        if (((username == null) && (maleSocket.getUserName() != null))
+                                || ((username != null) && !username.equals(maleSocket.getUserName()))) {
+                            
+                            if (username != null) {
+                                NamedBean nB = maleSocket.getManager().getByUserName(username);
+                                if (nB != null) {
+                                    String uname = username;
+                                    ThreadingUtil.runOnGUIEventually(() -> {
+                                        log.error("User name is not unique {}", uname);
+                                        String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + uname)});
+                                        JOptionPane.showMessageDialog(null, msg,
+                                                Bundle.getMessage("WarningTitle"),
+                                                JOptionPane.ERROR_MESSAGE);
+                                    });
+                                    username = null;
+                                }
+                            }
+                            maleSocket.setUserName(username);
+                        }
+                        
+                        ThreadingUtil.runOnGUIEventually(() -> {
+                            _changeUsernameDialog.dispose();
+                            _changeUsernameDialog = null;
+                            for (TreeModelListener l : _treePane.femaleSocketTreeModel.listeners) {
+                                TreeModelEvent tme = new TreeModelEvent(
+                                        femaleSocket,
+                                        path.getPath()
+                                );
+                                l.treeNodesChanged(tme);
+                            }
+                            _treePane._tree.updateUI();
+                        });
+                        if (_treePane._femaleRootSocket.isActive()) {
+                            _treePane._femaleRootSocket.registerListeners();
+                        }
+                    });
+                }
+            });
+//            _edit.setToolTipText(Bundle.getMessage("EditButtonHint"));  // NOI18N
+            
+//            makeAddEditFrame(false, femaleSocket, _editSwingConfiguratorInterface, _edit);  // NOI18N
+            
+            _changeUsernameDialog = new JDialog(
+                    this,
+                    Bundle.getMessage(
+                            "EditLocalVariablesDialogTitle",
+                            femaleSocket.getLongDescription()),
+                    true);
+    //        frame.addHelpMenu(
+    //                "package.jmri.jmrit.logixng.tools.swing.ConditionalNGAddEdit", true);     // NOI18N
+            Container contentPanel = _changeUsernameDialog.getContentPane();
+            contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+            
+//            JPanel tablePanel = new JPanel();
+            
+            JLabel usernameLabel = new JLabel("Username");
+            _usernameField.setText(maleSocket.getUserName());
+            
+            contentPanel.add(usernameLabel);
+            contentPanel.add(_usernameField);
+            
+            // set up create and cancel buttons
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.setLayout(new FlowLayout());
+            
+            // Cancel
+            JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));    // NOI18N
+            buttonPanel.add(cancel);
+            cancel.addActionListener((ActionEvent e) -> {
+                _changeUsernameDialog.setVisible(false);
+                _changeUsernameDialog.dispose();
+                _changeUsernameDialog = null;
+            });
+    //        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
+            cancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
+            
+            buttonPanel.add(_edit);
+            
+            _changeUsernameDialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    _changeUsernameDialog.setVisible(false);
+                    _changeUsernameDialog.dispose();
+                    _changeUsernameDialog = null;
+                }
+            });
+            
+            contentPanel.add(buttonPanel);
+            
+            _autoSystemName.addItemListener((ItemEvent e) -> {
+                autoSystemName();
+            });
+    //        addLogixNGFrame.setLocationRelativeTo(component);
+            _changeUsernameDialog.pack();
+            _changeUsernameDialog.setLocationRelativeTo(null);
+            
+            _changeUsernameDialog.setVisible(true);
+        }
+    }
+
+    /**
      * Enable/disable fields for data entry when user selects to have system
      * name automatically generated.
      */
@@ -1085,6 +1222,7 @@ public class TreeEditor extends TreeViewer {
         private static final String ACTION_COMMAND_LOCK = "lock";
         private static final String ACTION_COMMAND_UNLOCK = "unlock";
         private static final String ACTION_COMMAND_LOCAL_VARIABLES = "local_variables";
+        private static final String ACTION_COMMAND_CHANGE_USERNAME = "change_username";
 //        private static final String ACTION_COMMAND_EXPAND_TREE = "expandTree";
         
         private final JTree _tree;
@@ -1106,6 +1244,7 @@ public class TreeEditor extends TreeViewer {
         private JMenuItem menuItemLock;
         private JMenuItem menuItemUnlock;
         private JMenuItem menuItemLocalVariables;
+        private JMenuItem menuItemChangeUsername;
 //        private JMenuItem menuItemExpandTree;
         
         PopupMenu() {
@@ -1178,6 +1317,12 @@ public class TreeEditor extends TreeViewer {
             menuItemLocalVariables.addActionListener(this);
             menuItemLocalVariables.setActionCommand(ACTION_COMMAND_LOCAL_VARIABLES);
             add(menuItemLocalVariables);
+            
+            addSeparator();
+            menuItemChangeUsername = new JMenuItem(Bundle.getMessage("PopupMenuChangeUsername"));
+            menuItemChangeUsername.addActionListener(this);
+            menuItemChangeUsername.setActionCommand(ACTION_COMMAND_CHANGE_USERNAME);
+            add(menuItemChangeUsername);
 /*            
             addSeparator();
             menuItemExpandTree = new JMenuItem(Bundle.getMessage("PopupMenuExpandTree"));
@@ -1273,6 +1418,8 @@ public class TreeEditor extends TreeViewer {
             menuItemUnlock.setEnabled(false);   // Not implemented yet
             
             menuItemLocalVariables.setEnabled(femaleSocket.isConnected());
+            
+            menuItemChangeUsername.setEnabled(femaleSocket.isConnected());
             
             show(_tree, x, y);
         }
@@ -1401,6 +1548,10 @@ public class TreeEditor extends TreeViewer {
                     
                 case ACTION_COMMAND_LOCAL_VARIABLES:
                     editLocalVariables(_currentFemaleSocket, _currentPath);
+                    break;
+                    
+                case ACTION_COMMAND_CHANGE_USERNAME:
+                    changeUsername(_currentFemaleSocket, _currentPath);
                     break;
                     
 /*                    
