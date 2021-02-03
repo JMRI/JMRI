@@ -191,7 +191,6 @@ public class Automation extends PropertyChangeSupport implements java.beans.Prop
     private void cancelActions() {
         for (AutomationItem item : getItemsBySequenceList()) {
             item.getAction().cancelAction();
-            item.getAction().removePropertyChangeListener(this);
         }
     }
 
