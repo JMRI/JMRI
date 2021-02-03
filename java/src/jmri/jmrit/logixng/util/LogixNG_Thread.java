@@ -44,11 +44,11 @@ public class LogixNG_Thread {
     private final BlockingQueue<ThreadEvent> _eventQueue;
     
     
-    public static LogixNG_Thread createNewThread(String name) {
+    public static LogixNG_Thread createNewThread(@Nonnull String name) {
         return createNewThread(-1, name);
     }
     
-    public static LogixNG_Thread createNewThread(int threadID, String name) {
+    public static LogixNG_Thread createNewThread(int threadID, @Nonnull String name) {
         synchronized (LogixNG_Thread.class) {
             if (threadID == -1) {
                 threadID = ++_highestThreadID;
@@ -72,8 +72,10 @@ public class LogixNG_Thread {
         }
     }
     
-    public static boolean validateNewThreadName(String name) {
-        return _threadNames.containsKey(name);
+    public static boolean validateNewThreadName(@Nonnull String name) {
+        synchronized (LogixNG_Thread.class) {
+            return !_threadNames.containsKey(name);
+        }
     }
     
     public static LogixNG_Thread getThread(int threadID) {
@@ -163,8 +165,17 @@ public class LogixNG_Thread {
         return _name;
     }
     
-    public void setThreadName(String name) {
-        _name = name;
+    public void setThreadName(@Nonnull String name) {
+        if (_name.equals(name)) return;
+        
+        synchronized (LogixNG_Thread.class) {
+            if (_threadNames.containsKey(name)) {
+                throw new IllegalArgumentException(String.format("Thread name %s already exists", name));
+            }
+            _threadNames.remove(_name);
+            _threadNames.put(name, this);
+            _name = name;
+        }
     }
     
     public boolean getThreadInUse() {
