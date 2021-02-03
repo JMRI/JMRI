@@ -145,7 +145,7 @@ public class CbusPredefinedMeters implements CanListener {
                 log.info("Unable to fetch Master Command Station from Node Manager");
             }
             tc.addCanListener(CbusPredefinedMeters.this);
-            log.info("Enabled meter Long Ex2Data {} {}", 
+            log.info("Enabled meter Long Ex2Data {} {} {}", 
                 new CbusNameService(_memo).getEventNodeString(_nodeToListen,_eventToListenCurrent), 
                 new CbusNameService(_memo).getEventNodeString(_nodeToListen,_eventToListenVoltage),
                 new CbusNameService(_memo).getEventNodeString(_nodeToListen,_eventToListenCurrentExtra));
