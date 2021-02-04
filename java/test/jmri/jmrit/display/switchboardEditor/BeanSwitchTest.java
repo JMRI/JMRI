@@ -27,6 +27,8 @@ public class BeanSwitchTest {
     public void testCTor() {
         Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         SwitchboardEditor swe2 = new SwitchboardEditor("Bean Switch Default Switchboard");
+        swe2.setSwitchType("T");
+        swe2.setSwitchManu("I"); // set explicitly
         BeanSwitch t = new BeanSwitch(1,null,"IT1",0, swe2);
         Assertions.assertNotNull(t, "exists");
     }
@@ -34,6 +36,8 @@ public class BeanSwitchTest {
     @Test
     public void testButtonConnected() {
         Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
+        swe.setSwitchType("T");
+        swe.setSwitchManu("I"); // set explicitly
         NamedBean nb = jmri.InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT2");
         BeanSwitch t = new BeanSwitch(1, nb, "IT2", SwitchboardEditor.BUTTON, swe);
         Assertions.assertNotNull(t, "exists");
@@ -52,6 +56,8 @@ public class BeanSwitchTest {
     @Test
     public void testSliderConnected() {
         Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
+        swe.setSwitchType("T");
+        swe.setSwitchManu("I"); // set explicitly
         NamedBean nb = jmri.InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT3");
         nb.setUserName("intTurnOne");
         BeanSwitch t = new BeanSwitch(1, nb, "IT3", SwitchboardEditor.SLIDER, swe);
@@ -86,6 +92,7 @@ public class BeanSwitchTest {
         NamedBean nb = jmri.InstanceManager.getDefault(LightManager.class).provideLight("IL4");
         nb.setUserName("intLightFour");
         swe.setSwitchType("L");
+        swe.setSwitchManu("I"); // set explicitly
         BeanSwitch t = new BeanSwitch(1, nb, "IL4", SwitchboardEditor.KEY, swe);
         Assertions.assertNotNull(t, "exists");
         Assertions.assertNotNull(t.getIconLabel());
@@ -101,6 +108,7 @@ public class BeanSwitchTest {
     public void testSensorSymbolUnconnected() {
         Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         swe.setSwitchType("S");
+        swe.setSwitchManu("I"); // set explicitly
         BeanSwitch t = new BeanSwitch(1, null, "IS4", SwitchboardEditor.SYMBOL, swe);
         Assertions.assertNotNull(t, "exists");
         Thread dialog_thread1 = new Thread(() -> {
@@ -127,7 +135,6 @@ public class BeanSwitchTest {
         JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             swe = new SwitchboardEditor("Bean Switch Test Switchboard");
-            swe.setSwitchManu("I"); // set explicitly
         }
     }
 
