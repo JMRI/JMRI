@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
   <meta name="keywords" content="JMRI CBUS setup Fast Clock Fastclock time speed rate FCLK">
-  <title>JMRI Hardware Support - CBUS&trade; Fast Clock</title>
+  <title>JMRI Hardware Support - CBUS&reg; Fast Clock</title>
   <!--#include virtual="/Style.shtml" -->
 </head>
 
@@ -150,7 +150,7 @@
         
         
         <h2></h2>
-        <p>CBUS&trade; is a registered trade mark of Dr Michael Bolton</p>
+        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
         <p></p>
 
       <!--#include virtual="/Footer.shtml" -->
