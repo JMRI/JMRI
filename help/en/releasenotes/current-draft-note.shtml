@@ -395,8 +395,8 @@
         <a id="Meters" name="Meters"></a>
         <ul>
           <li>The Settings menu was slightly reorganized with submenus for each value.</li>
-          <li>When no meters are available, both Meters menus and the Units Settinsg menu show a short explanation.</li>
-          <li>Meters will honor the regional setting for the decimal separator (. or ,))</li>
+          <li>When no meters are available, both Meters menus and the Units Settings menu show a short explanation.</li>
+          <li>Meters will honor the JMRI Locale/regional setting for the decimal separator (. or ,))</li>
         </ul>
 
     <h3>Operations</h3>
