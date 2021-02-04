@@ -33,6 +33,12 @@ public abstract class AbstractDigitalExpression extends AbstractBase
 
     /** {@inheritDoc} */
     @Override
+    public void notifyChangedResult(boolean oldResult, boolean newResult) {
+        firePropertyChange(Base.PROPERTY_LAST_RESULT_CHANGED, oldResult, newResult);
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public Base getParent() {
         return _parent;
     }

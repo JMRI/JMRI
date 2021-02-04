@@ -89,24 +89,24 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         expression2 = new StringExpressionMemory("IQSE11", null);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", null == expression2.getUserName());
-        Assert.assertTrue("String matches", "Get memory none as string value".equals(expression2.getLongDescription()));
+        Assert.assertEquals("String matches", "Get memory none as string value", expression2.getLongDescription());
         
         expression2 = new StringExpressionMemory("IQSE11", "My memory");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", "My memory".equals(expression2.getUserName()));
-        Assert.assertTrue("String matches", "Get memory none as string value".equals(expression2.getLongDescription()));
+        Assert.assertEquals("String matches", "Get memory none as string value", expression2.getLongDescription());
         
         expression2 = new StringExpressionMemory("IQSE11", null);
         expression2.setMemory(_memory);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", null == expression2.getUserName());
-        Assert.assertTrue("String matches", "Get memory IM1 as string value".equals(expression2.getLongDescription()));
+        Assert.assertEquals("String matches", "Get memory IM1 as string value", expression2.getLongDescription());
         
         expression2 = new StringExpressionMemory("IQSE11", "My memory");
         expression2.setMemory(_memory);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", "My memory".equals(expression2.getUserName()));
-        Assert.assertTrue("String matches", "Get memory IM1 as string value".equals(expression2.getLongDescription()));
+        Assert.assertEquals("String matches", "Get memory IM1 as string value", expression2.getLongDescription());
         
         boolean thrown = false;
         try {
@@ -366,7 +366,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(doStringAction);
         conditionalNG.getChild(0).connect(maleSocketDoStringAction);
         _memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
-        stringExpressionMemory = new StringExpressionMemory("IQSE321", "StringIO_Memory");
+        stringExpressionMemory = new StringExpressionMemory("IQSE321", null);
         MaleSocket maleSocketStringExpressionMemory =
                 InstanceManager.getDefault(StringExpressionManager.class).registerExpression(stringExpressionMemory);
         doStringAction.getChild(0).connect(maleSocketStringExpressionMemory);

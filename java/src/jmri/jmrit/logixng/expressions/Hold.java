@@ -26,10 +26,10 @@ import jmri.jmrit.logixng.SocketAlreadyConnectedException;
  */
 public class Hold extends AbstractDigitalExpression implements FemaleSocketListener {
 
-    private String _holdExpressionSocketSystemName;
     private String _triggerExpressionSocketSystemName;
-    private final FemaleDigitalExpressionSocket _holdExpressionSocket;
+    private String _holdExpressionSocketSystemName;
     private final FemaleDigitalExpressionSocket _triggerExpressionSocket;
+    private final FemaleDigitalExpressionSocket _holdExpressionSocket;
     private boolean _isActive = false;
     
     public Hold(String sys, String user)
@@ -37,10 +37,10 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
         
         super(sys, user);
         
-        _holdExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, "E1");
         _triggerExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, "E2");
+                .createFemaleSocket(this, this, Bundle.getMessage("Hold_SocketName_Trigger"));
+        _holdExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
+                .createFemaleSocket(this, this, Bundle.getMessage("Hold_SocketName_Hold"));
     }
     
     @Override
@@ -70,9 +70,10 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
     @Override
     public boolean evaluate() throws JmriException {
         if (_isActive) {
-            _isActive = _holdExpressionSocket.evaluate();
+            _isActive = _holdExpressionSocket.evaluate()
+                    || _triggerExpressionSocket.evaluate();
         } else {
-            _isActive = _holdExpressionSocket.evaluate() && _triggerExpressionSocket.evaluate();
+            _isActive = _triggerExpressionSocket.evaluate();
         }
         return _isActive;
     }
@@ -81,10 +82,10 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         switch (index) {
             case 0:
-                return _holdExpressionSocket;
+                return _triggerExpressionSocket;
                 
             case 1:
-                return _triggerExpressionSocket;
+                return _holdExpressionSocket;
                 
             default:
                 throw new IllegalArgumentException(
@@ -99,10 +100,10 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
     
     @Override
     public void connected(FemaleSocket socket) {
-        if (socket == _holdExpressionSocket) {
-            _holdExpressionSocketSystemName = socket.getConnectedSocket().getSystemName();
-        } else if (socket == _triggerExpressionSocket) {
+        if (socket == _triggerExpressionSocket) {
             _triggerExpressionSocketSystemName = socket.getConnectedSocket().getSystemName();
+        } else if (socket == _holdExpressionSocket) {
+            _holdExpressionSocketSystemName = socket.getConnectedSocket().getSystemName();
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
@@ -110,10 +111,10 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
     
     @Override
     public void disconnected(FemaleSocket socket) {
-        if (socket == _holdExpressionSocket) {
-            _holdExpressionSocketSystemName = null;
-        } else if (socket == _triggerExpressionSocket) {
+        if (socket == _triggerExpressionSocket) {
             _triggerExpressionSocketSystemName = null;
+        } else if (socket == _holdExpressionSocket) {
+            _holdExpressionSocketSystemName = null;
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
@@ -127,16 +128,8 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
     @Override
     public String getLongDescription(Locale locale) {
         return Bundle.getMessage(locale, "Hold_Long",
-                _holdExpressionSocket.getName(),
-                _triggerExpressionSocket.getName());
-    }
-
-    public String getHoldActionSocketSystemName() {
-        return _holdExpressionSocketSystemName;
-    }
-
-    public void setHoldActionSocketSystemName(String systemName) {
-        _holdExpressionSocketSystemName = systemName;
+                _triggerExpressionSocket.getName(),
+                _holdExpressionSocket.getName());
     }
 
     public String getTriggerExpressionSocketSystemName() {
@@ -147,31 +140,18 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
         _triggerExpressionSocketSystemName = systemName;
     }
 
+    public String getHoldActionSocketSystemName() {
+        return _holdExpressionSocketSystemName;
+    }
+
+    public void setHoldActionSocketSystemName(String systemName) {
+        _holdExpressionSocketSystemName = systemName;
+    }
+
     /** {@inheritDoc} */
     @Override
     public void setup() {
         try {
-            if ( !_holdExpressionSocket.isConnected()
-                    || !_holdExpressionSocket.getConnectedSocket().getSystemName()
-                            .equals(_holdExpressionSocketSystemName)) {
-                
-                String socketSystemName = _holdExpressionSocketSystemName;
-                _holdExpressionSocket.disconnect();
-                if (socketSystemName != null) {
-                    MaleSocket maleSocket =
-                            InstanceManager.getDefault(DigitalExpressionManager.class)
-                                    .getBySystemName(socketSystemName);
-                    if (maleSocket != null) {
-                        _holdExpressionSocket.connect(maleSocket);
-                        maleSocket.setup();
-                    } else {
-                        log.error("cannot load digital expression " + socketSystemName);
-                    }
-                }
-            } else {
-                _holdExpressionSocket.getConnectedSocket().setup();
-            }
-            
             if ( !_triggerExpressionSocket.isConnected()
                     || !_triggerExpressionSocket.getConnectedSocket().getSystemName()
                             .equals(_triggerExpressionSocketSystemName)) {
@@ -192,6 +172,27 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
                 }
             } else {
                 _triggerExpressionSocket.getConnectedSocket().setup();
+            }
+            
+            if ( !_holdExpressionSocket.isConnected()
+                    || !_holdExpressionSocket.getConnectedSocket().getSystemName()
+                            .equals(_holdExpressionSocketSystemName)) {
+                
+                String socketSystemName = _holdExpressionSocketSystemName;
+                _holdExpressionSocket.disconnect();
+                if (socketSystemName != null) {
+                    MaleSocket maleSocket =
+                            InstanceManager.getDefault(DigitalExpressionManager.class)
+                                    .getBySystemName(socketSystemName);
+                    if (maleSocket != null) {
+                        _holdExpressionSocket.connect(maleSocket);
+                        maleSocket.setup();
+                    } else {
+                        log.error("cannot load digital expression " + socketSystemName);
+                    }
+                }
+            } else {
+                _holdExpressionSocket.getConnectedSocket().setup();
             }
         } catch (SocketAlreadyConnectedException ex) {
             // This shouldn't happen and is a runtime error if it does.

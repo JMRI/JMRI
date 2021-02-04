@@ -34,27 +34,27 @@ public class HoldXml extends jmri.managers.configurexml.AbstractNamedBeanManager
         
         storeCommon(p, element);
         
-        Element e2 = new Element("holdSocket");
+        Element e2 = new Element("triggerSocket");
         e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
         MaleSocket socket = p.getChild(0).getConnectedSocket();
         String socketSystemName;
         if (socket != null) {
             socketSystemName = socket.getSystemName();
         } else {
-            socketSystemName = p.getHoldActionSocketSystemName();
+            socketSystemName = p.getTriggerExpressionSocketSystemName();
         }
         if (socketSystemName != null) {
             e2.addContent(new Element("systemName").addContent(socketSystemName));
         }
         element.addContent(e2);
         
-        e2 = new Element("triggerSocket");
+        e2 = new Element("holdSocket");
         e2.addContent(new Element("socketName").addContent(p.getChild(1).getName()));
         socket = p.getChild(1).getConnectedSocket();
         if (socket != null) {
             socketSystemName = socket.getSystemName();
         } else {
-            socketSystemName = p.getTriggerExpressionSocketSystemName();
+            socketSystemName = p.getHoldActionSocketSystemName();
         }
         if (socketSystemName != null) {
             e2.addContent(new Element("systemName").addContent(socketSystemName));
@@ -72,7 +72,7 @@ public class HoldXml extends jmri.managers.configurexml.AbstractNamedBeanManager
 
         loadCommon(h, shared);
 
-        Element socketElement = shared.getChild("holdSocket");
+        Element socketElement = shared.getChild("triggerSocket");
         String socketName = socketElement.getChild("socketName").getTextTrim();
         Element systemNameElement = socketElement.getChild("systemName");
         String systemName = null;
@@ -80,9 +80,9 @@ public class HoldXml extends jmri.managers.configurexml.AbstractNamedBeanManager
             systemName = systemNameElement.getTextTrim();
         }
         h.getChild(0).setName(socketName);
-        h.setHoldActionSocketSystemName(systemName);
+        h.setTriggerExpressionSocketSystemName(systemName);
         
-        socketElement = shared.getChild("triggerSocket");
+        socketElement = shared.getChild("holdSocket");
         socketName = socketElement.getChild("socketName").getTextTrim();
         systemNameElement = socketElement.getChild("systemName");
         systemName = null;
@@ -90,7 +90,7 @@ public class HoldXml extends jmri.managers.configurexml.AbstractNamedBeanManager
             systemName = systemNameElement.getTextTrim();
         }
         h.getChild(1).setName(socketName);
-        h.setTriggerExpressionSocketSystemName(systemName);
+        h.setHoldActionSocketSystemName(systemName);
         
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);
         return true;

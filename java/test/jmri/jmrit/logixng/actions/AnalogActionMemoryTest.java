@@ -80,24 +80,24 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
         action2 = new AnalogActionMemory("IQAA11", null);
         Assert.assertNotNull("object exists", action2);
         Assert.assertTrue("Username matches", null == action2.getUserName());
-        Assert.assertTrue("String matches", "Set memory none".equals(action2.getLongDescription()));
+        Assert.assertEquals("String matches", "Set memory none", action2.getLongDescription());
         
         action2 = new AnalogActionMemory("IQAA11", "My memory");
         Assert.assertNotNull("object exists", action2);
         Assert.assertTrue("Username matches", "My memory".equals(action2.getUserName()));
-        Assert.assertTrue("String matches", "Set memory none".equals(action2.getLongDescription()));
+        Assert.assertEquals("String matches", "Set memory none", action2.getLongDescription());
         
         action2 = new AnalogActionMemory("IQAA11", null);
         action2.setMemory(_memory);
         Assert.assertNotNull("object exists", action2);
         Assert.assertTrue("Username matches", null == action2.getUserName());
-        Assert.assertTrue("String matches", "Set memory IM1".equals(action2.getLongDescription()));
+        Assert.assertEquals("String matches", "Set memory IM1", action2.getLongDescription());
         
         action2 = new AnalogActionMemory("IQAA11", "My memory");
         action2.setMemory(_memory);
         Assert.assertNotNull("object exists", action2);
         Assert.assertTrue("Username matches", "My memory".equals(action2.getUserName()));
-        Assert.assertTrue("String matches", "Set memory IM1".equals(action2.getLongDescription()));
+        Assert.assertEquals("String matches", "Set memory IM1", action2.getLongDescription());
         
         boolean thrown = false;
         try {
@@ -218,7 +218,7 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
     
     @Test
     public void testLongDescription() {
-        Assert.assertTrue("String matches", "Set memory IM1".equals(_base.getLongDescription()));
+        Assert.assertEquals("String matches", "Set memory IM1", _base.getLongDescription());
     }
     
     @Test
@@ -261,7 +261,7 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
         conditionalNG.getChild(0).connect(maleSocketDoAnalogAction);
         _memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
         AnalogActionMemory analogActionMemory =
-                new AnalogActionMemory("IQAA321", "AnalogIO_Memory");
+                new AnalogActionMemory("IQAA321", null);
         MaleSocket maleSocketAnalogActionMemory =
                 InstanceManager.getDefault(AnalogActionManager.class)
                         .registerAction(analogActionMemory);

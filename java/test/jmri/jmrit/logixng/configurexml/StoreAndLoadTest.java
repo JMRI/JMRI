@@ -1016,8 +1016,6 @@ public class StoreAndLoadTest {
         
         
         ExpressionConditional expressionConditional = new ExpressionConditional(digitalExpressionManager.getAutoSystemName(), null);
-        expressionConditional.setConditionalState(ExpressionConditional.ConditionalState.True);
-        expressionConditional.set_Is_IsNot(Is_IsNot_Enum.Is);
         maleSocket = digitalExpressionManager.registerExpression(expressionConditional);
         maleSocket.setEnabled(false);
         and.getChild(indexExpr++).connect(maleSocket);
@@ -1026,7 +1024,63 @@ public class StoreAndLoadTest {
         expressionConditional.setComment("A comment");
         expressionConditional.setConditional("IX1C1");
         expressionConditional.setConditionalState(ExpressionConditional.ConditionalState.False);
+        expressionConditional.setAddressing(NamedBeanAddressing.Direct);
+        expressionConditional.setFormula("\"IT\"+index");
+        expressionConditional.setLocalVariable("index");
+        expressionConditional.setReference("{IM1}");
         expressionConditional.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        expressionConditional.setStateAddressing(NamedBeanAddressing.LocalVariable);
+        expressionConditional.setStateFormula("\"IT\"+index2");
+        expressionConditional.setStateLocalVariable("index2");
+        expressionConditional.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionConditional);
+        and.getChild(indexExpr++).connect(maleSocket);
+        
+        expressionConditional = new ExpressionConditional(digitalExpressionManager.getAutoSystemName(), null);
+        expressionConditional.setComment("A comment");
+        expressionConditional.setConditional("IX1C1");
+        expressionConditional.setConditionalState(ExpressionConditional.ConditionalState.True);
+        expressionConditional.setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionConditional.setFormula("\"IT\"+index");
+        expressionConditional.setLocalVariable("index");
+        expressionConditional.setReference("{IM1}");
+        expressionConditional.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionConditional.setStateAddressing(NamedBeanAddressing.Formula);
+        expressionConditional.setStateFormula("\"IT\"+index2");
+        expressionConditional.setStateLocalVariable("index2");
+        expressionConditional.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionConditional);
+        and.getChild(indexExpr++).connect(maleSocket);
+        
+        expressionConditional = new ExpressionConditional(digitalExpressionManager.getAutoSystemName(), null);
+        expressionConditional.setComment("A comment");
+        expressionConditional.setConditional("IX1C1");
+        expressionConditional.setConditionalState(ExpressionConditional.ConditionalState.Other);
+        expressionConditional.setAddressing(NamedBeanAddressing.Formula);
+        expressionConditional.setFormula("\"IT\"+index");
+        expressionConditional.setLocalVariable("index");
+        expressionConditional.setReference("{IM1}");
+        expressionConditional.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        expressionConditional.setStateAddressing(NamedBeanAddressing.Reference);
+        expressionConditional.setStateFormula("\"IT\"+index2");
+        expressionConditional.setStateLocalVariable("index2");
+        expressionConditional.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionConditional);
+        and.getChild(indexExpr++).connect(maleSocket);
+        
+        expressionConditional = new ExpressionConditional(digitalExpressionManager.getAutoSystemName(), null);
+        expressionConditional.setComment("A comment");
+        expressionConditional.setConditional("IX1C1");
+        expressionConditional.setConditionalState(ExpressionConditional.ConditionalState.False);
+        expressionConditional.setAddressing(NamedBeanAddressing.Reference);
+        expressionConditional.setFormula("\"IT\"+index");
+        expressionConditional.setLocalVariable("index");
+        expressionConditional.setReference("{IM1}");
+        expressionConditional.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionConditional.setStateAddressing(NamedBeanAddressing.Direct);
+        expressionConditional.setStateFormula("\"IT\"+index2");
+        expressionConditional.setStateLocalVariable("index2");
+        expressionConditional.setStateReference("{IM2}");
         maleSocket = digitalExpressionManager.registerExpression(expressionConditional);
         and.getChild(indexExpr++).connect(maleSocket);
         
@@ -1731,8 +1785,22 @@ public class StoreAndLoadTest {
         and.getChild(indexExpr++).connect(maleSocket);
         
         hold = new Hold(digitalExpressionManager.getAutoSystemName(), null);
+        hold.setUserName("A hold expression");
         hold.setComment("A comment");
         maleSocket = digitalExpressionManager.registerExpression(hold);
+        and.getChild(indexExpr++).connect(maleSocket);
+        
+        
+        LastResultOfDigitalExpression lastResultOfDigitalExpression =
+                new LastResultOfDigitalExpression(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(lastResultOfDigitalExpression);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+        
+        lastResultOfDigitalExpression = new LastResultOfDigitalExpression(digitalExpressionManager.getAutoSystemName(), null);
+        lastResultOfDigitalExpression.setComment("A comment");
+        lastResultOfDigitalExpression.setDigitalExpression("A hold expression");
+        maleSocket = digitalExpressionManager.registerExpression(lastResultOfDigitalExpression);
         and.getChild(indexExpr++).connect(maleSocket);
         
         

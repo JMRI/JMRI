@@ -1,5 +1,7 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
+import java.util.Comparator;
+
 import org.jdom2.Element;
 
 import jmri.InstanceManager;
@@ -48,6 +50,11 @@ public class EngineLengths extends RollingStockAttribute implements InstanceMana
         setDirtyAndFirePropertyChange(ENGINELENGTHS_NAME_CHANGED_PROPERTY, oldName, newName);
         // need to keep old name so location manager can replace properly
         super.deleteName(oldName);
+    }
+    
+    @Override
+    public void sort() {
+        list.sort(Comparator.comparingInt(Integer::parseInt));
     }
 
     /**

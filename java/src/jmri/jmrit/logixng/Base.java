@@ -63,6 +63,12 @@ public interface Base extends PropertyChangeProvider {
     public static final String PROPERTY_SOCKET_DISCONNECTED = "SocketDisconnected";
 
     /**
+     * The last result of the expression has changed.
+     * This constant is used in calls to firePropertyChange().
+     */
+    public static final String PROPERTY_LAST_RESULT_CHANGED = "LastResultChanged";
+
+    /**
      * Constant representing an "connected" state of the socket
      */
     public static final int SOCKET_CONNECTED = 0x02;

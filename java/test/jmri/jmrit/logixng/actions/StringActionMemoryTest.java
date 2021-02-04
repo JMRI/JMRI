@@ -85,24 +85,24 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         action2 = new StringActionMemory("IQSA11", null);
         Assert.assertNotNull("object exists", action2);
         Assert.assertTrue("Username matches", null == action2.getUserName());
-        Assert.assertTrue("String matches", "Set memory none".equals(action2.getLongDescription()));
+        Assert.assertEquals("String matches", "Set memory none", action2.getLongDescription());
         
         action2 = new StringActionMemory("IQSA11", "My memory");
         Assert.assertNotNull("object exists", action2);
         Assert.assertTrue("Username matches", "My memory".equals(action2.getUserName()));
-        Assert.assertTrue("String matches", "Set memory none".equals(action2.getLongDescription()));
+        Assert.assertEquals("String matches", "Set memory none", action2.getLongDescription());
         
         action2 = new StringActionMemory("IQSA11", null);
         action2.setMemory(_memory);
         Assert.assertNotNull("object exists", action2);
         Assert.assertTrue("Username matches", null == action2.getUserName());
-        Assert.assertTrue("String matches", "Set memory IM1".equals(action2.getLongDescription()));
+        Assert.assertEquals("String matches", "Set memory IM1", action2.getLongDescription());
         
         action2 = new StringActionMemory("IQSA11", "My memory");
         action2.setMemory(_memory);
         Assert.assertNotNull("object exists", action2);
         Assert.assertTrue("Username matches", "My memory".equals(action2.getUserName()));
-        Assert.assertTrue("String matches", "Set memory IM1".equals(action2.getLongDescription()));
+        Assert.assertEquals("String matches", "Set memory IM1", action2.getLongDescription());
         
         boolean thrown = false;
         try {
@@ -262,7 +262,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(doStringAction);
         conditionalNG.getChild(0).connect(maleSocketDoStringAction);
         _memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
-        StringActionMemory stringActionMemory = new StringActionMemory("IQSA321", "StringIO_Memory");
+        StringActionMemory stringActionMemory = new StringActionMemory("IQSA321", null);
         MaleSocket maleSocketStringActionMemory =
                 InstanceManager.getDefault(StringActionManager.class).registerAction(stringActionMemory);
         doStringAction.getChild(1).connect(maleSocketStringActionMemory);

@@ -1003,11 +1003,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return The type names for cars and or engines
      */
     protected String[] getTypeNames() {
-        String[] types = new String[_typeList.size()];
-        for (int i = 0; i < _typeList.size(); i++) {
-            types[i] = _typeList.get(i);
-        }
-        return types;
+        return _typeList.toArray(new String[0]);
     }
 
     public String[] getCarTypeNames() {
@@ -1017,11 +1013,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 list.add(type);
             }
         }
-        String[] types = new String[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            types[i] = list.get(i);
-        }
-        return types;
+        return list.toArray(new String[0]);
     }
 
     public String[] getLocoTypeNames() {
@@ -1031,11 +1023,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 list.add(type);
             }
         }
-        String[] types = new String[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            types[i] = list.get(i);
-        }
-        return types;
+        return list.toArray(new String[0]);
     }
 
     /**
@@ -1045,12 +1033,11 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @param types The type names for cars and or engines
      */
     protected void setTypeNames(String[] types) {
-        if (types.length == 0) {
-            return;
-        }
-        java.util.Arrays.sort(types);
-        for (String type : types) {
-            _typeList.add(type);
+        if (types.length > 0) {
+            java.util.Arrays.sort(types);
+            for (String type : types) {
+                _typeList.add(type);
+            }
         }
     }
 
@@ -1131,13 +1118,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     List<String> _roadList = new ArrayList<>();
 
     protected void setRoadNames(String[] roads) {
-        if (roads.length == 0) {
-            return;
-        }
-        java.util.Arrays.sort(roads);
-        for (String road : roads) {
-            if (!road.isEmpty()) {
-                _roadList.add(road);
+        if (roads.length > 0) {
+            java.util.Arrays.sort(roads);
+            for (String road : roads) {
+                if (!road.isEmpty()) {
+                    _roadList.add(road);
+                }
             }
         }
     }
@@ -1146,17 +1132,13 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * Provides a list of road names that the train will either service or exclude.
      * See setRoadOption
      *
-     * @return Array of road names as Strings
+     * @return Array of sorted road names as Strings
      */
     public String[] getRoadNames() {
-        String[] roads = new String[_roadList.size()];
-        for (int i = 0; i < _roadList.size(); i++) {
-            roads[i] = _roadList.get(i);
+        String[] roads = _roadList.toArray(new String[0]);
+        if (_roadList.size() > 0) {
+            java.util.Arrays.sort(roads);
         }
-        if (_roadList.size() == 0) {
-            return roads;
-        }
-        java.util.Arrays.sort(roads);
         return roads;
     }
 
@@ -1260,13 +1242,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     List<String> _loadList = new ArrayList<>();
 
     protected void setLoadNames(String[] loads) {
-        if (loads.length == 0) {
-            return;
-        }
-        java.util.Arrays.sort(loads);
-        for (String load : loads) {
-            if (!load.isEmpty()) {
-                _loadList.add(load);
+        if (loads.length > 0) {
+            java.util.Arrays.sort(loads);
+            for (String load : loads) {
+                if (!load.isEmpty()) {
+                    _loadList.add(load);
+                }
             }
         }
     }
@@ -1278,14 +1259,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return Array of load names as Strings
      */
     public String[] getLoadNames() {
-        String[] loads = new String[_loadList.size()];
-        for (int i = 0; i < _loadList.size(); i++) {
-            loads[i] = _loadList.get(i);
+        String[] loads = _loadList.toArray(new String[0]);
+        if (_loadList.size() > 0) {
+            java.util.Arrays.sort(loads);
         }
-        if (_loadList.size() == 0) {
-            return loads;
-        }
-        java.util.Arrays.sort(loads);
         return loads;
     }
 
@@ -1393,14 +1370,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return Array of owner names as Strings
      */
     public String[] getOwnerNames() {
-        String[] owners = new String[_ownerList.size()];
-        for (int i = 0; i < _ownerList.size(); i++) {
-            owners[i] = _ownerList.get(i);
+        String[] owners = _ownerList.toArray(new String[0]);
+        if (_ownerList.size() > 0) {
+            java.util.Arrays.sort(owners);
         }
-        if (_ownerList.size() == 0) {
-            return owners;
-        }
-        java.util.Arrays.sort(owners);
         return owners;
     }
 

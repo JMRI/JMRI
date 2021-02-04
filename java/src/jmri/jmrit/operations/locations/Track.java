@@ -801,11 +801,7 @@ public class Track extends PropertyChangeSupport {
      * @return rolling stock type names
      */
     public String[] getTypeNames() {
-        String[] types = new String[_typeList.size()];
-        for (int i = 0; i < _typeList.size(); i++) {
-            types[i] = _typeList.get(i);
-        }
-        return types;
+        return _typeList.toArray(new String[0]);
     }
 
     private void setTypeNames(String[] types) {
@@ -896,36 +892,30 @@ public class Track extends PropertyChangeSupport {
     }
 
     public String[] getRoadNames() {
-        String[] roads = new String[_roadList.size()];
-        for (int i = 0; i < _roadList.size(); i++) {
-            roads[i] = _roadList.get(i);
+        String[] roads = _roadList.toArray(new String[0]);
+        if (_roadList.size() > 0) {
+            java.util.Arrays.sort(roads);
         }
-        if (_roadList.size() == 0) {
-            return roads;
-        }
-        java.util.Arrays.sort(roads);
         return roads;
     }
 
     private void setRoadNames(String[] roads) {
-        if (roads.length == 0) {
-            return;
-        }
-        java.util.Arrays.sort(roads);
-        for (String roadName : roads) {
-            if (!roadName.equals(NONE)) {
-                _roadList.add(roadName);
+        if (roads.length > 0) {
+            java.util.Arrays.sort(roads);
+            for (String roadName : roads) {
+                if (!roadName.equals(NONE)) {
+                    _roadList.add(roadName);
+                }
             }
         }
     }
 
     public void addRoadName(String road) {
-        if (_roadList.contains(road)) {
-            return;
+        if (!_roadList.contains(road)) {
+            _roadList.add(road);
+            log.debug("Track ({}) add car road ({})", getName(), road);
+            setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _roadList.size() - 1, _roadList.size());
         }
-        _roadList.add(road);
-        log.debug("Track ({}) add car road ({})", getName(), road);
-        setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _roadList.size() - 1, _roadList.size());
     }
 
     public void deleteRoadName(String road) {
@@ -982,13 +972,12 @@ public class Track extends PropertyChangeSupport {
     }
 
     private void setLoadNames(String[] loads) {
-        if (loads.length == 0) {
-            return;
-        }
-        java.util.Arrays.sort(loads);
-        for (String loadName : loads) {
-            if (!loadName.equals(NONE)) {
-                _loadList.add(loadName);
+        if (loads.length > 0) {
+            java.util.Arrays.sort(loads);
+            for (String loadName : loads) {
+                if (!loadName.equals(NONE)) {
+                    _loadList.add(loadName);
+                }
             }
         }
     }
@@ -1000,14 +989,10 @@ public class Track extends PropertyChangeSupport {
      * @return Array of load names as Strings
      */
     public String[] getLoadNames() {
-        String[] loads = new String[_loadList.size()];
-        for (int i = 0; i < _loadList.size(); i++) {
-            loads[i] = _loadList.get(i);
+        String[] loads = _loadList.toArray(new String[0]);
+        if (_loadList.size() > 0) {
+            java.util.Arrays.sort(loads);
         }
-        if (_loadList.size() == 0) {
-            return loads;
-        }
-        java.util.Arrays.sort(loads);
         return loads;
     }
 
@@ -1115,13 +1100,12 @@ public class Track extends PropertyChangeSupport {
     }
 
     private void setShipLoadNames(String[] loads) {
-        if (loads.length == 0) {
-            return;
-        }
-        java.util.Arrays.sort(loads);
-        for (String shipLoadName : loads) {
-            if (!shipLoadName.equals(NONE)) {
-                _shipLoadList.add(shipLoadName);
+        if (loads.length > 0) {
+            java.util.Arrays.sort(loads);
+            for (String shipLoadName : loads) {
+                if (!shipLoadName.equals(NONE)) {
+                    _shipLoadList.add(shipLoadName);
+                }
             }
         }
     }
@@ -1133,14 +1117,10 @@ public class Track extends PropertyChangeSupport {
      * @return Array of load names as Strings
      */
     public String[] getShipLoadNames() {
-        String[] loads = new String[_shipLoadList.size()];
-        for (int i = 0; i < _shipLoadList.size(); i++) {
-            loads[i] = _shipLoadList.get(i);
+        String[] loads = _shipLoadList.toArray(new String[0]);
+        if (_shipLoadList.size() > 0) {
+            java.util.Arrays.sort(loads);
         }
-        if (_shipLoadList.size() == 0) {
-            return loads;
-        }
-        java.util.Arrays.sort(loads);
         return loads;
     }
 
@@ -1266,11 +1246,7 @@ public class Track extends PropertyChangeSupport {
     }
 
     public String[] getDropIds() {
-        String[] ids = new String[_dropList.size()];
-        for (int i = 0; i < _dropList.size(); i++) {
-            ids[i] = _dropList.get(i);
-        }
-        return ids;
+        return _dropList.toArray(new String[0]);
     }
 
     private void setDropIds(String[] ids) {
@@ -1342,11 +1318,7 @@ public class Track extends PropertyChangeSupport {
     }
 
     public String[] getPickupIds() {
-        String[] ids = new String[_pickupList.size()];
-        for (int i = 0; i < _pickupList.size(); i++) {
-            ids[i] = _pickupList.get(i);
-        }
-        return ids;
+        return _pickupList.toArray(new String[0]);
     }
 
     private void setPickupIds(String[] ids) {

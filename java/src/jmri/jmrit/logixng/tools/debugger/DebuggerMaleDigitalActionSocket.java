@@ -17,6 +17,18 @@ public class DebuggerMaleDigitalActionSocket extends AbstractDebuggerMaleSocket 
         super(manager, maleSocket);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public String getBeforeInfo() {
+        return Bundle.getMessage("DigitalAction_InfoBefore");
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public String getAfterInfo() {
+        return Bundle.getMessage("DigitalAction_InfoAfter");
+    }
+    
     @Override
     public void execute() throws JmriException {
         before();

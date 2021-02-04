@@ -3,8 +3,7 @@ package jmri.jmrit.logixng.tools.swing;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -42,9 +41,9 @@ public class DebuggerSymbolTableModel extends AbstractTableModel {
 //        }
     }
     
-    public void update() {
+    public void update(Map<String, SymbolTable.Symbol> symbols) {
         _symbols.clear();
-        for (Symbol s : _conditionalNG.getSymbolTable().getSymbols().values()) {
+        for (Symbol s : symbols.values()) {
             _symbols.add(s);
         }
         fireTableDataChanged();

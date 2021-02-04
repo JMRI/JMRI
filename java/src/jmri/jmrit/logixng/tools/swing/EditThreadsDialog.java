@@ -103,16 +103,24 @@ public class EditThreadsDialog {
         JPanel panel5 = new JPanel();
         panel5.setLayout(new FlowLayout());
         
-        // Cancel
+        // Add thread
         JButton addThread = new JButton(Bundle.getMessage("EditThreadsDialog_ButtonAddThread"));    // NOI18N
         panel5.add(addThread);
         addThread.addActionListener((ActionEvent e) -> {
-            LogixNG_Thread thread = LogixNG_Thread.createNewThread("");
+            String newName = "";
+            if (! LogixNG_Thread.validateNewThreadName(newName)) {
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("EditThreadsDialog_ErrorThreadNameAlreadyExists", newName),
+                        Bundle.getMessage("EditThreadsDialog_ErrorTitle"),
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            LogixNG_Thread thread = LogixNG_Thread.createNewThread(newName);
             int row = _threadTableModel._threads.size();
             _threadTableModel._threads.add(thread);
             _threadTableModel.fireTableRowsInserted(row, row);
         });
-//        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
+//        addThread.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
         
         // Cancel
         JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));    // NOI18N
@@ -286,10 +294,19 @@ public class EditThreadsDialog {
         }
         
         private void changeThreadName(Object value, int row) {
-            String uName = (String) value;
+            String name = (String) value;
             LogixNG_Thread thread = _threads.get(row);
-            thread.setThreadName(uName);
-            fireTableRowsUpdated(row, row);
+            if (!thread.getThreadName().equals(name)) {
+                if (! LogixNG_Thread.validateNewThreadName(name)) {
+                    JOptionPane.showMessageDialog(null,
+                            Bundle.getMessage("EditThreadsDialog_ErrorThreadNameAlreadyExists", name),
+                            Bundle.getMessage("EditThreadsDialog_ErrorTitle"),
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                thread.setThreadName(name);
+                fireTableRowsUpdated(row, row);
+            }
         }
         
         @Override

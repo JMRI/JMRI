@@ -272,33 +272,6 @@ public class ExpressionOBlockSwing extends AbstractDigitalExpressionSwing {
         }
     }
     
-    
-    /**
-     * Create OBlock object for the expression
-     *
-     * @param reference OBlock application description
-     * @return The new output as OBlock object
-     */
-    protected OBlock getOBlockFromPanel(String reference) {
-        if (oblockBeanPanel == null) {
-            return null;
-        }
-        oblockBeanPanel.setReference(reference); // pass oblock application description to be put into oblock Comment
-        try {
-            return oblockBeanPanel.getNamedBean();
-        } catch (jmri.JmriException ex) {
-            log.warn("skipping creation of oblock not found for " + reference);
-            return null;
-        }
-    }
-    
-//    private void noOBlockMessage(String s1, String s2) {
-//        log.warn("Could not provide oblock " + s2);
-//        String msg = Bundle.getMessage("WarningNoOBlock", new Object[]{s1, s2});
-//        JOptionPane.showMessageDialog(editFrame, msg,
-//                Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-//    }
-    
     /** {@inheritDoc} */
     @Override
     public String toString() {

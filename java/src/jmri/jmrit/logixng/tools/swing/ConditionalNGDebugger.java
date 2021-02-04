@@ -41,6 +41,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
     private State _currentState = State.None;
     private boolean _run = false;
     private MaleSocket _rootSocket;
+    private final JLabel _actionExpressionInfoLabel = new JLabel();
     
     private final Object _lock = new Object();
     private boolean _continue = false;
@@ -155,6 +156,13 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
             setTitle(Bundle.getMessage("TitleEditConditionalNG2", _conditionalNG.getSystemName(), _conditionalNG.getUserName()));
         }
         
+        
+        JPanel actionExpressionInfo = new JPanel();
+        actionExpressionInfo.add(_actionExpressionInfoLabel);
+        JScrollPane actionExpressionInfoScrollPane = new JScrollPane(actionExpressionInfo);
+        actionExpressionInfoScrollPane.setPreferredSize(new Dimension(400, 200));
+        
+        
         JPanel symbolPanel = new JPanel();
         JScrollPane variableScrollPane = new JScrollPane(symbolPanel);
         JTable table = new JTable();
@@ -164,11 +172,18 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
         scrollpane.setPreferredSize(new Dimension(400, 200));
         symbolPanel.add(scrollpane, BorderLayout.CENTER);
         
+        
+        JSplitPane variableSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+                           actionExpressionInfoScrollPane, variableScrollPane);
+        variableSplitPane.setOneTouchExpandable(true);
+        variableSplitPane.setDividerLocation(150);
+        
+        
         JPanel watchPanel = new JPanel();
         JScrollPane watchScrollPane = new JScrollPane(watchPanel);
         
         JSplitPane watchSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-                           variableScrollPane, watchScrollPane);
+                           variableSplitPane, watchScrollPane);
         watchSplitPane.setOneTouchExpandable(true);
         watchSplitPane.setDividerLocation(150);
         
@@ -294,6 +309,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
         if (Debugger.STEP_BEFORE.equals(evt.getPropertyName())
                 || Debugger.STEP_AFTER.equals(evt.getPropertyName())) {
             
+            String infoString = "";
             _currentMaleSocket = (AbstractDebuggerMaleSocket) evt.getNewValue();
             if (_rootSocket == null) _rootSocket = _currentMaleSocket;
             
@@ -309,6 +325,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
                     } else {
                         _currentState = State.None;
                     }
+                    infoString = _currentMaleSocket.getBeforeInfo();
                     break;
                 case Debugger.STEP_AFTER:
                     if (!_run || _currentMaleSocket.getBreakpointAfter()) {
@@ -325,19 +342,25 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
                         }
                         _currentState = State.None;
                     }
+                    infoString = _currentMaleSocket.getAfterInfo();
                     break;
                 default:
                     _currentState = State.None;
             }
             
+            Map<String, SymbolTable.Symbol> symbols =
+                    _conditionalNG.getSymbolTable().getSymbols();
+            
+            String infStr = infoString;
             jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
                 if (enableMenuItems.get()) {
                     _runItem.setEnabled(true);
                     _stepOverItem.setEnabled(true);
                     _stepIntoItem.setEnabled(true);
                 }
+                _actionExpressionInfoLabel.setText(infStr);
                 _treePane.updateTree(_currentMaleSocket);
-                _symbolTableModel.update();
+                _symbolTableModel.update(symbols);
             });
             
 //            System.out.format("propertyChange middle: %s, %s, run: %b, currentState: %s%n", evt.getPropertyName(), ((MaleSocket)evt.getNewValue()).getLongDescription(), _run, _currentState.name());

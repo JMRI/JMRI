@@ -13,14 +13,29 @@ import jmri.jmrit.logixng.MaleDigitalBooleanActionSocket;
  */
 public class DebuggerMaleDigitalBooleanActionSocket extends AbstractDebuggerMaleSocket implements MaleDigitalBooleanActionSocket {
     
+    private boolean _nextStatus;
+    
     public DebuggerMaleDigitalBooleanActionSocket(BaseManager<MaleDigitalBooleanActionSocket> manager, MaleDigitalBooleanActionSocket maleSocket) {
         super(manager, maleSocket);
     }
 
+    /** {@inheritDoc} */
     @Override
-    public void execute(boolean hasChangedToTrue) throws JmriException {
+    public String getBeforeInfo() {
+        return Bundle.getMessage("DigitalBooleanAction_InfoBefore", _nextStatus ? Bundle.getMessage("True") : Bundle.getMessage("False"));
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public String getAfterInfo() {
+        return Bundle.getMessage("DigitalBooleanAction_InfoAfter");
+    }
+    
+    @Override
+    public void execute(boolean status) throws JmriException {
+        _nextStatus = status;
         before();
-        ((MaleDigitalBooleanActionSocket) _maleSocket).execute(hasChangedToTrue);
+        ((MaleDigitalBooleanActionSocket) _maleSocket).execute(_nextStatus);
         after();
     }
 

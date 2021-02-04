@@ -15,14 +15,29 @@ import jmri.jmrit.logixng.MaleStringActionSocket;
  */
 public class DebuggerMaleStringActionSocket extends AbstractDebuggerMaleSocket implements MaleStringActionSocket {
     
+    private String _nextValue;
+    
     public DebuggerMaleStringActionSocket(BaseManager<MaleStringActionSocket> manager, MaleStringActionSocket maleSocket) {
         super(manager, maleSocket);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public String getBeforeInfo() {
+        return Bundle.getMessage("StringAction_InfoBefore", _nextValue);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public String getAfterInfo() {
+        return Bundle.getMessage("StringAction_InfoAfter");
+    }
+    
     @Override
     public void setValue(@Nonnull String value) throws JmriException {
+        _nextValue = value;
         before();
-        ((MaleStringActionSocket) _maleSocket).setValue(value);
+        ((MaleStringActionSocket) _maleSocket).setValue(_nextValue);
         after();
     }
 

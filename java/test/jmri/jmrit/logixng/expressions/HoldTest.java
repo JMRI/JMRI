@@ -54,10 +54,10 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Hold while E1. Trigger on E2 ::: Log error%n" +
-                "   ? E1%n" +
+                "Trigger on expression Trigger. Hold while expression Hold ::: Log error%n" +
+                "   ? Trigger%n" +
                 "      Socket not connected%n" +
-                "   ? E2%n" +
+                "   ? Hold%n" +
                 "      Socket not connected%n");
     }
     
@@ -69,10 +69,10 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
                 "      ! A%n" +
                 "         If Then Else ::: Log error%n" +
                 "            ? If%n" +
-                "               Hold while E1. Trigger on E2 ::: Log error%n" +
-                "                  ? E1%n" +
+                "               Trigger on expression Trigger. Hold while expression Hold ::: Log error%n" +
+                "                  ? Trigger%n" +
                 "                     Socket not connected%n" +
-                "                  ? E2%n" +
+                "                  ? Hold%n" +
                 "                     Socket not connected%n" +
                 "            ! Then%n" +
                 "               Set the atomic boolean to true ::: Log error%n" +
@@ -97,12 +97,12 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
         expression2 = new Hold("IQDE321", null);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertNull("Username matches", expression2.getUserName());
-        Assert.assertEquals("String matches", "Hold while E1. Trigger on E2", expression2.getLongDescription());
+        Assert.assertEquals("String matches", "Trigger on expression Trigger. Hold while expression Hold", expression2.getLongDescription());
         
         expression2 = new Hold("IQDE321", "My expression");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", "My expression", expression2.getUserName());
-        Assert.assertEquals("String matches", "Hold while E1. Trigger on E2", expression2.getLongDescription());
+        Assert.assertEquals("String matches", "Trigger on expression Trigger. Hold while expression Hold", expression2.getLongDescription());
         
         boolean thrown = false;
         try {
@@ -129,9 +129,9 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
         Assert.assertNotNull("exists", expression);
         Assert.assertEquals("expression has 2 female sockets", 2, expression.getChildCount());
         expression.getChild(0).setName("XYZ123");
-        expression.setHoldActionSocketSystemName("IQDE52");
+        expression.setTriggerExpressionSocketSystemName("IQDE52");
         expression.getChild(1).setName("ZH12");
-        expression.setTriggerExpressionSocketSystemName("IQDE554");
+        expression.setHoldActionSocketSystemName("IQDE554");
         
         Assert.assertEquals("expression female socket name is XYZ123",
                 "XYZ123", expression.getChild(0).getName());
@@ -319,7 +319,7 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
     public void testDescription() {
         Hold e1 = new Hold("IQDE321", null);
         Assert.assertTrue("Hold".equals(e1.getShortDescription()));
-        Assert.assertTrue("Hold while E1. Trigger on E2".equals(e1.getLongDescription()));
+        Assert.assertTrue("Trigger on expression Trigger. Hold while expression Hold".equals(e1.getLongDescription()));
     }
     
     @Test

@@ -13,16 +13,30 @@ import jmri.jmrit.logixng.MaleStringExpressionSocket;
  */
 public class DebuggerMaleStringExpressionSocket extends AbstractDebuggerMaleSocket implements MaleStringExpressionSocket {
     
+    private String _lastResult;
+    
     public DebuggerMaleStringExpressionSocket(BaseManager<MaleStringExpressionSocket> manager, MaleStringExpressionSocket maleSocket) {
         super(manager, maleSocket);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public String getBeforeInfo() {
+        return Bundle.getMessage("AnalogExpression_InfoBefore");
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public String getAfterInfo() {
+        return Bundle.getMessage("AnalogExpression_InfoAfter", _lastResult);
+    }
+    
     @Override
     public String evaluate() throws JmriException {
         before();
-        String result = ((MaleStringExpressionSocket) _maleSocket).evaluate();
+        _lastResult = ((MaleStringExpressionSocket) _maleSocket).evaluate();
         after();
-        return result;
+        return _lastResult;
     }
 
     @Override

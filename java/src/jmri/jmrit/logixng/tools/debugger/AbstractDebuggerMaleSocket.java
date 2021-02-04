@@ -12,7 +12,7 @@ import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
  * Abstract debugger male socket
  * @author Daniel Bergqvist 2020
  */
-public class AbstractDebuggerMaleSocket extends AbstractMaleSocket {
+public abstract class AbstractDebuggerMaleSocket extends AbstractMaleSocket {
     
     private final Debugger _debugger = InstanceManager.getDefault(Debugger.class);
     protected final MaleSocket _maleSocket;
@@ -28,7 +28,21 @@ public class AbstractDebuggerMaleSocket extends AbstractMaleSocket {
         super(manager);
         _maleSocket = maleSocket;
     }
-
+    
+    /**
+     * Get information about this action/expression before it is executed or
+     * evaluated.
+     * @return an information string
+     */
+    public abstract String getBeforeInfo();
+    
+    /**
+     * Get information about this action/expression after it is executed or
+     * evaluated.
+     * @return an information string
+     */
+    public abstract String getAfterInfo();
+    
     protected boolean isDebuggerActive() {
         return _debugger.isDebuggerActive()
                 && (_debugger.getDebugConditionalNG() == this.getConditionalNG());

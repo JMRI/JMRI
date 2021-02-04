@@ -31,6 +31,7 @@ public class LogixNG_Thread {
     public static final int DEFAULT_LOGIXNG_DEBUG_THREAD = 1;
     
     private static final Map<Integer, LogixNG_Thread> _threads = new HashMap<>();
+    private static final Map<String, LogixNG_Thread> _threadNames = new HashMap<>();
     private static int _highestThreadID = -1;
     
     private final int _threadID;
@@ -43,12 +44,11 @@ public class LogixNG_Thread {
     private final BlockingQueue<ThreadEvent> _eventQueue;
     
     
-    public static LogixNG_Thread createNewThread(String name) {
+    public static LogixNG_Thread createNewThread(@Nonnull String name) {
         return createNewThread(-1, name);
     }
     
-//    @InvokeOnGuiThread
-    public static LogixNG_Thread createNewThread(int threadID, String name) {
+    public static LogixNG_Thread createNewThread(int threadID, @Nonnull String name) {
         synchronized (LogixNG_Thread.class) {
             if (threadID == -1) {
                 threadID = ++_highestThreadID;
@@ -60,11 +60,21 @@ public class LogixNG_Thread {
                 throw new IllegalArgumentException(String.format("Thread ID %d already exists", threadID));
             }
             
+            if (_threadNames.containsKey(name)) {
+                throw new IllegalArgumentException(String.format("Thread name %s already exists", name));
+            }
             LogixNG_Thread thread = new LogixNG_Thread(threadID, name);
             _threads.put(threadID, thread);
+            _threadNames.put(name, thread);
             thread._logixNGThread.start();
             
             return thread;
+        }
+    }
+    
+    public static boolean validateNewThreadName(@Nonnull String name) {
+        synchronized (LogixNG_Thread.class) {
+            return !_threadNames.containsKey(name);
         }
     }
     
@@ -105,6 +115,7 @@ public class LogixNG_Thread {
             if (aThread._threadInUse) throw new IllegalArgumentException("Thread is in use");
             
             _threads.remove(thread._threadID);
+            _threadNames.remove(thread._name);
         }
     }
     
@@ -154,8 +165,17 @@ public class LogixNG_Thread {
         return _name;
     }
     
-    public void setThreadName(String name) {
-        _name = name;
+    public void setThreadName(@Nonnull String name) {
+        if (_name.equals(name)) return;
+        
+        synchronized (LogixNG_Thread.class) {
+            if (_threadNames.containsKey(name)) {
+                throw new IllegalArgumentException(String.format("Thread name %s already exists", name));
+            }
+            _threadNames.remove(_name);
+            _threadNames.put(name, this);
+            _name = name;
+        }
     }
     
     public boolean getThreadInUse() {
@@ -320,6 +340,7 @@ public class LogixNG_Thread {
                     throw new RuntimeException("Could not stop logixNGThread. Current state: "+_logixNGThread.getState().name());
                 }
                 _threads.remove(_threadID);
+                _threadNames.remove(_name);
                 _stopThread = false;
             }
         }

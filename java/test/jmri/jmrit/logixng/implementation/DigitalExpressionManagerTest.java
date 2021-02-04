@@ -112,6 +112,12 @@ public class DigitalExpressionManagerTest extends AbstractManagerTestBase {
             super(sys);
         }
 
+        /** {@inheritDoc} */
+        @Override
+        public void notifyChangedResult(boolean oldResult, boolean newResult) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
         @Override
         protected void registerListenersForThisClass() {
             throw new UnsupportedOperationException("Not supported");
