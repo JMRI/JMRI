@@ -348,6 +348,9 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
                     _currentState = State.None;
             }
             
+            Map<String, SymbolTable.Symbol> symbols =
+                    _conditionalNG.getSymbolTable().getSymbols();
+            
             String infStr = infoString;
             jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
                 if (enableMenuItems.get()) {
@@ -357,7 +360,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
                 }
                 _actionExpressionInfoLabel.setText(infStr);
                 _treePane.updateTree(_currentMaleSocket);
-                _symbolTableModel.update();
+                _symbolTableModel.update(symbols);
             });
             
 //            System.out.format("propertyChange middle: %s, %s, run: %b, currentState: %s%n", evt.getPropertyName(), ((MaleSocket)evt.getNewValue()).getLongDescription(), _run, _currentState.name());
