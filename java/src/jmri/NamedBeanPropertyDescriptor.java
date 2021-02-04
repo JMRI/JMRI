@@ -68,7 +68,7 @@ public abstract class NamedBeanPropertyDescriptor<E> {
      */
     @Override
     public int hashCode() {
-        return Objects.hashCode(this.propertyKey) * Objects.hashCode(this.defaultValue);
+        return Objects.hashCode(this.propertyKey) * Objects.hashCode(getValueClass());
     }
     
 }
