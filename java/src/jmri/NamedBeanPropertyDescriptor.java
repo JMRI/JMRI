@@ -54,7 +54,7 @@ public abstract class NamedBeanPropertyDescriptor<E> {
     }
     
     /**
-     * Equals based on Property Key and Default value.
+     * Equals based on Property Key and Default value Class.
      * {@inheritDoc}
      */
     @Override
@@ -63,7 +63,7 @@ public abstract class NamedBeanPropertyDescriptor<E> {
     }
 
     /**
-     * hashCode based on Property Key and Default value.
+     * hashCode based on Property Key and Default value Class.
      * {@inheritDoc}
      */
     @Override
