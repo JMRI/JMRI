@@ -385,7 +385,8 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+	        <li>A problem storing and reading LE controlpoint values for users with a non-default Locale has been fixed
+            .</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
