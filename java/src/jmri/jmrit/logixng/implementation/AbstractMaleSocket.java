@@ -82,7 +82,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             return _localVariables;
         }
     }
-
+    
     @Override
     public Base getParent() {
         return _parent;
@@ -182,6 +182,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             if (getUserName() != null) {
                 writer.append(" ::: ");
                 writer.append(Bundle.getMessage("LabelUserName"));
+                writer.append(" ");
                 writer.append(getUserName());
             }
             if (getComment() != null) {

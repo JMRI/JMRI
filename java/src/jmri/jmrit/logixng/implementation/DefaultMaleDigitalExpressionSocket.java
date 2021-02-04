@@ -31,6 +31,12 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
 
     /** {@inheritDoc} */
     @Override
+    public void notifyChangedResult(boolean oldResult, boolean newResult) {
+        _expression.notifyChangedResult(oldResult, newResult);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     public final Base getRoot() {
         return _expression.getRoot();
     }
@@ -71,16 +77,26 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
         return _expression.isExternal();
     }
     
+    private void checkChangedLastResult(boolean savedLastResult) {
+        if (savedLastResult != lastEvaluationResult) {
+            _expression.notifyChangedResult(savedLastResult, lastEvaluationResult);
+        }
+    }
+    
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() throws JmriException {
+        boolean saveLastResult = lastEvaluationResult;
         if (! _enabled) {
+            lastEvaluationResult = false;
+            checkChangedLastResult(saveLastResult);
             return false;
         }
         
         if ((_debugConfig != null)
                 && ((DigitalExpressionDebugConfig)_debugConfig)._forceResult) {
             lastEvaluationResult = ((DigitalExpressionDebugConfig)_debugConfig)._result;
+            checkChangedLastResult(saveLastResult);
             return lastEvaluationResult;
         }
         
@@ -93,15 +109,21 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
             lastEvaluationResult = _expression.evaluate();
         } catch (JmriException e) {
             handleError(this, Bundle.getMessage("ExceptionEvaluateExpression", e), e, log);
-            return false;
+            lastEvaluationResult = false;
         } catch (RuntimeException e) {
             handleError(this, Bundle.getMessage("ExceptionEvaluateExpression", e), e, log);
-            return false;
+            lastEvaluationResult = false;
         }
         
         conditionalNG.getStack().setCount(currentStackPos);
         conditionalNG.getSymbolTable().removeSymbols(_localVariables);
         
+        checkChangedLastResult(saveLastResult);
+        return lastEvaluationResult;
+    }
+
+    @Override
+    public boolean getLastResult() {
         return lastEvaluationResult;
     }
 

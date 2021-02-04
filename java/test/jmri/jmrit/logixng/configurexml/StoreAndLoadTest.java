@@ -1785,8 +1785,22 @@ public class StoreAndLoadTest {
         and.getChild(indexExpr++).connect(maleSocket);
         
         hold = new Hold(digitalExpressionManager.getAutoSystemName(), null);
+        hold.setUserName("A hold expression");
         hold.setComment("A comment");
         maleSocket = digitalExpressionManager.registerExpression(hold);
+        and.getChild(indexExpr++).connect(maleSocket);
+        
+        
+        LastResultOfDigitalExpression lastResultOfDigitalExpression =
+                new LastResultOfDigitalExpression(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(lastResultOfDigitalExpression);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+        
+        lastResultOfDigitalExpression = new LastResultOfDigitalExpression(digitalExpressionManager.getAutoSystemName(), null);
+        lastResultOfDigitalExpression.setComment("A comment");
+        lastResultOfDigitalExpression.setDigitalExpression("A hold expression");
+        maleSocket = digitalExpressionManager.registerExpression(lastResultOfDigitalExpression);
         and.getChild(indexExpr++).connect(maleSocket);
         
         

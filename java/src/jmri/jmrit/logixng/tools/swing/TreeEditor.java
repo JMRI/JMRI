@@ -999,7 +999,28 @@ public class TreeEditor extends TreeViewer {
                                     username = null;
                                 }
                             }
+                            
                             maleSocket.setUserName(username);
+                            
+                            MaleSocket m = maleSocket;
+                            while (! (m instanceof NamedBean)) m = (MaleSocket) m.getObject();
+                            
+                            NamedBeanHandleManager nbMan = InstanceManager.getDefault(NamedBeanHandleManager.class);
+                            if (nbMan.inUse(maleSocket.getSystemName(), (NamedBean)m)) {
+                                String msg = Bundle.getMessage("UpdateToUserName", new Object[]{maleSocket.getManager().getBeanTypeHandled(), username, maleSocket.getSystemName()});
+                                int optionPane = JOptionPane.showConfirmDialog(null,
+                                        msg, Bundle.getMessage("UpdateToUserNameTitle"),
+                                        JOptionPane.YES_NO_OPTION);
+                                if (optionPane == JOptionPane.YES_OPTION) {
+                                    //This will update the bean reference from the systemName to the userName
+                                    try {
+                                        nbMan.updateBeanFromSystemToUser((NamedBean)m);
+                                    } catch (JmriException ex) {
+                                        //We should never get an exception here as we already check that the username is not valid
+                                        log.error("Impossible exception setting user name", ex);
+                                    }
+                                }
+                            }
                         }
                         
                         ThreadingUtil.runOnGUIEventually(() -> {

@@ -21,6 +21,12 @@ public class DebuggerMaleDigitalExpressionSocket extends AbstractDebuggerMaleSoc
 
     /** {@inheritDoc} */
     @Override
+    public void notifyChangedResult(boolean oldResult, boolean newResult) {
+        ((MaleDigitalExpressionSocket) _maleSocket).notifyChangedResult(oldResult, newResult);
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public String getBeforeInfo() {
         return Bundle.getMessage("AnalogExpression_InfoBefore");
     }
@@ -37,6 +43,11 @@ public class DebuggerMaleDigitalExpressionSocket extends AbstractDebuggerMaleSoc
         _lastResult = ((MaleDigitalExpressionSocket) _maleSocket).evaluate();
         after();
         return _lastResult;
+    }
+
+    @Override
+    public boolean getLastResult() {
+        return ((MaleDigitalExpressionSocket) _maleSocket).getLastResult();
     }
 
     @Override

@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>LogixNG Tutorial - Chapter 23</title>
+<script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="script.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<table width="800">
+<tr>
+<td>
+
+<h1>LogixNG Tutorial - Chapter 23</h1>
+
+<h2>Using LogixNG in other parts of JMRI or by third party software</h2>
+
+LogixNG has a reserved group of system names for items created by other parts of JMRI. IQDA:JMRI:aaaa. The purpose of
+these special system names is to guarantee that there will never be any collission between JMRI system names and system
+names created by the user.
+<p>
+LogixNG has a reserved group of system names for items created by third party software that uses JMRI as a library.
+IQDA:JMRI-LIB:aaaa. The purpose of
+these special system names is to guarantee that there will never be any collission between the third party software
+system names and system names created by the user or by JMRI.
+<p>
+The user can, but should not, create their own system names using IQDA:JMRI:aaaa or IQDA:JMRI-LIB:aaaa system names. By
+doing so, the user takes the risk of collissions with JMRI or third party software. But for developers, this may be
+useful during development.
+<p>
+While developing a tool for JMRI, you may end up with the need to create some special action or expression for LogixNG
+to be used only in your tool. You can do that by developing the tool, but not announce its existence. LogixNG will
+still be happy to use the new action or expression, but the user will not be able to add that action or expression
+anywhere else in his ConditionalNGs. Note that people may argue about whenether this is good or bad, but it's at least
+possible.
+
+
+</td>
+</tr>
+</table>
+</body>
+</html>

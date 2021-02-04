@@ -236,7 +236,7 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
         JUnitUtil.initMemoryManager();
         JUnitUtil.initLogixNGManager();
         
-        expressionConstant = new StringExpressionConstant("IQSE321", "StringIO_Constant");
+        expressionConstant = new StringExpressionConstant("IQSE321", null);
         expressionConstant.setValue("Something");
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");

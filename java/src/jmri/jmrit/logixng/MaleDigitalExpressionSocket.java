@@ -18,4 +18,10 @@ public interface MaleDigitalExpressionSocket
     @Override
     public boolean evaluate() throws JmriException;
     
+    /**
+     * Get the last result of the evaluation.
+     * @return the last result
+     */
+    public boolean getLastResult();
+    
 }
