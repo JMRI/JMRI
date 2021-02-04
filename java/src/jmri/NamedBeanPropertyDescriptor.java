@@ -1,5 +1,7 @@
 package jmri;
 
+import java.util.Objects;
+
 /**
  * Describes metadata about a given property key for a NamedBean.
  * <p>
@@ -49,6 +51,24 @@ public abstract class NamedBeanPropertyDescriptor<E> {
      */
     public Class<?> getValueClass() {
         return defaultValue.getClass();
+    }
+    
+    /**
+     * Equals based on Property Key and Default value.
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object obj) {
+        return (obj instanceof NamedBeanPropertyDescriptor && obj.hashCode() == this.hashCode());
+    }
+
+    /**
+     * hashCode based on Property Key and Default value.
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(this.propertyKey) * Objects.hashCode(this.defaultValue);
     }
     
 }
