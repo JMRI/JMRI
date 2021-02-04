@@ -21,7 +21,15 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>
+                    Andrew Crosland added a second current meter instance for SPROG Generation 5 hardware.
+                </li>
+                <li>
+                    Corrected links to images on SPROG Generation 5 hardware help page.
+                </li>
+                <li>
+                    Changed trademark recognition to &reg; for register trademarks, rather than &trade;.
+                </li>
             </ul>
 
         <h4>C/MRI</h4>
