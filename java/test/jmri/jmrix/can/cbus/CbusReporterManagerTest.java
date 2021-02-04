@@ -98,6 +98,7 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     }
     
     @Test
+    @SuppressWarnings("unchecked")
     public void testNoDuplicatePropertiesInMultipleConnections() {
     
         CanSystemConnectionMemo otherMemo = new CanSystemConnectionMemo("M2");
@@ -107,14 +108,7 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
         InstanceManager.setReporterManager(l);
         ReporterManager reporterManager = InstanceManager.getDefault(jmri.ReporterManager.class);
         
-        ProxyManager<Reporter> proxy;
-        try {
-            proxy = (ProxyManager<Reporter>) reporterManager;
-        }
-        catch (Exception ex){
-            Assert.assertFalse("ReporterManager not a ProxyManager", true);
-            return;
-        }
+        ProxyManager<Reporter> proxy = (ProxyManager<Reporter>) reporterManager;
         
         Assert.assertEquals("2 Managers found, l + Internal",2,proxy.getManagerList().size());
         Assert.assertEquals("2 properties found",2,proxy.getKnownBeanProperties().size());
