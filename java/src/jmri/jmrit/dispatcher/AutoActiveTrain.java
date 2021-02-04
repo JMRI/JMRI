@@ -616,6 +616,7 @@ public class AutoActiveTrain implements ThrottleListener {
         }
         if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SECTIONSALLOCATED
                 || waitingOnAllocation ) {
+            log.debug("{}:ClearStop",_activeTrain.getActiveTrainName());
             waitingOnAllocation = false;
             setSpeedBySignal();
         }
@@ -807,14 +808,16 @@ public class AutoActiveTrain implements ThrottleListener {
                     _activeTrain.getStartBlockSectionSequenceNumber() == _currentAllocatedSection.getSequence()) {
                 nextSectionExpected = false;
             }
+            log.debug("{}:Next Section Expected[{}]",_activeTrain.getActiveTrainName(),  nextSectionExpected);
+            // NOw handled in SetSpeedBySignal()
             // check if new next Section exists but is not allocated to this train excepting above circumstances
-            if ( nextSectionExpected &&_nextSection != null && !_activeTrain.isInAllocatedList(_nextSection)) {
-                // next section is not allocated to this train, must not enter it, even if signal is OK.
-                log.warn("Stopping train [{}] in section [{}], as next section [{}] is not allocated",
-                        _activeTrain.getActiveTrainName(),_currentAllocatedSection.getSection().getDisplayName(USERSYS),_nextSection.getDisplayName(USERSYS));
-                stopInCurrentSection(NO_TASK);
-                _needSetSpeed = false;
-            }
+            //if ( nextSectionExpected &&_nextSection != null && !_activeTrain.isInAllocatedList(_nextSection)) {
+            //    // next section is not allocated to this train, must not enter it, even if signal is OK.
+            //    log.warn("Stopping train [{}] in section [{}], as next section [{}] is not allocated",
+            //            _activeTrain.getActiveTrainName(),_currentAllocatedSection.getSection().getDisplayName(USERSYS),_nextSection.getDisplayName(USERSYS));
+            //    stopInCurrentSection(NO_TASK);
+            //    _needSetSpeed = false;
+            //}
             // see if we need to rescan as entering safe section.
             if (ts != null &&
                     ts.isSafe() &&
@@ -846,13 +849,14 @@ public class AutoActiveTrain implements ThrottleListener {
                     .getSignalType() == DispatcherFrame.SIGNALMAST) {
                 setSpeedBySignalMast();
             } else {
-                log.trace("Set Speed by BlocksAllocated");
+                log.trace("{}:Set Speed by BlocksAllocated",_activeTrain.getActiveTrainName());
                 setSpeedBySectionsAllocated();
             }
         } else {
             // This will stop it.
-             waitingOnAllocation = true;  // flag setSpeedBySignal reuired when another allocation made.
              stopInCurrentSection(NO_TASK);
+             log.debug("{}:Set Stop",_activeTrain.getActiveTrainName());
+             waitingOnAllocation = true;  // flag setSpeedBySignal reuired when another allocation made.
         }
     }
 

@@ -304,10 +304,10 @@ public class AutoActiveTrainsSMLStoppingTest {
         JUnitUtil.setBeanStateAndWait(bm.getBlock("Block East"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
             return smm.getSignalMast("North-East").getAspect().equals("Approach");
-        }, "Signal West End Div now Clear");
+        }, "Signal West End Div now Approach");
         // Accelerates to
         JUnitUtil.waitFor(() -> {
-            return aat.getThrottle().getSpeedSetting() == speedMedium;
+            return aat.getThrottle().getSpeedSetting() >= speedMedium;
         }, "Failed to slow entering north. begin - stop north - go - end - stop");
 
         JUnitUtil.setBeanStateAndWait(bm.getBlock("Block West"), Block.UNOCCUPIED); // tail moves out
@@ -470,7 +470,7 @@ public class AutoActiveTrainsSMLStoppingTest {
             return smm.getSignalMast("North-East").getAspect().equals("Approach");
         }, "Signal West End Div now Approach");
         JUnitUtil.waitFor(() -> {
-            return aat.getThrottle().getSpeedSetting() == speedMedium;
+            return aat.getThrottle().getSpeedSetting() >= speedMedium;
         }, "Failed to restart in north. begin - stop north - go - end - prev block inactive.");
 
         JUnitUtil.setBeanStateAndWait(bm.getBlock("Block East"), Block.OCCUPIED);
@@ -556,7 +556,7 @@ public class AutoActiveTrainsSMLStoppingTest {
         }, "Signal West End Div now Clear");
         // Accelerates to
         JUnitUtil.waitFor(() -> {
-            return aat.getThrottle().getSpeedSetting() == speedMedium;
+            return aat.getThrottle().getSpeedSetting() >= speedMedium;
         }, "Failed to accelerate. begin - start stop north - go - end - stop on previous block");
 
         JUnitUtil.setBeanStateAndWait(bm.getBlock("Block West"), Block.UNOCCUPIED);  // tail moves out
@@ -790,10 +790,10 @@ public class AutoActiveTrainsSMLStoppingTest {
         JUnitUtil.setBeanStateAndWait(bm.getBlock("Block East"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
             return smm.getSignalMast("North-East").getAspect().equals("Approach");
-        }, "Signal West End Div now Clear");
+        }, "Signal West End Div now Approach");
         // Accelerates to
         JUnitUtil.waitFor(() -> {
-            return aat.getThrottle().getSpeedSetting() == speedMedium;
+            return aat.getThrottle().getSpeedSetting() >= speedMedium;
         }, "Failed to accelerate. begin - start stop north - go - end - Stop - on entry train dont fit");
 
         JUnitUtil.setBeanStateAndWait(bm.getBlock("Block West"), Block.UNOCCUPIED);
