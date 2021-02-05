@@ -11,11 +11,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
 
 import javax.swing.AbstractAction;
-//import javax.annotation.Nonnull;
 import javax.swing.AbstractButton;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -249,7 +247,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
                             _itemType, _family, family);
                     _family = family;
                 }
-                return;
             }
         }
     }
@@ -272,10 +269,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
             if (mapFamily == null) {
                 _isUnstoredMap = true;
             } else {
-                if (log.isDebugEnabled()) {
-                    log.debug("getValidFamilyName: findFamilyOfMap {} found stored family \"{}\" for family \"{}\".",
-                            _itemType, mapFamily, family);
-                }
+                log.debug("getValidFamilyName: findFamilyOfMap {} found stored family \"{}\" for family \"{}\".",
+                        _itemType, mapFamily, family);
                 _isUnstoredMap = false;
                 if (family != null) {
                     return mapFamily;
@@ -288,7 +283,11 @@ public abstract class FamilyItemPanel extends ItemPanel {
         while (!nameOK) {
             if (mapFamily == null || mapFamily.isEmpty()) {
                 Component fr;
-                if (_dialog != null) fr = _dialog; else fr = this;
+                if (_dialog != null) {
+                    fr = _dialog;
+                } else {
+                    fr = this;
+                }
                 mapFamily = JOptionPane.showInputDialog(fr, Bundle.getMessage("EnterFamilyName"),
                         Bundle.getMessage("createNewFamily"), JOptionPane.QUESTION_MESSAGE);
                 if (mapFamily == null) { // user quit
@@ -298,16 +297,11 @@ public abstract class FamilyItemPanel extends ItemPanel {
             if (families.isEmpty()) {
                 break;
             }
-            Iterator<String> iter = families.keySet().iterator();
-            while (iter.hasNext()) {
-                String fam = iter.next();
+            for (String fam : families.keySet()) {
                 if (mapFamily.equals(fam)) {
                     if (_update) {
                         String thisType = NAME_MAP.get(_itemType);
-                        JOptionPane.showMessageDialog(_frame,
-                                Bundle.getMessage("DuplicateFamilyName", mapFamily, Bundle.getMessage(thisType),
-                                        Bundle.getMessage("UseAnotherName")),
-                                Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(_frame, Bundle.getMessage("DuplicateFamilyName", mapFamily, Bundle.getMessage(thisType), Bundle.getMessage("UseAnotherName")), Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                         mapFamily = null;
                         nameOK = false;
                         break;
@@ -350,10 +344,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
     protected boolean namesStoredMap(String family) {
         HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
-        if (families.keySet().contains(family)) {
-            return true;
-        }
-        return false;
+        return families.containsKey(family);
     }
     
     /*
@@ -470,17 +461,15 @@ public abstract class FamilyItemPanel extends ItemPanel {
         int length = 0;
         JRadioButton button = null;
 
-        Iterator<String> iter = keySet.iterator();
-        while (iter.hasNext()) {
-            family = iter.next();
+        for (String s : keySet) {
+            family = s;
             length += family.length();
             button = new JRadioButton(family);
             addFamilyButtonListener(button, family);
             if (family.equals(_family)) {
                 button.setSelected(true);
             }
-            log.debug("{} ActionListener and button for family \"{}\" at gridx= {} gridy= {}", _itemType, family,
-                    c.gridx, c.gridy);
+            log.debug("{} ActionListener and button for family \"{}\" at gridx= {} gridy= {}", _itemType, family, c.gridx, c.gridy);
             gridbag.setConstraints(button, c);
             buttonPanel.add(button, c);
             if (c.gridx >= numCol || length > 50) { // start next row
@@ -565,8 +554,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
         if (iconMap == null) {
             return;
         }
-        JLabel label = null;
-        NamedIcon icon = null;
+        JLabel label;
+        NamedIcon icon;
         String scaleText;
         if (!iconMap.isEmpty()) {
             String displayKey = getDisplayKey();
@@ -583,7 +572,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
                 double scale = icon.reduceTo(CatalogPanel.ICON_WIDTH, 
                         CatalogPanel.ICON_HEIGHT, CatalogPanel.ICON_SCALE);
                 scaleText = java.text.MessageFormat.format(Bundle.getMessage("scale"),
-                        new Object[]{CatalogPanel.printDbl(scale, 2)});
+                        CatalogPanel.printDbl(scale, 2));
             } else {
                 scaleText = Bundle.getMessage("noIcon");
             }
@@ -868,6 +857,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
                 iconPanel.setImage(_frame.getPreviewBackground());
             }
         }
+        log.debug("FamilyItemPanel.super stores previewColorChange");
         super.previewColorChange();
     }
 

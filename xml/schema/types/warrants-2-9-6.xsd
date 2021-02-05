@@ -113,13 +113,13 @@
                       <xs:complexType>
                         <xs:attribute name="valueType" type="xs:nonNegativeInteger" use="required"/>
                         <xs:attribute name="speedMode" type="xs:string"/>
-                        <xs:attribute name="floatValue" type="xs:decimal"/>
+                        <xs:attribute name="floatValue" type="xs:float"/>
                       </xs:complexType>
               	    </xs:element>
                   </xs:sequence>
                   <xs:attribute name="elapsedTime" type="xs:integer" use="required"></xs:attribute>
                   <xs:attribute name="beanName" type="xs:string" use="required"></xs:attribute>
-                  <xs:attribute name="trackSpeed" type="xs:decimal"></xs:attribute>
+                  <xs:attribute name="trackSpeed" type="xs:float"></xs:attribute>
                 </xs:complexType>
               </xs:element>
               <xs:element name="throttleCommand" minOccurs="0" maxOccurs="unbounded">

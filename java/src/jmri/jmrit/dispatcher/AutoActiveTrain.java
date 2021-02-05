@@ -3,7 +3,6 @@ package jmri.jmrit.dispatcher;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.DccLocoAddress;

@@ -1729,7 +1729,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
             } else if (secList.size() > 1) {
                 if (_AutoAllocate) {
-                    nextSection = autoChoice(secList, ar);
+                    nextSection = autoChoice(secList, ar, seqNum);
                 } else {
                     nextSection = dispatcherChoice(secList, ar);
                 }
@@ -1751,7 +1751,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 nextSection = secList.get(0);
             } else if (secList.size() > 1) {
                 if (_AutoAllocate) {
-                    nextSection = autoChoice(secList, ar);
+                    nextSection = autoChoice(secList, ar, nextSectionSeqNo);
                 } else {
                     nextSection = dispatcherChoice(secList, ar);
                 }
@@ -2165,8 +2165,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     // automatically make a choice of next section
-    private Section autoChoice(List<Section> sList, AllocationRequest ar) {
-        Section tSection = autoAllocate.autoNextSectionChoice(sList, ar);
+    private Section autoChoice(List<Section> sList, AllocationRequest ar, int sectionSeqNo) {
+        Section tSection = autoAllocate.autoNextSectionChoice(sList, ar, sectionSeqNo);
         if (tSection != null) {
             return tSection;
         }
