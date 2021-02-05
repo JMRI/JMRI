@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.util.Objects;
 
 import jmri.util.JUnitUtil;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -19,13 +20,13 @@ import javax.swing.*;
  *
  * @author Egbert Broerse Copyright (C) 2017, 2021
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class BeanSwitchTest {
 
     private SwitchboardEditor swe = null;
 
     @Test
     public void testCTor() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         SwitchboardEditor swe2 = new SwitchboardEditor("Bean Switch Default Switchboard");
         swe2.setSwitchType("T");
         swe2.setSwitchManu("I"); // set explicitly
@@ -35,7 +36,6 @@ public class BeanSwitchTest {
 
     @Test
     public void testButtonConnected() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         swe.setSwitchType("T");
         swe.setSwitchManu("I"); // set explicitly
         NamedBean nb = jmri.InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT2");
@@ -52,9 +52,9 @@ public class BeanSwitchTest {
         Assertions.assertFalse(t.getInverted(), "IT2 can't invert");
     }
 
+    //@Disabled("no output received in last 10 min on Travis CI GUI test run")
     @Test
         public void testSliderConnected() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         swe.setSwitchType("T");
         swe.setSwitchManu("I"); // set explicitly
         NamedBean nb = jmri.InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT3");
@@ -80,17 +80,16 @@ public class BeanSwitchTest {
         t.renameBeanDialog(); // dialog
 
         JUnitUtil.waitFor(()-> !(dialog_thread1.isAlive()), "Edit bean user name dialog");
-        Assertions.assertEquals("intTurnThree", nb.getUserName(), "Old name reapplied to nb");
+        Assertions.assertEquals("intTurnThree", nb.getUserName(), "New name 3 reapplied to nb");
         // actual bean rename method
-        t.renameBean("intTurnTwo", "intTurnOne");
-        Assertions.assertEquals("intTurnTwo", t.getUserNameString(), "New name applied to nb");
+        t.renameBean("intTurnTwo", "intTurnThree");
+        Assertions.assertEquals("intTurnTwo", t.getUserNameString(), "New name 2 applied to nb");
 
         t.cleanup(); // make sure no exception is thrown
     }
 
     @Test
     public void testLightKeyConnected() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         NamedBean nb = jmri.InstanceManager.getDefault(LightManager.class).provideLight("IL4");
         nb.setUserName("intLightFour");
         swe.setSwitchType("L");
@@ -108,7 +107,6 @@ public class BeanSwitchTest {
 
     @Test
     public void testSensorSymbolUnconnected() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         swe.setSwitchType("S");
         swe.setSwitchManu("I"); // set explicitly
         BeanSwitch t = new BeanSwitch(1, null, "IS4", SwitchboardEditor.SYMBOL, swe);
