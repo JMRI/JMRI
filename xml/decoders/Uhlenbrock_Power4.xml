@@ -30,13 +30,13 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
         </programming>
 
         <variables>
-            <variable CV="6324.0" item="Long Address" mask="VVVVVVVVVVVVVV" default="1" comment="Board address" >
+            <variable CV="6324.0" item="Long Address" mask="VVVVVVVVVVVVVV" default="1" comment="Module address" >
               <decVal min="0" max="65534"/>
-              <label xml:lang="it">Indirizzo Primario: </label>
-              <label xml:lang="fr">Adresse décodeur: </label>
-              <label xml:lang="de">Decoderadresse: </label>
-              <label xml:lang="nl">Decoderadres: </label>
-              <label>Decoder Address: </label>
+              <label xml:lang="it">Indirizzo Modulo: </label>
+              <label xml:lang="fr">Adresse Module: </label>
+              <label xml:lang="de">Moduladresse: </label>
+              <label xml:lang="nl">Module-adres: </label>
+              <label>Module Address: </label>
               <tooltip>Enter as decimal value (1-65534)</tooltip>
             </variable>
             <variable CV="6324.1" item="Decoder Version" readOnly="yes">
@@ -60,8 +60,8 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <label xml:lang="de">CV5 bestimmt Kontroll</label>
               <label xml:lang="nl">Boosterbesturing instellen met CV5</label>
               <label>Use CV5 for Booster Control</label>
-              <tooltip>On: Set in CV5 (belo). Off: Set using DIP hardware switches.</tooltip>
-              <tooltip xml:lang="de">Ein: CV5 (hier unten) bestimmt Steuerung des Verstärkers. Aus: Eingabe mit DIP Schalter</tooltip>
+              <tooltip>On: Set in CV5 (below). Off: Set using DIP hardware switches.</tooltip>
+              <tooltip xml:lang="de">Ein: CV5 (unten) bestimmt Steuerung des Verstärkers. Aus: Eingabe mit DIP Schalter</tooltip>
               <tooltip xml:lang="nl">Aan: CV5 (hieronder) bepaalt besturing Booster. Uit: Stel in met DIP schakelaars</tooltip>
             </variable>
             <variable CV="6324.3" mask="XXXXXXVX" item="Switch STOP/GO" default="0">
@@ -107,16 +107,16 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <label xml:lang="fr">Booster á polarité inversé́</label>
               <label xml:lang="nl">Uitgangen Omgekeerd</label>
               <label>Invert Output Polarity</label>
-              <tooltip>Reverse booster output polarity (to correct crossed wires)</tooltip>
-              <tooltip xml:lang="de">Booster Ausgang Umgepolt (Korrigiert Anschlusskabel)</tooltip>
-              <tooltip xml:lang="nl">Keer polariteit van de uitgangen om (ongekeerde aansluitingen)</tooltip>
+              <tooltip>Reverse booster output polarity (to correct swapped wires)</tooltip>
+              <tooltip xml:lang="de">Booster Ausgang Umgepolt (Korrigiert gequerte Anschlusskabel)</tooltip>
+              <tooltip xml:lang="nl">Keer polariteit van de uitgangen om (herstelt omgekeerde aansluitingen)</tooltip>
               <tooltip xml:lang="fr">Le polarité des sorties du booster sont inversé (cable)</tooltip>
             </variable>
-            <variable CV="6324.3" mask="XVXXXXXX" item="Cut Out" default="1">
+            <variable CV="6324.3" mask="XVXXXXXX" item="Cut Out Hardware" default="1">
               <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
               <label>Cut Out Hardware</label>
-              <label xml:lang="de">Cut Out</label>
-              <label xml:lang="nl">Cut Out</label>
+              <label xml:lang="de">Cut Out Geräte</label>
+              <label xml:lang="nl">Cut Out </label>
               <tooltip>Cut Out Hardware activated (required for Selectrix operation)</tooltip>
               <tooltip xml:lang="de">Cut Out Hardware aktiviert (für Selectrix Betrieb)</tooltip>
               <tooltip xml:lang="nl">Schakel Cut Out Hardware in (vereist voor Selectrix)</tooltip>
@@ -147,6 +147,23 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <label xml:lang="nl">Booster-besturing:</label>
               <tooltip>Instead of the dip switches, set CV3 bit 0 to 1 and this choice will apply</tooltip>
             </variable>
+            <variable CV="6324.5" mask="XXXXXVXX" item="DCC Brake" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>DCC Brake Generator</label>
+              <label xml:lang="de">DCC Bremsen</label>
+              <label xml:lang="nl">DCC Afremmen</label>
+              <tooltip>Off: Normal operation, Brake Generator off</tooltip>
+              <tooltip xml:lang="de">Aus: Normalbetrieb</tooltip>
+              <tooltip xml:lang="nl">Uit: Normaal bedrijf, remgenerator uit</tooltip>
+            </variable>
+            <variable CV="6324.5" mask="XXXXVXXX" item="RailCom CutOut" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>RailCom CutOut</label>
+              <tooltip>Off: RailCom off</tooltip>
+              <tooltip xml:lang="de">Aus: RailCom deaktiviert</tooltip>
+              <tooltip xml:lang="nl">Uit: RailCom uitgeschakeld</tooltip>
+            </variable>
+
             <variable CV="6324.6" readOnly="yes" item="Temperature">
               <decVal max="255"/>
               <label xml:lang="de">Temperatur in Grad °C: </label>
@@ -161,7 +178,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <label xml:lang="nl">Huidige belasting (%): </label>
               <label>Power Load (%): </label>
             </variable>
-            <variable CV="6324.8" item="Switch Address" default="0">
+            <variable CV="6324.8" item="Switch Address" mask="VVVVVVVVVVVV" default="0">
               <decVal min="1" max="2047"/>
               <label xml:lang="de">Adresse Ein-/Ausschalten: </label>
               <label xml:lang="fr">Adresse de commutation: </label>
@@ -204,7 +221,6 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
         <row>
             <column>
               <display item="Switch Address"/>
-              <separator/>
 
               <label>
                 <text> </text>
@@ -249,10 +265,10 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
                 <display item="Signal Off to Input" format="checkbox"/>
                 <display item="Send Short" format="checkbox"/>
                 <display item="Invert Outputs" format="checkbox"/>
-                <display item="Cut Out" format="checkbox"/>
+                <display item="Cut Out Hardware" format="checkbox"/>
                 <display item="Ignore DIP Switches" format="checkbox"/>
-
                 <group>
+                  <separator/>
                   <qualifier>
                     <variableref>Ignore DIP Switches</variableref>
                     <relation>eq</relation>
@@ -261,7 +277,12 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
                   <row>
                     <display item="Booster Control"/>
                   </row>
-                  <separator/>
+                  <row>
+                    <display item="DCC Brake" format="checkbox"/>
+                  </row>
+                  <row>
+                    <display item="RailCom CutOut" format="checkbox"/>
+                  </row>
                 </group>
             </column>
 

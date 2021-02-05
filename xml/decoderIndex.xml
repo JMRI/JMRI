@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.21.4ish+jake+20210126T2242Z+R9aafee9cd0 on Tue Jan 26 17:43:12 EST 2021-->
-  <decoderIndex version="1024">
+  <!--Written by JMRI version 4.21.5ish+egbertbroerse+20210205T2116Z+R2b0e2d25c3 on Fri Feb 05 22:16:20 CET 2021-->
+  <decoderIndex version="1026">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -12986,6 +12986,7 @@
         <model model="BR94" lowVersionID="28" highVersionID="28" formFactor="0" productID="28" />
         <model model="V36" lowVersionID="61" highVersionID="61" formFactor="0" productID="61" />
         <model model="V100" lowVersionID="3" highVersionID="3" formFactor="0" productID="03" />
+        <model model="V20" lowVersionID="17" highVersionID="17" formFactor="0" productID="17" />
         <model model="V60 ver 1" lowVersionID="9" highVersionID="9" formFactor="0" productID="09" />
         <model model="V60 ver 2" lowVersionID="32" highVersionID="32" formFactor="0" productID="32" />
         <model model="V160" lowVersionID="5" highVersionID="5" formFactor="0" productID="05" />
@@ -12996,6 +12997,7 @@
         <model model="BR360" lowVersionID="9" highVersionID="9" formFactor="0" productID="09" />
         <model model="VT98" lowVersionID="10" highVersionID="10" formFactor="0" productID="10" />
         <model model="Köf II" lowVersionID="2" highVersionID="2" formFactor="0" productID="02" />
+        <model model="KLV 12" lowVersionID="27" highVersionID="27" formFactor="0" productID="27" />
       </family>
       <family name="Lenz Silver with 6th gen BEMF" mfg="Lenz" highVersionID="82" lowVersionID="65" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" file="Lenz_Silver.xml">
         <model model="Silver" numOuts="4" numFns="12" nmraWarrant="yes" nmraWarrantStart="200604" lowVersionID="65" highVersionID="75" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO">
@@ -36035,6 +36037,12 @@
           <output name="7" label=". A7 ." connection="solder" maxcurrent="50 mA" />
           <output name="8" label=". A8 ." connection="solder" maxcurrent="50 mA" />
           <size length="22" width="12.5" height="2.5" units="mm" />
+        </model>
+      </family>
+      <family name="Booster" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_Power4.xml">
+        <model model="Power4" productID="6324" maxTotalCurrent="3.5A" formFactor="Stationary" comment="3.5A Multiprotocol Booster">
+          <versionCV />
+          <size length="104" width="58" height="33" units="mm" />
         </model>
       </family>
       <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero" file="Umelec_ATL2051.xml">
