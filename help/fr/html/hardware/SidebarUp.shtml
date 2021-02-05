@@ -1,0 +1,5 @@
+<!-- SidebarUp.shtml -->
+<!-- Il s'agit de la d&#233;finition commune de la barre lat&#233;rale pour les pages dans le r&#233;pertoire html/hardware/[subdirectory]/ -->
+<!-- Un jour, il faudra peut-&#234;tre une barre lat&#233;rale s&#233;par&#233;e pour ces fichiers, mais pour l'instant... -->
+<!--#include virtual="/help/en/html/hardware/Sidebar.shtml" -->
+<!-- /SidebarUp.shtml -->
