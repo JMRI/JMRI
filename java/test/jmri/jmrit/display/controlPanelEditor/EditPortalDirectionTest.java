@@ -55,7 +55,9 @@ public class EditPortalDirectionTest {
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager();  // only needed intermittently; better to find and remove, but that would require lots o' refactoring
+        blkMgr.dispose();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        //JUnitUtil.clearShutDownManager();  // only needed intermittently; better to find and remove, but that would require lots o' refactoring
         JUnitUtil.tearDown();
     }
 

@@ -28,6 +28,8 @@ import org.apiguardian.api.API;
 
 /**
  * User interface for generating an issue report on the JMRI GitHub project.
+ * To allow international support, only the UI is localized.
+ * The user is requested to supply the report contents in English.
  *
  * @author Randall Wood Copyright 2020
  */
@@ -77,10 +79,10 @@ public class IssueReporter extends JFrame implements ClipboardOwner, DocumentLis
         logsCB = new JCheckBox();
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle(Bundle.getMessage("IssueReporterAction.title"));
+        setTitle(Bundle.getMessage("IssueReporterAction.title", ""));
         setPreferredSize(new java.awt.Dimension(400, 600));
 
-        titleLabel.setFont(titleLabel.getFont().deriveFont(titleLabel.getFont().getStyle() | java.awt.Font.BOLD));
+        titleLabel.setFont(titleLabel.getFont().deriveFont(titleLabel.getFont().getStyle()));
         titleLabel.setText(Bundle.getMessage("IssueReporter.titleLabel.text"));
 
         bodyTA.setColumns(20);
@@ -98,13 +100,13 @@ public class IssueReporter extends JFrame implements ClipboardOwner, DocumentLis
 
         instructionsLabel.setText(Bundle.getMessage("IssueReporter.instructionsLabel.bug"));
 
-        typeLabel.setFont(typeLabel.getFont().deriveFont(typeLabel.getFont().getStyle() | java.awt.Font.BOLD));
+        typeLabel.setFont(typeLabel.getFont().deriveFont(typeLabel.getFont().getStyle()));
         typeLabel.setText(Bundle.getMessage("IssueReporter.typeLabel.text"));
 
         typeCB.setModel(new DefaultComboBoxModel<>(new String[]{Bundle.getMessage("IssueReporterType.bug"), Bundle.getMessage("IssueReporterType.feature")}));
         typeCB.addActionListener(this::typeCBActionListener);
 
-        repoLabel.setFont(repoLabel.getFont().deriveFont(repoLabel.getFont().getStyle() | java.awt.Font.BOLD));
+        repoLabel.setFont(repoLabel.getFont().deriveFont(repoLabel.getFont().getStyle()));
         repoLabel.setText(Bundle.getMessage("IssueReporter.repoLabel.text"));
 
         repoCB.setModel(new GitHubRepositoryComboBoxModel());
@@ -381,6 +383,7 @@ public class IssueReporter extends JFrame implements ClipboardOwner, DocumentLis
         }
 
         @Override
+        @Nonnull
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             return files;
         }
@@ -406,9 +409,11 @@ public class IssueReporter extends JFrame implements ClipboardOwner, DocumentLis
         }
 
         @Override
+        @Nonnull
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             return body;
         }
 
     }
+
 }

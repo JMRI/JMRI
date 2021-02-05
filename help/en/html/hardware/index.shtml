@@ -140,12 +140,12 @@
                <i style="padding-left: 1em;"><a href="#networks">Networks and Protocols:</a></i>
                 <ul>
                   <li><a href="can/index.shtml">CAN Bus Networks</a>                
-                  <li><a href="can/cbus/index.shtml">CBUS&trade;</a>                
+                  <li><a href="can/cbus/index.shtml">CBUS&reg;</a>                
                   <li><a href="cmri/CMRI.shtml">C/MRI</a>
                   <li><a href="XBee/index.shtml">Digi XBee</a>
                   <li><a href="ipocsmr/index.shtml">IPOCS</a></li>
                   <li><a href="loconet/Digitrax.shtml">LocoNet</a>
-                  <li><a href="can/cbus/index.shtml">CBUS&trade;</a>
+                  <li><a href="can/cbus/index.shtml">CBUS</a>
                   <li><a href="modbus/index.shtml">Modbus</a>
                   <li><a href="mqtt/index.shtml">MQTT</a>
                   <li><a href="rps/index.shtml">NAC Services RPS</a>
@@ -1123,7 +1123,7 @@
    <p><a href="#TopOfPage">[Go to top of page]</a></p>     
 
         <h2></h2>
-        <p>CBUS&trade; is a registered trade mark of Dr Michael Bolton</p>
+        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
         <p></p>
 
 <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
