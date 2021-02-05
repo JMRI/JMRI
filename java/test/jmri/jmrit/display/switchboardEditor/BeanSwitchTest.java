@@ -1,11 +1,9 @@
 package jmri.jmrit.display.switchboardEditor;
 
-import jmri.LightManager;
-import jmri.NamedBean;
-import jmri.SensorManager;
-import jmri.TurnoutManager;
+import jmri.*;
+import jmri.jmrit.beantable.AddNewDevicePanel;
 import jmri.jmrit.display.EditorFrameOperator;
-import jmri.util.JUnitAppender;
+//import jmri.util.JUnitAppender;
 import org.junit.jupiter.api.*;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.MouseEvent;
@@ -14,6 +12,9 @@ import jmri.util.JUnitUtil;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JLabelOperator;
+
+import javax.swing.*;
 
 /**
  *
@@ -50,11 +51,10 @@ public class BeanSwitchTest {
         Assertions.assertFalse(t.getInverted(), "IT2 not inverted"); // LT turnout could invert
         t.setBeanInverted(true);
         Assertions.assertFalse(t.getInverted(), "IT2 can't invert");
-
     }
 
     @Test
-    public void testSliderConnected() {
+        public void testSliderConnected() {
         Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         swe.setSwitchType("T");
         swe.setSwitchManu("I"); // set explicitly
@@ -71,7 +71,8 @@ public class BeanSwitchTest {
 
         Thread dialog_thread1 = new Thread(() -> {
             JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("EditNameTitle", ""));
-            //((JTextField)jdo.getComponent(2)).setText("intTurnTwo");
+            // step down for items inside JOptionPane
+            ((JTextField)((JPanel)((JPanel)((JOptionPane)jdo.getContentPane().getComponent(0)).getComponent(0)).getComponent(0)).getComponent(1)).setText("intTurnThree");
             new JButtonOperator(jdo, Bundle.getMessage("ButtonOK")).doClick();
         });
         dialog_thread1.setName("Edit bean user name dialog");
@@ -80,10 +81,12 @@ public class BeanSwitchTest {
         t.renameBeanDialog(); // dialog
 
         JUnitUtil.waitFor(()-> !(dialog_thread1.isAlive()), "Edit bean user name dialog");
-        Assertions.assertEquals("intTurnOne", nb.getUserName(), "New name applied to nb");
+        Assertions.assertEquals("intTurnThree", nb.getUserName(), "Old name reapplied to nb");
         // actual bean rename method
         t.renameBean("intTurnTwo", "intTurnOne");
-        Assertions.assertEquals("intTurnTwo", nb.getUserName(), "New name applied to nb");
+        Assertions.assertEquals("intTurnTwo", t.getUserNameString(), "New name applied to nb");
+
+        t.cleanup(); // make sure no exception is thrown
     }
 
     @Test
@@ -101,11 +104,10 @@ public class BeanSwitchTest {
         //t.displayState(nb.getState()); // we have no listener, so grab it directly
         Assertions.assertEquals("IL4: +", t.getIconLabel(), "On label +");
 
-        t.cleanup(); // just make sure no exception is thrown
+        t.cleanup(); // make sure no exception is thrown
     }
 
     @Test
-    @Disabled
     public void testSensorSymbolUnconnected() {
         Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         swe.setSwitchType("S");
@@ -114,6 +116,8 @@ public class BeanSwitchTest {
         Assertions.assertNotNull(t, "exists");
         Thread dialog_thread1 = new Thread(() -> {
             JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("ConnectNewMenu", ""));
+            // step down for items inside JFrame
+            ((JTextField)((JPanel)((AddNewDevicePanel)jfo.getContentPane().getComponent(0)).getComponent(0)).getComponent(3)).setText("intSensFour");
             new JButtonOperator(jfo, Bundle.getMessage("ButtonOK")).doClick();
         });
         dialog_thread1.setName("Connect new Sensor dialog");
@@ -122,12 +126,16 @@ public class BeanSwitchTest {
         t.connectNew(); // pops a dialog
 
         JUnitUtil.waitFor(()-> !(dialog_thread1.isAlive()), "Connect new Sensor dialog");
-//        JUnitAppender.assertWarnMessage("Switch IS4 not found on panel. Number of switches displayed: 24");
-//        JUnitAppender.assertWarnMessage("failed to update switch to state of IS4");
-        // can't recreate this BeanSwitch to include a connection, so we just check it was created and available in the manager
-        Assertions.assertNotNull(jmri.InstanceManager.getDefault(SensorManager.class).provideSensor("IS4"), "Sensor IS4 created");
+        // can't recreate this BeanSwitch to include a connection, so we just check sensor was created and available in the manager
+        Sensor newSensor = jmri.InstanceManager.getDefault(SensorManager.class).getSensor("IS4");
+        Assertions.assertNotNull(newSensor, "Sensor IS4 was created");
+        String newName = jmri.InstanceManager.getDefault(SensorManager.class).getSensor("IS4").getUserName();
+        Assertions.assertNotNull(newName, "Sensor IS4 has user name");
+        Assertions.assertEquals("intSensFour", jmri.InstanceManager.getDefault(SensorManager.class).getSensor("IS4").getUserName(), "User name applied to nb");
         t.displayState(4);
-        Assertions.assertEquals("IS4", t.getIconLabel(), "Active label (no sign)");
+        Assertions.assertEquals("IS4", t.getIconLabel(), "Active label (no sign until recreated as connected)");
+
+        t.cleanup(); // make sure no exception is thrown
     }
 
     @BeforeEach
