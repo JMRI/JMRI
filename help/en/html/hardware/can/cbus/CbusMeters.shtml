@@ -4,7 +4,7 @@
 <html lang="en">
     <head>
         <meta name="keywords" content="JMRI CBUS setup voltage current meter">
-        <title>JMRI Hardware Support - CBUS&trade; Voltage / Current Meters</title>
+        <title>JMRI Hardware Support - CBUS&reg; Voltage / Current Meters</title>
         <meta name="author" content="Andrew Crosland">
         <!--#include virtual="/Style.shtml" -->
     </head>
@@ -15,7 +15,7 @@
             <!--#include virtual="Sidebar.shtml" -->
             <div id="mainContent">
 
-                <h1>Hardware Support: CBUS&trade; - Voltage/Current Meters</h1>
+                <h1>Hardware Support: CBUS - Voltage/Current Meters</h1>
                 <p>The CBUS voltage and current meters may be used to display track voltage and current on
                     the layout, if suitable hardware is being used. Availability of meters
                     will depend on the hardware connection.</p>
@@ -37,7 +37,7 @@
                 <img src="images/meter.png" alt="CBUS Meter " >
 
                 <h2></h2>
-                <p>CBUS&trade; is a registered trade mark of Dr Michael Bolton</p>
+                <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
                 <p></p>
 
                 <!--#include virtual="/Footer.shtml" -->

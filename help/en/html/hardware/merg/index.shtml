@@ -31,7 +31,7 @@
                 <h2><a name="introduction" id="introduction">Introduction</a></h2>
                 <div>
                     <p>MERG (Model Electronic Railway Group) hardware supported by JMRI is currently
-                        centred around the range of CBUS&trade; kits designed by and for members of MERG.</p>
+                        centred around the range of CBUS&reg; kits designed by and for members of MERG.</p>
                     <p>This page is aimed at helping users of MERG hardware and JMRI to setup their system.</p>
                     <p>For an overview of CBUS see the separate <a href="../can/cbus/index.shtml"> CBUS
                         help topic</a>.</p>
@@ -249,7 +249,7 @@
                 </div>
 
                 <h2></h2>
-                <p>CBUS&trade; is a registered trade mark of Dr Michael Bolton</p>
+                <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
                 <p></p>
 
                 <!--#include virtual="/Footer.shtml" -->
