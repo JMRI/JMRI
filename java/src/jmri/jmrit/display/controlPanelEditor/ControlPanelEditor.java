@@ -20,10 +20,7 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -103,12 +100,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private JMenu _circuitMenu;
     private JMenu _drawMenu;
     private CircuitBuilder _circuitBuilder;
-    private ArrayList<Rectangle> _highlightGroup = new ArrayList<>();
+    private final ArrayList<Rectangle> _highlightGroup = new ArrayList<>();
     private ShapeDrawer _shapeDrawer;
     private ItemPalette _itemPalette;
     private boolean _disableShapeSelection;
     private boolean _disablePortalSelection = true;  // only select PortalIcon in CircuitBuilder
-    private String _portalIconFamily;
+    private String _portalIconFamily = "Standard"; // initial default, must match xml, updated in setIconFamilysetPortalIconFamily
     private HashMap<String, NamedIcon> _portalIconMap;
 
     private final JCheckBoxMenuItem useGlobalFlagBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxGlobalFlags"));
@@ -194,6 +191,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             @Override
             public void actionPerformed(ActionEvent e) {
                 _itemPalette = ItemPalette.getDefault(Bundle.getMessage("MenuItemItemPalette"), editor);
+                assert _itemPalette != null;
                 _itemPalette.setVisible(true);
             }
         }.init(this));
@@ -211,9 +209,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
     private void setMenuAcceleratorKey (JMenuItem mi,  int key) {
         if (SystemType.isMacOSX()) {
-            mi.setAccelerator(KeyStroke.getKeyStroke(key, ActionEvent.META_MASK));
+            mi.setAccelerator(KeyStroke.getKeyStroke(key, InputEvent.META_MASK));
         } else {
-            mi.setAccelerator(KeyStroke.getKeyStroke(key, ActionEvent.CTRL_MASK));
+            mi.setAccelerator(KeyStroke.getKeyStroke(key, InputEvent.CTRL_MASK));
         }
     }
 
@@ -269,22 +267,25 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             if (_portalIconMap == null) {
                 HashMap<String, HashMap<String, NamedIcon>> familyMap = ItemPalette.getFamilyMaps("Portal");
                 _portalIconMap = familyMap.get("Standard");
+                // fill in the default PortalIconMap for CPE if it was null up to now.
+                // TODO check if this is ever called since we fixed getting it from ItemPalette above, remove for better maintainability
                 if (_portalIconMap == null) {
+                    log.warn("empty PortalIconMap returned");
                     _portalIconMap = new HashMap<>();
-                    _portalIconMap.put(PortalIcon.HIDDEN, 
+                    _portalIconMap.put(PortalIcon.HIDDEN,
                             new NamedIcon("resources/icons/Invisible.gif", "resources/icons/Invisible.gif"));
-                    _portalIconMap.put(PortalIcon.PATH, 
+                    _portalIconMap.put(PortalIcon.PATH,
                             new NamedIcon("resources/icons/greenSquare.gif", "resources/icons/greenSquare.gif"));
-                    _portalIconMap.put(PortalIcon.VISIBLE, 
+                    _portalIconMap.put(PortalIcon.VISIBLE,
                             new NamedIcon("resources/icons/throttles/RoundRedCircle20.png", "resources/icons/throttles/RoundRedCircle20.png"));
-                    _portalIconMap.put(PortalIcon.TO_ARROW, 
+                    _portalIconMap.put(PortalIcon.TO_ARROW,
                             new NamedIcon("resources/icons/track/toArrow.gif", "resources/icons/track/toArrow.gif"));
-                    _portalIconMap.put(PortalIcon.FROM_ARROW, 
+                    _portalIconMap.put(PortalIcon.FROM_ARROW,
                             new NamedIcon("resources/icons/track/fromArrow.gif", "resources/icons/track/fromArrow.gif"));
                 }
             }
         }
-        // Don't return ItemPalette's map!
+        // return a copy, not the ItemPalette's map!
         return PositionableIcon.cloneMap(_portalIconMap, null);
     }
 
@@ -1027,7 +1028,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                             } else {
                                 name = pos.getNameString();
                             }
-                            if (((String) select).equals(name)) {
+                            if (select.equals(name)) {
                                 _manualSelection = true;
                                 highlight(pos);
                                 return pos;
@@ -1057,7 +1058,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
         } else {
             if (event.isControlDown() && (event.isPopupTrigger() || event.isMetaDown() || event.isAltDown())) {
-                ActionListener ca = null;
+                ActionListener ca;
                 Editor ed = this;
                 ca = e -> {
                     if (_itemPalette != null) {
@@ -1803,7 +1804,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 String url = newIcon.getURL();
                 NamedIcon icon = NamedIcon.getIconByName(url);
                 PositionableLabel ni = new PositionableLabel(icon, this);
-                // infer a background icon from the size
+                // infer a background icon from its size
+                assert icon != null;
                 if (icon.getIconHeight() > 500 || icon.getIconWidth() > 600) {
                     ni.setDisplayLevel(BKG);
                 } else {
@@ -1835,7 +1837,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                     log.debug("DnD Add {}", pos.getNameString());
                 }
             } else {
-                log.warn("Editor DropTargetListener  supported DataFlavors not avaialable at drop from {}", tr.getClass().getName());
+                log.warn("Editor DropTargetListener supported DataFlavors not available at drop from {}", tr.getClass().getName());
             }
         } catch (IOException ioe) {
             log.warn("Editor DropTarget caught IOException", ioe);
@@ -1858,6 +1860,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
 
         @Override
+        @Nonnull
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             log.debug("PositionableListDnD.getTransferData:");
             if (flavor.equals(_dataFlavor)) {

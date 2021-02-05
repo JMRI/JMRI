@@ -61,6 +61,7 @@ public class EditCircuitPathsTest {
 
     @AfterEach
     public void tearDown() {
+        blkMgr.dispose();
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }

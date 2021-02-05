@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.GuardedBy;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -140,7 +141,9 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     public static final int STRUT_SIZE = 5;
     static final String RED_X = "resources/icons/misc/X-red.gif";
 
+    @GuardedBy("ItemPalette")
     protected static JTabbedPane _tabPane;
+    @GuardedBy("ItemPalette")
     protected static HashMap<String, ItemPanel> _tabIndex;
 
     private static volatile HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> _iconMaps;
@@ -157,7 +160,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
             return;     // never loaded
         }
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
-        // unfiltered, xml-stored, item palate icon tree
+        // unfiltered, xml-stored, item palette icon tree
         CatalogTree tree = manager.getBySystemName("NXPI");
         // discard old version
         if (tree != null) {
@@ -445,18 +448,22 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         buildTabPane(this);
 
         setLayout(new BorderLayout(5, 5));
-        add(_tabPane, BorderLayout.CENTER);
-        JScrollPane sp = (JScrollPane) _tabPane.getSelectedComponent();
-        _currentItemPanel = (ItemPanel) sp.getViewport().getView();
-        _currentItemPanel.hideIcons();
+        synchronized (this) {
+            add(_tabPane, BorderLayout.CENTER);
+            JScrollPane sp = (JScrollPane) _tabPane.getSelectedComponent();
+            _currentItemPanel = (ItemPanel) sp.getViewport().getView();
+            _currentItemPanel.hideIcons();
+        }
     }
 
     /*
      * Add the tabs on the Control Panel Editor.
      */
     static void buildTabPane(ItemPalette palette) {
-        _tabPane = new JTabbedPane();
-        _tabIndex = new HashMap<>();
+        //synchronized (ItemPalette.class) {
+            _tabPane = new JTabbedPane();
+            _tabIndex = new HashMap<>();
+        //}
         tabWidth = getTabWidth();
 
         ItemPanel itemPanel = new TableItemPanel<>(palette, "Turnout", null,
@@ -524,9 +531,11 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     static void addItemTab(ItemPanel itemPanel, String key, String tabTitle) {
         itemPanel.init();
         JScrollPane scrollPane = new JScrollPane(itemPanel);
-        _tabPane.add(Bundle.getMessage(tabTitle), scrollPane);
-        _tabIndex.put(key, itemPanel);
-        log.debug("_tabIndex.size()={}", _tabIndex.size());
+        synchronized (ItemPalette.class) {
+            _tabPane.add(Bundle.getMessage(tabTitle), scrollPane);
+            _tabIndex.put(key, itemPanel);
+            log.debug("_tabIndex.size()={}", _tabIndex.size());
+        }
     }
 
     static int getTabWidth() {
@@ -540,8 +549,10 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     static void setTabs() {
         JLabel lab = new JLabel();
         lab.setPreferredSize(new Dimension(tabWidth, 30));
-        for (int i = 0 ; i == _tabPane.getTabCount() ; i++) {
-            _tabPane.setTabComponentAt(i, lab);
+        synchronized (ItemPalette.class) {
+            for (int i = 0; i == _tabPane.getTabCount(); i++) {
+                _tabPane.setTabComponentAt(i, lab);
+            }
         }
     }
 
@@ -593,15 +604,17 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     }
 
     private void closePanels(java.awt.event.WindowEvent e) {
-        java.awt.Component[] comps = _tabPane.getComponents();
-        if (log.isDebugEnabled()) {
-            log.debug("closePanels: tab count= {}", _tabPane.getTabCount());
-        }
-        for (Component comp : comps) {
-            javax.swing.JViewport vp = (javax.swing.JViewport) ((JScrollPane) comp).getComponent(0);
-            Component ip = vp.getView();
-            if (ip instanceof ItemPanel) {
-                ((ItemPanel) ip).closeDialogs();
+        synchronized(this) {
+            java.awt.Component[] comps = _tabPane.getComponents();
+            if (log.isDebugEnabled()) {
+                log.debug("closePanels: tab count= {}", _tabPane.getTabCount());
+            }
+            for (Component comp : comps) {
+                javax.swing.JViewport vp = (javax.swing.JViewport) ((JScrollPane) comp).getComponent(0);
+                Component ip = vp.getView();
+                if (ip instanceof ItemPanel) {
+                    ((ItemPanel) ip).closeDialogs();
+                }
             }
         }
         super.windowClosing(e);

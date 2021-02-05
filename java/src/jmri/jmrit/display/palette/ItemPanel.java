@@ -304,7 +304,7 @@ public abstract class ItemPanel extends JPanel  {
             gridbag.setConstraints(panel, c);
         }
         if (log.isDebugEnabled()) {
-            log.debug("addIconsToPanel adds {} icons (map size {})to iconPanel for {}", cnt, iconMap.size(), _itemType);
+            log.debug("addIconsToPanel adds {} icons (map size {}) to iconPanel for {}", cnt, iconMap.size(), _itemType);
         }
         iconPanel.invalidate();
     }
