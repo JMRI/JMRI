@@ -82,8 +82,8 @@
 
         <p>Sensors are kept in your <i>layout configuration</i>, along with Turnouts, Lights, Signal Heads, control panel
         setup etc. To store this information on disk, allowing you to <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
-        it</a> the next time you run JMRI, see <a href="../apps/StoringYourWork.shtml">
-        Storing Your Work</a>.
+        it</a> the next time you run JMRI, see <a href="../apps/LoadStoreWork.shtml">
+        Loading and Storing Your Work</a>.
         </p>
 
         <a name="add" id="add"></a>

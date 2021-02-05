@@ -96,8 +96,8 @@
         control panel setup etc.<br>
         To save this information on disk, allowing you to <a href=
         "../../../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
-        it</a> next time you run JMRI, see <a href="../../apps/StoringYourWork.shtml">
-        Storing Your Work</a>.</p>
+        it</a> next time you run JMRI, see <a href="../../apps/LoadStoreWork.shtml">
+        Loading and Storing Your Work</a>.</p>
 
         <p>For more information on creating and displaying
         panels, including how to show signals on your panels,

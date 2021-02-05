@@ -106,8 +106,8 @@
       with Turnouts, Sensors, Signal Heads, control panel setup etc.
       To store this information on disk, allowing you to
       <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
-      it</a> next time you run JMRI, see <a href="../apps/StoringYourWork.shtml">
-      Storing Your Work</a>.  Note that the occupied/unoccupied
+      it</a> next time you run JMRI, see <a href="../apps/LoadStoreWork.shtml">
+      Loading and Storing Your Work</a>.  Note that the occupied/unoccupied
       state of each Block is not saved in the configuration file.
       When Blocks are loaded from a configuration file, their
       status is read from the Sensors.</p>

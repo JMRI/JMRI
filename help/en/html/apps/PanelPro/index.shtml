@@ -28,8 +28,8 @@
     <div id="mainContent">
 
       <h1>JMRI: PanelPro</h1>
-            <p class="noted">Note: The PanelPro main menu is being changed.  See
-            <a href="../../apps/StoringYourWork.shtml"> Storing Your Work</a> for details.
+            <p class="noted">Note: The PanelPro main menu is being changed.
+            See <a href="../LoadStoreWork.shtml">Loading and Storing Your Work</a> for details.
             The menu references below are the for the old menu structure.
             </p>
 
@@ -203,7 +203,7 @@
 
             <h3>(Re)opening a panel file</h3>
             <p>When starting your next PanelPro session, either load the latest
-            xml file via the Panels &gt; Open Panel... menu item or add an
+            xml file via the Panels &rArr; Open Panel... menu item or add an
             "Open file..." entry to <a
             href="../../../package/apps/TabbedPreferences.shtml#Startup">"Preferences
             &gt; Start Up"</a> to do it for you.</p>

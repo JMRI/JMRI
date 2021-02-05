@@ -175,7 +175,7 @@
       <p>Like other JMRI objects such as turnouts and sensors, the Lights in your Light Table
       are kept in your  <i>layout configuration</i> xml file. To save this information, allowing
       you to <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload it</a> next
-      time you run JMRI, see <a href="../apps/StoringYourWork.shtml">Storing Your Work</a>.
+      time you run JMRI, see <a href="../apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>.
 
       <p>The Light Control is enabled on loading, so will automatically monitor any changes in
       state of its control sensor, turnout, or fast clock.  When a Light with no Light Control

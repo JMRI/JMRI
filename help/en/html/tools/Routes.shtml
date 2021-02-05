@@ -119,7 +119,7 @@
           of other Routes.</p>
 
           <p>By convention, System Names usually start with "IO"
-          for <u>I</u>nternal R<u>o</u>ute.</p>
+          for <span class="co"><strong>I</strong></span>nternal R<span class="co"><strong>o</strong></span>ute.</p>
         </li>
 
         <li>
@@ -321,8 +321,8 @@
       with Turnouts, Sensors, Signal Heads, Lights, control panel
       setup etc. To store this information on disk, allowing you to
       <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
-      it</a> next time you run JMRI, see <a href="../apps/StoringYourWork.shtml">
-      Storing Your Work</a>.  Note that the
+      it</a> next time you run JMRI, see <a href="../apps/LoadStoreWork.shtml">
+      Loading and Storing Your Work</a>.  Note that the
       enabled/disabled state of each Route is not saved in the
       configuration file. When Routes are loaded from a
       configuration file, they are all enabled.</p>

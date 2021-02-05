@@ -106,8 +106,8 @@
       with Turnouts, Sensors, Signal Heads, etc. To store this
       information on disk, allowing you to
       <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
-      it</a> next time you run JMRI, see <a href="../apps/StoringYourWork.shtml">
-      Storing Your Work</a>.
+      it</a> next time you run JMRI, see <a href="../apps/LoadStoreWork.shtml">
+      Loading and Storing Your Work</a>.
 
        <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
