@@ -105,6 +105,7 @@ public class BeanSwitchTest {
     }
 
     @Test
+    @Disabled
     public void testSensorSymbolUnconnected() {
         Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         swe.setSwitchType("S");
