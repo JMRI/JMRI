@@ -594,8 +594,8 @@
       panels.</p>
 
       <ul>
-        <li><strong>Store Panels...</strong> {Changed as of 4.23.1: Store ALL table content and panels}
-        See <a href="../../../../html/apps/StoringYourWork.shtml">Storing Your Work</a>.</li>
+        <li><strong>Store ALL table content and panels...</strong> {<em>Old: <strong>Store Panels...</strong></em>} <span class="since">since 4.23.1</span>
+        See <a href="../../../../html/apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>.</li>
 
         <li><strong>Delete this Panel...</strong> - This item deletes the
         front most panel. A confirmation dialog is displayed,

@@ -213,6 +213,7 @@
         <br>
         <strong>File &rArr; Store Panels</strong>
         <br>
+        A non-blanking space can be used before the right arrow to control line breaks.
         </li>
 
         <li>You cannot count on any particular location for your files on the local machine, so all links

@@ -118,7 +118,7 @@
 
       <h3><a name="SaveYourWork" id="SaveYourWork">Saving your changes</a></h3>
 
-        <p>See <a href="../../apps/StoringYourWork.shtml">Storing Your Work</a>.</p>
+        <p>See <a href="../../apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>.</p>
 <!--
       <p>JMRI does not remember the Turnout, Sensor or Reporter table entries from
           a previous JMRI session unless you take specific action to save your
@@ -172,7 +172,7 @@
           throat 3/4 track switch".  This may be done via the "Turnout Table" by
           pressing the "Add..." button at the bottom of the table, then entering the
           information shown here.</p>
-      <p><img src="images/AddNewTurnout.png" alt="Adding a LocoNet Turnout" width="550"/></p>
+      <p><img src="images/AddNewTurnout.png" alt="Adding a LocoNet Turnout" width="550"></p>
       <p>Activate the "Create" button to add the new entry into the "Turnout Table".</p>
       <p>When multiple "connections" are configured in the current JMRI Configuration
           Profile, the "System Connection" box allows selecting between the
