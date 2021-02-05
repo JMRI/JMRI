@@ -14,6 +14,7 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.util.TypeConversionUtil;
 
 /**
  * Evaluates the state of a Memory.
@@ -29,7 +30,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
     private boolean _caseInsensitive = false;
     private String _constantValue = "";
     private NamedBeanHandle<Memory> _otherMemoryHandle;
-    private String _otherLocalVariable = "";
+    private String _localVariable = "";
     private String _regEx = "";
     private boolean _listenToOtherMemory = true;
 //    private boolean _listenToOtherMemory = false;
@@ -129,13 +130,13 @@ public class ExpressionMemory extends AbstractDigitalExpression
         return _otherMemoryHandle;
     }
     
-    public void setOtherLocalVaiable(@Nonnull String localVariable) {
-        assertListenersAreNotRegistered(log, "setOtherLocalVaiable");
-        _otherLocalVariable = localVariable;
+    public void setLocalVariable(@Nonnull String localVariable) {
+        assertListenersAreNotRegistered(log, "setOtherLocalVariable");
+        _localVariable = localVariable;
     }
     
-    public String getOtherLocalVaiable() {
-        return _otherLocalVariable;
+    public String getLocalVariable() {
+        return _localVariable;
     }
     
     public void setConstantValue(String constantValue) {
@@ -364,7 +365,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
                 otherValue = getString(_otherMemoryHandle.getBean().getValue());
                 break;
             case LocalVariable:
-                otherValue = null;  // Fix later!!!
+                otherValue = TypeConversionUtil.convertToString(getConditionalNG().getSymbolTable().getValue(_localVariable), false);
                 break;
             default:
                 throw new IllegalArgumentException("_compareTo has unknown value: "+_compareTo.name());
@@ -453,7 +454,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
                 
             case LocalVariable:
                 message = "Memory_Long_CompareLocalVariable";
-                other = otherMemoryName;
+                other = _localVariable;
                 break;
                 
             case RegEx:

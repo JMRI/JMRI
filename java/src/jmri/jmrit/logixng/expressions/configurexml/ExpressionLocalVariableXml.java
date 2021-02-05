@@ -37,6 +37,10 @@ public class ExpressionLocalVariableXml extends jmri.managers.configurexml.Abstr
         if (variableName != null) {
             element.addContent(new Element("variable").addContent(variableName));
         }
+        String otherVariableName = p.getOtherLocalVariable();
+        if (otherVariableName != null) {
+            element.addContent(new Element("otherVariable").addContent(otherVariableName));
+        }
         
         NamedBeanHandle<Memory> memoryName = p.getMemory();
         if (memoryName != null) {
@@ -48,6 +52,7 @@ public class ExpressionLocalVariableXml extends jmri.managers.configurexml.Abstr
         element.addContent(new Element("caseInsensitive").addContent(p.getCaseInsensitive() ? "yes" : "no"));
         
         element.addContent(new Element("constant").addContent(p.getConstantValue()));
+        element.addContent(new Element("regEx").addContent(p.getRegEx()));
 
         return element;
     }
@@ -65,11 +70,26 @@ public class ExpressionLocalVariableXml extends jmri.managers.configurexml.Abstr
             h.setVariable(variableName.getTextTrim());
         }
 
+        Element otherVariableName = shared.getChild("otherVariable");
+        if (otherVariableName != null) {
+            h.setOtherLocalVariable(otherVariableName.getTextTrim());
+        }
+
         Element memoryName = shared.getChild("memory");
         if (memoryName != null) {
             Memory t = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
             if (t != null) h.setMemory(t);
             else h.removeMemory();
+        }
+
+        Element constant = shared.getChild("constant");
+        if (constant != null) {
+            h.setConstantValue(constant.getText());
+        }
+
+        Element regEx = shared.getChild("regEx");
+        if (regEx != null) {
+            h.setRegEx(regEx.getText());
         }
 
         Element compareTo = shared.getChild("compareTo");
@@ -87,11 +107,6 @@ public class ExpressionLocalVariableXml extends jmri.managers.configurexml.Abstr
             h.setCaseInsensitive("yes".equals(caseInsensitive.getTextTrim()));
         } else {
             h.setCaseInsensitive(false);
-        }
-
-        Element data = shared.getChild("constant");
-        if (data != null) {
-            h.setConstantValue(data.getTextTrim());
         }
 
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);

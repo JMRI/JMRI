@@ -43,6 +43,11 @@ public class ExpressionMemoryXml extends jmri.managers.configurexml.AbstractName
             element.addContent(new Element("otherMemory").addContent(otherMemory.getName()));
         }
         
+        String variableName = p.getLocalVariable();
+        if (variableName != null) {
+            element.addContent(new Element("variable").addContent(variableName));
+        }
+        
         element.addContent(new Element("compareTo").addContent(p.getCompareTo().name()));
         element.addContent(new Element("memoryOperation").addContent(p.getMemoryOperation().name()));
         element.addContent(new Element("caseInsensitive").addContent(p.getCaseInsensitive() ? "yes" : "no"));
@@ -73,6 +78,11 @@ public class ExpressionMemoryXml extends jmri.managers.configurexml.AbstractName
             Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(otherMemoryName.getTextTrim());
             if (m != null) h.setOtherMemory(m);
             else h.removeOtherMemory();
+        }
+
+        Element variableName = shared.getChild("variable");
+        if (variableName != null) {
+            h.setLocalVariable(variableName.getTextTrim());
         }
 
         Element constant = shared.getChild("constant");

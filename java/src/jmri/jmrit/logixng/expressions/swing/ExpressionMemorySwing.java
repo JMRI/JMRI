@@ -100,21 +100,7 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
             if (expression.getMemory() != null) {
                 _memoryBeanPanel.setDefaultNamedBean(expression.getMemory().getBean());
             }
-//            _compareToComboBox.setSelectedItem(expression.getCompareTo());
             _memoryOperationComboBox.setSelectedItem(expression.getMemoryOperation());
-/*            
-            switch (expression.getCompareTo()) {
-                case Value: _tabbedPaneCompareTo.setSelectedComponent(_compareToConstant); break;
-                case Memory: _tabbedPaneCompareTo.setSelectedComponent(_compareToMemory); break;
-                case LocalVariable: _tabbedPaneCompareTo.setSelectedComponent(_compareToLocalVariable); break;
-                case RegEx: break;      // This case is handled by enableDisableCompareTo();
-//                case RegEx: _tabbedPaneCompareTo.setSelectedComponent(_panelLightFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + expression.getCompareTo().name());
-            }
-*/            
-            if (expression.getMemory() != null) {
-                _memoryBeanPanel.setDefaultNamedBean(expression.getMemory().getBean());
-            }
             _compareToConstantTextField.setText(expression.getConstantValue());
             _tabbedPaneCompareTo.setSelectedComponent(_compareToMemory);
             _compareToConstantTextField.setText(expression.getConstantValue());
@@ -125,7 +111,6 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
             _memoryBeanPanel,
             _memoryOperationComboBox,
             _tabbedPane
-//            _tabbedPaneCompareTo
         };
         
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
@@ -170,7 +155,6 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         } catch (JmriException ex) {
             log.error("Cannot get NamedBeanHandle for memory", ex);
         }
-//        expression.setCompareTo(_compareToComboBox.getItemAt(_compareToComboBox.getSelectedIndex()));
         expression.setMemoryOperation(_memoryOperationComboBox.getItemAt(_memoryOperationComboBox.getSelectedIndex()));
         
         
@@ -191,7 +175,7 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         }
         
         expression.setConstantValue(_compareToConstantTextField.getText());
-        expression.setOtherLocalVaiable(_compareToLocalVariableTextField.getText());
+        expression.setLocalVariable(_compareToLocalVariableTextField.getText());
         expression.setRegEx(_compareToRegExTextField.getText());
     }
     

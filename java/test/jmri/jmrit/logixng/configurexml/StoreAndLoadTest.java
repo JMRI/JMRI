@@ -1249,6 +1249,28 @@ public class StoreAndLoadTest {
         maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
         and.getChild(indexExpr++).connect(maleSocket);
         
+        expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLocalVariable.setComment("A comment");
+        expressionLocalVariable.setVariable("MyVar");
+        expressionLocalVariable.setMemory(memory2);
+        expressionLocalVariable.setOtherLocalVariable("MyOtherVar");
+        expressionLocalVariable.setCaseInsensitive(false);
+        expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.LocalVariable);
+        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.LessThan);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
+        and.getChild(indexExpr++).connect(maleSocket);
+        
+        expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLocalVariable.setComment("A comment");
+        expressionLocalVariable.setVariable("MyVar");
+        expressionLocalVariable.setRegEx("/^Test$/");
+        expressionLocalVariable.setMemory(memory2);
+        expressionLocalVariable.setCaseInsensitive(false);
+        expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.RegEx);
+        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.LessThan);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
+        and.getChild(indexExpr++).connect(maleSocket);
+        
         
         ExpressionMemory expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
         expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.GreaterThan);
@@ -1279,6 +1301,7 @@ public class StoreAndLoadTest {
         expressionMemory.setComment("A comment");
         expressionMemory.setMemory(memory2);
         expressionMemory.setOtherMemory(memory3);
+        expressionMemory.setLocalVariable("MyVar");
         expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.GreaterThan);
         expressionMemory.setCompareTo(ExpressionMemory.CompareTo.LocalVariable);
         maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
