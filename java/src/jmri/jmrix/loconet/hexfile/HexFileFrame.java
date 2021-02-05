@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * overriding the readCV and writeCV methods.
  *
  * @author Bob Jacobsen Copyright 2001, 2002
- * @author i18n Egbert Broerse 2017
+ * @author Egbert Broerse 2017, 2021
  */
 public class HexFileFrame extends JmriJFrame {
 
@@ -105,6 +105,9 @@ public class HexFileFrame extends JmriJFrame {
         JPanel pane4 = new JPanel();
         pane4.add(simReplyBox);
         getContentPane().add(pane4);
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+            simReplyBox.setSelected(prefMgr.getSimplePreferenceState("simReply"));
+        });
 
         openHexFileButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -305,6 +308,9 @@ public class HexFileFrame extends JmriJFrame {
     public void simReplyActionPerformed(java.awt.event.ActionEvent e) {  // resume button
         log.debug("simReplyBox changed");
         port.setSimReply(simReplyBox.isSelected());
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+            prefMgr.setSimplePreferenceState("simReply", simReplyBox.isSelected());
+        });
     }
 
     private final static Logger log = LoggerFactory.getLogger(HexFileFrame.class);

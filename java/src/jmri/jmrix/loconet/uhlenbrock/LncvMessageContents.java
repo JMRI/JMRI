@@ -571,7 +571,7 @@ public class LncvMessageContents {
         m.setElement(LNCV_SRC_ELEMENT_INDEX, LNCV_LNMODULE_VALUE);
         m.setElement(5, LNCV_CMD_READ_REPLY);
         // HIBITS handled last
-        m.setElement(7, m.getElement(7));
+        m.setElement(7, m.getElement(7)); // if
         m.setElement(8, m.getElement(8));
         m.setElement(9, m.getElement(9));
         m.setElement(10, m.getElement(10));
@@ -583,6 +583,33 @@ public class LncvMessageContents {
         m.setElement(13, 0x0);
 
         return m;
+    }
+
+    /**
+     * In Hexfile simulation mode, mock a ProgStart reply message back to the CS.
+     *
+     * @param m  the preceding LocoNet message
+     * @return  LocoNet message containing the reply, or null if preceding
+     *          message isn't a query
+     */
+    public static LocoNetMessage createLncvProgStartReply(LocoNetMessage m) {
+        if (!isSupportedLncvMessage(m)) {
+            return null;
+        }
+        LocoNetMessage m2 = LncvMessageContents.createLncvReadReply(m);
+        if (m2 != null) {
+            LncvMessageContents lmc = new LncvMessageContents(m);
+            m2.setElement(LncvMessageContents.PXCT1_ELEMENT_INDEX, 0x21); // hi bits
+            if (lmc.getLncvArticleNum() == -1) { // mock a certain device
+                m2.setElement(LncvMessageContents.LNCV_ART_L_ELEMENT_INDEX, 0x13); // article number 5033
+                m2.setElement(LncvMessageContents.LNCV_ART_H_ELEMENT_INDEX, 0x29);
+            }
+            if (lmc.getLncvModuleNum() == -1) { // mock a certain address
+                m2.setElement(LncvMessageContents.LNCV_MOD_L_ELEMENT_INDEX, 0x3); // address value 3
+                m2.setElement(LncvMessageContents.LNCV_MOD_H_ELEMENT_INDEX, 0x0);
+            }
+        }
+        return m2;
     }
 
     /**

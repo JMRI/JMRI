@@ -1,17 +1,11 @@
 package jmri.jmrix.loconet.hexfile;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
+import java.io.*;
 
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
 import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
+import jmri.util.ImmediatePipedOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,9 +23,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public class LnHexFilePort extends LnPortController implements LocoNetListener, Runnable {
+public class LnHexFilePort extends LnPortController implements Runnable {
 
     volatile BufferedReader sFile = null;
+    private boolean outputBufferEmpty = true;
+    private boolean checkBuffer = true;
 
     public LnHexFilePort() {
         this(new HexFileSystemConnectionMemo());
@@ -44,6 +40,13 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
             pin = new DataInputStream(tempPipe);
             outpipe = new DataOutputStream(new PipedOutputStream(tempPipe));
             pout = outpipe;
+            // test to hear messages
+//            PipedOutputStream tempPipeI = new ImmediatePipedOutputStream();
+//            pout = new DataOutputStream(tempPipeI);
+//            inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
+//            PipedOutputStream tempPipeO = new ImmediatePipedOutputStream();
+//            outpipe = new DataOutputStream(tempPipeO);
+//            pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
             log.error("init (pipe): Exception: {}", e.toString());
         }
@@ -57,8 +60,6 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
                         new String[]{Bundle.getMessage("BeanStateUnknown"),
                             Bundle.getMessage("SensorStateInactive"),
                             Bundle.getMessage("SensorStateActive")}, true));
-        // add listener for other traffic on simulated LocoNet, in order to simulate appropriate replies (eg. for developers)
-        memo.getLnTrafficController().addLocoNetListener(~0, this);
     }
 
     /**
@@ -101,6 +102,7 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
                 // until we are interrupted
                 try {
                     Thread.sleep(10000);
+                    log.debug("LnHexFilePort.running"); // NOI18N
                 } catch (InterruptedException e) {
                     log.info("LnHexFilePort.run: woken from sleep"); // NOI18N
                     if (sFile == null) {
@@ -110,8 +112,10 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
                     }
                 }
             }
-            log.info("LnHexFilePort.run: changing input file..."); // NOI18N
+            message = readMessage();
+            //SerialReply r;
 
+            log.info("LnHexFilePort.run: changing input file..."); // NOI18N
             // process the input file into the output side of pipe
             _running = true;
             try {
@@ -119,18 +123,18 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
                     log.debug("Simulator received a message");
                     LocoNetMessage reply = generateReply(message);
                     if (reply != null) {
-                        getSystemConnectionMemo().getLnTrafficController().sendLocoNetMessage(reply);
-//                        int len = reply.getOpCode();
-//                        for (int i = 0; i < len; i++) {
-//                            log.debug("byte {} of SV2 message", i);
-//                            // parse as hex into integer, then convert to byte
-//                            int ival = reply.getElement(i);
-//                            // send each byte to the output pipe (input to consumer)
-//                            byte bval = (byte) ival;
-//                            outpipe.writeByte(bval);
-//                        }
-//                        // flush the pipe so other threads can see the message
-//                        outpipe.flush();
+//                        getSystemConnectionMemo().getLnTrafficController().sendLocoNetMessage(reply);
+                        int len = reply.getOpCode();
+                        for (int i = 0; i < len; i++) {
+                            log.debug("byte {} of Ln message", i);
+                            // parse as hex into integer, then convert to byte
+                            int ival = reply.getElement(i);
+                            // send each byte to the output pipe (input to consumer)
+                            byte bval = (byte) ival;
+                            outpipe.writeByte(bval);
+                        }
+                        // flush the pipe so other threads can see the message
+                        outpipe.flush();
                     }
                     // ready
                 } else { // must be a new file
@@ -164,9 +168,11 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
                 log.info("LnHexFilePort.run: normal finish to file"); // NOI18N
 
             } catch (InterruptedException e) {
-                if (sFile != null || message != null) { // changed in another thread before the interrupt
+                if (sFile != null) { // changed in another thread before the interrupt
                     log.info("LnHexFilePort.run: user selected new file"); // NOI18N
                     // swallow the exception since we have handled its intent
+                } else if (message != null) {
+                    log.info("LnHexFilePort.run: message received"); // NOI18N
                 } else {
                     log.error("LnHexFilePort.run: unexpected InterruptedException, exiting"); // NOI18N
                     Thread.currentThread().interrupt();
@@ -234,7 +240,7 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
 
     // internal ends of the pipes
     private DataOutputStream outpipe = null;  // feed pin
-    //private DataInputStream inpipe = null;  // feed pout
+    private DataInputStream inpipe = null;  // feed pout
 
     @Override
     public boolean okToSend() {
@@ -256,6 +262,16 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
     public String openPort(String portName, String appName) {
         log.error("openPort should not have been invoked", new Exception());
         return null;
+    }
+
+    /**
+     * Set if the output buffer is empty or full. This should only be set to
+     * false by external processes.
+     *
+     * @param s true if output buffer is empty; false otherwise
+     */
+    synchronized public void setOutputBufferEmpty(boolean s) {
+        outputBufferEmpty = s;
     }
 
     @Override
@@ -316,12 +332,6 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
 
     LocoNetMessage message;
 
-    @Override
-    public synchronized void message(LocoNetMessage m) {
-        log.debug("LnMessage stored");
-        message = m; // store 1 LocoNet message
-    }
-
     private boolean simReply = false;
 
     /**
@@ -330,6 +340,47 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
      */
     public void setSimReply(boolean state) {
         simReply = state;
+        log.debug("SimReply is {}", simReply);
+    }
+
+    /**
+     * Read one incoming message from the buffer
+     * and set outputBufferEmpty to true.
+     */
+    private LocoNetMessage readMessage() {
+        LocoNetMessage msg = null;
+        // log.debug("Simulator reading message");
+        try {
+            if (inpipe != null && inpipe.available() > 0) {
+                msg = loadChars();
+            }
+        } catch (java.io.IOException e) {
+            // should do something meaningful here.
+        }
+        setOutputBufferEmpty(true);
+        return (msg);
+    }
+
+    /**
+     * Get characters from the input source.
+     * <p>
+     * Only used in the Receive thread.
+     *
+     * @return filled message, only when the message is complete.
+     * @throws IOException when presented by the input source.
+     */
+    private LocoNetMessage loadChars() throws java.io.IOException {
+        int nchars;
+        byte[] rcvBuffer = new byte[32];
+
+        nchars = inpipe.read(rcvBuffer, 0, 32);
+        //log.debug("new message received");
+        LocoNetMessage msg = new LocoNetMessage(nchars);
+
+        for (int i = 0; i < nchars; i++) {
+            msg.setElement(i, rcvBuffer[i] & 0xFF);
+        }
+        return msg;
     }
 
     /**
@@ -337,7 +388,7 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
      * Supported types:
      * <ul>
      *     <li>LN SV rev2 board (@link jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents)</li>
-     *     <li>LNCV board (@link jmri.jmrix.loconet.uhlenbrock.Lncv2MessageContents)</li>
+     *     <li>LNCV board {@link jmri.jmrix.loconet.uhlenbrock.LncvMessageContents} ReadReply</li>
      * </ul>
      *
      * @param m message heard on connection thread
@@ -358,19 +409,20 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
                     int serial = 111;
                     return LnSv2MessageContents.createSv2DeviceDiscoveryReply(myId, dest, mf, dev, type, serial);
                 }
-            }
-            if (LncvMessageContents.isSupportedLncvMessage(m)) {
+            } else if (LncvMessageContents.isSupportedLncvMessage(m)) {
                 log.debug("generate reply for LNCV Read message");
-                LncvMessageContents c = new LncvMessageContents(m);
-                // READ REPLY
-                if (c.getCvNum() >= 0) { // was LNCV Read, reply value (contents)
+                if (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ) {
+                    // generate READ REPLY
                     log.debug("generate LNCV Read reply message");
                     return LncvMessageContents.createLncvReadReply(m);
-                }
-                // WRITE reply LACK
-                if (c.getCmd() == 0x20) { // was LNCV Write
+                } else if (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_WRITE) {
+                    // generate WRITE reply LACK
                     log.debug("generate LNCV Write reply message");
                     return new LocoNetMessage(new int[]{LnConstants.OPC_LONG_ACK, 0x6d, 0x7f, 0x1});
+                } else if (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_PROG_START) {
+                    // generate STARTPROGALL reply
+                    log.debug("generate LNCV PROGSTART response message");
+                    return LncvMessageContents.createLncvProgStartReply(m);
                 }
             }
         }
