@@ -110,7 +110,7 @@
         
         <li>CAN via MERG Network Interface
          <ul>
-         <li>The network interface can be used for the CANEther, CANGC1e, CANPi and CBUS&trade; Server.
+         <li>The network interface can be used for the CANEther, CANGC1e, CANPi and CBUS&reg; Server.
          </li>
           <li>
           CBUS Server is a <a href="https://nodejs.org/en/">Node.js</a> program to allow multiple network connections
@@ -258,7 +258,7 @@
       debugging command-line tool.</p>
 
       <h2></h2>
-        <p>CBUS&trade; is a registered trade mark of Dr Michael Bolton</p>
+        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
         <p></p>
 
       <!--#include virtual="/Footer.shtml" -->

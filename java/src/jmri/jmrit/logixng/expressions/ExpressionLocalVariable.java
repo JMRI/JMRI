@@ -14,6 +14,7 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.util.TypeConversionUtil;
 
 /**
  * Evaluates the state of a local variable.
@@ -29,6 +30,8 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     private boolean _caseInsensitive = false;
     private String _constantValue = "";
     private NamedBeanHandle<Memory> _memoryHandle;
+    private String _otherLocalVariable = "";
+    private String _regEx = "";
     private boolean _listenToMemory = true;
 //    private boolean _listenToMemory = false;
     
@@ -109,12 +112,37 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
         return _memoryHandle;
     }
     
+    public void setOtherLocalVariable(@Nonnull String localVariable) {
+        assertListenersAreNotRegistered(log, "setOtherLocalVariable");
+        _otherLocalVariable = localVariable;
+    }
+    
+    public String getOtherLocalVariable() {
+        return _otherLocalVariable;
+    }
+    
     public void setConstantValue(String constantValue) {
         _constantValue = constantValue;
     }
     
     public String getConstantValue() {
         return _constantValue;
+    }
+    
+    public void setRegEx(String regEx) {
+        _regEx = regEx;
+    }
+    
+    public String getRegEx() {
+        return _regEx;
+    }
+    
+    public void setListenToMemory(boolean listenToMemory) {
+        this._listenToMemory = listenToMemory;
+    }
+    
+    public boolean getListenToMemory() {
+        return _listenToMemory;
     }
     
     public void setVariableOperation(VariableOperation variableOperation) {
@@ -306,6 +334,9 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
             case Memory:
                 otherValue = getString(_memoryHandle.getBean().getValue());
                 break;
+            case LocalVariable:
+                otherValue = TypeConversionUtil.convertToString(getConditionalNG().getSymbolTable().getValue(_otherLocalVariable), false);
+                break;
             default:
                 throw new IllegalArgumentException("_compareTo has unknown value: "+_compareTo.name());
         }
@@ -382,6 +413,16 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
             case Memory:
                 message = "Variable_Long_CompareMemory";
                 other = memoryName;
+                break;
+                
+            case LocalVariable:
+                message = "Variable_Long_CompareLocalVariable";
+                other = _otherLocalVariable;
+                break;
+                
+            case RegEx:
+                message = "Variable_Long_CompareRegEx";
+                other = _regEx;
                 break;
                 
             default:
@@ -493,8 +534,22 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     
     
     public enum CompareTo {
-        Value,
-        Memory;
+        Value(Bundle.getMessage("Variable_CompareTo_Value")),
+        Memory(Bundle.getMessage("Variable_CompareTo_Memory")),
+        LocalVariable(Bundle.getMessage("Variable_CompareTo_LocalVariable")),
+        RegEx(Bundle.getMessage("Variable_CompareTo_RegularExpression"));
+        
+        private final String _text;
+        
+        private CompareTo(String text) {
+            this._text = text;
+        }
+        
+        @Override
+        public String toString() {
+            return _text;
+        }
+        
     }
     
     
