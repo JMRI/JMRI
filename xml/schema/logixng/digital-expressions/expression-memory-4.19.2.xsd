@@ -49,6 +49,8 @@
                   <xs:restriction base="xs:token">
                     <xs:enumeration value="Value"/>
                     <xs:enumeration value="Memory"/>
+                    <xs:enumeration value="LocalVariable"/>
+                    <xs:enumeration value="RegEx"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
@@ -73,6 +75,8 @@
               <xs:element name="caseInsensitive" type="yesNoType" />
 
               <xs:element name="constant" type="xs:string" />
+
+              <xs:element name="regEx" type="xs:string" />
 
               <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 

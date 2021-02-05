@@ -48,6 +48,7 @@ public class ExpressionMemoryXml extends jmri.managers.configurexml.AbstractName
         element.addContent(new Element("caseInsensitive").addContent(p.getCaseInsensitive() ? "yes" : "no"));
         
         element.addContent(new Element("constant").addContent(p.getConstantValue()));
+        element.addContent(new Element("regEx").addContent(p.getRegEx()));
 
         return element;
     }
@@ -77,6 +78,11 @@ public class ExpressionMemoryXml extends jmri.managers.configurexml.AbstractName
         Element constant = shared.getChild("constant");
         if (constant != null) {
             h.setConstantValue(constant.getText());
+        }
+
+        Element regEx = shared.getChild("regEx");
+        if (regEx != null) {
+            h.setRegEx(regEx.getText());
         }
 
         Element memoryOperation = shared.getChild("memoryOperation");

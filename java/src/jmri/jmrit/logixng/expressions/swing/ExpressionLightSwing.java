@@ -6,12 +6,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
-import jmri.Light;
-import jmri.LightManager;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionLight;
 import jmri.jmrit.logixng.expressions.ExpressionLight.LightState;
@@ -25,7 +20,7 @@ import jmri.util.swing.BeanSelectCreatePanel;
 public class ExpressionLightSwing extends AbstractDigitalExpressionSwing {
 
     private JTabbedPane _tabbedPaneLight;
-    private BeanSelectCreatePanel<Light> lightBeanPanel;
+    private BeanSelectCreatePanel<Light> _lightBeanPanel;
     private JPanel _panelLightDirect;
     private JPanel _panelLightReference;
     private JPanel _panelLightLocalVariable;
@@ -37,7 +32,7 @@ public class ExpressionLightSwing extends AbstractDigitalExpressionSwing {
     private JComboBox<Is_IsNot_Enum> _is_IsNot_ComboBox;
     
     private JTabbedPane _tabbedPaneLightState;
-    private JComboBox<LightState> stateComboBox;
+    private JComboBox<LightState> _stateComboBox;
     private JPanel _panelLightStateDirect;
     private JPanel _panelLightStateReference;
     private JPanel _panelLightStateLocalVariable;
@@ -64,8 +59,8 @@ public class ExpressionLightSwing extends AbstractDigitalExpressionSwing {
         _tabbedPaneLight.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelLightLocalVariable);
         _tabbedPaneLight.addTab(NamedBeanAddressing.Formula.toString(), _panelLightFormula);
         
-        lightBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(LightManager.class), null);
-        _panelLightDirect.add(lightBeanPanel);
+        _lightBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(LightManager.class), null);
+        _panelLightDirect.add(_lightBeanPanel);
         
         _lightReferenceTextField = new JTextField();
         _lightReferenceTextField.setColumns(30);
@@ -97,12 +92,12 @@ public class ExpressionLightSwing extends AbstractDigitalExpressionSwing {
         _tabbedPaneLightState.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelLightStateLocalVariable);
         _tabbedPaneLightState.addTab(NamedBeanAddressing.Formula.toString(), _panelLightStateFormula);
         
-        stateComboBox = new JComboBox<>();
+        _stateComboBox = new JComboBox<>();
         for (LightState e : LightState.values()) {
-            stateComboBox.addItem(e);
+            _stateComboBox.addItem(e);
         }
         
-        _panelLightStateDirect.add(stateComboBox);
+        _panelLightStateDirect.add(_stateComboBox);
         
         _lightStateReferenceTextField = new JTextField();
         _lightStateReferenceTextField.setColumns(30);
@@ -126,7 +121,7 @@ public class ExpressionLightSwing extends AbstractDigitalExpressionSwing {
                 default: throw new IllegalArgumentException("invalid _addressing state: " + expression.getAddressing().name());
             }
             if (expression.getLight() != null) {
-                lightBeanPanel.setDefaultNamedBean(expression.getLight().getBean());
+                _lightBeanPanel.setDefaultNamedBean(expression.getLight().getBean());
             }
             _lightReferenceTextField.setText(expression.getReference());
             _lightLocalVariableTextField.setText(expression.getLocalVariable());
@@ -141,7 +136,7 @@ public class ExpressionLightSwing extends AbstractDigitalExpressionSwing {
                 case Formula: _tabbedPaneLightState.setSelectedComponent(_panelLightStateFormula); break;
                 default: throw new IllegalArgumentException("invalid _addressing state: " + expression.getAddressing().name());
             }
-            stateComboBox.setSelectedItem(expression.getBeanState());
+            _stateComboBox.setSelectedItem(expression.getBeanState());
             _lightStateReferenceTextField.setText(expression.getStateReference());
             _lightStateLocalVariableTextField.setText(expression.getStateLocalVariable());
             _lightStateFormulaTextField.setText(expression.getStateFormula());
@@ -217,8 +212,8 @@ public class ExpressionLightSwing extends AbstractDigitalExpressionSwing {
         }
         ExpressionLight expression = (ExpressionLight)object;
         try {
-            if (!lightBeanPanel.isEmpty() && (_tabbedPaneLight.getSelectedComponent() == _panelLightDirect)) {
-                Light light = lightBeanPanel.getNamedBean();
+            if (!_lightBeanPanel.isEmpty() && (_tabbedPaneLight.getSelectedComponent() == _panelLightDirect)) {
+                Light light = _lightBeanPanel.getNamedBean();
                 if (light != null) {
                     NamedBeanHandle<Light> handle
                             = InstanceManager.getDefault(NamedBeanHandleManager.class)
@@ -249,7 +244,7 @@ public class ExpressionLightSwing extends AbstractDigitalExpressionSwing {
             
             if (_tabbedPaneLightState.getSelectedComponent() == _panelLightStateDirect) {
                 expression.setStateAddressing(NamedBeanAddressing.Direct);
-                expression.setBeanState((LightState)stateComboBox.getSelectedItem());
+                expression.setBeanState((LightState)_stateComboBox.getSelectedItem());
             } else if (_tabbedPaneLightState.getSelectedComponent() == _panelLightStateReference) {
                 expression.setStateAddressing(NamedBeanAddressing.Reference);
                 expression.setStateReference(_lightStateReferenceTextField.getText());
@@ -267,33 +262,6 @@ public class ExpressionLightSwing extends AbstractDigitalExpressionSwing {
         }
     }
     
-    
-    /**
-     * Create Light object for the expression
-     *
-     * @param reference Light application description
-     * @return The new output as Light object
-     */
-    protected Light getLightFromPanel(String reference) {
-        if (lightBeanPanel == null) {
-            return null;
-        }
-        lightBeanPanel.setReference(reference); // pass light application description to be put into light Comment
-        try {
-            return lightBeanPanel.getNamedBean();
-        } catch (jmri.JmriException ex) {
-            log.warn("skipping creation of light not found for " + reference);
-            return null;
-        }
-    }
-    
-//    private void noLightMessage(String s1, String s2) {
-//        log.warn("Could not provide light " + s2);
-//        String msg = Bundle.getMessage("WarningNoLight", new Object[]{s1, s2});
-//        JOptionPane.showMessageDialog(editFrame, msg,
-//                Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-//    }
-    
     /** {@inheritDoc} */
     @Override
     public String toString() {
@@ -302,8 +270,8 @@ public class ExpressionLightSwing extends AbstractDigitalExpressionSwing {
     
     @Override
     public void dispose() {
-        if (lightBeanPanel != null) {
-            lightBeanPanel.dispose();
+        if (_lightBeanPanel != null) {
+            _lightBeanPanel.dispose();
         }
     }
     
