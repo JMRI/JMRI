@@ -21,7 +21,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 
   <div class="nomenu" id="mBody">
 <div id="mainContent">
@@ -68,7 +68,7 @@ a> provides a simple pin out
 <p> Les informations sur cette page ont &#233;t&#233; fournies par Dick Bronson et Walter Thompson.</P>
 
    <hr class="hide">
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>
