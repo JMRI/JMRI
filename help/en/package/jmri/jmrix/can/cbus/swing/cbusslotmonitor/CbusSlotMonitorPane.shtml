@@ -6,7 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: CBUS&trade; Console Tool</title>
+  <title>JMRI: CBUS&reg; Console Tool</title>
   <meta name="author" content="Steve Young">
   <meta name="keywords" content="JMRI CBUS Command station throttle session monitor cancmd">
   <!--#include virtual="/Style.shtml" -->
@@ -17,7 +17,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-     <h1>JMRI : CBUS&trade; Command Station Monitor</h1>
+     <h1>JMRI : CBUS Command Station Monitor</h1>
         <p>Main Table - Monitoring train sessions.</p>
 
     <h3>Top Menu Items</h3>    
@@ -107,7 +107,7 @@
         
         
         <h2></h2>
-        <p>CBUS&trade; is a registered trade mark of Dr Michael Bolton</p>
+        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
         <p></p>
 
       <!--#include virtual="/Footer.shtml" -->

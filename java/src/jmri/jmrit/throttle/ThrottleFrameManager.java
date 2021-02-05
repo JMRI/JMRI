@@ -29,14 +29,14 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
     private int activeFrame;
     private final ThrottleCyclingKeyListener throttleCycler;
 
-    private ArrayList<ThrottleWindow> throttleWindows;
+    private ArrayList<ThrottleWindow> throttleWindows; // synchronized access
 
     private JmriJFrame throttlePreferencesFrame;
     private JmriJFrame throttlesListFrame;
     private ThrottlesListPanel throttlesListPanel;
 
     /**
-     * Constructor for the ThrottleFrameManager object
+     * Constructor for the ThrottleFrameManager object.
      */
     public ThrottleFrameManager() {
         throttleCycler = new ThrottleCyclingKeyListener();
@@ -56,8 +56,10 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         ThrottleWindow tw = new ThrottleWindow();
         tw.pack();
         KeyListenerInstaller.installKeyListenerOnAllComponents(throttleCycler, tw);
-        throttleWindows.add(tw);
-        activeFrame = throttleWindows.indexOf(tw);
+        synchronized (this) {
+            throttleWindows.add(tw);
+            activeFrame = throttleWindows.indexOf(tw);
+        }
         return tw;
     }
 
@@ -78,20 +80,21 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
     public void requestThrottleWindowDestruction(ThrottleWindow frame) {
         if (frame != null) {
             destroyThrottleWindow(frame);
-            try {
-                throttleWindows.remove(throttleWindows.indexOf(frame));
-            } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
-                log.debug(ex.toString());
-            }
-            if (throttleWindows.size() > 0) {
-                requestFocusForNextFrame();
+            synchronized (this) {
+                try {
+                    throttleWindows.remove(throttleWindows.indexOf(frame));
+                } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
+                    log.debug(ex.toString());
+                }
+                if (throttleWindows.size() > 0) {
+                    requestFocusForNextFrame();
+                }
             }
         }
     }
 
-    public void requestAllThrottleWindowsDestroyed() {
-        for (Iterator<ThrottleWindow> i = throttleWindows.iterator(); i.hasNext();) {
-            ThrottleWindow frame = i.next();
+    public synchronized void requestAllThrottleWindowsDestroyed() {
+        for (ThrottleWindow frame : throttleWindows) {
             destroyThrottleWindow(frame);
         }
         throttleWindows = new ArrayList<>(0);
@@ -112,22 +115,22 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
      *
      * @return The Iterator on the list of ThrottleFrames.
      */
-    public Iterator<ThrottleWindow> getThrottleWindows() {
+    public synchronized Iterator<ThrottleWindow> getThrottleWindows() {
         return throttleWindows.iterator();
     }
 
-    public int getNumberThrottleWindows() {
+    public synchronized int getNumberThrottleWindows() {
         return throttleWindows.size();
     }
 
-    private void requestFocusForNextFrame() {
+    private synchronized void requestFocusForNextFrame() {
         activeFrame = (activeFrame + 1) % throttleWindows.size();
         ThrottleWindow tf = throttleWindows.get(activeFrame);
         tf.requestFocus();
         tf.toFront();
     }
 
-    private void requestFocusForPreviousFrame() {
+    private synchronized void requestFocusForPreviousFrame() {
         activeFrame--;
         if (activeFrame < 0) {
             activeFrame = throttleWindows.size() - 1;
@@ -138,7 +141,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
     }
 
 
-    private void requestFocusAddress() {
+    private synchronized void requestFocusAddress() {
         throttleWindows.get(activeFrame).getCurrentThrottleFrame().getAddressPanel().requestFocus();
         throttleWindows.get(activeFrame).getCurrentThrottleFrame().getAddressPanel().toFront();
         try {
@@ -147,7 +150,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
             log.debug("address move vetoed");
         }
     }
-    private void requestFocusControls() {
+    private synchronized void requestFocusControls() {
         throttleWindows.get(activeFrame).getCurrentThrottleFrame().getControlPanel().requestFocus();
         throttleWindows.get(activeFrame).getCurrentThrottleFrame().getControlPanel().toFront();
         try {
@@ -156,7 +159,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
             log.debug("control move vetoed");
         }
     }
-    private void requestFocusFunctions() {
+    private synchronized void requestFocusFunctions() {
         throttleWindows.get(activeFrame).getCurrentThrottleFrame().getFunctionPanel().requestFocus();
         throttleWindows.get(activeFrame).getCurrentThrottleFrame().getFunctionPanel().toFront();
         try {
@@ -166,7 +169,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         }
     }
 
-    public ThrottleWindow getCurrentThrottleFrame() {
+    public synchronized ThrottleWindow getCurrentThrottleFrame() {
         if (throttleWindows == null) {
             return null;
         }
