@@ -14,19 +14,15 @@ Broadcast mode, but you have to be sure only one such device is powered, as they
 programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
 
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
-    <version author="Egbert Broerse" version="1.0" lastUpdated="20210205"/>
+    <version author="Egbert Broerse" version="1.0" lastUpdated="20210206"/>
     <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
-
+    <!-- compare to Power8, a 7A Booster. Because of the way LNCV includes the art.nr. in the CV it could not be included in this file -->
     <decoder>
         <family name="Booster" mfg="Uhlenbrock Elektronik" type="stationary">
             <model model="Power4" productID="6324" maxTotalCurrent="3.5A" formFactor="Stationary" comment="3.5A Multiprotocol Booster">
               <versionCV />
               <size length="104" width="58" height="33" units="mm" />
             </model>
-          <model model="Power8" productID="6328" maxTotalCurrent="7A" formFactor="Stationary" comment="7A Multiprotocol Booster">
-            <versionCV />
-            <size length="104" width="58" height="33" units="mm" />
-          </model>
         </family>
 
         <programming direct="no" paged="no" register="no" ops="no">
@@ -128,7 +124,9 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
 
             <variable CV="6324.4" item="Starting Phase Wait" default="6">
               <decVal min="0" max="255"/>
-              <label>Starting phase wait period: </label>
+              <label>Starting phase wait: </label>
+              <label xml:lang="de">Start Wartezeit: </label>
+              <label xml:lang="nl">Opstartpauze: </label>
               <tooltip>Waiting period in 0.5 s steps. The standard value is equivalent to approx. 3 seconds</tooltip>
               <tooltip xml:lang="de">Startphase Wartezeit in 0,5s Schritten. Werkseinstellung ~ 3 s.</tooltip>
               <tooltip xml:lang="nl">Wachttijd inschakelen in stappen van 0,5s. Standaard ingesteld op ca. 3 s.</tooltip>
@@ -139,14 +137,17 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
                 <enumChoice choice="0" value="0">
                   <choice>LocoNet Input</choice>
                   <choice xml:lang="de">LocoNet Eingang</choice>
+                  <choice xml:lang="nl">LocoNet Ingang</choice>
                 </enumChoice>
                 <enumChoice choice="0" value="1">
                   <choice>DCC Booster Input (Lenz CDE)</choice>
                   <choice xml:lang="de">DCC Verstärker-eingang (Lenz CDE)</choice>
+                  <choice xml:lang="nl">DCC Booster-ingang (Lenz CDE)</choice>
                 </enumChoice>
                 <enumChoice choice="0" value="2">
                   <choice>Märklin Booster Input</choice>
                   <choice xml:lang="de">Märklin Verstärker-eingang</choice>
+                  <choice xml:lang="nl">Märklin Booster-ingang</choice>
                 </enumChoice>
               </enumVal>
               <label>Booster Control:</label>
@@ -171,7 +172,6 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="de">Aus: RailCom deaktiviert</tooltip>
               <tooltip xml:lang="nl">Uit: RailCom uitgeschakeld</tooltip>
             </variable>
-
             <variable CV="6324.6" readOnly="yes" item="Temperature">
               <decVal max="255"/>
               <label xml:lang="de">Betriebstemperatur in °C: </label>
@@ -201,15 +201,19 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <decVal min="0" max="255"/>
               <label>Braking Signal Data: </label>
               <label xml:lang="de">Bremssignaldaten: </label>
+              <label xml:lang="nl">Instelling Afremmen</label>
               <tooltip>Data for braking signal (not explained in manual)</tooltip>
               <tooltip xml:lang="de">Daten für Bremssignal (z.B. Langsamfahrt)</tooltip>
+              <tooltip xml:lang="nl">Data voor Remsignaal (bijv. Langzaam rijden)</tooltip>
             </variable>
             <variable CV="6324.10" item="DCC Cutout Time" default="63">
               <decVal min="0" max="255"/>
               <label>DCC CutOut Time: </label>
-              <label xml:lang="de">DCC CutOut-Time: </label>
-              <tooltip>DCC CutOut time in 7.5 µseconds steps</tooltip>
-              <tooltip xml:lang="de">DCC CutOut-Time in 7,5μs Schritten</tooltip>
+              <label xml:lang="de">DCC CutOut-Zeit: </label>
+              <label xml:lang="nl">DCC CutOut-tijd</label>
+              <tooltip>DCC CutOut time in 7.5 µ seconds steps</tooltip>
+              <tooltip xml:lang="de">DCC CutOut-Dauer in 7,5 μs Schritten</tooltip>
+              <tooltip xml:lang="nl">DCC CutOut-tijd in stappen van 7,5 μs</tooltip>
             </variable>
               <variable CV="6324.11" item="Restart Wait" default="20">
                 <decVal min="0" max="255"/>

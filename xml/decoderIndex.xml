@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.21.5ish+egbertbroerse+20210206T1742Z+R3d6fe0d88f on Sat Feb 06 18:42:06 CET 2021-->
-  <decoderIndex version="1028">
+  <!--Written by JMRI version 4.21.5ish+egbertbroerse+20210206T1924Z+R79755178bc on Sat Feb 06 20:24:34 CET 2021-->
+  <decoderIndex version="1032">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -36039,17 +36039,29 @@
           <size length="22" width="12.5" height="2.5" units="mm" />
         </model>
       </family>
-      <family name="IntelliLight" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_IntelliLight.xml">
+      <family name="IntelliLight" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_IntelliLight2800.xml">
         <model model="Controller" productID="2800" formFactor="Stationary" comment="Lighting Controller">
           <versionCV />
           <size length="600" width="105" height="66" units="mm" />
         </model>
       </family>
-      <family name="Booster" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_Powerx.xml">
+      <family name="IntelliLight" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_IntelliLight2820.xml">
+        <model model="Controller" productID="2800" formFactor="Stationary" comment="Lighting Controller">
+          <versionCV />
+          <size length="600" width="105" height="66" units="mm" />
+        </model>
+        <model model="LED Controller" productID="2820" formFactor="Stationary" comment="LED Lighting Controller">
+          <versionCV />
+          <size length="105" width="58" height="35" units="mm" />
+        </model>
+      </family>
+      <family name="Booster" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_Power4.xml">
         <model model="Power4" productID="6324" maxTotalCurrent="3.5A" formFactor="Stationary" comment="3.5A Multiprotocol Booster">
           <versionCV />
           <size length="104" width="58" height="33" units="mm" />
         </model>
+      </family>
+      <family name="Booster" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_Power8.xml">
         <model model="Power8" productID="6328" maxTotalCurrent="7A" formFactor="Stationary" comment="7A Multiprotocol Booster">
           <versionCV />
           <size length="104" width="58" height="33" units="mm" />
