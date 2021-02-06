@@ -112,8 +112,8 @@
 
       <p>The Light Table is kept in your <i>layout configuration</i>, along
       with Turnouts, Sensors, Signal Heads, control panel setup etc.
-      To store this information on disk, see <a href="../../../../html/apps/StoringYourWork.shtml">
-      Storing Your Work</a>.</p>
+      To store this information on disk, see <a href="../../../../html/apps/LoadStoreWork.shtml">
+      Loading and Storing Your Work</a>.</p>
       <p>Note that the enabled/disabled state of
       each Light is not saved in the configuration file. When Lights are loaded from
       a configuration file, they are all enabled.</p>

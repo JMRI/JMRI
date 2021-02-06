@@ -159,13 +159,13 @@
         they'll work when reloaded)
         <br><br>
 
-      For more information on storing all your work in JMRI, <a href="../StoringYourWork.shtml">click here.</a>
+      For more information on storing all your work in JMRI, <a href="../LoadStoreWork.shtml">click here.</a>
         </dd>
 
       <dt id="multifile">Can I store just the configuration information?</dt>
       <dd>You can store just the "configuration" information in a file.
-      See <a href="../../apps/StoringYourWork.shtml">
-      Storing Your Work</a>.  Look at the options for <strong>PanelPro &rArr; Tables</strong>.
+      See <a href="../../apps/LoadStoreWork.shtml">
+      Loading and Storing Your Work</a>.  Look at the options for <strong>PanelPro &rArr; Tables</strong>.
       <br><br>
       The alternate store options can be accessed from the File menu for any
       of the tables.  Make sure to use a different file name since the resulting file
