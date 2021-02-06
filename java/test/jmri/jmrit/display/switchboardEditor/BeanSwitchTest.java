@@ -88,6 +88,7 @@ public class BeanSwitchTest {
         t.cleanup(); // make sure no exception is thrown
     }
 
+    @Disabled("no output received in last 10 min on Travis CI GUI test run")
     @Test
     public void testLightKeyConnected() {
         NamedBean nb = jmri.InstanceManager.getDefault(LightManager.class).provideLight("IL4");
