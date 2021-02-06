@@ -5,7 +5,7 @@ import java.io.*;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
 import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
-import jmri.util.ImmediatePipedOutputStream;
+//import jmri.util.ImmediatePipedOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -135,6 +135,9 @@ public class LnHexFilePort extends LnPortController implements Runnable {
                         }
                         // flush the pipe so other threads can see the message
                         outpipe.flush();
+
+                        // finished that line, wait
+                        Thread.sleep(delay);
                     }
                     // ready
                 } else { // must be a new file
@@ -242,10 +245,7 @@ public class LnHexFilePort extends LnPortController implements Runnable {
     private DataOutputStream outpipe = null;  // feed pin
     private DataInputStream inpipe = null;  // feed pout
 
-    @Override
-    public boolean okToSend() {
-        return true;
-    }
+
     // define operation
     private int delay = 100;      // units are milliseconds; default is quiet a busy LocoNet
 
@@ -272,6 +272,28 @@ public class LnHexFilePort extends LnPortController implements Runnable {
      */
     synchronized public void setOutputBufferEmpty(boolean s) {
         outputBufferEmpty = s;
+    }
+
+    /**
+     * Can the port accept additional characters? The state of CTS determines
+     * this, as there seems to be no way to check the number of queued bytes and
+     * buffer length. This might go false for short intervals, but it might also
+     * stick off if something goes wrong.
+     *
+     * @return true if port can accept additional characters; false otherwise
+     */
+     @Override
+    //public boolean okToSend() {
+    //    return true;
+    //}
+    public boolean okToSend() {
+        if (checkBuffer) {
+            log.debug("Buffer Empty: {}", outputBufferEmpty);
+            return (outputBufferEmpty);
+        } else {
+            log.debug("No Flow Control or Buffer Check");
+            return (true);
+        }
     }
 
     @Override
