@@ -265,11 +265,14 @@ public class LncvMessageContents {
             case LNCV_READ_REPLY: // mod positions store CV value in ReadReply
                 returnString = Bundle.getMessage(locale, "LNCV_READ_REPLY_INTERPRETED", sArt, sCvn, sMod);
                 break;
-            case LNCV_DIRECT_LED1: // CV position contains module address, value position contains LED 0-15 on/off
-                returnString = Bundle.getMessage(locale, "LNCV_DIRECT_INTERPRETED", "1", sCvn);
+            case LNCV_DIRECT_LED1: // CV position contains module address, Value position contains LED 0-15 on/off
+                String modBin = String.format("%8s", Integer.toBinaryString(mod)).replace(' ', '0');
+                returnString = Bundle.getMessage(locale, "LNCV_DIRECT_INTERPRETED", "1", modBin, sCvn);
                 break;
-            case LNCV_DIRECT_LED2: // CV position contains module address, value position contains LED 16-31 on/off
-                returnString = Bundle.getMessage(locale, "LNCV_DIRECT_INTERPRETED", "2", sCvn);
+            case LNCV_DIRECT_LED2: // CV position contains module address, Value position contains LED 16-31 on/off
+                modBin = String.format("%8s", Integer.toBinaryString(mod)).replace(' ', '0');
+                returnString = Bundle.getMessage(locale, "LNCV_DIRECT_INTERPRETED", "2", modBin, sCvn);
+                //to16Bits(cvn, true));
                 break;
             case LNCV_DIRECT_REPLY: // CV position contains module address, value position = Button on/off message
                 returnString = Bundle.getMessage(locale, "LNCV_DIRECT_REPLY_INTERPRETED", sCvn, sMod);

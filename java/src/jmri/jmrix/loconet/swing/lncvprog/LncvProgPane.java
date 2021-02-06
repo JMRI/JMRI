@@ -476,19 +476,32 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
 
     private JPanel ledPanel;
 
+    // a row of checkboxes to set LEDs in module on/off
     private JPanel initDirectPanel() {
         ledPanel = new JPanel();
         for (int i = 0; i < 16; i++) {
             JCheckBox ledBox = new JCheckBox(""+i);
             ledPanel.add(ledBox);
         }
+        JPanel options = new JPanel();
+        options.setLayout(new BoxLayout(options, BoxLayout.Y_AXIS));
+        JToggleButton buttonAll = new JToggleButton(Bundle.getMessage("AllOn"));
+        buttonAll.addActionListener(e -> toggleAll(buttonAll.isSelected()));
+        options.add(buttonAll);
         JCheckBox serieTwo = new JCheckBox("LED2");
-        ledPanel.add(serieTwo);
+        options.add(serieTwo); // place to the right of Set button
+        ledPanel.add(options);
         JButton buttonSet = new JButton(Bundle.getMessage("ButtonSetDirect"));
         ledPanel.add(buttonSet);
         buttonSet.addActionListener(e -> setDirect(serieTwo.isSelected()));
-        ledPanel.setVisible(false); // start hidden
+        ledPanel.setVisible(false); // initially hide ledPanel
         return ledPanel;
+    }
+
+    private void toggleAll(boolean on) {
+        for (int j = 0; j < 16 ; j++) {
+            ((JCheckBox)ledPanel.getComponent(j)).setSelected(on);
+        }
     }
 
     protected void directActionPerformed() {
@@ -498,7 +511,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         }
         if (directCheckBox.isSelected()) {
             articleField.setEditable(false);
-            articleField.setText("6900");
+            articleField.setText("6900"); // fixed article number as per documentation
             articleField.setBackground(Color.WHITE); // reset
             readButton.setEnabled (false);
             ledPanel.setVisible(true);
@@ -512,7 +525,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
 
     // SetDirect button
     /**
-     * Handle SetDirect button, assemble LNCV read message. Requires presence of memo.
+     * Handle SetDirect button, assemble LNCV Direct Set message. Requires presence of memo to send.
      */
     protected void setDirect(boolean range2) {
         if (addressField.getText() != null) {
@@ -522,7 +535,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
                 // fetch the bits as set on the ledPanel
                 for (int j = 0; j < 16 ; j++) {
                     cv += (((JCheckBox)ledPanel.getComponent(j)).isSelected() ? (1 << j) : 0);
-                    log.debug("j={} cv={}", j, cv);
+                    //log.debug("j={} cv={}", j, cv);
                 }
                 memo.getLnTrafficController().sendLocoNetMessage(LncvMessageContents.createDirectWriteRequest(adr, cv, range2));
             } catch (NumberFormatException e) {
