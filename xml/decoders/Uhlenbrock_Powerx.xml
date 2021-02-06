@@ -23,6 +23,10 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <versionCV />
               <size length="104" width="58" height="33" units="mm" />
             </model>
+          <model model="Power8" productID="6328" maxTotalCurrent="7A" formFactor="Stationary" comment="7A Multiprotocol Booster">
+            <versionCV />
+            <size length="104" width="58" height="33" units="mm" />
+          </model>
         </family>
 
         <programming direct="no" paged="no" register="no" ops="no">
@@ -43,7 +47,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <decVal/>
               <label xml:lang="it">Versione Booster: </label>
               <label xml:lang="fr">Version Booster: </label>
-              <label xml:lang="de">Verstärker Version: </label>
+              <label xml:lang="de">Softwareversion: </label>
               <label xml:lang="nl">Booster firmware-versie: </label>
               <label>Booster Firmware Version: </label>
             </variable>
@@ -57,11 +61,11 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             </variable>
             <variable CV="6324.3" mask="XXXXXXXV" item="Ignore DIP Switches" default="0">
               <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-              <label xml:lang="de">CV5 bestimmt Kontroll</label>
+              <label xml:lang="de">Nutze CV5 für Grundeinstellung</label>
               <label xml:lang="nl">Boosterbesturing instellen met CV5</label>
               <label>Use CV5 for Booster Control</label>
               <tooltip>On: Set in CV5 (below). Off: Set using DIP hardware switches.</tooltip>
-              <tooltip xml:lang="de">Ein: CV5 (unten) bestimmt Steuerung des Verstärkers. Aus: Eingabe mit DIP Schalter</tooltip>
+              <tooltip xml:lang="de">Ein: CV5 (unten) bestimmt die Booster Grundeinstellung. Aus: Eingabe mit DIP Schalter</tooltip>
               <tooltip xml:lang="nl">Aan: CV5 (hieronder) bepaalt besturing Booster. Uit: Stel in met DIP schakelaars</tooltip>
             </variable>
             <variable CV="6324.3" mask="XXXXXXVX" item="Switch STOP/GO" default="0">
@@ -70,7 +74,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <label xml:lang="nl">Inschakelen met GO/STOP</label>
               <label>Turn on/off by LocoNet GO/STOP</label>
               <tooltip>Booster switches on/off by LocoNet GO/STOP instruction (GPON/GPOFF). Off: Signal on selected input switches booster on/off</tooltip>
-              <tooltip xml:lang="de">Booster schalten mit LocoNet GO/STOP Berichte (GPON/GPOFF). Aus: Steuersignal schaltet Verstärker ein/aus.</tooltip>
+              <tooltip xml:lang="de">Booster ein-/ausschalten per LocoNet-Befehl GO/STOP (GPON/GPOFF). Aus: Eingangssignal am gewählten Boostereingang schaltet Verstärker ein/aus.</tooltip>
               <tooltip xml:lang="nl">Booster inschakelen met LocoNet GO/STOP instructie (GPON/GPOFF). Uit: Ingestelde ingangssignaal schakelt booster aan/uit</tooltip>
             </variable>
             <variable CV="6324.3" mask="XXXXXVXX" item="Booster All" default="1">
@@ -93,22 +97,22 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             </variable>
             <variable CV="6324.3" mask="XXXVXXXX" item="Send Short" default="1">
               <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-              <label xml:lang="de">Versendet Kurzschluss-bericht</label>
+              <label xml:lang="de">Sende Kurzschluss-bericht</label>
               <label xml:lang="fr">Envoie un rapport á court-circuit</label>
               <label xml:lang="nl">Stuur LN bericht bij kortsluiting</label>
               <label>Send Short Detected LN-message</label>
               <tooltip>Booster sends a special L.NET report if there is a short circuit or temperature shut down, enabling the control unit to display which booster has a short circuit.</tooltip>
-              <tooltip xml:lang="de">Booster versendet bei Kurzschluss oder Temperaturüberschritt einen besonderen L.NET Bericht damit die Kontrolleinheit anzeigen kann welcher Booster einen Kurzschluss hatte.</tooltip>
+              <tooltip xml:lang="de">Booster sendet bei Kurzschluss oder Temperaturüberschritt einen besonderen L.NET Bericht für die Intellibox II.</tooltip>
               <tooltip xml:lang="nl">De booster verstuurt bij kortsluiting of te hoge temperatuur een speciaal bericht op LocoNet zodat de centrale de status kan tonen.</tooltip>
             </variable>
             <variable CV="6324.3" mask="XXVXXXXX" item="Invert Outputs" default="0">
               <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-              <label xml:lang="de">Booster Output Umgepolt</label>
+              <label xml:lang="de">Gleissignal umpolen</label>
               <label xml:lang="fr">Booster á polarité inversé́</label>
               <label xml:lang="nl">Uitgangen Omgekeerd</label>
               <label>Invert Output Polarity</label>
               <tooltip>Reverse booster output polarity (to correct swapped wires)</tooltip>
-              <tooltip xml:lang="de">Booster Ausgang Umgepolt (Korrigiert gequerte Anschlusskabel)</tooltip>
+              <tooltip xml:lang="de">Gleissignal umpolen zur Verwendung gedrehter LocoNet Kabel oder bei Vertauschung von C und D des DCC-Boostereingangs.</tooltip>
               <tooltip xml:lang="nl">Keer polariteit van de uitgangen om (herstelt omgekeerde aansluitingen)</tooltip>
               <tooltip xml:lang="fr">Le polarité des sorties du booster sont inversé (cable)</tooltip>
             </variable>
@@ -118,7 +122,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <label xml:lang="de">Cut Out Geräte</label>
               <label xml:lang="nl">Cut Out </label>
               <tooltip>Cut Out Hardware activated (required for Selectrix operation)</tooltip>
-              <tooltip xml:lang="de">Cut Out Hardware aktiviert (für Selectrix Betrieb)</tooltip>
+              <tooltip xml:lang="de">Cut Out Hardware aktiviert ( (notwendig für den RailCom Betrieb/Selectrix)</tooltip>
               <tooltip xml:lang="nl">Schakel Cut Out Hardware in (vereist voor Selectrix)</tooltip>
             </variable>
 
@@ -126,31 +130,35 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <decVal min="0" max="255"/>
               <label>Starting phase wait period: </label>
               <tooltip>Waiting period in 0.5 s steps. The standard value is equivalent to approx. 3 seconds</tooltip>
+              <tooltip xml:lang="de">Startphase Wartezeit in 0,5s Schritten. Werkseinstellung ~ 3 s.</tooltip>
+              <tooltip xml:lang="nl">Wachttijd inschakelen in stappen van 0,5s. Standaard ingesteld op ca. 3 s.</tooltip>
             </variable>
             <!-- no choice, but item="Action Mode" is required to hide elements in UI unless it's a LocoServo -->
             <variable CV="6324.5" mask="XXXXXXVV" comment="bits 0-1" item="Booster Control" default="0">
               <enumVal>
                 <enumChoice choice="0" value="0">
                   <choice>LocoNet Input</choice>
+                  <choice xml:lang="de">LocoNet Eingang</choice>
                 </enumChoice>
                 <enumChoice choice="0" value="1">
                   <choice>DCC Booster Input (Lenz CDE)</choice>
-                  <choice xml:lang="de">DCC Verstärker Eingang (Lenz CDE)</choice>
+                  <choice xml:lang="de">DCC Verstärker-eingang (Lenz CDE)</choice>
                 </enumChoice>
                 <enumChoice choice="0" value="2">
                   <choice>Märklin Booster Input</choice>
-                  <choice xml:lang="de">Märklin Verstärker Eingang</choice>
+                  <choice xml:lang="de">Märklin Verstärker-eingang</choice>
                 </enumChoice>
               </enumVal>
               <label>Booster Control:</label>
-              <label xml:lang="de">Verstärker-steuerung:</label>
+              <label xml:lang="de">Grundeinstellungen:</label>
               <label xml:lang="nl">Booster-besturing:</label>
               <tooltip>Instead of the dip switches, set CV3 bit 0 to 1 and this choice will apply</tooltip>
+              <tooltip xml:lang="de">Soll der Booster nicht über den DIP-Switch sondern per LocoNet CV eingestellt werden, setze Bit 0 in der LNCV 3.</tooltip>
             </variable>
             <variable CV="6324.5" mask="XXXXXVXX" item="DCC Brake" default="0">
               <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
               <label>DCC Brake Generator</label>
-              <label xml:lang="de">DCC Bremsen</label>
+              <label xml:lang="de">DCC-Bremsgenerator</label>
               <label xml:lang="nl">DCC Afremmen</label>
               <tooltip>Off: Normal operation, Brake Generator off</tooltip>
               <tooltip xml:lang="de">Aus: Normalbetrieb</tooltip>
@@ -158,7 +166,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             </variable>
             <variable CV="6324.5" mask="XXXXVXXX" item="RailCom CutOut" default="0">
               <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-              <label>RailCom CutOut</label>
+              <label>DCC-RailCom CutOut</label>
               <tooltip>Off: RailCom off</tooltip>
               <tooltip xml:lang="de">Aus: RailCom deaktiviert</tooltip>
               <tooltip xml:lang="nl">Uit: RailCom uitgeschakeld</tooltip>
@@ -166,14 +174,14 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
 
             <variable CV="6324.6" readOnly="yes" item="Temperature">
               <decVal max="255"/>
-              <label xml:lang="de">Temperatur in Grad °C: </label>
+              <label xml:lang="de">Betriebstemperatur in °C: </label>
               <label xml:lang="fr">Température (ºC): </label>
               <label xml:lang="nl">Temperatuur (ºC): </label>
               <label>Operating Temperature (ºC): </label>
             </variable>
             <variable CV="6324.7" readOnly="yes" item="Load">
               <decVal max="100"/>
-              <label xml:lang="de">Belastungsprozentsatz: </label>
+              <label xml:lang="de">Strombelastung (%)): </label>
               <label xml:lang="fr">Pourcentage de charge: </label>
               <label xml:lang="nl">Huidige belasting (%): </label>
               <label>Power Load (%): </label>
@@ -185,28 +193,32 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <label xml:lang="nl">Adres voor Aan/Uit: </label>
               <label>Booster On/Off Address: </label>
               <tooltip>Solenoid address to turn single booster on or off</tooltip>
-              <tooltip xml:lang="de">Adresse schalten um Booster ein oder aus zu schalten</tooltip>
+              <tooltip xml:lang="de">Magnetartikeladresse für Booster Einzelabschaltung</tooltip>
               <tooltip xml:lang="fr">Adresse de commutation pour allumer ou éteindre le booster</tooltip>
-              <tooltip xml:lang="nl">Magnetisch artikeladres voor Individuele uitschakeling van een booster</tooltip>
+              <tooltip xml:lang="nl">Magnetisch artikeladres voor Individuele uitschakeling van de booster</tooltip>
             </variable>
             <variable CV="6324.9" item="Braking Signal" default="6">
               <decVal min="0" max="255"/>
               <label>Braking Signal Data: </label>
+              <label xml:lang="de">Bremssignaldaten: </label>
               <tooltip>Data for braking signal (not explained in manual)</tooltip>
+              <tooltip xml:lang="de">Daten für Bremssignal (z.B. Langsamfahrt)</tooltip>
             </variable>
             <variable CV="6324.10" item="DCC Cutout Time" default="63">
               <decVal min="0" max="255"/>
               <label>DCC CutOut Time: </label>
+              <label xml:lang="de">DCC CutOut-Time: </label>
               <tooltip>DCC CutOut time in 7.5 µseconds steps</tooltip>
+              <tooltip xml:lang="de">DCC CutOut-Time in 7,5μs Schritten</tooltip>
             </variable>
               <variable CV="6324.11" item="Restart Wait" default="20">
                 <decVal min="0" max="255"/>
-                <label xml:lang="de">Einschaltzeit nach Kurzschluss: </label>
+                <label xml:lang="de">Wartezeit nach Kurzschluss: </label>
                 <label xml:lang="fr">Activation d'après court-circuit: </label>
                 <label xml:lang="nl">Wachttijd na kortsluiting: </label>
                 <label>Restart Wait after Short: </label>
                 <tooltip>Turn on automatically following a short circuit in 0.5 s steps. The standard value is equivalent to approx. 10 seconds. 0 turns off auto restart.</tooltip>
-                <tooltip xml:lang="de">Automatisches Einschalten nach einem Kurzschluss im 0,5 s Takt. Der Standardwert entspricht ca. 10 Sekunden. Wert 0: kein autom. Einschalten</tooltip>
+                <tooltip xml:lang="de">Automatisches Einschalten nach einem Kurzschluss im 0,5 s Schritten. Der Standardwert entspricht ca. 10 Sekunden. (0 = schalte nicht wieder ein)</tooltip>
                 <tooltip xml:lang="fr">Activation automatique si court-circuit en étapes de 0,5 s. La valeur standard équivaut à env. 10 secondes. Valeur 0: automatique désactivé.</tooltip>
                 <tooltip xml:lang="nl">Wachttijd tot de herstart na kortsluiting. De standaardwaarde ca. 10 secondes. (Het instellen gebeurt in stappen van 0,5 s)</tooltip>
               </variable>
