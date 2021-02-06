@@ -145,7 +145,7 @@
       <h2>Saving and Reloading Configuration</h2>
       <p>The Signal Groups information is saved as part of the JMRI configuration in an
       XML file, along with control panel setup and similar stuff.
-      See <a href="../../apps/StoringYourWork.shtml"> Storing Your Work</a>.</p>
+      See <a href="../../apps/LoadStoreWork.shtml"> Loading and Storing Your Work</a>.</p>
 
       <p>For more information on creating and displaying panels,
       including how to show Signals on your Panels, please see the

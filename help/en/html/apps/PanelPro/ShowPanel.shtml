@@ -29,7 +29,7 @@
       <h1>JMRI: Displaying Panel File Contents</h1>
 
       <p>To load a Panel previously saved to disk in JMRI
-      and have the program display it, see <a href="../LoadingAndStoringYourWork.shtml">
+      and have the program display it, see <a href="../LoadStoreWork.shtml">
       Loading and Storing Your Work.</a><br>
       In contrast, this page describes how to show the contents
       of the file itself, meaning the data used to draw
