@@ -34,6 +34,7 @@ public class BeanSwitchTest {
         Assertions.assertNotNull(t, "exists");
     }
 
+    @Disabled("no output received in last 10 min on Travis CI GUI test run")
     @Test
     public void testButtonConnected() {
         swe.setSwitchType("T");
