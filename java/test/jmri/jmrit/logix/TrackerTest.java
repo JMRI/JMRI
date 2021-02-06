@@ -57,8 +57,8 @@ public class TrackerTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        // clear IconFamily warning
-        JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
+        // clear IconFamily warning, fixed in 4.21.5
+        // fixed: JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
 
         TrackerTableAction tta = jmri.InstanceManager.getDefault(TrackerTableAction.class);
         assertThat(tta).withFailMessage("TrackerTableAction not found").isNotNull();

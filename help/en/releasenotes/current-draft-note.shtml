@@ -21,7 +21,15 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>
+                    Andrew Crosland added a second current meter instance for SPROG Generation 5 hardware.
+                </li>
+                <li>
+                    Corrected links to images on SPROG Generation 5 hardware help page.
+                </li>
+                <li>
+                    Changed trademark recognition to &reg; for register trademarks, rather than &trade;.
+                </li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -371,7 +379,7 @@
    <h3>Internationalization</h3>
         <a id="I18N" name="I18N"></a>
         <ul>
-            <li></li>
+            <li>Dutch translations added for the Where Used, Meters and Issue Reporting tools.</li>
         </ul>
 
     <h3>Layout Editor</h3>
@@ -394,7 +402,9 @@
     <h3>Meters and MeterFrames</h3>
         <a id="Meters" name="Meters"></a>
         <ul>
-            <li></li>
+          <li>The Settings menu was slightly reorganized with submenus for each value.</li>
+          <li>When no meters are available, both Meters menus and the Units Settings menu show a short explanation.</li>
+          <li>Meters will honor the JMRI Locale/regional setting for the decimal separator (. or ,))</li>
         </ul>
 
     <h3>Operations</h3>

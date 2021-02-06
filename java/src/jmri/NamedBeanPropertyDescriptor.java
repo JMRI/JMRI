@@ -2,6 +2,8 @@ package jmri;
 
 import java.util.Objects;
 
+import javax.annotation.Nonnull;
+
 /**
  * Describes metadata about a given property key for a NamedBean.
  * <p>
@@ -22,9 +24,10 @@ public abstract class NamedBeanPropertyDescriptor<E> {
     /** What should be displayed when a given Bean does not have this property set. */
     public final E defaultValue;
 
-    protected NamedBeanPropertyDescriptor(String propertyKey, E defaultValue) {
-        this.propertyKey = propertyKey;
-        this.defaultValue = defaultValue;
+    protected NamedBeanPropertyDescriptor(
+            @Nonnull String propertyKey, @Nonnull E defaultValue) {
+        this.propertyKey = Objects.requireNonNull(propertyKey);
+        this.defaultValue = Objects.requireNonNull(defaultValue);
     }
 
     /**

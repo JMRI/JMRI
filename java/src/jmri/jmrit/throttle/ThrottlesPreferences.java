@@ -372,9 +372,7 @@ public class ThrottlesPreferences {
         if (listeners == null) {
             return;
         }
-        if (listeners.contains(l)) {
-            listeners.remove(l);
-        }
+        listeners.remove(l);
     }
 
     private final static Logger log = LoggerFactory.getLogger(ThrottlesPreferences.class);
