@@ -2,6 +2,9 @@ package jmri.jmrit.logixng.actions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.script.*;
 
 import jmri.InstanceManager;
 import jmri.*;
@@ -10,6 +13,7 @@ import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.expressions.True;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
+import jmri.script.JmriScriptEngineManager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -111,6 +115,77 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
     private ActionScript actionScript;
     private Sensor sensor;
     
+    
+    /*
+     * ActionScript assumes that bindings are local to the script that
+     * ActionScript executes. This test was written to check if that's the case
+     * and it's kept here both as a proof of it and to verify that it stays
+     * that way.
+     * Daniel Bergqvist
+     */
+    @Test
+    public void testThatBindingsAreLocal() throws ScriptException {
+        String script = ""
+                + "import java\n"
+                + "import java.beans\n"
+                + "import jmri\n"
+                + ""
+                + "class MyClass(java.beans.PropertyChangeListener):\n"
+                + ""
+                + "  s = sensors.provideSensor(\"IS%d\")\n"
+                + ""
+                + "  def __init__(self, ai):\n"
+                + "    self.s.addPropertyChangeListener(\"KnownState\", self)\n"
+                + "    self.myInt = ai\n"
+                + ""
+                + "  def propertyChange(self, evt):\n"
+                + "    self.myInt.set(self.s.getState())\n"
+                + ""
+                + "MyClass(param)\n"
+                ;
+        
+        
+        Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
+        sensor1.setCommandedState(Sensor.UNKNOWN);
+        Sensor sensor2 = InstanceManager.getDefault(SensorManager.class).provide("IS2");
+        sensor2.setCommandedState(Sensor.UNKNOWN);
+        
+        AtomicInteger myInt1 = new AtomicInteger();
+        AtomicInteger myInt2 = new AtomicInteger();
+        
+        JmriScriptEngineManager scriptEngineManager = jmri.script.JmriScriptEngineManager.getDefault();
+        Bindings bindings = new SimpleBindings();
+        bindings.put("param", myInt1);    // Give the script access to the local variable 'param'
+        scriptEngineManager.getEngineByName(JmriScriptEngineManager.PYTHON)
+                .eval(String.format(script,1), bindings);
+        bindings.put("param", myInt2);    // Give the script access to the local variable 'param'
+        scriptEngineManager.getEngineByName(JmriScriptEngineManager.PYTHON)
+                .eval(String.format(script,2), bindings);
+        
+        sensor1.setCommandedState(Sensor.INACTIVE);
+        sensor2.setCommandedState(Sensor.INACTIVE);
+        Assert.assertEquals(Sensor.INACTIVE, sensor1.getState());
+        Assert.assertEquals(Sensor.INACTIVE, sensor2.getState());
+        Assert.assertEquals(Sensor.INACTIVE, myInt1.get());
+        Assert.assertEquals(Sensor.INACTIVE, myInt2.get());
+        sensor1.setCommandedState(Sensor.ACTIVE);
+        Assert.assertEquals(Sensor.ACTIVE, sensor1.getState());
+        Assert.assertEquals(Sensor.INACTIVE, sensor2.getState());
+        Assert.assertEquals(Sensor.ACTIVE, myInt1.get());
+        Assert.assertEquals(Sensor.INACTIVE, myInt2.get());
+        
+        sensor1.setCommandedState(Sensor.INACTIVE);
+        sensor2.setCommandedState(Sensor.INACTIVE);
+        Assert.assertEquals(Sensor.INACTIVE, sensor1.getState());
+        Assert.assertEquals(Sensor.INACTIVE, sensor2.getState());
+        Assert.assertEquals(Sensor.INACTIVE, myInt1.get());
+        Assert.assertEquals(Sensor.INACTIVE, myInt2.get());
+        sensor2.setCommandedState(Sensor.ACTIVE);
+        Assert.assertEquals(Sensor.INACTIVE, sensor1.getState());
+        Assert.assertEquals(Sensor.ACTIVE, sensor2.getState());
+        Assert.assertEquals(Sensor.INACTIVE, myInt1.get());
+        Assert.assertEquals(Sensor.ACTIVE, myInt2.get());
+    }
     
     @Override
     public ConditionalNG getConditionalNG() {
