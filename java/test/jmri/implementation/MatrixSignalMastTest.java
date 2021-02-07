@@ -202,9 +202,9 @@ public class MatrixSignalMastTest {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         // provide 3 turnouts:
-        it11 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("11");
-        it12 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("12");
-        it13 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("13");
+        it11 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("IT11");
+        it12 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("IT12");
+        it13 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("IT13");
     }
 
     @AfterEach
