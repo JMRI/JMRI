@@ -9,7 +9,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 /**
- * Supporting class for Uhlenbrock LocoNet LNCV Programming & Direct Format messaging.
+ * Supporting class for Uhlenbrock LocoNet LNCV Programming and Direct Format messaging.
  * Structure adapted from {@link jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents}
  * 
  * Some of the message formats used in this class are Copyright Uhlenbrock.de

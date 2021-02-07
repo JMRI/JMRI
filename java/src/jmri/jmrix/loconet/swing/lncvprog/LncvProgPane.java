@@ -526,6 +526,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
     // SetDirect button
     /**
      * Handle SetDirect button, assemble LNCV Direct Set message. Requires presence of memo to send.
+     * @param range2 false for LEDs 0-15, true for LEDs 16-31
      */
     protected void setDirect(boolean range2) {
         if (addressField.getText() != null) {

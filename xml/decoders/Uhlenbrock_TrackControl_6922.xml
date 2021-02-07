@@ -256,7 +256,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip>See Track-Control Manual page 4 for graphics</tooltip>
             </variable>
 
-            <variable CV="6922.40" item="Feedback Address" default="0">
+            <variable CV="6922.40" item="Lock Key Address" default="0">
               <decVal max="4095"/>
               <label xml:lang="de">Adresse Tastensperre: </label>
               <label xml:lang="nl">Adres Toetsvergrendeling: </label>
@@ -388,6 +388,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               </group>
 
               <display item="Feedback Address"/>
+              <display item="Lock Key Address"/>
               <display item="Go Stop Key"/>
               <display item="Shunting Key"/>
 
