@@ -55,7 +55,6 @@ public class BeanSwitchTest {
         Assertions.assertFalse(t.getInverted(), "IT2 can't invert");
     }
 
-    @Disabled("no output received in last 10 min on Travis CI GUI test run")
     @Test
         public void testSliderConnected() {
         swe.setSwitchType("T");

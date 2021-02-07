@@ -30,7 +30,6 @@ import org.netbeans.jemmy.operators.JPopupMenuOperator;
 public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEditor> {
 
     // SwitchboardEditor e is already present in super
-    private SwitchboardEditor e = null;
 
     @Override
     @Ignore("ChangeView is not applicable to SwitchBoards")
