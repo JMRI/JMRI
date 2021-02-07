@@ -191,9 +191,10 @@
 
         <li><span class="since">Since
         <a href="https://jmri.org/releasenotes/jmri4.21.4.shtml" target="_blank">
-        JMRI 4.21.4</a></span><em>EXPERIMENTAL</em>: The Uhlenbrock USB Adapter part #63120 will only work with a
+        JMRI 4.21.4</a></span> The Uhlenbrock USB Adapter part #63120 will only work with a
         Windows OS, as it requires special Uhlenbrock supplied drivers to be installed. Follow the manufacturers
-        instruction for that install.<br>
+        instruction for that install. Basic connectivity was tested over LocoNet to a Digitrax Zephyr. The Slot Monitor,
+        Power Control are working correctly an Programming looks to be working.<br>
         In the JMRI Connection Preferences, verify the (default) settings. The options as stored in the adapter should
         only be configured from a LocoNet throttle, for example the Daisy.<br>
         Since JMRI can only communicate via the connection, it could lose contact during configuration.</li>
