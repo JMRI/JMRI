@@ -14,7 +14,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.SortOrder;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.table.TableRowSorter;
 import jmri.*;
 import jmri.swing.RowSorterUtil;
@@ -60,11 +59,8 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
             table.addToPanel(this);
             dataTabs.addTab(tabbedTableArray.get(x).getItemString(), null, tabbedTableArray.get(x).getPanel(), null);
         }
-        dataTabs.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent evt) {
-                setMenuBar(f);
-            }
+        dataTabs.addChangeListener((ChangeEvent evt) -> {
+            setMenuBar(f);
         });
         dataPanel.add(dataTabs, BorderLayout.CENTER);
         init = true;
@@ -189,7 +185,7 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
                 tableAction.setManager(manager);
             }
             dataModel = tableAction.getTableDataModel();
-            TableRowSorter<BeanTableDataModel> sorter = new TableRowSorter<>(dataModel);
+            TableRowSorter<BeanTableDataModel<E>> sorter = new TableRowSorter<>(dataModel);
             dataTable = dataModel.makeJTable(dataModel.getMasterClassName() + ":" + getItemString(), dataModel, sorter);
             dataScroll = new JScrollPane(dataTable);
 

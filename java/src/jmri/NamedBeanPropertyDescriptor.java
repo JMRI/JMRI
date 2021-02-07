@@ -56,4 +56,22 @@ public abstract class NamedBeanPropertyDescriptor<E> {
         return defaultValue.getClass();
     }
     
+    /**
+     * Equals based on Property Key and Default value Class.
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object obj) {
+        return (obj instanceof NamedBeanPropertyDescriptor && obj.hashCode() == this.hashCode());
+    }
+
+    /**
+     * hashCode based on Property Key and Default value Class.
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(this.propertyKey) * Objects.hashCode(getValueClass());
+    }
+    
 }
