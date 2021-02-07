@@ -93,6 +93,35 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
         Assert.assertFalse("Default reporter sensor follower set in properties", (Boolean) nbpd.defaultValue);
         Assert.assertEquals("sensor follower key set",CbusReporterManager.CBUS_MAINTAIN_SENSOR_DESCRIPTOR_KEY,nbpd.propertyKey);
         
+        Assert.assertFalse("Equals different",cbrepproplist.get(0).equals(nbpd));
+        
+    }
+    
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testNoDuplicatePropertiesInMultipleConnections() {
+    
+        CanSystemConnectionMemo otherMemo = new CanSystemConnectionMemo("M2");
+        otherMemo.setUserName("CAN2");
+        CbusReporterManager ll = new CbusReporterManager(otherMemo);
+        
+        InstanceManager.setReporterManager(l);
+        ReporterManager reporterManager = InstanceManager.getDefault(jmri.ReporterManager.class);
+        
+        ProxyManager<Reporter> proxy = (ProxyManager<Reporter>) reporterManager;
+        
+        Assert.assertEquals("2 Managers found, l + Internal",2,proxy.getManagerList().size());
+        Assert.assertEquals("2 properties found",2,proxy.getKnownBeanProperties().size());
+
+        proxy.addManager(ll);
+        
+        Assert.assertEquals("3 Managers found, I, l, ll",3,proxy.getManagerList().size());
+        Assert.assertTrue("M in list",proxy.getManagerList().contains(l));
+        Assert.assertTrue("M2 in list",proxy.getManagerList().contains(ll));
+        Assert.assertEquals("Still 2 properties found",2,proxy.getKnownBeanProperties().size());
+        
+        ll.dispose();
+        otherMemo.dispose();
     }
     
     private CanSystemConnectionMemo memo;
@@ -102,6 +131,7 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
