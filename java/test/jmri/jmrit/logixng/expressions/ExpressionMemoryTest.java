@@ -240,6 +240,76 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         memory.setValue("New value");
         // The action should now be executed so the atomic boolean should be true
         Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
+        
+        
+        // Test regular expression match
+        conditionalNG.setEnabled(false);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.MatchRegex);
+        expressionMemory.setCompareTo(ExpressionMemory.CompareTo.Value);
+        expressionMemory.setConstantValue("Hello.*");
+        memory.setValue("Hello world");
+        atomicBoolean.set(false);
+        Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());
+        conditionalNG.setEnabled(true);
+        Assert.assertTrue("The expression returns true",atomicBoolean.get());
+        
+        conditionalNG.setEnabled(false);
+        memory.setValue("Some world");
+        atomicBoolean.set(false);
+        Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());
+        conditionalNG.setEnabled(true);
+        Assert.assertFalse("The expression returns false",atomicBoolean.get());
+        
+        // Test regular expressions
+        conditionalNG.setEnabled(false);
+        expressionMemory.setConstantValue("\\w\\w\\d+\\s\\d+");
+        memory.setValue("Ab213 31");
+        atomicBoolean.set(false);
+        Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());
+        conditionalNG.setEnabled(true);
+        Assert.assertTrue("The expression returns true",atomicBoolean.get());
+        
+        conditionalNG.setEnabled(false);
+        memory.setValue("Ab213_31");    // Underscore instead of space
+        atomicBoolean.set(false);
+        Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());
+        conditionalNG.setEnabled(true);
+        Assert.assertFalse("The expression returns false",atomicBoolean.get());
+        
+        
+        // Test regular expression not match
+        conditionalNG.setEnabled(false);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.NotMatchRegex);
+        expressionMemory.setCompareTo(ExpressionMemory.CompareTo.Value);
+        expressionMemory.setConstantValue("Hello.*");
+        memory.setValue("Hello world");
+        atomicBoolean.set(false);
+        Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());
+        conditionalNG.setEnabled(true);
+        Assert.assertFalse("The expression returns false",atomicBoolean.get());
+        
+        conditionalNG.setEnabled(false);
+        memory.setValue("Some world");
+        atomicBoolean.set(false);
+        Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());
+        conditionalNG.setEnabled(true);
+        Assert.assertTrue("The expression returns true",atomicBoolean.get());
+        
+        // Test regular expressions
+        conditionalNG.setEnabled(false);
+        expressionMemory.setConstantValue("\\w\\w\\d+\\s\\d+");
+        memory.setValue("Ab213 31");
+        atomicBoolean.set(false);
+        Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());
+        conditionalNG.setEnabled(true);
+        Assert.assertFalse("The expression returns false",atomicBoolean.get());
+        
+        conditionalNG.setEnabled(false);
+        memory.setValue("Ab213_31");    // Underscore instead of space
+        atomicBoolean.set(false);
+        Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());
+        conditionalNG.setEnabled(true);
+        Assert.assertTrue("The expression returns true",atomicBoolean.get());
     }
     
     @Test
