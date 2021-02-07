@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.21.5ish+egbertbroerse+20210207T0844Z+R7a314ffc56 on Sun Feb 07 09:44:18 CET 2021-->
-  <decoderIndex version="1034">
+  <!--Written by JMRI version 4.21.5ish+egbertbroerse+20210207T2127Z+Rd9fb1b74d4 on Sun Feb 07 22:27:48 CET 2021-->
+  <decoderIndex version="1036">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -36065,6 +36065,12 @@
       </family>
       <family name="Track-Control" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_TrackControl_6922.xml">
         <model model="Turnout Module" productID="6922" formFactor="Stationary" comment="Control Panel Turnout Activator/Indicator">
+          <versionCV />
+          <size length="40" width="25" height="12" units="mm" />
+        </model>
+      </family>
+      <family name="Track-Control" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_TrackControl_6923.xml">
+        <model model="Signal Module" productID="6923" formFactor="Stationary" comment="Control Panel Signal Indicator">
           <versionCV />
           <size length="40" width="25" height="12" units="mm" />
         </model>
