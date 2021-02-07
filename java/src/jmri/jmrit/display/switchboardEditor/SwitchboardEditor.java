@@ -153,7 +153,7 @@ public class SwitchboardEditor extends Editor {
      * until the GridLayout is configured, used to determine the total number of items to be placed.
      * Accounts for "hide unconnected" setting, so it can be empty.
      */
-    @GuardedBy("this")
+    //@GuardedBy("this")
     private final LinkedHashMap<String, BeanSwitch> switchesOnBoard = new LinkedHashMap<>();
 
     /**
