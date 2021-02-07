@@ -65,6 +65,7 @@ public class DefaultSymbolTable implements SymbolTable {
     /** {@inheritDoc} */
     @Override
     public void setValue(String name, Object value) {
+        if (_symbols.get(name) == null) throw new IllegalArgumentException("The symbol "+name+" does not exist in the symbol table");
         _stack.setValueAtIndex(_firstSymbolIndex + _symbols.get(name).getIndex(), value);
     }
     

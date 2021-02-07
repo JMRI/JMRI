@@ -33,7 +33,7 @@ public class ExpressionLocalVariableXml extends jmri.managers.configurexml.Abstr
 
         storeCommon(p, element);
 
-        String variableName = p.getVariableName();
+        String variableName = p.getLocalVariable();
         if (variableName != null) {
             element.addContent(new Element("variable").addContent(variableName));
         }
@@ -67,7 +67,7 @@ public class ExpressionLocalVariableXml extends jmri.managers.configurexml.Abstr
 
         Element variableName = shared.getChild("variable");
         if (variableName != null) {
-            h.setVariable(variableName.getTextTrim());
+            h.setLocalVariable(variableName.getTextTrim());
         }
 
         Element otherVariableName = shared.getChild("otherVariable");

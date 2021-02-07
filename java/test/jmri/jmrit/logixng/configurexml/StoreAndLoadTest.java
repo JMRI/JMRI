@@ -1241,7 +1241,7 @@ public class StoreAndLoadTest {
         
         expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
         expressionLocalVariable.setComment("A comment");
-        expressionLocalVariable.setVariable("MyVar");
+        expressionLocalVariable.setLocalVariable("MyVar");
         expressionLocalVariable.setMemory(memory2);
         expressionLocalVariable.setCaseInsensitive(false);
         expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.Memory);
@@ -1251,7 +1251,7 @@ public class StoreAndLoadTest {
         
         expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
         expressionLocalVariable.setComment("A comment");
-        expressionLocalVariable.setVariable("MyVar");
+        expressionLocalVariable.setLocalVariable("MyVar");
         expressionLocalVariable.setMemory(memory2);
         expressionLocalVariable.setOtherLocalVariable("MyOtherVar");
         expressionLocalVariable.setCaseInsensitive(false);
@@ -1262,7 +1262,7 @@ public class StoreAndLoadTest {
         
         expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
         expressionLocalVariable.setComment("A comment");
-        expressionLocalVariable.setVariable("MyVar");
+        expressionLocalVariable.setLocalVariable("MyVar");
         expressionLocalVariable.setRegEx("/^Test$/");
         expressionLocalVariable.setMemory(memory2);
         expressionLocalVariable.setCaseInsensitive(false);

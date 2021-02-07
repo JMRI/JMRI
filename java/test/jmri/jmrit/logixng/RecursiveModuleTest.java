@@ -104,7 +104,7 @@ public class RecursiveModuleTest {
         
         
         ExpressionLocalVariable expressionLocalVariable913 = new ExpressionLocalVariable("IQDE913", null);
-        expressionLocalVariable913.setVariable("n");
+        expressionLocalVariable913.setLocalVariable("n");
         expressionLocalVariable913.setConstantValue("0");
         expressionLocalVariable913.setCompareTo(ExpressionLocalVariable.CompareTo.Value);
         expressionLocalVariable913.setVariableOperation(ExpressionLocalVariable.VariableOperation.Equal);
@@ -128,7 +128,7 @@ public class RecursiveModuleTest {
         ifThenElseSocket912.getChild(2).connect(ifThenElseSocket915);
         
         ExpressionLocalVariable expressionLocalVariable916 = new ExpressionLocalVariable("IQDE916", null);
-        expressionLocalVariable916.setVariable("n");
+        expressionLocalVariable916.setLocalVariable("n");
         expressionLocalVariable916.setConstantValue("1");
         expressionLocalVariable916.setCompareTo(ExpressionLocalVariable.CompareTo.Value);
         expressionLocalVariable916.setVariableOperation(ExpressionLocalVariable.VariableOperation.Equal);
