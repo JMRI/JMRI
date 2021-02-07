@@ -98,7 +98,7 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
         
         if (expression != null) {
             if (expression.getMemory() != null) {
-                _localVariableTextField.setText(expression.getVariableName());
+                _localVariableTextField.setText(expression.getLocalVariable());
             }
             _memoryOperationComboBox.setSelectedItem(expression.getVariableOperation());
             _compareToConstantTextField.setText(expression.getConstantValue());
@@ -143,7 +143,7 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
         }
         ExpressionLocalVariable expression = (ExpressionLocalVariable)object;
         
-        expression.setVariable(_localVariableTextField.getText());
+        expression.setLocalVariable(_localVariableTextField.getText());
         expression.setVariableOperation(_memoryOperationComboBox.getItemAt(_memoryOperationComboBox.getSelectedIndex()));
         
         

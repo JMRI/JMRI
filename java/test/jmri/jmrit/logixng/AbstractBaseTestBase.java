@@ -252,6 +252,9 @@ public abstract class AbstractBaseTestBase {
         Map<String, String> userNames = new HashMap<>();
         Map<String, String> comments = new HashMap<>();
         
+        // The copy is not a male socket so it will not get the local variables
+        _baseMaleSocket.clearLocalVariables();
+        
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
         _baseMaleSocket.printTree(Locale.ENGLISH, printWriter, TREE_INDENT);

@@ -30,8 +30,6 @@ import org.junit.Test;
 public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase {
 
     protected Memory _memory;
-    
-    
     private LogixNG logixNG;
     private ConditionalNG conditionalNG;
     private AnalogExpressionMemory expressionMemory;

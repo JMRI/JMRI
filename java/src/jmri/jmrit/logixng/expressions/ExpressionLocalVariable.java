@@ -24,7 +24,7 @@ import jmri.util.TypeConversionUtil;
 public class ExpressionLocalVariable extends AbstractDigitalExpression
         implements PropertyChangeListener, VetoableChangeListener {
 
-    private String _variableName;
+    private String _localVariable;
     private VariableOperation _variableOperation = VariableOperation.Equal;
     private CompareTo _compareTo = CompareTo.Value;
     private boolean _caseInsensitive = false;
@@ -48,7 +48,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
         if (sysName == null) sysName = manager.getAutoSystemName();
         ExpressionLocalVariable copy = new ExpressionLocalVariable(sysName, userName);
         copy.setComment(getComment());
-        copy.setVariable(_variableName);
+        copy.setLocalVariable(_localVariable);
         copy.setVariableOperation(_variableOperation);
         copy.setCompareTo(_compareTo);
         copy.setCaseInsensitive(_caseInsensitive);
@@ -57,13 +57,13 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
         return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
-    public void setVariable(String variableName) {
-        assertListenersAreNotRegistered(log, "setMemory");
-        _variableName = variableName;
+    public void setLocalVariable(String variableName) {
+        assertListenersAreNotRegistered(log, "setLocalVariable");
+        _localVariable = variableName;
     }
     
-    public String getVariableName() {
-        return _variableName;
+    public String getLocalVariable() {
+        return _localVariable;
     }
     
     public void setMemory(@Nonnull String memoryName) {
@@ -320,10 +320,10 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() {
-        if (_variableName == null) return false;
+        if (_localVariable == null) return false;
         
         String variableValue = getString(getConditionalNG()
-                        .getSymbolTable().getValue(_variableName));
+                        .getSymbolTable().getValue(_localVariable));
         String otherValue = null;
         boolean result;
         
@@ -395,6 +395,13 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
 
     @Override
     public String getLongDescription(Locale locale) {
+        String variableName;
+        if ((_localVariable == null) || _localVariable.isEmpty()) {
+            variableName = Bundle.getMessage(locale, "BeanNotSelected");
+        } else {
+            variableName = _localVariable;
+        }
+        
         String memoryName;
         if (_memoryHandle != null) {
             memoryName = _memoryHandle.getBean().getDisplayName();
@@ -441,17 +448,17 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
             case GreaterThanOrEqual:
                 // fall through
             case GreaterThan:
-                return Bundle.getMessage(locale, message, _variableName, _variableOperation._text, other);
+                return Bundle.getMessage(locale, message, variableName, _variableOperation._text, other);
                 
             case IsNull:
                 // fall through
             case IsNotNull:
-                return Bundle.getMessage(locale, "Variable_Long_CompareNull", _variableName, _variableOperation._text);
+                return Bundle.getMessage(locale, "Variable_Long_CompareNull", variableName, _variableOperation._text);
                 
             case MatchRegex:
                 // fall through
             case NotMatchRegex:
-                return Bundle.getMessage(locale, "Variable_Long_CompareRegex", _variableName, _variableOperation._text);
+                return Bundle.getMessage(locale, "Variable_Long_CompareRegex", variableName, _variableOperation._text);
                 
             default:
                 throw new IllegalArgumentException("_variableOperation has unknown value: "+_variableOperation.name());
