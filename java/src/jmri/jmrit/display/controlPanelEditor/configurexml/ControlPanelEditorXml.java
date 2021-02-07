@@ -30,7 +30,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
     }
 
     /**
-     * Default implementation for storing the contents of a ControlPanelEditor
+     * Default implementation for storing the contents of a ControlPanelEditor.
      *
      * @param o Object to store, of type ControlPanelEditor
      * @return Element containing the complete info
@@ -67,7 +67,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("shapeSelect", "" + (p.getShapeSelect() ? "yes" : "no"));
 
         String family = p.getPortalIconFamily();
-        if (family != null) {
+        if (family != null && !family.equals("Standard")) { // don't store the default map name
         Element elem = new Element("icons");
             elem.setAttribute("portalFamily", family);
             panel.addContent(elem);
@@ -229,6 +229,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         }
 
         Element elem = shared.getChild("icons");
+        log.warn("Portal elem = {} null", elem == null ? "" : "NOT");
         if (elem != null) {
             Attribute attr = elem.getAttribute("portalFamily");
             if (attr != null) {

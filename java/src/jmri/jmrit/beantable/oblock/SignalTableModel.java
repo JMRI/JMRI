@@ -152,7 +152,6 @@ public class SignalTableModel extends AbstractTableModel {
     // Rebuild _signalList CopyOnWriteArrayList<SignalRow>, copying Signals from Portal table
     private void makeList() {
         //CopyOnWriteArrayList<SignalRow> tempList = new CopyOnWriteArrayList<>();
-        //_signalList.clear(); // EBR try to fix +1 rows bug
         SignalArray tempList = new SignalArray();
         Collection<Portal> portals = _portalMgr.getPortalSet();
         for (Portal portal : portals) {
@@ -333,7 +332,6 @@ public class SignalTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        //log.debug("_signalList.numberOfSignals = {}", _signalList.numberOfSignals()); // EBR debug
         return _signalList.numberOfSignals() + (_tabbed ? 0 : 1); // + 1 row in _desktop to create entry row
         // +1 adds the extra empty row at the bottom of the table display, causes IOB when called externally when _tabbed
     }

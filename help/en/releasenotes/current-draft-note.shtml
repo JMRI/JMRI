@@ -21,7 +21,15 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>
+                    Andrew Crosland added a second current meter instance for SPROG Generation 5 hardware.
+                </li>
+                <li>
+                    Corrected links to images on SPROG Generation 5 hardware help page.
+                </li>
+                <li>
+                    Changed trademark recognition to &reg; for register trademarks, rather than &trade;.
+                </li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -316,7 +324,7 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li></li>
+                <li>Added new definitions to program Power4, Power8 (boosters) and IntelliLight module.</li>
             </ul>
 
         <h4>Umelec</h4>
@@ -371,13 +379,14 @@
    <h3>Internationalization</h3>
         <a id="I18N" name="I18N"></a>
         <ul>
-            <li></li>
+            <li>Dutch translations added for the Where Used, Meters and Issue Reporting tools.</li>
         </ul>
 
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+	        <li>A problem storing and reading LE controlpoint values for users with a non-default Locale has been fixed
+            .</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -394,7 +403,9 @@
     <h3>Meters and MeterFrames</h3>
         <a id="Meters" name="Meters"></a>
         <ul>
-            <li></li>
+          <li>The Settings menu was slightly reorganized with submenus for each value.</li>
+          <li>When no meters are available, both Meters menus and the Units Settings menu show a short explanation.</li>
+          <li>Meters will honor the JMRI Locale/regional setting for the decimal separator (. or ,))</li>
         </ul>
 
     <h3>Operations</h3>
@@ -452,7 +463,8 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>Turnouts with 1 Sensor Feedback update to Inconsistent state when the Sensor being followed enters an Unknown or Inconsistent state.
+            <br>See <a href="https://www.jmri.org/help/en/package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout_Feedback">Turnout Feedback</a></li>
         </ul>
 
     <h3>Scripting</h3>
