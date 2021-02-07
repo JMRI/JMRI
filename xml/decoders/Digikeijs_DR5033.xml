@@ -232,9 +232,9 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
     </decoder>
 
     <pane>
-        <name>LNCV Booster Configuration</name>
-        <name xml:lang="de">LNCV Boosterkonfiguration</name>
-        <name xml:lang="nl">LNCV Booster instellen</name>
+        <name>LNCV Configuration</name>
+        <name xml:lang="de">LNCV Konfiguration</name>
+        <name xml:lang="nl">LNCV Configuratie</name>
         <row>
             <column>
               <label>

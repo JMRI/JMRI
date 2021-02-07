@@ -23,7 +23,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
