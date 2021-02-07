@@ -142,16 +142,17 @@ public class BeanSwitchTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        if (!GraphicsEnvironment.isHeadless()) {
-            swe = new SwitchboardEditor("Bean Switch Test Switchboard");
-        }
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalLightManager();
+
+        swe = new SwitchboardEditor("Bean Switch Test Switchboard");
     }
 
     @AfterEach
     public void tearDown() {
         if (swe != null) {
-            new EditorFrameOperator(swe.getTargetFrame()).closeFrameWithConfirmations();
-            swe = null;
+            swe.dispose();
         }
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();

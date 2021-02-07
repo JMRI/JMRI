@@ -39,9 +39,9 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
 
     @Test
     public void testDefaultCtor() {
-        SwitchboardEditor p = new SwitchboardEditor();
-        Assertions.assertNotNull(p, "exists");
-        p.dispose();
+        SwitchboardEditor e1 = new SwitchboardEditor();
+        Assertions.assertNotNull(e1, "exists");
+        e1.dispose();
     }
 
     @Test
@@ -202,9 +202,11 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     @Test
     public void testGetSwitches() {
         e.setMinSpinner(8);
-        e.setMinSpinner(17);
-        Assertions.assertEquals(8, e.getSwitches().size(), "Get array containing all items");
+        e.setMaxSpinner(17);
+        e.updatePressed();
+        Assertions.assertEquals(10, e.getSwitches().size(), "Get array containing all items");
     }
+
     // from here down is testing infrastructure
 
     @BeforeEach
@@ -215,18 +217,15 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
-        if (!GraphicsEnvironment.isHeadless()) {
-            e = new SwitchboardEditor("Switchboard Editor Test");
-        }
+
+        e = new SwitchboardEditor("Switchboard Editor Test");
     }
 
     @AfterEach
     @Override
     public void tearDown() {
         if (e != null) {
-           // dispose on Swing thread
-           new EditorFrameOperator(e.getTargetFrame()).closeFrameWithConfirmations();
-           e = null;
+            e.dispose();
         }
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
