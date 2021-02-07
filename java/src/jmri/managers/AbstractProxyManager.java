@@ -428,13 +428,18 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     * List does not contain duplicates.
+     */
     @Nonnull
     @Override
     public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
-        List<NamedBeanPropertyDescriptor<?>> l = new ArrayList<>();
-        mgrs.forEach(m -> l.addAll(m.getKnownBeanProperties()));
-        return l;
+        // Create List as set to prevent duplicates from multiple managers
+        // of the same hardware type.
+        Set<NamedBeanPropertyDescriptor<?>> set = new HashSet<>();
+        mgrs.forEach(m -> set.addAll(m.getKnownBeanProperties()));
+        return new ArrayList<>(set);
     }
 
     /** {@inheritDoc} */

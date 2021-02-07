@@ -49,15 +49,15 @@ public class MqttSensorTest extends jmri.implementation.AbstractSensorTestBase {
     }
 
     @Override
-    public void checkOnMsgSent() {
-        Assert.assertEquals("topic", "track/turnout/2", saveTopic);
-        Assert.assertEquals("topic", "THROWN", new String(savePayload));
+    public void checkActiveMsgSent() {
+        Assert.assertEquals("topic", "track/sensor/1", saveTopic);
+        Assert.assertEquals("topic", "ACTIVE", new String(savePayload));
     }
 
     @Override
-    public void checkOffMsgSent() {
-        Assert.assertEquals("topic", "track/turnout/2", saveTopic);
-        Assert.assertEquals("topic", "CLOSED", new String(savePayload));
+    public void checkInactiveMsgSent() {
+        Assert.assertEquals("topic", "track/sensor/1", saveTopic);
+        Assert.assertEquals("topic", "INACTIVE", new String(savePayload));
     }
 
     // private final static Logger log = LoggerFactory.getLogger(MqttSensorTest.class);
