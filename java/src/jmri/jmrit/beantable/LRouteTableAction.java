@@ -216,7 +216,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         }
 
         @Override
-        public Logix getBySystemName(@Nonnull @Nonnull String name) {
+        public Logix getBySystemName(@Nonnull String name) {
             return _logixManager.getBySystemName(name);
         }
 

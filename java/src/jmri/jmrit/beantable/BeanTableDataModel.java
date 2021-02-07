@@ -710,12 +710,15 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         menuItem.addActionListener((ActionEvent e1) -> renameBean(rowindex, 0));
         popupMenu.add(menuItem);
 
-        menuItem = new JMenuItem(Bundle.getMessage("Clear"));
+        menuItem = new JMenuItem(Bundle.getMessage("ClearName"));
         menuItem.addActionListener((ActionEvent e1) -> removeName(rowindex, 0));
         popupMenu.add(menuItem);
 
-        menuItem = new JMenuItem(Bundle.getMessage("Move"));
+        menuItem = new JMenuItem(Bundle.getMessage("MoveName"));
         menuItem.addActionListener((ActionEvent e1) -> moveBean(rowindex, 0));
+        if (getRowCount() == 1) {
+            menuItem.setEnabled(false); // you can't move when there is just 1 item (to other table?
+        }
         popupMenu.add(menuItem);
 
         menuItem = new JMenuItem(Bundle.getMessage("EditComment"));
@@ -737,35 +740,24 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     }
 
     /**
-     * Change the bean System Name in a dialog.
+     * Change the bean User Name in a dialog.
      *
      * @param row table model row number of bean
      * @param column always passed in as 0, not used
      */
     public void renameBean(int row, int column) {
         T nBean = getBySystemName(sysNameList.get(row));
-        String oldName = nBean.getUserName();
-        JTextField _newName = new JTextField(20);
-        _newName.setText(oldName);
-        Object[] renameBeanOption = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), _newName};
-        int retval = JOptionPane.showOptionDialog(null,
-                Bundle.getMessage("RenameFrom", oldName), Bundle.getMessage("RenameTitle", getBeanType()),
-                JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                renameBeanOption, renameBeanOption[2]);
-
-        if (retval != 1) {
-            return;
-        }
-        String value = _newName.getText();
-
-        if (value.equals(oldName)) {
-            //name not changed.
+        String oldName = (nBean.getUserName() == null ? "" : nBean.getUserName());
+        String newName = JOptionPane.showInputDialog(null,
+                Bundle.getMessage("RenameFrom", getBeanType(), "\"" +oldName+"\""), oldName);
+        if (newName == null || newName.equals(nBean.getUserName())) {
+            // name not changed
             return;
         } else {
-            T nB = getByUserName(value);
+            T nB = getByUserName(newName);
             if (nB != null) {
-                log.error("User name is not unique {}", value);
-                String msg = Bundle.getMessage("WarningUserName", "" + value);
+                log.error("User name is not unique {}", newName);
+                String msg = Bundle.getMessage("WarningUserName", "" + newName);
                 JOptionPane.showMessageDialog(null, msg,
                         Bundle.getMessage("WarningTitle"),
                         JOptionPane.ERROR_MESSAGE);
@@ -773,16 +765,18 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             }
         }
 
-        if (!allowBlockNameChange("Rename", nBean, value)) return;  // NOI18N
+        if (!allowBlockNameChange("Rename", nBean, newName)) {
+            return;  // NOI18N
+        }
 
-        nBean.setUserName(value);
+        nBean.setUserName(newName);
         fireTableRowsUpdated(row, row);
-        if (!value.isEmpty()) {
+        if (!newName.isEmpty()) {
             if (oldName == null || oldName.isEmpty()) {
                 if (!nbMan.inUse(sysNameList.get(row), nBean)) {
                     return;
                 }
-                String msg = Bundle.getMessage("UpdateToUserName", getBeanType(), value, sysNameList.get(row));
+                String msg = Bundle.getMessage("UpdateToUserName", getBeanType(), newName, sysNameList.get(row));
                 int optionPane = JOptionPane.showConfirmDialog(null,
                         msg, Bundle.getMessage("UpdateToUserNameTitle"),
                         JOptionPane.YES_NO_OPTION);
@@ -795,9 +789,8 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                         log.error("Impossible exception renaming Bean", ex);
                     }
                 }
-
             } else {
-                nbMan.renameBean(oldName, value, nBean);
+                nbMan.renameBean(oldName, newName, nBean);
             }
 
         } else {
@@ -824,14 +817,16 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * Determine whether it is safe to rename/remove a Block user name.
      * <p>The user name is used by the LayoutBlock to link to the block and
      * by Layout Editor track components to link to the layout block.
+     *
      * @param changeType This will be Remove or Rename.
      * @param bean The affected bean.  Only the Block bean is of interest.
      * @param newName For Remove this will be empty, for Rename it will be the new user name.
      * @return true to continue with the user name change.
      */
     boolean allowBlockNameChange(String changeType, T bean, String newName) {
-        if (!bean.getBeanType().equals("Block")) return true;  // NOI18N
-
+        if (!bean.getBeanType().equals("Block")) {
+            return true;  // NOI18N
+        }
         // If there is no layout block or the block name is empty, Block rename and remove are ok without notification.
         String oldName = bean.getUserName();
         if (oldName == null) return true;
@@ -870,7 +865,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         getManager().getNamedBeanSet().forEach((T b) -> {
             //Only add items that do not have a username assigned.
             String userName = b.getUserName();
-            if (userName==null || userName.isEmpty()) {
+            if (userName == null || userName.isEmpty()) {
                 box.addItem(b.getSystemName());
             }
         });
