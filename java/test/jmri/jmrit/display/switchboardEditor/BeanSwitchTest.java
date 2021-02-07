@@ -9,7 +9,7 @@ import java.awt.event.MouseEvent;
 import java.util.Objects;
 
 import jmri.util.JUnitUtil;
-//import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -17,10 +17,12 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 import javax.swing.*;
 
 /**
+ * Test functioning of switchboardeditor/BeanSwitch.
  *
  * @author Egbert Broerse Copyright (C) 2017, 2021
  */
-@Disabled("stalling on Travis GUI") // IfSystemProperty(named ="java.awt.headless", matches ="true")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class BeanSwitchTest {
 
     private SwitchboardEditor swe = null;
@@ -89,7 +91,6 @@ public class BeanSwitchTest {
         t.cleanup(); // make sure no exception is thrown
     }
 
-    @Disabled("no output received in last 10 min on Travis CI GUI test run")
     @Test
     public void testLightKeyConnected() {
         NamedBean nb = jmri.InstanceManager.getDefault(LightManager.class).provideLight("IL4");

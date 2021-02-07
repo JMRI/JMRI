@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import org.junit.Ignore;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.JMenuBarOperator;
 import org.netbeans.jemmy.operators.JMenuOperator;
 
@@ -19,15 +20,17 @@ import jmri.util.JUnitUtil;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 
 /**
- * Test simple functioning of SwitchboardEditor
+ * Test functioning of SwitchboardEditor.
  *
  * @author Paul Bender Copyright (C) 2016
  * @author Egbert Broerse Copyright (C) 2017, 2020, 2021
  */
-//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEditor> {
 
     // SwitchboardEditor e is already present in super
+    private SwitchboardEditor e = null;
 
     @Override
     @Ignore("ChangeView is not applicable to SwitchBoards")
@@ -37,7 +40,6 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
 
     @Test
     public void testDefaultCtor() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         SwitchboardEditor p = new SwitchboardEditor();
         Assertions.assertNotNull(p, "exists");
         p.dispose();
@@ -45,13 +47,11 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
 
     @Test
     public void testStringCtor() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         Assertions.assertNotNull(e, "exists");
     }
 
     @Test
     public void checkOptionsMenuExists() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
         EditorFrameOperator jfo = new EditorFrameOperator(e);
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
@@ -61,7 +61,6 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
 
     @Test
     public void checkSetEditable() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
         e.setAllEditable(true);
         EditorFrameOperator jfo = new EditorFrameOperator(e);
@@ -73,7 +72,6 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
 
     @Test
     public void testTurnoutSwitchPopup() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         // initially selected connection should be Internal
         Assertions.assertEquals("I", e.getSwitchManu(), "Internal connection default at startup");
         Assertions.assertEquals(1, e.getPanelMenuRangeMin(), "MinSpinner=1 default at startup");
@@ -88,14 +86,12 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
 
     @Test
     public void testIsDirty() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to false.
         Assertions.assertFalse(e.isDirty(), "isDirty");
     }
 
     @Test
     public void testSetDirty() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to false, setDirty() sets it to true.
         e.setDirty();
         Assertions.assertTrue(e.isDirty(), "isDirty after set");
@@ -103,7 +99,6 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
 
     @Test
     public void testSetDirtyWithParameter() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to false, so set it to true.
         e.setDirty(true);
         Assertions.assertTrue(e.isDirty(), "isDirty after set");
@@ -111,7 +106,6 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
 
     @Test
     public void testResetDirty() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to false, so set it to true.
         e.setDirty(true);
         // then call resetDirty, which sets it back to false.
@@ -121,7 +115,6 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
 
     @Test
     public void testGetSetDefaultTextColor() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         Assertions.assertEquals(ColorUtil.ColorBlack, e.getDefaultTextColor(), "Default Text Color");
         e.setDefaultTextColor(Color.PINK);
         Assertions.assertEquals(ColorUtil.ColorPink, e.getDefaultTextColor(), "Default Text Color after Set");
@@ -129,7 +122,6 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
 
     @Test
     public void testSwitchRangeTurnouts() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setSwitchManu("I"); // set explicitly
         Assertions.assertEquals("T", e.getSwitchType(), "Default Switch Type Turnouts");
         Assertions.assertEquals("button", e.getSwitchShape(), "Default Switch Shape Button");
@@ -149,7 +141,6 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
 
     @Test
     public void testSwitchInvertSensors() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setSwitchType("S");
         // initially selected connection should be Internal but is not 100% predictable (after type is changed?)
         e.setSwitchManu("I"); // so set explicitly
@@ -176,7 +167,6 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
 
     @Test
     public void testHideUnconnected() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         // initially selected connection should be Internal but is not 100% predictable (after type is changed?)
         e.setSwitchManu("I"); // so set explicitly
         ((TurnoutManager) e.getManager()).provideTurnout("IT24"); // active manager should be a TurnoutManager, connect to item 1
@@ -187,7 +177,6 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
 
     @Test
     public void testSwitchAllLights() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setSwitchType("L");
         e.setSwitchManu("I"); // so set explicitly as LightManager
         e.updatePressed(); // rebuild for Lights
@@ -213,7 +202,6 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
 
     @Test
     public void testGetSwitches() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setMinSpinner(8);
         e.setMinSpinner(17);
         Assertions.assertEquals(8, e.getSwitches().size(), "Get array containing all items");
