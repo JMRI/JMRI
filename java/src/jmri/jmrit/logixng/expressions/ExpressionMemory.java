@@ -427,14 +427,14 @@ public class ExpressionMemory extends AbstractDigitalExpression
     public String getLongDescription(Locale locale) {
         String memoryName;
         if (_memoryHandle != null) {
-            memoryName = _memoryHandle.getBean().getDisplayName();
+            memoryName = _memoryHandle.getName();
         } else {
             memoryName = Bundle.getMessage(locale, "BeanNotSelected");
         }
         
         String otherMemoryName;
         if (_otherMemoryHandle != null) {
-            otherMemoryName = _otherMemoryHandle.getBean().getDisplayName();
+            otherMemoryName = _otherMemoryHandle.getName();
         } else {
             otherMemoryName = Bundle.getMessage(locale, "BeanNotSelected");
         }
@@ -488,7 +488,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
             case MatchRegex:
                 // fall through
             case NotMatchRegex:
-                return Bundle.getMessage(locale, "Memory_Long_CompareRegEx", memoryName, _memoryOperation._text);
+                return Bundle.getMessage(locale, "Memory_Long_CompareRegEx", memoryName, _memoryOperation._text, other);
                 
             default:
                 throw new IllegalArgumentException("_memoryOperation has unknown value: "+_memoryOperation.name());

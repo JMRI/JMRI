@@ -390,7 +390,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "Variable_Short");
+        return Bundle.getMessage(locale, "LocalVariable_Short");
     }
 
     @Override
@@ -404,7 +404,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
         
         String memoryName;
         if (_memoryHandle != null) {
-            memoryName = _memoryHandle.getBean().getDisplayName();
+            memoryName = _memoryHandle.getName();
         } else {
             memoryName = Bundle.getMessage(locale, "BeanNotSelected");
         }
@@ -413,22 +413,22 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
         String other;
         switch (_compareTo) {
             case Value:
-                message = "Variable_Long_CompareConstant";
+                message = "LocalVariable_Long_CompareConstant";
                 other = _constantValue;
                 break;
                 
             case Memory:
-                message = "Variable_Long_CompareMemory";
+                message = "LocalVariable_Long_CompareMemory";
                 other = memoryName;
                 break;
                 
             case LocalVariable:
-                message = "Variable_Long_CompareLocalVariable";
+                message = "LocalVariable_Long_CompareLocalVariable";
                 other = _otherLocalVariable;
                 break;
                 
             case RegEx:
-                message = "Variable_Long_CompareRegEx";
+                message = "LocalVariable_Long_CompareRegEx";
                 other = _regEx;
                 break;
                 
@@ -453,12 +453,12 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
             case IsNull:
                 // fall through
             case IsNotNull:
-                return Bundle.getMessage(locale, "Variable_Long_CompareNull", variableName, _variableOperation._text);
+                return Bundle.getMessage(locale, "LocalVariable_Long_CompareNull", variableName, _variableOperation._text);
                 
             case MatchRegex:
                 // fall through
             case NotMatchRegex:
-                return Bundle.getMessage(locale, "Variable_Long_CompareRegex", variableName, _variableOperation._text);
+                return Bundle.getMessage(locale, "LocalVariable_Long_CompareRegEx", variableName, _variableOperation._text, other);
                 
             default:
                 throw new IllegalArgumentException("_variableOperation has unknown value: "+_variableOperation.name());
@@ -509,16 +509,16 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     
     
     public enum VariableOperation {
-        LessThan(Bundle.getMessage("VariableOperation_LessThan"), true),
-        LessThanOrEqual(Bundle.getMessage("VariableOperation_LessThanOrEqual"), true),
-        Equal(Bundle.getMessage("VariableOperation_Equal"), true),
-        GreaterThanOrEqual(Bundle.getMessage("VariableOperation_GreaterThanOrEqual"), true),
-        GreaterThan(Bundle.getMessage("VariableOperation_GreaterThan"), true),
-        NotEqual(Bundle.getMessage("VariableOperation_NotEqual"), true),
-        IsNull(Bundle.getMessage("VariableOperation_IsNull"), false),
-        IsNotNull(Bundle.getMessage("VariableOperation_IsNotNull"), false),
-        MatchRegex(Bundle.getMessage("VariableOperation_MatchRegEx"), true),
-        NotMatchRegex(Bundle.getMessage("VariableOperation_NotMatchRegEx"), true);
+        LessThan(Bundle.getMessage("LocalVariableOperation_LessThan"), true),
+        LessThanOrEqual(Bundle.getMessage("LocalVariableOperation_LessThanOrEqual"), true),
+        Equal(Bundle.getMessage("LocalVariableOperation_Equal"), true),
+        GreaterThanOrEqual(Bundle.getMessage("LocalVariableOperation_GreaterThanOrEqual"), true),
+        GreaterThan(Bundle.getMessage("LocalVariableOperation_GreaterThan"), true),
+        NotEqual(Bundle.getMessage("LocalVariableOperation_NotEqual"), true),
+        IsNull(Bundle.getMessage("LocalVariableOperation_IsNull"), false),
+        IsNotNull(Bundle.getMessage("LocalVariableOperation_IsNotNull"), false),
+        MatchRegex(Bundle.getMessage("LocalVariableOperation_MatchRegEx"), true),
+        NotMatchRegex(Bundle.getMessage("LocalVariableOperation_NotMatchRegEx"), true);
         
         private final String _text;
         private final boolean _extraValue;
@@ -541,10 +541,10 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     
     
     public enum CompareTo {
-        Value(Bundle.getMessage("Variable_CompareTo_Value")),
-        Memory(Bundle.getMessage("Variable_CompareTo_Memory")),
-        LocalVariable(Bundle.getMessage("Variable_CompareTo_LocalVariable")),
-        RegEx(Bundle.getMessage("Variable_CompareTo_RegularExpression"));
+        Value(Bundle.getMessage("LocalVariable_CompareTo_Value")),
+        Memory(Bundle.getMessage("LocalVariable_CompareTo_Memory")),
+        LocalVariable(Bundle.getMessage("LocalVariable_CompareTo_LocalVariable")),
+        RegEx(Bundle.getMessage("LocalVariable_CompareTo_RegularExpression"));
         
         private final String _text;
         

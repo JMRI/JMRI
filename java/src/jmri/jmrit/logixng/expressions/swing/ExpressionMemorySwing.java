@@ -23,7 +23,6 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
     private JComboBox<MemoryOperation> _memoryOperationComboBox;
     
     private JTabbedPane _tabbedPane;
-    private JPanel _tabbedPaneBeanPanel;
     
     private JTabbedPane _tabbedPaneCompareTo;
     private BeanSelectCreatePanel<Memory> _compareToMemoryBeanPanel;
@@ -67,7 +66,6 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         _memoryOperationComboBox.addActionListener((e) -> { enableDisableCompareTo(); });
         
         _tabbedPane = new JTabbedPane();
-        _tabbedPaneBeanPanel = new JPanel();
         
         _tabbedPaneCompareTo = new JTabbedPane();
         _tabbedPane.addTab("", _tabbedPaneCompareTo);
@@ -100,10 +98,19 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
             if (expression.getMemory() != null) {
                 _memoryBeanPanel.setDefaultNamedBean(expression.getMemory().getBean());
             }
+            if (expression.getOtherMemory() != null) {
+                _compareToMemoryBeanPanel.setDefaultNamedBean(expression.getOtherMemory().getBean());
+            }
+            switch (expression.getCompareTo()) {
+                case RegEx:
+                case Value: _tabbedPaneCompareTo.setSelectedComponent(_compareToConstant); break;
+                case Memory: _tabbedPaneCompareTo.setSelectedComponent(_compareToMemory); break;
+                case LocalVariable: _tabbedPaneCompareTo.setSelectedComponent(_compareToLocalVariable); break;
+                default: throw new IllegalArgumentException("invalid _addressing state: " + expression.getCompareTo().name());
+            }
             _memoryOperationComboBox.setSelectedItem(expression.getMemoryOperation());
             _compareToConstantTextField.setText(expression.getConstantValue());
-            _tabbedPaneCompareTo.setSelectedComponent(_compareToMemory);
-            _compareToConstantTextField.setText(expression.getConstantValue());
+            _compareToLocalVariableTextField.setText(expression.getLocalVariable());
             _compareToRegExTextField.setText(expression.getRegEx());
         }
         
@@ -160,7 +167,7 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         
         try {
             if (!_compareToMemoryBeanPanel.isEmpty()
-                    && (_tabbedPane.getSelectedComponent() == _tabbedPaneBeanPanel)
+                    && (_tabbedPane.getSelectedComponent() == _tabbedPaneCompareTo)
                     && (_tabbedPaneCompareTo.getSelectedComponent() == _compareToMemory)) {
                 Memory otherMemory = _compareToMemoryBeanPanel.getNamedBean();
                 if (otherMemory != null) {
@@ -174,9 +181,25 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
             log.error("Cannot get NamedBeanHandle for memory", ex);
         }
         
-        expression.setConstantValue(_compareToConstantTextField.getText());
-        expression.setLocalVariable(_compareToLocalVariableTextField.getText());
-        expression.setRegEx(_compareToRegExTextField.getText());
+        if (_tabbedPane.getSelectedComponent() == _tabbedPaneCompareTo) {
+            if (_tabbedPaneCompareTo.getSelectedComponent() == _compareToConstant) {
+                expression.setCompareTo(CompareTo.Value);
+                expression.setConstantValue(_compareToConstantTextField.getText());
+            } else if (_tabbedPaneCompareTo.getSelectedComponent() == _compareToMemory) {
+                expression.setCompareTo(CompareTo.Memory);
+            } else if (_tabbedPaneCompareTo.getSelectedComponent() == _compareToLocalVariable) {
+                expression.setCompareTo(CompareTo.LocalVariable);
+                expression.setLocalVariable(_compareToLocalVariableTextField.getText());
+//            } else if (_tabbedPaneCompareTo.getSelectedComponent() == _compareToRegEx) {
+//                expression.setCompareTo(CompareTo.RegEx);
+//                expression.setRegEx(_compareToRegExTextField.getText());
+            } else {
+                throw new IllegalArgumentException("_tabbedPaneLight has unknown selection");
+            }
+        } else {
+            expression.setCompareTo(CompareTo.RegEx);
+            expression.setRegEx(_compareToRegExTextField.getText());
+        }
     }
     
     /** {@inheritDoc} */
