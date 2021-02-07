@@ -1,16 +1,8 @@
 package jmri.jmrit.logixng.expressions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.NamedBeanHandle;
-import jmri.Memory;
-import jmri.MemoryManager;
-import jmri.NamedBean;
-import jmri.NamedBeanHandleManager;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.actions.IfThenElse;
@@ -37,7 +29,6 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
     private MaleSocket localVariableMaleSocket;
     private ActionAtomicBoolean actionAtomicBoolean;
     private AtomicBoolean atomicBoolean;
-    private Memory memory;
     
     
     @Override
