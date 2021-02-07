@@ -348,7 +348,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                     T nB = getByUserName((String) value);
                     if (nB != null) {
                         log.error("User name is not unique {}", value);
-                        String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
+                        String msg = Bundle.getMessage("WarningUserName", "" + value);
                         JOptionPane.showMessageDialog(null, msg,
                                 Bundle.getMessage("WarningTitle"),
                                 JOptionPane.ERROR_MESSAGE);
@@ -358,7 +358,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 T nBean = getBySystemName(sysNameList.get(row));
                 nBean.setUserName((String) value);
                 if (nbMan.inUse(sysNameList.get(row), nBean)) {
-                    String msg = Bundle.getMessage("UpdateToUserName", new Object[]{getBeanType(), value, sysNameList.get(row)});
+                    String msg = Bundle.getMessage("UpdateToUserName", getBeanType(), value, sysNameList.get(row));
                     int optionPane = JOptionPane.showConfirmDialog(null,
                             msg, Bundle.getMessage("UpdateToUserNameTitle"),
                             JOptionPane.YES_NO_OPTION);
@@ -505,8 +505,8 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     synchronized public void dispose() {
         getManager().removePropertyChangeListener(this);
         if (sysNameList != null) {
-            for (int i = 0; i < sysNameList.size(); i++) {
-                T b = getBySystemName(sysNameList.get(i));
+            for (String s : sysNameList) {
+                T b = getBySystemName(s);
                 if (b != null) {
                     b.removePropertyChangeListener(this);
                 }
@@ -544,7 +544,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
         // now print each row of data
         // create a base string the width of the column
-        StringBuilder spaces = new StringBuilder(""); // NOI18N
+        StringBuilder spaces = new StringBuilder(); // NOI18N
         for (int i = 0; i < columnSize; i++) {
             spaces.append(" "); // NOI18N
         }
@@ -555,7 +555,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 if (value == null) {
                     columnStrings[j] = spaces.toString();
                 } else if (value instanceof JComboBox<?>) {
-                    columnStrings[j] = ((JComboBox<?>) value).getSelectedItem().toString();
+                    columnStrings[j] = Objects.requireNonNull(((JComboBox<?>) value).getSelectedItem()).toString();
                 } else {
                     // Boolean or String
                     columnStrings[j] = value.toString();
@@ -568,16 +568,16 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         w.close();
     }
 
-    protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize) {
+    protected void printColumns(HardcopyWriter w, String[] columnStrings, int columnSize) {
         // create a base string the width of the column
-        StringBuilder spaces = new StringBuilder(""); // NOI18N
+        StringBuilder spaces = new StringBuilder(); // NOI18N
         for (int i = 0; i < columnSize; i++) {
             spaces.append(" "); // NOI18N
         }
         // loop through each column
         boolean complete = false;
         while (!complete) {
-            StringBuilder lineString = new StringBuilder(""); // NOI18N
+            StringBuilder lineString = new StringBuilder(); // NOI18N
             complete = true;
             for (int i = 0; i < columnStrings.length; i++) {
                 String columnString = ""; // NOI18N
@@ -588,9 +588,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 if (columnStrings[i].length() > columnSize) {
                     boolean noWord = true;
                     for (int k = columnSize; k >= 1; k--) {
-                        if (columnStrings[i].substring(k - 1, k).equals(" ")
-                                || columnStrings[i].substring(k - 1, k).equals("-")
-                                || columnStrings[i].substring(k - 1, k).equals("_")) {
+                        if (columnStrings[i].charAt(k - 1) == ' '
+                                || columnStrings[i].charAt(k - 1) == '-'
+                                || columnStrings[i].charAt(k - 1) == '_') {
                             columnString = columnStrings[i].substring(0, k)
                                     + spaces.substring(columnStrings[i].substring(0, k).length());
                             columnStrings[i] = columnStrings[i].substring(k);
@@ -703,39 +703,27 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem menuItem = new JMenuItem(Bundle.getMessage("CopyName"));
-        menuItem.addActionListener((ActionEvent e1) -> {
-            copyName(rowindex, 0);
-        });
+        menuItem.addActionListener((ActionEvent e1) -> copyName(rowindex, 0));
         popupMenu.add(menuItem);
 
         menuItem = new JMenuItem(Bundle.getMessage("Rename"));
-        menuItem.addActionListener((ActionEvent e1) -> {
-            renameBean(rowindex, 0);
-        });
+        menuItem.addActionListener((ActionEvent e1) -> renameBean(rowindex, 0));
         popupMenu.add(menuItem);
 
         menuItem = new JMenuItem(Bundle.getMessage("Clear"));
-        menuItem.addActionListener((ActionEvent e1) -> {
-            removeName(rowindex, 0);
-        });
+        menuItem.addActionListener((ActionEvent e1) -> removeName(rowindex, 0));
         popupMenu.add(menuItem);
 
         menuItem = new JMenuItem(Bundle.getMessage("Move"));
-        menuItem.addActionListener((ActionEvent e1) -> {
-            moveBean(rowindex, 0);
-        });
+        menuItem.addActionListener((ActionEvent e1) -> moveBean(rowindex, 0));
         popupMenu.add(menuItem);
 
         menuItem = new JMenuItem(Bundle.getMessage("EditComment"));
-        menuItem.addActionListener((ActionEvent e1) -> {
-            editComment(rowindex, 0);
-        });
+        menuItem.addActionListener((ActionEvent e1) -> editComment(rowindex, 0));
         popupMenu.add(menuItem);
 
         menuItem = new JMenuItem(Bundle.getMessage("ButtonDelete"));
-        menuItem.addActionListener((ActionEvent e1) -> {
-            deleteBean(rowindex, 0);
-        });
+        menuItem.addActionListener((ActionEvent e1) -> deleteBean(rowindex, 0));
         popupMenu.add(menuItem);
 
         popupMenu.show(e.getComponent(), e.getX(), e.getY());
@@ -762,7 +750,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         Object[] renameBeanOption = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), _newName};
         int retval = JOptionPane.showOptionDialog(null,
                 Bundle.getMessage("RenameFrom", oldName), Bundle.getMessage("RenameTitle", getBeanType()),
-                0, JOptionPane.INFORMATION_MESSAGE, null,
+                JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
                 renameBeanOption, renameBeanOption[2]);
 
         if (retval != 1) {
@@ -890,7 +878,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         int retval = JOptionPane.showOptionDialog(null,
                 Bundle.getMessage("MoveDialog", getBeanType(), currentName, oldNameBean.getSystemName()),
                 Bundle.getMessage("MoveDialogTitle"),
-                0, JOptionPane.INFORMATION_MESSAGE, null,
+                JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
                 new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), box}, null);
         log.debug("Dialog value {} selected {}:{}", retval, box.getSelectedIndex(), box.getSelectedItem());
         if (retval != 1) {
@@ -931,7 +919,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         Object[] editCommentOption = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonUpdate")};
         int retval = JOptionPane.showOptionDialog(null,
                 commentFieldScroller, Bundle.getMessage("EditComment"),
-                0, JOptionPane.INFORMATION_MESSAGE, null,
+                JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
                 editCommentOption, editCommentOption[1]);
         if (retval != 1) {
             return;
