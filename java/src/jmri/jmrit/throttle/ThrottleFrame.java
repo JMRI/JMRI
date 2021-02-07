@@ -392,16 +392,13 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
                 Math.max(addressPanel.getHeight() + functionPanel.getHeight(), controlPanel.getHeight())));
 
         // #JYNSTRUMENT# Bellow prepare drag'n drop receptacle:
-        new URIDrop(this, new Listener() {
-            @Override
-            public void URIsDropped(URI[] uris) {
+        new URIDrop(this, uris -> {
                 if (isEditMode) {
                     for (URI uri : uris ) {
                         ynstrument(new File(uri).getPath());
                     }
                 }
-            }
-        });
+            });
 
         KeyListenerInstaller.installKeyListenerOnAllComponents(new FrameCyclingKeyListener(), this);
         try {

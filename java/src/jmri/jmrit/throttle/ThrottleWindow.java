@@ -255,14 +255,11 @@ public class ThrottleWindow extends JmriJFrame {
         throttleToolBar.add(jbThrottleList);
 
         // Receptacle for Jynstruments
-        new URIDrop(throttleToolBar, new Listener() {
-            @Override
-            public void URIsDropped(URI[] uris) {
+        new URIDrop(throttleToolBar, uris -> {
                 for (URI uri : uris ) {
                     ynstrument(new File(uri).getPath());
                 }
-            }
-        });
+            });
 
         add(throttleToolBar, BorderLayout.PAGE_START);
     }
