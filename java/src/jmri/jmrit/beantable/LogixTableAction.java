@@ -260,13 +260,13 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             }
 
             @Override
-            public Logix getBySystemName(String name) {
+            public Logix getBySystemName(@Nonnull String name) {
                 return InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(
                         name);
             }
 
             @Override
-            public Logix getByUserName(String name) {
+            public Logix getByUserName(@Nonnull String name) {
                 return InstanceManager.getDefault(jmri.LogixManager.class).getByUserName(
                         name);
             }

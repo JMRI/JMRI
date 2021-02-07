@@ -87,20 +87,19 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     protected synchronized void updateNameList() {
         // first, remove listeners from the individual objects
         if (sysNameList != null) {
-            for (int i = 0; i < sysNameList.size(); i++) {
+            for (String s : sysNameList) {
                 // if object has been deleted, it's not here; ignore it
-                T b = getBySystemName(sysNameList.get(i));
+                T b = getBySystemName(s);
                 if (b != null) {
                     b.removePropertyChangeListener(this);
                 }
             }
         }
-        sysNameList = getManager().getNamedBeanSet().stream().map(
-            e -> e.getSystemName()).collect( java.util.stream.Collectors.toList() );
+        sysNameList = getManager().getNamedBeanSet().stream().map(NamedBean::getSystemName).collect( java.util.stream.Collectors.toList() );
         // and add them back in
-        for (int i = 0; i < sysNameList.size(); i++) {
+        for (String s : sysNameList) {
             // if object has been deleted, it's not here; ignore it
-            T b = getBySystemName(sysNameList.get(i));
+            T b = getBySystemName(s);
             if (b != null) {
                 b.addPropertyChangeListener(this);
             }
@@ -749,6 +748,12 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         clipboard.setContents(name, null);
     }
 
+    /**
+     * Change the bean System Name in a dialog.
+     *
+     * @param row table model row number of bean
+     * @param column always passed in as 0, not used
+     */
     public void renameBean(int row, int column) {
         T nBean = getBySystemName(sysNameList.get(row));
         String oldName = nBean.getUserName();
@@ -772,7 +777,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             T nB = getByUserName(value);
             if (nB != null) {
                 log.error("User name is not unique {}", value);
-                String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
+                String msg = Bundle.getMessage("WarningUserName", "" + value);
                 JOptionPane.showMessageDialog(null, msg,
                         Bundle.getMessage("WarningTitle"),
                         JOptionPane.ERROR_MESSAGE);
@@ -789,7 +794,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 if (!nbMan.inUse(sysNameList.get(row), nBean)) {
                     return;
                 }
-                String msg = Bundle.getMessage("UpdateToUserName", new Object[]{getBeanType(), value, sysNameList.get(row)});
+                String msg = Bundle.getMessage("UpdateToUserName", getBeanType(), value, sysNameList.get(row));
                 int optionPane = JOptionPane.showConfirmDialog(null,
                         msg, Bundle.getMessage("UpdateToUserNameTitle"),
                         JOptionPane.YES_NO_OPTION);
@@ -816,7 +821,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     public void removeName(int row, int column) {
         T nBean = getBySystemName(sysNameList.get(row));
         if (!allowBlockNameChange("Remove", nBean, "")) return;  // NOI18N
-        String msg = Bundle.getMessage("UpdateToSystemName", new Object[]{getBeanType()});
+        String msg = Bundle.getMessage("UpdateToSystemName", getBeanType());
         int optionPane = JOptionPane.showConfirmDialog(null,
                 msg, Bundle.getMessage("UpdateToSystemNameTitle"),
                 JOptionPane.YES_NO_OPTION);
@@ -892,13 +897,14 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             return;
         }
         String entry = (String) box.getSelectedItem();
+        assert entry != null;
         T newNameBean = getBySystemName(entry);
         if (oldNameBean != newNameBean) {
             oldNameBean.setUserName(null);
             newNameBean.setUserName(currentName);
             InstanceManager.getDefault(NamedBeanHandleManager.class).moveBean(oldNameBean, newNameBean, currentName);
             if (nbMan.inUse(newNameBean.getSystemName(), newNameBean)) {
-                String msg = Bundle.getMessage("UpdateToUserName", new Object[]{getBeanType(), currentName, sysNameList.get(row)});
+                String msg = Bundle.getMessage("UpdateToUserName", getBeanType(), currentName, sysNameList.get(row));
                 int optionPane = JOptionPane.showConfirmDialog(null, msg, Bundle.getMessage("UpdateToUserNameTitle"), JOptionPane.YES_NO_OPTION);
                 if (optionPane == JOptionPane.YES_OPTION) {
                     try {
@@ -979,10 +985,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     String formatToolTip(String comment) {
         String tip = null;
         if (comment != null && !comment.isEmpty()) {
-            StringBuilder sb = new StringBuilder("<html>");
-            sb.append(comment.replaceAll(System.getProperty("line.separator"), "<br>"));
-            sb.append("</html>");
-            tip = sb.toString();
+            tip = "<html>" + comment.replaceAll(System.getProperty("line.separator"), "<br>") + "</html>";
         }
         return tip;
     }
@@ -1135,18 +1138,18 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                     ArrayList<String> listenerRefs = t.getListenerRefs();
                     if (listenerRefs.size() > 0) {
                         ArrayList<String> listeners = new ArrayList<>();
-                        for (int i = 0; i < listenerRefs.size(); i++) {
-                            if (!listeners.contains(listenerRefs.get(i))) {
-                                listeners.add(listenerRefs.get(i));
+                        for (String listenerRef : listenerRefs) {
+                            if (!listeners.contains(listenerRef)) {
+                                listeners.add(listenerRef);
                             }
                         }
 
                         message.append("<br>");
                         message.append(Bundle.getMessage("ReminderInUse", count));
                         message.append("<ul>");
-                        for (int i = 0; i < listeners.size(); i++) {
+                        for (String listener : listeners) {
                             message.append("<li>");
-                            message.append(listeners.get(i));
+                            message.append(listener);
                             message.append("</li>");
                         }
                         message.append("</ul>");
@@ -1160,8 +1163,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                     }
                 } else {
                     String msg = MessageFormat.format(
-                            Bundle.getMessage("DeletePrompt"),
-                            new Object[]{t.getSystemName()});
+                            Bundle.getMessage("DeletePrompt"), t.getSystemName());
                     JLabel question = new JLabel(msg);
                     question.setAlignmentX(Component.CENTER_ALIGNMENT);
                     container.add(question);
@@ -1298,4 +1300,5 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     }
 
     private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class);
+
 }

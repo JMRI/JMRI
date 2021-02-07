@@ -96,7 +96,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
              * {@inheritDoc}
              */
             @Override
-            public Reporter getBySystemName(String name) {
+            public Reporter getBySystemName(@Nonnull String name) {
                 return reporterManager.getBySystemName(name);
             }
 
@@ -104,7 +104,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
              * {@inheritDoc}
              */
             @Override
-            public Reporter getByUserName(String name) {
+            public Reporter getByUserName(@Nonnull String name) {
                 return reporterManager.getByUserName(name);
             }
 
