@@ -1345,7 +1345,6 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // create staging
         Location westford = lmanager.newLocation("Westford Staging");
-        westford.setLocationOps(Location.STAGING);
         Track westfordStaging1 = westford.addTrack("Staging 1", Track.STAGING);
         westfordStaging1.setLength(1000);
 
@@ -1423,7 +1422,6 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // create staging
         Location westford = lmanager.newLocation("Westford Staging");
-        westford.setLocationOps(Location.STAGING);
         Track westfordStaging1 = westford.addTrack("Staging 1", Track.STAGING);
         westfordStaging1.setLength(1000);
 
@@ -1496,7 +1494,6 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // create staging
         Location westford = lmanager.newLocation("Westford Staging");
-        westford.setLocationOps(Location.STAGING);
         Track westfordStaging1 = westford.addTrack("Staging 1", Track.STAGING);
         westfordStaging1.setLength(1000);
 
@@ -1660,7 +1657,6 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // create staging
         Location westford = lmanager.newLocation("Westford Staging");
-        westford.setLocationOps(Location.STAGING);
         Track westfordStaging1 = westford.addTrack("Staging 1", Track.STAGING);
         westfordStaging1.setLength(1000);
         Track westfordStaging2 = westford.addTrack("Staging 2", Track.STAGING);
@@ -5724,7 +5720,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("2nd location in train's route", "North Industries", lNI.getName());
 
         // make it staging
-        lNI.setLocationOps(Location.STAGING);
+        lNI.changeTrackType(Track.STAGING);
 
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertTrue("Train status", train1.isBuilt());
@@ -6552,7 +6548,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         // Create locations used
         Location loc1;
         loc1 = lmanager.newLocation("Westend");
-        loc1.setLocationOps(Location.STAGING);
         loc1.setTrainDirections(Location.WEST + Location.EAST);
 
         Location loc2;
@@ -6561,7 +6556,6 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Location loc3;
         loc3 = lmanager.newLocation("Eastend");
-        loc3.setLocationOps(Location.STAGING);
         loc3.setTrainDirections(Location.WEST + Location.EAST);
 
         Track loc1trk1;
@@ -7658,7 +7652,6 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // Create staging and track
         Location westford_staging = lmanager.newLocation("Westford-1");
-        westford_staging.setLocationOps(Location.STAGING);
         Track staging = westford_staging.addTrack("Westford staging", Track.STAGING);
         staging.setLength(500);
 
@@ -11573,7 +11566,6 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // Staging and enable car blocking
         Location westford = lmanager.newLocation("Westford Staging");
-        westford.setLocationOps(Location.STAGING);
         Track westfordStaging = westford.addTrack("Staging", Track.STAGING);
         westfordStaging.setLength(1000);
         westfordStaging.setBlockCarsEnabled(true);
@@ -11778,7 +11770,6 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // Staging and enable car blocking
         Location westford = lmanager.newLocation("Westford Staging");
-        westford.setLocationOps(Location.STAGING);
         Track westfordStaging = westford.addTrack("Staging", Track.STAGING);
         westfordStaging.setLength(1000);
         westfordStaging.setBlockCarsEnabled(true);
@@ -11898,7 +11889,6 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // Staging and enable car blocking
         Location westford = lmanager.newLocation("Westford Staging");
-        westford.setLocationOps(Location.STAGING);
         Track westfordStaging = westford.addTrack("Staging", Track.STAGING);
         westfordStaging.setLength(1000);
         westfordStaging.setBlockCarsEnabled(true);
@@ -11985,7 +11975,6 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // Staging and enable car blocking
         Location westford = lmanager.newLocation("Westford Staging");
-        westford.setLocationOps(Location.STAGING);
         Track westfordStaging = westford.addTrack("Staging", Track.STAGING);
         westfordStaging.setLength(1000);
         westfordStaging.setBlockCarsEnabled(true);
@@ -12089,7 +12078,6 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // Staging and enable car blocking
         Location westford = lmanager.newLocation("Westford Staging");
-        westford.setLocationOps(Location.STAGING);
         Track westfordStaging = westford.addTrack("Staging", Track.STAGING);
         westfordStaging.setLength(1000);
         westfordStaging.setBlockCarsEnabled(true);
@@ -12288,7 +12276,6 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // Staging and enable car blocking
         Location westford = lmanager.newLocation("Westford Staging");
-        westford.setLocationOps(Location.STAGING);
         Track westfordStaging = westford.addTrack("Staging", Track.STAGING);
         westfordStaging.setLength(1000);
         westfordStaging.setBlockCarsEnabled(true);
@@ -13431,7 +13418,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue(train1.reset());
         loc1trk1.setTrackType(Track.STAGING);
         loc1trk2.setTrackType(Track.STAGING);
-        loc1.setLocationOps(Location.STAGING);
         train1.reset();
         Assert.assertFalse(new TrainBuilder().build(train1));
         Assert.assertFalse("Train 1 After Build from staging, eight loco on departure track", train1.isBuilt());

@@ -1,5 +1,9 @@
 package jmri;
 
+import java.util.Objects;
+
+import javax.annotation.Nonnull;
+
 /**
  * Describes metadata about a given property key for a NamedBean.
  * <p>
@@ -20,9 +24,10 @@ public abstract class NamedBeanPropertyDescriptor<E> {
     /** What should be displayed when a given Bean does not have this property set. */
     public final E defaultValue;
 
-    protected NamedBeanPropertyDescriptor(String propertyKey, E defaultValue) {
-        this.propertyKey = propertyKey;
-        this.defaultValue = defaultValue;
+    protected NamedBeanPropertyDescriptor(
+            @Nonnull String propertyKey, @Nonnull E defaultValue) {
+        this.propertyKey = Objects.requireNonNull(propertyKey);
+        this.defaultValue = Objects.requireNonNull(defaultValue);
     }
 
     /**
@@ -49,6 +54,24 @@ public abstract class NamedBeanPropertyDescriptor<E> {
      */
     public Class<?> getValueClass() {
         return defaultValue.getClass();
+    }
+    
+    /**
+     * Equals based on Property Key and Default value Class.
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object obj) {
+        return (obj instanceof NamedBeanPropertyDescriptor && obj.hashCode() == this.hashCode());
+    }
+
+    /**
+     * hashCode based on Property Key and Default value Class.
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(this.propertyKey) * Objects.hashCode(getValueClass());
     }
     
 }

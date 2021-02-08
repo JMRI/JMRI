@@ -324,7 +324,7 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li></li>
+                <li>Added new definitions to program Power4, Power8 (boosters) and IntelliLight module.</li>
             </ul>
 
         <h4>Umelec</h4>
@@ -385,7 +385,8 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+	        <li>A problem storing and reading LE controlpoint values for users with a non-default Locale has been fixed
+            .</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -462,7 +463,8 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>Turnouts with 1 Sensor Feedback update to Inconsistent state when the Sensor being followed enters an Unknown or Inconsistent state.
+            <br>See <a href="https://www.jmri.org/help/en/package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout_Feedback">Turnout Feedback</a></li>
         </ul>
 
     <h3>Scripting</h3>
@@ -520,7 +522,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Fix Jynstrument instantiation on Windows (cleaner URI to path method). <a href="https://groups.io/g/jmriusers/topic/the_jynstruments/78674589"> User message 78674589</a></li>
         </ul>
 
     <h3>Timetable</h3>

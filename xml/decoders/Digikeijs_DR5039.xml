@@ -83,7 +83,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
     <pane>
         <name>LNCV Configuration</name>
         <name xml:lang="de">LNCV Konfiguration</name>
-        <name xml:lang="nl">LNCV instellen</name>
+        <name xml:lang="nl">LNCV Confuguratie</name>
         <row>
           <column>
               <label>

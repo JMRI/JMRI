@@ -20,10 +20,10 @@ public class LnSensorTest extends jmri.implementation.AbstractSensorTestBase {
     public int numListeners() {return lnis.numListeners();}
 
     @Override
-    public void checkOnMsgSent() {}
+    public void checkActiveMsgSent() {}
 
     @Override
-    public void checkOffMsgSent() {}
+    public void checkInactiveMsgSent() {}
 
     @Override
     public void checkStatusRequestMsgSent() {

@@ -2868,9 +2868,7 @@
    group. This blocking feature doesn't consider where in the train the cars are, as some crew
    members when picking up cars, will add the cars to any part of the train. So the first stop in
    the departure train's route may not have the cars at the head of the train, but they should be in
-   a group, somewhere in the train. The first time you depart staging with this feature on, the cars
-   will not be blocked for you, you need to first terminate a new train into staging, those cars
-   will have the blocking tags assigned to them. To enable this feature, see Edit Staging Track,
+   a group, somewhere in the train. To enable this feature, see Edit Staging Track,
    "Optional Car Blocking" in the lower right corner of the window. There are many reasons why this
    option will not block cars correctly. See the train's <a href="#BuildReports">build report</a> for more details.
 

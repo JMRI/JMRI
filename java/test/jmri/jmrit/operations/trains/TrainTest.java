@@ -4206,7 +4206,6 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertTrue(train1.reset());
         loc1trk1.setTrackType(Track.STAGING);
         loc1trk2.setTrackType(Track.STAGING);
-        loc1.setLocationOps(Location.STAGING);
         Assert.assertFalse(train1.build());
         Assert.assertFalse("Train 1 After Build from staging, eight loco on departure track", train1
                 .isBuilt());
