@@ -757,7 +757,7 @@ public class CarManagerTest extends OperationsTestCase {
         r.addLocation(l3);
 
         // make last staging
-        l3.setLocationOps(Location.STAGING);
+        l3.changeTrackType(Track.STAGING);
 
         Train t1 = new Train("id1", "F");
         t1.setRoute(r);
