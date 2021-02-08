@@ -109,7 +109,7 @@ public class HexFileFrame extends JmriJFrame implements LocoNetListener {
         getContentPane().add(pane4);
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
             simReplyBox.setSelected(prefMgr.getSimplePreferenceState("simReply"));
-            port.simReply(simReplyBox.isSelected()); // set state in adapter
+            port.simReply(simReplyBox.isSelected()); // update state in adapter
         });
 
         openHexFileButton.addActionListener(this::openHexFileButtonActionPerformed);
@@ -124,8 +124,8 @@ public class HexFileFrame extends JmriJFrame implements LocoNetListener {
     @Override
     @InvokeOnGuiThread
     public void dispose() {
-        // leaves the LocoNet Packetizer (e.g. the simulated connection)
-        // running so that the application can keep pretending to run with the window closed.
+        // leaves the LocoNet Packetizer (e.g. the simulated connection) running
+        // so that the application can keep pretending to run with the window closed.
         super.dispose();
     }
 
