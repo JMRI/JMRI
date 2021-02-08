@@ -3,6 +3,9 @@ package jmri.jmrix.loconet;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.annotation.Nonnull;
+
+import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
+import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrix.AbstractMessage;
@@ -546,6 +549,52 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
         }
         return (val & 0xFF00) / 256;
     }
+
+    /**
+     * Small set of hardware replies to send in simulator in response to specific messages.
+     * Supported types:
+     * <ul>
+     *     <li>LN SV rev2 board (@link jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents)</li>
+     *     <li>LNCV board {@link jmri.jmrix.loconet.uhlenbrock.LncvMessageContents} ReadReply</li>
+     * </ul>
+     *
+     * @param m message to respond to
+     */
+    static public LocoNetMessage generateReply(LocoNetMessage m) {
+        LocoNetMessage reply = null;
+        if (LnSv2MessageContents.isSupportedSv2Message(m)) {
+            log.debug("generate reply for SV2 message");
+            LnSv2MessageContents c = new LnSv2MessageContents(m);
+            if (c.getDestAddr() == -1) { // Sv2 QueryAll, reply (content includes no address)
+                log.debug("generate LNSV2 query reply message");
+                int dest = 1; // keep it simple, don't fetch src from m
+                int myId = 44; // a random value
+                int mf = 129; // Digitrax
+                int dev = 0;
+                int type = 3055;
+                int serial = 111;
+                reply = LnSv2MessageContents.createSv2DeviceDiscoveryReply(myId, dest, mf, dev, type, serial);
+            }
+        } else if (LncvMessageContents.isSupportedLncvMessage(m)) {
+            log.debug("generate reply for LNCV Read message");
+            if (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ) {
+                // generate READ REPLY
+                log.debug("generate LNCV Read reply message");
+                reply = LncvMessageContents.createLncvReadReply(m);
+            } else if (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_WRITE) {
+                // generate WRITE reply LACK
+                log.debug("generate LNCV Write reply message");
+                reply = new LocoNetMessage(new int[]{LnConstants.OPC_LONG_ACK, 0x6d, 0x7f, 0x1});
+            } else if (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_PROG_START) {
+                // generate STARTPROGALL reply
+                log.debug("generate LNCV PROGSTART response message");
+                reply = LncvMessageContents.createLncvProgStartReply(m);
+            }
+            // ignore LncvMessageContents.LncvCommand.LNCV_PROG_END, no response expected
+        }
+        return reply;
+    }
+
 
     /**
      * Extract sensor address from a sensor message.  Does not verify

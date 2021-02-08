@@ -150,19 +150,19 @@ public class LncvMessageContents {
     public static boolean isSupportedLncvMessage(LocoNetMessage m) {
         // must be OPC_PEER_XFER or OPC_IMM_PACKET opcode
         if ((m.getOpCode() != LnConstants.OPC_PEER_XFER) && (m.getOpCode() != LnConstants.OPC_IMM_PACKET)) {
-            //log.debug("cannot be LNCV message because not OPC_PEER_XFER or OPC_IMM_PACKET");  // NOI18N
+            log.debug("cannot be LNCV message because not OPC_PEER_XFER or OPC_IMM_PACKET");  // NOI18N
             return false;
         }
 
         // length must be 0x0f
         if (m.getElement(1) != LNCV_LENGTH_ELEMENT_VALUE) {
-            //log.debug("cannot be LNCV message because not length 0x0f");  // NOI18N
+            log.debug("cannot be LNCV message because not length 0x0f");  // NOI18N
             return false;
         }
 
         // <SRC_ELEMENT> must be correct
         if ((m.getElement(LNCV_SRC_ELEMENT_INDEX) != LNCV_CS_SRC_VALUE) && (m.getElement(LNCV_SRC_ELEMENT_INDEX) != LNCV_LNMODULE_VALUE)) {
-            //log.debug("cannot be LNCV message because Source not correct");  // NOI18N
+            log.debug("cannot be LNCV message because Source not correct");  // NOI18N
             return false;
         }
 
@@ -170,7 +170,6 @@ public class LncvMessageContents {
         // check the (compound) command element
         int msgData = m.getElement(LNCV_CMDDATA_ELEMENT_INDEX) + (((m.getElement(PXCT1_ELEMENT_INDEX) & LNCV_CMDDATA_DAT7_CHECK_MASK) == LNCV_CMDDATA_DAT7_CHECK_MASK) ? 0x80 : 0);
         return isSupportedLncvCommand(m.getElement(LNCV_CMD_ELEMENT_INDEX), m.getOpCode(), msgData);
-        //log.debug("LocoNet message is not a supported LNCV Format message");  // NOI18N
     }
 
     /**
@@ -293,7 +292,7 @@ public class LncvMessageContents {
      * @return true if the possibleCmd value is one of the supported (simple) LNCV Programming Format commands
      */
     public static boolean isSupportedLncvCommand(int command, int opc, int cmdData) {
-        //log.debug("CMD = {}-{}-{}", command, opc, cmdData);
+        log.debug("CMD = {}-{}-{}", command, opc, cmdData);
         for (LncvCommand commandToCheck : LncvCommand.values()) {
             if (commandToCheck.matches(command, opc, cmdData)) {
                 return true;
@@ -588,7 +587,7 @@ public class LncvMessageContents {
     /**
      * In Hexfile simulation mode, mock a ProgStart reply message back to the CS.
      *
-     * @param m  the preceding LocoNet message
+     * @param m the preceding LocoNet message
      * @return  LocoNet message containing the reply, or null if preceding
      *          message isn't a query
      */
@@ -596,18 +595,20 @@ public class LncvMessageContents {
         if (!isSupportedLncvMessage(m)) {
             return null;
         }
+        LncvMessageContents lmc = new LncvMessageContents(m);
+        if (lmc.getLncvArticleNum() == -1) { // mock a certain device
+            m.setElement(LncvMessageContents.LNCV_ART_L_ELEMENT_INDEX, 0x13); // article number 5033
+            m.setElement(LncvMessageContents.LNCV_ART_H_ELEMENT_INDEX, 0x29);
+            m.setElement(LncvMessageContents.PXCT1_ELEMENT_INDEX, 0x21); // hibits to go with 5033
+        }
+        if (lmc.getLncvModuleNum() == -1) { // mock a certain address
+            m.setElement(LncvMessageContents.LNCV_MOD_L_ELEMENT_INDEX, 0x3); // address value 3
+            m.setElement(LncvMessageContents.LNCV_MOD_H_ELEMENT_INDEX, 0x0);
+        }
         LocoNetMessage m2 = LncvMessageContents.createLncvReadReply(m);
         if (m2 != null) {
-            LncvMessageContents lmc = new LncvMessageContents(m);
-            m2.setElement(LncvMessageContents.PXCT1_ELEMENT_INDEX, 0x21); // hi bits
-            if (lmc.getLncvArticleNum() == -1) { // mock a certain device
-                m2.setElement(LncvMessageContents.LNCV_ART_L_ELEMENT_INDEX, 0x13); // article number 5033
-                m2.setElement(LncvMessageContents.LNCV_ART_H_ELEMENT_INDEX, 0x29);
-            }
-            if (lmc.getLncvModuleNum() == -1) { // mock a certain address
-                m2.setElement(LncvMessageContents.LNCV_MOD_L_ELEMENT_INDEX, 0x3); // address value 3
-                m2.setElement(LncvMessageContents.LNCV_MOD_H_ELEMENT_INDEX, 0x0);
-            }
+            m2.setElement(LncvMessageContents.LNCV_CVN_L_ELEMENT_INDEX, 0x00);
+            m2.setElement(LncvMessageContents.LNCV_CVN_H_ELEMENT_INDEX, 0x00);
         }
         return m2;
     }
