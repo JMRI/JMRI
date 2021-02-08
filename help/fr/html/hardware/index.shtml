@@ -1,452 +1,1141 @@
-<<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- UpDated by Blorec Herv&#233;  2019-02-02-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="fr">
 <head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
   <title>JMRI: Hardware Support</title>
+  <meta name="Author" content="Bob Jacobsen, Egbert Broerse, Jerry Grochow">
+  <!--#include virtual="/Style.shtml" -->
+    
+  <style type="text/css">
+* {
+  box-sizing: border-box;
+}
 
-<meta name="Author" content="Bob Jacobsen, Egbert Broerse">
+/* Create three equal columns that float next to each other */
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 10px;
+}
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+  
 </head>
 
+<!-- Reorg and additions by @jerryg2003 2020-04-25 -->
+
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
 
-  <div class="nomenu" id="mBody">
-<div id="mainContent">>
+        <a id="TopOfPage" name="TopOfPage"></a> 
+        <h1>JMRI : Support mat&#233;riel</h1>
 
-        <h1>JMRI: Materiel pris en Charge</h1>
+      <p>JMRI prend en charge un large &#233;ventail de produits de type "Centrale" DCC de
+      divers vendeurs d'automatisation de mod&#232;les r&#233;duits ferroviaire. Nous prenons &#233;galement en charge les 
+      accessoires et les dispositifs des r&#233;seaux non-DCC 
+      qui se connectent via une vari&#233;t&#233; de r&#233;seaux et de protocoles.
+      Cette page &#233;num&#232;re les mat&#233;riels et les r&#233;seaux avec lesquels JMRI fonctionne, et 
+      fournit des liens vers des informations sur la mani&#232;re de configurer JMRI pour qu'il fonctionne avec chaque type particulier.</p>
 
-		<p>JMRI prend en charge un large &#233;ventail de "Centrale" DCC produits par 
-		diff&#233;rents fournisseurs pour l'automatisation de r&#233;seaux miniatures. 
-		Nous prenons en charge des r&#233;seaux non DCC.
-		S'il y a un moyen de faire communiquer un ordinateur avec une partie donn&#233;e d'un 
-		&#233;quipement de r&#233;seau miniature, il est possible de le connecter &#224; JMRI.
-		<p>
-		Cette page donne la liste d'&#233;quipement de r&#233;seau qui est connu de JMRI
-		pour travailler avec, et fournit des liens vers des informations sur la fa&#231;on
-		de configurer JMRI pour travailler avec chaque type particulier.
-     <p>
- 		Si vous ne voyez pas votre syst&#232;me particulier ici, s'il vous pla&#238;t demander &#224; ce sujet
-		sur le groupe <a href="https://groups.yahoo.com/neo/groups/jmriusers/info"> liste de diffusion utilisateur </a>
-	
-		<div class="list">
-		<dl>
-    <dt class="im">Fabricant <!-- header, link--></dt>
-    <dt>JMRI prend en charge <!-- header, link--></dt>
-    
-    <dt class="im">
-				<a href="http://www.atlasrr.com/dccsupport.htm">
-				<img src="images/atlas_logo.gif" width="44" height="34" alt="Atlas"></a>
-    </dt>
-	<dt><a href="XPressNet/index.shtml">Atlas (XPressNet)</a></dt>
-	<dd><p class="dl"> Configurer: Atlas Commander via
-				<A HREF="XPressNet/index.shtml"> Lenz LI100, LI101F, LIUSB ou interfaces Genli XPressNet, ZTC contr&#244;les ZTC640 interface, ou un XPA et modem compatible Hayes </a></p>
-				<p> Note: vous ne pouvez pas programmer de  d&#233;codeurs avec cette configuration </p>
-</dd>
+      <ul>
+          <!-- TOC -->
+          <li><a href="#catalpha">Cat&#233;gorie/Indice alphab&#233;tique </a></li>
+          <li>Mat&#233;riel support&#233; :
+            <ul>
+            <li><a href="#multi">Mat&#233;riel polyvalent</a></li>
+            <li><a href="#commandstations">Centrale</a></li>
+            <li><a href="#networks">R&#233;seaux et protocoles</a></li>
+            <li><a href="#programmers">Programmeurs</a></li>
+            <li><a href="#autre">Accessoires et autres dispositifs</a></li>
+            </ul>
+          </li>
+          <li>Sujets suppl&#233;mentaires :
+            <ul>
+            <li><a href="#connect">Connexion aux Centrales</a></li>
+            <li><a href="#general">Information g&#233;n&#233;rale sur le mat&#233;riel</a></li>
+            </ul>
+          </li>
+      </ul>
 
- 	<dt class="im">
-				<a href="http://www.bachrus.com/speedometer.php">
-		  		<img src="images/Bachrus_Logo.gif" width="100" height="25" alt="Bachrus"></a>
-	</dt>
- 	<dt><a href="bachrus/index.shtml">Bachrus</a></dt>
-	<dd><p class="dl">Configurer:<a href="bachrus/index.shtml">Compteur de Vitesse Bachrus MTS-DCC pour train miniature </a></p> 
-  	</dd>
+      <p>S'il existe un moyen de faire communiquer un ordinateur avec un
+      un &#233;quipement de mod&#233;lisme ferroviaire donn&#233;, il est possible de
+      le connecter &#224; JMRI. Si vous ne voyez pas votre syst&#232;me particulier
+      ici, veuillez vous renseigner sur aupr&#232;s de <a href=
+      "https://groups.io/g/jmriusers">Utilisateurs JMRI</a>.</p>
+      
+      <p class="note">Pour les d&#233;veloppeurs ajoutant une nouvelle int&#233;gration mat&#233;rielle : voir <a href="Help.shtml#hwhelp.shtml">
+      ici pour des informations sur la cr&#233;ation d'aide et de pages web pour les nouveaux mat&#233;riels</a>.
+	  </p>
 
-	<dt class="im"><a href="http://www.jlcenterprises.net/">C/MRI</a></dt>
-    <dt><a href="cmri/CMRI.shtml">C/MRI</a></dt>
-    <dd>
-        <p class="dl">Configurer: <a href="cmri/CMRI.shtml"> Centrale C/MRI de Bruce Chubb</a>
-        par une connexion via 
-        s&#233;rie directe, 
-        <a href="cmri/CMRI.shtml#usb">adaptateur USB-s&#233;rie</a>,
-        ou <a href="cmri/CMRI.shtml#net">connexion r&#233;seau</a>.</p>
-	</dd>
 
-   <dt class="im">
-			<img src="http://www.cti-electronics.com/banner.gif" width="122" height="27" alt="CTI">
-	    </dt>
-    <dt><a href="acela/index.shtml">CTI Electronics Acela</a></dt>
-    <dd><p class="dl">Configurer: Cartes &#201;lectroniques CTI via l'adaptateur
-			<a href="acela/index.shtml">Acela</a>.</p>
-			<p>&nbsp;</p>
-	</dd>
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+      <a id="catalpha" name="catalpha"></a>
+      <h2>Cat&#233;gorie/Index alphab&#233;tique</h2>
+      
+      <p> Cet indice croise les mat&#233;riels et les produits selon les cat&#233;gories dans lesquelles ils 
+      apparaissent sur cette page. Cliquez sur une cat&#233;gorie pour acc&#233;der &#224; cette cat&#233;gorie sur cette page.  Cliquez sur une 
+      pour aller &#224; la page d'aide de JMRI pour ce produit ou cette famille. La barre lat&#233;rale fournit
+      une liste alphab&#233;tique.</p>
+      
+         <div class="row">
 
-     <dt class="im">
-			<a href="http://www.cvpusa.com/">
-			<img src="images/ico-cvp.gif" width="44" height="34" alt="CVP"></a>
-    </dt>
-    <dt><a href="easydcc/EasyDCC.shtml">Produits CVP EasyDCC</a></dt>
-    <dd><p class="dl">Configurer: Centrale EasyDCC via
-		<a href="easydcc/EasyDCC.shtml">S&#233;rie</a> ou 
-		<a href="TerminalServer.shtml">Serveur Terminal</a></p>
-		<p>&nbsp;</p>
-	</dd>
+             <div class="column">
+                 
+                <i style="padding-left : 1em ;"><a href="#commandstations">Centrale:</a></i>
+                <ul>
+                  <li><a href="XPressNet/index.shtml">Atlas Commander</a>
+                  <li><a href="easydcc/EasyDCC.shtml">CVP EasyDCC</a>
+                  <li><a href="dccpp/index.shtml">DCC++< (arduino)</a>
+                  <li><a href="digirails/index.shtml">Digikeijs (Digirails)</a>
+                  <li><a href="loconet/Digitrax.shtml">Digitrax</a>
+                  <li><a href="ecos/index.shtml">ESU ECoS</a>
+                  <li><a href="loconet/Fleischmann.shtml">Fleischmann</a>
+                  <li><a href="XPressNet/index.shtml">Hornby</a>
+                  <li><a href="tmcc/index.shtml">Lionel TMCC</a>
+                  <li><a href="marklin/index.shtml">M&auml;rklin CS2</a>
+                  <li><a href="merg/index.shtml">MERG</a>
+                  <li><a href="mrc/index.shtml">MRC</a>
+                  <li><a href="nce/NCE.shtml">NCE</a>
+                  <li><a href="XPressNet/index.shtml">Roco</a>
+                  <li><a href="sprog/SPROG.shtml">SPROG DCC </a>
+                  <li><a href="sproggen5/index.shtml">SPROG DCC Generation 5</a>
+                  <li><a href="tams/index.shtml">TAMS Master Control</a>
+                  <li><a href="loconet/Digitrax.shtml">Uhlenbrock Intellibox</a>
+                  <li><a href="XPressNet/index.shtml">Viessmann Commander</a>
+                  <li><a href="nce/Wangrow.shtml">Syst&#232;me Wangrow One</a>
+                  <li><a href="zimo/Zimo.shtml">Zimo MX-1</a>
+                  <li><a href="XPressNet/index.shtml">Contr&#244;les ZTC</a>
+                </ul>   
 
-    <dt class="im">
-			<a href="https://www.youtube.com/channel/UCJmvQx-fe0OMAIH-_g-_rZw">
-			<img src="dccpp/images/dccpp_logo.jpg" width="60" height="26" alt="DCC++"></a>
-    </dt>
-    <dt><a href="dccpp/index.shtml">DCC++</a></dt>
-    <dd><p class="dl">Configurer:  
-			<a href="dccpp/index.shtml">Centrale DCC++ Open Source Arduino
-			</a>.</p>
-	</dd>
-	
-	<dt><a href="dcc4pc/index.shtml">Dcc4Pc</a></dt>
+              </div>
 
+           <div class="column">
+     
+                <i style="padding-left : 1em ;"><a href="#multi">Multi-Sujet:</a></i>
+                <ul>
+                  <li><a href="arduino/index.shtml">Arduinos</a>
+                  <li><a href="acela/index.shtml">CTI Electronics (Acela)</a>
+                  <li><a href="loconet/Digitrax.shtml">Digitrax</a>
+                  <li><a href="ipocsmr/index.shtml">IPOCSMR</a></li>
+                  <li><a href="XPressNet/index.shtml">Lenz</a>
+                  <li><a href="merg/index.shtml">MERG</a>
+                  <li><a href="pi/index.shtml">Raspberry Pi</a>                
+                  <li><a href="sprog/SPROG.shtml">SPROG DCC</a>
+                  <li><a href="sproggen5/index.shtml">SPROG DCC Generation 5</a>
+                </ul> 
+
+               <br>
+               <i style="padding-left : 1em ;"><a href="#networks">R&#233;seaux et protocoles:</a></i>
+                <ul>
+
+
+                  <li><a href="can/index.shtml">R&#233;seaux CAN Bus</a>                
+                  <li><a href="can/cbus/index.shtml">CBUS&reg;</a>                
+                  <li><a href="cmri/CMRI.shtml">C/MRI</a>
+                  <li><a href="XBee/index.shtml">Digi XBee</a>
+                  <li><a href="ipocsmr/index.shtml">IPOCS</a></li>
+                  <li><a href="loconet/Digitrax.shtml">LocoNet</a>
+                  <li><a href="can/cbus/index.shtml">CBUS</a>
+                  <li><a href="modbus/index.shtml">Modbus</a>
+                  <li><a href="mqtt/index.shtml">MQTT</a>
+                  <li><a href="rps/index.shtml">NAC Services RPS</a>
+                  <li><a href="XPressNet/index.shtml">OpenDCC</a>
+                  <li><a href="openlcb/index.shtml">OpenLCB</a>
+                  <li><a href="SRCP/index.shtml">SRCP server</a>
+                  <li><a href="powerline/index.shtml">Powerline</a>
+                  <li><a href="XPressNet/index.shtml">XPressNet</a>
+                </ul>
+                
+             </div>
+                
+              <div class="column">
+                   
+                 <i style="padding-left: 1em;"><a href="#other">Accessoires/Autres dispositifs:</a></i>
+
+                <ul>
+                  <li><a href="anyma/index.shtml">Anyma DMX</a>
+                  <li><a href="arduino/index.shtml">Arduinos</a>
+                  <li><a href="bachrus/index.shtml">Bachrus</a>
+                  <li><a href="dcc4pc/index.shtml">Dcc4Pc</a>
+                  <li><a href="misc/DccSpecialties.shtml">DCC Specialties</a>
+                  <li><a href="powerline/Compatibilit&#233;.shtml">Insteon (Powerline)</a>                  
+                  <li><a href="maple/index.shtml">Syst&#232;mes Maple</a>
+                  <li><a href="oaktree/OakTree.shtml">Syst&#232;mes Oak Tree </a>
+                  <li><a href="raildriver/index.shtml">Pi Engineering RailDriver</a>
+                  <li><a href="grapevine/index.shtml">Protrak Grapevine</a>
+                  <li><a href="rfid/index.shtml">Lecteurs de RFID</a>
+                  <li><a href="secsi/index.shtml">TracTronics SECSI</a>
+                  <li><a href="../../package/jmri/jmrit/withrottle/UserInterface.shtml">WiFi Throttles</a>
+                             <!-- La ligne de priorit&#233; devra &#234;tre modifi&#233;e lors de la r&#233;organisation de la page r&#233;f&#233;renc&#233;e @jerryg2003 01-14-2020 -->
+                  <li><a href="powerline/Compatibilit&#233;.shtml">X10 (Powerline)</a>                  
+                </ul>
+                
+                <br>
+                <i style="padding-left : 1em ;"><a href="#programmers">Programmeurs:</a></i>
+   
+                <ul>
+                  <li><a href="loconet/PR3.shtml">Digitrax PR3</a>
+                  <li><a href="loconet/PR4.shtml">Digitrax PR4</a>
+                  <li><a href="merg/index.shtml">MERG</a>
+                  <li><a href="qsi/index.shtml">Programmeur quantique QSI </a>
+                  <li><a href="sprog/SPROG.shtml">SPROG DCC</a>
+                  <li><a href="sproggen5/index.shtml">SPROG DCC Generation 5</a>
+                </ul>
+          </div>
+      </div> 
+      
+   <p><a href="#TopOfPage">[Aller en haut de la page]</a></p>     
+      
+
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->      
+      <a id="multi" name="multi"></a>
+      <h2>Mat&#233;riel polyvalent</h2>
+      <div class="list">
+        <dl>
+          <dt class="im">Fabricant <!-- header, link--></dt>
+          <dt>JMRI Support <!-- header, link--></dt>
+          <dd>&nbsp;</dd>
+
+          <dt class="im"><a href="https://arduino.cc" target="_blank">
+          <img src="arduino/images/arduinologo.png" width="56" height="42" 
+          alt="Arduino (microcontr&#244;leur)"></a></dt>
+          <dt><a href="arduino/index.shtml">Arduino (microcontr&#244;leur)</a></dt>
           <dd>
-            <p class="dl">Configurer: <a href=
-            "dcc4pc/index.shtml">Cartes de d\u00e9tection DCC 4 PC</a></p>
+            <p class="dl">Configurer : Voir <a href="arduino/index.shtml"> le 
+            Page d'aide JMRI arduino</a> pour des informations sur la configuration pour le contr&#244;le des accessoires.
+            Voir aussi <a href="dccpp/index.shtml">DCC++</a> pour une utilisation en tant que Centrale DCC.
+            </p>
+            <p>&nbsp;</p>
+          </dd>
+          
+        <dt class="im"><img src=
+          "http://www.cti-electronics.com/banner.gif" width="122"
+          height="27" alt="CTI"></dt>
+          <dt><a href="acela/index.shtml">CTI Electronics
+          Acela</a></dt>
+          <dd>
+            <p class="dl">Configurer : Cartes &#233;lectroniques CTI via l'adaptateur
+            <a href="acela/index.shtml">Acela</a> .</p>
+            <p>&nbsp;</p>
           </dd>
 
-	<dt class="im">
-			<a href="http://www.dccspecialties.com">
-			<img src="http://www.dccspecialties.com/common/top-logo.gif" width="60" height="26" alt="DCC Specialties"></a>
-    </dt>
-    <dt><a href="misc/DccSpecialties.shtml">DCC Specialties</a></dt>
-    <dd><p class="dl">Configurer:  
-			<a href="misc/DccSpecialties.shtml">Produits famille Hare, Wabbit, Block Watcher ou PSX</a>.</p>
-	</dd>
+          <dt class="im"><a href="http://www.digitrax.com/" target="_blank">
+          <img src="images/Digitrax-logo.jpg" width="60" height="28" alt="Digitrax"></a></dt>
+          <dt><a href="loconet/Digitrax.shtml">Digitrax</a></dt>
+          <dd>
+            <p class="dl">Informations g&#233;n&#233;rales sur <a href=
+            "loconet/Digitrax.shtml">connecter JMRI &#224; un LocoNet Digitrax
+            </a></p>
 
- 	<dt class="im">
-	    <a href="http://www.digi.com/xbee">
-	    <img src="http://www.digi.com/images/news/digi_2c_sm.gif" width="50" height="50" alt="Digi XBee"></a>
-    </dt>
-    <dt><a href="XBee/index.shtml">Digi</a></dt>
-    <dd><p class="dl">Informations G&#233;n&#233;rales sur <a href="XBee/index.shtml">la connexions &#224; un r&#233;seau Digi XBee</a></p>
-	</dd>
+            <p class="dl">Configurer : Connexions &#224; un LocoNet
+            via</p>
 
-	    
-   	<dt class="im">
-		<a href="http://www.digitrax.com/">
-		<img src="images/Digitrax-logo.jpg" width="44" height="34" alt="Digitrax"></a></dt>
-	     <dt><a href="loconet/Digitrax.shtml">Digitrax</a></dt>
-	    <dd>
-	        <p class="dl"><A HREF="loconet/Digitrax.shtml">Informations g&#233;n&#233;rales sur  <a href="loconet/Digitrax.shtml">la connexion de JMRI &#224; Digitrax LocoNet </a></p>
-			<p class="dl"> Configuration: Connexion &#224; un LocoNet via
-		    	<ul>
- 		    	<li><A HREF="loconet/PR3.shtml">Interface Digitrax PR3 </a>
-		   	 	<li><A HREF="loconet/LocoBufferUSB.shtml">LocoBuffer-USB RR-CirKits</a>
-		   	 	<li>Le plus anciens 
-	   				<A HREF="loconet/LocoBufferII.shtml">LocoBuffer-II </a>,
- 	  				<A HREF="loconet/LocoBuffer.shtml">LocoBuffer </a> et les interface	
-	   				<A HREF="loconet/MS100.shtml">MS100 </a>
-	   				<li><a href="loconet/BTLocoBridge.shtml">Bluetooth
+            <ul>
+              <li><a href="loconet/PR3.shtml">Interface Digitrax PR3
+              </a></li>
+              
+              <li><a href="loconet/PR4.shtml">Interface Digitrax PR4
+              </a></li>
+
+              <li><a href="loconet/LocoBufferUSB.shtml">LocoBuffer-USB RR-CirKits
+              </a></li>
+
+              <li>L'ancien <a href=
+              "loconet/LocoBufferII.shtml">LocoBuffer-II</a>,
+              <a href="loconet/LocoBuffer.shtml">LocoBuffer</a> et
+              <a href="loconet/MS100.shtml">interfaces MS100</a>
+              </li>
+
+              <li><a href="loconet/BTLocoBridge.shtml">LocoBridge Bluetooth
+              </a></li>
+            </ul>
+
+            <p class="dl">Configurer : <a href=
+            "loconet/LocoNetSim.shtml">Simulateur de locoNet &#224; utiliser
+            lorsqu'il est d&#233;connect&#233; d'un r&#233;seau</a>.</p>
+
+            <p class="dl">Configurer : Connexion &#224; distance &#224; un LocoNet
+            via le <a href="loconet/LocoNetServer.shtml">Serveur JMRI LocoNet
+            </a>.</p>
+           <p class="dl">Configurer : Connexion &#224; distance &#224; un LocoNet
+            via <a href=
+            "loconet/LbServer.shtml">LbServer</a>. Plus 
+            d'informations sur <a href=
+            "loconet/LocoNetworking.shtml">connexion multiple
+            des ordinateurs &#224; un seul LocoNet</a></p>
+
+            <p class="dl">Configurer : Programmation et tests
+            d&#233;codeurs sans centrale via une <a href=
+            "loconet/PR2.shtml">Interface PR2 de Digitrax</a>,
+            <a href="loconet/PR3.shtml">interface PR3</a>, ou
+           <a href="loconet/PR4.shtml">interface PR4</a>.</p>
+
+            <p class="dl">Configurer : Connexion directe &#224; une
+            <a href="loconet/Uhlenbrock.shtml">Intellibox</a>.</p>
+
+            <p class="dl">Configurer : Connexion &#224; un <a href=
+            "loconet/StandaloneLocoNet.shtml">LocoNet autonome</a>.</p>
+            <p>&nbsp;</p>
+          </dd>
+
+          <dt class="im"><a href="https://ipocsmr.github.io" target="_blank">
+            <img src="ipocsmr/images/ipocsmrlogo.png" width="56" height="56" 
+            alt="IPOCSMR"></a></dt>
+            <dt><a href="ipocsmr/index.shtml">IPOCSMR</a></dt>
+            <dd>
+              IPOCSMR est une impl&#233;mentation de logiciel libre d'une interface bas&#233;e sur IP 
+              pour contr&#244;ler les objets du chemin de fer miniature tels que les moteurs d'aiguillages
+              , signaux et d&#233;tecteurs. L'IPOCSMR est con&#231;u en utilisant la norme ESP8266 comme
+              la liaison Wi-Fi vers les contr&#244;leurs d'objets et Arduino UNO pour
+              r&#233;aliser le contr&#244;le direct de l'objet. Les interfaces IPOCS JMRI utilisent
+              MQTT et comprend un logiciel d'interface fonctionnant dans un logiciel JMRI
+               de communication IP fonctionnant dans un environnement ESP8266
+              et un logiciel de contr&#244;le d'objets fonctionnant dans Arduino. 
+              Les autres informations,  descriptions des syst&#232;mes et les logiciels peuvent &#234;tre trouv&#233;s sur
+              GitHub.
+
+              <p class="dl">Configurer : Connexion &#224; un syst&#232;me
+              <a href="ipocsmr/">IPOCSMR</a> .
+              </p>
+              <p>&nbsp;</p>
+            </dd>
+          </dd>
+
+          <dt class="im"><a href="http://www.lenz.com/" target="_blank">
+          <img src="images/ico-lenz.gif" width="44" height="34" alt="Lenz"></a></dt>
+          <dt><a href="XPressNet/index.shtml">Lenz</a></dt>
+          <dd>
+            <p class="dl">Configurer : <a href=
+            "XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB ou
+            Interfaces GenLi XPressNet, Commandes ZTC interfacesZTC640
+            ou un modem XPA et Hayes compatible
+            </a>.</p>
+
+            <p>Veuillez v&#233;rifier les notes ci-dessus pour  conna&#238;tre les 
+            restrictions du  syst&#232;mes  sur ce que peut faire JMRI.</p>
+            <p>&nbsp;</p>
+          </dd>
+
+          <dt class="im"><a href="http://www.raspberrypi.org" target="_blank">
+          <img src="https://www.raspberrypi.org/wp-content/uploads/2011/10/Raspi-PGB001-300x267.png"
+          width="60" height="58" alt="Fondation Framboise Pi"></a></dt>
+          <dt><a href="pi/index.shtml">Rasperry Pi
+          Fondation</a></dt>
+          <dd>
+            <p class="dl"><a href="pi/index.shtml">G&#233;n&#233;ralit&#233;s
+            informations sur la connexion aux broches GPIO Rasperry Pi.</a></p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+          </dd>
+              
+          <dt class="im"><a href="http://www.sprog-dcc.co.uk/" target="_blank">
+          <img src="images/SprogDCCLarge.jpg" width="157" height="40" alt="SPROG DCC Logo"></a></dt>
+          <dt><a href="sprog/SPROG.shtml">SPROG DCC/<a href="sproggen5/index.shtml">SPROG DCC Generation 5</a></dt>
+          <dd>
+            <p class="dl">Informations g&#233;n&#233;rales sur <a href=
+            "sprog/SPROG.shtml">connexion de JMRI &#224; un programmateur/centrale SPROG</a></p>
+
+            <p class="dl">Informations g&#233;n&#233;rales sur <a href=
+            "sproggen5/index.shtml">connexion de JMRI &#224; un programmateur/centrale SPROG de g&#233;n&#233;ration 5</a></p>
+
+          </dd>
+
+        </dl>
+      </div><!-- ferme .list -->
+
+   <p><a href="#TopOfPage">[Aller en haut de la page]</a></p>     
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+      <a id="postes de commande" name="postes de commande"></a>
+      <h2>Centrale</h2>
+      <div class="list">
+        <dl>         
+          <dt class="im">Fabricant <!-- header, link--></dt>
+          <dt>JMRI Support <!-- en-t&#234;te, lien--></dt>
+          <dd>&nbsp;</dd>
+
+          <dt class="im"><a href= "https://shop.atlasrr.com/t-atlascommander.aspx" target="_blank">
+          <img src="images/atlas_logo.gif" width="44" height="34" alt="Atlas"></a></dt>
+          <dt><a href="XPressNet/index.shtml">Atlas Commander</a></dt>
+          <dd>
+
+            <p class="dl">Configurer : Atlas Commander via <a href=
+            "XPressNet/index.shtml">Lenz LI100</a>, <a href=
+            "XPressNet/LI101Configurationtool.shtml">LI101F</a>,
+            Interfaces LIUSB ou GenLi XPressNet, Commande ZTC
+            Interface ZTC640, ou un modem XPA et Hayes compatible
+            modem</p>
+            <p>Note : vous ne pouvez pas programmer de d&#233;codeurs avec cette
+            configuration.</p>
+            <p>&nbsp;</p>
+          </dd>
+
+          <dt class="im"><a href="http://www.cvpusa.com/" target="_blank">
+          <img src="images/ico-cvp.gif" width="44" height="34" alt="CVP"></a></dt>
+          <dt><a href="easydcc/EasyDCC.shtml">Produits VPC
+          EasyDCC</a></dt>
+          <dd>
+            <p class="dl">Configurer : Centralee EasyDCC via
+            <a href="easydcc/EasyDCC.shtml">S&#233;rie</a> ou <a href=
+            "TerminalServer.shtml">terminal Serveur </a></p>
+            <p>&nbsp;</p>
+          </dd>
+
+          <dt class="im"><a href=
+          "https://www.youtube.com/channel/UCJmvQx-fe0OMAIH-_g-_rZw" target="_blank">
+          <img src="dccpp/images/dccpp_logo.jpg" width="60" height="26" alt="DCC++"></a></dt>
+          <dt><a href="dccpp/index.shtml">DCC++</a></dt>
+          <dd>
+            <p class="dl">Configurer : <a href=
+            "dccpp/index.shtml">DCC++ Commande Arduino Open Source
+            Station</a>.</p>
+            <p>&nbsp;</p>
+          </dd>
+
+          <dt class="im"><a href="https://www.digikeijs.com" target="_blank">
+          <img src="images/digikeijs-logo.png" width="50" height="14" alt="Digikeijs"></a></dt>
+          <dt><a href="digirails/index.shtml">Digikeijs (Digirails)</a></dt>
+          <dd>
+            <p class="dl">Configurer : <a href=
+            "digirails/index.shtml">DR5000</a></p>
+            <p>&nbsp;</p>
+          </dd>
+
+         <dt class="im"><a href="http://www.digitrax.com/" target="_blank">
+          <img src="images/Digitrax-logo.jpg" width="60" height="28" alt="Digitrax"></a></dt>
+          <dt><a href="loconet/Digitrax.shtml">Digitrax</a></dt>
+          <dd>
+            <p class="dl">Informations g&#233;n&#233;rales sur <a href=
+            "loconet/Digitrax.shtml">connecter JMRI &#224; un LocoNet Digitrax
+            </a></p>
+
+            <p class="dl">Configurer : Connexions &#224; un LocoNet
+            via une</p>
+
+            <ul>
+              <li><a href="loconet/PR3.shtml">interface Digitrax PR3
+              </a></li>
+              
+              <li><a href="loconet/PR4.shtml">interface Digitrax PR4
+              </a></li>
+
+              <li><a href="loconet/LocoBufferUSB.shtml">LocoBuffer-USB RR-CirKits
+              </a></li>
+
+              <li>Les anciennes  interfaces<a href=
+              "loconet/LocoBufferII.shtml">LocoBuffer-II</a>,
+              <a href="loconet/LocoBuffer.shtml">LocoBuffer</a> et
+              <a href="loconet/MS100.shtml">MS100</a>
+              </li>
+
+              <li><a href="loconet/BTLocoBridge.shtml">Bluetooth
               LocoBridge</a></li>
-           
-	            </ul>
-		    </p>
-		<p class="dl"> Configurer:
-		<A HREF="loconet/LocoNetSim.shtml">LocoNet Simulator pour une utilisation en cas de d&#233;connexion d'un r&#233;seau </a>. </p>
-		<p class="dl">Configurer: Connexion &#224; distance via un LocoNet
-		<A HREF="loconet/LocoNetServer.shtml"> Serveur LocoNet JMRI </a>. </p>
-		<p class="dl"> Configurer: Connexion &#224; distance via un LocoNet
-		<A HREF="loconet/LbServer.shtml">LbServer  </a>. </p>
-		<A HREF="loconet/LocoNetworking.shtml">Informations suppl&#233;mentaires sur la connexion de plusieurs ordinateurs &#224; un seul LocoNet </a>
-		<p class="dl">Configurer: programmation et test des d&#233;codeurs sans une centrale de commande au moyen d'une
-		<A HREF="loconet/PR2.shtml">Interface Digitrax PR2 </a>
-		ou
-		<A HREF="loconet/PR3.shtml">Interface PR3 </a>. </p>
-		<p class="dl">Configurer: connexion directe &#224; un
-		une <a href="loconet/Uhlenbrock.shtml">Intellibox </a>.
-    </dd>
+            </ul>
 
-   	<dt class="im">
-			<a href="http://www.esu.eu/en/products/digital-control/">
-			<img src="http://www.esu.eu/esu_logo.jpg" width="70" height="50" alt="ESU"></a>
-   	</dt>
-    <dt><a href="ecos/index.shtml">ESU</a></dt>
-    <dd><p class="dl">Configurer la connexion &#224; une centrale
-			<a href="ecos/index.shtml">ECoS</a>.</p>
-			<p>&nbsp;</p>
-	</dd>
+            <p class="dl">Configurer : <a href=
+            "loconet/LocoNetSim.shtml">Simulateur de locoNet &#224; utiliser
+            lorsqu'il est d&#233;connect&#233; d'un r&#233;seau</a>.</p>
 
-    <dt class="im">
-			<a href="http://www.fleischmann.de/en/home/index.html">
-			<img src="images/ico-fl.gif" width="54" height="34" alt="Fleischmann"></a>
-    </dt>
-    <dt><a href="loconet/Fleischmann.shtml">Fleischmann</a></dt>
-    <dd><p class="dl">Configurer: (LocoNet)
-        <a href="loconet/Fleischmann.shtml">Les communications Twin Centre</a></p> 
-	</dd>
-	<dd>
-            <p class="dl">Configurer: Fleischmann Z21 et z21 via
-            <a href="roco/z21/index.shtml">Ethernet</a>.</p>
+            <p class="dl">Configurer : Connexion &#224; distance &#224; un LocoNet
+            via le <a href="loconet/LocoNetServer.shtml">Serveur JMRI LocoNet
+            </a>.</p>
+
+            <p class="dl">Configurer : Connexion &#224; distance &#224; un LocoNet
+            via <a href=
+            "loconet/LbServer.shtml">LbServer</a>. Plus
+            d'informations sur <a href=
+            "loconet/LocoNetworking.shtml">connexion de plusieurs
+             ordinateurs &#224; un seul LocoNet</a></p>
+
+            <p class="dl">Configurer : Programmation et tests
+            d&#233;codeurs sans Centrale via une <a href=
+            "loconet/PR2.shtml">Interface PR2 de Digitrax</a>,
+            <a href="loconet/PR3.shtml">interface PR3</a>, ou
+           <a href="loconet/PR4.shtml">interface PR4</a>.</p>
+
+            <p class="dl">Configurer : Connexion directe &#224; un
+            <a href="loconet/Uhlenbrock.shtml">Intellibox</a>.</p>
+
+            <p class="dl">Configurer : Connexion &#224; un <a href=
+            "loconet/StandaloneLocoNet.shtml"> LocoNet autonome</a>.</p>
+            <p>&nbsp;</p>
           </dd>
 
-	<dt class="im">
- 			<a href="http://www.hornby.com/uk-en/">
-			<img src="images/hornby.png" width="81" height="25" alt="Hornby"></a>
-    </dt>
-	<dt><a href="XPressNet/index.shtml">Hornby</a></dt>
-   	<dd>
-		<p class="dl"> Configurer: Hornby Elite via<a HREF="XPressNet/index.shtml"> un port USB Int&#233;gr&#233;</a></p>
-        <p><class="dl"> Configurer: Elite Hornby ou Hornby S&#233;lectionnez via
-		<a href="XPressNet/index.shtml"> Lenz LI100, LI101F, LIUSB ou Genli interfaces XPressNet, ZTC contr&#244;les ZTC640 interface, ou un XPA et modem compatible Hayes </a></p>
+          <dt class="im"><a href="http://www.esu.eu/en/products/digital-control/" target="_blank">
+          <img src="http://www.esu.eu/esu_logo.jpg" width="70" height="50" alt="ESU"></a></dt>
+          <dt><a href="ecos/index.shtml">ESU</a></dt>
+          <dd>
+            <p class="dl">Configurer la connexion &#224; une <a href=
+            "ecos/index.shtml">ECoS</a> centrale.</p>
+            <p>&nbsp;</p>
+          </dd>
 
-		<p> S'il vous pla&#238;t consulter les notes ci-dessus pour les restrictions que JMRI peut apportere sur ce syst&#232;me sp&#233;cifique</p>
-    </dd>
-
-
-    <dt class="im">
-			<a href="http://www.lenz.com/">
-			<img src="images/ico-lenz.gif" width="44" height="34" alt="Lenz"></a>
-    </dt>
-    <dt><a href="XPressNet/index.shtml">Lenz</a></dt>
-    <dd>
-	        <p class="dl">Configurer:
-		<a href="XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB or GenLi XPressNet interfaces, ZTC Controls ZTC640 interface, 
-		 ou un XPA et modem compatible Hayes</a></p> 
-		<p>S'il vous pla&#238;t consulter les notes ci-dessus pour les restrictions que JMRI peut apporter sur ce syst&#232;me sp&#233;cifique</p>
-   </dd>
-
-    <dt class="im"><a href="http://legacy.lionel.com/GettingStarted/LionelTechnology/legacy/legacyHome.cfm">
-	     <img src="images/ico-lionel.gif" width="108" height="35" alt="Lionel TMCC"></a></dt>
-   <dt><a href="tmcc/index.shtml">Lionel TMCC</a></dt>
-    <dd>
-			<p>Connexion: c&#226;ble S&#233;rie</p>
-	        <p class="dl">Configurer: <a href="tmcc/index.shtml">Centrale TMCC </a></p>
-    </dd>
-
-    <dt class="im"><a href="http://www.maplesystems.com">
-	    <img src="http://www.maplesystems.com/images/homepage-new/MapleLogo.gif" width="95" height="90" alt="Maple Logo"></a></dt>
-    <dt><a href="maple/index.shtml">Syst&#232;meMaple</a></dt>
-    <dd>
-				<p> &#233;cran tactile Syst&#232;mes Maple </p>
-	        <p class="dl">Configurer: <a href="maple/index.shtml">connexion via une liaison s&#233;rie</a></p>
-    </dd>
-
-    <dt class="im"><a href="http://www.marklin.com/digital/"><img src="images/marklin_logo.gif" width="101" height="22" alt="Marklin"></a></dt>
-    <dt><a href="marklin/index.shtml">M&#228;rklin</a></dt>
-    <dd><p class="dl">Configurer la connexion &#224; la centrale
-			<a href="marklin/index.shtml">CS2</a></p>
-	    <a href="ecos/index.shtml">CS</a> Centrale - voir ESU ECoS
-	</dd>
-
- 	<dt class="im"><a href="http://www.merg.org.uk/">
-	    <img src="http://www.merg.org.uk/merg_images/merg_logo.png" alt="MERG logo" height="45" width="100"></a></dt>
-     <dt><a href="can/cbus/index.shtml">MERG CBUS</a></dt>
-    <dd><p class="dl">Configuration: <a href="can/cbus/index.shtml"> r&#233;seaux CBUS MERG</a></p>
-	</dd>
-	
-	 <dt class="im"><img src=
-          "http://www.modbus.org/images/logo_new.jpg" alt=
-          "Modbus logo" height="27" width="96"></dt>
-
-          <dt><a href="modbus/index.shtml">Modbus</a></dt>
-
+          <dt class="im"><a href="http://www.fleischmann.de/en/home/index.html" target="_blank">
+          <img src="images/ico-fl.gif" width="54" height="34" alt="Fleischmann"></a></dt>
+          <dt><a href="loconet/Fleischmann.shtml">Centre de jumelage Fleischmann </a></dt>
           <dd>
             <p class="dl">Configure: <a href=
-            "modbus/index.shtml">R\u00e9seaux Modbus </a></p>
+            "loconet/Fleischmann.shtml">Twin Centre
+            Fleischmann</a> (LocoNet)</p>
+            <p class="dl">Configurer : Fleischmann Z21 et z21 via
+            <a href="roco/z21/index.shtml">Ethernet</a>.</p>
+            <p>&nbsp;</p>
           </dd>
 
-	<dt class="im"><a href="http://www.modelrectifier.com">
-	    <img src="http://www.modelrectifier.com/images/interface/MRCLogo.gif" alt="MRC logo" height="48" width="96"></a></dt>
-    <dt><a href="mrc/index.shtml">Model Rectifier Corp</a> (MRC)</dt>
-    <dd><p class="dl">Les d&#233;codeurs MRC peuvent &#234;tre configur&#233;s via DecoderPro en utilisant tout syst&#232;me DCC pris en charge.</p>
-	    <p>Pour avoir plus d'information sur la connexion de JMRI &#224; une centrale MRC, voir la page<a href="mrc/index.shtml">syst&#232;me MRC</a>.
-	</dd>
+          <dt class="im"><a href="http://www.hornby.com/uk-en/" target="_blank">
+          <img src="images/hornby.png" width="81" height="25" alt="Hornby"></a></dt>
+          <dt><a href="XPressNet/index.shtml">Hornby</a></dt>
+          <dd>
+            <p class="dl">Configurer : Hornby Elite via <a href=
+            "XPressNet/index.shtml">le port USB int&#233;gr&#233;</a></p>
 
-    <dt class=im><a href="http://www.proto87.com/model-trains-DCC-decoders.html">
-	     <img src="images/RPS.gif" width="64" height="41" alt="RPS image"></a></dt>
-     <dt><a href="rps/index.shtml">NAC Services RPS</a></dt>
-    <dd>
-			<a href="rps/index.shtml">Configurer la connexion</a> &#224; un syst&#232;me de d&#233;tection de position RPS
-	</dd>
-		
-    <dt class="im"><a href="http://www.ncedcc.com/">
-	    <img src="images/ncelogo.jpg" width="44" height="34" alt="NCE"></a></dt>
-    <dt><a href="nce/NCE.shtml">NCE</a></dt>
-    <dd>
-		Configurer une connexion &#224; une Powerhouse Pro via un
-		<a href="nce/NCE.shtml#phpro"> lien s&#233;rie</a> ou
-		<a href="nce/NCE.shtml#vianetwork"> Serveur Terminal</a>.
-		<br>
-		Configurer une connexion &#224; un PowerCab via un
-		<A HREF="nce/NCE.shtml#powercab">adapteur USB NCE</a>.
-	</dd>
-	
-    <dt class="im"><a href="http://www.oaktreesystems.com/">
-	    <img src="images/otslogosmall.gif" width="37" height="50" alt="Oak Tree Systems"></a></dt>
-    <dt>Syst&#232;mes Oak Tree</dt>
-    <dd>
-	        <p class="dl">Configurer une connexion &#224; une  <a href="oaktree/OakTree.shtml">Railroad Control Interface Oak Tree(RCI)</a>, incluant
-	        les cartes d'interfaces I0-24, IO-48 et O-48 et le r&#233;gulateur manuel HH2<a>.<br/ >
-			( Remarque: RCI est pour &#234;tre remplac&#233; par <a href="http://www.oaktreesystems.com/main.html">Layout Control System(LCS)</a>)
-					</p>
-	</dd>
+            <p class="dl">Configurer : Hornby Elite ou Hornby Select
+            via <a href="XPressNet/index.shtml">Lenz LI100</a>,
+            <a href=
+            "XPressNet/LI101Configurationtool.shtml">LI101F</a>,
+            <a href="XPressNet/index.shtml">les interfaces XPressNet LIUSB ou GenLi
+            , l'interface ZTC Commandes ZTC640, ou
+            un modem compatible XPA et Hayes</a>.</p>
 
-	<dt class="im"><a href="http://openlcb.org/">
-	    <img src="http://openlcb.org/trunk/web/logo-ajs-dph.png" alt="OpenLCB logo" height="57" width="138"></a></dt>
-    <dt><a href="openlcb/index.shtml">OpenLCB</a></dt>
-    <dd><p class="dl">Configurer: <a href="openlcb/index.shtml">des r&#233;seaux OpenLCB</a></p>
-	</dd>
+            <p>Veuillez v&#233;rifier les notes ci-dessus pour conna&#238;tre les 
+            restrictions du syst&#232;me sur ce que peut faire JMRI.</p>
+            <p>&nbsp;</p>
+          </dd>
 
-    <dt class="im"><a href="http://www.protrak.cc">
-	    <img src="http://www.protrak.cc/ptgif.gif"></a></dt>
-    <dt><a href="grapevine/index.shtml">ProTrak Grapevine</a></dt>
-    <dd><p class="dl">Configurer: <A HREF="grapevine/index.shtml">n&#339;uds Grapevine</a></p>
-	</dd>
+          <dt class="im"><a href=
+          "http://legacy.lionel.com/GettingStarted/LionelTechnology/legacy/legacyHome.cfm" target="_blank">
+          <img src="images/ico-lionel.gif" width="108" height="35" alt="Lionel TMCC"></a></dt>
+          <dt><a href="tmcc/index.shtml">Lionel TMCC</a></dt>
+          <dd>
+            <p>Connexion : C&#226;ble s&#233;rie </p>
 
-    <dt class="im"><a href="http://www.qsisolutions.com/products/q-programmer.html">
-	    <img src="http://static.wixstatic.com/media/0f7119_14d3842619a14f52862954b9151cf131.png_srz_361_120_75_22_0.50_1.20_0.00_png_srz" height="40" width="120" alt="QSI"></a></dt>
-    <dt><a href="qsi/index.shtml">QSI Solutions</a></dt>
-    <dd>
-				<p>Connexion: Programmateur Quantum</p>
-	        <p class="dl">Configurer: <a href="qsi/index.shtml">connexion USB</a></p>
-	</dd>
+            <p class="dl">Configurer : <a href=
+            "tmcc/index.shtml">Centrale du TMCC</a></p>
+            <p>&nbsp;</p>
+          </dd>
 
-    <dt class="im"><a href="http://www.raspberrypi.org">
-			<img src="https://www.raspberrypi.org/wp-content/uploads/2011/10/Raspi-PGB001-300x267.png" width="60" height="58" alt="Raspberry Pi Foundation"></a>
-    </dt>
-    <dt><a href="pi/index.shtml">Raspberry Pi Foundation</a></dt>
-    <dd><p class="dl"><a href="pi/index.shtml">Information G&#233;n&#233;rale sur la connexion aux broches GPIO d'un Raspberry PI.</a></p>
-	</dd>
+          <dt class="im"><a href="http://www.marklin.com/digital/" target="_blank">
+          <img src="images/marklin_logo.gif" width="101" height="22" alt="Marklin"></a></dt>
+          <dt><a href="marklin/index.shtml">M&auml;rklin</a></dt>
+          <dd>
+            <p class="dl">Configurer la connexion &#224; une  <a href=
+            "marklin/index.shtml">CS2</a> Centrale CS2
+            2.</p><a href="ecos/index.shtml">CS</a> Centrale
+            - voir ECOS ESU
+            <p>&nbsp;</p>
+          </dd>
 
-    <dt class="im"><a href="http://www.roco.com/">Roco</a></dt>
-    <dt><a href="XPressNet/index.shtml">Roco</a> (XPressNet )</dt>
-    <dd>
-	        <p class="dl">Configurer: Roco LocoMaus 2 (Roco port s&#233;rie r&#233;f: 10760), Roco MultiMaus (Roco r&#233;f: 10810), ou Roco multiZENTRAL-Pro (Roco r&#233;f: 10830) via
-		<a href="XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB ou interfaces GenLi XPressNet, ZTC Controls ZTC640 interface, ou un XPA et  modem compatibles Hayes</a> 
-		</p>
-		<p>S'il vous pla&#238;t consulter les notes ci-dessus pour les restrictions que JMRI peut apporter &#224; ce syst&#232;me sp&#233;cifique</p>
-	</dd>
-	
-	<dd>
-            <p class="dl">Configurer: Roco Z21 et z21 via <a href=
+          <dt class="im"><a href="http://www.modelrectifier.com" target="_blank">
+            <img src="http://www.modelrectifier.com/v/vspfiles/templates/modelRecRes/images/template/desktop/client-logo.png" alt="MRC logo" height="43" width="103">
+          </a></dt>
+          <dt><a href="mrc/index.shtml">Model Rectifier Corp</a>
+          (MRC)</dt>
+          <dd>
+            <p class="dl">Les d&#233;codeurs MRC peuvent &#234;tre configur&#233;s via
+            DecoderPro en utilisant tout syst&#232;me DCC pris en charge.</p>
+
+            <p>Pour plus d'informations sur la connexion de JMRI &#224; MRC
+            voir la page du syst&#233;me <a href="mrc/index.shtml">MRC
+            </a>.</p>
+            <p>&nbsp;</p>
+          </dd>
+
+         <dt class="im"><a href="http://www.ncedcc.com/" target="_blank">
+         <img src="images/ncelogo.jpg" width="44" height="34" alt="NCE"></a></dt>
+          <dt><a href="nce/NCE.shtml">NCE</a></dt>
+          <dd><p>Configurer la connexion &#224; un Powerhouse Pro via <a href=
+            "nce/NCE.shtml#phpro">lien s&#233;rie</a> ou <a href=
+            "nce/NCE.shtml#vianetwork">terminalServeur </a>.<br>Configurer
+            connexion &#224; une PowerCab via un <a href=
+            "nce/NCE.shtml#powercab">Adaptateur USB NCE</a>.</p>
+            <p>&nbsp;</p>
+          </dd>
+
+          <dt class="im"><a href="http://www.roco.com/" target="_blank">
+          <img src="images/roco.gif" width="110" height="40" alt="Roco"></a></dt>
+          <dt><a href="XPressNet/index.shtml">Roco</a></dt>
+          <dd>
+            <p class="dl">Configurer : Roco LocoMaus 2 (Partie Roco
+            num&#233;ro 10760), Roco MultiMaus (Roco Part num&#233;ro 10810),
+            ou Roco multiZENTRAL-Pro (Roco Part number 10830) via
+            <a href="XPressNet/index.shtml">Lenz LI100, LI101F,
+            Interfaces LIUSB ou GenLi XPressNet, Commandes ZTC
+            Interface ZTC640, ou un modem XPA et Hayes compatible
+            </a>.</p>
+
+            <p>Veuillez v&#233;rifier les notes ci-dessus  pour conna&#238;tre 
+            les restrictions du syst&#232;me sur ce que peut faire JMRI..</p>
+            <p class="dl">Configurer : Roco Z21 et z21 via <a href=
             "roco/z21/index.shtml">Ethernet</a>.</p>
+            <p>&nbsp;</p>
           </dd>
 
-    <dt class="im"><a href="http://www.sprog-dcc.co.uk/"><img src="http://www.sprog-dcc.co.uk/images/SprogDCC300.jpg" alt="SPROG" height="41" width="150"></a></dt>
-    <dt><a href="sprog/SPROG.shtml">SPROG</a></dt>
-    <dd><p class="dl">Configurer: <A HREF="sprog/SPROG.shtml">SPROG</a>
-	        que ce soit un programmateur DCC autonome ou centrale DCC</p>
-	</dd>
+         <dt class="im"><a href="https://www.sprog-dcc.co.uk/" target="_blank">
+          <img src="images/SprogDCCLarge.jpg" width="157" height="40" alt="SPROG DCC Logo"></a></dt>
+          <dt><a href="sprog/SPROG.shtml">SPROG DCC/<a href="sproggen5/index.shtml">SPROG DCC Generation 5</a></dt>
+          <dd>
+            <p class="dl">Configurer : <a href=
+            "sprog/SPROG.shtml">SPROG</a> en tant que programmeur DCC autonome ou centrale DCC</p>
+            <p class="dl">Configurer : <a href=
+            "sproggen5/index.shtml">SPROG Generation 5</a> comme centrale et programmateur DCC</p>
+          </dd>
 
-    <dt class="im"><a href="http://srcpd.sourceforge.net/"><img src="http://www.der-moba.de/skins/dermoba/wiki.png" height="55" width="78"></a></dt>
-    <dt><a href="SRCP/index.shtml">SRCP</a></dt>
-    <dd><p class="dl">Configurer: <A HREF="SRCP/index.shtml">Connexion au serveur SRCP</a></p></dd>
+          <dt class="im"><a href="http://www.tams-online.de/" target="_blank">
+          <img src="images/tams_logo.gif" width="64" height="30" alt="TAMS"></a></dt>
+          <dt><a href="tams/index.shtml">TAMS</a></dt>
+          <dd>
+            <p class="dl">Configurer la connexion &#224; <a href=
+            "tams/index.shtml">TAMS</a> Centrale Principale.</p>
+            <p>&nbsp;</p>
+          </dd>
 
- 	<dt class="im"><a href="http://www.tams-online.de/"><img src="images/tams_logo.gif" width="48" height="20" alt="TAMS"></a></dt>
-    <dt><a href="tams/index.shtml">TAMS</a></dt>
-    <dd><p class="dl">Configurer la connexion &#224; centrale Master Control de  
-			<a href="tams/index.shtml">TAMS</a></p>
-	</dd>
+          <dt class="im"><a href="http://www.uhlenbrock.de/" target="_blank">
+          <img src="images/ico-Ur.gif" width="66" height="52" alt="Uhlenbrock"></a></dt>
+          <dt><a href=
+          "loconet/Uhlenbrock.shtml">Uhlenbrock</a></dt>
+          <dd>
+            L'Intellibox peut &#234;tre connect&#233;e aux programmes JMRI soit
+            via une connexion LocoNet, ou via son propre port s&#233;rie (RS232) int&#233;gr&#233;
+            ou une connexion USB.
 
-    <dt class="im"><a href="http://www.uhlenbrock.de/">
-	    <img src="images/ico-Ur.gif" width="44" height="34" alt="Uhlenbrock"></a></dt>
-    <dt><a href="loconet/Uhlenbrock.shtml">Uhlenbrock</a></dt>
-    <dd>Les Intellibox peuvent &#234;tre connect&#233;es au programme JMRI soit par leurs connexions Loconet, ou via leurs propres ports s&#233;rie
-	    <p class="dl">Configurer: Uhlenbrock Intellibox-I ou -II via
-			<a href="loconet/Digitrax.shtml"> l'interface LocoNet </a></p>
-			</p>
-	    <p class="dl">Configuration: Uhlenbrock Intellibox-I via un
-			<a href="loconet/Uhlenbrock.shtml"> Port s&#233;rie int&#233;gr&#233; </a></p>
-			</p>
- 		<p class="dl">Configurer: Uhlenbrock Intellibox-II via
-			<a href="loconet/Uhlenbrock.shtml#usb">une connexion USB int&#233;gr&#233;e</a>
-			</p>
-	</dd>
+            <p class="dl">Configurer : Uhlenbrock Intellibox-I ou -II
+            via l'<a href="loconet/Uhlenbrock.shtml#loconet">interface LocoNet
+            </a></p>
 
-    <dt class="im"><a href="http://www.viessmann-modell.com/">Viessmann</a></dt>
-    <dt><a href="XPressNet/index.shtml">Viessmann</a> (XPressNet)</dt>
-    <dd>
-	        <p class="dl">Configurer: Viessmann Commander via
-		<a href="XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB ou interfaces GenLi XPressNet, ZTC Controls ZTC640 interface, ou un  XPA et modem compatibles Hayes </a> 
-		</p>
-		<p>S'il vous pla&#238;t consulter les notes ci-dessus pour les restrictions que JMRI peut apporter &#224; ce syst&#232;me sp&#233;cifique</p>
-    </dd>
+            <p class="dl">Configurer : Uhlenbrock Intellibox-I via le
+            <a href="loconet/Uhlenbrock.shtml#serial">port s&#233;rie int&#233;gr&#233;
+            </a></p>
 
-    <dt class="im">Wangrow</dt>
-	<dt><a href="nce/Wangrow.shtml">Wangrow</a></dt>
-    <dd>
-			<p>Connexion: Wangrow Serial Port</p>
-	        <p class="dl">Configurer: <A HREF="nce/Wangrow.shtml">System One</a></p></dd>
+            <p class="dl">Configurer : Uhlenbrock Intellibox-II via la
+            <a href="loconet/Uhlenbrock.shtml#usb">connexion USB int&#233;gr&#233;e
+            </a></p>
+            <p>&nbsp;</p>
+          </dd>
 
-    <dt class="im"><a href="http://www.x10.com">X10</a></dt>
-    <dt><a href="powerline/index.shtml">X10</a></dt>
-    <dd>
-    <p>Connection: X10, Insteon contr&#244;leurs courant-porteur</p>
-	     <p class="dl">Configure: <a href="powerline/index.shtml">CM11, 2412S et contr&#244;leurs compatibles </a></p></dd>
+          <dt class="im"><a href="http://www.viessmann-modell.com/" target="_blank">
+          <img src="images/viessmann.png" width="75" height="74" alt="Viessmann"></a></dt>
+          <dt><a href="XPressNet/index.shtml">Viessmann</a>
+          (XPressNet)</dt>
+          <dd>
+            <p class="dl">Configurer : Viessmann Commander via les interfaces
+            <a href="XPressNet/index.shtml">Lenz LI100, LI101F,
+             LIUSB ou GenLi XPressNet, Commande ZTC
+            Interface ZTC640, ou un modemXPA et Hayes compatible
+           .</a></p>
+            <p>Veuillez v&#233;rifier les notes ci-dessus pour conna&#238;tre 
+            les restrictions du syst&#232;me sur ce que peut faire JMRI.</p>
+            <p>&nbsp;</p>
+          </dd>
 
-    <dt class="im"><a href="http://w3.zimo.at/">Zimo</a></dt>
-    <dt><a href="zimo/Zimo.shtml">ZIMO</a></dt>
-    <dd>
-			<p class="dl">Configurer: <a href="zimo/Zimo.shtml">Zimo MX-1</a> </p>
-    </dd>
+          <dt class="im">Wangrow</dt>
+          <dt><a href="nce/Wangrow.shtml">Wangrow</a></dt>
+          <dd>
+            <p>Connexion : Port s&#233;rie de Wangrow </p>
+            <p class="dl">Configurer : <a href=
+            "nce/Wangrow.shtml">System One</a></p>
+            <p>&nbsp;</p>
+          </dd>
 
-    <dt class="im">
-	        <a href="http://ztccontrols.com/">
-		<img src="images/ztclogo.gif" width="44" height="34" alt="ZTC"></a>
-	</dt>
+         <dt class="im"><a href="http://www.zimo.at/" target="_blank">
+         <img src="images/zimo.gif" width="100" height="65" alt="Zimo"></a></dt>
+          <dt><a href="zimo/Zimo.shtml">ZIMO</a></dt>
+          <dd>
+            <p class="dl">Configurer : <a href="zimo/Zimo.shtml">ZIMO
+            MX-1</a></p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+          </dd>
 
-    <dt>Commandes ZTC </dt>
-    <dd>
-	    	<p class="dl">Configurer: Commandes ZTC  ZTC511, Commandes ZTC ZTC521 via
-		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB ou les  interfaces GenLi XPressNet, ZTC Controls ZTC640 interface, ou un XPA et modem compatibles Hayes </a> 
-		(requi&#232;re le logiciel XPressNet V3.0 )
-		</p>
-		<p>S'il vous pla&#238;t consulter les notes ci-dessus pour les restrictions que JMRI peut apporter &#224; ce ce syst&#232;me sp&#233;cifique</p>
-		</dd>
+        <dt class="im"><a href="http://www.ztccontrols.com/" target="_blank">
+        <img src="images/ztclogo.gif" width="44" height="34" alt="ZTC"></a></dt>
+          <dt><a href="XPressNet/index.shtml">Contr&#244;les ZTC</a></dt>
+          <dd>
+            <p class="dl">Configurer : ZTC commande ZTC511, ZTC
+            Commande ZTC521 via le  Interfaces <a href=
+            "XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB ou
+            GenLi XPressNet, contr&#244;les ZTC ZTC640
+            ou un modem compatible XPA et Hayes</a>
+            (n&#233;cessite le logiciel XPressNet V3.0).</p>
+            <p>Veuillez v&#233;rifier les notes ci-dessus pour conna&#238;tre 
+            les restrictions du syst&#232;me sur ce que peut faire JMRI.</p>
+            <p>&nbsp;</p>
+          </dd>
 
-	</dl>
-	</div><!-- closes .list -->
+        </dl>
+      </div><!-- ferme .list -->
 
-        <H2>JMRI: Connexion aux centrales de commande</H2>
-	<dl>
-	<dt class=left>Macintosh</dt>
-	<dd>
-		<p><a href="MacintoshSerialPorts.shtml">Mac connecteur Mini-DIN8 </a></p>
-		<p><a href="USBtoSerial.shtml">USB vers un adaptateur S&#233;rie</a></p>
-	</dd>
+   <p><a href="#TopOfPage">[Aller en haut de la page]</a></p>     
 
-	<dt class=left>PC</dt>
-	<dd>
-		<p><a href="USBtoSerial.shtml">USB vers adaptateur S&#233;rie</a></p>
-	</dd>
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->      
+     <a id="networks" name="networks"></a>
+       <h2>R&#233;seaux et protocoles</h2>
+      <div class="list">
+        <dl>
+          
+          <dt class="im">Fabricant <!-- header, link--></dt>
+          <dt>JMRI Support <!-- en-t&#234;te, lien--></dt>
+          <dd>&nbsp;</dd>
+ 
+          <dt class="im"><a href="http://www.jlcenterprises.net/" target="_blank">C/MRI</a></dt>
+          <dt><a href="cmri/CMRI.shtml">C/MRI</a></dt>
+          <dd>
+            <p class="dl">Configurer : <a href=
+            "cmri/CMRI.shtml">Commande syst&#232;me  C/MRI de Bruce Chubb
+            </a> pour une connexion via un port s&#233;rie direct, <a href=
+            "cmri/CMRI.shtml#L632">adaptateur s&#233;rie USB</a>, ou une
+            <a href="cmri/CMRI.shtml#L215">connexion r&#233;seau
+            </a>.</p>
+            <p>&nbsp;</p>
+          </dd>
 
-	<dt class=left>Serveur Terminal</dt>
-	<dd>
-		<p><a href="TerminalServer.shtml">EasyDCC via un Serveur Terminal Lantronix</a></p>
-	</dd>
-	
-	<dt class="left">Raspberry Pi</dt>
+<!-- CAN Bus Networks va ici -->
+
+          <dt class="im"><a href="https://www.digi.com/xbee" target="_blank">
+          <img src="https://www.digi.com/images/news/digi_2c_sm.gif" width="50" height="50" alt="Digi XBee"></a></dt>
+          <dt><a href="XBee/index.shtml">Digi XBee</a></dt>
+          <dd>
+            <p class="dl">Informations g&#233;n&#233;rales sur la <a href=
+            "XBee/index.shtml">connexion &#224; un r&#233;seau Digi XBee
+              </a></p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+          </dd>
+
+          <dt class="im"><a href="https://ipocsmr.github.io" target="_blank">
+            <img src="ipocsmr/images/ipocsmrlogo.png" width="56" height="56" 
+            alt="IPOCSMR"></a></dt>
+            <dt><a href="ipocsmr/index.shtml">IPOCS</a></dt>
+            <dd>
+              IPOCS, abr&#233;viation de Internet Protocol Object Controller System, est
+              un protocole Open Source qui est bas&#233; sur le protocole  FFIS TCC-OCS
+              pour la communication entre les objets ferroviaires en bordure de voie et un Centre de contr&#244;le du trafic
+              . La sp&#233;cification FFFIS TCC-OCS fait partie de l'ERTMS-R.
+
+              <p class="dl">Configurer : Utilis&#233; pour <a href="ipocsmr/index.shtml">IPOCSMR</a>.
+              </p>
+              <p>&nbsp;</p>
+            </dd>
+          </dd>
+
+         <dt class="im"><a href="http://www.digitrax.com/" target="_blank">
+          <img src="images/Digitrax-logo.jpg" width="60" height="28" alt="Digitrax"></a></dt>
+          <dt><a href="loconet/Digitrax.shtml">LocoNet (Digitrax)</a></dt>
+          <dd>
+            <p class="dl">Informations g&#233;n&#233;rales sur <a href=
+            "loconet/Digitrax.shtml">connecter JMRI &#224; un Loconet Digitrax
+            </a></p>
+
+            <p class="dl">Configurer : Connexions &#224; un LocoNet
+            via une </p>
+
+            <ul>
+              <li><a href="loconet/PR3.shtml">interface Digitrax PR3
+              </a></li>
+              
+              <li><a href="loconet/PR4.shtml">interface Digitrax PR4
+              </a></li>
+
+              <li><a href="loconet/LocoBufferUSB.shtml">LocoBuffer-USB de RR-CirKits
+              </a></li>
+
+              <li>Les anciennes interfaces<a href=
+              "loconet/LocoBufferII.shtml">LocoBuffer-II</a>,
+              <a href="loconet/LocoBuffer.shtml">LocoBuffer</a> et
+              <a href="loconet/MS100.shtml">MS100</a>
+              </li>
+
+              <li><a href="loconet/BTLocoBridge.shtml">Bluetooth
+              LocoBridge</a></li>
+            </ul>
+
+            <p class="dl">Configurer : <a href=
+            "loconet/LocoNetSim.shtml">Simulateur de locoNet &#224; utiliser
+            lorsqu'il est d&#233;connect&#233; d'un r&#233;seau</a>.</p>
+
+            <p class="dl">Configurer : Connexion &#224; distance &#224; un LocoNet
+            via un<a href="loconet/LocoNetServer.shtml">Serveur JMRI LocoNet
+            </a>.</p>
+
+            <p class="dl">Configurer : Connexion &#224; distance &#224; un LocoNet
+            via <a href=
+            "loconet/LbServer.shtml">LbServer</a>. Plus
+            d'informations sur une <a href=
+            "loconet/LocoNetworking.shtml">connexion de plusieurs
+            ordinateurs &#224; un seul LocoNet</a></p>
+
+            <p class="dl">Configurer : Programmation et tests
+            d&#233;codeurs sans centrale via une <a href=
+            "loconet/PR2.shtml">Interface PR2 de Digitrax</a>,
+            <a href="loconet/PR3.shtml">interface PR3</a>, ou
+           <a href="loconet/PR4.shtml">interface PR4</a>.</p>
+
+            <p class="dl">Configurer : Connexion directe &#224; une
+            <a href="loconet/Uhlenbrock.shtml">Intellibox</a>.</p>
+
+            <p class="dl">Configurer : Connexion &#224; un <a href=
+            "loconet/StandaloneLocoNet.shtml">Standalone LocoNet</a>.</p>
+            <p>&nbsp;</p>
+          </dd>
+          
+          <dt><a href="can/cbus/index.shtml">CBUS</a></dt>
+          <dd>
+            <p class="dl">Configurer : <a href=
+            "can/cbus/index.shtml">r&#233;seaux CBUS</a></p>
+            <p>&nbsp;</p>
+          </dd>
+
+          <dt class="im"><img src="http://www.modbus.org/images/logo_new.jpg" alt=
+          "Logo Modbus" height="27" width="96"></dt>
+          <dt><a href="modbus/index.shtml">Modbus</a></dt>
+          <dd>
+            <p class="dl">Configurer : <a href=
+            "modbus/index.shtml">R&#233;seaux modbus</a></p>
+            <p>&nbsp;</p>
+          </dd>
+
+          <dt class="im"><img src="http://mqtt.org/new/wp-content/uploads/2012/02/mqtt-inside.png" 
+          alt="MQTT logo" height="60" width="60"></dt>
+          <dt><a href="mqtt/index.shtml">MQTT</a></dt>
+          <dd>
+            <p class="dl">Configurer : <a href=
+            "mqtt/index.shtml">R&#233;seaux MQTT</a></p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+          </dd>
+
+          <dt class="im"><a href="http://www.proto87.com/model-trains-DCC-decoders.html" target="_blank">
+          <img src="images/RPS.gif" width="64" height="41" alt="RPS image"></a></dt>
+          <dt><a href="rps/index.shtml">Services du NAC</a></dt>
+          <dd><p><a href="rps/index.shtml">Configurer la connexion</a> &#224;
+            un syst&#232;me de d&#233;tection de la position RPS (Railroad Position System).</p>
+            <p>&nbsp;</p>
+          </dd>
+
+          <dt class="im"><a href="http://openlcb.org/" target="_blank">
+          <img src="http://openlcb.org/trunk/web/logo-ajs-dph.png" alt=
+          "Logo OpenLCB" height="57" width="138"></a></dt>
+          <dt><a href="openlcb/index.shtml">OpenLCB</a></dt>
+          <dd>
+            <p class="dl">Configurer : <a href=
+            "openlcb/index.shtml">R&#233;seaux OpenLCB</a></p>
+            <p>&nbsp;</p>
+
+
+            <p>&nbsp;</p>
+          </dd>
+
+          <dt class="im"><a href="http://srcpd.sourceforge.net/" target="_blank">
+          <img src="http://www.der-moba.de/skins/dermoba/wiki.png" height=
+          "55" width="78" alt="SRCP"></a></dt>
+          <dt><a href="SRCP/index.shtml">SRCP</a></dt>
+          <dd>
+            <p class="dl">Configurer : <a href=
+            "SRCP/index.shtml">Connexion au serveur du SRCP</a></p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+          </dd>
+
+         <dt class="im"><a href="http://www.x10.com" target="_blank">X10</a></dt>
+          <dt><a href="powerline/index.shtml">X10</a></dt>
+          <dd>
+            <p>Connexion : X10, contr&#244;leurs Power-Line Insteon</p>
+            <p class="dl">Configurer : <a href=
+            "powerline/index.shtml"> contr&#244;leurs CM11, 2412S et compatible
+           </a>.</p>
+            <p>&nbsp;</p>
+          </dd>
+ 
+      </dl>       
+      </div><!-- ferme .list -->
+   <p><a href="#TopOfPage">[Aller en haut de la page]</a></p>     
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->      
+      <a id="programmeurs" name="programmeurs"></a>
+      <h2>Programmeurs</h2>
+      <div class="list">
+        <dl>
+          <dt class="im">Fabricant <!-- header, link--></dt>
+          <dt>JMRI Support <!-- header, link--></dt>
+          <dd>&nbsp;</dd>
+
+          <dt class="im"><a href="http://www.digitrax.com/" target="_blank">
+          <img src="images/Digitrax-logo.jpg" width="60" height="28" alt="Digitrax"></a></dt>
+          <dt><a href="loconet/Digitrax.shtml">Digitrax</a></dt>
+          <dd>
+            <p class="dl">Informations g&#233;n&#233;rales sur <a href=
+            "loconet/Digitrax.shtml">connecter JMRI &#224; un Loconet Digitrax
+           </a></p>
+
+            <p class="dl">Configurer : Programmation et tests
+            d&#233;codeurs sans centrale via une interface <a href=
+            "loconet/PR2.shtml">I PR2 de Digitrax</a>,
+            <a href="loconet/PR3.shtml"> PR3</a>, ou
+           <a href="loconet/PR4.shtml">iPR4</a>.</p>
+
+            <p>&nbsp;</p>
+          </dd>
+          <dt class="im"><a href="http://www.qsisolutions.com/products/q-programmer.html" target="_blank">
+          <img src="http://static.wixstatic.com/media/0f7119_14d3842619a14f52862954b9151cf131.png_srz_361_120_75_22_0.50_1.20_0.00_png_srz"
+          height="40" width="120" alt="QSI"></a></dt>
+          <dt><a href="qsi/index.shtml">Solutions QSI</a></dt>
+          <dd>
+            <p>Connexion : Programmeur quantique </p>
+
+            <p class="dl">Configurer : <a href="qsi/index.shtml">Connexion USB</a></p>
+
+            <p> Les d&#233;codeurs QSI peuvent &#234;tre programm&#233;s avec DecoderPro
+            par le biais de n'importe quel syst&#232;me DCC. JMRI ne peut pas charger les sons dans les d&#233;codeurs QSI
+            .</p>
+            <p>&nbsp;</p>
+          </dd>
+
+         <dt class="im"><a href="https://www.sprog-dcc.co.uk/" target="_blank">
+          <img src="images/SprogDCCLarge.jpg" width="157" height="40" alt="SPROG DCC Logo"></a></dt>
+          <dt><a href="sprog/SPROG.shtml">SPROG DCC/<a href="sproggen5/index.shtml">SPROG DCC Generation 5</a></dt>
+          <dd>
+            <p class="dl">Configurer : <a href="sprog/SPROG.shtml">SPROG</a> soit en tant que
+            Programmeur DCC ou Centrale DCC</p>
+          </dd>
+          <dd>
+            <p class="dl">Configurer : <a href="sproggen5/index.shtml">SPROG</a> comme Centrale DCC et programmateur</p>
+          </dd>
+
+        </dl>
+      </div><!-- ferme .list -->
+
+   <p><a href="#TopOfPage">[Aller en haut de la page]</a></p>     
+ 
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->      
+      <a id="other" name="other"></a>
+       <h2>Accessoires et autres dispositifs</h2>
+      <div class="list">
+        <dl>
+          <dt class="im">Fabricant <!-- header, link--></dt>
+          <dt>Support JMRI  <!-- en-t&#234;te, lien--></dt>
+          <dd>&nbsp;</dd>
+
+<!-- Anyma DMX va ici -->
+
+          <dt class="im"><a href="https://arduino.cc" target="_blank">
+          <img src="arduino/images/arduinologo.png" width="56" height="42" 
+          alt="Arduino (microcontr&#244;leur)"></a></dt>
+          <dt><a href="arduino/index.shtml">Arduino (microcontr&#244;leur)</a></dt>
+          <dd>
+            <p class="dl">Configurer : Voir <a href="arduino/index.shtml"> la page d'aide  
+            JMRI arduino</a> pour des informations sur la configuration pour la commande des accessoires.
+            Voir aussi <a href="dccpp/index.shtml">DCC++</a> pour une utilisation en tant que centrale DCC.
+            </p>
+            <p>&nbsp;</p>
+          </dd>
+          
+          <dt class="im"><a href=
+          "https://web.archive.org/web/20170720024241/http://www.bachrus.com:80/index.php" target="_blank">
+          <img src="images/Bachrus_Logo.gif" width="100" height="25" alt="Bachrus"></a></dt>
+          <dt><a href="bachrus/index.shtml">Bachrus</a></dt>
+          <dd>
+            <p class="dl">Configurer : <a href=
+            "bachrus/index.shtml">Compteur de vitesse Bachrus MTS-DCC Model Train
+            </a></p>
+
+
+            <p>&nbsp;</p>
+          </dd>
+
+          <dt class="im"><a href="dcc4pc/index.shtml">DCC4PC</a></dt>
+          <dt><a href="dcc4pc/index.shtml">DCC4PC</a></dt>
+          <dd>
+            <p class="dl">Configurer : <a href=
+            "dcc4pc/index.shtml">Cartes de d&#233;tection DCC4PC</a></p>
+          </dd>
+
+          <dt class="im"><a href="https://www.dccspecialties.com" target="_blank">
+          <img src="https://www.dccspecialties.com/common/top-logo.gif"
+          width="60" height="26" alt="DCC Specialties"></a></dt>
+          <dt><a href="misc/DccSpecialties.shtml">Sp&#233;cialit&#233;s DCC
+          </a></dt>
+          <dd>
+            <p class="dl">Configurer : <a href=
+            "misc/DccSpecialties.shtml">Hare, Wabbit, Block Watcher
+            ou des produits de la famille PSX</a>.</p>
+            <p>&nbsp;</p>
+          </dd>
+
+          <dt class="im"><a href="https://www.maplesystems.com" target="_blank">
+          <img src="https://www.maplesystems.com/images/maple-logo-white.jpg"
+          width="67" height= "60" alt= "Logo de l'&#233;rable"></a></dt>
+          <dt><a href="maple/index.shtml">Syst&#232;mes Mapple</a></dt>
+          <dd>
+            <p>Ecran tactile de Maple Systems</p>
+
+            <p class="dl">Configurer : <a href=
+            "maple/index.shtml">connexion par liaison s&#233;rie</a></p>
+            <p>&nbsp;</p>
+          </dd>
+
+          <dt class="im"><a href="http://www.oaktreesystems.com/" target="_blank">
+          <img src="images/otslogosmall.gif" width="37" height="50" alt="Oak Tree Systems"></a></dt>
+          <dt><a href="oaktree/OakTree.shtml">Ch&#234;ne
+          Syst&#232;mes</a></dt>
+          <dd>
+            <p class="dl">Configurer la connexion &#224; <a href=
+            "oaktree/OakTree.shtml">L'Interfacee contr&#244;le ferroviaire (RCI) Oak Tree 
+            </a>, y compris l'IO-24, l'IO-48 et
+            Cartes d'interface O-48 et R&#233;gulateur portatif HH-2.<br>
+            (Note : RCI doit &#234;tre remplac&#233; par <a href=
+            "http://www.oaktreesystems.com/main.html">Syst&#232;me de Commande de R&#233;seau (LCS)</a>)</p>
+            <p>&nbsp;</p>
+          </dd>
+
+          <dt class="im"><a href="http://raildriver.com/" target="_blank">RailDriver</a></dt>
+          <dt><a href="raildriver/index.shtml">PI Engineering</a></dt>
+          <dd>
+            <p class="dl">Configurer : <a href=
+            "raildriver/index.shtml">simulateur de Cabine de conduite 
+            </a></p>
+            <p>&nbsp;</p>
+          </dd>
+
+          <dt class="im"><a href="http://protrak.org" target="_blank">
+          <img src=
+          "http://protrak.org/wpt/wp-content/uploads/2015/05/ProTrak_Login2.png" alt="Logo ProTrak"></a></dt>
+          <dt><a href="grapevine/index.shtml">ProTrak</a></dt>
+          <dd>
+            <p class="dl">Configurer : <a href=
+            "grapevine/index.shtml">N&#339;uds Gravepine</a></p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+          </dd>
+ 
+          <dt class="im"><a href="secsi/index.shtml">SECSI</a></dt>
+          <dt><a href="secsi/index.shtml">TracTronics</a></dt>
+          <dd>
+            <p class="dl">Configurer : <a href=
+            "secsi/index.shtml">connections TracTronics SECSI </a></p>
+            <p>&nbsp;</p>
+          </dd>
+
+<!-- WiFi Throttles goes here -->
+
+        </dl>
+      </div><!-- ferme .list -->
+   <p><a href="#TopOfPage">[Aller en haut de la page]</a></p>     
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+      <a id="mfr" name="mfr"></a>
+      <h2>Indice des fabricants de mat&#233;riel informatique</h2>
+      
+      <p>Cette section renvoie aux fabricants de mat&#233;riel et aux produits qui sont connus pour fonctionner avec JMRI.
+      Voir ci-dessus les liens vers des pages d'aide sp&#233;cifiques.
+      
+      <p class="note">[TBA]</p>
+      
+   <p><a href="#TopOfPage">[Aller en haut de la page]</a></p>     
+      
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+      <a id="connect" name="connect"></a>
+      <h2>Connexion aux centrales</h2>
+
+    <div class="list">
+     
+      <dl>
+        <dt class="left">Macintosh</dt>
 
         <dd>
-          <p><a href="pi/index.shtml#connecting">Connexion aux broches GPIO Pi </a></p>
+          <p><a href="USBtoSerial.shtml">USB vers Adaptateur S&#233;rie
+         </a></p>
+
+          <p><a href="MacintoshSerialPorts.shtml"> connecteur Mac Mini-DIN8
+          </a></p>
+        </dd>
+
+        <dt class="left">PC</dt>
+
+        <dd>
+          <p><a href="USBtoSerial.shtml#usb2serial">vers Adaptateur S&#233;rie</a></p>
+        </dd>
+
+        <dt class="left">Serveur Principal</dt>
+
+        <dd>
+          <p><a href="TerminalServer.shtml">Connexions pour EasyDCC (via
+          Lantronix), centrales des RCE, C/MRI)
+          Terminal Server</a></p>
+        </dd>
+
+        <dt class="left">Rasperry Pi</dt>
+
+        <dd>
+          <p><a href="pi/index.shtml#connecting">Connexion aux
+          Broches de connexion GPIO de Pi</a></p>
         </dd>
       </dl>
+   </div>
+   
+   <p><a href="#TopOfPage">[Aller en haut de la page]</a></p>     
 
-	
-	        <h2>
-		JMRI: Infos G&#233;n&#233;rales sur le mat&#233;riel
-        </h2>
-	<dl>
-	<dt class=left><a href="../doc/Technical/TurnoutFeedback.shtml">R&#233;troaction des aiguillages</a></dt>
-	<dd>
-        Si votre r&#233;seau utilise un m&#233;canisme de r&#233;tro-signalisation pour d&#233;tecter la position actuelle des Aiguillages,
-		 par exemple un micro-contact reli&#233; &#224; la
-        barre de commande ou un d&#233;codeur qui renvoie un message de confirmation,
-        JMRI peut l'utiliser pour garder une trace de ce qui se passe r&#233;ellement
-        sur le r&#233;seau. Nous appelons cela "R&#233;troaction ou R&#233;trosignalisation", et pour l'utiliser et la configurer voir 
-		la page <a href="../doc/Technical/TurnoutFeedback.shtml">R&#233;trosignalisation Aiguillage</a>.
-	</dd>
 
-	<dt class="left"><a href="PDA.shtml">PDA</a></dt>
-  <dd>Une fa&#231;on d'utiliser un PDA pour acc&#233;der &#224; JMRI .</dd>
-</dl>
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+      <a id="general" name="general"></a>
+      <h2>Informations g&#233;n&#233;rales sur le mat&#233;riel</h2>
 
-<!--#include virtual="/Footer" -->
-		</div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+
+
+    <div class="list">
+     
+      <dl>
+        <dt class="left"><a href=
+        "../doc/Technical/TurnoutFeedback.shtml">R&#233;trosignalisation Aiguillage</a></dt>
+
+        <dd>
+        <p>Si votre mise r&#233;seau utilise un m&#233;canisme de r&#233;trosignalisation pour d&#233;tecter
+        les positions r&#233;elles des aiguillages, par exemple un microcontact
+        connect&#233; aux barres de de commande ou &#224; un d&#233;codeur qui renvoie une
+        confirmation, JMRI peut l'utiliser pour suivre
+        ce qui se passe r&#233;ellement sur le r&#233;seau. Nous appelons cela
+        "Feedback", et comment le configurer et l'utiliser est d&#233;crit sur
+        le <a href=
+        "../doc/Technical/TurnoutFeedback.shtml">page sur la r&#233;trosignalisation aiguillage
+        </a>.</p>
+        </dd>
+
+        <dt class="left"><a href="PDA.shtml">PDA [obsol&#232;te]</a></dt>
+
+        <dd>
+        <p>Une fa&#231;on d'utiliser un PDA pour acc&#233;der &#224; JMRI.</p>
+        </dd>
+      </dl>
+   </div>
+   
+   <p><a href="#TopOfPage">[Aller en haut de la page]</a></p>     
+
+        <h2></h2>
+        <p>CBUS&reg ; est une marque d&#233;pos&#233;e du Dr Michael Bolton</p>
+        
+        <p>traduction 2021-02-08</p>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
 
+   
