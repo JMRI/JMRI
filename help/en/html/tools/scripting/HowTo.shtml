@@ -84,10 +84,10 @@
 
     <h2><a id="running">How do I run a saved script?</a></h2>
 
-	  <div class="para"><span class="since">since 4.23.1</span>
-	  <p>From the PanelPro main screen, click on "Scripting" {<em>Old: <strong>Panels</strong></em>}
+	  <div class="para">
+	  <p>From the PanelPro main screen, click on <strong>Scripting</strong> {<em>Old: <strong>Panels</strong></em>}
 	  in the top menu. Or, from the DecoderPro main screen,
-	  click on "Actions" in the top menu. Select "Run Script..." from the dropdown.</p>
+	  click on <strong>Actions</strong> in the top menu. Select <strong>Run Script...</strong> from the dropdown.</p>
 
       <p>The directory set up in Preferences (which you can change) will appear and you can select a script to run.
 	  YOu can also navigate to any other directory that contains stored scripts.  [On PCs, Jython script files have
@@ -580,7 +580,7 @@ SensndExample().start()
     </pre>
 
       <p>That will look for the file in the top-level JMRI
-      program directory, which might now be what you want. If you
+      program directory, which might not be what you want. If you
       want JMRI to search for the file in the default scripts
       directory (which you can set in preferences), use the
       slightly more complex form:</p>

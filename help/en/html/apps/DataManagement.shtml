@@ -55,17 +55,21 @@
         <h1>JMRI: Understanding the Data Management</h1>
         <p class="subtitle">A Work-In-Progress</p>
 
-<h3>fix idtags</h3>
-
-
+        <div class="noted"><span class="since">since 4.23.1</span>
+        <p>Note: The PanelPro main menu is being changed.
+        See <a href="LoadStoreWork.shtml">Loading and Storing Your Work</a> for details.
+        The menu references below are for the new menu structure with the old
+        menu paths in braces.
+        </p>
+        </div>
 
         <ul class="snav">
 		<li><a href="#category">Elements by Category</a></li>
 		<li><a href="#catalpha">Category/Alpha Index</a></li>
 	    </ul>
 
-      <p class="noted">This page includes information intended for advanced users of JMRI.  Basic information on commands to store your
-      work is available <a href="StoringYourWork.shtml">here.</a>  The additional information containted on the current page is not
+      <p class="noted">This page includes information intended for advanced users of JMRI.  Basic information on commands to load and store your
+      work is available <a href="LoadStoreWork.shtml">here.</a>  The additional information containted on the current page is not
       necessary for ordinary, day-to-day use of JMRI but may be of interest to those who want to understand in more detail when, how,
       and where JMRI stores the data you and the system create and update.</p>
 
@@ -79,7 +83,7 @@
       reference guide to all JMRI data, how it gets created and updated, when it gets saved (some doesn't!), and, for
       more advanced users, where it gets stored.</p>
 
-      <p>We want to stress that this is <u>additional technical detail</u>. You should not need to know this
+      <p>We want to stress that this is <span class="co">additional technical detail</span>. You should not need to know this
       for normal operation of the programs.  If you find that you do, perhaps there's something going wrong, and
       before reading this page you should ask for help on the
       <a href="https://groups.io/g/jmriusers/">JmriUsers group</a>
@@ -116,12 +120,20 @@
       column labelled <b>"Save Command"</b>, these
       are the places where a command to "save" or "store" will save and store some portion of your work:</p>
       <ol>
-      <li>Preferences: "Save"
-      <li>Panel editors: File-&gt; Store Panels...  PanelPro main window: Panels-&gt; Store Panels... (also stores Tables)
-      <li>Tables (also Fast Clock): File-&gt; (a) "Store configuration" or (b) "Store configuration and panels" [which does the same as "Store Panels" in the panel editors])
-      <li>Roster entry: (a) automatic (b) File-&gt; Save or "Save to Roster" (c) "Write" to Decoder
-      <li>Images/Icons: "Save Image Index"
-      <li>Scripts: "Store..." (on Script Entry window)
+        <li>Preferences: "Save"</li>
+        <li>Panel editors: <strong>File &rArr; Store ALL table content and panels...</strong>
+          {<em>Old: <strong>File &rArr; Store Panels...</strong></em>} or use the PanelPro main menu item
+          <strong>File &rArr; Store ALL table content and panels...</strong>
+          {<em>Old: <strong>Panels &rArr; Store Panels...</strong></em>}
+        </li>
+        <li>Tables (also Fast Clock):
+          <strong>File &rArr; Store &rArr; </strong><br>
+          (a) <strong>Store Only table content (No Panels)...</strong> {<em>Old: <strong>Store configuration</strong></em>} or<br>
+          (b) <strong>Store ALL table content and panels...</strong> {<em>Old: <strong>Store configuration and panels</strong></em>}
+        </li>
+      <li>Roster entry: (a) automatic (b) File &rArr; Save or "Save to Roster" (c) "Write" to Decoder</li>
+      <li>Images/Icons: "Save Image Index"</li>
+      <li>Scripts: "Store..." (on Script Entry window)</li>
       </ol>
 
       <p>These commands are identified in the tables by these numbers.</p>
@@ -275,7 +287,7 @@
           <td class="where"><a href="../tools/scripting/index.shtml">Script Entry window</a> or external editor</td>
           <td class="who">UC/US</td>
           <td class="cmd">6</td>
-          <td class="store">Scripts are stored in ".js" files where specified by user (default: Script Location)</td>
+          <td class="store">Scripts are stored in ".py" or ".js" files where specified by user (default: Script Location)</td>
           <td>&#10004;</td>
         </tr>
 
@@ -305,8 +317,8 @@
           <td class="data">CTC data</td>
           <td class="where"></td>
           <td class="who">UC/US</td>
-          <td class="cmd">Tools->CTC->Open CTC Configuration Editor->File->Save</td>
-          <td class="store">In ctc/ in Preferences location</td>
+          <td class="cmd">2, 3(a), 3(b)</td>
+          <td class="store">Included in the tables and panels xml data file</td>
           <td></td>
         </tr>
 
@@ -345,8 +357,8 @@
           <td class="data">Window size/location</td>
           <td class="where"></td>
           <td class="who">UC/<b>AS</b></td>
-          <td class="cmd">Saved when JMRI is closed</td>
-          <td class="store">??</td>
+          <td class="cmd">Saved when window is moved or resized</td>
+          <td class="store">Saved in the user-interface.xml file in the Profile location.</td>
           <td></td>
         </tr>
 
