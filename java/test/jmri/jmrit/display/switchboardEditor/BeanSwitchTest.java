@@ -21,7 +21,6 @@ import javax.swing.*;
  *
  * @author Egbert Broerse Copyright (C) 2017, 2021
  */
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class BeanSwitchTest {
 
@@ -30,10 +29,9 @@ public class BeanSwitchTest {
     @Disabled("no output received in last 10 min on Travis CI GUI test run")
     @Test
     public void testCTor() {
-        SwitchboardEditor swe2 = new SwitchboardEditor("Bean Switch Default Switchboard");
-        swe2.setSwitchType("T");
-        swe2.setSwitchManu("I"); // set explicitly
-        BeanSwitch t = new BeanSwitch(1,null,"IT1",0, swe2);
+        swe.setSwitchType("T");
+        swe.setSwitchManu("I"); // set explicitly
+        BeanSwitch t = new BeanSwitch(1,null,"IT1",0, swe);
         Assertions.assertNotNull(t, "exists");
     }
 

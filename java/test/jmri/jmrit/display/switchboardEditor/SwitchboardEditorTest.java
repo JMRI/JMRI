@@ -25,7 +25,6 @@ import org.netbeans.jemmy.operators.JPopupMenuOperator;
  * @author Paul Bender Copyright (C) 2016
  * @author Egbert Broerse Copyright (C) 2017, 2020, 2021
  */
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEditor> {
 
