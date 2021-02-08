@@ -367,7 +367,7 @@ public class ImportEngines extends ImportRollingStock {
                                 Bundle.getMessage("engineTrack"),
                                 JOptionPane.YES_NO_OPTION);
                         if (results == JOptionPane.YES_OPTION) {
-                            if (location.getLocationOps() == Location.NORMAL) {
+                            if (!location.isStaging()) {
                                 log.debug("Create 1000 foot yard track ({})", engineTrackName);
                                 track = location.addTrack(engineTrackName, Track.YARD);
                             } else {

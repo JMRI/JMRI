@@ -12,12 +12,14 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Stephen Lowens" version="1.3" lastUpdated="20210131"/>  
   <version author="Michael Mosher" version="1.2" lastUpdated="20200109"/>
   <version author="B. Milhaupt" version="1.1" lastUpdated="20180823"/>
   <version author="td@teamdigital1.com" version="1.0" lastUpdated="20101103"/>
   <!-- Version 1 initial release -->
   <!-- Version 1.1 release, added "LOCONETOPSBOARD" programming token to allow LocoNet-connected boards to read CV values -->
   <!-- Version 1.2 change mfg to match name in NMRA.xml -->
+  <!-- Version 1.3 change maximum input address to 2040 -->
   <decoder>
     <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary">
       <model model="SMD84" lowVersionID="1" comment="SMD84 is a stationary decoder, but it can be programmed in the usual way"/>
@@ -429,7 +431,7 @@
       </variable>
       <!-- Begin primary input variable definition -->
       <variable CV="35" mask="VVVVVVVV" item="PA1" default="1">
-        <splitVal highCV="36" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="36" max="2040" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
       <variable CV="36" mask="VXXXXXXX" item="PInv P1">
@@ -490,7 +492,7 @@
         <label>Route Number</label>
       </variable>
       <variable CV="38" mask="VVVVVVVV" item="PA2" default="2">
-        <splitVal highCV="39" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="39" max="2040" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
       <variable CV="39" mask="VXXXXXXX" item="PInv P2" default="0">
@@ -551,7 +553,7 @@
         <label>Route Number</label>
       </variable>
       <variable CV="41" mask="VVVVVVVV" item="PA3" default="3">
-        <splitVal highCV="42" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="42" max="2040" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
       <variable CV="42" mask="VXXXXXXX" item="PInv P3">
@@ -612,7 +614,7 @@
         <label>Route Number</label>
       </variable>
       <variable CV="44" mask="VVVVVVVV" item="PA4" default="4">
-        <splitVal highCV="45" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="45" max="2040" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
       <variable CV="45" mask="VXXXXXXX" item="PInv P4" default="0">
@@ -673,7 +675,7 @@
         <label>Route Number</label>
       </variable>
       <variable CV="47" mask="VVVVVVVV" item="PA5" default="5">
-        <splitVal highCV="48" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="48" max="2040" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
       <variable CV="48" mask="VXXXXXXX" item="PInv P5">
@@ -734,7 +736,7 @@
         <label>Route Number</label>
       </variable>
       <variable CV="50" mask="VVVVVVVV" item="PA6" default="6">
-        <splitVal highCV="51" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="51" max="2040" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
       <variable CV="51" mask="VXXXXXXX" item="PInv P6" default="0">
@@ -795,7 +797,7 @@
         <label>Route Number</label>
       </variable>
       <variable CV="53" mask="VVVVVVVV" item="PA7" default="7">
-        <splitVal highCV="54" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="54" max="2040" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
       <variable CV="54" mask="VXXXXXXX" item="PInv P7">
@@ -856,7 +858,7 @@
         <label>Route Number</label>
       </variable>
       <variable CV="56" mask="VVVVVVVV" item="PA8" default="8">
-        <splitVal highCV="57" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="57" max="2040" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
       <variable CV="57" mask="VXXXXXXX" item="PInv P8" default="0">
@@ -918,7 +920,7 @@
       </variable>
       <!-- Begin secondary input variable definition -->
       <variable CV="59" mask="VVVVVVVV" item="SA1" default="0">
-        <splitVal highCV="60" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="60" max="2040" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
       <variable CV="60" mask="VXXXXXXX" item="SInv S1">
@@ -979,7 +981,7 @@
         <label>Route Number</label>
       </variable>
       <variable CV="62" mask="VVVVVVVV" item="SA2" default="0">
-        <splitVal highCV="63" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="63" max="2040" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
       <variable CV="63" mask="VXXXXXXX" item="SInv S2" default="0">
@@ -1040,7 +1042,7 @@
         <label>Route Number</label>
       </variable>
       <variable CV="65" mask="VVVVVVVV" item="SA3" default="0">
-        <splitVal highCV="66" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="66" max="2040" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
       <variable CV="66" mask="VXXXXXXX" item="SInv S3">
@@ -1101,7 +1103,7 @@
         <label>Route Number</label>
       </variable>
       <variable CV="68" mask="VVVVVVVV" item="SA4" default="0">
-        <splitVal highCV="69" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="69" max="2040" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
       <variable CV="69" mask="VXXXXXXX" item="SInv S4" default="0">
@@ -1162,7 +1164,7 @@
         <label>Route Number</label>
       </variable>
       <variable CV="71" mask="VVVVVVVV" item="SA5" default="0">
-        <splitVal highCV="72" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="72" max="2040" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
       <variable CV="72" mask="VXXXXXXX" item="SInv S5">
@@ -1223,7 +1225,7 @@
         <label>Route Number</label>
       </variable>
       <variable CV="74" mask="VVVVVVVV" item="SA6" default="0">
-        <splitVal highCV="75" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="75" max="2040" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
       <variable CV="75" mask="VXXXXXXX" item="SInv S6" default="0">
@@ -1284,7 +1286,7 @@
         <label>Route Number</label>
       </variable>
       <variable CV="77" mask="VVVVVVVV" item="SA7" default="0">
-        <splitVal highCV="78" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="78" max="2040" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
       <variable CV="78" mask="VXXXXXXX" item="SInv S7">
@@ -1345,7 +1347,7 @@
         <label>Route Number</label>
       </variable>
       <variable CV="80" mask="VVVVVVVV" item="SA8" default="0">
-        <splitVal highCV="81" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="81" max="2040" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
       <variable CV="81" mask="VXXXXXXX" item="SInv S8" default="0">
@@ -1407,7 +1409,7 @@
       </variable>
       <!-- Begin auxiliary input variable definition -->
       <variable CV="83" mask="VVVVVVVV" item="AA1" default="0">
-        <splitVal highCV="84" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="84" max="2040" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
       <variable CV="84" mask="VXXXXXXX" item="AInv A1">
@@ -1468,7 +1470,7 @@
         <label>Route Number</label>
       </variable>
       <variable CV="86" mask="VVVVVVVV" item="AA2" default="0">
-        <splitVal highCV="87" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="87" max="2040" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
       <variable CV="87" mask="VXXXXXXX" item="AInv A2" default="0">
@@ -1529,7 +1531,7 @@
         <label>Route Number</label>
       </variable>
       <variable CV="89" mask="VVVVVVVV" item="AA3" default="0">
-        <splitVal highCV="90" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="90" max="2040" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
       <variable CV="90" mask="VXXXXXXX" item="AInv A3">
@@ -1590,7 +1592,7 @@
         <label>Route Number</label>
       </variable>
       <variable CV="92" mask="VVVVVVVV" item="AA4" default="0">
-        <splitVal highCV="93" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="93" max="2040" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
       <variable CV="93" mask="VXXXXXXX" item="SInv A4" default="0">
@@ -1651,7 +1653,7 @@
         <label>Route Number</label>
       </variable>
       <variable CV="95" mask="VVVVVVVV" item="AA5" default="0">
-        <splitVal highCV="96" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="96" max="2040" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
       <variable CV="96" mask="VXXXXXXX" item="AInv A5">
@@ -1723,7 +1725,7 @@
       </variable>
       <!-- Input Lockout variable definition -->
       <variable CV="100" mask="VVVVVVVV" item="Lockout">
-        <splitVal highCV="101" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="101" max="2040" upperMask="XXXXVVVV"/>
         <label>Address</label>
       </variable>
       <!-- Begin route variable definition -->

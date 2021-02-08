@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -260,13 +261,13 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             }
 
             @Override
-            public Logix getBySystemName(String name) {
+            public Logix getBySystemName(@Nonnull String name) {
                 return InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(
                         name);
             }
 
             @Override
-            public Logix getByUserName(String name) {
+            public Logix getByUserName(@Nonnull String name) {
                 return InstanceManager.getDefault(jmri.LogixManager.class).getByUserName(
                         name);
             }

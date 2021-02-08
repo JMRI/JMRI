@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
@@ -215,12 +216,12 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         }
 
         @Override
-        public Logix getBySystemName(String name) {
+        public Logix getBySystemName(@Nonnull String name) {
             return _logixManager.getBySystemName(name);
         }
 
         @Override
-        public Logix getByUserName(String name) {
+        public Logix getByUserName(@Nonnull String name) {
             return _logixManager.getByUserName(name);
         }
 

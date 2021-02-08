@@ -4,8 +4,8 @@ import java.awt.GraphicsEnvironment;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.display.EditorManager;
@@ -120,7 +120,6 @@ public class TrainIconAnimationTest extends OperationsTestCase {
         Assert.assertEquals("Location 1 Id", "1", l1.getId());
         Assert.assertEquals("Location 1 Name", "North End", l1.getName());
         Assert.assertEquals("Location 1 Initial Length", 0, l1.getLength());
-        l1.setLocationOps(Location.STAGING);
         l1.setTrainDirections(DIRECTION_ALL);
         l1.setSwitchListEnabled(true);
         lmanager.register(l1);
@@ -167,7 +166,6 @@ public class TrainIconAnimationTest extends OperationsTestCase {
         Location l2 = new Location("20", "North Industries");
         Assert.assertEquals("Location 2 Id", "20", l2.getId());
         Assert.assertEquals("Location 2 Name", "North Industries", l2.getName());
-        l2.setLocationOps(Location.NORMAL);
         l2.setTrainDirections(DIRECTION_ALL);
         l2.setSwitchListEnabled(true);
         lmanager.register(l2);
@@ -187,7 +185,6 @@ public class TrainIconAnimationTest extends OperationsTestCase {
         Assert.assertEquals("Location 3 Id", "3", l3.getId());
         Assert.assertEquals("Location 3 Name", "South End", l3.getName());
         Assert.assertEquals("Location 3 Initial Length", 0, l3.getLength());
-        l3.setLocationOps(Location.STAGING);
         l3.setTrainDirections(DIRECTION_ALL);
         l3.setSwitchListEnabled(true);
         lmanager.register(l3);

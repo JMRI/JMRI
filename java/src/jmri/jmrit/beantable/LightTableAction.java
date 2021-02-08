@@ -339,7 +339,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
              * {@inheritDoc}
              */
             @Override
-            public Light getBySystemName(String name) {
+            public Light getBySystemName(@Nonnull String name) {
                 return lightManager.getBySystemName(name);
             }
 
@@ -347,7 +347,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
              * {@inheritDoc}
              */
             @Override
-            public Light getByUserName(String name) {
+            public Light getByUserName(@Nonnull String name) {
                 return InstanceManager.getDefault(LightManager.class).getByUserName(name);
             }
 
