@@ -432,12 +432,12 @@ public class EcosLocoTableAction extends AbstractTableAction<NamedBean> {
             }
 
             @Override
-            public NamedBean getBySystemName(String name) {
+            public NamedBean getBySystemName(@Nonnull String name) {
                 return null;
             }
 
             @Override
-            public NamedBean getByUserName(String name) {
+            public NamedBean getByUserName(@Nonnull String name) {
                 return null;
             }
 

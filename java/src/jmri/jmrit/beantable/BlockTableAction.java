@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Set;
+import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
 import javax.swing.AbstractCellEditor;
 import javax.swing.BoxLayout;
@@ -156,12 +157,12 @@ public class BlockTableAction extends AbstractTableAction<Block> {
             }
 
             @Override
-            public Block getBySystemName(String name) {
+            public Block getBySystemName(@Nonnull String name) {
                 return InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(name);
             }
 
             @Override
-            public Block getByUserName(String name) {
+            public Block getByUserName(@Nonnull String name) {
                 return InstanceManager.getDefault(jmri.BlockManager.class).getByUserName(name);
             }
 
