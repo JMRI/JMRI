@@ -94,12 +94,12 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> implements Prop
             }
 
             @Override
-            public IdTag getBySystemName(String name) {
+            public IdTag getBySystemName(@Nonnull String name) {
                 return tagManager.getBySystemName(name);
             }
 
             @Override
-            public IdTag getByUserName(String name) {
+            public IdTag getByUserName(@Nonnull String name) {
                 return tagManager.getByUserName(name);
             }
 

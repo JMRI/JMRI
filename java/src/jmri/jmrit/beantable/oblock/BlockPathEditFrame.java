@@ -7,6 +7,8 @@ import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -25,12 +27,12 @@ public class BlockPathEditFrame extends JmriJFrame {
     JLabel blockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameOBlock")), JLabel.TRAILING);
     JLabel blockName = new JLabel();
     JLabel pathLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("PathName")), JLabel.TRAILING);
-    JTextField pathUserName = new JTextField(15);
+    protected JTextField pathUserName = new JTextField(15);
     JLabel fromPortalLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("FromPortal")), JLabel.TRAILING);
     JLabel toPortalLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ToPortal")), JLabel.TRAILING);
     String[] p0 = {""};
-    private final JComboBox<String> fromPortalComboBox = new JComboBox<>(p0);
-    private final JComboBox<String> toPortalComboBox = new JComboBox<>(p0);
+    protected final JComboBox<String> fromPortalComboBox = new JComboBox<>(p0);
+    protected final JComboBox<String> toPortalComboBox = new JComboBox<>(p0);
     JLabel statusBar = new JLabel(Bundle.getMessage("AddXStatusInitial1", Bundle.getMessage("Path"), Bundle.getMessage("ButtonOK")), JLabel.LEADING);
     // the following 3 items copied from beanedit, place in separate static method?
     private final JSpinner lengthSpinner = new JSpinner(); // 2 digit decimal format field, initialized later as instance
@@ -39,7 +41,7 @@ public class BlockPathEditFrame extends JmriJFrame {
 
     private final BlockPathEditFrame frame = this;
     private boolean _newPath = false;
-    protected final OBlockManager obm = InstanceManager.getDefault(OBlockManager.class);
+    //protected final OBlockManager obm = InstanceManager.getDefault(OBlockManager.class);
     PortalManager pm;
     private final OBlock _block;
     private OPath _path;
@@ -52,8 +54,8 @@ public class BlockPathEditFrame extends JmriJFrame {
     protected boolean isDirty = false;  // true to fire reminder to save work
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
-    public BlockPathEditFrame(String title, OBlock block, OPath path,
-                              TableFrames.PathTurnoutJPanel turnouttable, BlockPathTableModel pathmodel, TableFrames parent) {
+    public BlockPathEditFrame(String title, @Nonnull OBlock block, @CheckForNull OPath path,
+                              @CheckForNull TableFrames.PathTurnoutJPanel turnouttable, BlockPathTableModel pathmodel, TableFrames parent) {
         super(title, true, true);
         _block = block;
         _turnoutTablePane = turnouttable;
@@ -62,17 +64,30 @@ public class BlockPathEditFrame extends JmriJFrame {
         if (path == null || turnouttable == null) {
             _newPath = true;
         } else {
-            _path = path;
-            _tomodel = turnouttable.getModel();
-            if (_tomodel != null) { // test uses a plain JTable without getRowCount()
-                log.debug("TurnoutModel.size = {}", _tomodel.getRowCount());
+            if ((path.getBlock() != null) && (path.getBlock() != block)) {
+                // somehow we received a path that part of another block
+                log.error("BlockPathEditFrame for OPath {}, but it is not part of OBlock {}", path.getName(), block.getDisplayName());
+                JOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("OBlockEditWrongPath", path.getName(), block.getDisplayName()),
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                // cancel edit
+                closeFrame();
+                return;
+            } else {
+                _path = path;
+                _tomodel = turnouttable.getModel();
+                if (_tomodel != null) { // test uses a plain JTable without getRowCount()
+                    log.debug("TurnoutModel.size = {}", _tomodel.getRowCount());
+                }
             }
         }
         // fill Portals combo
         pm = InstanceManager.getDefault(PortalManager.class);
         for (Portal pi : pm.getPortalSet()) {
-            fromPortalComboBox.addItem(pi.getName());
-            toPortalComboBox.addItem(pi.getName());
+            if (pi.getFromBlock() == _block || pi.getToBlock() == _block) { // show only relevant Portals
+                fromPortalComboBox.addItem(pi.getName()); // in both combos
+                toPortalComboBox.addItem(pi.getName());
+            }
         }
         layoutFrame();
         blockName.setText(_block.getDisplayName());
@@ -93,7 +108,7 @@ public class BlockPathEditFrame extends JmriJFrame {
         p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
 
         JPanel configGrid = new JPanel();
-        GridLayout layout = new GridLayout(5, 2, 10, 0); // (int rows, int cols, int hgap, int vgap)
+        GridLayout layout = new GridLayout(4, 2, 10, 0); // (int rows, int cols, int hgap, int vgap)
         configGrid.setLayout(layout);
 
         // row 1
@@ -124,16 +139,16 @@ public class BlockPathEditFrame extends JmriJFrame {
             if ((fromPortalComboBox.getItemCount() > 0) && (fromPortalComboBox.getSelectedItem() != null) &&
                     (toPortalComboBox.getSelectedItem() != null)
                     && (fromPortalComboBox.getSelectedItem().equals(toPortalComboBox.getSelectedItem()))) {
-                log.debug("resetting ToPortal");
+                log.debug("resetting FromPortal");
                 fromPortalComboBox.setSelectedIndex(0); // clear the other one
             }
         });
         configGrid.add(toPortalComboBox);
 
-        // row 5
-//        JPanel p3 = new JPanel();
-//        p3.setLayout(new BoxLayout(p3, BoxLayout.LINE_AXIS));
-//        p3.add(Box.createHorizontalGlue());
+        p.add(configGrid);
+
+        // Length
+        JPanel physical = new JPanel();
         // copied from beanedit, also in BlockPathEditFrame
         lengthSpinner.setModel(
                 new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(0f), Float.valueOf(1000f), Float.valueOf(0.01f)));
@@ -158,14 +173,14 @@ public class BlockPathEditFrame extends JmriJFrame {
             inch.setSelected(!cm.isSelected());
             updateLength();
         });
-        configGrid.add(p1);
+        physical.add(p1);
 
         JPanel p2 = new JPanel();
         p2.add(lengthSpinner);
         lengthSpinner.setToolTipText(Bundle.getMessage("LengthToolTip", Bundle.getMessage("Path")));
-        configGrid.add(p2);
+        physical.add(p2);
 
-        p.add(configGrid);
+        p.add(physical);
 
         JPanel totbl = new JPanel();
         totbl.setLayout(new BorderLayout(10, 10));
@@ -188,7 +203,7 @@ public class BlockPathEditFrame extends JmriJFrame {
         cancel.addActionListener((ActionEvent e) -> closeFrame());
         JButton ok;
         p2.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
-        ok.addActionListener(this::createPressed);
+        ok.addActionListener(this::okPressed);
         p.add(p2, BorderLayout.SOUTH);
 
         frame.getContentPane().add(p);
@@ -238,11 +253,12 @@ public class BlockPathEditFrame extends JmriJFrame {
         _newPath = false;
     }
 
-    private void createPressed(ActionEvent e) {
+    protected void okPressed(ActionEvent e) {
         String user = pathUserName.getText().trim();
         if (user.equals("") || (_newPath && _block.getPathByName(user) != null)) { // check existing names before creating
             status(user.equals("") ? Bundle.getMessage("WarningSysNameEmpty") : Bundle.getMessage("DuplPathName", user), true);
             pathUserName.setBackground(Color.red);
+            log.debug("username empty");
             return;
         }
         if (_newPath) {
@@ -258,81 +274,26 @@ public class BlockPathEditFrame extends JmriJFrame {
                     _pathmodel.fireTableDataChanged();
                     closeFrame(); // success
                 }
+            } else {
+                log.debug("_newPath - could not get from/to Portal from this OBlock");
             }
         } else if (!_path.getName().equals(user)) {
             _path.setName(user); // name change on existing path
         }
         try { // adapted from BlockPathTableModel setValue
-            if (fromPortalComboBox.getSelectedIndex() <= 0) {
-                // 0 = empty choice, need at least 1 Portal
-                if (toPortalComboBox.getSelectedIndex() > 0) {
-                    _path.setFromPortal(null); // portal can be removed from path by setting to null but we want at least 1
-                } else {
-                    status(Bundle.getMessage("WarnPortalOnPath"), true);
-                    return;
-                }
-            } else {
-                String fromP = (String) fromPortalComboBox.getSelectedItem();
-                log.debug("looking for FromPortal {}", fromP);
-                Portal fromPortal = _block.getPortalByName(fromP);
-                if (fromPortal == null || pm.getPortal(fromP) == null) {
-                    int val = _core.verifyWarning(Bundle.getMessage("BlockPortalConflict", fromP, _block.getDisplayName()));
-                    if (val == 2) {
-                        return; // abort
-                    }
-                    fromPortal = pm.providePortal(fromP);
-                    if (!fromPortal.setFromBlock(_block, false)) {
-                        val = _core.verifyWarning(Bundle.getMessage("BlockPathsConflict", fromP, fromPortal.getFromBlockName()));
-                        if (val == 2) {
-                            return;
-                        }
-                    }
-                    fromPortal.setFromBlock(_block, true);
-                }
-                _path.setFromPortal(fromPortal);
-                if (!fromPortal.addPath(_path)) {
-                    status(Bundle.getMessage("AddPathFailed", fromP), true);
-                    return;
-                }
+            // set fromPortal
+            if (!setPortal(fromPortalComboBox, toPortalComboBox, true)) {
+                return;
             }
-
-            if (toPortalComboBox.getSelectedIndex() <= 0) {
-                // 0 = empty choice, need at least 1 Portal
-                if (fromPortalComboBox.getSelectedIndex() > 0) {
-                    _path.setToPortal(null); // portal can be removed from path by setting to null
-                } else {
-                    status(Bundle.getMessage("WarnPortalOnPath"), true);
-                    return;
-                }
-            } else {
-                String toP = (String) toPortalComboBox.getSelectedItem();
-                log.debug("looking for ToPortal {}", toP);
-                Portal toPortal = _block.getPortalByName(toP);
-                if (toPortal == null || pm.getPortal(toP) == null) {
-                    int val = _core.verifyWarning(Bundle.getMessage("BlockPortalConflict", toP, _block.getDisplayName()));
-                    if (val == 2) {
-                        return; // abort
-                    }
-                    toPortal = pm.providePortal(toP);
-                    if (!toPortal.setFromBlock(_block, false)) {
-                        val = _core.verifyWarning(Bundle.getMessage("BlockPathsConflict", toP, toPortal.getFromBlockName()));
-                        if (val == 2) {
-                            return;
-                        }
-                    }
-                    toPortal.setToBlock(_block, true);
-                    _path.setToPortal(toPortal);
-                    if (!toPortal.addPath(_path)) {
-                        status(Bundle.getMessage("AddPathFailed", toP), true);
-                        return;
-                    }
-                }
+            // set toPortal
+            if (!setPortal(toPortalComboBox, fromPortalComboBox, false)) {
+                return;
             }
-
             _path.setLength((float) lengthSpinner.getValue() * (cm.isSelected() ? 10.0f : 25.4f)); // stored in mm
             _block.setMetricUnits(cm.isSelected());
         } catch (IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), Bundle.getMessage("PathCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(),
+                    Bundle.getMessage("PathCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
             status(Bundle.getMessage("AddPathFailed", user), true);
             return;
         }
@@ -341,11 +302,64 @@ public class BlockPathEditFrame extends JmriJFrame {
             _pathmodel.fireTableDataChanged();
         }
         _core.setPathEdit(false);
-        log.debug("BlockPathEditFrame.createPressed pathEdit=False");
+        log.debug("BlockPathEditFrame.okPressed complete. pathEdit = false");
         closeFrame();
     }
 
-    protected void closeFrame(){
+    private boolean setPortal(JComboBox<String> portalBox, JComboBox<String> compareBox, boolean isFrom) {
+        if (portalBox.getSelectedIndex() <= 0) {
+            // 0 = empty choice, need at least 1 Portal in an OBlockPath
+            log.debug("fromPortal no selection, require 1 so check toPortal is not empty");
+            if (compareBox.getSelectedIndex() > 0) {
+                if (isFrom) {
+                    _path.setFromPortal(null); // portal can be removed from path by setting to null but we require at least 1
+                } else {
+                    _path.setToPortal(null); // at least 1
+                }
+                log.debug("removed {}Portal", (isFrom ? "From" : "To"));
+            } else {
+                status(Bundle.getMessage("WarnPortalOnPath"), true);
+                return false;
+            }
+        } else {
+            String portalName = (String) portalBox.getSelectedItem();
+            log.debug("looking for {}Portal {} (combo item {})", (isFrom ? "From" : "To"), portalName, portalBox.getSelectedIndex());
+            Portal portal = _block.getPortalByName(portalName);
+            if (portal == null || pm.getPortal(portalName) == null) {
+                int val = _core.verifyWarning(Bundle.getMessage("BlockPortalConflict", portalName, _block.getDisplayName()));
+                if (val == 2) {
+                    return false; // abort
+                }
+                portal = pm.providePortal(portalName);
+                if (isFrom) {
+                    if (!portal.setFromBlock(_block, false)) {
+                        val = _core.verifyWarning(Bundle.getMessage("BlockPathsConflict", portalName, portal.getFromBlockName()));
+                    }
+                } else {
+                    if (!portal.setToBlock(_block, false)) {
+                        val = _core.verifyWarning(Bundle.getMessage("BlockPathsConflict", portalName, portal.getToBlockName()));
+                    }
+                }
+                if (val == 2) {
+                    return false;
+                }
+                log.debug("fromPortal == null");
+                portal.setFromBlock(_block, true);
+            }
+            if (isFrom) {
+                _path.setFromPortal(portal); // portal can be removed from path by setting to null but we require at least 1
+            } else {
+                _path.setToPortal(portal); // at least 1
+            }
+            if (!portal.addPath(_path)) {
+                status(Bundle.getMessage("AddPathFailed", portalName), true);
+                return false ;
+            }
+        }
+        return true;
+    }
+
+    protected void closeFrame() {
         // remind to save, if Path was created or edited
         if (isDirty) {
             showReminderMessage();

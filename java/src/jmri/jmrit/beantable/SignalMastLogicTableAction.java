@@ -105,6 +105,20 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                 JOptionPane.showMessageDialog(finalF, Bundle.getMessage("SectionGenerationComplete"));
             }
         });
+        JMenuItem setSMLDirSensors = new JMenuItem(Bundle.getMessage("MenuItemAddDirectionSensors"));
+        pathMenu.add(setSMLDirSensors);
+        setSMLDirSensors.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int n = InstanceManager.getDefault(SignalMastLogicManager.class).setupSignalMastsDirectionSensors();
+                if (n > 0) {
+                    JOptionPane.showMessageDialog(finalF, java.text.MessageFormat.format(
+                            Bundle.getMessage("MenuItemAddDirectionSensorsErrorCount"), n),
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
     }
 
     List<Hashtable<SignalMastLogic, SignalMast>> signalMastLogicList = null;
@@ -237,11 +251,13 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
             @Override
             public void setValueAt(Object value, int row, int col) {
                 if (col == COMCOL) {
-                    getLogicFromRow(row).setComment((String) value, getDestMastFromRow(row));
+                    SignalMastLogic rowLogic = getLogicFromRow(row);
+                    assert rowLogic != null;
+                    rowLogic.setComment((String) value, getDestMastFromRow(row));
                 } else if (col == EDITLOGICCOL) {
                     class WindowMaker implements Runnable {
 
-                        int row;
+                        final int row;
 
                         WindowMaker(int r) {
                             row = r;
@@ -249,7 +265,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
 
                         @Override
                         public void run() {
-                            editLogic(row, 0);
+                            editLogic(row);
                         }
                     }
                     WindowMaker t = new WindowMaker(row);
@@ -257,7 +273,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
 
                 } else if (col == DELCOL) {
                     // button fired, delete Bean
-                    deleteLogic(row, col);
+                    deleteLogic(row);
                 } else if (col == ENABLECOL) {
                     boolean enable = ((Boolean) value);
                     if (enable) {
@@ -328,12 +344,12 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                 }
             }
 
-            void editLogic(int row, int col) {
+            void editLogic(int row) {
                 sigLog.setMast(Objects.requireNonNull(getLogicFromRow(row)).getSourceMast(), getDestMastFromRow(row));
                 sigLog.actionPerformed(null);
             }
 
-            void deleteLogic(int row, int col) {
+            void deleteLogic(int row) {
                 //This needs to be looked at
                 InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removeSignalMastLogic(Objects.requireNonNull(getLogicFromRow(row)), Objects.requireNonNull(getDestMastFromRow(row)));
             }

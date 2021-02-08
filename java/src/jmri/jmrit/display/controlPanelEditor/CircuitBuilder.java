@@ -16,22 +16,7 @@ import java.util.Map;
 import java.util.SortedSet;
 
 import javax.annotation.Nonnull;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 
@@ -256,6 +241,7 @@ public class CircuitBuilder {
 
     private JMenu makePortalIconMenu() {
         JMenu familyMenu = new JMenu(Bundle.getMessage("portalIconSet"));
+        ButtonGroup familyGroup = new ButtonGroup();
         ActionListener portalIconAction = (ActionEvent event) -> {
             String family = event.getActionCommand();
             if (!family.equals(_editor.getPortalIconFamily())) {
@@ -271,12 +257,16 @@ public class CircuitBuilder {
         };
         HashMap<String, HashMap<String, NamedIcon>> familyMap = ItemPalette.getFamilyMaps("Portal");
         for (String family : familyMap.keySet()) {
-            JMenuItem mi = new JMenuItem(family);
+            JCheckBoxMenuItem mi = new JCheckBoxMenuItem(family);
+            familyGroup.add(mi);
+            if (_editor.getPortalIconFamily().equals(family)) {
+                mi.setSelected(true);
+            }
             mi.setActionCommand(family);
             mi.addActionListener(portalIconAction);
             familyMenu.add(mi);
         }
-        return familyMenu; 
+        return familyMenu;
     }
 
 

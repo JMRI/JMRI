@@ -59,7 +59,7 @@ public class SignalPairTest {
         Assert.assertNotNull("CPE exists", cpe );
         cb = cpe.getCircuitBuilder();
         Assert.assertNotNull("CB exists", cb );
-        jmri.util.JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
+        //fixed: jmri.util.JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
         portalMgr = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class);
         Assert.assertNotNull("PortMgr exists", portalMgr );
         mastMgr = InstanceManager.getDefault(SignalMastManager.class);

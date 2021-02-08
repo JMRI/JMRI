@@ -79,8 +79,8 @@ public class DCCppLightManager extends AbstractLightManager {
 
     /**
      * Get the bit address from the system name.
-     * @param systemName a valid LocoNet-based Turnout System Name
-     * @return the turnout number extracted from the system name
+     * @param systemName a valid Light System Name
+     * @return the light number extracted from the system name
      */
     public int getBitFromSystemName(String systemName) {
         try {

@@ -150,7 +150,7 @@ public class BackgroundItemPanel extends IconItemPanel {
         _chooser.setPreviewPanel(new JPanel());
         _chooser.getSelectionModel().addChangeListener((ChangeEvent e) -> colorChange());
         _chooser.setColor(_frame.getCurrentColor());
-        _chooser = JmriColorChooser.extendColorChooser(_chooser);
+        JmriColorChooser.extendColorChooser(_chooser);
         panel.add(_chooser);
 
         panel.add(makeColorButtonPanel());

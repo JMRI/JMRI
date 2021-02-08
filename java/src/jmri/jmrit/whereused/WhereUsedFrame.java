@@ -27,7 +27,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
     JComboBox<ItemType> _itemTypeBox;
 
     NamedBean _itemBean;
-    NamedBeanComboBox<?> _itemNameBox = new NamedBeanComboBox<Sensor>(
+    NamedBeanComboBox<?> _itemNameBox = new NamedBeanComboBox<>(
                         InstanceManager.getDefault(SensorManager.class));
 
     JPanel _topPanel;
@@ -58,7 +58,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
         contentPane.add(_topPanel, BorderLayout.NORTH);
 
         // Build an empty where used listing
-        JScrollPane scrollPane = null;
+        JScrollPane scrollPane;
         buildWhereUsedListing(ItemType.NONE, null);
         scrollPane = new JScrollPane(_scrolltext);
         contentPane.add(scrollPane);
@@ -97,7 +97,6 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
         _topPanel.add(_createButton);
         _itemNameBox.setEnabled(false);
         _createButton.setEnabled(false);
-        return;
     }
 
     void buildBottomPanel() {
@@ -191,7 +190,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
                 _textArea = EntryExitWhereUsed.getWhereUsed(bean);
                 break;
             default:
-                _textArea = new JTextArea(Bundle.getMessage("TypePrompt"));
+                _textArea = new JTextArea(Bundle.getMessage("TypePrompt", Bundle.getMessage("ButtonCreate")));
                 break;
         }
 
@@ -205,7 +204,6 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
         _scrolltext.add(_textArea);
         pack();
         repaint();
-        return;
     }
 
     JFileChooser userFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
@@ -234,7 +232,9 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
                     Bundle.getMessage("SaveDuplicateAppend"),  // NOI18N
                     Bundle.getMessage("ButtonCancel")};               // NOI18N
             int selectedOption = JOptionPane.showOptionDialog(null,
-                    Bundle.getMessage("SaveDuplicatePrompt", file.getName()), // NOI18N
+                    Bundle.getMessage("SaveDuplicatePrompt", file.getName(),
+                            Bundle.getMessage("SaveDuplicateAppend"),
+                            Bundle.getMessage("SaveDuplicateReplace")), // NOI18N
                     Bundle.getMessage("SaveDuplicateTitle"),   // NOI18N
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.WARNING_MESSAGE,
@@ -335,7 +335,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
 
         private final String _bundleKey;
 
-        private ItemType(String bundleKey) {
+        ItemType(String bundleKey) {
             _bundleKey = bundleKey;
         }
 

@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.display.DisplayFrame for class diagram for the palette package.
  *
  * @author Pete Cressman Copyright (c) 2010, 2020
- * @author Egbert Broerse Copyright 2017
+ * @author Egbert Broerse Copyright 2017, 2021
  */
 public abstract class ItemPanel extends JPanel  {
 
@@ -94,7 +94,7 @@ public abstract class ItemPanel extends JPanel  {
             PortalIcon.TO_ARROW, PortalIcon.FROM_ARROW};
 
     protected static HashMap<String, String[]> STATE_MAP = new HashMap<>();
-    {
+    static {
         STATE_MAP.put("Turnout", TURNOUT);
         STATE_MAP.put("Sensor", SENSOR);
         STATE_MAP.put("SignalHead", SIGNALHEAD);
@@ -107,7 +107,7 @@ public abstract class ItemPanel extends JPanel  {
     }
 
     protected static HashMap<String, String> NAME_MAP = new HashMap<>();
-    {
+    static {
         NAME_MAP.put("Turnout", "BeanNameTurnout");
         NAME_MAP.put("Sensor", "BeanNameSensor");
         NAME_MAP.put("SignalHead", "BeanNameSignalHead");
@@ -304,7 +304,7 @@ public abstract class ItemPanel extends JPanel  {
             gridbag.setConstraints(panel, c);
         }
         if (log.isDebugEnabled()) {
-            log.debug("addIconsToPanel adds {} icons (map size {})to iconPanel for {}", cnt, iconMap.size(), _itemType);
+            log.debug("addIconsToPanel adds {} icons (map size {}) to iconPanel for {}", cnt, iconMap.size(), _itemType);
         }
         iconPanel.invalidate();
     }
@@ -348,8 +348,7 @@ public abstract class ItemPanel extends JPanel  {
         } else {
             scale = icon.reduceTo(CatalogPanel.ICON_WIDTH, CatalogPanel.ICON_HEIGHT, CatalogPanel.ICON_SCALE);
         }
-        String scaleText = java.text.MessageFormat.format(Bundle.getMessage("scale"),
-                new Object[]{CatalogPanel.printDbl(scale, 2)});
+        String scaleText = java.text.MessageFormat.format(Bundle.getMessage("scale"), CatalogPanel.printDbl(scale, 2));
         JLabel label = new JLabel(scaleText);
         JPanel sPanel = new JPanel();
         sPanel.setOpaque(false);
@@ -457,9 +456,9 @@ public abstract class ItemPanel extends JPanel  {
     }
 
     /**
-     * Different names for the same map
-     * @param key1
-     * @param key2
+     * Ask user to choose from 2 different names for the same icon map.
+     * @param key1 first name found for same map
+     * @param key2 second name found, default to delete
      * @return the name and map to discard
      */
     private String queryWhichToDelete(String key1, String key2) {
@@ -474,17 +473,19 @@ public abstract class ItemPanel extends JPanel  {
         }
         return key2;
     }
-    // oldDim old panel size,
-    // totalDim old frame size
+
+    /**
+     * Resize frame to allow display/shrink after Icon map is dieplayed.
+     * @param isPalette selector for what to resize, true to resize parent tabbed frame
+     * @param oldDim old panel size
+     * @param frameDim old frame size
+     */
     protected void reSizeDisplay(boolean isPalette, Dimension oldDim, Dimension frameDim) {
         Dimension newDim = getPreferredSize();
         Dimension deltaDim = shellDimension(this);
         if (log.isDebugEnabled()) {
             // Gather data for additional dimensions needed to display new panel in the total frame
             Dimension frameDiffDim = new Dimension(frameDim.width - oldDim.width, frameDim.height - oldDim.height);
-            /*log.debug("resize {} {}. frameDim= ({}, {}) OldDim= ({}, {})",
-                    (isPalette?"tabPane":"update"), _itemType, frameDim.width, frameDim.height,
-                    oldDim.width, oldDim.height);*/
             log.debug("resize {} {}. frameDiffDim= ({}, {}) deltaDim= ({}, {}) prefDim= ({}, {}))",
                     (isPalette?"tabPane":"update"), _itemType,
                     frameDiffDim.width, frameDiffDim.height,
@@ -501,9 +502,9 @@ public abstract class ItemPanel extends JPanel  {
         if (panel instanceof FamilyItemPanel) {
             return new Dimension(23, 122);
         } else if (panel instanceof IconItemPanel) {
-            return new Dimension(15, 65);
+            return new Dimension(23, 65);
         }
-        return new Dimension(7, 48);
+        return new Dimension(23, 48);
     }
 
     static public GridBagConstraints itemGridBagConstraint() {
@@ -520,4 +521,5 @@ public abstract class ItemPanel extends JPanel  {
     }
 
     private final static Logger log = LoggerFactory.getLogger(ItemPanel.class);
+
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>JMRI Icons</title>
+	<title>JMRI Switchboard Icons</title>
 </head>
 <body>
 <h1>JMRI Resources</h1>

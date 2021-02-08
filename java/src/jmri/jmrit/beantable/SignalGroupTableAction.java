@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -286,12 +287,12 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             }
 
             @Override
-            public SignalGroup getBySystemName(String name) {
+            public SignalGroup getBySystemName(@Nonnull String name) {
                 return InstanceManager.getDefault(SignalGroupManager.class).getBySystemName(name);
             }
 
             @Override
-            public SignalGroup getByUserName(String name) {
+            public SignalGroup getByUserName(@Nonnull String name) {
                 return InstanceManager.getDefault(SignalGroupManager.class).getByUserName(name);
             }
 

@@ -264,7 +264,7 @@ public class HtmlConductor extends HtmlTrainCommon {
                         if (car.isUtility()) {
                             builder.append(pickupUtilityCars(carList, car, TrainCommon.IS_MANIFEST));
                          // use truncated format if there's a switch list
-                        } else if (Setup.isTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled()) {
+                        } else if (Setup.isPrintTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled()) {
                             builder.append(pickUpCar(car, Setup.getPickupTruncatedManifestMessageFormat()));
                         } else {
                             builder.append(pickUpCar(car, Setup.getPickupManifestMessageFormat()));

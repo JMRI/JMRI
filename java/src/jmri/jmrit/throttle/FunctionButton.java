@@ -358,9 +358,7 @@ public class FunctionButton extends JToggleButton {
      * @param l The FunctionListener to be removed
      */
     public void removeFunctionListener(FunctionListener l) {
-        if (listeners.contains(l)) {
-            listeners.remove(l);
-        }
+        listeners.remove(l);
     }
 
     /**

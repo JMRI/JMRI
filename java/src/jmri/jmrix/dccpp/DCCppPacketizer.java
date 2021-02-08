@@ -52,6 +52,7 @@ public class DCCppPacketizer extends DCCppTrafficController {
     @Override
     public void sendDCCppMessage(DCCppMessage m, DCCppListener reply) {
         if (m.length() != 0) {
+            log.debug("Sending: '{}'", m);            
             sendMessage(m, reply);
             // why the next line?
             // https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html#yield--
@@ -149,19 +150,19 @@ public class DCCppPacketizer extends DCCppTrafficController {
             // Spin waiting for '<'
             char1 = readByteProtected(istream);
         }
-        log.debug("Serial: Message started...");
+        log.trace("Serial: Message started...");
         // Pick up the rest of the command
         for (i = 0; i < msg.maxSize(); i++) {
             char1 = readByteProtected(istream);
             if (char1 == '>') {
-                log.debug("Received: {}", m);
+                log.debug("Received: '{}'", m);
                 // NOTE: Cast is OK because we checked runtime type of msg above.
                 ((DCCppReply) msg).parseReply(m.toString());
                 break;
             } else {
                 m.append(Character.toString((char) char1));
                 //char1 = readByteProtected(istream);
-                log.debug("msg char[{}]: {} ({})", i, char1, Character.toString((char) char1));
+                log.trace("msg char[{}]: {} ({})", i, char1, Character.toString((char) char1));
                 //msg.setElement(i, char1 & 0xFF);
             }
         }

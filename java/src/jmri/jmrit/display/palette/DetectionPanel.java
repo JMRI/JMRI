@@ -86,7 +86,7 @@ public class DetectionPanel extends JPanel {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(Bundle.getMessage("DectectorNote")));
+        blurb.add(new JLabel(Bundle.getMessage("DetectorNote")));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         _sensorBlurbPanel.add(blurb);
         add(_sensorBlurbPanel);
@@ -120,7 +120,7 @@ public class DetectionPanel extends JPanel {
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         blurb.add(new JLabel(Bundle.getMessage("DragOccupancyName", Bundle.getMessage("OccupancySensor"))));
-        blurb.add(new JLabel(Bundle.getMessage("DectectorNote")));
+        blurb.add(new JLabel(Bundle.getMessage("DetectorNote")));
 //        blurb.add(new JLabel(Bundle.getMessage("DragErrorName", Bundle.getMessage("ErrorSensor"))));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();

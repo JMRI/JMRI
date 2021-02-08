@@ -4872,7 +4872,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         // create object
         PositionablePoint o = new PositionablePoint(name,
                 PositionablePoint.PointType.ANCHOR, this);
-        PositionablePointView pv = new PositionablePointView(o, currentPoint, this);
+        PositionablePointView pv = new PositionablePointView(o, p, this);
         addLayoutTrack(o, pv);
 
         setDirty();
@@ -5462,7 +5462,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     log.error("provideLayoutBlock: Failure to auto-assign for empty LayoutBlock name");
                 }
             } else {
-                log.error("provideLayoutBlock: no name given and not assigning auto block names");
+                log.debug("provideLayoutBlock: no name given and not assigning auto block names");
             }
         } else {
             // check if this Layout Block already exists

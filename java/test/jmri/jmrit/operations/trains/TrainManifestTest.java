@@ -2,9 +2,10 @@ package jmri.jmrit.operations.trains;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -27,7 +28,7 @@ public class TrainManifestTest extends OperationsTestCase {
     }
     
     @Test
-    public void testAddCarsLocationUnknown() {
+    public void testAddCarsLocationUnknown() throws IOException {
         JUnitOperationsUtil.initOperationsData();
         CarManager cmanager = InstanceManager.getDefault(CarManager.class);
         Car car = cmanager.getByRoadAndNumber("CP", "777");
@@ -40,6 +41,7 @@ public class TrainManifestTest extends OperationsTestCase {
         
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(file);
         Assert.assertEquals("confirm number of lines in manifest", 15, in.lines().count());
+        in.close();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainManifestTest.class);

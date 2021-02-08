@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.21.4-SNAPSHOT</version>
+    <version>4.21.5-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -1261,13 +1261,13 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>3.6.0</version>
+            <version>3.141.59</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>3.4.0</version>
+            <version>4.2.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -1627,6 +1627,11 @@
             <artifactId>apiguardian-api</artifactId>
             <version>1.1.0</version>
         </dependency>
+		<dependency>
+        	<groupId>commons-logging</groupId>
+        	<artifactId>commons-logging</artifactId>
+        	<version>1.2</version>
+		</dependency>        
     </dependencies>
 
     <repositories>

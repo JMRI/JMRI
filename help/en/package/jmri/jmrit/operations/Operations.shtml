@@ -275,6 +275,7 @@
 
        <ul>
         <li><a href="#ReturnWhenEmpty">Return When Empty</a></li>
+        <li><a href="#ReturnWhenLoaded">Return When Loaded</a></li>
        </ul></li>
 
       <li><a href="#CarsTools">Cars Tools</a>
@@ -894,8 +895,8 @@
    </p>
 
    <p>
-    You can quickly set the <a href="#SetTrainIconCoordinates">train icon coordinates</a> for your panel using tools in
-    the Routes and <a href="#EditRoute">Edit Route</a> windows.
+    You can quickly set the <a href="#SetTrainIconCoordinates">train icon coordinates</a> for your
+    panel using tools in the Routes and <a href="#EditRoute">Edit Route</a> windows.
    </p>
 
    <p>
@@ -1202,7 +1203,7 @@
    car's final destination fields. The car routing algorithm will search for the most efficient
    route for the car to travel. The router will attempt to use classification/interchange tracks and
    then yards to move cars. If you don't want the router to use yards, you can deselect the "Enable
-   Car Routing via Yards" checkbox. The program will try and find a route using a maximum of five
+   Car Routing via Yards" checkbox. The program will try and find a route using a maximum of six
    trains to complete the car move. Note that the program never gives up trying to route a car. If a
    car has been assigned a <a href="#CarsSet">Final Destination</a> or <a href="#EditCarLoads">Custom
     Load</a> the program will try and route the car during every train build that has access to the car.
@@ -2867,9 +2868,7 @@
    group. This blocking feature doesn't consider where in the train the cars are, as some crew
    members when picking up cars, will add the cars to any part of the train. So the first stop in
    the departure train's route may not have the cars at the head of the train, but they should be in
-   a group, somewhere in the train. The first time you depart staging with this feature on, the cars
-   will not be blocked for you, you need to first terminate a new train into staging, those cars
-   will have the blocking tags assigned to them. To enable this feature, see Edit Staging Track,
+   a group, somewhere in the train. To enable this feature, see Edit Staging Track,
    "Optional Car Blocking" in the lower right corner of the window. There are many reasons why this
    option will not block cars correctly. See the train's <a href="#BuildReports">build report</a> for more details.
 
@@ -3602,6 +3601,38 @@
    <p>Use the "Load" menu to change the car's load, or create new ones by using the "Edit"
     button located to the right of the load menu.</p>
 
+   <a name="ReturnWhenEmpty" id="ReturnWhenEmpty"></a>
+   <h4>Return When Empty</h4>
+   You can also optionally enter the location and track that you want the car to return to when the
+   car's load status becomes empty. You can also replace the car's default empty "E" load with one
+   from the return when empty (RWE) load menu. Only custom loads that are type <a href="#LoadType">Empty</a>
+   are shown in the combo box. When you specify a custom RWE load for a car, the program will use
+   the RWE load instead of the default empty "E" load in all cases where the "E" load would normally
+   occur. Note that the RWE load also overrides the generation of custom loads out of staging since
+   the "E" load isn't used by the program for this car. However, if a car does arrive into staging
+   with the RWE load name, the program will set the load name to the default "E", and not use the
+   RWE addresses.
+
+   <p>Note that manually changing the load name will not cause the Return When Empty (RWE)
+    destination to become active, only when the car is set out by the program will the RWE
+    destination and RWE load become active.</p>
+
+   <a name="ReturnWhenLoaded" id="ReturnWhenLoaded"></a>
+   <h4>Return When Loaded</h4>
+   You can also optionally enter the location and track that you want the car to return to when the
+   car's load status becomes loaded. You can also replace the car's default load "L" with one from
+   the return when loaded (RWL) load menu. Only custom loads that are type
+   <a href="#LoadType">Load</a> are shown in the combo box. When you specify a custom RWL load for a
+   car, the program will use the RWL load instead of the default "L" load in all cases where the "L"
+   load would normally occur. When a car arrives into staging and has the "E" load and the option to
+   swap load names is enabled, the program will activate the RWL load and addresses. Also when a car
+   arrives into staging and has a custom load type of empty and the option to remove custom load
+   names is enabled, the program will activate the RWL load and addresses.
+
+   <p>Note that manually changing the load name will not cause the Return When Loaded (RWL)
+    destination to become active, only when the car is set out by the program will the RWL
+    destination and RWL load name become active.</p>
+
    <h4>Kernel</h4>
 
    <p>
@@ -3609,20 +3640,6 @@
     moved as a single unit. Select the kernel you want the car to be in using the "Kernel" menu, and
     use the "Edit" button to create new ones.
    </p>
-
-   <a name="ReturnWhenEmpty" id="ReturnWhenEmpty"></a>
-   <h4>Return When Empty</h4>
-   You can also optionally enter the location and track that you want the car to return to when the
-   car's load status becomes empty. You can also replace the car's default empty load "E" with one
-   from the return when empty (RWE) load menu. Only custom loads that are type <a href="#LoadType">Empty</a>
-   are shown in the combo box. When you specify a custom RWE load for a car, the program will use
-   the RWE load instead of the default empty "E" in all cases where the "E" load would normally
-   occur. Note that the RWE load also overrides the generation of custom loads out of staging since
-   the "E" load isn't used by the program for this car.
-
-   <p>Note that manually changing the load status to empty "E" will not cause the Return When
-    Empty (RWE) destination to become active, only when the car is set out by the program will the
-    RWE destination and RWE load become active.</p>
 
    <h4>Optional -- Normally Set by Program</h4>
    The next three set of fields are normally set by the program when building trains. We'll explain how they work in
@@ -4112,11 +4129,14 @@
 
    <a name="SetTrainIconCoordinates" id="SetTrainIconCoordinates"></a>
    <h4>Set Train Icon Coordinates</h4>
-   <p>Use this tool to set the default X and Y coordinates of your train icons for each
-    location. The tool allows you to specify the icon coordinates based on the train's direction.
-    You can also update all of your existing routes and locations with these new coordinates. As an
-    alternative, you can use a route's "Tools-&gt;Set Train Icon Coordinates for this Route" to
-    create coordinates unique to a specific route.</p>
+   <p>
+    Use this tool to set the default X and Y coordinates of your train icons for each location. The
+    tool allows you to specify the icon coordinates based on the train's direction. You can also
+    update all of your existing routes and locations with these new coordinates. As an alternative,
+    you can use a route's "Tools-&gt;Set Train Icon Coordinates for this Route" to create
+    coordinates unique to a specific route. Enter the name of the <a href="#PanelOptionsTrainIcons">panel</a>
+    you wish to use in the Settings window.
+   </p>
 
    <a name="Trains" id="Trains"></a>
    <h2>Trains</h2>
@@ -5339,7 +5359,7 @@
     The routing method also uses the car's move count to determine which cars to look at first. A
     car needs to be routed when it has a <a href="#FinalDestination">final destination</a> (think
     ship to address). The program will try and route the car to its final destination using up to
-    five trains. If the car has a custom load and no final destination, the program will search for
+    six trains. If the car has a custom load and no final destination, the program will search for
     a spur with a schedule that is demanding that car's load, and then will then give the car a
     final destination that is the spur, and then route the car to that spur.
    </p>
@@ -5429,7 +5449,7 @@
    <p>
     If a car has a custom load without a destination, the program will search for a spur with a
     schedule demanding that car type and load, the program will then "route" the car to that
-    destination. The program will use up to five trains to route a car to a destination. The program
+    destination. The program will use up to six trains to route a car to a destination. The program
     when determining how many cars an industry can serve considers the length of the spur serving
     the industry, and the length of the alternate track if one is specified. If the car is departing
     staging with a custom load, the "Percentage of custom loads generated by staging" is used to
@@ -5615,19 +5635,20 @@
    <h3>Custom Switch Lists</h3>
    You can if you wish create custom switch lists using an Excel program. You can configure where to
    find the Excel program for custom switch lists from the "Switch Lists by Location" window "Tools"
-   menu. Or go to <a href="#SettingsOptions">Options</a> and select the "Generate CSV Switch List"
-   to enable this feature. For more information see <a href="#SetupExcelProgram">Setup Excel
-    Program (Manifest Creator)</a>.
+   menu. Or go to
+   <a href="#SettingsOptions">Options</a> and select the "Generate CSV Switch List" to enable this
+   feature. For more information see
+   <a href="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</a>.
 
-   <p>Four new buttons will appear at the bottom of the "Switch Lists by Location" window,
-    "Generate CSV Switch Lists", "Generate CSV Switch Lists Changes", "Run", and "Run Changes". The
-    "Generate CSV Switch Lists" will create a comma separated values file for each of the selected locations. And the
-    "Generate CSV Switch Lists Changes" will only create new CSV files for locations that have have
-    been modified by a new train build. You can find the CSV files in the csvSwitchList directory.
-    The "Run" button is used to create custom switch lists for all of the selected locations by
-    executing an Excel program. The "Run" button will create the CSV files needed before asking the
-    Excel program to create and print a custom switch list. The "Run Changes" will only create new
-    switch lists for locations that have new work.</p>
+   <p>When the feature to generate CSV Switch Lists is enabled, the program will create a comma
+    separated values file for each of the selected locations. You can find the CSV files in the
+    csvSwitchList directory.</p>
+
+   <p>Two new buttons will appear at the bottom of the "Switch Lists by Location" window, "Run",
+    and "Run Changes". The "Run" button is used to create custom switch lists for all of the
+    selected locations by executing an Excel program. The "Run" button will if needed, create the
+    CSV files needed before asking the Excel program to create and print a custom switch list. The
+    "Run Changes" will only create new switch lists for locations that have new work.</p>
 
    <a name="TrainMove" id="TrainMove"></a>
    <h3>Moving Trains</h3>

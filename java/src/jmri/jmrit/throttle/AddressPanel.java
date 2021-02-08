@@ -113,9 +113,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         if (listeners == null) {
             return;
         }
-        if (listeners.contains(l)) {
-            listeners.remove(l);
-        }
+        listeners.remove(l);
     }
 
     /**

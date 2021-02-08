@@ -10,7 +10,6 @@ import jmri.swing.NamedBeanComboBox;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Provides a tabbed beanedit panel for an OBlock object.
@@ -25,7 +24,7 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
     private static final String tightText = Bundle.getMessage("BlockTight");
     private static final String severeText = Bundle.getMessage("BlockSevere");
     public String[] curveOptions = {noneText, gradualText, tightText, severeText};
-    static final java.util.Vector<String> speedList = new java.util.Vector<String>();
+    static final java.util.Vector<String> speedList = new java.util.Vector<>();
     private String tabName = Bundle.getMessage("BeanNameOBlock");
     JTextField userNameField = new JTextField(20);
     NamedBeanComboBox<Reporter> reporterComboBox;
@@ -86,12 +85,9 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
         final SensorDebounceEditAction debounce = new SensorDebounceEditAction();
         debounce.sensorDebounce(basic);
 
-        sensorComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                debounce.setBean(sensorComboBox.getSelectedItem());
-                debounce.resetDebounceItems(e);
-            }
+        sensorComboBox.addActionListener(e -> {
+            debounce.setBean(sensorComboBox.getSelectedItem());
+            debounce.resetDebounceItems(e);
         });
         basic.setSaveItem(new AbstractAction() {
             @Override
@@ -157,16 +153,7 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
 
         reporter.addItem(new BeanEditItem(reporterComboBox, Bundle.getMessage("BeanNameReporter"), Bundle.getMessage("BlockReporterText")));
 
-        reporterComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (reporterComboBox.getSelectedItem() != null) {
-                    useCurrent.setEnabled(true);
-                } else {
-                    useCurrent.setEnabled(false);
-                }
-            }
-        });
+        reporterComboBox.addActionListener(e -> useCurrent.setEnabled(reporterComboBox.getSelectedItem() != null));
 
         reporter.addItem(new BeanEditItem(useCurrent, Bundle.getMessage("BlockReporterCurrent"), Bundle.getMessage("BlockUseCurrentText")));
 
@@ -197,7 +184,7 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
     }
 
     JSpinner lengthSpinner = new JSpinner(); // 2 digit decimal format field, initialized later as instance
-    JComboBox<String> curvatureField = new JComboBox<String>(curveOptions);
+    JComboBox<String> curvatureField = new JComboBox<>(curveOptions);
     JCheckBox permissiveField = new JCheckBox();
     JComboBox<String> speedField;
 
@@ -236,24 +223,18 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         inch.setSelected(true);
 
-        inch.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cm.setSelected(!inch.isSelected());
-                updateLength();
-            }
+        inch.addActionListener(e -> {
+            cm.setSelected(!inch.isSelected());
+            updateLength();
         });
-        cm.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                inch.setSelected(!cm.isSelected());
-                updateLength();
-            }
+        cm.addActionListener(e -> {
+            inch.setSelected(!cm.isSelected());
+            updateLength();
         });
 
         basic.addItem(new BeanEditItem(p, Bundle.getMessage("BlockLengthUnits"), Bundle.getMessage("BlockLengthUnitsText")));
         basic.addItem(new BeanEditItem(curvatureField, Bundle.getMessage("BlockCurveColName"), ""));
-        basic.addItem(new BeanEditItem(speedField = new JComboBox<String>(speedList), Bundle.getMessage("BlockSpeedColName"), Bundle.getMessage("BlockMaxSpeedText")));
+        basic.addItem(new BeanEditItem(speedField = new JComboBox<>(speedList), Bundle.getMessage("BlockSpeedColName"), Bundle.getMessage("BlockMaxSpeedText")));
         basic.addItem(new BeanEditItem(permissiveField, Bundle.getMessage("BlockPermColName"), Bundle.getMessage("BlockPermissiveText")));
 
         permissiveField.setSelected(bean.getPermissiveWorking());
@@ -262,7 +243,7 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String cName = (String) curvatureField.getSelectedItem();
-                if (cName.equals(noneText)) {
+                if (cName == null || cName.equals(noneText)) {
                     bean.setCurvature(Block.NONE);
                 } else if (cName.equals(gradualText)) {
                     bean.setCurvature(Block.GRADUAL);
@@ -279,10 +260,10 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
                     JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
                     return;
                 }
-                if (!speedList.contains(speed) && !speed.contains("Global")) {
+                if (speed != null && !speedList.contains(speed) && !speed.contains("Global")) {
                     speedList.add(speed);
                 }
-                float len = 0.0f;
+                float len;
                 len = (Float) lengthSpinner.getValue();
                 if (inch.isSelected()) {
                     bean.setLength(len * 25.4f);
@@ -314,7 +295,7 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
 
                 speedField.setEditable(true);
                 speedField.setSelectedItem(speed);
-                float len = 0.0f;
+                float len;
                 if (inch.isSelected()) {
                     len = bean.getLengthIn();
                 } else {
@@ -329,7 +310,7 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
     }
 
     private void updateLength() {
-        float len = 0.0f;
+        float len;
         if (inch.isSelected()) {
             len = bean.getLengthIn();
         } else {

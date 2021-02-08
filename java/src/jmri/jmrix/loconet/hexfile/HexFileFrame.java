@@ -19,6 +19,9 @@ import org.slf4j.LoggerFactory;
  * drives a test App. It controls reading from a .hex file, feeding the
  * information to a LocoMonFrame (monitor) and connecting to a LocoGenFrame (for
  * sending a few commands).
+ * Note that running a simulated LocoNet connection, {@link HexFileFrame#configure()} will substitute the
+ * {@link jmri.progdebugger.ProgDebugger} for the {@link jmri.jmrix.loconet.LnOpsModeProgrammer}
+ * overriding the readCV and writeCV methods.
  *
  * @author Bob Jacobsen Copyright 2001, 2002
  * @author i18n Egbert Broerse 2017
@@ -78,7 +81,7 @@ public class HexFileFrame extends JmriJFrame {
         jLabel1.setText(Bundle.getMessage("FieldDelay"));
         jLabel1.setVisible(true);
 
-        setTitle(Bundle.getMessage("TitleLocoNetSimulator"));
+        setTitle(Bundle.getMessage("TitleLocoNetSimulator", getAdapter().getUserName()));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         JPanel pane1 = new JPanel();
@@ -192,13 +195,18 @@ public class HexFileFrame extends JmriJFrame {
         }
 
         // Install a debug programmer, replacing the existing LocoNet one
+        // Note that this needs to be repeated for the DefaultManagers, if one is set to HexFile (Ln Sim)
+        // see jmri.jmrix.loconet.hexfile.HexFileSystemConnectionMemo
+        log.debug("HexFileFrame called");
         DefaultProgrammerManager ep = port.getSystemConnectionMemo().getProgrammerManager();
         port.getSystemConnectionMemo().setProgrammerManager(
                 new jmri.progdebugger.DebugProgrammerManager(port.getSystemConnectionMemo()));
         if (port.getSystemConnectionMemo().getProgrammerManager().isAddressedModePossible()) {
+            log.debug("replacing AddressedProgrammer in Hex");
             jmri.InstanceManager.store(port.getSystemConnectionMemo().getProgrammerManager(), jmri.AddressedProgrammerManager.class);
         }
         if (port.getSystemConnectionMemo().getProgrammerManager().isGlobalProgrammerAvailable()) {
+            log.debug("replacing GlobalProgrammer in Hex");
             jmri.InstanceManager.store(port.getSystemConnectionMemo().getProgrammerManager(), GlobalProgrammerManager.class);
         }
         jmri.InstanceManager.deregister(ep, jmri.AddressedProgrammerManager.class);
