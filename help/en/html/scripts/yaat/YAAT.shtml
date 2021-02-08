@@ -51,6 +51,7 @@
 
       <p>
       YAAT is designed to eliminate the programming by using text files that contain English like phrases.  For example:
+      </p>
 
       <pre>
       sensor = sensors.getSensor('S-Sensor')
@@ -62,7 +63,7 @@
       <pre>
       Set sensor S-Sensor active
       </pre>
-      </p>
+
 
       <p>
       Each train has its own text file, but they can coordinate actions by using JMRI sensors, etc.
@@ -91,7 +92,8 @@
       <dl>
         <dt>logLevel</dt>
         <dd>YAAT sends logging information to either the JMRI system console or the
-        script monitor located at <strong>Panels &rArr; Script Output</strong>.
+        script monitor located at <strong>Scripting </strong>{<em>Old: <strong>Panels</strong></em>}
+        <strong>&rArr; Script Output</strong>.
         Zero is no logging, 4 provides the maximum detail.</dd>
 
         <dt>statusSensor</dt>
@@ -273,6 +275,7 @@
       </p>
 
       <h3>Running the demo</h3>
+      <p>
       After starting <strong>PanelPro</strong>, click on the <strong>Open Panel File</strong>
       button and select <strong>yaat demo.xml</strong>.</p>
 
@@ -297,7 +300,7 @@
       </p>
 
       <h2>Advanced Features</h2>
-      <h3>Compiled Trains</h3><a name="CompTrains" id="CompTrains" />
+      <h3>Compiled Trains</h3><a name="CompTrains" id="CompTrains"></a>
 
       <p>
       The standard YAAT process compiles each train from its text file or from the embedded content.
@@ -311,7 +314,7 @@
       </p>
 
       <p>
-      A compiled train is located at the preference:yaatp/<trainname> directory.  When YAAT
+      A compiled train is located at the preference:yaatp/&lt;trainname&gt; directory.  When YAAT
       is started, the date/time for each train source file is checked.  If it is greater
       than the compiled train, if any, the compile will occur.  Otherwise the compiled
       version will be loaded.  Embedded trains are always compiled.
