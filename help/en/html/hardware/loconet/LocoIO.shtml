@@ -71,7 +71,7 @@
         <li>Block Detector - Blink</li>
         <li>Servo (LocoServo ports 5-12 only)</li>
       </ul>
-      <p>Since rev 1.49</p>
+      <p>Since LocoIO rev 1.49</p>
       <ul>
         <li>Port Not In Use</li>
         <li>On older boards, you are advised to configure unused ports as Output Fixed to prevent accidental
@@ -85,10 +85,12 @@
 
       <a name="current" id="current"></a>
       <h2>LocoIO Programmer via Roster</h2>
+      <span class="since">Since
+      <a href="https://jmri.org/releasenotes/jmri4.21.2.shtml" target="_blank">JMRI 4.21.2</a></span>
       <p>The <a href=
       "../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">Public_Domain_HDL_LocoIO</a> Decoder
       Definition in the "Public Domain and DIY" category supports set-up of a wide range of LocoIO
-      devices up to rev 1.54 LocoIO/LocoBooster/LocoRCD/LocoServo hardware since 2020.
+      devices up to LocoIO/LocoBooster/LocoRCD/LocoServo rev 1.54 hardware since 2020.
 
       <p>To use the current LocoIO Programmer follow these steps:</p>
       <ol>
