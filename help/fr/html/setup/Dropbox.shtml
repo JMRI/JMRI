@@ -1,93 +1,184 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="fr">
-<!-- Translated by Herv&#233; BLOREC bzh56420@yahoo.fr on 2016-12-30 -->
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI Setup - Sharing Files with DropBox</title>
   <meta name="keywords" content=
-  "java model railroad JMRI install Dropbox"><!-- Style -->
+  "java model railroad JMRI install Dropbox">
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  "text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
+      <!-- Page Body -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+      <h1>Installation de JMRI: Partage de fichiers avec Dropbox</h1>
 
-<!-- Page Body -->
-<h1>Configuration JMRI: Partage de Fichiers avec Dropbox</h1>
+      <p><a href="https://www.dropbox.com" target=
+      "_blank">Dropbox</a> <a href="https://www.dropbox.com"
+      target="_blank"><img src=
+      "images/dropbox-logos_dropbox-vertical-blue.png" width="85"
+      height="85" align="right"></a> est un service gratuit qui vous permet
+       de partager des fichiers entre plusieurs ordinateurs sur un r&#233;seau.
+      Une fois que vous vous &#234;tes inscrit &#224; Dropbox, vous pouvez configurer JMRI pour
+      l'utiliser pour partager des Inventaires, des fichiers de configuration de r&#233;seau et d'autres
+      informations entre plusieurs ordinateurs.</p>
 
-<p>
-  <a href="https://www.dropbox.com" target="_blank">Dropbox</a>
-  <a href="https://www.dropbox.com" target="_blank"><img src="images/dropbox-logos_dropbox-vertical-blue.png" width="85" height="85" align="right"></a>
-  est un service gratuit qui vous permet de partager des fichiers entre plusieurs ordinateurs sur un r&#233;seau.
-   Une fois que vous vous êtes inscrit avec Dropbox, vous pouvez configurer JMRI pour l'utiliser pour partager
-  Inventaires, fichiers de configuration de r&#233;seau et autres informations entre plusieurs ordinateurs.
-</p>
-<p>
-  L'utilisation de  <a href="https://www.dropbox.com" target="_blank">Dropbox</a>
-  au lieu d'un dossier partag&#233; ou d'un lecteur r&#233;seau pr&#233;sente un certain nombre d'avantages:
-  <ul>
-    <li>Dropbox garde une copie locale compl&#232;te de tous les fichiers sur chaque ordinateur, apportant un certain nombre d'avantages. </li>
-     <li> JMRI continuera &#225; fonctionner même si un seul ordinateur est sous tension, et même s'il n'y a pas de connexion r&#233;seau. </li>
-     <li> Il n'y aura pas de p&#233;nalit&#233; de vitesse lors de l'acc&#232;s aux fichiers, comme avec une connexion r&#233;seau. </li>
-     <Li> Les fichiers de donn&#233;es JMRI ne sont pas con&#231;us pour un acc&#232;s simultan&#233; aux mises &#225; jour, comme cela peut arriver avec une connexion r&#233;seau et entra&#238;ner une corruption des donn&#233;es. Dropbox fonctionne sur des copies s&#233;par&#233;es des fichiers et toute mise &#225; jour simultan&#233;e est g&#233;r&#233;e avec &#233;l&#233;gance par Dropbox. Les deux versions sont enregistr&#233;es (avec un renomm&#233;) et si n&#233;cessaire, vous pouvez choisir celle qui doit être conserv&#233;e. </li>
-      <Li> Dropbox prot&#232;ge vos fichiers en fournissant une redondance mat&#233;rielle. Si un ordinateur &#233;choue, les fichiers sont toujours sur les serveurs Dropbox et tous les autres ordinateurs configur&#233;s pour utiliser le même compte Dropbox. Un lecteur r&#233;seau partag&#233; ne fournit pas de redondance mat&#233;rielle par d&#233;faut. </li>
-    <Li> Dropbox prot&#232;ge vos fichiers en fournissant une sauvegarde limit&#233;e. Vous pouvez r&#233;cup&#233;rer une version de fichier ou un fichier supprim&#233; au cours des 30 derniers jours, afin que les erreurs puissent être facilement annul&#233;es. Un lecteur r&#233;seau partag&#233; ne fournit pas d'historique de sauvegarde r&#233;cup&#233;rable par d&#233;faut. </li>
-    <Li> Dropbox prot&#232;ge vos fichiers en fournissant une copie hors site des versions de sauvegarde actuelles et r&#233;centes (30 jours). Un lecteur r&#233;seau partag&#233; ne fournit aucune copie hors site par d&#233;faut. </li>
-    <Li> Dropbox fournit aux clients des ordinateurs Windows, Mac OS et Linux. Tous les fichiers de <a href="../../package/apps/TabbedPreferences.shtml#FileLocations" target="_blank">l'mplacement des fichiers utilisateur </a> de JMRI sont stock&#233;s dans un format ind&#233;pendant du syst&#232;me d'exploitation  et Peut être partag&#233; par n'importe quel client JMRI avec Dropbox install&#233;. Un lecteur r&#233;seau partag&#233; peut ne pas n&#233;cessairement fournir le partage multiplate-forme. </li>
-    <Li> Notez que ni Dropbox ni un lecteur r&#233;seau partag&#233; ne fournissent de copie hors ligne compl&#232;tement isol&#233;e (p&#233;riph&#233;rique externe tel qu'un lecteur USB ou un CD/DVD) par d&#233;faut. Cette responsabilit&#233; vous incombe toujours. </li>
-  </ul>
-</p>
-<p>
-L'approche suivante devrait &#233;galement fonctionner avec d'autres services de synchronisation de fichiers bas&#233;s sur le cloud, tels que <a href="https://www.google.com.au/drive/" target="_blank">Google Drive</a> and <a href="https://onedrive.live.com" target="_blank">OneDrive</a>. Cependant, la solution <a href="https://www.dropbox.com" target="_blank"> Dropbox </a> est bien test&#233;e, ayant &#233;t&#233; utilis&#233;e par un certain nombre de d&#233;veloppeurs et d'utilisateurs de JMRI depuis un certain temps.
-</p>
+      <p>Utilisation <a href="https://www.dropbox.com" target=
+      "_blank">Dropbox</a> </p>
 
-<H3> &#201;tape 1 </ h3>
-<P> Pour configurer un emplacement de fichier utilisateur partag&#233; sur le Web:
-<ul>
-	<Li> Cr&#233;ez un dossier JMRI dans Dropbox sur le premier ordinateur. </li>
-	Li> Si vous avez d&#233;j&#225; cr&#233;&#233; des &#233;l&#233;ments (listes, panneaux, etc.), allez dans Aide-> Emplacements et
-	Appuyez sur Ouvrir les fichiers des utilisateurs.
-<a href="images/Help_Locations.png"> <img src = "images/Help_Locations.png" width = "682" height = "139"> </a>
-	<br> Ceci ouvrira une fenêtre sur votre bureau montrant un r&#233;pertoire.
-	Rappelez-vous o&#249; c'est, parce que vous allez d&#233;placer des &#233;l&#233;ments depuis l&#225; plus tard.
-	</li>
-	<Li> Toujours dans la fenêtre Aide-> Lieux, v&#233;rifiez si votre emplacement de liste est diff&#233;rent de 		l'emplacement des fichiers utilisateur.
-	Si oui, cliquez sur Ouvrir l'emplacement de la liste pour ouvrir une fenêtre sur cet emplacement. Vous 		copirez des fichiers depuis l&#225; plus tard.
-	<a href="images/Help_Locations_Roster.png"><img src="images/Help_Locations_Roster.png" width="682" height="139"></a></li>
-	<Li> Preferences-> Inventaire-> Inventaire-> Emplacement Inventaire > R&#233;initialiser. N'entrez pas d'emplacement d'inventaire. De cette fa&#231;on, il suivra le r&#233;glage de l'emplacement des fichiers utilisateur. <br>
-<a href="images/Roster_Reset.png"> <img src = "images / Roster_Reset.png" width = "416" height = "159"> </a> </li>
-<Li> Pr&#233;f&#233;rences -> Emplacement des fichiers -> Emplacement des fichiers utilisateur et d&#233;finissez-le dans le dossier JMRI que vous avez cr&#233;&#233; dans Dropbox.
-<a href="images/Locations_Files.png"> <img src = "images / Locations_Files.png" width = "418" height = "157"> </a> </li>
-<Li> Red&#233;marrez JMRI et utilisez Aide -> Emplacements pour vous assurer que tout a &#233;t&#233; correctement modifi&#233;. </li>
-<Li> Si vous avez d&#233;j&#225; cr&#233;&#233; des fichiers des types r&#233;pertori&#233;s dans ce lien
-(Voir <a href="../../package/apps/TabbedPreferences.shtml#FileLocations" target="_blank"> cette page </a> pour obtenir de l'aide), les d&#233;placer de l'ancien emplacement vers votre nouvel emplacement. Par exemple, vos fichiers
-dans la fenêtre Fichiers utilisateur que nous avons ouverte &#225; la premi&#232;re &#233;tape doit être
-Nouvel utilisateur Fichiers Emplacement que vous venez de cr&#233;er. </li>
-</ul>
-</p>
+      <ul>
+        <li>Dropbox conserve une copie locale compl&#232;te de tous les fichiers sur chaque
+        ordinateur, apportant un certain nombre d'avantages.</li>
 
-<h3>Etape 2 -... </ h3>
-<P> Les seules &#233;tapes que vous devez faire sur les ordinateurs suivants sont:
-<Ul>
-<Li> Pr&#233;f&#233;rences -> Inventaire -> Inventaire -> Emplacement d'Inventaire -> R&#233;initialiser. N'entrez pas d'emplacement de liste. De cette fa&#231;on, il suivra l'emplacement des fichiers utilisateur.
-<Li> Pr&#233;f&#233;rences -> Emplacements -> Emplacement des fichiers utilisateur et d&#233;finissez-le dans le dossier JMRI que vous avez cr&#233;&#233; dans Dropbox.
-</ul>
-</p>
+        <li>JMRI continuera &#224; fonctionner m&#234;me si un seul ordinateur est
+        s&#251;r, et m&#234;me s'il n'y a pas de connexion r&#233;seau.</li>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
+        <li>Il n'y aura pas de probl&#232;me d&#249; &#224; la vitesse  lors de l'acc&#232;s aux fichiers, m&#234;me
+        avec une connexion r&#233;seau.</li>
+
+        <li>Les fichiers de donn&#233;es IRMJ ne sont pas con&#231;us pour un acc&#232;s 
+        simultan&#233; aux mises &#224; jour, comme cela peut se faire avec une connexion r&#233;seau et
+        conduisent &#224; la corruption des donn&#233;es. La bo&#238;te de d&#233;p&#244;t fonctionne sur des copies s&#233;par&#233;es
+        de fichiers et toute mise &#224; jour simultan&#233;e est trait&#233;e avec doigt&#233;
+        par Dropbox. Les deux versions sont sauvegard&#233;es (dont l'une est renomm&#233;e) et
+        si n&#233;cessaire, vous pouvez choisir laquel conserver.</li>
+
+        <li>Dropbox prot&#232;ge vos fichiers en fournissant une redondance mat&#233;rielle
+        . Si un ordinateur tombe en panne, les fichiers sont toujours sur les
+         serveurs de Dropbox et tout autre ordinateur configur&#233; pour utiliser
+        le m&#234;me compte Dropbox. Un lecteur r&#233;seau partag&#233; ne
+        fournir une redondance mat&#233;rielle par d&#233;faut.</li>
+
+        <li> facilit&#233; de r&#233;cup&#233;ration limit&#233;e. Vous pouvez r&#233;cup&#233;rer 
+        n'importe quelle version de fichier. 
+        Vous pouvez r&#233;cup&#233;rer n'importe quelle version de fichier
+        ou supprim&#233; au cours des 30 derniers jours, de sorte que les erreurs peuvent &#234;tre
+        facilement r&#233;versibles. Un lecteur r&#233;seau partag&#233; ne fournit 
+        pas de redondance mat&#233;rielle par d&#233;faut..</li>
+
+        <li></li>Dropbox prot&#232;ge vos fichiers en fournissant une 
+        copie hors site des versions de sauvegarde actuelles et r&#233;centes (30 jours).
+        Un lecteur r&#233;seau partag&#233; ne fournit aucune copie hors site
+        par d&#233;faut.</li>
+
+        <li>Dropbox fournit des clients pour Windows, Mac OS et Linux
+        . Tous les  JMRI <a href=
+        "../../package/apps/TabbedPreferences.shtml#FileLocations"
+        target="_blank">Les fichiers dans les emplacements utilisateur</a> sont stock&#233;s dans un
+        format ind&#233;pendant du syst&#232;me d'exploitation, qui peut &#234;tre partag&#233; par n'importe quel
+        Client JMRI avec Dropbox install&#233;. Un lecteur r&#233;seau partag&#233;
+        n'assure pas n&#233;cessairement le partage entre les plates-formes.</li>
+
+        <li>Notez que ni Dropbox ni un lecteur r&#233;seau partag&#233;
+        fournira une copie hors-ligne enti&#232;rement isol&#233;e et non vivante (externe
+        (par exemple, une cl&#233; USB ou un CD/DVD) par d&#233;faut. Cette
+        responsabilit&#233; vous incombe toujours.
+      </ul>
+
+      <p> L'approche suivante devrait &#233;galement fonctionner avec d'autres
+      services de synchronisation de fichiers dans le "Cloud" tels que <a href=
+      "https://www.google.com.au/drive/" target="_blank">Google
+      Drive</a> et <a href="https://onedrive.live.com" target=
+      "_blank">OneDrive</a>. Cependant, le <a href=
+      "https://www.dropbox.com" target="_blank">Dropbox</a>
+      est bien test&#233;e, ayant &#233;t&#233; utilis&#233;e par un certain nombre de 
+      d&#233;veloppeurs et utilisateurs JMRI depuis un certain temps.</p>
+
+      <h3>&#233;tape 1</h3>
+
+      <p>Pour mettre en place un emplacement partag&#233; du fichier utilisateur sur le web:</p>
+
+      <ul>
+        <li>Cr&#233;er un dossier JMRI dans le Dropbox sur le premier
+        ordinateur.</li>
+
+        <li>Si vous avez d&#233;j&#224; cr&#233;&#233; des &#233;l&#233;ments (entr&#233;es d'inventaire,
+        ) allez &#224; Aide&#8209;Emplacements et appuyez sur Ouvrir
+        Emplacement des fichiers utilisateur.<br>
+        <a href="images/Help_Locations.png"><img src=
+        "images/Help_Locations.png" width="682" height=
+        "139"></a><br>
+        Une fen&#234;tre s'ouvrira alors sur votre bureau et affichera un
+        r&#233;pertoire. Rappelez-vous o&#249; il se trouve, car vous allez d&#233;m&#233;nager
+        les articles de l&#224; plus tard.</li>
+
+        <li>Restez sur la fen&#234;tre Aidep&#8209;>;Emplacement, v&#233;rifiez pour 
+        voir si la localisation de votre inventaire est diff&#233;rente de celle de l'emplacement des fichiers utilisateur
+        . Si c'est le cas, cliquez sur Ouvrir l'emplacement de l'inventaire pour ouvrir une
+        fen&#234;tre sur cet endroit. Vous y copierez des fichiers
+        plus tard.<br>
+        <a href="images/Help_Locations_Roster.png"><img src=
+        "images/Help_Locations_Roster.png" width="682" height=
+        "139"></a></li>
+
+        <li>
+        Pr&#233;f&#233;rences&#8209;&gt;Inventaire&#8209;&gt;Inventaire&#8209;&gt;Emplacement Inventaire
+        &#8209; R&#233;initialisation. N'entrez pas dans une liste d'emplacement.
+        De cette fa&#231;on, il suivra le param&#233;trage des emplacements fichiers utilisateurs
+       .<br>
+        <a href="images/Roster_Reset.png"><img src=
+        "images/Roster_Reset.png" width="416" height=
+        "159"></a></li>
+
+        <li>Pr&#233;f&#233;rences&#8209; Emplacements des fichiers&#8209;Emplacement des Fichiers Utilisateur
+         et le placer dans le dossier JMRI que vous avez cr&#233;&#233; dans le Dropbox
+       .<br>
+        <a href="images/Locations_Files.png"><img src=
+        "images/Locations_Files.png" width="418" height=
+        "157"></a></li>
+
+        <li> Relancer JMRI et utiliser l'aide &#8209; Emplacements pour vous
+        assurer que tout est modifi&#233; correctement.</li>
+
+        <li>Si vous avez d&#233;j&#224; cr&#233;&#233; des fichiers du type
+        qui se trouve sur ce lien (voir <a href=
+        "../../package/apps/TabbedPreferences.shtml#FileLocations"
+        target="_blank">cette page</a> pour obtenir de l'aide), les d&#233;placer
+        de l'ancien lieu &#224; votre nouveau lieu. Par exemple, vos dossiers
+        dans la fen&#234;tre Fichiers utilisateur que nous avons ouverte &#224; la premi&#232;re &#233;tape doit
+        &#234;tre d&#233;plac&#233; vers le nouvel emplacement des fichiers utilisateurs que vous venez de
+        cr&#233;&#233;.</li>
+      </ul>
+
+      <h3>&#233;tape 2-...</h3>
+
+      <p>Les seules &#233;tapes &#224; effectuer sur les ordinateurs suivants
+      sont:</p>
+
+      <ul>
+        <li> Pr&#233;f&#233;rences&#8209;&gt; Inventaire&#8209;&gt; Inventaire&#8209;&gt; Emplacement Inventaire
+        &#8209; R&#233;initialisation. Ne pas entrer
+        une localisation de la l'inventaire. De cette fa&#231;on, il suivra les fichiers des Emplacements utilisateurs
+       .</li>
+
+        <li>Pr&#233;f&#233;rences &#8209;&gt; Emplacements &#8209;&gt; Emplacement des 
+        Fichiers Utilisateur et le placer dans le dossier JMRI que vous avez cr&#233;&#233; dans
+        la Dropbox.</li>
+      </ul><!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
+
+    
+
