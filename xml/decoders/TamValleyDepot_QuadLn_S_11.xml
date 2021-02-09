@@ -87,15 +87,15 @@
                 </enumVal>
             </variable>
             <variable item="Signal State Memory" CV="11" mask="XXXXVXXX" default="0">
-                <enumVal>
-                    <enumChoice choice="Disable"/>
-                    <enumChoice choice="Enable"/>
-                </enumVal>
                 <qualifier>
                     <variableref>Signaling</variableref>
                     <relation>eq</relation>
                     <value>1</value>
                 </qualifier>
+                <enumVal>
+                    <enumChoice choice="Disable"/>
+                    <enumChoice choice="Enable"/>
+                </enumVal>
             </variable>
             <variable item="Lock Indicator" CV="11" mask="XVXXXXXX" default="0">
                 <enumVal>
@@ -192,21 +192,21 @@
             </variable>
 
             <variable item="Main IO Start Address" CV="9" mask="VVVVVVVV" default="0">
-                <splitVal highCV="10" upperMask="XXXXVVVV" offset="1" /> 
                 <qualifier>
                     <variableref>ServoMain</variableref>
                     <relation>eq</relation>
                     <value>0</value>
                 </qualifier>
+                <splitVal highCV="10" upperMask="XXXXVVVV" offset="1" /> 
             </variable>
 
             <variable item="Aux IO Start Address" CV="15" mask="VVVVVVVV" default="4">
-                <splitVal highCV="16" upperMask="XXXXVVVV" offset="1" /> 
                 <qualifier>
                     <variableref>ServoAux</variableref>
                     <relation>eq</relation>
                     <value>0</value>
                 </qualifier>
+                <splitVal highCV="16" upperMask="XXXXVVVV" offset="1" /> 
             </variable>
             
             <variable item="One Choice Enum" CV="1" mask="XXXXXXXX">
