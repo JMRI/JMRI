@@ -344,22 +344,22 @@
         <xi:include href="http://jmri.org/xml/decoders/tvd/InputTypeAux.xml"/>
     </variable>
     <variable item="Det GPIO{$index} Qual" CV="1" mask="XXXXXXXX">
-        <enumVal>
-            <enumChoice choice="" />
-        </enumVal>
         <qualifier>
             <variableref>GPIO<xsl:value-of select="$index"/> Type</variableref>
             <relation>ne</relation>
             <value>0</value>
         </qualifier>
+        <enumVal>
+            <enumChoice choice="" />
+        </enumVal>
     </variable>
     <variable item="GPIO{$index} Trigger" CV="{$CV1}" mask="XXXXXXVV" default="2">
-        <xi:include href="http://jmri.org/xml/decoders/tvd/InputTrigger.xml"/>
         <qualifier>
             <variableref>GPIO<xsl:value-of select="$index"/> Type</variableref>
             <relation>eq</relation>
             <value>0</value>
         </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/tvd/InputTrigger.xml"/>
     </variable>
     <variable item="GPIO{$index} LED Mode" CV="{$CV1}" mask="XXXVVVXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/tvd/InputLedMode.xml"/>
@@ -446,24 +446,24 @@
         </variable>
     </variables>
     <variable item="Non-TVD Det GPIO{$index +1} Qual" CV="1" mask="XXXXXXXX">
-        <enumVal>
-            <enumChoice choice="" />
-        </enumVal>
         <qualifier>
             <variableref>GPIO<xsl:value-of select="$index+1"/> Type</variableref>
             <relation>eq</relation>
             <value>0</value>
         </qualifier>
-    </variable>
-    <variable item="TVD Det GPIO{$index +1} Qual" CV="1" mask="XXXXXXXX">
         <enumVal>
             <enumChoice choice="" />
         </enumVal>
+    </variable>
+    <variable item="TVD Det GPIO{$index +1} Qual" CV="1" mask="XXXXXXXX">
         <qualifier>
             <variableref>GPIO<xsl:value-of select="$index+1"/> Type</variableref>
             <relation>ne</relation>
             <value>0</value>
         </qualifier>
+        <enumVal>
+            <enumChoice choice="" />
+        </enumVal>
     </variable>
 
     <variable item="GPIO{$index +1} Msg2 Addr" CV="{$CV5}" default="0">
