@@ -268,8 +268,56 @@ public class StoreAndLoadTest {
         
         actionLocalVariable = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
         actionLocalVariable.setComment("A comment");
-        actionLocalVariable.setVariable("result");
-        actionLocalVariable.setData("1");
+        actionLocalVariable.setLocalVariable("result");
+        actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
+        actionLocalVariable.setConstantValue("1");
+        actionLocalVariable.setOtherLocalVariable("SomeVar");
+        actionLocalVariable.setMemory(memory3);
+        actionLocalVariable.setFormula("a+b");
+        maleSocket = digitalActionManager.registerAction(actionLocalVariable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionLocalVariable = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
+        actionLocalVariable.setComment("A comment");
+        actionLocalVariable.setLocalVariable("result");
+        actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.CopyMemoryToVariable);
+        actionLocalVariable.setConstantValue("1");
+        actionLocalVariable.setOtherLocalVariable("SomeVar");
+        actionLocalVariable.setMemory(memory3);
+        actionLocalVariable.setFormula("a+b");
+        maleSocket = digitalActionManager.registerAction(actionLocalVariable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionLocalVariable = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
+        actionLocalVariable.setComment("A comment");
+        actionLocalVariable.setLocalVariable("result");
+        actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.CopyVariableToVariable);
+        actionLocalVariable.setConstantValue("1");
+        actionLocalVariable.setOtherLocalVariable("SomeVar");
+        actionLocalVariable.setMemory(memory3);
+        actionLocalVariable.setFormula("a+b");
+        maleSocket = digitalActionManager.registerAction(actionLocalVariable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionLocalVariable = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
+        actionLocalVariable.setComment("A comment");
+        actionLocalVariable.setLocalVariable("result");
+        actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.SetToNull);
+        actionLocalVariable.setConstantValue("1");
+        actionLocalVariable.setOtherLocalVariable("SomeVar");
+        actionLocalVariable.setMemory(memory3);
+        actionLocalVariable.setFormula("a+b");
+        maleSocket = digitalActionManager.registerAction(actionLocalVariable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionLocalVariable = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
+        actionLocalVariable.setComment("A comment");
+        actionLocalVariable.setLocalVariable("result");
+        actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.SetToString);
+        actionLocalVariable.setConstantValue("1");
+        actionLocalVariable.setOtherLocalVariable("SomeVar");
+        actionLocalVariable.setMemory(memory3);
+        actionLocalVariable.setFormula("a+b");
         maleSocket = digitalActionManager.registerAction(actionLocalVariable);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         

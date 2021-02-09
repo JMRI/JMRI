@@ -32,6 +32,7 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
         ActionMemory action = new ActionMemory(systemName, userName);
+        updateObject(action);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
     }
     

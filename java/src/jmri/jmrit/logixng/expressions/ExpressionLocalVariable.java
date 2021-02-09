@@ -54,6 +54,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
         copy.setCaseInsensitive(_caseInsensitive);
         copy.setConstantValue(_constantValue);
         if (_memoryHandle != null) copy.setMemory(_memoryHandle);
+        copy.setOtherLocalVariable(_localVariable);
         return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
