@@ -300,6 +300,11 @@
                 <li></li>
             </ul>
 
+        <h4>Tam Valley Depot</h4>
+            <ul>
+                <li>Updated the QuadLN_S template to support the 16 servo capability in the Version 3 software</li>
+            </ul>
+
         <h4>TCS</h4>
             <ul>
                 <li></li>
