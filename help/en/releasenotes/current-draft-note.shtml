@@ -324,7 +324,10 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li>Added new definitions to program Power4, Power8 (boosters) and IntelliLight module.</li>
+                <li>New definitions to program Power4, Power8 (boosters) and IntelliLight 28x0 modules.</li>
+                <li>For Uhlenbrock Track-Control modules a Direct Message type was added to the LNCV protocol.
+                  The Lncv Programming tool has a new checkbox 'Direct Mode', allowing to set LEDs etc.</li>
+                <li>Two new Track-Control definitions (art. 69220 Turnout and 69230 Signal Module)</li>
             </ul>
 
         <h4>Umelec</h4>

@@ -284,12 +284,12 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
         }
 
         @Override
-        public Audio getBySystemName(String name) {
+        public Audio getBySystemName(@Nonnull String name) {
             return InstanceManager.getDefault(jmri.AudioManager.class).getBySystemName(name);
         }
 
         @Override
-        public Audio getByUserName(String name) {
+        public Audio getByUserName(@Nonnull String name) {
             return InstanceManager.getDefault(jmri.AudioManager.class).getByUserName(name);
         }
 

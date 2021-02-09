@@ -573,12 +573,12 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             }
 
             @Override
-            public Turnout getBySystemName(String name) {
+            public Turnout getBySystemName(@Nonnull String name) {
                 return turnoutManager.getBySystemName(name);
             }
 
             @Override
-            public Turnout getByUserName(String name) {
+            public Turnout getByUserName(@Nonnull String name) {
                 return InstanceManager.getDefault(TurnoutManager.class).getByUserName(name);
             }
 
