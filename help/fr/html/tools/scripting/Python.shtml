@@ -128,7 +128,7 @@ Si vous recevez un message concernant une "erreur de syntaxe", consultez
        </div>
        
          <a id="newJython"></a>
-        <h2>Le support de JMRI pour Python est-il complet ?
+        <h2>Le support de JMRI pour Python est-il complet ?</h2>
         Le scriptage utilise <a href="http://www.jython.org" target="_blank">Jython</a>, un
         forme du langage Python. Le langage de base est assez
         complet, mais toutes les biblioth&#232;ques Python ne sont pas
