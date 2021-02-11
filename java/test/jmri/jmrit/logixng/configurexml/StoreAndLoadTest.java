@@ -330,16 +330,55 @@ public class StoreAndLoadTest {
         actionMemory = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
         actionMemory.setComment("A comment");
         actionMemory.setMemory(memory1);
-        actionMemory.setOtherMemory(memory2);
-        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.CopyMemoryToMemory);
+        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.CalculateFormula);
+        actionMemory.setOtherMemory(memory3);
+        actionMemory.setConstantValue("Some string");
+        actionMemory.setFormula("n + 3");
+        actionMemory.setLocalVariable("Somevar");
         maleSocket = digitalActionManager.registerAction(actionMemory);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionMemory = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
         actionMemory.setComment("A comment");
         actionMemory.setMemory(memory1);
-        actionMemory.setData("n + 3");
-        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.CalculateFormula);
+        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.CopyMemoryToMemory);
+        actionMemory.setOtherMemory(memory3);
+        actionMemory.setConstantValue("Some string");
+        actionMemory.setFormula("n + 3");
+        actionMemory.setLocalVariable("Somevar");
+        maleSocket = digitalActionManager.registerAction(actionMemory);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionMemory = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
+        actionMemory.setComment("A comment");
+        actionMemory.setMemory(memory1);
+        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.CopyVariableToMemory);
+        actionMemory.setOtherMemory(memory3);
+        actionMemory.setConstantValue("Some string");
+        actionMemory.setFormula("n + 3");
+        actionMemory.setLocalVariable("Somevar");
+        maleSocket = digitalActionManager.registerAction(actionMemory);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionMemory = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
+        actionMemory.setComment("A comment");
+        actionMemory.setMemory(memory1);
+        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.SetToNull);
+        actionMemory.setOtherMemory(memory3);
+        actionMemory.setConstantValue("Some string");
+        actionMemory.setFormula("n + 3");
+        actionMemory.setLocalVariable("Somevar");
+        maleSocket = digitalActionManager.registerAction(actionMemory);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionMemory = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
+        actionMemory.setComment("A comment");
+        actionMemory.setMemory(memory1);
+        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.SetToString);
+        actionMemory.setOtherMemory(memory3);
+        actionMemory.setConstantValue("Some string");
+        actionMemory.setFormula("n + 3");
+        actionMemory.setLocalVariable("Somevar");
         maleSocket = digitalActionManager.registerAction(actionMemory);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         

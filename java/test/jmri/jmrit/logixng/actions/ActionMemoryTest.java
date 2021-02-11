@@ -90,7 +90,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         
         action2 = new ActionMemory("IQDA321", "My memory");
         action2.setMemoryOperation(ActionMemory.MemoryOperation.SetToString);
-        action2.setData("New value");
+        action2.setConstantValue("New value");
         Assert.assertNotNull("object exists", action2);
         Assert.assertEquals("Username matches", "My memory", action2.getUserName());
         Assert.assertEquals("String matches", "Set memory '' to \"New value\"", action2.getLongDescription());
@@ -103,7 +103,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue("memory is correct", memory == action2.getMemory().getBean());
         Assert.assertNotNull("object exists", action2);
         Assert.assertNull("Username matches", action2.getUserName());
-        Assert.assertEquals("String matches", "Copy memory IM12 to memory IM1", action2.getLongDescription());
+        Assert.assertEquals("String matches", "Set memory IM1 to the value of memory IM12", action2.getLongDescription());
         
         boolean thrown = false;
         try {
@@ -143,6 +143,8 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testSetMemory() {
+        actionMemory.unregisterListeners();
+        
         Memory memory11 = InstanceManager.getDefault(MemoryManager.class).provide("IM11");
         Memory memory12 = InstanceManager.getDefault(MemoryManager.class).provide("IM12");
         NamedBeanHandle<Memory> memoryHandle12 = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(memory12.getDisplayName(), memory12);
@@ -193,7 +195,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         
         // Test to set memory to string
         actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.SetToString);
-        actionMemory.setData("New value");
+        actionMemory.setConstantValue("New value");
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the memory should be thrown
@@ -272,17 +274,19 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testLongDescription() throws ParserException {
+        actionMemory.unregisterListeners();
+        
         actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.SetToNull);
         Assert.assertEquals("String matches", "Set memory IM1 to null", _base.getLongDescription());
         
         actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.SetToString);
-        actionMemory.setData("Some new value");
+        actionMemory.setConstantValue("Some new value");
         Assert.assertEquals("String matches", "Set memory IM1 to \"Some new value\"", _base.getLongDescription());
         
         actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.CopyMemoryToMemory);
         Memory otherMemory = InstanceManager.getDefault(MemoryManager.class).provide("IM99");
         actionMemory.setOtherMemory(otherMemory);
-        Assert.assertEquals("String matches", "Copy memory IM99 to memory IM1", _base.getLongDescription());
+        Assert.assertEquals("String matches", "Set memory IM1 to the value of memory IM99", _base.getLongDescription());
     }
     
     @Test

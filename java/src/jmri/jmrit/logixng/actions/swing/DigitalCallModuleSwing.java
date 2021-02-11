@@ -23,8 +23,8 @@ import jmri.jmrit.logixng.tools.swing.CallModuleParameterTableModel;
  */
 public class DigitalCallModuleSwing extends AbstractDigitalActionSwing {
 
-    JComboBox<ModuleItem> _moduleComboBox;
-    CallModuleParameterTableModel _moduleParametersTableModel;
+    private JComboBox<ModuleItem> _moduleComboBox;
+    private CallModuleParameterTableModel _moduleParametersTableModel;
     
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

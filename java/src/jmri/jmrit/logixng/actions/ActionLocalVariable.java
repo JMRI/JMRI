@@ -48,11 +48,12 @@ public class ActionLocalVariable extends AbstractDigitalAction
         ActionLocalVariable copy = new ActionLocalVariable(sysName, userName);
         copy.setComment(getComment());
         copy.setLocalVariable(_localVariable);
-        copy.setMemory(_memoryHandle);
         copy.setVariableOperation(_variableOperation);
         copy.setConstantValue(_constantValue);
         if (_memoryHandle != null) copy.setMemory(_memoryHandle);
         copy.setOtherLocalVariable(_localVariable);
+        copy.setFormula(_formula);
+        copy.setListenToMemory(_listenToMemory);
         return manager.registerAction(copy);
     }
     

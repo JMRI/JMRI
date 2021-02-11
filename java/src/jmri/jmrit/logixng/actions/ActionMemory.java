@@ -1,8 +1,6 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
+import java.beans.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -25,13 +23,18 @@ import jmri.util.ThreadingUtil;
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public class ActionMemory extends AbstractDigitalAction implements VetoableChangeListener {
+public class ActionMemory extends AbstractDigitalAction
+        implements PropertyChangeListener, VetoableChangeListener {
 
     private NamedBeanHandle<Memory> _memoryHandle;
     private NamedBeanHandle<Memory> _otherMemoryHandle;
     private MemoryOperation _memoryOperation = MemoryOperation.SetToString;
-    private String _data = "";
+    private String _constantValue = "";
+    private String _localVariable = "";
+    private String _formula = "";
     private ExpressionNode _expressionNode;
+    private boolean _listenToMemory = true;
+//    private boolean _listenToMemory = false;
     
     public ActionMemory(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -49,7 +52,10 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
         if (_memoryHandle != null) copy.setMemory(_memoryHandle);
         if (_otherMemoryHandle != null) copy.setOtherMemory(_otherMemoryHandle);
         copy.setMemoryOperation(_memoryOperation);
-        copy.setData(_data);
+        copy.setConstantValue(_constantValue);
+        copy.setLocalVariable(_localVariable);
+        copy.setFormula(_formula);
+        copy.setListenToMemory(_listenToMemory);
         return manager.registerAction(copy);
     }
     
@@ -124,6 +130,40 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
         return _otherMemoryHandle;
     }
     
+    public void setLocalVariable(@Nonnull String localVariable) {
+        assertListenersAreNotRegistered(log, "setOtherLocalVariable");
+        _localVariable = localVariable;
+    }
+    
+    public String getLocalVariable() {
+        return _localVariable;
+    }
+    
+    public void setConstantValue(String constantValue) {
+        _constantValue = constantValue;
+    }
+    
+    public String getConstantValue() {
+        return _constantValue;
+    }
+    
+    public void setFormula(String formula) throws ParserException {
+        _formula = formula;
+        parseFormula();
+    }
+    
+    public String getFormula() {
+        return _formula;
+    }
+    
+    public void setListenToMemory(boolean listenToMemory) {
+        this._listenToMemory = listenToMemory;
+    }
+    
+    public boolean getListenToMemory() {
+        return _listenToMemory;
+    }
+    
     public void setMemoryOperation(MemoryOperation state) throws ParserException {
         _memoryOperation = state;
         parseFormula();
@@ -131,15 +171,6 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
     
     public MemoryOperation getMemoryOperation() {
         return _memoryOperation;
-    }
-    
-    public void setData(String newValue) throws ParserException {
-        _data = newValue;
-        parseFormula();
-    }
-    
-    public String getData() {
-        return _data;
     }
     
     private void parseFormula() throws ParserException {
@@ -162,7 +193,7 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
             }
 */            
             RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _expressionNode = parser.parseExpression(_data);
+            _expressionNode = parser.parseExpression(_formula);
         } else {
             _expressionNode = null;
         }
@@ -185,7 +216,7 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
                 if ((_otherMemoryHandle != null) && evt.getOldValue().equals(_otherMemoryHandle.getBean())) doVeto = true;
                 if (doVeto) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("Memory_MemoryInUseMemoryExpressionVeto", getDisplayName()), e); // NOI18N
+                    throw new PropertyVetoException(Bundle.getMessage("ActionMemory_MemoryInUseMemoryExpressionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
@@ -229,12 +260,12 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
                     break;
                     
                 case SetToString:
-                    memory.setValue(_data);
+                    memory.setValue(_constantValue);
                     break;
                     
                 case CopyVariableToMemory:
                     Object variableValue = getConditionalNG()
-                                    .getSymbolTable().getValue(_data);
+                                    .getSymbolTable().getValue(_localVariable);
                     memory.setValue(variableValue);
                     break;
                     
@@ -247,7 +278,7 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
                     break;
                     
                 case CalculateFormula:
-                    if (_data.isEmpty()) {
+                    if (_formula.isEmpty()) {
                         memory.setValue(null);
                     } else {
                         try {
@@ -282,7 +313,7 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "Memory_Short");
+        return Bundle.getMessage(locale, "ActionMemory_Short");
     }
 
     @Override
@@ -303,15 +334,15 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
         
         switch (_memoryOperation) {
             case SetToNull:
-                return Bundle.getMessage(locale, "Memory_Long_Null", memoryName);
+                return Bundle.getMessage(locale, "ActionMemory_Long_Null", memoryName);
             case SetToString:
-                return Bundle.getMessage(locale, "Memory_Long_Value", memoryName, _data);
+                return Bundle.getMessage(locale, "ActionMemory_Long_Value", memoryName, _constantValue);
             case CopyVariableToMemory:
-                return Bundle.getMessage(locale, "Memory_Long_CopyVariableToMemory", _data, memoryName);
+                return Bundle.getMessage(locale, "ActionMemory_Long_CopyVariableToMemory", memoryName, _localVariable);
             case CopyMemoryToMemory:
-                return Bundle.getMessage(locale, "Memory_Long_CopyMemoryToMemory", copyToMemoryName, memoryName);
+                return Bundle.getMessage(locale, "ActionMemory_Long_CopyMemoryToMemory", memoryName, copyToMemoryName);
             case CalculateFormula:
-                return Bundle.getMessage(locale, "Memory_Long_Formula", memoryName, _data);
+                return Bundle.getMessage(locale, "ActionMemory_Long_Formula", memoryName, _formula);
             default:
                 throw new IllegalArgumentException("_memoryOperation has invalid value: " + _memoryOperation.name());
         }
@@ -326,11 +357,29 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
+        if (!_listenersAreRegistered && (_otherMemoryHandle != null)) {
+            if (_listenToMemory) {
+                _otherMemoryHandle.getBean().addPropertyChangeListener("value", this);
+            }
+            _listenersAreRegistered = true;
+        }
     }
     
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
+        if (_listenersAreRegistered) {
+            if (_listenToMemory && (_otherMemoryHandle != null)) {
+                _otherMemoryHandle.getBean().addPropertyChangeListener("value", this);
+            }
+            _listenersAreRegistered = false;
+        }
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
     }
     
     /** {@inheritDoc} */
@@ -340,12 +389,25 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
     
     
     public enum MemoryOperation {
-        SetToNull,
-        SetToString,
-        CopyVariableToMemory,
-        CopyMemoryToMemory,
-        CalculateFormula;
+        SetToNull(Bundle.getMessage("ActionMemory_MemoryOperation_SetToNull")),
+        SetToString(Bundle.getMessage("ActionMemory_MemoryOperation_SetToString")),
+        CopyVariableToMemory(Bundle.getMessage("ActionMemory_MemoryOperation_CopyVariableToMemory")),
+        CopyMemoryToMemory(Bundle.getMessage("ActionMemory_MemoryOperation_CopyMemoryToMemory")),
+        CalculateFormula(Bundle.getMessage("ActionMemory_MemoryOperation_CalculateFormula"));
+        
+        private final String _text;
+        
+        private MemoryOperation(String text) {
+            this._text = text;
+        }
+        
+        @Override
+        public String toString() {
+            return _text;
+        }
+        
     }
+    
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionMemory.class);
     

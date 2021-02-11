@@ -1,9 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
 import java.beans.*;
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import jmri.InstanceManager;
@@ -89,6 +87,14 @@ public class ActionListenOnBeans extends AbstractDigitalAction
     public void removeReference(NamedBeanReference reference) {
         assertListenersAreNotRegistered(log, "removeReference");
         _namedBeanReferences.remove(reference._name);
+    }
+    
+    public Collection<NamedBeanReference> getReferences() {
+        return _namedBeanReferences.values();
+    }
+    
+    public void clearReferences() {
+        _namedBeanReferences.clear();
     }
     
     @Override
@@ -215,7 +221,8 @@ public class ActionListenOnBeans extends AbstractDigitalAction
             _manager = manager;
         }
         
-        public String getName() { return _name; }
+        @Override
+        public String toString() { return _name; }
         
         public Class<? extends NamedBean> getClazz() { return _clazz; }
         
@@ -243,12 +250,35 @@ public class ActionListenOnBeans extends AbstractDigitalAction
             return _name;
         }
         
+        public void setName(String name) {
+            _name = name;
+        }
+        
         public NamedBeanType getType() {
             return _type;
         }
         
+        public void setType(NamedBeanType type) {
+            if (type == null) throw new RuntimeException("Daniel");
+            _type = type;
+        }
+        
         public NamedBeanHandle<? extends NamedBean> getHandle() {
             return _handle;
+        }
+        
+        public void updateHandle() {
+            if (!_name.isEmpty()) {
+                NamedBean bean = _type._manager.getNamedBean(_name);
+                if (bean != null) {
+                    _handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(_name, bean);
+                } else {
+                    log.warn("Cannot find named bean "+_name+" in manager for "+_type._manager.getBeanTypeHandled());
+                    _handle = null;
+                }
+            } else {
+                _handle = null;
+            }
         }
     }
     

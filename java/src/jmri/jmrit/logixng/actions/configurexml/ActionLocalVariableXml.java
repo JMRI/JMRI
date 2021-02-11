@@ -46,16 +46,6 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
         
         element.addContent(new Element("variableOperation").addContent(p.getVariableOperation().name()));
         
-/*        // TEMPORARY SOLUTION!!! REMOVE THIS!!!!
-        switch (p.getVariableOperation()) {
-            case SetToNull: break;
-            case SetToString: element.addContent(new Element("constant").addContent(p.getConstantValue()));
-            case CopyVariableToVariable: element.addContent(new Element("otherVariable").addContent(p.getOtherLocalVariable()));
-            case CopyMemoryToVariable: break;
-            case CalculateFormula: element.addContent(new Element("formula").addContent(p.getFormula()));
-            throw new IllegalArgumentException("getVariableOperation() has invalid value: {}" + p.getVariableOperation().name());
-        }
-*/        
         element.addContent(new Element("constant").addContent(p.getConstantValue()));
         element.addContent(new Element("otherVariable").addContent(p.getOtherLocalVariable()));
         element.addContent(new Element("formula").addContent(p.getFormula()));
