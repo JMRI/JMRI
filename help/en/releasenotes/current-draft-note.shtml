@@ -302,6 +302,11 @@
                 <li></li>
             </ul>
 
+        <h4>Tam Valley Depot</h4>
+            <ul>
+                <li>Updated the QuadLN_S template to support the 16 servo capability in the Version 3 software</li>
+            </ul>
+
         <h4>TCS</h4>
             <ul>
                 <li></li>
@@ -409,6 +414,7 @@
           <li>The Settings menu was slightly reorganized with submenus for each value.</li>
           <li>When no meters are available, both Meters menus and the Units Settings menu show a short explanation.</li>
           <li>Meters will honor the JMRI Locale/regional setting for the decimal separator (. or ,))</li>
+          <li>Meters now use meter max and resolution to default integer and decimal digits</li>
         </ul>
 
     <h3>Operations</h3>
