@@ -643,7 +643,7 @@
     for now. Save the train, close the window, and return to the Trains window. Press the
     <a href="#BuildingTrains">Build</a> button for the train. It should build. Now pressing the
     "Print" or "Preview" button will produce a Manifest for your train depending on the state of "Preview"
-    checkbox at the bottom of the "Trains" window. Review the Manifest and you should see that the
+    checkbox at the bottom of the <a href="#Trains">Trains</a> window. Review the Manifest and you should see that the
     train serviced all car types. If you examine the
     <a href="#Cars">Cars</a> window you can see that cars are now assigned to your train.
    </p>
@@ -906,7 +906,7 @@
    <p>The train icon menu allows you to "Move" a train to the next location in the train's
     route. You can also quickly move a train to any location in the train's route by selecting
     "Route" followed by any location in the route. The text for the move action becomes "Terminate"
-    when the train arrives at the last location in the train's route. You would "Terminate" the
+    when the train arrives at the last location in the train's route. You would <a href="#TerminateTrain">Terminate</a> the
     train when all of the cars have been spotted to their specified tracks.</p>
 
    <h3>Save</h3>
@@ -1055,7 +1055,7 @@
    mode will not fill every track to capacity which is more prototypical. However, normal mode won't
    swap a set of cars, cars are picked up or set out based on the available track space. Normal mode
    prevents track overloading. In aggressive mode you can "accidentally" create track overloading by
-   the order you build and run your trains or by using the Train Reset function.
+   the order you build and run your trains or by using the <a href="#TrainReset">Train Reset</a> function.
 
    <p>Aggressive builds makes the car's track space available as soon as a car is scheduled for
     a pick up. Therefore there can be instances where a train was to pick up a car to vacate the
@@ -1676,15 +1676,15 @@
 
    <a name="SaveTrainManifests" id="SaveTrainManifests"></a>
    <h4>Save Train Manifests</h4>
-   When the option "Save Train Manifests" is selected, OperationsPro&trade; will save the current train
-   Manifest before creating a new one. The program will store the old Manifests in a directory
+   When the option "Save Train Manifests" is selected, OperationsPro&trade; will save the current
+   train Manifest before creating a new one. The program will store the old Manifests in a directory
    called "manifestBackups" located in the "operations" directory. You can review your old Manifest
    using the
    <a href="#PrintSavedTrainManifests">Print or Preview Saved Train Manifests</a> under tools in the <a href="#Trains">Trains</a>
    or <a href="#TrainEdit">Edit Train</a> windows.
    <p>The program will also store a copy of each train's build report in a directory called
     "buildStatusBackups" also located in the "operations" directory.</p>
-    
+
    <p>This option also makes backup copies of any switch list that you create. They are stored
     in a directory called "switchListBackups" located in the "operations" directory. A separate
     directory is created for each location's switch list that you create.</p>
@@ -2096,15 +2096,19 @@
 
    <a name="CopyTrack" id="CopyTrack"></a>
    <h4>Copy Track</h4>
-   The copy track tool allows you to select an existing track and create a new track with the same attributes as the
-   original. You can also transfer all of the rolling stock from the original track to the new track, and if you
-   wish, delete the copied track. Select the operations you want and then press the "Copy" button to create a new
-   track, move cars and locos, and delete the original track. If you're pleased with the results, press the "Save"
-   button to make your copy permanent.
+   The copy track tool allows you to select an existing track and create a new track with the same
+   attributes as the original. You can also transfer all of the rolling stock from the original
+   track to the new track, and if you wish, delete the copied track. Select the operations you want
+   and then press the "Copy" button to create a new track, move cars and locos, and delete the
+   original track. If you're pleased with the results, press the "Save" button to make your copy
+   permanent.
 
-   <p>When using the copy track feature, it is recommended that you reset or terminate any built
-    trains as the copy track will not transfer rolling stock from a track that has a scheduled pick
-    up or set out from a built train. This restriction also applies to deleting the original track.</p>
+   <p>
+    When using the copy track feature, it is recommended that you <a href="#TrainReset">reset</a> or
+    <a href="#TerminateTrain">terminate</a> any built trains as the copy track will not transfer
+    rolling stock from a track that has a scheduled pick up or set out from a built train. This
+    restriction also applies to deleting the original track.
+   </p>
 
    <a name="ChangeTrackTypeLocation" id="ChangeTrackTypeLocation"></a>
    <h4>Change Track Type</h4>
@@ -3908,13 +3912,15 @@
     <img src="images/Routes.png">
    </p>
 
-   <p>The "Routes" window shows for every route created the id, name, comment, shortest route
-    length, longest route length, and status of the route. If there's a problem with the route, the
-    status will be reported as "Error". If the route hasn't been assigned to a train, the status for
-    the route is reported as "Orphan". If a route has been assigned to a train or trains, and one of
-    the trains is built, the status becomes "Train Built". You can not modify a route that is
-    assigned to a built train. Reset or terminate a built train if you want to modify the route. Use
-    the "Edit" button to modify a route.</p>
+   <p>
+    The "Routes" window shows for every route created the id, name, comment, shortest route length,
+    longest route length, and status of the route. If there's a problem with the route, the status
+    will be reported as "Error". If the route hasn't been assigned to a train, the status for the
+    route is reported as "Orphan". If a route has been assigned to a train or trains, and one of the
+    trains is built, the status becomes "Train Built". You can not modify a route that is assigned
+    to a built train. <a href="#TrainReset">Reset</a> or <a href="#TerminateTrain">terminate</a> a
+    built train if you want to modify the route. Use the "Edit" button to modify a route.
+   </p>
 
    <a name="AddRoute" id="AddRoute"></a>
    <h3>Add Route</h3>
@@ -4147,17 +4153,19 @@
     <img src="images/Trains.png">
    </p>
 
-   <p>The "Trains" window shows all of your trains. For each train, there's a checkbox in
-    the "Build" column used to select which trains to build, print, and terminate. The buttons on
-    the bottom of the page will build, print or terminate the trains selected. You can also modify
-    an existing train using the "Edit" button for that train. For each train there's also an action
-    button. You can select one of four actions for your train. The 'Move" action causes a built
-    train to depart its current location and move to the next location in the train's route. The
-    "Conductor" action opens a window that provides the train's Manifest for each location in the
-    train's route. The last two actions are "Terminate" and "Reset", pressing "Terminate" moves a
-    built train to the last location in the train's route, and completes the work assigned to the
-    train. "Reset" is used to release all cars assigned to a built train. You can only reset a train
-    that hasn't moved.</p>
+   <p>
+    The Trains window shows all of your trains. For each train, there's a checkbox in the "Build"
+    column used to select which trains to build, print, and terminate. The buttons on the bottom of
+    the page will build, print or terminate the trains selected. You can also modify an existing
+    train using the "Edit" button for that train. For each train there's also an action button. You
+    can select one of four actions for your train. The 'Move" action causes a built train to depart
+    its current location and move to the next location in the train's route. The "Conductor" action
+    opens a window that provides the train's Manifest for each location in the train's route. The
+    last two actions are <a href="#TerminateTrain">Terminate</a> and "Reset", pressing "Terminate"
+    moves a built train to the last location in the train's route, and completes the work assigned
+    to the train. <a href="#TrainReset">Reset</a> is used to release all cars assigned to a built
+    train. You can only reset a train that hasn't moved.
+   </p>
 
    <p>
     There are several checkboxes along the bottom of the Trains window. The "Show All" when selected
@@ -4277,8 +4285,8 @@
    <h3>Reset Train</h3>
    The "Reset Train" button allows you to remove locomotives and cars that have been assigned to a
    train. Useful when you want to try various build options and don't what to physically move
-   locomotives and cars on the railroad. Note that you can only reset a train that hasn't been
-   moved.
+   locomotives and cars on the railroad. Note that you can only reset a built train that hasn't been
+   moved. You can also reset a train from the <a href="#Trains">Trains</a> window.
 
    <p>
     There are many counters used when building a train and they are NOT restored when using the
@@ -4834,13 +4842,15 @@
 
    <a name="TrainsTableColors" id="TrainsTableColors"></a>
    <h4>Train Row Color</h4>
-   <p>OperationsPro&trade; gives you two options for color coding the rows in the "Trains"
-    window. You can manually color code your trains, or you can have the program automatically set a
-    train's row color based on the status of the train. For example you could tell the program you
-    want the row colored red if a train fails to build. You can also when using the "Auto" option
-    define a unique color for each train when they are reset. Before switching to "Auto", select the
-    reset row colors for your various trains. You can find this feature under "Tools" in the
-    "Trains" window.</p>
+   <p>
+    OperationsPro&trade; gives you two options for color coding the rows in the "Trains" window. You
+    can manually color code your trains, or you can have the program automatically set a train's row
+    color based on the status of the train. For example you could tell the program you want the row
+    colored red if a train fails to build. You can also when using the "Auto" option define a unique
+    color for each train when they are <a href="#TrainReset">reset</a>. Before switching to "Auto",
+    select the reset row colors for your various trains. You can find this feature under "Tools" in
+    the "Trains" window.
+   </p>
 
    <a name="TrainSchedules" id="TrainSchedules"></a>
    <h4>Train Schedules</h4>
@@ -5694,13 +5704,16 @@
    trains, print all trains, and then use the "Save Builds" button and shut down the program. Later
    you can restart the program and terminate the trains that completed their runs.
 
-   <p>The correct time to terminate a train is when the train actually arrives at its
-    destination. Terminating a train before it completes it run means that the operation program
-    incorrectly believes that the locomotives and cars have been delivered. It is better to build
-    and print twelve trains and then later find out that only nine trains completed their runs. You
-    would then terminate nine trains, and leave the other three for next time. Or if you wish you
-    could reset any trains that didn't depart from their terminal. Reseting trains really isn't
-    necessary, the trains that didn't run during this session could run the during the next session.</p>
+   <p>
+    The correct time to <a href="#TerminateTrain">terminate</a> a train is when the train actually
+    arrives at its destination. Terminating a train before it completes it run means that the
+    operation program incorrectly believes that the locomotives and cars have been delivered. It is
+    better to build and print twelve trains and then later find out that only nine trains completed
+    their runs. You would then terminate nine trains, and leave the other three for next time. Or if
+    you wish you could <a href="#TrainReset">reset</a> any trains that didn't depart from their
+    terminal. Reseting trains really isn't necessary, the trains that didn't run during this session
+    could run the during the next session.
+   </p>
 
    <p>An alternate method is to build, print, and use the "Move" button for each train to track
     the actual movement of the trains during your session. As long as the trains on your layout
