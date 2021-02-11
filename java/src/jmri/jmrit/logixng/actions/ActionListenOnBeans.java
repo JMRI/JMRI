@@ -259,7 +259,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         }
         
         public void setType(NamedBeanType type) {
-            if (type == null) throw new RuntimeException("Daniel");
+            if (type == null) throw new NullPointerException("type is null");
             _type = type;
         }
         

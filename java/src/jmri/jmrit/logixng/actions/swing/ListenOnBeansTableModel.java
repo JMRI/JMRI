@@ -261,7 +261,7 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
                     }
                 }
             } else {
-                namedBeanComboBox.addItem("aaaa");
+                namedBeanComboBox.addItem("");
             }
             
 //            namedBeanComboBox.setSelectedItem(value);
