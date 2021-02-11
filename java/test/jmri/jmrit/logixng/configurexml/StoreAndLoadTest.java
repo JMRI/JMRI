@@ -36,15 +36,18 @@ public class StoreAndLoadTest {
         Light light1 = InstanceManager.getDefault(LightManager.class).provide("IL1");
         light1.setCommandedState(Light.OFF);
         Light light2 = InstanceManager.getDefault(LightManager.class).provide("IL2");
+        light2.setUserName("Some light");
         light2.setCommandedState(Light.OFF);
         Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         sensor1.setCommandedState(Sensor.INACTIVE);
         Sensor sensor2 = InstanceManager.getDefault(SensorManager.class).provide("IS2");
         sensor2.setCommandedState(Sensor.INACTIVE);
+        sensor2.setUserName("Some sensor");
         Turnout turnout1 = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         turnout1.setCommandedState(Turnout.CLOSED);
         Turnout turnout2 = InstanceManager.getDefault(TurnoutManager.class).provide("IT2");
         turnout2.setCommandedState(Turnout.CLOSED);
+        turnout2.setUserName("Some turnout");
         Turnout turnout3 = InstanceManager.getDefault(TurnoutManager.class).provide("IT3");
         turnout3.setCommandedState(Turnout.CLOSED);
         Turnout turnout4 = InstanceManager.getDefault(TurnoutManager.class).provide("IT4");
@@ -54,6 +57,7 @@ public class StoreAndLoadTest {
 
         Memory memory1 = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
         Memory memory2 = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
+        memory2.setUserName("Some memory");
         Memory memory3 = InstanceManager.getDefault(MemoryManager.class).provide("IM3");
         
         LogixManager logixManager = InstanceManager.getDefault(LogixManager.class);
@@ -256,7 +260,49 @@ public class StoreAndLoadTest {
         
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
-        actionListenOnBeans.addReference("light:IL1");
+        actionListenOnBeans.addReference("Light:"+light1.getSystemName());
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeans.setComment("A comment");
+        actionListenOnBeans.addReference("Light:"+light2.getUserName());
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeans.setComment("A comment");
+        actionListenOnBeans.addReference("Memory:"+memory1.getSystemName());
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeans.setComment("A comment");
+        actionListenOnBeans.addReference("Memory:"+memory2.getUserName());
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeans.setComment("A comment");
+        actionListenOnBeans.addReference("Sensor:"+sensor1.getSystemName());
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeans.setComment("A comment");
+        actionListenOnBeans.addReference("Sensor:"+sensor2.getUserName());
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeans.setComment("A comment");
+        actionListenOnBeans.addReference("Turnout:"+turnout1.getSystemName());
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeans.setComment("A comment");
+        actionListenOnBeans.addReference("Turnout:"+turnout2.getUserName());
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         

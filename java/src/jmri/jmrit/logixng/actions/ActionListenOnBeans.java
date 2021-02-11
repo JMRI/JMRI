@@ -66,7 +66,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         }
         
         try {
-            NamedBeanType type = NamedBeanType.valueOf(parts[0].toUpperCase());
+            NamedBeanType type = NamedBeanType.valueOf(parts[0]);
             NamedBeanReference reference = new NamedBeanReference(parts[1], type);
             _namedBeanReferences.put(reference._name, reference);
         } catch (IllegalArgumentException e) {
@@ -204,10 +204,10 @@ public class ActionListenOnBeans extends AbstractDigitalAction
     
     
     public enum NamedBeanType {
-        LIGHT(Bundle.getMessage("BeanNameLight"), Light.class, "KnownState", InstanceManager.getDefault(LightManager.class)),
-        MEMORY(Bundle.getMessage("BeanNameMemory"), Memory.class, "value", InstanceManager.getDefault(MemoryManager.class)),
-        SENSOR(Bundle.getMessage("BeanNameSensor"), Sensor.class, "KnownState", InstanceManager.getDefault(SensorManager.class)),
-        TURNOUT(Bundle.getMessage("BeanNameTurnout"), Turnout.class, "KnownState", InstanceManager.getDefault(TurnoutManager.class));
+        Light(Bundle.getMessage("BeanNameLight"), Light.class, "KnownState", InstanceManager.getDefault(LightManager.class)),
+        Memory(Bundle.getMessage("BeanNameMemory"), Memory.class, "value", InstanceManager.getDefault(MemoryManager.class)),
+        Sensor(Bundle.getMessage("BeanNameSensor"), Sensor.class, "KnownState", InstanceManager.getDefault(SensorManager.class)),
+        Turnout(Bundle.getMessage("BeanNameTurnout"), Turnout.class, "KnownState", InstanceManager.getDefault(TurnoutManager.class));
         
         private final String _name;
         private final Class<? extends NamedBean> _clazz;

@@ -192,7 +192,7 @@ public class RecursiveModuleTest {
         conditionalNG.getChild(0).connect(manySocket);
         
         ActionListenOnBeans listenOnBeans = new ActionListenOnBeans("IQDA2", null);
-        listenOnBeans.addReference(new NamedBeanReference("IMN", ActionListenOnBeans.NamedBeanType.MEMORY));
+        listenOnBeans.addReference(new NamedBeanReference("IMN", ActionListenOnBeans.NamedBeanType.Memory));
 //        listenOnBeans.addReference("Turnoaut:IT1");
 //        listenOnBeans.addReference("Turnout:IT1xx");
 //        listenOnBeans.addReference("senSorIS1");

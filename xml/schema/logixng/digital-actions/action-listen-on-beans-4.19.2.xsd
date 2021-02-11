@@ -41,6 +41,32 @@
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
 
+              <xs:element name="references" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="reference" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+
+                          <xs:element name="type" minOccurs="1" maxOccurs="1">
+                            <xs:simpleType>
+                              <xs:restriction base="xs:token">
+                                <xs:enumeration value="Light"/>
+                                <xs:enumeration value="Memory"/>
+                                <xs:enumeration value="Sensor"/>
+                                <xs:enumeration value="Turnout"/>
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
               <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>

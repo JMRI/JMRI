@@ -139,7 +139,7 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
     
     public void add() {
         int row = _namedBeanReference.size();
-        _namedBeanReference.add(new NamedBeanReference("", NamedBeanType.TURNOUT));
+        _namedBeanReference.add(new NamedBeanReference("", NamedBeanType.Turnout));
         fireTableRowsInserted(row, row);
     }
     
@@ -160,7 +160,7 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
                 boolean isSelected, boolean hasFocus, int row, int column) {
             
             if (column == COLUMN_BEAN_TYPE) {
-                if (value == null) value = NamedBeanType.TURNOUT;
+                if (value == null) value = NamedBeanType.Turnout;
                 
                 if (! (value instanceof NamedBeanType)) {
                     throw new IllegalArgumentException("value is not an NamedBeanType: " + value.getClass().getName());
@@ -188,7 +188,7 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
         public Component getTableCellEditorComponent(JTable table, Object value,
                 boolean isSelected, int row, int column) {
             
-            if (value == null) value = NamedBeanType.TURNOUT;
+            if (value == null) value = NamedBeanType.Turnout;
             
             if (! (value instanceof NamedBeanType)) {
                 throw new IllegalArgumentException("value is not an NamedBeanType: " + value.getClass().getName());

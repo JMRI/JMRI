@@ -1,11 +1,16 @@
 package jmri.jmrit.logixng.actions.configurexml;
 
+import java.util.List;
+
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.NamedBeanHandle;
 import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.actions.ActionListenOnBeans;
+import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanReference;
+import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanType;
 
 import org.jdom2.Element;
 
@@ -35,14 +40,16 @@ public class ActionListenOnBeansXml extends jmri.managers.configurexml.AbstractN
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
         storeCommon(p, element);
-
-//        NamedBeanHandle light = p.getLight();
-//        if (light != null) {
-//            element.addContent(new Element("light").addContent(light.getName()));
-//        }
         
-//        element.addContent(new Element("lightState").addContent(p.getLightState().name()));
-
+        Element parameters = new Element("references");
+        for (NamedBeanReference ref : p.getReferences()) {
+            Element elementParameter = new Element("reference");
+            elementParameter.addContent(new Element("name").addContent(ref.getName()));
+            elementParameter.addContent(new Element("type").addContent(ref.getType().name()));
+            parameters.addContent(elementParameter);
+        }
+        element.addContent(parameters);
+        
         return element;
     }
     
@@ -53,17 +60,28 @@ public class ActionListenOnBeansXml extends jmri.managers.configurexml.AbstractN
         ActionListenOnBeans h = new ActionListenOnBeans(sys, uname);
 
         loadCommon(h, shared);
-
-//        Element lightName = shared.getChild("light");
-//        if (lightName != null) {
-//            Light t = InstanceManager.getDefault(LightManager.class).getLight(lightName.getTextTrim());
-//            if (t != null) h.setLight(t);
-//            else h.removeLight();
-//        }
-
+        
+        List<Element> parameterList = shared.getChild("references").getChildren();  // NOI18N
+        log.debug("Found " + parameterList.size() + " references");  // NOI18N
+        
+        for (Element e : parameterList) {
+            Element elementName = e.getChild("name");
+            
+            NamedBeanType type = null;
+            Element elementType = e.getChild("type");
+            if (elementType != null) {
+                type = NamedBeanType.valueOf(elementType.getTextTrim());
+            }
+            
+            if (elementName == null) throw new IllegalArgumentException("Element 'name' does not exists");
+            if (type == null) throw new IllegalArgumentException("Element 'type' does not exists");
+            
+            h.addReference(new NamedBeanReference(elementName.getTextTrim(), type));
+        }
+        
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLightXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionListenOnBeansXml.class);
 }
