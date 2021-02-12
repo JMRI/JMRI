@@ -42,7 +42,7 @@
         <!-- Permit any of these tags in any order in any number -->
         <xs:choice minOccurs="0" maxOccurs="unbounded">
             
-            <xs:element name="action-sensor"     type="LogixNG_DigitalAction_ActionSensorType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="action-turnout"     type="LogixNG_DigitalAction_ActionTurnoutType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="if-then-else"      type="LogixNG_DigitalAction_IfThenElseType" minOccurs="0" maxOccurs="unbounded" />
             
           </xs:choice>
