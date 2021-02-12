@@ -551,14 +551,16 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
     }
 
     /**
-     * Small set of hardware replies to send in simulator in response to specific messages.
+     * Choose from a subset of hardware replies to send in HexFile simulator mode in response to specific messages.
      * Supported message types:
      * <ul>
      *     <li>LN SV rev2 board {@link jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents}</li>
      *     <li>LNCV board {@link jmri.jmrix.loconet.uhlenbrock.LncvMessageContents} ReadReply</li>
      * </ul>
+     * Listener is attached to jmri.jmrix.loconet.hexfile.HexFileFrame with GUI bos to turn this option on/off
      *
      * @param m the message to respond to
+     * @return an appropriate reply by type and values
      */
     static public LocoNetMessage generateReply(LocoNetMessage m) {
         LocoNetMessage reply = null;
