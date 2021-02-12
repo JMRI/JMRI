@@ -9,8 +9,11 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
+
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
@@ -19,6 +22,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
@@ -28,6 +32,8 @@ import jmri.jmrit.jython.JynstrumentFactory;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.iharder.dnd.URIDrop;
+import jmri.util.iharder.dnd.URIDrop.Listener;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,7 +103,7 @@ public class ThrottleWindow extends JmriJFrame {
                 && (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingToolBar())) {
             initializeToolbar();
         }
-        /*        if ( (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle() ) 
+        /*        if ( (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle() )
          && ( InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isResizingWindow()))
          setResizable(false);*/
         initializeMenu();
@@ -249,11 +255,11 @@ public class ThrottleWindow extends JmriJFrame {
         throttleToolBar.add(jbThrottleList);
 
         // Receptacle for Jynstruments
-        new URIDrop(throttleToolBar, files -> {
-            for (java.net.URI file : files) {
-                ynstrument(file.getPath());
-            }
-        });
+        new URIDrop(throttleToolBar, uris -> {
+                for (URI uri : uris ) {
+                    ynstrument(new File(uri).getPath());
+                }
+            });
 
         add(throttleToolBar, BorderLayout.PAGE_START);
     }

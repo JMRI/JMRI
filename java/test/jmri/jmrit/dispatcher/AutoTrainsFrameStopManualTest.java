@@ -57,7 +57,7 @@ import java.nio.file.StandardCopyOption;
         public void testToManual() throws Exception {
              jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
             };
-            Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+            // Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
             WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
@@ -93,7 +93,9 @@ import java.nio.file.StandardCopyOption;
             JFrameOperator atw = new JFrameOperator(Bundle.getMessage("TitleAutoTrains"));
 
             // trains loads and runs, 2 allocated sections, the one we are in and 1 ahead.
-            assertThat(d.getAllocatedSectionsList()).withFailMessage("Section South 1").hasSize(2);
+            JUnitUtil.waitFor(() -> {
+                return(d.getAllocatedSectionsList().size()==2);
+            },"Allocated sections should be 2");
 
             JUnitUtil.waitFor(() -> {
                 return smm.getSignalMast("South To West").getAspect().equals("Approach");

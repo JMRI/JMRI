@@ -136,7 +136,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             interchangeModel.initTable(interchangeTable, location);
             stagingModel.initTable(stagingTable, location);
             _location.addPropertyChangeListener(this);
-            if (_location.getLocationOps() == Location.NORMAL) {
+            if (!_location.isStaging()) {
                 if (spurModel.getRowCount() > 0) {
                     spurRadioButton.setSelected(true);
                 } else if (yardModel.getRowCount() > 0) {
@@ -298,7 +298,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         toolMenu.add(new ShowTrackMovesAction());
         toolMenu.add(new ModifyLocationsAction(_location));
         toolMenu.add(new ModifyLocationsCarLoadsAction(_location));
-        if (_location != null && _location.getLocationOps() == Location.NORMAL) {
+        if (_location != null && !_location.isStaging()) {
             toolMenu.add(new LocationTrackBlockingOrderAction(_location));
         }
         toolMenu.add(new ShowTrainsServingLocationAction(_location, null));
@@ -469,7 +469,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         if (Setup.isRfidEnabled() && readerSelector != null) {
             _location.setReporter(readerSelector.getSelectedItem());
         }
-        setLocationOps();
         // save location file
         OperationsXml.save();
     }
@@ -501,14 +500,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             return false;
         }
         return true;
-    }
-
-    private void setLocationOps() {
-        if (stagingRadioButton.isSelected()) {
-            _location.setLocationOps(Location.STAGING);
-        } else {
-            _location.setLocationOps(Location.NORMAL);
-        }
     }
 
     private void reportLocationExists(String s) {
@@ -549,7 +540,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
     @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
-        setLocationOps();
         setVisibleLocations();
     }
 

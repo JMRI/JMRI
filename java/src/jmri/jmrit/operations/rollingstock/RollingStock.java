@@ -753,6 +753,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
 
     /**
      * Where in a train's route this car resides
+     * 
      * @return the location in a train's route
      */
     public RouteLocation getRouteLocation() {
@@ -768,6 +769,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
 
     /**
      * Used to determine which train delivered a car to an interchange track.
+     * 
      * @return the route id of the last train delivering this car.
      */
     public String getLastRouteId() {
@@ -987,8 +989,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     /**
-     * Provides the last date when this rolling stock was moved, or was reset from a
-     * built train, as a string.
+     * Provides the last date when this rolling stock was moved
      *
      * @return String MM/dd/yyyy HH:mm:ss
      */
@@ -999,10 +1000,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"); // NOI18N
         return format.format(_lastDate);
     }
-    
+
     /**
-     * Sets the last date when this rolling stock was moved, or was reset from a
-     * built train.
+     * Sets the last date when this rolling stock was moved
      *
      * @param date The Date when this rolling stock was last moved.
      *
@@ -1016,8 +1016,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     /**
-     * Provides the last date when this rolling stock was moved, or was reset from a
-     * built train.
+     * Provides the last date when this rolling stock was moved
      *
      * @return date
      */
@@ -1026,9 +1025,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     /**
-     * Sets the last date when this rolling stock was moved, or was reset from a
-     * built train. This method is used only for loading data from a file. Use
-     * setLastDate(Date) instead.
+     * Sets the last date when this rolling stock was moved. This method is used
+     * only for loading data from a file. Use setLastDate(Date) instead.
      *
      * @param date MM/dd/yyyy HH:mm:ss
      */

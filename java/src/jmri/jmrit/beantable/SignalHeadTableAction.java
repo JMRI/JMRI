@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -264,12 +265,12 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             }
 
             @Override
-            public SignalHead getBySystemName(String name) {
+            public SignalHead getBySystemName(@Nonnull String name) {
                 return InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(name);
             }
 
             @Override
-            public SignalHead getByUserName(String name) {
+            public SignalHead getByUserName(@Nonnull String name) {
                 return InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(name);
             }
 
