@@ -6,7 +6,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.Base.Lock;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
-import jmri.jmrit.logixng.actions.DigitalMany;
+import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -75,7 +75,7 @@ public class ConditionalNGTest {
             FemaleSocket femaleSocket = conditionalNG.getFemaleSocket();
             MaleDigitalActionSocket actionManySocket =
                     InstanceManager.getDefault(DigitalActionManager.class)
-                            .registerAction(new DigitalMany(digitalActionManager.getAutoSystemName(), null));
+                            .registerAction(new ActionTurnout(digitalActionManager.getAutoSystemName(), null));
             femaleSocket.connect(actionManySocket);
 //            femaleSocket.setLock(Base.Lock.HARD_LOCK);
 
@@ -121,7 +121,7 @@ public class ConditionalNGTest {
 
         MaleDigitalActionSocket actionManySocket =
                 InstanceManager.getDefault(DigitalActionManager.class)
-                        .registerAction(new DigitalMany(digitalActionManager.getAutoSystemName(), null));
+                        .registerAction(new ActionTurnout(digitalActionManager.getAutoSystemName(), null));
         
         
         Assert.assertEquals("socket name is correct", null, conditionalNG.getSocketSystemName());

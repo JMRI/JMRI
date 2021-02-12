@@ -4,8 +4,8 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.expressions.ExpressionTurnout;
-import jmri.jmrit.logixng.expressions.configurexml.ExpressionTurnoutXml;
+import jmri.jmrit.logixng.expressions.ExpressionSensor;
+import jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml;
 import jmri.jmrit.logixng.implementation.DefaultDigitalExpressionManager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -44,7 +44,7 @@ public class DefaultDigitalExpressionManagerXmlTest {
         // Test loading the same class twice, in order to check field "xmlClasses"
         e = new Element("logixngAnalogExpressions");
         e2 = new Element("existing_class");
-        e2.setAttribute("class", "jmri.jmrit.logixng.expressions.configurexml.ExpressionTurnoutXml");
+        e2.setAttribute("class", "jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml");
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQDE1"));
         e2.addContent(new Element("maleSocket"));
@@ -52,7 +52,7 @@ public class DefaultDigitalExpressionManagerXmlTest {
         
         e = new Element("logixngAnalogExpressions");
         e2 = new Element("existing_class");
-        e2.setAttribute("class", "jmri.jmrit.logixng.expressions.configurexml.ExpressionTurnoutXml");
+        e2.setAttribute("class", "jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml");
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQDE2"));
         e2.addContent(new Element("maleSocket"));
@@ -184,7 +184,7 @@ public class DefaultDigitalExpressionManagerXmlTest {
     
     
     
-    private class MyDigitalExpression extends ExpressionTurnout {
+    private class MyDigitalExpression extends ExpressionSensor {
         
         MyDigitalExpression() {
             super("IQDE9999", null);
@@ -195,14 +195,14 @@ public class DefaultDigitalExpressionManagerXmlTest {
     
     // This class is loaded by reflection. The class cannot be private since
     // Spotbugs will in that case flag it as "is never used locally"
-    class PrivateConstructorXml extends ExpressionTurnoutXml {
+    class PrivateConstructorXml extends ExpressionSensorXml {
         private PrivateConstructorXml() {
         }
     }
     
     // This class is loaded by reflection. The class cannot be private since
     // Spotbugs will in that case flag it as "is never used locally"
-    class ThrowExceptionXml extends ExpressionTurnoutXml {
+    class ThrowExceptionXml extends ExpressionSensorXml {
         @Override
         public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
             throw new JmriConfigureXmlException();

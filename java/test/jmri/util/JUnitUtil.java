@@ -23,13 +23,8 @@ import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultLogixNGManager;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGManager;
-import jmri.jmrit.logixng.implementation.DefaultAnalogActionManager;
-import jmri.jmrit.logixng.implementation.DefaultAnalogExpressionManager;
 import jmri.jmrit.logixng.implementation.DefaultDigitalActionManager;
-import jmri.jmrit.logixng.implementation.DefaultDigitalBooleanActionManager;
 import jmri.jmrit.logixng.implementation.DefaultDigitalExpressionManager;
-import jmri.jmrit.logixng.implementation.DefaultStringActionManager;
-import jmri.jmrit.logixng.implementation.DefaultStringExpressionManager;
 import jmri.jmrit.roster.RosterConfigManager;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
@@ -897,29 +892,11 @@ public class JUnitUtil {
         }
         InstanceManager.setDefault(ConditionalNG_Manager.class, m2);
         
-        AnalogActionManager m3 = new DefaultAnalogActionManager();
-        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
-            InstanceManager.getDefault(ConfigureManager.class).registerConfig(m3, jmri.Manager.LOGIXNG_ANALOG_ACTIONS);
-        }
-        InstanceManager.setDefault(AnalogActionManager.class, m3);
-        
-        AnalogExpressionManager m4 = new DefaultAnalogExpressionManager();
-        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
-            InstanceManager.getDefault(ConfigureManager.class).registerConfig(m4, jmri.Manager.LOGIXNG_ANALOG_EXPRESSIONS);
-        }
-        InstanceManager.setDefault(AnalogExpressionManager.class, m4);
-        
         DigitalActionManager m5 = new DefaultDigitalActionManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m5, jmri.Manager.LOGIXNG_DIGITAL_ACTIONS);
         }
         InstanceManager.setDefault(DigitalActionManager.class, m5);
-        
-        DigitalBooleanActionManager m6 = new DefaultDigitalBooleanActionManager();
-        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
-            InstanceManager.getDefault(ConfigureManager.class).registerConfig(m6, jmri.Manager.LOGIXNG_DIGITAL_BOOLEAN_ACTIONS);
-        }
-        InstanceManager.setDefault(DigitalBooleanActionManager.class, m6);
         
         DigitalExpressionManager m7 = new DefaultDigitalExpressionManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
@@ -927,17 +904,6 @@ public class JUnitUtil {
         }
         InstanceManager.setDefault(DigitalExpressionManager.class, m7);
         
-        StringActionManager m8 = new DefaultStringActionManager();
-        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
-            InstanceManager.getDefault(ConfigureManager.class).registerConfig(m8, jmri.Manager.LOGIXNG_STRING_ACTIONS);
-        }
-        InstanceManager.setDefault(StringActionManager.class, m8);
-        
-        StringExpressionManager m9 = new DefaultStringExpressionManager();
-        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
-            InstanceManager.getDefault(ConfigureManager.class).registerConfig(m9, jmri.Manager.LOGIXNG_STRING_EXPRESSIONS);
-        }
-        InstanceManager.setDefault(StringExpressionManager.class, m9);
         m1.activateAllLogixNGs();
     }
 

@@ -25,9 +25,9 @@ public class DefaultFemaleGenericExpressionSocket
     private FemaleSocket _internalSocket;       // The socket that the owner of this female socket uses.
     private FemaleSocket _currentActiveSocket;  // The socket that is currently in use, if any. Null otherwise.
     private final FemaleSocketListener _socketListener;
-    private final FemaleAnalogExpressionSocket _analogSocket = new DefaultFemaleAnalogExpressionSocket(this, this, "A");
+//    private final FemaleAnalogExpressionSocket _analogSocket = new DefaultFemaleAnalogExpressionSocket(this, this, "A");
     private final FemaleDigitalExpressionSocket _digitalSocket = new DefaultFemaleDigitalExpressionSocket(this, this, "D");
-    private final FemaleStringExpressionSocket _stringSocket = new DefaultFemaleStringExpressionSocket(this, this, "S");
+//    private final FemaleStringExpressionSocket _stringSocket = new DefaultFemaleStringExpressionSocket(this, this, "S");
     private boolean _do_i18n;
     
     public DefaultFemaleGenericExpressionSocket(
@@ -43,17 +43,17 @@ public class DefaultFemaleGenericExpressionSocket
         _socketListener = listener;
         
         switch (_socketType) {
-            case ANALOG:
-                _currentActiveSocket = _analogSocket;
-                break;
+//            case ANALOG:
+//                _currentActiveSocket = _analogSocket;
+//                break;
                 
             case DIGITAL:
                 _currentActiveSocket = _digitalSocket;
                 break;
                 
-            case STRING:
-                _currentActiveSocket = _stringSocket;
-                break;
+//            case STRING:
+//                _currentActiveSocket = _stringSocket;
+//                break;
                 
             case GENERIC:
                 _currentActiveSocket = null;
@@ -71,7 +71,7 @@ public class DefaultFemaleGenericExpressionSocket
         return _currentActiveSocket;
     }
     
-    
+/*    
     public FemaleAnalogExpressionSocket getAnalogSocket(Base parent) {
         if (_internalSocket != null) {
             throw new RuntimeException("internal socket cannot be set more than once");
@@ -80,7 +80,7 @@ public class DefaultFemaleGenericExpressionSocket
         _internalSocket = socket;
         return socket;
     }
-    
+*/    
     public FemaleDigitalExpressionSocket getDigitalSocket(Base parent) {
         if (_internalSocket != null) {
             throw new RuntimeException("internal socket cannot be set more than once");
@@ -90,7 +90,7 @@ public class DefaultFemaleGenericExpressionSocket
         _internalSocket = socket;
         return socket;
     }
-    
+/*    
     public FemaleStringExpressionSocket getStringSocket(Base parent) {
         if (_internalSocket != null) {
             throw new RuntimeException("internal socket cannot be set more than once");
@@ -99,7 +99,7 @@ public class DefaultFemaleGenericExpressionSocket
         _internalSocket = socket;
         return socket;
     }
-    
+*/    
     public FemaleGenericExpressionSocket getGenericSocket(Base parent) {
         if (_internalSocket != null) {
             throw new RuntimeException("internal socket cannot be set more than once");
@@ -113,9 +113,10 @@ public class DefaultFemaleGenericExpressionSocket
     /** {@inheritDoc} */
     @Override
     public boolean isCompatible(MaleSocket socket) {
-        return (socket instanceof MaleAnalogExpressionSocket)
-                || (socket instanceof MaleDigitalExpressionSocket)
-                || (socket instanceof MaleStringExpressionSocket);
+        return (socket instanceof MaleDigitalExpressionSocket);
+//        return (socket instanceof MaleAnalogExpressionSocket)
+//                || (socket instanceof MaleDigitalExpressionSocket)
+//                || (socket instanceof MaleStringExpressionSocket);
     }
     
     /** {@inheritDoc} */
@@ -138,17 +139,17 @@ public class DefaultFemaleGenericExpressionSocket
                 _currentActiveSocket = _digitalSocket;
                 break;
                 
-            case ANALOG:
-                _socketType = SocketType.ANALOG;
-                _currentSocketType = SocketType.ANALOG;
-                _currentActiveSocket = _analogSocket;
-                break;
+//            case ANALOG:
+//                _socketType = SocketType.ANALOG;
+//                _currentSocketType = SocketType.ANALOG;
+//                _currentActiveSocket = _analogSocket;
+//                break;
                 
-            case STRING:
-                _socketType = SocketType.STRING;
-                _currentSocketType = SocketType.STRING;
-                _currentActiveSocket = _stringSocket;
-                break;
+//            case STRING:
+//                _socketType = SocketType.STRING;
+//                _currentSocketType = SocketType.STRING;
+//                _currentActiveSocket = _stringSocket;
+//                break;
                 
             case GENERIC:
                 _socketType = SocketType.GENERIC;
@@ -183,15 +184,15 @@ public class DefaultFemaleGenericExpressionSocket
                 case DIGITAL:
                     return ((MaleDigitalExpressionSocket)getConnectedSocket()).evaluate();
 
-                case ANALOG:
-                    return TypeConversionUtil.convertToBoolean(
-                            ((MaleAnalogExpressionSocket)getConnectedSocket()).evaluate(),
-                            _do_i18n);
+//                case ANALOG:
+//                    return TypeConversionUtil.convertToBoolean(
+//                            ((MaleAnalogExpressionSocket)getConnectedSocket()).evaluate(),
+//                            _do_i18n);
 
-                case STRING:
-                    return TypeConversionUtil.convertToBoolean(
-                            ((MaleStringExpressionSocket)getConnectedSocket()).evaluate(),
-                            _do_i18n);
+//                case STRING:
+//                    return TypeConversionUtil.convertToBoolean(
+//                            ((MaleStringExpressionSocket)getConnectedSocket()).evaluate(),
+//                            _do_i18n);
 
                 default:
                     throw new RuntimeException("socketType has invalid value: "+_currentSocketType.name());
@@ -210,13 +211,13 @@ public class DefaultFemaleGenericExpressionSocket
                             ((MaleDigitalExpressionSocket)getConnectedSocket()).evaluate(),
                             _do_i18n);
 
-                case ANALOG:
-                    return ((MaleAnalogExpressionSocket)getConnectedSocket()).evaluate();
+//                case ANALOG:
+//                    return ((MaleAnalogExpressionSocket)getConnectedSocket()).evaluate();
 
-                case STRING:
-                    return TypeConversionUtil.convertToDouble(
-                            ((MaleStringExpressionSocket)getConnectedSocket()).evaluate(),
-                            _do_i18n);
+//                case STRING:
+//                    return TypeConversionUtil.convertToDouble(
+//                            ((MaleStringExpressionSocket)getConnectedSocket()).evaluate(),
+//                            _do_i18n);
 
                 default:
                     throw new RuntimeException("socketType has invalid value: "+_currentSocketType.name());
@@ -235,13 +236,13 @@ public class DefaultFemaleGenericExpressionSocket
                             ((MaleDigitalExpressionSocket)getConnectedSocket()).evaluate(),
                             _do_i18n);
 
-                case ANALOG:
-                    return TypeConversionUtil.convertToString(
-                            ((MaleAnalogExpressionSocket)getConnectedSocket()).evaluate(),
-                            _do_i18n);
+//                case ANALOG:
+//                    return TypeConversionUtil.convertToString(
+//                            ((MaleAnalogExpressionSocket)getConnectedSocket()).evaluate(),
+//                            _do_i18n);
 
-                case STRING:
-                    return ((MaleStringExpressionSocket)getConnectedSocket()).evaluate();
+//                case STRING:
+//                    return ((MaleStringExpressionSocket)getConnectedSocket()).evaluate();
 
                 default:
                     throw new RuntimeException("socketType has invalid value: "+_currentSocketType.name());
@@ -260,13 +261,13 @@ public class DefaultFemaleGenericExpressionSocket
                     return ((MaleDigitalExpressionSocket)getConnectedSocket())
                             .evaluate();
                     
-                case ANALOG:
-                    return ((MaleAnalogExpressionSocket)getConnectedSocket())
-                            .evaluate();
+//                case ANALOG:
+//                    return ((MaleAnalogExpressionSocket)getConnectedSocket())
+//                            .evaluate();
                     
-                case STRING:
-                    return ((MaleStringExpressionSocket)getConnectedSocket())
-                            .evaluate();
+//                case STRING:
+//                    return ((MaleStringExpressionSocket)getConnectedSocket())
+//                            .evaluate();
                     
                 default:
                     throw new RuntimeException("_currentSocketType has invalid value: "+_currentSocketType.name());
@@ -307,9 +308,9 @@ public class DefaultFemaleGenericExpressionSocket
             classes.put(category, new ArrayList<>());
         }
         
-        addClassesToMap(classes, InstanceManager.getDefault(AnalogExpressionManager.class).getExpressionClasses());
+//        addClassesToMap(classes, InstanceManager.getDefault(AnalogExpressionManager.class).getExpressionClasses());
         addClassesToMap(classes, InstanceManager.getDefault(DigitalExpressionManager.class).getExpressionClasses());
-        addClassesToMap(classes, InstanceManager.getDefault(StringExpressionManager.class).getExpressionClasses());
+//        addClassesToMap(classes, InstanceManager.getDefault(StringExpressionManager.class).getExpressionClasses());
         
         return classes;
     }
@@ -339,12 +340,12 @@ public class DefaultFemaleGenericExpressionSocket
         if (_digitalSocket.isCompatible(socket)) {
             _currentSocketType = SocketType.DIGITAL;
             _currentActiveSocket = _digitalSocket;
-        } else if (_analogSocket.isCompatible(socket)) {
-            _currentSocketType = SocketType.ANALOG;
-            _currentActiveSocket = _analogSocket;
-        } else if (_stringSocket.isCompatible(socket)) {
-            _currentSocketType = SocketType.STRING;
-            _currentActiveSocket = _stringSocket;
+//        } else if (_analogSocket.isCompatible(socket)) {
+//            _currentSocketType = SocketType.ANALOG;
+//            _currentActiveSocket = _analogSocket;
+//        } else if (_stringSocket.isCompatible(socket)) {
+//            _currentSocketType = SocketType.STRING;
+//            _currentActiveSocket = _stringSocket;
         } else {
             throw new IllegalArgumentException("Socket is not compatible");
         }
@@ -416,20 +417,20 @@ public class DefaultFemaleGenericExpressionSocket
     }
     
     
-    
+/*    
     private class AnalogSocket extends DefaultFemaleAnalogExpressionSocket {
         
         public AnalogSocket(Base parent, FemaleSocketListener listener, String name) {
             super(parent, listener, name);
         }
         
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public boolean isCompatible(MaleSocket socket) {
             return DefaultFemaleGenericExpressionSocket.this.isCompatible(socket);
         }
         
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public double evaluate() throws JmriException {
             return DefaultFemaleGenericExpressionSocket.this.evaluateDouble();
@@ -440,38 +441,38 @@ public class DefaultFemaleGenericExpressionSocket
             return DefaultFemaleGenericExpressionSocket.this.getConnectableClasses();
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public Base getParent() {
             return DefaultFemaleGenericExpressionSocket.this.getParent();
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public void setParent(Base parent) {
             DefaultFemaleGenericExpressionSocket.this.setParent(parent);
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public Lock getLock() {
             return DefaultFemaleGenericExpressionSocket.this.getLock();
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public void setLock(Lock lock) {
             DefaultFemaleGenericExpressionSocket.this.setLock(lock);
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public void connect(MaleSocket socket) throws SocketAlreadyConnectedException {
             DefaultFemaleGenericExpressionSocket.this.connect(socket);
             _listener.connected(this);
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public void disconnect() {
             if (DefaultFemaleGenericExpressionSocket.this.isConnected()) {
@@ -480,31 +481,31 @@ public class DefaultFemaleGenericExpressionSocket
             }
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public MaleSocket getConnectedSocket() {
             return DefaultFemaleGenericExpressionSocket.this.getConnectedSocket();
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public boolean isConnected() {
             return DefaultFemaleGenericExpressionSocket.this.isConnected();
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public void setName(String name) {
             DefaultFemaleGenericExpressionSocket.this.setName(name);
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public String getName() {
             return DefaultFemaleGenericExpressionSocket.this.getName();
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public void disposeMe() {
             DefaultFemaleGenericExpressionSocket.this.dispose();
@@ -512,7 +513,7 @@ public class DefaultFemaleGenericExpressionSocket
 
         /**
          * Register listeners if this object needs that.
-         */
+         *./
         @Override
         public void registerListeners() {
             DefaultFemaleGenericExpressionSocket.this.registerListeners();
@@ -520,26 +521,26 @@ public class DefaultFemaleGenericExpressionSocket
 
         /**
          * Register listeners if this object needs that.
-         */
+         *./
         @Override
         public void unregisterListeners() {
             DefaultFemaleGenericExpressionSocket.this.unregisterListeners();
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public String getShortDescription(Locale locale) {
             return DefaultFemaleGenericExpressionSocket.this.getShortDescription(locale);
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public String getLongDescription(Locale locale) {
             return DefaultFemaleGenericExpressionSocket.this.getLongDescription(locale);
         }
 
     }
-    
+*/    
     
     private class DigitalSocket extends DefaultFemaleDigitalExpressionSocket {
         
@@ -664,20 +665,20 @@ public class DefaultFemaleGenericExpressionSocket
 
     }
     
-    
+/*    
     private class StringSocket extends DefaultFemaleStringExpressionSocket {
         
         public StringSocket(Base parent, FemaleSocketListener listener, String name) {
             super(parent, listener, name);
         }
         
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public boolean isCompatible(MaleSocket socket) {
             return DefaultFemaleGenericExpressionSocket.this.isCompatible(socket);
         }
         
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public String evaluate() throws JmriException {
             return DefaultFemaleGenericExpressionSocket.this.evaluateString();
@@ -688,38 +689,38 @@ public class DefaultFemaleGenericExpressionSocket
             return DefaultFemaleGenericExpressionSocket.this.getConnectableClasses();
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public Base getParent() {
             return DefaultFemaleGenericExpressionSocket.this.getParent();
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public void setParent(Base parent) {
             DefaultFemaleGenericExpressionSocket.this.setParent(parent);
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public Lock getLock() {
             return DefaultFemaleGenericExpressionSocket.this.getLock();
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public void setLock(Lock lock) {
             DefaultFemaleGenericExpressionSocket.this.setLock(lock);
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public void connect(MaleSocket socket) throws SocketAlreadyConnectedException {
             DefaultFemaleGenericExpressionSocket.this.connect(socket);
             _listener.connected(this);
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public void disconnect() {
             if (DefaultFemaleGenericExpressionSocket.this.isConnected()) {
@@ -728,31 +729,31 @@ public class DefaultFemaleGenericExpressionSocket
             }
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public MaleSocket getConnectedSocket() {
             return DefaultFemaleGenericExpressionSocket.this.getConnectedSocket();
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public boolean isConnected() {
             return DefaultFemaleGenericExpressionSocket.this.isConnected();
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public void setName(String name) {
             DefaultFemaleGenericExpressionSocket.this.setName(name);
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public String getName() {
             return DefaultFemaleGenericExpressionSocket.this.getName();
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public void disposeMe() {
             DefaultFemaleGenericExpressionSocket.this.dispose();
@@ -760,7 +761,7 @@ public class DefaultFemaleGenericExpressionSocket
 
         /**
          * Register listeners if this object needs that.
-         */
+         *./
         @Override
         public void registerListeners() {
             DefaultFemaleGenericExpressionSocket.this.registerListeners();
@@ -768,26 +769,26 @@ public class DefaultFemaleGenericExpressionSocket
 
         /**
          * Register listeners if this object needs that.
-         */
+         *./
         @Override
         public void unregisterListeners() {
             DefaultFemaleGenericExpressionSocket.this.unregisterListeners();
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public String getShortDescription(Locale locale) {
             return DefaultFemaleGenericExpressionSocket.this.getShortDescription(locale);
         }
 
-        /** {@inheritDoc} */
+        /** {@inheritDoc} *./
         @Override
         public String getLongDescription(Locale locale) {
             return DefaultFemaleGenericExpressionSocket.this.getLongDescription(locale);
         }
 
     }
-    
+*/    
     
     private class GenericSocket extends AbstractFemaleSocket
             implements FemaleGenericExpressionSocket {

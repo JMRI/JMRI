@@ -6,7 +6,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.implementation.DefaultMaleAnalogActionSocket;
 
 /**
  * This action sets the value of an AtomicBoolean. It is mostly used for tests.

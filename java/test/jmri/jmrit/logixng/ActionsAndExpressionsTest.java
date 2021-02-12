@@ -160,33 +160,33 @@ public class ActionsAndExpressionsTest {
         return FileSystems.getDefault().getPath("java/src/jmri/jmrit/logixng/" + subFolder);
     }
     
-    public Map<Category, List<Class<? extends Base>>> getAnalogActionClasses() {
-        return InstanceManager.getDefault(AnalogActionManager.class).getActionClasses();
-    }
+//    public Map<Category, List<Class<? extends Base>>> getAnalogActionClasses() {
+//        return InstanceManager.getDefault(AnalogActionManager.class).getActionClasses();
+//    }
     
-    public Map<Category, List<Class<? extends Base>>> getAnalogExpressionClasses() {
-        return InstanceManager.getDefault(AnalogExpressionManager.class).getExpressionClasses();
-    }
+//    public Map<Category, List<Class<? extends Base>>> getAnalogExpressionClasses() {
+//        return InstanceManager.getDefault(AnalogExpressionManager.class).getExpressionClasses();
+//    }
     
     public Map<Category, List<Class<? extends Base>>> getDigitalActionClasses() {
         return InstanceManager.getDefault(DigitalActionManager.class).getActionClasses();
     }
     
-    public Map<Category, List<Class<? extends Base>>> getDigitalBooleanActionClasses() {
-        return InstanceManager.getDefault(DigitalBooleanActionManager.class).getActionClasses();
-    }
+//    public Map<Category, List<Class<? extends Base>>> getDigitalBooleanActionClasses() {
+//        return InstanceManager.getDefault(DigitalBooleanActionManager.class).getActionClasses();
+//    }
     
     public Map<Category, List<Class<? extends Base>>> getDigitalExpressionClasses() {
         return InstanceManager.getDefault(DigitalExpressionManager.class).getExpressionClasses();
     }
     
-    public Map<Category, List<Class<? extends Base>>> getStringActionClasses() {
-        return InstanceManager.getDefault(StringActionManager.class).getActionClasses();
-    }
+//    public Map<Category, List<Class<? extends Base>>> getStringActionClasses() {
+//        return InstanceManager.getDefault(StringActionManager.class).getActionClasses();
+//    }
     
-    public Map<Category, List<Class<? extends Base>>> getStringExpressionClasses() {
-        return InstanceManager.getDefault(StringExpressionManager.class).getExpressionClasses();
-    }
+//    public Map<Category, List<Class<? extends Base>>> getStringExpressionClasses() {
+//        return InstanceManager.getDefault(StringExpressionManager.class).getExpressionClasses();
+//    }
     
     public void addClasses(Map<Category, List<Class<? extends Base>>> classes, Map<Category, List<Class<? extends Base>>> newClasses) {
             newClasses.entrySet().forEach((entry) -> {
@@ -203,10 +203,10 @@ public class ActionsAndExpressionsTest {
         for (Category category : Category.values()) {
             classes.put(category, new ArrayList<>());
         }
-        addClasses(classes, getAnalogActionClasses());
+//        addClasses(classes, getAnalogActionClasses());
         addClasses(classes, getDigitalActionClasses());
-        addClasses(classes, getDigitalBooleanActionClasses());
-        addClasses(classes, getStringActionClasses());
+//        addClasses(classes, getDigitalBooleanActionClasses());
+//        addClasses(classes, getStringActionClasses());
         
         checkFolder(
                 getPath("actions"),
@@ -225,9 +225,9 @@ public class ActionsAndExpressionsTest {
         for (Category category : Category.values()) {
             classes.put(category, new ArrayList<>());
         }
-        addClasses(classes, getAnalogExpressionClasses());
+//        addClasses(classes, getAnalogExpressionClasses());
         addClasses(classes, getDigitalExpressionClasses());
-        addClasses(classes, getStringExpressionClasses());
+//        addClasses(classes, getStringExpressionClasses());
         
         checkFolder(
                 getPath("expressions"),

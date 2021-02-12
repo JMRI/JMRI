@@ -25,32 +25,7 @@
             "
         >
 
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/and-4.19.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/antecedent-4.19.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-clock-4.19.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-conditional-4.19.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-entryexit-4.19.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-light-4.19.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-local-variable-4.19.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-loconet-slot-usage-4.19.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-memory-4.19.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-oblock-4.19.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-reference-4.19.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-script-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-sensor-4.19.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-signalhead-4.19.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-signalmast-4.19.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-turnout-4.19.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-warrant-4.19.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/false-4.19.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/formula-4.19.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/hold-4.19.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/last-result-of-digital-expression-4.19.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/or-4.19.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/reset-on-true-4.19.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/timer-4.19.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/trigger-once-4.19.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/true-4.19.2.xsd"/>
 
     <xs:complexType name="LogixNG_DigitalExpressionManagerType">
       <xs:annotation>
@@ -66,32 +41,7 @@
         <!-- Permit any of these tags in any order in any number -->
         <xs:choice minOccurs="0" maxOccurs="unbounded">
             
-            <xs:element name="and"                type="LogixNG_DigitalExpression_AndType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="antecedent"         type="LogixNG_DigitalExpression_AntecedentType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-clock"   type="LogixNG_DigitalExpression_ExpressionClockType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-conditional"  type="LogixNG_DigitalExpression_ExpressionConditionalType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-entryexit"    type="LogixNG_DigitalExpression_ExpressionEntryExit" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-light"   type="LogixNG_DigitalExpression_ExpressionLightType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-local-variable"  type="LogixNG_DigitalExpression_ExpressionLocalVariableType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-loconet-slot-usage" type="LogixNG_DigitalExpression_ExpressionLocoNetSlotUsageType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-memory"  type="LogixNG_DigitalExpression_ExpressionMemoryType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-oblock"  type="LogixNG_DigitalExpression_ExpressionOBlockType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-reference"  type="LogixNG_DigitalExpression_ExpressionReferenceType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-script"  type="LogixNG_DigitalExpression_ExpressionScriptType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="expression-sensor"  type="LogixNG_DigitalExpression_ExpressionSensorType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-signalhead"  type="LogixNG_DigitalExpression_ExpressionSignalHeadType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-signalmast"  type="LogixNG_DigitalExpression_ExpressionSignalMastType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-turnout" type="LogixNG_DigitalExpression_ExpressionTurnoutType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-warrant" type="LogixNG_DigitalExpression_ExpressionWarrantType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="false"              type="LogixNG_DigitalExpression_FalseType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="formula"            type="LogixNG_DigitalExpression_FormulaType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="hold"               type="LogixNG_DigitalExpression_HoldType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="last-result-of-digital-expression"  type="LogixNG_DigitalExpression_LastResultOfDigitalExpressionType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="or"                 type="LogixNG_DigitalExpression_OrType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="reset-on-true"      type="LogixNG_DigitalExpression_ResetOnTrueType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="timer"              type="LogixNG_DigitalExpression_TimerType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="trigger-once"       type="LogixNG_DigitalExpression_TriggerOnceType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="true"               type="LogixNG_DigitalExpression_TrueType" minOccurs="0" maxOccurs="unbounded" />
             
           </xs:choice>
       </xs:sequence>

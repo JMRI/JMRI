@@ -46,9 +46,9 @@ public class LogixNG_DigitalInstanceInitializer extends AbstractInstanceInitiali
             return new DefaultDigitalActionManager();
         }
 
-        if (type == DigitalBooleanActionManager.class) {
-            return new DefaultDigitalBooleanActionManager();
-        }
+//        if (type == DigitalBooleanActionManager.class) {
+//            return new DefaultDigitalBooleanActionManager();
+//        }
 
         if (type == DigitalExpressionManager.class) {
             return new DefaultDigitalExpressionManager();
@@ -62,7 +62,7 @@ public class LogixNG_DigitalInstanceInitializer extends AbstractInstanceInitiali
         Set<Class<?>> set = super.getInitalizes();
         set.addAll(Arrays.asList(
                 DigitalActionManager.class,
-                DigitalBooleanActionManager.class,
+//                DigitalBooleanActionManager.class,
                 DigitalExpressionManager.class
         ));
         return set;
