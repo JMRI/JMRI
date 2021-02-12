@@ -7,10 +7,10 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.util.ReferenceUtil;
-import jmri.jmrit.logixng.util.parser.*;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
+//import jmri.jmrit.logixng.util.ReferenceUtil;
+//import jmri.jmrit.logixng.util.parser.*;
+//import jmri.jmrit.logixng.util.parser.ExpressionNode;
+//import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
 import jmri.util.TypeConversionUtil;
 
 /**
@@ -26,14 +26,14 @@ public class ExpressionSensor extends AbstractDigitalExpression
     private String _reference = "";
     private String _localVariable = "";
     private String _formula = "";
-    private ExpressionNode _expressionNode;
+//    private ExpressionNode _expressionNode;
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private SensorState _sensorState = SensorState.Active;
     private String _stateReference = "";
     private String _stateLocalVariable = "";
     private String _stateFormula = "";
-    private ExpressionNode _stateExpressionNode;
+//    private ExpressionNode _stateExpressionNode;
     
     public ExpressionSensor(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -41,7 +41,7 @@ public class ExpressionSensor extends AbstractDigitalExpression
     }
     
     @Override
-    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws ParserException {
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
         DigitalExpressionManager manager = InstanceManager.getDefault(DigitalExpressionManager.class);
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
@@ -51,12 +51,12 @@ public class ExpressionSensor extends AbstractDigitalExpression
         if (_sensorHandle != null) copy.setSensor(_sensorHandle);
         copy.setBeanState(_sensorState);
         copy.setAddressing(_addressing);
-        copy.setFormula(_formula);
+//        copy.setFormula(_formula);
         copy.setLocalVariable(_localVariable);
         copy.setReference(_reference);
         copy.set_Is_IsNot(_is_IsNot);
         copy.setStateAddressing(_stateAddressing);
-        copy.setStateFormula(_stateFormula);
+//        copy.setStateFormula(_stateFormula);
         copy.setStateLocalVariable(_stateLocalVariable);
         copy.setStateReference(_stateReference);
         return manager.registerExpression(copy);
@@ -97,9 +97,9 @@ public class ExpressionSensor extends AbstractDigitalExpression
         return _sensorHandle;
     }
     
-    public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
+    public void setAddressing(NamedBeanAddressing addressing) {
         _addressing = addressing;
-        parseFormula();
+//        parseFormula();
     }
     
     public NamedBeanAddressing getAddressing() {
@@ -107,9 +107,9 @@ public class ExpressionSensor extends AbstractDigitalExpression
     }
     
     public void setReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
+//        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
+//            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
+//        }
         _reference = reference;
     }
     
@@ -124,7 +124,7 @@ public class ExpressionSensor extends AbstractDigitalExpression
     public String getLocalVariable() {
         return _localVariable;
     }
-    
+/*    
     public void setFormula(@Nonnull String formula) throws ParserException {
         _formula = formula;
         parseFormula();
@@ -144,7 +144,7 @@ public class ExpressionSensor extends AbstractDigitalExpression
             _expressionNode = null;
         }
     }
-    
+*/    
     public void set_Is_IsNot(Is_IsNot_Enum is_IsNot) {
         _is_IsNot = is_IsNot;
     }
@@ -153,9 +153,9 @@ public class ExpressionSensor extends AbstractDigitalExpression
         return _is_IsNot;
     }
     
-    public void setStateAddressing(NamedBeanAddressing addressing) throws ParserException {
+    public void setStateAddressing(NamedBeanAddressing addressing) {
         _stateAddressing = addressing;
-        parseStateFormula();
+//        parseStateFormula();
     }
     
     public NamedBeanAddressing getStateAddressing() {
@@ -171,9 +171,9 @@ public class ExpressionSensor extends AbstractDigitalExpression
     }
     
     public void setStateReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
+//        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
+//            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
+//        }
         _stateReference = reference;
     }
     
@@ -188,7 +188,7 @@ public class ExpressionSensor extends AbstractDigitalExpression
     public String getStateLocalVariable() {
         return _stateLocalVariable;
     }
-    
+/*    
     public void setStateFormula(@Nonnull String formula) throws ParserException {
         _stateFormula = formula;
         parseStateFormula();
@@ -208,7 +208,7 @@ public class ExpressionSensor extends AbstractDigitalExpression
             _stateExpressionNode = null;
         }
     }
-    
+*/    
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
@@ -242,22 +242,22 @@ public class ExpressionSensor extends AbstractDigitalExpression
     private String getNewState() throws JmriException {
         
         switch (_stateAddressing) {
-            case Reference:
-                return ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _stateReference);
+//            case Reference:
+//                return ReferenceUtil.getReference(
+//                        getConditionalNG().getSymbolTable(), _stateReference);
                 
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                return TypeConversionUtil
-                        .convertToString(symbolTable.getValue(_stateLocalVariable), false);
-                
+//            case LocalVariable:
+//                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+//                return TypeConversionUtil
+//                        .convertToString(symbolTable.getValue(_stateLocalVariable), false);
+/*                
             case Formula:
                 return _stateExpressionNode != null
                         ? TypeConversionUtil.convertToString(
                                 _stateExpressionNode.calculate(
                                         getConditionalNG().getSymbolTable()), false)
                         : null;
-                
+*/                
             default:
                 throw new IllegalArgumentException("invalid _addressing state: " + _stateAddressing.name());
         }
@@ -275,20 +275,20 @@ public class ExpressionSensor extends AbstractDigitalExpression
                 sensor = _sensorHandle != null ? _sensorHandle.getBean() : null;
                 break;
                 
-            case Reference:
-                String ref = ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _reference);
-                sensor = InstanceManager.getDefault(SensorManager.class)
-                        .getNamedBean(ref);
-                break;
+//            case Reference:
+//                String ref = ReferenceUtil.getReference(
+//                        getConditionalNG().getSymbolTable(), _reference);
+//                sensor = InstanceManager.getDefault(SensorManager.class)
+//                        .getNamedBean(ref);
+//                break;
                 
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                sensor = InstanceManager.getDefault(SensorManager.class)
-                        .getNamedBean(TypeConversionUtil
-                                .convertToString(symbolTable.getValue(_localVariable), false));
-                break;
-                
+//            case LocalVariable:
+//                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+//                sensor = InstanceManager.getDefault(SensorManager.class)
+//                        .getNamedBean(TypeConversionUtil
+//                                .convertToString(symbolTable.getValue(_localVariable), false));
+//                break;
+/*                
             case Formula:
                 sensor = _expressionNode != null ?
                         InstanceManager.getDefault(SensorManager.class)
@@ -297,7 +297,7 @@ public class ExpressionSensor extends AbstractDigitalExpression
                                                 getConditionalNG().getSymbolTable()), false))
                         : null;
                 break;
-                
+*/                
             default:
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
@@ -363,11 +363,11 @@ public class ExpressionSensor extends AbstractDigitalExpression
             case LocalVariable:
                 namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
                 break;
-                
+/*                
             case Formula:
                 namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
                 break;
-                
+*/                
             default:
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
@@ -384,11 +384,11 @@ public class ExpressionSensor extends AbstractDigitalExpression
             case LocalVariable:
                 state = Bundle.getMessage(locale, "AddressByLocalVariable", _stateLocalVariable);
                 break;
-                
+/*                
             case Formula:
                 state = Bundle.getMessage(locale, "AddressByFormula", _stateFormula);
                 break;
-                
+*/                
             default:
                 throw new IllegalArgumentException("invalid _stateAddressing state: " + _stateAddressing.name());
         }

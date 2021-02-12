@@ -9,10 +9,10 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.util.ReferenceUtil;
-import jmri.jmrit.logixng.util.parser.*;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
+//import jmri.jmrit.logixng.util.ReferenceUtil;
+//import jmri.jmrit.logixng.util.parser.*;
+//import jmri.jmrit.logixng.util.parser.ExpressionNode;
+//import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
 import jmri.util.ThreadingUtil;
 import jmri.util.TypeConversionUtil;
 
@@ -28,13 +28,13 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     private String _reference = "";
     private String _localVariable = "";
     private String _formula = "";
-    private ExpressionNode _expressionNode;
+//    private ExpressionNode _expressionNode;
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private TurnoutState _turnoutState = TurnoutState.Thrown;
     private String _stateReference = "";
     private String _stateLocalVariable = "";
     private String _stateFormula = "";
-    private ExpressionNode _stateExpressionNode;
+//    private ExpressionNode _stateExpressionNode;
     
     public ActionTurnout(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -42,7 +42,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     }
     
     @Override
-    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws ParserException {
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
@@ -52,11 +52,11 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         if (_turnoutHandle != null) copy.setTurnout(_turnoutHandle);
         copy.setBeanState(_turnoutState);
         copy.setAddressing(_addressing);
-        copy.setFormula(_formula);
+//        copy.setFormula(_formula);
         copy.setLocalVariable(_localVariable);
         copy.setReference(_reference);
         copy.setStateAddressing(_stateAddressing);
-        copy.setStateFormula(_stateFormula);
+//        copy.setStateFormula(_stateFormula);
         copy.setStateLocalVariable(_stateLocalVariable);
         copy.setStateReference(_stateReference);
         return manager.registerAction(copy);
@@ -97,9 +97,9 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         return _turnoutHandle;
     }
     
-    public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
+    public void setAddressing(NamedBeanAddressing addressing) {
         _addressing = addressing;
-        parseFormula();
+//        parseFormula();
     }
     
     public NamedBeanAddressing getAddressing() {
@@ -107,9 +107,9 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     }
     
     public void setReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
+//        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
+//            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
+//        }
         _reference = reference;
     }
     
@@ -124,8 +124,8 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     public String getLocalVariable() {
         return _localVariable;
     }
-    
-    public void setFormula(@Nonnull String formula) throws ParserException {
+/*    
+    public void setFormula(@Nonnull String formula) {
         _formula = formula;
         parseFormula();
     }
@@ -144,10 +144,10 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
             _expressionNode = null;
         }
     }
-    
-    public void setStateAddressing(NamedBeanAddressing addressing) throws ParserException {
+*/    
+    public void setStateAddressing(NamedBeanAddressing addressing) {
         _stateAddressing = addressing;
-        parseStateFormula();
+//        parseStateFormula();
     }
     
     public NamedBeanAddressing getStateAddressing() {
@@ -163,9 +163,9 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     }
     
     public void setStateReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
+//        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
+//            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
+//        }
         _stateReference = reference;
     }
     
@@ -180,7 +180,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     public String getStateLocalVariable() {
         return _stateLocalVariable;
     }
-    
+/*    
     public void setStateFormula(@Nonnull String formula) throws ParserException {
         _stateFormula = formula;
         parseStateFormula();
@@ -200,7 +200,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
             _stateExpressionNode = null;
         }
     }
-    
+*/    
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
@@ -234,22 +234,22 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     private String getNewState() throws JmriException {
         
         switch (_stateAddressing) {
-            case Reference:
-                return ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _stateReference);
+//            case Reference:
+//                return ReferenceUtil.getReference(
+//                        getConditionalNG().getSymbolTable(), _stateReference);
                 
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                return TypeConversionUtil
-                        .convertToString(symbolTable.getValue(_stateLocalVariable), false);
-                
+//            case LocalVariable:
+//                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+//                return TypeConversionUtil
+//                        .convertToString(symbolTable.getValue(_stateLocalVariable), false);
+/*                
             case Formula:
                 return _stateExpressionNode != null
                         ? TypeConversionUtil.convertToString(
                                 _stateExpressionNode.calculate(
                                         getConditionalNG().getSymbolTable()), false)
                         : null;
-                
+*/                
             default:
                 throw new IllegalArgumentException("invalid _addressing state: " + _stateAddressing.name());
         }
@@ -267,20 +267,20 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
                 turnout = _turnoutHandle != null ? _turnoutHandle.getBean() : null;
                 break;
                 
-            case Reference:
-                String ref = ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _reference);
-                turnout = InstanceManager.getDefault(TurnoutManager.class)
-                        .getNamedBean(ref);
-                break;
+//            case Reference:
+//                String ref = ReferenceUtil.getReference(
+//                        getConditionalNG().getSymbolTable(), _reference);
+//                turnout = InstanceManager.getDefault(TurnoutManager.class)
+//                        .getNamedBean(ref);
+//                break;
                 
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                turnout = InstanceManager.getDefault(TurnoutManager.class)
-                        .getNamedBean(TypeConversionUtil
-                                .convertToString(symbolTable.getValue(_localVariable), false));
-                break;
-                
+//            case LocalVariable:
+//                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+//                turnout = InstanceManager.getDefault(TurnoutManager.class)
+//                        .getNamedBean(TypeConversionUtil
+//                                .convertToString(symbolTable.getValue(_localVariable), false));
+//                break;
+/*                
             case Formula:
                 turnout = _expressionNode != null ?
                         InstanceManager.getDefault(TurnoutManager.class)
@@ -289,7 +289,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
                                                 getConditionalNG().getSymbolTable()), false))
                         : null;
                 break;
-                
+*/                
             default:
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
@@ -369,11 +369,11 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
             case LocalVariable:
                 namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
                 break;
-                
+/*                
             case Formula:
                 namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
                 break;
-                
+*/                
             default:
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
@@ -390,11 +390,11 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
             case LocalVariable:
                 state = Bundle.getMessage(locale, "AddressByLocalVariable", _stateLocalVariable);
                 break;
-                
+/*                
             case Formula:
                 state = Bundle.getMessage(locale, "AddressByFormula", _stateFormula);
                 break;
-                
+*/                
             default:
                 throw new IllegalArgumentException("invalid _stateAddressing state: " + _stateAddressing.name());
         }

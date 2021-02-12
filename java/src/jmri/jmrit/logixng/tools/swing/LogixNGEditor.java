@@ -45,7 +45,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     LogixNG _curLogixNG = null;
     
     ConditionalNGEditor _treeEdit = null;
-    ConditionalNGDebugger _debugger = null;
+//    ConditionalNGDebugger _debugger = null;
     
     int _numConditionalNGs = 0;
     boolean _inEditMode = false;
@@ -639,7 +639,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
      * Note: you can get here via the New Conditional button
      * (newConditionalPressed) or via an Edit button in the Conditional table of
      * the Edit Logix window.
-     */
+     *./
     void makeDebugConditionalNGWindow() {
         // Create a new LogixNG edit view, add the listener.
         _debugger = new ConditionalNGDebugger(_curConditionalNG);
@@ -651,7 +651,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         final LogixNGEditor logixNGEditor = this;
         _debugger.addLogixNGEventListener(new LogixNG_DebuggerEventListenerImpl(logixNGEditor));
     }
-    
+*/    
     // ------------ Methods for Edit ConditionalNG Pane ------------
 
     /**
@@ -678,7 +678,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
      * Respond to Edit Button in the ConditionalNG table of the Edit LogixNG Window.
      *
      * @param rx index (row number) of ConditionalNG to be edited
-     */
+     *./
     void debugConditionalNGPressed(int rx) {
         if (checkEditConditionalNG()) {
             return;
@@ -693,7 +693,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         // get action variables
         makeDebugConditionalNGWindow();
     }
-
+*/
     /**
      * Check if edit of a conditional is in progress.
      *
@@ -992,7 +992,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
 
                     @Override
                     public void run() {
-                        debugConditionalNGPressed(row);
+//                        debugConditionalNGPressed(row);
                     }
                 }
                 WindowMaker t = new WindowMaker(row);
@@ -1178,7 +1178,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         }
     }
     
-    
+/*    
     private class LogixNG_DebuggerEventListenerImpl
             implements ConditionalNGDebugger.ConditionalNGEventListener {
 
@@ -1210,7 +1210,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             });
         }
     }
-    
+*/    
     
     // This class is copied from BeanTableDataModel
     private class DeleteBeanWorker extends SwingWorker<Void, Void> {

@@ -50,7 +50,7 @@ public class LogixNG_InstanceInitializer extends AbstractInstanceInitializer {
         if (type == LogixNG_Manager.class) {
             return new DefaultLogixNGManager();
         }
-
+/*
         if (type == ModuleManager.class) {
             return new DefaultModuleManager();
         }
@@ -58,7 +58,7 @@ public class LogixNG_InstanceInitializer extends AbstractInstanceInitializer {
         if (type == NamedTableManager.class) {
             return new DefaultNamedTableManager();
         }
-
+*/
         if (type == LogixNGPreferences.class) {
             return new DefaultLogixNGPreferences();
         }
@@ -73,8 +73,8 @@ public class LogixNG_InstanceInitializer extends AbstractInstanceInitializer {
                 ConditionalNG_Manager.class,
                 FemaleSocketManager.class,
                 LogixNG_Manager.class,
-                ModuleManager.class,
-                NamedTableManager.class,
+//                ModuleManager.class,
+//                NamedTableManager.class,
                 LogixNGPreferences.class
         ));
         return set;

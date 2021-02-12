@@ -15,7 +15,6 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.*;
 
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.SymbolTable.VariableData;
 
 /**
  * Show the action/expression tree.
@@ -336,15 +335,6 @@ public class TreePane extends JPanel implements PropertyChangeListener {
                 connectedItemLabel.setText(label);
                 if (connectedSocket.getComment() != null) {
                     mainPanel.setToolTipText(connectedSocket.getComment());
-                }
-                
-                for (VariableData variableData : connectedSocket.getLocalVariables()) {
-                    JLabel variableLabel = new JLabel(Bundle.getMessage(
-                            "PrintLocalVariable",
-                            variableData._name,
-                            variableData._initalValueType,
-                            variableData._initialValueData));
-                    mainPanel.add(variableLabel);
                 }
             }
             

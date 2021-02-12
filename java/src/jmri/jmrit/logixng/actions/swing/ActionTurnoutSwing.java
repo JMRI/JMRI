@@ -16,7 +16,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.jmrit.logixng.actions.ActionTurnout.TurnoutState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
-import jmri.jmrit.logixng.util.parser.ParserException;
+//import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectCreatePanel;
 
 /**
@@ -122,7 +122,7 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
             }
             _turnoutReferenceTextField.setText(action.getReference());
             _turnoutLocalVariableTextField.setText(action.getLocalVariable());
-            _turnoutFormulaTextField.setText(action.getFormula());
+//            _turnoutFormulaTextField.setText(action.getFormula());
             
             switch (action.getStateAddressing()) {
                 case Direct: _tabbedPaneTurnoutState.setSelectedComponent(_panelTurnoutStateDirect); break;
@@ -134,7 +134,7 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
             _stateComboBox.setSelectedItem(action.getBeanState());
             _turnoutStateReferenceTextField.setText(action.getStateReference());
             _turnoutStateLocalVariableTextField.setText(action.getStateLocalVariable());
-            _turnoutStateFormulaTextField.setText(action.getStateFormula());
+//            _turnoutStateFormulaTextField.setText(action.getStateFormula());
         }
         
         JComponent[] components = new JComponent[]{
@@ -171,8 +171,8 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
             return false;
         }
         
-        try {
-            action.setFormula(_turnoutFormulaTextField.getText());
+//        try {
+//            action.setFormula(_turnoutFormulaTextField.getText());
             if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutDirect) {
                 action.setAddressing(NamedBeanAddressing.Direct);
             } else if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutReference) {
@@ -184,9 +184,9 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
             } else {
                 throw new IllegalArgumentException("_tabbedPane has unknown selection");
             }
-        } catch (ParserException e) {
-            errorMessages.add("Cannot parse formula: " + e.getMessage());
-        }
+//        } catch (ParserException e) {
+//            errorMessages.add("Cannot parse formula: " + e.getMessage());
+//        }
         return true;
     }
     
@@ -218,7 +218,7 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
         } catch (JmriException ex) {
             log.error("Cannot get NamedBeanHandle for turnout", ex);
         }
-        try {
+//        try {
             if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutDirect) {
                 action.setAddressing(NamedBeanAddressing.Direct);
             } else if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutReference) {
@@ -229,7 +229,7 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
                 action.setLocalVariable(_turnoutLocalVariableTextField.getText());
             } else if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutFormula) {
                 action.setAddressing(NamedBeanAddressing.Formula);
-                action.setFormula(_turnoutFormulaTextField.getText());
+//                action.setFormula(_turnoutFormulaTextField.getText());
             } else {
                 throw new IllegalArgumentException("_tabbedPaneTurnout has unknown selection");
             }
@@ -245,41 +245,15 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
                 action.setStateLocalVariable(_turnoutStateLocalVariableTextField.getText());
             } else if (_tabbedPaneTurnoutState.getSelectedComponent() == _panelTurnoutStateFormula) {
                 action.setStateAddressing(NamedBeanAddressing.Formula);
-                action.setStateFormula(_turnoutStateFormulaTextField.getText());
+//                action.setStateFormula(_turnoutStateFormulaTextField.getText());
             } else {
                 throw new IllegalArgumentException("_tabbedPaneTurnoutState has unknown selection");
             }
-        } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
-        }
+//        } catch (ParserException e) {
+//            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+//        }
     }
     
-    
-    /**
-     * Create Turnout object for the action
-     *
-     * @param reference Turnout application description
-     * @return The new output as Turnout object
-     */
-    protected Turnout getTurnoutFromPanel(String reference) {
-        if (turnoutBeanPanel == null) {
-            return null;
-        }
-        turnoutBeanPanel.setReference(reference); // pass turnout application description to be put into turnout Comment
-        try {
-            return turnoutBeanPanel.getNamedBean();
-        } catch (jmri.JmriException ex) {
-            log.warn("skipping creation of turnout not found for " + reference);
-            return null;
-        }
-    }
-    
-//    private void noTurnoutMessage(String s1, String s2) {
-//        log.warn("Could not provide turnout " + s2);
-//        String msg = Bundle.getMessage("WarningNoTurnout", new Object[]{s1, s2});
-//        JOptionPane.showMessageDialog(editFrame, msg,
-//                Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-//    }
     
     /** {@inheritDoc} */
     @Override

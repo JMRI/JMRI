@@ -16,7 +16,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.expressions.ExpressionSensor.SensorState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
-import jmri.jmrit.logixng.util.parser.ParserException;
+// import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectCreatePanel;
 
 /**
@@ -130,7 +130,7 @@ public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
             }
             _sensorReferenceTextField.setText(expression.getReference());
             _sensorLocalVariableTextField.setText(expression.getLocalVariable());
-            _sensorFormulaTextField.setText(expression.getFormula());
+//            _sensorFormulaTextField.setText(expression.getFormula());
             
             is_IsNot_ComboBox.setSelectedItem(expression.get_Is_IsNot());
             
@@ -144,7 +144,7 @@ public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
             _stateComboBox.setSelectedItem(expression.getBeanState());
             _sensorStateReferenceTextField.setText(expression.getStateReference());
             _sensorStateLocalVariableTextField.setText(expression.getStateLocalVariable());
-            _sensorStateFormulaTextField.setText(expression.getStateFormula());
+//            _sensorStateFormulaTextField.setText(expression.getStateFormula());
         }
         
         JComponent[] components = new JComponent[]{
@@ -182,8 +182,8 @@ public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
             return false;
         }
         
-        try {
-            expression.setFormula(_sensorFormulaTextField.getText());
+//        try {
+//            expression.setFormula(_sensorFormulaTextField.getText());
             if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorDirect) {
                 expression.setAddressing(NamedBeanAddressing.Direct);
             } else if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorReference) {
@@ -195,9 +195,9 @@ public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
             } else {
                 throw new IllegalArgumentException("_tabbedPane has unknown selection");
             }
-        } catch (ParserException e) {
-            errorMessages.add("Cannot parse formula: " + e.getMessage());
-        }
+//        } catch (ParserException e) {
+//            errorMessages.add("Cannot parse formula: " + e.getMessage());
+//        }
         return true;
     }
     
@@ -235,7 +235,7 @@ public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
         } catch (JmriException ex) {
             log.error("Cannot get NamedBeanHandle for sensor", ex);
         }
-        try {
+//        try {
             if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorDirect) {
                 expression.setAddressing(NamedBeanAddressing.Direct);
             } else if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorReference) {
@@ -246,7 +246,7 @@ public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
                 expression.setLocalVariable(_sensorLocalVariableTextField.getText());
             } else if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorFormula) {
                 expression.setAddressing(NamedBeanAddressing.Formula);
-                expression.setFormula(_sensorFormulaTextField.getText());
+//                expression.setFormula(_sensorFormulaTextField.getText());
             } else {
                 throw new IllegalArgumentException("_tabbedPaneSensor has unknown selection");
             }
@@ -264,13 +264,13 @@ public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
                 expression.setStateLocalVariable(_sensorStateLocalVariableTextField.getText());
             } else if (_tabbedPaneSensorState.getSelectedComponent() == _panelSensorStateFormula) {
                 expression.setStateAddressing(NamedBeanAddressing.Formula);
-                expression.setStateFormula(_sensorStateFormulaTextField.getText());
+//                expression.setStateFormula(_sensorStateFormulaTextField.getText());
             } else {
                 throw new IllegalArgumentException("_tabbedPaneSensorState has unknown selection");
             }
-        } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
-        }
+//        } catch (ParserException e) {
+//            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+//        }
     }
     
     

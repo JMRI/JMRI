@@ -102,10 +102,7 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
         
         ConditionalNG conditionalNG = getConditionalNG();
         
-        int currentStackPos = conditionalNG.getStack().getCount();
-        
         try {
-            conditionalNG.getSymbolTable().createSymbols(_localVariables);
             lastEvaluationResult = _expression.evaluate();
         } catch (JmriException e) {
             handleError(this, Bundle.getMessage("ExceptionEvaluateExpression", e), e, log);
@@ -114,9 +111,6 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
             handleError(this, Bundle.getMessage("ExceptionEvaluateExpression", e), e, log);
             lastEvaluationResult = false;
         }
-        
-        conditionalNG.getStack().setCount(currentStackPos);
-        conditionalNG.getSymbolTable().removeSymbols(_localVariables);
         
         checkChangedLastResult(saveLastResult);
         return lastEvaluationResult;

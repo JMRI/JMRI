@@ -5,7 +5,7 @@ import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.actions.ActionTurnout;
-import jmri.jmrit.logixng.util.parser.ParserException;
+//import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
 
@@ -44,13 +44,13 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
         element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
         element.addContent(new Element("reference").addContent(p.getReference()));
         element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
-        element.addContent(new Element("formula").addContent(p.getFormula()));
+//        element.addContent(new Element("formula").addContent(p.getFormula()));
         
         element.addContent(new Element("stateAddressing").addContent(p.getStateAddressing().name()));
         element.addContent(new Element("turnoutState").addContent(p.getBeanState().name()));
         element.addContent(new Element("stateReference").addContent(p.getStateReference()));
         element.addContent(new Element("stateLocalVariable").addContent(p.getStateLocalVariable()));
-        element.addContent(new Element("stateFormula").addContent(p.getStateFormula()));
+//        element.addContent(new Element("stateFormula").addContent(p.getStateFormula()));
 
         return element;
     }
@@ -70,7 +70,7 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
             else h.removeTurnout();
         }
         
-        try {
+//        try {
             Element elem = shared.getChild("addressing");
             if (elem != null) {
                 h.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
@@ -82,8 +82,8 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
             elem = shared.getChild("localVariable");
             if (elem != null) h.setLocalVariable(elem.getTextTrim());
             
-            elem = shared.getChild("formula");
-            if (elem != null) h.setFormula(elem.getTextTrim());
+//            elem = shared.getChild("formula");
+//            if (elem != null) h.setFormula(elem.getTextTrim());
             
             
             elem = shared.getChild("stateAddressing");
@@ -102,12 +102,12 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
             elem = shared.getChild("stateLocalVariable");
             if (elem != null) h.setStateLocalVariable(elem.getTextTrim());
             
-            elem = shared.getChild("stateFormula");
-            if (elem != null) h.setStateFormula(elem.getTextTrim());
+//            elem = shared.getChild("stateFormula");
+//            if (elem != null) h.setStateFormula(elem.getTextTrim());
             
-        } catch (ParserException e) {
-            throw new JmriConfigureXmlException(e);
-        }
+//        } catch (ParserException e) {
+//            throw new JmriConfigureXmlException(e);
+//        }
         
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;

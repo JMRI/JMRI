@@ -11,7 +11,6 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.implementation.swing.ErrorHandlingDialog;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.*;
 
@@ -32,8 +31,6 @@ public class DefaultConditionalNG extends AbstractBase
     private Base.Lock _lock = Base.Lock.NONE;
     private final ExecuteLock _executeLock = new ExecuteLock();
     private boolean _runDelayed = true;
-    private final Stack _stack = new DefaultStack();
-    private SymbolTable _symbolTable;
     
     
     public DefaultConditionalNG(String sys, String user)
@@ -150,10 +147,7 @@ public class DefaultConditionalNG extends AbstractBase
         public void run() {
             while (_executeLock.loop()) {
                 if (_conditionalNG.isEnabled()) {
-                    DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(_conditionalNG);
-                    
                     try {
-                        _conditionalNG.setSymbolTable(newSymbolTable);
                         if (_localFemaleSocket != null) {
                             _localFemaleSocket.execute();
                         } else {
@@ -165,32 +159,30 @@ public class DefaultConditionalNG extends AbstractBase
                         log.warn("ConditionalNG {} got an exception during execute: {}",
                                 _conditionalNG.getSystemName(), e, e);
                     }
-                    
-                    _conditionalNG.setSymbolTable(newSymbolTable.getPrevSymbolTable());
                 }
             }
         }
         
     }
     
-    /** {@inheritDoc} */
+    /** {@inheritDoc} *./
     @Override
     public Stack getStack() {
         return _stack;
     }
     
-    /** {@inheritDoc} */
+    /** {@inheritDoc} *./
     @Override
     public SymbolTable getSymbolTable() {
         return _symbolTable;
     }
     
-    /** {@inheritDoc} */
+    /** {@inheritDoc} *./
     @Override
     public void setSymbolTable(SymbolTable symbolTable) {
         _symbolTable = symbolTable;
     }
-    
+*/    
     @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameConditionalNG");

@@ -68,7 +68,8 @@ public abstract class AbstractManagerXml extends jmri.managers.configurexml.Abst
         
         Element elementMaleSocket = element.getChild("maleSocket");
         if (elementMaleSocket == null) {
-            throw new IllegalArgumentException("maleSocket is null");
+//            throw new IllegalArgumentException("maleSocket is null");
+            return;
         }
         
         List<Element> children = elementMaleSocket.getChildren();

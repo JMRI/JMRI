@@ -21,11 +21,11 @@ import javax.swing.tree.*;
 import jmri.*;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.SymbolTable.InitialValueType;
+//import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.swing.SwingTools;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
-import jmri.jmrit.logixng.util.parser.swing.FunctionsHelpDialog;
+//import jmri.jmrit.logixng.util.parser.swing.FunctionsHelpDialog;
 import jmri.util.ThreadingUtil;
 
 /**
@@ -43,7 +43,7 @@ public class TreeEditor extends TreeViewer {
     private JDialog _selectItemTypeDialog = null;
     private JDialog _addItemDialog = null;
     private JDialog _editActionExpressionDialog = null;
-    private JDialog _editLocalVariablesDialog = null;
+//    private JDialog _editLocalVariablesDialog = null;
     private JDialog _changeUsernameDialog = null;
     private final JTextField _socketNameTextField = new JTextField(20);
     private final JTextField _systemName = new JTextField(20);
@@ -77,7 +77,7 @@ public class TreeEditor extends TreeViewer {
     private SwingConfiguratorInterface _editSwingConfiguratorInterface;
     private final List<Map.Entry<SwingConfiguratorInterface, Base>> _swingConfiguratorInterfaceList = new ArrayList<>();
     
-    private LocalVariableTableModel _localVariableTableModel;
+//    private LocalVariableTableModel _localVariableTableModel;
     
     private final boolean _enableClipboard;
     private final boolean _disableRootRemoveCutCopy;
@@ -746,7 +746,7 @@ public class TreeEditor extends TreeViewer {
         JButton showFunctionHelp = new JButton(Bundle.getMessage("ButtonFunctionHelp"));    // NOI18N
         panel5.add(showFunctionHelp);
         showFunctionHelp.addActionListener((ActionEvent e) -> {
-            InstanceManager.getDefault(FunctionsHelpDialog.class).showDialog();
+//            InstanceManager.getDefault(FunctionsHelpDialog.class).showDialog();
         });
 //        showFunctionHelp.setToolTipText("FunctionHelpButtonHint");      // NOI18N
 
@@ -804,7 +804,7 @@ public class TreeEditor extends TreeViewer {
      *
      * @param femaleSocket the female socket
      * @param path the path to the item the user has clicked on
-     */
+     *./
     final protected void editLocalVariables(FemaleSocket femaleSocket, TreePath path) {
         // possible change
         _showReminder = true;
@@ -909,7 +909,7 @@ public class TreeEditor extends TreeViewer {
             JButton showFunctionHelp = new JButton(Bundle.getMessage("ButtonFunctionHelp"));    // NOI18N
             buttonPanel.add(showFunctionHelp);
             showFunctionHelp.addActionListener((ActionEvent e) -> {
-                InstanceManager.getDefault(FunctionsHelpDialog.class).showDialog();
+//                InstanceManager.getDefault(FunctionsHelpDialog.class).showDialog();
             });
 //            showFunctionHelp.setToolTipText("FunctionHelpButtonHint");      // NOI18N
             
@@ -1576,7 +1576,7 @@ public class TreeEditor extends TreeViewer {
                     break;
                     
                 case ACTION_COMMAND_LOCAL_VARIABLES:
-                    editLocalVariables(_currentFemaleSocket, _currentPath);
+//                    editLocalVariables(_currentFemaleSocket, _currentPath);
                     break;
                     
                 case ACTION_COMMAND_CHANGE_USERNAME:

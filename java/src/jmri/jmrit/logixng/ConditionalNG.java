@@ -87,24 +87,6 @@ public interface ConditionalNG extends Base, NamedBean {
     public void execute(FemaleDigitalActionSocket socket);
     
     /**
-     * Get the stack
-     * @return the stack
-     */
-    public Stack getStack();
-    
-    /**
-     * Get the current symbol table
-     * @return the symbol table
-     */
-    public SymbolTable getSymbolTable();
-    
-    /**
-     * Set the current symbol table
-     * @param symbolTable the symbol table
-     */
-    public void setSymbolTable(SymbolTable symbolTable);
-    
-    /**
      * Register listeners for the ConditionalNG tree.
      * <P>
      * Important: This method may be called more than once. Methods overriding

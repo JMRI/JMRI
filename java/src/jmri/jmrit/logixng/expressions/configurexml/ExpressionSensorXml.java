@@ -4,7 +4,7 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionSensor;
-import jmri.jmrit.logixng.util.parser.ParserException;
+//import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
 
@@ -43,7 +43,7 @@ public class ExpressionSensorXml extends jmri.managers.configurexml.AbstractName
         element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
         element.addContent(new Element("reference").addContent(p.getReference()));
         element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
-        element.addContent(new Element("formula").addContent(p.getFormula()));
+//        element.addContent(new Element("formula").addContent(p.getFormula()));
         
         element.addContent(new Element("is_isNot").addContent(p.get_Is_IsNot().name()));
         
@@ -51,7 +51,7 @@ public class ExpressionSensorXml extends jmri.managers.configurexml.AbstractName
         element.addContent(new Element("sensorState").addContent(p.getBeanState().name()));
         element.addContent(new Element("stateReference").addContent(p.getStateReference()));
         element.addContent(new Element("stateLocalVariable").addContent(p.getStateLocalVariable()));
-        element.addContent(new Element("stateFormula").addContent(p.getStateFormula()));
+//        element.addContent(new Element("stateFormula").addContent(p.getStateFormula()));
 
         return element;
     }
@@ -71,7 +71,7 @@ public class ExpressionSensorXml extends jmri.managers.configurexml.AbstractName
             else h.removeSensor();
         }
 
-        try {
+//        try {
             Element elem = shared.getChild("addressing");
             if (elem != null) {
                 h.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
@@ -83,8 +83,8 @@ public class ExpressionSensorXml extends jmri.managers.configurexml.AbstractName
             elem = shared.getChild("localVariable");
             if (elem != null) h.setLocalVariable(elem.getTextTrim());
             
-            elem = shared.getChild("formula");
-            if (elem != null) h.setFormula(elem.getTextTrim());
+//            elem = shared.getChild("formula");
+//            if (elem != null) h.setFormula(elem.getTextTrim());
             
             
             Element is_IsNot = shared.getChild("is_isNot");
@@ -109,12 +109,12 @@ public class ExpressionSensorXml extends jmri.managers.configurexml.AbstractName
             elem = shared.getChild("stateLocalVariable");
             if (elem != null) h.setStateLocalVariable(elem.getTextTrim());
             
-            elem = shared.getChild("stateFormula");
-            if (elem != null) h.setStateFormula(elem.getTextTrim());
+//            elem = shared.getChild("stateFormula");
+//            if (elem != null) h.setStateFormula(elem.getTextTrim());
             
-        } catch (ParserException e) {
-            throw new JmriConfigureXmlException(e);
-        }
+//        } catch (ParserException e) {
+//            throw new JmriConfigureXmlException(e);
+//        }
 
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);
         return true;

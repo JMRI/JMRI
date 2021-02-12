@@ -5,8 +5,8 @@ import java.util.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.Module;
-import jmri.jmrit.logixng.Stack;
+//import jmri.jmrit.logixng.Module;
+//import jmri.jmrit.logixng.Stack;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.managers.AbstractManager;
 import jmri.util.LoggingUtil;
@@ -143,10 +143,10 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
             logixNG.setup();
             logixNG.setParentForAllChildren();
         }
-        for (Module module : InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet()) {
-            module.setup();
-            module.setParentForAllChildren();
-        }
+//        for (Module module : InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet()) {
+//            module.setup();
+//            module.setParentForAllChildren();
+//        }
         _clipboard.setup();
     }
 
@@ -206,8 +206,8 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
             logixNG.printTree(locale, writer, indent, "");
             writer.println();
         }
-        InstanceManager.getDefault(ModuleManager.class).printTree(locale, writer, indent);
-        InstanceManager.getDefault(NamedTableManager.class).printTree(locale, writer, indent);
+//        InstanceManager.getDefault(ModuleManager.class).printTree(locale, writer, indent);
+//        InstanceManager.getDefault(NamedTableManager.class).printTree(locale, writer, indent);
     }
     
     

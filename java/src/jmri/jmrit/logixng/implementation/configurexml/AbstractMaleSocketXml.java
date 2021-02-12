@@ -1,9 +1,6 @@
 package jmri.jmrit.logixng.implementation.configurexml;
 
-import java.util.List;
-
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.configurexml.MaleSocketXml;
 
 import org.jdom2.Element;
@@ -39,13 +36,6 @@ public class AbstractMaleSocketXml
         element.setAttribute("class", this.getClass().getName());
         
         element.addContent(new Element("errorHandling").addContent(maleSocket.getErrorHandlingType().name()));
-        for (SymbolTable.VariableData data : maleSocket.getLocalVariables()) {
-            Element elementVariable = new Element("localVariable");
-            elementVariable.addContent(new Element("name").addContent(data._name));
-            elementVariable.addContent(new Element("type").addContent(data._initalValueType.name()));
-            elementVariable.addContent(new Element("data").addContent(data._initialValueData));
-            element.addContent(elementVariable);
-        }
         
         return element;
     }
@@ -77,27 +67,6 @@ public class AbstractMaleSocketXml
         if (errorHandlingElement != null) {
             maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType
                     .valueOf(errorHandlingElement.getTextTrim()));
-        }
-        
-        List<Element> localVariableList = maleSocketElement.getChildren("localVariable");  // NOI18N
-        log.debug("Found " + localVariableList.size() + " male sockets");  // NOI18N
-        
-        for (Element e : localVariableList) {
-            Element elementName = e.getChild("name");
-            
-            InitialValueType type = null;
-            Element elementType = e.getChild("type");
-            if (elementType != null) {
-                type = InitialValueType.valueOf(elementType.getTextTrim());
-            }
-            
-            Element elementData = e.getChild("data");
-            
-            if (elementName == null) throw new IllegalArgumentException("Element 'name' does not exists");
-            if (type == null) throw new IllegalArgumentException("Element 'type' does not exists");
-            if (elementData == null) throw new IllegalArgumentException("Element 'data' does not exists");
-            
-            maleSocket.addLocalVariable(elementName.getTextTrim(), type, elementData.getTextTrim());
         }
         
         return true;
