@@ -75,6 +75,7 @@ public class RecursiveModuleTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
+        ActionListenOnBeans.NamedBeanType.reset();
         
         n = InstanceManager.getDefault(MemoryManager.class).provide("IMN");
         n.setValue(1);

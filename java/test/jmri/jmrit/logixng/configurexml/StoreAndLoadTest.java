@@ -929,6 +929,17 @@ public class StoreAndLoadTest {
         booleanMany.getChild(2).connect(maleSocket);
         
         
+        LogLocalVariables logLocalVariables = new LogLocalVariables(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(logLocalVariables);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        logLocalVariables = new LogLocalVariables(digitalActionManager.getAutoSystemName(), null);
+        logLocalVariables.setComment("A comment");
+        maleSocket = digitalActionManager.registerAction(logLocalVariables);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        
         DigitalMany many = new DigitalMany(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(many);
         maleSocket.setEnabled(false);
