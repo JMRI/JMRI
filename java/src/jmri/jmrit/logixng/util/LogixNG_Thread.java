@@ -227,14 +227,14 @@ public class LogixNG_Thread {
     }
 
     /**
-     * Run some layout-specific code at some later point.
+     * Run some LogixNG-specific code at some later point.
      * <p>
      * Please note the operation may have happened before this returns. Or
      * later. No long-term guarantees.
      * <p>
      * Typical uses:
      * <p> {@code
-     * ThreadingUtil.runOnLayoutEventually(() -> {
+     * ThreadingUtil.runOnLogixNGEventually(() -> {
      *     sensor.setState(value);
      * }); 
      * }
@@ -250,14 +250,14 @@ public class LogixNG_Thread {
     }
 
     /**
-     * Run some layout-specific code at some later point, at least a known time
+     * Run some LogixNG-specific code at some later point, at least a known time
      * in the future.
      * <p>
      * There is no long-term guarantee about the accuracy of the interval.
      * <p>
      * Typical uses:
      * <p> {@code
-     * ThreadingUtil.runOnLayoutEventually(() -> {
+     * ThreadingUtil.runOnLogixNGDelayed(() -> {
      *     sensor.setState(value);
      * }, 1000); 
      * }
@@ -273,7 +273,7 @@ public class LogixNG_Thread {
             // Swing Timer since the method returns a Timer object and we don't
             // want to change the method interface.
             Timer timer = new Timer(delay, (ActionEvent e) -> {
-                // Dispatch the event to the layout event handler once the time
+                // Dispatch the event to the LogixNG event handler once the time
                 // has passed.
                 _eventQueue.add(new ThreadEvent(ta));
             });
@@ -286,9 +286,9 @@ public class LogixNG_Thread {
     }
 
     /**
-     * Check if on the layout-operation thread.
+     * Check if on the LogixNG-operation thread.
      *
-     * @return true if on the layout-operation thread
+     * @return true if on the LogixNG-operation thread
      */
     public boolean isLogixNGThread() {
         if (_logixNGThread != null) {
@@ -299,7 +299,7 @@ public class LogixNG_Thread {
     }
 
     /**
-     * Checks if the the current thread is the layout thread.
+     * Checks if the the current thread is the LogixNG thread.
      * The check is only done if debug is enabled.
      */
     public void checkIsLogixNGThread() {

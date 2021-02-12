@@ -34,10 +34,10 @@ public abstract class AbstractDigitalActionTestBase extends AbstractBaseTestBase
     
     @Test
     public void testBundle() {
-        Assert.assertEquals("strings are equal", "Set memory", Bundle.getMessage("Memory_Short"));
-        Assert.assertEquals("strings are equal", "Set memory IM1 to null", Bundle.getMessage("Memory_Long_Null", "IM1"));
-        Assert.assertEquals("strings are equal", "Set memory", Bundle.getMessage(Locale.CANADA, "Memory_Short"));
-        Assert.assertEquals("strings are equal", "Set memory IM1 to null", Bundle.getMessage(Locale.CANADA, "Memory_Long_Null", "IM1"));
+        Assert.assertEquals("strings are equal", "Set memory", Bundle.getMessage("ActionMemory_Short"));
+        Assert.assertEquals("strings are equal", "Set memory IM1 to null", Bundle.getMessage("ActionMemory_Long_Null", "IM1"));
+        Assert.assertEquals("strings are equal", "Set memory", Bundle.getMessage(Locale.CANADA, "ActionMemory_Short"));
+        Assert.assertEquals("strings are equal", "Set memory IM1 to null", Bundle.getMessage(Locale.CANADA, "ActionMemory_Long_Null", "IM1"));
     }
     
     @Test

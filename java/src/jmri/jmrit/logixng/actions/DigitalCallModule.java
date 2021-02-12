@@ -13,7 +13,6 @@ import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.Module.ParameterData;
 import jmri.jmrit.logixng.Module.ReturnValueType;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
-import jmri.jmrit.logixng.implementation.DefaultModule;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 
 /**
@@ -146,8 +145,6 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
                     log.error("definition.returnValueType has invalid value: {}", parameter.getReturnValueType().name());
                     throw new IllegalArgumentException("definition._returnValueType has invalid value: " + parameter.getReturnValueType().name());
             }
-            
-//            System.out.format("Return symbol: %s = %s%n", symbol.getName(), initialValue);
         }
     }
     

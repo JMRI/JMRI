@@ -36,15 +36,18 @@ public class StoreAndLoadTest {
         Light light1 = InstanceManager.getDefault(LightManager.class).provide("IL1");
         light1.setCommandedState(Light.OFF);
         Light light2 = InstanceManager.getDefault(LightManager.class).provide("IL2");
+        light2.setUserName("Some light");
         light2.setCommandedState(Light.OFF);
         Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         sensor1.setCommandedState(Sensor.INACTIVE);
         Sensor sensor2 = InstanceManager.getDefault(SensorManager.class).provide("IS2");
         sensor2.setCommandedState(Sensor.INACTIVE);
+        sensor2.setUserName("Some sensor");
         Turnout turnout1 = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         turnout1.setCommandedState(Turnout.CLOSED);
         Turnout turnout2 = InstanceManager.getDefault(TurnoutManager.class).provide("IT2");
         turnout2.setCommandedState(Turnout.CLOSED);
+        turnout2.setUserName("Some turnout");
         Turnout turnout3 = InstanceManager.getDefault(TurnoutManager.class).provide("IT3");
         turnout3.setCommandedState(Turnout.CLOSED);
         Turnout turnout4 = InstanceManager.getDefault(TurnoutManager.class).provide("IT4");
@@ -54,6 +57,7 @@ public class StoreAndLoadTest {
 
         Memory memory1 = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
         Memory memory2 = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
+        memory2.setUserName("Some memory");
         Memory memory3 = InstanceManager.getDefault(MemoryManager.class).provide("IM3");
         
         LogixManager logixManager = InstanceManager.getDefault(LogixManager.class);
@@ -256,7 +260,49 @@ public class StoreAndLoadTest {
         
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
-        actionListenOnBeans.addReference("light:IL1");
+        actionListenOnBeans.addReference("Light:"+light1.getSystemName());
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeans.setComment("A comment");
+        actionListenOnBeans.addReference("Light:"+light2.getUserName());
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeans.setComment("A comment");
+        actionListenOnBeans.addReference("Memory:"+memory1.getSystemName());
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeans.setComment("A comment");
+        actionListenOnBeans.addReference("Memory:"+memory2.getUserName());
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeans.setComment("A comment");
+        actionListenOnBeans.addReference("Sensor:"+sensor1.getSystemName());
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeans.setComment("A comment");
+        actionListenOnBeans.addReference("Sensor:"+sensor2.getUserName());
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeans.setComment("A comment");
+        actionListenOnBeans.addReference("Turnout:"+turnout1.getSystemName());
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeans.setComment("A comment");
+        actionListenOnBeans.addReference("Turnout:"+turnout2.getUserName());
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         
@@ -268,8 +314,56 @@ public class StoreAndLoadTest {
         
         actionLocalVariable = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
         actionLocalVariable.setComment("A comment");
-        actionLocalVariable.setVariable("result");
-        actionLocalVariable.setData("1");
+        actionLocalVariable.setLocalVariable("result");
+        actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
+        actionLocalVariable.setConstantValue("1");
+        actionLocalVariable.setOtherLocalVariable("SomeVar");
+        actionLocalVariable.setMemory(memory3);
+        actionLocalVariable.setFormula("a+b");
+        maleSocket = digitalActionManager.registerAction(actionLocalVariable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionLocalVariable = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
+        actionLocalVariable.setComment("A comment");
+        actionLocalVariable.setLocalVariable("result");
+        actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.CopyMemoryToVariable);
+        actionLocalVariable.setConstantValue("1");
+        actionLocalVariable.setOtherLocalVariable("SomeVar");
+        actionLocalVariable.setMemory(memory3);
+        actionLocalVariable.setFormula("a+b");
+        maleSocket = digitalActionManager.registerAction(actionLocalVariable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionLocalVariable = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
+        actionLocalVariable.setComment("A comment");
+        actionLocalVariable.setLocalVariable("result");
+        actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.CopyVariableToVariable);
+        actionLocalVariable.setConstantValue("1");
+        actionLocalVariable.setOtherLocalVariable("SomeVar");
+        actionLocalVariable.setMemory(memory3);
+        actionLocalVariable.setFormula("a+b");
+        maleSocket = digitalActionManager.registerAction(actionLocalVariable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionLocalVariable = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
+        actionLocalVariable.setComment("A comment");
+        actionLocalVariable.setLocalVariable("result");
+        actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.SetToNull);
+        actionLocalVariable.setConstantValue("1");
+        actionLocalVariable.setOtherLocalVariable("SomeVar");
+        actionLocalVariable.setMemory(memory3);
+        actionLocalVariable.setFormula("a+b");
+        maleSocket = digitalActionManager.registerAction(actionLocalVariable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionLocalVariable = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
+        actionLocalVariable.setComment("A comment");
+        actionLocalVariable.setLocalVariable("result");
+        actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.SetToString);
+        actionLocalVariable.setConstantValue("1");
+        actionLocalVariable.setOtherLocalVariable("SomeVar");
+        actionLocalVariable.setMemory(memory3);
+        actionLocalVariable.setFormula("a+b");
         maleSocket = digitalActionManager.registerAction(actionLocalVariable);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         
@@ -282,16 +376,55 @@ public class StoreAndLoadTest {
         actionMemory = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
         actionMemory.setComment("A comment");
         actionMemory.setMemory(memory1);
-        actionMemory.setOtherMemory(memory2);
-        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.CopyMemoryToMemory);
+        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.CalculateFormula);
+        actionMemory.setOtherMemory(memory3);
+        actionMemory.setConstantValue("Some string");
+        actionMemory.setFormula("n + 3");
+        actionMemory.setLocalVariable("Somevar");
         maleSocket = digitalActionManager.registerAction(actionMemory);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         actionMemory = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
         actionMemory.setComment("A comment");
         actionMemory.setMemory(memory1);
-        actionMemory.setData("n + 3");
-        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.CalculateFormula);
+        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.CopyMemoryToMemory);
+        actionMemory.setOtherMemory(memory3);
+        actionMemory.setConstantValue("Some string");
+        actionMemory.setFormula("n + 3");
+        actionMemory.setLocalVariable("Somevar");
+        maleSocket = digitalActionManager.registerAction(actionMemory);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionMemory = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
+        actionMemory.setComment("A comment");
+        actionMemory.setMemory(memory1);
+        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.CopyVariableToMemory);
+        actionMemory.setOtherMemory(memory3);
+        actionMemory.setConstantValue("Some string");
+        actionMemory.setFormula("n + 3");
+        actionMemory.setLocalVariable("Somevar");
+        maleSocket = digitalActionManager.registerAction(actionMemory);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionMemory = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
+        actionMemory.setComment("A comment");
+        actionMemory.setMemory(memory1);
+        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.SetToNull);
+        actionMemory.setOtherMemory(memory3);
+        actionMemory.setConstantValue("Some string");
+        actionMemory.setFormula("n + 3");
+        actionMemory.setLocalVariable("Somevar");
+        maleSocket = digitalActionManager.registerAction(actionMemory);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionMemory = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
+        actionMemory.setComment("A comment");
+        actionMemory.setMemory(memory1);
+        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.SetToString);
+        actionMemory.setOtherMemory(memory3);
+        actionMemory.setConstantValue("Some string");
+        actionMemory.setFormula("n + 3");
+        actionMemory.setLocalVariable("Somevar");
         maleSocket = digitalActionManager.registerAction(actionMemory);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         
@@ -794,6 +927,17 @@ public class StoreAndLoadTest {
         onChange.setComment("A comment");
         maleSocket = digitalBooleanActionManager.registerAction(onChange);
         booleanMany.getChild(2).connect(maleSocket);
+        
+        
+        LogLocalVariables logLocalVariables = new LogLocalVariables(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(logLocalVariables);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        logLocalVariables = new LogLocalVariables(digitalActionManager.getAutoSystemName(), null);
+        logLocalVariables.setComment("A comment");
+        maleSocket = digitalActionManager.registerAction(logLocalVariables);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
         DigitalMany many = new DigitalMany(digitalActionManager.getAutoSystemName(), null);

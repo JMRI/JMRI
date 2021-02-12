@@ -25,45 +25,27 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalAction_ActionLocalVariableType">
+    <xs:complexType name="LogixNG_DigitalAction_LogLocalVariablesType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a ActionLocalVariable class.
+          Define the XML stucture for storing the contents of a LogLocalVariables class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionLocalVariableXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.LogLocalVariablesXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
         
             <xs:sequence>
-
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
-              <xs:element name="variable" type="beanNameType" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1"/>
-
-              <xs:element name="variableOperation" minOccurs="0" maxOccurs="1">
-                <xs:simpleType>
-                  <xs:restriction base="xs:token">
-                    <xs:enumeration value="SetToNull"/>
-                    <xs:enumeration value="SetToString"/>
-                    <xs:enumeration value="CopyVariableToVariable"/>
-                    <xs:enumeration value="CopyMemoryToVariable"/>
-                    <xs:enumeration value="CalculateFormula"/>
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-
-              <xs:element name="constant" type="xs:string" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="otherVariable" type="xs:string" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
-            
-			<xs:attribute name="class" type="classType" use="required"/>
+
+<!--            <xs:attribute name="enabled" type="yesNoType" /> -->
+            <xs:attribute name="class" type="classType" use="required"/>
         
     </xs:complexType>
 

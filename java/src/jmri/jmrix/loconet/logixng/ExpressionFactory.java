@@ -39,7 +39,7 @@ public class ExpressionFactory implements DigitalExpressionFactory {
     public static final class LocoNet extends Category {
         
         public LocoNet() {
-            super("LOCONET", Bundle.getMessage("MenuLocoNet"), 300);
+            super("LOCONET", Bundle.getMessage("MenuLocoNet"), 1100);
         }
     }
 

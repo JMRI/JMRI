@@ -49,7 +49,9 @@ public class ActionMemoryXml extends jmri.managers.configurexml.AbstractNamedBea
         
         element.addContent(new Element("memoryOperation").addContent(p.getMemoryOperation().name()));
         
-        element.addContent(new Element("data").addContent(p.getData()));
+        element.addContent(new Element("constant").addContent(p.getConstantValue()));
+        element.addContent(new Element("variable").addContent(p.getLocalVariable()));
+        element.addContent(new Element("formula").addContent(p.getFormula()));
 
         return element;
     }
@@ -85,15 +87,25 @@ public class ActionMemoryXml extends jmri.managers.configurexml.AbstractNamedBea
             }
         }
 
-        Element data = shared.getChild("data");
-        if (data != null) {
+        Element constant = shared.getChild("constant");
+        if (constant != null) {
+            h.setConstantValue(constant.getTextTrim());
+        }
+        
+        Element variable = shared.getChild("variable");
+        if (variable != null) {
+            h.setLocalVariable(variable.getTextTrim());
+        }
+        
+        Element formula = shared.getChild("formula");
+        if (formula != null) {
             try {
-                h.setData(data.getTextTrim());
+                h.setFormula(formula.getTextTrim());
             } catch (ParserException e) {
-                log.error("cannot set data: " + data.getTextTrim(), e);
+                log.error("cannot set data: " + formula.getTextTrim(), e);
             }
         }
-
+        
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }

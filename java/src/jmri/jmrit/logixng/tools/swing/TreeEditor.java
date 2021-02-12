@@ -554,8 +554,16 @@ public class TreeEditor extends TreeViewer {
                             femaleSocket.unregisterListeners();
                             
                             Base object = femaleSocket.getConnectedSocket().getObject();
-                            ((NamedBean)object).setUserName(_addUserName.getText());
-                            ((NamedBean)object).setComment(_addComment.getText());
+                            if (_addUserName.getText().isEmpty()) {
+                                ((NamedBean)object).setUserName(null);
+                            } else {
+                                ((NamedBean)object).setUserName(_addUserName.getText());
+                            }
+                            if (_addComment.getText().isEmpty()) {
+                                ((NamedBean)object).setComment(null);
+                            } else {
+                                ((NamedBean)object).setComment(_addComment.getText());
+                            }
                             for (Map.Entry<SwingConfiguratorInterface, Base> entry : _swingConfiguratorInterfaceList) {
                                 entry.getKey().updateObject(entry.getValue());
                                 entry.getKey().dispose();

@@ -34,7 +34,7 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
         
         storeCommon(p, element);
 
-        String variableName = p.getVariableName();
+        String variableName = p.getLocalVariable();
         if (variableName != null) {
             element.addContent(new Element("variable").addContent(variableName));
         }
@@ -46,7 +46,9 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
         
         element.addContent(new Element("variableOperation").addContent(p.getVariableOperation().name()));
         
-        element.addContent(new Element("data").addContent(p.getData()));
+        element.addContent(new Element("constant").addContent(p.getConstantValue()));
+        element.addContent(new Element("otherVariable").addContent(p.getOtherLocalVariable()));
+        element.addContent(new Element("formula").addContent(p.getFormula()));
 
         return element;
     }
@@ -61,7 +63,7 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
 
         Element variableName = shared.getChild("variable");
         if (variableName != null) {
-            h.setVariable(variableName.getTextTrim());
+            h.setLocalVariable(variableName.getTextTrim());
         }
 
         Element memoryName = shared.getChild("memory");
@@ -79,16 +81,26 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
                 log.error("cannot set variable operation: " + queryType.getTextTrim(), e);
             }
         }
-
-        Element data = shared.getChild("data");
-        if (data != null) {
+        
+        Element constant = shared.getChild("constant");
+        if (constant != null) {
+            h.setConstantValue(constant.getTextTrim());
+        }
+        
+        Element otherVariable = shared.getChild("otherVariable");
+        if (otherVariable != null) {
+            h.setOtherLocalVariable(otherVariable.getTextTrim());
+        }
+        
+        Element formula = shared.getChild("formula");
+        if (formula != null) {
             try {
-                h.setData(data.getTextTrim());
+                h.setFormula(formula.getTextTrim());
             } catch (ParserException e) {
-                log.error("cannot set data: " + data.getTextTrim(), e);
+                log.error("cannot set data: " + formula.getTextTrim(), e);
             }
         }
-
+        
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }

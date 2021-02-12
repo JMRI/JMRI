@@ -335,7 +335,7 @@ public class TreePane extends JPanel implements PropertyChangeListener {
                 }
                 connectedItemLabel.setText(label);
                 if (connectedSocket.getComment() != null) {
-                    panel.setToolTipText(connectedSocket.getComment());
+                    mainPanel.setToolTipText(connectedSocket.getComment());
                 }
                 
                 for (VariableData variableData : connectedSocket.getLocalVariables()) {

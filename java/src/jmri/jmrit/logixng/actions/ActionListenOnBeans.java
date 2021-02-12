@@ -1,9 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
 import java.beans.*;
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import jmri.InstanceManager;
@@ -68,7 +66,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         }
         
         try {
-            NamedBeanType type = NamedBeanType.valueOf(parts[0].toUpperCase());
+            NamedBeanType type = NamedBeanType.valueOf(parts[0]);
             NamedBeanReference reference = new NamedBeanReference(parts[1], type);
             _namedBeanReferences.put(reference._name, reference);
         } catch (IllegalArgumentException e) {
@@ -89,6 +87,14 @@ public class ActionListenOnBeans extends AbstractDigitalAction
     public void removeReference(NamedBeanReference reference) {
         assertListenersAreNotRegistered(log, "removeReference");
         _namedBeanReferences.remove(reference._name);
+    }
+    
+    public Collection<NamedBeanReference> getReferences() {
+        return _namedBeanReferences.values();
+    }
+    
+    public void clearReferences() {
+        _namedBeanReferences.clear();
     }
     
     @Override
@@ -198,28 +204,44 @@ public class ActionListenOnBeans extends AbstractDigitalAction
     
     
     public enum NamedBeanType {
-        LIGHT(Bundle.getMessage("BeanNameLight"), Light.class, "KnownState", InstanceManager.getDefault(LightManager.class)),
-        MEMORY(Bundle.getMessage("BeanNameMemory"), Memory.class, "value", InstanceManager.getDefault(MemoryManager.class)),
-        SENSOR(Bundle.getMessage("BeanNameSensor"), Sensor.class, "KnownState", InstanceManager.getDefault(SensorManager.class)),
-        TURNOUT(Bundle.getMessage("BeanNameTurnout"), Turnout.class, "KnownState", InstanceManager.getDefault(TurnoutManager.class));
+        Light(Bundle.getMessage("BeanNameLight"), Light.class, "KnownState", () -> { return InstanceManager.getDefault(LightManager.class); }),
+        Memory(Bundle.getMessage("BeanNameMemory"), Memory.class, "value", () -> { return InstanceManager.getDefault(MemoryManager.class); }),
+        Sensor(Bundle.getMessage("BeanNameSensor"), Sensor.class, "KnownState", () -> { return InstanceManager.getDefault(SensorManager.class); }),
+        Turnout(Bundle.getMessage("BeanNameTurnout"), Turnout.class, "KnownState", () -> { return InstanceManager.getDefault(TurnoutManager.class); });
         
         private final String _name;
         private final Class<? extends NamedBean> _clazz;
         private final String _propertyName;
-        private final Manager<? extends NamedBean> _manager;
+        private final GetManager _getManager;
+        private Manager<? extends NamedBean> _manager;
         
-        NamedBeanType(String name, Class<? extends NamedBean> clazz, String propertyName, Manager<? extends NamedBean> manager) {
+        NamedBeanType(String name, Class<? extends NamedBean> clazz, String propertyName, GetManager getManager) {
             _name = name;
             _clazz = clazz;
             _propertyName = propertyName;
-            _manager = manager;
+            _getManager = getManager;
+            _manager = _getManager.getManager();
         }
         
-        public String getName() { return _name; }
+        @Override
+        public String toString() { return _name; }
         
         public Class<? extends NamedBean> getClazz() { return _clazz; }
         
         public Manager<? extends NamedBean> getManager() { return _manager; }
+        
+        // This method is used by test classes to reset this enum.
+        // Each test resets the InstanceManager so we need to reset the
+        // managers in this enum.
+        public static void reset() {
+            for (NamedBeanType type : NamedBeanType.values()) {
+                type._manager = type._getManager.getManager();
+            }
+        }
+        
+        private interface GetManager {
+            Manager<? extends NamedBean> getManager();
+        }
     }
     
     
@@ -243,12 +265,35 @@ public class ActionListenOnBeans extends AbstractDigitalAction
             return _name;
         }
         
+        public void setName(String name) {
+            _name = name;
+        }
+        
         public NamedBeanType getType() {
             return _type;
         }
         
+        public void setType(NamedBeanType type) {
+            if (type == null) throw new NullPointerException("type is null");
+            _type = type;
+        }
+        
         public NamedBeanHandle<? extends NamedBean> getHandle() {
             return _handle;
+        }
+        
+        public void updateHandle() {
+            if (!_name.isEmpty()) {
+                NamedBean bean = _type._manager.getNamedBean(_name);
+                if (bean != null) {
+                    _handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(_name, bean);
+                } else {
+                    log.warn("Cannot find named bean "+_name+" in manager for "+_type._manager.getBeanTypeHandled());
+                    _handle = null;
+                }
+            } else {
+                _handle = null;
+            }
         }
     }
     

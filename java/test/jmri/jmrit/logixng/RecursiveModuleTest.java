@@ -75,6 +75,7 @@ public class RecursiveModuleTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
+        ActionListenOnBeans.NamedBeanType.reset();
         
         n = InstanceManager.getDefault(MemoryManager.class).provide("IMN");
         n.setValue(1);
@@ -113,8 +114,8 @@ public class RecursiveModuleTest {
         ifThenElseSocket912.getChild(0).connect(maleSocket913);
         
         ActionLocalVariable actionLocalVariable914 = new ActionLocalVariable("IQDA914", null);
-        actionLocalVariable914.setVariable("result");
-        actionLocalVariable914.setData("1");   // Since this is a formula, it's the number 1, not the string "1"
+        actionLocalVariable914.setLocalVariable("result");
+        actionLocalVariable914.setFormula("1");   // Since this is a formula, it's the number 1, not the string "1"
         actionLocalVariable914.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
         MaleSocket maleSocket914 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionLocalVariable914);
@@ -137,8 +138,8 @@ public class RecursiveModuleTest {
         ifThenElse915.getChild(0).connect(maleSocket916);
         
         ActionLocalVariable actionLocalVariable917 = new ActionLocalVariable("IQDA917", null);
-        actionLocalVariable917.setVariable("result");
-        actionLocalVariable917.setData("1");   // Since this is a formula, it's the number 1, not the string "1"
+        actionLocalVariable917.setLocalVariable("result");
+        actionLocalVariable917.setFormula("1");   // Since this is a formula, it's the number 1, not the string "1"
         actionLocalVariable917.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
         MaleSocket maleSocket917 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionLocalVariable917);
@@ -170,8 +171,8 @@ public class RecursiveModuleTest {
         manySocket921.getChild(1).connect(maleSocket932);
         
         ActionLocalVariable actionLocalVariable933 = new ActionLocalVariable("IQDA933", null);
-        actionLocalVariable933.setVariable("result");
-        actionLocalVariable933.setData("temp1 + temp2");
+        actionLocalVariable933.setLocalVariable("result");
+        actionLocalVariable933.setFormula("temp1 + temp2");
         actionLocalVariable933.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
         MaleSocket maleSocket933 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionLocalVariable933);
@@ -192,7 +193,7 @@ public class RecursiveModuleTest {
         conditionalNG.getChild(0).connect(manySocket);
         
         ActionListenOnBeans listenOnBeans = new ActionListenOnBeans("IQDA2", null);
-        listenOnBeans.addReference(new NamedBeanReference("IMN", ActionListenOnBeans.NamedBeanType.MEMORY));
+        listenOnBeans.addReference(new NamedBeanReference("IMN", ActionListenOnBeans.NamedBeanType.Memory));
 //        listenOnBeans.addReference("Turnoaut:IT1");
 //        listenOnBeans.addReference("Turnout:IT1xx");
 //        listenOnBeans.addReference("senSorIS1");

@@ -268,27 +268,27 @@ public class ForTest extends AbstractDigitalActionTestBase {
                 new DigitalMany(digitalActionManager.getAutoSystemName(), null));
         
         ActionLocalVariable lv = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
-        lv.setVariable("n");
+        lv.setLocalVariable("n");
         lv.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
-        lv.setData("2");
+        lv.setFormula("2");
         m1.getChild(0).connect(digitalActionManager.registerAction(lv));
         
         lv = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
-        lv.setVariable("fn_2");
+        lv.setLocalVariable("fn_2");
         lv.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
-        lv.setData("0");
+        lv.setFormula("0");
         m1.getChild(1).connect(digitalActionManager.registerAction(lv));
         
         lv = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
-        lv.setVariable("fn_1");
+        lv.setLocalVariable("fn_1");
         lv.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
-        lv.setData("1");
+        lv.setFormula("1");
         m1.getChild(2).connect(digitalActionManager.registerAction(lv));
         
         lv = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
-        lv.setVariable("result");
+        lv.setLocalVariable("result");
         lv.setVariableOperation(ActionLocalVariable.VariableOperation.SetToString);
-        lv.setData("0, 1");
+        lv.setConstantValue("0, 1");
         m1.getChild(3).connect(digitalActionManager.registerAction(lv));
 /*        
         lv = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
@@ -306,9 +306,9 @@ public class ForTest extends AbstractDigitalActionTestBase {
         
         
         lv = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
-        lv.setVariable("n");
+        lv.setLocalVariable("n");
         lv.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
-        lv.setData("n + 1");
+        lv.setFormula("n + 1");
         _for.getChild(2).connect(digitalActionManager.registerAction(lv));
         
         
@@ -316,39 +316,39 @@ public class ForTest extends AbstractDigitalActionTestBase {
                 new DigitalMany(digitalActionManager.getAutoSystemName(), null));
         
         lv = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
-        lv.setVariable("fn");
+        lv.setLocalVariable("fn");
         lv.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
-        lv.setData("fn_1 + fn_2");
+        lv.setFormula("fn_1 + fn_2");
         m1.getChild(0).connect(digitalActionManager.registerAction(lv));
         
         lv = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
-        lv.setVariable("fn_2");
+        lv.setLocalVariable("fn_2");
         lv.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
-        lv.setData("fn_1");
+        lv.setFormula("fn_1");
         m1.getChild(1).connect(digitalActionManager.registerAction(lv));
         
         lv = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
-        lv.setVariable("fn_1");
+        lv.setLocalVariable("fn_1");
         lv.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
-        lv.setData("fn");
+        lv.setFormula("fn");
         m1.getChild(2).connect(digitalActionManager.registerAction(lv));
         
         lv = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
-        lv.setVariable("result");
+        lv.setLocalVariable("result");
         lv.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
-        lv.setData("result + \", \" + str(fn)");
+        lv.setFormula("result + \", \" + str(fn)");
         m1.getChild(3).connect(digitalActionManager.registerAction(lv));
         
         ActionMemory lm = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
         lm.setMemory("IM_RESULT");
         lm.setMemoryOperation(ActionMemory.MemoryOperation.CopyVariableToMemory);
-        lm.setData("result");
+        lm.setLocalVariable("result");
         m1.getChild(4).connect(digitalActionManager.registerAction(lm));
 /*        
         lv = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
         lv.setVariable("debug");
         lv.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
-        lv.setData("debug + format(\"N: %d, n: %d, fn_2: %d, fn_1: %d, fn: %d, result: %s%n\", N, n, fn_2, fn_1, fn, result)");
+        lv.setFormula("debug + format(\"N: %d, n: %d, fn_2: %d, fn_1: %d, fn: %d, result: %s%n\", N, n, fn_2, fn_1, fn, result)");
         m1.getChild(5).connect(digitalActionManager.registerAction(lv));
         
         lm = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
