@@ -1,0 +1,16 @@
+<!-- C'est la partie locale de la barre lat&#233;rale pour la signalisation -->
+
+<dt><h3><a href="index.shtml">Signalisation</a></h3><</dt>
+		<dd>Ajouter des signaux &#224; votre mise en page avec JMRI.
+		    <ul>
+		    <li><a href="SignalingSetup.shtml">D&#233;marrage rapide de la signalisation </a>.
+		    <li><a href="AspectSignaling.shtml">Aspect Signalisation</a>
+		    <li><a href="SignalHeads.shtml">Feux de Signalisation</a>
+		    <li><a href="SignalMasts.shtml">M&#226;ts de Signalisation</a>
+		    <li><a href="SignalGroups.shtml">Groupes de signaux</a>
+		    <li><a href="SignalMastLogic.shtml">Logique M&#226;ts de Signalisation</a>
+		    <li><a href="interlock/index.shtml">Verrouillage Entr&#233;e/Sortie</a>
+		    <li><a href="../../../package/jmri/jmrit/cabsignals/CabSignalPane.shtml">Cab Signalisation</a>Cab
+		    </ul>
+		</dd>
+
