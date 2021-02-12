@@ -16,10 +16,18 @@ public class TaskAllocateRelease {
         allocatedSection = aSection;
         terminateingTrain = termTrain;
     }
+    
+    TaskAllocateRelease(TaskAction action, AllocationRequest aRequest) {
+        act = action;
+        allocationRequest = aRequest;
+    }
+
 
     private TaskAction act;
     private String trainName = null;
     private AllocatedSection allocatedSection = null;
+    private AllocationRequest allocationRequest = null;
+    
     private boolean terminateingTrain = false;
 
     public enum TaskAction {
@@ -27,7 +35,8 @@ public class TaskAllocateRelease {
         RELEASE_RESERVED,
         RELEASE_ONE,
         AUTO_RELEASE,
-        ABORT;
+        ABORT,
+        ALLOCATE_IMMEDIATE;
     }
 
     public TaskAction getAction() {
@@ -45,4 +54,9 @@ public class TaskAllocateRelease {
     public boolean getTerminatingTrain() {
         return terminateingTrain;
     }
+    
+    public AllocationRequest getAllocationRequest() {
+        return allocationRequest;
+    }
+    
 }

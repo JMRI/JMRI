@@ -9,7 +9,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 /**
- * Supporting class for Uhlenbrock LocoNet LNCV Programming Format messaging.
+ * Supporting class for Uhlenbrock LocoNet LNCV Programming and Direct Format messaging.
  * Structure adapted from {@link jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents}
  * 
  * Some of the message formats used in this class are Copyright Uhlenbrock.de
@@ -45,6 +45,7 @@ public class LncvMessageContents {
     public final static int LNCV_LENGTH_ELEMENT_VALUE = 0x0f;
     public final static int LNCV_LNMODULE_VALUE = 0x05;
     public final static int LNCV_CS_SRC_VALUE = 0x01;
+    public final static int LNCV_PC_SRC_VALUE = 0x08;
     public final static int LNCV_CSDEST_VALUE = 0x4b49;
     public final static int LNCV_ALL = 0xffff; // decimal 65535
     public final static int LNCV_ALL_MASK = 0xff00; // decimal 65535
@@ -84,6 +85,8 @@ public class LncvMessageContents {
     //    public final static int LNCV_DATA_END = 0x40;
     public final static int LNCV_DATA_PROFF_MASK = 0x40;
     public final static int LNCV_DATA_PRON_MASK = 0x80;
+    public final static int LNCV_DATA_LED1_MASK = 0xff;
+    public final static int LNCV_DATA_LED2_MASK = 0xfe;
     public final static int LNCV_DATA_RO_MASK = 0x01;
 
     // helpers for decoding LNCV_CMD
@@ -150,19 +153,19 @@ public class LncvMessageContents {
     public static boolean isSupportedLncvMessage(LocoNetMessage m) {
         // must be OPC_PEER_XFER or OPC_IMM_PACKET opcode
         if ((m.getOpCode() != LnConstants.OPC_PEER_XFER) && (m.getOpCode() != LnConstants.OPC_IMM_PACKET)) {
-            //log.debug("cannot be LNCV message because not OPC_PEER_XFER or OPC_IMM_PACKET");  // NOI18N
+            //log.debug("cannot be LNCV message because not OPC_PEER_XFER (0xe5) or OPC_IMM_PACKET (0xed)");  // NOI18N
             return false;
         }
 
         // length must be 0x0f
         if (m.getElement(1) != LNCV_LENGTH_ELEMENT_VALUE) {
-            log.debug("cannot be LNCV message because not length 0x0f");  // NOI18N
+            //log.debug("cannot be LNCV message because not length 0x0f");  // NOI18N
             return false;
         }
 
         // <SRC_ELEMENT> must be correct
-        if ((m.getElement(LNCV_SRC_ELEMENT_INDEX) != LNCV_CS_SRC_VALUE) && (m.getElement(LNCV_SRC_ELEMENT_INDEX) != LNCV_LNMODULE_VALUE)) {
-            log.debug("cannot be LNCV message because Source not correct");  // NOI18N
+        if ((m.getElement(LNCV_SRC_ELEMENT_INDEX) != LNCV_CS_SRC_VALUE) && (m.getElement(LNCV_SRC_ELEMENT_INDEX) != LNCV_LNMODULE_VALUE) && (m.getElement(LNCV_SRC_ELEMENT_INDEX) != LNCV_PC_SRC_VALUE)) {
+            //log.debug("cannot be LNCV message because Source not correct");  // NOI18N
             return false;
         }
 
@@ -191,7 +194,7 @@ public class LncvMessageContents {
 
     /**
      * Interpret a LocoNet message to determine its LNCV compound Programming Format.
-     * If the message is not an LNCV Programming Format message, returns null.
+     * If the message is not an LNCV Programming/Direct Format message, returns null.
      *
      * @param m LocoNet message containing LNCV Programming Format message
      * @return LncvCommand found in the LNCV Programming Format message or null if not found
@@ -262,6 +265,18 @@ public class LncvMessageContents {
             case LNCV_READ_REPLY: // mod positions store CV value in ReadReply
                 returnString = Bundle.getMessage(locale, "LNCV_READ_REPLY_INTERPRETED", sArt, sCvn, sMod);
                 break;
+            case LNCV_DIRECT_LED1: // CV position contains module address, Value position contains LED 0-15 on/off
+                String modBin = String.format("%8s", Integer.toBinaryString(mod)).replace(' ', '0');
+                returnString = Bundle.getMessage(locale, "LNCV_DIRECT_INTERPRETED", "1", modBin, sCvn);
+                break;
+            case LNCV_DIRECT_LED2: // CV position contains module address, Value position contains LED 16-31 on/off
+                modBin = String.format("%8s", Integer.toBinaryString(mod)).replace(' ', '0');
+                returnString = Bundle.getMessage(locale, "LNCV_DIRECT_INTERPRETED", "2", modBin, sCvn);
+                //to16Bits(cvn, true));
+                break;
+            case LNCV_DIRECT_REPLY: // CV position contains module address, value position = Button on/off message
+                returnString = Bundle.getMessage(locale, "LNCV_DIRECT_REPLY_INTERPRETED", sCvn, sMod);
+                break;
             default:
                 return Bundle.getMessage(locale, "LNCV_UNDEFINED_MESSAGE") + "\n";
         }
@@ -278,7 +293,7 @@ public class LncvMessageContents {
      * @return true if the possibleCmd value is one of the supported (simple) LNCV Programming Format commands
      */
     public static boolean isSupportedLncvCommand(int command, int opc, int cmdData) {
-        log.debug("CMD = {}-{}-{}", command, opc, cmdData);
+        //log.debug("CMD = {}-{}-{}", command, opc, cmdData);
         for (LncvCommand commandToCheck : LncvCommand.values()) {
             if (commandToCheck.matches(command, opc, cmdData)) {
                 return true;
@@ -598,7 +613,25 @@ public class LncvMessageContents {
     }
 
     /**
-     * LNCV Commands mapped to sets of 3 parts in message. LNCV knows only 3 simple &lt;CMD&gt; values.
+     * Create LocoNet message to set aseries of Track-Control module display LEDs.
+     *
+     * @param moduleAddress  address of the module
+     * @param ledValue  CV number to query
+     * @param range2 true if intended for LED2 Command (leds 16-31), fasle for LED1 (0-15)
+     * @return LocoNet message
+     */
+    public static LocoNetMessage createDirectWriteRequest(int moduleAddress, int ledValue, boolean range2) {
+        return createLncvMessage(
+                LNCV_PC_SRC_VALUE,
+                0x5,
+                (range2 ? LncvCommand.LNCV_DIRECT_LED2 : LncvCommand.LNCV_DIRECT_LED1),
+                6900,
+                moduleAddress, // special: CV position [D3-D4] contains the module address
+                ledValue);
+    }
+
+    /**
+     * LNCV Commands mapped to unique sets of 3 parts in message. LNCV knows only 3 simple &lt;CMD&gt; values.
      */
     public enum LncvCommand { // commands mapped to 3 values in message, LNCV knows only 3 simple commands
         LNCV_WRITE (LNCV_CMD_WRITE, LnConstants.OPC_IMM_PACKET, 0x00), // CMD=0x20, CmdData=0x0
@@ -606,7 +639,10 @@ public class LncvMessageContents {
         LNCV_READ (LNCV_CMD_READ, LnConstants.OPC_IMM_PACKET, 0x00), // CMD=0x21, CmdData=0x0
         LNCV_READ_REPLY (LNCV_CMD_READ_REPLY, LnConstants.OPC_PEER_XFER, 0x00), // CMD=0x1f, CmdData=0x0
         LNCV_PROG_START (LNCV_CMD_READ, LnConstants.OPC_IMM_PACKET, LNCV_DATA_PRON_MASK), // CMD=0x21, CmdData=0x80
-        LNCV_PROG_END (LNCV_CMD_READ, LnConstants.OPC_PEER_XFER, LNCV_DATA_PROFF_MASK); // CMD=0x21, CmdData=0x40
+        LNCV_PROG_END (LNCV_CMD_READ, LnConstants.OPC_PEER_XFER, LNCV_DATA_PROFF_MASK), // CMD=0x21, CmdData=0x40
+        LNCV_DIRECT_LED1 (LNCV_CMD_WRITE, LnConstants.OPC_IMM_PACKET, LNCV_DATA_LED1_MASK), // CMD=0x20, CmdData=0xff
+        LNCV_DIRECT_LED2 (LNCV_CMD_WRITE, LnConstants.OPC_IMM_PACKET, LNCV_DATA_LED2_MASK), // CMD=0x20, CmdData=0xfe
+        LNCV_DIRECT_REPLY (LNCV_CMD_READ_REPLY, LnConstants.OPC_PEER_XFER, LNCV_DATA_LED1_MASK); // CMD=0x1f, CmdData=0xff
 
         private final int cmd;
         private final int opc;

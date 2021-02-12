@@ -2485,7 +2485,8 @@ public class TrainBuilder extends TrainCommon {
         _success = false;
         for (_carIndex = 0; _carIndex < _carList.size(); _carIndex++) {
             Car car = _carList.get(_carIndex);
-            // second pass deals with cars that have a final destination equal to this location.
+            // second pass deals with cars that have a final destination equal to this
+            // location.
             // therefore a local move can be made. This causes "off spots" to be serviced.
             if (isSecondPass && !car.getFinalDestinationName().equals(rl.getName())) {
                 continue;
@@ -4117,13 +4118,12 @@ public class TrainBuilder extends TrainCommon {
         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarHasAssignedDest"),
                 new Object[] { car.toString(), (car.getDestinationName() + ", " + car.getDestinationTrackName()) }));
         RouteLocation rld = _train.getRoute().getLastLocationByName(car.getDestinationName());
-        // code check, router doesn't set a car's destination if not carried by train
-        // being built
         if (rld == null) {
-            // car has a destination that isn't serviced by this train
-            addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildExcludeCarDestNotPartRoute"),
+            // code check, router doesn't set a car's destination if not carried by train
+            // being built. Car has a destination that isn't serviced by this train. Find
+            // buildExcludeCarDestNotPartRoute in loadRemoveAndListCars()
+            throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildExcludeCarDestNotPartRoute"),
                     new Object[] { car.toString(), car.getDestinationName(), _train.getRoute().getName() }));
-            return true; // done
         }
         // A car can have a routeLocation if the train wasn't reset before a build
         if (car.getRouteLocation() != null) {
@@ -4629,7 +4629,7 @@ public class TrainBuilder extends TrainCommon {
                                 new Object[] { car.getTrackName(), testTrack.getName() }));
                         continue;
                     }
-                    // No local moves from yard to yard
+                    // No local moves from yard to yard, except for cabooses and cars with FRED
                     if (_train.isLocalSwitcher() &&
                             !Setup.isLocalYardMovesEnabled() &&
                             testTrack.isYard() &&
@@ -4650,12 +4650,8 @@ public class TrainBuilder extends TrainCommon {
                                         new Object[] { car.getTrackName(), testTrack.getName() }));
                         continue;
                     }
-
-                    // not staging, then use (should never be staging TODO throw an exception?)
-                    if (!testTrack.isStaging()) {
-                        trackTemp = testTrack;
-                        break;
-                    }
+                    trackTemp = testTrack;
+                    break;
                 }
             }
             // did we find a new destination?
@@ -4684,7 +4680,7 @@ public class TrainBuilder extends TrainCommon {
                             break; // done
                         }
                         if (rle.getName().equals(rld.getName()) &&
-                                (rle.getMaxCarMoves() - rle.getCarMoves() > 0) &&
+                                (rle.getCarMoves() < rle.getMaxCarMoves()) &&
                                 rle.isDropAllowed() &&
                                 checkDropTrainDirection(car, rle, trackTemp)) {
                             log.debug("Found an earlier drop for car ({}) destination ({})", car.toString(),
@@ -4818,7 +4814,7 @@ public class TrainBuilder extends TrainCommon {
                         new Object[] { car.toString(), rld.getName(), rld.getId() }));
                 return false;
             }
-            if (rld.getMaxCarMoves() - rld.getCarMoves() <= 0) {
+            if (rld.getCarMoves() >= rld.getMaxCarMoves()) {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildNoPickupLaterMoves"),
                         new Object[] { car.toString(), rld.getName(), rld.getId() }));
                 return false;
@@ -5002,9 +4998,10 @@ public class TrainBuilder extends TrainCommon {
         }
         return redirected;
     }
-    
+
     /**
      * report any cars left at route location
+     * 
      * @param rl route location
      */
     private void reportCarsNotMoved(RouteLocation rl) {
