@@ -117,6 +117,8 @@ public class HexFileFrame extends JmriJFrame implements LocoNetListener {
         jButton1.addActionListener(this::jButton1ActionPerformed);
         delayField.addActionListener(this::delayFieldActionPerformed);
         simReplyBox.addActionListener(this::simReplyActionPerformed);
+
+        pack();
     }
 
     boolean connected = false;
