@@ -155,71 +155,67 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         // check to see if car will move to destination using a single train
         if (checkForSingleTrain(car, clone)) {
             return true; // a single train can service this car
-        } else if (Setup.isCarRoutingEnabled()) {
-            log.debug("Car ({}) final destination ({}) is not served by a single train", car,
-                    car.getFinalDestinationName());
-            // was the request for a local move?
-            if (car.getLocationName().equals(car.getFinalDestinationName())) {
-                addLine(_buildReport, SEVEN,
-                        MessageFormat.format(Bundle.getMessage("RouterCouldNotFindTrain"),
-                                new Object[] { car.getLocationName(), car.getTrackName(), car.getFinalDestinationName(),
-                                        car.getFinalDestinationTrackName() }));
-                // _status = STATUS_NO_TRAINS;
-                // return false; // maybe next time
-            }
-            if (_addtoReport) {
-                addLine(_buildReport, SEVEN, BLANK_LINE);
-                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterBeginTwoTrain"),
-                        new Object[] { car.toString(), car.getLocationName(), car.getFinalDestinationName() }));
-            }
-
-            _nextLocationTracks.clear();
-            _lastLocationTracks.clear();
-            _otherLocationTracks.clear();
-            _nextLocationTrains.clear();
-            _lastLocationTrains.clear();
-
-            // first try using 2 trains and an interchange track to route the car
-            if (setCarDestinationTwoTrainsInterchange(car)) {
-                if (car.getDestination() == null) {
-                    log.debug(
-                            "Was able to find a route via classification/interchange track, but not using train ({})" +
-                                    " or car destination not set, try again using yard tracks",
-                            _train.getName()); // NOI18N
-                    if (setCarDestinationTwoTrainsYard(car)) {
-                        log.debug("Was able to find route via yard ({}, {}) for car ({})", car.getDestinationName(),
-                                car.getDestinationTrackName(), car);
-                    }
-                } else {
-                    log.debug("Was able to find route via interchange ({}, {}) for car ({})", car.getDestinationName(),
-                            car.getDestinationTrackName(), car);
-                }
-                // now try 2 trains using a yard track
-            } else if (setCarDestinationTwoTrainsYard(car)) {
-                log.debug("Was able to find route via yard ({}, {}) for car ({}) using two trains",
-                        car.getDestinationName(), car.getDestinationTrackName(), car);
-                // now try 3 or more trains to route car, but not through staging
-            } else if (setCarDestinationMultipleTrains(car, false)) {
-                log.debug("Was able to find multiple train route for car ({})", car);
-                // now try 2 trains using a staging track to connect
-            } else if (setCarDestinationTwoTrainsStaging(car)) {
-                log.debug("Was able to find route via staging ({}, {}) for car ({}) using two trains",
-                        car.getDestinationName(), car.getDestinationTrackName(), car);
-                // now try 3 or more trains to route car, include staging if enabled
-            } else if (setCarDestinationMultipleTrains(car, true)) {
-                log.debug("Was able to find multiple train route for car ({}) through staging", car);
-            } else {
-                log.debug("Wasn't able to set route for car ({})", car);
-                _status = STATUS_NOT_ABLE;
-                return false; // maybe next time
-            }
-        } else {
+        }
+        if (!Setup.isCarRoutingEnabled()) {
             log.debug("Car ({}) final destination ({}) is not served directly by any train", car,
                     car.getFinalDestinationName()); // NOI18N
             _status = STATUS_ROUTER_DISABLED;
             car.setFinalDestination(null);
             car.setFinalDestinationTrack(null);
             return false;
+        }
+        log.debug("Car ({}) final destination ({}) is not served by a single train", car,
+                car.getFinalDestinationName());
+        // was the request for a local move? Try multiple trains to move car
+        if (car.getLocationName().equals(car.getFinalDestinationName())) {
+            addLine(_buildReport, SEVEN,
+                    MessageFormat.format(Bundle.getMessage("RouterCouldNotFindTrain"),
+                            new Object[] { car.getLocationName(), car.getTrackName(), car.getFinalDestinationName(),
+                                    car.getFinalDestinationTrackName() }));
+        }
+        if (_addtoReport) {
+            addLine(_buildReport, SEVEN, BLANK_LINE);
+            addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterBeginTwoTrain"),
+                    new Object[] { car.toString(), car.getLocationName(), car.getFinalDestinationName() }));
+        }
+
+        _nextLocationTracks.clear();
+        _lastLocationTracks.clear();
+        _otherLocationTracks.clear();
+        _nextLocationTrains.clear();
+        _lastLocationTrains.clear();
+
+        // first try using 2 trains and an interchange track to route the car
+        if (setCarDestinationTwoTrainsInterchange(car)) {
+            if (car.getDestination() == null) {
+                log.debug("Was able to find a route via classification/interchange track, but not using train ({})" +
+                        " or car destination not set, try again using yard tracks", _train.getName()); // NOI18N
+                if (setCarDestinationTwoTrainsYard(car)) {
+                    log.debug("Was able to find route via yard ({}, {}) for car ({})", car.getDestinationName(),
+                            car.getDestinationTrackName(), car);
+                }
+            } else {
+                log.debug("Was able to find route via interchange ({}, {}) for car ({})", car.getDestinationName(),
+                        car.getDestinationTrackName(), car);
+            }
+            // now try 2 trains using a yard track
+        } else if (setCarDestinationTwoTrainsYard(car)) {
+            log.debug("Was able to find route via yard ({}, {}) for car ({}) using two trains",
+                    car.getDestinationName(), car.getDestinationTrackName(), car);
+            // now try 3 or more trains to route car, but not through staging
+        } else if (setCarDestinationMultipleTrains(car, false)) {
+            log.debug("Was able to find multiple train route for car ({})", car);
+            // now try 2 trains using a staging track to connect
+        } else if (setCarDestinationTwoTrainsStaging(car)) {
+            log.debug("Was able to find route via staging ({}, {}) for car ({}) using two trains",
+                    car.getDestinationName(), car.getDestinationTrackName(), car);
+            // now try 3 or more trains to route car, include staging if enabled
+        } else if (setCarDestinationMultipleTrains(car, true)) {
+            log.debug("Was able to find multiple train route for car ({}) through staging", car);
+        } else {
+            log.debug("Wasn't able to set route for car ({})", car);
+            _status = STATUS_NOT_ABLE;
+            return false; // maybe next time
         }
         return true; // car's destination has been set
     }
@@ -638,11 +634,11 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
     private boolean setCarDestinationMultipleTrains(Car car, boolean useStaging) {
         if (useStaging && !Setup.isCarRoutingViaStagingEnabled())
             return false; // routing via staging is disabled
-        
+
         if (_addtoReport) {
             addLine(_buildReport, SEVEN, BLANK_LINE);
         }
-        
+
         if (_lastLocationTracks.isEmpty()) {
             if (useStaging) {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCouldNotFindStaging"),
@@ -715,7 +711,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
 
     private boolean routeUsing3Trains(Car car) {
         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterNTrains"),
-                new Object[] { "3", car.getFinalDestinationName(),  car.getFinalDestinationTrackName()}));
+                new Object[] { "3", car.getFinalDestinationName(), car.getFinalDestinationTrackName() }));
         Car testCar = clone(car); // reload
         boolean foundRoute = false;
         for (Track nlt : _nextLocationTracks) {

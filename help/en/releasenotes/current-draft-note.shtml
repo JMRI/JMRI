@@ -302,6 +302,11 @@
                 <li></li>
             </ul>
 
+        <h4>Tam Valley Depot</h4>
+            <ul>
+                <li>Updated the QuadLN_S template to support the 16 servo capability in the Version 3 software</li>
+            </ul>
+
         <h4>TCS</h4>
             <ul>
                 <li></li>
@@ -324,7 +329,10 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li>Added new definitions to program Power4, Power8 (boosters) and IntelliLight module.</li>
+                <li>New definitions to program Power4, Power8 (boosters) and IntelliLight 28x0 modules.</li>
+                <li>For Uhlenbrock Track-Control modules a Direct Message type was added to the LNCV protocol.
+                  The Lncv Programming tool has a new checkbox 'Direct Mode', allowing to set LEDs etc.</li>
+                <li>Two new Track-Control definitions (art. 69220 Turnout and 69230 Signal Module)</li>
             </ul>
 
         <h4>Umelec</h4>
@@ -406,6 +414,7 @@
           <li>The Settings menu was slightly reorganized with submenus for each value.</li>
           <li>When no meters are available, both Meters menus and the Units Settings menu show a short explanation.</li>
           <li>Meters will honor the JMRI Locale/regional setting for the decimal separator (. or ,))</li>
+          <li>Meters now use meter max and resolution to default integer and decimal digits</li>
         </ul>
 
     <h3>Operations</h3>
@@ -522,7 +531,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Fix Jynstrument instantiation on Windows (cleaner URI to path method). <a href="https://groups.io/g/jmriusers/topic/the_jynstruments/78674589"> User message 78674589</a></li>
         </ul>
 
     <h3>Timetable</h3>

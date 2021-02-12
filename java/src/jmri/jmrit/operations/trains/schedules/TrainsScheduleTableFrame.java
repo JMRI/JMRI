@@ -9,20 +9,12 @@ import java.io.File;
 import java.text.MessageFormat;
 import java.util.Enumeration;
 import java.util.List;
-import javax.swing.AbstractButton;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -34,8 +26,6 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import jmri.swing.JTablePersistenceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for adding and editing train schedules for operations.
@@ -215,7 +205,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         setJMenuBar(menuBar);
 
         // add help menu to window
-        addHelpMenu("package.jmri.jmrit.operations.Operations_TrainSchedule", true); // NOI18N
+        addHelpMenu("package.jmri.jmrit.operations.Operations_TrainSchedules", true); // NOI18N
 
         setTitle(Bundle.getMessage("TitleScheduleTrains"));
 

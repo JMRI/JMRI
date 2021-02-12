@@ -12,168 +12,233 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
-	<version author="robin@n3ix.com" version="2.03.1" lastUpdated="20180410"/>
-	<decoder>
-		<family name="Quad-LN_S" mfg="Tam Valley Depot" type="stationary" comment="The Quad-LN_S is programmed in OPs mode except for the device address.">
-			<model model="Quad-LN_S_v1" comment="4 Servo Driver with Signaling or 4 additonal Servos" lowVersionID="6"/>
-		</family>
+   <version author="robin@n3ix.com" version="3.00.1" lastUpdated="20200902"/>
+   <decoder>
+        <family name="Quad-LN_S" mfg="Tam Valley Depot" type="stationary" comment="The Quad-LN_S is programmed in OPs mode except for the device address.">
+            <model model="Quad-LN_S_v1" comment="4 or 8 Servo Driver with Signaling and Detection options" lowVersionID="6"/>
+            <model model="Quad-LN_S_v3" comment="4, 8, 12 or 16 Servo Driver with Signaling and Detection options" lowVersionID="7"/>
+        </family>
         <programming direct="no" paged="yes" register="no" ops="no">
             <mode>LOCONETOPSBOARD</mode>
         </programming>
-		
-		<variables>
+      
+        <variables>
             <variable item="Expansion" CV="11" mask="XXXXXXVV" default="0">
-				<enumVal>
-					<enumChoice choice="Relays 1-4"/>
-					<enumChoice choice="Signaling"/>
-					<enumChoice choice="Servos 5-8"/>
-				</enumVal>
-			</variable>
-			<variable item="Servo State Memory" CV="11" mask="XXXXXVXX" default="1">
-				<enumVal>
-					<enumChoice choice="Disable"/>
-					<enumChoice choice="Enable"/>
-				</enumVal>
-			</variable>
-			<variable item="Signal State Memory" CV="11" mask="XXXXVXXX" default="0">
-				<enumVal>
-					<enumChoice choice="Disable"/>
-					<enumChoice choice="Enable"/>
-				</enumVal>
-			</variable>
-			<variable item="Send Output Off" CV="11" mask="XXXVXXXX" default="1">
-				<enumVal>
-					<enumChoice choice="Disable"/>
-					<enumChoice choice="Enable"/>
-				</enumVal>
-			</variable>
-			<variable item="Local Actions" CV="11" mask="XXVXXXXX" default="1">
-				<enumVal>
-					<enumChoice choice="Perform Internally"/>
-					<enumChoice choice="Visible on Loconet"/>
-				</enumVal>
-			</variable>
-			<variable item="Lock Indicator" CV="11" mask="XVXXXXXX" default="0">
-				<enumVal>
-					<enumChoice choice="Blink when Locked"/>
-					<enumChoice choice="Blink when Unlocked"/>
-				</enumVal>
-			</variable>
-			<variable item="DCC Busy Retry" CV="11" mask="VXXXXXXX" default="1">
-				<enumVal>
-					<enumChoice choice="Disable"/>
-					<enumChoice choice="Enable"/>
-				</enumVal>
-			</variable>
+                <enumVal>
+                    <enumChoice choice="Relay"/>
+                    <enumChoice choice="Signaling"/>
+                    <enumChoice choice="Servo"/>
+                </enumVal>
+            </variable>
+            <variable item="ServoExp" CV="11" mask="XXXXXXVX" default="0">
+                <decVal/>
+             </variable>
+         
+            <variable item="IO Mode" CV="11" mask="XXVVXXXX" default="0" include="Quad-LN_S_v3">
+                <enumVal>
+                    <enumChoice choice="Both IO"/>
+                    <enumChoice choice="Main IO, Aux Servo"/>
+                    <enumChoice choice="Both Servo" value="3"/>
+                </enumVal>
+            </variable>
+            <variable item="ServoMain" CV="11" mask="XXVXXXXX" default="0" include="Quad-LN_S_v3">
+                <decVal/>
+            </variable>
+            <variable item="ServoAux" CV="11" mask="XXXVXXXX" default="0" include="Quad-LN_S_v3">
+                <decVal/>
+            </variable>
+            <variable item="Servo16" CV="11" mask="XXVVXXVX" default="0" include="Quad-LN_S_v3">
+                <decVal/>
+            </variable>
+            <variable item="Send Output Off" CV="11" mask="XXXVXXXX" default="1" exclude="Quad-LN_S_v3">
+                <enumVal>
+                    <enumChoice choice="Disable"/>
+                    <enumChoice choice="Enable"/>
+                </enumVal>
+            </variable>
+            <variable item="Local Actions" CV="11" mask="XXVXXXXX" default="1" exclude="Quad-LN_S_v3">
+                <enumVal>
+                    <enumChoice choice="Perform Internally"/>
+                    <enumChoice choice="Visible on Loconet"/>
+                </enumVal>
+            </variable>
+             <variable item="IO Mode" CV="11" mask="XXXXXXXX" default="0" exclude="Quad-LN_S_v3">
+                <enumVal>
+                    <enumChoice choice="Both IO"/>
+                </enumVal>
+            </variable>
+           <variable item="ServoMain" CV="11" mask="XXXXXXXX" default="0" exclude="Quad-LN_S_v3">
+                <decVal/>
+            </variable>
+            <variable item="ServoAux" CV="11" mask="XXXXXXXX" default="0" exclude="Quad-LN_S_v3">
+                <decVal/>
+            </variable>
+            <variable item="Servo16" CV="11" mask="XXXXXXVX" default="0" exclude="Quad-LN_S_v3">
+                <decVal/>
+            </variable>
+         
+            <variable item="Signaling" CV="11" mask="XXXXXXXV" default="0">
+                <decVal/>
+            </variable>
+            <variable item="Servo State Memory" CV="11" mask="XXXXXVXX" default="1">
+                <enumVal>
+                    <enumChoice choice="Disable"/>
+                    <enumChoice choice="Enable"/>
+                </enumVal>
+            </variable>
+            <variable item="Signal State Memory" CV="11" mask="XXXXVXXX" default="0">
+                <qualifier>
+                    <variableref>Signaling</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
+                </qualifier>
+                <enumVal>
+                    <enumChoice choice="Disable"/>
+                    <enumChoice choice="Enable"/>
+                </enumVal>
+            </variable>
+            <variable item="Lock Indicator" CV="11" mask="XVXXXXXX" default="0">
+                <enumVal>
+                    <enumChoice choice="Blink when Locked"/>
+                    <enumChoice choice="Blink when Unlocked"/>
+                </enumVal>
+            </variable>
+            <variable item="DCC Busy Retry" CV="11" mask="VXXXXXXX" default="1">
+                <enumVal>
+                    <enumChoice choice="Disable"/>
+                    <enumChoice choice="Enable"/>
+                </enumVal>
+            </variable>
 
-			<variable item="Sensor Input Polarity" CV="12" mask="XXXXXXXV" default="0">
-				<enumVal>
-					<enumChoice choice="Normal"/>
-					<enumChoice choice="Inverted"/>
-				</enumVal>
-			</variable>
-			<variable item="Servo Drive" CV="12" mask="XXXXXXVX" default="0">
-				<enumVal>
-					<enumChoice choice="Always On"/>
-					<enumChoice choice="Off when Stopped"/>
-				</enumVal>
-			</variable>
-			<variable item="No CS" CV="12" mask="XXXXXVXX" default="0">
-				<enumVal>
-					<enumChoice choice="Disable"/>
-					<enumChoice choice="Enable"/>
-				</enumVal>
-			</variable>
-			<variable item="Route Delay" CV="12" mask="XXVVXXXX" default="0">
-				<enumVal>
-					<enumChoice choice="1 Sec"/>
-					<enumChoice choice="2 Sec"/>
-					<enumChoice choice="4 Sec"/>
-					<enumChoice choice="8 Sec"/>
-				</enumVal>
-			</variable>
-			<variable item="Disable Interrogate" CV="12" mask="XVXXXXXX" default="0">
-				<enumVal>
-					<enumChoice choice="Normal"/>
-					<enumChoice choice="Disable"/>
-				</enumVal>
-			</variable>
-			<variable item="Switch State Request" CV="12" mask="VXXXXXXX" default="0">
-				<enumVal>
-					<enumChoice choice="Ignore"/>
-					<enumChoice choice="Respond"/>
-				</enumVal>
-			</variable>
+            <variable item="Sensor Input Polarity" CV="12" mask="XXXXXXXV" default="0">
+                <enumVal>
+                    <enumChoice choice="Normal"/>
+                    <enumChoice choice="Inverted"/>
+                </enumVal>
+            </variable>
+            <variable item="Servo Drive" CV="12" mask="XXXXXXVX" default="0">
+                <qualifier>
+                    <variableref>Servo16</variableref>
+                    <relation>le</relation>
+                    <value>8</value>
+                </qualifier>
+                <enumVal>
+                    <enumChoice choice="Always On"/>
+                    <enumChoice choice="Off when Stopped"/>
+                </enumVal>
+            </variable>
+            <variable item="No CS" CV="12" mask="XXXXXVXX" default="0">
+                <enumVal>
+                    <enumChoice choice="Disable"/>
+                    <enumChoice choice="Enable"/>
+                </enumVal>
+            </variable>
+            <variable item="Local Actions" CV="12" mask="XXXXVXXX" default="1" include="Quad-LN_S_v3">
+                <enumVal>
+                    <enumChoice choice="Perform Internally"/>
+                    <enumChoice choice="Visible on Loconet"/>
+                </enumVal>
+            </variable>
+            <variable item="Route Delay" CV="12" mask="XXVVXXXX" default="0">
+                <enumVal>
+                    <enumChoice choice="1 Sec"/>
+                    <enumChoice choice="2 Sec"/>
+                    <enumChoice choice="4 Sec"/>
+                    <enumChoice choice="8 Sec"/>
+                </enumVal>
+            </variable>
+            <variable item="Disable Interrogate" CV="12" mask="XVXXXXXX" default="0">
+                <enumVal>
+                    <enumChoice choice="Normal"/>
+                    <enumChoice choice="Disable"/>
+                </enumVal>
+            </variable>
+            <variable item="Switch State Request" CV="12" mask="VXXXXXXX" default="0">
+                <enumVal>
+                    <enumChoice choice="Ignore"/>
+                    <enumChoice choice="Respond"/>
+                </enumVal>
+            </variable>
 
             <variable item="Long Address" CV="17" default="11000" comment="Range 1-16383">
-				<longAddressVal/>
-			</variable>
+                <longAddressVal/>
+            </variable>
 
-			<variable item="Lock Start Address" CV="13" mask="VVVVVVVV" default="100">
-				<splitVal highCV="14" upperMask="XXXXXVVV" offset="1" /> 
-			</variable>
+            <variable item="Lock Start Address" CV="13" mask="VVVVVVVV" default="100">
+                <splitVal highCV="14" upperMask="XXXXXVVV" offset="1" /> 
+            </variable>
 
-			<variable item="Servo Start Address" CV="2" mask="VVVVVVVV" default="0">
-				<splitVal highCV="3" upperMask="XXXXXVVV" offset="1" />
-			</variable>
+            <variable item="Servo Start Address" CV="2" mask="VVVVVVVV" default="0">
+                <splitVal highCV="3" upperMask="XXXXXVVV" offset="1" />
+            </variable>
 
-			<variable item="Major Version" CV="4" mask="VVVVXXXX" readOnly="yes" default="1">
-				<decVal/>
-			</variable>
-			<variable item="Minor Version" CV="4" mask="XXXXVVVV" readOnly="yes" default="0">
-				<decVal/>
-			</variable>
-			<variable item="Build Num" CV="5" readOnly="yes" default="0">
-				<decVal/>
-			</variable>
-			<variable item="Hardware Rev" CV="6" readOnly="yes" default="1">
-				<decVal/>
-			</variable>
-			<variable item="Version ID" CV="7" readOnly="yes" default="47">
-				<decVal/>
-			</variable>
-			<variable item="Manufacturer ID" CV="8" readOnly="yes" default="59">
-				<decVal/>
-			</variable>
+            <variable item="Major Version" CV="4" mask="VVVVXXXX" readOnly="no" default="1">
+                <decVal/>
+            </variable>
+            <variable item="Minor Version" CV="4" mask="XXXXVVVV" readOnly="no" default="0">
+                <decVal/>
+            </variable>
+            <variable item="Build Num" CV="5" readOnly="yes" default="0">
+                <decVal/>
+            </variable>
+            <variable item="Hardware Rev" CV="6" readOnly="yes" default="1">
+                <decVal/>
+            </variable>
+            <variable item="Version ID" CV="7" readOnly="yes" default="47">
+                <decVal/>
+            </variable>
+            <variable item="Manufacturer ID" CV="8" readOnly="yes" default="59">
+                <decVal/>
+            </variable>
 
-			<variable item="Main IO Start Address" CV="9" mask="VVVVVVVV" default="0">
-				<splitVal highCV="10" upperMask="XXXXVVVV" offset="1" /> 
-			</variable>
+            <variable item="Main IO Start Address" CV="9" mask="VVVVVVVV" default="0">
+                <qualifier>
+                    <variableref>ServoMain</variableref>
+                    <relation>eq</relation>
+                    <value>0</value>
+                </qualifier>
+                <splitVal highCV="10" upperMask="XXXXVVVV" offset="1" /> 
+            </variable>
 
-			<variable item="Aux IO Start Address" CV="15" mask="VVVVVVVV" default="4">
-				<splitVal highCV="16" upperMask="XXXXVVVV" offset="1" /> 
-			</variable>
+            <variable item="Aux IO Start Address" CV="15" mask="VVVVVVVV" default="4">
+                <qualifier>
+                    <variableref>ServoAux</variableref>
+                    <relation>eq</relation>
+                    <value>0</value>
+                </qualifier>
+                <splitVal highCV="16" upperMask="XXXXVVVV" offset="1" /> 
+            </variable>
             
-			<variable item="One Choice Enum" CV="1" mask="XXXXXXXX">
+            <variable item="One Choice Enum" CV="1" mask="XXXXXXXX">
                 <enumVal>
                     <enumChoice choice="" />
                 </enumVal>
             </variable>
-            
+         
         <!-- the .xsl file will insert here -->
         
         </variables>
 
-		<resets>
-			<factReset CV="8" default="8">
+        <resets>
+            <factReset CV="8" default="8">
                 <label>Restore All CVs to Factory Defaults. Device Address=11000</label>
             </factReset>
-			<factReset CV="8" default="9">
+            <factReset CV="8" default="9">
                 <label>Restore Addresses to Factory Defaults. Device Address=11000</label>
             </factReset>
-			<factReset CV="8" default="10">
+            <factReset CV="8" default="10">
                 <label>Restore Servo and Input CVs to Factory Defaults.</label>
             </factReset>
-		</resets>
-	</decoder>
+        </resets>
+    </decoder>
 
-	<pane> 
+    <pane> 
         <name>Quad-LN_S</name>
-       <column>
+        <column>
             <row>
                 <column>
-                    <display item="Extended Address" tooltip="10000-16383: 5 digit number suggested">
-                        <label>Long Address</label>
+                    <display item="Long Address" tooltip="10000-16383: 5 digit number suggested">
+                        <label>Board Address</label>
                     </display>
                     <label label=" "/>
                     <display item="Servo Start Address" tooltip="Address of first servo: 1-2045. Recommend not using 1017-1020 for any servo.">
@@ -185,9 +250,9 @@
                     <display item="Main IO Start Address" tooltip="Address of first Main IO input: 1-4093.">
                         <label>Main IO Start Address</label>
                     </display>
-                    <display item="Aux IO Start Address" tooltip="Address of first Aux IO input: 1-4093.">
-                        <label>Aux IO Start Address</label>
-                    </display>
+               <display item="Aux IO Start Address" tooltip="Address of first Aux IO input: 1-4093.">
+                  <label>Aux IO Start Address</label>
+               </display>
                     <label label=" "/>
                     <label label=" "/>
                     <display item="Route Delay" tooltip="time delay for Delayed Route entries.">
@@ -199,21 +264,29 @@
                 <column>
                     <label label="           "/>
                 </column>
-                <column>
-                    <label label=" "/>
-                    <display item="Expansion" format="radiobuttons" tooltip="Specify use of Expansion Port">
-                        <label>Expansion Port</label>
-                    </display>
-                    <label label=" "/>
-                    <label label=" "/>
-                </column>
+                    <column>
+                        <display item="One Choice Enum" format="onradiobutton" layout="right">
+                          <label>EXPANSION PORT</label>
+                        </display>
+                        <display item="Expansion" format="radiobuttons" tooltip="Specify use of Expansion Port">
+                            <label>Mode</label>
+                        </display>
+                        <label label=" "/>
+                        <display item="One Choice Enum" format="onradiobutton" layout="right" >
+                            <label>MAIN and AUX IO PORTS</label>
+                        </display>
+                        <display item="IO Mode" format="radiobuttons" tooltip="Specify use of Aux and Main IO Port">
+                            <label>Mode</label>
+                        </display>
+                        <label label=" "/>
+                    </column>
                 <column>
                     <label label="           "/>
                 </column>
                 <column>
-                    <display item="Servo Drive" format="checkbox" tooltip="Disable servo drive when stopped">
-                        <label>Servo OFF When Stopped</label>
-                    </display>
+                <display item="Servo Drive" format="checkbox" tooltip="Disable servo drive when stopped">
+                    <label>Servo OFF When Stopped</label>
+                </display>
                     <display item="Servo State Memory" format="checkbox" tooltip="Retain servo states when powered down">
                         <label>Servo State Memory</label>
                     </display>
@@ -223,7 +296,7 @@
                     <display item="DCC Busy Retry" format="checkbox" tooltip="Retry Switch Requests when they aren't relayed to DCC by the Command Station">
                         <label>Retry on DCC Busy</label>
                     </display>
-                    <display item="Send Output Off" format="checkbox" tooltip="Send an Output Off Switch Request following every Output On request">
+                    <display item="Send Output Off" format="checkbox" tooltip="Send an Output Off Switch Request following every Output On Request">
                         <label>Output Off Switch Request</label>
                     </display>
                     <display item="No CS" format="checkbox" tooltip="Enable when no command station is present">
@@ -244,8 +317,6 @@
                     <display item="Disable Interrogate" format="checkbox" tooltip="Ignore Stationary Decoder Interrogation messages">
                         <label>Disable Interrogate</label>
                     </display>
-                    <label label=" "/>
-                    <label label=" "/>
                     <label label=" "/>
                 </column>
             </row>
@@ -297,199 +368,313 @@
             <row>
                 <label label=" "/>
             </row>
- 			<row>
-				<column>
-					<label>
-                        <text>Firmware version 1.0 or later is required with this Quad-LN_S family decoder template file.</text>
+            <row>
+                <column>
+                    <group include="Quad-LN_S_v3">
+                        <qualifier>
+                            <variableref>Major Version</variableref>
+                            <relation>le</relation>
+                            <value>2</value>
+                        </qualifier>
+                        <label>
+                            <text>FIRMWARE VERSION 3.0 OR LATER IS REQUIRED TO USE THE Quad-LN_S_v3 TEMPLATE.</text>
+                        </label>
+                        <label>
+                            <text>DO A READ SHEET.  IF THIS MESSAGE IS STILL PRESENT THEN USE THE Quad-LN_S_v1 TEMPLATE OR UPDATE YOUR FIRMWARE.</text>
+                        </label>
+                    </group>
+                    <group include="Quad-LN_S_v1">
+                        <qualifier>
+                             <variableref>Major Version</variableref>
+                             <relation>ge</relation>
+                             <value>3</value>
+                        </qualifier>
+                        <label>
+                            <text>FIRMWARE VERSION 3.0 REQUIRES USE OF THE Quad-LN_S_v3 TEMPLATE.</text>
+                        </label>
+                        <label>
+                            <text>DO A READ SHEET.  IF THIS MESSAGE IS STILL PRESENT THEN USE THE Quad-LN_S_v3 TEMPLATE.</text>
+                        </label>
+                    </group>
+                    <group include="Quad-LN_S_v1">
+                        <qualifier>
+                            <variableref>Major Version</variableref>
+                            <relation>lt</relation>
+                            <value>2</value>
+                        </qualifier>
+                        <label>
+                            <text>Firmware version 2.0 or later is required when using the Detector Board.</text>
+                        </label>
+                        <label>
+                            <text>Do a Read Sheet.  If this message is still present then update your firmware if you wish to use the Detector Board.</text>
+                        </label>
+                    </group>
+                    <label label=" "/>
+                    <label>
+                        <text>Decoder Template File Version: 3.00.1</text>
                     </label>
-					<label>
-                        <text>Firmware version 2.0 or later is required when using the Detector Board.</text>
-                    </label>
-					<label>
-                        <text>Decoder Template File Version: 2.03.1</text>
-                    </label>
-					<label>
+                    <label>
                         <text>Decoder Transform File Version: x.xx</text>
                     </label>
-				</column>
-			</row>
+                </column>
+            </row>
         </column>
-	</pane>
+    </pane>
+
+<!-- hide basic pane    -->
+    <pane>
+        <name>Basic</name>
+    </pane>
 
 	<pane>
         <name>Group 1/4</name>
         <qualifier>
-            <variableref>Expansion</variableref>
-            <relation>ne</relation>
-            <value>2</value>
+            <variableref>Servo16</variableref>
+            <relation>eq</relation>
+            <value>0</value>
         </qualifier>
     </pane>
-	<pane>
+   <pane>
         <name>Group 2/4</name>
         <qualifier>
-            <variableref>Expansion</variableref>
-            <relation>ne</relation>
-            <value>2</value>
+            <variableref>Servo16</variableref>
+            <relation>eq</relation>
+            <value>0</value>
         </qualifier>
     </pane>
-	<pane>
+   <pane>
         <name>Group 3/4</name>
         <qualifier>
-            <variableref>Expansion</variableref>
-            <relation>ne</relation>
-            <value>2</value>
+            <variableref>Servo16</variableref>
+            <relation>eq</relation>
+            <value>0</value>
         </qualifier>
     </pane>
-	<pane>
+   <pane>
         <name>Group 4/4</name>
         <qualifier>
-            <variableref>Expansion</variableref>
+            <variableref>Servo16</variableref>
+            <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+    </pane>
+   <pane>
+        <name>Group 1</name>
+        <qualifier>
+            <variableref>Servo16</variableref>
             <relation>ne</relation>
-            <value>2</value>
+            <value>0</value>
+        </qualifier>
+    </pane>
+   <pane>
+        <name>Group 2</name>
+        <qualifier>
+            <variableref>Servo16</variableref>
+            <relation>ne</relation>
+            <value>0</value>
+        </qualifier>
+    </pane>
+   <pane>
+        <name>Group 3</name>
+        <qualifier>
+            <variableref>Servo16</variableref>
+            <relation>ne</relation>
+            <value>0</value>
+        </qualifier>
+    </pane>
+   <pane>
+        <name>Group 4</name>
+        <qualifier>
+            <variableref>Servo16</variableref>
+            <relation>ne</relation>
+            <value>0</value>
+        </qualifier>
+    </pane>
+   <pane>
+        <name>Group 5</name>
+        <!-- Octo -->
+        <qualifier>
+            <variableref>Servo16</variableref>
+            <relation>ne</relation>
+            <value>0</value>
+        </qualifier>
+    </pane>
+   <pane>
+        <name>Group 6</name>
+        <!-- Octo -->
+        <qualifier>
+            <variableref>Servo16</variableref>
+            <relation>ne</relation>
+            <value>0</value>
+        </qualifier>
+    </pane>
+   <pane>
+        <name>Group 7</name>
+        <!-- Octo -->
+        <qualifier>
+            <variableref>Servo16</variableref>
+            <relation>ne</relation>
+            <value>0</value>
+        </qualifier>
+    </pane>
+   <pane>
+        <name>Group 8</name>
+        <!-- Octo -->
+        <qualifier>
+            <variableref>Servo16</variableref>
+            <relation>ne</relation>
+            <value>0</value>
         </qualifier>
     </pane>
 
-	<pane>
-        <name>Group 1/8</name>
-        <!-- Octo version -->
+   <pane include="Quad-LN_S_v3">
+        <name>Group 9</name>
+        <!-- Dodeca version -->
         <qualifier>
-            <variableref>Expansion</variableref>
-            <relation>eq</relation>
-            <value>2</value>
+            <variableref>Servo16</variableref>
+            <relation>gt</relation>
+            <value>8</value>
         </qualifier>
     </pane>
-	<pane>
-        <name>Group 2/8</name>
-        <!-- Octo version -->
+   
+   <pane include="Quad-LN_S_v3">
+        <name>Group 10</name>
+        <!-- Dodeca version -->
         <qualifier>
-            <variableref>Expansion</variableref>
-            <relation>eq</relation>
-            <value>2</value>
+            <variableref>Servo16</variableref>
+            <relation>gt</relation>
+            <value>8</value>
         </qualifier>
     </pane>
-	<pane>
-        <name>Group 3/8</name>
-        <!-- Octo version -->
+   
+   <pane include="Quad-LN_S_v3">
+        <name>Group 11</name>
+        <!-- Dodeca version -->
         <qualifier>
-            <variableref>Expansion</variableref>
-            <relation>eq</relation>
-            <value>2</value>
+            <variableref>Servo16</variableref>
+            <relation>gt</relation>
+            <value>8</value>
         </qualifier>
     </pane>
-	<pane>
-        <name>Group 4/8</name>
-        <!-- Octo version -->
+   
+   <pane include="Quad-LN_S_v3">
+        <name>Group 12</name>
+        <!-- Dodeca version -->
         <qualifier>
-            <variableref>Expansion</variableref>
-            <relation>eq</relation>
-            <value>2</value>
+            <variableref>Servo16</variableref>
+            <relation>gt</relation>
+            <value>8</value>
         </qualifier>
     </pane>
-	<pane>
-        <name>Group 5/8</name>
-        <!-- Octo version -->
+   
+   <pane include="Quad-LN_S_v3">
+        <name>Group 13</name>
+        <!-- Hex version -->
         <qualifier>
-            <variableref>Expansion</variableref>
+            <variableref>Servo16</variableref>
             <relation>eq</relation>
-            <value>2</value>
+            <value>25</value>
         </qualifier>
     </pane>
-	<pane>
-        <name>Group 6/8</name>
-        <!-- Octo version -->
+   
+   <pane include="Quad-LN_S_v3">
+        <name>Group 14</name>
+        <!-- Hex version -->
         <qualifier>
-            <variableref>Expansion</variableref>
+            <variableref>Servo16</variableref>
             <relation>eq</relation>
-            <value>2</value>
+            <value>25</value>
         </qualifier>
     </pane>
-	<pane>
-        <name>Group 7/8</name>
-        <!-- Octo version -->
+   
+   <pane include="Quad-LN_S_v3">
+        <name>Group 15</name>
+        <!-- Hex version -->
         <qualifier>
-            <variableref>Expansion</variableref>
+            <variableref>Servo16</variableref>
             <relation>eq</relation>
-            <value>2</value>
+            <value>25</value>
         </qualifier>
     </pane>
-	<pane>
-        <name>Group 8/8</name>
-        <!-- Octo version -->
+   
+   <pane include="Quad-LN_S_v3">
+        <name>Group 16</name>
+        <!-- Hex version -->
         <qualifier>
-            <variableref>Expansion</variableref>
+            <variableref>Servo16</variableref>
             <relation>eq</relation>
-            <value>2</value>
+            <value>25</value>
         </qualifier>
     </pane>
-
-	<pane>
+   
+   <pane>
         <name>Routes</name>
- 	</pane>
+    </pane>
     
-	<pane>
+   <pane>
         <name>LED 1-12</name>
         <qualifier>
-            <variableref>Expansion</variableref>
-            <relation>eq</relation>
-            <value>1</value>
+            <variableref>Signaling</variableref>
+            <relation>gt</relation>
+            <value>0</value>
         </qualifier>
     </pane>
-	<pane>
+   <pane>
         <name>LED 13-24</name>
         <qualifier>
-            <variableref>Expansion</variableref>
-            <relation>eq</relation>
-            <value>1</value>
+            <variableref>Signaling</variableref>
+            <relation>gt</relation>
+            <value>0</value>
         </qualifier>
    </pane>
                 
     <pane>
         <name>Aspect 1-8</name>
         <qualifier>
-            <variableref>Expansion</variableref>
-            <relation>eq</relation>
-            <value>1</value>
+            <variableref>Signaling</variableref>
+            <relation>gt</relation>
+            <value>0</value>
         </qualifier>
     </pane>
     <pane>
         <name>Aspect 9-16</name>
         <qualifier>
-            <variableref>Expansion</variableref>
-            <relation>eq</relation>
-            <value>1</value>
+            <variableref>Signaling</variableref>
+            <relation>gt</relation>
+            <value>0</value>
         </qualifier>
     </pane>
     <pane>
         <name>Aspect 17-24</name>
         <qualifier>
-            <variableref>Expansion</variableref>
-            <relation>eq</relation>
-            <value>1</value>
+            <variableref>Signaling</variableref>
+            <relation>gt</relation>
+            <value>0</value>
         </qualifier>
     </pane>
     <pane>
         <name>Aspect 25-32</name>
         <qualifier>
-            <variableref>Expansion</variableref>
-            <relation>eq</relation>
-            <value>1</value>
+            <variableref>Signaling</variableref>
+            <relation>gt</relation>
+            <value>0</value>
         </qualifier>
     </pane>
     <pane>
         <name>Aspect 33-40</name>
         <qualifier>
-            <variableref>Expansion</variableref>
-            <relation>eq</relation>
-            <value>1</value>
+            <variableref>Signaling</variableref>
+            <relation>gt</relation>
+            <value>0</value>
         </qualifier>
     </pane>
     <pane>
         <name>Aspect 41-48</name>
         <qualifier>
-            <variableref>Expansion</variableref>
-            <relation>eq</relation>
-            <value>1</value>
+            <variableref>Signaling</variableref>
+            <relation>gt</relation>
+            <value>0</value>
         </qualifier>
     </pane>
-	<!--</programmer>-->
+   <!--</programmer>-->
 </decoder-config>

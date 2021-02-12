@@ -12,6 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Stephen Lowens" version="1.4" lastUpdated="20210131"/>  
   <version author="Michael Mosher" version="1.3" lastUpdated="20200109"/>
   <version author="B. Milhaupt" version="1.2" lastUpdated="20180823"/>
   <version author="td@teamdigital1.com" version="1.0" lastUpdated="20130520"/>
@@ -19,6 +20,7 @@
   <!-- Version 1.1 added delay for inputs 9-16 release 10/27/13-->  
   <!-- Version 1.2 release, added "LOCONETOPSBOARD" programming token to allow LocoNet-connected boards to read CV values -->
   <!-- Version 1.3 change mfg to match name in NMRA.xml -->
+  <!-- Version 1.4 change maximum input address to 2040 -->
  <decoder>
     <family name="CSC Family" mfg="Team Digital, LLC" type="stationary" comment="The CSC can be programmed in the usual way">
       <model model="CSC" lowVersionID="10" comment="Original HW"/>
@@ -359,7 +361,7 @@
       </variable>
       <!-- Begin inputs 1-8 variable definition -->
       <variable item="Address 1" CV="10" mask="VVVVVVVV">
-        <splitVal highCV="11" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="11" max="2040" upperMask="XXXXVVVV"/>
         <label>Address 1</label>
       </variable>
       <variable CV="11" mask="VXXXXXXX" item="Inv 1">
@@ -560,7 +562,7 @@
       </variable>
       <!-- Begin inputs 9-16 variable definition -->
       <variable item="Address 9" CV="34" mask="VVVVVVVV">
-        <splitVal highCV="35" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="35" max="2040" upperMask="XXXXVVVV"/>
         <label>Address 9</label>
       </variable>
       <variable CV="35" mask="VXXXXXXX" item="Inv 9">
@@ -585,7 +587,7 @@
         <label>Transition 9</label>
       </variable>
       <variable item="Address 10" CV="37" mask="VVVVVVVV">
-        <splitVal highCV="38" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="38" max="2040" upperMask="XXXXVVVV"/>
         <label>Address 10</label>
       </variable>
       <variable CV="38" mask="VXXXXXXX" item="Inv 10">
@@ -610,7 +612,7 @@
         <label>Transition 10</label>
       </variable>
       <variable item="Address 11" CV="40" mask="VVVVVVVV">
-        <splitVal highCV="41" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="41" max="2040" upperMask="XXXXVVVV"/>
         <label>Address 11</label>
       </variable>
       <variable CV="41" mask="VXXXXXXX" item="Inv 11">
@@ -635,7 +637,7 @@
         <label>Transition 11</label>
       </variable>
       <variable item="Address 12" CV="43" mask="VVVVVVVV">
-        <splitVal highCV="44" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="44" max="2040" upperMask="XXXXVVVV"/>
         <label>Address 12</label>
       </variable>
       <variable CV="44" mask="VXXXXXXX" item="Inv 12">
@@ -660,7 +662,7 @@
         <label>Transition 12</label>
       </variable>
       <variable item="Address 13" CV="46" mask="VVVVVVVV">
-        <splitVal highCV="47" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="47" max="2040" upperMask="XXXXVVVV"/>
         <label>Address 13</label>
       </variable>
       <variable CV="47" mask="VXXXXXXX" item="Inv 13">
@@ -685,7 +687,7 @@
         <label>Transition 13</label>
       </variable>
       <variable item="Address 14" CV="49" mask="VVVVVVVV">
-        <splitVal highCV="50" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="50" max="2040" upperMask="XXXXVVVV"/>
         <label>Address 14</label>
       </variable>
       <variable CV="50" mask="VXXXXXXX" item="Inv 14">
@@ -710,7 +712,7 @@
         <label>Transition 14</label>
       </variable>
       <variable item="Address 15" CV="52" mask="VVVVVVVV">
-        <splitVal highCV="53" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="53" max="2040" upperMask="XXXXVVVV"/>
         <label>Address 15</label>
       </variable>
       <variable CV="53" mask="VXXXXXXX" item="Inv 15">
@@ -735,7 +737,7 @@
         <label>Transition 15</label>
       </variable>
       <variable item="Address 16" CV="55" mask="VVVVVVVV">
-        <splitVal highCV="56" max="7" upperMask="XXXXVVVV"/>
+        <splitVal highCV="56" max="2040" upperMask="XXXXVVVV"/>
         <label>Address 16</label>
       </variable>
       <variable CV="56" mask="VXXXXXXX" item="Inv 16">

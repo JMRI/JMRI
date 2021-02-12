@@ -128,8 +128,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         initTable();
     }
 
-    // Train frame table column widths (13), starts with id column and ends with
-    // edit
+    // Train frame table column widths, starts with id column and ends with edit
     private final int[] _tableColumnWidths = { 50, 50, 50, 72, 100, 140, 50, 50, 50, 50, 120, 120, 120, 120, 120, 90,
             70 };
 
