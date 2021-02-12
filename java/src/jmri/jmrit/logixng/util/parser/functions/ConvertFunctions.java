@@ -31,6 +31,7 @@ public class ConvertFunctions implements FunctionFactory {
     public Set<Function> getFunctions() {
         Set<Function> functionClasses = new HashSet<>();
         functionClasses.add(new IntFunction());
+        functionClasses.add(new FloatFunction());
         functionClasses.add(new StrFunction());
         return functionClasses;
     }
@@ -63,6 +64,42 @@ public class ConvertFunctions implements FunctionFactory {
         @Override
         public String getDescription() {
             return Bundle.getMessage("Convert.int");
+        }
+        
+    }
+    
+    public static class FloatFunction implements Function {
+        
+        @Override
+        public String getModule() {
+            return new ConvertFunctions().getModule();
+        }
+        
+        @Override
+        public String getName() {
+            return "float";
+        }
+        
+        @Override
+        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                throws JmriException {
+            
+            switch (parameterList.size()) {
+                case 1:
+                    return TypeConversionUtil.convertToDouble(parameterList.get(0).calculate(symbolTable), false);
+                case 2:
+                    boolean do_i18n = TypeConversionUtil.convertToBoolean(
+                            parameterList.get(0).calculate(symbolTable), false);
+                    return TypeConversionUtil.convertToDouble(
+                            parameterList.get(0).calculate(symbolTable), do_i18n);
+                default:
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+            }
+        }
+        
+        @Override
+        public String getDescription() {
+            return Bundle.getMessage("Convert.float");
         }
         
     }

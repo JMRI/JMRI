@@ -57,6 +57,12 @@ Currently supported operators are:
 <tr><td> =   +=   -= <br> *=   /=   %=</td><td>assignment</td><td>right to left</td></tr>
 </table>
 
+<p>
+
+Note that for the calculations to work, each operand must have the correct type. For example, if you have a memory IM1
+that has a number as a string and you want to subtrack from it, like <i>IM1&nbsp;-&nbsp;1</i>, you need to convert the string in
+IM1 to an integer or a float. Example: <i>int(IM1)&nbsp;-&nbsp;1</i> or <i>float(IM1)&nbsp;-&nbsp;1</i>.
+
 <h3>Functions</h3>
 
 Formula supports functions, like sin(x) and random(). Some functions takes one or several parameters. A function has
@@ -74,6 +80,40 @@ implemented yet.
 <p>
 For JMRI developers: The functions are defined in the package <i>jmri.jmrit.logixng.util.parser.functions</i> and each
 module has its own Java class. Each function is its own class that implements the <i>Function</i> interface.
+
+<h4>Documentation of the functions</h4>
+
+To make it easier to use the functions, each function has some documentation for it.
+
+<img src="images/chapter6_function_help1.png"><br>
+<p>
+Each action/expression has a button <i>Formula functions</i> that opens a dialog box with documentation of the
+functions.
+
+<p>
+
+<img src="images/chapter6_function_help2.png"><br>
+<p>
+The functions are grouped in modules to make it easier to find the functions. Select the module you are interested in.
+<p>
+
+<img src="images/chapter6_function_help3.png"><br>
+<p>
+Then select the function you are interested in.
+<p>
+In this case, the function <i>fastClock()</i> take a string parameter which can have any of the values <i>hour</i>,
+<i>min</i> or <i>minOfDay</i>.
+<p>
+
+
+<img src="images/chapter6_function_help4.png"><br>
+<p>
+Some functions, for example the function <i>random()</i>, can take different numbers of parameters. The function
+<i>random()</i> takes either a maximum value and returns a random value 0.0 <= x < max. Or it takes a minimum value and
+returns a random value min <= x < max.
+
+<p>
+
 
 <h3>Add new function with Jython</h3>
 

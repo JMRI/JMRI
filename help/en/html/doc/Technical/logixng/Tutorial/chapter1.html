@@ -53,9 +53,34 @@ copy, but since actions and expressions build a tree, a copy can be of many acti
 
 <h2>1. Basics</h2>
 
-LogixNG has two basic building blocks: Actions and Expressions. Actions do something, for example throw a turnout or
-sets a signal mast. Expressions ask something, for example if a sensor is active or if a signal head has a particular
-appearance. The actions and expressions form a tree and a complex logix can be built with them.
+LogixNG has four basic building blocks: Actions, Expressions, Male sockets and Female sockets.
+
+<p>
+
+Actions do something, for example throw a turnout or sets a signal mast. Expressions ask something, for example if a
+sensor is active or if a signal head has a particular appearance. The actions and expressions form a tree and a complex
+logix can be built with them.
+
+<p>
+
+Each action/expression is embedded in one or several male sockets. Male sockets allow actions/expressions to be
+connected to a female socket of the correct type.
+
+<p>
+
+A ConditionalNG has a female socket that is the root of the ConditionalNG tree. And some actions/expressions have one
+or several female sockets as children. There are several different female sockets:
+<p>
+<table border="1" cellspacing="0" cellpadding="2">
+<tr><th>Symbol</th><th>Type</th></tr>
+<tr><td style="text-align:center">!</td><td>Digital action</td></tr>
+<tr><td style="text-align:center">?</td><td>Digital expression</td></tr>
+<tr><td style="text-align:center">!b</td><td>Digital boolean action</td></tr>
+<tr><td style="text-align:center">!~</td><td>Analog action</td></tr>
+<tr><td style="text-align:center">?~</td><td>Analog expression</td></tr>
+<tr><td style="text-align:center">!s</td><td>String action</td></tr>
+<tr><td style="text-align:center">?s</td><td>String expression</td></tr>
+</table>
 
 <h3>Categories</h3>
 
@@ -66,16 +91,21 @@ categories are:
 <ul>
 <li>Item - Actions and expressions related to items on the layout, for example turnouts and signal masts</li>
 <li>Common - The most important actions and expressions that are not in the category Item</li>
-<li>LocoNet - Actions and expressions related to LocoNet</li>
 <li>Other - Other actions and expressions</li>
-<li>Extravaganza - Things seldom used, included mostly for fun, but maybe useful in some cases.</li>
+<li>LocoNet - Actions and expressions related to LocoNet</li>
 </ul>
 
 These categories may not be optimal and it would probably be good to have a discussion on the jmri developers mailing
-list about these. It's easy to change them, add more categories and to move an action or expression from one category
-to another.
+list about these. It's easy to change them, it's easy to add more categories and it's to move an action or expression
+from one category to another.
 
 <h3>Create an action: ActionTurnout</h3>
+
+<p>
+To add an action or expression, right-click (command-click) with the mouse on a female socket and select <i>Add</i> in
+the popup menu. To edit an action or expression, right-click (command-click) with the mouse on that action/expression
+and select <i>Edit</i>.
+<p>
 
 One thing one notices when creating an action or expression is that LogixNG is much more powerful than Logix. For now,
 we only use "Direct" when entering a turnout. We will look at Reference, Local variable and Formula later in this

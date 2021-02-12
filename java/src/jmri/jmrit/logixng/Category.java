@@ -135,12 +135,4 @@ public abstract class Category implements Comparable<Category> {
         }
     }
     
-    
-    public static final class Extravaganza extends Category {
-
-        public Extravaganza() {
-            super("EXRAVAGANZA", Bundle.getMessage("CategoryExtravaganza"), 900);
-        }
-    }
-    
 }
