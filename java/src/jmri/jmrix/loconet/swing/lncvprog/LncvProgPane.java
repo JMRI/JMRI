@@ -2,8 +2,6 @@ package jmri.jmrix.loconet.swing.lncvprog;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 
@@ -123,15 +121,13 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         moduleTable.setDefaultEditor(JButton.class, new ButtonEditor(new JButton()));
         moduleTable.setDefaultRenderer(JButton.class, new ButtonRenderer());
         moduleTable.setRowSelectionAllowed(true);
-        moduleTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-            public void valueChanged(ListSelectionEvent event) {
-                // print first column value from selected row
-                copyEntry((int) moduleTable.getValueAt(moduleTable.getSelectedRow(), 1),
-                        (int) moduleTable.getValueAt(moduleTable.getSelectedRow(), 2));
-            }
+        moduleTable.getSelectionModel().addListSelectionListener(event -> {
+            // print first column value from selected row
+            copyEntry((int) moduleTable.getValueAt(moduleTable.getSelectedRow(), 1),
+                    (int) moduleTable.getValueAt(moduleTable.getSelectedRow(), 2));
         });
         // establish row sorting for the table
-        sorter = new TableRowSorter<LncvProgTableModel>(moduleTableModel);
+        sorter = new TableRowSorter<>(moduleTableModel);
         moduleTable.setRowSorter(sorter);
          // establish table physical characteristics persistence
         moduleTable.setName("LNCV Device Management"); // NOI18N
