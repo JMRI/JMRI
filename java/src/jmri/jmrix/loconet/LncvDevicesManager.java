@@ -76,11 +76,6 @@ public class LncvDevicesManager extends PropertyChangeSupport
         jmri.util.ThreadingUtil.runOnLayoutEventually( ()-> firePropertyChange("DeviceListChanged", true, false));
     }
 
-    public void sendLncvDiscoveryRequest() {
-        memo.getLnTrafficController().sendLocoNetMessage(
-                LncvMessageContents.createAllProgStartRequest(0));
-    }
-
     public void message(LocoNetMessage m) {
         if (LncvMessageContents.isSupportedLncvMessage(m)) {
             if (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ_REPLY) {
