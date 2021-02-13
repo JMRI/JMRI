@@ -151,7 +151,6 @@ public class LightTableAction extends AbstractTableAction<Light> {
                     case EDITCOL:
                         return new JButton(Bundle.getMessage("ButtonEdit")).getPreferredSize().width+4;
                     case INTENSITYCOL:
-                        return new JTextField(6).getPreferredSize().width;
                     case ENABLECOL:
                         return new JTextField(6).getPreferredSize().width;
                     default:
