@@ -8,8 +8,8 @@ import javax.swing.event.ChangeListener;
  * Default swing behaviour is to close a JCheckBoxMenuItem when clicked. This
  * leaves the menu open following a selection. Used when long lists are
  * displayed.
- * Does not stay open with Nimbus L&F Popup Menus,
- * does stay open with other Nimbus L&F Menus.
+ * Does not stay open with Nimbus LAF Popup Menus,
+ * does stay open with other Nimbus LAF Menus.
  * 
  * @author Steve Young (C) 2019
  */

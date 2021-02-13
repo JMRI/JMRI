@@ -129,7 +129,7 @@ public class TriStateJCheckBox extends JCheckBox implements Icon  {
     private final static Icon icon = UIManager.getIcon("CheckBox.icon");
     
     /**
-     * Paint the Icon dependant on state, special handling for Nimbus L&F.
+     * Paint the Icon dependant on state, special handling for Nimbus LAF.
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")

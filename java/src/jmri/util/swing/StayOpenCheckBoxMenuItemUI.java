@@ -5,7 +5,7 @@ package jmri.util.swing;
  * Does not close menu that the CheckBox is in when set.
  * JCheckBoxMenuItem items in Popup menus require this UI to stay open.
  * 
- * Does NOT work with Nimbus L&F, does not display checked check-boxes.
+ * Does NOT work with Nimbus LAF, does not display checked check-boxes.
  * 
  * @author Steve Young (C) 2021
  */
