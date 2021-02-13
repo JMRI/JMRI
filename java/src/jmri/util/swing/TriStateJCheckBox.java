@@ -148,7 +148,7 @@ public class TriStateJCheckBox extends JCheckBox implements Icon  {
             } else {
                 painter = (Painter)UIManager.get("CheckBox[Enabled].iconPainter");
             }
-            if (painter != null){
+            if (painter != null && g instanceof Graphics2D){
                 JComponent jc = (c instanceof JComponent) ? (JComponent)c : null;
                 Graphics2D gfx = (Graphics2D)g;
                 gfx.translate(x, y);
