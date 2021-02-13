@@ -65,7 +65,7 @@ public class BeanSwitchTest {
 
         Thread dialog_thread1 = new Thread(() -> {
             JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("EditNameTitle", ""));
-            // no output? : new JTextFieldOperator(jdo, 0).setText("intTurnThree");
+            new JTextFieldOperator(jdo, 0).setText("intTurnThree");
             // option: step down for items inside JFrame - unstable for different UI, time out in Travis CI > 60 min
             //((JTextField) ((JPanel) ((JPanel) ((JOptionPane) jdo.getContentPane().getComponent(0)).getComponent(0)).getComponent(0)).getComponent(1)).setText("intTurnThree");
             new JButtonOperator(jdo, Bundle.getMessage("ButtonOK")).doClick();
@@ -76,9 +76,9 @@ public class BeanSwitchTest {
         t.renameBeanDialog(); // dialog
 
         JUnitUtil.waitFor(() -> !(dialog_thread1.isAlive()), "Edit bean user name dialog");
-        Assertions.assertEquals("intTurnOne", nb.getUserName(), "New name applied to nb");
+        Assertions.assertEquals("intTurnThree", nb.getUserName(), "New name 3 applied to nb");
         // actual bean rename method
-        t.renameBean("intTurnTwo", "intTurnOne");
+        t.renameBean("intTurnTwo", "intTurnThree");
         Assertions.assertEquals("intTurnTwo", t.getUserNameString(), "New name 2 applied to nb");
         t.cleanup(); // make sure no exception is thrown
     }

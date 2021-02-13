@@ -604,15 +604,20 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
      */
     public void renameBeanDialog() {
         String oldName = _uName;
-        // show input dialog
-        String newUserName = (String) JOptionPane.showInputDialog(null, Bundle.getMessage("EnterNewName", _switchSysName), Bundle.getMessage("EditNameTitle", ""), JOptionPane.PLAIN_MESSAGE, null, null, oldName);
-        if (newUserName == null) { // user cancelled
-            log.debug("NewName dialog returned Null, cancelled");
+        JTextField name = new JTextField(oldName);
+        // show input dialog, build by hand so that Jemmy can reach it in test
+        JOptionPane pane = new JOptionPane(
+                new Object[]{Bundle.getMessage("EnterNewName", _switchSysName), name},
+                JOptionPane.INFORMATION_MESSAGE, JOptionPane.YES_NO_OPTION, null,
+                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, 0);
+        JDialog dialog = pane.createDialog(null, Bundle.getMessage("EditNameTitle", ""));
+        dialog.setVisible(true);
+        if (pane.getValue().equals(Bundle.getMessage("ButtonCancel"))) {
             return;
         }
-        log.debug("New name: {}", newUserName);
-        if (newUserName.length() == 0) {
-            log.debug("new user name is empty");
+        String newUserName = name.getText();
+        if (newUserName == null || newUserName.equals(Bundle.getMessage("NoUserName")) || newUserName.isEmpty()) { // user cancelled
+            log.debug("new user name was empty");
             JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningEmptyUserName"), Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
