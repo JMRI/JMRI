@@ -1,87 +1,154 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="fr">
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
 <head>
-<!-- UpDated  by Blorec Herv&#233; 2016-09-15--> 
-  <title>
- 	JMRI: Signal Heads Documentation
-  </title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-<meta name="Date.Modified" content="20160323"/>
-  <meta name="keywords"
-        content="turnout model railroad JMRI decoderpro panelpro">
-
-<!-- Style -->
-  <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Signal Heads Documentation</title>
+  <meta name="author" content="Bob Jacobsen, Egbert Broerse">
+  <meta name="Date.Modified" content="20161218">
+  <meta name="keywords" content=
+  "turnout model railroad JMRI decoderpro panelpro">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=ISO-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <!-- /Style -->
 </head>
+
 <body>
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
+      <!-- Page Body -->
 
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+      <h1>JMRI : Feux de Signalisation</h1>
 
-      <div id="mainContent">
-<!-- Page Body -->
+      <p>Les Feux de Signalisation sont la fa&#231;on dont JMRI repr&#233;sente
+      les lumi&#232;res/LED individuelles dans un signal sur votre r&#233;seau. JMRI s'occupe des 
+      Feux de Signalisation comme un type sp&#233;cifique de sorties qui peuvent &#234;tre fix&#233;es &#224;
+      diff&#233;rentes couleurs : Rouge, Jaune, Vert, Jaune Clignotant, etc.
+      En fonction du mat&#233;riel utilis&#233; pour connecter le signal  de  votre mod&#232;le au syst&#232;me DCC,
+      le programme d&#233;ploie une technique diff&#233;rente
+      pour activer ou d&#233;sactiver chacune de ces couleurs..<br>
+      Les Feux de Signalisation peuvent &#234;tre utilis&#233;s pour construire des m&#226;ts de signalisation &#224; l'aide de l'
+      <a href="SignalMasts.shtml">Outil M&#226;ts de Signalisation</a>. Selon
+       la fa&#231;on dont vos signaux sur le r&#233;seau sont connect&#233;s au
+      Syst&#232;me DCC, les Feux de Signalisation font normalement partie d'un m&#226;t de signalisation,
+      mais <a href=
+      "../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">
+      certains mat&#233;riels de signalisation</a> sont capables de prendre en charge plusieurs aspects
+      directement, et ne n&#233;cessiteront pas l'utilisation d'un Feu de Signalisation individuel. <a name="table" id="table"></a></p>
 
-<h1>JMRI: Feux de Signalisation</h1>
+      <h3>La Table des Feux de Signalisation</h3><a href=
+      "../../../package/jmri/jmrit/beantable/images/SigHeadTable.png"><img src="../../../package/jmri/jmrit/beantable/images/SigHeadTable.png"
+      align="right" width="447" height="177" hspace="0" vspace="0"
+      alt="Signal Head Table figure"></a> 
+      <!-- La section suivante est tir&#233;e de, et devrait &#234;tre maintenue en coh&#233;rence avec -->
+       
+      <!-- help/en/package/jmri/jmrit/beantable/SignalHeadTable.html -->
+       Toutes les Feux de Signalisation connus par  JMRI peuvent &#234;tre r&#233;f&#233;renc&#233;s
+      en utilisant l'outil "Table des Feux de Signalisation" dans le menu Outils de la plupart
+      des programmes JMRI.
 
-			<p>
-			Les Feux de Signalisations sont la mani&#232;re pour JMRI de repr&#233;senter les lampes/LEDs individuelles dans un signal sur votre r&#233;seau. IRM g&#232;re les Feux de Signalisations comme une sorte sp&#233;cifique 
-		 	de sorties qui peuvent &#234;tre configur&#233;es pour des couleurs vari&#233;es: Rouge, Jaune, Vert, Flash Jaune, etc. D&#233;pendant du mat&#233;riel utilis&#233; pour connecter vos signaux miniatures au syst&#232;me DCC, Le programme d&#233;ploie diff&#233;rentes techniques pour commuter ces couleurs on/off. <br/>
-			Les Feux de Signalisations peuvent &#234;tre utilis&#233;s pour construire des M&#226;ts de Signalisation avec l'utilisation de l'<a href="SignalMasts.shtml">Outil M&#226;ts de Signalisation</a>. D&#233;pendant de la fa&#231;on dont vos signaux sur le r&#233;seau sont connect&#233;s au syst&#232;me DCC, les Feux de Signalisations sont normalement une partie des M&#226;t de Signalisation, mais <a href="../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">un peu de mat&#233;riel de signalisation</a> est capable d'accepter de multiple Aspects directement, et ne requi&#232;rent pas l'utilisation de Feux de Signalisations Individuels.  
+      <p>Pour plus d'informations sur la configuration des Feux de Signalisation avec le
+      Table des Feux de Signalisation, veuillez consulter la <a href=
+      "../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">
+      Page d'aide de la Table des Feux de Signalisation</a>. <a name="add" id=
+      "add"></a></p>
 
-<a name="table"><h3>Le Tableau Feu de Signalisation</h3></a>
+      <h3>Cr&#233;er une Feu de Signalisation</h3><a href=
+      "../../../package/jmri/jmrit/beantable/images/SignalHeadAdd1.png"><img src="../../../package/jmri/jmrit/beantable/images/SignalHeadAdd1.png"
+      align="right" width="127" height="200" hspace="0" vspace="0"
+      alt="Add Signal Head window figure"></a>
 
-<a href="../../../package/jmri/jmrit/beantable/SignalHeads.png"><img src="../../../package/jmri/jmrit/beantable/SignalHeads.png" align="right" width="554" height="184" hspace="0" vspace="0" alt="Signal Head Table figure"></a>
-<!-- The following section is taken from, and should be kept consistent with -->
-<!-- help/fr/package/jmri/jmrit/beantable/SignalHeadTable.html -->
+      <p>Pour d&#233;finir un nouveau Feu de Signalisation, cliquez sur le bouton <a href=
+      "../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">Ajouter...</a>
+      en bas de la Table des Feux de Signalisation. Cela permettra de
+      vous demander le type de Feu de Signalisation et tout autre renseignement,
+      ces informations sont n&#233;cessaires pour le type s&#233;lectionn&#233;.<br>
+      Plus d'informations sur la <a href=
+      "../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">Page d'aide Ajout
+      de Feux de Signalisation </a>.</p>
 
-Tous les Feux de Signalisation que JMRI connait peuvent &#234;tre r&#233;f&#233;renc&#233;s 
-en utilisant le Tableau Feux de Signalisation dans le menu Outils de la plupart des programmes JMRI.
-<p>
+      <h3><a name="edit" id="edit">Modifier un Feu de Signalisation existant
+      </a></h3>
 
-		pour des infos suppl&#233;mentaires sur la configuration des Feux de Signalisation avec le Tableau 
-Feu de Signalisation, SVP voir la 
-		<a href="../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">la page d'aide Tableau Feu de Signalisation</a>.
+      <p>Cliquez sur le bouton <b>Modifier</b>.
+      &#224; droite de l'en-t&#234;te de la Table Feu de Signalisation pour ouvrir la fen&#234;tre d'&#233;dition 
+      du Feu de Signalisation.</p>
 
-<a name="add"><h3>Cr&#233;ation d'un Feu de Signalisation</h3></a>
-		<a href="../../../package/jmri/jmrit/beantable/SignalHeadAdd1.png"><img src="../../../package/jmri/jmrit/beantable/SignalHeadAdd1.png" align="right" width="181" height="218" hspace="0" vspace="0" alt="Add Signal Head window figure"></a>
+      <p>Une fois qu'un Feu de Signalisation a &#233;t&#233; d&#233;fini, son type de connexion
+      et le nom du syst&#232;me ne peut &#234;tre modifi&#233;. Vous pouvez ignorer les Feux de Signalisation
+      que vous avez d&#233;finis et que vous n'utilisez pas ; ils ne font pas de mal.
+      Si vous le pr&#233;f&#233;rez, vous pouvez supprimer un Feu de Signalisation de la liste
+      en cliquant sur le bouton Supprimer. Enregistrez une copie du
+      Fichier de configuration JMRI comme sauvegarde, lire attentivement
+      le message d'avertissement qui appara&#238;t en cas d'utilisation du Feu de Signalisation
+      par d'autres parties de JMRI !
 
-<p>Pour d&#233;finir un nouveau Feu de Signalisation, cliquez sur le bouton 
-		<a href="../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">Ajouter...</a>en bas du Tableau Feu de Signalisation. Cela vous demandera le type de  Feu de Signalisation et toute information suppl&#233;mentaire n&#233;cessaire pour le type s&#233;lectionn&#233;. 
-			<br/>
-Il y a plus d'information sur la 
-		<a href="../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">page d'aide Ajout Feu de Signalisation</a>. 
+      <h3>Commande d'un Feu de Signalisation</h3>Autre que le r&#233;glage manuel
+      l'apparition d'un Feu de Signalisation &#224; partir de la table de Feu de Signalisation 
+      en cliquant sur l'&#233;tat actuel d'un Feu dans la colonne Apparence
+      et en s&#233;lectionnant un &#233;tat dans la bo&#238;te combin&#233;e qui s'ouvre,
+      Les Feux de Signalisation peuvent &#234;tre command&#233;s automatiquement par JMRI
+      de diff&#233;rentes mani&#232;res, notamment :
 
-<a name="edit"><h3>Modification d'un Feu de Signalisation Existant</h3> 
-		<p>Cliquez sur le bouton <b>Modifier</b> &#224; droite du Tableau Feu de Signalisation pour ouvrir la fen&#234;tre Modifier Feu de Signalisation. 
-<p>Une fois qu'un Feu de Signalisation a &#233;t&#233; d&#233;fini, son Type de connexion et le Nom Syst&#232;me ne peuvent plus &#234;tre chang&#233;s. Vous pouvez ignor&#233; le Feu de Signalisation que vous avez d&#233;fini 
-et ne pas l'utiliser; il ne nuit pas en quoi que ce soit. Si vous le pr&#233;f&#233;rez, vous pouvez effacer un Feu de Signalisation du Tableau Feu de Signalisation en cliquant le bouton Effacer. Sauvegarder 
-une copie du fichier de configuration JMRI comme une sauvegarde d'abord et lire attentivement le message d'avertissement qui appara&#238;t si le Feu de Signalisation est utilis&#233; par d'autres parties de JMRI! 
-   
-<h3>Commander un Feu de Signalisation</h3>
+      <ul>
+        <li><a href="AspectSignaling.shtml">Aspect Signalisation</a>,
+        la m&#233;thode la plus polyvalente pour afficher les diff&#233;rents types 
+        de r&#232;gles de signalisation de nombreux chemins de fer am&#233;ricains et &#233;trangers,
+        automatiquement en tenant compte de l'&#233;tat des Aiguillages et des
+        (Occupation) Capteurs;</li>
 
-		En dehors du r&#233;glage manuel de l'Aspect d'un Feu de Signalisation du Tableau Feu de Signalisation en cliquant sur le bouton "Apparence" dans la colonne &#201;tat, les Feux de Signalisation peuvent &#234;tre contr&#244;l&#233;s automatiquement par JMRI de diverses fa&#231;ons, y compris:
-<ul>
-	<li><a href="AspectSignaling.shtml">Aspect Signalisation</a>, la m&#233;thode la plus polyvalente pour afficher les diff&#233;rentes de signalisation r&#233;alistes issues des Livres de R&#232;glements de nombreux chemins de fer am&#233;ricains et &#233;trangers, entra&#238;n&#233;e automatiquement par l'&#233;tat des Aiguillages et des Capteurs ( occupation ); 
-	<li>Via <a href="../Logix.shtml">Logix</a>, une m&#233;thode graphique de commande de Feux de Signalisation avec de simples &#233;tats logiques ;
-	<li>Par des <a href="../scripting/index.shtml">Scripts</a>, utilisation d'un langag complet de programmation pour faire ce que vous voulez; 
-		<li>Utilisation de la <a href="../../../package/jmri/jmrit/blockboss/BlockBossFrame.shtml">Logic Simple Signal</a> Outil, pour une signalisation BAL type d'Am&#233;rique du Nord ( plus facilement disponible via la premi&#232;re m&#233;thode ).
-</ul>
+        <li>Via <a href="../Logix.shtml">Logix</a>, une mani&#232;re graphique
+        de conmmander les Feux de Signalisation avec des &#233;nonc&#233;s 
+        logiques simples</li>
 
-<h2>Sauvegarde et Rechargement de la Configuration</h2>
+        <li>By <a href="../scripting/index.shtml">Scripts</a>,
+        utiliser un langage de programmation complet pour faire ce que 
+        vous voulez;</li>
 
-L'information Feu de Signalisation est sauvegard&#233;e comme une partie de la configuration JMRI dans un fichier XML, ainsi que la configuration du panneau de commande et d'autres choses semblables. Pour plus d'informations sur la cr&#233;ation et l'affichage des panneaux, y compris la fa&#231;on de montrer des signaux sur vos panneaux, SVP voir les <A HREF="../../apps/PanelPro/Panels.shtml">pages Panneaux</a>.
+        <li>Utilisation du <a href=
+        "../../../package/jmri/jmrit/blockboss/BlockBossFrame.shtml">
+        Logique Signal Simple</a> Outil, pour la signalisation de base de BAL
+        dutype nord-am&#233;ricain (plus facilement accessible via le
+        premi&#232;re m&#233;thode).</li>
+      </ul>
 
-<p>Retour &#224; la <a href="index.shtml#tools">page principale d'aide Signalisation</a>.
+      <h2>Sauvegarde et rechargement de la configuration</h2>
 
-<!--#include virtual="/Footer" -->
+      <p>Les informations du Feux de Signalisation sont conserv&#233;es dans votre <i>
+      configuration de r&#233;seau</i>, ainsi que les aiguillages, les feux, les capteurs,
+      configuration du panneau de commande, etc.<br>
+        Sauvegarder ces informations sur le disque, permettant de <a href=
+      "../../../package/jmri/jmrit/display/PanelMenuHelp.shtml"> les recharger
+      </a> la prochaine fois que vous lancez JMRI, utilisez <b>Sauvegarder Configuration...</b>
+      dans le menu <b>Fichier</b> en haut de la Table Feux de Signalisationx (ou
+      autres tableaux dans le menu Outils), ou s&#233;lectionnez <b>Sauvegarder
+      Panneau...</b> dans le menu <b>Panneau</b>...</p>
+      <p>Pour plus d'informations sur la cr&#233;ation et l'affichage des panneaux,
+      y compris la fa&#231;on de montrer les signaux sur vos panneaux, veuillez consulter les
+      <a href="../../apps/PanelPro/Panels.shtml">Pages Panneaux</a>.</p>
 
+      <p>Retour &#224; la page d'aide <a href="index.shtml#tools">Signalisation Principale
+     </a>.</p>
+	<p>Traduction 2021-02-13</p>
+
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
-  </div> <!-- closes #mBody-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
+
+    
+
