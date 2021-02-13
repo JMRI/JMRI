@@ -51,12 +51,9 @@ public class BeanTableDataModelTest extends AbstractBeanTableDataModelBase<Senso
         return 13;
     }
 
+    // An implementation of BeanTableModel which can be used in testing.
     private class BeanTableDataModelImpl extends SensorTableDataModel {
 
-        public BeanTableDataModelImpl(){
-            super();
-        }
-        
         public BeanTableDataModelImpl(Manager<Sensor> mgr){
             super(mgr);
         }
