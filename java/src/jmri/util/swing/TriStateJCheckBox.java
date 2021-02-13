@@ -161,7 +161,7 @@ public class TriStateJCheckBox extends JCheckBox implements Icon  {
         }
         
         if ((((TriStateModel) model).getState() != TriStateJCheckBox.State.PARTIAL)
-            || c == null ){
+            || c == null || g == null){
             return;
         }
         
