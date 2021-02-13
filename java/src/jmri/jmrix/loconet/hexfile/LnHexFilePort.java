@@ -2,8 +2,12 @@ package jmri.jmrix.loconet.hexfile;
 
 import java.io.*;
 
+import jmri.jmrix.loconet.LnConstants;
+import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.LnPortController;
+import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
+import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -301,6 +305,51 @@ public class LnHexFilePort extends LnPortController implements Runnable {
 
     public boolean simReply() {
         return simReply;
+    }
+
+    /**
+     * Choose from a subset of hardware replies to send in HexFile simulator mode in response to specific messages.
+     * Supported message types:
+     * <ul>
+     *     <li>LN SV rev2 board {@link jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents}</li>
+     *     <li>LNCV board {@link jmri.jmrix.loconet.uhlenbrock.LncvMessageContents} ReadReply</li>
+     * </ul>
+     * Listener is attached to jmri.jmrix.loconet.hexfile.HexFileFrame with GUI bos to turn this option on/off
+     *
+     * @param m the message to respond to
+     * @return an appropriate reply by type and values
+     */
+    static public LocoNetMessage generateReply(LocoNetMessage m) {
+        LocoNetMessage reply = null;
+        log.debug("generateReply for {}", m.toMonitorString());
+        if (LnSv2MessageContents.isSupportedSv2Message(m)) {
+            log.debug("generate reply for SV2 message");
+            LnSv2MessageContents c = new LnSv2MessageContents(m);
+            if (c.getDestAddr() == -1) { // Sv2 QueryAll, reply (content includes no address)
+                log.debug("generate LNSV2 query reply message");
+                int dest = 1; // keep it simple, don't fetch src from m
+                int myId = 11; // a random value
+                int mf = 129; // Digitrax
+                int dev = 1;
+                int type = 3055;
+                int serial = 111;
+                reply = LnSv2MessageContents.createSv2DeviceDiscoveryReply(myId, dest, mf, dev, type, serial);
+            }
+        } else if (LncvMessageContents.isSupportedLncvMessage(m)) {
+            //log.debug("generate reply for LNCV Read message");
+            if (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ) {
+                // generate READ REPLY
+                reply = LncvMessageContents.createLncvReadReply(m);
+            } else if (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_WRITE) {
+                // generate WRITE reply LACK
+                reply = new LocoNetMessage(new int[]{LnConstants.OPC_LONG_ACK, 0x6d, 0x7f, 0x1});
+            } else if (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_PROG_START) {
+                // generate STARTPROGALL reply
+                reply = LncvMessageContents.createLncvProgStartReply(m);
+            }
+            // ignore LncvMessageContents.LncvCommand.LNCV_PROG_END, no response expected
+        }
+        return reply;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnHexFilePort.class);
