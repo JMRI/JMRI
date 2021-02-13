@@ -111,7 +111,7 @@ public class LncvDevicesManager extends PropertyChangeSupport
                                         } else {
                                             JOptionPane.showMessageDialog(null,
                                                     Bundle.getMessage("WarnMultipleLncvModsFound", art, addr, l.size()),
-                                                    Bundle.getMessage("TitleWarn"), JOptionPane.WARNING_MESSAGE);
+                                                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                                             log.info("Found multiple matching roster entries. " + "Cannot associate any one to this device.");
                                         }
                                     }
