@@ -47,7 +47,7 @@
       </xs:annotation>
       <xs:sequence>
         
-        <xs:element name="thread" minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Thread" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="id" type="xs:int" minOccurs="1" maxOccurs="1"/>
@@ -56,14 +56,14 @@
           </xs:complexType>
         </xs:element>
 
-        <xs:element name="logixng" minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="LogixNG" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1"/>
 
-              <xs:element name="conditionalngs" minOccurs="1" maxOccurs="1">
+              <xs:element name="ConditionalNGs" minOccurs="1" maxOccurs="1">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="conditionalNG_SystemName" type="systemNameType" minOccurs="0" maxOccurs="unbounded"/>
@@ -81,13 +81,13 @@
         </xs:element>
         
 
-        <xs:element name="clipboard" minOccurs="0" maxOccurs="1">
+        <xs:element name="Clipboard" minOccurs="0" maxOccurs="1">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="many" minOccurs="0" maxOccurs="1">
+              <xs:element name="Many" minOccurs="0" maxOccurs="1">
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element name="socket" minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="Socket" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
                           <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
@@ -119,7 +119,7 @@
       </xs:annotation>
       <xs:sequence>
         
-        <xs:element name="conditionalng" minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ConditionalNG" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
@@ -130,7 +130,7 @@
               <xs:element name="socketName" type="xs:string" minOccurs="0" maxOccurs="1"/>
               <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
 
-              <xs:element name="socket" minOccurs="1" maxOccurs="unbounded">
+              <xs:element name="Socket" minOccurs="1" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>
                   <xs:element name="socketName" type="xs:string" minOccurs="0" maxOccurs="1"/>
@@ -160,7 +160,7 @@
       </xs:annotation>
       <xs:sequence>
         
-        <xs:element name="module" minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Module" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
@@ -169,10 +169,10 @@
 
               <xs:element name="rootSocketType" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
-              <xs:element name="parameters" minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="Parameters" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element name="parameter" minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="Parameter" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
                           <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
@@ -214,7 +214,7 @@
       </xs:annotation>
       <xs:sequence>
         
-        <xs:element name="csv-table" minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="CsvTable" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>

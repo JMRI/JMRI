@@ -254,33 +254,6 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
         }
     }
     
-    
-    /**
-     * Create Turnout object for the action
-     *
-     * @param reference Turnout application description
-     * @return The new output as Turnout object
-     */
-    protected Turnout getTurnoutFromPanel(String reference) {
-        if (turnoutBeanPanel == null) {
-            return null;
-        }
-        turnoutBeanPanel.setReference(reference); // pass turnout application description to be put into turnout Comment
-        try {
-            return turnoutBeanPanel.getNamedBean();
-        } catch (jmri.JmriException ex) {
-            log.warn("skipping creation of turnout not found for " + reference);
-            return null;
-        }
-    }
-    
-//    private void noTurnoutMessage(String s1, String s2) {
-//        log.warn("Could not provide turnout " + s2);
-//        String msg = Bundle.getMessage("WarningNoTurnout", new Object[]{s1, s2});
-//        JOptionPane.showMessageDialog(editFrame, msg,
-//                Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-//    }
-    
     /** {@inheritDoc} */
     @Override
     public String toString() {

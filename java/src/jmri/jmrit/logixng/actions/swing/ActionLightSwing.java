@@ -35,7 +35,7 @@ public class ActionLightSwing extends AbstractDigitalActionSwing {
     private JTextField _lightFormulaTextField;
     
     private JTabbedPane _tabbedPaneLightState;
-    private JComboBox<ActionLight.LightState> _stateComboBox;
+    private JComboBox<LightState> _stateComboBox;
     private JPanel _panelLightStateDirect;
     private JPanel _panelLightStateReference;
     private JPanel _panelLightStateLocalVariable;
@@ -90,7 +90,7 @@ public class ActionLightSwing extends AbstractDigitalActionSwing {
         _tabbedPaneLightState.addTab(NamedBeanAddressing.Formula.toString(), _panelLightStateFormula);
         
         _stateComboBox = new JComboBox<>();
-        for (ActionLight.LightState e : ActionLight.LightState.values()) {
+        for (LightState e : LightState.values()) {
             _stateComboBox.addItem(e);
         }
         
@@ -253,33 +253,6 @@ public class ActionLightSwing extends AbstractDigitalActionSwing {
             throw new RuntimeException("ParserException: "+e.getMessage(), e);
         }
     }
-    
-    
-    /**
-     * Create Light object for the action
-     *
-     * @param reference Light application description
-     * @return The new output as Light object
-     */
-    protected Light getLightFromPanel(String reference) {
-        if (lightBeanPanel == null) {
-            return null;
-        }
-        lightBeanPanel.setReference(reference); // pass light application description to be put into light Comment
-        try {
-            return lightBeanPanel.getNamedBean();
-        } catch (jmri.JmriException ex) {
-            log.warn("skipping creation of light not found for " + reference);
-            return null;
-        }
-    }
-    
-//    private void noLightMessage(String s1, String s2) {
-//        log.warn("Could not provide light " + s2);
-//        String msg = Bundle.getMessage("WarningNoLight", new Object[]{s1, s2});
-//        JOptionPane.showMessageDialog(editFrame, msg,
-//                Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-//    }
     
     /** {@inheritDoc} */
     @Override

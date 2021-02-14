@@ -40,12 +40,12 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
      */
     @Override
     public Element store(Object o) {
-        Element logixNGs = new Element("logixngs");
+        Element logixNGs = new Element("LogixNGs");
         setStoreElementClass(logixNGs);
         LogixNG_Manager tm = (LogixNG_Manager) o;
         if (tm != null) {
             for (LogixNG_Thread thread : LogixNG_Thread.getThreads()) {
-                Element e = new Element("thread");  // NOI18N
+                Element e = new Element("Thread");  // NOI18N
                 e.addContent(new Element("id").addContent(Integer.toString(thread.getThreadId())));
                 e.addContent(new Element("name").addContent(thread.getThreadName()));
                 logixNGs.addContent(e);
@@ -54,7 +54,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
             for (LogixNG logixNG : tm.getNamedBeanSet()) {
                 log.debug("logixng system name is " + logixNG.getSystemName());  // NOI18N
                 boolean enabled = logixNG.isEnabled();
-                Element elem = new Element("logixng");  // NOI18N
+                Element elem = new Element("LogixNG");  // NOI18N
                 elem.addContent(new Element("systemName").addContent(logixNG.getSystemName()));  // NOI18N
 
                 // store common part
@@ -132,7 +132,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
      * @param sharedLogixNG Element containing the LogixNG elements to load.
      */
     public void loadThreads(Element sharedLogixNG) {
-        List<Element> threads = sharedLogixNG.getChildren("thread");  // NOI18N
+        List<Element> threads = sharedLogixNG.getChildren("Thread");  // NOI18N
         log.debug("Found " + threads.size() + " threads");  // NOI18N
         
         for (int i = 0; i < threads.size(); i++) {
@@ -155,7 +155,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
      * @param sharedLogixNG Element containing the LogixNG elements to load.
      */
     public void loadLogixNGs(Element sharedLogixNG) {
-        List<Element> logixNGList = sharedLogixNG.getChildren("logixng");  // NOI18N
+        List<Element> logixNGList = sharedLogixNG.getChildren("LogixNG");  // NOI18N
         log.debug("Found " + logixNGList.size() + " logixngs");  // NOI18N
         LogixNG_Manager tm = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
 

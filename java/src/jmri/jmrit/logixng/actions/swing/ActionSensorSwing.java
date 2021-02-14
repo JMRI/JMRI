@@ -14,6 +14,7 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionSensor;
+import jmri.jmrit.logixng.actions.ActionSensor.SensorState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectCreatePanel;
@@ -34,7 +35,7 @@ public class ActionSensorSwing extends AbstractDigitalActionSwing {
     private JTextField _sensorFormulaTextField;
     
     private JTabbedPane _tabbedPaneSensorState;
-    private JComboBox<ActionSensor.SensorState> _stateComboBox;
+    private JComboBox<SensorState> _stateComboBox;
     private JPanel _panelSensorStateDirect;
     private JPanel _panelSensorStateReference;
     private JPanel _panelSensorStateLocalVariable;
@@ -89,7 +90,7 @@ public class ActionSensorSwing extends AbstractDigitalActionSwing {
         _tabbedPaneSensorState.addTab(NamedBeanAddressing.Formula.toString(), _panelSensorStateFormula);
         
         _stateComboBox = new JComboBox<>();
-        for (ActionSensor.SensorState e : ActionSensor.SensorState.values()) {
+        for (SensorState e : SensorState.values()) {
             _stateComboBox.addItem(e);
         }
         
@@ -258,33 +259,6 @@ public class ActionSensorSwing extends AbstractDigitalActionSwing {
             throw new RuntimeException("ParserException: "+e.getMessage(), e);
         }
     }
-    
-    
-    /**
-     * Create Sensor object for the action
-     *
-     * @param reference Sensor application description
-     * @return The new output as Sensor object
-     */
-    protected Sensor getSensorFromPanel(String reference) {
-        if (sensorBeanPanel == null) {
-            return null;
-        }
-        sensorBeanPanel.setReference(reference); // pass sensor application description to be put into sensor Comment
-        try {
-            return sensorBeanPanel.getNamedBean();
-        } catch (jmri.JmriException ex) {
-            log.warn("skipping creation of sensor not found for " + reference);
-            return null;
-        }
-    }
-    
-//    private void noSensorMessage(String s1, String s2) {
-//        log.warn("Could not provide sensor " + s2);
-//        String msg = Bundle.getMessage("WarningNoSensor", new Object[]{s1, s2});
-//        JOptionPane.showMessageDialog(editFrame, msg,
-//                Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-//    }
     
     /** {@inheritDoc} */
     @Override

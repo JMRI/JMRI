@@ -47,7 +47,7 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
                 // store common part
                 storeCommon(conditionalNG, elem);
                 
-                elem.addContent(new Element("thread").addContent(
+                elem.addContent(new Element("Thread").addContent(
                         Integer.toString(conditionalNG.getStartupThreadId())));  // NOI18N
                 
                 Element e2 = new Element("socket");
@@ -125,7 +125,7 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
             String userName = getUserName(conditionalNG_Element);
             
             int threadId = LogixNG_Thread.DEFAULT_LOGIXNG_THREAD;
-            Element threadElem = conditionalNG_Element.getChild("thread");
+            Element threadElem = conditionalNG_Element.getChild("Thread");
             if (threadElem != null) threadId = Integer.parseInt(threadElem.getTextTrim());
             
             String enabled = "";

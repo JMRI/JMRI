@@ -42,7 +42,7 @@
         <xs:choice minOccurs="0" maxOccurs="unbounded">
 
 
-          <xs:element name="abstractMaleSocket" minOccurs="0" maxOccurs="1">
+          <xs:element name="AbstractMaleSocket" minOccurs="0" maxOccurs="1">
             <xs:complexType>
               <xs:sequence>
 
@@ -60,7 +60,7 @@
                 </xs:simpleType>
               </xs:element>
 
-              <xs:element name="localVariable" minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="LocalVariable" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
@@ -99,7 +99,7 @@
 
 
 
-          <xs:element name="abstractDebuggerMaleSocket" minOccurs="0" maxOccurs="1">
+          <xs:element name="AbstractDebuggerMaleSocket" minOccurs="0" maxOccurs="1">
             <xs:complexType>
               <xs:sequence>
 
