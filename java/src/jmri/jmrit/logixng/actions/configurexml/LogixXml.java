@@ -28,13 +28,13 @@ public class LogixXml extends jmri.managers.configurexml.AbstractNamedBeanManage
     public Element store(Object o) {
         Logix p = (Logix) o;
 
-        Element element = new Element("logix");
+        Element element = new Element("Logix");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
         storeCommon(p, element);
 
-        Element e2 = new Element("expressionSocket");
+        Element e2 = new Element("ExpressionSocket");
         e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
         MaleSocket socket = p.getExpressionSocket().getConnectedSocket();
         String socketSystemName;
@@ -48,7 +48,7 @@ public class LogixXml extends jmri.managers.configurexml.AbstractNamedBeanManage
         }
         element.addContent(e2);
 
-        e2 = new Element("actionSocket");
+        e2 = new Element("ActionSocket");
         e2.addContent(new Element("socketName").addContent(p.getChild(1).getName()));
         socket = p.getActionSocket().getConnectedSocket();
         if (socket != null) {
@@ -72,16 +72,16 @@ public class LogixXml extends jmri.managers.configurexml.AbstractNamedBeanManage
 
         loadCommon(h, shared);
 
-        Element socketName = shared.getChild("expressionSocket").getChild("socketName");
+        Element socketName = shared.getChild("ExpressionSocket").getChild("socketName");
         h.getChild(0).setName(socketName.getTextTrim());
-        Element socketSystemName = shared.getChild("expressionSocket").getChild("systemName");
+        Element socketSystemName = shared.getChild("ExpressionSocket").getChild("systemName");
         if (socketSystemName != null) {
             h.setExpressionSocketSystemName(socketSystemName.getTextTrim());
         }
         
-        socketName = shared.getChild("actionSocket").getChild("socketName");
+        socketName = shared.getChild("ActionSocket").getChild("socketName");
         h.getChild(1).setName(socketName.getTextTrim());
-        socketSystemName = shared.getChild("actionSocket").getChild("systemName");
+        socketSystemName = shared.getChild("ActionSocket").getChild("systemName");
         if (socketSystemName != null) {
             h.setActionSocketSystemName(socketSystemName.getTextTrim());
         }
