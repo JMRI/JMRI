@@ -27,7 +27,7 @@ public class ActionSimpleScriptXml extends jmri.managers.configurexml.AbstractNa
     public Element store(Object o) {
         ActionSimpleScript p = (ActionSimpleScript) o;
 
-        Element element = new Element("action-script");
+        Element element = new Element("ActionSimpleScript");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

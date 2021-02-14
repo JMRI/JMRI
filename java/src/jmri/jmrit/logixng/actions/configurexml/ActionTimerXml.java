@@ -34,13 +34,13 @@ public class ActionTimerXml extends jmri.managers.configurexml.AbstractNamedBean
     public Element store(Object o) {
         ActionTimer p = (ActionTimer) o;
 
-        Element element = new Element("action-timer");
+        Element element = new Element("ActionTimer");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
         storeCommon(p, element);
 
-        Element e2 = new Element("startSocket");
+        Element e2 = new Element("StartSocket");
         e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
         MaleSocket socket = p.getStartExpressionSocket().getConnectedSocket();
         String socketSystemName;
@@ -54,7 +54,7 @@ public class ActionTimerXml extends jmri.managers.configurexml.AbstractNamedBean
         }
         element.addContent(e2);
 
-        e2 = new Element("stopSocket");
+        e2 = new Element("StopSocket");
         e2.addContent(new Element("socketName").addContent(p.getChild(1).getName()));
         socket = p.getStopExpressionSocket().getConnectedSocket();
         if (socket != null) {
@@ -67,9 +67,9 @@ public class ActionTimerXml extends jmri.managers.configurexml.AbstractNamedBean
         }
         element.addContent(e2);
 
-        Element e = new Element("actions");
+        Element e = new Element("Actions");
         for (int i=0; i < p.getNumActions(); i++) {
-            e2 = new Element("socket");
+            e2 = new Element("Socket");
             e2.addContent(new Element("delay").addContent(Integer.toString(p.getDelay(i))));
             e2.addContent(new Element("socketName").addContent(p.getActionSocket(i).getName()));
             socket = p.getActionSocket(i).getConnectedSocket();
@@ -96,17 +96,17 @@ public class ActionTimerXml extends jmri.managers.configurexml.AbstractNamedBean
     public boolean load(Element shared, Element perNode) {
         List<Map.Entry<String, String>> expressionSystemNames = new ArrayList<>();
         
-        Element socketNameElement = shared.getChild("startSocket").getChild("socketName");
+        Element socketNameElement = shared.getChild("StartSocket").getChild("socketName");
         String startSocketName = socketNameElement.getTextTrim();
-        Element socketSystemNameElement = shared.getChild("startSocket").getChild("systemName");
+        Element socketSystemNameElement = shared.getChild("StartSocket").getChild("systemName");
         String startSocketSystemName = null;
         if (socketSystemNameElement != null) {
             startSocketSystemName = socketSystemNameElement.getTextTrim();
         }
         
-        socketNameElement = shared.getChild("stopSocket").getChild("socketName");
+        socketNameElement = shared.getChild("StopSocket").getChild("socketName");
         String stopSocketName = socketNameElement.getTextTrim();
-        socketSystemNameElement = shared.getChild("stopSocket").getChild("systemName");
+        socketSystemNameElement = shared.getChild("StopSocket").getChild("systemName");
         String stopSocketSystemName = null;
         if (socketSystemNameElement != null) {
             stopSocketSystemName = socketSystemNameElement.getTextTrim();
@@ -114,7 +114,7 @@ public class ActionTimerXml extends jmri.managers.configurexml.AbstractNamedBean
         
         List<ActionTimer.ActionData> actionDataList = new ArrayList<>();
         
-        Element actionElement = shared.getChild("actions");
+        Element actionElement = shared.getChild("Actions");
         for (Element socketElement : actionElement.getChildren()) {
             String socketName = socketElement.getChild("socketName").getTextTrim();
             Element systemNameElement = socketElement.getChild("systemName");

@@ -29,7 +29,7 @@ public class DigitalBooleanOnChangeXml extends jmri.managers.configurexml.Abstra
     public Element store(Object o) {
         DigitalBooleanOnChange p = (DigitalBooleanOnChange) o;
 
-        Element element = new Element("on-change");
+        Element element = new Element("OnChange");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
@@ -37,7 +37,7 @@ public class DigitalBooleanOnChangeXml extends jmri.managers.configurexml.Abstra
 
         element.setAttribute("trigger", p.getTrigger().name());
         
-        Element e2 = new Element("socket");
+        Element e2 = new Element("Socket");
         e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
         MaleSocket socket = p.getSocket().getConnectedSocket();
         String socketSystemName;
@@ -66,9 +66,9 @@ public class DigitalBooleanOnChangeXml extends jmri.managers.configurexml.Abstra
 
         loadCommon(h, shared);
         
-        Element socketName = shared.getChild("socket").getChild("socketName");
+        Element socketName = shared.getChild("Socket").getChild("socketName");
         h.getChild(0).setName(socketName.getTextTrim());
-        Element socketSystemName = shared.getChild("socket").getChild("systemName");
+        Element socketSystemName = shared.getChild("Socket").getChild("systemName");
         if (socketSystemName != null) {
             h.setActionSocketSystemName(socketSystemName.getTextTrim());
         }

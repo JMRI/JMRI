@@ -30,7 +30,7 @@ public class ActionSensorXml extends jmri.managers.configurexml.AbstractNamedBea
     public Element store(Object o) {
         ActionSensor p = (ActionSensor) o;
 
-        Element element = new Element("action-sensor");
+        Element element = new Element("ActionSensor");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

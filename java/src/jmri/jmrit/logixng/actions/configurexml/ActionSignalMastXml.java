@@ -30,7 +30,7 @@ public class ActionSignalMastXml extends jmri.managers.configurexml.AbstractName
     public Element store(Object o) {
         ActionSignalMast p = (ActionSignalMast) o;
 
-        Element element = new Element("action-signalmast");
+        Element element = new Element("ActionSignalMast");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 

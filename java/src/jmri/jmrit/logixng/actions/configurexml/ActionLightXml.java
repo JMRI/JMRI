@@ -30,7 +30,7 @@ public class ActionLightXml extends jmri.managers.configurexml.AbstractNamedBean
     public Element store(Object o) {
         ActionLight p = (ActionLight) o;
 
-        Element element = new Element("action-light");
+        Element element = new Element("ActionLight");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

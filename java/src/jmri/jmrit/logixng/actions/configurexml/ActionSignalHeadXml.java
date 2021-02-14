@@ -30,7 +30,7 @@ public class ActionSignalHeadXml extends jmri.managers.configurexml.AbstractName
     public Element store(Object o) {
         ActionSignalHead p = (ActionSignalHead) o;
 
-        Element element = new Element("action-signalhead");
+        Element element = new Element("ActionSignalHead");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 

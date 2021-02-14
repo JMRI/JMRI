@@ -31,7 +31,7 @@ public class AnalogActionMemoryXml extends jmri.managers.configurexml.AbstractNa
     public Element store(Object o) {
         AnalogActionMemory p = (AnalogActionMemory) o;
 
-        Element element = new Element("analog-action-memory");
+        Element element = new Element("AnalogActionMemory");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

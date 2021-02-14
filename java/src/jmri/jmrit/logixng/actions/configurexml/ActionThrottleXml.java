@@ -30,13 +30,13 @@ public class ActionThrottleXml extends jmri.managers.configurexml.AbstractNamedB
     public Element store(Object o) {
         ActionThrottle p = (ActionThrottle) o;
 
-        Element element = new Element("throttle");
+        Element element = new Element("Throttle");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
         storeCommon(p, element);
 
-        Element e2 = new Element("locoAddressSocket");
+        Element e2 = new Element("LocoAddressSocket");
         e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
         MaleSocket socket = p.getLocoAddressSocket().getConnectedSocket();
         String socketSystemName;
@@ -50,7 +50,7 @@ public class ActionThrottleXml extends jmri.managers.configurexml.AbstractNamedB
         }
         element.addContent(e2);
 
-        e2 = new Element("locoSpeedSocket");
+        e2 = new Element("LocoSpeedSocket");
         e2.addContent(new Element("socketName").addContent(p.getChild(1).getName()));
         socket = p.getLocoSpeedSocket().getConnectedSocket();
         if (socket != null) {
@@ -63,7 +63,7 @@ public class ActionThrottleXml extends jmri.managers.configurexml.AbstractNamedB
         }
         element.addContent(e2);
 
-        e2 = new Element("locoDirectionSocket");
+        e2 = new Element("LocoDirectionSocket");
         e2.addContent(new Element("socketName").addContent(p.getChild(1).getName()));
         socket = p.getLocoDirectionSocket().getConnectedSocket();
         if (socket != null) {
@@ -88,23 +88,23 @@ public class ActionThrottleXml extends jmri.managers.configurexml.AbstractNamedB
 
         loadCommon(h, shared);
         
-        Element socketName = shared.getChild("locoAddressSocket").getChild("socketName");
+        Element socketName = shared.getChild("LocoAddressSocket").getChild("socketName");
         h.getChild(0).setName(socketName.getTextTrim());
-        Element socketSystemName = shared.getChild("locoAddressSocket").getChild("systemName");
+        Element socketSystemName = shared.getChild("LocoAddressSocket").getChild("systemName");
         if (socketSystemName != null) {
             h.setLocoAddressSocketSystemName(socketSystemName.getTextTrim());
         }
         
-        socketName = shared.getChild("locoSpeedSocket").getChild("socketName");
+        socketName = shared.getChild("LocoSpeedSocket").getChild("socketName");
         h.getChild(1).setName(socketName.getTextTrim());
-        socketSystemName = shared.getChild("locoSpeedSocket").getChild("systemName");
+        socketSystemName = shared.getChild("LocoSpeedSocket").getChild("systemName");
         if (socketSystemName != null) {
             h.setLocoSpeedSocketSystemName(socketSystemName.getTextTrim());
         }
         
-        socketName = shared.getChild("locoDirectionSocket").getChild("socketName");
+        socketName = shared.getChild("LocoDirectionSocket").getChild("socketName");
         h.getChild(1).setName(socketName.getTextTrim());
-        socketSystemName = shared.getChild("locoDirectionSocket").getChild("systemName");
+        socketSystemName = shared.getChild("LocoDirectionSocket").getChild("systemName");
         if (socketSystemName != null) {
             h.setLocoDirectionSocketSystemName(socketSystemName.getTextTrim());
         }

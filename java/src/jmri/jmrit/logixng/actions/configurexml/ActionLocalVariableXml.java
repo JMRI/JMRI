@@ -28,7 +28,7 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
     public Element store(Object o) {
         ActionLocalVariable p = (ActionLocalVariable) o;
 
-        Element element = new Element("action-local-variable");
+        Element element = new Element("ActionLocalVariable");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

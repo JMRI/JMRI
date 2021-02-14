@@ -30,7 +30,7 @@ public class ActionScriptXml extends jmri.managers.configurexml.AbstractNamedBea
     public Element store(Object o) {
         ActionScript p = (ActionScript) o;
 
-        Element element = new Element("action-script");
+        Element element = new Element("ActionScript");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

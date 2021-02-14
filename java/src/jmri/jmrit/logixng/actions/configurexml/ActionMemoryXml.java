@@ -31,7 +31,7 @@ public class ActionMemoryXml extends jmri.managers.configurexml.AbstractNamedBea
     public Element store(Object o) {
         ActionMemory p = (ActionMemory) o;
 
-        Element element = new Element("action-memory");
+        Element element = new Element("ActionMemory");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

@@ -35,15 +35,15 @@ public class ActionListenOnBeansXml extends jmri.managers.configurexml.AbstractN
     public Element store(Object o) {
         ActionListenOnBeans p = (ActionListenOnBeans) o;
 
-        Element element = new Element("action-listen-on-beans");
+        Element element = new Element("ActionListenOnBeans");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
         storeCommon(p, element);
         
-        Element parameters = new Element("references");
+        Element parameters = new Element("References");
         for (NamedBeanReference ref : p.getReferences()) {
-            Element elementParameter = new Element("reference");
+            Element elementParameter = new Element("Reference");
             elementParameter.addContent(new Element("name").addContent(ref.getName()));
             elementParameter.addContent(new Element("type").addContent(ref.getType().name()));
             parameters.addContent(elementParameter);
@@ -61,7 +61,7 @@ public class ActionListenOnBeansXml extends jmri.managers.configurexml.AbstractN
 
         loadCommon(h, shared);
         
-        List<Element> parameterList = shared.getChild("references").getChildren();  // NOI18N
+        List<Element> parameterList = shared.getChild("References").getChildren();  // NOI18N
         log.debug("Found " + parameterList.size() + " references");  // NOI18N
         
         for (Element e : parameterList) {

@@ -30,7 +30,7 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
     public Element store(Object o) {
         ActionTurnout p = (ActionTurnout) o;
 
-        Element element = new Element("action-turnout");
+        Element element = new Element("ActionTurnout");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
