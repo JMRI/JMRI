@@ -44,15 +44,15 @@ public class AnalogManyXml extends jmri.managers.configurexml.AbstractNamedBeanM
     public Element store(Object o) {
         AnalogMany p = (AnalogMany) o;
 
-        Element element = new Element("many");
+        Element element = new Element("Many");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
         storeCommon(p, element);
         
-        Element e = new Element("actions");
+        Element e = new Element("Actions");
         for (int i=0; i < p.getChildCount(); i++) {
-            Element e2 = new Element("socket");
+            Element e2 = new Element("Socket");
             e2.addContent(new Element("socketName").addContent(p.getChild(i).getName()));
             MaleSocket socket = p.getChild(i).getConnectedSocket();
             String socketSystemName;
@@ -76,7 +76,7 @@ public class AnalogManyXml extends jmri.managers.configurexml.AbstractNamedBeanM
         
         List<Map.Entry<String, String>> actionSystemNames = new ArrayList<>();
         
-        Element actionElement = shared.getChild("actions");
+        Element actionElement = shared.getChild("Actions");
         for (Element socketElement : actionElement.getChildren()) {
             String socketName = socketElement.getChild("socketName").getTextTrim();
             Element systemNameElement = socketElement.getChild("systemName");

@@ -26,11 +26,11 @@ public class ClipboardManyXml extends jmri.managers.configurexml.AbstractNamedBe
     public Element store(Object o) {
         ClipboardMany p = (ClipboardMany) o;
 
-        Element element = new Element("many");
+        Element element = new Element("Many");
         element.setAttribute("class", this.getClass().getName());
 
         for (int i=0; i < p.getChildCount(); i++) {
-            Element e2 = new Element("socket");
+            Element e2 = new Element("Socket");
             e2.addContent(new Element("socketName").addContent(p.getChild(i).getName()));
             MaleSocket socket = p.getChild(i).getConnectedSocket();
             
@@ -57,7 +57,7 @@ public class ClipboardManyXml extends jmri.managers.configurexml.AbstractNamedBe
         
         List<ClipboardMany.ItemData> systemNamesAndClasses = new ArrayList<>();
         
-        Element actionElement = shared.getChild("many");
+        Element actionElement = shared.getChild("Many");
         for (Element socketElement : actionElement.getChildren()) {
             String socketName = socketElement.getChild("socketName").getTextTrim();
             Element systemNameElement = socketElement.getChild("systemName");

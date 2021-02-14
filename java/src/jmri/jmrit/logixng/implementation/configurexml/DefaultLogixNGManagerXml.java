@@ -60,7 +60,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
                 // store common part
                 storeCommon(logixNG, elem);
 
-                Element e = new Element("conditionalngs");
+                Element e = new Element("ConditionalNGs");
                 for (int i=0; i < logixNG.getNumConditionalNGs(); i++) {
                     if (logixNG.getConditionalNG(i) != null) {
                         e.addContent(new Element("conditionalNG_SystemName").addContent(logixNG.getConditionalNG(i).getSystemName()));
@@ -76,7 +76,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
             }
             
             // Store items on the clipboard
-            Element elemClipboard = new Element("clipboard");  // NOI18N
+            Element elemClipboard = new Element("Clipboard");  // NOI18N
             Clipboard clipboard = tm.getClipboard();
             if (clipboard.getFemaleSocket().isConnected()) {
                 Base rootObject = clipboard.getFemaleSocket().getConnectedSocket().getObject();
@@ -194,7 +194,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
                 }
                 
                 List<Element> conditionalNGList =
-                        logixNG_Element.getChild("conditionalngs").getChildren();  // NOI18N
+                        logixNG_Element.getChild("ConditionalNGs").getChildren();  // NOI18N
                 
                 for (int j = 0; j < conditionalNGList.size(); j++) {
                     
@@ -210,7 +210,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
     }
     
     public void loadClipboard(Element sharedLogixNG) {
-        List<Element> clipboardList = sharedLogixNG.getChildren("clipboard");  // NOI18N
+        List<Element> clipboardList = sharedLogixNG.getChildren("Clipboard");  // NOI18N
         if (clipboardList.isEmpty()) return;
         List<Element> clipboardSubList = clipboardList.get(0).getChildren();
         if (clipboardSubList.isEmpty()) return;

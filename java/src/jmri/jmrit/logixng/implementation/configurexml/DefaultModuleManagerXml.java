@@ -38,7 +38,7 @@ public class DefaultModuleManagerXml extends AbstractManagerXml {
      */
     @Override
     public Element store(Object o) {
-        Element expressions = new Element("logixngModules");
+        Element expressions = new Element("LogixngModules");
         setStoreElementClass(expressions);
         DefaultModuleManager tm = (DefaultModuleManager) o;
         if (tm != null) {

@@ -39,9 +39,9 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
         ConditionalNG_Manager tm = (ConditionalNG_Manager) o;
         if (tm != null) {
             for (ConditionalNG conditionalNG : tm.getNamedBeanSet()) {
-                log.debug("conditionalng system name is " + conditionalNG.getSystemName());  // NOI18N
+                log.debug("ConditionalNG system name is " + conditionalNG.getSystemName());  // NOI18N
                 boolean enabled = conditionalNG.isEnabled();
-                Element elem = new Element("conditionalng");  // NOI18N
+                Element elem = new Element("ConditionalNG");  // NOI18N
                 elem.addContent(new Element("systemName").addContent(conditionalNG.getSystemName()));  // NOI18N
                 
                 // store common part
@@ -108,7 +108,7 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
      * @param conditionalNGs Element containing the ConditionalNG elements to load.
      */
     public void loadConditionalNGs(Element conditionalNGs) {
-        List<Element> conditionalNGList = conditionalNGs.getChildren("conditionalng");  // NOI18N
+        List<Element> conditionalNGList = conditionalNGs.getChildren("ConditionalNG");  // NOI18N
         log.debug("Found " + conditionalNGList.size() + " logixngConditionalNGs");  // NOI18N
         ConditionalNG_Manager tm = InstanceManager.getDefault(jmri.jmrit.logixng.ConditionalNG_Manager.class);
         
@@ -132,7 +132,7 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
             if (conditionalNG_Element.getAttribute("enabled") != null) {  // NOI18N
                 enabled = conditionalNG_Element.getAttribute("enabled").getValue();  // NOI18N
             }
-            log.debug("create conditionalng: (" + sysName + ")("  // NOI18N
+            log.debug("create ConditionalNG: (" + sysName + ")("  // NOI18N
                     + (userName == null ? "<null>" : userName) + ")");  // NOI18N
             
             // Create a new ConditionalNG but don't setup the initial tree.
