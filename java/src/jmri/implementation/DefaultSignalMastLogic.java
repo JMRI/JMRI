@@ -51,6 +51,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
     boolean useAutoGenTurnouts = true;
 
     LayoutBlock facingBlock = null;
+    LayoutBlock remoteProtectingBlock = null;
 
     boolean disposing = false;
 
@@ -2225,10 +2226,15 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                     int preBlk = i - 1;
                     if (i == lblks.size() - 1) {
                         nxtBlk = i;
+                        LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
                     }
                     //We use the best connectivity for the current block;
                     connection = new ConnectivityUtil(lblks.get(i).getMaxConnectedPanel());
-                    turnoutList = connection.getTurnoutList(lblks.get(i).getBlock(), lblks.get(preBlk).getBlock(), lblks.get(nxtBlk).getBlock());
+                    if (i == lblks.size() - 1 && remoteProtectingBlock != null) {
+                        turnoutList = connection.getTurnoutList(lblks.get(i).getBlock(), lblks.get(preBlk).getBlock(), remoteProtectingBlock.getBlock());
+                    }else{
+                        turnoutList = connection.getTurnoutList(lblks.get(i).getBlock(), lblks.get(preBlk).getBlock(), lblks.get(nxtBlk).getBlock());
+                    }
                     for (int x = 0; x < turnoutList.size(); x++) {
                         LayoutTurnout lt = turnoutList.get(x).getObject();
                         if (lt instanceof LayoutSlip) {

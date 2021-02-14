@@ -22,7 +22,7 @@ from javax.swing import JButton, JFrame, JPanel, JProgressBar, \
 
 class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
 
-    logLevel = 0
+    logLevel = 2
 
     def __init__(self):
         pass
@@ -112,7 +112,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
     ## ***********************************************************************************
         
     def create_transits_and_trainTrainInfos(self, panel):
-        #if self.logLevel > 1: print "*********************************** producing transit ******************************"
+        if self.logLevel > 1: print "*********************************** producing transit ******************************"
         #produce all the transits, so use the stopping graph which is more complete than the stopping graph
         
         self.delete_transits()
@@ -249,24 +249,25 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             last_signal_mast = self.get_last_signal_mast(penultimate_signal_mast, last_block)
             if self.logLevel > 0: print "last_signal_mast",last_signal_mast.getUserName()
             
-            # 2a) get the first signal mast
-            if self.logLevel > 1: print "get_first_signal_mast"
-            if self.logLevel > 1: print "---------------------"
-            first_block = layout_block_list[0]
-            second_signal_mast = signal_mast_list[0]
-            first_signal_mast = self.get_first_signal_mast(second_signal_mast, first_block)
-            if self.logLevel > 0: print "first_signal_mast", first_signal_mast
+            #first signal mast not needed as transit includes facing section
+            # # 2a) get the first signal mast
+            # if self.logLevel > 1: print "get_first_signal_mast"
+            # if self.logLevel > 1: print "---------------------"
+            # first_block = layout_block_list[0]
+            # second_signal_mast = signal_mast_list[0]
+            # first_signal_mast = self.get_first_signal_mast(second_signal_mast, first_block)
+            # if self.logLevel > 0: print "first_signal_mast", first_signal_mast
             
-            if self.logLevel > 0: print "signal_mast_list",[sm.getUserName() for sm in signal_mast_list]
+            # if self.logLevel > 0: print "signal_mast_list",[sm.getUserName() for sm in signal_mast_list]
             
-            # 3a) add the first signal mast if it was possible to get it
-            if first_signal_mast !=None:
-                signal_mast_list.insert(0, first_signal_mast)
-                first_signal_mast_not_present = False
-            else:
-                first_signal_mast_not_present = True
-            if self.logLevel > 1: print "signal mast list 3a" , signal_mast_list
-            if self.logLevel > 0: print "signal mast list with fsm" , [ signal.getUserName() for signal in signal_mast_list]
+            # # 3a) add the first signal mast if it was possible to get it
+            # if first_signal_mast !=None:
+                # signal_mast_list.insert(0, first_signal_mast)
+                # first_signal_mast_not_present = False
+            # else:
+                # first_signal_mast_not_present = True
+            # if self.logLevel > 1: print "signal mast list 3a" , signal_mast_list
+            # if self.logLevel > 0: print "signal mast list with fsm" , [ signal.getUserName() for signal in signal_mast_list]
             
             # 3b) add the last signal mast
             signal_mast_list.append(last_signal_mast)
@@ -275,7 +276,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             
             # 4) store signal_mast_list
             e.setItem(signal_mast_list=signal_mast_list)
-            e.setItem(first_signal_mast_not_present=first_signal_mast_not_present)
+            #e.setItem(first_signal_mast_not_present=first_signal_mast_not_present)
             
             
     def get_last_signal_mast(self,signal_mast,layout_block):
@@ -483,6 +484,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         
         #iterate through the signalmasts
         signal_mast_list = e.getItem("signal_mast_list")
+        print "signal_mast_list", signal_mast_list
         for signal_mast in signal_mast_list:
             if self.logLevel > 1: print "adding ", signal_mast.getUserName()
             TransitCreationTool.addNamedBean(signal_mast)
@@ -520,83 +522,83 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             if self.logLevel > 1: print "could not create transit", signal_mast_list
         if self.logLevel > 0: print "finished transit"
         
-        first_signal_mast_not_present = e.getItem("first_signal_mast_not_present")
+        # first_signal_mast_not_present = e.getItem("first_signal_mast_not_present")
         
-        if first_signal_mast_not_present:
-            if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-            if self.logLevel > 0: print "&&&& first signal mast addition &&&&"
-            if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+        # if first_signal_mast_not_present:
+            # if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+            # if self.logLevel > 0: print "&&&& first signal mast addition &&&&"
+            # if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 
-            #get parameters for the existing first transit section
-            if self.logLevel > 1 : print"first_signal_mast_not_present"
+            # #get parameters for the existing first transit section
+            # if self.logLevel > 1 : print"first_signal_mast_not_present"
             
-            TransitSectionList= transit.getTransitSectionList()
-            firstTransitSection = TransitSectionList[0]
+            # TransitSectionList= transit.getTransitSectionList()
+            # firstTransitSection = TransitSectionList[0]
             
-            if self.logLevel > 1 : print"TransitSectionList", TransitSectionList
-            if self.logLevel > 1 : print"firstTransitSection", firstTransitSection
+            # if self.logLevel > 1 : print"TransitSectionList", TransitSectionList
+            # if self.logLevel > 1 : print"firstTransitSection", firstTransitSection
         
-            [sectionList, sectionNameList, sectionDirectionList] = self.get_list_possible_sections(transit, firstTransitSection)
+            # [sectionList, sectionNameList, sectionDirectionList] = self.get_list_possible_sections(transit, firstTransitSection)
             
-            if self.logLevel > 1 : print"sectionList", sectionList
-            if self.logLevel > 1 : print"sectionNameList", sectionNameList
-            if self.logLevel > 1 : print"sectionDirectionList", sectionDirectionList
+            # if self.logLevel > 1 : print"sectionList", sectionList
+            # if self.logLevel > 1 : print"sectionNameList", sectionNameList
+            # if self.logLevel > 1 : print"sectionDirectionList", sectionDirectionList
             
             
-            layout_block_list = e.getItem("path")
-            first_block = layout_block_list[0].getBlock()
+            # layout_block_list = e.getItem("path")
+            # first_block = layout_block_list[0].getBlock()
 
-            sectionToInsert = self.get_section_containing_block(first_block, sectionList)
+            # sectionToInsert = self.get_section_containing_block(first_block, sectionList)
             
-            if self.logLevel > 1 : print"sectionToInsert",sectionToInsert
+            # if self.logLevel > 1 : print"sectionToInsert",sectionToInsert
             
-            index = sectionList.index(sectionToInsert)
-            sectionName = sectionNameList[index]
-            direction = sectionDirectionList[index]
+            # index = sectionList.index(sectionToInsert)
+            # sectionName = sectionNameList[index]
+            # direction = sectionDirectionList[index]
             
-            seq = 0
+            # seq = 0
             
-            if self.logLevel > 1 : print"index", index, "sectionName",sectionName,"direction",direction,"seq",seq
+            # if self.logLevel > 1 : print"index", index, "sectionName",sectionName,"direction",direction,"seq",seq
             
-            transit_section_to_insert = jmri.TransitSection(sectionToInsert, seq, direction)
-            if self.logLevel > 0: print "transit_section_to_insert",transit_section_to_insert
-            #insert first_transit_section at start of transit
+            # transit_section_to_insert = jmri.TransitSection(sectionToInsert, seq, direction)
+            # if self.logLevel > 0: print "transit_section_to_insert",transit_section_to_insert
+            # #insert first_transit_section at start of transit
 
             
-            FirstSignalMastName = self.getSignalMastName(sectionToInsert)
-            SignalMastManager = jmri.InstanceManager.getDefault(jmri.SignalMastManager)
-            firstsignalmast = SignalMastManager.getSignalMast(FirstSignalMastName)
-            signal_mast_list = e.getItem("signal_mast_list")
-            penultimate_signal_mast = signal_mast_list[0].getUserName()
-            signal_mast_list.insert(0, firstsignalmast)
-            e.setItem(signal_mast_list=signal_mast_list)
+            # FirstSignalMastName = self.getSignalMastName(sectionToInsert)
+            # SignalMastManager = jmri.InstanceManager.getDefault(jmri.SignalMastManager)
+            # firstsignalmast = SignalMastManager.getSignalMast(FirstSignalMastName)
+            # signal_mast_list = e.getItem("signal_mast_list")
+            # penultimate_signal_mast = signal_mast_list[0].getUserName()
+            # signal_mast_list.insert(0, firstsignalmast)
+            # e.setItem(signal_mast_list=signal_mast_list)
             
-            start_signal_mast = signal_mast_list[0].getUserName()
-            end_signal_mast = signal_mast_list[-1].getUserName()
-            oldTransitName = transit.getUserName()
-            newTransitName = "From " + start_signal_mast + " to " + end_signal_mast
-            if self.logLevel > 0: print "penultimate_signal_mast",penultimate_signal_mast
-            if self.logLevel > 0: print "oldTransitName",oldTransitName
-            if self.logLevel > 0: print "newTransitName",newTransitName
-            transit.setUserName(newTransitName)
-            #TransitManager = jmri.InstanceManager.getDefault(jmri.TransitManager)
-            #TransitManager.deleteTransit(transit)
-            #transit = TransitManager.createNewTransit(newTransitName)
-            #e.setItem(transit=transit)
-            transit.removeAllSections()
-            #sn = 0
-            #transit_section_to_insert.setSequenceNumber(sn)   
-            transit.addTransitSection(transit_section_to_insert)
-            for ts in TransitSectionList:
-                #increment the sequence number if required
-                ##sn = ts.getSequenceNumber()
-                #sn += 1
-                #ts.setSequenceNumber(sn)
-                transit.addTransitSection(ts)
-            if self.logLevel > 0: print "newTransitNamecheck",transit.getUserName()    
-            if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-            if self.logLevel > 0: print "&&&& end signal mast addition &&&&&&"
-            if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+            # start_signal_mast = signal_mast_list[0].getUserName()
+            # end_signal_mast = signal_mast_list[-1].getUserName()
+            # oldTransitName = transit.getUserName()
+            # newTransitName = "From " + start_signal_mast + " to " + end_signal_mast
+            # if self.logLevel > 0: print "penultimate_signal_mast",penultimate_signal_mast
+            # if self.logLevel > 0: print "oldTransitName",oldTransitName
+            # if self.logLevel > 0: print "newTransitName",newTransitName
+            # transit.setUserName(newTransitName)
+            # #TransitManager = jmri.InstanceManager.getDefault(jmri.TransitManager)
+            # #TransitManager.deleteTransit(transit)
+            # #transit = TransitManager.createNewTransit(newTransitName)
+            # #e.setItem(transit=transit)
+            # transit.removeAllSections()
+            # #sn = 0
+            # #transit_section_to_insert.setSequenceNumber(sn)   
+            # transit.addTransitSection(transit_section_to_insert)
+            # for ts in TransitSectionList:
+                # #increment the sequence number if required
+                # ##sn = ts.getSequenceNumber()
+                # #sn += 1
+                # #ts.setSequenceNumber(sn)
+                # transit.addTransitSection(ts)
+            # if self.logLevel > 0: print "newTransitNamecheck",transit.getUserName()    
+            # if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+            # if self.logLevel > 0: print "&&&& end signal mast addition &&&&&&"
+            # if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 
         #set username temporarily so that it is not overwritten by another
         temp_name = transit.getUserName() + "_temp"
@@ -1138,7 +1140,3 @@ class DisplayProgress:
     def killLabel(self):
         self.frame1.setVisible(False)
         self.frame1 = None
-
-
-
-

@@ -59,12 +59,26 @@ class Update_Signal_Logic():
         self.msg = "About to create all signal logic and sections\nrequired for dispatcher operation"
         self.msg = self.msg + "\n***********************\n Do you wish to continue\n***********************"
         myAnswer = JOptionPane.showConfirmDialog(None, self.msg)
-        self.set_layout_editor()
-        self.delete_transits()
-        self.delete_sections()
-        self.delete_signal_mast_logic()
-        self.create_auto_signal_mast_logic()
-        self.create_sections()
+        if myAnswer == JOptionPane.YES_OPTION:
+            self.delete_transits()
+            self.delete_sections()
+            self.delete_signal_mast_logic()
+            self.set_layout_editor()
+            self.create_auto_signal_mast_logic()
+            self.create_sections()
+            return True
+        elif myAnswer == JOptionPane.NO_OPTION:
+            msg = 'Stopping'
+            JOptionPane.showMessageDialog(None, 'Stopping', "Stopping" , JOptionPane.WARNING_MESSAGE)
+            return False
+        elif myAnswer == JOptionPane.CANCEL_OPTION:
+            msg = 'Stopping'
+            JOptionPane.showMessageDialog(None, 'Stopping', "Stopping", JOptionPane.WARNING_MESSAGE)
+            return False
+        elif myAnswer == JOptionPane.CLOSED_OPTION:
+            msg = 'Stopping'
+            JOptionPane.showMessageDialog(None, 'Stopping', "Stopping", JOptionPane.WARNING_MESSAGE)
+            return False
         
     # update_logic must be called after transits have been built with the auto_signal_mast_logic
     # or else the sections will not correspond to the signal_masts_logic at the time of 

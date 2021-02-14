@@ -2,6 +2,9 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import jmri.Block;
+import jmri.EntryPoint;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
@@ -9,6 +12,8 @@ import jmri.Section;
 import jmri.SignalMast;
 import jmri.Transit;
 import jmri.TransitManager;
+import jmri.TransitSection;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,31 +75,76 @@ final public class TransitCreationTool {
 
     public Transit createTransit() throws JmriException {
         TransitManager tm = InstanceManager.getDefault(jmri.TransitManager.class);
-        String transitName = "From " + list.get(0).getDisplayName() + " to " + list.get(list.size() - 1).getDisplayName();
+        String transitName =
+                "From " + list.get(0).getDisplayName() + " to " + list.get(list.size() - 1).getDisplayName();
         Transit t = tm.createNewTransit(transitName);
         if (t == null) {
             log.error("Unable to create transit {}", transitName);
             throw new JmriException(Bundle.getMessage("TCTErrorUnableToCreate", transitName));
         }
-
+        int seqNo = 0;
         if (list.get(0) instanceof SignalMast) {
             jmri.SignalMastLogicManager smlm = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
             for (int i = 1; i <= list.size() - 1; i++) {
+                if (i == 1) {
+                    // unless first sm = last sm in which case first section is
+                    // last section
+                    // (cirle)
+                    if (list.get(i - 1) == list.get(list.size() - 1)) {
+                        t.addTransitSection(new jmri.TransitSection(
+                                smlm.getSignalMastLogic((SignalMast) list.get(list.size() - 2))
+                                        .getAssociatedSection((SignalMast) list.get(list.size() - 1)),
+                                seqNo, Section.FORWARD));
+                        seqNo++;
+                    } else {
+                        if (smlm.getSignalMastLogic((SignalMast) list.get(i - 1)).getFacingBlock() != null) {
+                            // find shortest section with facing block at bottom
+                            // of list
+                            Block blockToFind =
+                                    smlm.getSignalMastLogic((SignalMast) list.get(i - 1)).getFacingBlock().getBlock();
+                            int count = 999;
+                            Section secFound = null;
+                            for (Section sec : InstanceManager.getDefault(jmri.SectionManager.class)
+                                    .getNamedBeanSet()) {
+                                if (sec.containsBlock(blockToFind)) {
+                                    // for ( EntryPoint ep :
+                                    // sec.getReverseEntryPointList()) {
+                                    // if (ep.isForwardType() && ep.getBlock()
+                                    // == blockToFind) {
+                                    if (sec.getBlockList().size() < count) {
+                                        count = sec.getBlockList().size();
+                                        secFound = sec;
+                                    }
+
+                                }
+                            }
+                            if (secFound != null) {
+                                t.addTransitSection(new jmri.TransitSection(secFound, seqNo, Section.REVERSE));
+                                seqNo++;
+                            } else {
+
+                            }
+                        }
+                    }
+                }
                 jmri.SignalMastLogic sml = smlm.getSignalMastLogic((SignalMast) list.get(i - 1));
                 Section sec = sml.getAssociatedSection((SignalMast) list.get(i));
-                //In theory sec being null would already have been tested when the signal was added.
+                // In theory sec being null would already have been tested when
+                // the signal was added.
                 if (sec == null) {
-                    String error = Bundle.getMessage("TCTErrorMastPairsNoSection", list.get(i - 1).getDisplayName(), list.get(i).getDisplayName());
+                    String error = Bundle.getMessage("TCTErrorMastPairsNoSection", list.get(i - 1).getDisplayName(),
+                            list.get(i).getDisplayName());
                     log.error("will throw {}", error);
                     tm.deregister(t);
                     t.dispose();
                     cancelTransitCreate();
                     throw new JmriException(error);
                 }
-                t.addTransitSection(new jmri.TransitSection(sec, i, Section.FORWARD));
+                t.addTransitSection(new jmri.TransitSection(sec, seqNo, Section.FORWARD));
+                seqNo++;
             }
         }
-        //Once created clear the list for a fresh start.
+        // Once created clear the list for a fresh start.
         list = new ArrayList<>();
         return t;
     }

@@ -188,7 +188,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         
     #    Dispatch (<filename.xml>, [USER | ROSTER | OPERATIONS >,<dccAddress, RosterEntryName or Operations>
         
-    def doDispatch_old(self, traininfoFileName, type, value):
+    def doDispatch(self, traininfoFileName, type, value):
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
         #try: 
         if self.logLevel > 0: print "traininfoFileName",traininfoFileName
@@ -238,7 +238,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         DF.newTrainDone(null);
         return True
             
-    def doDispatch(self, traininfoFileName, type, train):
+    def doDispatch_new(self, traininfoFileName, type, train):
         if self.logLevel > 0: print "In doDispatch: traininfoFileName",traininfoFileName,"type", type, "train", train
         info = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(traininfoFileName)
         if self.logLevel > 0: print "info.trainName", info.trainName

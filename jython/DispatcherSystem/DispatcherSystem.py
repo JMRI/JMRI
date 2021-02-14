@@ -267,7 +267,8 @@ def CreateIcons_action(event):
         JOptionPane.showMessageDialog(None, msg, 'Stopping', JOptionPane.WARNING_MESSAGE)
         return
     elif myAnswer == JOptionPane.CLOSED_OPTION:
-        #print "You closed the window. How rude!"
+        msg = 'Stopping'
+        JOptionPane.showMessageDialog(None, msg, 'Stopping', JOptionPane.WARNING_MESSAGE)
         return
     p = processXML(initialPanelFilename, finalPanelFilename )
 
@@ -439,24 +440,26 @@ def CreateTransits_action(event):
     usl = Update_Signal_Logic()
     
     #print "updating logic stage1"
-    usl.create_autologic_and_sections()
-    
-    #print "updating logic stage2"
-    usl.update_logic(run_file)
-    if logLevel > 0: print "updated logic"
-    
-    progress = 15
-    dpg.Update(str(progress)+ "% complete")
+    ans = usl.create_autologic_and_sections()
 
-    #print "Creating Transits"
-    CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
-    exec(open (CreateTransits).read())
-
-    #print "about to run CreateTransits"
-    ct = CreateTransits()
+    if ans == True: 
     
-    ct.run_transits(icons_file, run_file)
-    #print "ran CreateTransits"
+        #print "updating logic stage2"
+        #usl.update_logic(run_file)
+        if logLevel > 0: print "updated logic"
+        
+        progress = 15
+        dpg.Update(str(progress)+ "% complete")
+
+        #print "Creating Transits"
+        CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
+        exec(open (CreateTransits).read())
+
+        #print "about to run CreateTransits"
+        ct = CreateTransits()
+        
+        ct.run_transits(icons_file, run_file)
+        #print "ran CreateTransits"
 
     dpg.killLabel()
 
