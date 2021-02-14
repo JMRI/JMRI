@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
@@ -129,7 +130,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             }
             // not actually used due to the configDeleteColumn, setColumnToHoldButton, configureButton
             if (col == EDITCOL) {
-                return new JTextField(10).getPreferredSize().width;
+                return new JTextField(Bundle.getMessage("ButtonEdit")).getPreferredSize().width;
             }
             // not actually used due to the configValueColumn, setColumnToHoldButton, configureButton
             if (col == ENABLECOL) {
@@ -215,12 +216,12 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         }
 
         @Override
-        public Logix getBySystemName(String name) {
+        public Logix getBySystemName(@Nonnull String name) {
             return _logixManager.getBySystemName(name);
         }
 
         @Override
-        public Logix getByUserName(String name) {
+        public Logix getByUserName(@Nonnull String name) {
             return _logixManager.getByUserName(name);
         }
 
@@ -249,10 +250,10 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             return "";
         }
 
-        // typical to get right width
+        // typical to get correct width
         @Override
         protected void configDeleteColumn(JTable table) {
-            // have the delete column hold a button
+            // have the DELETECOL = EDITCOL column hold a button
             setColumnToHoldButton(table, DELETECOL,
                     new JButton(Bundle.getMessage("ButtonEdit")));
         }

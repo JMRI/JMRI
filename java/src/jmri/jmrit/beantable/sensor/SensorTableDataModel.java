@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
+import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
 import javax.swing.AbstractCellEditor;
 import javax.swing.ImageIcon;
@@ -132,7 +133,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
      * {@inheritDoc}
      */
     @Override
-    protected Sensor getBySystemName(String name) {
+    protected Sensor getBySystemName(@Nonnull String name) {
         return senManager.getBySystemName(name);
     }
 
@@ -140,7 +141,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
      * {@inheritDoc}
      */
     @Override
-    protected Sensor getByUserName(String name) {
+    protected Sensor getByUserName(@Nonnull String name) {
         return InstanceManager.getDefault(SensorManager.class).getByUserName(name);
     }
 

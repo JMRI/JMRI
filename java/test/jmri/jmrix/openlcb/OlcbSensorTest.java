@@ -38,15 +38,27 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
     }
 
     @Override
-    public void checkOnMsgSent() {
+    public void checkActiveMsgSent() {
         Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.8").match(ti.tc.rcvMessage));
     }
 
     @Override
-    public void checkOffMsgSent() {
+    public void checkInactiveMsgSent() {
         Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(ti.tc.rcvMessage));
     }
+    
+    @org.junit.jupiter.api.Disabled("Test requires further setup")
+    @jmri.util.junit.annotations.ToDo("Check checkActiveMsgSent() producing correct result")
+    @Test
+    @Override
+    public void testCommandSentActive() {}
 
+    @org.junit.jupiter.api.Disabled("Test requires further setup")
+    @jmri.util.junit.annotations.ToDo("Check checkInactiveMsgSent() producing correct result")
+    @Test
+    @Override
+    public void testCommandSentInactive() {}
+    
     @Override
     public void checkStatusRequestMsgSent() {
         ti.flush();
@@ -150,19 +162,19 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         ti.flush();
         Assert.assertNotNull(ti.tc.rcvMessage);
         log.debug("recv msg: {} header {}", ti.tc.rcvMessage, Integer.toHexString(ti.tc.rcvMessage.getHeader()));
-        checkOnMsgSent();
+        checkActiveMsgSent();
         ti.tc.rcvMessage = null;
         t.setKnownState(Sensor.INACTIVE);
         Assert.assertEquals(Sensor.INACTIVE, t.getKnownState());
         ti.flush();
-        checkOffMsgSent();
+        checkInactiveMsgSent();
 
         // Repeat send
         ti.tc.rcvMessage = null;
         t.setKnownState(Sensor.INACTIVE);
         Assert.assertEquals(Sensor.INACTIVE, t.getKnownState());
         ti.flush();
-        checkOffMsgSent();
+        checkInactiveMsgSent();
     }
 
     @Test

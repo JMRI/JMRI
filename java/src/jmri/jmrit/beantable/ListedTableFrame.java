@@ -1,9 +1,6 @@
 package jmri.jmrit.beantable;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Component;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -53,15 +50,15 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
         return true;
     }
 
-    static ArrayList<TabbedTableItemListArray> tabbedTableItemListArrayArray = new ArrayList<TabbedTableItemListArray>();
+    static ArrayList<TabbedTableItemListArray> tabbedTableItemListArrayArray = new ArrayList<>();
     ArrayList<TabbedTableItem<E>> tabbedTableArray = new ArrayList<>();
 
     final UserPreferencesManager pref = InstanceManager.getDefault(UserPreferencesManager.class);
     JSplitPane cardHolder;
     JList<String> list;
     JScrollPane listScroller;
-    JPanel buttonpanel;
-    JPanel detailpanel;
+    JPanel listPanel;
+    JPanel detailPanel;
     TabbedTableItem<E> itemBeingAdded = null;
     static boolean init = false;
 
@@ -110,8 +107,8 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
     public void initComponents() {
         actionList = new ActionJList(this);
 
-        detailpanel = new JPanel();
-        detailpanel.setLayout(new CardLayout());
+        detailPanel = new JPanel();
+        detailPanel.setLayout(new CardLayout());
         tabbedTableArray = new ArrayList<>(tabbedTableItemListArrayArray.size());
         ArrayList<TabbedTableItemListArray> removeItem = new ArrayList<>(5);
         for (TabbedTableItemListArray item : tabbedTableItemListArrayArray) {
@@ -119,11 +116,11 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
             try {
                 TabbedTableItem<E> itemModel = new TabbedTableItem<>(item.getClassAsString(), item.getItemString(), item.getStandardTableModel());
                 itemBeingAdded = itemModel;
-                detailpanel.add(itemModel.getPanel(), itemModel.getClassAsString());
+                detailPanel.add(itemModel.getPanel(), itemModel.getClassAsString());
                 tabbedTableArray.add(itemModel);
                 itemBeingAdded.getAAClass().addToFrame(this);
             } catch (Exception ex) {
-                detailpanel.add(errorPanel(item.getItemString()), item.getClassAsString());
+                detailPanel.add(errorPanel(item.getItemString()), item.getClassAsString());
                 log.error("Error when adding {} to display", item.getClassAsString(), ex);
                 removeItem.add(item);
             }
@@ -140,16 +137,17 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
         list.setLayoutOrientation(JList.VERTICAL);
         list.addMouseListener(actionList);
 
-        buttonpanel = new JPanel();
-        buttonpanel.setLayout(new BorderLayout(5, 0));
-        buttonpanel.setLayout(new BoxLayout(buttonpanel, BoxLayout.Y_AXIS));
-        buttonpanel.add(listScroller);
+        listPanel = new JPanel();
+        listPanel.setLayout(new BorderLayout(5, 0));
+        listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
+        listPanel.add(listScroller);
+        listPanel.setMinimumSize(new Dimension(140, 400)); // guarantees minimum width of left divider list
 
         buildMenus(tabbedTableArray.get(0));
         setTitle(tabbedTableArray.get(0).getItemString());
 
         cardHolder = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-                buttonpanel, detailpanel);
+                listPanel, detailPanel);
 
         cardHolder.setDividerSize(8);
         if (this.getDividerLocation() != 0) {
@@ -226,9 +224,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
 
         JMenuItem newItem = new JMenuItem(Bundle.getMessage("MenuNewWindow"));
         fileMenu.add(newItem);
-        newItem.addActionListener((ActionEvent e) -> {
-            actionList.openNewTableWindow(list.getSelectedIndex());
-        });
+        newItem.addActionListener((ActionEvent e) -> actionList.openNewTableWindow(list.getSelectedIndex()));
 
         fileMenu.add(new jmri.configurexml.StoreMenu());
 
@@ -252,13 +248,10 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
 
         JMenu viewMenu = new JMenu(Bundle.getMessage("MenuView"));
         menuBar.add(viewMenu);
-        for (int i = 0; i < tabbedTableItemListArrayArray.size(); i++) {
-            final TabbedTableItemListArray itemList = tabbedTableItemListArrayArray.get(i);
+        for (final TabbedTableItemListArray itemList : tabbedTableItemListArrayArray) {
             JMenuItem viewItem = new JMenuItem(itemList.getItemString());
             viewMenu.add(viewItem);
-            viewItem.addActionListener((ActionEvent e) -> {
-                gotoListItem(itemList.getClassAsString());
-            });
+            viewItem.addActionListener((ActionEvent e) -> gotoListItem(itemList.getClassAsString()));
         }
 
         this.setJMenuBar(menuBar);
@@ -336,7 +329,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
         int bottomBoxIndex; // index to insert extra stuff
         static final int bottomStrutWidth = 20;
 
-        boolean standardModel = true;
+        boolean standardModel;
 
         final JPanel dataPanel = new JPanel();
 
@@ -395,7 +388,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
             dataModel.configureTable(dataTable);
 
             java.awt.Dimension dataTableSize = dataTable.getPreferredSize();
-            // width is right, but if table is empty, it's not high
+            // width is fine, but if table is empty, it's not high
             // enough to reserve much space.
             dataTableSize.height = Math.max(dataTableSize.height, 400);
             dataScroll.getViewport().setPreferredSize(dataTableSize);
@@ -410,9 +403,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
             if (tableAction.includeAddButton()) {
                 JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
                 addToBottomBox(addButton);
-                addButton.addActionListener((ActionEvent e) -> {
-                    tableAction.addPressed(e);
-                });
+                addButton.addActionListener((ActionEvent e) -> tableAction.addPressed(e));
             }
             if (dataModel.getPropertyColumnCount() > 0) {
                 final JCheckBox propertyVisible = new JCheckBox(Bundle.getMessage
@@ -420,9 +411,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
                 propertyVisible.setToolTipText(Bundle.getMessage
                         ("ShowSystemSpecificPropertiesToolTip"));
                 addToBottomBox(propertyVisible);
-                propertyVisible.addActionListener((ActionEvent e) -> {
-                    dataModel.setPropertyColumnsVisible(dataTable, propertyVisible.isSelected());
-                });
+                propertyVisible.addActionListener((ActionEvent e) -> dataModel.setPropertyColumnsVisible(dataTable, propertyVisible.isSelected()));
                 dataModel.setPropertyColumnsVisible(dataTable, false);
             }
             dataModel.persistTable(dataTable);
@@ -486,7 +475,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
 
         String className;
         String itemText;
-        boolean standardModel = true;
+        boolean standardModel;
 
         TabbedTableItemListArray(String aaClass, String choice, boolean stdModel) {
             className = aaClass;
@@ -525,9 +514,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
             popUp = new JPopupMenu();
             menuItem = new JMenuItem("Open in New Window"); // TODO I18N
             popUp.add(menuItem);
-            menuItem.addActionListener((ActionEvent e) -> {
-                openNewTableWindow(mouseItem);
-            });
+            menuItem.addActionListener((ActionEvent e) -> openNewTableWindow(mouseItem));
             try {
                 Object p2 = Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval");
                 if (p2 != null) {
@@ -540,7 +527,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
         }
 
         int clickDelay = 500;
-        int currentItemSelected = -1;
+        int currentItemSelected;
 
         @Override
         public void mousePressed(MouseEvent e) {
@@ -582,9 +569,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
                 return;
             }
             if (clickTimer == null) {
-                clickTimer = new Timer(clickDelay, (ActionEvent e1) -> {
-                    selectListItem(mouseItem);
-                });
+                clickTimer = new Timer(clickDelay, (ActionEvent e1) -> selectListItem(mouseItem));
                 clickTimer.setRepeats(false);
             }
             if (e.getClickCount() == 1) {
@@ -600,7 +585,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
             TabbedTableItem<E> item = tabbedTableArray.get(index);
             class WindowMaker implements Runnable {
 
-                TabbedTableItem<E> item;
+                final TabbedTableItem<E> item;
 
                 WindowMaker(TabbedTableItem<E> tItem) {
                     item = tItem;
@@ -619,8 +604,8 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
         void selectListItem(int index) {
             currentItemSelected = index;
             TabbedTableItem<E> item = tabbedTableArray.get(index);
-            CardLayout cl = (CardLayout) (detailpanel.getLayout());
-            cl.show(detailpanel, item.getClassAsString());
+            CardLayout cl = (CardLayout) (detailPanel.getLayout());
+            cl.show(detailPanel, item.getClassAsString());
             frame.setTitle(item.getItemString());
             frame.generateWindowRef();
             try {
@@ -635,4 +620,5 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
     }
 
     private final static Logger log = LoggerFactory.getLogger(ListedTableFrame.class);
+
 }

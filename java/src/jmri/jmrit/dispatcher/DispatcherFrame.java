@@ -747,6 +747,15 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     /*
+     * Queue a release all reserved sections for a train.
+     */
+    protected void queueAllocate(AllocationRequest aRequest) {
+        if (_AutoRelease || _AutoAllocate) {
+            autoAllocate.scanAllocationRequests(new TaskAllocateRelease(TaskAction.ALLOCATE_IMMEDIATE, aRequest));
+        }
+    }
+
+    /*
      * Wait for the queue to empty
      */
     protected void queueWaitForEmpty() {
@@ -1427,7 +1436,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
         }
         AllocationRequest ar = at.initializeFirstAllocation();
-        if (ar != null) {
+        if (ar == null) {
+            log.debug("First allocation returned null, normal for auotallocate");
+        }
+        // removed. initializeFirstAllocation already does this. 
+        /* if (ar != null) {
             if ((ar.getSection()).containsBlock(at.getStartBlock())) {
                 // Active Train is in the first Section, go ahead and allocate it
                 AllocatedSection als = allocateSection(ar, null);
@@ -1435,7 +1448,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     log.error("Problem allocating the first Section of the Active Train - {}", at.getActiveTrainName());
                 }
             }
-        }
+        } */
         activeTrainsTableModel.fireTableDataChanged();
         if (allocatedSectionTableModel != null) {
             allocatedSectionTableModel.fireTableDataChanged();
@@ -1535,10 +1548,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      *                          suppress error message dialogs from this method.
      * @param frame             window request is from, or "null" if not from a
      *                          window
+     * @param firstAllocation           True if first allocation                         
      * @return true if successful; false otherwise
      */
     protected boolean requestAllocation(ActiveTrain activeTrain, Section section, int direction,
-            int seqNumber, boolean showErrorMessages, JmriJFrame frame) {
+            int seqNumber, boolean showErrorMessages, JmriJFrame frame,boolean firstAllocation) {
         // check input entries
         if (activeTrain == null) {
             if (showErrorMessages) {
@@ -1579,14 +1593,26 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         AllocationRequest ar = findAllocationRequestInQueue(section, seqNumber, direction, activeTrain);
         if (ar == null) {
             ar = new AllocationRequest(section, seqNumber, direction, activeTrain);
-            allocationRequests.add(ar);
-            if (_AutoAllocate) {
-                queueScanOfAllocationRequests();
+            if (!firstAllocation && _AutoAllocate) {
+                allocationRequests.add(ar);
+                if (_AutoAllocate) {
+                    queueScanOfAllocationRequests();
+                }
+            } else if (_AutoAllocate) {  // It is auto allocate and First section
+                queueAllocate(ar);
+            } else {
+                // manual
             }
         }
         activeTrainsTableModel.fireTableDataChanged();
         allocationRequestTableModel.fireTableDataChanged();
         return true;
+    }
+    
+    protected boolean requestAllocation(ActiveTrain activeTrain, Section section, int direction,
+            int seqNumber, boolean showErrorMessages, JmriJFrame frame) {
+        return requestAllocation( activeTrain,  section,  direction,
+                 seqNumber,  showErrorMessages,  frame, false);
     }
 
     // ensures there will not be any duplicate allocation requests
@@ -1936,7 +1962,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 ix = i;
             }
         }
-        allocationRequests.remove(ix);
+        if (ix != -1) {
+            allocationRequests.remove(ix);
+        }
         ar.dispose();
         allocationRequestTableModel.fireTableDataChanged();
         activeTrainsTableModel.fireTableDataChanged();
@@ -1950,7 +1978,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             requestNextAllocation(at);
             queueScanOfAllocationRequests();
         }
-
         return as;
     }
 

@@ -149,6 +149,9 @@ public class AutoAllocate implements Runnable {
                         case SCAN_REQUESTS:
                             scanAllocationRequestList(allocationRequests);
                             break;
+                        case ALLOCATE_IMMEDIATE:
+                            _dispatcher.allocateSection(task.getAllocationRequest(), null);
+                            break;
                         case ABORT:
                             abort = true; //belt an braces
                             break;

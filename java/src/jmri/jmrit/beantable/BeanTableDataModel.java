@@ -23,7 +23,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
@@ -88,20 +87,19 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     protected synchronized void updateNameList() {
         // first, remove listeners from the individual objects
         if (sysNameList != null) {
-            for (int i = 0; i < sysNameList.size(); i++) {
+            for (String s : sysNameList) {
                 // if object has been deleted, it's not here; ignore it
-                T b = getBySystemName(sysNameList.get(i));
+                T b = getBySystemName(s);
                 if (b != null) {
                     b.removePropertyChangeListener(this);
                 }
             }
         }
-        sysNameList = getManager().getNamedBeanSet().stream().map(
-            e -> e.getSystemName()).collect( java.util.stream.Collectors.toList() );
+        sysNameList = getManager().getNamedBeanSet().stream().map(NamedBean::getSystemName).collect( java.util.stream.Collectors.toList() );
         // and add them back in
-        for (int i = 0; i < sysNameList.size(); i++) {
+        for (String s : sysNameList) {
             // if object has been deleted, it's not here; ignore it
-            T b = getBySystemName(sysNameList.get(i));
+            T b = getBySystemName(s);
             if (b != null) {
                 b.addPropertyChangeListener(this);
             }
@@ -301,7 +299,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 return new JTextField(15).getPreferredSize().width; // TODO I18N using Bundle.getMessage()
             case VALUECOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
             case DELETECOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
-                return new JTextField(22).getPreferredSize().width;
+                return new JTextField(Bundle.getMessage("ButtonDelete")).getPreferredSize().width;
             default:
                 NamedBeanPropertyDescriptor<?> desc = getPropertyColumnDescriptor(col);
                 if (desc == null || desc.getColumnHeaderText() == null) {
@@ -350,7 +348,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                     T nB = getByUserName((String) value);
                     if (nB != null) {
                         log.error("User name is not unique {}", value);
-                        String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
+                        String msg = Bundle.getMessage("WarningUserName", "" + value);
                         JOptionPane.showMessageDialog(null, msg,
                                 Bundle.getMessage("WarningTitle"),
                                 JOptionPane.ERROR_MESSAGE);
@@ -360,7 +358,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 T nBean = getBySystemName(sysNameList.get(row));
                 nBean.setUserName((String) value);
                 if (nbMan.inUse(sysNameList.get(row), nBean)) {
-                    String msg = Bundle.getMessage("UpdateToUserName", new Object[]{getBeanType(), value, sysNameList.get(row)});
+                    String msg = Bundle.getMessage("UpdateToUserName", getBeanType(), value, sysNameList.get(row));
                     int optionPane = JOptionPane.showConfirmDialog(null,
                             msg, Bundle.getMessage("UpdateToUserNameTitle"),
                             JOptionPane.YES_NO_OPTION);
@@ -486,11 +484,11 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
     /**
      * Service method to setup a column so that it will hold a button for its
-     * values
+     * values.
      *
      * @param table  {@link JTable} to use
-     * @param column Column to setup
-     * @param sample Typical button, used for size
+     * @param column index for column to setup
+     * @param sample typical button, used to determine preferred size
      */
     protected void setColumnToHoldButton(JTable table, int column, JButton sample) {
         // install a button renderer & editor
@@ -507,8 +505,8 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     synchronized public void dispose() {
         getManager().removePropertyChangeListener(this);
         if (sysNameList != null) {
-            for (int i = 0; i < sysNameList.size(); i++) {
-                T b = getBySystemName(sysNameList.get(i));
+            for (String s : sysNameList) {
+                T b = getBySystemName(s);
                 if (b != null) {
                     b.removePropertyChangeListener(this);
                 }
@@ -546,7 +544,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
         // now print each row of data
         // create a base string the width of the column
-        StringBuilder spaces = new StringBuilder(""); // NOI18N
+        StringBuilder spaces = new StringBuilder(); // NOI18N
         for (int i = 0; i < columnSize; i++) {
             spaces.append(" "); // NOI18N
         }
@@ -557,7 +555,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 if (value == null) {
                     columnStrings[j] = spaces.toString();
                 } else if (value instanceof JComboBox<?>) {
-                    columnStrings[j] = ((JComboBox<?>) value).getSelectedItem().toString();
+                    columnStrings[j] = Objects.requireNonNull(((JComboBox<?>) value).getSelectedItem()).toString();
                 } else {
                     // Boolean or String
                     columnStrings[j] = value.toString();
@@ -570,16 +568,16 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         w.close();
     }
 
-    protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize) {
+    protected void printColumns(HardcopyWriter w, String[] columnStrings, int columnSize) {
         // create a base string the width of the column
-        StringBuilder spaces = new StringBuilder(""); // NOI18N
+        StringBuilder spaces = new StringBuilder(); // NOI18N
         for (int i = 0; i < columnSize; i++) {
             spaces.append(" "); // NOI18N
         }
         // loop through each column
         boolean complete = false;
         while (!complete) {
-            StringBuilder lineString = new StringBuilder(""); // NOI18N
+            StringBuilder lineString = new StringBuilder(); // NOI18N
             complete = true;
             for (int i = 0; i < columnStrings.length; i++) {
                 String columnString = ""; // NOI18N
@@ -590,9 +588,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 if (columnStrings[i].length() > columnSize) {
                     boolean noWord = true;
                     for (int k = columnSize; k >= 1; k--) {
-                        if (columnStrings[i].substring(k - 1, k).equals(" ")
-                                || columnStrings[i].substring(k - 1, k).equals("-")
-                                || columnStrings[i].substring(k - 1, k).equals("_")) {
+                        if (columnStrings[i].charAt(k - 1) == ' '
+                                || columnStrings[i].charAt(k - 1) == '-'
+                                || columnStrings[i].charAt(k - 1) == '_') {
                             columnString = columnStrings[i].substring(0, k)
                                     + spaces.substring(columnStrings[i].substring(0, k).length());
                             columnStrings[i] = columnStrings[i].substring(k);
@@ -705,39 +703,30 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem menuItem = new JMenuItem(Bundle.getMessage("CopyName"));
-        menuItem.addActionListener((ActionEvent e1) -> {
-            copyName(rowindex, 0);
-        });
+        menuItem.addActionListener((ActionEvent e1) -> copyName(rowindex, 0));
         popupMenu.add(menuItem);
 
         menuItem = new JMenuItem(Bundle.getMessage("Rename"));
-        menuItem.addActionListener((ActionEvent e1) -> {
-            renameBean(rowindex, 0);
-        });
+        menuItem.addActionListener((ActionEvent e1) -> renameBean(rowindex, 0));
         popupMenu.add(menuItem);
 
-        menuItem = new JMenuItem(Bundle.getMessage("Clear"));
-        menuItem.addActionListener((ActionEvent e1) -> {
-            removeName(rowindex, 0);
-        });
+        menuItem = new JMenuItem(Bundle.getMessage("ClearName"));
+        menuItem.addActionListener((ActionEvent e1) -> removeName(rowindex, 0));
         popupMenu.add(menuItem);
 
-        menuItem = new JMenuItem(Bundle.getMessage("Move"));
-        menuItem.addActionListener((ActionEvent e1) -> {
-            moveBean(rowindex, 0);
-        });
+        menuItem = new JMenuItem(Bundle.getMessage("MoveName"));
+        menuItem.addActionListener((ActionEvent e1) -> moveBean(rowindex, 0));
+        if (getRowCount() == 1) {
+            menuItem.setEnabled(false); // you can't move when there is just 1 item (to other table?
+        }
         popupMenu.add(menuItem);
 
         menuItem = new JMenuItem(Bundle.getMessage("EditComment"));
-        menuItem.addActionListener((ActionEvent e1) -> {
-            editComment(rowindex, 0);
-        });
+        menuItem.addActionListener((ActionEvent e1) -> editComment(rowindex, 0));
         popupMenu.add(menuItem);
 
         menuItem = new JMenuItem(Bundle.getMessage("ButtonDelete"));
-        menuItem.addActionListener((ActionEvent e1) -> {
-            deleteBean(rowindex, 0);
-        });
+        menuItem.addActionListener((ActionEvent e1) -> deleteBean(rowindex, 0));
         popupMenu.add(menuItem);
 
         popupMenu.show(e.getComponent(), e.getX(), e.getY());
@@ -750,30 +739,25 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         clipboard.setContents(name, null);
     }
 
+    /**
+     * Change the bean User Name in a dialog.
+     *
+     * @param row table model row number of bean
+     * @param column always passed in as 0, not used
+     */
     public void renameBean(int row, int column) {
         T nBean = getBySystemName(sysNameList.get(row));
-        String oldName = nBean.getUserName();
-        JTextField _newName = new JTextField(20);
-        _newName.setText(oldName);
-        Object[] renameBeanOption = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), _newName};
-        int retval = JOptionPane.showOptionDialog(null,
-                Bundle.getMessage("RenameFrom", oldName), Bundle.getMessage("RenameTitle", getBeanType()),
-                0, JOptionPane.INFORMATION_MESSAGE, null,
-                renameBeanOption, renameBeanOption[2]);
-
-        if (retval != 1) {
-            return;
-        }
-        String value = _newName.getText();
-
-        if (value.equals(oldName)) {
-            //name not changed.
+        String oldName = (nBean.getUserName() == null ? "" : nBean.getUserName());
+        String newName = JOptionPane.showInputDialog(null,
+                Bundle.getMessage("RenameFrom", getBeanType(), "\"" +oldName+"\""), oldName);
+        if (newName == null || newName.equals(nBean.getUserName())) {
+            // name not changed
             return;
         } else {
-            T nB = getByUserName(value);
+            T nB = getByUserName(newName);
             if (nB != null) {
-                log.error("User name is not unique {}", value);
-                String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
+                log.error("User name is not unique {}", newName);
+                String msg = Bundle.getMessage("WarningUserName", "" + newName);
                 JOptionPane.showMessageDialog(null, msg,
                         Bundle.getMessage("WarningTitle"),
                         JOptionPane.ERROR_MESSAGE);
@@ -781,16 +765,18 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             }
         }
 
-        if (!allowBlockNameChange("Rename", nBean, value)) return;  // NOI18N
+        if (!allowBlockNameChange("Rename", nBean, newName)) {
+            return;  // NOI18N
+        }
 
-        nBean.setUserName(value);
+        nBean.setUserName(newName);
         fireTableRowsUpdated(row, row);
-        if (!value.isEmpty()) {
+        if (!newName.isEmpty()) {
             if (oldName == null || oldName.isEmpty()) {
                 if (!nbMan.inUse(sysNameList.get(row), nBean)) {
                     return;
                 }
-                String msg = Bundle.getMessage("UpdateToUserName", new Object[]{getBeanType(), value, sysNameList.get(row)});
+                String msg = Bundle.getMessage("UpdateToUserName", getBeanType(), newName, sysNameList.get(row));
                 int optionPane = JOptionPane.showConfirmDialog(null,
                         msg, Bundle.getMessage("UpdateToUserNameTitle"),
                         JOptionPane.YES_NO_OPTION);
@@ -803,9 +789,8 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                         log.error("Impossible exception renaming Bean", ex);
                     }
                 }
-
             } else {
-                nbMan.renameBean(oldName, value, nBean);
+                nbMan.renameBean(oldName, newName, nBean);
             }
 
         } else {
@@ -817,7 +802,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     public void removeName(int row, int column) {
         T nBean = getBySystemName(sysNameList.get(row));
         if (!allowBlockNameChange("Remove", nBean, "")) return;  // NOI18N
-        String msg = Bundle.getMessage("UpdateToSystemName", new Object[]{getBeanType()});
+        String msg = Bundle.getMessage("UpdateToSystemName", getBeanType());
         int optionPane = JOptionPane.showConfirmDialog(null,
                 msg, Bundle.getMessage("UpdateToSystemNameTitle"),
                 JOptionPane.YES_NO_OPTION);
@@ -832,14 +817,16 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * Determine whether it is safe to rename/remove a Block user name.
      * <p>The user name is used by the LayoutBlock to link to the block and
      * by Layout Editor track components to link to the layout block.
+     *
      * @param changeType This will be Remove or Rename.
      * @param bean The affected bean.  Only the Block bean is of interest.
      * @param newName For Remove this will be empty, for Rename it will be the new user name.
      * @return true to continue with the user name change.
      */
     boolean allowBlockNameChange(String changeType, T bean, String newName) {
-        if (!bean.getBeanType().equals("Block")) return true;  // NOI18N
-
+        if (!bean.getBeanType().equals("Block")) {
+            return true;  // NOI18N
+        }
         // If there is no layout block or the block name is empty, Block rename and remove are ok without notification.
         String oldName = bean.getUserName();
         if (oldName == null) return true;
@@ -878,7 +865,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         getManager().getNamedBeanSet().forEach((T b) -> {
             //Only add items that do not have a username assigned.
             String userName = b.getUserName();
-            if (userName==null || userName.isEmpty()) {
+            if (userName == null || userName.isEmpty()) {
                 box.addItem(b.getSystemName());
             }
         });
@@ -886,20 +873,21 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         int retval = JOptionPane.showOptionDialog(null,
                 Bundle.getMessage("MoveDialog", getBeanType(), currentName, oldNameBean.getSystemName()),
                 Bundle.getMessage("MoveDialogTitle"),
-                0, JOptionPane.INFORMATION_MESSAGE, null,
+                JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
                 new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), box}, null);
         log.debug("Dialog value {} selected {}:{}", retval, box.getSelectedIndex(), box.getSelectedItem());
         if (retval != 1) {
             return;
         }
         String entry = (String) box.getSelectedItem();
+        assert entry != null;
         T newNameBean = getBySystemName(entry);
         if (oldNameBean != newNameBean) {
             oldNameBean.setUserName(null);
             newNameBean.setUserName(currentName);
             InstanceManager.getDefault(NamedBeanHandleManager.class).moveBean(oldNameBean, newNameBean, currentName);
             if (nbMan.inUse(newNameBean.getSystemName(), newNameBean)) {
-                String msg = Bundle.getMessage("UpdateToUserName", new Object[]{getBeanType(), currentName, sysNameList.get(row)});
+                String msg = Bundle.getMessage("UpdateToUserName", getBeanType(), currentName, sysNameList.get(row));
                 int optionPane = JOptionPane.showConfirmDialog(null, msg, Bundle.getMessage("UpdateToUserNameTitle"), JOptionPane.YES_NO_OPTION);
                 if (optionPane == JOptionPane.YES_OPTION) {
                     try {
@@ -926,7 +914,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         Object[] editCommentOption = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonUpdate")};
         int retval = JOptionPane.showOptionDialog(null,
                 commentFieldScroller, Bundle.getMessage("EditComment"),
-                0, JOptionPane.INFORMATION_MESSAGE, null,
+                JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
                 editCommentOption, editCommentOption[1]);
         if (retval != 1) {
             return;
@@ -980,10 +968,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     String formatToolTip(String comment) {
         String tip = null;
         if (comment != null && !comment.isEmpty()) {
-            StringBuilder sb = new StringBuilder("<html>");
-            sb.append(comment.replaceAll(System.getProperty("line.separator"), "<br>"));
-            sb.append("</html>");
-            tip = sb.toString();
+            tip = "<html>" + comment.replaceAll(System.getProperty("line.separator"), "<br>") + "</html>";
         }
         return tip;
     }
@@ -1136,18 +1121,18 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                     ArrayList<String> listenerRefs = t.getListenerRefs();
                     if (listenerRefs.size() > 0) {
                         ArrayList<String> listeners = new ArrayList<>();
-                        for (int i = 0; i < listenerRefs.size(); i++) {
-                            if (!listeners.contains(listenerRefs.get(i))) {
-                                listeners.add(listenerRefs.get(i));
+                        for (String listenerRef : listenerRefs) {
+                            if (!listeners.contains(listenerRef)) {
+                                listeners.add(listenerRef);
                             }
                         }
 
                         message.append("<br>");
                         message.append(Bundle.getMessage("ReminderInUse", count));
                         message.append("<ul>");
-                        for (int i = 0; i < listeners.size(); i++) {
+                        for (String listener : listeners) {
                             message.append("<li>");
-                            message.append(listeners.get(i));
+                            message.append(listener);
                             message.append("</li>");
                         }
                         message.append("</ul>");
@@ -1161,8 +1146,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                     }
                 } else {
                     String msg = MessageFormat.format(
-                            Bundle.getMessage("DeletePrompt"),
-                            new Object[]{t.getSystemName()});
+                            Bundle.getMessage("DeletePrompt"), t.getSystemName());
                     JLabel question = new JLabel(msg);
                     question.setAlignmentX(Component.CENTER_ALIGNMENT);
                     container.add(question);
@@ -1299,4 +1283,5 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     }
 
     private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class);
+
 }

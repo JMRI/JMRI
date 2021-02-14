@@ -8,8 +8,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.net.*;
 import java.util.EventObject;
 import java.util.Locale;
 
@@ -416,9 +415,9 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     protected void setJynstrumentSpace() {
         _jynstrumentSpace = new JPanel();
         _jynstrumentSpace.setLayout(new FlowLayout());
-        new URIDrop(_jynstrumentSpace, (java.net.URI[] uris) -> {
-            for (java.net.URI uri : uris) {
-                ynstrument(uri.getPath());
+        new URIDrop(_jynstrumentSpace, (URI[] uris) -> {
+            for (URI uri : uris ) {
+                ynstrument(new File(uri).getPath());
             }
         });
     }

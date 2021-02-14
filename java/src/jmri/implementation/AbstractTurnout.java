@@ -886,11 +886,16 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                     return;
                 }
                 // OK, now handle it
-                int mode = (Integer) evt.getNewValue();
-                if (mode == Sensor.ACTIVE) {
-                    newKnownState(THROWN);
-                } else if (mode == Sensor.INACTIVE) {
-                    newKnownState(CLOSED);
+                switch ((Integer) evt.getNewValue()) {
+                    case Sensor.ACTIVE:
+                        newKnownState(THROWN);
+                        break;
+                    case Sensor.INACTIVE:
+                        newKnownState(CLOSED);
+                        break;
+                    default:
+                        newKnownState(INCONSISTENT);
+                        break;
                 }
             } else {
                 // unexpected mismatch
@@ -909,38 +914,18 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             }
             // OK, now handle it
             Sensor s2 = getSecondSensor();
-            int mode = (Integer) evt.getNewValue();
-
             if (s2 == null) {
                 log.warn("Turnout feedback sensor 2 configured incorrectly ");
                 return; // can't complete
             }
-            if ((mode == Sensor.ACTIVE) && (src == s2)) {
-                if((s1.getKnownState() == Sensor.INACTIVE)) {
-                   newKnownState(CLOSED);
-                } else {
-                   newKnownState(INCONSISTENT);
-                }
-            } else if ((mode == Sensor.INACTIVE) && (src == s2)) {
-                if((s1.getKnownState() == Sensor.ACTIVE)) {
-                   newKnownState(THROWN);
-                } else {
-                   newKnownState(INCONSISTENT);
-                }
-            } else if ((mode == Sensor.ACTIVE) && (src == s1)) {
-                if((s2.getKnownState() == Sensor.INACTIVE)) {
-                   newKnownState(THROWN);
-                } else {
-                   newKnownState(INCONSISTENT);
-                }
-            } else if ((mode == Sensor.INACTIVE) && (src == s1)) {
-                if((s2.getKnownState() == Sensor.ACTIVE)) {
-                   newKnownState(CLOSED);
-                } else {
-                   newKnownState(INCONSISTENT);
-                }
+            if (s1.getKnownState() == Sensor.INACTIVE && s2.getKnownState() == Sensor.ACTIVE) {
+                newKnownState(CLOSED);
+            } else if (s1.getKnownState() == Sensor.ACTIVE && s2.getKnownState() == Sensor.INACTIVE) {
+                newKnownState(THROWN);
+            } else if (s1.getKnownState() == Sensor.UNKNOWN && s2.getKnownState() == Sensor.UNKNOWN) {
+                newKnownState(UNKNOWN);
             } else {
-                   newKnownState(UNKNOWN);
+                newKnownState(INCONSISTENT);
             }
             // end TWOSENSOR block
         }
