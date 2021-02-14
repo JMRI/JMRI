@@ -342,7 +342,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 return new JTextField(15).getPreferredSize().width; // TODO I18N using Bundle.getMessage()
             case VALUECOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
             case DELETECOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
-                return new JTextField(22).getPreferredSize().width;
+                return new JTextField(Bundle.getMessage("ButtonDelete")).getPreferredSize().width;
             default:
                 NamedBeanPropertyDescriptor<?> desc = getPropertyColumnDescriptor(col);
                 if (desc == null || desc.getColumnHeaderText() == null) {
@@ -549,11 +549,11 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
     /**
      * Service method to setup a column so that it will hold a button for its
-     * values
+     * values.
      *
      * @param table  {@link JTable} to use
-     * @param column Column to setup
-     * @param sample Typical button, used for size
+     * @param column index for column to setup
+     * @param sample typical button, used to determine preferred size
      */
     protected void setColumnToHoldButton(JTable table, int column, JButton sample) {
         // install a button renderer & editor
