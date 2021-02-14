@@ -29,7 +29,7 @@ public class TrueXml extends jmri.managers.configurexml.AbstractNamedBeanManager
     public Element store(Object o) {
         True p = (True) o;
 
-        Element element = new Element("true");
+        Element element = new Element("True");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 

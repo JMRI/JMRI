@@ -28,7 +28,7 @@ public class StringExpressionMemoryXml extends jmri.managers.configurexml.Abstra
     public Element store(Object o) {
         StringExpressionMemory p = (StringExpressionMemory) o;
 
-        Element element = new Element("string-expression-memory");
+        Element element = new Element("StringExpressionMemory");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 

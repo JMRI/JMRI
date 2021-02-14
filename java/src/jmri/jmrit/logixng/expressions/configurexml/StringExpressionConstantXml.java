@@ -28,7 +28,7 @@ public class StringExpressionConstantXml extends jmri.managers.configurexml.Abst
     public Element store(Object o) {
         StringExpressionConstant p = (StringExpressionConstant) o;
 
-        Element element = new Element("string-expression-constant");
+        Element element = new Element("StringExpressionConstant");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 

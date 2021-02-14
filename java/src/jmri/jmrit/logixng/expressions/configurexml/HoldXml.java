@@ -28,13 +28,13 @@ public class HoldXml extends jmri.managers.configurexml.AbstractNamedBeanManager
     public Element store(Object o) {
         Hold p = (Hold) o;
 
-        Element element = new Element("hold");
+        Element element = new Element("Hold");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
         storeCommon(p, element);
         
-        Element e2 = new Element("triggerSocket");
+        Element e2 = new Element("TriggerSocket");
         e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
         MaleSocket socket = p.getChild(0).getConnectedSocket();
         String socketSystemName;
@@ -48,7 +48,7 @@ public class HoldXml extends jmri.managers.configurexml.AbstractNamedBeanManager
         }
         element.addContent(e2);
         
-        e2 = new Element("holdSocket");
+        e2 = new Element("HoldSocket");
         e2.addContent(new Element("socketName").addContent(p.getChild(1).getName()));
         socket = p.getChild(1).getConnectedSocket();
         if (socket != null) {
@@ -72,7 +72,7 @@ public class HoldXml extends jmri.managers.configurexml.AbstractNamedBeanManager
 
         loadCommon(h, shared);
 
-        Element socketElement = shared.getChild("triggerSocket");
+        Element socketElement = shared.getChild("TriggerSocket");
         String socketName = socketElement.getChild("socketName").getTextTrim();
         Element systemNameElement = socketElement.getChild("systemName");
         String systemName = null;
@@ -82,7 +82,7 @@ public class HoldXml extends jmri.managers.configurexml.AbstractNamedBeanManager
         h.getChild(0).setName(socketName);
         h.setTriggerExpressionSocketSystemName(systemName);
         
-        socketElement = shared.getChild("holdSocket");
+        socketElement = shared.getChild("HoldSocket");
         socketName = socketElement.getChild("socketName").getTextTrim();
         systemNameElement = socketElement.getChild("systemName");
         systemName = null;

@@ -30,13 +30,13 @@ public class TriggerOnceXml extends jmri.managers.configurexml.AbstractNamedBean
     public Element store(Object o) {
         TriggerOnce p = (TriggerOnce) o;
 
-        Element element = new Element("trigger-once");
+        Element element = new Element("TriggerOnce");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
 
-        Element e2 = new Element("socket");
+        Element e2 = new Element("Socket");
         e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
         MaleSocket socket = p.getChild(0).getConnectedSocket();
         String socketSystemName;
@@ -66,7 +66,7 @@ public class TriggerOnceXml extends jmri.managers.configurexml.AbstractNamedBean
 
         loadCommon(h, shared);
 
-        Element socketElement = shared.getChild("socket");
+        Element socketElement = shared.getChild("Socket");
         String socketName = socketElement.getChild("socketName").getTextTrim();
         Element systemNameElement = socketElement.getChild("systemName");
         String systemName = null;

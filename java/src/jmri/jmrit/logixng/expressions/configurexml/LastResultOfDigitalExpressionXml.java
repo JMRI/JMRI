@@ -28,15 +28,15 @@ public class LastResultOfDigitalExpressionXml extends jmri.managers.configurexml
     public Element store(Object o) {
         LastResultOfDigitalExpression p = (LastResultOfDigitalExpression) o;
 
-        Element element = new Element("last-result-of-digital-expression");
+        Element element = new Element("LastResultOfDigitalExpression");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
         storeCommon(p, element);
 
-        NamedBeanHandle light = p.getDigitalExpression();
-        if (light != null) {
-            element.addContent(new Element("expression").addContent(light.getName()));
+        NamedBeanHandle handle = p.getDigitalExpression();
+        if (handle != null) {
+            element.addContent(new Element("expression").addContent(handle.getName()));
         }
         
         return element;
