@@ -276,17 +276,13 @@ public class HexFileFrame extends JmriJFrame implements LocoNetListener {
 
     @Override
     public synchronized void message(LocoNetMessage m) {
-        log.debug("message heard {}", m.toMonitorString());
+        log.debug("HexFileFrame heard message {}", m.toMonitorString());
         if (port.simReply()) {
             LocoNetMessage reply = LnHexFilePort.generateReply(m);
             if (reply != null) {
                 packets.sendLocoNetMessage(reply);
                 log.debug("message reply forwarded to port");
-            } else {
-                log.debug("generateReply returned null reply");
             }
-        } else {
-            log.debug("port simReply is off");
         }
     }
 
