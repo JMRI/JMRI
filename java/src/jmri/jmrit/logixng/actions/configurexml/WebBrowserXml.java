@@ -29,7 +29,7 @@ public class WebBrowserXml extends jmri.managers.configurexml.AbstractNamedBeanM
     public Element store(Object o) {
         WebBrowser p = (WebBrowser) o;
 
-        Element element = new Element("web-browser");
+        Element element = new Element("WebBrowser");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

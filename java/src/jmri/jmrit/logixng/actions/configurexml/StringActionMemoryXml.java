@@ -25,7 +25,7 @@ public class StringActionMemoryXml extends jmri.managers.configurexml.AbstractNa
     public Element store(Object o) {
         StringActionMemory p = (StringActionMemory) o;
 
-        Element element = new Element("string-action-memory");
+        Element element = new Element("StringActionMemory");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

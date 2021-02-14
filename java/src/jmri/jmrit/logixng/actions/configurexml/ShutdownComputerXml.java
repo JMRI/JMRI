@@ -29,7 +29,7 @@ public class ShutdownComputerXml extends jmri.managers.configurexml.AbstractName
     public Element store(Object o) {
         ShutdownComputer p = (ShutdownComputer) o;
         
-        Element element = new Element("shutdown-computer");
+        Element element = new Element("ShutdownComputer");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

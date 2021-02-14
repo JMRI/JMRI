@@ -30,7 +30,7 @@ public class TableForEachXml extends jmri.managers.configurexml.AbstractNamedBea
     public Element store(Object o) {
         TableForEach p = (TableForEach) o;
 
-        Element element = new Element("table-for-each");
+        Element element = new Element("TableForEach");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
@@ -43,7 +43,7 @@ public class TableForEachXml extends jmri.managers.configurexml.AbstractNamedBea
         element.addContent(new Element("rowOrColumnName").addContent(p.getRowOrColumnName()));
         element.addContent(new Element("tableRowOrColumn").addContent(p.getTableRowOrColumn().name()));
         
-        Element e2 = new Element("socket");
+        Element e2 = new Element("Socket");
         e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
         MaleSocket socket = p.getSocket().getConnectedSocket();
         String socketSystemName;
@@ -74,9 +74,9 @@ public class TableForEachXml extends jmri.managers.configurexml.AbstractNamedBea
                 TableForEach.TableRowOrColumn.valueOf(tableRowOrColumnElement.getTextTrim());
         h.setTableRowOrColumn(tableRowOrColumn);
         
-        Element socketName = shared.getChild("socket").getChild("socketName");
+        Element socketName = shared.getChild("Socket").getChild("socketName");
         h.getChild(0).setName(socketName.getTextTrim());
-        Element socketSystemName = shared.getChild("socket").getChild("systemName");
+        Element socketSystemName = shared.getChild("Socket").getChild("systemName");
         if (socketSystemName != null) {
             h.setSocketSystemName(socketSystemName.getTextTrim());
         }

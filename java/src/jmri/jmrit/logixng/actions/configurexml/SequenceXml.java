@@ -33,13 +33,13 @@ public class SequenceXml extends jmri.managers.configurexml.AbstractNamedBeanMan
     public Element store(Object o) {
         Sequence p = (Sequence) o;
 
-        Element element = new Element("sequence");
+        Element element = new Element("Sequence");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
         storeCommon(p, element);
 
-        Element e2 = new Element("startSocket");
+        Element e2 = new Element("StartSocket");
         e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
         MaleSocket socket = p.getStartExpressionSocket().getConnectedSocket();
         String socketSystemName;
@@ -53,7 +53,7 @@ public class SequenceXml extends jmri.managers.configurexml.AbstractNamedBeanMan
         }
         element.addContent(e2);
 
-        e2 = new Element("stopSocket");
+        e2 = new Element("StopSocket");
         e2.addContent(new Element("socketName").addContent(p.getChild(1).getName()));
         socket = p.getStopExpressionSocket().getConnectedSocket();
         if (socket != null) {
@@ -66,7 +66,7 @@ public class SequenceXml extends jmri.managers.configurexml.AbstractNamedBeanMan
         }
         element.addContent(e2);
 
-        e2 = new Element("resetSocket");
+        e2 = new Element("ResetSocket");
         e2.addContent(new Element("socketName").addContent(p.getChild(2).getName()));
         socket = p.getResetExpressionSocket().getConnectedSocket();
         if (socket != null) {
@@ -79,9 +79,9 @@ public class SequenceXml extends jmri.managers.configurexml.AbstractNamedBeanMan
         }
         element.addContent(e2);
 
-        Element e = new Element("expressions");
+        Element e = new Element("Expressions");
         for (int i=0; i < p.getNumExpressions(); i++) {
-            e2 = new Element("socket");
+            e2 = new Element("Socket");
             e2.addContent(new Element("socketName").addContent(p.getExpressionSocket(i).getName()));
             socket = p.getExpressionSocket(i).getConnectedSocket();
             if (socket != null) {
@@ -96,9 +96,9 @@ public class SequenceXml extends jmri.managers.configurexml.AbstractNamedBeanMan
         }
         element.addContent(e);
 
-        e = new Element("actions");
+        e = new Element("Actions");
         for (int i=0; i < p.getNumActions(); i++) {
-            e2 = new Element("socket");
+            e2 = new Element("Socket");
             e2.addContent(new Element("socketName").addContent(p.getActionSocket(i).getName()));
             socket = p.getActionSocket(i).getConnectedSocket();
             if (socket != null) {
@@ -123,31 +123,31 @@ public class SequenceXml extends jmri.managers.configurexml.AbstractNamedBeanMan
     public boolean load(Element shared, Element perNode) {
         List<Map.Entry<String, String>> expressionSystemNames = new ArrayList<>();
         
-        Element socketNameElement = shared.getChild("startSocket").getChild("socketName");
+        Element socketNameElement = shared.getChild("StartSocket").getChild("socketName");
         String startSocketName = socketNameElement.getTextTrim();
-        Element socketSystemNameElement = shared.getChild("startSocket").getChild("systemName");
+        Element socketSystemNameElement = shared.getChild("StartSocket").getChild("systemName");
         String startSocketSystemName = null;
         if (socketSystemNameElement != null) {
             startSocketSystemName = socketSystemNameElement.getTextTrim();
         }
         
-        socketNameElement = shared.getChild("stopSocket").getChild("socketName");
+        socketNameElement = shared.getChild("StopSocket").getChild("socketName");
         String stopSocketName = socketNameElement.getTextTrim();
-        socketSystemNameElement = shared.getChild("stopSocket").getChild("systemName");
+        socketSystemNameElement = shared.getChild("StopSocket").getChild("systemName");
         String stopSocketSystemName = null;
         if (socketSystemNameElement != null) {
             stopSocketSystemName = socketSystemNameElement.getTextTrim();
         }
         
-        socketNameElement = shared.getChild("resetSocket").getChild("socketName");
+        socketNameElement = shared.getChild("ResetSocket").getChild("socketName");
         String resetSocketName = socketNameElement.getTextTrim();
-        socketSystemNameElement = shared.getChild("resetSocket").getChild("systemName");
+        socketSystemNameElement = shared.getChild("ResetSocket").getChild("systemName");
         String resetSocketSystemName = null;
         if (socketSystemNameElement != null) {
             resetSocketSystemName = socketSystemNameElement.getTextTrim();
         }
         
-        Element expressionElement = shared.getChild("expressions");
+        Element expressionElement = shared.getChild("Expressions");
         for (Element socketElement : expressionElement.getChildren()) {
             String socketName = socketElement.getChild("socketName").getTextTrim();
             Element systemNameElement = socketElement.getChild("systemName");
@@ -160,7 +160,7 @@ public class SequenceXml extends jmri.managers.configurexml.AbstractNamedBeanMan
         
         List<Map.Entry<String, String>> actionSystemNames = new ArrayList<>();
         
-        Element actionElement = shared.getChild("actions");
+        Element actionElement = shared.getChild("Actions");
         for (Element socketElement : actionElement.getChildren()) {
             String socketName = socketElement.getChild("socketName").getTextTrim();
             Element systemNameElement = socketElement.getChild("systemName");
