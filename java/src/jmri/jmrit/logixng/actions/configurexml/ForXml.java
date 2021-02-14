@@ -27,14 +27,14 @@ public class ForXml extends jmri.managers.configurexml.AbstractNamedBeanManagerC
     public Element store(Object o) {
         For p = (For) o;
 
-        Element element = new Element("for");
+        Element element = new Element("For");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
         storeCommon(p, element);
 
-        Element e2 = new Element("initSocket");
-        e2.addContent(new Element("socketName").addContent(p.getChild(1).getName()));
+        Element e2 = new Element("InitSocket");
+        e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
         MaleSocket socket = p.getThenActionSocket().getConnectedSocket();
         String socketSystemName;
         if (socket != null) {
@@ -47,8 +47,8 @@ public class ForXml extends jmri.managers.configurexml.AbstractNamedBeanManagerC
         }
         element.addContent(e2);
 
-        e2 = new Element("whileSocket");
-        e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
+        e2 = new Element("WhileSocket");
+        e2.addContent(new Element("socketName").addContent(p.getChild(1).getName()));
         socket = p.getWhileExpressionSocket().getConnectedSocket();
         if (socket != null) {
             socketSystemName = socket.getSystemName();
@@ -60,7 +60,7 @@ public class ForXml extends jmri.managers.configurexml.AbstractNamedBeanManagerC
         }
         element.addContent(e2);
 
-        e2 = new Element("afterEachSocket");
+        e2 = new Element("AfterEachSocket");
         e2.addContent(new Element("socketName").addContent(p.getChild(2).getName()));
         socket = p.getAfterEachActionSocket().getConnectedSocket();
         if (socket != null) {
@@ -73,7 +73,7 @@ public class ForXml extends jmri.managers.configurexml.AbstractNamedBeanManagerC
         }
         element.addContent(e2);
 
-        e2 = new Element("doSocket");
+        e2 = new Element("DoSocket");
         e2.addContent(new Element("socketName").addContent(p.getChild(2).getName()));
         socket = p.getDoActionSocket().getConnectedSocket();
         if (socket != null) {
@@ -98,30 +98,30 @@ public class ForXml extends jmri.managers.configurexml.AbstractNamedBeanManagerC
 
         loadCommon(h, shared);
         
-        Element socketName = shared.getChild("whileSocket").getChild("socketName");
+        Element socketName = shared.getChild("InitSocket").getChild("socketName");
         h.getChild(0).setName(socketName.getTextTrim());
-        Element socketSystemName = shared.getChild("whileSocket").getChild("systemName");
-        if (socketSystemName != null) {
-            h.setWhileExpressionSocketSystemName(socketSystemName.getTextTrim());
-        }
-        
-        socketName = shared.getChild("initSocket").getChild("socketName");
-        h.getChild(1).setName(socketName.getTextTrim());
-        socketSystemName = shared.getChild("initSocket").getChild("systemName");
+        Element socketSystemName = shared.getChild("InitSocket").getChild("systemName");
         if (socketSystemName != null) {
             h.setInitActionSocketSystemName(socketSystemName.getTextTrim());
         }
         
-        socketName = shared.getChild("afterEachSocket").getChild("socketName");
+        socketName = shared.getChild("WhileSocket").getChild("socketName");
+        h.getChild(1).setName(socketName.getTextTrim());
+        socketSystemName = shared.getChild("WhileSocket").getChild("systemName");
+        if (socketSystemName != null) {
+            h.setWhileExpressionSocketSystemName(socketSystemName.getTextTrim());
+        }
+        
+        socketName = shared.getChild("AfterEachSocket").getChild("socketName");
         h.getChild(2).setName(socketName.getTextTrim());
-        socketSystemName = shared.getChild("afterEachSocket").getChild("systemName");
+        socketSystemName = shared.getChild("AfterEachSocket").getChild("systemName");
         if (socketSystemName != null) {
             h.setAfterEachActionSocketSystemName(socketSystemName.getTextTrim());
         }
         
-        socketName = shared.getChild("doSocket").getChild("socketName");
+        socketName = shared.getChild("DoSocket").getChild("socketName");
         h.getChild(2).setName(socketName.getTextTrim());
-        socketSystemName = shared.getChild("doSocket").getChild("systemName");
+        socketSystemName = shared.getChild("DoSocket").getChild("systemName");
         if (socketSystemName != null) {
             h.setDoActionSocketSystemName(socketSystemName.getTextTrim());
         }

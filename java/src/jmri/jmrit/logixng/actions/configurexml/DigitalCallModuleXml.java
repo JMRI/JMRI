@@ -32,7 +32,7 @@ public class DigitalCallModuleXml extends jmri.managers.configurexml.AbstractNam
     public Element store(Object o) {
         DigitalCallModule p = (DigitalCallModule) o;
 
-        Element element = new Element("call-module");
+        Element element = new Element("CallModule");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
@@ -43,9 +43,9 @@ public class DigitalCallModuleXml extends jmri.managers.configurexml.AbstractNam
             element.addContent(new Element("module").addContent(module.getName()));
         }
         
-        Element parameters = new Element("parameters");
+        Element parameters = new Element("Parameters");
         for (ParameterData pd : p.getParameterData()) {
-            Element elementParameter = new Element("parameter");
+            Element elementParameter = new Element("Parameter");
             elementParameter.addContent(new Element("name").addContent(pd._name));
             elementParameter.addContent(new Element("initalValueType").addContent(pd._initalValueType.name()));
             elementParameter.addContent(new Element("initialValueData").addContent(pd._initialValueData));
@@ -73,7 +73,7 @@ public class DigitalCallModuleXml extends jmri.managers.configurexml.AbstractNam
             else h.removeModule();
         }
         
-        List<Element> parameterList = shared.getChild("parameters").getChildren();  // NOI18N
+        List<Element> parameterList = shared.getChild("Parameters").getChildren();  // NOI18N
         log.debug("Found " + parameterList.size() + " parameters");  // NOI18N
 
         for (Element e : parameterList) {

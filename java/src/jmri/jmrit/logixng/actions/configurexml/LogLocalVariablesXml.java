@@ -27,7 +27,7 @@ public class LogLocalVariablesXml extends jmri.managers.configurexml.AbstractNam
     public Element store(Object o) {
         LogLocalVariables p = (LogLocalVariables) o;
         
-        Element element = new Element("log-local-variables");
+        Element element = new Element("LogLocalVariables");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

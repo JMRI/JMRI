@@ -27,7 +27,7 @@ public class IfThenElseXml extends jmri.managers.configurexml.AbstractNamedBeanM
     public Element store(Object o) {
         IfThenElse p = (IfThenElse) o;
 
-        Element element = new Element("if-then-else");
+        Element element = new Element("IfThenElse");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
@@ -35,7 +35,7 @@ public class IfThenElseXml extends jmri.managers.configurexml.AbstractNamedBeanM
 
         element.setAttribute("type", p.getType().name());
         
-        Element e2 = new Element("ifSocket");
+        Element e2 = new Element("IfSocket");
         e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
         MaleSocket socket = p.getIfExpressionSocket().getConnectedSocket();
         String socketSystemName;
@@ -49,7 +49,7 @@ public class IfThenElseXml extends jmri.managers.configurexml.AbstractNamedBeanM
         }
         element.addContent(e2);
 
-        e2 = new Element("thenSocket");
+        e2 = new Element("ThenSocket");
         e2.addContent(new Element("socketName").addContent(p.getChild(1).getName()));
         socket = p.getThenActionSocket().getConnectedSocket();
         if (socket != null) {
@@ -62,7 +62,7 @@ public class IfThenElseXml extends jmri.managers.configurexml.AbstractNamedBeanM
         }
         element.addContent(e2);
 
-        e2 = new Element("elseSocket");
+        e2 = new Element("ElseSocket");
         e2.addContent(new Element("socketName").addContent(p.getChild(2).getName()));
         socket = p.getElseActionSocket().getConnectedSocket();
         if (socket != null) {
@@ -90,23 +90,23 @@ public class IfThenElseXml extends jmri.managers.configurexml.AbstractNamedBeanM
 
         loadCommon(h, shared);
         
-        Element socketName = shared.getChild("ifSocket").getChild("socketName");
+        Element socketName = shared.getChild("IfSocket").getChild("socketName");
         h.getChild(0).setName(socketName.getTextTrim());
-        Element socketSystemName = shared.getChild("ifSocket").getChild("systemName");
+        Element socketSystemName = shared.getChild("IfSocket").getChild("systemName");
         if (socketSystemName != null) {
             h.setIfExpressionSocketSystemName(socketSystemName.getTextTrim());
         }
         
-        socketName = shared.getChild("thenSocket").getChild("socketName");
+        socketName = shared.getChild("ThenSocket").getChild("socketName");
         h.getChild(1).setName(socketName.getTextTrim());
-        socketSystemName = shared.getChild("thenSocket").getChild("systemName");
+        socketSystemName = shared.getChild("ThenSocket").getChild("systemName");
         if (socketSystemName != null) {
             h.setThenActionSocketSystemName(socketSystemName.getTextTrim());
         }
         
-        socketName = shared.getChild("elseSocket").getChild("socketName");
+        socketName = shared.getChild("ElseSocket").getChild("socketName");
         h.getChild(2).setName(socketName.getTextTrim());
-        socketSystemName = shared.getChild("elseSocket").getChild("systemName");
+        socketSystemName = shared.getChild("ElseSocket").getChild("systemName");
         if (socketSystemName != null) {
             h.setElseActionSocketSystemName(socketSystemName.getTextTrim());
         }

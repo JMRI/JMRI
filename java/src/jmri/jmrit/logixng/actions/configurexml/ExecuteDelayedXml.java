@@ -29,13 +29,13 @@ public class ExecuteDelayedXml extends jmri.managers.configurexml.AbstractNamedB
     public Element store(Object o) {
         ExecuteDelayed p = (ExecuteDelayed) o;
 
-        Element element = new Element("executeDelayed");
+        Element element = new Element("ExecuteDelayed");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
         storeCommon(p, element);
         
-        Element e2 = new Element("socket");
+        Element e2 = new Element("Socket");
         e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
         MaleSocket socket = p.getSocket().getConnectedSocket();
         String socketSystemName;
@@ -59,9 +59,9 @@ public class ExecuteDelayedXml extends jmri.managers.configurexml.AbstractNamedB
     @Override
     public boolean load(Element shared, Element perNode) {
         
-        Element socketNameElement = shared.getChild("socket").getChild("socketName");
+        Element socketNameElement = shared.getChild("Socket").getChild("socketName");
         String socketName = socketNameElement.getTextTrim();
-        Element socketSystemNameElement = shared.getChild("socket").getChild("systemName");
+        Element socketSystemNameElement = shared.getChild("Socket").getChild("systemName");
         String socketSystemName = null;
         if (socketSystemNameElement != null) {
             socketSystemName = socketSystemNameElement.getTextTrim();

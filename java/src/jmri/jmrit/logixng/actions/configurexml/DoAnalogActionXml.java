@@ -1,9 +1,7 @@
 package jmri.jmrit.logixng.actions.configurexml;
 
 import jmri.InstanceManager;
-import jmri.jmrit.logixng.FemaleAnalogActionSocket;
-import jmri.jmrit.logixng.FemaleAnalogExpressionSocket;
-import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.DoAnalogAction;
 
 import org.jdom2.Element;
@@ -29,33 +27,38 @@ public class DoAnalogActionXml extends jmri.managers.configurexml.AbstractNamedB
     public Element store(Object o) {
         DoAnalogAction p = (DoAnalogAction) o;
 
-        Element element = new Element("do-analog-action");
+        Element element = new Element("DoAnalogAction");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
         storeCommon(p, element);
 
-        String systemName;
-        
-        FemaleAnalogExpressionSocket expressionSocket = p.getAnalogExpressionSocket();
-        if (expressionSocket.isConnected()) {
-            systemName = expressionSocket.getConnectedSocket().getSystemName();
+        Element e2 = new Element("ExpressionSocket");
+        e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
+        MaleSocket socket = p.getAnalogExpressionSocket().getConnectedSocket();
+        String socketSystemName;
+        if (socket != null) {
+            socketSystemName = socket.getSystemName();
         } else {
-            systemName = p.getAnalogExpressionSocketSystemName();
+            socketSystemName = p.getAnalogExpressionSocketSystemName();
         }
-        if (systemName != null) {
-            element.addContent(new Element("expressionSystemName").addContent(systemName));
+        if (socketSystemName != null) {
+            e2.addContent(new Element("systemName").addContent(socketSystemName));
         }
+        element.addContent(e2);
 
-        FemaleAnalogActionSocket actionSocket = p.getAnalogActionSocket();
-        if (actionSocket.isConnected()) {
-            systemName = actionSocket.getConnectedSocket().getSystemName();
+        e2 = new Element("ActionSocket");
+        e2.addContent(new Element("socketName").addContent(p.getChild(1).getName()));
+        socket = p.getAnalogActionSocket().getConnectedSocket();
+        if (socket != null) {
+            socketSystemName = socket.getSystemName();
         } else {
-            systemName = p.getAnalogActionSocketSystemName();
+            socketSystemName = p.getAnalogActionSocketSystemName();
         }
-        if (systemName != null) {
-            element.addContent(new Element("actionSystemName").addContent(systemName));
+        if (socketSystemName != null) {
+            e2.addContent(new Element("systemName").addContent(socketSystemName));
         }
+        element.addContent(e2);
 
         return element;
     }
@@ -69,13 +72,18 @@ public class DoAnalogActionXml extends jmri.managers.configurexml.AbstractNamedB
 
         loadCommon(h, shared);
 
-        Element expressionSystemNameElement = shared.getChild("expressionSystemName");
-        if (expressionSystemNameElement != null) {
-            h.setAnalogExpressionSocketSystemName(expressionSystemNameElement.getTextTrim());
+        Element socketName = shared.getChild("ExpressionSocket").getChild("socketName");
+        h.getChild(0).setName(socketName.getTextTrim());
+        Element socketSystemName = shared.getChild("ExpressionSocket").getChild("systemName");
+        if (socketSystemName != null) {
+            h.setAnalogExpressionSocketSystemName(socketSystemName.getTextTrim());
         }
-        Element actionSystemNameElement = shared.getChild("actionSystemName");
-        if (actionSystemNameElement != null) {
-            h.setAnalogActionSocketSystemName(actionSystemNameElement.getTextTrim());
+        
+        socketName = shared.getChild("ActionSocket").getChild("socketName");
+        h.getChild(1).setName(socketName.getTextTrim());
+        socketSystemName = shared.getChild("ActionSocket").getChild("systemName");
+        if (socketSystemName != null) {
+            h.setAnalogActionSocketSystemName(socketSystemName.getTextTrim());
         }
         
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
