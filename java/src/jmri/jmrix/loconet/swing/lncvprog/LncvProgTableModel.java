@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet.swing.lncvprog;
 
 import jmri.InstanceManager;
+import jmri.LocoAddress;
 import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
@@ -8,6 +9,7 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame;
 import jmri.jmrix.ProgrammingTool;
+import jmri.jmrix.loconet.LnProgrammerManager;
 import jmri.jmrix.loconet.LncvDevicesManager;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.uhlenbrock.LncvDevice;
@@ -157,8 +159,11 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
                       String lastModelName = "";
                       if (l.size() > 0) {
                           for (DecoderFile d : l) {
+                              // we do not check for LNCV programmingMode support since we do not expect replies from non-LNCV devices
+                              // (and there is currently no access to supported modes in the DecoderIndexFile)
                               if (d.getModel().equals("")) {
                                   log.warn("Empty model(name) in decoderfile {}", d.getFileName());
+                                  continue;
                               }
                               lastModelName = d.getModel();
                           }
