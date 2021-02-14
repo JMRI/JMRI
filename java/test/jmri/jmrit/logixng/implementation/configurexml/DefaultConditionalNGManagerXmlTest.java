@@ -2,7 +2,6 @@ package jmri.jmrit.logixng.implementation.configurexml;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
-import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGManager;
 import jmri.util.JUnitAppender;
@@ -32,39 +31,39 @@ public class DefaultConditionalNGManagerXmlTest {
         Assert.assertNotNull("exists", b);
         
         // Test loading a conditionalng without system name
-        Element e = new Element("conditionalngs");
-        Element e2 = new Element("conditionalng");
+        Element e = new Element("ConditionalNGs");
+        Element e2 = new Element("ConditionalNG");
         e.addContent(e2);
         b.loadConditionalNGs(e);
-//        JUnitAppender.assertWarnMessage("unexpected null in systemName [Element: <conditionalng/>]");
+        JUnitAppender.assertWarnMessage("unexpected null in systemName [Element: <ConditionalNG/>]");
         
         // Fix this later!!!
 /***************************        
         // Test load ConditionalNG without attribute "enable"
-        e = new Element("conditionalngs");
-        e2 = new Element("conditionalng");
+        e = new Element("ConditionalNGs");
+        e2 = new Element("ConditionalNG");
         e2.addContent(new Element("systemName").addContent("IQC1001"));
-        Element eConditionals = new Element("conditionalngs");
+        Element eConditionals = new Element("ConditionalNGs");
         e2.addContent(eConditionals);
         e.addContent(e2);
         b.loadConditionalNGs(e);
         
         // Test load ConditionalNG with bad conditionalng (no systemName in the conditionalNG)
-        e = new Element("conditionalngs");
-        e2 = new Element("conditionalng");
+        e = new Element("ConditionalNGs");
+        e2 = new Element("ConditionalNG");
         e2.addContent(new Element("systemName").addContent("IQC1002"));
-        eConditionals = new Element("conditionalngs");
-        Element eConditional = new Element("conditionalng");
+        eConditionals = new Element("ConditionalNGs");
+        Element eConditional = new Element("ConditionalNG");
         eConditionals.addContent(eConditional);
         e2.addContent(eConditionals);
         e.addContent(e2);
         b.loadConditionalNGs(e);
-//        JUnitAppender.assertWarnMessage("unexpected null in systemName [Element: <conditionalng/>]");
+//        JUnitAppender.assertWarnMessage("unexpected null in systemName [Element: <ConditionalNG/>]");
 //        JUnitAppender.assertErrorMessage("exception thrown");
         
         // Test loading a ConditionalNG that already exists
-        e = new Element("conditionalngs");
-        e2 = new Element("conditionalng");
+        e = new Element("ConditionalNGs");
+        e2 = new Element("ConditionalNG");
         String systemName = "IQ1001";
         Assert.assertNotNull("bean exists",
                 InstanceManager.getDefault(ConditionalNG_Manager.class).getBySystemName(systemName));
@@ -73,10 +72,10 @@ public class DefaultConditionalNGManagerXmlTest {
         b.loadConditionalNGs(e);
         
         // Test load ConditionalNG with attribute "enable" as empty string
-        e = new Element("conditionalngs");
-        e2 = new Element("conditionalng");
+        e = new Element("ConditionalNGs");
+        e2 = new Element("ConditionalNG");
         e2.addContent(new Element("systemName").addContent("IQC1003"));
-        eConditionals = new Element("conditionalngs");
+        eConditionals = new Element("ConditionalNGs");
         e2.addContent(eConditionals);
         e2.setAttribute("enabled", "");
         e.addContent(e2);
@@ -86,10 +85,10 @@ public class DefaultConditionalNGManagerXmlTest {
         Assert.assertFalse("bean is not enabled", conditionalNG.isEnabled());
         
         // Test load ConditionalNG with attribute "enable" as invalid value
-        e = new Element("conditionalngs");
-        e2 = new Element("conditionalng");
+        e = new Element("ConditionalNGs");
+        e2 = new Element("ConditionalNG");
         e2.addContent(new Element("systemName").addContent("IQC1004"));
-        eConditionals = new Element("conditionalngs");
+        eConditionals = new Element("ConditionalNGs");
         e2.addContent(eConditionals);
         e2.setAttribute("enabled", "invalid value");
         e.addContent(e2);
@@ -99,10 +98,10 @@ public class DefaultConditionalNGManagerXmlTest {
         Assert.assertFalse("bean is not enabled", conditionalNG.isEnabled());
         
         // Test load ConditionalNG with attribute "enable" as yes
-        e = new Element("conditionalngs");
-        e2 = new Element("conditionalng");
+        e = new Element("ConditionalNGs");
+        e2 = new Element("ConditionalNG");
         e2.addContent(new Element("systemName").addContent("IQC1005"));
-        eConditionals = new Element("conditionalngs");
+        eConditionals = new Element("ConditionalNGs");
         e2.addContent(eConditionals);
         e2.setAttribute("enabled", "yes");
         e.addContent(e2);
@@ -113,14 +112,14 @@ public class DefaultConditionalNGManagerXmlTest {
         
 /*        
         // Test loading the same class twice, in order to check field "xmlClasses"
-        e = new Element("conditionalngs");
+        e = new Element("ConditionalNGs");
         e2 = new Element("existing_class");
         e2.setAttribute("class", "jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml");
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQAA1"));
         b.loadConditionalNGs(e);
         
-        e = new Element("conditionalngs");
+        e = new Element("ConditionalNGs");
         e2 = new Element("existing_class");
         e2.setAttribute("class", "jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml");
         e.addContent(e2);
@@ -128,7 +127,7 @@ public class DefaultConditionalNGManagerXmlTest {
         b.loadConditionalNGs(e);
 /*        
         // Test trying to load a class with private constructor
-        e = new Element("conditionalngs");
+        e = new Element("ConditionalNGs");
         e2 = new Element("existing_class");
         e2.setAttribute("class", "jmri.jmrit.logixng.implementation.configurexml.DefaultAnalogActionManagerXmlTest$PrivateConstructorXml");
         e.addContent(e2);
@@ -136,7 +135,7 @@ public class DefaultConditionalNGManagerXmlTest {
         JUnitAppender.assertErrorMessage("cannot create constructor");
         
         // Test trying to load a class which throws an exception
-        e = new Element("conditionalngs");
+        e = new Element("ConditionalNGs");
         e2 = new Element("existing_class");
         e2.setAttribute("class", "jmri.jmrit.logixng.implementation.configurexml.DefaultAnalogActionManagerXmlTest$ThrowExceptionXml");
         e.addContent(e2);
