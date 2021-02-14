@@ -2076,7 +2076,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
             List<LayoutBlock> protectingBlocks = new ArrayList<>();
             // We don't care which Layout Editor panel the signal mast is on, just so long as
             // the routing is done via layout blocks.
-            LayoutBlock remoteProtectingBlock = null;
+            remoteProtectingBlock = null;
             for (int i = 0; i < layout.size(); i++) {
                 if (log.isDebugEnabled()) {
                     log.debug("{} Layout name {}", destination.getDisplayName(), editor.getLayoutName());
