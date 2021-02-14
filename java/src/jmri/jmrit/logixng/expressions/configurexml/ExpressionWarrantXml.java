@@ -31,7 +31,7 @@ public class ExpressionWarrantXml extends jmri.managers.configurexml.AbstractNam
     public Element store(Object o) {
         ExpressionWarrant p = (ExpressionWarrant) o;
 
-        Element element = new Element("expression-warrant");
+        Element element = new Element("ExpressionWarrant");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

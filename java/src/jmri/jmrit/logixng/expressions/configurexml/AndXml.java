@@ -35,15 +35,15 @@ public class AndXml extends jmri.managers.configurexml.AbstractNamedBeanManagerC
     public Element store(Object o) {
         And p = (And) o;
 
-        Element element = new Element("and");
+        Element element = new Element("And");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
         storeCommon(p, element);
         
-        Element e = new Element("expressions");
+        Element e = new Element("Expressions");
         for (int i=0; i < p.getChildCount(); i++) {
-            Element e2 = new Element("socket");
+            Element e2 = new Element("Socket");
             e2.addContent(new Element("socketName").addContent(p.getChild(i).getName()));
             MaleSocket socket = p.getChild(i).getConnectedSocket();
             String socketSystemName;
@@ -66,7 +66,7 @@ public class AndXml extends jmri.managers.configurexml.AbstractNamedBeanManagerC
     public boolean load(Element shared, Element perNode) {
         List<Map.Entry<String, String>> expressionSystemNames = new ArrayList<>();
         
-        Element actionElement = shared.getChild("expressions");
+        Element actionElement = shared.getChild("Expressions");
         for (Element socketElement : actionElement.getChildren()) {
             String socketName = socketElement.getChild("socketName").getTextTrim();
             Element systemNameElement = socketElement.getChild("systemName");

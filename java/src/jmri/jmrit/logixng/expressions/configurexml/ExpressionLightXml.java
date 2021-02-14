@@ -29,7 +29,7 @@ public class ExpressionLightXml extends jmri.managers.configurexml.AbstractNamed
     public Element store(Object o) {
         ExpressionLight p = (ExpressionLight) o;
 
-        Element element = new Element("expression-light");
+        Element element = new Element("ExpressionLight");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

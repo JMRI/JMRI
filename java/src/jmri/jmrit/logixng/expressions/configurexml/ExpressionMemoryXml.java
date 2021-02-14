@@ -28,7 +28,7 @@ public class ExpressionMemoryXml extends jmri.managers.configurexml.AbstractName
     public Element store(Object o) {
         ExpressionMemory p = (ExpressionMemory) o;
 
-        Element element = new Element("expression-memory");
+        Element element = new Element("ExpressionMemory");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

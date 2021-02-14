@@ -31,7 +31,7 @@ public class ExpressionConditionalXml extends jmri.managers.configurexml.Abstrac
 
 //        if (p.getLightName() == null) throw new RuntimeException("aaaaa");
         
-        Element element = new Element("expression-conditional");
+        Element element = new Element("ExpressionConditional");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 

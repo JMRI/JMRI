@@ -29,7 +29,7 @@ public class ExpressionTurnoutXml extends jmri.managers.configurexml.AbstractNam
     public Element store(Object o) {
         ExpressionTurnout p = (ExpressionTurnout) o;
 
-        Element element = new Element("expression-turnout");
+        Element element = new Element("ExpressionTurnout");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

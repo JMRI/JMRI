@@ -29,7 +29,7 @@ public class FalseXml extends jmri.managers.configurexml.AbstractNamedBeanManage
     public Element store(Object o) {
         False p = (False) o;
 
-        Element element = new Element("false");
+        Element element = new Element("False");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

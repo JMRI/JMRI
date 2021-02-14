@@ -30,7 +30,7 @@ public class ExpressionSignalMastXml extends jmri.managers.configurexml.Abstract
     public Element store(Object o) {
         ExpressionSignalMast p = (ExpressionSignalMast) o;
 
-        Element element = new Element("expression-signalmast");
+        Element element = new Element("ExpressionSignalMast");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 

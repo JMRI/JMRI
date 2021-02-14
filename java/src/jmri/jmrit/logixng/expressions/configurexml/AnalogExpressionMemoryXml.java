@@ -28,7 +28,7 @@ public class AnalogExpressionMemoryXml extends jmri.managers.configurexml.Abstra
     public Element store(Object o) {
         AnalogExpressionMemory p = (AnalogExpressionMemory) o;
 
-        Element element = new Element("analog-expression-memory");
+        Element element = new Element("AnalogExpressionMemory");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 

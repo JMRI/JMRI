@@ -28,7 +28,7 @@ public class ExpressionReferenceXml extends jmri.managers.configurexml.AbstractN
     public Element store(Object o) {
         ExpressionReference p = (ExpressionReference) o;
 
-        Element element = new Element("expression-reference");
+        Element element = new Element("ExpressionReference");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 

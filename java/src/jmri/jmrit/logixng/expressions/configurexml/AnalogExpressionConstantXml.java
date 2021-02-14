@@ -28,7 +28,7 @@ public class AnalogExpressionConstantXml extends jmri.managers.configurexml.Abst
     public Element store(Object o) {
         AnalogExpressionConstant p = (AnalogExpressionConstant) o;
 
-        Element element = new Element("analog-expression-constant");
+        Element element = new Element("AnalogExpressionConstant");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 

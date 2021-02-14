@@ -27,7 +27,7 @@ public class ExpressionLocalVariableXml extends jmri.managers.configurexml.Abstr
     public Element store(Object o) {
         ExpressionLocalVariable p = (ExpressionLocalVariable) o;
 
-        Element element = new Element("expression-local-variable");
+        Element element = new Element("ExpressionLocalVariable");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 

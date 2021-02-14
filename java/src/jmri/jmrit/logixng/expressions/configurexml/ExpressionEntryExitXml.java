@@ -31,7 +31,7 @@ public class ExpressionEntryExitXml extends jmri.managers.configurexml.AbstractN
     public Element store(Object o) {
         ExpressionEntryExit p = (ExpressionEntryExit) o;
 
-        Element element = new Element("expression-entryexit");
+        Element element = new Element("ExpressionEntryExit");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

@@ -30,7 +30,7 @@ public class ExpressionSignalHeadXml extends jmri.managers.configurexml.Abstract
     public Element store(Object o) {
         ExpressionSignalHead p = (ExpressionSignalHead) o;
 
-        Element element = new Element("expression-signalhead");
+        Element element = new Element("ExpressionSignalHead");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 

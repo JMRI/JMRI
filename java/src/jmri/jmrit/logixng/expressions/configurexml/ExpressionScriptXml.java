@@ -29,7 +29,7 @@ public class ExpressionScriptXml extends jmri.managers.configurexml.AbstractName
 
 //        if (p.getLightName() == null) throw new RuntimeException("aaaaa");
         
-        Element element = new Element("expression-script");
+        Element element = new Element("ExpressionScript");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 

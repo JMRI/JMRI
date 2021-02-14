@@ -28,7 +28,7 @@ public class ExpressionClockXml extends jmri.managers.configurexml.AbstractNamed
     public Element store(Object o) {
         ExpressionClock p = (ExpressionClock) o;
 
-        Element element = new Element("expression-clock");
+        Element element = new Element("ExpressionClock");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 

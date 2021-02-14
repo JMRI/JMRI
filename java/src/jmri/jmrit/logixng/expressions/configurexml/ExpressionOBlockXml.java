@@ -31,7 +31,7 @@ public class ExpressionOBlockXml extends jmri.managers.configurexml.AbstractName
     public Element store(Object o) {
         ExpressionOBlock p = (ExpressionOBlock) o;
 
-        Element element = new Element("expression-oblock");
+        Element element = new Element("ExpressionOblock");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

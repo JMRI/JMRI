@@ -29,7 +29,7 @@ public class ExpressionSensorXml extends jmri.managers.configurexml.AbstractName
     public Element store(Object o) {
         ExpressionSensor p = (ExpressionSensor) o;
 
-        Element element = new Element("expression-sensor");
+        Element element = new Element("ExpressionSensor");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
