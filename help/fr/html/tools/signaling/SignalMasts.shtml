@@ -1,50 +1,121 @@
-!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="fr">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
-<!-- UpDated  by Blorec Herv&#233; le 2016-09-15--> 
-<title>JMRI: Signal Masts</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI: Signal Masts documentation</title>
+  <meta name="Author" content="Bob Jacobsen, Egbert Broerse, B. Milhaupt">
+  <meta name="Date.Modified" content="20200106">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+      <h1>JMRI : M&#226;ts du signal</h1>
 
+      <p class="subtitle">Utilisation des M&#226;ts de Signalisation</p>
 
-<H1>JMRI: M&#226;ts de Signalisation</H1>
-<p class=subtitle>
-    Informations g&#233;n&#233;rales sur les M&#226;ts Signal JMRI
-</p>
+      <div class="para">
+        <a href=
+        "../../../package/jmri/jmrit/beantable/images/SignalMasts-num.png"><img src="../../../package/jmri/jmrit/beantable/images/SignalMasts-num.png"
+        width="619" height="166" align="right"></a>
 
-<div class=para>
-<a href="../../../package/jmri/jmrit/beantable/SignalMastTable.png">
-   <img src="../../../package/jmri/jmrit/beantable/SignalMastTable.png" 
-        height="86" width="338" align="right">
-</a>
-Les objets JMRI "SignalMast"  vous permettent d'afficher des aspects réalistes sur les
-signaux. Pour plus d'information, consultez la page<a  href="AspectSignaling.shtml"> Aspect Signalisation </a>.
-<p>
-Les  M&#226;ts de Signalisation sont configur&#233;s via le
-<a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Tableau  M&#226;ts de Signalisation  </a>
-Vous pouvez en ajouter de nouveaux avec le bouton "Ajouter ..." 
-sur le tableau, qui vous emm&#232;ne &#224; la
-<a href="../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml"> fen&#234;tre "Ajouter  M&#226;ts de Signalisation" </a>.
+        <p> Les objets M&#226;ts de Signalisation JMRI vous permettent d'afficher des aspects
+        types sur les signaux. Pour des informations d'arri&#232;re-plan, voir la page <a href="AspectSignaling.shtml">Aspect
+        Signalisation</a>.</p>
 
-<p>
-Du tableau, vous pouvez d&#233;finir des M&#226;ts de Signalisation individuels avec tous les aspects qu'ils sont capables
-d'afficher en cliquant dans la colonne  "Aspect" 
+        <h3>Le Tableau des M&#226;ts de Signalisation</h3>
 
-<!--#include virtual="/Footer" -->
+        <p>Les M&#226;ts de Signalisation sont configur&#233;s par le biais du <a href=
+        "../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">
+        Tableau des m&#226;ts de signalisation</a>. Vous acc&#233;dez &#224; cet outil &#224; partir du menu
+        <b>Outils &gt; Tableaux &gt; Signaux &gt; M&#226;ts de Signalisation</b> menu.</p>
+
+        <p>À partir du Tableau, vous pouvez d&#233;finir manuellement tout les aspects individuels des M&#226;ts de Signalisation 
+        qu'ils sont en mesure d'afficher
+        en les s&#233;lectionnant dans l'une des bo&#238;tes combin&#233;es de la colonne "Aspect".
+        Vous pouvez modifier les param&#232;tres d'un M&#226;t de Signalisation en cliquant
+        the <a href="../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">
+            "Modifier"</a> bouton dans la ligne correspondante.</p><a name=
+        "add" id="add"></a>
+
+        <h3>Cr&#233;er un M&#226;t de Signalisation</h3>
+
+        <p>Vous ajoutez un nouveau M&#226;t de Signalisation en cliquant sur le bouton "Ajouter...".
+        en bas du Tableau des M&#226;ts de Signalisation,  ce qui vous am&#232;ne &#224; la page <a href=
+        "../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">
+       "Ajouter/Modifier le M&#226;t de Signalisation" </a>.</p>
+
+        <h3>R&#233;p&#233;teurs de  M&#226;t de Signalisation </h3><img src=
+        "images/SignalMastRepeaterPane.png" width="291" height="98"
+        align="right">
+        
+        <p>Un R&#233;p&#233;teur de M&#226;t de Signalisation permet &#224; un m&#226;t de signalisation physique (ou virtuel) 
+            d'imiter l'aspect d'un autre m&#226;t de signalisation.</p>
+        <p>Cela peut &#234;tre utile de plusieurs fa&#231;ons:</p>
+        <ul>
+            <li>Quand un m&#226;t de signalisation physique doit fournir un aspect qui est exactement 
+                identique &#224; un autre m&#226;t de signalisation physique.  Cela pourrait &#234;tre utilis&#233; pour 
+                "r&#233;p&#233;ter" l'aspect d'un m&#226;t de signalisation "difficile &#224; voir" sur un autre 
+                m&#226;t de signalisation facile &#224; voir, comme celui qui est mod&#233;lis&#233; dans le TCO ddu r&#233;seau
+                .</li>
+            <li>Quand il y a plusieurs Itin&#233;raires diff&#233;rents entre deux m&#226;ts de signalisation physique, 
+                la recherche de la Logique M&#226;t de Signalisation JMRI ne permettra d'identifier la logique que pour un
+                des itin&#233;raires.  En pr&#233;voyant plusieurs m&#226;ts de signalisation &#224; l'extr&#233;mit&#233; "Destination" des Itin&#233;raire, 
+                il est possible de cr&#233;er et de configurer manuellement une logique de M&#226;t de Signalisation pour chacun 
+                des  itin&#233;raires alternatifs, de telle sorte que le M&#226;t de Signalisation "Source" affiche l'indication 
+                correcte pour prot&#233;ger le M&#226;t de Signalisation "Destination", quelle que soit l'itin&#233;raire s&#233;lectionn&#233;.</li>  
+
+        </ul>
+        <p>Voir la documentation <a href="../../../package/jmri/jmrit/beantable/SignalMastRepeater.shtml">
+            R&#233;p&#233;teur de M&#226;t de Signalisation</a> pour plus de d&#233;tails.</p>
+
+        <h2>Sauvegarde et rechargement de la configuration</h2>
+
+        <p>Les informations du M&#226;t de Signalisation sont conserv&#233;es dans votre <i>
+        configuration r&#233;seau</i>, ainsi que les aiguillages, les feux, les capteurs,
+        configuration du panneau de commande, etc.<br>
+        Sauvegarder ces informations sur le disque, permettant de <a href=
+        "../../../package/jmri/jmrit/display/PanelMenuHelp.shtml">le recharger </a> 
+        la prochaine fois que vous lancez JMRI, utilisez .<b> Sauvegarder Configuration</b>
+        dans le menu <b>Fichier</b> en haut du tableau des M&#226;ts de Signalisation (ou
+        autres tableaux dans le menu Outils), ou s&#233;lectionnez <b>Sauvegarder
+        Panneau...</b> dans le menu <b>Panneaux</b>...</p>
+        <p>Pour plus d'informations sur la cr&#233;ation et l'affichage
+        y compris la mani&#232;re de faire appara&#238;tre les signaux sur vos panneaux,
+        veuillez voir les <a href=
+        "../../apps/PanelPro/Panels.shtml">pages Panneaux</a>.</p>
+
+        <p>Retour &#224; la page d'aide <a href="index.shtml#tools">Signalisation Principale
+        </a>.</p
+<p>Traduction 2021-02-14</p>
+        <!--#include virtual="/Footer.shtml" -->
+      </div><!-- closes #mainContent-->
+    </div><!-- closes #mBody-->
+  </div>
 </body>
-</html>>
+</html>
+
+   
+
+
+
+  
