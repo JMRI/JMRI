@@ -19,6 +19,8 @@ import jmri.jmrit.logixng.expressions.*;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.*;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import org.junit.*;
 
 /**
@@ -2221,6 +2223,8 @@ public class StoreAndLoadTest {
         
         
         
+        // Check that we can add variables to all actions/expressions and that
+        // the variables are stored in the panel file
         femaleRootSocket.forEntireTree((Base b) -> {
             if (b instanceof MaleSocket) {
                 addVariables((MaleSocket) b);
@@ -2228,6 +2232,13 @@ public class StoreAndLoadTest {
         });
         
         
+        // Check that we can rename the female sockets and that the names
+        // are stored in the panel file.
+        femaleRootSocket.forEntireTree((Base b) -> {
+            if (b instanceof FemaleSocket) {
+                ((FemaleSocket)b).setName(RandomStringUtils.randomAlphabetic(10));
+            }
+        });
         
         
 /*        
