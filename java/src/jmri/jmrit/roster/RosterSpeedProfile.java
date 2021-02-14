@@ -78,8 +78,8 @@ public class RosterSpeedProfile {
      * speed value returned unchanged.
      *
      * @param mms MilliMetres per second
-     * @return scale speed in units specified by Warrant Preferences. if warrent
-     *         prefernces are not a speed
+     * @return scale speed in units specified by Warrant Preferences. if warrant
+     *         preferences are not a speed
      */
     public float MMSToScaleSpeed(float mms) {
         int interp = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation();
