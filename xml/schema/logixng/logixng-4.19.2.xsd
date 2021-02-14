@@ -66,7 +66,7 @@
               <xs:element name="ConditionalNGs" minOccurs="1" maxOccurs="1">
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element name="conditionalNG_SystemName" type="systemNameType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="unbounded"/>
                   </xs:sequence>
 
                   <xs:attribute name="enabled" type="yesNoType" />
@@ -185,7 +185,7 @@
                 </xs:complexType>
               </xs:element>
 
-              <xs:element name="rootSocket" minOccurs="1" maxOccurs="unbounded">
+              <xs:element name="RootSocket" minOccurs="1" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>

@@ -32,7 +32,7 @@ public class DefaultModuleXml extends jmri.managers.configurexml.AbstractNamedBe
     public Element store(Object o) {
         DefaultModule p = (DefaultModule) o;
 
-        Element element = new Element("module");
+        Element element = new Element("Module");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
@@ -40,9 +40,9 @@ public class DefaultModuleXml extends jmri.managers.configurexml.AbstractNamedBe
         
         element.addContent(new Element("rootSocketType").addContent(p.getRootSocketType().getName()));
         
-        Element elementParameters = new Element("parameters");
+        Element elementParameters = new Element("Parameters");
         for (Parameter data : p.getParameters()) {
-            Element elementParameter = new Element("parameter");
+            Element elementParameter = new Element("Parameter");
             elementParameter.addContent(new Element("name").addContent(data.getName()));
             elementParameter.addContent(new Element("isInput").addContent(data.isInput() ? "yes" : "no"));
             elementParameter.addContent(new Element("isOutput").addContent(data.isOutput() ? "yes" : "no"));
@@ -50,7 +50,7 @@ public class DefaultModuleXml extends jmri.managers.configurexml.AbstractNamedBe
         }
         element.addContent(elementParameters);
         
-        Element e2 = new Element("rootSocket");
+        Element e2 = new Element("RootSocket");
         e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
         MaleSocket socket = p.getRootSocket().getConnectedSocket();
         String socketSystemName;
@@ -83,7 +83,7 @@ public class DefaultModuleXml extends jmri.managers.configurexml.AbstractNamedBe
         
         loadCommon(h, shared);
         
-        List<Element> parameterList = shared.getChild("parameters").getChildren();  // NOI18N
+        List<Element> parameterList = shared.getChild("Parameters").getChildren();  // NOI18N
         log.debug("Found " + parameterList.size() + " parameters");  // NOI18N
 
         for (Element e : parameterList) {
@@ -95,9 +95,9 @@ public class DefaultModuleXml extends jmri.managers.configurexml.AbstractNamedBe
             h.addParameter(elementName.getTextTrim(), isInput, isOutput);
         }
         
-        Element socketName = shared.getChild("rootSocket").getChild("socketName");
+        Element socketName = shared.getChild("RootSocket").getChild("socketName");
         h.getChild(0).setName(socketName.getTextTrim());
-        Element socketSystemName = shared.getChild("rootSocket").getChild("systemName");
+        Element socketSystemName = shared.getChild("RootSocket").getChild("systemName");
         if (socketSystemName != null) {
             h.setSocketSystemName(socketSystemName.getTextTrim());
         }

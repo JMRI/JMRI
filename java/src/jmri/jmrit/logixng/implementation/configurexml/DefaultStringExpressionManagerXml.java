@@ -43,7 +43,7 @@ public class DefaultStringExpressionManagerXml extends AbstractManagerXml {
      */
     @Override
     public Element store(Object o) {
-        Element expressions = new Element("logixngStringExpressions");
+        Element expressions = new Element("LogixNGStringExpressions");
         setStoreElementClass(expressions);
         StringExpressionManager tm = (StringExpressionManager) o;
         if (tm != null) {

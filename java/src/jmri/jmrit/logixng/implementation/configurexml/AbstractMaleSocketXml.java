@@ -33,14 +33,15 @@ public class AbstractMaleSocketXml
     public Element store(Object o) {
         AbstractMaleSocket maleSocket = (AbstractMaleSocket) o;
         
-        Element element = new Element("abstractMaleSocket");
+        Element element = new Element("AbstractMaleSocket");
         element.setAttribute("enabled", maleSocket.isEnabled() ? "yes" : "no");  // NOI18N
         element.setAttribute("catchAbortExecution", maleSocket.getCatchAbortExecution()? "yes" : "no");  // NOI18N
         element.setAttribute("class", this.getClass().getName());
         
         element.addContent(new Element("errorHandling").addContent(maleSocket.getErrorHandlingType().name()));
+        
         for (SymbolTable.VariableData data : maleSocket.getLocalVariables()) {
-            Element elementVariable = new Element("localVariable");
+            Element elementVariable = new Element("LocalVariable");
             elementVariable.addContent(new Element("name").addContent(data._name));
             elementVariable.addContent(new Element("type").addContent(data._initalValueType.name()));
             elementVariable.addContent(new Element("data").addContent(data._initialValueData));
@@ -79,7 +80,7 @@ public class AbstractMaleSocketXml
                     .valueOf(errorHandlingElement.getTextTrim()));
         }
         
-        List<Element> localVariableList = maleSocketElement.getChildren("localVariable");  // NOI18N
+        List<Element> localVariableList = maleSocketElement.getChildren("LocalVariable");  // NOI18N
         log.debug("Found " + localVariableList.size() + " male sockets");  // NOI18N
         
         for (Element e : localVariableList) {

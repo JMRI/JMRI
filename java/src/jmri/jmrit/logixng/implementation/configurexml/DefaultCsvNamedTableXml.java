@@ -28,7 +28,7 @@ public class DefaultCsvNamedTableXml extends jmri.managers.configurexml.Abstract
     public Element store(Object o) {
         DefaultCsvNamedTable p = (DefaultCsvNamedTable) o;
 
-        Element element = new Element("csv-table");
+        Element element = new Element("CsvTable");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

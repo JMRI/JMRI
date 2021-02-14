@@ -43,7 +43,7 @@ public class DefaultStringActionManagerXml extends AbstractManagerXml {
      */
     @Override
     public Element store(Object o) {
-        Element actions = new Element("logixngStringActions");
+        Element actions = new Element("LogixNGStringActions");
         setStoreElementClass(actions);
         StringActionManager tm = (StringActionManager) o;
         if (tm != null) {

@@ -63,9 +63,9 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
                 Element e = new Element("ConditionalNGs");
                 for (int i=0; i < logixNG.getNumConditionalNGs(); i++) {
                     if (logixNG.getConditionalNG(i) != null) {
-                        e.addContent(new Element("conditionalNG_SystemName").addContent(logixNG.getConditionalNG(i).getSystemName()));
+                        e.addContent(new Element("systemName").addContent(logixNG.getConditionalNG(i).getSystemName()));
                     } else {
-                        e.addContent(new Element("conditionalNG_SystemName").addContent(logixNG.getConditionalNG_SystemName(i)));
+                        e.addContent(new Element("systemName").addContent(logixNG.getConditionalNG_SystemName(i)));
                     }
                 }
                 elem.addContent(e);

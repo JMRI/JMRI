@@ -43,11 +43,11 @@
         <!-- Permit any of these tags in any order in any number -->
         <xs:choice minOccurs="0" maxOccurs="unbounded">
 
-            <xs:element name="analog-expression-constant"  type="LogixNG_AnalogExpression_ConstantType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="analog-expression-memory"    type="LogixNG_AnalogExpression_MemoryType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="formula"                     type="LogixNG_AnalogExpression_FormulaType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="AnalogExpressionConstant"  type="LogixNG_AnalogExpression_ConstantType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="AnalogExpressionMemory"    type="LogixNG_AnalogExpression_MemoryType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="AnalogFormula"                     type="LogixNG_AnalogExpression_FormulaType" minOccurs="0" maxOccurs="unbounded" />
 
-            <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
         </xs:choice>
       </xs:sequence>

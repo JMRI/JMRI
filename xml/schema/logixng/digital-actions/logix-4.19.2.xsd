@@ -41,7 +41,7 @@
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
 
-              <xs:element name="expressionSocket" minOccurs="1" maxOccurs="1">
+              <xs:element name="ExpressionSocket" minOccurs="1" maxOccurs="1">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
@@ -49,7 +49,7 @@
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="actionSocket" minOccurs="1" maxOccurs="1">
+              <xs:element name="ActionSocket" minOccurs="1" maxOccurs="1">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
@@ -58,7 +58,7 @@
                 </xs:complexType>
               </xs:element>
 
-              <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
             

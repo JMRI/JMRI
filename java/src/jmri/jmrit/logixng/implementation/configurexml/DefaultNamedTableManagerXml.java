@@ -37,7 +37,7 @@ public class DefaultNamedTableManagerXml extends AbstractManagerXml {
      */
     @Override
     public Element store(Object o) {
-        Element expressions = new Element("logixngTables");
+        Element expressions = new Element("LogixNGTables");
         setStoreElementClass(expressions);
         DefaultNamedTableManager tm = (DefaultNamedTableManager) o;
         if (tm != null) {

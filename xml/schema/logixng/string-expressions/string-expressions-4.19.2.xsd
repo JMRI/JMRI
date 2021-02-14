@@ -43,11 +43,11 @@
         <!-- Permit any of these tags in any order in any number -->
         <xs:choice minOccurs="0" maxOccurs="unbounded">
 
-            <xs:element name="string-expression-constant"  type="LogixNG_StringExpression_ConstantType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="string-expression-memory"    type="LogixNG_StringExpression_MemoryType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="formula"                     type="LogixNG_StringExpression_FormulaType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="StringExpressionConstant"  type="LogixNG_StringExpression_ConstantType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="StringExpressionMemory"    type="LogixNG_StringExpression_MemoryType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="StringFormula"                     type="LogixNG_StringExpression_FormulaType" minOccurs="0" maxOccurs="unbounded" />
 
-            <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
         </xs:choice>
       </xs:sequence>

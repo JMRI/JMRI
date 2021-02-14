@@ -43,9 +43,9 @@
         <!-- Permit any of these tags in any order in any number -->
         <xs:choice minOccurs="0" maxOccurs="unbounded">
 
-            <xs:element name="many"                            type="LogixNG_DigitalAction_ManyType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="string-action-memory"            type="LogixNG_StringAction_MemoryType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="string-action-loconet-opc-peer"  type="LogixNG_StringAction_LocoNetOPC_PEER_Type" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="StringMany"                  type="LogixNG_DigitalAction_ManyType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="StringActionMemory"          type="LogixNG_StringAction_MemoryType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="StringActionLoconetOpcPeer"  type="LogixNG_StringAction_LocoNetOPC_PEER_Type" minOccurs="0" maxOccurs="unbounded" />
 
         </xs:choice>
       </xs:sequence>

@@ -33,7 +33,7 @@ public class DigitalBooleanManyXml extends jmri.managers.configurexml.AbstractNa
     public Element store(Object o) {
         DigitalBooleanMany p = (DigitalBooleanMany) o;
 
-        Element element = new Element("Many");
+        Element element = new Element("DigitalBooleanMany");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

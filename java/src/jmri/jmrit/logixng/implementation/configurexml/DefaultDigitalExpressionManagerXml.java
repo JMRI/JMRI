@@ -46,7 +46,7 @@ public class DefaultDigitalExpressionManagerXml extends AbstractManagerXml {
      */
     @Override
     public Element store(Object o) {
-        Element expressions = new Element("logixngDigitalExpressions");
+        Element expressions = new Element("LogixNGDigitalExpressions");
         setStoreElementClass(expressions);
         DigitalExpressionManager tm = (DigitalExpressionManager) o;
 //        System.out.format("DefaultDigitalExpressionManagerXml: manager: %s%n", tm);

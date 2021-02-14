@@ -43,10 +43,10 @@
 
               <xs:element name="module" type="beanNameType" minOccurs="0" maxOccurs="1"/>
 
-              <xs:element name="parameters" minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="Parameters" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element name="parameter" minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="Parameter" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
                           <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
@@ -87,7 +87,7 @@
                 </xs:complexType>
               </xs:element>
 
-              <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
             

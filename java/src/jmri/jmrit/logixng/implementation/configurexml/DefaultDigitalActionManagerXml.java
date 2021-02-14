@@ -45,7 +45,7 @@ public class DefaultDigitalActionManagerXml extends AbstractManagerXml {
      */
     @Override
     public Element store(Object o) {
-        Element actions = new Element("logixngDigitalActions");
+        Element actions = new Element("LogixNGDigitalActions");
         setStoreElementClass(actions);
         DigitalActionManager tm = (DigitalActionManager) o;
 //        System.out.format("DefaultDigitalActionManagerXml: manager: %s%n", tm);

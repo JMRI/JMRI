@@ -31,7 +31,7 @@ public abstract class AbstractManagerXml extends jmri.managers.configurexml.Abst
      * @return Element containing the complete info
      */
     public Element storeMaleSocket(MaleSocket maleSocket) {
-        Element element = new Element("maleSocket");
+        Element element = new Element("MaleSocket");
         
         Base m = maleSocket;
         while (m instanceof MaleSocket) {
@@ -66,7 +66,7 @@ public abstract class AbstractManagerXml extends jmri.managers.configurexml.Abst
         
         Map<String, Map.Entry<MaleSocketXml, Element>> maleSocketXmlClasses = new HashMap<>();
         
-        Element elementMaleSocket = element.getChild("maleSocket");
+        Element elementMaleSocket = element.getChild("MaleSocket");
         if (elementMaleSocket == null) {
             throw new IllegalArgumentException("maleSocket is null");
         }

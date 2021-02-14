@@ -43,7 +43,7 @@ public class DefaultAnalogExpressionManagerXml extends AbstractManagerXml {
      */
     @Override
     public Element store(Object o) {
-        Element expressions = new Element("logixngAnalogExpressions");
+        Element expressions = new Element("LogixNGAnalogExpressions");
         setStoreElementClass(expressions);
         AnalogExpressionManager tm = (AnalogExpressionManager) o;
         if (tm != null) {

@@ -39,7 +39,7 @@
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
-              <xs:element name="initSocket" minOccurs="1" maxOccurs="unbounded">
+              <xs:element name="InitSocket" minOccurs="1" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
@@ -47,7 +47,7 @@
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="whileSocket" minOccurs="1" maxOccurs="1">
+              <xs:element name="WhileSocket" minOccurs="1" maxOccurs="1">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
@@ -55,7 +55,7 @@
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="afterEachSocket" minOccurs="1" maxOccurs="1">
+              <xs:element name="AfterEachSocket" minOccurs="1" maxOccurs="1">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
@@ -63,7 +63,7 @@
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="doSocket" minOccurs="1" maxOccurs="1">
+              <xs:element name="DoSocket" minOccurs="1" maxOccurs="1">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
@@ -72,7 +72,7 @@
                 </xs:complexType>
               </xs:element>
 
-              <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
             <xs:attribute name="enabled" type="yesNoType" />

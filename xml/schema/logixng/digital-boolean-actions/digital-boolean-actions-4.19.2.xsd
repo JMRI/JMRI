@@ -42,10 +42,10 @@
         <!-- Permit any of these tags in any order in any number -->
         <xs:choice minOccurs="0" maxOccurs="unbounded">
             
-            <xs:element name="many"         type="LogixNG_DigitalBooleanAction_ManyType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="on-change"    type="LogixNG_DigitalBooleanAction_OnChangeType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="DigitalBooleanMany"   type="LogixNG_DigitalBooleanAction_ManyType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="OnChange"    type="LogixNG_DigitalBooleanAction_OnChangeType" minOccurs="0" maxOccurs="unbounded" />
 
-            <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
            
           </xs:choice>
       </xs:sequence>

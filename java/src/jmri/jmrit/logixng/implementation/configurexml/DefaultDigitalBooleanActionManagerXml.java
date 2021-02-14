@@ -45,7 +45,7 @@ public class DefaultDigitalBooleanActionManagerXml extends AbstractManagerXml {
      */
     @Override
     public Element store(Object o) {
-        Element actions = new Element("logixngDigitalBooleanActions");
+        Element actions = new Element("LogixNGDigitalBooleanActions");
         setStoreElementClass(actions);
         DigitalBooleanActionManager tm = (DigitalBooleanActionManager) o;
 //        System.out.format("DefaultDigitalBooleanActionManagerXml: manager: %s%n", tm);

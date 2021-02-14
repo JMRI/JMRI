@@ -43,7 +43,7 @@
 
               <xs:element name="systemConnection" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
-              <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
 

@@ -66,32 +66,32 @@
         <!-- Permit any of these tags in any order in any number -->
         <xs:choice minOccurs="0" maxOccurs="unbounded">
             
-            <xs:element name="and"                type="LogixNG_DigitalExpression_AndType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="antecedent"         type="LogixNG_DigitalExpression_AntecedentType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-clock"   type="LogixNG_DigitalExpression_ExpressionClockType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-conditional"  type="LogixNG_DigitalExpression_ExpressionConditionalType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-entryexit"    type="LogixNG_DigitalExpression_ExpressionEntryExit" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-light"   type="LogixNG_DigitalExpression_ExpressionLightType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-local-variable"  type="LogixNG_DigitalExpression_ExpressionLocalVariableType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-loconet-slot-usage" type="LogixNG_DigitalExpression_ExpressionLocoNetSlotUsageType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-memory"  type="LogixNG_DigitalExpression_ExpressionMemoryType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-oblock"  type="LogixNG_DigitalExpression_ExpressionOBlockType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-reference"  type="LogixNG_DigitalExpression_ExpressionReferenceType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-script"  type="LogixNG_DigitalExpression_ExpressionScriptType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-sensor"  type="LogixNG_DigitalExpression_ExpressionSensorType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-signalhead"  type="LogixNG_DigitalExpression_ExpressionSignalHeadType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-signalmast"  type="LogixNG_DigitalExpression_ExpressionSignalMastType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-turnout" type="LogixNG_DigitalExpression_ExpressionTurnoutType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="expression-warrant" type="LogixNG_DigitalExpression_ExpressionWarrantType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="false"              type="LogixNG_DigitalExpression_FalseType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="formula"            type="LogixNG_DigitalExpression_FormulaType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="hold"               type="LogixNG_DigitalExpression_HoldType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="last-result-of-digital-expression"  type="LogixNG_DigitalExpression_LastResultOfDigitalExpressionType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="or"                 type="LogixNG_DigitalExpression_OrType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="reset-on-true"      type="LogixNG_DigitalExpression_ResetOnTrueType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="timer"              type="LogixNG_DigitalExpression_TimerType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="trigger-once"       type="LogixNG_DigitalExpression_TriggerOnceType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="true"               type="LogixNG_DigitalExpression_TrueType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="And"                type="LogixNG_DigitalExpression_AndType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="Antecedent"         type="LogixNG_DigitalExpression_AntecedentType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ExpressionClock"    type="LogixNG_DigitalExpression_ExpressionClockType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ExpressionConditional"  type="LogixNG_DigitalExpression_ExpressionConditionalType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ExpressionEntryExit"    type="LogixNG_DigitalExpression_ExpressionEntryExit" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ExpressionLight"    type="LogixNG_DigitalExpression_ExpressionLightType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ExpressionLocalVariable"  type="LogixNG_DigitalExpression_ExpressionLocalVariableType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ExpressionLoconetSlotUsage" type="LogixNG_DigitalExpression_ExpressionLocoNetSlotUsageType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ExpressionMemory"   type="LogixNG_DigitalExpression_ExpressionMemoryType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ExpressionOBlock"   type="LogixNG_DigitalExpression_ExpressionOBlockType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ExpressionReference"  type="LogixNG_DigitalExpression_ExpressionReferenceType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ExpressionScript"   type="LogixNG_DigitalExpression_ExpressionScriptType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ExpressionSensor"   type="LogixNG_DigitalExpression_ExpressionSensorType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ExpressionSignalHead"  type="LogixNG_DigitalExpression_ExpressionSignalHeadType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ExpressionSignalMast"  type="LogixNG_DigitalExpression_ExpressionSignalMastType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ExpressionTurnout"  type="LogixNG_DigitalExpression_ExpressionTurnoutType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ExpressionWarrant"  type="LogixNG_DigitalExpression_ExpressionWarrantType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="False"              type="LogixNG_DigitalExpression_FalseType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="DigitalFormula"     type="LogixNG_DigitalExpression_FormulaType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="Hold"               type="LogixNG_DigitalExpression_HoldType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="LastResultOfDigitalExpression"  type="LogixNG_DigitalExpression_LastResultOfDigitalExpressionType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="Or"                 type="LogixNG_DigitalExpression_OrType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ResetOnTrue"        type="LogixNG_DigitalExpression_ResetOnTrueType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="Timer"              type="LogixNG_DigitalExpression_TimerType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="TriggerOnce"        type="LogixNG_DigitalExpression_TriggerOnceType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="True"               type="LogixNG_DigitalExpression_TrueType" minOccurs="0" maxOccurs="unbounded" />
             
           </xs:choice>
       </xs:sequence>

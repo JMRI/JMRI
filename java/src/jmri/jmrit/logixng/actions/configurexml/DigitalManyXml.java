@@ -32,7 +32,7 @@ public class DigitalManyXml extends jmri.managers.configurexml.AbstractNamedBean
     public Element store(Object o) {
         DigitalMany p = (DigitalMany) o;
 
-        Element element = new Element("Many");
+        Element element = new Element("DigitalMany");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

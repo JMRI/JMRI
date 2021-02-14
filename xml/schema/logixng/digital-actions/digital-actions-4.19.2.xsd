@@ -35,6 +35,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-sensor-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-signalhead-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-signalmast-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-simple-script-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-timer-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-turnout-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/call-module-4.19.2.xsd"/>
@@ -66,32 +67,33 @@
         <!-- Permit any of these tags in any order in any number -->
         <xs:choice minOccurs="0" maxOccurs="unbounded">
             
-            <xs:element name="action-light"      type="LogixNG_DigitalAction_ActionLightType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="action-listen-on-beans"  type="LogixNG_DigitalAction_ActionListenOnBeansType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="action-local-variable"  type="LogixNG_DigitalAction_ActionLocalVariableType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="action-loconet-clear-slots"  type="LogixNG_DigitalAction_ActionLocoNetClearSlotsType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="action-loconet-update-slots"  type="LogixNG_DigitalAction_ActionLocoNetUpdateSlotsType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="action-memory"     type="LogixNG_DigitalAction_ActionMemoryType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="action-script"     type="LogixNG_DigitalAction_ActionScriptType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="action-sensor"     type="LogixNG_DigitalAction_ActionSensorType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="action-signalhead" type="LogixNG_DigitalAction_ActionSignalHeadType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="action-signalmast" type="LogixNG_DigitalAction_ActionSignalMastType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="action-timer"      type="LogixNG_DigitalAction_ActionTimerType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="action-turnout"    type="LogixNG_DigitalAction_ActionTurnoutType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="call-module"       type="LogixNG_DigitalAction_CallModuleType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="do-analog-action"  type="LogixNG_DigitalAction_DoAnalogActionType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="do-string-action"  type="LogixNG_DigitalAction_DoStringActionType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="executeDelayed"    type="LogixNG_DigitalAction_ExecuteDelayedType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="for"               type="LogixNG_DigitalAction_ForType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="if-then-else"      type="LogixNG_DigitalAction_IfThenElseType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="logix"             type="LogixNG_DigitalAction_LogixType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="log-local-variables"  type="LogixNG_DigitalAction_LogLocalVariablesType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="many"              type="LogixNG_DigitalAction_ManyType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="sequence"          type="LogixNG_DigitalAction_SequenceType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="shutdown-computer" type="LogixNG_DigitalAction_ShutdownComputerType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="table-for-each"    type="LogixNG_DigitalAction_TableForEachType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="throttle"          type="LogixNG_DigitalAction_ThrottleType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="web-browser"       type="LogixNG_DigitalAction_WebBrowserType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ActionLight"       type="LogixNG_DigitalAction_ActionLightType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ActionListenOnBeans"  type="LogixNG_DigitalAction_ActionListenOnBeansType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ActionLocalVariable"  type="LogixNG_DigitalAction_ActionLocalVariableType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ActionLoconetClearSlots"  type="LogixNG_DigitalAction_ActionLocoNetClearSlotsType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ActionLoconetUpdateSlots"  type="LogixNG_DigitalAction_ActionLocoNetUpdateSlotsType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ActionMemory"      type="LogixNG_DigitalAction_ActionMemoryType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ActionScript"      type="LogixNG_DigitalAction_ActionScriptType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ActionSensor"      type="LogixNG_DigitalAction_ActionSensorType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ActionSignalHead"  type="LogixNG_DigitalAction_ActionSignalHeadType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ActionSignalMast"  type="LogixNG_DigitalAction_ActionSignalMastType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ActionSimpleScript"  type="LogixNG_DigitalAction_ActionSimpleScriptType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ActionTimer"       type="LogixNG_DigitalAction_ActionTimerType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ActionTurnout"     type="LogixNG_DigitalAction_ActionTurnoutType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="CallModule"        type="LogixNG_DigitalAction_CallModuleType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="DoAnalogAction"    type="LogixNG_DigitalAction_DoAnalogActionType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="DoStringAction"    type="LogixNG_DigitalAction_DoStringActionType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ExecuteDelayed"    type="LogixNG_DigitalAction_ExecuteDelayedType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="For"               type="LogixNG_DigitalAction_ForType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="IfThenElse"        type="LogixNG_DigitalAction_IfThenElseType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="Logix"             type="LogixNG_DigitalAction_LogixType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="LogLocalVariables" type="LogixNG_DigitalAction_LogLocalVariablesType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="DigitalMany"       type="LogixNG_DigitalAction_ManyType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="Sequence"          type="LogixNG_DigitalAction_SequenceType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ShutdownComputer"  type="LogixNG_DigitalAction_ShutdownComputerType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="TableForEach"      type="LogixNG_DigitalAction_TableForEachType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="Throttle"          type="LogixNG_DigitalAction_ThrottleType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="WebBrowser"        type="LogixNG_DigitalAction_WebBrowserType" minOccurs="0" maxOccurs="unbounded" />
             
           </xs:choice>
       </xs:sequence>

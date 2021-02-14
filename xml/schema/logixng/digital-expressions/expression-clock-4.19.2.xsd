@@ -55,7 +55,7 @@
               <xs:element name="beginTime" type="xs:int" />
               <xs:element name="endTime" type="xs:int" />
 
-              <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
             <xs:attribute name="class" type="classType" use="required"/>

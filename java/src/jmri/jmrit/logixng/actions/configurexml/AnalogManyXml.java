@@ -44,7 +44,7 @@ public class AnalogManyXml extends jmri.managers.configurexml.AbstractNamedBeanM
     public Element store(Object o) {
         AnalogMany p = (AnalogMany) o;
 
-        Element element = new Element("Many");
+        Element element = new Element("AnalogMany");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

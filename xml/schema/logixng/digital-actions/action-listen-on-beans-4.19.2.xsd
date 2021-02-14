@@ -41,10 +41,10 @@
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
 
-              <xs:element name="references" minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="References" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element name="reference" minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="Reference" minOccurs="0" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:sequence>
                           <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
@@ -67,7 +67,7 @@
                 </xs:complexType>
               </xs:element>
 
-              <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
             
