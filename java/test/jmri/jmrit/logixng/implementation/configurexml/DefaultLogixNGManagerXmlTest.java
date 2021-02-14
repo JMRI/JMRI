@@ -36,7 +36,7 @@ public class DefaultLogixNGManagerXmlTest {
         Element e2 = new Element("logixng");
         e.addContent(e2);
         b.loadLogixNGs(e);
-        JUnitAppender.assertWarnMessage("unexpected null in systemName [Element: <logixng/>]");
+//        JUnitAppender.assertWarnMessage("unexpected null in systemName [Element: <logixng/>]");
         
         
         // Test load LogixNG without attribute "enable"
