@@ -31,7 +31,7 @@ public class ActionUpdateSlotsXml extends jmri.managers.configurexml.AbstractNam
     public Element store(Object o) {
         ActionUpdateSlots p = (ActionUpdateSlots) o;
 
-        Element element = new Element("action-loconet-update-slots");
+        Element element = new Element("ActionLoconetUpdateSlots");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

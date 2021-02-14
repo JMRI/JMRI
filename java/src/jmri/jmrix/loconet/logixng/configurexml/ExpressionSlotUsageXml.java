@@ -31,7 +31,7 @@ public class ExpressionSlotUsageXml extends jmri.managers.configurexml.AbstractN
     public Element store(Object o) {
         ExpressionSlotUsage p = (ExpressionSlotUsage) o;
 
-        Element element = new Element("expression-loconet-slot-usage");
+        Element element = new Element("ExpressionLoconetSlotUsage");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

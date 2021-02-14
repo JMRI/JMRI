@@ -31,7 +31,7 @@ public class ActionClearSlotsXml extends jmri.managers.configurexml.AbstractName
     public Element store(Object o) {
         ActionClearSlots p = (ActionClearSlots) o;
 
-        Element element = new Element("action-loconet-clear-slots");
+        Element element = new Element("ActionLoconetClearSlots");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
