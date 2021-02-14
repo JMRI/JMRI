@@ -311,8 +311,8 @@ public class LnHexFilePort extends LnPortController implements Runnable {
      * Choose from a subset of hardware replies to send in HexFile simulator mode in response to specific messages.
      * Supported message types:
      * <ul>
-     *     <li>LN SV rev2 board {@link jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents}</li>
-     *     <li>LNCV board {@link jmri.jmrix.loconet.uhlenbrock.LncvMessageContents} ReadReply</li>
+     *     <li>LN SV rev2 {@link jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents}</li>
+     *     <li>LNCV {@link jmri.jmrix.loconet.uhlenbrock.LncvMessageContents} ReadReply</li>
      * </ul>
      * Listener is attached to jmri.jmrix.loconet.hexfile.HexFileFrame with GUI box to turn this option on/off
      *
@@ -321,10 +321,10 @@ public class LnHexFilePort extends LnPortController implements Runnable {
      */
     static public LocoNetMessage generateReply(LocoNetMessage m) {
         LocoNetMessage reply = null;
-        log.debug("generateReply for {}", m.toMonitorString());
+        //log.debug("generateReply for {}", m.toMonitorString());
 
         if (LnSv2MessageContents.isSupportedSv2Message(m)) {
-            log.debug("generate reply for SV2 message");
+            //log.debug("generate reply for SV2 message");
             LnSv2MessageContents c = new LnSv2MessageContents(m);
             if (c.getDestAddr() == -1) { // Sv2 QueryAll, reply (content includes no address)
                 log.debug("generate LNSV2 query reply message");
@@ -339,15 +339,12 @@ public class LnHexFilePort extends LnPortController implements Runnable {
         } else if (LncvMessageContents.isSupportedLncvMessage(m)) {
             if (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ) {
                 // generate READ REPLY
-                log.debug("create ReadReply");
                 reply = LncvMessageContents.createLncvReadReply(m);
             } else if (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_WRITE) {
                 // generate WRITE reply LACK
-                log.debug("create LACK");
                 reply = new LocoNetMessage(new int[]{LnConstants.OPC_LONG_ACK, 0x6d, 0x7f, 0x1});
             } else if (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_PROG_START) {
                 // generate STARTPROGALL reply
-                log.debug("create ProgStartReply");
                 reply = LncvMessageContents.createLncvProgStartReply(m);
             }
             // ignore LncvMessageContents.LncvCommand.LNCV_PROG_END, no response expected

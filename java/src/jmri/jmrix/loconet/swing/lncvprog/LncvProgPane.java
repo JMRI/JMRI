@@ -152,12 +152,16 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.Y_AXIS));
         tablePanel.add(tableScrollPane, BorderLayout.CENTER);
 
-        JSplitPane holder = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-                tablePanel, getMonitorPanel());
-        add(holder, Component.LEFT_ALIGNMENT);
-        holder.setDividerSize(8);
-        holder.setOneTouchExpandable(true);
-
+        // this does not fill the full width, why?
+//        JSplitPane holder = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+//                tablePanel, getMonitorPanel());
+//        holder.setMinimumSize(new Dimension(1000, 400));
+//        holder.setPreferredSize(new Dimension(1000, 400));
+//        holder.setDividerSize(8);
+//        holder.setOneTouchExpandable(true);
+//        add(holder, BorderLayout.LINE_START);
+        add(tablePanel);
+        add(getMonitorPanel());
         rawCheckBox.setSelected(pm.getSimplePreferenceState(rawDataCheck));
     }
 
@@ -594,7 +598,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
     @Override
     public synchronized void message(LocoNetMessage m) { // receive a LocoNet message and log it
         // got a LocoNet message, see if it's an LNCV response
-        log.debug("LncvProgPane heard message {}", m.toMonitorString());
+        //log.debug("LncvProgPane heard message {}", m.toMonitorString());
         if (LncvMessageContents.isSupportedLncvMessage(m)) {
             // raw data, to display
             String raw = (rawCheckBox.isSelected() ? ("[" + m.toString() + "] ") : "");
@@ -672,7 +676,6 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
              log.error("LNCV process finished with error: {}", error);
              statusText2.setText(Bundle.getMessage("FeedBackDiscoverFail"));
         } else {
-            log.debug("LNCV process completed successfully.");
             synchronized (this) {
                 statusText2.setText(Bundle.getMessage("FeedBackDiscoverSuccess", lncvdm.getDeviceCount()));
                 result.setText(reply);
