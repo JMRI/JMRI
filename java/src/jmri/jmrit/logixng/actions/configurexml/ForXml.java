@@ -74,7 +74,7 @@ public class ForXml extends jmri.managers.configurexml.AbstractNamedBeanManagerC
         element.addContent(e2);
 
         e2 = new Element("DoSocket");
-        e2.addContent(new Element("socketName").addContent(p.getChild(2).getName()));
+        e2.addContent(new Element("socketName").addContent(p.getChild(3).getName()));
         socket = p.getDoActionSocket().getConnectedSocket();
         if (socket != null) {
             socketSystemName = socket.getSystemName();
@@ -120,7 +120,7 @@ public class ForXml extends jmri.managers.configurexml.AbstractNamedBeanManagerC
         }
         
         socketName = shared.getChild("DoSocket").getChild("socketName");
-        h.getChild(2).setName(socketName.getTextTrim());
+        h.getChild(3).setName(socketName.getTextTrim());
         socketSystemName = shared.getChild("DoSocket").getChild("systemName");
         if (socketSystemName != null) {
             h.setDoActionSocketSystemName(socketSystemName.getTextTrim());

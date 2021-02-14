@@ -64,7 +64,7 @@ public class ActionThrottleXml extends jmri.managers.configurexml.AbstractNamedB
         element.addContent(e2);
 
         e2 = new Element("LocoDirectionSocket");
-        e2.addContent(new Element("socketName").addContent(p.getChild(1).getName()));
+        e2.addContent(new Element("socketName").addContent(p.getChild(2).getName()));
         socket = p.getLocoDirectionSocket().getConnectedSocket();
         if (socket != null) {
             socketSystemName = socket.getSystemName();
@@ -103,7 +103,7 @@ public class ActionThrottleXml extends jmri.managers.configurexml.AbstractNamedB
         }
         
         socketName = shared.getChild("LocoDirectionSocket").getChild("socketName");
-        h.getChild(1).setName(socketName.getTextTrim());
+        h.getChild(2).setName(socketName.getTextTrim());
         socketSystemName = shared.getChild("LocoDirectionSocket").getChild("systemName");
         if (socketSystemName != null) {
             h.setLocoDirectionSocketSystemName(socketSystemName.getTextTrim());
