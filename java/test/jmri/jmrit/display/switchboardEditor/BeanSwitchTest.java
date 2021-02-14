@@ -1,16 +1,17 @@
 package jmri.jmrit.display.switchboardEditor;
 
 import jmri.*;
+import jmri.jmrit.display.EditorFrameOperator;
 import org.junit.jupiter.api.*;
 import java.awt.event.MouseEvent;
-import java.util.Objects;
+//import java.util.Objects;
 
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
+//import org.netbeans.jemmy.operators.JButtonOperator;
+//import org.netbeans.jemmy.operators.JDialogOperator;
+//import org.netbeans.jemmy.operators.JFrameOperator;
+//import org.netbeans.jemmy.operators.JTextFieldOperator;
 
 /**
  * Test functioning of switchboardeditor/BeanSwitch.
@@ -146,7 +147,8 @@ public class BeanSwitchTest {
     @AfterEach
     public void tearDown() {
         if (swe != null) {
-            swe.dispose();
+            new EditorFrameOperator(swe.getTargetFrame()).closeFrameWithConfirmations();
+            swe = null;
         }
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
