@@ -875,7 +875,7 @@ MTA*&lt;;&gt;qR
 
         <li>'F' function key. Format F<i>{0|1}</i><i>Function</i>.</li>
 
-        <li>'f' force function</li>
+        <li>'f' force function. Format f<i>{0|1}</i><i>Function</i>.</li>
 
         <li>'I' idle, which sets the speed to 0</li>
 

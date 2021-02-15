@@ -1747,6 +1747,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                                 .equals(TrainCommon.splitString(rLoc.getName())) &&
                         TrainCommon.splitString(getTrainTerminatesName())
                                 .equals(TrainCommon.splitString(rldest.getName())) &&
+                        !TrainCommon.splitString(getTrainDepartsName())
+                                .equals(TrainCommon.splitString(getTrainTerminatesName())) &&
                         !isLocalSwitcher() &&
                         !car.isCaboose() &&
                         !car.hasFred() &&

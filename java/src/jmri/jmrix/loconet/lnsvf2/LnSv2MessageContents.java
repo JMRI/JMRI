@@ -99,8 +99,8 @@ public class LnSv2MessageContents {
     public final static int SV_CMD_RECONFIGURE_REPLY = 0x4F;   // reply to SV_CMD_RECONFIGURE_REQUEST
 
     // LocoNet "SV 2 format" helper definitions: SV_CMD "reply" bit
-    public final static int SV2_SV_CMD_REPLY_BIT_NUBMER = 0x6;
-    public final static int SV2_SV_CMD_REPLY_BIT_MASK = (2^SV2_SV_CMD_REPLY_BIT_NUBMER);
+    public final static int SV2_SV_CMD_REPLY_BIT_NUMBER = 0x6;
+    public final static int SV2_SV_CMD_REPLY_BIT_MASK = (2^SV2_SV_CMD_REPLY_BIT_NUMBER);
 
     // LocoNet "SV 2 format" helper definitions for data
     public final static int SV2_SV_DATA_INDEX_EEPROM_SIZE = 1;

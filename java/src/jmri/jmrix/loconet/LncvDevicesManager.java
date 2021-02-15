@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet;
 
-//import java.util.ArrayList;
 import java.util.List;
 
 import jmri.Programmer;
@@ -15,7 +14,7 @@ import jmri.jmrix.loconet.uhlenbrock.LncvDevice;
 import jmri.jmrix.loconet.uhlenbrock.LncvDevices;
 import jmri.managers.DefaultProgrammerManager;
 
-import jmri.progdebugger.ProgDebugger;
+//import jmri.progdebugger.ProgDebugger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,18 +27,19 @@ import javax.swing.*;
  * devices and "manage" them.
  *
  * Supports the following features:
- *  - LNCV "discovery" process ? not supported
- *  - LNCV Device "destination address" change ? not supported
- *  - LNCV Device "reconfigure/reset" ? not supported
- *  - identification of devices with conflicting "destination address"es
+ *  - LNCV "discovery" process supported via PRAG_START_ALL call
+ *  - LNCV Device "destination address" change supported by writing a new value to LNCV 0 (close session next)
+ *  - LNCV Device "reconfigure/reset" not supported/documented
+ *  - identification of devices with conflicting "destination address"es (warning before program start)
  *  - identification of a matching JMRI "decoder definition" for each discovered
- *    device, if an appropriate definition exists
+ *    device, if an appropriate definition exists (only 1 value is matched, checks for LNCV protocol support)
  *  - identification of matching JMRI "roster entry" which matches each
  *    discovered device, if an appropriate roster entry exists
  *  - ability to open a symbolic programmer for a given discovered device, if
  *    an appropriate roster entry exists
  *
  * @author B. Milhaupt Copyright (c) 2020
+ * @author Egbert Broerse (c) 2021
  */
 
 public class LncvDevicesManager extends PropertyChangeSupport
@@ -201,8 +201,8 @@ public class LncvDevicesManager extends PropertyChangeSupport
             return ProgrammingResult.FAIL_NO_ADDRESSED_PROGRAMMER;
         }
 
-        if (p.getClass() != ProgDebugger.class) {
-            // ProgDebugger used for LocoNet HexFile Sim, setting progMode not required so skip allows testing of LNCV Tool
+        //if (p.getClass() != ProgDebugger.class) {
+            // ProgDebugger is used for LocoNet HexFile Sim, uncommenting above line allows testing of LNCV Tool
             if (!p.getSupportedModes().contains(LnProgrammerManager.LOCONETLNCVMODE)) {
                 return ProgrammingResult.FAIL_NO_LNCV_PROGRAMMER;
             }
@@ -211,7 +211,7 @@ public class LncvDevicesManager extends PropertyChangeSupport
             if (!prgMode.equals(LnProgrammerManager.LOCONETLNCVMODE)) {
                 return ProgrammingResult.FAIL_NO_LNCV_PROGRAMMER;
             }
-        }
+        //}
         RosterEntry re = Roster.getDefault().entryFromTitle(dev.getRosterName());
         String name = re.getId();
 
