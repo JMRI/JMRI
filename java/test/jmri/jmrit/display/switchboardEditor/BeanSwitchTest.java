@@ -21,18 +21,20 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class BeanSwitchTest {
 
-    private SwitchboardEditor swe = null;
-
     @Test
     public void testCTor() {
-        swe.setSwitchType("T");
-        swe.setSwitchManu("I"); // set explicitly
-        BeanSwitch t = new BeanSwitch(1,null,"IT1",0, swe);
+        SwitchboardEditor sbe = new SwitchboardEditor("Bean Switch Test Switchboard");
+        sbe.setSwitchType("T");
+        sbe.setSwitchManu("I"); // set explicitly
+        BeanSwitch t = new BeanSwitch(1,null,"IT1",0, sbe);
         Assertions.assertNotNull(t, "exists");
+
+        //new EditorFrameOperator(sbe.getTargetFrame()).closeFrameWithConfirmations();
     }
 
     @Test
     public void testButtonConnected() {
+        SwitchboardEditor swe = new SwitchboardEditor("Bean Switch Test Switchboard");
         swe.setSwitchType("T");
         swe.setSwitchManu("I"); // set explicitly
         NamedBean nb = jmri.InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT2");
@@ -47,15 +49,18 @@ public class BeanSwitchTest {
 //        Assertions.assertFalse(t.getInverted(), "IT2 not inverted"); // LT turnout could invert
 //        t.setBeanInverted(true);
 //        Assertions.assertFalse(t.getInverted(), "IT2 can't invert");
+
+        //new EditorFrameOperator(swe.getTargetFrame()).closeFrameWithConfirmations();
     }
 
     @Test
         public void testSliderConnected() {
-        swe.setSwitchType("T");
-        swe.setSwitchManu("I"); // set explicitly
+        SwitchboardEditor sw2 = new SwitchboardEditor("Bean Switch Test Switchboard");
+        sw2.setSwitchType("T");
+        sw2.setSwitchManu("I"); // set explicitly
         NamedBean nb = jmri.InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT3");
         nb.setUserName("intTurnOne");
-        BeanSwitch t = new BeanSwitch(1, nb, "IT3", SwitchboardEditor.SLIDER, swe);
+        BeanSwitch t = new BeanSwitch(1, nb, "IT3", SwitchboardEditor.SLIDER, sw2);
         Assertions.assertNotNull(t, "exists");
         Assertions.assertNotNull(t.getIconLabel());
         Assertions.assertTrue(t.getIconLabel().endsWith("?"), "Unknown label ?");
@@ -83,15 +88,17 @@ public class BeanSwitchTest {
 //        Assertions.assertEquals("intTurnTwo", t.getUserNameString(), "New name 2 applied to nb");
 
         //t.cleanup(); // make sure no exception is thrown
+        //new EditorFrameOperator(sw2.getTargetFrame()).closeFrameWithConfirmations();
     }
 
     @Test
     public void testLightKeyConnected() {
+        SwitchboardEditor sw3 = new SwitchboardEditor("Bean Switch Test Switchboard");
         NamedBean nb = jmri.InstanceManager.getDefault(LightManager.class).provideLight("IL4");
         nb.setUserName("intLightFour");
-        swe.setSwitchType("L");
-        swe.setSwitchManu("I"); // set explicitly
-        BeanSwitch t = new BeanSwitch(1, nb, "IL4", SwitchboardEditor.KEY, swe);
+        sw3.setSwitchType("L");
+        sw3.setSwitchManu("I"); // set explicitly
+        BeanSwitch t = new BeanSwitch(1, nb, "IL4", SwitchboardEditor.KEY, sw3);
         Assertions.assertNotNull(t, "exists");
         Assertions.assertNotNull(t.getIconLabel());
         Assertions.assertTrue(t.getIconLabel().endsWith("-"), "Initial Off label -");
@@ -101,13 +108,15 @@ public class BeanSwitchTest {
         //Assertions.assertEquals("IL4: +", t.getIconLabel(), "On label +");
 
         //t.cleanup(); // make sure no exception is thrown
+        new EditorFrameOperator(sw3.getTargetFrame()).closeFrameWithConfirmations();
     }
 
     @Test
     public void testSensorSymbolUnconnected() {
-        swe.setSwitchType("S");
-        swe.setSwitchManu("I"); // set explicitly
-        BeanSwitch t = new BeanSwitch(1, null, "IS4", SwitchboardEditor.SYMBOL, swe);
+        SwitchboardEditor sw4 = new SwitchboardEditor("Bean Switch Test Switchboard");
+        sw4.setSwitchType("S");
+        sw4.setSwitchManu("I"); // set explicitly
+        BeanSwitch t = new BeanSwitch(1, null, "IS4", SwitchboardEditor.SYMBOL, sw4);
         Assertions.assertNotNull(t, "exists");
 //        Thread dialog_thread1 = new Thread(() -> {
 //            JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("ConnectNewMenu", ""));
@@ -135,6 +144,7 @@ public class BeanSwitchTest {
 //        Assertions.assertEquals("IS4", t.getIconLabel(), "Active label (no sign until recreated as connected)");
 
         //t.cleanup(); // make sure no exception is thrown
+        // new EditorFrameOperator(sw4.getTargetFrame()).closeFrameWithConfirmations();
     }
 
     @BeforeEach
@@ -144,17 +154,10 @@ public class BeanSwitchTest {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
-
-        swe = new SwitchboardEditor("Bean Switch Test Switchboard");
     }
 
     @AfterEach
     public void tearDown() {
-        if (swe != null) {
-            new EditorFrameOperator(swe.getTargetFrame()).closeFrameWithConfirmations();
-            swe = null;
-        }
-        JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }

@@ -135,6 +135,7 @@ public class SwitchboardEditor extends Editor {
     private final JCheckBoxMenuItem hideUnconnectedBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxHideUnconnected"));
     private final JCheckBoxMenuItem autoItemRangeBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxAutoItemRange"));
     private final JCheckBoxMenuItem showToolTipBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxShowTooltips"));
+    @GuardedBy("this")
     private final JCheckBoxMenuItem autoRowsBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxAutoRows"));
     private final JCheckBoxMenuItem showUserNameBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxUserName"));
     private final JRadioButtonMenuItem scrollBoth = new JRadioButtonMenuItem(Bundle.getMessage("ScrollBoth"));
@@ -795,30 +796,34 @@ public class SwitchboardEditor extends Editor {
 
         // auto rows item
         _optionMenu.add(autoRowsBox);
-        autoRowsBox.setSelected(true); // default on
+        synchronized (this) {
+            autoRowsBox.setSelected(true); // default on
+        }
         autoRowsBox.addActionListener((ActionEvent event) -> {
-            if (autoRowsBox.isSelected()) {
-                log.debug("autoRows was turned ON");
-                int oldRows = rows;
-                rows = autoRows(cellProportion); // recalculates rows x columns and redraws pane
-                // sets _tileSize TODO: specific proportion value per Type/Shape choice?
-                rowsSpinner.setEnabled(false);
-                rowsSpinner.setToolTipText(Bundle.getMessage("RowsSpinnerOffTooltip"));
-                // hide rowsSpinner + rowsLabel?
-                if (rows != oldRows) {
-                    //rowsSpinner.setValue(rows); // update display, but will not propagate when disabled
-                    updatePressed(); // redraw if rows value changed
+            synchronized (this) {
+                if (autoRowsBox.isSelected()) {
+                    log.debug("autoRows was turned ON");
+                    int oldRows = rows;
+                    rows = autoRows(cellProportion); // recalculates rows x columns and redraws pane
+                    // sets _tileSize TODO: specific proportion value per Type/Shape choice?
+                    rowsSpinner.setEnabled(false);
+                    rowsSpinner.setToolTipText(Bundle.getMessage("RowsSpinnerOffTooltip"));
+                    // hide rowsSpinner + rowsLabel?
+                    if (rows != oldRows) {
+                        //rowsSpinner.setValue(rows); // update display, but will not propagate when disabled
+                        updatePressed(); // redraw if rows value changed
+                    }
+                } else {
+                    log.debug("autoRows was turned OFF");
+                    rowsSpinner.setValue(rows); // autoRows turned off, copy current value in spinner
+                    rowsSpinner.setEnabled(true); // show rowsSpinner + rowsLabel?
+                    rowsSpinner.setToolTipText(Bundle.getMessage("RowsSpinnerOnTooltip"));
+                    // calculate tile size
+                    int colNum = (((getTotal() > 0) ? (getTotal()) : 1) + rows - 1) / rows;
+                    int maxW = (super.getTargetFrame().getWidth() - 10) / colNum; // int division, subtract 2x3px for border
+                    int maxH = (super.getTargetFrame().getHeight() - verticalMargin) / rows; // for footer
+                    _tileSize = Math.min(maxW, maxH); // store for tile graphics
                 }
-            } else {
-                log.debug("autoRows was turned OFF");
-                rowsSpinner.setValue(rows); // autoRows turned off, copy current value in spinner
-                rowsSpinner.setEnabled(true); // show rowsSpinner + rowsLabel?
-                rowsSpinner.setToolTipText(Bundle.getMessage("RowsSpinnerOnTooltip"));
-                // calculate tile size
-                int colNum = (((getTotal() > 0) ? (getTotal()) : 1) + rows - 1) / rows;
-                int maxW = (super.getTargetFrame().getWidth() - 10)/colNum; // int division, subtract 2x3px for border
-                int maxH = (super.getTargetFrame().getHeight() - verticalMargin)/rows; // for footer
-                _tileSize = Math.min(maxW, maxH); // store for tile graphics
             }
         });
         // show tooltip item
@@ -1438,7 +1443,7 @@ public class SwitchboardEditor extends Editor {
      *
      * @return the number of switches to display per row or 0 if autoRowsBox (menu-setting) is selected
      */
-    public int getRows() {
+    public synchronized int getRows() {
         if (autoRowsBox.isSelected()) {
             return 0;
         } else {
@@ -1451,7 +1456,7 @@ public class SwitchboardEditor extends Editor {
      *
      * @param rws the number of switches displayed per row (as text) or 0 te activate autoRowsBox setting
      */
-    public void setRows(int rws) {
+    public synchronized void setRows(int rws) {
         autoRowsBox.setSelected(rws == 0);
         if (rws > 0) {
             rowsSpinner.setValue(rws); // rows is set via rowsSpinner
