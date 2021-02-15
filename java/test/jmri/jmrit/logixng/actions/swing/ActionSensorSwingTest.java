@@ -87,6 +87,8 @@ public class ActionSensorSwingTest extends SwingConfiguratorInterfaceTestBase {
         new JComboBoxOperator(jdo, 1).setSelectedItem(ActionSensor.SensorState.Active);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
+        JUnitUtil.waitFor(() -> {return action.getSensor() != null;});
+        
         Assert.assertEquals("IS99", action.getSensor().getBean().getSystemName());
         Assert.assertEquals(ActionSensor.SensorState.Active, action.getBeanState());
     }

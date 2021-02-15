@@ -167,22 +167,12 @@ public class TreeEditor extends TreeViewer {
      * @param conditionalNG the conditionalNG or null if no conditionalNG
      * @param ta the thread action
      */
-    private void runOnConditionalNGThreadOrGUIThread(
+    private void runOnConditionalNGThreadOrGUIThreadEventually(
             ConditionalNG conditionalNG, ThreadingUtil.ThreadAction ta) {
         
-        AtomicReference<RuntimeException> ar = new AtomicReference<>();
-        
         if (conditionalNG != null) {
-            ThreadingUtil.ThreadAction taException = () -> {
-                try {
-                    ta.run();
-                } catch (RuntimeException e) {
-                    ar.set(e);
-                }
-            };
             LogixNG_Thread thread = conditionalNG.getCurrentThread();
-            thread.runOnLogixNG(taException);
-            if (ar.get() != null) throw ar.get();
+            thread.runOnLogixNGEventually(ta);
         } else {
             // Run the thread action on the GUI thread. And we already are on the GUI thread.
             ta.run();
@@ -427,7 +417,7 @@ public class TreeEditor extends TreeViewer {
             _create.addActionListener((ActionEvent e) -> {
                 _treePane._femaleRootSocket.unregisterListeners();
                 
-                runOnConditionalNGThreadOrGUIThread(
+                runOnConditionalNGThreadOrGUIThreadEventually(
                         _treePane._femaleRootSocket.getConditionalNG(),
                         () -> {
                     
@@ -500,10 +490,12 @@ public class TreeEditor extends TreeViewer {
                                 Bundle.getMessage("ValidateErrorTitle"),
                                 JOptionPane.ERROR_MESSAGE);
                     }
+                    ThreadingUtil.runOnGUIEventually(() -> {
+                        if (_treePane._femaleRootSocket.isActive()) {
+                            _treePane._femaleRootSocket.registerListeners();
+                        }
+                    });
                 });
-                if (_treePane._femaleRootSocket.isActive()) {
-                    _treePane._femaleRootSocket.registerListeners();
-                }
             });
             _create.setToolTipText(Bundle.getMessage("CreateButtonHint"));  // NOI18N
             
@@ -530,7 +522,7 @@ public class TreeEditor extends TreeViewer {
             _edit = new JButton(Bundle.getMessage("ButtonOK"));  // NOI18N
             _edit.addActionListener((ActionEvent e) -> {
                 
-                runOnConditionalNGThreadOrGUIThread(
+                runOnConditionalNGThreadOrGUIThreadEventually(
                         _treePane._femaleRootSocket.getConditionalNG(),
                         () -> {
                             
@@ -843,7 +835,7 @@ public class TreeEditor extends TreeViewer {
                 } else {
                     _treePane._femaleRootSocket.unregisterListeners();
                     
-                    runOnConditionalNGThreadOrGUIThread(
+                    runOnConditionalNGThreadOrGUIThreadEventually(
                             _treePane._femaleRootSocket.getConditionalNG(),
                             () -> {
 
@@ -985,7 +977,7 @@ public class TreeEditor extends TreeViewer {
                 } else {
                     _treePane._femaleRootSocket.unregisterListeners();
                     
-                    runOnConditionalNGThreadOrGUIThread(
+                    runOnConditionalNGThreadOrGUIThreadEventually(
                             _treePane._femaleRootSocket.getConditionalNG(),
                             () -> {
                         
@@ -1480,7 +1472,7 @@ public class TreeEditor extends TreeViewer {
                     if (_currentFemaleSocket.isConnected()) {
                         _treePane._femaleRootSocket.unregisterListeners();
                         
-                        runOnConditionalNGThreadOrGUIThread(
+                        runOnConditionalNGThreadOrGUIThreadEventually(
                                 _treePane._femaleRootSocket.getConditionalNG(),
                                 () -> {
                             Clipboard clipboard =
@@ -1501,7 +1493,7 @@ public class TreeEditor extends TreeViewer {
                     if (_currentFemaleSocket.isConnected()) {
                         _treePane._femaleRootSocket.unregisterListeners();
                         
-                        runOnConditionalNGThreadOrGUIThread(
+                        runOnConditionalNGThreadOrGUIThreadEventually(
                                 _treePane._femaleRootSocket.getConditionalNG(),
                                 () -> {
                             Clipboard clipboard =
@@ -1531,7 +1523,7 @@ public class TreeEditor extends TreeViewer {
                     if (! _currentFemaleSocket.isConnected()) {
                         _treePane._femaleRootSocket.unregisterListeners();
                         
-                        runOnConditionalNGThreadOrGUIThread(
+                        runOnConditionalNGThreadOrGUIThreadEventually(
                                 _treePane._femaleRootSocket.getConditionalNG(),
                                 () -> {
                             Clipboard clipboard =
@@ -1554,7 +1546,7 @@ public class TreeEditor extends TreeViewer {
                     
                 case ACTION_COMMAND_ENABLE:
                     _currentFemaleSocket.getConnectedSocket().setEnabled(true);
-                    runOnConditionalNGThreadOrGUIThread(
+                    runOnConditionalNGThreadOrGUIThreadEventually(
                             _treePane._femaleRootSocket.getConditionalNG(),
                             () -> {
                         ThreadingUtil.runOnGUIEventually(() -> {
@@ -1567,7 +1559,7 @@ public class TreeEditor extends TreeViewer {
                     
                 case ACTION_COMMAND_DISABLE:
                     _currentFemaleSocket.getConnectedSocket().setEnabled(false);
-                    runOnConditionalNGThreadOrGUIThread(
+                    runOnConditionalNGThreadOrGUIThreadEventually(
                             _treePane._femaleRootSocket.getConditionalNG(),
                             () -> {
                         ThreadingUtil.runOnGUIEventually(() -> {

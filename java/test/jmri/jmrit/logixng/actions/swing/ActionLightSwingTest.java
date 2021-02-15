@@ -62,6 +62,8 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
         new JComboBoxOperator(jdo, 1).setSelectedItem(ActionLight.LightState.Off);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
+        JUnitUtil.waitFor(() -> {return action.getLight() != null;});
+        
         Assert.assertEquals("IL1", action.getLight().getBean().getSystemName());
         Assert.assertEquals(ActionLight.LightState.Off, action.getBeanState());
     }
