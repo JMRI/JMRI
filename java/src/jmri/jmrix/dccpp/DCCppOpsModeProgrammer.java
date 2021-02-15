@@ -31,7 +31,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     int value;
     ProgListener progListener = null;
 
-    protected DCCppTrafficController tc = null;
+    protected DCCppTrafficController tc;
 
     public DCCppOpsModeProgrammer(int pAddress, DCCppTrafficController controller) {
         tc = controller;
@@ -62,6 +62,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
         progListener = p;
         value = val;
         progState = DCCppProgrammer.REQUESTSENT;
+        assert msg != null;
         restartTimer(msg.getTimeout());
         /* Issue #2423 (GitHub) -- DCC++ base station does not respond to Ops Mode
          * writes, so waiting for a response just means JMRI times out after a long delay.
@@ -79,7 +80,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
         }
         progState = DCCppProgrammer.NOTPROGRAMMING;
         stopTimer();
-        notifyProgListenerEnd(progListener,value,ProgListener.OK);
+        notifyProgListenerEnd(progListener, value, ProgListener.OK);
     }
 
     /** 
@@ -87,7 +88,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
      */
     @Override
     synchronized public void readCV(String CVname, ProgListener p) throws ProgrammerException {
-        notifyProgListenerEnd(p,Integer.parseInt(CVname),ProgListener.NotImplemented);
+        notifyProgListenerEnd(p, Integer.parseInt(CVname), ProgListener.NotImplemented);
     }
 
     /** 
@@ -95,7 +96,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
      */
     @Override
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
-        notifyProgListenerEnd(p,val,ProgListener.NotImplemented);
+        notifyProgListenerEnd(p, val, ProgListener.NotImplemented);
     }
 
     /** 
@@ -106,7 +107,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     @Override
     @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
-        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
+        List<ProgrammingMode> ret = new ArrayList<>();
         ret.add(ProgrammingMode.OPSBYTEMODE);
         ret.add(ProgrammingMode.OPSBITMODE);
         return ret;
@@ -143,7 +144,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     synchronized protected void timeout() {
         progState = DCCppProgrammer.NOTPROGRAMMING;
         stopTimer();
-        notifyProgListenerEnd(progListener,value,ProgListener.FailedTimeout);
+        notifyProgListenerEnd(progListener, value, ProgListener.FailedTimeout);
     }
 
     // initialize logging

@@ -82,9 +82,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     * Generate text translations of replies for use in the DCCpp monitor.
     *
     * @return representation of the DCCppReply as a string.
-    */
+    **/
     @Override
-   public String toMonitorString(){
+    public String toMonitorString(){
         // Beautify and display
         String text;
 

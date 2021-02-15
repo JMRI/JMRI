@@ -78,7 +78,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
      * This is public to allow access from the internal class(es) when compiling
      * with Java 1.1
      */
-    public LinkedList<DCCppMessage> xmtList = new LinkedList<DCCppMessage>();
+    public LinkedList<DCCppMessage> xmtList = new LinkedList<>();
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Only used during system initialization")
     public DCCppOverTcpPacketizer(DCCppCommandStation cs) {
@@ -92,10 +92,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
     public DCCppNetworkPortController networkController = null;
 
     public boolean isXmtBusy() {
-        if (networkController == null) {
-            return false;
-        }
-        return true;
+        return networkController != null;
     }
 
     /**
@@ -145,9 +142,9 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
         log.debug("queue DCCpp packet: {}", m);
         // in an atomic operation, queue the request and wake the xmit thread
         try {
-            synchronized (xmtHandler) {
+            synchronized (this) {
                 xmtList.addLast(m);
-                xmtHandler.notify();
+                xmtHandler.notifyAll();
             }
         } catch (Exception e) {
             log.warn("passing to xmit: unexpected exception: ", e);
@@ -272,7 +269,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                     //final DCCppPacketizer thisTc = trafficController;
                     // return a notification via the queue to ensure end
                     Runnable r = new Runnable() {
-                            DCCppReply msgForLater = thisMsg;
+                            final DCCppReply msgForLater = thisMsg;
 
                             @Override
                             public void run() {
@@ -289,7 +286,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                     log.debug("EOFException, is DCC++ serial I/O using timeouts?");
                 } catch (java.io.IOException e) {
                     // fired when write-end of HexFile reaches end
-                    log.debug("IOException, should only happen with HexFile: {}", e);
+                    log.debug("IOException, should only happen with HexFile: ", e);
                     log.info("End of file");
                     //  disconnectPort(networkController);
                     return;
@@ -315,7 +312,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                 try {
                     // get content; failure is a NoSuchElementException
                     log.debug("check for input");
-                    DCCppMessage msg = null;
+                    DCCppMessage msg;
                     synchronized (this) {
                         msg = xmtList.removeFirst();
                     }
@@ -326,11 +323,11 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                             //Commented out as the original LnPortnetworkController always returned true.
                             //if (!networkController.okToSend()) log.warn(DCCpp port not ready to receive"); // TCP, not RS232, so message is a real warning
                             log.debug("start write to network stream");
-                            StringBuffer packet = new StringBuffer(msg.length() + SEND_PREFIX.length() + 2);
+                            StringBuilder packet = new StringBuilder(msg.length() + SEND_PREFIX.length() + 2);
                             if (useOldPrefix) {
                                 packet.append(OLD_SEND_PREFIX);
                             }
-                            packet.append("<" + msg.toString() + ">");
+                            packet.append("<").append(msg.toString()).append(">");
                             if (log.isDebugEnabled()) { // avoid building a String when not needed
                                 log.debug("Write to LbServer: {}", packet.toString());
                             }

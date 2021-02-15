@@ -165,7 +165,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
                 while (!isInterrupted()) {
                     msg = null;
 
-                    synchronized (replyQueue) {
+                    synchronized (this) {
                         if (replyQueue.isEmpty()) {
                             replyQueue.wait();
                         }
@@ -208,14 +208,14 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
 
     @Override
     public void message(DCCppMessage msg) {
-        // no need to handle outgonig messages
+        // no need to handle outgoing messages
     }
 
     @Override
     public void message(DCCppReply msg) {
-        synchronized (replyQueue) {
+        synchronized (this) {
             replyQueue.add(msg);
-            replyQueue.notify();
+            replyQueue.notifyAll();
             log.debug("Message added to queue: {}", msg);
         }
     }
