@@ -295,7 +295,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     // * Add a ActionTurnout
     // After that, test that the LogixNG is executed properly
     @Test
-    public void testAddAndRun() throws JmriException {
+    public void testAddAndRun() throws JmriException, InterruptedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
@@ -395,11 +395,15 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         addItemDialog = new JDialogOperator("Add ! ");  // NOI18N
         new JButtonOperator(addItemDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
         
+        JUnitUtil.waitFor(() -> {return conditionalNG.getChild(0).isConnected();});
+        
         Assert.assertTrue("Is connected", conditionalNG.getChild(0).isConnected());
         Assert.assertEquals("Action is correct", "If Then Else",
                 conditionalNG.getChild(0).getConnectedSocket().getLongDescription());
         Assert.assertEquals("Num childs are correct", 3, conditionalNG.getChild(0).getConnectedSocket().getChildCount());
         
+        
+        Thread.sleep(100);
         
         // We click on the IfThenElse if-expression female socket to open the popup menu
         tp = jto.getPathForRow(1);
@@ -426,9 +430,14 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         
         Assert.assertTrue("Is connected", conditionalNG.getChild(0).isConnected());
         Assert.assertEquals("Num childs are correct", 3, conditionalNG.getChild(0).getConnectedSocket().getChildCount());
+        
+        JUnitUtil.waitFor(() -> {return conditionalNG.getChild(0).getConnectedSocket().getChild(0).getConnectedSocket() != null;});
+        
         Assert.assertEquals("Expression is correct", "Sensor IS1 is Active",
                 conditionalNG.getChild(0).getConnectedSocket().getChild(0).getConnectedSocket().getLongDescription());
         
+        
+        Thread.sleep(100);
         
         // We click on the IfThenElse then-action female socket to open the popup menu
         tp = jto.getPathForRow(2);
