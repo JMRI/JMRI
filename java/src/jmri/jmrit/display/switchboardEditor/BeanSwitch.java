@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
 import java.io.File;
 import java.io.IOException;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -67,14 +68,14 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     /**
      * Ctor.
      *
-     * @param index       DCC address.
+     * @param index       ordinal of this switch on Switchboard.
      * @param bean        layout object to connect to.
      * @param switchName  descriptive name corresponding with system name to
      *                    display in switch tooltip, i.e. LT1.
-     * @param shapeChoice Button, Icon (static) or Drawing (vector graphics).
+     * @param shapeChoice Button, Slider, Key (all drawn on screen) or Icon (sets of graphic files).
      * @param editor      main switchboard editor.
      */
-    public BeanSwitch(int index, NamedBean bean, String switchName, int shapeChoice, SwitchboardEditor editor) {
+    public BeanSwitch(int index, @CheckForNull NamedBean bean, String switchName, int shapeChoice, @Nonnull SwitchboardEditor editor) {
         log.debug("Name = [{}]", switchName);
         _switchSysName = switchName;
         sysNameTextBox.setText(switchName); // setting name here allows test of AddNew()
