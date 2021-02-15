@@ -78,7 +78,7 @@ public abstract class AbstractMonPane extends JmriPanel {
     protected JToggleButton freezeButton = new JToggleButton();
     protected JScrollPane jScrollPane1 = new JScrollPane();
     protected TextAreaFIFO monTextPane = new TextAreaFIFO(MAX_LINES);
-    protected JButton startLogButton = new JButton();
+    protected JToggleButton startLogButton = new JToggleButton();
     protected JButton stopLogButton = new JButton();
     protected JCheckBox rawCheckBox = new JCheckBox();
     protected JCheckBox timeCheckBox = new JCheckBox();
@@ -592,6 +592,8 @@ public abstract class AbstractMonPane extends JmriPanel {
                                 Bundle.getMessage("ErrorPossibleCauseCannotOpenForWrite"))),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
+        } else {
+            startLogButton.setSelected(true); // keep toggle on
         }
     }
 
@@ -604,6 +606,7 @@ public abstract class AbstractMonPane extends JmriPanel {
             }
             logStream = null;
         }
+        startLogButton.setSelected(false);
     }
 
     public void openFileChooserButtonActionPerformed(java.awt.event.ActionEvent e) {
