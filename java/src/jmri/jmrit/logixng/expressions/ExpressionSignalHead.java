@@ -603,6 +603,8 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
         if (_queryAddressing == NamedBeanAddressing.Direct) {
             if (_queryType == QueryType.Appearance) {
                 return Bundle.getMessage(locale, "SignalHead_LongAppearance", namedBean, appearance);
+            } else if (_queryType == QueryType.NotAppearance) {
+                return Bundle.getMessage(locale, "SignalHead_LongNotAppearance", namedBean, appearance);
             } else {
                 return Bundle.getMessage(locale, "SignalHead_Long", namedBean, query);
             }

@@ -591,6 +591,8 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
         if (_queryAddressing == NamedBeanAddressing.Direct) {
             if (_queryType == QueryType.Aspect) {
                 return Bundle.getMessage(locale, "SignalMast_LongAspect", namedBean, aspect);
+            } if (_queryType == QueryType.NotAspect) {
+                return Bundle.getMessage(locale, "SignalMast_LongNotAspect", namedBean, aspect);
             } else {
                 return Bundle.getMessage(locale, "SignalMast_Long", namedBean, query);
             }
