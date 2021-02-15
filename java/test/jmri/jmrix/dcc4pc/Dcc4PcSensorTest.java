@@ -21,6 +21,11 @@ public class Dcc4PcSensorTest extends jmri.implementation.AbstractSensorTestBase
 
     @Override
     public void checkStatusRequestMsgSent() {}
+    
+    @Override
+    public void testSensorSetKnownState() {
+        // status not currently updated for INCONSISTENT
+    }
 
     @Override
     @BeforeEach

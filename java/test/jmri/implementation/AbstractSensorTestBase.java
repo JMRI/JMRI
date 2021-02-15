@@ -217,6 +217,27 @@ public abstract class AbstractSensorTestBase {
         jmri.util.JUnitUtil.waitFor(()->{return t.getCommandedState() == Sensor.OFF;}, "commanded state = OFF");
         Assert.assertTrue("Sensor is ON", t.getCommandedState() == Sensor.OFF);
     }
+    
+    @Test
+    public void testSensorSetKnownState() throws JmriException {
+
+        t.setKnownState(Sensor.ACTIVE);
+        Assert.assertEquals("ACTIVE", t.describeState(Sensor.ACTIVE), t.describeState(t.getState()));
+
+        t.setKnownState(Sensor.INACTIVE);
+        Assert.assertEquals("INACTIVE", t.describeState(Sensor.INACTIVE), t.describeState(t.getState()));
+
+        t.setKnownState(Sensor.UNKNOWN);
+        Assert.assertEquals("UNKNOWN", t.describeState(Sensor.UNKNOWN), t.describeState(t.getState()));
+
+        // Reset known state to something normal
+        t.setKnownState(Sensor.ACTIVE);
+        Assert.assertEquals("ACTIVE", t.describeState(Sensor.ACTIVE), t.describeState(t.getState()));
+
+        t.setKnownState(Sensor.INCONSISTENT);
+        Assert.assertEquals("INCONSISTENT", t.describeState(Sensor.INCONSISTENT), t.describeState(t.getState()));
+
+    }
 
     //dispose of t.
     @AfterEach
