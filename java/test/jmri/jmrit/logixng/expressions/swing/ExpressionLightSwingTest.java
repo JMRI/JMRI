@@ -98,6 +98,8 @@ public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase
         
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
+        JUnitUtil.waitFor(() -> {return expression.getLight() != null;});
+        
         Assert.assertEquals("IL99", expression.getLight().getBean().getSystemName());
         Assert.assertEquals(ExpressionLight.LightState.On, expression.getBeanState());
     }

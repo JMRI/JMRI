@@ -63,6 +63,8 @@ public class ActionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBase {
         new JComboBoxOperator(jdo, 1).setSelectedItem(ActionTurnout.TurnoutState.Closed);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
+        JUnitUtil.waitFor(() -> {return action.getTurnout() != null;});
+        
         Assert.assertEquals("IT1", action.getTurnout().getBean().getSystemName());
         Assert.assertEquals(ActionTurnout.TurnoutState.Closed, action.getBeanState());
     }
