@@ -80,11 +80,9 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner, 
             saveButton.setEnabled(true);
         });
 
-        if (portNumber != null) {
-            portNumber.addChangeListener((ChangeEvent e) -> {
-                saveButton.setEnabled(true);
-            });
-        }
+        portNumber.addChangeListener((ChangeEvent e) -> {
+            saveButton.setEnabled(true);
+        });
 
         super.pack();
     }
