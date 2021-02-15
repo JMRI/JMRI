@@ -2,10 +2,13 @@ package jmri.jmrix.loconet.uhlenbrock;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import jmri.jmrix.loconet.LncvDevicesManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Manage an array of LncvDevice items. See {@link LncvDevicesManager}
  * Based on Lnsvf2Devices by B. Milhaupt
  * @author Egbert Broerse 2020
  */
