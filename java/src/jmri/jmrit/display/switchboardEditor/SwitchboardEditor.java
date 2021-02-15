@@ -291,10 +291,12 @@ public class SwitchboardEditor extends Editor {
         switchShapePane.add(rowsLabel);
         rowsSpinner.setToolTipText(Bundle.getMessage("RowsSpinnerOnTooltip"));
         rowsSpinner.addChangeListener(e -> {
-            if (!autoRowsBox.isSelected()) { // spinner is disabled when autoRows is on, but just in case
-                rows = (Integer) rowsSpinner.getValue();
-                updatePressed();
-                setDirty();
+            synchronized (this) {
+                if (!autoRowsBox.isSelected()) { // spinner is disabled when autoRows is on, but just in case
+                    rows = (Integer) rowsSpinner.getValue();
+                    updatePressed();
+                    setDirty();
+                }
             }
         });
         switchShapePane.add(rowsSpinner);
@@ -428,12 +430,14 @@ public class SwitchboardEditor extends Editor {
         switchboardLayeredPane.setSize(new Dimension((int) frSize.getWidth() - 6, (int) frSize.getHeight() - verticalMargin));
 
         switchboardLayeredPane.repaint();
-        if (autoRowsBox.isSelected()) { // check if autoRows is active
-            int oldRows = rows;
-            rows = autoRows(cellProportion); // if it suggests a different value for rows, call updatePressed()
-            if (rows != oldRows) {
-                //rowsSpinner.setValue(rows); // updatePressed will update rows spinner in display, but will not propagate when disabled
-                updatePressed(); // redraw if rows value changed
+        synchronized (this) {
+            if (autoRowsBox.isSelected()) { // check if autoRows is active
+                int oldRows = rows;
+                rows = autoRows(cellProportion); // if it suggests a different value for rows, call updatePressed()
+                if (rows != oldRows) {
+                    //rowsSpinner.setValue(rows); // updatePressed will update rows spinner in display, but will not propagate when disabled
+                    updatePressed(); // redraw if rows value changed
+                }
             }
         }
     }
@@ -1766,7 +1770,7 @@ public class SwitchboardEditor extends Editor {
         return report;
     }
 
-    public int getTileSize() {
+    public synchronized int getTileSize() {
         return _tileSize; // initially 100
     }
 
