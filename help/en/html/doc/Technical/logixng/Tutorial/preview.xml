@@ -185,7 +185,7 @@
       <systemName>IM_7_2</systemName>
       <userName>Actual Crane Angle</userName>
     </memory>
-    <memory value="100">
+    <memory value="100.0">
       <systemName>IM_7_3</systemName>
       <userName>Commanded Crane Arm</userName>
     </memory>
@@ -193,7 +193,7 @@
       <systemName>IM_7_4</systemName>
       <userName>Actual Crane Arm</userName>
     </memory>
-    <memory value="0">
+    <memory value="0.0">
       <systemName>IM_7_5</systemName>
       <userName>Commanded Crane Bucket</userName>
     </memory>
@@ -8117,104 +8117,104 @@
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Sun Feb 14 23:52:21 CET 2021</date>
+      <date>Mon Feb 15 01:52:18 CET 2021</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Sun Feb 14 23:52:29 CET 2021</date>
+      <date>Mon Feb 15 01:52:27 CET 2021</date>
       <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Sat Feb 13 00:24:24 CET 2021</date>
+          <date>Sun Feb 14 23:52:21 CET 2021</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Sat Feb 13 00:24:32 CET 2021</date>
+          <date>Sun Feb 14 23:52:29 CET 2021</date>
           <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Fri Feb 12 03:38:01 CET 2021</date>
+              <date>Sat Feb 13 00:24:24 CET 2021</date>
               <filename>JMRI program</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Fri Feb 12 03:38:09 CET 2021</date>
+              <date>Sat Feb 13 00:24:32 CET 2021</date>
               <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
               <filehistory>
                 <operation>
                   <type>app</type>
-                  <date>Fri Feb 12 03:17:26 CET 2021</date>
+                  <date>Fri Feb 12 03:38:01 CET 2021</date>
                   <filename>JMRI program</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Fri Feb 12 03:17:33 CET 2021</date>
+                  <date>Fri Feb 12 03:38:09 CET 2021</date>
                   <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
                   <filehistory>
                     <operation>
                       <type>app</type>
-                      <date>Thu Feb 11 23:56:55 CET 2021</date>
+                      <date>Fri Feb 12 03:17:26 CET 2021</date>
                       <filename>JMRI program</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Thu Feb 11 23:57:04 CET 2021</date>
+                      <date>Fri Feb 12 03:17:33 CET 2021</date>
                       <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
                       <filehistory>
                         <operation>
                           <type>app</type>
-                          <date>Thu Feb 11 23:42:56 CET 2021</date>
+                          <date>Thu Feb 11 23:56:55 CET 2021</date>
                           <filename>JMRI program</filename>
                         </operation>
                         <operation>
                           <type>Load OK</type>
-                          <date>Thu Feb 11 23:43:05 CET 2021</date>
+                          <date>Thu Feb 11 23:57:04 CET 2021</date>
                           <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
                         </operation>
                         <operation>
                           <type>Store</type>
-                          <date>Thu Feb 11 23:47:25 CET 2021</date>
+                          <date>Fri Feb 12 01:23:35 CET 2021</date>
                           <filename />
                         </operation>
                       </filehistory>
                     </operation>
                     <operation>
                       <type>Store</type>
-                      <date>Fri Feb 12 01:23:35 CET 2021</date>
+                      <date>Fri Feb 12 03:22:35 CET 2021</date>
                       <filename />
                     </operation>
                   </filehistory>
                 </operation>
                 <operation>
                   <type>Store</type>
-                  <date>Fri Feb 12 03:22:35 CET 2021</date>
+                  <date>Fri Feb 12 03:38:44 CET 2021</date>
                   <filename />
                 </operation>
               </filehistory>
             </operation>
             <operation>
               <type>Store</type>
-              <date>Fri Feb 12 03:38:44 CET 2021</date>
+              <date>Sat Feb 13 00:24:50 CET 2021</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Sat Feb 13 00:24:50 CET 2021</date>
+          <date>Mon Feb 15 00:01:17 CET 2021</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Mon Feb 15 00:01:17 CET 2021</date>
+      <date>Mon Feb 15 01:52:46 CET 2021</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.21.5ish+daniel+2021-02-14T22:52:05Z+RUNKNOWN on Mon Feb 15 00:01:17 CET 2021-->
+  <!--Written by JMRI version 4.21.5ish+daniel+2021-02-15T00:52:02Z+RUNKNOWN on Mon Feb 15 01:52:46 CET 2021-->
 </layout-config>
