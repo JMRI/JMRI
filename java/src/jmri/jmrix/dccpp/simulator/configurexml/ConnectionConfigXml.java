@@ -6,6 +6,8 @@ import jmri.jmrix.dccpp.simulator.ConnectionConfig;
 import jmri.jmrix.dccpp.simulator.DCCppSimulatorAdapter;
 import org.jdom2.Element;
 
+import javax.annotation.Nonnull;
+
 /**
  * Handle XML persistence of layout connections by persisting the
  * DCCppSimulatorAdapter (and connections). Note this is named as the XML version
@@ -47,7 +49,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) {
+    public boolean load(@Nonnull Element shared, Element perNode) {
         boolean result = true;
         // start the "connection"
         getInstance();

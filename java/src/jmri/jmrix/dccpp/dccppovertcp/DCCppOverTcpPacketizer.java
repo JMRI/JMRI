@@ -14,6 +14,8 @@ import jmri.jmrix.dccpp.DCCppReply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.concurrent.GuardedBy;
+
 /**
  * Converts Stream-based I/O to/from DCC++ messages. The "DCCppInterface" side
  * sends/receives DCCppMessage objects. The connection to a
@@ -65,7 +67,9 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
     /**
      * XmtHandler (a local class) object to implement the transmit thread
      */
+    @GuardedBy ("lock")
     protected Runnable xmtHandler;
+    final Object lock = new Object();
 
     /**
      * RcvHandler (a local class) object to implement the receive thread
@@ -162,10 +166,13 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
         // make sure that the xmt priority is no lower than the current priority
         int xmtpriority = (Thread.MAX_PRIORITY - 1 > priority ? Thread.MAX_PRIORITY - 1 : Thread.MAX_PRIORITY);
         // start the XmtHandler in a thread of its own
-        if (xmtHandler == null) {
-            xmtHandler = new XmtHandler();
+        Thread xmtThread;
+        synchronized (lock) {
+            if (xmtHandler == null) {
+                xmtHandler = new XmtHandler();
+            }
+            xmtThread = new Thread(xmtHandler, "DCC++ transmit handler");
         }
-        Thread xmtThread = new Thread(xmtHandler, "DCC++ transmit handler");
         log.debug("Xmt thread starts at priority {}", xmtpriority);
         xmtThread.setDaemon(true);
         xmtThread.setPriority(Thread.MAX_PRIORITY - 1);

@@ -14,6 +14,8 @@ import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.concurrent.GuardedBy;
+
 /**
  * Implementation of the DCCppOverTcp LbServer Server Protocol.
  *
@@ -25,7 +27,9 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
     Socket clientSocket;
     BufferedReader inStream;
     OutputStream outStream;
+    @GuardedBy ("lock")
     LinkedList<DCCppReply> replyQueue = new LinkedList<>(); // Init before Rx and Tx
+    final Object lock = new Object();
 
     Thread txThread;
     String inString;
@@ -123,8 +127,10 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
         txThread = null;
         inStream = null;
         outStream = null;
-        replyQueue.clear();
-        replyQueue = null;
+        synchronized (lock) {
+            replyQueue.clear();
+            replyQueue = null;
+        }
 
         try {
             clientSocket.close();
@@ -165,7 +171,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
                 while (!isInterrupted()) {
                     msg = null;
 
-                    synchronized (this) {
+                    synchronized (lock) {
                         if (replyQueue.isEmpty()) {
                             replyQueue.wait();
                         }
@@ -213,11 +219,11 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
 
     @Override
     public void message(DCCppReply msg) {
-        synchronized (this) {
+        synchronized (lock) {
             replyQueue.add(msg);
             replyQueue.notifyAll();
-            log.debug("Message added to queue: {}", msg);
         }
+        log.debug("Message added to queue: {}", msg);
     }
 
     @Override
