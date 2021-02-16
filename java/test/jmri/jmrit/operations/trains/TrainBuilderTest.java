@@ -3468,9 +3468,8 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertTrue("Train 1 status", train1.isBuilt());
-
+        
         JUnitOperationsUtil.checkOperationsShutDownTask();
-
     }
 
     /*
@@ -3512,8 +3511,16 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue(new TrainBuilder().build(train2));
         Assert.assertEquals("Train 2 After Build 2 requires FRED", true, train2.isBuilt());
 
-        JUnitOperationsUtil.checkOperationsShutDownTask();
+        // require car road PC with FRED, should fail
+        train2.setCabooseRoad("PC");
+        train2.reset();
+        Assert.assertFalse(new TrainBuilder().build(train2));
+        
+        train2.setCabooseRoad("CP");
+        train2.reset();
+        Assert.assertTrue(new TrainBuilder().build(train2));
 
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     /*
@@ -5822,7 +5829,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 461, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 469, in.lines().count());
         in.close();
 
         // TODO search and confirm limit message in build report
@@ -5861,7 +5868,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 252, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 260, in.lines().count());
         in.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
@@ -5915,7 +5922,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 377, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 385, in.lines().count());
         in.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
@@ -7494,6 +7501,96 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("car's train c4", train1, c4.getTrain());
         Assert.assertEquals("car's train c5", train1, c5.getTrain());
         Assert.assertEquals("car's train c6", null, c6.getTrain());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    @Test
+    public void testTurnFinalDestination() {
+
+        // confirm defaults
+        
+
+        Location westford = JUnitOperationsUtil.createOneNormalLocation("Westford");
+        Track westfordSpur1 = westford.getTrackByName("Westford Spur 1", null);
+        Track westfordYard1 = westford.getTrackByName("Westford Yard 1", null);
+        Track westfordYard2 = westford.getTrackByName("Westford Yard 2", null);
+        Track westfordInterchange1 = westford.getTrackByName("Westford Interchange 1", null);
+        Track westfordInterchange2 = westford.getTrackByName("Westford Interchange 2", null);
+
+        // place cars on track
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", westfordSpur1, 0);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("A", "2", "Boxcar", "40", westfordSpur1, 10);
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("A", "3", "Boxcar", "40", westfordYard1, 20);
+        Car c4 = JUnitOperationsUtil.createAndPlaceCar("A", "4", "Boxcar", "40", westfordYard1, 30);
+        Car c5 = JUnitOperationsUtil.createAndPlaceCar("A", "5", "Boxcar", "40", westfordInterchange1, 40);
+        Car c6 = JUnitOperationsUtil.createAndPlaceCar("A", "6", "Boxcar", "40", westfordInterchange1, 50);
+
+        // set car destinations
+        c2.setDestination(westford, westfordYard2);
+        c6.setDestination(westford, westfordSpur1);
+        
+        c1.setFinalDestination(westford);
+        c1.setFinalDestinationTrack(westfordInterchange1);
+        c3.setFinalDestination(westford);
+        c3.setFinalDestinationTrack(westfordYard2);
+        c4.setFinalDestination(westford);
+        c4.setFinalDestinationTrack(westfordInterchange1);
+        c5.setFinalDestination(westford);
+        c5.setFinalDestinationTrack(westfordInterchange2);
+        
+        // create train
+        Train train1 = tmanager.newTrain("TestTurnFinalDestination");
+
+        Location needham = JUnitOperationsUtil.createOneNormalLocation("Needham");
+        Route route = rmanager.newRoute("Route Wesford");
+        route.addLocation(westford);
+        train1.setRoute(route);
+        
+        train1.setAllowThroughCarsEnabled(false);
+
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertTrue("Train status", train1.isBuilt());
+
+        // confirm cars are assigned to train
+        Assert.assertEquals("car's train", train1, c1.getTrain());
+        Assert.assertEquals("car's train", train1, c2.getTrain());
+        Assert.assertEquals("car's train", train1, c3.getTrain());
+        Assert.assertEquals("car's train", train1, c4.getTrain());
+        Assert.assertEquals("car's train", train1, c5.getTrain());
+        Assert.assertEquals("car's train", train1, c6.getTrain());
+        
+        Assert.assertEquals("car's destination", westfordInterchange1, c1.getDestinationTrack());
+        Assert.assertEquals("car's destination", westfordYard2, c2.getDestinationTrack());
+        Assert.assertEquals("car's destination", westfordYard2, c3.getDestinationTrack());
+        Assert.assertEquals("car's destination", westfordInterchange1, c4.getDestinationTrack());
+        Assert.assertEquals("car's destination", westfordInterchange2, c5.getDestinationTrack());
+        Assert.assertEquals("car's destination", westfordSpur1, c6.getDestinationTrack());
+        
+        train1.reset();
+        route.addLocation(needham);
+        route.addLocation(westford);
+        
+        c2.setDestination(westford, westfordYard2);
+        c6.setDestination(westford, westfordSpur1);
+        
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertTrue("Train status", train1.isBuilt());
+
+        // confirm cars are assigned to train
+        Assert.assertEquals("car's train", train1, c1.getTrain());
+        Assert.assertEquals("car's train", train1, c2.getTrain());
+        Assert.assertEquals("car's train", train1, c3.getTrain());
+        Assert.assertEquals("car's train", train1, c4.getTrain());
+        Assert.assertEquals("car's train", train1, c5.getTrain());
+        Assert.assertEquals("car's train", train1, c6.getTrain());
+        
+        Assert.assertEquals("car's destination", westfordInterchange1, c1.getDestinationTrack());
+        Assert.assertEquals("car's destination", westfordYard2, c2.getDestinationTrack());
+        Assert.assertEquals("car's destination", westfordYard2, c3.getDestinationTrack());
+        Assert.assertEquals("car's destination", westfordInterchange1, c4.getDestinationTrack());
+        Assert.assertEquals("car's destination", westfordInterchange2, c5.getDestinationTrack());
+        Assert.assertEquals("car's destination", westfordSpur1, c6.getDestinationTrack());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
@@ -9299,6 +9396,11 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertEquals("e1 destination 5", "Boston Engine Yard", e1.getDestinationTrackName());
         Assert.assertEquals("e2 destination 5", "Boston Engine Yard", e2.getDestinationTrackName());
+        
+        // require a caboose road that doesn't exist in staging, should fail
+        train1.setCabooseRoad("PS");
+        train1.reset();
+        Assert.assertFalse(new TrainBuilder().build(train1));
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
@@ -12898,6 +13000,8 @@ public class TrainBuilderTest extends OperationsTestCase {
      */
     @Test
     public void testAutoHPT() {
+        
+        Assert.assertEquals("check default", 6, Setup.getMaxNumberEngines());
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
 
         Assert.assertEquals("confirm default of 1 HPT", 1, Setup.getHorsePowerPerTon());
@@ -12998,7 +13102,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("e3 not assigned to train", null, e3.getDestination());
         Assert.assertEquals("e4 assigned to train, train needs 1600 HP", essex, e4.getDestination());
 
-        // now increase the train's weight
+        // again increase the train's weight
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", carTypes[1], "40", bostonYard1, 0);
         c2.setWeightTons("200"); // 200 tons loaded
         c2.setLoadName(cld.getDefaultLoadName());
@@ -13010,6 +13114,33 @@ public class TrainBuilderTest extends OperationsTestCase {
         // confirm that the specified engines were assigned to the train
         Assert.assertEquals("e1 not assigned to train", null, e1.getDestination());
         Assert.assertEquals("e2 not assigned to train", null, e2.getDestination());
+        Assert.assertEquals("e3 assigned to train", essex, e3.getDestination());
+        Assert.assertEquals("e4 assigned to train", essex, e4.getDestination());
+        
+        // again increase the train's weight
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("UP", "3", carTypes[1], "40", bostonYard1, 0);
+        c3.setWeightTons("350"); // 350 tons loaded
+        c3.setLoadName(cld.getDefaultLoadName());
+
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm that the specified engines were assigned to the train
+        Assert.assertEquals("e1 not assigned to train", essex, e1.getDestination());
+        Assert.assertEquals("e2 not assigned to train", essex, e2.getDestination());
+        Assert.assertEquals("e3 assigned to train", essex, e3.getDestination());
+        Assert.assertEquals("e4 assigned to train", essex, e4.getDestination());
+        
+        // Limit the number of engines to only 3
+        Setup.setMaxNumberEngines(3);     
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm that the specified engines were assigned to the train
+        Assert.assertEquals("e1 not assigned to train", null, e1.getDestination());
+        Assert.assertEquals("e2 not assigned to train", essex, e2.getDestination());
         Assert.assertEquals("e3 assigned to train", essex, e3.getDestination());
         Assert.assertEquals("e4 assigned to train", essex, e4.getDestination());
 

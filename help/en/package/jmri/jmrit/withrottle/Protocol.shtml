@@ -875,7 +875,7 @@ MTA*&lt;;&gt;qR
 
         <li>'F' function key. Format F<i>{0|1}</i><i>Function</i>.</li>
 
-        <li>'f' force function</li>
+        <li>'f' force function. Format f<i>{0|1}</i><i>Function</i>.</li>
 
         <li>'I' idle, which sets the speed to 0</li>
 
@@ -967,6 +967,23 @@ MTA*&lt;;&gt;F012
       both the push (1) and release (0) and JMRI will map that into
       the correct DCC command or commands, as appropriate.</p>
 
+      <h3>'f' Force Function</h3>
+
+      <p>This command will set the function state regardless of
+      the state before this command. For example:</p>
+      <pre class="code">
+MTA*&lt;;&gt;f112
+</pre>
+
+      <p>will activate Function 12 if it was off before and will
+      keep F12 active if it was on before. If Function 12 is
+      a momentary function, it will still be activated by this
+      command and stay active.</p>
+      
+      <p>The server will respond with a property change
+      notification only if this command changes the function state.
+      </p>
+
       <h3>'m' momentary: Set Function to momentary or locking</h3>
       
       <p>A function can either be momentary, i.e. active as long as
@@ -992,7 +1009,7 @@ MTA*&lt;;&gt;m012
       
       <p class="note">The global wiThrottle preference "F2 always 
       momentary" will override this setting for F2</p>
-      
+
       <h3>'R' Set Direction</h3>
 
       <p>Used to change between forward and reverse:</p>

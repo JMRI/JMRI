@@ -219,11 +219,11 @@
         It allows to discover stationary LNCV devices and read and write individual LNCVs.<br>
         Enter the first 4 digits of the device as the Article Number before starting a Programming Session, or the
         modules will not respond. Once a session is running, use the responses collected in the LNCV Monitor table to
-        navigate to your Roster to access the full functionalty of each device. When a matching definition is found
-        in the JMRI Decoder Index, a [Create Entry] button will show. If your device reponded to a general call but
-        is not yet supported, the button will read [No Match] (and it won't work). Once you have a Roster Entry, the
-        button will read [Program] and will directly open the entry tabs.<br>
-        Check the 'Direct Mode' checkbox to access 16 state buttons to set LEDs etc. on Track-Control items.</p>
+        navigate to your Roster to access the full functionality of each device. When a matching definition is found
+        in the JMRI Decoder Index, a [Create Entry] button will show. If your device responded to a general call but
+        is not yet supported, the button will read [No Match] (and it won't do much). Once you have a Roster Entry,
+        the button will read [Program] and will directly open the entry tabs.<br>
+        Check the 'Direct Mode' checkbox to access a row of state buttons to set LEDs etc. on Track-Control items.</p>
 
       <p>The Intellibox Command Stations can't be configured over their
       LocoNet connection.<br>

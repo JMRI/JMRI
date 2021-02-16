@@ -579,11 +579,14 @@
 
    <p>
     So let's begin with the <a href="#Settings">Settings</a> window. Enter a name for your railroad,
-    the scale that you're modeling, and decide of you're are going to use descriptive names or AAR
-    codes for your rolling stock. You can also optionally select which directions your railroad
-    travels. Leave the rest of the fields in the <a href="#Settings">Settings</a> window alone for
-    now, you can always come back and change them later. Now press the "Save" button in the lower
-    right corner and close the window by pressing the "X" in the upper right corner.
+    the scale that you're modeling, and decide of you're are going to use <a href="#CarTypes">descriptive
+     names</a> or AAR codes for your rolling stock. You can also optionally select which <a
+     href="#LocationServiceDirection">directions</a> your railroad travels. You also have the option
+    to add the OperationsPro&trade; menu to the main window. Select "Add Operations Menu to Main
+    Menu" if you want this option. The next time you start PanelPro the OperationsPro&trade; menu
+    will appear. Leave the rest of the fields in the <a href="#Settings">Settings</a> window alone
+    for now, you can always come back and change them later. Now press the "Save" button in the
+    lower right corner and close the window by pressing the "X" in the upper right corner.
    </p>
 
    <p>
