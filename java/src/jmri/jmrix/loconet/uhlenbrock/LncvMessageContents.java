@@ -547,6 +547,8 @@ public class LncvMessageContents {
                 moduleAddress);
     }
 
+    /* These 2 static methods are used to mock replies to requests from JMRI */
+
     /**
      * In Hexfile simulation mode, mock a ReadReply message back to the CS.
      *
@@ -558,28 +560,29 @@ public class LncvMessageContents {
         if (!isLnMessageASpecificLncvCommand(m, LncvCommand.LNCV_READ)) {
             return null;
         }
-        m.setOpCode(LnConstants.OPC_PEER_XFER);
-        m.setElement(LNCV_LENGTH_ELEMENT_INDEX, LNCV_LENGTH_ELEMENT_VALUE);
+        LocoNetMessage reply = new LocoNetMessage(m);
+        reply.setOpCode(LnConstants.OPC_PEER_XFER);
+        reply.setElement(LNCV_LENGTH_ELEMENT_INDEX, LNCV_LENGTH_ELEMENT_VALUE);
 
-        m.setElement(LNCV_DST_L_ELEMENT_INDEX, (m.getElement(LNCV_SRC_ELEMENT_INDEX) == LNCV_CS_SRC_VALUE ? 0x49 : m.getElement(LNCV_SRC_ELEMENT_INDEX)));
-        m.setElement(LNCV_DST_H_ELEMENT_INDEX, (m.getElement(LNCV_SRC_ELEMENT_INDEX) == LNCV_CS_SRC_VALUE ? 0x4b : 0x00));
+        reply.setElement(LNCV_DST_L_ELEMENT_INDEX, (reply.getElement(LNCV_SRC_ELEMENT_INDEX) == LNCV_CS_SRC_VALUE ? 0x49 : reply.getElement(LNCV_SRC_ELEMENT_INDEX)));
+        reply.setElement(LNCV_DST_H_ELEMENT_INDEX, (reply.getElement(LNCV_SRC_ELEMENT_INDEX) == LNCV_CS_SRC_VALUE ? 0x4b : 0x00));
 
         // set SRC after reading old value to determine DST above
-        m.setElement(LNCV_SRC_ELEMENT_INDEX, LNCV_LNMODULE_VALUE);
-        m.setElement(5, LNCV_CMD_READ_REPLY);
+        reply.setElement(LNCV_SRC_ELEMENT_INDEX, LNCV_LNMODULE_VALUE);
+        reply.setElement(5, LNCV_CMD_READ_REPLY);
         // HIBITS handled last
-        m.setElement(7, m.getElement(7));
-        m.setElement(8, m.getElement(8));
-        m.setElement(9, m.getElement(9));
-        m.setElement(10, m.getElement(10));
-        if (m.getElement(9) != 0 || m.getElement(10) != 0) { // if CV=0, keep cv value as is, it was passed in as the module address
-            m.setElement(LNCV_MOD_L_ELEMENT_INDEX, 0x8); // random cv value_low
-            m.setElement(LNCV_MOD_H_ELEMENT_INDEX, 0x1); // random cv value_hi
-            m.setElement(PXCT1_ELEMENT_INDEX, m.getElement(PXCT1_ELEMENT_INDEX)^0x60); // HIBITS recalculate (only elements 11-12 have changed = HIBITS bits 5 & 6)
+        reply.setElement(7, reply.getElement(7));
+        reply.setElement(8, reply.getElement(8));
+        reply.setElement(9, reply.getElement(9));
+        reply.setElement(10, reply.getElement(10));
+        if (reply.getElement(9) != 0 || reply.getElement(10) != 0) { // if CV=0, keep cv value as is, it was passed in as the module address
+            reply.setElement(LNCV_MOD_L_ELEMENT_INDEX, 0x8); // random cv value_low
+            reply.setElement(LNCV_MOD_H_ELEMENT_INDEX, 0x1); // random cv value_hi
+            reply.setElement(PXCT1_ELEMENT_INDEX, reply.getElement(PXCT1_ELEMENT_INDEX)^0x60); // HIBITS recalculate (only elements 11-12 have changed = HIBITS bits 5 & 6)
         }
-        m.setElement(13, 0x0);
+        reply.setElement(13, 0x0);
 
-        return m;
+        return reply;
     }
 
     /**
@@ -595,21 +598,21 @@ public class LncvMessageContents {
         }
         LncvMessageContents lmc = new LncvMessageContents(m);
         log.debug("request to article {}", lmc.getLncvArticleNum());
-        m.setElement(LncvMessageContents.LNCV_CMDDATA_ELEMENT_INDEX, 0x00); // correct CMDDATA for ReadRequest
-        m.setElement(LncvMessageContents.PXCT1_ELEMENT_INDEX, m.getElement(PXCT1_ELEMENT_INDEX)^0x40); // together with this HIBIT
+        LocoNetMessage forward = new LocoNetMessage(m);
+        forward.setElement(LncvMessageContents.LNCV_CMDDATA_ELEMENT_INDEX, 0x00); // correct CMDDATA for ReadRequest
+        forward.setElement(LncvMessageContents.PXCT1_ELEMENT_INDEX, m.getElement(PXCT1_ELEMENT_INDEX)^0x40); // together with this HIBIT
         if (lmc.getLncvArticleNum() == LNCV_ALL) { // mock a certain device
             log.debug("art ALL");
-            m.setElement(LncvMessageContents.LNCV_ART_L_ELEMENT_INDEX, 0x29); // article number 5033
-            m.setElement(LncvMessageContents.LNCV_ART_H_ELEMENT_INDEX, 0x13);
-            m.setElement(LncvMessageContents.PXCT1_ELEMENT_INDEX, 0x01); // hibits to go with 5033
+            forward.setElement(LncvMessageContents.LNCV_ART_L_ELEMENT_INDEX, 0x29); // article number 5033
+            forward.setElement(LncvMessageContents.LNCV_ART_H_ELEMENT_INDEX, 0x13);
+            forward.setElement(LncvMessageContents.PXCT1_ELEMENT_INDEX, 0x01); // hibits to go with 5033
         }
         if (lmc.getLncvModuleNum() == LNCV_ALL) { // mock a certain address
             log.debug("mod ALL");
-            m.setElement(LncvMessageContents.LNCV_MOD_L_ELEMENT_INDEX, 0x3); // address value 3
-            m.setElement(LncvMessageContents.LNCV_MOD_H_ELEMENT_INDEX, 0x0);
+            forward.setElement(LncvMessageContents.LNCV_MOD_L_ELEMENT_INDEX, 0x3); // address value 3
+            forward.setElement(LncvMessageContents.LNCV_MOD_H_ELEMENT_INDEX, 0x0);
         }
-        LocoNetMessage m2 = LncvMessageContents.createLncvReadReply(m);
-        return m2;
+        return LncvMessageContents.createLncvReadReply(forward);
     }
 
     /**
