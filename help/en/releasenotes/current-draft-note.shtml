@@ -79,7 +79,8 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+              <li>When connected to the LocoNet HexFile Simulator, simulated replies from selected devices are
+                sent to the monitor (select the "Simulate replies" checkbox on the HexFile pane).</li>
             </ul>
 
         <h4>Maple</h4>
@@ -333,6 +334,8 @@
                 <li>For Uhlenbrock Track-Control modules a Direct Message type was added to the LNCV protocol.
                   The Lncv Programming tool has a new checkbox 'Direct Mode', allowing to set LEDs etc.</li>
                 <li>Two new Track-Control definitions (art. 69220 Turnout and 69230 Signal Module)</li>
+                <li>When connected to the LocoNet HexFile Simulator, simulated replies from LNCV devices are
+                  sent to the monitor (select the "Simulate replies" checkbox on the HexFile pane).</li>
             </ul>
 
         <h4>Umelec</h4>
