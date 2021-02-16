@@ -77,6 +77,8 @@ public class ExpressionSensorSwingTest extends SwingConfiguratorInterfaceTestBas
         new JComboBoxOperator(jdo, 2).setSelectedItem(ExpressionSensor.SensorState.Inactive);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
+        JUnitUtil.waitFor(() -> {return expression.getSensor() != null;});
+        
         Assert.assertEquals("IS1", expression.getSensor().getBean().getSystemName());
         Assert.assertEquals(ExpressionSensor.SensorState.Inactive, expression.getBeanState());
     }
@@ -106,6 +108,8 @@ public class ExpressionSensorSwingTest extends SwingConfiguratorInterfaceTestBas
         new JComboBoxOperator(jdo, 1).setSelectedItem(Is_IsNot_Enum.Is);
         new JComboBoxOperator(jdo, 2).setSelectedItem(ExpressionSensor.SensorState.Active);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
+        
+        JUnitUtil.waitFor(() -> {return expression.getSensor() != null;});
         
         Assert.assertEquals("IS99", expression.getSensor().getBean().getSystemName());
         Assert.assertEquals(ExpressionSensor.SensorState.Active, expression.getBeanState());

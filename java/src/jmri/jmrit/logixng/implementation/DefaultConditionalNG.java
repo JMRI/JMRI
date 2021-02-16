@@ -129,8 +129,28 @@ public class DefaultConditionalNG extends AbstractBase
     /** {@inheritDoc} */
     @Override
     public void execute(FemaleDigitalActionSocket socket) {
-        if (_executeLock.once()) {
-            runOnLogixNG_Thread(new ExecuteTask(this, _executeLock, socket));
+        runOnLogixNG_Thread(() -> {internalExecute(this, socket);});
+    }
+    
+    private static void internalExecute(ConditionalNG conditionalNG, FemaleDigitalActionSocket femaleSocket) {
+        if (conditionalNG.isEnabled()) {
+            DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(conditionalNG);
+
+            try {
+                conditionalNG.setSymbolTable(newSymbolTable);
+                if (femaleSocket != null) {
+                    femaleSocket.execute();
+                } else {
+                    conditionalNG.getFemaleSocket().execute();
+                }
+            } catch (JmriException | RuntimeException e) {
+//                LoggingUtil.warnOnce(log, "ConditionalNG {} got an exception during execute: {}",
+//                        conditionalNG.getSystemName(), e, e);
+                log.warn("ConditionalNG {} got an exception during execute: {}",
+                        conditionalNG.getSystemName(), e, e);
+            }
+
+            conditionalNG.setSymbolTable(newSymbolTable.getPrevSymbolTable());
         }
     }
     
@@ -149,25 +169,7 @@ public class DefaultConditionalNG extends AbstractBase
         @Override
         public void run() {
             while (_executeLock.loop()) {
-                if (_conditionalNG.isEnabled()) {
-                    DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(_conditionalNG);
-                    
-                    try {
-                        _conditionalNG.setSymbolTable(newSymbolTable);
-                        if (_localFemaleSocket != null) {
-                            _localFemaleSocket.execute();
-                        } else {
-                            _conditionalNG.getFemaleSocket().execute();
-                        }
-                    } catch (JmriException | RuntimeException e) {
-//                            LoggingUtil.warnOnce(log, "ConditionalNG {} got an exception during execute: {}",
-//                                    getSystemName(), e, e);
-                        log.warn("ConditionalNG {} got an exception during execute: {}",
-                                _conditionalNG.getSystemName(), e, e);
-                    }
-                    
-                    _conditionalNG.setSymbolTable(newSymbolTable.getPrevSymbolTable());
-                }
+                internalExecute(_conditionalNG, _localFemaleSocket);
             }
         }
         

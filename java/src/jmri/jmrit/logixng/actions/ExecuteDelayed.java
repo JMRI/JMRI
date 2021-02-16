@@ -64,7 +64,7 @@ public class ExecuteDelayed
     /**
      * Get a new timer task.
      */
-    private ProtectedTimerTask getNewTimerTask() {
+    private ProtectedTimerTask getNewTimerTask(ConditionalNG conditionalNG) {
         return new ProtectedTimerTask() {
             @Override
             public void execute() {
@@ -73,9 +73,9 @@ public class ExecuteDelayed
                         _timerTask = null;
                         long currentTimerTime = System.currentTimeMillis() - _timerStart;
                         if (currentTimerTime < _timerDelay) {
-                            scheduleTimer(_timerDelay - currentTimerTime);
+                            scheduleTimer(conditionalNG, _timerDelay - currentTimerTime);
                         } else {
-                            getConditionalNG().execute(_socket);
+                            conditionalNG.execute(_socket);
                         }
                     }
                 } catch (Exception e) {
@@ -85,9 +85,9 @@ public class ExecuteDelayed
         };
     }
     
-    private void scheduleTimer(long delay) {
+    private void scheduleTimer(ConditionalNG conditionalNG, long delay) {
         if (_timerTask != null) _timerTask.stopTimer();
-        _timerTask = getNewTimerTask();
+        _timerTask = getNewTimerTask(conditionalNG);
         TimerUtil.schedule(_timerTask, delay);
     }
     
@@ -101,7 +101,7 @@ public class ExecuteDelayed
             }
             _timerDelay = _delay * _unit.getMultiply();
             _timerStart = System.currentTimeMillis();
-            scheduleTimer(_delay * _unit.getMultiply());
+            scheduleTimer(getConditionalNG(), _delay * _unit.getMultiply());
         }
     }
     

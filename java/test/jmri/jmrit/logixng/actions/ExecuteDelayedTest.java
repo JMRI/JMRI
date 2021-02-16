@@ -109,7 +109,11 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
         a2.setDelay(26);
         a2.setUnit(TimerUnit.Minutes);
         a2.setResetIfAlreadyStarted(true);
-        Assert.assertEquals("strings are equal", "Execute A after 26 seconds. Reset on repeat", a2.getLongDescription());
+        Assert.assertEquals("strings are equal", "Execute A after 26 minutes. Reset on repeat", a2.getLongDescription());
+        a2.setDelay(4);
+        a2.setUnit(TimerUnit.Hours);
+        a2.setResetIfAlreadyStarted(false);
+        Assert.assertEquals("strings are equal", "Execute A after 4 hours. Ignore on repeat", a2.getLongDescription());
     }
     
     @Ignore
