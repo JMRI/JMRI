@@ -104,22 +104,4 @@ public interface ConditionalNG extends Base, NamedBean {
      */
     public void setSymbolTable(SymbolTable symbolTable);
     
-    /**
-     * Register listeners for the ConditionalNG tree.
-     * <P>
-     * Important: This method may be called more than once. Methods overriding
-     * this method must ensure that listeners are not registered more than once.
-     */
-    @Override
-    public void registerListeners();
-    
-    /**
-     * Unregister listeners for the ConditionalNG tree.
-     * <P>
-     * Important: This method may be called more than once. Methods overriding
-     * this method must ensure that listeners are not unregistered more than once.
-     */
-    @Override
-    public void unregisterListeners();
-    
 }

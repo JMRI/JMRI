@@ -11,7 +11,6 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.implementation.swing.ErrorHandlingDialog;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.*;
 
