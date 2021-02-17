@@ -207,6 +207,11 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             internalAdjust = false;
         }
     }
+    
+    private void paintSpeedSliderDecorations(JSlider slider, Boolean paint) {
+        slider.setPaintTicks(paint);
+        slider.setPaintLabels(paint);
+    }
 
     /**
      * Set the GUI to match the speed steps of the current address. Initialises
@@ -249,15 +254,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         labelTable.put(maxSpeed / 2, new JLabel("50%"));
         labelTable.put(maxSpeed, new JLabel("100%"));
         labelTable.put(0, new JLabel(Bundle.getMessage("ButtonStop")));
-        speedSlider.setLabelTable(labelTable);
-        
-        if (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()) {
-            speedSlider.setPaintTicks(false);
-            speedSlider.setPaintLabels(false);
-        } else {
-            speedSlider.setPaintTicks(true);
-            speedSlider.setPaintLabels(true);
-        }
+        speedSlider.setLabelTable(labelTable);        
+        paintSpeedSliderDecorations(speedSlider, ! (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()));
 
         if (speedSliderContinuous != null) {
             speedSliderContinuous.setMaximum(maxSpeed);
@@ -275,14 +273,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             labelTable.put(-maxSpeed / 2, new JLabel("-50%"));
             labelTable.put(-maxSpeed, new JLabel("-100%"));
             speedSliderContinuous.setLabelTable(labelTable);
-            speedSlider.setLabelTable(labelTable);
-            if (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()) {
-                speedSliderContinuous.setPaintTicks(false);
-                speedSliderContinuous.setPaintLabels(false);
-            } else {
-                speedSliderContinuous.setPaintTicks(true);
-                speedSliderContinuous.setPaintLabels(true);
-            }
+            paintSpeedSliderDecorations(speedSliderContinuous, ! (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()));
         }
 
         speedSpinnerModel.setMaximum(maxSpeed);
@@ -637,13 +628,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         labelTable.put(maxSpeed, new JLabel("100%"));
         labelTable.put(0, new JLabel(Bundle.getMessage("ButtonStop")));
         speedSlider.setLabelTable(labelTable);
-        if (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()) {
-            speedSlider.setPaintTicks(false);
-            speedSlider.setPaintLabels(false);
-        } else {
-            speedSlider.setPaintTicks(true);
-            speedSlider.setPaintLabels(true);
-        }
+        paintSpeedSliderDecorations(speedSlider, ! (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()));
         // remove old actions
         speedSlider.addChangeListener((ChangeEvent e) -> {
             if (!internalAdjust) {
@@ -691,13 +676,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         labelTable.put(-maxSpeed / 2, new JLabel("-50%"));
         labelTable.put(-maxSpeed, new JLabel("-100%"));
         speedSliderContinuous.setLabelTable(labelTable);
-        if (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()) {
-            speedSliderContinuous.setPaintTicks(false);
-            speedSliderContinuous.setPaintLabels(false);
-        } else {
-            speedSliderContinuous.setPaintTicks(true);
-            speedSliderContinuous.setPaintLabels(true);
-        }
+        paintSpeedSliderDecorations(speedSliderContinuous, ! (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()));
         // remove old actions
         speedSliderContinuous.addChangeListener((ChangeEvent e) -> {
             if (!internalAdjust) {
