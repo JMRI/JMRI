@@ -518,10 +518,11 @@ public abstract class AbstractMonPane extends JmriPanel {
                         }
                     } else {
                         if (s.equals(checkRaw)) {
-                        synchronized (this) {
-                            linesBuffer.setLength(0);
+                            synchronized (this) {
+                                linesBuffer.setLength(0);
+                            }
+                            return true;
                         }
-                        return true;
                     }
                 }
             }
