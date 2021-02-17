@@ -352,22 +352,16 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
         ButtonGroup enableButtonGroup = new ButtonGroup();
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(Bundle.getMessage("EnableAllLogixNGs"));  // NOI18N
-        r.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enableAll(true);
-            }
+        r.addActionListener((ActionEvent e) -> {
+            enableAll(true);
         });
         enableButtonGroup.add(r);
         r.setSelected(true);
         menu.add(r);
 
         r = new JRadioButtonMenuItem(Bundle.getMessage("DisableAllLogixNGs"));  // NOI18N
-        r.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enableAll(false);
-            }
+        r.addActionListener((ActionEvent e) -> {
+            enableAll(false);
         });
         enableButtonGroup.add(r);
         menu.add(r);
@@ -428,11 +422,8 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         menu.setMnemonic(KeyEvent.VK_T);
 
         JMenuItem item = new JMenuItem(Bundle.getMessage("OpenPickListTables"));  // NOI18N
-        item.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                openPickListTable();
-            }
+        item.addActionListener((ActionEvent e) -> {
+            openPickListTable();
         });
         menu.add(item);
 
@@ -622,12 +613,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             // Create bean
             create = new JButton(Bundle.getMessage("ButtonCreate"));  // NOI18N
             panel5.add(create);
-            create.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    createPressed(e);
-                }
-            });
+            create.addActionListener(this::createPressed);
             create.setToolTipText(Bundle.getMessage("LogixNGCreateButtonHint"));  // NOI18N
         }
         addLogixNGFrame.pack();
@@ -1060,30 +1046,24 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             button.add(noButton);
             container.add(button);
 
-            noButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    //there is no point in remebering this the user will never be
-                    //able to delete a bean!
-                    /*if(remember.isSelected()){
-                     setDisplayDeleteMsg(0x01);
-                     }*/
-                    dialog.dispose();
-                }
+            noButton.addActionListener((ActionEvent e) -> {
+                //there is no point in remebering this the user will never be
+                //able to delete a bean!
+                /*if(remember.isSelected()){
+                setDisplayDeleteMsg(0x01);
+                }*/
+                dialog.dispose();
             });
 
-            yesButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (p != null && remember.isSelected()) {
-                        p.setMultipleChoiceOption(getClassName(), "delete", 0x02);  // NOI18N
-                    }
-                    if (x != null) {
-                        deleteBean(x);
-//                        deleteSourceWhereUsed();
-                    }
-                    dialog.dispose();
+            yesButton.addActionListener((ActionEvent e) -> {
+                if (p != null && remember.isSelected()) {
+                    p.setMultipleChoiceOption(getClassName(), "delete", 0x02);  // NOI18N
                 }
+                if (x != null) {
+                    deleteBean(x);
+//                        deleteSourceWhereUsed();
+                }
+                dialog.dispose();
             });
             container.add(remember);
             container.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -1187,6 +1167,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         condBrowserFrame.addHelpMenu("package.jmri.jmrit.beantable.LogixAddEdit", true);            // NOI18N
         
         condBrowserFrame.addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosed(WindowEvent e) {
                 _textContent = null;
             }
@@ -1222,7 +1203,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         });
         
         JPanel settingsPanel = getSettingsPanel();
-        if (settingsPanel != null) bottomPanel.add(settingsPanel, BorderLayout.CENTER);;
+        if (settingsPanel != null) bottomPanel.add(settingsPanel, BorderLayout.CENTER);
         
         JButton saveBrowse = new JButton(Bundle.getMessage("BrowserSaveButton"));   // NOI18N
         saveBrowse.setToolTipText(Bundle.getMessage("BrowserSaveButtonHint"));      // NOI18N
