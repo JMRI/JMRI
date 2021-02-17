@@ -29,6 +29,7 @@ public class ControlPanelPropertyEditor extends JDialog {
     private JRadioButton displaySliderContinuous; // display slider from -100 to 0 to 100
     private JRadioButton displaySteps;
     private JCheckBox trackBox;
+    private JCheckBox speedStepBoxVisibleBox;
     private JTextField functionSwitchSlider;
 
     private int _displaySlider;
@@ -95,11 +96,16 @@ public class ControlPanelPropertyEditor extends JDialog {
         constraints.gridy = 4;
         trackBox.setSelected(control.getTrackSlider());
         propertyPanel.add(trackBox, constraints);
+        
+        speedStepBoxVisibleBox = new JCheckBox(Bundle.getMessage("CheckBoxHideSpeedStepSelector"));
+        constraints.gridy = 5;
+        speedStepBoxVisibleBox.setSelected(control.getHideSpeedStep() );
+        propertyPanel.add(speedStepBoxVisibleBox, constraints);                
 
         JLabel functionSwitchLabel = new JLabel(Bundle.getMessage("SwitchSliderOnFunction"));
         functionSwitchSlider = new JTextField(4);
         functionSwitchSlider.setText(control.getSwitchSliderFunction());
-        constraints.gridy = 5;
+        constraints.gridy = 6;
         constraints.gridx = 0;
         propertyPanel.add(functionSwitchLabel, constraints);
         constraints.gridx = 1;
@@ -186,6 +192,7 @@ public class ControlPanelPropertyEditor extends JDialog {
             control.setTrackSlider(trackBox.isSelected());
             control.setSwitchSliderFunction(functionSwitchSlider.getText());
             control.setSpeedController(_displaySlider);
+            control.setHideSpeedStep(speedStepBoxVisibleBox.isSelected());
             finishEdit();
         }
     }

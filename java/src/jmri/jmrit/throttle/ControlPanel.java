@@ -76,6 +76,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     private JPanel mainPanel;
 
     private boolean trackSlider = false;
+    private boolean hideSpeedStep = false;
     private final boolean trackSliderDefault = false;
     private long trackSliderMinInterval = 200;         // milliseconds
     private final long trackSliderMinIntervalDefault = 200;  // milliseconds
@@ -250,7 +251,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         labelTable.put(0, new JLabel(Bundle.getMessage("ButtonStop")));
         speedSlider.setLabelTable(labelTable);
         
-        if (preferences.isUsingIcons()) {
+        if (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()) {
             speedSlider.setPaintTicks(false);
             speedSlider.setPaintLabels(false);
         } else {
@@ -275,7 +276,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             labelTable.put(-maxSpeed, new JLabel("-100%"));
             speedSliderContinuous.setLabelTable(labelTable);
             speedSlider.setLabelTable(labelTable);
-            if (preferences.isUsingIcons()) {
+            if (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()) {
                 speedSliderContinuous.setPaintTicks(false);
                 speedSliderContinuous.setPaintLabels(false);
             } else {
@@ -393,6 +394,26 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     public boolean getTrackSlider() {
         return trackSlider;
     }
+    
+    /**
+     * Set hiding speed step selector (or not)
+     *
+     * @param hide boolean value, true to hide, false to show
+     */
+    public void setHideSpeedStep(boolean hide) {
+        hideSpeedStep = hide;
+        this.speedStepBox.setVisible(! hideSpeedStep);
+    }
+
+    /**
+     * Get status of hiding  speed step selector
+     * 
+     * @return true if speed step selector is hiden.
+     */
+    public boolean getHideSpeedStep() {
+        return hideSpeedStep;
+    }
+    
 
     /**
      * Set the GUI to match that the loco speed.
@@ -457,26 +478,26 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         constraints.fill = GridBagConstraints.NONE;
 
         constraints.gridy = 10;
-        if (preferences.isUsingIcons()) {
+        if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
             constraints.gridx = 2;
         }
         buttonPanel.add(forwardButton, constraints);
 
-        if (preferences.isUsingIcons()) {
+        if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
             constraints.gridx = 0;
         } else {
             constraints.gridy = 20;
         }
         buttonPanel.add(reverseButton, constraints);
 
-        if (preferences.isUsingIcons()) {
+        if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
             constraints.gridx = 1;
         } else { 
             constraints.gridy = 30;
         }
         buttonPanel.add(idleButton, constraints);
 
-        if (preferences.isUsingIcons()) {
+        if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
             constraints.gridx = 1;
         } else {
             constraints.gridx = 0;
@@ -511,7 +532,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
     private void setupButton(AbstractButton button, final ThrottlesPreferences preferences, final String iconPath,
         final String selectedIconPath, final String message) {
-        if (preferences.isUsingIcons()) {
+        if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
             button.setBorderPainted(false);
             button.setContentAreaFilled(false);
             button.setText(null);
@@ -546,7 +567,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         sliderPanel.setOpaque(false);
         
         speedSlider = new JSlider(0, intSpeedSteps);
-        if (preferences.isUsingIcons()) {
+        if (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()) {
             speedSlider.setUI(new ControlPanelCustomSliderUI(speedSlider));
         }
         speedSlider.setOpaque(false);
@@ -567,7 +588,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         });
 
         speedSliderContinuous = new JSlider(-intSpeedSteps, intSpeedSteps);
-        if (preferences.isUsingIcons()) {
+        if (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()) {
             speedSliderContinuous.setUI(new ControlPanelCustomSliderUI(speedSlider));
         }
         speedSliderContinuous.setValue(0);
@@ -616,7 +637,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         labelTable.put(maxSpeed, new JLabel("100%"));
         labelTable.put(0, new JLabel(Bundle.getMessage("ButtonStop")));
         speedSlider.setLabelTable(labelTable);
-        if (preferences.isUsingIcons()) {
+        if (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()) {
             speedSlider.setPaintTicks(false);
             speedSlider.setPaintLabels(false);
         } else {
@@ -670,7 +691,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         labelTable.put(-maxSpeed / 2, new JLabel("-50%"));
         labelTable.put(-maxSpeed, new JLabel("-100%"));
         speedSliderContinuous.setLabelTable(labelTable);
-        if (preferences.isUsingIcons()) {
+        if (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()) {
             speedSliderContinuous.setPaintTicks(false);
             speedSliderContinuous.setPaintLabels(false);
         } else {
@@ -749,7 +770,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
               throttle.setSpeedStepMode(s);
             }
         });
-
+        hideSpeedStep = ( preferences.isUsingExThrottle() && preferences.isHidingSpeedStepSelector() );
+        speedStepBox.setVisible(! hideSpeedStep);
+        
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridBagLayout());
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
@@ -1201,6 +1224,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         me.setAttribute("trackSlider", String.valueOf(this.trackSlider));
         me.setAttribute("trackSliderMinInterval", String.valueOf(this.trackSliderMinInterval));
         me.setAttribute("switchSliderOnFunction", switchSliderFunction != null ? switchSliderFunction : "Fxx");
+        me.setAttribute("hideSpeedStep", String.valueOf(this.hideSpeedStep));
         //Element window = new Element("window");
         java.util.ArrayList<Element> children = new java.util.ArrayList<>(1);
         children.add(WindowPreferences.getPreferences(this));
@@ -1218,6 +1242,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * @param e The Element for this object.
      */
     public void setXml(Element e) {
+        final ThrottlesPreferences preferences =
+                InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences();
         internalAdjust = true;
         try {
             this.setSpeedController(e.getAttribute("displaySpeedSlider").getIntValue());
@@ -1251,6 +1277,16 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         } else {
             trackSliderMinInterval = trackSliderMinIntervalDefault;
         }
+        Attribute hssAtt = e.getAttribute("hideSpeedStep");
+        if (hssAtt != null) {
+            try {
+                setHideSpeedStep ( hssAtt.getBooleanValue() );
+            } catch (org.jdom2.DataConversionException ex) {
+                setHideSpeedStep ( preferences.isUsingExThrottle() && preferences.isHidingSpeedStepSelector() );
+            }
+        } else {
+            setHideSpeedStep ( preferences.isUsingExThrottle() && preferences.isHidingSpeedStepSelector() );
+        }        
         if ((prevShuntingFn == null) && (e.getAttribute("switchSliderOnFunction") != null)) {
             setSwitchSliderFunction(e.getAttribute("switchSliderOnFunction").getValue());
         }
