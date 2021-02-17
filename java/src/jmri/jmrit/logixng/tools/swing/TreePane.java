@@ -16,6 +16,7 @@ import javax.swing.tree.*;
 
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.SymbolTable.VariableData;
+import jmri.util.ThreadingUtil;
 
 /**
  * Show the action/expression tree.
@@ -148,8 +149,10 @@ public class TreePane extends JPanel implements PropertyChangeListener {
             List<FemaleSocket> list = new ArrayList<>();
             getPath(b, list);
             
-            FemaleSocket femaleSocket = list.get(list.size()-1);
-            updateTree(femaleSocket, list.toArray());
+            ThreadingUtil.runOnGUIEventually(() -> {
+                FemaleSocket femaleSocket = list.get(list.size()-1);
+                updateTree(femaleSocket, list.toArray());
+            });
         }
         
         
@@ -160,7 +163,9 @@ public class TreePane extends JPanel implements PropertyChangeListener {
                 // Update the tree
                 List<FemaleSocket> list = new ArrayList<>();
                 getPath(socket, list);
-                updateTree(socket, list.toArray());
+                ThreadingUtil.runOnGUIEventually(() -> {
+                    updateTree(socket, list.toArray());
+                });
             }
         }
         
@@ -171,7 +176,9 @@ public class TreePane extends JPanel implements PropertyChangeListener {
             FemaleSocket femaleSocket = ((FemaleSocket)evt.getSource());
             List<FemaleSocket> list = new ArrayList<>();
             getPath(femaleSocket, list);
-            updateTree(femaleSocket, list.toArray());
+            ThreadingUtil.runOnGUIEventually(() -> {
+                updateTree(femaleSocket, list.toArray());
+            });
         }
     }
     
