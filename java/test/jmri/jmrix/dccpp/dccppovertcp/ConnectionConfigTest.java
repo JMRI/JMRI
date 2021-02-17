@@ -19,7 +19,7 @@ public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionCon
         JUnitUtil.initDefaultUserMessagePreferences();
         jmri.jmrix.dccpp.DCCppSystemConnectionMemo memo = new jmri.jmrix.dccpp.DCCppSystemConnectionMemo();
         jmri.InstanceManager.setDefault(jmri.jmrix.dccpp.DCCppSystemConnectionMemo.class, memo);
-        cc = new ConnectionConfig();
+        cc = new ConnectionConfig(new DCCppTcpDriverAdapter()); // adapter assumed in test
    }
 
    @AfterEach

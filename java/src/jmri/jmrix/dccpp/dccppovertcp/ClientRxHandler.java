@@ -27,9 +27,8 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
     Socket clientSocket;
     BufferedReader inStream;
     OutputStream outStream;
-    @GuardedBy ("lock")
-    LinkedList<DCCppReply> replyQueue = new LinkedList<>(); // Init before Rx and Tx
-    final Object lock = new Object();
+    @GuardedBy ("replyQueue")
+    final LinkedList<DCCppReply> replyQueue = new LinkedList<>(); // Init before Rx and Tx
 
     Thread txThread;
     String inString;
@@ -127,9 +126,8 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
         txThread = null;
         inStream = null;
         outStream = null;
-        synchronized (lock) {
+        synchronized (replyQueue) {
             replyQueue.clear();
-            replyQueue = null;
         }
 
         try {
@@ -171,7 +169,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
                 while (!isInterrupted()) {
                     msg = null;
 
-                    synchronized (lock) {
+                    synchronized (replyQueue) {
                         if (replyQueue.isEmpty()) {
                             replyQueue.wait();
                         }
@@ -219,7 +217,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
 
     @Override
     public void message(DCCppReply msg) {
-        synchronized (lock) {
+        synchronized (replyQueue) {
             replyQueue.add(msg);
             replyQueue.notifyAll();
         }

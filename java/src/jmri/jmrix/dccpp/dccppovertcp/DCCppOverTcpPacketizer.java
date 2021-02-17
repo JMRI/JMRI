@@ -37,7 +37,7 @@ import javax.annotation.concurrent.GuardedBy;
  * @author Alex Shepherd Copyright (C) 2003, 2006
  * @author Mark Underwood Copyright (C) 2015
  *
- * Based on LnOverTcpPacketizer
+ * Based on jmri.jmrix.loconet.loconetovertcp.LnOverTcpPacketizer
  *
  */
 // TODO: Consider ditching the LocoNet-inherited "RECEIVE" and "SEND" prefixes
@@ -67,9 +67,8 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
     /**
      * XmtHandler (a local class) object to implement the transmit thread
      */
-    @GuardedBy ("lock")
-    protected Runnable xmtHandler;
-    final Object lock = new Object();
+    @GuardedBy ("xmtHandler")
+    final protected Runnable xmtHandler;
 
     /**
      * RcvHandler (a local class) object to implement the receive thread
@@ -78,11 +77,9 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
 
     /**
      * Synchronized list used as a transmit queue.
-     * <p>
-     * This is public to allow access from the internal class(es) when compiling
-     * with Java 1.1
      */
-    public LinkedList<DCCppMessage> xmtList = new LinkedList<>();
+    @GuardedBy ("xmtHandler")
+    protected LinkedList<DCCppMessage> xmtList = new LinkedList<>();
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Only used during system initialization")
     public DCCppOverTcpPacketizer(DCCppCommandStation cs) {
@@ -100,7 +97,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
     }
 
     /**
-     * Make connection to existing DCCppPortnetworkController object.
+     * Make connection to existing DCCppNetworkPortController object.
      *
      * @param p Port networkController for connected. Save this for a later
      *          disconnect call
@@ -116,7 +113,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
     }
 
     /**
-     * Break connection to existing LnPortnetworkController object. Once broken,
+     * Break connection to existing DCCppNetworkPortController object. Once broken,
      * attempts to send via "message" member will fail.
      *
      * @param p previously connected port
@@ -146,7 +143,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
         log.debug("queue DCCpp packet: {}", m);
         // in an atomic operation, queue the request and wake the xmit thread
         try {
-            synchronized (this) {
+            synchronized (xmtHandler) {
                 xmtList.addLast(m);
                 xmtHandler.notifyAll();
             }
@@ -167,10 +164,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
         int xmtpriority = (Thread.MAX_PRIORITY - 1 > priority ? Thread.MAX_PRIORITY - 1 : Thread.MAX_PRIORITY);
         // start the XmtHandler in a thread of its own
         Thread xmtThread;
-        synchronized (lock) {
-            if (xmtHandler == null) {
-                xmtHandler = new XmtHandler();
-            }
+        synchronized (xmtHandler) { // never null at this point
             xmtThread = new Thread(xmtHandler, "DCC++ transmit handler");
         }
         log.debug("Xmt thread starts at priority {}", xmtpriority);
@@ -191,7 +185,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
     /**
      * Captive class to handle incoming characters. This is a permanent loop,
      * looking for input messages in character form on the stream connected to
-     * the LnPortnetworkController via <code>connectPort</code>.
+     * the DCCppNetworkPortController via <code>connectPort</code>.
      */
     class RcvHandler implements Runnable {
 
@@ -314,13 +308,13 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
         @Override
         public void run() {
 
-            while (true) {   // loop permanently
+            while (!threadStopRequest) {   // loop until asked to stop
                 // any input?
                 try {
                     // get content; failure is a NoSuchElementException
                     log.debug("check for input");
                     DCCppMessage msg;
-                    synchronized (this) {
+                    synchronized (xmtHandler) {
                         msg = xmtList.removeFirst();
                     }
 
@@ -357,6 +351,32 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
 
                     log.debug("end wait");
                 }
+            }
+        }
+    }
+
+    /**
+     * Terminate the receive and transmit threads.
+     * <p>
+     * This is intended to be used only by testing subclasses.
+     */
+    public void terminateThreads() {
+        threadStopRequest = true;
+        if (xmtThread != null) {
+            xmtThread.interrupt();
+            try {
+                xmtThread.join();
+            } catch (InterruptedException ie){
+                // interrupted during cleanup.
+            }
+        }
+
+        if (rcvThread != null) {
+            rcvThread.interrupt();
+            try {
+                rcvThread.join();
+            } catch (InterruptedException ie){
+                // interrupted during cleanup.
             }
         }
     }
