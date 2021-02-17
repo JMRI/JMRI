@@ -238,6 +238,39 @@ We now have the If Then Else action with the Set turnout action.
 
 <p>
 
+<img src="images/chapter1/create_conditionalng_16.png">
+
+<p>
+
+Right-click (command-click) with the mouse on the If socket and select "Add" in the popup menu to add a new expression.
+
+<p>
+
+<img src="images/chapter1/create_conditionalng_17.png">
+
+<p>
+
+Select the category "Item" and type "Get sensor". Then click on "Create".
+
+<p>
+
+<img src="images/chapter1/create_conditionalng_18.png">
+
+<p>
+
+Create new sensor IS_1_1 and select "Active". Note also the dropdown box "is" / "is not" in the middle. Then click on "Create".
+
+<p>
+
+<img src="images/chapter1/create_conditionalng_19.png">
+
+<p>
+
+We now have a ConditionalNG which will be executed every time the sensor IS_1_1 changes its state. And if IS_1_1 is
+changed to "Active", the turnout IT_1_1 will be thrown.
+
+<p>
+
 <hr>
 
 
@@ -342,13 +375,14 @@ action and then paste the IfThenElse action back.
 Logix support reading the fast clock. LogixNG also supports reading the system clock. Lets assume you want to cut power
 to the layout during the lunch. This can easily be done by the following ConditionalNG:
 
+<pre>
 * IfThenElse
   * If: And
     * E1: Clock: System clock between 12.00 and 13.00
 	* E2: Power: Is power ON?
   * Then: Power: Turn power off
   * Else:
-
+</pre>
 
 
 </td>
