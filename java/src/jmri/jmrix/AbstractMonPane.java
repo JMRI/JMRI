@@ -9,6 +9,7 @@ import java.io.PrintStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.annotation.concurrent.GuardedBy;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -78,7 +79,7 @@ public abstract class AbstractMonPane extends JmriPanel {
     protected JToggleButton freezeButton = new JToggleButton();
     protected JScrollPane jScrollPane1 = new JScrollPane();
     protected TextAreaFIFO monTextPane = new TextAreaFIFO(MAX_LINES);
-    protected JButton startLogButton = new JButton();
+    protected JToggleButton startLogButton = new JToggleButton();
     protected JButton stopLogButton = new JButton();
     protected JCheckBox rawCheckBox = new JCheckBox();
     protected JCheckBox timeCheckBox = new JCheckBox();
@@ -451,8 +452,8 @@ public abstract class AbstractMonPane extends JmriPanel {
         }
 
         // if requested, log to a file.
-        if (logStream != null) {
-            synchronized (logStream) {
+        synchronized (this) {
+            if (logStream != null) {
                 String logLine = sb.toString();
                 if (!newline.equals("\n")) { // NOI18N
                     // have to massage the line-ends
@@ -509,7 +510,9 @@ public abstract class AbstractMonPane extends JmriPanel {
 
             for (String s : filters) {
                 if (s.equals(checkRaw)) {
-                    linesBuffer.setLength(0);
+                    synchronized (this) {
+                        linesBuffer.setLength(0);
+                    }
                     return true;
                 }
             }
@@ -543,10 +546,8 @@ public abstract class AbstractMonPane extends JmriPanel {
 
     public synchronized void clearButtonActionPerformed(java.awt.event.ActionEvent e) {
         // clear the monitoring history
-        synchronized (linesBuffer) {
-            linesBuffer.setLength(0);
-            monTextPane.setText("");
-        }
+        linesBuffer.setLength(0);
+        monTextPane.setText("");
     }
 
     public String getFilePathAndName() {
@@ -592,18 +593,19 @@ public abstract class AbstractMonPane extends JmriPanel {
                                 Bundle.getMessage("ErrorPossibleCauseCannotOpenForWrite"))),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
+        } else {
+            startLogButton.setSelected(true); // keep toggle on
         }
     }
 
     public synchronized void stopLogButtonActionPerformed(java.awt.event.ActionEvent e) {
         // stop logging by removing the stream
         if (logStream != null) {
-            synchronized (logStream) {
-                logStream.flush();
-                logStream.close();
-            }
+            logStream.flush();
+            logStream.close();
             logStream = null;
         }
+        startLogButton.setSelected(false);
     }
 
     public void openFileChooserButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -612,12 +614,14 @@ public abstract class AbstractMonPane extends JmriPanel {
 
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
-            boolean loggingNow = (logStream != null);
-            stopLogButtonActionPerformed(e);  // stop before changing file
-            //File file = logFileChooser.getSelectedFile();
-            // if we were currently logging, start the new file
-            if (loggingNow) {
-                startLogButtonActionPerformed(e);
+            synchronized (this) {
+                boolean loggingNow = (logStream != null);
+                stopLogButtonActionPerformed(e);  // stop before changing file
+                //File file = logFileChooser.getSelectedFile();
+                // if we were currently logging, start the new file
+                if (loggingNow) {
+                    startLogButtonActionPerformed(e);
+                }
             }
         }
     }
@@ -648,11 +652,13 @@ public abstract class AbstractMonPane extends JmriPanel {
         filterField.setText(text);
     }
 
+    @GuardedBy("this")
     private volatile PrintStream logStream = null;
 
     // to get a time string
-    private DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");
+    private final DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");
 
+    @GuardedBy("this")
     protected StringBuffer linesBuffer = new StringBuffer();
     private static final int MAX_LINES = 500;
 

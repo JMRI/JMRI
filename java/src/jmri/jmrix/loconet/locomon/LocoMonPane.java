@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * LocoNet Monitor pane displaying (and logging) LocoNet messages on a given TrafficController.
- * TODO display messages sent while using the hexfile Simulator.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2010
  */
