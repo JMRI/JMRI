@@ -426,7 +426,21 @@ public interface Base extends PropertyChangeProvider {
      * @param writer the stream to print the tree to
      * @param indent the indentation of each level
      */
-    public void printTree(PrintWriter writer, String indent);
+    public default void printTree(PrintWriter writer, String indent) {
+        printTree(new PrintTreeSettings(), writer, indent);
+    }
+    
+    /**
+     * Print the tree to a stream.
+     * 
+     * @param settings settings for what to print
+     * @param writer the stream to print the tree to
+     * @param indent the indentation of each level
+     */
+    public void printTree(
+            PrintTreeSettings settings,
+            PrintWriter writer,
+            String indent);
     
     /**
      * Print the tree to a stream.
@@ -435,17 +449,42 @@ public interface Base extends PropertyChangeProvider {
      * @param writer the stream to print the tree to
      * @param indent the indentation of each level
      */
-    public void printTree(Locale locale, PrintWriter writer, String indent);
+    public default void printTree(
+            Locale locale,
+            PrintWriter writer,
+            String indent) {
+        printTree(new PrintTreeSettings(), locale, writer, indent);
+    }
     
     /**
      * Print the tree to a stream.
      * 
+     * @param settings settings for what to print
+     * @param locale The locale to be used
+     * @param writer the stream to print the tree to
+     * @param indent the indentation of each level
+     */
+    public void printTree(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String indent);
+    
+    /**
+     * Print the tree to a stream.
+     * 
+     * @param settings settings for what to print
      * @param locale The locale to be used
      * @param writer the stream to print the tree to
      * @param indent the indentation of each level
      * @param currentIndent the current indentation
      */
-    public void printTree(Locale locale, PrintWriter writer, String indent, String currentIndent);
+    public void printTree(
+            PrintTreeSettings settings,
+            Locale locale,
+            PrintWriter writer,
+            String indent,
+            String currentIndent);
     
     /**
      * Request a call-back when a bound property changes. Bound properties are
@@ -540,6 +579,13 @@ public interface Base extends PropertyChangeProvider {
     
     public interface RunnableWithBase {
         public void run(@Nonnull Base b);
+    }
+    
+    
+    public static class PrintTreeSettings {
+        public boolean _printErrorHandling = true;
+        public boolean _printNotConnectedSockets = true;
+        public boolean _printLocalVariables = true;
     }
     
 }

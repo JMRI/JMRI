@@ -4,11 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -75,7 +71,9 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
     
     private static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.logixng.LogixNGBundle");
-
+    
+    JTextArea _textContent;
+    
     /**
      * Create a AbstractLogixNGTableAction instance.
      *
@@ -111,6 +109,10 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     protected abstract void deleteBean(E bean);
     
     protected abstract String getBeanText(E bean);
+    
+    protected JPanel getSettingsPanel() {
+        return null;
+    }
 
     // ------------ Methods for LogixNG Table Window ------------
 
@@ -684,20 +686,26 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         Runnable t = new Runnable() {
             @Override
             public void run() {
-                JPanel panel5 = makeAddFrame("TitleCopyLogixNG", "Copy");    // NOI18N
-                // Create bean
-                JButton create = new JButton(Bundle.getMessage("ButtonCopy"));  // NOI18N
-                panel5.add(create);
-                create.addActionListener((ActionEvent e) -> {
-                    JOptionPane.showMessageDialog(null, "Copy is not implemented yet.", "Error", JOptionPane.ERROR_MESSAGE);
-//                    copyLogixNGPressed(e);
-                });
-                addLogixNGFrame.pack();
-                addLogixNGFrame.setVisible(true);
-                _autoSystemName.setSelected(false);
-                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
-                    _autoSystemName.setSelected(prefMgr.getCheckboxPreferenceState(systemNameAuto, true));
-                });
+                log.error("Copy LogixNG is not implemented yet");
+                
+                // This may or may not work. It's not tested yet.
+                // Disable for now.
+                if (1==0) {
+                    JPanel panel5 = makeAddFrame("TitleCopyLogixNG", "Copy");    // NOI18N
+                    // Create bean
+                    JButton create = new JButton(Bundle.getMessage("ButtonCopy"));  // NOI18N
+                    panel5.add(create);
+                    create.addActionListener((ActionEvent e) -> {
+                        JOptionPane.showMessageDialog(null, "Copy is not implemented yet.", "Error", JOptionPane.ERROR_MESSAGE);
+    //                    copyLogixNGPressed(e);
+                    });
+                    addLogixNGFrame.pack();
+                    addLogixNGFrame.setVisible(true);
+                    _autoSystemName.setSelected(false);
+                    InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+                        _autoSystemName.setSelected(prefMgr.getCheckboxPreferenceState(systemNameAuto, true));
+                    });
+                }
             }
         };
         log.debug("copyPressed started for {}", sName);  // NOI18N
@@ -1163,12 +1171,27 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     }
 
     /**
+     * Update text in the browser window.
+     */
+    void updateBrowserText() {
+        if (_textContent != null) {
+            _textContent.setText(getBeanText(_curNamedBean));
+        }
+    }
+    
+    /**
      * Create and initialize the conditionalNGs browser window.
      */
     void makeBrowserWindow() {
         JmriJFrame condBrowserFrame = new JmriJFrame(Bundle.getMessage("BrowserTitle"), false, true);   // NOI18N
         condBrowserFrame.addHelpMenu("package.jmri.jmrit.beantable.LogixAddEdit", true);            // NOI18N
-
+        
+        condBrowserFrame.addWindowListener(new WindowAdapter() {
+            public void windowClosed(WindowEvent e) {
+                _textContent = null;
+            }
+        });
+        
         Container contentPane = condBrowserFrame.getContentPane();
         contentPane.setLayout(new BorderLayout());
 
@@ -1183,8 +1206,8 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         contentPane.add(topPanel, BorderLayout.NORTH);
 
         // Build the conditionalNGs listing
-        JTextArea textContent = new JTextArea(this.getBeanText(_curNamedBean));
-        JScrollPane scrollPane = new JScrollPane(textContent);
+        _textContent = new JTextArea(this.getBeanText(_curNamedBean));
+        JScrollPane scrollPane = new JScrollPane(_textContent);
         contentPane.add(scrollPane);
 
         JPanel bottomPanel = new JPanel();
@@ -1197,6 +1220,10 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                     Bundle.getMessage("BrowserHelpTitle"),  // NOI18N
                     JOptionPane.INFORMATION_MESSAGE);
         });
+        
+        JPanel settingsPanel = getSettingsPanel();
+        if (settingsPanel != null) bottomPanel.add(settingsPanel, BorderLayout.CENTER);;
+        
         JButton saveBrowse = new JButton(Bundle.getMessage("BrowserSaveButton"));   // NOI18N
         saveBrowse.setToolTipText(Bundle.getMessage("BrowserSaveButtonHint"));      // NOI18N
         bottomPanel.add(saveBrowse, BorderLayout.EAST);

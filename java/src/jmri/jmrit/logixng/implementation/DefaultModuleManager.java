@@ -6,6 +6,7 @@ import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.Base.PrintTreeSettings;
 import jmri.jmrit.logixng.Module;
 import jmri.managers.AbstractManager;
 import jmri.util.*;
@@ -139,15 +140,15 @@ public class DefaultModuleManager extends AbstractManager<Module>
     
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintWriter writer, String indent) {
-        printTree(Locale.getDefault(), writer, indent);
+    public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent) {
+        printTree(settings, Locale.getDefault(), writer, indent);
     }
     
     /** {@inheritDoc} */
     @Override
-    public void printTree(Locale locale, PrintWriter writer, String indent) {
+    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent) {
         for (Module module : getNamedBeanSet()) {
-            module.printTree(locale, writer, indent, "");
+            module.printTree(settings, locale, writer, indent, "");
             writer.println();
         }
         InstanceManager.getDefault(ModuleManager.class);

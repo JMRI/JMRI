@@ -190,22 +190,22 @@ public class DefaultModule extends AbstractBase
 */    
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintWriter writer, String indent) {
-        printTree(Locale.getDefault(), writer, indent, "");
+    public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent) {
+        printTree(settings, Locale.getDefault(), writer, indent, "");
     }
     
     /** {@inheritDoc} */
     @Override
-    public void printTree(Locale locale, PrintWriter writer, String indent) {
-        printTree(locale, writer, indent, "");
+    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent) {
+        printTree(settings, locale, writer, indent, "");
     }
     
     /** {@inheritDoc} */
     @Override
-    public void printTree(Locale locale, PrintWriter writer, String indent, String currentIndent) {
+    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, String currentIndent) {
         printTreeRow(locale, writer, currentIndent);
 
-        _femaleRootSocket.printTree(locale, writer, indent, currentIndent+indent);
+        _femaleRootSocket.printTree(settings, locale, writer, indent, currentIndent+indent);
     }
 /*    
     @Override

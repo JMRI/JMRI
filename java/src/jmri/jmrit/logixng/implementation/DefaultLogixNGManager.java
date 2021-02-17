@@ -5,6 +5,7 @@ import java.util.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.Base.PrintTreeSettings;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.Stack;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
@@ -195,18 +196,18 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintWriter writer, String indent) {
-        printTree(Locale.getDefault(), writer, indent);
+    public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent) {
+        printTree(settings, Locale.getDefault(), writer, indent);
     }
     
     /** {@inheritDoc} */
     @Override
-    public void printTree(Locale locale, PrintWriter writer, String indent) {
+    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent) {
         for (LogixNG logixNG : getNamedBeanSet()) {
-            logixNG.printTree(locale, writer, indent, "");
+            logixNG.printTree(settings, locale, writer, indent, "");
             writer.println();
         }
-        InstanceManager.getDefault(ModuleManager.class).printTree(locale, writer, indent);
+        InstanceManager.getDefault(ModuleManager.class).printTree(settings, locale, writer, indent);
         InstanceManager.getDefault(NamedTableManager.class).printTree(locale, writer, indent);
     }
     

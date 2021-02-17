@@ -380,23 +380,23 @@ public class DefaultLogixNG extends AbstractNamedBean
     
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintWriter writer, String indent) {
-        printTree(Locale.getDefault(), writer, indent, "");
+    public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent) {
+        printTree(settings, Locale.getDefault(), writer, indent, "");
     }
     
     /** {@inheritDoc} */
     @Override
-    public void printTree(Locale locale, PrintWriter writer, String indent) {
-        printTree(locale, writer, indent, "");
+    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent) {
+        printTree(settings, locale, writer, indent, "");
     }
     
     /** {@inheritDoc} */
     @Override
-    public void printTree(Locale locale, PrintWriter writer, String indent, String currentIndent) {
+    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, String currentIndent) {
         printTreeRow(locale, writer, currentIndent);
         
         for (int i=0; i < this.getNumConditionalNGs(); i++) {
-            getConditionalNG(i).printTree(locale, writer, indent, currentIndent+indent);
+            getConditionalNG(i).printTree(settings, locale, writer, indent, currentIndent+indent);
 //            writer.println();
         }
     }

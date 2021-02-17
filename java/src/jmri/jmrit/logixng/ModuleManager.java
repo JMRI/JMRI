@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.util.Locale;
 
 import jmri.Manager;
+import jmri.jmrit.logixng.Base.PrintTreeSettings;
 
 /**
  * Manager for LogixNG modules
@@ -100,19 +101,21 @@ public interface ModuleManager extends Manager<Module> {
     /**
      * Print the tree to a stream.
      * 
+     * @param settings settings for what to print
      * @param writer the stream to print the tree to
      * @param indent the indentation of each level
      */
-    public void printTree(PrintWriter writer, String indent);
+    public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent);
     
     /**
      * Print the tree to a stream.
      * 
+     * @param settings settings for what to print
      * @param locale The locale to be used
      * @param writer the stream to print the tree to
      * @param indent the indentation of each level
      */
-    public void printTree(Locale locale, PrintWriter writer, String indent);
+    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent);
     
     /**
      * Test if parameter is a properly formatted system name.

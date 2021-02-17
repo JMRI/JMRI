@@ -171,11 +171,12 @@ public abstract class AbstractMaleSocket implements MaleSocket {
      * it's embedding an other AbstractMaleSocket. An example of this is the
      * AbstractDebuggerMaleSocket which embeds other male sockets.
      * 
+     * @param settings settings for what to print
      * @param locale The locale to be used
      * @param writer the stream to print the tree to
      * @param currentIndent the current indentation
      */
-    protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {
+    protected void printTreeRow(PrintTreeSettings settings, Locale locale, PrintWriter writer, String currentIndent) {
         if (!(getObject() instanceof AbstractMaleSocket)) {
             writer.append(currentIndent);
             writer.append(getLongDescription(locale));
@@ -189,8 +190,11 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                 writer.append(" ::: ");
                 writer.append(getComment());
             }
-            writer.append(" ::: ");
-            writer.append(getErrorHandlingType().toString());
+            
+            if (settings._printErrorHandling) {
+                writer.append(" ::: ");
+                writer.append(getErrorHandlingType().toString());
+            }
             if (!isEnabled()) {
                 writer.append(" ::: ");
                 writer.append(Bundle.getMessage("Disabled"));
@@ -218,14 +222,14 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintWriter writer, String indent) {
-        printTree(Locale.getDefault(), writer, indent, "");
+    public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent) {
+        printTree(settings, Locale.getDefault(), writer, indent, "");
     }
     
     /** {@inheritDoc} */
     @Override
-    public void printTree(Locale locale, PrintWriter writer, String indent) {
-        printTree(locale, writer, indent, "");
+    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent) {
+        printTree(settings, locale, writer, indent, "");
     }
     
     /**
@@ -237,17 +241,20 @@ public abstract class AbstractMaleSocket implements MaleSocket {
      * @param currentIndent the current indentation
      */
     @Override
-    public void printTree(Locale locale, PrintWriter writer, String indent, String currentIndent) {
-        printTreeRow(locale, writer, currentIndent);
-        for (VariableData localVariable : _localVariables) {
-            printLocalVariable(locale, writer, currentIndent, localVariable);
+    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, String currentIndent) {
+        printTreeRow(settings, locale, writer, currentIndent);
+        
+        if (settings._printLocalVariables) {
+            for (VariableData localVariable : _localVariables) {
+                printLocalVariable(locale, writer, currentIndent, localVariable);
+            }
         }
         
         if (getObject() instanceof MaleSocket) {
-            getObject().printTree(locale, writer, indent, currentIndent);
+            getObject().printTree(settings, locale, writer, indent, currentIndent);
         } else {
             for (int i=0; i < getChildCount(); i++) {
-                getChild(i).printTree(locale, writer, indent, currentIndent+indent);
+                getChild(i).printTree(settings, locale, writer, indent, currentIndent+indent);
             }
         }
     }

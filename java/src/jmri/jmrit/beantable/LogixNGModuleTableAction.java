@@ -79,6 +79,8 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
 
     JComboBox<FemaleSocketManager.SocketType> _femaleSocketType = new JComboBox<>();
     
+    private final Base.PrintTreeSettings _printTreeSettings = new Base.PrintTreeSettings();
+    
     /**
      * Create a LogixNGTableAction instance.
      *
@@ -147,8 +149,45 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
     @Override
     protected String getBeanText(Module bean) {
         StringWriter writer = new StringWriter();
-        _curNamedBean.printTree(new PrintWriter(writer), "    ");
+        _curNamedBean.printTree(_printTreeSettings, new PrintWriter(writer), "    ");
         return writer.toString();
+    }
+    
+    @Override
+    protected JPanel getSettingsPanel() {
+        JPanel checkBoxPanel = new JPanel();
+        
+        JCheckBox printErrorHandling = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintErrorHandling"));
+        printErrorHandling.setSelected(_printTreeSettings._printErrorHandling);
+        printErrorHandling.addChangeListener((event) -> {
+            if (_printTreeSettings._printErrorHandling != printErrorHandling.isSelected()) {
+                _printTreeSettings._printErrorHandling = printErrorHandling.isSelected();
+                updateBrowserText();
+            }
+        });
+        checkBoxPanel.add(printErrorHandling);
+        
+        JCheckBox printNotConnectedSockets = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintNotConnectedSocket"));
+        printNotConnectedSockets.setSelected(_printTreeSettings._printNotConnectedSockets);
+        printNotConnectedSockets.addChangeListener((event) -> {
+            if (_printTreeSettings._printNotConnectedSockets != printNotConnectedSockets.isSelected()) {
+                _printTreeSettings._printNotConnectedSockets = printNotConnectedSockets.isSelected();
+                updateBrowserText();
+            }
+        });
+        checkBoxPanel.add(printNotConnectedSockets);
+        
+        JCheckBox printLocalVariables = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintLocalVariables"));
+        printLocalVariables.setSelected(_printTreeSettings._printLocalVariables);
+        printLocalVariables.addChangeListener((event) -> {
+            if (_printTreeSettings._printLocalVariables != printLocalVariables.isSelected()) {
+                _printTreeSettings._printLocalVariables = printLocalVariables.isSelected();
+                updateBrowserText();
+            }
+        });
+        checkBoxPanel.add(printLocalVariables);
+        
+        return checkBoxPanel;
     }
     
     /**

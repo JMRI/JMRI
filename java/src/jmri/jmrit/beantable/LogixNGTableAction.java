@@ -6,16 +6,14 @@ import java.awt.event.ItemEvent;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.util.JmriJFrame;
 
 
+import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
@@ -46,6 +44,8 @@ import jmri.jmrit.logixng.tools.swing.LogixNGEditor;
  */
 public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
 
+    private final Base.PrintTreeSettings _printTreeSettings = new Base.PrintTreeSettings();
+    
     /**
      * Create a LogixNGTableAction instance.
      *
@@ -117,8 +117,45 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
     @Override
     protected String getBeanText(LogixNG e) {
         StringWriter writer = new StringWriter();
-        _curNamedBean.printTree(new PrintWriter(writer), "    ");
+        _curNamedBean.printTree(_printTreeSettings, new PrintWriter(writer), "    ");
         return writer.toString();
+    }
+    
+    @Override
+    protected JPanel getSettingsPanel() {
+        JPanel checkBoxPanel = new JPanel();
+        
+        JCheckBox printErrorHandling = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintErrorHandling"));
+        printErrorHandling.setSelected(_printTreeSettings._printErrorHandling);
+        printErrorHandling.addChangeListener((event) -> {
+            if (_printTreeSettings._printErrorHandling != printErrorHandling.isSelected()) {
+                _printTreeSettings._printErrorHandling = printErrorHandling.isSelected();
+                updateBrowserText();
+            }
+        });
+        checkBoxPanel.add(printErrorHandling);
+        
+        JCheckBox printNotConnectedSockets = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintNotConnectedSocket"));
+        printNotConnectedSockets.setSelected(_printTreeSettings._printNotConnectedSockets);
+        printNotConnectedSockets.addChangeListener((event) -> {
+            if (_printTreeSettings._printNotConnectedSockets != printNotConnectedSockets.isSelected()) {
+                _printTreeSettings._printNotConnectedSockets = printNotConnectedSockets.isSelected();
+                updateBrowserText();
+            }
+        });
+        checkBoxPanel.add(printNotConnectedSockets);
+        
+        JCheckBox printLocalVariables = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintLocalVariables"));
+        printLocalVariables.setSelected(_printTreeSettings._printLocalVariables);
+        printLocalVariables.addChangeListener((event) -> {
+            if (_printTreeSettings._printLocalVariables != printLocalVariables.isSelected()) {
+                _printTreeSettings._printLocalVariables = printLocalVariables.isSelected();
+                updateBrowserText();
+            }
+        });
+        checkBoxPanel.add(printLocalVariables);
+        
+        return checkBoxPanel;
     }
     
     /**

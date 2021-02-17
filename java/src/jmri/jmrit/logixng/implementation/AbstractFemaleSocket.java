@@ -330,27 +330,27 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintWriter writer, String indent) {
+    public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent) {
         throw new UnsupportedOperationException("Not supported.");
     }
     
     /** {@inheritDoc} */
     @Override
-    public void printTree(Locale locale, PrintWriter writer, String indent) {
+    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent) {
         throw new UnsupportedOperationException("Not supported.");
     }
     
     /** {@inheritDoc} */
     @Override
-    public void printTree(Locale locale, PrintWriter writer, String indent, String currentIndent) {
+    public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, String currentIndent) {
         printTreeRow(locale, writer, currentIndent);
 
         if (isConnected()) {
-            getConnectedSocket().printTree(locale, writer, indent, currentIndent+indent);
+            getConnectedSocket().printTree(settings, locale, writer, indent, currentIndent+indent);
         } else {
             writer.append(currentIndent);
             writer.append(indent);
-            writer.append("Socket not connected");
+            if (settings._printNotConnectedSockets) writer.append("Socket not connected");
             writer.println();
         }
     }

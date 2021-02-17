@@ -613,17 +613,17 @@ public abstract class FemaleSocketTestBase {
         }
 */
         @Override
-        public void printTree(PrintWriter writer, String indent) {
+        public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent) {
             throw new UnsupportedOperationException("Not supported.");
         }
 
         @Override
-        public void printTree(Locale locale, PrintWriter writer, String indent) {
+        public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent) {
             throw new UnsupportedOperationException("Not supported.");
         }
 
         @Override
-        public void printTree(Locale locale, PrintWriter writer, String indent, String currentIndent) {
+        public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, String currentIndent) {
             throw new UnsupportedOperationException("Not supported.");
         }
 
