@@ -86,7 +86,7 @@ public class CbusSensor extends AbstractSensor implements CanListener, CbusEvent
      * We broadcast that to all listeners by putting it out on CBUS. 
      * In turn, the code in this class
      * should use setOwnState to handle internal sets and bean notifies.
-     * Unknown / intermittent states do not send a message to CBUS,
+     * Unknown / Inconsistent states do not send a message to CBUS,
      * but do update sensor state.
      * {@inheritDoc}
      */
