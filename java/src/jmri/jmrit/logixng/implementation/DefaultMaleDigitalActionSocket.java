@@ -78,9 +78,9 @@ public class DefaultMaleDigitalActionSocket
             conditionalNG.getSymbolTable().createSymbols(_localVariables);
             _action.execute();
         } catch (JmriException e) {
-            handleError(this, Bundle.getMessage("ExceptionExecuteAction", e), e, log);
+            handleError(this, Bundle.getMessage("ExceptionExecuteAction", e.getLocalizedMessage()), e, log);
         } catch (RuntimeException e) {
-            handleError(this, Bundle.getMessage("ExceptionExecuteAction", e), e, log);
+            handleError(this, Bundle.getMessage("ExceptionExecuteAction", e.getLocalizedMessage()), e, log);
         }
 
         conditionalNG.getStack().setCount(currentStackPos);

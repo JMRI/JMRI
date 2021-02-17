@@ -80,9 +80,9 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
             conditionalNG.getSymbolTable().createSymbols(_localVariables);
             _action.setValue(value);
         } catch (JmriException e) {
-            handleError(this, Bundle.getMessage("ExceptionSetValue", e), e, log);
+            handleError(this, Bundle.getMessage("ExceptionSetValue", e.getLocalizedMessage()), e, log);
         } catch (RuntimeException e) {
-            handleError(this, Bundle.getMessage("ExceptionSetValue", e), e, log);
+            handleError(this, Bundle.getMessage("ExceptionSetValue", e.getLocalizedMessage()), e, log);
         }
         
         conditionalNG.getStack().setCount(currentStackPos);

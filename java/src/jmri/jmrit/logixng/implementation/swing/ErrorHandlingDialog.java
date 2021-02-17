@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.LogixNG_Manager;
 public class ErrorHandlingDialog {
     
     private Base _item;
-    private JDialog _selectItemTypeDialog;
+    private JDialog _errorDialog;
     
     private final JCheckBox _disableConditionalNGCheckBox =
             new JCheckBox(Bundle.getMessage("ErrorHandlingDialog_DisableConditionalNG"));   // NOI18N
@@ -33,13 +33,12 @@ public class ErrorHandlingDialog {
         
         _item = item;
         
-        _selectItemTypeDialog  = new JDialog(
+        _errorDialog = new JDialog(
                 (JDialog)null,
                 Bundle.getMessage("ErrorHandlingDialog_Title"),
                 true);
         
-        
-        Container contentPanel = _selectItemTypeDialog.getContentPane();
+        Container contentPanel = _errorDialog.getContentPane();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
         
         contentPanel.add(new JLabel(Bundle.getMessage(
@@ -58,7 +57,7 @@ public class ErrorHandlingDialog {
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
         
         contentPanel.add(panel3);
-
+        
         // set up create and cancel buttons
         JPanel panel5 = new JPanel();
         panel5.setLayout(new FlowLayout());
@@ -81,7 +80,7 @@ public class ErrorHandlingDialog {
 //        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
 //        continueButton.setToolTipText("CancelLogixButtonHint");      // NOI18N
         
-        _selectItemTypeDialog.addWindowListener(new java.awt.event.WindowAdapter() {
+        _errorDialog.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 continuePressed(null);
@@ -102,9 +101,9 @@ public class ErrorHandlingDialog {
         contentPanel.add(panel5);
         
 //        addLogixNGFrame.setLocationRelativeTo(component);
-        _selectItemTypeDialog.setLocationRelativeTo(null);
-        _selectItemTypeDialog.pack();
-        _selectItemTypeDialog.setVisible(true);
+        _errorDialog.setLocationRelativeTo(null);
+        _errorDialog.pack();
+        _errorDialog.setVisible(true);
         
         return _abortExecution;
     }
@@ -122,17 +121,17 @@ public class ErrorHandlingDialog {
     }
     
     private void abortPressed(ActionEvent e) {
-        _selectItemTypeDialog.setVisible(false);
-        _selectItemTypeDialog.dispose();
-        _selectItemTypeDialog = null;
+        _errorDialog.setVisible(false);
+        _errorDialog.dispose();
+        _errorDialog = null;
         _abortExecution = true;
         handleCheckBoxes();
     }
     
     private void continuePressed(ActionEvent e) {
-        _selectItemTypeDialog.setVisible(false);
-        _selectItemTypeDialog.dispose();
-        _selectItemTypeDialog = null;
+        _errorDialog.setVisible(false);
+        _errorDialog.dispose();
+        _errorDialog = null;
         handleCheckBoxes();
     }
     

@@ -108,9 +108,9 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
             conditionalNG.getSymbolTable().createSymbols(_localVariables);
             result = internalEvaluate();
         } catch (JmriException e) {
-            handleError(this, Bundle.getMessage("ExceptionEvaluate", e), e, log);
+            handleError(this, Bundle.getMessage("ExceptionEvaluate", e.getLocalizedMessage()), e, log);
         } catch (RuntimeException e) {
-            handleError(this, Bundle.getMessage("ExceptionEvaluate", e), e, log);
+            handleError(this, Bundle.getMessage("ExceptionEvaluate", e.getLocalizedMessage()), e, log);
         }
         
         conditionalNG.getStack().setCount(currentStackPos);

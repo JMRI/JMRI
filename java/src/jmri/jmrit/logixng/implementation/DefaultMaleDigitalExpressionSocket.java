@@ -108,10 +108,10 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
             conditionalNG.getSymbolTable().createSymbols(_localVariables);
             lastEvaluationResult = _expression.evaluate();
         } catch (JmriException e) {
-            handleError(this, Bundle.getMessage("ExceptionEvaluateExpression", e), e, log);
+            handleError(this, Bundle.getMessage("ExceptionEvaluateExpression", e.getLocalizedMessage()), e, log);
             lastEvaluationResult = false;
         } catch (RuntimeException e) {
-            handleError(this, Bundle.getMessage("ExceptionEvaluateExpression", e), e, log);
+            handleError(this, Bundle.getMessage("ExceptionEvaluateExpression", e.getLocalizedMessage()), e, log);
             lastEvaluationResult = false;
         }
         
