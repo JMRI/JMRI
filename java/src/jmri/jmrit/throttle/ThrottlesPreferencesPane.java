@@ -61,96 +61,89 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
 
     private void initComponents() {
 
-        GridBagConstraints gridBagConstraints13 = new GridBagConstraints();
-        gridBagConstraints13.gridx = 0;
-        gridBagConstraints13.insets = new Insets(2, 23, 2, 2);
-        gridBagConstraints13.ipady = 16;
-        gridBagConstraints13.anchor = GridBagConstraints.WEST;
-        gridBagConstraints13.gridy = 99;
-
         GridBagConstraints gridBagConstraints19 = new GridBagConstraints();
         gridBagConstraints19.gridx = 0;
         gridBagConstraints19.insets = new Insets(2, 5, 2, 2);
-        gridBagConstraints19.anchor = GridBagConstraints.WEST;
-        gridBagConstraints19.gridy = 15;
+        gridBagConstraints19.anchor = GridBagConstraints.SOUTHWEST;
+        gridBagConstraints19.gridy = 99;
         
         GridBagConstraints gridBagConstraints18 = new GridBagConstraints();
         gridBagConstraints18.gridx = 0;
         gridBagConstraints18.insets = new Insets(2, 5, 2, 2);
-        gridBagConstraints18.anchor = GridBagConstraints.WEST;
+        gridBagConstraints18.anchor = GridBagConstraints.NORTHWEST;
         gridBagConstraints18.gridy = 14;
         
         GridBagConstraints gridBagConstraints17 = new GridBagConstraints();
         gridBagConstraints17.gridx = 0;
         gridBagConstraints17.insets = new Insets(2, 5, 2, 2);
-        gridBagConstraints17.anchor = GridBagConstraints.WEST;
+        gridBagConstraints17.anchor = GridBagConstraints.NORTHWEST;
         gridBagConstraints17.gridy = 13;
         
         GridBagConstraints gridBagConstraints16 = new GridBagConstraints();
         gridBagConstraints16.gridx = 0;
         gridBagConstraints16.insets = new Insets(2, 23, 2, 2);
-        gridBagConstraints16.anchor = GridBagConstraints.WEST;
+        gridBagConstraints16.anchor = GridBagConstraints.NORTHWEST;
         gridBagConstraints16.gridy = 12;
 
         GridBagConstraints gridBagConstraints15 = new GridBagConstraints();
         gridBagConstraints15.gridx = 0;
         gridBagConstraints15.insets = new Insets(2, 23, 2, 2);
-        gridBagConstraints15.anchor = GridBagConstraints.WEST;
+        gridBagConstraints15.anchor = GridBagConstraints.NORTHWEST;
         gridBagConstraints15.gridy = 11;
         
         GridBagConstraints gridBagConstraints14 = new GridBagConstraints();
         gridBagConstraints14.gridx = 0;
         gridBagConstraints14.insets = new Insets(2, 23, 2, 2);
-        gridBagConstraints14.anchor = GridBagConstraints.WEST;
+        gridBagConstraints14.anchor = GridBagConstraints.NORTHWEST;
         gridBagConstraints14.gridy = 10;
 
         GridBagConstraints gridBagConstraints12 = new GridBagConstraints();
         gridBagConstraints12.gridx = 0;
         gridBagConstraints12.insets = new Insets(2, 23, 2, 2);
-        gridBagConstraints12.anchor = GridBagConstraints.WEST;
+        gridBagConstraints12.anchor = GridBagConstraints.NORTHWEST;
         gridBagConstraints12.gridy = 9;
 
         GridBagConstraints gridBagConstraints11 = new GridBagConstraints();
         gridBagConstraints11.gridx = 0;
         gridBagConstraints11.insets = new Insets(2, 23, 2, 2);
-        gridBagConstraints11.anchor = GridBagConstraints.WEST;
+        gridBagConstraints11.anchor = GridBagConstraints.NORTHWEST;
         gridBagConstraints11.gridy = 7;
 
         GridBagConstraints gridBagConstraints6 = new GridBagConstraints();
         gridBagConstraints6.insets = new Insets(2, 23, 2, 2);
         gridBagConstraints6.gridy = 5;
-        gridBagConstraints6.anchor = GridBagConstraints.WEST;
+        gridBagConstraints6.anchor = GridBagConstraints.NORTHWEST;
         gridBagConstraints6.gridx = 0;
 
         GridBagConstraints gridBagConstraints10 = new GridBagConstraints();
         gridBagConstraints10.insets = new Insets(2, 43, 2, 2);
         gridBagConstraints10.gridy = 6;
-        gridBagConstraints10.anchor = GridBagConstraints.WEST;
+        gridBagConstraints10.anchor = GridBagConstraints.NORTHWEST;
         gridBagConstraints10.gridx = 0;
         GridBagConstraints gridBagConstraints5 = new GridBagConstraints();
         gridBagConstraints5.insets = new Insets(2, 23, 2, 2);
         gridBagConstraints5.gridy = 4;
-        gridBagConstraints5.anchor = GridBagConstraints.WEST;
+        gridBagConstraints5.anchor = GridBagConstraints.NORTHWEST;
         gridBagConstraints5.gridx = 0;
         GridBagConstraints gridBagConstraints4 = new GridBagConstraints();
         gridBagConstraints4.insets = new Insets(2, 43, 2, 2);
         gridBagConstraints4.gridy = 3;
-        gridBagConstraints4.anchor = GridBagConstraints.WEST;
+        gridBagConstraints4.anchor = GridBagConstraints.NORTHWEST;
         gridBagConstraints4.gridx = 0;
         GridBagConstraints gridBagConstraints3 = new GridBagConstraints();
         gridBagConstraints3.insets = new Insets(2, 23, 2, 2);
         gridBagConstraints3.gridy = 2;
-        gridBagConstraints3.anchor = GridBagConstraints.WEST;
+        gridBagConstraints3.anchor = GridBagConstraints.NORTHWEST;
         gridBagConstraints3.gridx = 0;
         GridBagConstraints gridBagConstraints2 = new GridBagConstraints();
         gridBagConstraints2.insets = new Insets(2, 23, 2, 2);
         gridBagConstraints2.gridy = 1;
-        gridBagConstraints2.anchor = GridBagConstraints.WEST;
+        gridBagConstraints2.anchor = GridBagConstraints.NORTHWEST;
         gridBagConstraints2.gridx = 0;
         GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
         gridBagConstraints1.insets = new Insets(8, 5, 2, 2);
         gridBagConstraints1.gridy = 0;
-        gridBagConstraints1.anchor = GridBagConstraints.WEST;
+        gridBagConstraints1.anchor = GridBagConstraints.NORTHWEST;
         gridBagConstraints1.gridx = 0;
 
         // last line: buttons
@@ -161,7 +154,7 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         GridBagConstraints gridBagConstraints8 = new GridBagConstraints();
         gridBagConstraints8.insets = new Insets(5, 3, 5, 2);
         gridBagConstraints8.gridy = 100;
-        gridBagConstraints8.anchor = GridBagConstraints.WEST;
+        gridBagConstraints8.anchor = GridBagConstraints.SOUTHWEST;
         gridBagConstraints8.gridx = 0;
         GridBagConstraints gridBagConstraints7 = new GridBagConstraints();
         gridBagConstraints7.insets = new Insets(5, 3, 5, 2);
