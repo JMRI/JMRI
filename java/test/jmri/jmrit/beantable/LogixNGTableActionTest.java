@@ -461,6 +461,8 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         new JComboBoxOperator(addItemDialog, 1).setSelectedItem(ActionTurnout.TurnoutState.Thrown);
         new JButtonOperator(addItemDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
         
+        JUnitUtil.waitFor(() -> {return conditionalNG.getChild(0).getConnectedSocket().getChild(1).getConnectedSocket() != null;});
+        
         Assert.assertTrue("Is connected", conditionalNG.getChild(0).isConnected());
         Assert.assertEquals("Num childs are correct", 3, conditionalNG.getChild(0).getConnectedSocket().getChildCount());
         Assert.assertEquals("Expression is correct", "Set turnout IT1 to state Thrown",

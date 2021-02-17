@@ -63,6 +63,7 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
         JUnitUtil.waitFor(() -> {return action.getLight() != null;});
+        JUnitUtil.waitFor(() -> {return ActionLight.LightState.Off == action.getBeanState();});
         
         Assert.assertEquals("IL1", action.getLight().getBean().getSystemName());
         Assert.assertEquals(ActionLight.LightState.Off, action.getBeanState());

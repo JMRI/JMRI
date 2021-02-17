@@ -168,6 +168,7 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
     public void testPropertyChangeListener4() throws SocketAlreadyConnectedException {
     }
 */    
+    @Ignore
     @Test
     @Override
     public void testIsActive() {
@@ -176,6 +177,7 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
 //        JUnitAppender.suppressErrorMessage("getConditionalNG() return null");
     }
     
+    @Ignore
     @Test
     @Override
     public void testMaleSocketIsActive() {
