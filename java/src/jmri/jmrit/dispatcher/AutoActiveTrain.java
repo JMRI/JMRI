@@ -15,6 +15,7 @@ import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.ThrottleListener;
 import jmri.Timebase;
+import jmri.Turnout;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.roster.RosterEntry;
 import org.slf4j.Logger;
@@ -388,6 +389,7 @@ public class AutoActiveTrain implements ThrottleListener {
     private boolean _stoppingBySensor = false;
     private Sensor _stopSensor = null;
     private PropertyChangeListener _stopSensorListener = null;
+    private PropertyChangeListener _turnoutStateListener = null;
     private boolean _stoppingForStopSignal = false;    // if true, stopping because of signal appearance
     private boolean _stoppingByBlockOccupancy = false;    // if true, stop when _stoppingBlock goes UNOCCUPIED
     private boolean _stoppingUsingSpeedProfile = false;     // if true, using the speed profile against the roster entry to bring the loco to a stop in a specific distance
@@ -877,35 +879,41 @@ public class AutoActiveTrain implements ThrottleListener {
 
     private void setSpeedBySectionsAllocated() {
         int sectionsAhead = 0;
+        AllocatedSection as = null;
         for (AllocatedSection allocatedSection : _activeTrain.getAllocatedSectionList()) {
+            if (allocatedSection.getSection() == _nextSection) {
+                as = allocatedSection;
+            }
             if (!allocatedSection.getEntered()) {
                 sectionsAhead++;
             }
         }
         float newSpeed = 0.0f;
         log.debug("[{}:SectionsAhead[{}]",_activeTrain.getActiveTrainName() ,sectionsAhead);
-        switch (sectionsAhead) {
-            case 0:
-                newSpeed = 0.0f;
-                break;
-            case 1:
-                newSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class)
-                        .getSpeed("Medium");
-                        // .getSpeed(InstanceManager.getDefault(DispatcherFrame.class).getStoppingSpeedName());
-                _activeTrain.setStatus(ActiveTrain.RUNNING);
-                break;
-            default:
-                newSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class)
-                        .getSpeed("Normal");
-                // .getSpeed(InstanceManager.getDefault(DispatcherFrame.class).getStoppingSpeedName());
-                _activeTrain.setStatus(ActiveTrain.RUNNING);
-        }
-        for (Block block:_currentAllocatedSection.getSection().getBlockList()) {
-            float speed = -1.0f;
-            speed = getSpeedFromBlock(block);
-          if (speed > 0 && speed < newSpeed) {
-              newSpeed = speed;
-          }
+        if (checkTurn(as)) {
+            switch (sectionsAhead) {
+                case 0:
+                    newSpeed = 0.0f;
+                    break;
+                case 1:
+                    newSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class)
+                            .getSpeed("Medium");
+                    // .getSpeed(InstanceManager.getDefault(DispatcherFrame.class).getStoppingSpeedName());
+                    _activeTrain.setStatus(ActiveTrain.RUNNING);
+                    break;
+                default:
+                    newSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class)
+                            .getSpeed("Normal");
+                    // .getSpeed(InstanceManager.getDefault(DispatcherFrame.class).getStoppingSpeedName());
+                    _activeTrain.setStatus(ActiveTrain.RUNNING);
+            }
+            for (Block block : _currentAllocatedSection.getSection().getBlockList()) {
+                float speed = -1.0f;
+                speed = getSpeedFromBlock(block);
+                if (speed > 0 && speed < newSpeed) {
+                    newSpeed = speed;
+                }
+            }
         }
         if (newSpeed > 0 ) {
             log.trace("setSpeedBySectionsAllocated isStopping[{}]",isStopping());
@@ -914,6 +922,30 @@ public class AutoActiveTrain implements ThrottleListener {
         } else {
             stopInCurrentSection(NO_TASK);
         }
+    }
+
+    /**
+     * Check that all turnouts in a section have finished setting
+     * for passage. If not listens on first bad turnout
+     * and rechecks when set.
+     * @param as Allocated section whose turnouts need to be checked.
+     * @return true if no errors else false
+     */
+    private boolean checkTurn(AllocatedSection as) {
+        if (as != null && as.getAutoTurnoutsResponse() != null) {
+            Turnout to = InstanceManager.getDefault(DispatcherFrame.class).getAutoTurnoutsHelper().CheckStateAgainstList(as.getAutoTurnoutsResponse());
+            if (to != null) {
+                // at least one turnout isnt correctly set
+                to.addPropertyChangeListener(_turnoutStateListener = (PropertyChangeEvent e) -> {
+                    if (e.getPropertyName().equals("KnownState")) {
+                        ((Turnout) e.getSource()).removePropertyChangeListener(_turnoutStateListener);
+                        setSpeedBySignal();
+                    }
+                });
+                return false;
+            }
+        }
+        return true;
     }
 
     private void setSpeedBySignalMast() {
