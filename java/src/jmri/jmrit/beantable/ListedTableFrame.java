@@ -166,7 +166,6 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
         getContentPane().add(cardHolder);
         pack();
         actionList.selectListItem(0);
-
     }
 
     JPanel errorPanel(String text) {
