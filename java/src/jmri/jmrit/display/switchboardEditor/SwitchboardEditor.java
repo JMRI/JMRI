@@ -514,7 +514,7 @@ public class SwitchboardEditor extends Editor {
         }
         // disable the Rows spinner & Update button on the Switchboard Editor pane
         // param: GridLayout(vertical, horizontal), at least 1x1
-        switchboardLayeredPane.setLayout(new GridLayout(Math.max(rows, 1), 1));//(getTotal() + rows - 1) / rows));
+        switchboardLayeredPane.setLayout(new GridLayout(Math.max(rows, 1), 1));
 
         // add switches to LayeredPane
         for (BeanSwitch bs : switchesOnBoard.values()) {
@@ -823,9 +823,9 @@ public class SwitchboardEditor extends Editor {
                     rowsSpinner.setEnabled(true); // show rowsSpinner + rowsLabel?
                     rowsSpinner.setToolTipText(Bundle.getMessage("RowsSpinnerOnTooltip"));
                     // calculate tile size
-                    int colNum = (((getTotal() > 0) ? (getTotal()) : 1) + rows - 1) / rows;
+                    int colNum = (((getTotal() > 0) ? (getTotal()) : 1) + rows - 1) / Math.max(rows, 1);
                     int maxW = (super.getTargetFrame().getWidth() - 10) / colNum; // int division, subtract 2x3px for border
-                    int maxH = (super.getTargetFrame().getHeight() - verticalMargin) / rows; // for footer
+                    int maxH = (super.getTargetFrame().getHeight() - verticalMargin) / Math.max(rows, 1); // for footer
                     _tileSize = Math.min(maxW, maxH); // store for tile graphics
                 }
             }
@@ -1176,7 +1176,7 @@ public class SwitchboardEditor extends Editor {
      */
     private int autoRows(float cellProp) {
         // find cell matrix that allows largest size icons
-        double paneEffectiveWidth = Math.ceil((super.getTargetFrame().getWidth() - 6)/ cellProp); // -2x3px for border
+        double paneEffectiveWidth = Math.ceil((super.getTargetFrame().getWidth() - 6)/ Math.max(cellProp, 0.1f)); // -2x3px for border
         //log.debug("paneEffectiveWidth: {}", paneEffectiveWidth); // compare to resizeInFrame()
         double paneHeight = super.getTargetFrame().getHeight() - verticalMargin; // for footer
         int columnsNum = 1;
@@ -1190,13 +1190,13 @@ public class SwitchboardEditor extends Editor {
         }
 
         while (tileSize > tileSizeOld) {
-            rowsNum = (totalDisplayed + columnsNum - 1) / columnsNum; // int roundup
+            rowsNum = (totalDisplayed + columnsNum - 1) / Math.max(columnsNum, 1); // int roundup
             tileSizeOld = tileSize; // store for comparison
-            tileSize = (float) Math.min(paneEffectiveWidth / columnsNum, paneHeight / rowsNum);
+            tileSize = (float) Math.min(paneEffectiveWidth / Math.max(columnsNum, 1), paneHeight / Math.max(rowsNum, 1));
             //log.debug("C>R Cols {} x Rows {}, tileSize {} was {}", columnsNum, rowsNum, String.format("%.2f", tileSize),
             //        String.format("%.2f", tileSizeOld));
             if (tileSize < tileSizeOld) {
-                rowsNum = (totalDisplayed + columnsNum - 2) / (columnsNum - 1);
+                rowsNum = (totalDisplayed + columnsNum - 2) / Math.max((columnsNum - 1), 1);
                 break;
             }
             columnsNum++;
@@ -1208,9 +1208,9 @@ public class SwitchboardEditor extends Editor {
         float tileSizeC = 0.1f;
         float tileSizeCOld = 0.0f;
         while (tileSizeC > tileSizeCOld) {
-            columnsNumC = (totalDisplayed + rowsNumC - 1) / rowsNumC; // int roundup
+            columnsNumC = (totalDisplayed + rowsNumC - 1) / Math.max(rowsNumC, 1); // int roundup
             tileSizeCOld = tileSizeC; // store for comparison
-            tileSizeC = (float) Math.min(paneEffectiveWidth / columnsNumC, paneHeight / rowsNumC);
+            tileSizeC = (float) Math.min(paneEffectiveWidth / Math.max(columnsNumC, 1), paneHeight / Math.max(rowsNumC, 1));
             //log.debug("R>C Cols {} x Rows {}, tileSizeC {} was {}", columnsNumC, rowsNumC, String.format("%.2f", tileSizeC),
             //        String.format("%.2f", tileSizeCOld));
             if (tileSizeC < tileSizeCOld) {
@@ -1229,7 +1229,7 @@ public class SwitchboardEditor extends Editor {
         // similar calculations repeated in panel.js for web display
         //log.debug("CELL SIZE optimum found: CxR = {}x{}, tileSize = {}", ((totalDisplayed + rowsNum - 1) / rowsNum), rowsNum, tileSize);
 
-        _tileSize = Math.round((float) paneHeight / rowsNum); // recalculate tileSize from rowNum, store for tile graphics
+        _tileSize = Math.round((float) paneHeight / Math.max(rowsNum, 1)); // recalculate tileSize from rowNum, store for tile graphics
         return rowsNum;
     }
 
