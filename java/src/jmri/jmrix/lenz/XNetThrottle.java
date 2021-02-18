@@ -10,6 +10,8 @@ import jmri.jmrix.AbstractThrottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.concurrent.GuardedBy;
+
 /**
  * An implementation of DccThrottle with code specific to an XpressNet
  * connection.
@@ -22,7 +24,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
 
     protected java.util.TimerTask statusTask;   // Timer Task used to periodically get current
     // status of the throttle when throttle not available.
-    protected static final int statTimeoutValue = 1000; // Interval to check the 
+    protected static final int statTimeoutValue = 1000; // Interval to check the
+    @GuardedBy("this")
     protected XNetTrafficController tc;
 
     // status of the throttle
@@ -71,7 +74,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     /*
      * Set the traffic controller used with this throttle.
      */
-    public void setXNetTrafficController(XNetTrafficController controller) {
+    public synchronized void setXNetTrafficController(XNetTrafficController controller) {
         tc = controller;
     }
 
@@ -541,7 +544,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 /* The Command Station does not support this command */
                 log.error("Unsupported Command Sent to command station");
                 if ((requestState & THROTTLEMOMSTATSENT) == THROTTLEMOMSTATSENT) {
-                    // if momentaty is not supported, try requesting the
+                    // if momentary is not supported, try requesting the
                     // high function state.
                     requestState = THROTTLEIDLE;
                     sendFunctionHighInformationRequest();
@@ -584,7 +587,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         if (msg.getRetries() > 0) {
             // If the message still has retries available, send it back to 
             // the traffic controller.
-            tc.sendXNetMessage(msg, this);
+            synchronized (this) {
+                tc.sendXNetMessage(msg, this);
+            }
         } else {
             // Try to send the next queued message,  if one is available.
             sendQueuedMessage();
@@ -650,8 +655,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             // speed step mode.
             if (speedVal >= 1) {
                 speedVal -= 1;
-            } else {
-                speedVal = 0;
             }
             if (java.lang.Math.abs(
                     this.getSpeedSetting() - ((float) speedVal / (float) 126)) >= 0.0079) {
@@ -660,7 +663,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
         } else if (this.speedStepMode == SpeedStepMode.NMRA_DCC_28) {
             // We're in 28 speed step mode
-            // We have to re-arange the bits, since bit 4 is the LSB,
+            // We have to re-arrange the bits, since bit 4 is the LSB,
             // but other bits are in order from 0-3
             int speedVal = ((b2 & 0x0F) << 1)
                     + ((b2 & 0x10) >> 4);
@@ -678,7 +681,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
         } else if (this.speedStepMode == SpeedStepMode.NMRA_DCC_27) {
             // We're in 27 speed step mode
-            // We have to re-arange the bits, since bit 4 is the LSB,
+            // We have to re-arrange the bits, since bit 4 is the LSB,
             // but other bits are in order from 0-3
             int speedVal = ((b2 & 0x0F) << 1)
                     + ((b2 & 0x10) >> 4);
@@ -699,8 +702,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             int speedVal = (b2 & 0x0F);
             if (speedVal >= 1) {
                 speedVal -= 1;
-            } else {
-                speedVal = 0;
             }
             if (java.lang.Math.abs(
                     this.getSpeedSetting() - ((float) speedVal / (float) 14)) >= 0.071) {
@@ -883,16 +884,14 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             log.debug("sending message to traffic controller");
             // if the queue is not empty, remove the first message
             // from the queue, send the message, and set the state machine 
-            // to the requried state.
+            // to the required state.
             try {
                 msg = requestList.take();
             } catch (java.lang.InterruptedException ie) {
                 return; // if there was an error, exit.
             }
-            if (msg != null) {
-                requestState = msg.getState();
-                tc.sendXNetMessage(msg.getMsg(), this);
-            }
+            requestState = msg.getState();
+            tc.sendXNetMessage(msg.getMsg(), this);
         } else {
             log.debug("message queue empty");
             // if the queue is empty, set the state to idle.

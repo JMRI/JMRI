@@ -717,7 +717,7 @@ public class AbstractThrottleTest {
      */
     @Test
     public void testNotifyPropertyChangeListener() {
-        instance.notifyPropertyChangeListener("", null, null);
+        instance.firePropertyChange("", null, null);
         JUnitAppender.assertNoErrorMessage();
     }
 
@@ -1566,7 +1566,7 @@ public class AbstractThrottleTest {
         int i = 2;
         while (speed < 0.999f) {
             int result = instance.intSpeed(speed);
-            log.debug("speed= {} step= {}",speed,result);
+            log.debug("speed= {} step= {}", speed, result);
             Assert.assertEquals("speed step ", i++, result);
             speed += incre;
         }
@@ -1636,15 +1636,15 @@ public class AbstractThrottleTest {
         Assert.assertEquals("Starting Duration not set, throttle needs to call record(speed) on speed change", true, instance.start > 0);
         
         instance.start = instance.start - 2011; // make duration about 2 seconds
-        Assert.assertNotNull("instance finds roster entry",instance.getRosterEntry());
+        Assert.assertNotNull("instance finds roster entry", instance.getRosterEntry());
         
         instance.throttleDispose();
         Assert.assertEquals("No Duration in Roster Entry, throttle needs to call finishRecord()", "2", re.getAttribute("OperatingDuration"));
-        Assert.assertNotNull("Last Operated Updated",re.getAttribute("LastOperated"));
+        Assert.assertNotNull("Last Operated Updated", re.getAttribute("LastOperated"));
         
     }
 
-    public final class AbstractThrottleImpl extends AbstractThrottle {
+    public static final class AbstractThrottleImpl extends AbstractThrottle {
 
         private LocoAddress locoAddress;
 

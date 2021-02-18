@@ -146,9 +146,8 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
         // Get set of handles for JMRI managed throttles and
         // iterate over them setting the speed of each throttle to 0
         // log.info("stopAll() setting all speeds to emergency stop");
-        Iterator<Integer> itr = softThrottles.keySet().iterator();
-        while (itr.hasNext()) {
-            CbusThrottle throttle = softThrottles.get(itr.next());
+        for (Integer integer : softThrottles.keySet()) {
+            CbusThrottle throttle = softThrottles.get(integer);
             throttle.setSpeedSetting(-1.0f);
         }
     }
@@ -692,10 +691,9 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
         if (isRecovery){
             log.warn("Session recovery not possible for {}",_dccAddr);
             forceDisposeThrottle( _dccAddr ); // remove from JMRI share list
-            
-            Iterator<Integer> itr = softThrottles.keySet().iterator();
-            while (itr.hasNext()) {
-                CbusThrottle throttle = softThrottles.get(itr.next());
+
+            for (Integer integer : softThrottles.keySet()) {
+                CbusThrottle throttle = softThrottles.get(integer);
                 if (throttle.getLocoAddress() == _dccAddr) {
                     throttle.throttleDispose();
                     showSessionCancelDialogue(_dccAddr);
@@ -749,11 +747,10 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
     @Override
     protected void updateNumUsers( LocoAddress la, int numUsers ){
         log.debug("throttle {} notification that num. users is now {}",la,numUsers);
-        Iterator<Integer> itr = softThrottles.keySet().iterator();
-        while (itr.hasNext()) {
-            CbusThrottle throttle = softThrottles.get(itr.next());
-            if (throttle.getLocoAddress() == la ) {
-                if ( ( numUsers == 1 ) && throttle.getSpeedSetting() > 0 ) {
+        for (Integer integer : softThrottles.keySet()) {
+            CbusThrottle throttle = softThrottles.get(integer);
+            if (throttle.getLocoAddress() == la) {
+                if ((numUsers == 1) && throttle.getSpeedSetting() > 0) {
                     throttle.setDispatchActive(true);
                     return;
                 }

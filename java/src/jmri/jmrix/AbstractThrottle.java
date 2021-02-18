@@ -17,6 +17,9 @@ import jmri.Throttle;
 import jmri.ThrottleListener;
 import jmri.beans.PropertyChangeSupport;
 
+import javax.annotation.Nonnull;
+import javax.annotation.concurrent.GuardedBy;
+
 /**
  * An abstract implementation of DccThrottle. Based on Glen Oberhauser's
  * original LnThrottleManager implementation.
@@ -28,6 +31,7 @@ import jmri.beans.PropertyChangeSupport;
  */
 abstract public class AbstractThrottle extends PropertyChangeSupport implements DccThrottle {
 
+    @GuardedBy("this")
     protected float speedSetting;
     /**
      * Question: should we set a default speed step mode so it's never zero?
@@ -93,12 +97,12 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
 
     /**
      * speed - expressed as a value {@literal 0.0 -> 1.0.} Negative means
-     * emergency stop. This is an bound parameter.
+     * emergency stop. This is a bound parameter.
      *
      * @return speed
      */
     @Override
-    public float getSpeedSetting() {
+    public synchronized float getSpeedSetting() {
         return speedSetting;
     }
 
@@ -127,7 +131,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      *                              'stop'
      */
     @Override
-    public void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
+    public synchronized void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         if (Math.abs(this.speedSetting - speed) > 0.0001) {
             firePropertyChange(SPEEDSETTING, this.speedSetting, this.speedSetting = speed);
         }
@@ -176,6 +180,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public boolean[] getFunctions() {
         return Arrays.copyOf(FUNCTION_BOOLEAN_ARRAY,FUNCTION_BOOLEAN_ARRAY.length);
     }
@@ -184,6 +189,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public boolean[] getFunctionsMomentary() {
         return Arrays.copyOf(FUNCTION_MOMENTARY_BOOLEAN_ARRAY,
             FUNCTION_MOMENTARY_BOOLEAN_ARRAY.length);
@@ -270,7 +276,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     @Override
     public void addPropertyChangeListener(PropertyChangeListener l) {
         if ( Arrays.asList(getPropertyChangeListeners()).contains(l) ){
-            log.warn("Preventing {} adding duplicate PCL",l);
+            log.warn("Preventing {} adding duplicate PCL", l);
             return;
         }
         super.addPropertyChangeListener(l);
@@ -656,7 +662,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      *
      * @param speed the current speed
      */
-    protected void record(float speed) {
+    protected synchronized void record(float speed) {
         if (re == null) {
             return;
         }
@@ -667,7 +673,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         }
     }
 
-    protected void startClock() {
+    protected synchronized void startClock() {
         if (start == 0) {
             start = System.currentTimeMillis();
         }
@@ -683,7 +689,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         start = 0;
     }
 
-    protected void finishRecord() {
+    protected synchronized void finishRecord() {
         if (re == null) {
             return;
         }
@@ -711,15 +717,16 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         re = null;
     }
 
+    @GuardedBy("this")
     BasicRosterEntry re = null;
 
     @Override
-    public void setRosterEntry(BasicRosterEntry re) {
+    public synchronized void setRosterEntry(BasicRosterEntry re) {
         this.re = re;
     }
 
     @Override
-    public BasicRosterEntry getRosterEntry() {
+    public synchronized BasicRosterEntry getRosterEntry() {
         return re;
     }
 
@@ -732,7 +739,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * @return an integer in the range 0-127
      */
     protected int intSpeed(float speed) {
-        return this.intSpeed(speed, 127);
+        return intSpeed(speed, 127);
     }
 
     /**
@@ -744,7 +751,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      *              errors
      * @return an integer in the range 0-steps
      */
-    protected int intSpeed(float speed, int steps) {
+    protected static int intSpeed(float speed, int steps) {
         // test that speed is < 0 for emergency stop since calculation of
         // value returns 0 for some values of -1 < rawSpeed < 0
         if (speed < 0) {

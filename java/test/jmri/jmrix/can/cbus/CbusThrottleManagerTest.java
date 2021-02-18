@@ -52,7 +52,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         CanReply r = new CanReply( new int[]{CbusConstants.CBUS_PLOC, 1, 0xc4, 0xd2, 0,0,0 },0x12 );
         ((CbusThrottleManager)tm).reply(r);
         
-        JUnitUtil.waitFor(()->{ return(tm.getThrottleUsageCount(addr)>0); }, "throttle didn't create");
+        JUnitUtil.waitFor(()-> (tm.getThrottleUsageCount(addr)>0), "throttle didn't create");
         Assert.assertFalse("F0 init",(boolean) tm.getThrottleInfo(addr,Throttle.F0));
 
         r = new CanReply( new int[]{CbusConstants.CBUS_DFUN, 1, 0x00, 0x00 },0x12 );
@@ -997,7 +997,6 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         Assert.assertEquals("throttle use 1 addr", 1, tm.getThrottleUsageCount(addr));
         Assert.assertEquals("throttle use 1 int b", 1, tm.getThrottleUsageCount(42,false));
         Assert.assertEquals("throttle use 0", 0, tm.getThrottleUsageCount(77,true));
-
     }
     
     private CanSystemConnectionMemo memo;
@@ -1015,21 +1014,20 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
         tm = new CbusThrottleManager(memo);
-        InstanceManager.setThrottleManager( tm );
+        InstanceManager.setThrottleManager(tm);
     }
 
     @AfterEach
     public void tearDown() {
         CbusThrottleManager dtm = (CbusThrottleManager)tm;
         dtm.dispose();
-        tm=null;
+        tm = null;
         memo.dispose();
         memo = null;
         tc.terminateThreads();
         tc = null;
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
-
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusThrottleManagerTest.class);

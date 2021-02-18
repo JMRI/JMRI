@@ -472,7 +472,7 @@ public abstract class AbstractMRTrafficController {
                     AbstractMRMessage msg = pollMessage();
                     if (msg != null) {
                         // yes, send that
-                        log.debug("Sending poll, wait time {}", Long.toString(waitTimePoll));
+                        log.debug("Sending poll, wait time {}", waitTimePoll);
                         mCurrentState = WAITMSGREPLYSTATE;
                         forwardToPort(msg, pollReplyHandler());
                         // wait for reply
