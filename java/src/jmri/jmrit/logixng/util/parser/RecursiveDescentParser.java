@@ -77,7 +77,7 @@ public class RecursiveDescentParser {
         if ((exprNodeAndState._state != null)
                 && (exprNodeAndState._state._tokenIndex < _tokens.size())) {
             
-            throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntaxNotFullyParsed"));
+            throw new InvalidSyntaxException(Bundle.getMessage("InvalidSyntaxNotFullyParsed", exprNodeAndState._state._tokenIndex));
         }
         return exprNodeAndState._exprNode;
     }
@@ -159,7 +159,7 @@ public class RecursiveDescentParser {
 
         @Override
         public ExpressionNodeAndState parse(State state) throws ParserException {
-            ExpressionNodeAndState leftSide = rule4.parse(state);
+            ExpressionNodeAndState leftSide = rule2.parse(state);
             if (leftSide == null) {
                 return null;
             }
@@ -192,7 +192,7 @@ public class RecursiveDescentParser {
 
         @Override
         public ExpressionNodeAndState parse(State state) throws ParserException {
-            ExpressionNodeAndState leftSide = rule4.parse(state);
+            ExpressionNodeAndState leftSide = rule3.parse(state);
             if (leftSide == null) {
                 return null;
             }
@@ -244,7 +244,7 @@ public class RecursiveDescentParser {
             }
             State newState = leftSide._state;
             while ((newState._token != null)
-                    && ((newState._token._tokenType == TokenType.BOOLEAN_AND))) {
+                    && ((newState._token._tokenType == TokenType.BOOLEAN_OR))) {
                 
                 TokenType operatorTokenType = newState._token._tokenType;
                 newState = next(newState);
