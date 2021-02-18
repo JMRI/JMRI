@@ -933,7 +933,7 @@ public class AutoActiveTrain implements ThrottleListener {
      */
     private boolean checkTurn(AllocatedSection as) {
         if (as != null && as.getAutoTurnoutsResponse() != null) {
-            Turnout to = InstanceManager.getDefault(DispatcherFrame.class).getAutoTurnoutsHelper().CheckStateAgainstList(as.getAutoTurnoutsResponse());
+            Turnout to = InstanceManager.getDefault(DispatcherFrame.class).getAutoTurnoutsHelper().checkStateAgainstList(as.getAutoTurnoutsResponse());
             if (to != null) {
                 // at least one turnout isnt correctly set
                 to.addPropertyChangeListener(_turnoutStateListener = (PropertyChangeEvent e) -> {

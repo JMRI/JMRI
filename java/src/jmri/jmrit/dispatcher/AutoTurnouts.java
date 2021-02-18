@@ -99,7 +99,7 @@ public class AutoTurnouts {
         return turnoutUtil(s, seqNum, nextSection, at, le, trustKnownTurnouts, true, prevSection);
     }
 
-    protected Turnout CheckStateAgainstList(List<LayoutTrackExpectedState<LayoutTurnout>> turnoutList) {
+    protected Turnout checkStateAgainstList(List<LayoutTrackExpectedState<LayoutTurnout>> turnoutList) {
         if (turnoutList != null) {
             for (LayoutTrackExpectedState<LayoutTurnout> tes : turnoutList) {
                 Turnout to = tes.getObject().getTurnout();
