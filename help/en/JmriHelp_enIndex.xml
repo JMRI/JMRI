@@ -42,6 +42,7 @@
   <indexitem text="Block Tracking " target="html.tools.tracker.index"/>
 
   <indexitem text="Edit Blocks " target="package.jmri.jmrit.beantable.BlockEdit"/>
+
  </indexitem>
  <indexitem text="Block Table " target="package.jmri.jmrit.beantable.BlockTable"/>
 
@@ -243,7 +244,7 @@
   <indexitem text="Requirements " target="package.jmri.jmrit.dispatcher.Dispatcher_requirements"/>
 
  </indexitem>
- <indexitem text="Dispatcher System (Python Extension) " target="html.apps.DispatcherSystem.DispatcherSystem"/>
+ <indexitem text="Dispatcher System (Python Extension) " target="html.scripthelp.DispatcherSystem.DispatcherSystem"/>
 
  <indexitem text="Dropbox (Profile Sharing) " target="html.setup.Dropbox"/>
 
@@ -318,6 +319,8 @@
  <indexitem text="Jynstruments " target="html.tools.scripting.Jynstruments"/>
 
  <indexitem text="Jython (in Scripting) " target="html.tools.scripting.Python"/>
+
+ <indexitem text="Jython Apps for JMRI " target="html.tools.scripting.JythonApps"/>
 
  <indexitem text="Layout Editor (Panels) " target="package.jmri.jmrit.display.LayoutEditor"/>
 
