@@ -788,6 +788,17 @@ public class MeterFrame extends JmriJFrame {
                 }
             }
         }
+        // if more menu options than meters, remove any "NoMeters" menu item.
+        if (voltageMetersMenu.getItemCount() > voltageMeters.size()) {
+            for (int i =0; (i < voltageMetersMenu.getItemCount());++i) {
+                JMenuItem jim = voltageMetersMenu.getItem(i);
+                if (jim.getText().compareTo(Bundle.getMessage("NoMeters")) == 0 ) {
+                    voltageMetersMenu.remove(jim);
+                    log.trace("item '{}' removed from voltageMetersMenu for frame {}", jim.getText(), uuid);
+                    break;
+                }
+            }
+        }
     }
 
     /**
@@ -815,7 +826,7 @@ public class MeterFrame extends JmriJFrame {
                 }
             }
             if (!found) {
-                log.debug("Adding item '{}' to currentMetersMenu for frame {}", n, uuid);
+                log.trace("Adding item '{}' to currentMetersMenu for frame {}", n, uuid);
                 JCheckBoxMenuItem item = new JCheckBoxMenuItem(new SelectMeterAction(n, m));
                 currentMetersMenu.add(item);
                 meter_MenuItemMap.put(m, item);
@@ -825,6 +836,17 @@ public class MeterFrame extends JmriJFrame {
                 }
             }
         }
+        // if more menu options than meters, remove any "NoMeters" menu item.
+        if (currentMetersMenu.getItemCount() > currentMeters.size()) {
+            for (int i =0; (i < currentMetersMenu.getItemCount());++i) {
+                JMenuItem jim = currentMetersMenu.getItem(i);
+                if (jim.getText().compareTo(Bundle.getMessage("NoMeters")) == 0 ) {
+                    currentMetersMenu.remove(jim);
+                    log.trace("item '{}' removed from currentMetersMenu for frame {}", jim.getText(), uuid);
+                    break;
+                }                
+            }
+        }       
     }
 
     /**
