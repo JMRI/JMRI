@@ -53,6 +53,9 @@ public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
     }
 
     /**
+     * @param u URL that JavaHelp is trying to display
+     * @throws IOException if an error occurs fetching the URL
+     * @throws URISyntaxException if given an ill-formatted URL
      * @return true if the URL was handled as a special case
      */
     public static boolean activateURL(URL u) throws IOException, URISyntaxException {
