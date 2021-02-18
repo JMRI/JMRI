@@ -537,6 +537,7 @@
             <li>Fix Jynstrument instantiation on Windows (cleaner URI to path method). <a href="https://groups.io/g/jmriusers/topic/the_jynstruments/78674589"> User message 78674589</a></li>
             <li>Added local and global preferences to show/hide speed step selector. <a href="https://groups.io/g/jmriusers/topic/change_background_color_and/80665867"> User message 80665867</a></li>
             <li>Added global throttle preference to use or not large speed slider. <a href="https://groups.io/g/jmriusers/topic/change_background_color_and/80665867"> User message 80665867</a></li>
+            <li>Refactored VideoView Jynstrument for camera view in Throttle, reworked using <a href="https://github.com/sarxos/webcam-capture"> a new third party library.</a></li>
         </ul>
 
     <h3>Timetable</h3>
