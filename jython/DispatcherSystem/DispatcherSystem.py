@@ -51,7 +51,7 @@ frame.add(panel)
 
 #*****Menu*******
 bar = JMenuBar()
-jmri.util.HelpUtil.helpMenu(bar, 'html.apps.DispatcherSystem.DispatcherSystem' , True)
+jmri.util.HelpUtil.helpMenu(bar, 'html.scripthelp.DispatcherSystem.DispatcherSystem' , True)
 frame.setJMenuBar(bar)
 #
 
