@@ -80,4 +80,3 @@ class VideoView(Jynstrument, ItemListener):
             self.webcam = evt.getItem()
             self.addCamPanel()
             self.revalidate()
-            
