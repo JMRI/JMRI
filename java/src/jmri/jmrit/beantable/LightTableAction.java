@@ -93,18 +93,16 @@ public class LightTableAction extends AbstractTableAction<Light> {
         _graphicState = InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
 
         m = new BeanTableDataModel<Light>() {
-            static public final int ENABLECOL = NUMCOLUMN;
+            static public final int ENABLECOL = BeanTableDataModel.NUMCOLUMN;
             static public final int INTENSITYCOL = ENABLECOL + 1;
             static public final int EDITCOL = INTENSITYCOL + 1;
-            protected final String enabledString = Bundle.getMessage("ColumnHeadEnabled");
-            protected final String intensityString = Bundle.getMessage("ColumnHeadIntensity");
 
             /**
              * {@inheritDoc}
              */
             @Override
             public int getColumnCount() {
-                return NUMCOLUMN + 3;
+                return EDITCOL + 1 + getPropertyColumnCount();
             }
 
             /**
@@ -112,16 +110,15 @@ public class LightTableAction extends AbstractTableAction<Light> {
              */
             @Override
             public String getColumnName(int col) {
-                if (col == EDITCOL) {
-                    return "";    // no heading on "Edit"
-                }
-                if (col == INTENSITYCOL) {
-                    return intensityString;
-                }
-                if (col == ENABLECOL) {
-                    return enabledString;
-                } else {
-                    return super.getColumnName(col);
+                switch (col) {
+                    case EDITCOL:
+                        return ""; // no heading on "Edit"
+                    case INTENSITYCOL:
+                        return Bundle.getMessage("ColumnHeadIntensity");
+                    case ENABLECOL:
+                        return Bundle.getMessage("ColumnHeadEnabled");
+                    default:
+                        return super.getColumnName(col);
                 }
             }
 
@@ -130,18 +127,17 @@ public class LightTableAction extends AbstractTableAction<Light> {
              */
             @Override
             public Class<?> getColumnClass(int col) {
-                if (col == EDITCOL) {
-                    return JButton.class;
-                }
-                if (col == INTENSITYCOL) {
-                    return Double.class;
-                }
-                if (col == ENABLECOL) {
-                    return Boolean.class;
-                } else if (col == VALUECOL && _graphicState) {
-                    return JLabel.class; // use an image to show light state
-                } else {
-                    return super.getColumnClass(col);
+                switch (col) {
+                    case EDITCOL:
+                        return JButton.class;
+                    case INTENSITYCOL:
+                        return Double.class;
+                    case ENABLECOL:
+                        return Boolean.class;
+                    case VALUECOL:  // may use an image to show light state
+                        return ( _graphicState ? JLabel.class : JButton.class );
+                    default:
+                        return super.getColumnClass(col);
                 }
             }
 
@@ -150,20 +146,16 @@ public class LightTableAction extends AbstractTableAction<Light> {
              */
             @Override
             public int getPreferredWidth(int col) {
-                // override default value for UserName column
-                if (col == USERNAMECOL) {
-                    return new JTextField(16).getPreferredSize().width;
-                }
-                if (col == EDITCOL) {
-                    return new JTextField(6).getPreferredSize().width;
-                }
-                if (col == INTENSITYCOL) {
-                    return new JTextField(6).getPreferredSize().width;
-                }
-                if (col == ENABLECOL) {
-                    return new JTextField(6).getPreferredSize().width;
-                } else {
-                    return super.getPreferredWidth(col);
+                switch (col) {
+                    case USERNAMECOL: // override default value for UserName column
+                        return new JTextField(16).getPreferredSize().width;
+                    case EDITCOL:
+                        return new JButton(Bundle.getMessage("ButtonEdit")).getPreferredSize().width+4;
+                    case INTENSITYCOL:
+                    case ENABLECOL:
+                        return new JTextField(6).getPreferredSize().width;
+                    default:
+                        return super.getPreferredWidth(col);
                 }
             }
 
@@ -172,16 +164,14 @@ public class LightTableAction extends AbstractTableAction<Light> {
              */
             @Override
             public boolean isCellEditable(int row, int col) {
-                if (col == EDITCOL) {
-                    return true;
-                }
-                if (col == INTENSITYCOL) {
-                    return getValueAt(row, SYSNAMECOL) instanceof VariableLight;
-                }
-                if (col == ENABLECOL) {
-                    return true;
-                } else {
-                    return super.isCellEditable(row, col);
+                switch (col) {
+                    case INTENSITYCOL:
+                        return getValueAt(row, SYSNAMECOL) instanceof VariableLight;
+                    case EDITCOL:
+                    case ENABLECOL:
+                        return true;
+                    default:
+                        return super.isCellEditable(row, col);
                 }
             }
 
@@ -191,28 +181,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             @Override
             public String getValue(String name) {
                 Light l = lightManager.getBySystemName(name);
-                if (l == null) {
-                    return ("Failed to find " + name);
-                }
-                int val = l.getState();
-                switch (val) {
-                    case Light.ON:
-                        return Bundle.getMessage("StateOn");
-                    case Light.INTERMEDIATE:
-                        return Bundle.getMessage("LightStateIntermediate");
-                    case Light.OFF:
-                        return Bundle.getMessage("StateOff");
-                    case Light.TRANSITIONINGTOFULLON:
-                        return Bundle.getMessage("LightStateTransitioningToFullOn");
-                    case Light.TRANSITIONINGHIGHER:
-                        return Bundle.getMessage("LightStateTransitioningHigher");
-                    case Light.TRANSITIONINGLOWER:
-                        return Bundle.getMessage("LightStateTransitioningLower");
-                    case Light.TRANSITIONINGTOFULLOFF:
-                        return Bundle.getMessage("LightStateTransitioningToFullOff");
-                    default:
-                        return "Unexpected value: " + val;
-                }
+                return (l==null ? ("Failed to find " + name) : l.describeState(l.getState()));
             }
 
             /**
@@ -269,22 +238,12 @@ public class LightTableAction extends AbstractTableAction<Light> {
                         try {
                             if (getValueAt(row, SYSNAMECOL) instanceof VariableLight) {
                                 VariableLight l = (VariableLight) getValueAt(row, SYSNAMECOL);
-                                double intensity = ((Double) value);
-                                if (intensity < 0) {
-                                    intensity = 0;
-                                }
-                                if (intensity > 1.0) {
-                                    intensity = 1.0;
-                                }
+                                double intensity = Math.max(0, Math.min(1.0, (Double) value));
                                 l.setTargetIntensity(intensity);
                             } else {
                                 Light l = (Light) getValueAt(row, SYSNAMECOL);
                                 double intensity = ((Double) value);
-                                if (intensity > 0.5) {
-                                    l.setCommandedState(Light.ON);
-                                } else {
-                                    l.setCommandedState(Light.OFF);
-                                }
+                                l.setCommandedState( intensity > 0.5 ? Light.ON : Light.OFF);
                             }
                         } catch (IllegalArgumentException e1) {
                             status1.setText(Bundle.getMessage("LightError16"));
@@ -294,17 +253,13 @@ public class LightTableAction extends AbstractTableAction<Light> {
                     case ENABLECOL:
                         // alternate
                         Light l = (Light) getValueAt(row, SYSNAMECOL);
-                        boolean v = l.getEnabled();
-                        l.setEnabled(!v);
+                        l.setEnabled(!l.getEnabled());
                         break;
                     case VALUECOL:
-                        if (_graphicState) { // respond to clicking on ImageIconRenderer CellEditor
-                            Light ll = (Light) getValueAt(row, SYSNAMECOL);
-                            clickOn(ll);
-                            fireTableRowsUpdated(row, row);
-                            break;
-                        }
-                    //$FALL-THROUGH$
+                        Light ll = (Light) getValueAt(row, SYSNAMECOL);
+                        clickOn(ll);
+                        fireTableRowsUpdated(row, row);
+                        break;
                     default:
                         super.setValueAt(value, row, col);
                         break;
@@ -365,21 +320,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
              */
             @Override
             public void clickOn(Light t) {
-                int oldState = t.getState();
-                int newState;
-                switch (oldState) {
-                    case Light.ON:
-                        newState = Light.OFF;
-                        break;
-                    case Light.OFF:
-                        newState = Light.ON;
-                        break;
-                    default:
-                        newState = Light.OFF;
-                        log.warn("Unexpected Light state {} becomes OFF", oldState);
-                        break;
-                }
-                t.setState(newState);
+                t.setState( t.getState()==Light.OFF ? Light.ON : Light.OFF );
             }
 
             /**
@@ -2157,19 +2098,15 @@ public class LightTableAction extends AbstractTableAction<Light> {
          */
         @Override
         public Class<?> getColumnClass(int c) {
-            if (c == TYPE_COLUMN) {
-                return String.class;
+            switch (c) {
+                case EDIT_COLUMN:
+                case REMOVE_COLUMN:
+                    return JButton.class;
+                case TYPE_COLUMN:
+                case DESCRIPTION_COLUMN:
+                default:
+                    return String.class;
             }
-            if (c == DESCRIPTION_COLUMN) {
-                return String.class;
-            }
-            if (c == EDIT_COLUMN) {
-                return JButton.class;
-            }
-            if (c == REMOVE_COLUMN) {
-                return JButton.class;
-            }
-            return String.class;
         }
 
         /**
@@ -2193,19 +2130,15 @@ public class LightTableAction extends AbstractTableAction<Light> {
          */
         @Override
         public boolean isCellEditable(int r, int c) {
-            if (c == TYPE_COLUMN) {
-                return (false);
+            switch (c) {
+                case EDIT_COLUMN:
+                case REMOVE_COLUMN:
+                    return true;
+                case TYPE_COLUMN:
+                case DESCRIPTION_COLUMN:
+                default:
+                    return false;
             }
-            if (c == DESCRIPTION_COLUMN) {
-                return (false);
-            }
-            if (c == EDIT_COLUMN) {
-                return (true);
-            }
-            if (c == REMOVE_COLUMN) {
-                return (true);
-            }
-            return (false);
         }
 
         /**
@@ -2221,8 +2154,6 @@ public class LightTableAction extends AbstractTableAction<Light> {
             return "";
         }
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
-                justification = "better to keep cases in column order rather than to combine")
         public int getPreferredWidth(int col) {
             switch (col) {
                 case TYPE_COLUMN:
@@ -2230,13 +2161,11 @@ public class LightTableAction extends AbstractTableAction<Light> {
                 case DESCRIPTION_COLUMN:
                     return new JTextField(70).getPreferredSize().width;
                 case EDIT_COLUMN:
+                    return new JButton(Bundle.getMessage("ButtonEdit")).getPreferredSize().width+4;
                 case REMOVE_COLUMN:
+                    default:
                     return new JTextField(8).getPreferredSize().width;
-                default:
-                    // fall through
-                    break;
             }
-            return new JTextField(8).getPreferredSize().width;
         }
 
         /**
@@ -2276,6 +2205,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                     }
                     final int row;
 
+
                     @Override
                     public void run() {
                         editControlAction(row);
@@ -2284,7 +2214,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                 WindowMaker t = new WindowMaker(row);
                 javax.swing.SwingUtilities.invokeLater(t);
             }
-            if (col == REMOVE_COLUMN) {
+            else if (col == REMOVE_COLUMN) {
                 deleteControlAction(row);
             }
         }

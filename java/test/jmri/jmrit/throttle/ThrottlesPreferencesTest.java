@@ -21,19 +21,17 @@ public class ThrottlesPreferencesTest {
     }
 
     @Test
-    public void testIsUsingIcons() {
+    public void testIsUsingFunctionIcons() {
         Assume.assumeNotNull(preferences);
         Assume.assumeFalse(preferences.isDirty());
 
         Assert.assertTrue("default using extended throttle", preferences.isUsingExThrottle());
-        Assert.assertFalse("default not using icons", preferences.isUsingIcons());
+        Assert.assertFalse("default not using icons", preferences.isUsingFunctionIcon());
 
         preferences.setUsingFunctionIcon(true);
         Assert.assertTrue("preferences dirty after setting icons", preferences.isDirty());
-        Assert.assertTrue("use icons after setting setUsingFunctionIcon", preferences.isUsingIcons());
+        Assert.assertTrue("use icons after setting setUsingFunctionIcon", preferences.isUsingExThrottle());
 
-        preferences.setUseExThrottle(false);
-        Assert.assertFalse("don't use icons after disabled extended throttle", preferences.isUsingIcons());
     }
 
     @Test

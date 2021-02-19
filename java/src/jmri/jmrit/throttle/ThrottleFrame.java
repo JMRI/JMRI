@@ -22,12 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.swing.JComponent;
-import javax.swing.JDesktopPane;
-import javax.swing.JFileChooser;
-import javax.swing.JInternalFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
@@ -42,7 +37,6 @@ import jmri.jmrit.jython.JynstrumentFactory;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.iharder.dnd.URIDrop;
-import jmri.util.iharder.dnd.URIDrop.Listener;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -302,7 +296,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         int width = 3 * (FunctionButton.BUT_WDTH) + 2 * 3 * 5 + 10;   // = 192
         int height = 6 * (FunctionButton.BUT_HGHT) + 2 * 6 * 5 + 20; // = 240 (but there seems to be another 10 needed for some LAFs)
 
-        if (preferences.isUsingIcons()) {
+        if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
             width = FunctionButton.BUT_WDTH * 3 + 2 * 3 * 5 + 10;
             height = FunctionButton.BUT_IMG_SIZE * 2 + FunctionButton.BUT_HGHT * 4 + 2 * 6 * 5 + 20;
         }
@@ -340,7 +334,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         if (controlPanel.getHeight() > functionPanel.getHeight() + addressPanel.getHeight()) {
             addressPanel.setSize(addressPanel.getWidth(), controlPanel.getHeight() - functionPanel.getHeight());
         }
-        if (!(preferences.isUsingIcons())
+        if (!(preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon())
                 && (functionPanel.getWidth() < addressPanel.getWidth())) {
             functionPanel.setSize(addressPanel.getWidth(), functionPanel.getHeight());
         }
@@ -363,13 +357,8 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         add(functionPanel, PANEL_LAYER_FRAME);
         add(addressPanel, PANEL_LAYER_FRAME);
         add(speedPanel, PANEL_LAYER_FRAME);
-
+        
         if (preferences.isUsingExThrottle()) {
-            /*         if ( preferences.isUsingTransparentCtl() ) {
-             setTransparent(functionPanel);
-             setTransparent(addressPanel);
-             setTransparent(controlPanel);
-             }*/
             if (preferences.isUsingRosterImage()) {
                 backgroundPanel = new BackgroundPanel();
                 backgroundPanel.setAddressPanel(addressPanel); // reusing same way to do it than existing thing in functionPanel
@@ -379,7 +368,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
                 add(backgroundPanel, BACKPANEL_LAYER);
             }
             addComponentListener(this); // to force sub windows repositionning
-        }
+        }        
 
         frameList = new JInternalFrame[NUM_FRAMES];
         frameList[ADDRESS_PANEL_INDEX] = addressPanel;

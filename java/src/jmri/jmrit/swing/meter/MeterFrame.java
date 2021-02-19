@@ -745,108 +745,62 @@ public class MeterFrame extends JmriJFrame {
         });
 
         if ((menuBar != null) && (voltageMetersMenu != null)) {
-            updateVoltageMeters(voltageMetersMenu);
+            updateMetersMenu(voltageMetersMenu, voltageMeters);
         }
 
         if ((menuBar != null) && (currentMetersMenu != null)) {
-            updateCurrentMeters(currentMetersMenu);
+            updateMetersMenu(currentMetersMenu, currentMeters);
         }
     }
 
     /**
-     * Update the list of menu items for available meters of a given "Voltage Meters".
+     * Update specified menu with specified list of meters
      *
-     * @param voltageMetersMenu Menu which contains available voltage meters list
+     * @param menu - Menu to be updated
+     * @param meters - list of Meters
+     * 
      */
-    private void updateVoltageMeters(JMenu voltageMetersMenu) {
-        for (Meter m : voltageMeters) {
-            String n = m.getDisplayName();
-            log.trace("Need to add a new checkbox for voltmeter {}?", n);
+    private void updateMetersMenu(JMenu menu, List<Meter> meters) {
+        for (Meter meter : meters) {            
+            String n = meter.getDisplayName();
+            log.trace("need to add a new checkbox for meter '{}'?", n);
             boolean found = false;
 
-            if (voltageMetersMenu.getItemCount() > 0) {
-                for (int i =0; (i < voltageMetersMenu.getItemCount()) && (!found);++i) {
-                    JMenuItem jim = voltageMetersMenu.getItem(i);
+            if (menu.getItemCount() > 0) {
+                for (int i =0; (i < menu.getItemCount()) && (!found);++i) {
+                    JMenuItem jim = menu.getItem(i);
                     if (jim instanceof JCheckBoxMenuItem) {
-                        if (jim.getText().compareTo(m.getDisplayName()) == 0 ) {
-                            log.trace("item '{}' is already in voltageMetersMenu", n);
+                        if (jim.getText().compareTo(meter.getDisplayName()) == 0 ) {
+                            log.trace("item '{}' is already in menu", n);
                             found = true;
                         } else {
-                            log.trace("item '{}' is not already in voltageMetersMenu", n);
+                            log.trace("item '{}' is not already in menu", n);
                         }
                     }
                 }
             }
             if (!found) {
-                log.debug("Adding item '{}' to voltageMetersMenu for frame {}", n, uuid);
-                JCheckBoxMenuItem item = new JCheckBoxMenuItem(new SelectMeterAction(n, m));
-                voltageMetersMenu.add(item);
-                meter_MenuItemMap.put(m, item);
-                // if this new meter was selected when panel stored, activate it
-                if (getInitialMeterName().equals(n)) {
-                    setMeter(m);
-                }
-            }
-        }
-        // if more menu options than meters, remove any "NoMeters" menu item.
-        if (voltageMetersMenu.getItemCount() > voltageMeters.size()) {
-            for (int i =0; (i < voltageMetersMenu.getItemCount());++i) {
-                JMenuItem jim = voltageMetersMenu.getItem(i);
-                if (jim.getText().compareTo(Bundle.getMessage("NoMeters")) == 0 ) {
-                    voltageMetersMenu.remove(jim);
-                    log.trace("item '{}' removed from voltageMetersMenu for frame {}", jim.getText(), uuid);
-                    break;
-                }
-            }
-        }
-    }
-
-    /**
-     * Update the list of menu items for available "Current Meters".
-     *
-     * @param currentMetersMenu Menu which contains available current meters list
-     */
-    private void updateCurrentMeters(JMenu currentMetersMenu) {
-        for (Meter m : currentMeters) {
-            String n = m.getDisplayName();
-            log.trace("need to add a new checkbox for currentmeter '{}'?", n);
-            boolean found = false;
-
-            if (currentMetersMenu.getItemCount() > 0) {
-                for (int i =0; (i < currentMetersMenu.getItemCount()) && (!found);++i) {
-                    JMenuItem jim = currentMetersMenu.getItem(i);
-                    if (jim instanceof JCheckBoxMenuItem) {
-                        if (jim.getText().compareTo(m.getDisplayName()) == 0 ) {
-                            log.trace("item '{}' is already in currentMetersMenu", n);
-                            found = true;
-                        } else {
-                            log.trace("item '{}' is not already in currentMetersMenu", n);
-                        }
-                    }
-                }
-            }
-            if (!found) {
-                log.trace("Adding item '{}' to currentMetersMenu for frame {}", n, uuid);
-                JCheckBoxMenuItem item = new JCheckBoxMenuItem(new SelectMeterAction(n, m));
-                currentMetersMenu.add(item);
-                meter_MenuItemMap.put(m, item);
+                log.trace("Adding item '{}' to menu for frame {}", n, uuid);
+                JCheckBoxMenuItem item = new JCheckBoxMenuItem(new SelectMeterAction(n, meter));
+                menu.add(item);
+                meter_MenuItemMap.put(meter, item);
                 //if this new meter was selected when panel stored, activate it
                 if (getInitialMeterName().equals(n)) {
-                    setMeter(m);
+                    setMeter(meter);
                 }
             }
         }
         // if more menu options than meters, remove any "NoMeters" menu item.
-        if (currentMetersMenu.getItemCount() > currentMeters.size()) {
-            for (int i =0; (i < currentMetersMenu.getItemCount());++i) {
-                JMenuItem jim = currentMetersMenu.getItem(i);
+        if (menu.getItemCount() > meters.size()) {
+            for (int i =0; (i < menu.getItemCount());++i) {
+                JMenuItem jim = menu.getItem(i);
                 if (jim.getText().compareTo(Bundle.getMessage("NoMeters")) == 0 ) {
-                    currentMetersMenu.remove(jim);
-                    log.trace("item '{}' removed from currentMetersMenu for frame {}", jim.getText(), uuid);
+                    menu.remove(jim);
+                    log.trace("item '{}' removed from this menu for frame {}", jim.getText(), uuid);
                     break;
                 }                
             }
-        }       
+        }    
     }
 
     /**

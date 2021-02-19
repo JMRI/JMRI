@@ -26,6 +26,8 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
 
     private JCheckBox cbUseToolBar;
     private JCheckBox cbUseFunctionIcon;
+    private JCheckBox cbUseLargeSpeedSlider;
+    private JCheckBox cbHideSpeedStepSelector;
     private JCheckBox cbResizeWinImg;
     private JCheckBox cbUseExThrottle;
     private JCheckBox cbUseRosterImage;
@@ -59,22 +61,33 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
 
     private void initComponents() {
 
-        GridBagConstraints gridBagConstraints13 = new GridBagConstraints();
-        gridBagConstraints13.gridx = 0;
-        gridBagConstraints13.insets = new Insets(2, 23, 2, 2);
-        gridBagConstraints13.ipady = 16;
-        gridBagConstraints13.anchor = GridBagConstraints.WEST;
-        gridBagConstraints13.gridy = 99;
+        GridBagConstraints gridBagConstraints19 = new GridBagConstraints();
+        gridBagConstraints19.gridx = 0;
+        gridBagConstraints19.insets = new Insets(2, 5, 2, 2);
+        gridBagConstraints19.anchor = GridBagConstraints.WEST;
+        gridBagConstraints19.gridy = 99;
+        
+        GridBagConstraints gridBagConstraints18 = new GridBagConstraints();
+        gridBagConstraints18.gridx = 0;
+        gridBagConstraints18.insets = new Insets(2, 5, 2, 2);
+        gridBagConstraints18.anchor = GridBagConstraints.WEST;
+        gridBagConstraints18.gridy = 14;
+        
+        GridBagConstraints gridBagConstraints17 = new GridBagConstraints();
+        gridBagConstraints17.gridx = 0;
+        gridBagConstraints17.insets = new Insets(2, 5, 2, 2);
+        gridBagConstraints17.anchor = GridBagConstraints.WEST;
+        gridBagConstraints17.gridy = 13;
         
         GridBagConstraints gridBagConstraints16 = new GridBagConstraints();
         gridBagConstraints16.gridx = 0;
-        gridBagConstraints16.insets = new Insets(2, 5, 2, 2);
+        gridBagConstraints16.insets = new Insets(2, 23, 2, 2);
         gridBagConstraints16.anchor = GridBagConstraints.WEST;
         gridBagConstraints16.gridy = 12;
 
         GridBagConstraints gridBagConstraints15 = new GridBagConstraints();
         gridBagConstraints15.gridx = 0;
-        gridBagConstraints15.insets = new Insets(8, 5, 2, 2);
+        gridBagConstraints15.insets = new Insets(2, 23, 2, 2);
         gridBagConstraints15.anchor = GridBagConstraints.WEST;
         gridBagConstraints15.gridy = 11;
         
@@ -155,6 +168,8 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         cbUseExThrottle = new JCheckBox();
         cbUseToolBar = new JCheckBox();
         cbUseFunctionIcon = new JCheckBox();
+        cbUseLargeSpeedSlider = new JCheckBox();
+        cbHideSpeedStepSelector = new JCheckBox();
         cbUseRosterImage = new JCheckBox();
         cbResizeWinImg = new JCheckBox();
         cbEnableRosterSearch = new JCheckBox();
@@ -171,6 +186,8 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         cbResizeWinImg.setText(Bundle.getMessage("ExThrottleForceResize"));
         cbUseToolBar.setText(Bundle.getMessage("ExThrottleUseToolBar"));
         cbUseFunctionIcon.setText(Bundle.getMessage("ExThrottleUseFunctionIcons"));
+        cbUseLargeSpeedSlider.setText(Bundle.getMessage("ExThrottleUseLargeSpeedSlider"));
+        cbHideSpeedStepSelector.setText(Bundle.getMessage("ExThrottleHideSpeedStepSelector"));
         cbUseRosterImage.setText(Bundle.getMessage("ExThrottleUseRosterImageBkg"));
         cbEnableRosterSearch.setText(Bundle.getMessage("ExThrottleEnableRosterSearch"));
         cbEnableAutoLoad.setText(Bundle.getMessage("ExThrottleEnableAutoSave"));
@@ -224,10 +241,12 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         this.add(cbIgnoreThrottlePosition, gridBagConstraints10);
         this.add(cbUseToolBar, gridBagConstraints12);
         this.add(cbUseFunctionIcon, gridBagConstraints14);
-        this.add(cbSilentSteal,gridBagConstraints15 );
-        this.add(cbSilentShare,gridBagConstraints16 );
-        this.add(labelApplyWarning, gridBagConstraints13);
-        
+        this.add(cbUseLargeSpeedSlider, gridBagConstraints15);
+        this.add(cbHideSpeedStepSelector, gridBagConstraints16);
+        this.add(cbSilentSteal,gridBagConstraints17 );
+        this.add(cbSilentShare,gridBagConstraints18 );
+        this.add(labelApplyWarning, gridBagConstraints19);
+                
         if (InstanceManager.getNullableDefault(jmri.ThrottleManager.class) != null) {
             cbSilentSteal.setEnabled(InstanceManager.throttleManagerInstance().enablePrefSilentStealOption());
             cbSilentShare.setEnabled(InstanceManager.throttleManagerInstance().enablePrefSilentShareOption());
@@ -249,6 +268,8 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         cbEnableAutoLoad.setSelected(tp.isAutoLoading());
         cbHideUndefinedButtons.setSelected(tp.isHidingUndefinedFuncButt());
         cbIgnoreThrottlePosition.setSelected(tp.isIgnoringThrottlePosition());
+        cbUseLargeSpeedSlider.setSelected(tp.isUsingLargeSpeedSlider());
+        cbHideSpeedStepSelector.setSelected(tp.isHidingSpeedStepSelector());
         cbSilentSteal.setSelected(tp.isSilentSteal());
         cbSilentShare.setSelected(tp.isSilentShare());
     }
@@ -266,7 +287,9 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         tp.setEnableRosterSearch(cbEnableRosterSearch.isSelected());
         tp.setAutoLoad(cbEnableAutoLoad.isSelected());
         tp.setHideUndefinedFuncButt(cbHideUndefinedButtons.isSelected());
-        tp.setIgnoreThrottlePosition(cbIgnoreThrottlePosition.isSelected());
+        tp.setIgnoreThrottlePosition(cbIgnoreThrottlePosition.isSelected());        
+        tp.setUseLargeSpeedSlider(cbUseLargeSpeedSlider.isSelected());
+        tp.setHideSpeedStepSelector(cbHideSpeedStepSelector.isSelected());
         return tp;
     }
 
@@ -280,6 +303,8 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         cbResizeWinImg.setEnabled(cbUseExThrottle.isSelected() && cbUseRosterImage.isSelected());
         cbHideUndefinedButtons.setEnabled(cbUseExThrottle.isSelected());
         cbIgnoreThrottlePosition.setEnabled(cbUseExThrottle.isSelected() && cbEnableAutoLoad.isSelected());
+        cbUseLargeSpeedSlider.setEnabled(cbUseExThrottle.isSelected());
+        cbHideSpeedStepSelector.setEnabled(cbUseExThrottle.isSelected());
         if (cbUseExThrottle.isSelected()) {
             if (cbUseToolBar.isSelected()) {
                 cbIgnoreThrottlePosition.setSelected(true);
