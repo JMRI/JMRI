@@ -70,7 +70,7 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
             ctrlPanel.setLayout(new BorderLayout());
             Throttle thr = tf.getAddressPanel().getThrottle();
             JLabel dir = new JLabel();
-            if (preferences.isUsingIcons()) {
+            if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
                 if (thr.getIsForward()) {
                     dir.setIcon(fwdIcon);
                 } else {
@@ -85,7 +85,7 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
             }
             dir.setVerticalAlignment(JLabel.CENTER);
             ctrlPanel.add(dir, BorderLayout.WEST);
-            if (preferences.isUsingIcons()) {
+            if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
                 if (thr.getSpeedSetting() == -1) {
                     JLabel estop = new JLabel();
                     estop.setPreferredSize(new Dimension(64, height - 8));
