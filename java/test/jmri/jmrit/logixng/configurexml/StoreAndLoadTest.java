@@ -1534,6 +1534,33 @@ public class StoreAndLoadTest {
         and.getChild(indexExpr++).connect(maleSocket);
         
         
+        ExpressionPower expressionPower = new ExpressionPower(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(expressionPower);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+        
+        expressionPower = new ExpressionPower(digitalExpressionManager.getAutoSystemName(), null);
+        expressionPower.setComment("A comment");
+        expressionPower.setBeanState(ExpressionPower.PowerState.Off);
+        expressionPower.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        maleSocket = digitalExpressionManager.registerExpression(expressionPower);
+        and.getChild(indexExpr++).connect(maleSocket);
+        
+        expressionPower = new ExpressionPower(digitalExpressionManager.getAutoSystemName(), null);
+        expressionPower.setComment("A comment");
+        expressionPower.setBeanState(ExpressionPower.PowerState.On);
+        expressionPower.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        maleSocket = digitalExpressionManager.registerExpression(expressionPower);
+        and.getChild(indexExpr++).connect(maleSocket);
+        
+        expressionPower = new ExpressionPower(digitalExpressionManager.getAutoSystemName(), null);
+        expressionPower.setComment("A comment");
+        expressionPower.setBeanState(ExpressionPower.PowerState.Other);
+        expressionPower.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        maleSocket = digitalExpressionManager.registerExpression(expressionPower);
+        and.getChild(indexExpr++).connect(maleSocket);
+        
+        
         ExpressionReference expressionReference = new ExpressionReference(digitalExpressionManager.getAutoSystemName(), null);
         expressionReference.setPointsTo(ExpressionReference.PointsTo.LogixNGTable);
         expressionReference.set_Is_IsNot(Is_IsNot_Enum.Is);
@@ -2477,6 +2504,7 @@ public class StoreAndLoadTest {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initDebugPowerManager();
         
         JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initDefaultSignalMastManager();
