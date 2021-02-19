@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -331,7 +331,7 @@
           du capteur serait le m&ecirc;me num&eacute;ro. Le capteur
           # 1 serait mis &agrave; "Enter" et le capteur n&deg; 2
           serait fix&eacute; &agrave; "Exit".</p>
-          <!--#include virtual="/Footer" -->
+          <!--#include virtual="/Footer.shtml" -->
         </li>
       </ol>
     </div>
