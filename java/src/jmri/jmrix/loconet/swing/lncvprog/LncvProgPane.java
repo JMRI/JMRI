@@ -94,7 +94,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
      */
     @Override
     public void initComponents() {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         // buttons at top, like SE8c pane
         add(initButtonPanel()); // requires presence of memo.
         add(initDirectPanel()); // starts hidden, to set bits in Direct Mode only
@@ -126,9 +126,10 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         moduleTable.setDefaultRenderer(JButton.class, new ButtonRenderer());
         moduleTable.setRowSelectionAllowed(true);
         moduleTable.getSelectionModel().addListSelectionListener(event -> {
-            // print first column value from selected row
-            copyEntry((int) moduleTable.getValueAt(moduleTable.getSelectedRow(), 1),
-                    (int) moduleTable.getValueAt(moduleTable.getSelectedRow(), 2));
+            if (moduleTable.getSelectedRow() > -1 && moduleTable.getSelectedRow() < moduleTable.getRowCount()) {
+                // print first column value from selected row
+                copyEntry((int) moduleTable.getValueAt(moduleTable.getSelectedRow(), 1), (int) moduleTable.getValueAt(moduleTable.getSelectedRow(), 2));
+            }
         });
         // establish row sorting for the table
         sorter = new TableRowSorter<>(moduleTableModel);
@@ -151,17 +152,23 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.Y_AXIS));
         tablePanel.add(tableScrollPane, BorderLayout.CENTER);
 
+        // this does not fill the full width, why?
+//        JSplitPane holder = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+//                tablePanel, getMonitorPanel());
+//        holder.setMinimumSize(new Dimension(1000, 400));
+//        holder.setPreferredSize(new Dimension(1000, 400));
+//        holder.setDividerSize(8);
+//        holder.setOneTouchExpandable(true);
+//        add(holder, BorderLayout.LINE_START);
         add(tablePanel);
-
-        add(initNotesPanel());
+        add(getMonitorPanel());
         rawCheckBox.setSelected(pm.getSimplePreferenceState(rawDataCheck));
     }
 
     /*
-     * Initialize the Notes panel.
+     * Initialize the LNCV Monitor panel.
      */
-    protected JPanel initNotesPanel() {
-        // Set up the notes panel
+    protected JPanel getMonitorPanel() {
         JPanel panel3 = new JPanel();
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
 
@@ -266,7 +273,6 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
      * Initialize the Status panel.
      */
     protected JPanel initStatusPanel() {
-        // Set up module address and node type
         JPanel panel2 = new JPanel();
         panel2.setLayout(new BoxLayout(panel2, BoxLayout.PAGE_AXIS));
         JPanel panel21 = new JPanel();
@@ -467,8 +473,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         }
         // stop and inform user
         statusText1.setText(Bundle.getMessage("FeedBackWrite"));
-        // wait for LACK reply
-        //
+        // LACK reply will be received separately
         // if (received) {
         //      writeConfirmed = true;
         // }
@@ -489,6 +494,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         buttonAll.addActionListener(e -> toggleAll(buttonAll.isSelected()));
         options.add(buttonAll);
         JCheckBox serieTwo = new JCheckBox("LED2");
+        serieTwo.addActionListener(e -> renumber(serieTwo.isSelected()));
         options.add(serieTwo); // place to the right of Set button
         ledPanel.add(options);
         JButton buttonSet = new JButton(Bundle.getMessage("ButtonSetDirect"));
@@ -520,6 +526,16 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
             articleField.setEditable(true);
             readButton.setEnabled (true);
             ledPanel.setVisible(false);
+        }
+    }
+
+    /**
+     * Renumber the checkbox labels to match LED numbers.
+     * @param range2 false for LEDs 0-15, true for LEDs 16-31
+     */
+    protected void renumber(boolean range2) {
+        for (int j = 0; j < 16 ; j++) {
+            ((JCheckBox)ledPanel.getComponent(j)).setText(range2 ? ""+(j+16) : ""+j);
         }
     }
 
@@ -577,46 +593,47 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
      * {@inheritDoc}
      * Compare to {@link LnOpsModeProgrammer#message(jmri.jmrix.loconet.LocoNetMessage)}
      *
-     * @param l a message received and analysed for LNCV characteristics
+     * @param m a message received and analysed for LNCV characteristics
      */
     @Override
-    public synchronized void message(LocoNetMessage l) { // receive a LocoNet message and log it
-        // got a LocoNet message, see if it's a LNCV response
-        if (LncvMessageContents.isSupportedLncvMessage(l)) {
+    public synchronized void message(LocoNetMessage m) { // receive a LocoNet message and log it
+        // got a LocoNet message, see if it's an LNCV response
+        //log.debug("LncvProgPane heard message {}", m.toMonitorString());
+        if (LncvMessageContents.isSupportedLncvMessage(m)) {
             // raw data, to display
-            String raw = (rawCheckBox.isSelected() ? ("[" + l.toString() + "] ") : "");
+            String raw = (rawCheckBox.isSelected() ? ("[" + m.toString() + "] ") : "");
             // format the message text, expect it to provide consistent \n after each line
-            String formatted = l.toMonitorString(memo.getSystemPrefix());
+            String formatted = m.toMonitorString(memo.getSystemPrefix());
             // copy the formatted data
             reply += raw + formatted;
         }
         // or LACK write confirmation response from module?
-        if ((l.getOpCode() == LnConstants.OPC_LONG_ACK) &&
-                (l.getElement(1) == 0x6D)) { // elem 1 = OPC (matches 0xED), elem 2 = ack1
+        if ((m.getOpCode() == LnConstants.OPC_LONG_ACK) &&
+                (m.getElement(1) == 0x6D)) { // elem 1 = OPC (matches 0xED), elem 2 = ack1
             writeConfirmed = true;
-            if (l.getElement(2) == 0x7f) {
+            if (m.getElement(2) == 0x7f) {
                 valueField.setBackground(Color.GREEN);
                 reply += Bundle.getMessage("LNCV_WRITE_CONFIRMED", moduleProgRunning) + "\n";
-            } else if (l.getElement(2) == 1) {
+            } else if (m.getElement(2) == 1) {
                 valueField.setBackground(Color.RED);
                 reply += Bundle.getMessage("LNCV_WRITE_CV_NOTSUPPORTED", moduleProgRunning, cv) + "\n";
-            } else if (l.getElement(2) == 2) {
+            } else if (m.getElement(2) == 2) {
                 valueField.setBackground(Color.RED);
                 reply += Bundle.getMessage("LNCV_WRITE_CV_READONLY", moduleProgRunning, cv) + "\n";
-            } else if (l.getElement(2) == 3) {
+            } else if (m.getElement(2) == 3) {
                 valueField.setBackground(Color.RED);
                 reply += Bundle.getMessage("LNCV_WRITE_CV_OUTOFBOUNDS", moduleProgRunning, val) + "\n";
             }
         }
-        if (LncvMessageContents.extractMessageType(l) == LncvMessageContents.LncvCommand.LNCV_WRITE) {
+        if (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_WRITE) {
             reply += Bundle.getMessage("LNCV_WRITE_MOD_MONITOR", (moduleProgRunning == -1 ? "ALL" : moduleProgRunning)) + "\n";
         }
-        if (LncvMessageContents.extractMessageType(l) == LncvMessageContents.LncvCommand.LNCV_READ) {
+        if (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ) {
             reply += Bundle.getMessage("LNCV_READ_MOD_MONITOR", (moduleProgRunning == -1 ? "ALL" : moduleProgRunning)) + "\n";
         }
-        if (LncvMessageContents.extractMessageType(l) == LncvMessageContents.LncvCommand.LNCV_READ_REPLY) {
+        if (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ_REPLY) {
             // it's a LNCV ReadReply message, decode contents:
-            LncvMessageContents contents = new LncvMessageContents(l);
+            LncvMessageContents contents = new LncvMessageContents(m);
             int msgArt = contents.getLncvArticleNum();
             int msgAdr = moduleProgRunning;
             int msgCv = contents.getCvNum();
@@ -659,7 +676,6 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
              log.error("LNCV process finished with error: {}", error);
              statusText2.setText(Bundle.getMessage("FeedBackDiscoverFail"));
         } else {
-            log.debug("LNCV process completed successfully.");
             synchronized (this) {
                 statusText2.setText(Bundle.getMessage("FeedBackDiscoverSuccess", lncvdm.getDeviceCount()));
                 result.setText(reply);

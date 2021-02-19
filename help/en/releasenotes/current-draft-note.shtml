@@ -79,7 +79,8 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+              <li>When connected to the LocoNet HexFile Simulator, simulated replies from selected devices are
+                sent to the monitor (select the "Simulate replies" checkbox on the HexFile pane).</li>
             </ul>
 
         <h4>Maple</h4>
@@ -333,6 +334,8 @@
                 <li>For Uhlenbrock Track-Control modules a Direct Message type was added to the LNCV protocol.
                   The Lncv Programming tool has a new checkbox 'Direct Mode', allowing to set LEDs etc.</li>
                 <li>Two new Track-Control definitions (art. 69220 Turnout and 69230 Signal Module)</li>
+                <li>When connected to the LocoNet HexFile Simulator, simulated replies from LNCV devices are
+                  sent to the monitor (select the "Simulate replies" checkbox on the HexFile pane).</li>
             </ul>
 
         <h4>Umelec</h4>
@@ -532,6 +535,9 @@
         <a id="throttle" name="throttle"></a>
         <ul>
             <li>Fix Jynstrument instantiation on Windows (cleaner URI to path method). <a href="https://groups.io/g/jmriusers/topic/the_jynstruments/78674589"> User message 78674589</a></li>
+            <li>Added local and global preferences to show/hide speed step selector. <a href="https://groups.io/g/jmriusers/topic/change_background_color_and/80665867"> User message 80665867</a></li>
+            <li>Added global throttle preference to use or not large speed slider. <a href="https://groups.io/g/jmriusers/topic/change_background_color_and/80665867"> User message 80665867</a></li>
+            <li>Refactored VideoView Jynstrument for camera view in Throttle, reworked using <a href="https://github.com/sarxos/webcam-capture"> a new third party library.</a></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -585,6 +591,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Improved how JavaHelp handles non-HTML files on some platforms.</li>
         </ul>
 
