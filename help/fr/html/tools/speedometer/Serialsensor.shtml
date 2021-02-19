@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -47,7 +47,7 @@ RTS      7             4
 CTS      8             5
 RI       9            22
 
-</pre><!--#include virtual="/Footer" -->
+</pre><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>
