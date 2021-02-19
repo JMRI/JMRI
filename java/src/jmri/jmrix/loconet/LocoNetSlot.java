@@ -836,7 +836,9 @@ public class LocoNetSlot {
                 lastUpdateTime = System.currentTimeMillis();
                 return;
             }
-            case LnConstants.OPC_MOVE_SLOTS: {
+            case LnConstants.OPC_MOVE_SLOTS:
+            case LnConstants.OPC_LINK_SLOTS:
+            case LnConstants.OPC_UNLINK_SLOTS: {
                 // change in slot status, if any, will be reported by the reply,
                 // so don't need to do anything here (but could)
                 lastUpdateTime = System.currentTimeMillis();
