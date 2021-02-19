@@ -1,0 +1,24 @@
+!-- Partie locale de la barre latér&#233;ale pour les outils/r&#233;gulateur -->
+    <dt><h3><a href="ThrottleTOC.shtml" title="Cliquez pour voir l'outil R&#233;gulateur TOC">R&#233;gulateurs</a></h3>
+    </dt>
+    <dd>
+		<ul>
+		  <li><a href="ThrottleMain.shtml" title="L'outil R&#233;gulateur">L'outil R&#233;gulateur</a></li>
+		  <li><a href="ToolsMenuThrottleEntry.shtml">Ouvrir un...</a></li>
+		  <li><a href="BasicThrottleWindow.shtml">R&#233;gulateur</a></li>
+		  <li><a href="ThrottleWindowMenus.shtml">Menus</a></li>
+		  <li><a href="ThrottleToolBar.shtml">Barre d'Outils</a></li>
+		  <li><a href="AdvancedThrottleControl.shtml">Contr&#244;les</a></li>
+		  <li><a href="ThrottlesListWindow.shtml">Liste</a></li>
+		  <li><a href="ThrottlesPreferencesPane.shtml">Pr&#233;f&#233;rences</a><br>
+		  </li>
+		</ul>
+	
+		<ul>
+		  <li><a href="RostersMediaPane.shtml">M&#233;dias et &#201;tiquettes de fonction</a></li>
+		  <li><a href="../scripting/Jynstruments.shtml">Jynstruments</a></li>
+		  <li><a href="HowToJMRIOrientedThrottle.shtml">Construire un R&#233;gulateur orient&#233; JMRI</a></li>
+		</ul>
+	  </dd>
+    
+    <!-- Fin de la partie SidebarLocaPart.shtml -->
