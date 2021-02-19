@@ -110,15 +110,21 @@ public class ExpressionPower extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        InstanceManager.getDefault(PowerManager.class)
-                .addPropertyChangeListener(PowerManager.POWER, this);
+        if (!_listenersAreRegistered) {
+            InstanceManager.getDefault(PowerManager.class)
+                    .addPropertyChangeListener(PowerManager.POWER, this);
+            _listenersAreRegistered = true;
+        }
     }
     
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
-        InstanceManager.getDefault(PowerManager.class)
-                .removePropertyChangeListener(PowerManager.POWER, this);
+        if (_listenersAreRegistered) {
+            InstanceManager.getDefault(PowerManager.class)
+                    .removePropertyChangeListener(PowerManager.POWER, this);
+            _listenersAreRegistered = false;
+        }
     }
     
     /** {@inheritDoc} */
