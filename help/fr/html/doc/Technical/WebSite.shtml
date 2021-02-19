@@ -133,9 +133,9 @@ et ce contenu est mis &#224; jour depuis le r&#233;pertoire JMRI sans aucun trav
 <p>La r&#233;g&#233;n&#233;ration de la JavaDoc et le contenu XML implique 
 beaucoup plus de travail qu'une simple mise &#224; jour d'un r&#233;pertoire, et ainsi celleci ne se fait qu'une fois par jour, selon les besoins,
 par la t&#226;che 
-<a href="http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/">G&#233;n&#233;rer site Web</a>
+<a href="http://builds.jmri.org/jenkins/job/WebSite/job/generate-website/">G&#233;n&#233;rer site Web</a>
 sur la
-<a href="http://jmri.tagadab.com/jenkins/">production serveur Jenkins</a>.</p>
+<a href="http://builds.jmri.org/jenkins/">production serveur Jenkins</a>.</p>
 
 <a name="local" id="local"></a><h2>Local Web Site: Mac OS X</h2>
 

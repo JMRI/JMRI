@@ -929,7 +929,7 @@
         to the Tables</li>
 
         <li>Steve Rawlinson, who fixed a bug in Layout Blocks and
-        generously provides the <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Packages/">Jenkins server</a>
+        generously provides the <a href="http://builds.jmri.org/jenkins/job/Development/job/Packages/">Jenkins server</a>
         where we integrate our code and build the packages that we release to 
         our users.
         </li>

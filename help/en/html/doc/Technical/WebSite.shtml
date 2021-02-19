@@ -144,9 +144,9 @@
         <p>The regeneration of the Javadoc and xml content involves
         significantly more work than merely updating a directory, and so these are only done once per day, as needed,
         by the
-        <a href="http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/">Generate Website</a>
+        <a href="http://builds.jmri.org/jenkins/job/WebSite/job/generate-website/">Generate Website</a>
         job on the
-        <a href="http://jmri.tagadab.com/jenkins/">production Jenkins server</a>.</p>
+        <a href="http://builds.jmri.org/jenkins/">production Jenkins server</a>.</p>
 
         <a name="local"></a><h2>Local Web Site: Mac OS X</h2>
 
