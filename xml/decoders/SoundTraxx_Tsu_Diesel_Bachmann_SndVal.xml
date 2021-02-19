@@ -25,6 +25,7 @@
   <version author="Alain Le Marchand" version="9" lastUpdated="20160522"/>
   <version author="Alain Le Marchand" version="9.1" lastUpdated="20160522"/>
   <version author="Alain Le Marchand" version="9.2" lastUpdated="20180103"/>
+  <version author="Marc N Fournier" version="10" lastUpdated="20210212"/>
 
   <!-- This file contains the definitions for the Bachmann spec'd Sound Value series of decoders        -->
   <!-- version 1	Based on the "Soundtraxx_Tsu_Diesel files.                                      -->
@@ -50,8 +51,10 @@
   <!-- version 9    Add EMD SD45 (N scale)                                                              -->
   <!-- Version 9.1  Renamed family  to "Tsunami Diesel Bachmann Sound Value"                            -->
   <!--              Previous def. kept in file "SoundTraxx_Bachmann_SndVal_Dsl_deprecated.xml"          -->
-  <!-- version 9.2 Specific UserID with tooltip indicating version number,
-                  from SoundTraxx Product Identification guide Rev.B                                    -->
+  <!-- version 9.2  Specific UserID with tooltip indicating version number,
+                    from SoundTraxx Product Identification guide Rev.B                                  -->
+  <!-- version 10  	Add ditch light support FX5/FX6 to GE_ES44AC, EMD_SD70ACe as reported by User 
+					Add EMD E7, EMD GP30																-->
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
                 For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc.
@@ -228,6 +231,40 @@
             <functionlabel num="6" lockable="true">Lighted # Boards</functionlabel>
         </functionlabels>
       </model>
+	  <model model="EMD E7" numOuts="4" numFns="14" connector="other" productID="EMD_E7" comment="(HO scale) Dual Prime Mover END567">
+        <versionCV lowVersionID="82"/>
+        <output name="3" label="Mars|Light">
+            <label xml:lang="it">Flash|Luci</label>
+        </output>
+        <output name="4" label="# Board|Lights">
+            <label xml:lang="it"># Board|Luci</label>
+        </output>
+        <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+        </output>
+        <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|dinam</label>
+        </output>
+        <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+        </output>
+        <output name="9" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+        </output>
+        <functionlabels>
+            <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Mars Light</functionlabel>
+            <functionlabel num="6" lockable="true">Lighted # Boards</functionlabel>
+        </functionlabels>
+      </model>
       <model model="EMD F7A" numOuts="2" numFns="14" connector="other" productID="EMD_F7A" formFactor="HO" comment="Diesel Prime Mover EMD567 Non-Turbo">
         <versionCV lowVersionID="82"/>
         <output name="3" label="FX5| Rule 17">
@@ -309,6 +346,37 @@
             <label xml:lang="it">Silenzio| </label>
         </output>
       </model>
+	  
+	  <model model="EMD GP30" numOuts="2" numFns="14" connector="other" productID="EMD_GP30" formFactor="HO" comment="Diesel Prime Mover EMD567D3 Turbo">
+        <versionCV lowVersionID="82"/>
+        <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+        </output>
+        <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+        </output>
+        <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+        </output>
+        <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|dinam</label>
+		</output>
+        <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+        </output>
+        <output name="9" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+        </output>
+      </model>
+	  
 	  <model model="EMD GP38-2" numOuts="2" numFns="14" connector="other" productID="EMD_GP382" formFactor="HO" comment="Diesel Prime Mover EMD645 Non-Turbo">
         <versionCV lowVersionID="82"/>
         <output name="3" label="FX5| Rule 17">
@@ -431,6 +499,40 @@
             <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
         </functionlabels>
       </model>
+	  
+	  <model model="EMD SD70ACe + dl" numOuts="4" numFns="14" connector="other" productID="EMD_SD70ACe_dl" formFactor="HO" comment="Diesel Prime Mover EMD 16-710 G3C-T2 with Ditch Lights">
+        <versionCV lowVersionID="82"/>
+        <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+        </output>
+        <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+        </output>
+        <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+        </output>
+        <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|dinam</label>
+        </output>
+        <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+        </output>
+        <output name="9" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+        </output>
+        <functionlabels>
+            <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+        </functionlabels>
+      </model>
+	  
       <model model="GE ES44AC" numOuts="2" numFns="14" connector="other" productID="GE_ES44AC" formFactor="HO" comment="Diesel Prime Mover GE GEVO V12">
         <versionCV lowVersionID="82"/>
         <output name="3" label="FX5| Rule 17">
@@ -463,7 +565,40 @@
             <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
         </functionlabels>
       </model>
-      <model model="GG1" numOuts="2" numFns="14" connector="other" productID="GG1" formFactor="HO" comment="GE-Altoona Electric">
+	  
+	  <model model="GE ES44AC +dl" numOuts="4" numFns="14" connector="other" productID="GE_ES44AC_dl" formFactor="HO" comment="Diesel Prime Mover GE GEVO V12 with Ditch Lights">
+        <versionCV lowVersionID="82"/>
+        <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+        </output>
+        <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+        </output>
+        <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+        </output>
+        <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|dinam</label>
+        </output>
+        <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+        </output>
+        <output name="9" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+        </output>
+        <functionlabels>
+            <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+        </functionlabels>
+      </model>
+	  <model model="GG1" numOuts="2" numFns="14" connector="other" productID="GG1" formFactor="HO" comment="GE-Altoona Electric">
         <versionCV lowVersionID="82"/>
         <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -498,7 +633,7 @@
             <functionlabel num="6" lockable="true">Air Compressor</functionlabel>
         </functionlabels>
       </model>
-      <functionlabels>
+	  <functionlabels>
         <functionlabel num="0" lockable="true">Headlight</functionlabel>
         <functionlabel num="1" lockable="true">Bell</functionlabel>
         <functionlabel num="2" lockable="false">Air Horn</functionlabel>
@@ -526,7 +661,7 @@
         <label xml:lang="fr">Accelération (0-255)</label>
         <label xml:lang="de">Anfahrverzögerung (0-255)</label>
       </variable>
-      <variable CV="3" item="Accel" default="6" include="Alco_RS3,Alco_S2,EMD_DD40AX,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD45,EMD_SD70ACe,GE_ES44AC,GG1" tooltip="Sets the acceleration rate (delay).  Higher number = slower rate">
+      <variable CV="3" item="Accel" default="6" include="Alco_RS3,Alco_S2,EMD_DD40AX,EMD_E7,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP30,EMD_GP382,EMD_GP40,EMD_SD45,EMD_SD70ACe,GE_ES44AC,EMD_SD70ACe_dl,GE_ES44AC_dl,GG1" tooltip="Sets the acceleration rate (delay).  Higher number = slower rate">
         <decVal/>
         <label>Acceleration Rate (0-255)</label>
         <label xml:lang="it">Accellerazione (0-255)</label>
@@ -540,7 +675,7 @@
         <label xml:lang="fr">Décélération (0-255)</label>
         <label xml:lang="de">Bremszeit (0-255)</label>
       </variable>
-      <variable CV="4" item="Decel" default="5" include="Alco_RS3,Alco_S2,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD45,EMD_SD70ACe,GE_ES44AC" tooltip="Sets the deceleration rate (delay).  Higher number = slower rate">
+      <variable CV="4" item="Decel" default="5" include="Alco_RS3,Alco_S2,EMD_E7,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP30,EMD_GP382,EMD_GP40,EMD_SD45,EMD_SD70ACe,GE_ES44AC,EMD_SD70ACe_dl,GE_ES44AC_dl," tooltip="Sets the deceleration rate (delay).  Higher number = slower rate">
         <decVal/>
         <label>Braking Rate (0-255)</label>
         <label xml:lang="it">Decellerazione (0-255)</label>
@@ -606,11 +741,19 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F4</label>
       </variable>
-      <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="0" tooltip="Check to enable function F5 when the unit is operating in analog power mode">
+	  <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="0" tooltip="Check to enable function F5 when the unit is operating in analog power mode">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Analog Mode Function Status - F5</label>
+      </variable>
+	  <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="1" include="EMD_E7,EMD_SD70ACe_dl,GE_ES44AC_dl" tooltip="Check to enable function F5 when the unit is operating in analog power mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F5</label>
       </variable>
       <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0" tooltip="Check to enable function F6 when the unit is operating in analog power mode">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Analog Mode Function Status - F6</label>
+      </variable>
+	  <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="1" include="EMD_E7" tooltip="Check to enable function F6 when the unit is operating in analog power mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F6</label>
       </variable>
@@ -734,7 +877,7 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumCurve.xml"/>
         <label>Speed Table Selection</label>
       </variable>
-      <variable item="Speed Table Selection" CV="25" mask="XXXVVVVV" default="16" include="Alco_FA2,Alco_FB2,Alco_RS3,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD70ACe,GE_ES44AC" tooltip="Select a manufacturers speed curve, or use a curve you define yourself">
+      <variable item="Speed Table Selection" CV="25" mask="XXXVVVVV" default="16" include="Alco_FA2,Alco_FB2,Alco_RS3,EMD_E7,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP30,EMD_GP382,EMD_GP40,EMD_SD70ACe,GE_ES44AC,EMD_SD70ACe_dl,GE_ES44AC_dl" tooltip="Select a manufacturers speed curve, or use a curve you define yourself">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumCurve.xml"/>
         <label>Speed Table Selection</label>
       </variable>
@@ -764,11 +907,11 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls Headlight</label>
       </variable>
-      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2" default="0" include="Alco_FA2,Alco_FB2,Alco_S4">
+      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2" default="0" include="Alco_FA2,Alco_FB2,Alco_S4,GE_ES44AC_dl">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls Backup Light</label>
       </variable>
-      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2" default="1" include="Alco_S2,Alco_RS3,EMD_DD40AX,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD45,EMD_SD70ACe,GE_ES44AC,GG1">
+      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2" default="1" include="Alco_S2,Alco_RS3,EMD_DD40AX,EMD_E7,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP30,EMD_GP382,EMD_GP40,EMD_SD45,EMD_SD70ACe,GE_ES44AC,GG1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls Backup Light</label>
       </variable>
@@ -936,7 +1079,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Dynamics</label>
       </variable>
-      <variable item="F4 controls output 7" CV="38" mask="XXXXVXXX" default="1" include="EMD_GP382,EMD_GP40,EMD_DD40AX,EMD_SD45,EMD_SD70ACe,GE_ES44AC,GG1">
+      <variable item="F4 controls output 7" CV="38" mask="XXXXVXXX" default="1" include="EMD_GP30,EMD_GP382,EMD_GP40,EMD_DD40AX,EMD_SD45,EMD_SD70ACe,GE_ES44AC,EMD_SD70ACe_dl,GE_ES44AC_dl,GG1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Dynamics</label>
       </variable>
@@ -968,11 +1111,15 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output FX5</label>
             </variable>
-            <variable item="F5 controls output 3" CV="39" mask="XXXXXXVX" minOut="1" default="1" include="EMD_DD40AX">
+            <variable item="F5 controls output 3" CV="39" mask="XXXXXXVX" minOut="1" default="1" include="EMD_DD40AX,GE_ES44AC_dl">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output FX5</label>
             </variable>
-            <variable item="F5 controls output 4" CV="39" mask="XXXXXVXX" minOut="2" default="0">
+            <variable item="F5 controls output 4" CV="39" mask="XXXXXVXX" minOut="2" default="0" exclude="EMD_DD40AX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F5 controls output FX6</label>
+            </variable>
+			<variable item="F5 controls output 4" CV="39" mask="XXXXXVXX" minOut="2" default="1" include="GE_ES44AC_dl">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output FX6</label>
             </variable>
@@ -1239,15 +1386,19 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output Bell</label>
             </variable>
-            <variable item="F9 controls output 3(alt)" CV="39" mask="XXXXXXVX" minOut="1" default="0" exclude="EMD_DD40AX">
+            <variable item="F9 controls output 3(alt)" CV="39" mask="XXXXXXVX" minOut="1" default="0" exclude="EMD_E7,EMD_DD40AX,GE_ES44AC_dl">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output FX5</label>
             </variable>
-            <variable item="F9 controls output 3(alt)" CV="39" mask="XXXXXXVX" minOut="1" default="1" include="EMD_DD40AX">
+            <variable item="F9 controls output 3(alt)" CV="39" mask="XXXXXXVX" minOut="1" default="1" include="EMD_E7,EMD_DD40AX,EMD_SD70ACe_dl,GE_ES44AC_dl">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output FX5</label>
             </variable>
-            <variable item="F9 controls output 4(alt)" CV="39" mask="XXXXXVXX" minOut="2" default="0">
+            <variable item="F9 controls output 4(alt)" CV="39" mask="XXXXXVXX" minOut="2" default="0" exclude="GE_ES44AC_dl">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F9 controls output FX6</label>
+            </variable>
+			<variable item="F9 controls output 4(alt)" CV="39" mask="XXXXXVXX" minOut="2" default="1" include="EMD_SD70ACe_dl,GE_ES44AC_dl">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output FX6</label>
             </variable>
@@ -1279,7 +1430,7 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output FX6</label>
             </variable>
-            <variable item="F10 controls output 4(alt)" CV="40" mask="XXXXXVXX" minOut="2" default="1" include="EMD_DD40AX">
+            <variable item="F10 controls output 4(alt)" CV="40" mask="XXXXXVXX" minOut="2" default="1" include="EMD_E7,EMD_DD40AX">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output FX6</label>
             </variable>
@@ -1503,7 +1654,7 @@
       </variables>
       <!-- end exchangeable function groups -->
       <!-- Lighting Configuration follows -->
-      <variable item="Headlight F0(f) Effect Selection" CV="49" mask="XXXXVVVV" default="14" tooltip="Determines the effect generated from the headlight">
+      <variable item="Headlight F0(f) Effect Selection" CV="49" mask="XXXXVVVV" default="15" tooltip="Determines the effect generated from the headlight">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>Headlight F0(f) Effect Selection</label>
       </variable>
@@ -1523,11 +1674,7 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>Headlight F0(f) Light Type</label>
       </variable>
-      <variable item="Backup Light F0(r) Effect Selection" CV="50" mask="XXXXVVVV" default="13" exclude="Alco_FA2,Alco_FB2,Alco_S4,GG1" tooltip="Determines the effect generated from the backup light">
-        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
-        <label>Backup Light F0(r) Effect Selection</label>
-      </variable>
-      <variable item="Backup Light F0(r) Effect Selection" CV="50" mask="XXXXVVVV" default="14" include="Alco_FA2,Alco_FB2,Alco_S4,GG1" tooltip="Determines the effect generated from the backup light">
+      <variable item="Backup Light F0(r) Effect Selection" CV="50" mask="XXXXVVVV" default="15"  tooltip="Determines the effect generated from the backup light">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>Backup Light F0(r) Effect Selection</label>
       </variable>
@@ -1547,7 +1694,17 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>Backup Light F0(r) Light Type</label>
       </variable>
+	  <variable item="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="2" minOut="3" include="EMD_E7" tooltip="Determines the effect generated from the FX5 light output">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
+        <label>FX5 Effect Selection</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>
       <variable item="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="7" minOut="3" include="EMD_DD40AX" tooltip="Determines the effect generated from the FX5 light output">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
+        <label>FX5 Effect Selection</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>
+	  <variable item="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="9" minOut="3" include="EMD_SD70ACe_dl,GE_ES44AC_dl" tooltip="Determines the effect generated from the FX5 light output">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>FX5 Effect Selection</label>
         <comment>Don't show this for the TSU-750 models</comment>
@@ -1562,12 +1719,17 @@
         <label>FX5 Grade Crossing Logic</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
+	  <variable item="FX5 Grade Crossing Logic" CV="51" mask="XXVXXXXX" default="1" minOut="3" include="EMD_SD70ACe_dl,GE_ES44AC_dl" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX5 Grade Crossing Logic</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>
       <variable item="FX5 Rule 17 Mode" CV="51" mask="XVXXXXXX" default="0" minOut="3" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumR17FX5.xml"/>
         <label>FX5 Rule 17 Mode</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX5 Light Type" CV="51" mask="VXXXXXXX" default="1" minOut="3"  include="EMD_DD40AX" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable item="FX5 Light Type" CV="51" mask="VXXXXXXX" default="1" minOut="3"  include="EMD_E7,EMD_DD40AX,EMD_SD70ACe_dl,GE_ES44AC_dl" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>FX5 Light Type</label>
         <comment>Don't show this for the TSU-750 models</comment>
@@ -1577,12 +1739,27 @@
         <label>FX6 Effect Selection</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
+	  <variable item="FX6 Effect Selection" CV="52" mask="XXXXVVVV" default="9" minOut="4" include="EMD_SD70ACe_dl,GE_ES44AC_dl" tooltip="Determines the effect generated from the FX6 light output">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
+        <label>FX6 Effect Selection</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>
       <variable item="FX6 Phase Selection" CV="52" mask="XXXVXXXX" default="0" minOut="4" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
         <label>FX6 Phase Selection</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
+	  <variable item="FX6 Phase Selection" CV="52" mask="XXXVXXXX" default="1" minOut="4" include="EMD_SD70ACe_dl,GE_ES44AC_dl" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
+        <label>FX6 Phase Selection</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>
       <variable item="FX6 Grade Crossing Logic" CV="52" mask="XXVXXXXX" default="0" minOut="4" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX6 Grade Crossing Logic</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>
+	  <variable item="FX6 Grade Crossing Logic" CV="52" mask="XXVXXXXX" default="1" minOut="4" include="EMD_SD70ACe_dl,GE_ES44AC_dl" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6 Grade Crossing Logic</label>
         <comment>Don't show this for the TSU-750 models</comment>
@@ -1597,6 +1774,45 @@
         <label>FX6 Light Type</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
+	  <variable item="FX6 Light Type" CV="52" mask="VXXXXXXX" default="1" minOut="4" include="EMD_E7,EMD_SD70ACe_dl,GE_ES44AC_dl" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
+        <label>FX6 Light Type</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>
+	  
+	  <variable item="FX5 Forward Directional Control" CV="57" mask="XXXXXXXV" default="1" minOut="4" include="EMD_E7" tooltip="Check to enable FX5 function output in Forward direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX5 Forward Directional Control</label>
+      </variable>
+      <variable item="FX5 Reverse Directional Control" CV="57" mask="XXXXXXVX" default="0" minOut="4" include="" tooltip="Check to enable FX5 function output in Reverse direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX5 Reverse Directional Control</label>
+      </variable>
+      <variable item="FX5B Forward Directional Control" CV="57" mask="XXXXXVXX" default="0" minOut="4" include="" tooltip="Check to enable FX5B function output in Forward direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX5B Forward Directional Control</label>
+      </variable>
+      <variable item="FX5B Reverse Directional Control" CV="57" mask="XXXXVXXX" default="0" minOut="4" include="" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="Check to enable FX5B function output in Reverse direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX5B Reverse Directional Control</label>
+      </variable>
+      <variable item="FX6 Forward Directional Control" CV="57" mask="XXXVXXXX" default="1" minOut="4" include="EMD_E7" tooltip="Check to enable FX6 function output in Forward direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX6 Forward Directional Control</label>
+      </variable>
+      <variable item="FX6 Reverse Directional Control" CV="57" mask="XXVXXXXX" default="1" minOut="4" include="EMD_E7" tooltip="Check to enable FX6 function output in Reverse direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX6 Reverse Directional Control</label>
+      </variable>
+      <variable item="FX6B Forward Directional Control" CV="57" mask="XVXXXXXX" default="0" minOut="4" include="" tooltip="Check to enable FX6B function output in Forward direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX6B Forward Directional Control</label>
+      </variable>
+      <variable item="FX6B Reverse Directional Control" CV="57" mask="VXXXXXXX" default="0" minOut="4" include="" tooltip="Check to enable FX6B function output in Reverse direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX6B Reverse Directional Control</label>
+      </variable>
+	  
       <variable item="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" default="4" comment="0 is fast, 15 is slow, 4 is recommended for start" tooltip="Sets the overall flash rate of the Hyperlight effects">
         <decVal max="15"/>
         <label>Hyperlight Flash Rate (0-15)</label>
@@ -1608,11 +1824,15 @@
         <comment>0-15 seconds</comment>
       </variable>
       <!-- End Lighting Configuration -->
+	  <variable CV="63" item="Radio Power Conversion" default="15" include="EMD_GP30" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
+        <decVal/>
+        <label>Analog Mode Motor Start Voltage (0-255)</label>
+      </variable>
       <variable CV="63" item="Radio Power Conversion" default="25" include="Alco_S2,Alco_S4" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
         <decVal/>
         <label>Analog Mode Motor Start Voltage (0-255)</label>
       </variable>
-      <variable CV="63" item="Radio Power Conversion" default="35" include="Alco_FA2,Alco_FB2,Alco_RS3,EMD_DD40AX,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD45,EMD_SD70ACe,GE_ES44AC,GG1" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
+      <variable CV="63" item="Radio Power Conversion" default="35" include="Alco_FA2,Alco_FB2,Alco_RS3,EMD_E7,EMD_DD40AX,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD45,EMD_SD70ACe,GE_ES44AC,EMD_SD70ACe_dl,GE_ES44AC_dl,GG1" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
         <decVal/>
         <label>Analog Mode Motor Start Voltage (0-255)</label>
       </variable>
@@ -1638,7 +1858,7 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumManAuto.xml"/>
         <label>Auto Radiator Fan Enable</label>
       </variable>
-      <variable CV="113" item="Sound Group 3 Option 3" default="0" include="EMD_SD70ACe,GE_ES44AC,GG1" tooltip="&lt;html&gt;When loco has stopped and all functions are turned off, sound effects will turn&lt;br&gt;      off automatically after timeout period has elapsed.  Set to zero to disable.&lt;br&gt; Timeout in seconds = CV value /4&lt;/html&gt;">
+      <variable CV="113" item="Sound Group 3 Option 3" default="0" include="EMD_SD70ACe,GE_ES44AC,EMD_SD70ACe_dl,GE_ES44AC_dl,GG1" tooltip="&lt;html&gt;When loco has stopped and all functions are turned off, sound effects will turn&lt;br&gt;      off automatically after timeout period has elapsed.  Set to zero to disable.&lt;br&gt; Timeout in seconds = CV value /4&lt;/html&gt;">
         <decVal/>
         <label>Quiet Mode Timeout Period</label>
       </variable>
@@ -1646,11 +1866,11 @@
         <decVal max="15"/>
         <label>Bell Ring Rate</label>
       </variable>
-      <variable CV="114" item="Sound Group 3 Option 2" default="5" include="GG1" tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
+      <variable CV="114" item="Sound Group 3 Option 2" default="5" include="GG1,GE_ES44AC" tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
         <decVal max="15"/>
         <label>Bell Ring Rate</label>
       </variable>
-      <variable CV="114" item="Sound Group 3 Option 2" default="6" include="EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD45" tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
+      <variable CV="114" item="Sound Group 3 Option 2" default="6" include="EMD_E7,EMD_GP7,EMD_GP30,EMD_GP382,EMD_GP40,EMD_SD45" tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
         <decVal max="15"/>
         <label>Bell Ring Rate</label>
       </variable>
@@ -1730,7 +1950,7 @@
         <label>Airhorn Select</label>
         <comment>Show these horns for the models (productID) listed below</comment>
       </variable>
-      <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="EMD_SD70ACe" tooltip="Selects which airhorn to use">
+      <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="EMD_SD70ACe,EMD_SD70ACe_dl" tooltip="Selects which airhorn to use">
         <enumVal>
           <enumChoice choice="Nathan K5LLA">
             <choice>Nathan K5LLA</choice>
@@ -1745,7 +1965,7 @@
         <label>Airhorn Select</label>
         <comment>Show these horns for the models (productID) listed below</comment>
       </variable>
-      <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="GE_ES44AC" tooltip="Selects which airhorn to use">
+      <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="GE_ES44AC,GE_ES44AC_dl" tooltip="Selects which airhorn to use">
         <enumVal>
           <enumChoice choice="Nathan K5HL">
             <choice>Nathan K5HL</choice>
@@ -1775,7 +1995,8 @@
         <label>Airhorn Select</label>
         <comment>Show these horns for the models (productID) listed below</comment>
       </variable>
-      <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="EMD_GP7" comment="Show these horns for the models (productID) listed below" tooltip="Selects which airhorn to use">
+	  
+      <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="EMD_E7,EMD_GP7" comment="Show these horns for the models (productID) listed below" tooltip="Selects which airhorn to use">
         <enumVal>
           <enumChoice choice="Leslie A125/A200 Combo">
             <choice>Leslie A125/A200 Combo</choice>
@@ -1788,8 +2009,25 @@
           </enumChoice>
         </enumVal>
         <label>Airhorn Select</label>
+		<comment>Show these horns for the models (productID) listed below</comment>
+      </variable>
+		
+		<variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="EMD_GP30" comment="Show these horns for the models (productID) listed below" tooltip="Selects which airhorn to use">
+        <enumVal>
+          <enumChoice choice="Nathan M5">
+            <choice>Nathan M5</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie A200">
+            <choice>Leslie A200</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie S3">
+            <choice>Leslie S3L</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Airhorn Select</label>
         <comment>Show these horns for the models (productID) listed below</comment>
       </variable>
+
       <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="EMD_GP382,EMD_GP40,EMD_SD45" comment="Show these horns for the models (productID) listed below" tooltip="Selects which airhorn to use">
         <enumVal>
           <enumChoice choice="Nathan P3">
@@ -1838,7 +2076,7 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumDynamic.xml"/>
         <label>Dynamic Brake Override</label>
       </variable>
-      <variable CV="118" item="Advanced Group 2 Option 6" default="204" include="EMD_SD70ACe,GE_ES44AC,GG1" tooltip="&lt;html&gt;Adjust the motor response following a momentary power glitch&lt;br&gt;      0 or 128 = Disabled&lt;br&gt;      1-127 = Absolute Limiting (will return to this speed step)&lt;br&gt;      129-255 = Proportional Limiting (a percentage of set speed)&lt;br&gt;      Note: This feature is not available in early decoders&lt;/html&gt;">
+      <variable CV="118" item="Advanced Group 2 Option 6" default="204" include="EMD_GP30,EMD_E7,EMD_SD70ACe,GE_ES44AC,EMD_SD70ACe_dl,GE_ES44AC_dl,GG1" tooltip="&lt;html&gt;Adjust the motor response following a momentary power glitch&lt;br&gt;      0 or 128 = Disabled&lt;br&gt;      1-127 = Absolute Limiting (will return to this speed step)&lt;br&gt;      129-255 = Proportional Limiting (a percentage of set speed)&lt;br&gt;      Note: This feature is not available in early decoders&lt;/html&gt;">
         <decVal/>
         <label>Motor Recovery Speed (0-255)</label>
       </variable>
@@ -1859,7 +2097,7 @@
         <decVal/>
         <label>Bell Volume</label>
       </variable>
-      <variable CV="130" mask="VVVVVVVV" item="Sound Setting 14" default="64" include="Alco_RS3,EMD_F7A,EMD_DD40AX,EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD45,EMD_SD70ACe" tooltip="Sets the volume of the bell">
+      <variable CV="130" mask="VVVVVVVV" item="Sound Setting 14" default="64" include="EMD_E7,Alco_RS3,EMD_F7A,EMD_DD40AX,EMD_GP7,EMD_GP30,EMD_GP382,EMD_GP40,EMD_SD45,EMD_SD70ACe,EMD_SD70ACe_dl" tooltip="Sets the volume of the bell">
         <decVal/>
         <label>Bell Volume</label>
       </variable>
@@ -1867,7 +2105,7 @@
         <decVal/>
         <label>Bell Volume</label>
       </variable>
-      <variable CV="130" mask="VVVVVVVV" item="Sound Setting 14" default="90" include="GE_ES44AC" tooltip="Sets the volume of the bell">
+      <variable CV="130" mask="VVVVVVVV" item="Sound Setting 14" default="90" include="GE_ES44AC,GE_ES44AC_dl" tooltip="Sets the volume of the bell">
         <decVal/>
         <label>Bell Volume</label>
       </variable>
@@ -1887,7 +2125,11 @@
         <decVal/>
         <label>Engine Exhaust Volume</label>
       </variable>
-      <variable CV="131" mask="VVVVVVVV" item="Sound Setting 15" default="196" tooltip="Sets the volume of the diesel engine exhaust" include="EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD45">
+	  <variable CV="131" mask="VVVVVVVV" item="Sound Setting 15" default="150" tooltip="Sets the volume of the diesel engine exhaust" include="EMD_GP30">
+        <decVal/>
+        <label>Engine Exhaust Volume</label>
+      </variable>
+      <variable CV="131" mask="VVVVVVVV" item="Sound Setting 15" default="196" tooltip="Sets the volume of the diesel engine exhaust" include="EMD_E7,EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD45">
         <decVal/>
         <label>Engine Exhaust Volume</label>
       </variable>
@@ -1899,7 +2141,7 @@
         <decVal/>
         <label>Air Compressor Volume</label>
       </variable>
-      <variable CV="132" mask="VVVVVVVV" item="Sound Setting 23" default="120" tooltip="Sets the volume of the air compressor" include="EMD_SD70ACe,GE_ES44AC">
+      <variable CV="132" mask="VVVVVVVV" item="Sound Setting 23" default="00" tooltip="Sets the volume of the air compressor" include="EMD_SD70ACe,GE_ES44AC,EMD_SD70ACe_dl,GE_ES44AC_dl,">
         <decVal/>
         <label>Air Compressor Volume</label>
       </variable>
@@ -1911,11 +2153,11 @@
         <decVal/>
         <label>Pantograph Volume</label>
       </variable>
-      <variable CV="133" mask="VVVVVVVV" item="Sound Setting 16" default="120" include="EMD_GP382,EMD_GP40" tooltip="Sets the volume of the pantograph">
+      <variable CV="133" mask="VVVVVVVV" item="Sound Setting 16" default="120" include="EMD_GP382,EMD_GP40" tooltip="Sets the volume of Dynamic brake">
         <decVal/>
         <label>Dynamic brake Volume</label>
       </variable>
-      <variable CV="133" mask="VVVVVVVV" item="Sound Setting 16" default="196" include="EMD_SD45" tooltip="Sets the volume of the pantograph">
+      <variable CV="133" mask="VVVVVVVV" item="Sound Setting 16" default="196" include="EMD_GP30,EMD_SD45" tooltip="Sets the volume of Dynamic brake">
         <decVal/>
         <label>Dynamic brake Volume</label>
       </variable>
@@ -1936,7 +2178,7 @@
         <decVal/>
         <label>Grade Crossing Airhorn Sensitivity</label>
       </variable>
-      <variable item="Brake Squeal Sensitivity" CV="196" mask="VVVVVVVV" default="3" include="EMD_SD70ACe,GE_ES44AC,GG1" tooltip="Specifies the negative rate of throttle change needed to activate the automatic brake squeal">
+      <variable item="Brake Squeal Sensitivity" CV="196" mask="VVVVVVVV" default="3" include="EMD_GP30,EMD_E7,EMD_SD70ACe,GE_ES44AC_dl,GG1" tooltip="Specifies the negative rate of throttle change needed to activate the automatic brake squeal">
         <decVal/>
         <label>Brake Squeal Sensitivity</label>
       </variable>
@@ -1970,7 +2212,7 @@
         <decVal/>
         <label>Motor Kp Coefficient (0-255)</label>
       </variable>
-      <variable CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="80" include="Alco_FA2,Alco_FB2,Alco_RS3,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD45,EMD_SD70ACe,GE_ES44AC,GG1" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
+      <variable CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="80" include="Alco_FA2,Alco_FB2,Alco_RS3,EMD_E7,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP30,EMD_GP382,EMD_GP40,EMD_SD45,EMD_SD70ACe,GE_ES44AC,EMD_SD70ACe_dl,GE_ES44AC_dl,GG1" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
         <decVal/>
         <label>Motor Kp Coefficient (0-255)</label>
       </variable>
@@ -1982,7 +2224,7 @@
         <decVal/>
         <label>Motor Ki Coefficient (0-255)</label>
       </variable>
-      <variable CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="8" include="Alco_FA2,Alco_FB2,Alco_RS3,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP382,EMD_GP40,EMD_SD45,EMD_SD70ACe,GE_ES44AC,GG1" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
+      <variable CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="8" include="Alco_FA2,Alco_FB2,Alco_RS3,EMD_E7,EMD_F7A,EMD_F7B,EMD_GP7,EMD_GP30,EMD_GP382,EMD_GP40,EMD_SD45,EMD_SD70ACe,GE_ES44AC,EMD_SD70ACe_dl,GE_ES44AC_dl,GG1" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
         <decVal/>
         <label>Motor Ki Coefficient (0-255)</label>
       </variable>
@@ -2018,7 +2260,15 @@
         <decVal max="255"/>
         <label>BEMF Reference Voltage</label>
       </variable>
-      <variable CV="218" item="Trix Power Conversion" default="15" include="EMD_F7A,EMD_F7B" tooltip="undocumented">
+	  <variable CV="217" mask="XXXXXXVX" item="EMF Enable" default="1" include="EMD_GP30,EMD_E7" tooltip="Enable back-EMF motor control">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Back-EMF Enable</label>
+    </variable>
+    <variable CV="217" mask="XXXXVXXX" item="Load Control" default="0" tooltip="Direction commands will bring the motor to a full stop for a duration of 500ms before the decoder changes locomotive direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Auto-Stop Enable</label>
+    </variable>
+      <variable CV="218" item="Trix Power Conversion" default="15" include="EMD_GP30,EMD_E7,EMD_F7A,EMD_F7B" tooltip="undocumented">
         <decVal max="255"/>
         <label>Analog Mode Engine Start</label>
       </variable>
