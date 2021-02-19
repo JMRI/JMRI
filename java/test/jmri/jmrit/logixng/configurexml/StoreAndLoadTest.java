@@ -431,6 +431,24 @@ public class StoreAndLoadTest {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
+        ActionPower actionPower = new ActionPower(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionPower);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionPower = new ActionPower(digitalActionManager.getAutoSystemName(), null);
+        actionPower.setComment("A comment");
+        actionPower.setBeanState(ActionPower.PowerState.Off);
+        maleSocket = digitalActionManager.registerAction(actionPower);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        actionPower = new ActionPower(digitalActionManager.getAutoSystemName(), null);
+        actionPower.setComment("A comment");
+        actionPower.setBeanState(ActionPower.PowerState.On);
+        maleSocket = digitalActionManager.registerAction(actionPower);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        
         ActionScript actionScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionScript);
         maleSocket.setEnabled(false);
