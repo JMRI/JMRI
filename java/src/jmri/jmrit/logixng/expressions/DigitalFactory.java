@@ -27,6 +27,7 @@ public class DigitalFactory implements DigitalExpressionFactory {
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionLocalVariable.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionMemory.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionOBlock.class));
+        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionPower.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionReference.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionScript.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionSensor.class));
