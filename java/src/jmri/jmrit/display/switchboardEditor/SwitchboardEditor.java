@@ -118,7 +118,7 @@ public class SwitchboardEditor extends Editor {
     private int rows = 4; // matches initial autoRows pref for default pane size
     private final float cellProportion = 1.0f; // TODO analyse actual W:H per switch type/shape: worthwhile?
     private int _tileSize = 100;
-    private int _iconScale = 75;
+    private int _iconSquare = 75;
     private final JSpinner rowsSpinner = new JSpinner(new SpinnerNumberModel(rows, 1, 25, 1));
     private final JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
     // number of rows displayed on switchboard, disabled when autoRows is on
@@ -338,7 +338,7 @@ public class SwitchboardEditor extends Editor {
         setScroll(SCROLL_NONE);
         scrollNone.setSelected(true);
         // set icon size initial state
-        _iconScale = SIZE_INIT;
+        _iconSquare = SIZE_INIT;
         sizeDefault.setSelected(true);
         // register the resulting panel for later configuration
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
@@ -727,21 +727,21 @@ public class SwitchboardEditor extends Editor {
         return controls;
     }
 
-    private int getMinSpinner() {
+    private synchronized int getMinSpinner() {
         return (Integer) minSpinner.getValue();
     }
 
-    private int getMaxSpinner() {
+    private synchronized int getMaxSpinner() {
         return (Integer) maxSpinner.getValue();
     }
 
-    protected void setMinSpinner(int value) {
+    protected synchronized void setMinSpinner(int value) {
         if (value >= rangeBottom && value < rangeTop) { // allows to set above MaxSpinner temporarily
             minSpinner.setValue(value);
         }
     }
 
-    protected void setMaxSpinner(int value) {
+    protected synchronized void setMaxSpinner(int value) {
         if (value > rangeBottom && value <= rangeTop) { // allows to set above MinSpinner temporarily
             maxSpinner.setValue(value);
         }
@@ -1853,9 +1853,9 @@ public class SwitchboardEditor extends Editor {
     }
 
     public void setIconScale(int size) {
-        _iconScale = size;
+        _iconSquare = size;
         // also set the scale radio menu items, all 3 are in sizeGroup so will auto deselect
-        if (size <100) {
+        if (size < 100) {
             sizeSmall.setSelected(true);
         } else if (size > 100) {
             sizeLarge.setSelected(true);
@@ -1866,7 +1866,7 @@ public class SwitchboardEditor extends Editor {
     }
 
     public int getIconScale() {
-    return _iconScale;
+    return _iconSquare;
     }
 
     private final static Logger log = LoggerFactory.getLogger(SwitchboardEditor.class);

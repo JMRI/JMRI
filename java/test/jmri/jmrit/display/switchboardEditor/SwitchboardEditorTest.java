@@ -9,15 +9,13 @@ import java.util.Objects;
 import org.junit.Ignore;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-import org.netbeans.jemmy.operators.JMenuBarOperator;
-import org.netbeans.jemmy.operators.JMenuOperator;
+import org.netbeans.jemmy.operators.*;
 
 import jmri.*;
 import jmri.jmrit.display.AbstractEditorTestBase;
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.util.ColorUtil;
 import jmri.util.JUnitUtil;
-import org.netbeans.jemmy.operators.JPopupMenuOperator;
 
 /**
  * Test functioning of SwitchboardEditor.
@@ -77,9 +75,17 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
         Assertions.assertEquals("Turnouts", e.getSwitchTypeName(), "Type=Turnout default at startup");
         BeanSwitch sw = e.getSwitch("IT1");
         Assertions.assertNotNull(sw, "Found BeanSwitch IT1");
+
+        Thread popup_thread1 = new Thread(() -> {
+            JPopupMenuOperator jpmo = new JPopupMenuOperator();
+            jpmo.pushMenuNoBlock(sw.getNameString()); // close it
+        });
+        popup_thread1.setName("Switch popup");
+        popup_thread1.start();
+
         sw.showPopUp(new MouseEvent(sw, 1, 0, 0, 0, 0, 1, false));
-        JPopupMenuOperator jpmo = new JPopupMenuOperator();
-        jpmo.pushMenuNoBlock(sw.getNameString()); // close it
+
+        JUnitUtil.waitFor(() -> !(popup_thread1.isAlive()), "Switch popup");
     }
 
     @Test
