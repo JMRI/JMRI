@@ -110,9 +110,9 @@
             together and trigger a single internal Sensor for the
             Block.</li>
 
-            <li>An OBlock has from 1 to M Ppaths.</li>
+            <li>An OBlock has from 1 to M OPaths.</li>
 
-            <li>An OBlock has 0 to K Turnouts.</li>
+            <li>An OBlock has 0 to K PathTurnouts.</li>
           </ul>
         </li>
 
@@ -123,6 +123,8 @@
           <ul>
             <li>A Portal has exactly two Blocks (no more, no
             less)</li>
+
+            <li>A Portal serves both directions of travel.</li>
 
             <li>A Portal may have 0 to 2 Signals. If a Portal has a
             Signal, it faces one of its Blocks. A second Signal, if
@@ -138,38 +140,67 @@
           have the following characteristics:
 
           <ul>
-            <li>An OPath has 0 to N Turnouts.</li>
+            <li>An OPath has 0 to N Path Turnouts, each with a defined
+              state allowing a Train to follow the Path.</li>
 
             <li>An OPath has at least one, and no more than two,
             Portals.</li>
+
+            <li>An OPath serves both directions of travel, so no
+              duplicates are needed to travel N and S.</li>
+
           </ul>
         </li>
       </ul>How OBlocks, Portals and OPaths are used is described in
       the <a href="../logix/Warrant.shtml">Warrants</a> Help. You
       may want to browse that before reading further.
 
-      <p>OBlocks, Portals and OPaths can be created and edited by
-      the using the methods described below, or they can also be
+      <p>OBlocks, Portals and OPaths can be created and edited
+      using the methods described below, or they can also be
       created and edited from a WYSIWYG graphical interface
       described in the <a href=
       "../display/CircuitBuilder.shtml">Circuit Builder</a>
       Help.</p>
 
-      <p>Circuit Builder can be used you if you have a track
-      diagram using track icons showing your layout. Otherwise you
-      will need to use the tables below. See <a href=
-      "../logix/OBlockEdit.shtml">Creating and Editing OBlocks,
-      Portals and OPaths</a> for more details on using the
-      tables.</p>
+      <p>Circuit Builder can be used you if you have a Control
+      Panel Editor track diagram using track icons showing your
+      layout. Otherwise you will need to use the tables below.
+      See <a href="../logix/OBlockEdit.shtml">Creating and
+      Editing OBlocks, Portals and OPaths</a> for more details
+      on using the tables.</p>
 
-      <h2>Tables of the Occupancy Block, Portal, Path
-      Frame</h2>
-      <a href="images/OBlockWindow.png"><img src=
-      "images/OBlockWindow.png" align="right" width="701" height=
-      "287" hspace="0" vspace="0" alt=
-      "OBlock Tables frame in JMRI 4.3.4"></a>
+      <h2>Tables to edit Occupancy Block, Portals and Path</h2>
+      <p>In JMRi Preferences &gt; Display you can choose your preferred interface
+      to edit these items in tables (restart required):</p>
+      <ul>
+        <li>As a "tabbed" set in the regular JMRI Tables style, with
+        dedicated editing panels and combo-boxes to select items already
+        defined in JMRI:<br>
+        <a href="images/OBlockTableTabbed.png"><img src=
+        "images/OBlockTableTabbed.png" align="right" width="701"
+        height="290" alt="OBlock tabbed Tables in JMRI 4.21.3"></a>
+        </li>
+        <li>As a virtual "desktop" of windows grouped table windows,
+        supporting Drag-n-Drop and in-table editing and validation<br>
+        <a href="images/OBlockWindow.png"><img src=
+        "images/OBlockWindow.png" align="right" width="701" height=
+        "287" alt="OBlock Tables frame in JMRI 4.3.4"></a>
+        </li>
+      </ul>
 
-      <p>The tables defining these elements are contained within a
+      <h3>Tabbed OBlock GUI</h3><span class="since">since 4.21.3</span>
+      <p>The information in the tables is basically the same as you find in the desktop style,
+      but instead of an empty bottom row. New items are added by clicking
+      one of the [Add...] buttons below the tables. This opens up a pane to configure all items for a new
+      OBlock etc. Feedback in the status bar and tooltips assists to fill in the correct information.<br>
+      When you are done, click [Create] to complete the definition in JMRI, after which it shows up as an extra row
+      in the table.<br>
+      To edit an item in one of the tables, click the [Edit] button at the end of its table row.
+      <br>To prevent duplication, please refer to the detailed description of all items below.<br>
+      Specific help is accessible via the Window Help menu.</p>
+
+      <h3>Desktop OBlock GUI</h3>
+      <p>The tables to edit OBlocks etc are contained within a
       single frame that can be minimized or closed. The individual
       table frames can be minimized within this parent frame using
       the familiar OS window buttons.</p>
@@ -239,7 +270,7 @@
 
       <h3>Columns in the Portal Table</h3>
 
-      <p>The Portal table has columns for the blocks it separates.
+      <p>The Portal table has columns for the blocks each portal separates.
       You do not need to be concerned about the direction of travel
       through the portal. <i>It does not matter which side of the
       portal the blocks names are entered</i>, since the algorithms
@@ -264,13 +295,14 @@
       in the sort. After entering a new Portal, you may find it at
       the top of the window for further editing.
 
-      <h3>Columns in the Signal Table</h3>For each signal on your
+      <h3>Columns in the Signal Table</h3>
+      <p>For each signal on your
       layout, make an entry in the Signal Table. This Signal will
       control the actions of any warranted train - changing its
       speed according to the Signal's indication when the train
       reaches the Portal where the signal is placed. That is, the
       Signal 'protects' the Blocks beyond the Portal. The Signal
-      may be either a <b>Signal Mast</b> or a <b>Signal Head</b>.
+      may be either a <b>Signal Mast</b> or a <b>Signal Head</b>.</p>
 
       <ul>
         <li><b>Signal Name</b>: Enter the name of the Signal,
@@ -291,17 +323,18 @@
         System Name or User Name, of the Block whose entrance is
         protected by the Signal.</li>
 
-        <li><b>Length</b>: (Optional) The length add or subtract to
-        point where a speed change required by the Signal's Aspect
+        <li><b>Offset</b>: (Optional) The distance added (or subtracted for negative values) to
+        the point where a speed change required by the Signal's Aspect
         should begin. Often this equals the distance from where the
         mast of the signal is placed to where the gap of the Block
         it protects is.</li>
 
         <li><b>Units</b>: The unit used to determine the offset
-        length (in inches or centimeters).</li>
+        length (in inches or centimeters, click to convert).</li>
       </ul>
 
-      <h3>How Signal Aspects change Speed</h3>A Warrant detects the
+      <h3>How Signal Aspects change Speed</h3>
+      <p>A Warrant detects the
       signal Aspect when it's train enters the <i>approach</i>
       Block and - if needed - prepares to change the speed before
       it reaches the <i>protected</i> Block. Any speed change is
@@ -311,7 +344,7 @@
       of the engine (see <a href=
       "Warrant.shtml#SpeedMap">Warrants</a>). The point where the
       speed change should complete can be adjusted (+/-) by the
-      above <b>Length</b> amount, should that be desirable.
+        above <b>Length</b> amount, should that be desirable.</p>
 
       <p>Likewise, when the Signal indicates a Clear or increased
       speed from a stopped or reduced speed condition, the speed
@@ -319,14 +352,14 @@
 
       <a name="oblockpath" id="oblockpath"></a>
       <h3>Columns in Block-Path Tables</h3>
-      Each Block in the Occupancy Block Table will have one or more
+      <p>Each Block in the Occupancy Block Table will have one or more
       Paths in it.
       Pressing the <b>Paths</b> button in a row of the Occupancy
       Block Table will open this table. <i>Direction of the path is
       immaterial</i>. 'from' and 'to' do not have to correspond to
       any particular side of the Block; they are just Portal names
       for the Path that traverses from 'this portal' to 'that
-      portal'.
+      portal'.</p>
 
       <ul>
         <li><b>From Portal</b>: The Portal name of one
@@ -387,7 +420,7 @@
       <h3>The Edit menu</h3>
       This menu has the standard menu items for Cut, Copy and Paste.
 
-      <h3>The Open Tables menu</h3>
+      <h3>The Tables menu</h3>
       This menu has items to open the tables in the Occupancy Block,
       Portal, Path frame:
 
@@ -444,6 +477,7 @@
       Builder</a> for creating and editing OBlocks, Portals and
       OPaths from a graphical representation of your track
       plan.</p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

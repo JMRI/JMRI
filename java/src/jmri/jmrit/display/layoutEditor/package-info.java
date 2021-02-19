@@ -64,7 +64,7 @@
  * (basically) standard Swing components.  Below that is a JPane containing the 
  * layout drawing itself.
  * <p>
- * The LayoutTrack tree defines <code>draw1</code> and <code>draw2</code> methods that 
+ * The LayoutTrackView tree defines <code>draw1</code> and <code>draw2</code> methods that 
  * draw two different representations of the track elements.  These are only 
  * invoked from {}@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent}. LayoutEditorComponent is 
  * a JComponent with a {@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent#paint} public method
@@ -75,7 +75,7 @@
  * calls {@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent#draw1}
  * or {@link jmri.jmrit.display.layoutEditor.LayoutEditorComponent#draw2}. Those in turn
  * loop through a list from {@link jmri.jmrit.display.layoutEditor.LayoutEditor#getLayoutTracks()}
- * calling their individual {@link jmri.jmrit.display.layoutEditor.LayoutTrack#draw1} and {@link jmri.jmrit.display.layoutEditor.LayoutTrack#draw1}
+ * calling their individual {@link jmri.jmrit.display.layoutEditor.LayoutTrackView#draw1} and {@link jmri.jmrit.display.layoutEditor.LayoutTrackView#draw1}
  * methods.
  * <p>
  * <br><a href="doc-files/NMVCmodel.png"><img src="doc-files/MVCmodel.png" alt="MVC object diagram" height="67%" width="67%"></a><br>

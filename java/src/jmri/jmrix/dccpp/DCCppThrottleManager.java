@@ -29,11 +29,15 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
      */
     public DCCppThrottleManager(DCCppSystemConnectionMemo memo) {
         super(memo);
+        DCCppMessage msg;
         // connect to the TrafficManager
         tc = memo.getDCCppTrafficController();
 
         // Register to listen for throttle messages
         tc.addDCCppListener(DCCppInterface.THROTTLE, this);
+        //Request number of available slots
+        msg = DCCppMessage.makeCSMaxNumSlotsMsg();
+        tc.sendDCCppMessage(msg, this);
     }
 
     /**
@@ -125,35 +129,27 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
     // Handle incoming messages for throttles.
     @Override
     public void message(DCCppReply r) {
- // Guts of how a throttle handles replies...
- //
- // What should this be??
- // For now, drop the message.
- /*
-        // We want to check to see if a throttle has taken over an address
-        if (r.getElement(0) == DCCppConstants.LOCO_INFO_RESPONSE) {
-            if (r.getElement(1) == DCCppConstants.LOCO_NOT_AVAILABLE) {
-                // This is a take over message.  If we know about this throttle,
-                // send the message on.
-                LocoAddress address = new jmri.DccLocoAddress(r.getThrottleMsgAddr(),
-                        isLongAddress(r.getThrottleMsgAddr()));
-                if (throttles.containsKey(address)) {
-                    throttles.get(address).message(r);
-                }
-            }
+        // handle maxNumSlots and set value in commandstation
+        if (r.getElement(0) == DCCppConstants.MAXNUMSLOTS_REPLY) {
+            log.debug("MaxNumSlots reply received: {}", r);
+            tc.getCommandStation().setCommandStationMaxNumSlots(r);
         }
- */
-
     }
 
-    // listen for the messages to the LI100/LI101
+    // listen for the messages to the command station
     @Override
     public void message(DCCppMessage l) {
     }
 
-    // Handle a timeout notification
+    // Handle message timeout notification
+    // If the message still has retries available, reduce retries and send it back to the traffic controller.
     @Override
     public void notifyTimeout(DCCppMessage msg) {
+        log.debug("Notified of timeout on message '{}' , {} retries available.", msg, msg.getRetries());
+        if (msg.getRetries() > 0) {
+            msg.setRetries(msg.getRetries() - 1);
+            tc.sendDCCppMessage(msg, this);
+        }        
     }
 
     @Override
@@ -167,6 +163,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
             tc.getCommandStation().releaseRegister(t.getLocoAddress().getNumber());
             if (t instanceof DCCppThrottle) {
                 DCCppThrottle lnt = (DCCppThrottle) t;
+                throttles.remove(lnt.getLocoAddress()); // remove from throttles map.
                 lnt.throttleDispose();
                 return true;
             }

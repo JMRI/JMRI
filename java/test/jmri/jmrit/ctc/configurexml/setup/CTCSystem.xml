@@ -1,0 +1,659 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_172" class="java.beans.XMLDecoder">
+ <object class="jmri.jmrit.ctc.ctcserialdata.OtherData" id="OtherData0">
+  <void class="jmri.jmrit.ctc.ctcserialdata.OtherData" method="getField">
+   <string>_mDefaultFleetingEnabled</string>
+   <void method="set">
+    <object idref="OtherData0"/>
+    <boolean>true</boolean>
+   </void>
+  </void>
+  <void class="jmri.jmrit.ctc.ctcserialdata.OtherData" method="getField">
+   <string>_mNextUniqueNumber</string>
+   <void method="set">
+    <object idref="OtherData0"/>
+    <int>2</int>
+   </void>
+  </void>
+  <void class="jmri.jmrit.ctc.ctcserialdata.OtherData" method="getField">
+   <string>_mGUIDesign_NumberOfEmptyColumnsAtEnd</string>
+   <void method="set">
+    <object idref="OtherData0"/>
+    <int>1</int>
+   </void>
+  </void>
+ </object>
+ <object class="java.util.ArrayList">
+  <void method="add">
+   <object class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" id="CodeButtonHandlerData0">
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mUniqueID</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <int>0</int>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSwitchNumber</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <int>1</int>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSignalEtcNumber</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <int>2</int>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mFileVersion</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <int>6</int>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mCodeButtonInternalSensor</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string>IS2:CB</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mOSSectionOccupiedExternalSensor</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string>S-AW</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mOSSectionOccupiedExternalSensor2</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string></string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mGUIColumnNumber</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <int>2</int>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mGUIGeneratedAtLeastOnceAlready</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <boolean>true</boolean>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSIDI_Enabled</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <boolean>true</boolean>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSIDI_LeftInternalSensor</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string>IS2:LGK</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSIDI_NormalInternalSensor</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string>IS2:NGK</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSIDI_RightInternalSensor</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string>IS2:RGK</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSIDI_CodingTimeInMilliseconds</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <int>2000</int>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSIDI_TimeLockingTimeInMilliseconds</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <int>3000</int>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSIDI_LeftRightTrafficSignalsCSVList</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string>AW-Throat</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSIDI_RightLeftTrafficSignalsCSVList</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string>AW-Main,AW-Side</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSIDL_Enabled</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <boolean>true</boolean>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSIDL_LeftInternalSensor</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string>IS2:LGL</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSIDL_NormalInternalSensor</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string>IS2:NGL</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSIDL_RightInternalSensor</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string>IS2:RGL</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSWDI_Enabled</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <boolean>true</boolean>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSWDI_NormalInternalSensor</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string>IS1:SWNI</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSWDI_ReversedInternalSensor</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string>IS1:SWRI</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSWDI_ExternalTurnout</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string>T-AW</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSWDI_CodingTimeInMilliseconds</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <int>2000</int>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSWDI_GUITurnoutLeftHand</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <boolean>true</boolean>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSWDL_Enabled</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <boolean>true</boolean>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSWDL_InternalSensor</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string>IS1:LEVER</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mCO_Enabled</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <boolean>true</boolean>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mCO_CallOnToggleInternalSensor</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string>IS2:CALLON</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mCO_GroupingsListString</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string>AW-Throat,RIGHTTRAFFIC,Flashing Red,,B-Alpha-Main,IS1:SWNI,,,,,;AW-Throat,RIGHTTRAFFIC,Flashing Red,,B-Alpha-Side,IS1:SWRI,,,,,</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mTRL_Enabled</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <boolean>true</boolean>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mTRL_LeftTrafficLockingRulesSSVList</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string>Rule #:1,Enabled,EB-West,,1/2,Normal,,Normal,,Normal,,Normal,,Normal,S-AW,S-AW-Approach,,,,,,,,,,,0,,,,; Rule #:2,Enabled,EB-West,,1/2,Reverse,,Normal,,Normal,,Normal,,Normal,S-AW,S-AW-Approach,,,,,,,,,,,0,,,,</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mTRL_RightTrafficLockingRulesSSVList</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string>Rule #:1,Enabled,AE-Side,,1/2,Reverse,,Normal,,Normal,,Normal,,Normal,S-AW,S-Alpha-Side,,,,,,,,,,,0,,,,; Rule #:2,Enabled,AE-Main,,1/2,Normal,,Normal,,Normal,,Normal,,Normal,S-AW,S-Alpha-Main,,,,,,,,,,,0,,,,</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mTUL_Enabled</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <boolean>true</boolean>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mTUL_DispatcherInternalSensorLockToggle</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string>IS2:LOCKTOGGLE</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mTUL_ExternalTurnout</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string>T-AW</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mTUL_DispatcherInternalSensorUnlockedIndicator</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string>IS2:UNLOCKED</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mTUL_ndcos_WhenLockedSwitchStateIsClosed</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <boolean>true</boolean>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mTUL_AdditionalExternalTurnout1</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string></string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mTUL_AdditionalExternalTurnout2</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string></string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mTUL_AdditionalExternalTurnout3</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string></string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mIL_Enabled</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <boolean>true</boolean>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mIL_ListOfCSVSignalNames</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData0"/>
+      <string>AW-Throat,AW-Main,AW-Side</string>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" id="CodeButtonHandlerData1">
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mUniqueID</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <int>1</int>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSwitchNumber</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <int>3</int>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSignalEtcNumber</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <int>4</int>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mFileVersion</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <int>6</int>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mCodeButtonInternalSensor</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string>IS4:CB</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mOSSectionOccupiedExternalSensor</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string>S-AE</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mOSSectionOccupiedExternalSensor2</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string></string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mGUIColumnNumber</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <int>4</int>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mGUIGeneratedAtLeastOnceAlready</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <boolean>true</boolean>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSIDI_Enabled</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <boolean>true</boolean>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSIDI_LeftInternalSensor</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string>IS4:LGK</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSIDI_NormalInternalSensor</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string>IS4:NGK</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSIDI_RightInternalSensor</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string>IS4:RGK</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSIDI_CodingTimeInMilliseconds</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <int>2000</int>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSIDI_TimeLockingTimeInMilliseconds</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <int>3000</int>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSIDI_LeftRightTrafficSignalsCSVList</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string>AE-Main,AE-Side</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSIDI_RightLeftTrafficSignalsCSVList</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string>AE-Throat</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSIDL_Enabled</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <boolean>true</boolean>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSIDL_LeftInternalSensor</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string>IS4:LGL</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSIDL_NormalInternalSensor</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string>IS4:NGL</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSIDL_RightInternalSensor</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string>IS4:RGL</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSWDI_Enabled</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <boolean>true</boolean>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSWDI_NormalInternalSensor</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string>IS3:SWNI</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSWDI_ReversedInternalSensor</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string>IS3:SWRI</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSWDI_ExternalTurnout</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string>T-AE</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSWDI_CodingTimeInMilliseconds</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <int>2000</int>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSWDL_Enabled</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <boolean>true</boolean>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mSWDL_InternalSensor</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string>IS3:LEVER</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mCO_Enabled</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <boolean>true</boolean>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mCO_CallOnToggleInternalSensor</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string>IS4:CALLON</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mCO_GroupingsListString</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string>AE-Throat,LEFTTRAFFIC,Flashing Red,,B-Alpha-Main,IS3:SWNI,,,,,;AE-Throat,LEFTTRAFFIC,Flashing Red,,B-Alpha-Side,IS3:SWRI,,,,,</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mTRL_Enabled</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <boolean>true</boolean>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mTRL_LeftTrafficLockingRulesSSVList</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string>Rule #:1,Enabled,AW-Main,,3/4,Normal,,Normal,,Normal,,Normal,,Normal,S-AE,S-Alpha-Main,,,,,,,,,,,1,,,,; Rule #:2,Enabled,AW-Side,,3/4,Reverse,,Normal,,Normal,,Normal,,Normal,S-AE,S-Alpha-Side,,,,,,,,,,,1,,,,</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mTRL_RightTrafficLockingRulesSSVList</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string>Rule #:1,Enabled,EB-East,,3/4,Normal,,Normal,,Normal,,Normal,,Normal,S-AE,S-AE-Approach,,,,,,,,,,,1,,,,; Rule #:2,Enabled,EB-East,,3/4,Reverse,,Normal,,Normal,,Normal,,Normal,S-AE,S-AE-Approach,,,,,,,,,,,1,,,,</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mTUL_Enabled</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <boolean>true</boolean>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mTUL_DispatcherInternalSensorLockToggle</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string>IS4:LOCKTOGGLE</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mTUL_ExternalTurnout</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string>T-AE</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mTUL_DispatcherInternalSensorUnlockedIndicator</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string>IS4:UNLOCKED</string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mTUL_ndcos_WhenLockedSwitchStateIsClosed</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <boolean>true</boolean>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mTUL_AdditionalExternalTurnout1</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string></string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mTUL_AdditionalExternalTurnout2</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string></string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mTUL_AdditionalExternalTurnout3</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string></string>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mIL_Enabled</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <boolean>true</boolean>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mIL_ListOfCSVSignalNames</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData1"/>
+      <string>AE-Throat,AE-Main,AE-Side</string>
+     </void>
+    </void>
+   </object>
+  </void>
+ </object>
+</java>

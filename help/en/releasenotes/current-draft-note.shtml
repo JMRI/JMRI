@@ -4,22 +4,40 @@
           <li></li>
         </ul>
 
+        <h4>Acela CTI</h4>
+            <ul>
+                <li></li>
+            </ul>
+
 	    <h4>Anyma DMX512</h4>
             <ul>
                 <li></li>
             </ul>
-		
+
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-		
+
+        <h4>CBUS</h4>
+            <ul>
+                <li>
+                    Andrew Crosland added a second current meter instance for SPROG Generation 5 hardware.
+                </li>
+                <li>
+                    Corrected links to images on SPROG Generation 5 hardware help page.
+                </li>
+                <li>
+                    Changed trademark recognition to &reg; for register trademarks, rather than &trade;.
+                </li>
+            </ul>
+
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
             </ul>
 
-        <h4>DCC++</h4>
+        <h4>DCC++ and DCC-EX</h4>
             <ul>
                 <li></li>
             </ul>
@@ -44,6 +62,16 @@
                 <li></li>
             </ul>
 
+        <h4>Internal</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>IPOCSMR</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>JMRI Simple Server/JMRI Client</h4>
             <ul>
                 <li></li>
@@ -51,7 +79,8 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+              <li>When connected to the LocoNet HexFile Simulator, simulated replies from selected devices are
+                sent to the monitor (select the "Simulate replies" checkbox on the HexFile pane).</li>
             </ul>
 
         <h4>Maple</h4>
@@ -64,7 +93,7 @@
                 <li></li>
             </ul>
 
-        <h4>MERG CBUS</h4>
+        <h4>MERG</h4>
             <ul>
                 <li></li>
             </ul>
@@ -274,11 +303,16 @@
                 <li></li>
             </ul>
 
+        <h4>Tam Valley Depot</h4>
+            <ul>
+                <li>Updated the QuadLN_S template to support the 16 servo capability in the Version 3 software</li>
+            </ul>
+
         <h4>TCS</h4>
             <ul>
                 <li></li>
             </ul>
-	    
+
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -296,7 +330,12 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li></li>
+                <li>New definitions to program Power4, Power8 (boosters) and IntelliLight 28x0 modules.</li>
+                <li>For Uhlenbrock Track-Control modules a Direct Message type was added to the LNCV protocol.
+                  The Lncv Programming tool has a new checkbox 'Direct Mode', allowing to set LEDs etc.</li>
+                <li>Two new Track-Control definitions (art. 69220 Turnout and 69230 Signal Module)</li>
+                <li>When connected to the LocoNet HexFile Simulator, simulated replies from LNCV devices are
+                  sent to the monitor (select the "Simulate replies" checkbox on the HexFile pane).</li>
             </ul>
 
         <h4>Umelec</h4>
@@ -351,13 +390,14 @@
    <h3>Internationalization</h3>
         <a id="I18N" name="I18N"></a>
         <ul>
-            <li></li>
+            <li>Dutch translations added for the Where Used, Meters and Issue Reporting tools.</li>
         </ul>
 
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+	        <li>A problem storing and reading LE controlpoint values for users with a non-default Locale has been fixed
+            .</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -369,6 +409,15 @@
         <a id="Logix" name="Logix"></a>
         <ul>
           <li></li>
+        </ul>
+
+    <h3>Meters and MeterFrames</h3>
+        <a id="Meters" name="Meters"></a>
+        <ul>
+          <li>The Settings menu was slightly reorganized with submenus for each value.</li>
+          <li>When no meters are available, both Meters menus and the Units Settings menu show a short explanation.</li>
+          <li>Meters will honor the JMRI Locale/regional setting for the decimal separator (. or ,))</li>
+          <li>Meters now use meter max and resolution to default integer and decimal digits</li>
         </ul>
 
     <h3>Operations</h3>
@@ -398,7 +447,7 @@
             <ul>
                 <li></li>
             </ul>
-   
+
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
@@ -417,16 +466,17 @@
             <li></li>
         </ul>
 
-    <h3>Routes</h3>    
+    <h3>Routes</h3>
         <a id="Routes" name="Routes"></a>
        <ul>
             <li></li>
        </ul>
-       
+
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>Turnouts with 1 Sensor Feedback update to Inconsistent state when the Sensor being followed enters an Unknown or Inconsistent state.
+            <br>See <a href="https://www.jmri.org/help/en/package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout_Feedback">Turnout Feedback</a></li>
         </ul>
 
     <h3>Scripting</h3>
@@ -452,11 +502,9 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li>A common (minimum) interval for all outputs on the same connection can be configured (set
-                it in Preferences &gt; Connection &gt; Additional Connection Settings. Default this is set to 250
-                Milliseconds.</li>
+                <li></li>
             </ul>
-            
+
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
@@ -486,7 +534,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Fix Jynstrument instantiation on Windows (cleaner URI to path method). <a href="https://groups.io/g/jmriusers/topic/the_jynstruments/78674589"> User message 78674589</a></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -524,7 +572,13 @@
         <ul>
             <li></li>
         </ul>
-        
+
+   <h3>Web Server</h3>
+        <a id="server" name="server"></a>
+        <ul>
+            <li></li>
+        </ul>
+
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>

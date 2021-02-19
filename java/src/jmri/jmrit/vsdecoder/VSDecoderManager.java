@@ -670,36 +670,47 @@ public class VSDecoderManager implements PropertyChangeListener {
                 if (event.getNewValue() == null ) {
                     return; // block value was cleared, nothing to do
                 }
+
+                int locoAddress = 0;
+
                 if (event.getNewValue() instanceof String) {
                     repVal = event.getNewValue().toString();
                     // Is the new event value a valid VSDecoder address? If OK, set the sound position
-                    if (org.apache.commons.lang3.StringUtils.isNumeric(repVal)) {
-                        int locoAddress = Integer.parseInt(repVal);
-                        if (decoderInBlock.containsKey(locoAddress)) {
-                            if (blk.getPhysicalLocation() == null) {
-                                log.warn("Block {} has no physical location!", blk.getSystemName());
-                            } else {
-                                decoderInBlock.get(locoAddress).savedSound.setTunnel(blk.getPhysicalLocation().isTunnel()); // tunnel status
-                                decoderInBlock.get(locoAddress).setPosition(blk.getPhysicalLocation());
-                                log.debug("Block value: {}, physical location: {}", event.getNewValue(), blk.getPhysicalLocation());
-                            }
-                        } else {
-                            log.warn("Block value \"{}\" is not a valid VSDecoder address", event.getNewValue());
-                        }
-                        return;
+                    // First get the loco address
+                    if (Roster.getDefault().getEntryForId(repVal) != null) {
+                        locoAddress = Integer.parseInt(Roster.getDefault().getEntryForId(repVal).getDccAddress()); // numeric RosterEntry Id
+                    } else if (org.apache.commons.lang3.StringUtils.isNumeric(repVal)) {
+                        locoAddress = Integer.parseInt(repVal);
                     }
+                } else if (event.getNewValue() instanceof jmri.BasicRosterEntry) {
+                    locoAddress = Integer.parseInt(((RosterEntry) event.getNewValue()).getDccAddress());
+                } else if (event.getNewValue() instanceof jmri.implementation.DefaultIdTag) {
+                    //repVal = ((jmri.implementation.DefaultIdTag) event.getNewValue()).getUserName();
+                    log.debug("DefaultIdTag: {}", event.getNewValue());
                 } else if (event.getNewValue() instanceof jmri.jmrix.loconet.TranspondingTag) {
                     repVal = ((jmri.Reportable) event.getNewValue()).toReportString();
-                    log.info("Block Value TranspondingTag {} found", repVal);
                 } else {
                     log.warn("Block Value \"{}\" found - unsupported object!", event.getNewValue());
                 }
-                // Else it will still be null from the declaration/assignment above.
+
+                if (locoAddress != 0) {
+                    if (decoderInBlock.containsKey(locoAddress)) {
+                        decoderInBlock.get(locoAddress).savedSound.setTunnel(blk.getPhysicalLocation().isTunnel()); // tunnel status
+                        decoderInBlock.get(locoAddress).setPosition(blk.getPhysicalLocation());
+                        log.debug("Block value: {}, physical location: {}", event.getNewValue(), blk.getPhysicalLocation());
+                    } else {
+                        log.warn("Block value \"{}\" is not a valid VSDecoder address", event.getNewValue());
+                    }
+                    return;
+                }
+
+            // Else it will still be null from the declaration/assignment above.
             } else {
                 log.debug("Not a supported Block event type.  Ignoring.");
                 return;
             }  // Type of eventName.
-            // Set the decoder's position.
+
+            // Set the decoder's position due to the report.
             if (repVal == null) {
                 log.warn("Report from Block {} is null!", blk.getSystemName());
             }

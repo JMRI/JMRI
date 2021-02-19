@@ -6,6 +6,7 @@
  *         for calc'ing the "next" state
  * TODO: additional columns and changes for block, light, route
  * TODO: improve performance when client is sitting on page while lengthy list is loaded into JMRI
+ * TODO I18N titles and headers
  */
 
 var jmri = null;
@@ -204,28 +205,28 @@ function hideEmptyColumns(selector) {
 $(document).ready(function () {
 	jmri = $.JMRI({});
 
-	//replace title with the table type
-	document.title = "JMRI Tables: " + $("html").data("table-type") + "s";
-	$("h1.title").text($("html").data("table-type") + "s");
+	// replace title with the table type
+	document.title = "JMRI Tables: " + $("html").data("table-type") + "s"; // TODO I18N using Bundle
+	$("#table-type").text($("html").data("table-type") + "s"); // TODO I18N (-s for plural won't work in all languages)
 
 	jmri = $.JMRI({
-		//when we get the hello message, send a websocket list request which 
-		//  returns the list and sets up change listeners
+		// when we get the hello message, send a websocket list request which
+		// returns the list and sets up change listeners
+		// note: the functions and parameter names must match exactly those in jquery.jmri.js
 		hello: function (data) {
 			jmri.getList($("html").data("table-type")); // request list and updates for the table-type 
 		},
-		//everything calls console()
+		// everything calls console()
 		console: function (originalData) {
 			var data = JSON.parse(originalData);
 //			jmri.log("in console: data=" + JSON.stringify(data).substr(0, 180) + "...");
-			if ($.isArray(data)) {  //if its an array, 
-				rebuildTable(data); //  replace the table with the array list			
+			if ($.isArray(data)) {  // if its an array,
+				rebuildTable(data); // replace the table with the array list
 			} else if ((data.type) && (data.type === "error")) {
 				showError(data.data.code, data.data.message); //display any errors returned
 			} else if ((data.type) && (!data.type.match("pong|hello|goodbye"))) { //skip control messages
-				replaceRow(data.data.name, data.data); //if single item, update the row
+				replaceRow(data.data.name, data.data); // if single item, update the row
 			}
 		},
 	});
 });
-

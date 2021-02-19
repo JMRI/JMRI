@@ -2,10 +2,7 @@ package jmri.managers;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 import jmri.Block;
@@ -20,13 +17,12 @@ import jmri.SignalMast;
 import jmri.SignalMastLogic;
 import jmri.SignalMastLogicManager;
 import jmri.SignalMastManager;
+import jmri.*
 import jmri.implementation.DefaultSignalMastLogic;
 import jmri.implementation.SignalSpeedMap;
-import jmri.jmrit.display.layoutEditor.LayoutBlock;
-import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
-import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.*;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -502,6 +498,29 @@ public class DefaultSignalMastLogicManager
     @Override
     public Class<SignalMastLogic> getNamedBeanClass() {
         return SignalMastLogic.class;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int setupSignalMastsDirectionSensors() {
+        int errorCount = 0;
+        for (SignalMastLogic sml : getSignalMastLogicList()) {
+            errorCount += sml.setupDirectionSensors();
+        }
+        return errorCount;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void removeSignalMastsDirectionSensors() {
+        for (SignalMastLogic sml : getSignalMastLogicList()) {
+            sml.removeDirectionSensors();
+        }
+        return;
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManager.class);

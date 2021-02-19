@@ -28,7 +28,7 @@ public class PortalIconXml extends PositionableLabelXml {
     }
 
     /**
-     * Default implementation for storing the contents of a PortalIcon
+     * Default implementation for storing the contents of a PortalIcon.
      *
      * @param o Object to store, of type PortalIcon
      * @return Element containing the complete info
@@ -139,11 +139,8 @@ public class PortalIconXml extends PositionableLabelXml {
         if ((a = element.getAttribute("arrowSwitch")) != null && a.getValue().equals("no")) {
             value = false;
         }
-        l.setArrowOrientatuon(value);
-        value = false;
-        if ((a = element.getAttribute("arrowHide")) != null && a.getValue().equals("yes")) {
-            value = true;
-        }
+        l.setArrowOrientation(value);
+        value = (a = element.getAttribute("arrowHide")) != null && a.getValue().equals("yes");
         l.setHideArrows(value);
 
         Element iconsElem = element.getChild("icons");

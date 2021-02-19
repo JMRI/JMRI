@@ -111,6 +111,7 @@ public class OptionsMenu extends JMenu {
     JRadioButton trainsFromUser = new JRadioButton(Bundle.getMessage("TrainsFromUser"));
     JComboBox<String> signalTypeBox;
     JCheckBox detectionCheckBox = new JCheckBox(Bundle.getMessage("DetectionBox"));
+    JCheckBox setSSLDirectionalSensorsCheckBox = new JCheckBox(Bundle.getMessage("SetSSLDirectionSensorsBox"));
     JCheckBox shortNameCheckBox = new JCheckBox(Bundle.getMessage("ShortNameBox"));
     JCheckBox nameInBlockCheckBox = new JCheckBox(Bundle.getMessage("NameInBlockBox"));
     JCheckBox rosterInBlockCheckBox = new JCheckBox(Bundle.getMessage("RosterInBlockBox"));
@@ -126,7 +127,7 @@ public class OptionsMenu extends JMenu {
     JCheckBox trustKnownTurnoutsCheckBox = new JCheckBox(Bundle.getMessage("trustKnownTurnouts"));
     JComboBox<String> stoppingSpeedBox = new JComboBox<>();
 
-    String[] signalTypes = {Bundle.getMessage("SignalType1"), Bundle.getMessage("SignalType2")};
+    String[] signalTypes = {Bundle.getMessage("SignalType1"), Bundle.getMessage("SignalType2"), Bundle.getMessage("SignalType3")};
 
     private void optionWindowRequested(ActionEvent e) {
         if (optionsFrame == null) {
@@ -183,6 +184,11 @@ public class OptionsMenu extends JMenu {
             p3.add(detectionCheckBox);
             detectionCheckBox.setToolTipText(Bundle.getMessage("DetectionBoxHint"));
             optionsPane.add(p3);
+            JPanel p3A = new JPanel();
+            p3A.setLayout(new FlowLayout());
+            p3A.add(setSSLDirectionalSensorsCheckBox);
+            setSSLDirectionalSensorsCheckBox.setToolTipText(Bundle.getMessage("SetSSLDirectionSensorsBoxHint"));
+            optionsPane.add(p3A);
             JPanel p4 = new JPanel();
             p4.setLayout(new FlowLayout());
             p4.add(autoAllocateCheckBox);
@@ -316,6 +322,7 @@ public class OptionsMenu extends JMenu {
         trainsFromTrains.setSelected(dispatcher.getTrainsFromTrains());
         trainsFromUser.setSelected(dispatcher.getTrainsFromUser());
         detectionCheckBox.setSelected(dispatcher.getHasOccupancyDetection());
+        setSSLDirectionalSensorsCheckBox.setSelected(dispatcher.getSetSSLDirectionalSensors());
         autoAllocateCheckBox.setSelected(dispatcher.getAutoAllocate());
         autoTurnoutsCheckBox.setSelected(dispatcher.getAutoTurnouts());
         trustKnownTurnoutsCheckBox.setSelected(dispatcher.getTrustKnownTurnouts());
@@ -343,6 +350,7 @@ public class OptionsMenu extends JMenu {
             dispatcher.setLayoutEditor(layoutEditorList.get(index));
             dispatcher.setUseConnectivity(useConnectivityCheckBox.isSelected());
         }
+        dispatcher.setSetSSLDirectionalSensors(setSSLDirectionalSensorsCheckBox.isSelected());
         dispatcher.setTrainsFromRoster(trainsFromRoster.isSelected());
         dispatcher.setTrainsFromTrains(trainsFromTrains.isSelected());
         dispatcher.setTrainsFromUser(trainsFromUser.isSelected());

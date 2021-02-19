@@ -20,15 +20,20 @@ public class LnSensorTest extends jmri.implementation.AbstractSensorTestBase {
     public int numListeners() {return lnis.numListeners();}
 
     @Override
-    public void checkOnMsgSent() {}
+    public void checkActiveMsgSent() {}
 
     @Override
-    public void checkOffMsgSent() {}
+    public void checkInactiveMsgSent() {}
 
     @Override
     public void checkStatusRequestMsgSent() {
         // doesn't send a message right now, pending figuring out what
         // to send.
+    }
+    
+    @Override
+    public void testSensorSetKnownState() {
+        // status not currently updated when set UNKNOWN / INCONSISTENT
     }
     
     // LnSensor test for incoming status message

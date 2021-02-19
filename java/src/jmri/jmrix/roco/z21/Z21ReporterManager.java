@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Z21ReporterManager implements the Reporter Manager interface for Roco Z21
  * systems.
+ * Todo : add validateSystemNameFormat method
  *
  * @author Paul Bender Copyright (C) 2016
  */

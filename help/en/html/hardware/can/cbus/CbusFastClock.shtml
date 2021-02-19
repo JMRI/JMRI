@@ -3,18 +3,9 @@
 
 <html lang="en">
 <head>
-  <meta name="keywords" content="JMRI MERG CBUS setup Fast Clock Fastclock time speed rate FCLK">
-  <title>JMRI Hardware Support - MERG CBUS - CBUS Fast Clock</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="JMRI CBUS setup Fast Clock Fastclock time speed rate FCLK">
+  <title>JMRI Hardware Support - CBUS&reg; Fast Clock</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -23,7 +14,7 @@
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
-      <h1>Hardware Support: MERG CBUS - CBUS Fast Clock</h1>
+      <h1>Hardware Support: CBUS - Fast Clock</h1>
         <ul class="snav">
         <li><a href="#outbound">Sending to Network</a></li>
         <li><a href="#inbound">Receiving from Network</a></li>
@@ -60,7 +51,7 @@
       
         <p>Ensure that Internal Computer Clock is selected as the time source.</p>
       
-        <p>Check the Synchronise MERG CBUS Fast Clock checkbox.</p>
+        <p>Check the Synchronise CBUS Fast Clock checkbox.</p>
 
         <p>The Fast Clock Configuration is stored in xml, remember to store your setup!</p>
 
@@ -83,9 +74,9 @@
 
         <p>Open up the Fast Clock Setup Window.</p>
       
-        <p>Ensure that MERG CBUS Fast Clock is selected as the time source.</p>
+        <p>Ensure that CBUS Fast Clock is selected as the time source.</p>
       
-        <p>Check the Synchronise MERG CBUS Fast Clock checkbox.</p>
+        <p>Check the Synchronise CBUS Fast Clock checkbox.</p>
 
         <p>The master JMRI date and time will now be set whenever CBUS FCLK OPCs are heard on the network.</p>
         
@@ -158,6 +149,10 @@
             >JMRI Light Controllers</a> - Fast Clock Controlled.</p>
         
         
+        <h2></h2>
+        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
+        <p></p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

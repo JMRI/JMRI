@@ -5,17 +5,23 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.beans.*;
 import java.util.*;
-import javax.annotation.*;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
+
 import jmri.*;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.beantable.beanedit.*;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.swing.NamedBeanComboBox;
-import jmri.util.*;
-import jmri.util.swing.*;
-import org.slf4j.*;
+import jmri.util.JmriJFrame;
+import jmri.util.MathUtil;
+import jmri.util.swing.JmriColorChooser;
+import jmri.util.swing.SplitButtonColorChooserPanel;
+
+import org.slf4j.MDC;
 
 /**
  * A LayoutBlock is a group of track segments and turnouts on a LayoutEditor
@@ -116,7 +122,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      */
     public LayoutBlock(String sName, String uName) {
         super(sName, uName);
-        //_instance = this;
     }
 
     /*
@@ -126,7 +131,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * process considers IB1 and IB01 to be the same name which results in a
      * silent failure.
      */
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations, generics
     public void initializeLayoutBlock() {
         // get/create a Block object corresponding to this LayoutBlock
         block = null;   // assume failure (pessimist!)
@@ -161,7 +165,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 }
 
                 // Verify registration
-                if (bm.getSystemNameList().contains(s)) {
+                Block testGet = bm.getBySystemName(s);
+                if ( testGet!=null && bm.getNamedBeanSet().contains(testGet) ) {
                     log.debug("Block is valid: {}", s);
                     break;
                 }

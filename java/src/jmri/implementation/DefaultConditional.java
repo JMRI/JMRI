@@ -646,14 +646,9 @@ public class DefaultConditional extends AbstractNamedBean
                         break;
                     case CANCEL_TURNOUT_TIMERS:
                         ConditionalManager cmg = jmri.InstanceManager.getDefault(jmri.ConditionalManager.class);
-                        java.util.Iterator<String> iter = cmg.getSystemNameList().iterator();
+                        java.util.Iterator<Conditional> iter = cmg.getNamedBeanSet().iterator();
                         while (iter.hasNext()) {
-                            String sname = iter.next();
-                            if (sname == null) {
-                                errorList.add("Conditional system name null during cancel turnout timers for "  // NOI18N
-                                        + action.getDeviceName());
-                                continue; // no more processing of this one
-                            }
+                            String sname = iter.next().getSystemName();
                             
                             Conditional c = cmg.getBySystemName(sname);
                             if (c == null) {
@@ -790,14 +785,9 @@ public class DefaultConditional extends AbstractNamedBean
                         break;
                     case CANCEL_SENSOR_TIMERS:
                         ConditionalManager cm = jmri.InstanceManager.getDefault(jmri.ConditionalManager.class);
-                        java.util.Iterator<String> itr = cm.getSystemNameList().iterator();
+                        java.util.Iterator<Conditional> itr = cm.getNamedBeanSet().iterator();
                         while (itr.hasNext()) {
-                            String sname = itr.next();
-                            if (sname == null) {
-                                errorList.add("Conditional system name null during cancel sensor timers for "  // NOI18N
-                                        + action.getDeviceName());
-                                continue; // no more processing of this one
-                            }
+                            String sname = itr.next().getSystemName();
                             Conditional c = cm.getBySystemName(sname);
                             if (c == null) {
                                 errorList.add("Conditional null during cancel sensor timers for "  // NOI18N
@@ -1059,7 +1049,9 @@ public class DefaultConditional extends AbstractNamedBean
                         if (w == null) {
                             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
                         } else {
-                            w.getSpeedUtil().setDccAddress(getActionString(action));
+                            if(!w.getSpeedUtil().setAddress(getActionString(action))) {
+                                errorList.add("invalid train ID in action - " + action.getDeviceName());  // NOI18N
+                            }
                             actionCount++;
                         }
                         break;
@@ -1081,7 +1073,7 @@ public class DefaultConditional extends AbstractNamedBean
                             String err = frame.runTrain(w, Warrant.MODE_RUN);
                             if (err != null) {
                                 errorList.add("runAutoTrain error - " + err);  // NOI18N
-                                w.stopWarrant(true);
+                                w.stopWarrant(true, true);
                             }
                             actionCount++;
                         }

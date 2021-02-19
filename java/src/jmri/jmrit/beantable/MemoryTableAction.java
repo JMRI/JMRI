@@ -3,6 +3,7 @@ package jmri.jmrit.beantable;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -82,12 +83,12 @@ public class MemoryTableAction extends AbstractTableAction<Memory> {
             }
 
             @Override
-            public Memory getBySystemName(String name) {
+            public Memory getBySystemName(@Nonnull String name) {
                 return InstanceManager.memoryManagerInstance().getBySystemName(name);
             }
 
             @Override
-            public Memory getByUserName(String name) {
+            public Memory getByUserName(@Nonnull String name) {
                 return InstanceManager.memoryManagerInstance().getByUserName(name);
             }
 
@@ -275,7 +276,7 @@ public class MemoryTableAction extends AbstractTableAction<Memory> {
             } catch (IllegalArgumentException ex) {
                 // uName input no good
                 handleCreateException(sName);
-                errorMessage = "An error has occurred";
+                errorMessage = Bundle.getMessage("ErrorAddFailedCheck");
                 statusBarLabel.setText(errorMessage);
                 statusBarLabel.setForeground(Color.red);
                 return; // without creating

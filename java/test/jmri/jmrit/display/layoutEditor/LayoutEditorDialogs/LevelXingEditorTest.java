@@ -38,7 +38,7 @@ public class LevelXingEditorTest extends LayoutTrackEditorTest {
         LevelXingEditor editor = new LevelXingEditor(layoutEditor);
 
         // Edit the level crossing
-        editor.editLayoutTrack(levelXing);
+        editor.editLayoutTrack(levelXingView);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXing"));
 
         // Select AC block
@@ -82,9 +82,13 @@ public class LevelXingEditorTest extends LayoutTrackEditorTest {
            the following force tests of the normal create process handled by done. */
         acBlockComboBoxOperator.getTextField().setText("Xing New AC");
         bdBlockComboBoxOperator.getTextField().setText("Xing New BD");
-
-        new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
-        jFrameOperator.waitClosed();    // make sure the dialog actually closed
+    
+        try {
+            new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
+            jFrameOperator.waitClosed();    // make sure the dialog actually closed
+        } catch (Exception ex) {
+            log.error("Jemmy temporary", ex);
+        }
     }
 
     @Test
@@ -94,7 +98,7 @@ public class LevelXingEditorTest extends LayoutTrackEditorTest {
         LevelXingEditor editor = new LevelXingEditor(layoutEditor);
 
         // Edit the level crossing
-        editor.editLayoutTrack(levelXing);
+        editor.editLayoutTrack(levelXingView);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXing"));
 
         // Invoke layout block editor with no block assigned
@@ -125,7 +129,7 @@ public class LevelXingEditorTest extends LayoutTrackEditorTest {
         LevelXingEditor editor = new LevelXingEditor(layoutEditor);
 
         // Edit the level crossing
-        editor.editLayoutTrack(levelXing);
+        editor.editLayoutTrack(levelXingView);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXing"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
@@ -135,6 +139,7 @@ public class LevelXingEditorTest extends LayoutTrackEditorTest {
 
     private LayoutEditor layoutEditor = null;
     private LevelXing levelXing = null;
+    private LevelXingView levelXingView = null;
 
     @BeforeEach
     public void setUp() {
@@ -153,8 +158,9 @@ public class LevelXingEditorTest extends LayoutTrackEditorTest {
 
             // Level crossing
             point = MathUtil.add(point, delta);
-            levelXing = new LevelXing("Level Xing",
-                    point, layoutEditor);
+            levelXing = new LevelXing("Level Xing", layoutEditor); // point
+            levelXingView = new LevelXingView(levelXing, point, layoutEditor);
+            layoutEditor.addLayoutTrack(levelXing, levelXingView);
         }
     }
 
@@ -162,7 +168,6 @@ public class LevelXingEditorTest extends LayoutTrackEditorTest {
     public void tearDown() {
         if (levelXing != null) {
             levelXing.remove();
-            levelXing.dispose();
         }
 
         if (layoutEditor != null) {
@@ -178,5 +183,5 @@ public class LevelXingEditorTest extends LayoutTrackEditorTest {
         super.tearDown();
     }
     
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTrackEditorTest.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTrackEditorTest.class);
 }

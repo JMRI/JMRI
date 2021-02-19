@@ -5,14 +5,12 @@ import jmri.implementation.AbstractLight;
 
 import javax.annotation.Nonnull;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
- * JMRIClient implementation of the Light interface.
+ * MQTT implementation of the Light interface.
  *
- * @author Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2020
  * @author Paul Bender Copyright (C) 2010
+ * @author Fredrik Elestedt  Copyright (C) 2020
  */
 public class MqttLight extends AbstractLight implements MqttEventListener {
     private final MqttAdapter mqttAdapter;
@@ -80,7 +78,8 @@ public class MqttLight extends AbstractLight implements MqttEventListener {
     // Handle a request to change state by sending a formatted packet
     // to the server.
     @Override
-    protected synchronized void doNewState(int oldState, int newState) {
+    protected void doNewState(int oldState, int newState) {
+        log.debug("doNewState with old state {} new state {}", oldState, newState);
         if (oldState == newState) {
             return; //no change, just quit.
         }  // sort out states
@@ -105,7 +104,9 @@ public class MqttLight extends AbstractLight implements MqttEventListener {
     }
 
     private void sendMessage(String c) {
-        mqttAdapter.publish(this.sendTopic, c.getBytes());
+        jmri.util.ThreadingUtil.runOnLayoutEventually(() -> {
+            mqttAdapter.publish(this.sendTopic, c.getBytes());
+        });
     }
 
     @Override
@@ -130,12 +131,12 @@ public class MqttLight extends AbstractLight implements MqttEventListener {
 
     @Override
     public void notifyMqttMessage(String receivedTopic, String message) {
-        if (!receivedTopic.endsWith(rcvTopic) || receivedTopic.endsWith(sendTopic)) {
+        if (! ( receivedTopic.endsWith(rcvTopic) || receivedTopic.endsWith(sendTopic) ) ) {
             log.error("Got a message whose topic ({}) wasn't for me ({})", receivedTopic, rcvTopic);
             return;
         }        
         parser.beanFromPayload(this, message, receivedTopic);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MqttLight.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttLight.class);
 }

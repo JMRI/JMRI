@@ -1,10 +1,6 @@
 package jmri.jmrit.roster;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.text.DateFormat;
@@ -12,22 +8,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
 import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Display and edit a RosterEntry.
@@ -50,7 +42,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
     JTextField owner = new JTextField(30);
     DccLocoAddressSelector addrSel = new DccLocoAddressSelector();
 
-    JTextArea comment = new JTextArea(3, 30);
+    JTextArea comment = new JTextArea(3, 50);
     //JScrollPanes are defined with scroll bars on always to avoid undesirable resizing behavior
     //Without this the field will shrink to minimum size any time the scroll bars become needed and
     //the scroll bars are inside, not outside the field area, obscuring their contents.
@@ -60,11 +52,11 @@ public class RosterEntryPane extends javax.swing.JPanel {
     JLabel dateUpdated = new JLabel();
     JLabel decoderModel = new JLabel();
     JLabel decoderFamily = new JLabel();
-    JTextArea decoderComment = new JTextArea(3, 30);
+    JTextArea decoderComment = new JTextArea(3, 50);
     JScrollPane decoderCommentScroller = new JScrollPane(decoderComment, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-    Component pane = null;
-    RosterEntry re = null;
+    Component pane;
+    RosterEntry re;
 
     final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
 
@@ -101,8 +93,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
             // This goes through to find common protocols between the command station and the decoder
             // and will set the selection box list to match those that are common.
             jmri.ThrottleManager tm = InstanceManager.throttleManagerInstance();
-            List<LocoAddress.Protocol> protocoltypes = new ArrayList<>();
-            protocoltypes.addAll(Arrays.asList(tm.getAddressProtocolTypes()));
+            List<LocoAddress.Protocol> protocoltypes = new ArrayList<>(Arrays.asList(tm.getAddressProtocolTypes()));
 
             if (!protocoltypes.contains(LocoAddress.Protocol.DCC_LONG) && !protocoltypes.contains(LocoAddress.Protocol.DCC_SHORT)) {
                 //Multi protocol systems so far are not worried about dcc long vs dcc short
@@ -349,19 +340,13 @@ public class RosterEntryPane extends javax.swing.JPanel {
         }
         DccLocoAddress a = addrSel.getAddress();
         if (a == null) {
-            if (!r.getDccAddress().equals("")) {
-                return true;
-            }
+            return !r.getDccAddress().equals("");
         } else {
-
             if (r.getProtocol() != a.getProtocol()) {
                 return true;
             }
-            if (!r.getDccAddress().equals("" + a.getNumber())) {
-                return true;
-            }
+            return !r.getDccAddress().equals("" + a.getNumber());
         }
-        return false;
     }
 
     /**
@@ -373,9 +358,10 @@ public class RosterEntryPane extends javax.swing.JPanel {
         // check it's not a duplicate
         List<RosterEntry> l = Roster.getDefault().matchingList(null, null, null, null, null, null, id.getText());
         boolean oops = false;
-        for (int i = 0; i < l.size(); i++) {
-            if (re != l.get(i)) {
+        for (RosterEntry rosterEntry : l) {
+            if (re != rosterEntry) {
                 oops = true;
+                break;
             }
         }
         return oops;
@@ -437,7 +423,11 @@ public class RosterEntryPane extends javax.swing.JPanel {
     public void setDccAddress(String a) {
         DccLocoAddress addr = addrSel.getAddress();
         LocoAddress.Protocol protocol = addr.getProtocol();
-        addrSel.setAddress(new DccLocoAddress(Integer.parseInt(a), protocol));
+        try {
+            addrSel.setAddress(new DccLocoAddress(Integer.parseInt(a), protocol));
+        } catch (NumberFormatException e) {
+            log.error("Can't set DccAddress to {}", a);
+        }
     }
 
     public void setDccAddressLong(boolean m) {

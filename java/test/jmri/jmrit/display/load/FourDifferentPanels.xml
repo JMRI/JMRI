@@ -55,7 +55,7 @@
     </layoutTrackDrawingOptions>
   </LayoutEditor>
   <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="Control Panel Editor Panel C" x="266" y="500" height="341" width="523" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255" state="0" shapeSelect="yes" />
-  <switchboardeditor class="jmri.jmrit.display.switchboardEditor.configurexml.SwitchboardEditorXml" name="Switchboard Panel D" x="22" y="24" height="330" width="550" editable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="none" hideunconnected="no" autoitemrange="yes" rangemin="1" rangemax="24" type="T" connection="I" shape="button" columns="3" defaulttextcolor="black" redBackground="255" greenBackground="255" blueBackground="255" />
+  <switchboardeditor class="jmri.jmrit.display.switchboardEditor.configurexml.SwitchboardEditorXml" name="Switchboard Panel D" editable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="none" hideunconnected="no" autoitemrange="yes" rangemin="1" rangemax="24" type="T" connection="I" shape="button" rows="4" total="24" showusername="no" iconscale="100" defaulttextcolor="black" activecolor="red" inactivecolor="green" redBackground="255" greenBackground="255" blueBackground="255" />
   <filehistory>
     <operation>
       <type>app</type>
@@ -97,5 +97,5 @@
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.21.1ish+pete_+2020-07-19T20:14:13Z+R17e02fa752 on Sun Jul 19 13:16:30 PDT 2020-->
+  <!--Written by JMRI version 4.23.2ish+pete_+2020-10-05T20:14:13Z+R17e02fa752 on Sun Jul 19 13:16:30 PDT 2020-->
 </layout-config>

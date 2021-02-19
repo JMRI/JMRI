@@ -18,28 +18,26 @@ function getRosterTable(group) {
                 } else {
                     $("#warning-roster-no-entries").removeClass("hidden").addClass("show");
                 }
-                $("#roster").removeClass("show").addClass("hidden");
+                $("table#roster-table").removeClass("show").addClass("hidden");
             } else {
                 $("#warning-roster-no-entries").removeClass("show").addClass("hidden");
                 $("#warning-group-no-entries").removeClass("show").addClass("hidden");
-                $("#roster").removeClass("hidden").addClass("show");
-                $("#roster > tbody").empty();
-                $("#roster > tbody").append(data);
-
+                $("table#roster-table > tbody").empty();
+                $("table#roster-table > tbody").append(data);
                 $(".entry-url-menu-item > a[href='']").each(function() {
                     $(this).parent().addClass("disabled");
                     $(this).attr("href", "#");
                 });
-                hideEmptyColumns("#roster tr th");
+                hideEmptyColumns("table#roster-table tr th");
                 $(".roster-entry td").click(function(event) {
                     if (event.target === this) {
                         window.open("/web/webThrottle.html?loconame=" + $(this).parent().data("rosterEntry"), $(this).parent().data("address")).focus();
                     }
                 });
                 $(".roster-entry td").css("cursor", "pointer");
+                $("table#roster-table").removeClass("hidden").addClass("show");
             }
             $("#activity-alert").removeClass("show").addClass("hidden");
-            $("#trains-options").removeClass("hidden").addClass("show");
         },
         dataType: "html"
     });
@@ -52,7 +50,7 @@ function hideImage(img) {
     } else {
         $(img).remove();
     }
-    hideEmptyColumns("#roster tr th"); // also ensure that if no roster icons or images are loaded, the icon or image column is hidden
+    hideEmptyColumns("table#roster-table tr th"); // also ensure that if no roster icons or images are loaded, the icon or image column is hidden
     return true;
 }
 
@@ -141,8 +139,9 @@ $(document).ready(function() {
     getRosterTable($("html").data("roster-group"));
     initUploads();
     
-    //listen for roster changes and refresh the roster table when this occurs
-    //  by overriding processing of websocket messages of interest
+    // listen for roster changes and refresh the roster table when this occurs
+    //    by overriding processing of websocket messages of interest
+    // note: the functions and parameter names must match exactly those in jquery.jmri.js
     jmri = $.JMRI({
     	//wait for the hello message
     	hello: function(data) {

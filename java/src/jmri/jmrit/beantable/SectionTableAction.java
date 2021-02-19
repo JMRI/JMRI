@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
+import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultCellEditor;
@@ -114,12 +115,12 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             }
 
             @Override
-            public Section getBySystemName(String name) {
+            public Section getBySystemName(@Nonnull String name) {
                 return jmri.InstanceManager.getDefault(jmri.SectionManager.class).getBySystemName(name);
             }
 
             @Override
-            public Section getByUserName(String name) {
+            public Section getByUserName(@Nonnull String name) {
                 return jmri.InstanceManager.getDefault(jmri.SectionManager.class).getByUserName(name);
             }
 

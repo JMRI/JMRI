@@ -18,7 +18,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
- * Exports the car roster into a comma delimitated file (CSV).
+ * Exports the car roster into a comma delimited file (CSV).
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2011, 2016
  *
@@ -30,18 +30,6 @@ public class ExportCars extends XmlFile {
 
     public ExportCars(List<Car> carList) {
         _carList = carList;
-    }
-
-    /**
-     * Sets the delimiter for the CSV export. Does nothing, left in place to
-     * avoid API breakage during deprecation period.
-     *
-     * @param delimiter ignored
-     * @deprecated since 4.19.4 without replacement
-     */
-    @Deprecated
-    public void setDeliminter(String delimiter) {
-        // nothing to do
     }
 
     /**
@@ -113,7 +101,8 @@ public class ExportCars extends XmlFile {
                     Bundle.getMessage("Track"),
                     Bundle.getMessage("FinalDestination"),
                     LOCATION_TRACK_SEPARATOR,
-                    Bundle.getMessage("Track"));
+                    Bundle.getMessage("Track"),
+                    Bundle.getMessage( "RFID_Tag"));
 
             // store car number, road, type, length, weight, color, owner, built date, location and track name
             for (Car car : _carList) {
@@ -148,7 +137,8 @@ public class ExportCars extends XmlFile {
                         car.getDestinationTrackName(),
                         car.getFinalDestinationName(),
                         LOCATION_TRACK_SEPARATOR,
-                        car.getFinalDestinationTrackName());
+                        car.getFinalDestinationTrackName(),
+                        car.getRfid());
             }
             fileOut.flush();
             fileOut.close();

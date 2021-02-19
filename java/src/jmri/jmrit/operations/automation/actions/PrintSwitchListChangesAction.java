@@ -4,12 +4,14 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainCsvSwitchLists;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainSwitchLists;
 
 public class PrintSwitchListChangesAction extends Action {
 
     private static final int _code = ActionCodes.PRINT_SWITCHLIST_CHANGES;
+    protected static final boolean IS_CHANGED = true;
 
     @Override
     public int getCode() {
@@ -27,13 +29,22 @@ public class PrintSwitchListChangesAction extends Action {
 
     @Override
     public void doAction() {
+        doAction(IS_CHANGED);
+    }
+
+    protected void doAction(boolean isChanged) {
         if (getAutomationItem() != null) {
             setRunning(true);
             TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
+            TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
             for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
-                if (location.isSwitchListEnabled() && location.getStatus().equals(Location.MODIFIED)) {
+                if (location.isSwitchListEnabled() &&
+                        (!isChanged || location.getStatus().equals(Location.MODIFIED))) {
+                    // also build the CSV switch lists
+                    trainCsvSwitchLists.buildSwitchList(location);
                     trainSwitchLists.buildSwitchList(location);
-                    trainSwitchLists.printSwitchList(location, InstanceManager.getDefault(TrainManager.class).isPrintPreviewEnabled());
+                    trainSwitchLists.printSwitchList(location,
+                            InstanceManager.getDefault(TrainManager.class).isPrintPreviewEnabled());
                 }
             }
             // set trains switch lists printed
@@ -44,6 +55,6 @@ public class PrintSwitchListChangesAction extends Action {
 
     @Override
     public void cancelAction() {
-        // no cancel for this action     
+        // no cancel for this action
     }
 }

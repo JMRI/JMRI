@@ -6,6 +6,8 @@ import java.text.MessageFormat;
 
 import javax.swing.JOptionPane;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,8 +17,6 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
 
 /**
  * Export Routes to CSV file
@@ -24,18 +24,6 @@ import org.apache.commons.csv.CSVPrinter;
 public class ExportRoutes extends XmlFile {
 
     public ExportRoutes() {
-        // nothing to do
-    }
-
-    /**
-     * Sets the delimiter for the CSV export. Does nothing, left in place to
-     * avoid API breakage during deprecation period.
-     *
-     * @param delimiter ignored
-     * @deprecated since 4.19.4 without replacement
-     */
-    @Deprecated
-    public void setDeliminter(String delimiter) {
         // nothing to do
     }
 
@@ -80,11 +68,6 @@ public class ExportRoutes extends XmlFile {
                 count++;
                 fileOut.printRecord(route.getName(),
                         "", // NOI18N
-                        "", // NOI18N
-                        "", // NOI18N
-                        "", // NOI18N
-                        "", // NOI18N
-                        "", // NOI18N
                         route.getComment());
                 for (RouteLocation rl : route.getLocationsBySequenceList()) {
                     fileOut.printRecord("", // NOI18N
@@ -123,8 +106,6 @@ public class ExportRoutes extends XmlFile {
 
     private void loadHeader(CSVPrinter fileOut) throws IOException {
         fileOut.printRecord(Bundle.getMessage("Route"),
-                " ",
-                Bundle.getMessage("Name"),
                 Bundle.getMessage("Location"),
                 Bundle.getMessage("TrainDirection"),
                 Bundle.getMessage("Moves"),
@@ -138,8 +119,6 @@ public class ExportRoutes extends XmlFile {
                 Bundle.getMessage("X"),
                 Bundle.getMessage("Y"),
                 Bundle.getMessage("Comment"),
-                Bundle.getMessage("Comment"),
-                " ",
                 Bundle.getMessage("TextColor"));
     }
 

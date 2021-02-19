@@ -2,6 +2,7 @@ package jmri;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import java.awt.geom.Point2D;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
@@ -122,6 +123,17 @@ public class PathTest {
         // no elements; always true
         Assert.assertTrue("check path set", p.checkPathSet());
 
+    }
+
+    @Test
+    public void testDirection() {
+        int dir;
+        
+        dir = Path.computeDirection(new Point2D.Double(10.,10.), new Point2D.Double(10.,20.));
+        Assert.assertEquals(Path.SOUTH, dir);
+
+        dir = Path.computeDirection(new Point2D.Double(10.,10.), new Point2D.Double(20.,20.));
+        Assert.assertEquals(Path.SOUTH_EAST, dir);
     }
 
     @Test

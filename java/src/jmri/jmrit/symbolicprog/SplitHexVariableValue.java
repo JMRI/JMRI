@@ -2,6 +2,8 @@ package jmri.jmrit.symbolicprog;
 
 import java.util.HashMap;
 import javax.swing.JLabel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Like {@link SplitVariableValue}, except that the string representation is in
@@ -58,6 +60,21 @@ public class SplitHexVariableValue extends SplitVariableValue {
         return ret;
     }
 
+    /**
+     * Set value from a String value.
+     *
+     * @param value a string representing the unsigned long hex value to be set
+     */
+    @Override
+    public void setValue(String value) {
+        try {
+            long val = Long.parseUnsignedLong(value, 16);
+            setLongValue(val);
+        } catch (NumberFormatException e) {
+            log.warn("skipping set of non-hex value \"{}\"", value);
+        }
+    }
+
     // initialize logging
-//    private final static Logger log = LoggerFactory.getLogger(SplitHexVariableValue.class);
+    private final static Logger log = LoggerFactory.getLogger(SplitHexVariableValue.class);
 }

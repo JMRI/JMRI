@@ -127,8 +127,7 @@ public class LocoIO {
      * Compose and send a message out onto LocoNet changing the LocoIO hardware board
      * address of all connected LocoIO boards.
      * <p>
-     * User is warned beforehand that this is a broadcast type operation in
-     * {@link jmri.jmrix.loconet.locoio.LocoIOPanel#cautionAddrSet()}
+     * User is warned that this is a broadcast type operation.
      *
      * @param address the new base address of the LocoIO board to change
      * @param subAddress the new subAddress of the board

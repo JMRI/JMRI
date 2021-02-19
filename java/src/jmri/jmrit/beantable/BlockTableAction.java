@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Set;
+import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
 import javax.swing.AbstractCellEditor;
 import javax.swing.BoxLayout;
@@ -156,12 +157,12 @@ public class BlockTableAction extends AbstractTableAction<Block> {
             }
 
             @Override
-            public Block getBySystemName(String name) {
+            public Block getBySystemName(@Nonnull String name) {
                 return InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(name);
             }
 
             @Override
-            public Block getByUserName(String name) {
+            public Block getByUserName(@Nonnull String name) {
                 return InstanceManager.getDefault(jmri.BlockManager.class).getByUserName(name);
             }
 
@@ -207,6 +208,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     } else if (b.getCurvature() == Block.SEVERE) {
                         c.setSelectedItem(severeText);
                     }
+                    c.addActionListener(super::comboBoxAction);
                     return c;
                 } else if (col == LENGTHCOL) {
                     double len = 0.0;
@@ -227,6 +229,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     JComboBox<String> c = new JComboBox<>(speedList);
                     c.setEditable(true);
                     c.setSelectedItem(speed);
+                    c.addActionListener(super::comboBoxAction);
                     return c;
                 } else if (col == STATECOL) {
                     switch (b.getState()) {
@@ -247,6 +250,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                         name = sensor.getDisplayName();
                     }
                     c.setSelectedItem(name);
+                    c.addActionListener(super::comboBoxAction);
                     return c;
                 } else if (col == REPORTERCOL) {
                     Reporter reporter = b.getReporter();
@@ -256,6 +260,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                         name = reporter.getDisplayName();
                     }
                     rs.setSelectedItem(name);
+                    rs.addActionListener(super::comboBoxAction);
                     return rs;
                 } else if (col == CURRENTREPCOL) {
                     return Boolean.valueOf(b.isReportingCurrent());
@@ -343,7 +348,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
 
                         @Override
                         public void run() {
-                            editButton(b); // don't really want to stop Route w/o user action
+                            editButton(b); // don't really want to stop Block w/o user action
                         }
                     }
                     WindowMaker t = new WindowMaker(b);
@@ -503,8 +508,6 @@ public class BlockTableAction extends AbstractTableAction<Block> {
 
             @Override
             public void configureTable(JTable table) {
-                table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
-                table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
                 table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
                 jmri.InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
                 jmri.InstanceManager.getDefault(jmri.ReporterManager.class).addPropertyChangeListener(this);
@@ -1042,7 +1045,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
         }
 
         // Add some entry pattern checking, before assembling sName and handing it to the blockManager
-        String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameBlock"));
+        StringBuilder statusMessage = new StringBuilder(Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameBlock")));
 
         for (int x = 0; x < numberOfBlocks; x++) {
             if (x != 0) { // start at 2nd Block
@@ -1119,16 +1122,16 @@ public class BlockTableAction extends AbstractTableAction<Block> {
             }
             // add first and last names to statusMessage user feedback string
             if (x == 0 || x == numberOfBlocks - 1) {
-                statusMessage = statusMessage + " " + sName + " (" + user + ")";
+                statusMessage.append(" ").append(sName).append(" (").append(user).append(")");
             }
             if (x == numberOfBlocks - 2) {
-                statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
+                statusMessage.append(" ").append(Bundle.getMessage("ItemCreateUpTo")).append(" ");
             }
             // only mention first and last of addRangeCheckBox added
         } // end of for loop creating addRangeCheckBox of Blocks
 
         // provide feedback to user
-        statusBar.setText(statusMessage);
+        statusBar.setText(statusMessage.toString());
         statusBar.setForeground(Color.gray);
 
         pref.setSimplePreferenceState(systemNameAuto, _autoSystemNameCheckBox.isSelected());

@@ -109,9 +109,6 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
         if (type.equals(jmri.ReporterManager.class)){
            return true;
         }
-        if (type.equals(jmri.MultiMeter.class)){
-           return true;
-        }
         if (type.equals(jmri.SensorManager.class)){
            return true;
         }
@@ -143,9 +140,6 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
         if(T.equals(jmri.ReporterManager.class)){
             return super.get(T);
         }
-        if(T.equals(jmri.MultiMeter.class)){
-            return super.get(T);
-        }
         if(T.equals(jmri.SensorManager.class)){
             return super.get(T);
         }
@@ -164,6 +158,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
      * Configure the common managers for z21 connections. This puts the common
      * manager config in one place.
      */
+    @Override
     public void configureManagers() {
         log.debug("Called Configure Managers");
 
@@ -197,8 +192,9 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
         if ( xpm instanceof Z21XNetProgrammerManager) {
             ((Z21XNetProgrammerManager) xpm).setLocoNetMemo(_loconettunnel.getStreamPortController().getSystemConnectionMemo());
         }
-        // setup the MultiMeter
-        getMultiMeter();
+
+        // setup the PredefinedMeters
+        createPredefinedMeters();
 
         // setup the HeartBeat
         getHeartBeat();
@@ -245,15 +241,24 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
         store(c,RocoZ21CommandStation.class);
     }
 
+    protected Z21PredefinedMeters predefinedMeters;
+    
     /**
      * Provide access to the Roco Z21 MultiMeter for this particular
      * connection.
      * <p>
-     * NOTE: MultiMeter defaults to NULL
-     * @return MultiMeter, creates new if null.
+     * NOTE: PredefinedMeters defaults to NULL
+     * @return PredefinedMeters, creates new if null.
      */
-    public MultiMeter getMultiMeter() {
-        return (MultiMeter) classObjectMap.computeIfAbsent(MultiMeter.class, (Class c) -> { return new Z21MultiMeter(this); });
+    public Z21PredefinedMeters createPredefinedMeters() {
+        if (getDisabled()) {
+            return null;
+        }
+        if (predefinedMeters == null) {
+            InstanceManager.setMeterManager(new jmri.managers.AbstractMeterManager(this));
+            predefinedMeters = new Z21PredefinedMeters(this);
+        }
+        return predefinedMeters;
     }
 
     /**
@@ -285,6 +290,9 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
         }
         shutdownTunnel();
         InstanceManager.deregister(this, Z21SystemConnectionMemo.class);
+        if (predefinedMeters != null) {
+            predefinedMeters.dispose();
+        }
         super.dispose();
     }
 

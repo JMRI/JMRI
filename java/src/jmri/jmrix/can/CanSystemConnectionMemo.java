@@ -12,6 +12,7 @@ import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.jmrix.can.ConfigurationManager.SubProtocol;
+import jmri.jmrix.can.ConfigurationManager.ProgModeSwitch;
 import jmri.util.NamedBeanComparator;
 
 import jmri.util.startup.StartupActionFactory;
@@ -51,6 +52,7 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
 
     protected String _protocol = ConfigurationManager.MERGCBUS;
     protected SubProtocol _subProtocol = SubProtocol.CBUS;
+    protected ProgModeSwitch _progModeSwitch = ProgModeSwitch.NONE;
     
     jmri.jmrix.swing.ComponentFactory cf = null;
 
@@ -159,10 +161,21 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
         }
     }
 
+    public ProgModeSwitch getProgModeSwitch() {
+        return _progModeSwitch;
+    }
+    
+    public void setProgModeSwitch(ProgModeSwitch pms) {
+        if (null != pms) {
+            _progModeSwitch = pms;
+        }
+    }
+    
     /**
      * Configure the common managers for Can connections. This puts the common
      * manager config in one place.
      */
+    @Override
     public void configureManagers() {
         if (manager != null) {
             manager.configureManagers();
@@ -247,6 +260,15 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     @Override
     public boolean isRestartRequired() {
         return super.isRestartRequired() || protocolOptionsChanged;
+    }
+    
+    /**
+     * Custom interval of 100ms.
+     * {@inheritDoc}
+     */
+    @Override
+    public int getDefaultOutputInterval(){
+        return 100;
     }
 
     /**

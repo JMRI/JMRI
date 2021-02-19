@@ -76,7 +76,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
     
     /**
      * As this method is called by both throttle recovery and normal throttle creation,
-     * methods calling need to start their own timeoouts to ensure the correct
+     * methods calling need to start their own timeouts to ensure the correct
      * error message is displayed.
      */
     private void requestThrottleSetup(LocoAddress address, DecisionType decision) {
@@ -281,12 +281,11 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                     case CbusConstants.ERR_LOCO_ADDRESS_TAKEN:
                         if ( errCode == CbusConstants.ERR_LOCO_STACK_FULL ){
                             errStr = Bundle.getMessage("ERR_LOCO_STACK_FULL") + " " + rcvdIntAddr;
-                        }
-                        else if ( errCode == CbusConstants.ERR_LOCO_ADDRESS_TAKEN ){
-                            errStr = Bundle.getMessage("ERR_LOCO_ADDRESS_TAKEN",rcvdIntAddr);
+                        } else {
+                            errStr = Bundle.getMessage("ERR_LOCO_ADDRESS_TAKEN", rcvdIntAddr);
                         }
                         
-                        log.debug("handlexpected {} _dccAddr {} got {} ",_handleExpected,_dccAddr,rcvdDccAddr);
+                        log.debug("handlexpected {} _dccAddr {} got {} ", _handleExpected, _dccAddr, rcvdDccAddr);
                         
                         if ((_handleExpected) && rcvdDccAddr.equals(_dccAddr)) {
                             
@@ -312,7 +311,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                             CbusCommandStation cs = (CbusCommandStation) jmri.InstanceManager.getNullableDefault(jmri.CommandStation.class);
         
                             if ( cs != null ) {
-                                log.debug("cs says can steal {}, can share {}", cs.isStealAvailable(),cs.isShareAvailable() );
+                                log.debug("cs says can steal {}, can share {}", cs.isStealAvailable(), cs.isShareAvailable() );
                                 steal = cs.isStealAvailable();
                                 share = cs.isShareAvailable();
                             }
@@ -321,13 +320,13 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                                 failedThrottleRequest(_dccAddr, errStr);
                             }
                             else if ( steal && share ){
-                                notifyDecisionRequest(_dccAddr,DecisionType.STEAL_OR_SHARE);
+                                notifyDecisionRequest(_dccAddr, DecisionType.STEAL_OR_SHARE);
                             }
                             else if ( steal ){
-                                notifyDecisionRequest(_dccAddr,DecisionType.STEAL);
+                                notifyDecisionRequest(_dccAddr, DecisionType.STEAL);
                             }
-                            else if ( share ){
-                                notifyDecisionRequest(_dccAddr,DecisionType.SHARE);
+                            else { // must be share
+                                notifyDecisionRequest(_dccAddr, DecisionType.SHARE);
                             }
                         } else {
                             log.debug("ERR address not matched");

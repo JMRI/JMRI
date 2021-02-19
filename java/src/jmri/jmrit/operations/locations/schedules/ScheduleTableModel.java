@@ -145,8 +145,9 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         _table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(70);
 
         _frame.loadTableDetails(_table);
-        // turn off columns
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(HIT_COLUMN), false);
+        // setup columns
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(HIT_COLUMN), _matchMode);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(COUNT_COLUMN), !_matchMode);
 
         // does not use a table sorter
         _table.setRowSorter(null);

@@ -10,8 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * MrcClockControl.java
- *
  * Implementation of the Hardware Fast Clock for Mrc
  * <p>
  * This module is based on the NCE version.
@@ -119,8 +117,6 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         log.debug("MrcReply(len {})", r.getNumDataElements()); // NOI18N
 
         readClockPacket(r);
-
-        return;
     }
 
     @Override
@@ -144,7 +140,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         if (DEBUG_SHOW_PUBLIC_CALLS) {
             log.debug("getHardwareClockName"); // NOI18N
         }
-        return (Bundle.getMessage("MrcClockName")); // NOI18N
+        return (Bundle.getMessage("MrcClockName"));
     }
 
     /**

@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -372,7 +373,6 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
     }
     
-    
     // Check a single case to see if it's search match
     // @return true for matched
     private boolean checkSearchTarget(int index, String target) {
@@ -676,7 +676,8 @@ abstract public class PaneProgFrame extends JmriJFrame
         pack();
 
         if (log.isDebugEnabled()) {  // because size elements take time
-            log.debug("PaneProgFrame \"{}\" constructed for file {}, unconstrained size is {}, constrained to {}", pFrameTitle, _rosterEntry.getFileName(), super.getPreferredSize(), getPreferredSize());
+            log.debug("PaneProgFrame \"{}\" constructed for file {}, unconstrained size is {}, constrained to {}",
+                    pFrameTitle, _rosterEntry.getFileName(), super.getPreferredSize(), getPreferredSize());
         }
     }
 
@@ -810,10 +811,9 @@ abstract public class PaneProgFrame extends JmriJFrame
                     this,
                     Bundle.getMessage("ErrorCannotSetMode", desiredModes.toString()),
                     Bundle.getMessage("ErrorCannotSetModeTitle"),
-                    JOptionPane.OK_OPTION);
+                    JOptionPane.ERROR_MESSAGE);
             log.warn("No acceptable mode found, leave as found");
         }
-
     }
 
     /**
@@ -926,7 +926,6 @@ abstract public class PaneProgFrame extends JmriJFrame
                 re.setMaxFnNum(maxFnNumNew);
             }
         }
-
     }
 
     protected void loadProgrammerFile(RosterEntry r) {
@@ -1111,14 +1110,15 @@ abstract public class PaneProgFrame extends JmriJFrame
                 String namePrimary = (pnames.get(0)).getValue(); // get non-localised name
 
                 // check if there is a same-name pane in decoder file
-                for (int j = 0; j < decoderPaneList.size(); j++) {
+                // start at end to prevent concurrentmodification error on remove
+                for (int j = decoderPaneList.size() - 1; j >= 0; j--) {
                     List<Element> dnames = decoderPaneList.get(j).getChildren("name");
                     if (dnames.size() > 0) {
                         String namePrimaryDecoder = (dnames.get(0)).getValue(); // get non-localised name
                         if (namePrimary.equals(namePrimaryDecoder)) {
                             // replace programmer pane with same-name decoder pane
                             temp = decoderPaneList.get(j);
-                            decoderPaneList.remove(j);
+                            decoderPaneList.remove(j); // safe, not suspicious as we work end - front
                             isProgPane = false;
                         }
                     }
@@ -1128,7 +1128,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
             // handle include/exclude
             if (isIncludedFE(temp, modelElem, _rosterEntry, "", "")) {
-                newPane(name, temp, modelElem, false, isProgPane);  // dont force showing if empty
+                newPane(name, temp, modelElem, false, isProgPane);  // don't force showing if empty
             }
         }
     }
@@ -1301,7 +1301,6 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     protected JPanel makeMediaPane(RosterEntry r) {
-
         // create the identification pane (not configured by programmer file now; maybe later?)
         JPanel outer = new JPanel();
         outer.setLayout(new BoxLayout(outer, BoxLayout.Y_AXIS));
@@ -1418,6 +1417,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     /**
      * If there are any modifier elements, process them.
+     *
      * @param e Process the contents of this element
      * @param pane Destination of any visible items
      * @param model Used to locate any needed variables
@@ -1550,7 +1550,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     /**
-     * invoked by "Read Changes" button, this sets in motion a continuing
+     * Invoked by "Read Changes" button, this sets in motion a continuing
      * sequence of "read changes" operations on the panes.
      * <p>
      * Each invocation of this method reads one pane; completion of that request
@@ -1646,7 +1646,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     /**
-     * invoked by "Write All" button, this sets in motion a continuing sequence
+     * Invoked by "Write All" button, this sets in motion a continuing sequence
      * of "write all" operations on each pane. Each invocation of this method
      * writes one pane; completion of that request will cause it to happen
      * again, writing the next pane, until there's nothing left to write.
@@ -1862,7 +1862,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     /**
-     * local dispose, which also invokes parent. Note that we remove the
+     * Local dispose, which also invokes parent. Note that we remove the
      * components (removeAll) before taking those apart.
      */
     @Override
@@ -1926,7 +1926,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     /**
-     * Set value of Preference option to show empty panes
+     * Set value of Preference option to show empty panes.
      *
      * @param yes true if empty panes should be shown
      */
@@ -1937,7 +1937,8 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     /**
-     * get value of Preference option to show empty panes.
+     * Get value of Preference option to show empty panes.
+     *
      * @return value from programmer config. manager, else true.
      */
     public static boolean getShowEmptyPanes() {
@@ -1965,7 +1966,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     /**
-     * Option to control appearance of CV numbers in tool tips
+     * Option to control appearance of CV numbers in tool tips.
      *
      * @param yes true is CV numbers should be shown
      */

@@ -1,0 +1,32 @@
+<!-- Sidebar.shtml -->
+<!-- This is the common sidebar definition for html/hardware/can/cbus (MERG) pages -->
+
+<hr class="hide">
+<div id="side"> <!-- Block of text on left side of page -->
+    <div style="text-align: center">JMRI&reg; connects to...</div>
+    <dl>
+
+        <dt><h3 style="padding-left: 1em;"><a href="../index.shtml">SPROG DCC Generation 5</a></h3></dt>
+        <dd>
+            <ul>
+                <li><a href="index.shtml">SPROG DCC Hardware;</a></li>
+                <li><a href="Details.shtml">Hardware Connection Details</a></li>
+                <li><a href="../can/cbus/index.shtml">CBUS&reg; help topic</a></li>
+            </ul>
+        </dd>      
+
+        <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" --> 
+
+        <!--#include virtual="/help/en/parts/SidebarApplications.shtml" -->
+
+        <!--#include virtual="/help/en/parts/SidebarTools.shtml" -->
+
+        <!--#include virtual="/help/en/parts/SidebarLayoutAutomation.shtml" -->
+
+    </dl>
+
+    <!--#include virtual="/help/en/parts/SidebarTail.shtml" -->
+
+</div> <!-- closes #side -->
+
+<!-- /Sidebar.shtml -->

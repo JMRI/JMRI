@@ -181,7 +181,7 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
     }
 
     static final String[] POSITION = {"first", "second", "third", "fourth", "fifth",
-        "sixth", "seventh", "eighth", "nineth", "tenth"};
+        "sixth", "seventh", "eighth", "nineth", "tenth", "eleventh", "twelfth"};
 
     static public String getPositionName(int index) {
         return POSITION[index];
@@ -288,8 +288,7 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
             String position = (String) _tableModel.getValueAt(row, PickListModel.POSITION_COL);
             if (position != null && position.length() > 0) {
                 JOptionPane.showMessageDialog(_frame,
-                        Bundle.getMessage("DuplicatePosition",
-                                new Object[]{bean.getDisplayName(), position}),
+                        Bundle.getMessage("DuplicatePosition", bean.getDisplayName(), position),
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             } else {
                 _table.setValueAt(Bundle.getMessage(POSITION[_nextPosition]), row, PickListModel.POSITION_COL);
@@ -319,10 +318,7 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return false;
         }
-        if (getIconMap() == null) {
-            return false;
-        }
-        return true;
+        return getIconMap() != null;
     }
 
 
