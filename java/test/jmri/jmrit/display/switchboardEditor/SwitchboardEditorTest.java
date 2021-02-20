@@ -1,6 +1,7 @@
 package jmri.jmrit.display.switchboardEditor;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
 
@@ -24,18 +25,18 @@ import jmri.util.JUnitUtil;
 public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEditor> {
 
     // SwitchboardEditor e is already present in super
+    EditorFrameOperator jfo;
 
     @Override
-    //@Ignore("ChangeView is not applicable to SwitchBoards")
+    @Disabled("ChangeView is not applicable to SwitchBoards")
     @Test
     public void testChangeView() {
     }
 
     @Test
     public void testDefaultCtor() {
-        SwitchboardEditor e1 = new SwitchboardEditor();
-        Assertions.assertNotNull(e1, "exists");
-        e1.dispose();
+        e = new SwitchboardEditor();
+        Assertions.assertNotNull(e, "exists");
     }
 
     @Test
@@ -45,8 +46,6 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
 
     @Test
     public void checkOptionsMenuExists() {
-        e.setVisible(true);
-        EditorFrameOperator jfo = new EditorFrameOperator(e);
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
         Assertions.assertNotNull(jmo, "Options Menu Exists");
         Assertions.assertEquals(10, jmo.getItemCount(), "Menu Item Count");
@@ -54,13 +53,12 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
 
     @Test
     public void checkSetEditable() {
-        e.setVisible(true);
         e.setAllEditable(true);
-        EditorFrameOperator jfo = new EditorFrameOperator(e);
         JMenuBarOperator jmbo = new JMenuBarOperator(jfo);
         Assertions.assertEquals(4, jmbo.getMenuCount(), "Editable Menu Count: 4");
         e.setAllEditable(false);
         Assertions.assertEquals(3, jmbo.getMenuCount(), "Non-editable Menu Count: 3");
+        e.setAllEditable(true); // reset to be able to get to the menuBar to delete e
     }
 
     @Test
@@ -128,7 +126,6 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     public void testSwitchRangeTurnouts() {
         e.setSwitchType("T");
         e.setSwitchManu("I"); // set explicitly
-        e.setVisible(true);
         Assertions.assertEquals("T", e.getSwitchType(), "Default Switch Type is Turnouts");
         Assertions.assertEquals("button", e.getSwitchShape(), "Default Switch Shape Button");
         Assertions.assertEquals(0, e.getRows(), "Default Rows 0"); // autoRows on
@@ -140,11 +137,11 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
         Assertions.assertEquals("symbol", e.getSwitchShape(), "Switch shape set to 'symbol'");
         ((TurnoutManager) e.getManager('T')).provideTurnout("IT9"); // will connect to item 1
 
-        //e.getSwitch("IT8").okAddPressed(new ActionEvent(e, ActionEvent.ACTION_PERFORMED, "test")); // and to item 2
+        e.getSwitch("IT8").okAddPressed(new ActionEvent(e, ActionEvent.ACTION_PERFORMED, "test")); // and to item 2
 
         e.setHideUnconnected(true); // speed up redraw
         e.updatePressed(); // rebuild for new Turnouts + symbol shape
-        Assertions.assertEquals(1, e.getTotal(), "1 connected switch shown");
+        Assertions.assertEquals(2, e.getTotal(), "1 connected switch shown");
     }
 
     @Test
@@ -224,18 +221,23 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
 
         e = new SwitchboardEditor("Switchboard Editor Test");
+        e.setVisible(true);
+        jfo = new EditorFrameOperator(e);
     }
 
     @AfterEach
     @Override
     public void tearDown() {
         if (e != null) {
-            e.dispose();
+            // dispose on Swing thread
+            jfo.deleteViaFileMenuWithConfirmations();
+            e = null;
         }
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
