@@ -229,7 +229,6 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         }
 
         Element elem = shared.getChild("icons");
-        log.warn("Portal elem = {} null", elem == null ? "" : "NOT");
         if (elem != null) {
             Attribute attr = elem.getAttribute("portalFamily");
             if (attr != null) {
