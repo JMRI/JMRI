@@ -88,6 +88,21 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         f.pack();
         f.setVisible(true);
     }
+    
+    /**
+     * Notification that column visibility for the JTable has updated.
+     * <p>
+     * This is overridden by classes which have column visibility Checkboxes on bottom bar.
+     * <p>
+     * 
+     * Called on table startup and whenever a column goes hidden / visible.
+     * 
+     * @param colsVisible   array of ALL table columns and their visibility
+     *                      status in order of main Table Model, NOT XTableColumnModel.
+     */
+    protected void columnsVisibleUpdated(boolean[] colsVisible){
+        log.debug("columns updated {}",colsVisible);
+    }
 
     public BeanTableDataModel<E> getTableDataModel() {
         createModel();
