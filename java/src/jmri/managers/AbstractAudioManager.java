@@ -140,7 +140,7 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
 
     /**
      * Internal method to invoke the factory, after all the logic for returning
-     * an existing method has been invoked.
+     * an existing Audio has been invoked.
      *
      * @param systemName Audio object system name (for example IAS1, IAB4)
      * @param userName   Audio object user name

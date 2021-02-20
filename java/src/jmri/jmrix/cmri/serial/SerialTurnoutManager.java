@@ -1,12 +1,14 @@
 package jmri.jmrix.cmri.serial;
 
 import java.util.Locale;
+
 import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
-import jmri.JmriException;
-import jmri.Turnout;
+
+import jmri.*;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.managers.AbstractTurnoutManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -256,10 +258,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             try {
                 bitNum = Integer.parseInt(curAddress.substring(seperator + 1));
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorAssignFormat2", curAddress) + "\n" +
-                        Bundle.getMessage("ErrorAssignFormatHelp"),
-                        Bundle.getMessage("ErrorAssignTitle"),
-                        JOptionPane.INFORMATION_MESSAGE, null);
                 throw new JmriException("Part 2 of " + curAddress + " is not an integer");
             }
             tmpSName = getMemo().makeSystemName("T", nAddress, bitNum);
@@ -281,11 +279,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
                 // We do this to simply check that the value passed is a number!
                 Integer.parseInt(curAddress);
             } catch (NumberFormatException ex) {
-                // show dialog to user
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorAssignFormat", curAddress) + "\n" +
-                        Bundle.getMessage("ErrorAssignFormatHelp"),
-                        Bundle.getMessage("ErrorAssignTitle"),
-                        JOptionPane.INFORMATION_MESSAGE, null);
                 throw new JmriException("Address " + curAddress + " is not an integer");
             }
             tmpSName = prefix + "T" + curAddress;
@@ -302,50 +295,38 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
         String tmpSName = "";
         try {
-            tmpSName = createSystemName(curAddress, prefix);
-        } catch (JmriException ex) {
-            throw ex;
+            tmpSName = validateSystemNameFormat(createSystemName(curAddress, prefix));
+        } catch (JmriException | NamedBean.BadNameException ex) {
+            throw new JmriException(ex.getMessage());
         }
 
         //If the hardware address part does not already exist then this can
         //be considered the next valid address.
         Turnout t = getBySystemName(tmpSName);
-        if (t == null) {
+        if (t == null && !ignoreInitialExisting) {
             /* We look for the last instance of T, as the hardware address side
              of the system name should not contain the letter, however parts of the prefix might */
             int seperator = tmpSName.lastIndexOf("T") + 1;
-            curAddress = tmpSName.substring(seperator);
-            return curAddress;
+            return tmpSName.substring(seperator);
         }
 
         //The Number of Output Bits of the previous turnout will help determine the next
         //valid address.
-        bitNum = bitNum + t.getNumberOutputBits();
-        //Check to determine if the systemName is in use, return null if it is,
-        //otherwise return the next valid address.
-        tmpSName = getMemo().makeSystemName("T", nAddress, bitNum);
-        t = getBySystemName(tmpSName);
-        if (t != null) {
-            for (int x = 1; x < 10; x++) {
-                bitNum = bitNum + t.getNumberOutputBits();
-                //System.out.println("This should increment " + bitNum);
-                tmpSName = getMemo().makeSystemName("T", nAddress, bitNum);
-                t = getBySystemName(tmpSName);
-                if (t == null) {
-                    int seperator = tmpSName.lastIndexOf("T") + 1;
-                    curAddress = tmpSName.substring(seperator);
-                    return curAddress;
-                }
+        int increment = t==null ? 1 : t.getNumberOutputBits();
+        for (int x = 0; x < 10; x++) {
+            bitNum = bitNum + increment;
+            //System.out.println("This should increment " + bitNum);
+            tmpSName = getMemo().makeSystemName("T", nAddress, bitNum);
+            t = getBySystemName(tmpSName);
+            if (t == null) {
+                int seperator = tmpSName.lastIndexOf("T") + 1;
+                return tmpSName.substring(seperator);
             }
-            return null;
-        } else {
-            int seperator = tmpSName.lastIndexOf("T") + 1;
-            curAddress = tmpSName.substring(seperator);
-            return curAddress;
         }
+        throw new JmriException(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,tmpSName));
     }
 
     /**
@@ -353,7 +334,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      */
     @Override
     @Nonnull
-    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) throws NamedBean.BadSystemNameException {
+        systemName = validateSystemNamePrefix(systemName, locale);
         return getMemo().validateSystemNameFormat(super.validateSystemNameFormat(systemName, locale), typeLetter(), locale);
     }
     

@@ -180,7 +180,7 @@ public class WarrantTest {
         warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.3", "South"));
         warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.0", "South"));
 
-        warrant.getSpeedUtil().setDccAddress("999(L)");
+        warrant.getSpeedUtil().setAddress("999(L)");
         String msg = warrant.allocateRoute(false, orders);
 
         warrant.setTrainName("TestTrain");
@@ -195,9 +195,6 @@ public class WarrantTest {
             return m.endsWith("Cmd #2.") || m.endsWith("Cmd #3.");
         }, "Train starts to move after 2nd command");
         jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
-
-        // confirm one message logged
-        jmri.util.JUnitAppender.assertWarnMessage("Path NorthToWest in block North has length zero. Cannot run NXWarrants or ramp speeds through blocks with zero length.");
 
         jmri.util.ThreadingUtil.runOnLayout(() -> {
             try {
@@ -324,7 +321,7 @@ public class WarrantTest {
 
     @AfterEach
     public void tearDown() {
-        warrant.stopWarrant(true);
+        warrant.stopWarrant(true, true);
         _OBlockMgr = null;
         _portalMgr = null;
         _sensorMgr = null;

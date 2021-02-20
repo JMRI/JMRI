@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
- * Exports the Engine roster into a comma delimitated file (CSV). Order stored:
+ * Exports the Engine roster into a comma delimited file (CSV). Order stored:
  * Number, Road, Model, Length, Owner, Built, Location, -, Track, Consist,
  * Moves, Last, Value, HP, Weight, Type, Comment, Misc.
  *
@@ -32,18 +32,6 @@ public class ExportEngines extends XmlFile {
     protected static final String LOCATION_TRACK_SEPARATOR = "-";
 
     public ExportEngines() {
-        // nothing to do
-    }
-
-    /**
-     * Sets the delimiter for the CSV export. Does nothing, left in place to
-     * avoid API breakage during deprecation period.
-     *
-     * @param delimiter ignored
-     * @deprecated since 4.19.4 without replacement
-     */
-    @Deprecated
-    public void setDeliminter(String delimiter) {
         // nothing to do
     }
 

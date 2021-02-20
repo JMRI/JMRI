@@ -90,6 +90,11 @@ public class NBHSensor {
         return null;
     }
 
+    public NamedBeanHandle getBeanHandle() {
+        if (valid()) return _mNamedBeanHandleSensor;
+        return null;
+    }
+
     public boolean matchSensor(Sensor sensor) {
         if (valid()) return _mNamedBeanHandleSensor.getBean() == sensor;
         return false;
@@ -99,16 +104,34 @@ public class NBHSensor {
         _mUserIdentifier = userIdentifier;
         _mParameter = parameter;
         _mOptional = optional;
-        Sensor tempSensor = optional ? getSafeOptionalJMRISensor(module, userIdentifier, parameter, sensor) : getSafeExistingJMRISensor(module, userIdentifier, parameter, sensor);
+        Sensor tempSensor = _mOptional ? getSafeOptionalJMRISensor(module, userIdentifier, _mParameter, sensor) : getSafeExistingJMRISensor(module, userIdentifier, _mParameter, sensor);
         if (tempSensor != null) {
             _mNamedBeanHandleSensor = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(sensor, tempSensor);
         } else {
             _mNamedBeanHandleSensor = null;
         }
+        registerSensor(sensor);
     }
-    
-//????
-//  Use when something else has the thing we help with:
+
+    public NBHSensor(String module, String userIdentifier, String parameter, String sensorName) {
+        _mUserIdentifier = userIdentifier;
+        _mParameter = parameter;
+        _mOptional = false;
+
+        Sensor tempSensor = getSafeInternalSensor(module, userIdentifier, parameter, sensorName);
+        if (tempSensor != null) {
+            _mNamedBeanHandleSensor = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, tempSensor);
+        } else {
+            _mNamedBeanHandleSensor = null;
+        }
+        registerSensor(sensorName);
+    }
+
+    void registerSensor(String sensorName) {
+        if (valid()) InstanceManager.getDefault(CtcManager.class).putNBHSensor(sensorName, this);
+    }
+
+//  Used by CallOn to create a temporary NBHSensor for the current sensor for a block.
     public NBHSensor(NamedBeanHandle<Sensor> namedBeanHandleSensor) {
         _mUserIdentifier = Bundle.getMessage("Unknown");    // NOI18N
         _mParameter = _mUserIdentifier;
@@ -125,6 +148,11 @@ public class NBHSensor {
 
     private static Sensor getSafeOptionalJMRISensor(String module, String userIdentifier, String parameter, String sensor) {
         try { return getOptionalJMRISensor(module, userIdentifier, parameter, sensor); } catch (CTCException e) { e.logError(); }
+        return null;
+    }
+
+    private static Sensor getSafeInternalSensor(String module, String userIdentifier, String parameter, String sensor) {
+        try { return getInternalSensor(module, userIdentifier, parameter, sensor); } catch (CTCException e) { e.logError(); }
         return null;
     }
 
@@ -145,6 +173,14 @@ public class NBHSensor {
             Sensor returnValue = InstanceManager.getDefault(SensorManager.class).getSensor(sensor);
             if (returnValue == null) { throw new CTCException(module, userIdentifier, parameter, Bundle.getMessage("NBHSensorDoesNotExist") + " " + sensor); }  // NOI18N
             return returnValue;
+        } else { return null; }
+    }
+
+// Special case for CTC internal sensors.  These are not always predefined so the provide() method is used.
+    private static Sensor getInternalSensor(String module, String userIdentifier, String parameter, String sensor) throws CTCException {
+        if (!ProjectsCommonSubs.isNullOrEmptyString(sensor)) {
+            // Cannot use a constant Instance manager reference due to the dynamic nature of tests.
+            return InstanceManager.getDefault(SensorManager.class).provide(sensor);
         } else { return null; }
     }
 
@@ -171,53 +207,24 @@ public class NBHSensor {
         _mNamedBeanHandleSensor.getBean().removePropertyChangeListener(propertyChangeListener);
         _mArrayListOfPropertyChangeListeners.remove(propertyChangeListener);
     }
-    
+
 //  Support for "Grand Unification" (Editor support):
-    
-    
+
+
     /**
-     * @return The display name of the Sensor (getDisplayName()).
+     * @return The sensor's handle name.
      */
     public String getHandleName() {
-        return _mNamedBeanHandleSensor.getName();
+        return valid() ? _mNamedBeanHandleSensor.getName() : "";
     }
 
-    /**
-     * Set the new sensor name to use.  IF (and only if) the name changes, then we do EVERYTHING
-     * required to support the name change.
-     * 
-     * @param newName The new name of the object to use.
-     */    
-    public void setHandleName(String newName) {
-        if (getHandleName().compareTo(newName) != 0) { // User changed their minds about which Sensor to use (NOT a rename!):
-
-//  Save and unlink OUR propertyChangeListeners ONLY from the old Sensor:            
-            for (PropertyChangeListener propertyChangeListener : _mArrayListOfPropertyChangeListeners) {
-                _mNamedBeanHandleSensor.getBean().removePropertyChangeListener(propertyChangeListener);
-            }
-
-//  Allocate and replace the existing sensor (away with thee old sensor!)            
-            Sensor tempSensor = _mOptional ? getSafeOptionalJMRISensor("NBHSensor", _mUserIdentifier, _mParameter, newName) : getSafeExistingJMRISensor("NBHSensor", _mUserIdentifier, _mParameter, newName); // NOI18N
-            if (tempSensor != null) {
-                _mNamedBeanHandleSensor = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(newName, tempSensor);
-            } else {
-                _mNamedBeanHandleSensor = null;
-            }
-
-//  Relink OUR registered propertyChangeListeners to the NEW sensor:
-            for (PropertyChangeListener propertyChangeListener : _mArrayListOfPropertyChangeListeners) {
-                _mNamedBeanHandleSensor.getBean().addPropertyChangeListener(propertyChangeListener);
-            }
-        }
-    }
-    
-    
     /**
      * For Unit testing only.
      * @return Returns the present number of property change listeners registered with us so far.
-     */    
-    
+     */
     public int testingGetCountOfPropertyChangeListenersRegistered() {
         return _mArrayListOfPropertyChangeListeners.size();
     }
+
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NBHSensor.class);
 }

@@ -42,14 +42,12 @@ import org.slf4j.LoggerFactory;
  */
 public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delayed {
 
-    private static int _nRetries = 5;
+    private static int _nRetries = 3;
 
     /* According to the specification, DCC++ has a maximum timing
      interval of 500 milliseconds during normal communications */
-    // TODO: Note this timing interval is actually an XpressNet thing...
-    // Need to find out what DCC++'s equivalent is.
     protected static final int DCCppProgrammingTimeout = 10000;  // TODO: Appropriate value for DCC++?
-    private static int DCCppMessageTimeout = 5000;  // TODO: Appropriate value for DCC++?
+    private static int DCCppMessageTimeout = 2000;  // TODO: Appropriate value for DCC++?
 
     //private ArrayList<Integer> valueList = new ArrayList<>();
     private StringBuilder myMessage;
@@ -173,8 +171,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 return (new DCCppMessage(DCCppConstants.CLEAR_EEPROM_CMD, DCCppConstants.CLEAR_EEPROM_REGEX));
             case DCCppConstants.FUNCTION_CMD:
                 break;
-            case DCCppConstants.GET_FREE_MEMORY:
-                return (new DCCppMessage(DCCppConstants.GET_FREE_MEMORY, DCCppConstants.GET_FREE_MEMORY_REGEX));
+//            case DCCppConstants.GET_FREE_MEMORY:
+//                return (new DCCppMessage(DCCppConstants.GET_FREE_MEMORY, DCCppConstants.GET_FREE_MEMORY_REGEX));
             case DCCppConstants.LIST_REGISTER_CONTENTS:
                 return (new DCCppMessage(DCCppConstants.LIST_REGISTER_CONTENTS, DCCppConstants.LIST_REGISTER_CONTENTS_REGEX));
             case DCCppConstants.OPS_WRITE_CV_BIT:
@@ -228,8 +226,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 }
             case DCCppConstants.READ_CS_STATUS:
                 return (new DCCppMessage(DCCppConstants.READ_CS_STATUS, DCCppConstants.READ_CS_STATUS_REGEX));
-            case DCCppConstants.READ_CS_MAXNUMSLOTS:
-                return (new DCCppMessage(DCCppConstants.READ_CS_MAXNUMSLOTS, DCCppConstants.READ_CS_MAXNUMSLOTS_REGEX));
+            case DCCppConstants.READ_MAXNUMSLOTS:
+                return (new DCCppMessage(DCCppConstants.READ_MAXNUMSLOTS, DCCppConstants.READ_MAXNUMSLOTS_REGEX));
             case DCCppConstants.READ_TRACK_CURRENT:
                 return (DCCppMessage.makeReadTrackCurrentMsg());
             case DCCppConstants.SENSOR_CMD:
@@ -383,6 +381,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             case DCCppConstants.READ_CS_STATUS:
                 myRegex = DCCppConstants.READ_CS_STATUS_REGEX;
                 break;
+            case DCCppConstants.READ_MAXNUMSLOTS:
+                myRegex = DCCppConstants.READ_MAXNUMSLOTS_REGEX;
+                break;
             case DCCppConstants.WRITE_TO_EEPROM_CMD:
                 myRegex = DCCppConstants.WRITE_TO_EEPROM_REGEX;
                 break;
@@ -398,9 +399,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             case DCCppConstants.WRITE_DCC_PACKET_PROG:
                 myRegex = DCCppConstants.WRITE_DCC_PACKET_PROG_REGEX;
                 break;
-            case DCCppConstants.GET_FREE_MEMORY:
-                myRegex = DCCppConstants.GET_FREE_MEMORY_REGEX;
-                break;
+//            case DCCppConstants.GET_FREE_MEMORY:
+//                myRegex = DCCppConstants.GET_FREE_MEMORY_REGEX;
+//                break;
             case DCCppConstants.LIST_REGISTER_CONTENTS:
                 myRegex = DCCppConstants.LIST_REGISTER_CONTENTS_REGEX;
                 break;
@@ -470,33 +471,33 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             case DCCppConstants.TURNOUT_CMD:
                 if (isTurnoutAddMessage()) {
                     text = "Add Turnout: ";
-                    text += "T/O ID: " + getTOIDString();
+                    text += "ID: " + getTOIDString();
                     text += ", Address: " + getTOAddressString();
                     text += ", Subaddr: " + getTOSubAddressString();
                 } else if (isTurnoutDeleteMessage()) {
                     text = "Delete Turnout: ";
-                    text += "T/O ID: " + getTOIDString();
+                    text += "ID: " + getTOIDString();
                 } else if (isListTurnoutsMessage()) {
                     text = "List Turnouts...";
                 } else {
                     text = "Turnout Cmd: ";
-                    text += "T/O ID: " + getTOIDString();
+                    text += "ID: " + getTOIDString();
                     text += ", State: " + getTOStateString();
                 }
                 break;
             case DCCppConstants.OUTPUT_CMD:
                 if (isOutputCmdMessage()) {
                     text = "Output Cmd: ";
-                    text += "Output ID: " + getOutputIDString();
+                    text += "ID: " + getOutputIDString();
                     text += ", State: " + getOutputStateString();
                 } else if (isOutputAddMessage()) {
                     text = "Add Output: ";
-                    text += "Output ID: " + getOutputIDString();
+                    text += "ID: " + getOutputIDString();
                     text += ", Pin: " + getOutputPinString();
                     text += ", IFlag: " + getOutputIFlagString();
                 } else if (isOutputDeleteMessage()) {
                     text = "Delete Output: ";
-                    text += "Output ID: " + getOutputIDString();
+                    text += "ID: " + getOutputIDString();
                 } else if (isListOutputsMessage()) {
                     text = "List Outputs...";
                 } else {
@@ -506,12 +507,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             case DCCppConstants.SENSOR_CMD:
                 if (isSensorAddMessage()) {
                     text = "Add Sensor: ";
-                    text += "Sensor ID: " + getSensorIDString();
+                    text += "ID: " + getSensorIDString();
                     text += ", Pin: " + getSensorPinString();
                     text += ", Pullup: " + getSensorPullupString();
                 } else if (isSensorDeleteMessage()) {
                     text = "Delete Sensor: ";
-                    text += "Sensor ID: " + getSensorIDString();
+                    text += "ID: " + getSensorIDString();
                 } else if (isListSensorsMessage()) {
                     text = "List Sensors...";
                 } else {
@@ -565,6 +566,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             case DCCppConstants.READ_CS_STATUS:
                 text = "Status Cmd ";
                 break;
+            case DCCppConstants.READ_MAXNUMSLOTS:
+                text = "Get MaxNumSlots Cmd ";
+                break;
             case DCCppConstants.WRITE_DCC_PACKET_MAIN:
                 text = "Write DCC Packet Main Cmd: ";
                 text += "Register: " + getRegisterString();
@@ -575,16 +579,27 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 text += "Register: " + getRegisterString();
                 text += ", Packet:" + getPacketString();
                 break;
-            case DCCppConstants.GET_FREE_MEMORY:
-                text = "Get Free Memory Cmd: ";
-                text += toString();
-                break;
+//            case DCCppConstants.GET_FREE_MEMORY:
+//                text = "Get Free Memory Cmd: ";
+//                text += toString();
+//                break;
             case DCCppConstants.LIST_REGISTER_CONTENTS:
                 text = "List Register Contents Cmd: ";
                 text += toString();
                 break;
+            case DCCppConstants.WRITE_TO_EEPROM_CMD:
+                text = "Write to EEPROM Cmd: ";
+                text += toString();
+                break;
+            case DCCppConstants.CLEAR_EEPROM_CMD:
+                text = "Clear EEPROM Cmd: ";
+                text += toString();
+                break;
+            case DCCppConstants.QUERY_SENSOR_STATES_CMD:
+                text = "Query Sensor States Cmd: '" + toString() + "'";
+                break;               
             default:
-                text = "Unknown Message: " + toString();
+                text = "Unknown Message: '" + toString() + "'";
         }
 
         return text;
@@ -652,7 +667,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     public String getValueString(int idx) {
         Matcher m = match(toString(), myRegex, "gvs");
         if (m == null) {
-            log.error("No match!");
+            log.error("DCCppMessage '{}' not matched by '{}'", this.toString(), myRegex);
             return ("");
         } else if (idx <= m.groupCount()) {
             return (m.group(idx));
@@ -665,7 +680,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     public int getValueInt(int idx) {
         Matcher m = match(toString(), myRegex, "gvi");
         if (m == null) {
-            log.error("No match!");
+            log.error("DCCppMessage '{}' not matched by '{}'", this.toString(), myRegex);
             return (0);
         } else if (idx <= m.groupCount()) {
             return (Integer.parseInt(m.group(idx)));
@@ -677,10 +692,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
 
     public boolean getValueBool(int idx) {
         log.debug("msg = {}, regex = {}", this, myRegex);
-        Matcher m = match(toString(), myRegex, "gvi");
+        Matcher m = match(toString(), myRegex, "gvb");
 
         if (m == null) {
-            log.error("No Match!");
+            log.error("DCCppMessage '{}' not matched by '{}'", this.toString(), myRegex);
             return (false);
         } else if (idx <= m.groupCount()) {
             return (!m.group(idx).equals("0"));
@@ -755,7 +770,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             Pattern p = Pattern.compile(pat);
             Matcher m = p.matcher(s);
             if (!m.matches()) {
-                log.debug("No Match {} Command: {} Pattern: {}", name, s, pat);
+                log.trace("No Match {} Command: '{}' Pattern: '{}'", name, s, pat);
                 return (null);
             }
             return (m);
@@ -1493,6 +1508,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         switch (this.getOpCodeChar()) {
             case DCCppConstants.THROTTLE_CMD:
             case DCCppConstants.TURNOUT_CMD:
+            case DCCppConstants.SENSOR_CMD:
             case DCCppConstants.PROG_WRITE_CV_BYTE:
             case DCCppConstants.PROG_WRITE_CV_BIT:
             case DCCppConstants.PROG_READ_CV:
@@ -1500,7 +1516,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             case DCCppConstants.TRACK_POWER_OFF:
             case DCCppConstants.READ_TRACK_CURRENT:
             case DCCppConstants.READ_CS_STATUS:
-            case DCCppConstants.GET_FREE_MEMORY:
+            case DCCppConstants.READ_MAXNUMSLOTS:
+//            case DCCppConstants.GET_FREE_MEMORY:
             case DCCppConstants.OUTPUT_CMD:
             case DCCppConstants.LIST_REGISTER_CONTENTS:
                 retv = true;
@@ -1648,12 +1665,15 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     public static DCCppMessage makeTurnoutAddMsg(int id, int addr, int subaddr) {
         // Sanity check inputs
         if (id < 0 || id > DCCppConstants.MAX_TURNOUT_ADDRESS) {
+            log.error("turnout Id {} must be between {} and {}", id, 0, DCCppConstants.MAX_TURNOUT_ADDRESS);
             return (null);
         }
         if (addr < 0 || addr > DCCppConstants.MAX_ACC_DECODER_ADDRESS) {
+            log.error("turnout address {} must be between {} and {}", id, 0, DCCppConstants.MAX_ACC_DECODER_ADDRESS);
             return (null);
         }
         if (subaddr < 0 || subaddr > DCCppConstants.MAX_ACC_DECODER_SUBADDR) {
+            log.error("turnout subaddress {} must be between {} and {}", id, 0, DCCppConstants.MAX_ACC_DECODER_SUBADDR);
             return (null);
         }
 
@@ -2058,7 +2078,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * @return status message with to get number of slots.
      */
     public static DCCppMessage makeCSMaxNumSlotsMsg() {
-        return (new DCCppMessage(DCCppConstants.READ_CS_MAXNUMSLOTS, DCCppConstants.READ_CS_MAXNUMSLOTS_REGEX));
+        return (new DCCppMessage(DCCppConstants.READ_MAXNUMSLOTS, DCCppConstants.READ_MAXNUMSLOTS_REGEX));
     }
 
     /**
@@ -2653,10 +2673,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
 
     }
 
-    public static DCCppMessage makeCheckFreeMemMsg() {
-        return (new DCCppMessage(DCCppConstants.GET_FREE_MEMORY, DCCppConstants.GET_FREE_MEMORY_REGEX));
-    }
-
+//    public static DCCppMessage makeCheckFreeMemMsg() {
+//        return (new DCCppMessage(DCCppConstants.GET_FREE_MEMORY, DCCppConstants.GET_FREE_MEMORY_REGEX));
+//    }
+//
     public static DCCppMessage makeListRegisterContentsMsg() {
         return (new DCCppMessage(DCCppConstants.LIST_REGISTER_CONTENTS,
                 DCCppConstants.LIST_REGISTER_CONTENTS_REGEX));

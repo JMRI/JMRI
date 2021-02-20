@@ -32,14 +32,14 @@
             <label xml:lang="ca">Voltatge Alt</label>
             <tooltip xml:lang="de">Festlegung der Höchstgeschwindigkeit der Lok</tooltip>
         </variable>
-        <variable CV="6" default="88" item="Vmid" include="LokSound 5 DCC,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 L DCC,LokPilot 5 DCC,LokPilot 5 micro DCC,LokPilot 5 micro DCC Next18,LokPilot 5 L DCC,LokPilot 5 MKL DCC">
+        <variable CV="6" default="88" item="Vmid" include="LokSound 5 DCC,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 micro E24 DCC,LokSound 5 micro KATO,LokSound 5 L DCC,LokPilot 5 DCC,LokPilot 5 micro DCC,LokPilot 5 micro DCC Next18,LokPilot 5 Micro Next18 DCC,LokPilot 5 L DCC,LokPilot 5 MKL DCC">
             <decVal min="1"/>
             <label>Vmid</label>
             <label xml:lang="de">Mittengeschwindigkeit</label>
             <label xml:lang="ca">VMitjana</label>
             <tooltip xml:lang="de">Festlegung der Geschwindigkeit der Lok bei mittlerer Fahrstufe</tooltip>
         </variable>
-        <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" include="LokSound 5 DCC,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 L DCC,LokPilot 5 DCC,LokPilot 5 micro DCC,LokPilot 5 micro DCC Next18,LokPilot 5 L DCC,LokPilot 5 MKL DCC">
+        <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" include="LokSound 5 DCC,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 micro E24 DCC,LokSound 5 micro KATO,LokSound 5 L DCC,LokPilot 5 DCC,LokPilot 5 micro DCC,LokPilot 5 micro DCC Next18,LokPilot 5 Micro Next18 DCC,LokPilot 5 L DCC,LokPilot 5 MKL DCC">
             <enumVal>
                 <enumChoice choice="Use Vstart, Vmid, Vhigh">
                     <choice>Use Vstart, Vmid, Vhigh</choice>
@@ -368,7 +368,7 @@
     </variables>
     <!-- end motor-dependent variables -->
     <!-- begin AC Analog variables -->
-    <variables exclude="Essential Sound Unit,LokSound 5 DCC,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 L DCC,LokPilot 5 DCC,LokPilot 5 micro DCC,LokPilot 5 micro DCC Next18,LokPilot 5 L DCC,LokPilot 5 Fx micro DCC,LokPilot 5 Fx Micro Next18 DCC,LokPilot 5 MKL DCC ">
+    <variables exclude="Essential Sound Unit,LokSound 5 DCC,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 micro E24 DCC,LokSound 5 micro KATO,LokSound 5 L DCC,LokPilot 5 DCC,LokPilot 5 micro DCC,LokPilot 5 micro DCC Next18,LokPilot 5 Micro Next18 DCC,LokPilot 5 L DCC,LokPilot 5 Fx micro DCC,LokPilot 5 Fx Micro Next18 DCC,LokPilot 5 MKL DCC ">
         <variable CV="50" mask="XXXXXXXV" default="1" item="Analog (AC) Mode">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
             <label>AC Analog Mode</label>
@@ -389,7 +389,7 @@
         </variable>
     </variables>
     <!-- end AC Analog variables -->
-    <variable CV="3" default="40" item="Accel" exclude="Essential Sound Unit,LokSound 5 DCC,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 L DCC">
+    <variable CV="3" default="40" item="Accel" exclude="Essential Sound Unit,LokSound 5 DCC,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 micro E24 DCC,LokSound 5 micro KATO,LokSound 5 L DCC">
         <decVal/>
         <label>Acceleration</label>
         <label xml:lang="it">Accellerazione (0-255)</label>
@@ -399,7 +399,7 @@
         <tooltip>Value multiplied by 0.25 = Time from Stop to Full Speed.</tooltip>
         <tooltip xml:lang="de">Wert multipliziert mit 0.25 = Zeit vom Stop bis Maximalgeschwindigkeit.</tooltip>
     </variable>
-    <variable CV="3" default="11" item="Accel" include="Essential Sound Unit,LokSound 5 DCC,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 L DCC">
+    <variable CV="3" default="11" item="Accel" include="Essential Sound Unit,LokSound 5 DCC,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 micro E24 DCC,LokSound 5 micro KATO,LokSound 5 L DCC">
         <defaultItem default="30" include="Essential Sound Unit"/>
         <decVal/>
         <label>Acceleration</label>
@@ -410,7 +410,7 @@
         <tooltip>Value multiplied by 0.896 = Time from Stop to Full Speed.</tooltip>
         <tooltip xml:lang="de">Wert multipliziert mit 0.896 = Zeit vom Stop bis Maximalgeschwindigkeit.</tooltip>
     </variable>
-    <variable CV="4" default="40" item="Decel" exclude="Essential Sound Unit,LokSound 5 DCC,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 L DCC">
+    <variable CV="4" default="40" item="Decel" exclude="Essential Sound Unit,LokSound 5 DCC,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 micro E24 DCC,LokSound 5 micro KATO,LokSound 5 L DCC">
         <decVal/>
         <label>Deceleration</label>
         <label xml:lang="it">Decellerazione (0-255)</label>
@@ -420,7 +420,7 @@
         <tooltip>Value multiplied by 0.25 = Time from Full Speed to Stop.</tooltip>
         <tooltip xml:lang="de">Wert multipliziert mit 0.25 = Zeit von Maximalgeschwindigkeit bis Stop</tooltip>
     </variable>
-    <variable CV="4" default="11" item="Decel" include="Essential Sound Unit,LokSound 5 DCC,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 L DCC">
+    <variable CV="4" default="11" item="Decel" include="Essential Sound Unit,LokSound 5 DCC,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 micro E24 DCC,LokSound 5 micro KATO,LokSound 5 L DCC">
         <defaultItem default="50" include="Essential Sound Unit"/>
         <decVal/>
         <label>Deceleration</label>
@@ -629,7 +629,7 @@
         <label xml:lang="de">DCC Protokoll</label>
         <label xml:lang="ca">Protocol DCC</label>
     </variable>
-    <variables exclude="Essential Sound Unit,LokSound 5 DCC,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 L DCC">
+    <variables exclude="Essential Sound Unit,LokSound 5 DCC,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 micro E24 DCC,LokSound 5 micro KATO,LokSound 5 L DCC">
         <variable CV="47" mask="XXXXXXVX" default="1" item="ESU V4 Advanced Protocols M4">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
             <label>M4 Protocol</label>
@@ -649,7 +649,7 @@
             <label xml:lang="ca">Protocol Selectrix</label>
         </variable>
     </variables>
-    <variable CV="49" mask="VXXXVXXX" default="0" exclude="Essential Sound Unit,LokSound 5 DCC,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 L DCC" item="ESU V4 Advanced Protocols Additional Addresses">
+    <variable CV="49" mask="VXXXVXXX" default="0" exclude="Essential Sound Unit,LokSound 5 DCC,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 micro E24 DCC,LokSound 5 micro KATO,LokSound 5 L DCC" item="ESU V4 Advanced Protocols Additional Addresses">
         <enumVal>
             <enumChoice choice="No additional addresses" value="0">
                 <choice>No additional addresses</choice>
@@ -820,7 +820,7 @@
         <label xml:lang="de">Serielles Protokoll für C-Sinus</label>
         <label xml:lang="ca">SUSI</label>
     </variable>
-    <variable CV="124" mask="XXXVXXXX" default="1" item="ESU AUX10/Sensor" exclude="LokSound 5 micro,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 XL,LokPilot 5 Fx micro,LokPilot 5 Fx micro DCC,LokPilot 5 micro Next18,LokPilot 5 micro DCC Next18,Essential Sound Unit">
+    <variable CV="124" mask="XXXVXXXX" default="1" item="ESU AUX10/Sensor" exclude="LokSound 5 micro,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 micro E24 DCC,LokSound 5 micro KATO,LokSound 5 XL,LokPilot 5 Fx micro,LokPilot 5 Fx micro DCC,LokPilot 5 micro Next18,LokPilot 5 micro DCC Next18,LokPilot 5 Micro Next18 DCC,Essential Sound Unit">
         <enumVal>
             <enumChoice value="1">
                 <choice>Use digital wheel sensor</choice>

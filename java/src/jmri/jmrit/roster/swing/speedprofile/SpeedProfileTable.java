@@ -92,7 +92,7 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
         JLabel label = new JLabel(Bundle.getMessage("units"));
         label.setFont(font);
         javax.swing.ButtonGroup bp = new javax.swing.ButtonGroup();
-        JRadioButton mm = new JRadioButton(Bundle.getMessage("mm"));
+        JRadioButton mm = new JRadioButton(Bundle.getMessage("mmps"));
         mm.setFont(font);
         mm.addActionListener((ActionEvent e) -> {
             update(model, SignalSpeedMap.PERCENT_NORMAL);
@@ -329,7 +329,7 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
                 case STEP_COL:
                     return Math.round((float)(entry.getKey()*126)/1000);
                 case THROTTLE_COL:
-                    return (float)(entry.getKey())/1000;
+                    return threeDigit.format((float)(entry.getKey())/1000);
                 case FORWARD_SPEED_COL:
                     float speed = entry.getValue().getForwardSpeed();
                     switch(interp) {
@@ -376,10 +376,10 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
             try {
             switch (col) {
                 case FORWARD_SPEED_COL:
-                    entry.getValue().setForwardSpeed(Float.parseFloat((String)value));
+                    entry.getValue().setForwardSpeed(Float.parseFloat(((String)value).replace(',', '.')));
                     return;
                 case REVERSE_SPEED_COL:
-                    entry.getValue().setReverseSpeed(Float.parseFloat((String)value));
+                    entry.getValue().setReverseSpeed(Float.parseFloat(((String)value).replace(',', '.')));
                     return;
                 default:
                     // fall out

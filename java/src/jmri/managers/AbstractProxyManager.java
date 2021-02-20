@@ -14,6 +14,8 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.*;
 import jmri.beans.VetoableChangeSupport;
 import jmri.SystemConnectionMemo;
+import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
@@ -194,7 +196,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     @Override
     @Nonnull
     public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
-        Manager manager = getManager(systemName);
+        Manager<E> manager = getManager(systemName);
         if (manager == null) {
             manager = getDefaultManager();
         }
@@ -210,7 +212,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
      */
     @Override
     public NameValidity validSystemNameFormat(@Nonnull String systemName) {
-        Manager m = getManager(systemName);
+        Manager<E> m = getManager(systemName);
         return m == null ? NameValidity.INVALID : m.validSystemNameFormat(systemName);
     }
 
@@ -264,19 +266,26 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
      *
      * @param curAddress base address to use
      * @param prefix system prefix to use
-     * @param managerType BeanType manager (method is used for Turnout and Sensor Managers)
+     * @param beanType Bean Type for manager (method is used for Turnout and Sensor Managers)
      * @return a valid system name for this connection
      * @throws JmriException if systemName cannot be created
      */
-    String createSystemName(String curAddress, String prefix, Class managerType) throws JmriException {
+    String createSystemName(String curAddress, String prefix, Class<?> beanType) throws JmriException {
         for (Manager<E> m : mgrs) {
-            if (prefix.equals(m.getSystemPrefix()) && managerType.equals(m.getClass())) {
+            if (prefix.equals(m.getSystemPrefix()) && beanType.equals(m.getNamedBeanClass())) {
                 try {
-                    if (managerType == TurnoutManager.class) {
+                    if (beanType == Turnout.class) {
                         return ((TurnoutManager) m).createSystemName(curAddress, prefix);
-                    } else if (managerType == SensorManager.class) {
+                    } else if (beanType == Sensor.class) {
                         return ((SensorManager) m).createSystemName(curAddress, prefix);
-                    } else {
+                    }
+                    else if (beanType == Light.class) {
+                        return ((LightManager) m).createSystemName(curAddress, prefix);
+                    }
+                    else if (beanType == Reporter.class) {
+                        return ((ReporterManager) m).createSystemName(curAddress, prefix);
+                    }
+                    else {
                         log.warn("createSystemName requested for incompatible Manager");
                     }
                 } catch (jmri.JmriException ex) {
@@ -286,7 +295,13 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
         }
         throw new jmri.JmriException("Manager could not be found for System Prefix " + prefix);
     }
+    
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
+        return createSystemName(curAddress, prefix, getNamedBeanClass());
+    }
 
+    @SuppressWarnings("deprecation") // user warned by actual manager class
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, char typeLetter) throws jmri.JmriException {
         for (Manager<E> m : mgrs) {
             log.debug("NextValidAddress requested for {}", curAddress);
@@ -309,6 +324,31 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
         }
         return null;
     }
+    
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting, char typeLetter) throws jmri.JmriException {
+        for (Manager<E> m : mgrs) {
+            log.debug("NextValidAddress requested for {}", curAddress);
+            if (prefix.equals(m.getSystemPrefix()) && typeLetter == m.typeLetter()) {
+                try {
+                    switch (typeLetter) { // use #getDefaultManager() instead?
+                        case 'T':
+                            return ((TurnoutManager) m).getNextValidAddress(curAddress, prefix, ignoreInitialExisting);
+                        case 'S':
+                            return ((SensorManager) m).getNextValidAddress(curAddress, prefix, ignoreInitialExisting);
+                        case 'L':
+                            return ((LightManager) m).getNextValidAddress(curAddress, prefix, ignoreInitialExisting);
+                        case 'R':
+                            return ((ReporterManager) m).getNextValidAddress(curAddress, prefix, ignoreInitialExisting);
+                        default:
+                            return null;
+                    }
+                } catch (jmri.JmriException ex) {
+                    throw ex;
+                }
+            }
+        }
+        return null;
+    }
 
     /** {@inheritDoc} */
     @Override
@@ -320,6 +360,41 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     }
 
     /**
+     * Try to create a system manager. If this proxy manager is able to create
+     * a system manager, the concrete class must implement this method.
+     *
+     * @param memo the system connection memo for this connection
+     * @return the new manager or null if it's not possible to create the manager
+     */
+    protected Manager<E> createSystemManager(@Nonnull SystemConnectionMemo memo) {
+        return null;
+    }
+    
+    /**
+     * Try to create a system manager.
+     *
+     * @param systemPrefix the system prefix
+     * @return the new manager or null if it's not possible to create the manager
+     */
+    private Manager<E> createSystemManager(@Nonnull String systemPrefix) {
+        Manager<E> m = null;
+        
+        ConnectionConfigManager manager = InstanceManager.getNullableDefault(ConnectionConfigManager.class);
+        if (manager == null) return null;
+        
+        ConnectionConfig connections[] = manager.getConnections();
+        
+        for (ConnectionConfig connection : connections) {
+            if (systemPrefix.equals(connection.getAdapter().getSystemPrefix())) {
+                m = createSystemManager(connection.getAdapter().getSystemConnectionMemo());
+            }
+            if (m != null) break;
+        }
+//        if (m == null) throw new RuntimeException("Manager not created");
+        return m;
+    }
+    
+    /**
      * {@inheritDoc}
      * <p>
      * Forwards the register request to the matching system.
@@ -327,6 +402,10 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     @Override
     public void register(@Nonnull E s) {
         Manager<E> m = getManager(s.getSystemName());
+        if (m == null) {
+            String systemPrefix = Manager.getSystemPrefix(s.getSystemName());
+            m = createSystemManager(systemPrefix);
+        }
         if (m != null) {
             m.register(s);
         } else {
@@ -349,13 +428,18 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     * List does not contain duplicates.
+     */
     @Nonnull
     @Override
     public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
-        List<NamedBeanPropertyDescriptor<?>> l = new ArrayList<>();
-        mgrs.forEach(m -> l.addAll(m.getKnownBeanProperties()));
-        return l;
+        // Create List as set to prevent duplicates from multiple managers
+        // of the same hardware type.
+        Set<NamedBeanPropertyDescriptor<?>> set = new HashSet<>();
+        mgrs.forEach(m -> set.addAll(m.getKnownBeanProperties()));
+        return new ArrayList<>(set);
     }
 
     /** {@inheritDoc} */
@@ -497,7 +581,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<String> getSystemNameList() {
-        // jmri.util.LoggingUtil.deprecationWarning(log, "getSystemNameList"); // used by configureXML
+        jmri.util.LoggingUtil.deprecationWarning(log, "getSystemNameList");
         List<E> list = getNamedBeanList();
         ArrayList<String> retval = new ArrayList<>(list.size());
         list.forEach(e -> retval.add(e.getSystemName()));
@@ -509,7 +593,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     @Deprecated  // will be removed when superclass method is removed due to @Override
     @Nonnull
     public List<E> getNamedBeanList() {
-        // jmri.util.LoggingUtil.deprecationWarning(log, "getNamedBeanList"); // used by getSystemNameList
+        jmri.util.LoggingUtil.deprecationWarning(log, "getNamedBeanList"); // used by getSystemNameList
         // by doing this in order by manager and from each managers ordered sets, its finally in order
         ArrayList<E> tl = new ArrayList<>();
         mgrs.forEach(m -> tl.addAll(m.getNamedBeanSet()));

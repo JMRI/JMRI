@@ -350,7 +350,16 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
      * <p>
      * Change from e.g. connection config dialog and scripts using {@link #setOutputInterval(int)}
      */
-    private int _interval = 250;
+    private int _interval = getDefaultOutputInterval();
+    
+    /**
+     * Default interval 250ms.
+     * {@inheritDoc}
+     */
+    @Override
+    public int getDefaultOutputInterval(){
+        return 250;
+    }
 
     /**
      * Get the connection specific OutputInterval (in ms) to wait between/before commands

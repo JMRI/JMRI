@@ -44,6 +44,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract servlet for using panels in browser.
+ * <p>
+ * See JMRI Web Server - Panel Servlet Help in help/en/html/web/PanelServlet.shtml for an example description of
+ * the interaction between the Web Servlets, the Web Browser and the JMRI application.
  *
  * @author Randall Wood
  */
@@ -208,7 +211,7 @@ public abstract class AbstractPanelServlet extends HttpServlet {
     protected Editor getEditor(String name) {
         for (Editor editor : InstanceManager.getDefault(EditorManager.class).getAll()) {
             Container container = editor.getTargetPanel().getTopLevelAncestor();
-            if (Frame.class.isInstance(container)) {
+            if (container instanceof Frame) {
                 if (((Frame) container).getTitle().equals(name)) {
                     return editor;
                 }
@@ -309,6 +312,12 @@ public abstract class AbstractPanelServlet extends HttpServlet {
         return icons;
     }
 
+    /**
+     * Build and return a panel state display element containing icon URLs for all states.
+     *
+     * @param sub Positional containing additional icons for display (in MultiSensorIcon)
+     * @return a display element based on element name
+     */
     protected Element positionableElement(@Nonnull Positionable sub) {
         Element e = ConfigXmlManager.elementFromObject(sub);
         if (e != null) {
@@ -350,4 +359,5 @@ public abstract class AbstractPanelServlet extends HttpServlet {
         }
         return e;
     }
+
 }

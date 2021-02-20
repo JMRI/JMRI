@@ -1,16 +1,9 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.event.MouseEvent;
-import java.awt.geom.*;
-import java.util.*;
-import javax.annotation.*;
-import javax.swing.JPopupMenu;
+import javax.annotation.Nonnull;
 
-import jmri.*;
-import jmri.jmrit.display.layoutEditor.*;
-import jmri.util.*;
+import jmri.Turnout;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
 /**
  * MVC Editor component for LayoutRHTurnout objects.

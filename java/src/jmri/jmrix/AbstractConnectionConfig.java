@@ -1,21 +1,19 @@
 package jmri.jmrix;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+
+import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JFormattedTextField;
-import javax.swing.JTextField;
+import javax.annotation.Nonnull;
+import javax.swing.*;
 
 import jmri.InstanceManager;
+import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
+import jmri.util.swing.ValidatedTextField;
 
 /**
  * Abstract base class for common implementation of the ConnectionConfig.
@@ -27,51 +25,17 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     /**
      * Ctor for a functional object with no preexisting adapter. Expect that the
      * subclass setInstance() will fill the adapter member.
+     * {@link AbstractConnectionConfigXml}loadCommon
      */
     public AbstractConnectionConfig() {
         try {
-            // The next commented-out line replacing the following when Issue #4670 is resolved; see Manager
-            // systemPrefixField = new JFormattedTextField(new jmri.util.swing.RegexFormatter("[A-Za-z]\\d*"));
-            systemPrefixField = new JFormattedTextField(new SystemPrefixFormatter()) {
-                @Override
-                public void setValue(Object value) {
-                    log.debug("setValue {} {}", value, getBackground());
-                    if (getBackground().equals(java.awt.Color.RED)) { // only if might have set before, leaving default otherwise
-                        setBackground(java.awt.Color.WHITE); 
-                        setToolTipText(null);
-                    }
-                    super.setValue(value);
-                }
-                
-                @Override
-                public void setText(String value) {
-                    log.debug("setText {} {}", value, getBackground());
-                    if (getBackground().equals(java.awt.Color.RED)) { // only if might have set before, leaving default otherwise
-                        setBackground(java.awt.Color.WHITE); 
-                        setToolTipText(null);
-                    }
-                    super.setText(value);
-                }
-            };
-            
-            systemPrefixField.setPreferredSize(new JTextField("P123").getPreferredSize());
-            systemPrefixField.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
+            systemPrefixField = new ValidatedTextField(4,
+                    true,
+                    "[A-Za-z]\\d*",
+                    Bundle.getMessage("TipPrefixFormat"));
+            // see the "Prefix Needs Migration" dialog in jmri.jmrix.configurexml.AbstractConnectionConfigXml#loadCommon
         } catch (java.util.regex.PatternSyntaxException e) {
-            log.error("unexpected parse exception during setup", e);
-        }
-    }
-
-    static public class SystemPrefixFormatter extends javax.swing.text.DefaultFormatter {
-        @Override
-        public Object stringToValue(String text) throws java.text.ParseException {
-            try {
-                if (jmri.Manager.getSystemPrefixLength(text)!= text.length()) {
-                    throw new java.text.ParseException("Pattern did not match", 0);
-                }
-            } catch (jmri.NamedBean.BadSystemNameException e) {
-                throw new java.text.ParseException("Pattern did not match", 0);
-            }
-            return text;
+            log.error("Prefix unexpected parse exception during setup", e);
         }
     }
 
@@ -95,7 +59,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     protected JCheckBox showAdvanced = new JCheckBox(Bundle.getMessage("AdditionalConnectionSettings"));
     protected JLabel systemPrefixLabel = new JLabel(Bundle.getMessage("ConnectionPrefix"));
     protected JLabel connectionNameLabel = new JLabel(Bundle.getMessage("ConnectionName"));
-    protected JFormattedTextField systemPrefixField;
+    protected ValidatedTextField systemPrefixField;
     protected JTextField connectionNameField = new JTextField(15);
 
     protected JPanel _details = null;
@@ -112,7 +76,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
      */
     @Override
     public boolean isDirty() {
-        return (this.getAdapter() != null) ? this.getAdapter().isDirty() : true;
+        return (this.getAdapter() == null || this.getAdapter().isDirty());
     }
 
     /**
@@ -126,14 +90,14 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
      */
     @Override
     public boolean isRestartRequired() {
-        return (this.getAdapter() != null) ? this.getAdapter().isRestartRequired() : true;
+        return (this.getAdapter() == null || this.getAdapter().isRestartRequired());
     }
 
     protected static class Option {
 
         String optionDisplayName;
         JComponent optionSelection;
-        Boolean advanced = true;
+        Boolean advanced;
         JLabel label = null;
 
         public Option(String name, JComponent optionSelection, Boolean advanced) {
@@ -227,6 +191,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
             systemPrefixLabel.setLabelFor(systemPrefixField);
             _details.add(systemPrefixLabel);
             _details.add(systemPrefixField);
+            systemPrefixField.setToolTipText(Bundle.getMessage("TipPrefixFormat"));
             i++;
             cR.gridy = i;
             cL.gridy = i;
@@ -282,6 +247,50 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
         ConnectionConfigManager ccm = InstanceManager.getNullableDefault(ConnectionConfigManager.class);
         if (ccm != null) {
             ccm.remove(this);
+        }
+    }
+
+    protected void addNameEntryCheckers(@Nonnull PortAdapter adapter) {
+        if (adapter.getSystemConnectionMemo() != null) {
+            systemPrefixField.addActionListener(e -> checkPrefixEntry(adapter));
+            systemPrefixField.addFocusListener(new FocusListener() {
+                @Override
+                public void focusLost(FocusEvent e) {
+                    checkPrefixEntry(adapter);
+                }
+
+                @Override
+                public void focusGained(FocusEvent e) {
+                }
+            });
+            connectionNameField.addActionListener(e -> checkNameEntry(adapter));
+            connectionNameField.addFocusListener(new FocusListener() {
+                @Override
+                public void focusLost(FocusEvent e) {
+                    checkNameEntry(adapter);
+                }
+
+                @Override
+                public void focusGained(FocusEvent e) {
+                }
+            });
+        }
+    }
+
+    private void checkPrefixEntry(@Nonnull PortAdapter adapter) {
+        if (!systemPrefixField.isValid()) { // invalid prefix format entry, actually can't lose focus until valid
+            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+        }
+        if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) { // in use
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
+            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+        }
+    }
+
+    private void checkNameEntry(@Nonnull PortAdapter adapter) {
+        if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionNameDialog", connectionNameField.getText()));
+            connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
         }
     }
 

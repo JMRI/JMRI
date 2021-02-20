@@ -4,15 +4,11 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.Map;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,65 +56,22 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
      */
     @Override
     protected void checkInitDone() {
-        log.debug("init called for ()", name());
+        log.debug("init called for {}", name());
         if (init) {
             return;
         }
-        if (adapter.getSystemConnectionMemo() != null) {
-            systemPrefixField.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
-                        systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
-                    }
-                }
-            });
-            systemPrefixField.addFocusListener(new FocusListener() {
-                @Override
-                public void focusLost(FocusEvent e) {
-                    if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
-                        systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
-                    }
-                }
+        addNameEntryCheckers(adapter);
 
-                @Override
-                public void focusGained(FocusEvent e) {
-                }
-            });
-            connectionNameField.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionNameDialog", connectionNameField.getText()));
-                        connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
-                    }
-                }
-            });
-            connectionNameField.addFocusListener(new FocusListener() {
-                @Override
-                public void focusLost(FocusEvent e) {
-                    if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionNameDialog", connectionNameField.getText()));
-                        connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
-                    }
-                }
-
-                @Override
-                public void focusGained(FocusEvent e) {
-                }
-            });
-            for (Map.Entry<String, Option> entry : options.entrySet()) {
-                final String item = entry.getKey();
-                if (entry.getValue().getComponent() instanceof JComboBox) {
-                    ((JComboBox<?>) entry.getValue().getComponent()).addActionListener((ActionEvent e) -> {
-                        adapter.setOptionState(item, options.get(item).getItem());
-                    });
-                }
+        // Add listeners for advanced options combo boxes.
+        for (Map.Entry<String, Option> entry : options.entrySet()) {
+            final String item = entry.getKey();
+            if (entry.getValue().getComponent() instanceof JComboBox) {
+                ((JComboBox<?>) entry.getValue().getComponent()).addActionListener((ActionEvent e) -> {
+                    adapter.setOptionState(item, options.get(item).getItem());
+                });
             }
-
         }
+
         init = true;
     }
 
@@ -129,13 +82,13 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         }
 
         if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
+            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
         }
     }
 
     protected String[] baudList;
-    protected jmri.jmrix.SerialPortAdapter adapter = null;
+    protected jmri.jmrix.SerialPortAdapter adapter;
 
     /**
      * {@inheritDoc}
@@ -166,7 +119,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
             String[] optionsAvailable = adapter.getOptions();
             options.clear();
             for (String i : optionsAvailable) {
-                JComboBox<String> opt = new JComboBox<String>(adapter.getOptionChoices(i));
+                JComboBox<String> opt = new JComboBox<>(adapter.getOptionChoices(i));
                 opt.setSelectedItem(adapter.getOptionState(i));
                 // check that it worked
                 if (!adapter.getOptionState(i).equals(opt.getSelectedItem())) {
@@ -181,19 +134,14 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         }
 
         if (adapter.getSystemConnectionMemo() != null) {
-            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
+            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
         }
         NUMOPTIONS = NUMOPTIONS + options.size();
 
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
         showAdvanced.setForeground(Color.blue);
-        showAdvanced.addItemListener(new ItemListener() {
-            @Override
-                    public void itemStateChanged(ItemEvent e) {
-                        showAdvancedItems();
-                    }
-                });
+        showAdvanced.addItemListener(e -> showAdvancedItems());
         showAdvancedItems();
         init = false;  // need to reload action listeners
         checkInitDone();

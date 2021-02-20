@@ -1,6 +1,7 @@
 package jmri.jmrit.logix;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import jmri.ConfigureManager;
@@ -8,6 +9,10 @@ import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.ShutDownManager;
+import jmri.ShutDownTask;
+//import jmri.ShutDownManager;
+//import jmri.ShutDownTask;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
@@ -69,8 +74,8 @@ public class LearnWarrantTest {
         List<BlockOrder> orders = frame.getOrders();
         assertThat(orders.size()).withFailMessage("5 BlockOrders").isEqualTo(5);
 
-        frame._speedUtil.setDccAddress("99");
-        frame.setTrainInfo(null);
+        frame._speedUtil.setAddress("99");
+        frame.setTrainInfo("Student");
         JUnitUtil.waitFor(() -> (frame._speedUtil.getDccAddress() != null), "Found address");
         jmri.DccLocoAddress address = frame._speedUtil.getDccAddress();
         assertThat(address.getNumber()).withFailMessage("address=99").isEqualTo(99);
@@ -88,9 +93,9 @@ public class LearnWarrantTest {
         pressButton(jfo, Bundle.getMessage("Start"));
 
         JUnitUtil.waitFor(() -> (frame._learnThrottle != null), "Found throttle");
-        assertThat(frame._learnThrottle.getThrottle()).withFailMessage("Throttle not found").isNotNull();
+        assertThat(frame._speedUtil.getThrottle()).withFailMessage("Throttle not found").isNotNull();
 
-        Sensor lastSensor = recordtimes(route, frame._learnThrottle.getThrottle());
+        Sensor lastSensor = recordtimes(route, frame._speedUtil.getThrottle());
 
         // After stopping train, wait a bit before pressing stop
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
@@ -105,7 +110,7 @@ public class LearnWarrantTest {
         NXFrameTest.setAndConfirmSensorAction(lastSensor, Sensor.INACTIVE, 
                 _OBlockMgr.getOBlock(route[route.length-1]));
         // change address and run
-        frame._speedUtil.setDccAddress("111");
+        frame._speedUtil.setAddress("111");
         frame.setTrainInfo("111");
         JUnitUtil.waitFor(() -> (frame._speedUtil.getDccAddress() != null), "Found address");
         address = frame._speedUtil.getDccAddress();
@@ -126,10 +131,8 @@ public class LearnWarrantTest {
         JUnitUtil.waitFor(() -> oBlockOccupiedOrAllocated(block4), "Train 111 occupies last block ");
         new org.netbeans.jemmy.QueueTool().waitEmpty(100); // wait for script to complete
 
+        frame._userNameBox.setText("SavedIt");
         pressButton(jfo, Bundle.getMessage("ButtonSave"));
-/*        warrant = InstanceManager.getDefault(WarrantManager.class).getWarrant("Learning");
-        List<ThrottleSetting> commands = warrant.getThrottleCommands();
-        Assert.assertEquals("12 ThrottleCommands", 12, commands.size());*/
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         assertThat(tableFrame).withFailMessage("Warrant Table save").isNotNull();
@@ -201,26 +204,34 @@ public class LearnWarrantTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initDebugPowerManager();
-        JUnitUtil.initDebugThrottleManager();
-        JUnitUtil.initMemoryManager();
         JUnitUtil.initOBlockManager();
         JUnitUtil.initLogixManager();
-        JUnitUtil.initConditionalManager();
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         JUnitUtil.initWarrantManager();
+        JUnitUtil.initDebugThrottleManager();
     }
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
-        InstanceManager.getDefault(WarrantManager.class).dispose();
+        if (InstanceManager.containsDefault(ShutDownManager.class)) {
+            List<ShutDownTask> list = new ArrayList<>();
+            ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
+            for (Runnable r : sm.getRunnables()) {
+                if (r instanceof jmri.jmrit.logix.WarrantShutdownTask) {
+                    list.add((ShutDownTask)r);
+                }
+            }
+            for ( ShutDownTask t : list) {
+                sm.deregister(t);
+            }
+        }
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -112,9 +112,10 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-
+        String input = packetTextField.getText();
+        // TODO check input + feedback on error. Too easy to cause NPE
         // Send Macro
-        NceMessage m = createMacroCmd(packetTextField.getText());
+        NceMessage m = createMacroCmd(input);
         if (m == null) {
             macroReply.setText("error");
             JOptionPane.showMessageDialog(this,
@@ -126,7 +127,7 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
 
         // Unfortunately, the new command doesn't tell us if the macro is empty
         // so we send old command for status
-        NceMessage m2 = createOldMacroCmd(packetTextField.getText());
+        NceMessage m2 = createOldMacroCmd(input);
         tc.sendNceMessage(m2, this);
     }
 

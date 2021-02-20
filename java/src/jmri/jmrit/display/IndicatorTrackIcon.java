@@ -20,14 +20,16 @@ import org.slf4j.LoggerFactory;
 /**
  * An icon to display the status of a track segment in a block.
  * <p>
- * This responds to the following conditions: 1. KnownState of an occupancy
- * sensor of the block where the track segment appears 2. Allocation of a route
- * by a Warrant where the track segment appears 3. Current position of a train
- * being run under a Warrant where the track segment appears in a block of the
- * route 4. Out of Service for a block that cannot or should not be used 5. An
- * error state of the block where the track segment appears (short/no power
- * etc.)
- * <p>
+ * This responds to the following conditions:
+ * <ol>
+ *   <li>KnownState of an occupancy sensor of the block where the track segment appears
+ *   <li>Allocation of a route by a Warrant where the track segment appears
+ *   <li>Current position of a train being run under a Warrant where the track segment
+ *   appears in a block of the route
+ *   <li>Out of Service for a block that cannot or should not be used
+ *   <li>An error state of the block where the track segment appears (short/no power
+ *   etc.)
+ * </ol>
  * A click on the icon does not change any of the above conditions.
  *
  * @author Pete Cressman Copyright (c) 2010
@@ -203,7 +205,7 @@ public class IndicatorTrackIcon extends PositionableIcon
     }
 
     /**
-     * get track name for known state of occupancy sensor
+     * Get track name for known state of occupancy sensor
      */
     @Override
     public void setStatus(int state) {
@@ -278,8 +280,9 @@ public class IndicatorTrackIcon extends PositionableIcon
             try {
                 _pathUtil.setLocoIcon(block, getLocation(), getSize(), _editor);
             } catch (Exception e) {
-                log.error("setStatus on indicator track icon failed in thread {} {}: ",
-                    Thread.currentThread().getName(), Thread.currentThread().getId(), e);
+                // Rare. Observed in tests from add(Component comp, Component comp) in Editor.TargetPane
+                // as "java.lang.IllegalArgumentException: illegal component position"
+                log.error("setStatus on indicator track icon failed  {}", e);
             }
         }
         repaint();

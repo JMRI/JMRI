@@ -13,7 +13,7 @@
   <meta name="author" content="Kevin Dickerson, Egbert Broerse">
   <meta name="keywords" content=
   "JMRI help Signal Mast Logic Table">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>

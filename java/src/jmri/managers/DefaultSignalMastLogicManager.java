@@ -10,6 +10,7 @@ import jmri.implementation.DefaultSignalMastLogic;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -485,6 +486,29 @@ public class DefaultSignalMastLogicManager
     @Override
     public Class<SignalMastLogic> getNamedBeanClass() {
         return SignalMastLogic.class;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int setupSignalMastsDirectionSensors() {
+        int errorCount = 0;
+        for (SignalMastLogic sml : getSignalMastLogicList()) {
+            errorCount += sml.setupDirectionSensors();
+        }
+        return errorCount;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void removeSignalMastsDirectionSensors() {
+        for (SignalMastLogic sml : getSignalMastLogicList()) {
+            sml.removeDirectionSensors();
+        }
+        return;
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManager.class);

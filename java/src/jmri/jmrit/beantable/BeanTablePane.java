@@ -37,7 +37,7 @@ public class BeanTablePane<E extends NamedBean> extends jmri.util.swing.JmriPane
 
         dataModel = model;
 
-        TableRowSorter<BeanTableDataModel> sorter = new TableRowSorter<>(dataModel);
+        TableRowSorter<BeanTableDataModel<E>> sorter = new TableRowSorter<>(dataModel);
         dataTable = dataModel.makeJTable(dataModel.getMasterClassName(), dataModel, sorter);
         dataScroll = new JScrollPane(dataTable);
 

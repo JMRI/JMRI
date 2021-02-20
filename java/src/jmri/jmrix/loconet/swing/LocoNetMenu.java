@@ -57,7 +57,7 @@ public class LocoNetMenu extends JMenu {
                     lastWasSeparator = true;
                 }
             } else {
-                if ((item.interfaceOnly == false) ||
+                if ((!item.interfaceOnly) ||
                         isLocoNetInterface) {
                     add(new LnNamedPaneAction(Bundle.getMessage(item.name), wi, item.load, memo));
                     lastWasSeparator = false;
@@ -79,7 +79,6 @@ public class LocoNetMenu extends JMenu {
         new Item("MenuItemLocoStats", "jmri.jmrix.loconet.locostats.swing.LocoStatsPanel", false), // NOI18N
         null,
         new Item("MenuItemBDL16Programmer", "jmri.jmrix.loconet.bdl16.BDL16Panel", true), // NOI18N
-        new Item("MenuItemLocoIOProgrammer", "jmri.jmrix.loconet.locoio.LocoIOPanel", true), // NOI18N
         new Item("MenuItemPM4Programmer", "jmri.jmrix.loconet.pm4.PM4Panel", true), // NOI18N
         new Item("MenuItemSE8cProgrammer", "jmri.jmrix.loconet.se8.SE8Panel", true), // NOI18N
         new Item("MenuItemDS64Programmer", "jmri.jmrix.loconet.ds64.Ds64TabbedPanel", true), // NOI18N
@@ -89,6 +88,7 @@ public class LocoNetMenu extends JMenu {
         null,
         new Item("MenuItemThrottleMessages", "jmri.jmrix.loconet.swing.throttlemsg.MessagePanel", true), // NOI18N
         new Item("MenuItemSendPacket", "jmri.jmrix.loconet.locogen.LocoGenPanel", false), // NOI18N
+        new Item("MenuItemLncvProg", "jmri.jmrix.loconet.swing.lncvprog.LncvProgPane", true), // NOI18N
         new Item("MenuItemPr3ModeSelect", "jmri.jmrix.loconet.pr3.swing.Pr3SelectPane", false), // NOI18N
         null,
         new Item("MenuItemDownload", "jmri.jmrix.loconet.downloader.LoaderPane", false), // NOI18N

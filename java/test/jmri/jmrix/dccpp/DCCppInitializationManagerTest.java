@@ -1,5 +1,7 @@
 package jmri.jmrix.dccpp;
 
+import jmri.InstanceManager;
+
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
@@ -21,13 +23,9 @@ public class DCCppInitializationManagerTest {
         DCCppListenerScaffold l = new DCCppListenerScaffold();
         
         DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(t);
+        InstanceManager.setMeterManager(new jmri.managers.AbstractMeterManager(memo));
 
-        DCCppInitializationManager m = new DCCppInitializationManager(memo) {
-                @Override
-                protected int getInitTimeout() {
-                    return 50;   // shorten, because this will fail & delay test
-                }
-            };
+        DCCppInitializationManager m = new DCCppInitializationManager(memo);
         Assert.assertNotNull("exists", t);
         Assert.assertNotNull("exists", l);
         Assert.assertNotNull("exists", m);

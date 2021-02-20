@@ -10,6 +10,7 @@
 				<li><a href="/help/en/html/hardware/XPressNet/index.shtml">Atlas Commander</a>
 				<li><a href="/help/en/html/hardware/bachrus/index.shtml">Bachrus</a>
 				<li><a href="/help/en/html/hardware/can/index.shtml">CAN Bus Networks</a>				
+				<li><a href="/help/en/html/hardware/can/cbus/index.shtml">CBUS&reg;</a>
 				<li><a href="/help/en/html/hardware/cmri/CMRI.shtml">C/MRI</a>
 				<li><a href="/help/en/html/hardware/acela/index.shtml">CTI Electronics (Acela)</a>
 				<li><a href="/help/en/html/hardware/easydcc/EasyDCC.shtml">CVP EasyDCC</a>
@@ -28,7 +29,7 @@
 				<li><a href="/help/en/html/hardware/loconet/Digitrax.shtml">LocoNet</a>
 				<li><a href="/help/en/html/hardware/maple/index.shtml">Maple Systems</a>
 				<li><a href="/help/en/html/hardware/marklin/index.shtml">M&auml;rklin CS2</a>
-				<li><a href="/help/en/html/hardware/can/cbus/index.shtml">MERG CBUS</a>
+				<li><a href="/help/en/html/hardware/merg/index.shtml">MERG</a>
 				<li><a href="/help/en/html/hardware/modbus/index.shtml">Modbus</a>
                 <li><a href="/help/en/html/hardware/mqtt/index.shtml">MQTT</a>
 				<li><a href="/help/en/html/hardware/mrc/index.shtml">MRC</a>
@@ -44,7 +45,8 @@
 				<li><a href="/help/en/html/hardware/pi/index.shtml">Raspberry Pi</a>
                 <li><a href="/help/en/html/hardware/rfid/index.shtml">RFID Readers</a>
 				<li><a href="/help/en/html/hardware/XPressNet/index.shtml">Roco</a>
-				<li><a href="/help/en/html/hardware/sprog/SPROG.shtml">SPROG</a>
+				<li><a href="/help/en/html/hardware/sprog/SPROG.shtml">SPROG DCC</a>
+				<li><a href="/help/en/html/hardware/sproggen5/index.shtml">SPROG DCC Generation 5</a>
 				<li><a href="/help/en/html/hardware/SRCP/index.shtml">SRCP server</a>
 				<li><a href="/help/en/html/hardware/tams/index.shtml">TAMS Master Control</a>
                   <li><a href="/help/en/html/hardware/secsi/index.shtml">TracTronics SECSI</a>

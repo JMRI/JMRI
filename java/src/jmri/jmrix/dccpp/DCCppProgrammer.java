@@ -95,7 +95,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
         if (log.isDebugEnabled()) {
             log.debug("check CV {}", addr);
         }
-        log.debug("cs Type: {} CS Version: {}", controller().getCommandStation().getBaseStationType(), controller().getCommandStation().getCodeBuildDate());
+        log.debug("cs Type: {} CS Build: {}", controller().getCommandStation().getStationType(), controller().getCommandStation().getBuild());
         if (!getCanWrite()) {
             return false; // check basic implementation first
         }
@@ -264,9 +264,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
     // Handle a timeout notification
     @Override
     public void notifyTimeout(DCCppMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message{}", msg.toString());
-        }
+        log.debug("Notified of timeout on message '{}'", msg);
     }
 
 

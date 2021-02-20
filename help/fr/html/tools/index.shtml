@@ -197,7 +197,7 @@
 	<li><a href="../../package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Outil Envoi Trame</a></li>
 </ul>
 
-<h3><a href="../hardware/acela/index.shtml#tools">Outils MERG CBUS</a></h3>
+<h3><a href="../hardware/acela/index.shtml#tools">Outils CBUS&reg;</a></h3>
 <p>Quand JMRI est connect&#233; &#224; un r&#233;seau via CBUS, un menu <b>MERG</b> est montr&#233;:</p>
 <ul>   
 	<li>Console</li>

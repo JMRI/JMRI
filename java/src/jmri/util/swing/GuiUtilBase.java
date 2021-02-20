@@ -34,14 +34,21 @@ public class GuiUtilBase {
             return createEmptyMenuItem(null, "<none>");
         }
         name = LocaleSelector.getAttribute(child, "name");
-        if ((name == null) || (name.equals(""))) {
+        if ((name == null) || (name.isEmpty())) {
             if (child.getChild("name") != null) {
                 name = child.getChild("name").getText();
             }
         }
 
-        if (child.getChild("icon") != null) {
-            icon = new ImageIcon(FileUtil.findURL(child.getChild("icon").getText()));
+        Element childUrl = child.getChild("icon"); // NOI18N
+        if ( childUrl != null) {
+            java.net.URL iconUrl =  FileUtil.findURL(childUrl.getText());
+            if (iconUrl!=null) {
+                icon = new ImageIcon(iconUrl);
+            }
+            else {
+                log.warn("Unable to locate icon :{}:",childUrl.getText());
+            }
         }
         //This bit does not size very well, but it works for now.
         if (child.getChild("option") != null) {

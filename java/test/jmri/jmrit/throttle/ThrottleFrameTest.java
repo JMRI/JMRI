@@ -87,7 +87,7 @@ public class ThrottleFrameTest {
             FunctionButton f = to.getFunctionButton(i);
             Assert.assertTrue("Function F" + i + " continuous", f.getIsLockable());
             to.toggleFunctionMomentary(i);
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+            new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame to close
             Assert.assertFalse("Function F" + i + " momentary", f.getIsLockable());
         }
 
@@ -108,7 +108,7 @@ public class ThrottleFrameTest {
             FunctionButton f = to.getFunctionButton(i);
             Assert.assertFalse("Function F" + i + " off", f.isSelected());
             JemmyUtil.enterClickAndLeave(f);
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+            new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame to close
             Assert.assertTrue("Function F" + i + " on", f.isSelected());
         }
 
@@ -129,7 +129,7 @@ public class ThrottleFrameTest {
             FunctionButton f = to.getFunctionButton(i);
             Assert.assertFalse("Function F" + i + " off", f.isSelected());
             JemmyUtil.enterClickAndLeave(f);
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+            new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame to close
             Assert.assertTrue("Function F" + i + " on", f.isSelected());
             // Full Message along lines of Can't send F13-F20 since no command station defined
             JUnitAppender.assertErrorMessageStartsWith("Can't send F");
@@ -201,6 +201,7 @@ public class ThrottleFrameTest {
         to.pushReleaseButton();
     }
 
+    @Ignore("This test fails often on Windows CI")
     @Test
     public void testSliderMaximumSpeed() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());

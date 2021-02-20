@@ -105,6 +105,24 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
                 "LnSensorManager.createSystemName(curAddress, prefix) support for curAddress using the '3:5' format is deprecated as of JMRI 4.17.4 and will be removed in a future JMRI release.  Use the curAddress format '37' instead.");
     }
 
+    @Test
+    public void testSetGetRestingTime() {
+        Assert.assertEquals("check default resting time", 1250, ((LnSensorManager)l).getRestingTime());
+
+        ((LnSensorManager)l).setRestingTime(600);
+        Assert.assertEquals("check 1st set of resting time", 600, ((LnSensorManager)l).getRestingTime());
+        
+        ((LnSensorManager)l).setRestingTime(500);
+        Assert.assertEquals("check 2nd set of resting time", 500, ((LnSensorManager)l).getRestingTime());
+        
+        ((LnSensorManager)l).setRestingTime(499);
+        Assert.assertEquals("check 1st range check on set of resting time", 500, ((LnSensorManager)l).getRestingTime());
+        
+        ((LnSensorManager)l).setRestingTime(200001);
+        Assert.assertEquals("check 2nd range check on set of resting time", 200000, ((LnSensorManager)l).getRestingTime());
+        
+    }
+
     @Override
     @BeforeEach
     public void setUp() {
@@ -119,7 +137,7 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
         l = new LnSensorManager(memo);
         jmri.InstanceManager.setSensorManager(l);
     }
-
+    
     @AfterEach
     public void tearDown() {
         l.dispose();

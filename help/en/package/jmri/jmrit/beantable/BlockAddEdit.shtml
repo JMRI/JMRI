@@ -11,7 +11,7 @@
   "text/html; charset=us-ascii">
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Block Table">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -24,7 +24,7 @@
       <p>To add a new Block, click the <strong>Add...</strong>
       button at the bottom left edge of the Block Table
       pane.</p><img src="images/BlockAdd.png" width="592" height=
-      "162">
+      "162" alt="Block editing pane">
 
       <p>In the pane that opens, enter a valid System Name for
       the Block and if desired enter a User Name. For example, a
@@ -35,6 +35,8 @@
       and if you enter one it has to be unique in your JMRI
       setup. See the "<a href="../../../../html/doc/Technical/Names.shtml">Names</a>"
       Help page for more information.</p>
+      <p>Click [Create] to complete this step. Click [Cancel] to close
+      the pane (don't worry, already created items will stay).</p>
 
       <p>Complete the definition of the new Block by closing the
       Add New Block pane and clicking the <strong>Edit</strong>

@@ -1,8 +1,11 @@
 package jmri.managers;
 
 import java.beans.PropertyChangeListener;
+
+import jmri.JmriException;
 import jmri.Light;
 import jmri.LightManager;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
@@ -117,6 +120,47 @@ public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerT
         Light t2 = l.getByUserName("after");
         Assert.assertEquals("same object", t1, t2);
         Assert.assertEquals("no old object", null, l.getByUserName("before"));
+    }
+    
+    @Test
+    public void TestGetEntryToolTip(){
+        Assert.assertNotNull("getEntryToolTip not null", l.getEntryToolTip());
+        Assert.assertTrue("Entry ToolTip Contains text",(l.getEntryToolTip().length()>5));
+    }
+    
+    @Test
+    public void testGetNextValidAddress() throws JmriException {
+        
+        if (!l.allowMultipleAdditions(l.getSystemNamePrefix())){
+            return;
+        }
+        
+        Assert.assertNotNull("next valid before OK", l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),false));
+    
+        Assert.assertNotEquals("requesting ignore existing does not return same", 
+                l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),true),
+                l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),false));
+        
+        Light t =  l.provide(getASystemNameWithNoPrefix());
+        Assert.assertNotNull("exists", t);
+        
+        String nextValidAddr = l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),false);
+        Light nextValid =  l.provide(nextValidAddr);
+        Assert.assertNotNull("exists", nextValid);
+        Assert.assertNotEquals(nextValid, t);
+        
+    }
+    
+    @Test
+    public void testIncorrectGetNextValidAddress() {
+        if (!l.allowMultipleAdditions(l.getSystemNamePrefix())){
+            return;
+        }
+        boolean contains = Assert.assertThrows(JmriException.class,
+                ()->{
+                    l.getNextValidAddress("NOTANINCREMENTABLEADDRESS", l.getSystemPrefix(),false);
+                }).getMessage().contains("NOTANINCREMENTABLEADDRESS");
+        Assert.assertTrue("Exception contained incorrect address", contains);
     }
 
     /**

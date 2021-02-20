@@ -29,10 +29,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Panel to display and program a LocoIO configuration.
+ * Marked Legacy/Deprecated since 2017 version 4.12.
  *
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Egbert Broerse 2018
+ * @deprecated since 4.2.23 (10-2020) replaced by Roster based LocoIO definition
+ * xml/decoders/Public_Domain_HDL_LocoIO.xml using SV1MODE
  */
+@Deprecated
 public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements java.beans.PropertyChangeListener {
 

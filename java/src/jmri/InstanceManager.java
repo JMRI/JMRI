@@ -159,7 +159,7 @@ public final class InstanceManager {
         log.debug("Remove item type {}", type.getName());
         List<T> l = getList(type);
         int index = l.indexOf(item);
-        if (index != -1) { // -1 means items was not in list, and therefor, not registered
+        if (index != -1) { // -1 means items was not in list, and therefore, not registered
             l.remove(item);
             if (item instanceof Disposable) {
                 dispose((Disposable) item);
@@ -169,7 +169,7 @@ public final class InstanceManager {
         if (l.isEmpty()) {
             setInitializationState(type, InitializationState.NOTSET);
         }
-        if (index != -1) { // -1 means items was not in list, and therefor, not registered
+        if (index != -1) { // -1 means items was not in list, and therefore, not registered
             // fire property change last
             pcs.fireIndexedPropertyChange(getListPropertyName(type), index, item, null);
         }
@@ -661,6 +661,21 @@ public final class InstanceManager {
             ((ProxyManager<IdTag>) apm).addManager(p);
         } else {
             log.error("Incorrect setup: IdTagManager default isn't an AbstractProxyManager<IdTag>");
+        }
+    }
+
+    // Needs to have proxy manager converted to work
+    // with current list of managers (and robust default
+    // management) before this can be deprecated in favor of
+    // store(p, MeterManager.class)
+    @SuppressWarnings("unchecked") // AbstractProxyManager of the right type is type-safe by definition
+    static public void setMeterManager(MeterManager p) {
+        log.debug(" setMeterManager");
+        MeterManager apm = getDefault(MeterManager.class);
+        if (apm instanceof ProxyManager<?>) { // <?> due to type erasure
+            ((ProxyManager<Meter>) apm).addManager(p);
+        } else {
+            log.error("Incorrect setup: MeterManager default isn't an AbstractProxyManager<Meter>");
         }
     }
 

@@ -4,13 +4,13 @@ import jmri.util.gui.GuiLafPreferencesManager;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
+import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
 import javax.swing.AbstractCellEditor;
 import javax.swing.ImageIcon;
@@ -133,7 +133,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
      * {@inheritDoc}
      */
     @Override
-    protected Sensor getBySystemName(String name) {
+    protected Sensor getBySystemName(@Nonnull String name) {
         return senManager.getBySystemName(name);
     }
 
@@ -141,7 +141,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
      * {@inheritDoc}
      */
     @Override
-    protected Sensor getByUserName(String name) {
+    protected Sensor getByUserName(@Nonnull String name) {
         return InstanceManager.getDefault(SensorManager.class).getByUserName(name);
     }
 
@@ -327,9 +327,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
             case PULLUPCOL:
                 PullResistanceComboBox c = new PullResistanceComboBox(Sensor.PullResistance.values());
                 c.setSelectedItem(s.getPullResistance());
-                c.addActionListener((ActionEvent e) -> {
-                    comboBoxAction(e);
-                });
+                c.addActionListener(super::comboBoxAction);
                 return c;
             case FORGETCOL:
                 return Bundle.getMessage("StateForgetButton");
@@ -601,8 +599,6 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
         this.table = table;
         showDebounce(false);
         showPullUp(false);
-        this.table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
-        this.table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
         showStateForgetAndQuery(false);
         super.configureTable(table);
     }
@@ -646,15 +642,6 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
 //    public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
     public String getClassDescription() {
         return Bundle.getMessage("TitleSensorTable");
-    }
-
-    public void comboBoxAction(ActionEvent e) {
-        if (log.isDebugEnabled()) {
-            log.debug("Combobox change");
-        }
-        if (table != null && table.getCellEditor() != null) {
-            table.getCellEditor().stopCellEditing();
-        }
     }
 
     @Override

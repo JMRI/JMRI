@@ -30,6 +30,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Panel indicators</revremark>
     </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2020-08-25</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Panel indicators JOP, Speed map</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>CSD-1962-zakladni</aspecttable>
@@ -49,6 +55,7 @@
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/00_ygwg.png</imagelink>
       <imagelink type="ESP zb">../../../resources/icons/smallschematics/aspects/CSD/ESP/00_gw.png</imagelink>
       <imagelink type="ESP z">../../../resources/icons/smallschematics/aspects/CSD/ESP/00_g.png</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_grey.png</imagelink>
     </appearance>
 
     <appearance>
@@ -62,6 +69,7 @@
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_ygwg.png</imagelink>
       <imagelink type="ESP zb">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_gw.png</imagelink>
       <imagelink type="ESP z">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_g.png</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
     </appearance>
 
     <appearance>
@@ -71,6 +79,7 @@
       <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/02_ygwg.png</imagelink>
       <imagelink type="ESP žzb">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ygw.png</imagelink>
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ygwg.png</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
     </appearance>
 
     <appearance>
@@ -80,6 +89,7 @@
       <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/02_ygwg.png</imagelink>
       <imagelink type="ESP žzb">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ygw.png</imagelink>
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ygwg.png</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
     </appearance>
 
     <appearance>
@@ -89,6 +99,7 @@
       <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/02_ygwg.png</imagelink>
       <imagelink type="ESP žzb">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ygw.png</imagelink>
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ygwg.png</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
     </appearance>
 
     <appearance>
@@ -98,6 +109,7 @@
       <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/01_ygwg.png</imagelink>
       <imagelink type="ESP žzb">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_ygw.png</imagelink>
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_ygwg.png</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
     </appearance>
 
     <appearance>
@@ -111,6 +123,7 @@
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_ygwg.png</imagelink>
       <imagelink type="ESP zb">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_gw.png</imagelink>
       <imagelink type="ESP z">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_g.png</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
     </appearance>
 
     <appearance>
@@ -120,6 +133,7 @@
       <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/02_ygwg.png</imagelink>
       <imagelink type="ESP žzb">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ygw.png</imagelink>
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ygwg.png</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
     </appearance>
 
     <appearance>
@@ -129,6 +143,7 @@
       <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/02_ygwg.png</imagelink>
       <imagelink type="ESP žzb">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ygw.png</imagelink>
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ygwg.png</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
     </appearance>
 
     <appearance>
@@ -138,6 +153,7 @@
       <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/02_ygwg.png</imagelink>
       <imagelink type="ESP žzb">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ygw.png</imagelink>
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ygwg.png</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
     </appearance>
 
     <appearance>
@@ -147,6 +163,7 @@
       <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/01_ygwg.png</imagelink>
       <imagelink type="ESP žzb">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_ygw.png</imagelink>
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_ygwg.png</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
     </appearance>
 
     <appearance>
@@ -156,6 +173,7 @@
       <imagelink type="AŽD zbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/11_gwg.png</imagelink>
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/11_ygwg.png</imagelink>
       <imagelink type="ESP zbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/11_gwg.png</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
     </appearance>
 
     <appearance>
@@ -163,6 +181,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/012_60_vystraha_5o.gif</imagelink>
       <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/12_ygwg.png</imagelink>
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/12_ygwg.png</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
     </appearance>
 
     <appearance>
@@ -170,6 +189,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/013_60_o40_5o.gif</imagelink>
       <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/12_ygwg.png</imagelink>
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/12_ygwg.png</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
     </appearance>
 
     <appearance>
@@ -177,6 +197,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/014_60_o60_5o.gif</imagelink>
       <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/12_ygwg.png</imagelink>
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/12_ygwg.png</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
     </appearance>
 
     <appearance>
@@ -184,6 +205,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/015_60_o80_5o.gif</imagelink>
       <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/11_ygwg.png</imagelink>
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/11_ygwg.png</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
     </appearance>
 
     <appearance>
@@ -193,6 +215,7 @@
       <imagelink type="AŽD zbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/11_gwg.png</imagelink>
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/11_ygwg.png</imagelink>
       <imagelink type="ESP zbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/11_gwg.png</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
     </appearance>
 
     <appearance>
@@ -200,6 +223,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/017_80_vystraha_5o.gif</imagelink>
       <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/12_ygwg.png</imagelink>
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/12_ygwg.png</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
     </appearance>
 
     <appearance>
@@ -207,6 +231,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/018_80_o40_5o.gif</imagelink>
       <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/12_ygwg.png</imagelink>
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/12_ygwg.png</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
     </appearance>
 
     <appearance>
@@ -214,6 +239,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/019_80_o60_5o.gif</imagelink>
       <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/12_ygwg.png</imagelink>
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/12_ygwg.png</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
     </appearance>
 
     <appearance>
@@ -221,6 +247,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/020_80_o80_5o.gif</imagelink>
       <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/11_ygwg.png</imagelink>
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/11_ygwg.png</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
     </appearance>
 
     <appearance>
@@ -234,6 +261,7 @@
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_ygwg.png</imagelink>
       <imagelink type="ESP zb">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_gw.png</imagelink>
       <imagelink type="ESP zbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_gwg.png</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_white.png</imagelink>
     </appearance>
 
     <appearance>
@@ -247,6 +275,7 @@
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_ygwg.png</imagelink>
       <imagelink type="ESP zb">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_gw.png</imagelink>
       <imagelink type="ESP zbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_gwg.png</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_white.png</imagelink>
     </appearance>
 
     <appearance>
@@ -260,6 +289,7 @@
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_ygwg.gif</imagelink>
       <imagelink type="ESP zb">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_gw.gif</imagelink>
       <imagelink type="ESP zbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_gwg.gif</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_blink_white.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -273,6 +303,7 @@
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_ygwg.gif</imagelink>
       <imagelink type="ESP zb">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_gw.gif</imagelink>
       <imagelink type="ESP zbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_gwg.gif</imagelink>
+      <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_blink_white.gif</imagelink>
     </appearance>
 
   </appearances>
@@ -287,6 +318,7 @@
   </specificappearances>
     
   <aspectMappings>
+  
     <aspectMapping>
       <advancedAspect>Volno</advancedAspect>
       <ourAspect>Volno</ourAspect>
@@ -295,12 +327,50 @@
       <ourAspect>Rychlost 80 a volno</ourAspect>
     </aspectMapping>
     <aspectMapping>
+      <advancedAspect>Výstraha</advancedAspect>
+      <ourAspect>Volno</ourAspect>
+      <ourAspect>Rychlost 40 a volno</ourAspect>
+      <ourAspect>Rychlost 60 a volno</ourAspect>
+      <ourAspect>Rychlost 80 a volno</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Očekávej 40</advancedAspect>
+      <ourAspect>Volno</ourAspect>
+      <ourAspect>Rychlost 40 a volno</ourAspect>
+      <ourAspect>Rychlost 60 a volno</ourAspect>
+      <ourAspect>Rychlost 80 a volno</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Očekávej 60</advancedAspect>
+      <ourAspect>Volno</ourAspect>
+      <ourAspect>Rychlost 40 a volno</ourAspect>
+      <ourAspect>Rychlost 60 a volno</ourAspect>
+      <ourAspect>Rychlost 80 a volno</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Očekávej 80</advancedAspect>
+      <ourAspect>Volno</ourAspect>
+      <ourAspect>Rychlost 40 a volno</ourAspect>
+      <ourAspect>Rychlost 60 a volno</ourAspect>
+      <ourAspect>Rychlost 80 a volno</ourAspect>
+    </aspectMapping>
+    
+    <aspectMapping>
       <advancedAspect>Stůj</advancedAspect>
       <ourAspect>Výstraha</ourAspect>
       <ourAspect>Rychlost 40 a výstraha</ourAspect>
       <ourAspect>Rychlost 60 a výstraha</ourAspect>
       <ourAspect>Rychlost 80 a výstraha</ourAspect>
     </aspectMapping>
+    
+    <aspectMapping>
+      <advancedAspect>Opatrně na přivolávací návěst</advancedAspect>
+      <ourAspect>Výstraha</ourAspect>
+      <ourAspect>Rychlost 40 a výstraha</ourAspect>
+      <ourAspect>Rychlost 60 a výstraha</ourAspect>
+      <ourAspect>Rychlost 80 a výstraha</ourAspect>
+    </aspectMapping>
+    
     <aspectMapping>
       <advancedAspect>Rychlost 40 a volno</advancedAspect>
       <ourAspect>Očekávej 40</ourAspect>
@@ -309,6 +379,35 @@
       <ourAspect>Rychlost 80 a očekávej 40</ourAspect>
     </aspectMapping>
     <aspectMapping>
+      <advancedAspect>Rychlost 40 a výstraha</advancedAspect>
+      <ourAspect>Očekávej 40</ourAspect>
+      <ourAspect>Rychlost 40 a očekávej 40</ourAspect>
+      <ourAspect>Rychlost 60 a očekávej 40</ourAspect>
+      <ourAspect>Rychlost 80 a očekávej 40</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 40 a očekávej 40</advancedAspect>
+      <ourAspect>Očekávej 40</ourAspect>
+      <ourAspect>Rychlost 40 a očekávej 40</ourAspect>
+      <ourAspect>Rychlost 60 a očekávej 40</ourAspect>
+      <ourAspect>Rychlost 80 a očekávej 40</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 40 a očekávej 60</advancedAspect>
+      <ourAspect>Očekávej 40</ourAspect>
+      <ourAspect>Rychlost 40 a očekávej 40</ourAspect>
+      <ourAspect>Rychlost 60 a očekávej 40</ourAspect>
+      <ourAspect>Rychlost 80 a očekávej 40</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 40 a očekávej 80</advancedAspect>
+      <ourAspect>Očekávej 40</ourAspect>
+      <ourAspect>Rychlost 40 a očekávej 40</ourAspect>
+      <ourAspect>Rychlost 60 a očekávej 40</ourAspect>
+      <ourAspect>Rychlost 80 a očekávej 40</ourAspect>
+    </aspectMapping>
+    
+    <aspectMapping>
       <advancedAspect>Rychlost 60 a volno</advancedAspect>
       <ourAspect>Očekávej 60</ourAspect>
       <ourAspect>Rychlost 40 a očekávej 60</ourAspect>
@@ -316,12 +415,70 @@
       <ourAspect>Rychlost 80 a očekávej 60</ourAspect>
     </aspectMapping>
     <aspectMapping>
+      <advancedAspect>Rychlost 60 a výstraha</advancedAspect>
+      <ourAspect>Očekávej 60</ourAspect>
+      <ourAspect>Rychlost 40 a očekávej 60</ourAspect>
+      <ourAspect>Rychlost 60 a očekávej 60</ourAspect>
+      <ourAspect>Rychlost 80 a očekávej 60</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 60 a očekávej 40</advancedAspect>
+      <ourAspect>Očekávej 60</ourAspect>
+      <ourAspect>Rychlost 40 a očekávej 60</ourAspect>
+      <ourAspect>Rychlost 60 a očekávej 60</ourAspect>
+      <ourAspect>Rychlost 80 a očekávej 60</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 60 a očekávej 60</advancedAspect>
+      <ourAspect>Očekávej 60</ourAspect>
+      <ourAspect>Rychlost 40 a očekávej 60</ourAspect>
+      <ourAspect>Rychlost 60 a očekávej 60</ourAspect>
+      <ourAspect>Rychlost 80 a očekávej 60</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 60 a očekávej 80</advancedAspect>
+      <ourAspect>Očekávej 60</ourAspect>
+      <ourAspect>Rychlost 40 a očekávej 60</ourAspect>
+      <ourAspect>Rychlost 60 a očekávej 60</ourAspect>
+      <ourAspect>Rychlost 80 a očekávej 60</ourAspect>
+    </aspectMapping>
+    
+    <aspectMapping>
       <advancedAspect>Rychlost 80 a volno</advancedAspect>
       <ourAspect>Očekávej 80</ourAspect>
       <ourAspect>Rychlost 40 a očekávej 80</ourAspect>
       <ourAspect>Rychlost 60 a očekávej 80</ourAspect>
       <ourAspect>Rychlost 80 a očekávej 80</ourAspect>
     </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 80 a výstraha</advancedAspect>
+      <ourAspect>Očekávej 80</ourAspect>
+      <ourAspect>Rychlost 40 a očekávej 80</ourAspect>
+      <ourAspect>Rychlost 60 a očekávej 80</ourAspect>
+      <ourAspect>Rychlost 80 a očekávej 80</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 80 a očekávej 40</advancedAspect>
+      <ourAspect>Očekávej 80</ourAspect>
+      <ourAspect>Rychlost 40 a očekávej 80</ourAspect>
+      <ourAspect>Rychlost 60 a očekávej 80</ourAspect>
+      <ourAspect>Rychlost 80 a očekávej 80</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 80 a očekávej 60</advancedAspect>
+      <ourAspect>Očekávej 80</ourAspect>
+      <ourAspect>Rychlost 40 a očekávej 80</ourAspect>
+      <ourAspect>Rychlost 60 a očekávej 80</ourAspect>
+      <ourAspect>Rychlost 80 a očekávej 80</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 80 a očekávej 80</advancedAspect>
+      <ourAspect>Očekávej 80</ourAspect>
+      <ourAspect>Rychlost 40 a očekávej 80</ourAspect>
+      <ourAspect>Rychlost 60 a očekávej 80</ourAspect>
+      <ourAspect>Rychlost 80 a očekávej 80</ourAspect>
+    </aspectMapping>
+    
   </aspectMappings>
-  
+
 </appearancetable>  

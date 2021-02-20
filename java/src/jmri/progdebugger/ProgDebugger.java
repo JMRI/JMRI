@@ -10,17 +10,24 @@ import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 import jmri.beans.PropertyChangeSupport;
+import jmri.jmrix.loconet.hexfile.HexFileFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Debugging implementation of Programmer interface.
  * <p>
+ * Note that running a simulated LocoNet connection, {@link HexFileFrame#configure()} will substitute the
+ * {@link jmri.progdebugger.ProgDebugger} instead of the {@link jmri.jmrix.loconet.LnOpsModeProgrammer},
+ * overriding {@link #readCV(String, ProgListener)} and {@link #writeCV(String, int, ProgListener)}.
+ * <p>
  * Remembers writes, and returns the last written value when a read to the same
  * CV is made.
  * <p>
  * Only supports the DCC single-number address space, should be updated to handle
- * any string address.
+ * any string address. As a temporary fix we simply discard the first part of any CV name
+ * containing "." and use the rest.
+ * TODO Fully support numberformat "113.12" in ProgDebugger (used in LOCONETLNCVMODE and LOCONETBDOPSWMODE)
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007, 2013
  */
@@ -39,6 +46,7 @@ public class ProgDebugger extends PropertyChangeSupport implements AddressedProg
     // write CV is recorded for later use
     private int _lastWriteVal = -1;
     private int _lastWriteCv = -1;
+    //private String cvNumPrefix; // TODO use part 0 of composite CVnames for simulated replies?
 
     public int lastWrite() {
         return _lastWriteVal;
@@ -108,6 +116,7 @@ public class ProgDebugger extends PropertyChangeSupport implements AddressedProg
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public String decodeErrorCode(int i) {
         log.debug("decoderErrorCode {}", i);
         return "error " + i;
@@ -118,7 +127,17 @@ public class ProgDebugger extends PropertyChangeSupport implements AddressedProg
      */
     @Override
     public void writeCV(String CVname, int val, ProgListener p) throws ProgrammerException {
-        final int CV = Integer.parseInt(CVname);
+        final int CV;
+        // Check CVname contents for int parsing
+        if (CVname.contains(".")) {
+            String[] parts = CVname.split("\\.");
+            //cvNumPrefix = parts[0];
+            CVname = parts[1];
+            // in LocoNet LOCONETLNCVMODE and LOCONETBDOPSWMODE the CV value (string) eg. "25.2"
+            // contains a first part for Article ID/Board typeword. cvNumPrefix is discarded during debug/simulation.
+            // See jmri.jmrix.loconet.LnOpsModeProgrammer.writeCV()
+        }
+        CV = Integer.parseInt(CVname);
         nOperations++;
         final ProgListener m = p;
         // log out the request
@@ -206,7 +225,17 @@ public class ProgDebugger extends PropertyChangeSupport implements AddressedProg
      */
     @Override
     public void readCV(String CVname, ProgListener p) throws ProgrammerException {
-        final int CV = Integer.parseInt(CVname);
+        final int CV;
+        // Check CVname contents for int parsing
+        if (CVname.contains(".")) {
+            String[] parts = CVname.split("\\.");
+            //cvNumPrefix = parts[0];
+            CVname = parts[1];
+            // in LocoNet LOCONETLNCVMODE and LOCONETBDOPSWMODE the CV value (string) e.g. "113.12"
+            // contains a first part for Article ID/Board typeword. cvNumPrefix is discarded during debug/simulation.
+            // See jmri.jmrix.loconet.LnOpsModeProgrammer.writeCV()
+        }
+        CV = Integer.parseInt(CVname);
         final ProgListener m = p;
         _lastReadCv = CV;
         nOperations++;
@@ -270,22 +299,14 @@ public class ProgDebugger extends PropertyChangeSupport implements AddressedProg
     public List<ProgrammingMode> getSupportedModes() {
         if (address >= 0) {
             // addressed programmer
-            return Arrays.asList(
-                    new ProgrammingMode[]{
-                        ProgrammingMode.OPSBITMODE,
-                        ProgrammingMode.OPSBYTEMODE
-                    }
-            );
+            return Arrays.asList(ProgrammingMode.OPSBITMODE,
+                    ProgrammingMode.OPSBYTEMODE);
         } else {
             // global programmer
-            return Arrays.asList(
-                    new ProgrammingMode[]{
-                        ProgrammingMode.PAGEMODE,
-                        ProgrammingMode.DIRECTBITMODE,
-                        ProgrammingMode.DIRECTBYTEMODE,
-                        ProgrammingMode.DIRECTMODE
-                    }
-            );
+            return Arrays.asList(ProgrammingMode.PAGEMODE,
+                    ProgrammingMode.DIRECTBITMODE,
+                    ProgrammingMode.DIRECTBYTEMODE,
+                    ProgrammingMode.DIRECTMODE);
         }
     }
     /**
@@ -391,4 +412,5 @@ public class ProgDebugger extends PropertyChangeSupport implements AddressedProg
     }
 
     private final static Logger log = LoggerFactory.getLogger(ProgDebugger.class);
+
 }

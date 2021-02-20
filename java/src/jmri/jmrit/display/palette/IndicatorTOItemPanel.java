@@ -408,7 +408,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
     }
 
     @Override
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST", justification = "Cast follows specific Constuctor") 
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST", justification = "Cast follows specific Constructor")
     protected void openDialog(String type, String family) {
         closeDialogs();
         hideIcons();

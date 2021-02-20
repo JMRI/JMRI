@@ -40,7 +40,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         this.sm = sm; // doesn't full register, but fine for this purpose.
 
         // self-registration is deferred until the command station type is set below
-                
+
         // create and register the ComponentFactory for the GUI
         InstanceManager.store(cf = new LnComponentFactory(this),
                 ComponentFactory.class);
@@ -76,6 +76,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
     private LnTrafficController lt;
     protected LocoNetThrottledTransmitter tm;
     private SlotManager sm;
+    private LncvDevicesManager lncvdm = null;
     private LnMessageManager lnm = null;
 
     /**
@@ -123,6 +124,10 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         store(p,DefaultProgrammerManager.class);
     }
 
+    public void setLncvDevicesManager(LncvDevicesManager lncvdm) {
+        this.lncvdm = lncvdm;
+    }
+
     protected boolean mTurnoutNoRetry = false;
     protected boolean mTurnoutExtraSpace = false;
 
@@ -168,6 +173,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
      * Configure the common managers for LocoNet connections. This puts the
      * common manager config in one place.
      */
+    @Override
     public void configureManagers() {
 
         tm = new LocoNetThrottledTransmitter(getLnTrafficController(), mTurnoutExtraSpace);
@@ -203,21 +209,24 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         }
 
         InstanceManager.setReporterManager(getReporterManager());
-        
+
         InstanceManager.setDefault(CabSignalManager.class,getCabSignalManager());
 
         setConsistManager(new LocoNetConsistManager(this));
+
+        setLncvDevicesManager(new jmri.jmrix.loconet.LncvDevicesManager(this));
 
         ClockControl cc = getClockControl();
 
         InstanceManager.setDefault(ClockControl.class, cc);
 
-        jmri.InstanceManager.store(getMultiMeter(), jmri.MultiMeter.class);
-
         getIdTagManager();
 
         // register this SystemConnectionMemo to connect to rest of system
         register();
+
+        // This must be done after the memo is registered
+        getPredefinedMeters();
     }
 
     public LnPowerManager getPowerManager() {
@@ -275,7 +284,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         if (getDisabled()) {
             return null;
         }
-        return (LnSensorManager) classObjectMap.computeIfAbsent(LnSensorManager.class, (Class c) -> new LnSensorManager(this));
+        return (LnSensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class c) -> new LnSensorManager(this));
     }
 
     public LnLightManager getLightManager() {
@@ -285,11 +294,39 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         return (LnLightManager) classObjectMap.computeIfAbsent(LightManager.class, (Class c) -> new LnLightManager(this));
     }
 
-    public LnMultiMeter getMultiMeter() {
+    public LncvDevicesManager getLncvDevicesManager() {
         if (getDisabled()) {
             return null;
         }
-        return (LnMultiMeter) classObjectMap.computeIfAbsent(MultiMeter.class,(Class c) -> new LnMultiMeter(this));
+        if (lncvdm == null) {
+            setLncvDevicesManager(new LncvDevicesManager(this));
+            log.debug("Auto create of LncvDevicesManager for initial configuration");
+        }
+        return lncvdm;
+    }
+
+    protected LnPredefinedMeters predefinedMeters;
+
+    public LnPredefinedMeters getPredefinedMeters() {
+        if (getDisabled()) {
+            log.warn("Aborting getPredefinedMeters account is disabled!");
+            return null;
+        }
+//        switch (getSlotManager().commandStationType) {
+//            case COMMAND_STATION_USB_DCS240_ALONE:
+//            case COMMAND_STATION_DCS240:
+//            case COMMAND_STATION_DCS210:
+//            case COMMAND_STATION_USB_DCS52_ALONE:
+//            case COMMAND_STATION_DCS052:
+//                break;
+//            default:
+//                // The command station does not support these meters
+//                return null;
+//        }
+        if (predefinedMeters == null) {
+            predefinedMeters = new LnPredefinedMeters(this);
+        }
+        return predefinedMeters;
     }
 
     @Override
@@ -349,6 +386,9 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         if (lt != null){
             lt.dispose();
             lt = null;
+        }
+        if (predefinedMeters != null) {
+            predefinedMeters.dispose();
         }
         super.dispose();
     }

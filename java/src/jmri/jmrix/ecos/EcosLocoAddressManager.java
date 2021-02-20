@@ -111,6 +111,7 @@ public class EcosLocoAddressManager extends AbstractManager<NamedBean> implement
     @Nonnull
     @Deprecated  // will be removed when Manager method is removed due to @Override
     public List<String> getSystemNameList() {
+        jmri.util.LoggingUtil.deprecationWarning(log, "getSystemNameList");
         return new ArrayList<String>();
     }
 

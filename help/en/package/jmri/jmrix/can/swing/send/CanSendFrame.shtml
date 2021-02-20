@@ -8,7 +8,7 @@
 
   <title>JMRI: Send CAN Frame</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help send MERG CBUS packets long short can events frames event hex">
+  <meta name="keywords" content="JMRI help send CBUS packets long short can events frames event hex">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -28,7 +28,7 @@
 
      <h1>Send CAN Frame</h1>
       <img src="../../../../../../html/hardware/can/images/can-send-can-frame-349x392.png"
-      width="349" height="392" alt="JMRI MERG CBUS Send Frame Tool" align="right">
+      width="349" height="392" alt="JMRI CBUS Send Frame Tool" align="right">
 
       <p>The "Send CAN Frame" tool lets you directly send <a href=
       "../../../../../../html/hardware/can/index.shtml">CAN
@@ -38,7 +38,7 @@
       frame, the bottom section acts as a frame sequencer. </p>
       
       <p>You can enter packets in <a href=
-      "../../../../../../html/hardware/can/cbus/Names.shtml">CBUS
+      "../../../../../../html/hardware/can/cbus/Names.shtml">CBUS&reg;
       address format</a>, e.g. "+1", "-2" or "+n4e1" ( decimal, without the quotation marks ). 
       <br>
       Once you've entered the packet, just click "send" or press Enter.</p>      
@@ -60,11 +60,11 @@
       
       <p>If a message is unable to be created, a popup dialogue box will notify you.</p>
       
-      <p>Remember, if sending out messages to a live MERG CBUS network, these will be received and acted upon accordingly!</p>
+      <p>Remember, if sending out messages to a live CBUS network, these will be received and acted upon accordingly!</p>
       
       <h2><a name="sequencer" id="sequencer">Sequencer</a></h2>
       <img src="../../../../../../html/hardware/can/images/can-send-can-frame-sequence-352x393.gif"
-      width="352" height="393" alt="JMRI MERG CBUS Send Frame Tool Sequencer" align="right">
+      width="352" height="393" alt="JMRI CBUS Send Frame Tool Sequencer" align="right">
       
       
       
@@ -86,7 +86,7 @@
       
       
       <h2>Options</h2>
-      <p>MERG CBUS priority - Adds a priority to the message header.</p>
+      <p>CBUS priority - Adds a priority to the message header.</p>
       <p>Send as outgoing CanMessage - Sends as if message originating from JMRI 
       ( selected by default ).</p>
       <p>Send as outgoing CanMessage - Sends as if message originating from outside of JMRI </p>
@@ -94,9 +94,13 @@
      <h3>JMRI Help</h3>
       
       <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the MERG Send CAN Frame window.</p>
-      <p><a href="../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI MERG CBUS Support page</a>.</p>
+      <p><a href="../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Support page</a>.</p>
 
       
+        <h2></h2>
+        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
+        <p></p>
+
       
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
