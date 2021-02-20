@@ -119,6 +119,7 @@ public class SwitchboardEditor extends Editor {
     private final float cellProportion = 1.0f; // TODO analyse actual W:H per switch type/shape: worthwhile?
     private int _tileSize = 100;
     private int _iconSquare = 75;
+    @GuardedBy("this")
     private final JSpinner rowsSpinner = new JSpinner(new SpinnerNumberModel(rows, 1, 25, 1));
     private final JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
     // number of rows displayed on switchboard, disabled when autoRows is on
@@ -428,14 +429,13 @@ public class SwitchboardEditor extends Editor {
         Dimension frSize = super.getTargetFrame().getSize(); // 5 px for border, var px for footer, autoRows(int)
         // some GUIs include (wide) menu bar inside frame
         switchboardLayeredPane.setSize(new Dimension((int) frSize.getWidth() - 6, (int) frSize.getHeight() - verticalMargin));
-
-        switchboardLayeredPane.repaint();
+        //switchboardLayeredPane.repaint();
         synchronized (this) {
             if (autoRowsBox.isSelected()) { // check if autoRows is active
                 int oldRows = rows;
                 rows = autoRows(cellProportion); // if it suggests a different value for rows, call updatePressed()
                 if (rows != oldRows) {
-                    //rowsSpinner.setValue(rows); // updatePressed will update rows spinner in display, but will not propagate when disabled
+                    rowsSpinner.setValue(rows); // updatePressed will update rows spinner in display, but spinner will not propagate when disabled
                     updatePressed(); // redraw if rows value changed
                 }
             }
@@ -625,7 +625,7 @@ public class SwitchboardEditor extends Editor {
         }
     }
 
-    // update switchboard and setting
+    // update switchboard layout and setting
     private void doHideUnconnected(boolean hide) {
         setHideUnconnected(hide);
         if (hideUnconnected.isSelected() != hide) {
@@ -634,11 +634,11 @@ public class SwitchboardEditor extends Editor {
         if (hideUnconnectedBox.isSelected() != hide) {
             hideUnconnectedBox.setSelected(hide); // also (un)check the box on the menu
         }
+        updatePressed();
+        setDirty();
         synchronized (this) {
             help2.setVisible(!_hideUnconnected && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
         }
-        updatePressed();
-        setDirty();
     }
 
     /**
@@ -814,12 +814,12 @@ public class SwitchboardEditor extends Editor {
                     rowsSpinner.setToolTipText(Bundle.getMessage("RowsSpinnerOffTooltip"));
                     // hide rowsSpinner + rowsLabel?
                     if (rows != oldRows) {
-                        //rowsSpinner.setValue(rows); // update display, but will not propagate when disabled
+                        // rowsSpinner will be recalculated by auto so we don't copy the old value
                         updatePressed(); // redraw if rows value changed
                     }
                 } else {
                     log.debug("autoRows was turned OFF");
-                    rowsSpinner.setValue(rows); // autoRows turned off, copy current value in spinner
+                    rowsSpinner.setValue(rows); // autoRows turned off, copy current auto value to spinner
                     rowsSpinner.setEnabled(true); // show rowsSpinner + rowsLabel?
                     rowsSpinner.setToolTipText(Bundle.getMessage("RowsSpinnerOnTooltip"));
                     // calculate tile size

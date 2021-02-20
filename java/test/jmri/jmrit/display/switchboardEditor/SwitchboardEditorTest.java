@@ -1,7 +1,6 @@
 package jmri.jmrit.display.switchboardEditor;
 
 import java.awt.Color;
-import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
@@ -68,6 +67,8 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
 
     @Test
     public void testTurnoutSwitchPopup() {
+        e.setSwitchManu("I");
+        e.setSwitchType("T");
         // initially selected connection should be Internal
         Assertions.assertEquals("I", e.getSwitchManu(), "Internal connection default at startup");
         Assertions.assertEquals(1, e.getPanelMenuRangeMin(), "MinSpinner=1 default at startup");
@@ -89,9 +90,9 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     }
 
     @Test
-    public void testIsDirty() {
+    public void testStartsNotDirty() {
         // defaults to false.
-        Assertions.assertFalse(e.isDirty(), "isDirty");
+        Assertions.assertFalse(e.isDirty(), "isDirty starts as false");
     }
 
     @Test
@@ -126,17 +127,19 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
 
     @Test
     public void testSwitchRangeTurnouts() {
+        e.setSwitchType("T");
         e.setSwitchManu("I"); // set explicitly
-        Assertions.assertEquals("T", e.getSwitchType(), "Default Switch Type Turnouts");
+        e.setVisible(true);
+        Assertions.assertEquals("T", e.getSwitchType(), "Default Switch Type is Turnouts");
         Assertions.assertEquals("button", e.getSwitchShape(), "Default Switch Shape Button");
         Assertions.assertEquals(0, e.getRows(), "Default Rows 0"); // autoRows on
-        e.setRows(10);
-        Assertions.assertEquals(10, e.getRows(), "Set Rows 10");
+        e.setRows(10); // will turn off autoRows checkboxmenu
+        Assertions.assertEquals(10, e.getRows(), "Rows should now be be 10");
         e.setShowUserName(false);
         Assertions.assertEquals("no", e.showUserName(), "Show User Name is No");
         e.setSwitchShape("symbol");
         Assertions.assertEquals("symbol", e.getSwitchShape(), "Switch shape set to 'symbol'");
-        ((TurnoutManager) e.getManager('T')).provideTurnout("IT9"); // connect to item 1
+        ((TurnoutManager) e.getManager('T')).provideTurnout("IT9"); // will connect to item 1
         e.getSwitch("IT8").okAddPressed(new ActionEvent(e, ActionEvent.ACTION_PERFORMED, "test")); // and to item 2
         e.setHideUnconnected(true); // speed up redraw
         e.updatePressed(); // rebuild for new Turnouts + symbol shape
@@ -172,6 +175,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     @Test
     public void testHideUnconnected() {
         // initially selected connection should be Internal but is not 100% predictable (after type is changed?)
+        e.setSwitchType("T");
         e.setSwitchManu("I"); // so set explicitly
         ((TurnoutManager) e.getManager()).provideTurnout("IT24"); // active manager should be a TurnoutManager, connect to item 1
         e.setHideUnconnected(true);
