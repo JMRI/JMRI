@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Translated by Blorec Herv&eegu; le 2011-18-07-->
 
@@ -17,7 +17,7 @@
   <meta name="Robots" content="Index, Follow">
   <meta name="Revisit-After" content="7 Days"><!-- Style -->
   <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
+  "text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -27,11 +27,11 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">dossier (sous-r&eacute;pertoire)
-<h1 style="color:#ff0000">Mise &aacute; jour Version documentation du R&eacute;gulateur
+<h1>Version actuelle de la documentation du R&eacute;gulateur
 </span></h1>
 
 <p>S'il vous pla&icirc;t noter que cette documentation a &eacute;t&eacute; mise &aacute; jour, reportez-vous aux liens ci-dessous:</p>
@@ -43,7 +43,9 @@
   <li>La <a href="AdvancedThrottleControl.shtml">Fen&ecirc;tre contr&ocirc;les R&eacute;gulateur</a></li>
   <li>La <a href="ThrottlesListWindow.shtml">Liste des Fen&ecirc;tres R&eacute;gulateurs</a></li>
   <li>Le <a href="ThrottlesPreferencesPane.shtml">volet pr&eacute;f&eacute;rences R&eacute;gulateurs</a></li>
-  </ul>
+  </ul><hr>
+  
+  <h1>R&eacute;gulateurs dans JMRI v2.x</h1>
 
 <h2>Enregistrement d'une Configuration de R&eacute;gulateur</h2>
 
@@ -104,7 +106,7 @@ sauvegard&eacute; avec toutes les pr&eacute;f&eacute;rences, notamment la taille
 <a name="SaveMultiple"> </a>
 <h2>Sauvegarde de multiples Fen&ecirc;tres R&eacute;gulateurs</h2> 
 
-<dir>
+ <div style="margin-left: 2em">
    <p> Les instructions ci-dessus sont assez simples quand on travaille avec une seule
   Fen&ecirc;tre r&eacute;gulateur.</p>
 
@@ -147,9 +149,7 @@ Fen&ecirc;tres r&eacute;gulateurs identifi&eacute;es dans ce fichier seront ouve
       </tr>
     </tbody>
   </table>
-</dir>
-
-<a name="LoadLayout"></a> 
+ </div><a name="LoadLayout" id="LoadLayout"></a>
 
 <h2>Ouvrir/Charger une Configuration R&eacute;gulateur</h2>
 
@@ -210,7 +210,7 @@ soit v&eacute;rifi&eacute;e comme n'&eacute;tant pas utilis&eacute;e par un autr
 <a name="Merging"></a> 
 
 <h2>Fusion Fen&ecirc;tres de R&eacute;gulateurs </h2>
-<dir>
+<div style="margin-left: 2em">
    <p> Les fichiers de mise en page de R&eacute;gulateurs  peuvent consister en une Fen&ecirc;tre de r&eacute;gulateur unique (pour contr&ocirc;ler
    une seule locomotive ou une adresse de couplage), ou elle peut contenir de multiples
    Fen&ecirc;tres de r&eacute;gulateurs (voir figure 4-3). Dans les deux cas, &aacute; chaque ouverture d'un fichier de configuration de r&eacute;gulateur
@@ -225,7 +225,7 @@ soit v&eacute;rifi&eacute;e comme n'&eacute;tant pas utilis&eacute;e par un autr
    <p> Cependant, quand une ou plusieurs Fen&ecirc;tres de r&eacute;gulateurs sont d&eacute;j&agrave; ouvertes sur
    l'&eacute;cran, le programme va ouvrir une bo&icirc;te de dialogue comme le montre la figure 4-5 sur
    la droite. </p>
-</dir>
+</div>
 <ul>
    <li> <strong> Fusion </strong>? Quitte les Fen&ecirc;tres r&eacute;gulateur actives ouvertes
       en place et ouvre le r&eacute;gulateur (s) contenu dans le fichier de configuration en
@@ -335,7 +335,7 @@ il suffit de cliquer sur le " <big>X</big>" dans le coin sup&eacute;rieur droit 
 </table>
 <br>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->
