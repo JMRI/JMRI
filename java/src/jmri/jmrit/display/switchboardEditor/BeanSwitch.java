@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
 import java.io.File;
 import java.io.IOException;
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -37,7 +36,7 @@ import org.slf4j.LoggerFactory;
  */
 public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListener, ActionListener {
 
-    private final JButton beanButton = new JButton();
+    private final JButton beanButton;
     private IconSwitch iconSwitch;
     private final int _shape;
     private final String _switchSysName;
