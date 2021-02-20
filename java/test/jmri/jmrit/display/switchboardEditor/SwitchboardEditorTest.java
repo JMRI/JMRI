@@ -34,6 +34,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     }
 
     @Test
+    @Disabled("Temporarily off to find failing test method")
     public void testDefaultCtor() {
         e = new SwitchboardEditor();
         Assertions.assertNotNull(e, "exists");
@@ -45,6 +46,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     }
 
     @Test
+    @Disabled("Temporarily off to find failing test method")
     public void checkOptionsMenuExists() {
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
         Assertions.assertNotNull(jmo, "Options Menu Exists");
@@ -52,6 +54,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     }
 
     @Test
+    @Disabled("Temporarily off to find failing test method")
     public void checkSetEditable() {
         e.setAllEditable(true);
         JMenuBarOperator jmbo = new JMenuBarOperator(jfo);
@@ -93,6 +96,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     }
 
     @Test
+    @Disabled("Temporarily off to find failing test method")
     public void testSetDirty() {
         // defaults to false, setDirty() sets it to true.
         e.setDirty();
@@ -100,6 +104,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     }
 
     @Test
+    @Disabled("Temporarily off to find failing test method")
     public void testSetDirtyWithParameter() {
         // defaults to false, so set it to true.
         e.setDirty(true);
@@ -107,6 +112,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     }
 
     @Test
+    @Disabled("Temporarily off to find failing test method")
     public void testResetDirty() {
         // defaults to false, so set it to true.
         e.setDirty(true);
@@ -116,6 +122,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     }
 
     @Test
+    @Disabled("Temporarily off to find failing test method")
     public void testGetSetDefaultTextColor() {
         Assertions.assertEquals(ColorUtil.ColorBlack, e.getDefaultTextColor(), "Default Text Color");
         e.setDefaultTextColor(Color.PINK);
@@ -123,6 +130,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     }
 
     @Test
+    @Disabled("Temporarily off to find failing test method")
     public void testSwitchRangeTurnouts() {
         e.setSwitchType("T");
         e.setSwitchManu("I"); // set explicitly
@@ -145,6 +153,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     }
 
     @Test
+    @Disabled("Temporarily off to find failing test method")
     public void testSwitchInvertSensors() {
         e.setSwitchType("S");
         // initially selected connection should be Internal but is not 100% predictable (after type is changed?)
@@ -171,6 +180,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     }
 
     @Test
+    @Disabled("Temporarily off to find failing test method")
     public void testHideUnconnected() {
         // initially selected connection should be Internal but is not 100% predictable (after type is changed?)
         e.setSwitchType("T");
@@ -182,6 +192,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     }
 
     @Test
+    @Disabled("Temporarily off to find failing test method")
     public void testSwitchAllLights() {
         e.setSwitchType("L");
         e.setSwitchManu("I"); // so set explicitly as LightManager
@@ -207,6 +218,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     }
 
     @Test
+    @Disabled("Temporarily off to find failing test method")
     public void testGetSwitches() {
         e.setMinSpinner(8);
         e.setMaxSpinner(17);
