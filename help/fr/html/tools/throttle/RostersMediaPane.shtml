@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- Translated by Blorec Herv&#233; le 2011-09-28-->
 
-<html lang="en">
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -19,7 +19,7 @@
   <meta name="Revisit-After" content="7 Days">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments --><!-- are an arbitrary design pattern used by the update.pl script to --><!-- easily replace the common header/footer code for all the web pages --><!-- delete the following 2 Defines if you want to use the default JMRI logo --><!-- or change them to reflect your alternative logo --><!-- Style -->
   <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  "text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -29,7 +29,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
@@ -136,7 +136,7 @@
       Vous pouvez &eacute;galement jeter un oeil &agrave;
       Jynstruments pour le bouton de fonction avanc&eacute;e.<br>
       <br>
-    </div><!--#include virtual="/Footer" -->
+    </div><!--#include virtual="/Footer.shtml" -->
   </div>
 </body>
 </html>
