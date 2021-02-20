@@ -734,7 +734,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         }
     }
 
-    protected synchronized String getMonitorContents(){
+    protected String getMonitorContents(){
             return reply;
     }
 
