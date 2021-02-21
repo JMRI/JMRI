@@ -196,7 +196,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameSensor"));
         String errorMessage;
         for (int x = 0; x < numberOfSensors; x++) {
-            log.debug("b4 next valid addr for prefix {} conn choice mgr {}",sensorPrefix,((SensorManager)connectionChoice));
+            log.debug("b4 next valid addr for prefix {} conn choice mgr {}",sensorPrefix,connectionChoice);
             try {
                 curAddress = InstanceManager.getDefault(SensorManager.class).getNextValidAddress(curAddress, sensorPrefix, false);
             } catch (jmri.JmriException ex) {
