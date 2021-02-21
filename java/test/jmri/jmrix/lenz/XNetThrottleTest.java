@@ -7,8 +7,6 @@ import org.junit.jupiter.api.*;
 import jmri.util.junit.rules.RetryRule;
 
 /**
- * XNetThrottleTest.java
- * <p>
  * Test for the jmri.jmrix.lenz.XNetThrottle class
  *
  * @author Paul Bender Copyright (C) 2008-2016

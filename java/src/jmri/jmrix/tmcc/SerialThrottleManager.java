@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of a TMCC ThrottleManager.
- * TODO fix "Old code" without release/disposeThrottle, leaves threads open in test.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2006
  */
@@ -30,9 +29,11 @@ public class SerialThrottleManager extends AbstractThrottleManager {
         userName = "Lionel TMCC";
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void dispose() { // no listener on tc to be removed
-        //_memo.getTrafficController().removeListener(this);
-        //stopThrottleRequestTimer(); no timer used in tm
     }
 
     @Override
@@ -73,7 +74,7 @@ public class SerialThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-        /**
+    /**
      * What speed modes are supported by this system? value should be xor of
      * possible modes specifed by the DccThrottle interface
      */

@@ -496,8 +496,10 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
     }
 
     /**
+     * {@inheritDoc}
      * Dispose of this manager, typically for testing.
      */
+    @Override
     public void dispose() {
         if (retrySetupThread != null) {
             try {
