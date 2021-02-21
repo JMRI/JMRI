@@ -10,64 +10,174 @@
 <title>JMRI: USS CTC Tools</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css"  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
 
-  <div class="nomenu" id="mBody">
+
+  <body>
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+      <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
 
 <h2>JMRI:Outils USS CTC </h2>
 
 
-JMRI contient quelques outils pour aider &#224; l'automatisation des panneaux USS CTC.
-Ceux-ci peuvent &#234;tre utilis&#233;s soit pour les panneaux &#224; base d'&#233;cran , ou &#224;
-piloter un panneau physique avec de v&#233;ritables leviers et des voyants.
+<p class="example">
+      Il s'agit de l'impl&#233;mentation originale de CTC qui fournit des fonctionnalit&#233;s qui sont activ&#233;es par le biais de scripts.
+      Voir aussi <a href="../../../package/jmri/jmrit/ctc/CTC.shtml">la nouvelle lise en &#339;uvre de CTC</a> qui fournit
+      un &#233;diteur d'interface graphique pour configurer les r&#232;gles CTC et un ex&#233;cutable pour mettre en &#339;uvre la logique CTC. Il construit &#233;galement un squelette
+      de Panneau d&#201;dition CTC  avec les leviers/indicateurs d'aiguillage, les leviers/indicateurs de signaux, le code bouton , etc,
+      et un plan de voies minimal.
+      </p>
 
-<dl>
+      <p>JMRI contient des outils d'aide &#224; l'automatisation des Panneaux USS CTC
+      . Ils peuvent &#234;tre utilis&#233;s soit pour des panneauxs sur &#233;cran, soit
+      pour piloter un TCO physique avec de vrais leviers et voyants.</p>
+            
+      <h3>Outils bas&#233;s sur des scripts<span class="since">Depuis JMRI 4.8</span></h3>
+      <p>Ces outils sont tr&#232;s puissants, mais ne peuvent actuellement &#234;tre configur&#233;s que via un script.
+      <br>
+      Pour savoir comment proc&#233;der, voir :
+      <ul>
+      <li>L'exemple de script <a href="https://jmri.org/jython/ctc/TwoColumnMachine.py">jython/ctc/TwoColumnMachine.py</a> 
+      <li>La <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/package-summary.html">Documentation Javadoc sur
+        les diff&#233;rentes composantes</a>
+      </ul>
+      
+      Les outils disponibles sont :
+      <dl>
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/CodeLine.html">Ligne de code</a<>/dt>
+                            <dd>Met en &#339;uvre la ligne de code entre la machine CTC et le champ.
+                            Peut utiliser une sortie d'aiguillage pour indiquer, par exemple, &#224; un voyant de s'allumer ou &#224; des relais de faire du bruit.
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/Station.html">Gare</a></dt>  
+                            <dd>Correspond &#224; une seule gare sur la ligne de code, g&#233;n&#233;ralement
+                            une seule colonne sur l'appareil CTC et tous les &#233;l&#233;ments du domaine qui
+                            y sont connect&#233;s.
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/CodeButton.html">Bouton code</a<>/dt>
+                            <dd> Un par section, cela d&#233;finit la connexion au bouton code(une entr&#233;e de capteur)
+                            et le voyant de code (une sortie d'assistance) sur le panneau.
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TurnoutSection.html">Section de l'aiguillage</a<>/dt>
+                            <dd>Commande un seul aiguillage sur le terrain. Vous le configurez avec le nom de cet aiguillage
+                            ainsi que des entr&#233;es de capteurs pour le levier sur le panneau et des sorties d'aiguillage pour 
+                            les voyants t&#233;moins. Peut &#233;ventuellement prendre des objets Verrou pour ajouter un verrouillage type.
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/SignalHeadSection.html">Section SignalHead</a<>/dt>
+                            <dd>Commande les feux de signalisation autour d'un seul OS sur le terrain.
+                            Vous le configurez avec des listes de Feux gauche et droite
+                            qu'il peut forcer et lib&#233;rer, 
+                            ainsi que des entr&#233;es de capteurs pour le levier sur le panneau et des sorties d'aiguillage pour
+                            les voyants t&#233;moins. Peut &#233;ventuellement prendre des objets Verrou pour ajouter un verrouillage type.
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TrackCircuitSection.html">Section de circuit de piste</a<>/dt>
+                            <dd>Cela fait fonctionner un t&#233;moin lumineux d'occupation des voies (une sortie) sur le panneau &#224; partir d'un 
+                                capteur d'occupation sur le terrain (une entr&#233;e de capteur). En option, 
+                                peut sonner une cloche lorsqu'il est occup&#233; ou inoccup&#233;.
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/MaintainerCallSection.html">Section d'appel du responsable</a<>/dt>
+                            <dd>Ceci pilote un t&#233;moin d'appel du responsable (une sortie) dans le champ d'un 
+                                levier ou interrupteur sur le panneau central (une entr&#233;e de capteur).
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/OccupancyLock.html">Verrouillage de l'Occupation</a<>/dt>
+                            <dd>Lorsque cette option est ajout&#233;e &#224; une section Aiguillage ou ou Feu de Signalisation, elle emp&#234;che les changements
+                            pendant que la section OS (d&#233;finie dans le Verrou) est occup&#233;e.
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/RouteLock.html">Verrouillage d'Itin&#233;raire</a></dt>
+                            <dd>Ajout&#233; &#224; une section d'Aiguillages, cela emp&#234;che les changements
+                            tandis que la section OS a un itin&#233;raire d&#233;gag&#233; &#224; travers l'Aiguillage.
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TimeLock.html">Blocage horaire</a></dt>
+                            <dd>Ajout&#233; &#224; une section d'Aiguillage, cela emp&#234;che les changements
+                            tandis que la section OS a des signaux en cours d'ex&#233;cution.
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TrafficLock.html">Verrouillage Trafic</a<>/dt>                        
 
-<dt>
-<a href="../../../package/jmri/jmrit/ussctc/FollowerFrame.shtml"> Suiveur </a>
-<dd>
-Asservissement d'un dispositif de sortie d'Aiguillage pour suivre l'&#233;tat d'un dispositif de capteur d'entr&#233;e.
-Cela pourrait, par exemple, &#234;tre un aiguillage du r&#233;seau suivi par un commutateur du panneau de contr&#244;le reli&#233; &#224; un Capteur.
+   <dd> Se verrouille contre les signaux qui sont lib&#233;r&#233;s dans des directions oppos&#233;es sur
+                            un seul segment de voie.  Peut &#234;tre configur&#233; avec les r&#233;glages de l'Aiguillage
+                            (objets BeanSetting) pour permettre, par exemple, &#224; des signaux aux extr&#233;mit&#233;s oppos&#233;es d'une Ville
+                            de lib&#233;rer lorsqu'un aiguillage est dirig&#233; sur la voie principale et l'autre sur la voie d'&#233;vitement.
+      <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/TurnoutLock.html">Verrouillage d'Aiguillage</a></dt>
+                            <dd>Un terme un peu inappropri&#233;, car il fait r&#233;f&#233;rence &#224; un verrouillage bas&#233; sur l'&#233;tat d'un Aiguillage JMRI,  
+                            qui doit &#234;tre consid&#233;r&#233; comme un r&#233;sultat g&#233;n&#233;ralis&#233;.  Peut &#234;tre utilis&#233;, par exemple, pour verrouiller 
+                            les sections o&#249; un &#233;tat Appel On (sur un Aiguillage interne qui repr&#233;sente l'&#233;tat)
+                            a &#233;t&#233; d&#233;fini (par exemple, par une section d'appel du responsable utilis&#233;e pour d&#233;finir cet Aiguillage JMRI
+                            sur le terrain).
+      </dl>
+<!-- 
+      (Les pages suivantes existent, mais ne sont pas adapt&#233;es au contenu post-4.7.4)
+      <dl>
+        <dt><a href=
+        "../../../package/jmri/jmrit/ussctc/TurnoutLeverFrame.shtml">
+        Levier d'Aiguillage</a></dt>
 
-<dt>
-<a href="../../../package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml"> OS Indicateur </a>
-<dd>
-Pilotage des voyants d'occupation sur le panneau. Cela prend l'entr&#233;e d'un capteur
-pour montrer la section de voie occup&#233;e, et aussi &#233;ventuellement peut allumer le voyant
-si la section a &#233;t&#233; d&#233;bloqu&#233;e.
+        <dd>Contr&#244;le un Aiguillage &#224; partir d'un levier sur le panneau, 
+        avec les deux voyants lumineux.</dd>
 
-<dt>
-<a href="../../../package/jmri/jmrit/ussctc/TurnoutLeverFrame.shtml"> Levier d' Aiguillage </a>
-<dd>
-Commande un aiguillage depuis un levier situ&#233; sur le panneau, avec les deux
-voyants. (Pas encore sorti)
+        <dt><a href=
+        "../../../package/jmri/jmrit/ussctc/SignalLeverFrame.shtml">
+        Levier de Signal</a></dt>
 
-<dt>
-<a href="../../../package/jmri/jmrit/ussctc/SignalLeverFrame.shtml"> levier signal </a>
-<dd>
-Commandes d'un ensemble de signaux provenant d'un levier situ&#233; sur le panneau, avec les trois
-voyants. (Pas encore sorti)
+        <dd>Commande un ensemble de signaux &#224; partir d'un levier sur le panneau,
+        ainsi que les trois voyants lumineux.</dd>
 
-<dt>
-<a href="../../../package/jmri/jmrit/ussctc/CodeButtonFrame.shtml">Bouton code </a>
-<dd>
-Impl&#233;mente le bouton de code et une lampe de code. (Pas encore sorti)
-<dl>
+        <dt><a href=
+        "../../../package/jmri/jmrit/ussctc/CodeButtonFrame.shtml">Code
+        Bouton code </a></dt>
 
-</dl>
-    
-<!--#include virtual="/Footer" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+        <dd>Met en &#339;uvre le bouton code et la lampe code.</dd>
+      </dl>
+ -->
+
+      Il y a une page avec un exemple travaill&#233; (pas encore pr&#233;sent), 
+      et une page s&#233;par&#233;e d&#233;crivant les 
+      <a href="Conventions.shtml">conventions d'appellation</a> utilis&#233;es dans l'exemple, au cas o&#249;
+      vous constaterez qu'elles vous &#233;pargneront un certain travail de mise en place.
+      
+      <p>
+      Ces outils enregistrent des informations dans plusieurs objets de la m&#233;moire JMRI, qui
+      peuvent &#224; leur tour &#234;tre plac&#233;s sur des panneaux en tant que MemoryIcons.
+      <dl>
+        <dt>IMUSS CTC:SIGNALHEADSECTION:1:LOG</dt>
+        <dd>Ce que fait la ligne de code</dd>
+
+        <dt>IMUSS CTC:SIGNALHEADSECTION:1:TIME</dt>
+        <dd>Quand le temps passe</dd>
+
+        <dt>IMUSS CTC:LOCK:1:LOG</dt>
+        <dd>Indication de verrouillage des verrous</dd>
+        
+      </dl>
+      
+      Le "1" peut changer s'il y a plus d'un ensemble d'objets, 
+      c'est-&#224;-dire si plus d'une ligne de code est mod&#233;lis&#233;e.
+      
+      <h3>Outils autonomes</h3>
+
+      Ceux-ci peuvent &#234;tre cr&#233;&#233;s &#224; partir du menu USS sous Outils dans 
+      Applications JMRI. Ils travaillent en cr&#233;ant des applications Logix et/ou
+     des itin&#233;raires qui mettent en &#339;uvre la fonctionnalit&#233; souhait&#233;e.
+      Vous pourriez le faire &#224; la main, bien s&#251;r, mais ils
+      sont con&#231;us comme une simplification.
+      
+      <dl>
+        <dt><a href=
+        "../../../package/jmri/jmrit/ussctc/FollowerFrame.shtml">Follower</a></dt>
+
+        <dd> Esclave une sortie Dispositif d'Aiguillage pour suivre l'&#233;tat 
+        d'un dispositif de capteur d'entr&#233;e. Cela pourrait, par exemple, rendre 
+        Les panneaux d'affichage suivent un interrupteur de fa&#231;ade reli&#233; &#224; un
+        Sensor.</dd>
+
+        <dt><a href=
+        "../../../package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml">
+        Indicateur OS</a></dt>
+		Prend les donn&#233;es d'un capteur pour montrer que la section de la voie est
+        occup&#233;, et peut &#233;galement, en option, allumer l'indicateur si
+        la section a &#233;t&#233; d&#233;verrouill&#233;e.</dd>
+
+      </dl>
+<p>Traduction 2021-02-21</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
