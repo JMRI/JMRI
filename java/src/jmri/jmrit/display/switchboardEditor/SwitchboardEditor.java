@@ -480,9 +480,9 @@ public class SwitchboardEditor extends Editor {
         }
         // if range is confirmed, go ahead with switchboard update
         for (int i = switchesOnBoard.size() - 1; i >= 0; i--) {
-            if (i > switchboardLayeredPane.getComponentCount()) {
-                break;
-            }
+//            if (i > switchboardLayeredPane.getComponentCount()) {
+//                break;
+//            }
             // remove listeners before removing switches from JLayeredPane
             ((BeanSwitch) switchboardLayeredPane.getComponent(i)).cleanup();
             // deleting items starting from 0 will result in skipping the even numbered items
