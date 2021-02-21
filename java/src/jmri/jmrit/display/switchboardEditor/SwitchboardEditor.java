@@ -204,7 +204,7 @@ public class SwitchboardEditor extends Editor {
 
         setJMenuBar(_menuBar);
         addHelpMenu("package.jmri.jmrit.display.SwitchboardEditor", true);
-        // set GUI dependant margin if not Nimbus or CDE/Motif
+        // set GUI dependant margin if not Nimbus, CDE/Motif (or undefined)
         if (UIManager.getLookAndFeel().getName().equals("Metal")) {
             verticalMargin = 47;
         } else if (UIManager.getLookAndFeel().getName().equals("Mac OS X")) {
@@ -320,7 +320,11 @@ public class SwitchboardEditor extends Editor {
         hideUnconnected.setSelected(_hideUnconnected);
         log.debug("hideUnconnectedBox set to {}", hideUnconnected.isSelected());
         hideUnconnected.addActionListener((ActionEvent event) -> {
-            doHideUnconnected(hideUnconnected.isSelected());
+            setHideUnconnected(hideUnconnected.isSelected());
+            hideUnconnectedBox.setSelected(_hideUnconnected); // also (un)check the box on the menu
+            help2.setVisible(!_hideUnconnected && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
+            updatePressed();
+            setDirty();
         });
         checkboxPane.add(hideUnconnected);
         add(checkboxPane);
@@ -429,7 +433,7 @@ public class SwitchboardEditor extends Editor {
         Dimension frSize = super.getTargetFrame().getSize(); // 5 px for border, var px for footer, autoRows(int)
         // some GUIs include (wide) menu bar inside frame
         switchboardLayeredPane.setSize(new Dimension((int) frSize.getWidth() - 6, (int) frSize.getHeight() - verticalMargin));
-        //switchboardLayeredPane.repaint();
+        switchboardLayeredPane.repaint();
         synchronized (this) {
             if (autoRowsBox.isSelected()) { // check if autoRows is active
                 int oldRows = rows;
@@ -480,9 +484,9 @@ public class SwitchboardEditor extends Editor {
         }
         // if range is confirmed, go ahead with switchboard update
         for (int i = switchesOnBoard.size() - 1; i >= 0; i--) {
-//            if (i > switchboardLayeredPane.getComponentCount()) {
-//                break;
-//            }
+            if (i >= switchboardLayeredPane.getComponentCount()) {
+                continue;
+            }
             // remove listeners before removing switches from JLayeredPane
             ((BeanSwitch) switchboardLayeredPane.getComponent(i)).cleanup();
             // deleting items starting from 0 will result in skipping the even numbered items
@@ -622,22 +626,6 @@ public class SwitchboardEditor extends Editor {
                 }
             }
             // was already checked in first counting loop in init()
-        }
-    }
-
-    // update switchboard layout and setting
-    private void doHideUnconnected(boolean hide) {
-        setHideUnconnected(hide);
-        if (hideUnconnected.isSelected() != hide) {
-            hideUnconnected.setSelected(hide);
-        }
-        if (hideUnconnectedBox.isSelected() != hide) {
-            hideUnconnectedBox.setSelected(hide); // also (un)check the box on the menu
-        }
-        updatePressed();
-        setDirty();
-        synchronized (this) {
-            help2.setVisible(!_hideUnconnected && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
         }
     }
 
@@ -843,7 +831,11 @@ public class SwitchboardEditor extends Editor {
         _optionMenu.add(hideUnconnectedBox);
         hideUnconnectedBox.setSelected(_hideUnconnected);
         hideUnconnectedBox.addActionListener((ActionEvent event) -> {
-            doHideUnconnected(hideUnconnectedBox.isSelected());
+            setHideUnconnected(hideUnconnectedBox.isSelected());
+            hideUnconnected.setSelected(_hideUnconnected); // also (un)check the box on the editor
+            help2.setVisible(!_hideUnconnected && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
+            updatePressed();
+            setDirty();
         });
 
         // Show/Hide Scroll Bars
@@ -1081,7 +1073,7 @@ public class SwitchboardEditor extends Editor {
 
     @Override
     public void setAllEditable(boolean edit) {
-        log.debug("_editable set to {}", edit);
+        log.debug("_editable set to {} in super", edit);
         if (edit) {
             if (_editorMenu != null) {
                 _menuBar.remove(_editorMenu);
@@ -1411,7 +1403,6 @@ public class SwitchboardEditor extends Editor {
             case (BUTTON):
             default: // 0 = basic labelled button
                 shapeAsString = "button";
-                break;
         }
         return shapeAsString;
     }

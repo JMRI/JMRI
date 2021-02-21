@@ -185,6 +185,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
         // initially selected connection should be Internal but is not 100% predictable (after type is changed?)
         e.setSwitchType("T");
         e.setSwitchManu("I"); // so set explicitly
+        Assertions.assertTrue(e.getManager() instanceof TurnoutManager, "manager is a TurnoutManager");
         ((TurnoutManager) e.getManager()).provideTurnout("IT24"); // active manager should be a TurnoutManager, connect to item 1
         e.setHideUnconnected(true);
         e.updatePressed(); // setHideUnconnected will not invoke updatePressed
