@@ -1897,11 +1897,11 @@ public class TrainTest extends OperationsTestCase {
     }
 
     /**
-     * tests cars with custom loads. A train with two locations, a train to staging,
-     * and a train out of staging.
+     * tests cars with custom loads. A train with two locations, the second has
+     * schedules.
      */
     @Test
-    public void testScheduleLoads() {
+    public void testScheduleLoadsA() {
 
         ScheduleManager smanager = InstanceManager.getDefault(ScheduleManager.class);
 
@@ -1929,7 +1929,6 @@ public class TrainTest extends OperationsTestCase {
         // Create locations used
         Location newWestford = lmanager.newLocation("New Westford");
         Location newChelmsford = lmanager.newLocation("New Chelmsford");
-        Location newBedford = lmanager.newLocation("New Bedford");
 
         Track westfordYard1;
         westfordYard1 = newWestford.addTrack("Westford Yard 1", Track.YARD);
@@ -1990,26 +1989,16 @@ public class TrainTest extends OperationsTestCase {
         chelmsfordFreight4.setSchedule(sch2);
         chelmsfordFreight4.setScheduleMode(Track.SEQUENTIAL);
 
-        Track bedfordYard1;
-        bedfordYard1 = newBedford.addTrack("Bedford Yard 1", Track.STAGING);
-        bedfordYard1.setTrainDirections(Track.WEST + Track.EAST);
-        bedfordYard1.setLength(900);
-        bedfordYard1.setRemoveCustomLoadsEnabled(true);
-
         // Create route with 2 location
         Route rte1;
         rte1 = rmanager.newRoute("Two Location Route");
         RouteLocation rl1 = rte1.addLocation(newWestford);
         rl1.setTrainDirection(RouteLocation.EAST);
         rl1.setMaxCarMoves(12);
-        rl1.setTrainIconX(25); // set the train icon coordinates
-        rl1.setTrainIconY(75);
 
         RouteLocation rl2 = rte1.addLocation(newChelmsford);
         rl2.setTrainDirection(RouteLocation.EAST);
         rl2.setMaxCarMoves(12);
-        rl2.setTrainIconX(75); // set the train icon coordinates
-        rl2.setTrainIconY(75);
 
         // Create train
         Train train1;
@@ -2105,29 +2094,344 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("c13 track", "Chelmsford Freight 2", c13.getTrackName());
         Assert.assertEquals("c13 load", "Tin", c13.getLoadName());
 
-        // create a route to staging to test remove schedule load
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    /**
+     * tests cars with custom loads. train to staging, staging removes custom loads.
+     */
+    @Test
+    public void testScheduleLoadsB() {
+
+        // Create locations used
+        Location newChelmsford = lmanager.newLocation("New Chelmsford");
+        Location newBedford = lmanager.newLocation("New Bedford");
+
+        Track chelmsfordFreight1;
+        chelmsfordFreight1 = newChelmsford.addTrack("Chelmsford Freight 1", Track.SPUR);
+        chelmsfordFreight1.setLength(900);
+
+        Track chelmsfordFreight2;
+        chelmsfordFreight2 = newChelmsford.addTrack("Chelmsford Freight 2", Track.SPUR);
+        chelmsfordFreight2.setLength(900);
+
+        Track chelmsfordYard3;
+        chelmsfordYard3 = newChelmsford.addTrack("Chelmsford Yard 3", Track.YARD);
+        chelmsfordYard3.setLength(900);
+
+        Track chelmsfordFreight4;
+        chelmsfordFreight4 = newChelmsford.addTrack("Chelmsford Freight 4", Track.SPUR);
+        chelmsfordFreight4.setLength(900);
+
+        Track bedfordYard1;
+        bedfordYard1 = newBedford.addTrack("Bedford Yard 1", Track.STAGING);
+        bedfordYard1.setLength(900);
+        bedfordYard1.setRemoveCustomLoadsEnabled(true);
+
+        // Set up 13 cars
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("BM", "S1", "Gon", "90", chelmsfordFreight1, 13);
+        c1.setLoadName("Tin");
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "80", chelmsfordFreight2, 12);
+        c2.setLoadName("L");
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("XP", "S3", "Flat Car", "70", chelmsfordYard3, 0);
+        c3.setLoadName("L");
+        Car c4 = JUnitOperationsUtil.createAndPlaceCar("PU", "S4", "Boxcar", "60", chelmsfordYard3, 10);
+        Car c5 = JUnitOperationsUtil.createAndPlaceCar("UP", "S5", "Gon", "50", chelmsfordFreight2, 9);
+        c5.setLoadName("Tin");
+        Car c6 = JUnitOperationsUtil.createAndPlaceCar("CP", "S6", "Boxcar", "40", chelmsfordYard3, 8);
+        c6.setLoadName("L");
+        Car c7 = JUnitOperationsUtil.createAndPlaceCar("UP", "S7", "Boxcar", "50", chelmsfordFreight4, 7);
+        c7.setLoadName("L");
+
+        Car c9 = JUnitOperationsUtil.createAndPlaceCar("XP", "S9", "Flat Car", "90", chelmsfordFreight1, 5);
+        c9.setLoadName("Scrap");
+        Car c10 = JUnitOperationsUtil.createAndPlaceCar("CP", "S10", "Coil Car", "40", chelmsfordFreight4, 2);
+        c10.setLoadName("E");
+        Car c11 = JUnitOperationsUtil.createAndPlaceCar("CP", "S11", "Coil Car", "40", chelmsfordFreight4, 3);
+        c11.setLoadName("E");
+
+        Car c13 = JUnitOperationsUtil.createAndPlaceCar("UP", "S13", "Gon", "50", chelmsfordFreight2, 1);
+        c13.setLoadName("Tin");
+
+        // place two cars in a kernel
+        Kernel k1 = cmanager.newKernel("TwoCars");
+        c5.setKernel(k1);
+        c13.setKernel(k1);
+
+        // create a route to staging to test remove custom loads
         // Create route with 2 location
         Route rte2;
         rte2 = rmanager.newRoute("Chelmsford to Staging");
         RouteLocation r2rl1 = rte2.addLocation(newChelmsford);
         r2rl1.setTrainDirection(RouteLocation.EAST);
         r2rl1.setMaxCarMoves(12);
-        r2rl1.setTrainIconX(125); // set the train icon coordinates
-        r2rl1.setTrainIconY(75);
         RouteLocation r2rl3 = rte2.addLocation(newBedford);
         r2rl3.setTrainDirection(RouteLocation.EAST);
         r2rl3.setMaxCarMoves(12);
-        r2rl3.setTrainIconX(175); // set the train icon coordinates
-        r2rl3.setTrainIconY(75);
 
+        // Create train
+        Train train1 = tmanager.newTrain("Chelmsford to Bedford");
         train1.setRoute(rte2);
-        train1.setName("Chelmsford to Bedford");
         Assert.assertTrue(train1.build());
 
         // move and terminate train
         train1.move();
         train1.move();
         train1.move();
+
+        Assert.assertEquals("c1 track to staging", "Bedford Yard 1", c1.getTrackName());
+        Assert.assertEquals("c1 load to staging", "E", c1.getLoadName());
+        Assert.assertEquals("c2 track to staging", "Bedford Yard 1", c2.getTrackName());
+        Assert.assertEquals("c2 load to staging", "L", c2.getLoadName());
+        Assert.assertEquals("c3 track to staging", "Bedford Yard 1", c3.getTrackName());
+        Assert.assertEquals("c3 load to staging", "L", c3.getLoadName());
+        Assert.assertEquals("c4 track to staging", "Bedford Yard 1", c4.getTrackName());
+        Assert.assertEquals("c4 load to staging", "E", c4.getLoadName());
+        Assert.assertEquals("c5 track to staging", "Bedford Yard 1", c5.getTrackName());
+        Assert.assertEquals("c5 load to staging", "E", c5.getLoadName());
+        Assert.assertEquals("c6 track to staging", "Bedford Yard 1", c6.getTrackName());
+        Assert.assertEquals("c6 load to staging", "L", c6.getLoadName());
+        Assert.assertEquals("c7 track to staging", "Bedford Yard 1", c7.getTrackName());
+        Assert.assertEquals("c7 load to staging", "L", c7.getLoadName());
+
+        Assert.assertEquals("c9 track to staging", "Bedford Yard 1", c9.getTrackName());
+        Assert.assertEquals("c9 load to staging", "E", c9.getLoadName());
+        Assert.assertEquals("c10 track to staging", "Bedford Yard 1", c10.getTrackName());
+        Assert.assertEquals("c10 load to staging", "E", c10.getLoadName());
+        Assert.assertEquals("c11 track to staging", "Bedford Yard 1", c11.getTrackName());
+        Assert.assertEquals("c11 load to staging", "E", c11.getLoadName());
+
+        Assert.assertEquals("c13 track to staging", "Bedford Yard 1", c13.getTrackName());
+        Assert.assertEquals("c13 load to staging", "E", c13.getLoadName());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    /**
+     * tests cars with custom loads. Train out of staging should generate custom loads.
+     */
+    @Test
+    public void testScheduleLoadsC() {
+
+        ScheduleManager smanager = InstanceManager.getDefault(ScheduleManager.class);
+
+        // create schedules
+        Schedule sch1 = smanager.newSchedule("Schedule 1");
+        ScheduleItem sch1Item1 = sch1.addItem("Boxcar");
+        // request a UP Boxcar
+        sch1Item1.setRoadName("UP");
+        sch1Item1.setReceiveLoadName("Metal 1");
+        
+        ScheduleItem sch1Item2 = sch1.addItem("Flat Car");
+        // request an empty car and load it with Scrap
+        sch1Item2.setReceiveLoadName("Metal 2");
+        sch1Item2.setShipLoadName("Scrap");
+        
+        ScheduleItem sch1Item3 = sch1.addItem("Gon");
+        // request a loaded car and load it with Tin
+        sch1Item3.setReceiveLoadName("Metal 3");
+        sch1Item3.setShipLoadName("Tin");
+        
+        InstanceManager.getDefault(CarLoads.class).addName("Boxcar", "Metal 1");
+        InstanceManager.getDefault(CarLoads.class).addName("Flat Car", "Metal 2");
+        InstanceManager.getDefault(CarLoads.class).addName("Gon", "Metal 3");
+
+        Schedule sch2 = smanager.newSchedule("Schedule 2");
+        ScheduleItem sch2Item1 = sch2.addItem("Coil Car");
+        sch2Item1.setCount(2);
+        sch2.addItem("Boxcar");
+
+        // Create locations used
+        Location newWestford = lmanager.newLocation("New Westford");
+        Location newChelmsford = lmanager.newLocation("New Chelmsford");
+        Location newBedford = lmanager.newLocation("New Bedford");
+
+        Track westfordYard1;
+        westfordYard1 = newWestford.addTrack("Westford Yard 1", Track.YARD);
+        westfordYard1.setTrainDirections(Track.WEST + Track.EAST);
+        westfordYard1.setLength(900);
+
+        Track westfordYard2;
+        westfordYard2 = newWestford.addTrack("Westford Yard 2", Track.YARD);
+        westfordYard2.setTrainDirections(Track.WEST + Track.EAST);
+        westfordYard2.setLength(500);
+        westfordYard2.deleteTypeName("Coil Car");
+
+        Track westfordExpress3;
+        westfordExpress3 = newWestford.addTrack("Westford Express 3", Track.SPUR);
+        westfordExpress3.setTrainDirections(Track.WEST + Track.EAST);
+        westfordExpress3.setLength(300);
+        westfordExpress3.deleteTypeName("Gon");
+        westfordExpress3.deleteTypeName("Coil Car");
+
+        Track westfordExpress4;
+        westfordExpress4 = newWestford.addTrack("Westford Express 4", Track.SPUR);
+        westfordExpress4.setTrainDirections(Track.WEST + Track.EAST);
+        westfordExpress4.setLength(300);
+        westfordExpress4.deleteTypeName("Gon");
+        westfordExpress4.deleteTypeName("Coil Car");
+
+        Track chelmsfordFreight1;
+        chelmsfordFreight1 = newChelmsford.addTrack("Chelmsford Freight 1", Track.SPUR);
+        chelmsfordFreight1.setTrainDirections(Track.WEST + Track.EAST);
+        chelmsfordFreight1.setLength(900);
+        chelmsfordFreight1.deleteTypeName("Coil Car");
+        chelmsfordFreight1.setSchedule(sch1);
+        chelmsfordFreight1.setScheduleMode(Track.SEQUENTIAL);
+        // start the schedule with 2nd item Flat Car
+        chelmsfordFreight1.setScheduleItemId(sch1.getItemsBySequenceList().get(1).getId());
+
+        Track chelmsfordFreight2;
+        chelmsfordFreight2 = newChelmsford.addTrack("Chelmsford Freight 2", Track.SPUR);
+        chelmsfordFreight2.setTrainDirections(Track.WEST + Track.EAST);
+        chelmsfordFreight2.setLength(900);
+        chelmsfordFreight2.deleteTypeName("Coil Car");
+        chelmsfordFreight2.setSchedule(sch1);
+        chelmsfordFreight2.setScheduleMode(Track.SEQUENTIAL);
+        // start the schedule with 3rd item Gon
+        chelmsfordFreight2.setScheduleItemId(sch1.getItemsBySequenceList().get(2).getId());
+
+        Track chelmsfordYard3;
+        chelmsfordYard3 = newChelmsford.addTrack("Chelmsford Yard 3", Track.YARD);
+        chelmsfordYard3.setTrainDirections(Track.WEST + Track.EAST);
+        chelmsfordYard3.setLength(900);
+        chelmsfordYard3.deleteTypeName("Gon");
+        chelmsfordYard3.deleteTypeName("Coil Car");
+
+        Track chelmsfordFreight4;
+        chelmsfordFreight4 = newChelmsford.addTrack("Chelmsford Freight 4", Track.SPUR);
+        chelmsfordFreight4.setTrainDirections(Track.WEST + Track.EAST);
+        chelmsfordFreight4.setLength(900);
+        chelmsfordFreight4.setSchedule(sch2);
+        chelmsfordFreight4.setScheduleMode(Track.SEQUENTIAL);
+
+        Track bedfordYard1;
+        bedfordYard1 = newBedford.addTrack("Bedford Yard 1", Track.STAGING);
+        bedfordYard1.setTrainDirections(Track.WEST + Track.EAST);
+        bedfordYard1.setLength(900);
+        bedfordYard1.setRemoveCustomLoadsEnabled(true);
+
+        // create a route from staging to test generate schedule load
+        // Create route with 3 locations
+        Route rte3;
+        rte3 = rmanager.newRoute("Staging to Westford");
+        RouteLocation r3rl1 = rte3.addLocation(newBedford);
+        r3rl1.setTrainDirection(RouteLocation.EAST);
+        r3rl1.setMaxCarMoves(11); // there are 11 cars departing staging
+        RouteLocation r3rl2 = rte3.addLocation(newChelmsford);
+        r3rl2.setTrainDirection(RouteLocation.EAST);
+        r3rl2.setMaxCarMoves(12);
+        RouteLocation r3rl3 = rte3.addLocation(newWestford);
+        r3rl3.setTrainDirection(RouteLocation.EAST);
+        r3rl3.setMaxCarMoves(12);
+
+        // Create train
+        Train train1;
+        train1 = tmanager.newTrain("BCW");
+        train1.setRoute(rte3);
+
+        // Set up 13 cars
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("BM", "S1", "Gon", "90", bedfordYard1, 13);
+        c1.setLoadName("E");
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "80", bedfordYard1, 12);
+        c2.setLoadName("L");
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("XP", "S3", "Flat Car", "70", bedfordYard1, 0);
+        c3.setLoadName("L");
+        Car c4 = JUnitOperationsUtil.createAndPlaceCar("PU", "S4", "Boxcar", "60", bedfordYard1, 10);
+        Car c5 = JUnitOperationsUtil.createAndPlaceCar("UP", "S5", "Gon", "50", bedfordYard1, 9);
+        c5.setLoadName("E");
+        Car c6 = JUnitOperationsUtil.createAndPlaceCar("CP", "S6", "Boxcar", "40", bedfordYard1, 8);
+        c6.setLoadName("L");
+        Car c7 = JUnitOperationsUtil.createAndPlaceCar("UP", "S7", "Boxcar", "50", bedfordYard1, 7);
+        c7.setLoadName("L");
+        Car c8 = JUnitOperationsUtil.createAndPlaceCar("XP", "S8", "Gon", "60", westfordYard2, 6);
+        Car c9 = JUnitOperationsUtil.createAndPlaceCar("XP", "S9", "Flat Car", "90", bedfordYard1, 5);
+        Car c10 = JUnitOperationsUtil.createAndPlaceCar("CP", "S10", "Coil Car", "40", bedfordYard1, 2);
+        c10.setLoadName("E");
+        Car c11 = JUnitOperationsUtil.createAndPlaceCar("CP", "S11", "Coil Car", "40", bedfordYard1, 3);
+        c11.setLoadName("E");
+        Car c12 = JUnitOperationsUtil.createAndPlaceCar("CP", "S12", "Coil Car", "40", westfordYard1, 4);
+        Car c13 = JUnitOperationsUtil.createAndPlaceCar("UP", "S13", "Gon", "50", bedfordYard1, 1);
+        c13.setLoadName("E");
+
+        // place two cars in a kernel
+        Kernel k1 = cmanager.newKernel("TwoCars");
+        c5.setKernel(k1);
+        c13.setKernel(k1);
+
+//        Assert.assertTrue(train1.build());
+
+//        // Schedule sch1 should cause c2 to be delivered to Chelmsford Freight 2
+//        Assert.assertEquals("c2 destination", "Chelmsford Freight 2", c2.getDestinationTrackName());
+//        Assert.assertEquals("c2 next load", "", c2.getNextLoadName());
+//        // Schedule sch1 and sch2 should reject c3, to be delivered to Chelmsford Yard 3
+//        Assert.assertEquals("c3 destination", "Chelmsford Yard 3", c3.getDestinationTrackName());
+//        Assert.assertEquals("c3 next load", "", c3.getNextLoadName());
+//        Assert.assertEquals("c4 destination", "Chelmsford Yard 3", c4.getDestinationTrackName());
+//        // Schedule sch1 should cause c5 & c13 to be delivered to Chelmsford Freight 2
+//        Assert.assertEquals("c5 destination", "Chelmsford Freight 2", c5.getDestinationTrackName());
+//        Assert.assertEquals("c5 next load", "Tin", c5.getNextLoadName());
+//        Assert.assertEquals("c6 destination", "Chelmsford Yard 3", c6.getDestinationTrackName());
+//        Assert.assertEquals("c7 destination", "Chelmsford Freight 4", c7.getDestinationTrackName());
+//        Assert.assertEquals("c9 destination", "Chelmsford Freight 1", c9.getDestinationTrackName());
+//        Assert.assertEquals("c9 next load", "Scrap", c9.getNextLoadName());
+//        Assert.assertEquals("c10 destination", "Chelmsford Freight 4", c10.getDestinationTrackName());
+//        Assert.assertEquals("c11 destination", "Chelmsford Freight 4", c11.getDestinationTrackName());
+//        // C13 is part of kernel
+//        Assert.assertEquals("c13 destination", "Chelmsford Freight 2", c13.getDestinationTrackName());
+//        Assert.assertEquals("c13 next load", "Tin", c13.getNextLoadName());
+//
+//        // move and terminate train
+//        train1.move();
+//        train1.move();
+//        train1.move();
+//
+//        Assert.assertEquals("c1 track", "Chelmsford Freight 1", c1.getTrackName());
+//        Assert.assertEquals("c1 load", "Tin", c1.getLoadName());
+//        Assert.assertEquals("c2 track", "Chelmsford Freight 2", c2.getTrackName());
+//        Assert.assertEquals("c2 load", "L", c2.getLoadName());
+//        Assert.assertEquals("c3 track", "Chelmsford Yard 3", c3.getTrackName());
+//        Assert.assertEquals("c3 load", "L", c3.getLoadName());
+//        Assert.assertEquals("c4 track", "Chelmsford Yard 3", c4.getTrackName());
+//        Assert.assertEquals("c4 load", "E", c4.getLoadName());
+//        Assert.assertEquals("c5 track", "Chelmsford Freight 2", c5.getTrackName());
+//        Assert.assertEquals("c5 load", "Tin", c5.getLoadName());
+//        Assert.assertEquals("c6 track", "Chelmsford Yard 3", c6.getTrackName());
+//        Assert.assertEquals("c6 load", "L", c6.getLoadName());
+//        Assert.assertEquals("c7 track", "Chelmsford Freight 4", c7.getTrackName());
+//        Assert.assertEquals("c7 load", "L", c7.getLoadName());
+//        Assert.assertEquals("c8 track", "Westford Yard 2", c8.getTrackName());
+//        Assert.assertEquals("c8 load", "E", c8.getLoadName());
+//        Assert.assertEquals("c9 track", "Chelmsford Freight 1", c9.getTrackName());
+//        Assert.assertEquals("c9 load", "Scrap", c9.getLoadName());
+//        Assert.assertEquals("c10 track", "Chelmsford Freight 4", c10.getTrackName());
+//        Assert.assertEquals("c10 load", "E", c10.getLoadName());
+//        Assert.assertEquals("c11 track", "Chelmsford Freight 4", c11.getTrackName());
+//        Assert.assertEquals("c11 load", "E", c11.getLoadName());
+//        Assert.assertEquals("c12 track", "Westford Yard 1", c12.getTrackName());
+//        Assert.assertEquals("c12 load", "E", c12.getLoadName());
+//        Assert.assertEquals("c13 track", "Chelmsford Freight 2", c13.getTrackName());
+//        Assert.assertEquals("c13 load", "Tin", c13.getLoadName());
+//
+//        // create a route to staging to test remove schedule load
+//        // Create route with 2 location
+//        Route rte2;
+//        rte2 = rmanager.newRoute("Chelmsford to Staging");
+//        RouteLocation r2rl1 = rte2.addLocation(newChelmsford);
+//        r2rl1.setTrainDirection(RouteLocation.EAST);
+//        r2rl1.setMaxCarMoves(12);
+//        RouteLocation r2rl3 = rte2.addLocation(newBedford);
+//        r2rl3.setTrainDirection(RouteLocation.EAST);
+//        r2rl3.setMaxCarMoves(12);
+//
+//        train1.setRoute(rte2);
+//        train1.setName("Chelmsford to Bedford");
+//        Assert.assertTrue(train1.build());
+//
+//        // move and terminate train
+//        train1.move();
+//        train1.move();
+//        train1.move();
 
         Assert.assertEquals("c1 track to staging", "Bedford Yard 1", c1.getTrackName());
         Assert.assertEquals("c1 load to staging", "E", c1.getLoadName());
@@ -2156,40 +2460,13 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("c13 track to staging", "Bedford Yard 1", c13.getTrackName());
         Assert.assertEquals("c13 load to staging", "E", c13.getLoadName());
 
-        // create a route from staging to test generate schedule load
-        // Create route with 3 locations
-        Route rte3;
-        rte3 = rmanager.newRoute("Staging to Chelmsford");
-        RouteLocation r3rl1 = rte3.addLocation(newBedford);
-        r3rl1.setTrainDirection(RouteLocation.EAST);
-        r3rl1.setMaxCarMoves(11); // there are 11 cars departing staging
-        r3rl1.setTrainIconX(25); // set the train icon coordinates
-        r3rl1.setTrainIconY(100);
-        RouteLocation r3rl2 = rte3.addLocation(newChelmsford);
-        r3rl2.setTrainDirection(RouteLocation.EAST);
-        r3rl2.setMaxCarMoves(12);
-        RouteLocation r3rl3 = rte3.addLocation(newWestford);
-        r3rl3.setTrainDirection(RouteLocation.EAST);
-        r3rl3.setMaxCarMoves(12);
-        r3rl3.setTrainIconX(75); // set the train icon coordinates
-        r3rl3.setTrainIconY(100);
-
-        bedfordYard1.setRemoveCustomLoadsEnabled(false);
+//        bedfordYard1.setRemoveCustomLoadsEnabled(false);
         bedfordYard1.setAddCustomLoadsAnySpurEnabled(true); // generate schedule loads
 
-        sch1Item1.setReceiveLoadName("Metal 1"); // request these loads from staging
-        sch1Item2.setReceiveLoadName("Metal 2");
-        sch1Item3.setReceiveLoadName("Metal 3");
-
-        InstanceManager.getDefault(CarLoads.class).addName("Gon", "Metal 3"); // Allows c13 which is part of a kernel to
-                                                                              // get a new load
-
-        train1.setRoute(rte3);
-        train1.setName("BCW");
         Assert.assertTrue(train1.build());
-
         Assert.assertEquals("Train Bedford Chelmsford Westford build status", true, train1.isBuilt());
-        Assert.assertEquals("c1 load from staging", "E", c1.getLoadName());
+        
+        Assert.assertEquals("c1 load from staging", "Metal 3", c1.getLoadName());
         Assert.assertEquals("c2 load from staging", "L", c2.getLoadName());
         Assert.assertEquals("c3 load from staging", "L", c3.getLoadName());
         Assert.assertEquals("c4 load from staging", "E", c4.getLoadName());
@@ -2209,8 +2486,8 @@ public class TrainTest extends OperationsTestCase {
         train1.move();
         train1.move();
 
-        Assert.assertEquals("c1 track from staging terminated", "Westford Yard 1", c1.getTrackName());
-        Assert.assertEquals("c1 load from staging terminated", "E", c1.getLoadName());
+        Assert.assertEquals("c1 track from staging terminated", "Chelmsford Freight 1", c1.getTrackName());
+        Assert.assertEquals("c1 load from staging terminated", "Tin", c1.getLoadName());
         Assert.assertEquals("c2 track from staging terminated", "Westford Yard 2", c2.getTrackName());
         Assert.assertEquals("c2 load from staging terminated", "L", c2.getLoadName());
         Assert.assertEquals("c3 track from staging terminated", "Westford Yard 1", c3.getTrackName());
@@ -2225,7 +2502,7 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("c7 load from staging terminated", "L", c7.getLoadName());
         Assert.assertEquals("c8 track from staging terminated", "Westford Yard 2", c8.getTrackName());
         Assert.assertEquals("c8 load from staging terminated", "E", c8.getLoadName());
-        Assert.assertEquals("c9 track from staging terminated", "Chelmsford Freight 2", c9.getTrackName());
+        Assert.assertEquals("c9 track from staging terminated", "Chelmsford Freight 1", c9.getTrackName());
         Assert.assertEquals("c9 load from staging terminated", "Scrap", c9.getLoadName());
         Assert.assertEquals("c10 track from staging terminated", "Chelmsford Freight 4", c10.getTrackName());
         Assert.assertEquals("c10 load from staging terminated", "L", c10.getLoadName());
@@ -2234,7 +2511,7 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("c12 track from staging terminated", "Westford Yard 1", c12.getTrackName());
         Assert.assertEquals("c12 load from staging terminated", "E", c12.getLoadName());
         Assert.assertEquals("c13 track from staging terminated", "Chelmsford Freight 2", c13.getTrackName());
-        Assert.assertEquals("c13 load from staging terminated", "Tin", c13.getLoadName());
+        Assert.assertEquals("c13 load from staging terminated", "E", c13.getLoadName());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
