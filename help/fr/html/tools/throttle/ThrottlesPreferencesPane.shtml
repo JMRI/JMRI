@@ -1,25 +1,34 @@
+<
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<!-- UpDated by Blorec Herv&#233;  2013-10-04-->
-<html lang="fr">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-	<title>Throttles Preferences</title>
-	<meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro" >
-	<meta name="Description" content="Throttle documentation for JMRI project" >
-	<meta name="Author" content="Lionel Jeanson" >
-	<meta name="Language" content="EN" >
-	
-	<!-- Style -->
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" >
-	<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen" >
-	<link rel="stylesheet" type="text/css" href="/css/print.css" media="print" >
-	<link rel="icon" href="/images/jmri.ico" type="image/png" >
-	<link rel="home" title="Home" href="/" >
-	<!-- /Style -->
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org" />
+
+  <title>Throttles Preferences</title>
+  <meta name="keywords" content=
+  "JMRI decoderpro dcc nmra throttle throttlepro" />
+  <meta name="Description" content=
+  "Throttle documentation for JMRI project" />
+  <meta name="Author" content="Lionel Jeanson" />
+  <meta name="Language" content="EN" />
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" >
+	<link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen" />
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print" />
+  <link rel="icon" href="/images/jmri.ico" type="image/png" />
+  <link rel="home" title="Home" href="/" />
+  <!-- /Style -->
 </head>
 
+
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
@@ -44,7 +53,7 @@ appliqu&#233;e ou sauv&#233;s.
 	</ul>
 
 
-<h2>Utilisez le R&#233;gulateur &#233;tendu </h2>
+<h2>Utilisez le R&#233;gulateur principal </h2>
 
 Ce r&#233;glage activera/d&#233;sactivera toutes les fonctionnalit&#233;s &#233;tendues des r&#233;gulateurs.
 
@@ -106,9 +115,39 @@ les boutons non d&#233;finis (pas de texte) dans PanelPro seront automatiquement
 Cette option activera une <a  href="ThrottleToolBar.shtml">Barre d'Outils qui
 appara&#238;tra dans toutes les Fen&#234;tres R&#233;gulateurs </a>.
 
-<!--#include virtual="/Footer" -->
+<h2>Subtiliser/Partager les Options</h2>
+      <img alt= "JMRI Throttle Preferences Silent Steal Share Options"
+           src="images/throttles-preferences-steal-share-600x395.png" width="600" height="395"/>
+      
+      <p></p>Ces options d&#233;pendent du syst&#232;me et ne sont pas disponibles pour tous les types de mat&#233;riel.
+      
+      <p>Certains syst&#232;mes effectuent une subtilisation ou un partage automatique, donc aucune option n'est requise.</p>
+      
+      <p>Les options Subtilisation Silencieuse et Partage Silencieux sont ind&#233;pendantes du param&#232;tre Utiliser le R&#233;gulateur Principal. </p>
+      
+      <p>Si Subtilisation Silencieuse et Partage Silencieux  sont tous deux disponibles, un seul peut &#234;tre s&#233;lectionn&#233; &#224; la fois.</p>
+      
+      <p>Les scripts d'automatisation et le mat&#233;riel r&#233;el peuvent remplacer ces options &#224; tout moment. 
+      Bien que ces options servent de guide, elles sont pleinement respect&#233;es dans la fen#234;tre principale du R&#233;gulateur JMRI.
+      
+      <p>Les connexions WiThrottle ne peuvent prendre en charge que les questions sur la Subtilisation, 
+      donc les questions de Subtilisation ou de Partage sont trait&#233;es comme des questions de Subtilisation uniquement.
+      
+      <p>Voir la documentation de chaque mat&#233;riel pour plus de d&#233;tails sur la fa&#231;on dont ces options affectent votre syst&#232;me, par exemple. <a href="../../hardware/can/cbus/index.shtml#dcc">CBUS&reg; R&#233;gulateur</a></p>
+
+        <h2></h2>
+        <p>CBUS&reg; est une marque d&#233;pos&#233;e du Dr Michael Bolton</p>
+        <p></p>
+
+
+<p>Traduction 2021-02-21</p>
+
+<!--#include virtual="/Footer.shtml" -->
 
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->
 </body>
 </html>
+
+   
+
