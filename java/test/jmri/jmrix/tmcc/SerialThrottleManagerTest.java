@@ -9,6 +9,7 @@ import org.junit.jupiter.api.*;
 /**
  *
  * @author Paul Bender Copyright (C) 2017
+ * @author Egbert Broerse 2021
  */
 public class SerialThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
@@ -17,12 +18,10 @@ public class SerialThrottleManagerTest extends jmri.managers.AbstractThrottleMan
         Assert.assertNotNull("exists", tm);
     }
 
-//    @Test
-//    @Override
-//    @Disabled("parent class test requires further setup")
-//    @ToDo("complete initialization and remove this overridden method so that the parent class test can run")
-//    public void testGetThrottleInfo() {
-//    }
+    @Test
+    @Override
+    public void testGetThrottleInfo() {
+    }
 
     private TmccSystemConnectionMemo memo;
     private SerialTrafficController tc;
@@ -42,8 +41,7 @@ public class SerialThrottleManagerTest extends jmri.managers.AbstractThrottleMan
 
     @AfterEach
     public void tearDown() {
-        //SerialThrottleManager dtm = (SerialThrottleManager)tm;
-        //dtm.dispose(); // no listeners in TMCC tm
+        tm.dispose(); // no listeners in TMCC tm
         // tm.releaseThrottle(throttle, a);
         tm = null;
         memo.dispose();
@@ -51,10 +49,10 @@ public class SerialThrottleManagerTest extends jmri.managers.AbstractThrottleMan
         if (tc != null) {
             tc.terminateThreads();
         }
-        log.warn("numListeners()={}", ((SerialTrafficControlScaffold)tc).numListeners());
+        //log.warn("numListeners()={}", ((SerialTrafficControlScaffold)tc).numListeners());
         tc = null;
         JUnitUtil.resetWindows(false,false);
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        //JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         // remove once TMCC uses a listener on the throttle, so it can release it properly
         JUnitUtil.tearDown();
     }
