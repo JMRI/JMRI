@@ -388,7 +388,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      * result in a JmriException.
      */
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         if (isDisposing) return;
         log.debug("throttleDispose - disposing of throttle (and setting slot = null)");
         isDisposing = true;

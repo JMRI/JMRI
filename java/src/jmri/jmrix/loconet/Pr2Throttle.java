@@ -251,7 +251,7 @@ public class Pr2Throttle extends AbstractThrottle {
      * {@inheritDoc}
      */
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         finishRecord();
     }
 

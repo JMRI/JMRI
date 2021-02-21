@@ -225,7 +225,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
     }
 
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         finishRecord();
     }
 

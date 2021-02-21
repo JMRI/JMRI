@@ -47,7 +47,11 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
         tc = memo.getTrafficController();
         addTc(tc);
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void dispose() {
         tc.removeCanListener(this);
         stopThrottleRequestTimer();

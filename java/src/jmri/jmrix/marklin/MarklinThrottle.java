@@ -189,7 +189,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
     }
 
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         active = false;
          finishRecord();
     }

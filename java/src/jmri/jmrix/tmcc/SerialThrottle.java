@@ -145,7 +145,7 @@ public class SerialThrottle extends AbstractThrottle {
      * {@inheritDoc}
      */
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         finishRecord();
     }
 

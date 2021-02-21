@@ -54,7 +54,8 @@ public class SerialThrottleManagerTest extends jmri.managers.AbstractThrottleMan
         log.warn("numListeners()={}", ((SerialTrafficControlScaffold)tc).numListeners());
         tc = null;
         JUnitUtil.resetWindows(false,false);
-        //JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        // remove once TMCC uses a listener on the throttle, so it can release it properly
         JUnitUtil.tearDown();
     }
 

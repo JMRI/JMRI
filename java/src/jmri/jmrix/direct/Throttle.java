@@ -123,7 +123,7 @@ public class Throttle extends AbstractThrottle {
     }
 
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         finishRecord();
     }
 

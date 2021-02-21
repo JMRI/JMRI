@@ -108,7 +108,7 @@ public class DebugThrottle extends AbstractThrottle {
     }
 
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         log.debug("throttleDispose() called for address {}", this.address);
         finishRecord();
     }

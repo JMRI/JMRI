@@ -216,7 +216,7 @@ public class EasyDccThrottle extends AbstractThrottle {
     }
 
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         active = false;
         finishRecord();
     }

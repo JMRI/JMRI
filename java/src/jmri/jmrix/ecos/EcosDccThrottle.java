@@ -215,7 +215,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
      * {@inheritDoc} 
      */
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         String message = "release(" + this.objectNumber + ", control)";
         EcosMessage m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);

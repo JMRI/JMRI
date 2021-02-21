@@ -174,9 +174,13 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void dispose() {
         tc.removeDCCppListener(DCCppInterface.THROTTLE, this);
-        //stopThrottleRequestTimer(); no timer used in tm
+        //stopThrottleRequestTimer(); no timer used in this tm
     }
 
     private final static Logger log = LoggerFactory.getLogger(DCCppThrottleManager.class);

@@ -245,7 +245,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
     }
 
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         finishRecord();
     }
 

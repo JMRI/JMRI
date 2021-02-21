@@ -290,7 +290,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      * the last user.
      */
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         active = false;
         stopStatusTimer();
         finishRecord();

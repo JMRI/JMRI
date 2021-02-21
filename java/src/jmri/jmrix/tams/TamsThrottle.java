@@ -221,7 +221,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
     }
 
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         active = false;
         TamsMessage tm = TamsMessage.getXEvtLok();
         tc.removePollMessage(tm, this);

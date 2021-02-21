@@ -870,6 +870,13 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * {@inheritDoc}
      */
     @Override
+    public void dispose() {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public synchronized int getThrottleUsageCount(LocoAddress la) {
         if (addressThrottles.containsKey( la)) {
             return addressThrottles.get(la).getUseCount();

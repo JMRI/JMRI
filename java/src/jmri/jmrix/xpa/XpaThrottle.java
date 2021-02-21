@@ -137,7 +137,7 @@ public class XpaThrottle extends AbstractThrottle {
      * {@inheritDoc}
      */
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         finishRecord();
     }
 

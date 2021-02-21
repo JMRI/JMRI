@@ -131,7 +131,7 @@ public class OlcbThrottle extends AbstractThrottle {
      * {@inheritDoc} 
      */
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         log.debug("throttleDispose() called");
         finishRecord();
     }

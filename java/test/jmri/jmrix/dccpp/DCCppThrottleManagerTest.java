@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender
  * @author Mark Underwood (C) 2015
+ * @author Egbert Broerse 2021
  */
 public class DCCppThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 

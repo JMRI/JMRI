@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
 
-    protected DCCppTrafficController tc = null;
+    protected DCCppTrafficController tc;
 
     // status of the throttle
     protected static final int THROTTLEIDLE = 0;  // Idle Throttle
@@ -40,22 +40,20 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         super(memo);
         tc = controller;
         requestList = new LinkedBlockingQueue<RequestMessage>();
-        if (log.isDebugEnabled()) {
-            log.debug("DCCppThrottle constructor");
-        }
+        log.debug("DCCppThrottle constructor");
     }
 
     /**
      * Constructor.
      * @param memo system connection.
-     * @param address loco address.
+     * @param address loco address to set on throttle
      * @param controller system connection traffic controller.
      */
     public DCCppThrottle(DCCppSystemConnectionMemo memo, LocoAddress address, DCCppTrafficController controller) {
         super(memo);
-        this.tc = controller;
+        tc = controller;
         if (address instanceof DccLocoAddress) {
-            this.setDccAddress(((DccLocoAddress) address).getNumber());
+            this.setDccAddress(address.getNumber());
         }
         else {
             log.error("LocoAddress {} is not a DccLocoAddress",address);
@@ -341,7 +339,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     //A queue to hold outstanding messages
-    protected LinkedBlockingQueue<RequestMessage> requestList = null;
+    protected LinkedBlockingQueue<RequestMessage> requestList;
 
     //function to send message from queue.
     synchronized protected void sendQueuedMessage() {
@@ -359,10 +357,8 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
             } catch (java.lang.InterruptedException ie) {
                 return; // if there was an error, exit.
             }
-            if (msg != null) {
-                requestState = msg.getState();
-                tc.sendDCCppMessage(msg.getMsg(), this);
-            }
+            requestState = msg.getState();
+            tc.sendDCCppMessage(msg.getMsg(), this);
         } else {
             log.debug("message queue empty");
             // if the queue is empty, set the state to idle.
@@ -377,7 +373,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         RequestMessage msg = new RequestMessage(m, s);
         try {
             requestList.put(msg);
-        } catch (java.lang.InterruptedException ie) {
+        } catch (java.lang.InterruptedException ignore) {
         }
         // if the state is idle, trigger the message send
         if (requestState == THROTTLEIDLE) {

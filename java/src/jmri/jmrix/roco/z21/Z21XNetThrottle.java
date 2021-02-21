@@ -276,7 +276,7 @@ public class Z21XNetThrottle extends jmri.jmrix.roco.RocoXNetThrottle {
      * the last user.
      */
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         active = false;
         stopStatusTimer();
         finishRecord();

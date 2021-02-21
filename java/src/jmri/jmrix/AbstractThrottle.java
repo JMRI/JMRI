@@ -370,13 +370,13 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     }
 
     /**
-     * Dispose when finished with this Throttle.
-     * Abstract Throttles normally call finishRecord(); here.
+     * Dispose when finished with this Throttle. May be used in tests for cleanup.
+     * Throttles normally call {@link #finishRecord()} here.
      */
-    abstract protected void throttleDispose();
+    protected abstract void throttleDispose();
 
     /**
-     * to handle quantized speed. Note this can change! Valued returned is
+     * Handle quantized speed. Note this can change! Value returned is
      * always positive.
      *
      * @return 1 divided by the number of speed steps this DCC throttle supports
