@@ -33,7 +33,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
@@ -150,7 +150,7 @@
   <dt>C. <a href="ThrottleChapter4.shtml#CloseThrottle"
   title="Closing A Throttle Window">Fermeture d'une Fen&#234;tre R&#233;gulateur</a></dt>
 </dl>
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->
