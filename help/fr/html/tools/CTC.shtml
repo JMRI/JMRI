@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright JMRI.org 2020 -->
+
+  <title>JMRI: CTC Tools</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
+
+    <h1>JMRI: Outils CTC</h1>
+    
+    <p>
+      Cette aide est destin&#233;e &#224; la "nouvelle" mise en &#339;uvre de la CCT qui offre des capacit&#233;s allant au-del&#226; de l'<a href="./uss/index.shtml">.
+      USS CTC</a>.  
+      Voir <a href="../../package/jmri/jmrit/ctc/CTC.shtml">ici </a> pour des informations sur cette nouvelle mise en &#339;uvre de la CTC.  Elle fournit
+      un &#233;diteur d'interface graphique pour configurer les r&#232;gles CTC et un ex&#233;cutable pour mettre en &#339;uvre la logique CTC. Il construit &#233;galement un squelette
+      de  Panneau &#201;diteur de CTC avec les leviers/indicateurs d'Aiguillage, les leviers/indicateurs de Signaux, le bouton code, etc,
+      et un plan de voies minimal.
+
+      </p>
+      
+      <p class="noted">
+      L'impl&#233;mentation originale des outils USS CTC (n&#233;cessite la cr&#233;ation de scripts) est discut&#233;e <a href="./uss/index.shtml"> ici.</a>
+      </p>
+<p>Traduction 2021-02-21</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
+
+   
+
+
+
+ 
+
