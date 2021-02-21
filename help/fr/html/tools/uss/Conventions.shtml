@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+< head>
+  <titre>JMRI : USS CTC Tools Recommendations</titre>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html ; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
+
+<corps>
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+      <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
+
+      <h2>JMRI : Recommandations sur les outils de l'USS CTC</h2>
+
+      <p>Cette page expose certaines conventions qui pourraient &#234;tre 
+        utile lors de la mise en place d'un panneau CTC &#224; l'aide des outils CTC de l'USS.
+        Voici, en gros, comment nous avons r&#233;alis&#233; les exemples, et ce pourrait &#234;tre 
+        une approche utile pour vous permettre d'organiser toutes les informations n&#233;cessaires.</p>
+            
+    <p>
+        Les noms utilisateur des appareils :
+    <p>
+        Les indicateurs du panneau sont pilot&#233;s par les Aiguillages appel&#233;s tels que"CTC 31 N" ou "CTC 31 R".
+        pour un levier d'aiguillage, ou "CTC 32 R", "CTC 32 C" ou "CTC 32 L" pour un levier de signalisation.
+    <p>
+        Les Capteurs qui sont connect&#233;s pour commuter les entr&#233;es du panneau utilisent les m&#234;mes noms,
+        bien que celui du centre sur un signal (c'est-&#224;-dire "CTC 32 C") soit souvent omis.
+    <p>
+        Les Capteurs d&#233;tecteur d'Occupation sont &#233;tiquet&#233;s comme "Circuits de Voie", c'est-&#224;-dire "TC 12". 
+        La lampe correspondante sur le panneau est command&#233;e par un Aiguillage du m&#234;me nom, "TC 12".
+    <p>
+        Le code du bouton et le code de la lampe  sont respectivement appel&#233;s "Boutoncode 32" et "Lampe code 32".
+    <p>
+        L'appel de maintenance des Aiguillages et des Capteurs  sont &#233;tiquet&#233;s par exemple "MC 88".
+    <p>
+        Le v&#233;ritable Aiguillage sur le r&#233;seau est connu sous le nom de "Aiguillage CTC 3 ".
+    <p>
+        Les signaux se trouvant autour d'une section de l'OS sont connus par le num&#233;ro de la section et son emplacement :
+        "CTC 4 principal sup&#233;rieur", "CTC 4 principal inf&#233;rieur", "CTC 4 principal simple", "CTC 4 voie d'&#233;vitement".
+        
+	<p>Traduction 2021-02-21</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
+
