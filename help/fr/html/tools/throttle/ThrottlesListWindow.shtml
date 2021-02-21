@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
@@ -43,7 +43,7 @@ Le M&#234;me que dans <a href="ThrottleToolBar.shtml"> la Fen&#234;tre barre d'o
 <h2>Bouton d'arr&#234;t</h2>
 Le M&#234;me que dans<a href="ThrottleToolBar.shtml"> la Fen&#234;tre barre d'outils R&#233;gulateur </a>. <br >
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->
