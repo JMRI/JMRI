@@ -595,7 +595,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                 hardwareAddressValidator.setManager(prefixBox.getSelectedItem());
             }
             
-            hardwareAddressValidator = new SystemNameValidator(hardwareAddressTextField, Objects.requireNonNull(prefixBox.getSelectedItem()), true);
+            
             hardwareAddressTextField.setInputVerifier(hardwareAddressValidator);
             prefixBox.addActionListener((evt) -> hardwareAddressValidator.setManager(prefixBox.getSelectedItem()));
             hardwareAddressValidator.addPropertyChangeListener("validation", (evt) -> { // NOI18N
