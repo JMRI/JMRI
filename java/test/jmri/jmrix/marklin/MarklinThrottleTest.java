@@ -402,9 +402,11 @@ public class MarklinThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @AfterEach
     @Override
     public void tearDown() {
-
-        //memo.getThrottleManager().dispose();
+        // no need to dispose of instance
+        memo.getThrottleManager().dispose();
+        memo.getTrafficController().terminateThreads();
         memo.dispose();
+        memo = null;
         JUnitUtil.tearDown();
     }
 
