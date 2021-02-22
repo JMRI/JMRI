@@ -54,6 +54,6 @@ public class SerialThrottleManagerTest extends jmri.managers.AbstractThrottleMan
         JUnitUtil.tearDown();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialThrottleManagerTest.class);
+    //private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialThrottleManagerTest.class);
 
 }

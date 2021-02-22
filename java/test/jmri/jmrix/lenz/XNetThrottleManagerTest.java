@@ -3,8 +3,8 @@ package jmri.jmrix.lenz;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * Test for the jmri.jmrix.lenz.XNetThrottleManager class
@@ -41,6 +41,6 @@ public class XNetThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetThrottleManager.class);
+    //private final static Logger log = LoggerFactory.getLogger(XNetThrottleManager.class);
 
 }

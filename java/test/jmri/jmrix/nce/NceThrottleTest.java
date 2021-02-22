@@ -393,7 +393,7 @@ public class NceThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         memo = new NceSystemConnectionMemo();
         memo.setNceTrafficController(tcis);
         tm = new NceThrottleManager(memo);
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, new NceThrottleManager(memo));
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, tm);
         instance = new NceThrottle(memo, new jmri.DccLocoAddress(1024,true));
     }
 
