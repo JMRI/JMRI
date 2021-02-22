@@ -30,7 +30,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",tm);
+        Assert.assertNotNull("exists", tm);
     }
     
     @Test
@@ -1019,8 +1019,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
     @AfterEach
     public void tearDown() {
-        CbusThrottleManager dtm = (CbusThrottleManager)tm;
-        dtm.dispose();
+        tm.dispose();
         tm = null;
         memo.dispose();
         memo = null;

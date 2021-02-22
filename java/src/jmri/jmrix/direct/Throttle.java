@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  */
 public class Throttle extends AbstractThrottle {
 
-    private CommandStation tcl = null;
+    private CommandStation tcl;
 
     /**
      * Constructor.

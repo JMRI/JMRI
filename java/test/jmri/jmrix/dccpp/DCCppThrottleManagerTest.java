@@ -84,7 +84,6 @@ public class DCCppThrottleManagerTest extends jmri.managers.AbstractThrottleMana
         memo = null;
         tc.terminateThreads();
         tc = null;
-        tm = null;
         cs = null;
         JUnitUtil.resetWindows(false, false);
         JUnitUtil.tearDown();
