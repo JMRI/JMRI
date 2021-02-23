@@ -5,7 +5,7 @@ import java.awt.event.*;
 import java.util.*;
 import java.util.List;
 import javax.annotation.Nonnull;
-import javax.annotation.concurrent.GuardedBy;
+//import javax.annotation.concurrent.GuardedBy;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
