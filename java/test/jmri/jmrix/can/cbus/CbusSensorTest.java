@@ -439,6 +439,34 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
     
     }
     
+    @Test
+    public void checkNoMsgSentOnSetStateUnknownInconsistent() throws jmri.JmriException {
+        
+        Assert.assertTrue(t.getKnownState() == Sensor.UNKNOWN);
+        Assert.assertEquals(("tcis 0"),0,(tcis.outbound.size()));
+        
+        t.setKnownState(Sensor.ACTIVE);
+        Assert.assertTrue(t.getKnownState() == Sensor.ACTIVE);
+        Assert.assertEquals(("tcis 1"),1,(tcis.outbound.size()));
+
+        t.setKnownState(Sensor.UNKNOWN);
+        Assert.assertTrue(t.getKnownState() == Sensor.UNKNOWN);
+        Assert.assertEquals(("tcis still 1"),1,(tcis.outbound.size()));
+        
+        t.setKnownState(Sensor.INACTIVE);
+        Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);
+        Assert.assertEquals(("tcis 2"),2,(tcis.outbound.size()));
+        
+        t.setKnownState(Sensor.INCONSISTENT);
+        Assert.assertTrue(t.getKnownState() == Sensor.INCONSISTENT);
+        Assert.assertEquals(("tcis still 2"),2,(tcis.outbound.size()));
+        
+        t.setKnownState(Sensor.ACTIVE);
+        Assert.assertTrue(t.getKnownState() == Sensor.ACTIVE);
+        Assert.assertEquals(("tcis 3"),3,(tcis.outbound.size()));
+
+    }
+    
     private TrafficControllerScaffold tcis;
     
     @Override

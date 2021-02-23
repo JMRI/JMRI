@@ -773,6 +773,7 @@ public class TrainBuilderTest extends OperationsTestCase {
      */
     @Test
     public void testCarDestinationsA() {
+        
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
 
         // Route Acton-Boston-Chelmsford-Chelmsford-Boston-Acton
@@ -7953,49 +7954,48 @@ public class TrainBuilderTest extends OperationsTestCase {
         sch1Item3.setShipLoadName("Tin");
         InstanceManager.getDefault(CarLoads.class).addName(carTypes[3], "Tin"); // Allows c13 which is part of a kernel
                                                                                 // to get a new load
-
         Schedule sch2 = smanager.newSchedule("Schedule 2");
         ScheduleItem sch2Item1 = sch2.addItem(carTypes[4]);
         sch2Item1.setCount(2);
         sch2.addItem(carTypes[1]);
 
         // Create locations used
-        Location loc1;
-        loc1 = lmanager.newLocation("Westford");
+        Location westford;
+        westford = lmanager.newLocation("Westford");
 
-        Location loc2;
-        loc2 = lmanager.newLocation("Chelmsford");
+        Location chelmsford;
+        chelmsford = lmanager.newLocation("Chelmsford");
 
-        Location loc3;
-        loc3 = lmanager.newLocation("Bedford");
+        Location bedford;
+        bedford = lmanager.newLocation("Bedford");
 
         Track loc1trk1;
-        loc1trk1 = loc1.addTrack("Westford Yard 1", Track.YARD);
+        loc1trk1 = westford.addTrack("Westford Yard 1", Track.YARD);
         loc1trk1.setTrainDirections(Track.WEST + Track.EAST);
         loc1trk1.setLength(900);
 
         Track loc1trk2;
-        loc1trk2 = loc1.addTrack("Westford Yard 2", Track.YARD);
+        loc1trk2 = westford.addTrack("Westford Yard 2", Track.YARD);
         loc1trk2.setTrainDirections(Track.WEST + Track.EAST);
         loc1trk2.setLength(500);
         loc1trk2.deleteTypeName(carTypes[4]);
 
         Track loc1trk3;
-        loc1trk3 = loc1.addTrack("Westford Express 3", Track.SPUR);
+        loc1trk3 = westford.addTrack("Westford Express 3", Track.SPUR);
         loc1trk3.setTrainDirections(Track.WEST + Track.EAST);
         loc1trk3.setLength(300);
         loc1trk3.deleteTypeName(carTypes[3]);
         loc1trk3.deleteTypeName(carTypes[4]);
 
         Track loc1trk4;
-        loc1trk4 = loc1.addTrack("Westford Express 4", Track.SPUR);
+        loc1trk4 = westford.addTrack("Westford Express 4", Track.SPUR);
         loc1trk4.setTrainDirections(Track.WEST + Track.EAST);
         loc1trk4.setLength(300);
         loc1trk4.deleteTypeName(carTypes[3]);
         loc1trk4.deleteTypeName(carTypes[4]);
 
         Track loc2trk1;
-        loc2trk1 = loc2.addTrack("Chelmsford Freight 1", Track.SPUR);
+        loc2trk1 = chelmsford.addTrack("Chelmsford Freight 1", Track.SPUR);
         loc2trk1.setTrainDirections(Track.WEST + Track.EAST);
         loc2trk1.setLength(900);
         loc2trk1.deleteTypeName(carTypes[4]);
@@ -8005,7 +8005,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         loc2trk1.setScheduleItemId(sch1.getItemsBySequenceList().get(1).getId());
 
         Track loc2trk2;
-        loc2trk2 = loc2.addTrack("Chelmsford Freight 2", Track.SPUR);
+        loc2trk2 = chelmsford.addTrack("Chelmsford Freight 2", Track.SPUR);
         loc2trk2.setTrainDirections(Track.WEST + Track.EAST);
         loc2trk2.setLength(900);
         loc2trk2.deleteTypeName(carTypes[4]);
@@ -8015,21 +8015,21 @@ public class TrainBuilderTest extends OperationsTestCase {
         loc2trk2.setScheduleItemId(sch1.getItemsBySequenceList().get(2).getId());
 
         Track loc2trk3;
-        loc2trk3 = loc2.addTrack("Chelmsford Yard 3", Track.YARD);
+        loc2trk3 = chelmsford.addTrack("Chelmsford Yard 3", Track.YARD);
         loc2trk3.setTrainDirections(Track.WEST + Track.EAST);
         loc2trk3.setLength(900);
         loc2trk3.deleteTypeName(carTypes[3]);
         loc2trk3.deleteTypeName(carTypes[4]);
 
         Track loc2trk4;
-        loc2trk4 = loc2.addTrack("Chelmsford Freight 4", Track.SPUR);
+        loc2trk4 = chelmsford.addTrack("Chelmsford Freight 4", Track.SPUR);
         loc2trk4.setTrainDirections(Track.WEST + Track.EAST);
         loc2trk4.setLength(900);
         loc2trk4.setSchedule(sch2);
         loc2trk4.setScheduleMode(Track.SEQUENTIAL);
 
         Track loc3trk1;
-        loc3trk1 = loc3.addTrack("Bedford Yard 1", Track.STAGING);
+        loc3trk1 = bedford.addTrack("Bedford Yard 1", Track.STAGING);
         loc3trk1.setTrainDirections(Track.WEST + Track.EAST);
         loc3trk1.setLength(900);
         loc3trk1.setRemoveCustomLoadsEnabled(true);
@@ -8037,13 +8037,13 @@ public class TrainBuilderTest extends OperationsTestCase {
         // Create route with 2 location
         Route rte1;
         rte1 = rmanager.newRoute("Two Location Route");
-        RouteLocation rl1 = rte1.addLocation(loc1);
+        RouteLocation rl1 = rte1.addLocation(westford);
         rl1.setTrainDirection(RouteLocation.EAST);
         rl1.setMaxCarMoves(12);
         rl1.setTrainIconX(25); // set the train icon coordinates
         rl1.setTrainIconY(75);
 
-        RouteLocation rl2 = rte1.addLocation(loc2);
+        RouteLocation rl2 = rte1.addLocation(chelmsford);
         rl2.setTrainDirection(RouteLocation.EAST);
         rl2.setMaxCarMoves(12);
         rl2.setTrainIconX(75); // set the train icon coordinates
@@ -8073,7 +8073,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         c3.setLength("70");
         c3.setMoves(0);
         c3.setLoadName("L");
-        c3.setDestination(loc2, null); // force this car to Chelmsford
+        c3.setDestination(chelmsford, null); // force this car to Chelmsford
         cmanager.register(c3);
 
         Car c4 = new Car(roadNames[2], "S4");
@@ -8149,21 +8149,21 @@ public class TrainBuilderTest extends OperationsTestCase {
         cmanager.register(c13);
 
         // place the cars in the yards
-        Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(loc1, loc1trk1));
-        Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(loc1, loc1trk1));
-        Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(loc1, loc1trk1));
-        Assert.assertEquals("Place c4", Track.OKAY, c4.setLocation(loc1, loc1trk1));
+        Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(westford, loc1trk1));
+        Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(westford, loc1trk1));
+        Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(westford, loc1trk1));
+        Assert.assertEquals("Place c4", Track.OKAY, c4.setLocation(westford, loc1trk1));
 
-        Assert.assertEquals("Place c5", Track.OKAY, c5.setLocation(loc1, loc1trk2));
-        Assert.assertEquals("Place c6", Track.OKAY, c6.setLocation(loc1, loc1trk2));
-        Assert.assertEquals("Place c7", Track.OKAY, c7.setLocation(loc1, loc1trk2));
-        Assert.assertEquals("Place c8", Track.OKAY, c8.setLocation(loc1, loc1trk2));
-        Assert.assertEquals("Place c9", Track.OKAY, c9.setLocation(loc1, loc1trk2));
+        Assert.assertEquals("Place c5", Track.OKAY, c5.setLocation(westford, loc1trk2));
+        Assert.assertEquals("Place c6", Track.OKAY, c6.setLocation(westford, loc1trk2));
+        Assert.assertEquals("Place c7", Track.OKAY, c7.setLocation(westford, loc1trk2));
+        Assert.assertEquals("Place c8", Track.OKAY, c8.setLocation(westford, loc1trk2));
+        Assert.assertEquals("Place c9", Track.OKAY, c9.setLocation(westford, loc1trk2));
 
-        Assert.assertEquals("Place c10", Track.OKAY, c10.setLocation(loc1, loc1trk1));
-        Assert.assertEquals("Place c11", Track.OKAY, c11.setLocation(loc1, loc1trk1));
-        Assert.assertEquals("Place c12", Track.OKAY, c12.setLocation(loc1, loc1trk1));
-        Assert.assertEquals("Place c13", Track.OKAY, c13.setLocation(loc1, loc1trk2));
+        Assert.assertEquals("Place c10", Track.OKAY, c10.setLocation(westford, loc1trk1));
+        Assert.assertEquals("Place c11", Track.OKAY, c11.setLocation(westford, loc1trk1));
+        Assert.assertEquals("Place c12", Track.OKAY, c12.setLocation(westford, loc1trk1));
+        Assert.assertEquals("Place c13", Track.OKAY, c13.setLocation(westford, loc1trk2));
 
         train1.reset();
 
@@ -8225,12 +8225,12 @@ public class TrainBuilderTest extends OperationsTestCase {
         // Create route with 2 location
         Route rte2;
         rte2 = rmanager.newRoute("Chelmsford to Staging");
-        RouteLocation r2rl1 = rte2.addLocation(loc2);
+        RouteLocation r2rl1 = rte2.addLocation(chelmsford);
         r2rl1.setTrainDirection(RouteLocation.EAST);
         r2rl1.setMaxCarMoves(12);
         r2rl1.setTrainIconX(125); // set the train icon coordinates
         r2rl1.setTrainIconY(75);
-        RouteLocation r2rl3 = rte2.addLocation(loc3);
+        RouteLocation r2rl3 = rte2.addLocation(bedford);
         r2rl3.setTrainDirection(RouteLocation.EAST);
         r2rl3.setMaxCarMoves(12);
         r2rl3.setTrainIconX(175); // set the train icon coordinates
@@ -8277,15 +8277,15 @@ public class TrainBuilderTest extends OperationsTestCase {
         // Create route with 3 locations
         Route rte3;
         rte3 = rmanager.newRoute("Staging to Chelmsford");
-        RouteLocation r3rl1 = rte3.addLocation(loc3);
+        RouteLocation r3rl1 = rte3.addLocation(bedford);
         r3rl1.setTrainDirection(RouteLocation.EAST);
         r3rl1.setMaxCarMoves(11); // there are 11 cars departing staging
         r3rl1.setTrainIconX(25); // set the train icon coordinates
         r3rl1.setTrainIconY(100);
-        RouteLocation r3rl2 = rte3.addLocation(loc2);
+        RouteLocation r3rl2 = rte3.addLocation(chelmsford);
         r3rl2.setTrainDirection(RouteLocation.EAST);
         r3rl2.setMaxCarMoves(12);
-        RouteLocation r3rl3 = rte3.addLocation(loc1);
+        RouteLocation r3rl3 = rte3.addLocation(westford);
         r3rl3.setTrainDirection(RouteLocation.EAST);
         r3rl3.setMaxCarMoves(12);
         r3rl3.setTrainIconX(75); // set the train icon coordinates
@@ -8297,10 +8297,10 @@ public class TrainBuilderTest extends OperationsTestCase {
         sch1Item1.setReceiveLoadName("Metal 1"); // request these loads from staging
         sch1Item2.setReceiveLoadName("Metal 2");
         sch1Item3.setReceiveLoadName("Metal 3");
-
+        
+        InstanceManager.getDefault(CarLoads.class).addName(carTypes[2], "Metal 2");
         InstanceManager.getDefault(CarLoads.class).addName(carTypes[3], "Metal 3"); // Allows c13 which is part of a
                                                                                     // kernel to get a new load
-
         train1.setRoute(rte3);
         train1.setName("BCW");
         train1.reset();
@@ -13435,6 +13435,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // improve test coverage
         Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_DETAILED);
+        Setup.setManifestFormat(Setup.TWO_COLUMN_TRACK_FORMAT);
 
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
         String engineTypes[] = Bundle.getMessage("engineDefaultTypes").split(",");
@@ -14404,6 +14405,9 @@ public class TrainBuilderTest extends OperationsTestCase {
      */
     @Test
     public void testFindFinalDestinationForCarLoadAlternateTrack() {
+        
+        // improve test coverage
+        Setup.setPrintHeadersEnabled(false);
 
         setupCustomCarLoad();
 
@@ -15440,5 +15444,12 @@ public class TrainBuilderTest extends OperationsTestCase {
         // increase test coverage
         Setup.setGenerateCsvManifestEnabled(true);
         Setup.setAllowReturnToStagingEnabled(true);
+        Setup.setPrintHeadersEnabled(true);
+        // use all of the car attributes when creating Manifests
+        Setup.setDropManifestMessageFormat(Setup.getCarAttributes());
+        Setup.setPickupManifestMessageFormat(Setup.getCarAttributes());
+        // use all of the engine attribures when creating Manifests
+        Setup.setDropEngineMessageFormat(Setup.getEngineAttributes());
+        Setup.setPickupEngineMessageFormat(Setup.getEngineAttributes());
     }
 }

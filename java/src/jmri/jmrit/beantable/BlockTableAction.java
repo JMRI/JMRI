@@ -15,24 +15,7 @@ import java.text.DecimalFormat;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
-import javax.swing.AbstractCellEditor;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import jmri.Block;
@@ -760,7 +743,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
      * inchBoxChanged() and centimeterBoxChanged() methods
      */
     @Override
-    public void addToFrame(BeanTableFrame f) {
+    public void addToFrame(BeanTableFrame<Block> f) {
         //final BeanTableFrame finalF = f; // needed for anonymous ActionListener class
         f.addToBottomBox(inchBox, this.getClass().getName());
         inchBox.setToolTipText(Bundle.getMessage("InchBoxToolTip"));
@@ -789,7 +772,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
      * @param f the JFrame of this table
      */
     @Override
-    public void setMenuBar(BeanTableFrame f) {
+    public void setMenuBar(BeanTableFrame<Block> f) {
         final jmri.util.JmriJFrame finalF = f; // needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
         int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenus before 'Window' and 'Help'
