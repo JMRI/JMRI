@@ -119,7 +119,7 @@ public class SwitchboardEditor extends Editor {
     private final float cellProportion = 1.0f; // TODO analyse actual W:H per switch type/shape: worthwhile?
     private int _tileSize = 100;
     private int _iconSquare = 75;
-    @GuardedBy("this")
+    //tmp @GuardedBy("this")
     private final JSpinner rowsSpinner = new JSpinner(new SpinnerNumberModel(rows, 1, 25, 1));
     private final JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
     // number of rows displayed on switchboard, disabled when autoRows is on
@@ -136,7 +136,7 @@ public class SwitchboardEditor extends Editor {
     private final JCheckBoxMenuItem hideUnconnectedBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxHideUnconnected"));
     private final JCheckBoxMenuItem autoItemRangeBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxAutoItemRange"));
     private final JCheckBoxMenuItem showToolTipBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxShowTooltips"));
-    @GuardedBy("this")
+    //tmp @GuardedBy("this")
     private final JCheckBoxMenuItem autoRowsBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxAutoRows"));
     private final JCheckBoxMenuItem showUserNameBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxUserName"));
     private final JRadioButtonMenuItem scrollBoth = new JRadioButtonMenuItem(Bundle.getMessage("ScrollBoth"));
@@ -294,13 +294,13 @@ public class SwitchboardEditor extends Editor {
         switchShapePane.add(rowsLabel);
         rowsSpinner.setToolTipText(Bundle.getMessage("RowsSpinnerOnTooltip"));
         rowsSpinner.addChangeListener(e -> {
-            synchronized (this) {
+            //tmp synchronized (this) {
                 if (!autoRowsBox.isSelected()) { // spinner is disabled when autoRows is on, but just in case
                     rows = (Integer) rowsSpinner.getValue();
                     updatePressed();
                     setDirty();
                 }
-            }
+            //tmp }
         });
         switchShapePane.add(rowsSpinner);
         rowsSpinner.setEnabled(false);
@@ -436,7 +436,7 @@ public class SwitchboardEditor extends Editor {
         // some GUIs include (wide) menu bar inside frame
         switchboardLayeredPane.setSize(new Dimension((int) frSize.getWidth() - 6, (int) frSize.getHeight() - verticalMargin));
         switchboardLayeredPane.repaint();
-        synchronized (this) {
+        //tmp synchronized (this) {
             if (autoRowsBox.isSelected()) { // check if autoRows is active
                 int oldRows = rows;
                 rows = autoRows(cellProportion); // if it suggests a different value for rows, call updatePressed()
@@ -445,7 +445,7 @@ public class SwitchboardEditor extends Editor {
                     updatePressed(); // redraw if rows value changed
                 }
             }
-        }
+        //tmp }
     }
 
     /**
@@ -455,7 +455,7 @@ public class SwitchboardEditor extends Editor {
      * from XML (with all saved options set).
      * Switchboard JPanel WindowResize() event is handled by resizeInFrame()
      */
-    public synchronized void updatePressed() {
+    public void updatePressed() { //tmp synchronized
         log.debug("updatePressed START _tileSize = {}", _tileSize);
 
         if (_autoItemRange && !autoItemRange.isSelected()) {
@@ -618,7 +618,7 @@ public class SwitchboardEditor extends Editor {
                 // set switch to display current bean state
                 _switch.displayState(nb.getState());
             }
-            synchronized (this) {
+            //tmp synchronized (this) {
                 switchesOnBoard.put(name, _switch); // add to LinkedHashMap of switches for later placement on JLayeredPane
                 log.debug("Added switch {}", name);
                 // keep total number of switches below practical total of 400 (20 x 20 items)
@@ -626,7 +626,7 @@ public class SwitchboardEditor extends Editor {
                     log.warn("switchboards are limited to {} items", unconnectedRangeLimit);
                     break;
                 }
-            }
+            //tmp }
             // was already checked in first counting loop in init()
         }
     }
@@ -717,21 +717,21 @@ public class SwitchboardEditor extends Editor {
         return controls;
     }
 
-    private synchronized int getMinSpinner() {
+    private int getMinSpinner() { //tmp
         return (Integer) minSpinner.getValue();
     }
 
-    private synchronized int getMaxSpinner() {
+    private int getMaxSpinner() { //tmp synchronized
         return (Integer) maxSpinner.getValue();
     }
 
-    protected synchronized void setMinSpinner(int value) {
+    protected void setMinSpinner(int value) { //tmp synchronized
         if (value >= rangeBottom && value < rangeTop) { // allows to set above MaxSpinner temporarily
             minSpinner.setValue(value);
         }
     }
 
-    protected synchronized void setMaxSpinner(int value) {
+    protected void setMaxSpinner(int value) { //tmp synchronized
         if (value > rangeBottom && value <= rangeTop) { // allows to set above MinSpinner temporarily
             maxSpinner.setValue(value);
         }
@@ -790,11 +790,11 @@ public class SwitchboardEditor extends Editor {
 
         // auto rows item
         _optionMenu.add(autoRowsBox);
-        synchronized (this) {
+        //tmp synchronized (this) {
             autoRowsBox.setSelected(true); // default on
-        }
+        //tmp }
         autoRowsBox.addActionListener((ActionEvent event) -> {
-            synchronized (this) {
+            //tmp synchronized (this) {
                 if (autoRowsBox.isSelected()) {
                     log.debug("autoRows was turned ON");
                     int oldRows = rows;
@@ -818,7 +818,7 @@ public class SwitchboardEditor extends Editor {
                     int maxH = (super.getTargetFrame().getHeight() - verticalMargin) / Math.max(rows, 1); // for footer
                     _tileSize = Math.min(maxW, maxH); // store for tile graphics
                 }
-            }
+            //tmp }
         });
         // show tooltip item
         _optionMenu.add(showToolTipBox);
@@ -1440,7 +1440,7 @@ public class SwitchboardEditor extends Editor {
      *
      * @return the number of switches to display per row or 0 if autoRowsBox (menu-setting) is selected
      */
-    public synchronized int getRows() {
+    public int getRows() { //tmp synchronized
         if (autoRowsBox.isSelected()) {
             return 0;
         } else {
@@ -1453,7 +1453,7 @@ public class SwitchboardEditor extends Editor {
      *
      * @param rws the number of switches displayed per row (as text) or 0 te activate autoRowsBox setting
      */
-    public synchronized void setRows(int rws) {
+    public void setRows(int rws) { //tmp synchronized
         autoRowsBox.setSelected(rws == 0);
         if (rws > 0) {
             rowsSpinner.setValue(rws); // rows is set via rowsSpinner
@@ -1489,7 +1489,7 @@ public class SwitchboardEditor extends Editor {
      *
      * @return the total number of switches displayed
      */
-    public synchronized int getTotal() {
+    public int getTotal() { //tmp synchronized
         return switchesOnBoard.size();
     }
 
@@ -1691,7 +1691,7 @@ public class SwitchboardEditor extends Editor {
      * @param sName name of switch label/connected bean
      * @return BeanSwitch switch object with the given name
      */
-    protected synchronized BeanSwitch getSwitch(String sName) {
+    protected BeanSwitch getSwitch(String sName) { //tmp synchronized
         if (switchesOnBoard.containsKey(sName)) {
             return switchesOnBoard.get(sName);
         }
@@ -1705,7 +1705,7 @@ public class SwitchboardEditor extends Editor {
      *
      * @return list of all BeanSwitch switch object
      */
-    public synchronized List<BeanSwitch> getSwitches() {
+    public List<BeanSwitch> getSwitches() { //tmp synchronized
         ArrayList<BeanSwitch> _switches = new ArrayList<>();
         log.debug("N = {}", switchesOnBoard.size());
         for (Map.Entry<String, BeanSwitch> bs : switchesOnBoard.entrySet()) {
@@ -1763,7 +1763,7 @@ public class SwitchboardEditor extends Editor {
         return report;
     }
 
-    public synchronized int getTileSize() {
+    public int getTileSize() { //tmp synchronized
         return _tileSize; // initially 100
     }
 
@@ -1772,7 +1772,7 @@ public class SwitchboardEditor extends Editor {
      *
      * @param on state to set Light.ON or Light.OFF
      */
-    public synchronized void switchAllLights(int on) {
+    public void switchAllLights(int on) { //tmp synchronized
         for (BeanSwitch bs : switchesOnBoard.values()) {
                 bs.switchLight(on);
             }
