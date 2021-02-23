@@ -42,14 +42,26 @@ public class IfThenElse extends AbstractDigitalAction
          * that are finished will be called with execute(). Actions that have
          * child actions need to deal with this.
          */
-        TRIGGER_ACTION,
+        TRIGGER_ACTION(Bundle.getMessage("IfThenElse_TriggerAction")),
         
         /**
          * Action is executed when the expression is True but only as long as
          * the expression stays True. If the expression becomes False, the
          * action is aborted.
          */
-        CONTINOUS_ACTION,
+        CONTINOUS_ACTION(Bundle.getMessage("IfThenElse_ContinousAction"));
+        
+        private final String _text;
+        
+        private Type(String text) {
+            this._text = text;
+        }
+        
+        @Override
+        public String toString() {
+            return _text;
+        }
+        
     }
 
     private Type _type = Type.TRIGGER_ACTION;
@@ -179,10 +191,11 @@ public class IfThenElse extends AbstractDigitalAction
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "IfThenElse_Long",
-                _ifExpressionSocket.getName(),
-                _thenActionSocket.getName(),
-                _elseActionSocket.getName());
+        return Bundle.getMessage(locale, "IfThenElse_Long", _type.toString());
+//        return Bundle.getMessage(locale, "IfThenElse_Long",
+//                _ifExpressionSocket.getName(),
+//                _thenActionSocket.getName(),
+//                _elseActionSocket.getName());
     }
 
     public FemaleDigitalExpressionSocket getIfExpressionSocket() {
