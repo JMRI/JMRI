@@ -1,35 +1,19 @@
 package jmri.jmrit.logixng.tools;
 
-import jmri.jmrit.logixng.expressions.ExpressionConditional;
-import jmri.jmrit.logixng.expressions.ExpressionEntryExit;
-import jmri.jmrit.logixng.expressions.ExpressionSignalMast;
-import jmri.jmrit.logixng.expressions.ExpressionLight;
-import jmri.jmrit.logixng.expressions.ExpressionClock;
-import jmri.jmrit.logixng.expressions.ExpressionWarrant;
-import jmri.jmrit.logixng.expressions.ExpressionSignalHead;
-import jmri.jmrit.logixng.expressions.ExpressionOBlock;
-import jmri.jmrit.logixng.expressions.Or;
-import jmri.jmrit.logixng.expressions.ExpressionMemory;
-import jmri.jmrit.logixng.expressions.And;
-import jmri.jmrit.logixng.expressions.ExpressionSensor;
-import jmri.jmrit.logixng.expressions.Antecedent;
-import jmri.jmrit.logixng.expressions.ExpressionTurnout;
-import jmri.jmrit.logixng.actions.ActionSensor;
-import jmri.jmrit.logixng.actions.ActionLight;
-import jmri.jmrit.logixng.actions.ActionTurnout;
-
 import java.util.List;
 
 import javax.annotation.Nonnull;
 
 import jmri.*;
+import jmri.implementation.DefaultConditionalAction;
 import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
-import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.Logix;
-import jmri.jmrit.logixng.actions.DigitalBooleanOnChange;
+import jmri.jmrit.logixng.actions.*;
+import jmri.jmrit.logixng.expressions.*;
+import jmri.jmrit.logixng.util.TimerUnit;
 
 /**
  * Imports Logixs to LogixNG
@@ -124,7 +108,7 @@ public class ImportConditional {
         buildExpression(expression, conditionalVariables);
         
 //        DigitalActionBean action = new Many(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-        buildAction(logix, _conditional, conditionalActions);
+        buildAction(logix, conditionalActions);
         
         MaleSocket expressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
         logix.getChild(0).connect(expressionSocket);
@@ -187,7 +171,7 @@ public class ImportConditional {
                     break;
                 default:
                     newExpression = null;
-                    log.warn("Unexpected type in ImportConditional.doImport(): {} -> {}", cv.getType(), cv.getType().getItemType());
+                    log.error("Unexpected type in ImportConditional.doImport(): {} -> {}", cv.getType(), cv.getType().getItemType());
                     break;
             }
             
@@ -201,7 +185,7 @@ public class ImportConditional {
     }
     
     
-    private void buildAction(Logix logix, Conditional conditional, List<ConditionalAction> conditionalActions)
+    private void buildAction(Logix logix, List<ConditionalAction> conditionalActions)
             throws SocketAlreadyConnectedException, JmriException {
         
         for (int i=0; i < conditionalActions.size(); i++) {
@@ -554,7 +538,7 @@ public class ImportConditional {
                 break;
             default:
                 throw new InvalidConditionalVariableException(
-                        Bundle.getMessage("ConditionalBadSignalHeadType", cv.getType().toString()));
+                        Bundle.getMessage("ConditionalBadSignalMastType", cv.getType().toString()));
         }
         
         expression.setTriggerOnChange(cv.doTriggerActions());
@@ -620,7 +604,7 @@ public class ImportConditional {
         
         if (cv.getType() != Conditional.Type.FAST_CLOCK_RANGE) {
             throw new InvalidConditionalVariableException(
-                    Bundle.getMessage("ConditionalBadConditionalType", cv.getType().toString()));
+                    Bundle.getMessage("ConditionalBadFastClockType", cv.getType().toString()));
         }
         
         expression.setType(ExpressionClock.Type.FastClock);
@@ -657,7 +641,7 @@ public class ImportConditional {
                 break;
             default:
                 throw new InvalidConditionalVariableException(
-                        Bundle.getMessage("ConditionalBadConditionalType", cv.getType().toString()));
+                        Bundle.getMessage("ConditionalBadWarrantType", cv.getType().toString()));
         }
         
         expression.setTriggerOnChange(cv.doTriggerActions());
@@ -688,11 +672,10 @@ public class ImportConditional {
     
     private DigitalActionBean getSensorAction(@Nonnull ConditionalAction ca, Sensor sn) throws JmriException {
         
-        ActionSensor action;
-        
         switch (ca.getType()) {
             case SET_SENSOR:
-                action = new ActionSensor(InstanceManager.getDefault(DigitalActionManager.class)
+                ActionSensor action = 
+                        new ActionSensor(InstanceManager.getDefault(DigitalActionManager.class)
                                 .getAutoSystemName(), null);
                 
                 action.setSensor(sn);
@@ -714,17 +697,44 @@ public class ImportConditional {
                         throw new InvalidConditionalVariableException(
                                 Bundle.getMessage("ActionBadSensorState", ca.getActionData()));
                 }
-                break;
+                return action;
                 
             case RESET_DELAYED_SENSOR:
             case DELAYED_SENSOR:
+                ConditionalAction caTemp = new DefaultConditionalAction();
+                caTemp.setType(Conditional.Action.SET_SENSOR);
+                caTemp.setActionData(ca.getActionData());
+                DigitalActionBean subAction = getSensorAction(caTemp, sn);
+                ExecuteDelayed delayedAction =
+                        new ExecuteDelayed(InstanceManager.getDefault(DigitalActionManager.class)
+                                .getAutoSystemName(), null);
+                
+                String sNumber = ca.getActionString();
+                try {
+                    float time = Float.parseFloat(sNumber);
+                    delayedAction.setDelay((int) (time * 1000));
+                } catch (NumberFormatException e) {
+                    // If here, assume that sNumber has the name of a memory
+                    if (sNumber.charAt(0) == '@') {
+                        sNumber = sNumber.substring(1);
+                    }
+                    delayedAction.setDelayAddressing(NamedBeanAddressing.Reference);
+                    delayedAction.setDelayReference("{" + sNumber + "}");
+                }
+                
+                delayedAction.setDelay(0);
+                delayedAction.setUnit(TimerUnit.MilliSeconds);
+                delayedAction.setResetIfAlreadyStarted(ca.getType() == Conditional.Action.RESET_DELAYED_SENSOR);
+                MaleSocket subActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
+                        .registerAction(subAction);
+                delayedAction.getChild(0).connect(subActionSocket);
+                return delayedAction;
+                
             case CANCEL_SENSOR_TIMERS:
             default:
                 throw new InvalidConditionalVariableException(
                         Bundle.getMessage("ActionBadSensorType", ca.getType().toString()));
         }
-        
-        return action;
     }
     
     
@@ -766,6 +776,35 @@ public class ImportConditional {
                 
             case RESET_DELAYED_TURNOUT:
             case DELAYED_TURNOUT:
+                ConditionalAction caTemp = new DefaultConditionalAction();
+                caTemp.setType(Conditional.Action.SET_TURNOUT);
+                caTemp.setActionData(ca.getActionData());
+                DigitalActionBean subAction = getTurnoutAction(caTemp, tn);
+                ExecuteDelayed delayedAction =
+                        new ExecuteDelayed(InstanceManager.getDefault(DigitalActionManager.class)
+                                .getAutoSystemName(), null);
+                
+                String sNumber = ca.getActionString();
+                try {
+                    float time = Float.parseFloat(sNumber);
+                    delayedAction.setDelay((int) (time * 1000));
+                } catch (NumberFormatException e) {
+                    // If here, assume that sNumber has the name of a memory
+                    if (sNumber.charAt(0) == '@') {
+                        sNumber = sNumber.substring(1);
+                    }
+                    delayedAction.setDelayAddressing(NamedBeanAddressing.Reference);
+                    delayedAction.setDelayReference("{" + sNumber + "}");
+                }
+                
+                delayedAction.setDelay(0);
+                delayedAction.setUnit(TimerUnit.MilliSeconds);
+                delayedAction.setResetIfAlreadyStarted(ca.getType() == Conditional.Action.RESET_DELAYED_TURNOUT);
+                MaleSocket subActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
+                        .registerAction(subAction);
+                delayedAction.getChild(0).connect(subActionSocket);
+                return delayedAction;
+                
             case CANCEL_TURNOUT_TIMERS:
             case LOCK_TURNOUT:
             default:

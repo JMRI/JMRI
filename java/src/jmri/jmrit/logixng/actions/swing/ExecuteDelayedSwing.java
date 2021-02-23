@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.actions.swing;
 
-import java.awt.GridBagConstraints;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
@@ -10,7 +9,9 @@ import javax.swing.*;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ExecuteDelayed;
+import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.TimerUnit;
+import jmri.jmrit.logixng.util.parser.ParserException;
 
 /**
  * Configures an ExecuteDelayed object with a Swing JPanel.
@@ -21,10 +22,17 @@ public class ExecuteDelayedSwing extends AbstractDigitalActionSwing {
 
     private final JLabel _unitLabel = new JLabel(Bundle.getMessage("ExecuteDelayedSwing_Unit"));
     private JComboBox<TimerUnit> _unit;
-    private final JLabel _timerDelayLabel = new JLabel(Bundle.getMessage("ExecuteDelayedSwing_TimerDelay"));
-    private JFormattedTextField _timerDelay;
-    private final JLabel _resetIfAlreadyStartedLabel = new JLabel(Bundle.getMessage("ExecuteDelayedSwing_ResetIfAlreadyStarted"));
     private JCheckBox _resetIfAlreadyStarted;
+    
+    private JTabbedPane _tabbedPaneDelay;
+    private JFormattedTextField _timerDelay;
+    private JPanel _panelDelayDirect;
+    private JPanel _panelDelayReference;
+    private JPanel _panelDelayLocalVariable;
+    private JPanel _panelDelayFormula;
+    private JTextField _delayReferenceTextField;
+    private JTextField _delayLocalVariableTextField;
+    private JTextField _delayFormulaTextField;
     
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
@@ -35,48 +43,109 @@ public class ExecuteDelayedSwing extends AbstractDigitalActionSwing {
         ExecuteDelayed action = (ExecuteDelayed)object;
         
         panel = new JPanel();
-        panel.setLayout(new java.awt.GridBagLayout());
-        java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
-        c.gridwidth = 1;
-        c.gridheight = 1;
-        c.gridx = 0;
-        c.gridy = 0;
-        c.anchor = java.awt.GridBagConstraints.EAST;
-        panel.add(_unitLabel, c);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         
-        c.gridx = 1;
+        _tabbedPaneDelay = new JTabbedPane();
+        _panelDelayDirect = new javax.swing.JPanel();
+        _panelDelayReference = new javax.swing.JPanel();
+        _panelDelayLocalVariable = new javax.swing.JPanel();
+        _panelDelayFormula = new javax.swing.JPanel();
+        
+        _tabbedPaneDelay.addTab(NamedBeanAddressing.Direct.toString(), _panelDelayDirect);
+        _tabbedPaneDelay.addTab(NamedBeanAddressing.Reference.toString(), _panelDelayReference);
+        _tabbedPaneDelay.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelDelayLocalVariable);
+        _tabbedPaneDelay.addTab(NamedBeanAddressing.Formula.toString(), _panelDelayFormula);
+        
+        _timerDelay = new JFormattedTextField("0");
+        _timerDelay.setColumns(7);
+        
+        _panelDelayDirect.add(_timerDelay);
+        
+        _delayReferenceTextField = new JTextField();
+        _delayReferenceTextField.setColumns(30);
+        _panelDelayReference.add(_delayReferenceTextField);
+        
+        _delayLocalVariableTextField = new JTextField();
+        _delayLocalVariableTextField.setColumns(30);
+        _panelDelayLocalVariable.add(_delayLocalVariableTextField);
+        
+        _delayFormulaTextField = new JTextField();
+        _delayFormulaTextField.setColumns(30);
+        _panelDelayFormula.add(_delayFormulaTextField);
+        
+        
+        if (action != null) {
+            switch (action.getDelayAddressing()) {
+                case Direct: _tabbedPaneDelay.setSelectedComponent(_panelDelayDirect); break;
+                case Reference: _tabbedPaneDelay.setSelectedComponent(_panelDelayReference); break;
+                case LocalVariable: _tabbedPaneDelay.setSelectedComponent(_panelDelayLocalVariable); break;
+                case Formula: _tabbedPaneDelay.setSelectedComponent(_panelDelayFormula); break;
+                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getDelayAddressing().name());
+            }
+            _timerDelay.setText(Integer.toString(action.getDelay()));
+            _delayReferenceTextField.setText(action.getDelayReference());
+            _delayLocalVariableTextField.setText(action.getDelayLocalVariable());
+            _delayFormulaTextField.setText(action.getDelayFormula());
+        }
+        
+        JComponent[] components = new JComponent[]{
+            _tabbedPaneDelay};
+        
+        List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
+                Bundle.getMessage("ExecuteDelayed_Components"), components);
+        
+        JPanel delayPanel = new JPanel();
+        for (JComponent c : componentList) delayPanel.add(c);
+        
+        panel.add(delayPanel);
+        
+        
+        JPanel unitPanel = new JPanel();
+        unitPanel.add(_unitLabel);
+        
         _unit = new JComboBox<>();
         for (TimerUnit u : TimerUnit.values()) _unit.addItem(u);
         if (action != null) _unit.setSelectedItem(action.getUnit());
-        panel.add(_unit, c);
+        unitPanel.add(_unit);
         
-        c.gridx = 0;
-        c.gridy = 1;
-        panel.add(_timerDelayLabel, c);
+        panel.add(unitPanel);
         
-        c.gridx = 1;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        _timerDelay = new JFormattedTextField("0");
-        _timerDelay.setColumns(7);
-        if (action != null) _timerDelay.setText(Integer.toString(action.getDelay()));
-        _resetIfAlreadyStartedLabel.setLabelFor(_timerDelay);
-        panel.add(_timerDelay, c);
-        
-        c.gridx = 0;
-        c.gridy = 2;
-        panel.add(_resetIfAlreadyStartedLabel, c);
-        
-        c.gridx = 1;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        _resetIfAlreadyStarted = new JCheckBox();
+        _resetIfAlreadyStarted = new JCheckBox(Bundle.getMessage("ExecuteDelayedSwing_ResetIfAlreadyStarted"));
         if (action != null) _resetIfAlreadyStarted.setSelected(action.getResetIfAlreadyStarted());
-        _resetIfAlreadyStartedLabel.setLabelFor(_resetIfAlreadyStarted);
-        panel.add(_resetIfAlreadyStarted, c);
+        panel.add(_resetIfAlreadyStarted);
     }
     
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
+        // Create a temporary action to test formula
+        ExecuteDelayed action = new ExecuteDelayed("IQDA1", null);
+        
+        try {
+            if (_tabbedPaneDelay.getSelectedComponent() == _panelDelayReference) {
+                action.setDelayReference(_delayReferenceTextField.getText());
+            }
+        } catch (IllegalArgumentException e) {
+            errorMessages.add(e.getMessage());
+            return false;
+        }
+        
+        try {
+            action.setDelayFormula(_delayFormulaTextField.getText());
+            if (_tabbedPaneDelay.getSelectedComponent() == _panelDelayDirect) {
+                action.setDelayAddressing(NamedBeanAddressing.Direct);
+            } else if (_tabbedPaneDelay.getSelectedComponent() == _panelDelayReference) {
+                action.setDelayAddressing(NamedBeanAddressing.Reference);
+            } else if (_tabbedPaneDelay.getSelectedComponent() == _panelDelayLocalVariable) {
+                action.setDelayAddressing(NamedBeanAddressing.LocalVariable);
+            } else if (_tabbedPaneDelay.getSelectedComponent() == _panelDelayFormula) {
+                action.setDelayAddressing(NamedBeanAddressing.Formula);
+            } else {
+                throw new IllegalArgumentException("_tabbedPane has unknown selection");
+            }
+        } catch (ParserException e) {
+            errorMessages.add("Cannot parse formula: " + e.getMessage());
+        }
         return true;
     }
     
@@ -97,9 +166,30 @@ public class ExecuteDelayedSwing extends AbstractDigitalActionSwing {
         
         ExecuteDelayed action = (ExecuteDelayed)object;
         
-        action.setDelay(Integer.parseInt(_timerDelay.getText()));
         action.setUnit(_unit.getItemAt(_unit.getSelectedIndex()));
         action.setResetIfAlreadyStarted(_resetIfAlreadyStarted.isSelected());
+        
+        
+        
+        try {
+            if (_tabbedPaneDelay.getSelectedComponent() == _panelDelayDirect) {
+                action.setDelayAddressing(NamedBeanAddressing.Direct);
+                action.setDelay(Integer.parseInt(_timerDelay.getText()));
+            } else if (_tabbedPaneDelay.getSelectedComponent() == _panelDelayReference) {
+                action.setDelayAddressing(NamedBeanAddressing.Reference);
+                action.setDelayReference(_delayReferenceTextField.getText());
+            } else if (_tabbedPaneDelay.getSelectedComponent() == _panelDelayLocalVariable) {
+                action.setDelayAddressing(NamedBeanAddressing.LocalVariable);
+                action.setDelayLocalVariable(_delayLocalVariableTextField.getText());
+            } else if (_tabbedPaneDelay.getSelectedComponent() == _panelDelayFormula) {
+                action.setDelayAddressing(NamedBeanAddressing.Formula);
+                action.setDelayFormula(_delayFormulaTextField.getText());
+            } else {
+                throw new IllegalArgumentException("_tabbedPaneDelay has unknown selection");
+            }
+        } catch (ParserException e) {
+            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+        }
     }
     
     /** {@inheritDoc} */

@@ -129,7 +129,7 @@ public class ActionSensorSwing extends AbstractDigitalActionSwing {
                 case Reference: _tabbedPaneSensorState.setSelectedComponent(_panelSensorStateReference); break;
                 case LocalVariable: _tabbedPaneSensorState.setSelectedComponent(_panelSensorStateLocalVariable); break;
                 case Formula: _tabbedPaneSensorState.setSelectedComponent(_panelSensorStateFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
+                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getStateAddressing().name());
             }
             _stateComboBox.setSelectedItem(action.getBeanState());
             _sensorStateReferenceTextField.setText(action.getStateReference());

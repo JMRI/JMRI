@@ -1,10 +1,12 @@
 package jmri.jmrit.logixng.actions.configurexml;
 
 import jmri.InstanceManager;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.MaleSocket;
+import jmri.configurexml.JmriConfigureXmlException;
+import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.actions.ActionSensor;
 import jmri.jmrit.logixng.actions.ExecuteDelayed;
 import jmri.jmrit.logixng.util.TimerUnit;
+import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
 
@@ -49,7 +51,12 @@ public class ExecuteDelayedXml extends jmri.managers.configurexml.AbstractNamedB
         }
         element.addContent(e2);
         
+        element.addContent(new Element("delayAddressing").addContent(p.getDelayAddressing().name()));
         element.addContent(new Element("delay").addContent(Integer.toString(p.getDelay())));
+        element.addContent(new Element("delayReference").addContent(p.getDelayReference()));
+        element.addContent(new Element("delayLocalVariable").addContent(p.getDelayLocalVariable()));
+        element.addContent(new Element("delayFormula").addContent(p.getDelayFormula()));
+
         element.addContent(new Element("unit").addContent(p.getUnit().name()));
         element.addContent(new Element("resetIfAlreadyStarted").addContent(p.getResetIfAlreadyStarted() ? "yes" : "no"));  // NOI18N
         
@@ -57,7 +64,7 @@ public class ExecuteDelayedXml extends jmri.managers.configurexml.AbstractNamedB
     }
     
     @Override
-    public boolean load(Element shared, Element perNode) {
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         
         Element socketNameElement = shared.getChild("Socket").getChild("socketName");
         String socketName = socketNameElement.getTextTrim();
@@ -94,6 +101,25 @@ public class ExecuteDelayedXml extends jmri.managers.configurexml.AbstractNamedB
         }
         h.setResetIfAlreadyStarted("yes".equals(resetIfAlreadyStarted));
         
+        try {
+            Element elem = shared.getChild("delayAddressing");
+            if (elem != null) {
+                h.setDelayAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+            }
+            
+            elem = shared.getChild("delayReference");
+            if (elem != null) h.setDelayReference(elem.getTextTrim());
+            
+            elem = shared.getChild("delayLocalVariable");
+            if (elem != null) h.setDelayLocalVariable(elem.getTextTrim());
+            
+            elem = shared.getChild("delayFormula");
+            if (elem != null) h.setDelayFormula(elem.getTextTrim());
+            
+        } catch (ParserException e) {
+            throw new JmriConfigureXmlException(e);
+        }
+
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }

@@ -880,7 +880,32 @@ public class StoreAndLoadTest {
         
         executeDelayed = new ExecuteDelayed(digitalActionManager.getAutoSystemName(), null);
         executeDelayed.setComment("A comment");
+        executeDelayed.setDelayAddressing(NamedBeanAddressing.Direct);
         executeDelayed.setDelay(100);
+        executeDelayed.setResetIfAlreadyStarted(true);
+        maleSocket = digitalActionManager.registerAction(executeDelayed);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        executeDelayed = new ExecuteDelayed(digitalActionManager.getAutoSystemName(), null);
+        executeDelayed.setComment("A comment");
+        executeDelayed.setDelayAddressing(NamedBeanAddressing.LocalVariable);
+        executeDelayed.setDelayLocalVariable("MyVar");
+        executeDelayed.setResetIfAlreadyStarted(true);
+        maleSocket = digitalActionManager.registerAction(executeDelayed);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        executeDelayed = new ExecuteDelayed(digitalActionManager.getAutoSystemName(), null);
+        executeDelayed.setComment("A comment");
+        executeDelayed.setDelayAddressing(NamedBeanAddressing.Reference);
+        executeDelayed.setDelayReference("{MyMemory}");
+        executeDelayed.setResetIfAlreadyStarted(true);
+        maleSocket = digitalActionManager.registerAction(executeDelayed);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        executeDelayed = new ExecuteDelayed(digitalActionManager.getAutoSystemName(), null);
+        executeDelayed.setComment("A comment");
+        executeDelayed.setDelayAddressing(NamedBeanAddressing.Formula);
+        executeDelayed.setDelayFormula("MyVar + 10");
         executeDelayed.setResetIfAlreadyStarted(true);
         maleSocket = digitalActionManager.registerAction(executeDelayed);
         actionManySocket.getChild(indexAction++).connect(maleSocket);

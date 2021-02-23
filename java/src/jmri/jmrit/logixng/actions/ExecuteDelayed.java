@@ -1,15 +1,18 @@
 package jmri.jmrit.logixng.actions;
 
+import java.util.*;
+
 import jmri.jmrit.logixng.util.TimerUnit;
 
-import java.util.Locale;
-import java.util.Map;
+import javax.annotation.Nonnull;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.util.ProtectedTimerTask;
+import jmri.jmrit.logixng.util.*;
+import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.TimerUtil;
+import jmri.util.TypeConversionUtil;
 
 /**
  * Executes a digital action delayed.
@@ -23,9 +26,16 @@ public class ExecuteDelayed
     private String _socketSystemName;
     private final FemaleDigitalActionSocket _socket;
     private ProtectedTimerTask _timerTask;
+    private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private int _delay;
+    private String _stateReference = "";
+    private String _stateLocalVariable = "";
+    private String _stateFormula = "";
+    private ExpressionNode _stateExpressionNode;
     private TimerUnit _unit = TimerUnit.MilliSeconds;
     private boolean _resetIfAlreadyStarted;
+    
+    // These variables are used internally in this action
     private long _timerDelay = 0;   // Timer delay in milliseconds
     private long _timerStart = 0;   // Timer start in milliseconds
     
@@ -43,7 +53,11 @@ public class ExecuteDelayed
         if (sysName == null) sysName = manager.getAutoSystemName();
         ExecuteDelayed copy = new ExecuteDelayed(sysName, userName);
         copy.setComment(getComment());
+        copy.setDelayAddressing(_stateAddressing);
         copy.setDelay(_delay);
+        copy.setDelayFormula(_stateFormula);
+        copy.setDelayLocalVariable(_stateLocalVariable);
+        copy.setDelayReference(_stateReference);
         copy.setUnit(_unit);
         copy.setResetIfAlreadyStarted(_resetIfAlreadyStarted);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
@@ -91,6 +105,33 @@ public class ExecuteDelayed
         TimerUtil.schedule(_timerTask, delay);
     }
     
+    private long getNewDelay() throws JmriException {
+        
+        switch (_stateAddressing) {
+            case Direct:
+                return _delay;
+                
+            case Reference:
+                return TypeConversionUtil.convertToLong(ReferenceUtil.getReference(
+                        getConditionalNG().getSymbolTable(), _stateReference));
+                
+            case LocalVariable:
+                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+                return TypeConversionUtil
+                        .convertToLong(symbolTable.getValue(_stateLocalVariable));
+                
+            case Formula:
+                return _stateExpressionNode != null
+                        ? TypeConversionUtil.convertToLong(
+                                _stateExpressionNode.calculate(
+                                        getConditionalNG().getSymbolTable()))
+                        : null;
+                
+            default:
+                throw new IllegalArgumentException("invalid _addressing state: " + _stateAddressing.name());
+        }
+    }
+    
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
@@ -99,10 +140,19 @@ public class ExecuteDelayed
                 if (_resetIfAlreadyStarted) _timerTask.stopTimer();
                 else return;
             }
-            _timerDelay = _delay * _unit.getMultiply();
+            _timerDelay = getNewDelay() * _unit.getMultiply();
             _timerStart = System.currentTimeMillis();
             scheduleTimer(getConditionalNG(), _delay * _unit.getMultiply());
         }
+    }
+    
+    public void setDelayAddressing(NamedBeanAddressing addressing) throws ParserException {
+        _stateAddressing = addressing;
+        parseDelayFormula();
+    }
+    
+    public NamedBeanAddressing getDelayAddressing() {
+        return _stateAddressing;
     }
     
     /**
@@ -119,6 +169,45 @@ public class ExecuteDelayed
      */
     public void setDelay(int delay) {
         _delay = delay;
+    }
+    
+    public void setDelayReference(@Nonnull String reference) {
+        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
+            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
+        }
+        _stateReference = reference;
+    }
+    
+    public String getDelayReference() {
+        return _stateReference;
+    }
+    
+    public void setDelayLocalVariable(@Nonnull String localVariable) {
+        _stateLocalVariable = localVariable;
+    }
+    
+    public String getDelayLocalVariable() {
+        return _stateLocalVariable;
+    }
+    
+    public void setDelayFormula(@Nonnull String formula) throws ParserException {
+        _stateFormula = formula;
+        parseDelayFormula();
+    }
+    
+    public String getDelayFormula() {
+        return _stateFormula;
+    }
+    
+    private void parseDelayFormula() throws ParserException {
+        if (_stateAddressing == NamedBeanAddressing.Formula) {
+            Map<String, Variable> variables = new HashMap<>();
+            
+            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
+            _stateExpressionNode = parser.parseExpression(_stateFormula);
+        } else {
+            _stateExpressionNode = null;
+        }
     }
     
     /**
@@ -198,10 +287,33 @@ public class ExecuteDelayed
 
     @Override
     public String getLongDescription(Locale locale) {
+        String delay;
+        
+        switch (_stateAddressing) {
+            case Direct:
+                delay = Bundle.getMessage(locale, "ExecuteDelayed_DelayByDirect", _unit.getTimeWithUnit(_delay));
+                break;
+                
+            case Reference:
+                delay = Bundle.getMessage(locale, "ExecuteDelayed_DelayByReference", _stateReference, _unit.toString());
+                break;
+                
+            case LocalVariable:
+                delay = Bundle.getMessage(locale, "ExecuteDelayed_DelayByLocalVariable", _stateLocalVariable, _unit.toString());
+                break;
+                
+            case Formula:
+                delay = Bundle.getMessage(locale, "ExecuteDelayed_DelayByFormula", _stateFormula, _unit.toString());
+                break;
+                
+            default:
+                throw new IllegalArgumentException("invalid _stateAddressing state: " + _stateAddressing.name());
+        }
+        
         return Bundle.getMessage(locale,
                 "ExecuteDelayed_Long",
                 _socket.getName(),
-                _unit.getTimeWithUnit(_delay),
+                delay,
                 _resetIfAlreadyStarted
                         ? Bundle.getMessage("ExecuteDelayed_ResetRepeat")
                         : Bundle.getMessage("ExecuteDelayed_IgnoreRepeat"));

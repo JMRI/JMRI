@@ -74,6 +74,11 @@ public abstract class ImportActionTestBase {
         }
     }
     
+    // This method is used by some tests that tests delayed actions
+    public void doWait(boolean expectSuccess, boolean on) {
+        // Do nothing by default
+    }
+    
     // Test that state ON is imported correctly
     @Test
     public void testOn() throws JmriException {
@@ -83,6 +88,7 @@ public abstract class ImportActionTestBase {
             setNamedBeanState(false);
             assertBoolean(message, true, checkNamedBeanState(false));
             t1.setState(Turnout.THROWN);
+            doWait(expectSuccess, true);
             assertBoolean(message, expectSuccess, checkNamedBeanState(true));
         };
         
@@ -125,6 +131,7 @@ public abstract class ImportActionTestBase {
             setConditionalActionState(State.OFF);
             assertBoolean(message, true, checkNamedBeanState(true));
             t1.setState(Turnout.THROWN);
+            doWait(expectSuccess, false);
             assertBoolean(message, expectSuccess, checkNamedBeanState(false));
         };
         
@@ -167,6 +174,7 @@ public abstract class ImportActionTestBase {
             setConditionalActionState(State.ON);
             assertBoolean(message, true, checkNamedBeanState(false));
             t1.setState(Turnout.THROWN);
+            doWait(expectSuccess, true);
             assertBoolean(message, expectSuccess, checkNamedBeanState(true));
             
             t1.setState(Turnout.CLOSED);
@@ -174,6 +182,7 @@ public abstract class ImportActionTestBase {
             setConditionalActionState(State.TOGGLE);
             assertBoolean(message, true, checkNamedBeanState(true));
             t1.setState(Turnout.THROWN);
+            doWait(expectSuccess, false);
             assertBoolean(message, expectSuccess, checkNamedBeanState(false));
             
             t1.setState(Turnout.CLOSED);
@@ -181,6 +190,7 @@ public abstract class ImportActionTestBase {
             setConditionalActionState(State.TOGGLE);
             assertBoolean(message, true, checkNamedBeanState(false));
             t1.setState(Turnout.THROWN);
+            doWait(expectSuccess, true);
             assertBoolean(message, expectSuccess, checkNamedBeanState(true));
             
             t1.setState(Turnout.CLOSED);
@@ -188,6 +198,7 @@ public abstract class ImportActionTestBase {
             setConditionalActionState(State.TOGGLE);
             assertBoolean(message, true, checkNamedBeanState(true));
             t1.setState(Turnout.THROWN);
+            doWait(expectSuccess, false);
             assertBoolean(message, expectSuccess, checkNamedBeanState(false));
         };
         
