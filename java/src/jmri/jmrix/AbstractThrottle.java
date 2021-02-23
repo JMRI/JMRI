@@ -80,8 +80,8 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * Create a new AbstractThrottle with custom number of functions.
      * <p>
      * All function and momentary functions set to Off.
-     * @param memo System Connection.
-     * @param totalFunctions total number of functions available, including 0.
+     * @param memo System Connection this throttle is on
+     * @param totalFunctions total number of functions available, including 0
      */
     public AbstractThrottle(SystemConnectionMemo memo, int totalFunctions) {
         active = true;
@@ -91,7 +91,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     }
 
     /**
-     * System Connection.
+     * System Connection this throttle is on
      */
     protected SystemConnectionMemo adapterMemo;
 
@@ -139,7 +139,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     }
 
     /**
-     * setSpeedSettingAgain - set the speed and don't ever supress the sending
+     * setSpeedSettingAgain - set the speed and don't ever suppress the sending
      * of messages to the system
      *
      * @param speed the new speed

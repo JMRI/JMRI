@@ -265,7 +265,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     @Override
     public void setIsForward(boolean forward) {
         super.setIsForward(forward);
-        setSpeedSetting(this.speedSetting);
+        synchronized(this) {
+            setSpeedSetting(this.speedSetting);
+        }
     }
 
     /**
@@ -277,9 +279,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     @Override
     public void setSpeedStepMode(SpeedStepMode Mode) {
         super.setSpeedStepMode(Mode);
-        // On a lenz system, we need to send the speed to make sure the 
+        // On a Lenz system, we need to send the speed to make sure the
         // command station knows about the change.
-        setSpeedSetting(this.speedSetting);
+        synchronized(this) {
+            setSpeedSetting(this.speedSetting);
+        }
     }
 
     /**
@@ -658,8 +662,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
             if (java.lang.Math.abs(
                     this.getSpeedSetting() - ((float) speedVal / (float) 126)) >= 0.0079) {
-                firePropertyChange(SPEEDSETTING, this.speedSetting, this.speedSetting
-                        = (float) speedVal / (float) 126);
+                synchronized(this) {
+                    firePropertyChange(SPEEDSETTING, this.speedSetting,
+                            this.speedSetting = (float) speedVal / (float) 126);
+                }
             }
         } else if (this.speedStepMode == SpeedStepMode.NMRA_DCC_28) {
             // We're in 28 speed step mode
@@ -676,8 +682,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
             if (java.lang.Math.abs(
                     this.getSpeedSetting() - ((float) speedVal / (float) 28)) >= 0.035) {
-                firePropertyChange(SPEEDSETTING, this.speedSetting, this.speedSetting
-                        = (float) speedVal / (float) 28);
+                synchronized(this) {
+                    firePropertyChange(SPEEDSETTING, this.speedSetting,
+                            this.speedSetting = (float) speedVal / (float) 28);
+                }
             }
         } else if (this.speedStepMode == SpeedStepMode.NMRA_DCC_27) {
             // We're in 27 speed step mode
@@ -694,8 +702,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
             if (java.lang.Math.abs(
                     this.getSpeedSetting() - ((float) speedVal / (float) 27)) >= 0.037) {
-                firePropertyChange(SPEEDSETTING, this.speedSetting, this.speedSetting
-                        = (float) speedVal / (float) 27);
+                synchronized(this) {
+                    firePropertyChange(SPEEDSETTING, this.speedSetting,
+                            this.speedSetting = (float) speedVal / (float) 27);
+                }
             }
         } else {
             // Assume we're in 14 speed step mode.
@@ -705,8 +715,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
             if (java.lang.Math.abs(
                     this.getSpeedSetting() - ((float) speedVal / (float) 14)) >= 0.071) {
-                firePropertyChange(SPEEDSETTING, this.speedSetting, this.speedSetting
-                        = (float) speedVal / (float) 14);
+                synchronized(this) {
+                    firePropertyChange(SPEEDSETTING, this.speedSetting,
+                            this.speedSetting = (float) speedVal / (float) 14);
+                }
             }
         }
     }

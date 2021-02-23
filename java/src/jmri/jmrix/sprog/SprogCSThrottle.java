@@ -34,7 +34,9 @@ public class SprogCSThrottle extends AbstractThrottle {
         }
 
         // cache settings.
-        this.speedSetting = 0;
+        synchronized(this) {
+            this.speedSetting = 0;
+        }
         // Functions default to false
         this.isForward = true;
 
@@ -50,7 +52,7 @@ public class SprogCSThrottle extends AbstractThrottle {
 
     }
 
-    private SprogCommandStation commandStation;
+    private final SprogCommandStation commandStation;
 
     DccLocoAddress address;
 
@@ -109,7 +111,7 @@ public class SprogCSThrottle extends AbstractThrottle {
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     @Override
-    public void setSpeedSetting(float speed) {
+    public synchronized void setSpeedSetting(float speed) {
         SpeedStepMode mode = getSpeedStepMode();
         if (mode == SpeedStepMode.NMRA_DCC_28) {
             // 28 step mode speed commands are 
@@ -153,7 +155,9 @@ public class SprogCSThrottle extends AbstractThrottle {
     public void setIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
-        setSpeedSetting(speedSetting);  // Update the speed setting
+        synchronized(this) {
+            setSpeedSetting(speedSetting);  // Update the speed setting
+        }
         firePropertyChange(ISFORWARD, old, isForward);
     }
 
@@ -163,5 +167,7 @@ public class SprogCSThrottle extends AbstractThrottle {
         commandStation.release(address);
         finishRecord();
     }
+
     private final static Logger log = LoggerFactory.getLogger(SprogCSThrottle.class);
+
 }

@@ -28,7 +28,9 @@ public class SerialThrottle extends AbstractThrottle {
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
-        this.speedSetting = 0;
+        synchronized(this) {
+            this.speedSetting = 0;
+        }
         // Functions default to false
         this.address = address;
         this.isForward = true;
@@ -77,8 +79,11 @@ public class SerialThrottle extends AbstractThrottle {
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
     public void setSpeedSetting(float speed) {
-        float oldSpeed = this.speedSetting;
-        this.speedSetting = speed;
+        float oldSpeed;
+        synchronized(this) {
+            oldSpeed = this.speedSetting;
+            this.speedSetting = speed;
+        }
         int value = (int) (32 * speed);     // -1 for rescale to avoid estop
         if (value > 31) {
             value = 31;    // max possible speed
@@ -97,7 +102,9 @@ public class SerialThrottle extends AbstractThrottle {
         tc.sendSerialMessage(m, null);
         tc.sendSerialMessage(m, null);
         tc.sendSerialMessage(m, null);
-        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
+        synchronized(this) {
+            firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
+        }
         record(speed);
     }
 

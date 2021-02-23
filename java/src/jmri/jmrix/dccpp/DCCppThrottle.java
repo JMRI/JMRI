@@ -198,7 +198,9 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     @Override
     public void setIsForward(boolean forward) {
         super.setIsForward(forward);
-        setSpeedSetting(this.speedSetting);
+        synchronized(this) {
+            setSpeedSetting(this.speedSetting);
+        }
     }
 
     /*
@@ -300,19 +302,18 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         } else {
             // The assigned address matches mine.  Update my info 
             // to match the returned register info.
-            if (speed < 0) {
-                //this.setSpeedSetting(0.0f);
-                this.speedSetting = 0.0f;
-            }
-            else {
-                //this.setSpeedSetting((speed * 1.0f)/126.0f);
-                this.speedSetting = (speed * 1.0f)/126.0f;
+            synchronized(this) {
+                if (speed < 0) {
+                    //this.setSpeedSetting(0.0f);
+                    this.speedSetting = 0.0f;
+                } else {
+                    //this.setSpeedSetting((speed * 1.0f)/126.0f);
+                    this.speedSetting = (speed * 1.0f) / 126.0f;
+                }
             }
             this.isForward = (dir == 1);
          }
- 
     }
-
  
     // Listen for the outgoing messages (to the command station)
     @Override
@@ -341,9 +342,8 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     //A queue to hold outstanding messages
     protected LinkedBlockingQueue<RequestMessage> requestList;
 
-    //function to send message from queue.
+    // function to send message from queue.
     synchronized protected void sendQueuedMessage() {
-
         RequestMessage msg;
         // check to see if the queue has a message in it, and if it does,
         // remove the first message
@@ -405,4 +405,5 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
 
     // register for notification
     private final static Logger log = LoggerFactory.getLogger(DCCppThrottle.class);
+
 }
