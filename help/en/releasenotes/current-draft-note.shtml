@@ -535,6 +535,7 @@
         <a id="throttle" name="throttle"></a>
         <ul>
             <li>Fix Jynstrument instantiation on Windows (cleaner URI to path method). <a href="https://groups.io/g/jmriusers/topic/the_jynstruments/78674589"> User message 78674589</a></li>
+            <li>Under the hood code clean up for  throttles (all systems), safe release of throttles.</li>
         </ul>
 
     <h3>Timetable</h3>
