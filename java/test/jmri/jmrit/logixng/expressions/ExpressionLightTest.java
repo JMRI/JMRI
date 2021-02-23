@@ -411,7 +411,7 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         
         logixNG.addConditionalNG(conditionalNG);
         
-        IfThenElse ifThenElse = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
+        IfThenElse ifThenElse = new IfThenElse("IQDA321", null);
         MaleSocket socketIfThenElse =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
         conditionalNG.getChild(0).connect(socketIfThenElse);

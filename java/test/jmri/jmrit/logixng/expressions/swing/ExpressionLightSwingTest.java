@@ -52,7 +52,7 @@ public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase
 
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG("IQC1", null);
         
-        IfThenElse action = new IfThenElse("IQDA1", null, IfThenElse.Type.TRIGGER_ACTION);
+        IfThenElse action = new IfThenElse("IQDA1", null);
         MaleSocket maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
         conditionalNG.getChild(0).connect(maleSocket);
         
@@ -83,7 +83,7 @@ public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase
 
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG("IQC1", null);
         
-        IfThenElse action = new IfThenElse("IQDA1", null, IfThenElse.Type.TRIGGER_ACTION);
+        IfThenElse action = new IfThenElse("IQDA1", null);
         MaleSocket maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
         conditionalNG.getChild(0).connect(maleSocket);
         

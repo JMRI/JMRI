@@ -923,14 +923,20 @@ public class StoreAndLoadTest {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
-        IfThenElse ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null, IfThenElse.Type.CONTINOUS_ACTION);
+        IfThenElse ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(ifThenElse);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         
-        ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null, IfThenElse.Type.TRIGGER_ACTION);
+        ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null);
         ifThenElse.setComment("A comment");
         ifThenElse.setType(IfThenElse.Type.TRIGGER_ACTION);
+        maleSocket = digitalActionManager.registerAction(ifThenElse);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null);
+        ifThenElse.setComment("A comment");
+        ifThenElse.setType(IfThenElse.Type.CONTINOUS_ACTION);
         maleSocket = digitalActionManager.registerAction(ifThenElse);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         
@@ -1133,7 +1139,7 @@ public class StoreAndLoadTest {
         
         
         
-        ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null, IfThenElse.Type.TRIGGER_ACTION);
+        ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null);
         ifThenElse.setComment("A comment");
         ifThenElse.setType(IfThenElse.Type.TRIGGER_ACTION);
         maleSocket = digitalActionManager.registerAction(ifThenElse);

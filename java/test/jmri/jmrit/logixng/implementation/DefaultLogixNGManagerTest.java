@@ -114,7 +114,7 @@ public class DefaultLogixNGManagerTest {
             femaleSocket = actionManySocket.getChild(0);
             MaleDigitalActionSocket actionIfThenSocket =
                     InstanceManager.getDefault(DigitalActionManager.class)
-                            .registerAction(new IfThenElse(digitalActionManager.getAutoSystemName(), null, IfThenElse.Type.TRIGGER_ACTION));
+                            .registerAction(new IfThenElse(digitalActionManager.getAutoSystemName(), null));
             femaleSocket.connect(actionIfThenSocket);
         } catch (SocketAlreadyConnectedException e) {
             // This should never be able to happen.

@@ -52,7 +52,7 @@ public class IfThenElse extends AbstractDigitalAction
         CONTINOUS_ACTION,
     }
 
-    private Type _type;
+    private Type _type = Type.TRIGGER_ACTION;
     private boolean _lastExpressionResult = false;
     private String _ifExpressionSocketSystemName;
     private String _thenActionSocketSystemName;
@@ -61,9 +61,8 @@ public class IfThenElse extends AbstractDigitalAction
     private final FemaleDigitalActionSocket _thenActionSocket;
     private final FemaleDigitalActionSocket _elseActionSocket;
     
-    public IfThenElse(String sys, String user, Type type) {
+    public IfThenElse(String sys, String user) {
         super(sys, user);
-        _type = type;
         _ifExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, "If");
         _thenActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
@@ -78,8 +77,9 @@ public class IfThenElse extends AbstractDigitalAction
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
-        IfThenElse copy = new IfThenElse(sysName, userName, _type);
+        IfThenElse copy = new IfThenElse(sysName, userName);
         copy.setComment(getComment());
+        copy.setType(_type);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
     

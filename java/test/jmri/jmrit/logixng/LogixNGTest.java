@@ -453,7 +453,7 @@ public class LogixNGTest {
             femaleSocket = actionManySocket.getChild(0);
             MaleDigitalActionSocket actionIfThenSocket =
                     InstanceManager.getDefault(DigitalActionManager.class)
-                            .registerAction(new IfThenElse(digitalActionManager.getAutoSystemName(), null, IfThenElse.Type.TRIGGER_ACTION));
+                            .registerAction(new IfThenElse(digitalActionManager.getAutoSystemName(), null));
             femaleSocket.connect(actionIfThenSocket);
         } catch (SocketAlreadyConnectedException e) {
             // This should never be able to happen.
@@ -528,7 +528,7 @@ public class LogixNGTest {
     @Test
     public void testBundle() {
         Assert.assertTrue("bean type is correct", "LogixNG".equals(new DefaultLogixNG("IQ55", null).getBeanType()));
-        Assert.assertTrue("bean type is correct", "Digital action".equals(new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION).getBeanType()));
+        Assert.assertTrue("bean type is correct", "Digital action".equals(new IfThenElse("IQDA321", null).getBeanType()));
         Assert.assertTrue("bean type is correct", "Digital expression".equals(new And("IQDE321", null).getBeanType()));
     }
     

@@ -57,7 +57,7 @@ public class StoreAndLoadTest {
         
         FemaleSocket femaleSocket = conditionalNG.getFemaleSocket();
         
-        IfThenElse ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null, IfThenElse.Type.CONTINOUS_ACTION);
+        IfThenElse ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null);
         MaleSocket maleSocket = digitalActionManager.registerAction(ifThenElse);
         femaleSocket.connect(maleSocket);
         

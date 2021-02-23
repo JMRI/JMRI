@@ -125,7 +125,7 @@ public class ExecuteDelayed
                         ? TypeConversionUtil.convertToLong(
                                 _stateExpressionNode.calculate(
                                         getConditionalNG().getSymbolTable()))
-                        : null;
+                        : 0;
                 
             default:
                 throw new IllegalArgumentException("invalid _addressing state: " + _stateAddressing.name());

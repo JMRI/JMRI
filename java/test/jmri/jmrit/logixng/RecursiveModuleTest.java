@@ -97,7 +97,7 @@ public class RecursiveModuleTest {
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(many901);
         module.getRootSocket().connect(manySocket901);
         
-        IfThenElse ifThenElse912 = new IfThenElse("IQDA912", null, IfThenElse.Type.TRIGGER_ACTION);
+        IfThenElse ifThenElse912 = new IfThenElse("IQDA912", null);
         ifThenElse912.setType(IfThenElse.Type.CONTINOUS_ACTION);
         MaleSocket ifThenElseSocket912 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse912);
@@ -122,7 +122,7 @@ public class RecursiveModuleTest {
         ifThenElseSocket912.getChild(1).connect(maleSocket914);
         
         
-        IfThenElse ifThenElse915 = new IfThenElse("IQDA915", null, IfThenElse.Type.TRIGGER_ACTION);
+        IfThenElse ifThenElse915 = new IfThenElse("IQDA915", null);
         ifThenElse915.setType(IfThenElse.Type.CONTINOUS_ACTION);
         MaleSocket ifThenElseSocket915 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse915);

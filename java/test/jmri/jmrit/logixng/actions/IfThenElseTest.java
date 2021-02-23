@@ -70,7 +70,7 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
     
     @Override
     public NamedBean createNewBean(String systemName) {
-        return new IfThenElse(systemName, null, IfThenElse.Type.CONTINOUS_ACTION);
+        return new IfThenElse(systemName, null);
     }
     
     @Override
@@ -80,15 +80,18 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testCtor() {
-        DigitalActionBean t = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
+        IfThenElse t = new IfThenElse("IQDA321", null);
+        t.setType(IfThenElse.Type.TRIGGER_ACTION);
         Assert.assertNotNull("exists",t);
-        t = new IfThenElse("IQDA321", null, IfThenElse.Type.CONTINOUS_ACTION);
+        t = new IfThenElse("IQDA321", null);
+        t.setType(IfThenElse.Type.CONTINOUS_ACTION);
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testCtorAndSetup1() {
-        IfThenElse expression = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
+        IfThenElse expression = new IfThenElse("IQDA321", null);
+        expression.setType(IfThenElse.Type.TRIGGER_ACTION);
         Assert.assertNotNull("exists", expression);
         Assert.assertEquals("expression has 3 female sockets", 3, expression.getChildCount());
         expression.getChild(0).setName("XYZ123");
@@ -160,7 +163,8 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testCtorAndSetup2() {
-        IfThenElse expression = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
+        IfThenElse expression = new IfThenElse("IQDA321", null);
+        expression.setType(IfThenElse.Type.TRIGGER_ACTION);
         Assert.assertNotNull("exists", expression);
         Assert.assertEquals("expression has 3 female sockets", 3, expression.getChildCount());
         expression.getChild(0).setName("XYZ123");
@@ -235,7 +239,8 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
         MaleSocket childSocket1 = m1.registerAction(new ActionMemory("IQDA554", null));
         MaleSocket childSocket2 = m1.registerAction(new ActionMemory("IQDA594", null));
         
-        IfThenElse expression = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
+        IfThenElse expression = new IfThenElse("IQDA321", null);
+        expression.setType(IfThenElse.Type.TRIGGER_ACTION);
         Assert.assertNotNull("exists", expression);
         Assert.assertEquals("expression has 3 female sockets", 3, expression.getChildCount());
         expression.getChild(0).setName("XYZ123");
@@ -324,9 +329,11 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testToString() {
-        DigitalActionBean a1 = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
+        IfThenElse a1 = new IfThenElse("IQDA321", null);
+        a1.setType(IfThenElse.Type.TRIGGER_ACTION);
         Assert.assertEquals("strings are equal", "If Then Else", a1.getShortDescription());
-        DigitalActionBean a2 = new IfThenElse("IQDA321", null, IfThenElse.Type.CONTINOUS_ACTION);
+        IfThenElse a2 = new IfThenElse("IQDA321", null);
+        a2.setType(IfThenElse.Type.CONTINOUS_ACTION);
         Assert.assertEquals("strings are equal", "If Then Else", a2.getLongDescription());
     }
     
@@ -362,7 +369,8 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
         conditionalNG.setEnabled(true);
         conditionalNG.setRunDelayed(false);
         logixNG.addConditionalNG(conditionalNG);
-        actionIfThenElse = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
+        actionIfThenElse = new IfThenElse("IQDA321", null);
+        actionIfThenElse.setType(IfThenElse.Type.TRIGGER_ACTION);
         MaleSocket maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionIfThenElse);
         conditionalNG.getChild(0).connect(maleSocket);

@@ -558,7 +558,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         conditionalNG.setRunDelayed(false);
         conditionalNG.setEnabled(true);
         
-        ifThenElse = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
+        ifThenElse = new IfThenElse("IQDA321", null);
         MaleSocket maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
         conditionalNG.getChild(0).connect(maleSocket);

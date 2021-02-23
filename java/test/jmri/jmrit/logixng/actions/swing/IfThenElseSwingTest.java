@@ -35,7 +35,7 @@ public class IfThenElseSwingTest {
         Assert.assertTrue("panel is not null",
             null != new IfThenElseSwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new IfThenElseSwing().getConfigPanel(new IfThenElse("IQDA1", null, IfThenElse.Type.TRIGGER_ACTION), new JPanel()));
+            null != new IfThenElseSwing().getConfigPanel(new IfThenElse("IQDA1", null), new JPanel()));
     }
     
     // The minimal setup for log4J
