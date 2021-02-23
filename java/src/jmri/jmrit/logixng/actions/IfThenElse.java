@@ -192,10 +192,6 @@ public class IfThenElse extends AbstractDigitalAction
     @Override
     public String getLongDescription(Locale locale) {
         return Bundle.getMessage(locale, "IfThenElse_Long", _type.toString());
-//        return Bundle.getMessage(locale, "IfThenElse_Long",
-//                _ifExpressionSocket.getName(),
-//                _thenActionSocket.getName(),
-//                _elseActionSocket.getName());
     }
 
     public FemaleDigitalExpressionSocket getIfExpressionSocket() {
