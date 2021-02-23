@@ -932,7 +932,7 @@ public class LocoNetSlot {
                 localF26 = ((l.getElement(13) & 0b00100000 ) != 0);
                 localF27 = ((l.getElement(13) & 0b01000000 ) != 0);
                 localF28 = ((l.getElement(9)  & 0b01000000 ) != 0);
-
+                leadSlot = (((l.getElement(9) & 0x03)   * 128) + l.getElement(8) );
                 notifySlotListeners();
                 break;
             case LnConstants.OPC_EXP_SLOT_MOVE:
@@ -1184,6 +1184,10 @@ public class LocoNetSlot {
     public int getThrottleIdentity() {
         return id;
     }
+    
+    public int getLeadSlot() {
+        return leadSlot;
+    }
 
     /**
      * Update the status mode bits in STAT1 (D5, D4)
@@ -1385,6 +1389,7 @@ public class LocoNetSlot {
     private int id;  // throttle id, made from
     //     <ID1> and <ID2> normally identify the throttle controlling the loco
     private int expandedThrottleControllingID; //the throttle ID byte that is used in sending commands that require a throttle ID. (ID1)
+    private int leadSlot; // the top slot for this slot in a consist.
 
     private int _pcmd;  // hold pcmd and pstat for programmer
 
