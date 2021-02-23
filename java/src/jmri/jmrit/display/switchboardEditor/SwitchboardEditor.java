@@ -205,10 +205,12 @@ public class SwitchboardEditor extends Editor {
         setJMenuBar(_menuBar);
         addHelpMenu("package.jmri.jmrit.display.SwitchboardEditor", true);
         // set GUI dependant margin if not Nimbus, CDE/Motif (or undefined)
-        if (UIManager.getLookAndFeel().getName().equals("Metal")) {
-            verticalMargin = 47;
-        } else if (UIManager.getLookAndFeel().getName().equals("Mac OS X")) {
-            verticalMargin = 25;
+        if (UIManager.getLookAndFeel() != null) {
+            if (UIManager.getLookAndFeel().getName().equals("Metal")) {
+                verticalMargin = 47;
+            } else if (UIManager.getLookAndFeel().getName().equals("Mac OS X")) {
+                verticalMargin = 25;
+            }
         }
         switchboardLayeredPane = new TargetPane(); // extends JLayeredPane();
         switchboardLayeredPane.setPreferredSize(new Dimension(width, height));
@@ -484,9 +486,9 @@ public class SwitchboardEditor extends Editor {
         }
         // if range is confirmed, go ahead with switchboard update
         for (int i = switchesOnBoard.size() - 1; i >= 0; i--) {
-            if (i >= switchboardLayeredPane.getComponentCount()) {
-                continue;
-            }
+//            if (i >= switchboardLayeredPane.getComponentCount()) { // turn off this check for now
+//                continue;
+//            }
             // remove listeners before removing switches from JLayeredPane
             ((BeanSwitch) switchboardLayeredPane.getComponent(i)).cleanup();
             // deleting items starting from 0 will result in skipping the even numbered items
@@ -584,7 +586,7 @@ public class SwitchboardEditor extends Editor {
                     nb = jmri.InstanceManager.getDefault(TurnoutManager.class).getTurnout(name);
                     break;
                 case 1:
-                    try {
+                    try { // was: InstanceManager.getDefault(SensorManager.class)
                         name = ((SensorManager)memo.get(SensorManager.class)).createSystemName(i + "", prefix);
                     } catch (jmri.JmriException | NullPointerException ex) {
                         log.trace("Error creating range at sensor {}. Connection {}", i, memo.getUserName(), ex);

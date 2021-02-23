@@ -89,10 +89,10 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         _editor = editor;
         _bname = bean;
         _shape = shapeChoice;
-        if (_switchSysName.length() < 3) {
-            log.error("Switch name {} too short for a valid system name", switchName);
-            return;
-        }
+        //if (_switchSysName.length() < 3) { // causes unexpected effects?
+        //    log.error("Switch name {} too short for a valid system name", switchName);
+        //    return;
+        //}
         sysNameTextBox.setText(switchName); // setting name here allows test of AddNew()
         boolean hideUnconnected = false;
         Color backgroundColor = Color.LIGHT_GRAY;
