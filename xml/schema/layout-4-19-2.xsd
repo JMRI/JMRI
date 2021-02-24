@@ -79,7 +79,7 @@ signals - obsolete, EMPTY, never used
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/meterframes.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/ctcdata.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/filehistory.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/logixng-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/logixng-4.23.1.xsd"/>
 
   <xs:element name="layout-config">
     <xs:complexType>
