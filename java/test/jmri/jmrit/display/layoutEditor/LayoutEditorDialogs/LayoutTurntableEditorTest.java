@@ -28,10 +28,10 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
         new LayoutTurntableEditor(null);
     }
 
-
      @Test
     public void testEditTurntableDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // TODO remove next line after 4.21.5 if "provideLayoutBlock: no name" error wasn't seen any more
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         createTurnouts();
@@ -39,6 +39,7 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
         LayoutTurntableEditor editor = new LayoutTurntableEditor(layoutEditor);
 
         // Edit the layoutTurntable
+        layoutEditor.setAutoBlockAssignment(true); // confirm setting to (not) warn later on
         editor.editLayoutTrack(layoutTurntableView);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurntable"));
 
@@ -131,7 +132,7 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
 
-        jmri.util.JUnitAppender.assertErrorMessage("provideLayoutBlock: no name given and not assigning auto block names");
+        //jmri.util.JUnitAppender.assertErrorMessage("provideLayoutBlock: no name given and not assigning auto block names");
     }
 
     @Test
@@ -160,7 +161,6 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
-
     }
 
     @Test
@@ -211,7 +211,6 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel")).doClick();
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
-
     }
 
     private LayoutEditor layoutEditor = null;
