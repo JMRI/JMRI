@@ -5,7 +5,7 @@ import java.awt.event.*;
 import java.util.*;
 import java.util.List;
 import javax.annotation.Nonnull;
-//import javax.annotation.concurrent.GuardedBy;
+import javax.annotation.concurrent.GuardedBy;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
@@ -155,7 +155,7 @@ public class SwitchboardEditor extends Editor {
      * until the GridLayout is configured, used to determine the total number of items to be placed.
      * Accounts for "hide unconnected" setting, so it can be empty.
      */
-    //@GuardedBy("this")
+    @GuardedBy("this")
     private final LinkedHashMap<String, BeanSwitch> switchesOnBoard = new LinkedHashMap<>();
 
     /**
@@ -485,17 +485,19 @@ public class SwitchboardEditor extends Editor {
             }
         }
         // if range is confirmed, go ahead with switchboard update
-        for (int i = switchesOnBoard.size() - 1; i >= 0; i--) {
-//            if (i >= switchboardLayeredPane.getComponentCount()) { // turn off this check for now
-//                continue;
-//            }
-            // remove listeners before removing switches from JLayeredPane
-            ((BeanSwitch) switchboardLayeredPane.getComponent(i)).cleanup();
-            // deleting items starting from 0 will result in skipping the even numbered items
-            switchboardLayeredPane.remove(i);
+        synchronized (this) {
+            for (int i = switchesOnBoard.size() - 1; i >= 0; i--) {
+                //            if (i >= switchboardLayeredPane.getComponentCount()) { // turn off this check for now
+                //                continue;
+                //            }
+                // remove listeners before removing switches from JLayeredPane
+                ((BeanSwitch) switchboardLayeredPane.getComponent(i)).cleanup();
+                // deleting items starting from 0 will result in skipping the even numbered items
+                switchboardLayeredPane.remove(i);
+            }
+            switchesOnBoard.clear(); // reset beanswitches LinkedHashMap
+            log.debug("switchesOnBoard cleared, size is now: 0"); // always 0 at this point
         }
-        switchesOnBoard.clear(); // reset beanswitches LinkedHashMap
-        log.debug("switchesOnBoard cleared, size is now: 0"); // always 0 at this point
         switchboardLayeredPane.setSize(width, height);
 
         String memoName = (memo != null ? memo.getUserName() : "UNKNOWN");
@@ -523,17 +525,18 @@ public class SwitchboardEditor extends Editor {
         switchboardLayeredPane.setLayout(new GridLayout(Math.max(rows, 1), 1));
 
         // add switches to LayeredPane
-        for (BeanSwitch bs : switchesOnBoard.values()) {
-            switchboardLayeredPane.add(bs);
+        synchronized (this) {
+            for (BeanSwitch bs : switchesOnBoard.values()) {
+                switchboardLayeredPane.add(bs);
+            }
+            help3.setVisible(switchesOnBoard.size() == 0); // show/hide help3 warning
+            help2.setVisible(switchesOnBoard.size() != 0); // hide help2 when help3 is shown vice versa (as no items are dimmed or not)
         }
-
         // update the title at the bottom of the switchboard to match (no) layout control
         if (beanTypeList.getSelectedIndex() >= 0) {
             border.setTitle(memoName + " " +
                     beanTypeList.getSelectedItem() + " - " + (allControlling() ? interact : noInteract));
         }
-        help3.setVisible(switchesOnBoard.size() == 0); // show/hide help3 warning
-        help2.setVisible(switchesOnBoard.size() != 0); // hide help2 when help3 is shown vice versa (as no items are dimmed or not)
         // hide AllOn/Off buttons unless type is Light and control is allowed
         allOnButton.setVisible((beanTypeList.getSelectedIndex() == 2) && allControlling());
         allOffButton.setVisible((beanTypeList.getSelectedIndex() == 2) && allControlling());
@@ -618,7 +621,7 @@ public class SwitchboardEditor extends Editor {
                 // set switch to display current bean state
                 _switch.displayState(nb.getState());
             }
-            //tmp synchronized (this) {
+            synchronized (this) {
                 switchesOnBoard.put(name, _switch); // add to LinkedHashMap of switches for later placement on JLayeredPane
                 log.debug("Added switch {}", name);
                 // keep total number of switches below practical total of 400 (20 x 20 items)
@@ -626,7 +629,7 @@ public class SwitchboardEditor extends Editor {
                     log.warn("switchboards are limited to {} items", unconnectedRangeLimit);
                     break;
                 }
-            //tmp }
+            }
             // was already checked in first counting loop in init()
         }
     }
@@ -1489,7 +1492,7 @@ public class SwitchboardEditor extends Editor {
      *
      * @return the total number of switches displayed
      */
-    public int getTotal() { //tmp synchronized
+    public synchronized int getTotal() {
         return switchesOnBoard.size();
     }
 
@@ -1691,7 +1694,7 @@ public class SwitchboardEditor extends Editor {
      * @param sName name of switch label/connected bean
      * @return BeanSwitch switch object with the given name
      */
-    protected BeanSwitch getSwitch(String sName) { //tmp synchronized
+    protected synchronized BeanSwitch getSwitch(String sName) {
         if (switchesOnBoard.containsKey(sName)) {
             return switchesOnBoard.get(sName);
         }
@@ -1705,7 +1708,7 @@ public class SwitchboardEditor extends Editor {
      *
      * @return list of all BeanSwitch switch object
      */
-    public List<BeanSwitch> getSwitches() { //tmp synchronized
+    public synchronized List<BeanSwitch> getSwitches() {
         ArrayList<BeanSwitch> _switches = new ArrayList<>();
         log.debug("N = {}", switchesOnBoard.size());
         for (Map.Entry<String, BeanSwitch> bs : switchesOnBoard.entrySet()) {
@@ -1772,7 +1775,7 @@ public class SwitchboardEditor extends Editor {
      *
      * @param on state to set Light.ON or Light.OFF
      */
-    public void switchAllLights(int on) { //tmp synchronized
+    public synchronized void switchAllLights(int on) {
         for (BeanSwitch bs : switchesOnBoard.values()) {
                 bs.switchLight(on);
             }
