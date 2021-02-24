@@ -12,7 +12,6 @@ import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.expressions.Antecedent;
-import jmri.jmrit.logixng.util.parser.*;
 
 /**
  * Configures an ExpressionTurnout object with a Swing JPanel.
@@ -25,12 +24,19 @@ public class AntecedentSwing extends AbstractDigitalExpressionSwing {
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         Antecedent expression = (Antecedent)object;
         panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        JPanel antecedentPanel = new JPanel();
         JLabel label = new JLabel(Bundle.getMessage("Antecedent_Antecedent"));
         _antecedent = new JTextField();
         _antecedent.setColumns(40);
         if (expression != null) _antecedent.setText(expression.getAntecedent());
-        panel.add(label);
-        panel.add(_antecedent);
+        antecedentPanel.add(label);
+        antecedentPanel.add(_antecedent);
+        panel.add(antecedentPanel);
+        JLabel descriptionLabel = new JLabel(Bundle.getMessage("Antecedent_Description"));
+        JPanel subPanel = new JPanel();
+        subPanel.add(descriptionLabel);
+        panel.add(subPanel);
     }
     
     /** {@inheritDoc} */
