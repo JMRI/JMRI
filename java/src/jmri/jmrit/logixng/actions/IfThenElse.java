@@ -24,48 +24,8 @@ import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 public class IfThenElse extends AbstractDigitalAction
         implements FemaleSocketListener {
 
-    /**
-     * The type of Action. If the type is changed, the action is aborted if it
-     * is currently running.
-     */
-    public enum Type {
-        /**
-         * Action is triggered when the expression is True. The action may
-         * continue even if the expression becomes False.
-         * 
-         * If the expression is False and then True again before the action
-         * is finished, action.executeAgain() is called instead of action.execute().
-         * 
-         * Note that in a tree of actions, some actions may have been finished
-         * and some actions still running. In this case, the actions that are
-         * still running will be called with executeAgain() but those actions
-         * that are finished will be called with execute(). Actions that have
-         * child actions need to deal with this.
-         */
-        TRIGGER_ACTION(Bundle.getMessage("IfThenElse_TriggerAction")),
-        
-        /**
-         * Action is executed when the expression is True but only as long as
-         * the expression stays True. If the expression becomes False, the
-         * action is aborted.
-         */
-        CONTINOUS_ACTION(Bundle.getMessage("IfThenElse_ContinousAction"));
-        
-        private final String _text;
-        
-        private Type(String text) {
-            this._text = text;
-        }
-        
-        @Override
-        public String toString() {
-            return _text;
-        }
-        
-    }
-
     private Type _type = Type.TRIGGER_ACTION;
-    private boolean _lastExpressionResult = false;
+    private TriState _lastExpressionResult = TriState.Unknown;
     private String _ifExpressionSocketSystemName;
     private String _thenActionSocketSystemName;
     private String _elseActionSocketSystemName;
@@ -110,12 +70,20 @@ public class IfThenElse extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        _lastExpressionResult = _ifExpressionSocket.evaluate();
+        boolean result = _ifExpressionSocket.evaluate();
+        TriState _expressionResult = TriState.getValue(result);
         
-        if (_lastExpressionResult) {
-            _thenActionSocket.execute();
-        } else {
-            _elseActionSocket.execute();
+        // _lastExpressionResult may be Unknown
+        if ((_type == Type.CONTINOUS_ACTION) || (_expressionResult != _lastExpressionResult)) {
+            if (result) {
+                _thenActionSocket.execute();
+            } else {
+                _elseActionSocket.execute();
+            }
+            
+            // Last expression result must be stored as a tri state value, since
+            // we must know if the old value is known or not.
+            _lastExpressionResult = _expressionResult;
         }
     }
 
@@ -318,7 +286,60 @@ public class IfThenElse extends AbstractDigitalAction
     @Override
     public void disposeMe() {
     }
-
+    
+    
+    /**
+     * The type of Action. If the type is changed, the action is aborted if it
+     * is currently running.
+     */
+    public enum Type {
+        /**
+         * Action is triggered when the expression is True. The action may
+         * continue even if the expression becomes False.
+         * 
+         * If the expression is False and then True again before the action
+         * is finished, action.executeAgain() is called instead of action.execute().
+         * 
+         * Note that in a tree of actions, some actions may have been finished
+         * and some actions still running. In this case, the actions that are
+         * still running will be called with executeAgain() but those actions
+         * that are finished will be called with execute(). Actions that have
+         * child actions need to deal with this.
+         */
+        TRIGGER_ACTION(Bundle.getMessage("IfThenElse_TriggerAction")),
+        
+        /**
+         * Action is executed when the expression is True but only as long as
+         * the expression stays True. If the expression becomes False, the
+         * action is aborted.
+         */
+        CONTINOUS_ACTION(Bundle.getMessage("IfThenElse_ContinousAction"));
+        
+        private final String _text;
+        
+        private Type(String text) {
+            this._text = text;
+        }
+        
+        @Override
+        public String toString() {
+            return _text;
+        }
+        
+    }
+    
+    
+    private static enum TriState {
+        Unknown,
+        False,
+        True;
+        
+        public static TriState getValue(boolean value) {
+            return value ? True : False;
+        }
+    }
+    
+    
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IfThenElse.class);
 
 }
