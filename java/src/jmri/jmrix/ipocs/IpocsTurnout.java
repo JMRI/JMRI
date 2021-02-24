@@ -18,7 +18,7 @@ import jmri.jmrix.ipocs.protocol.packets.ThrowPointsPacket;
  */
 public class IpocsTurnout extends AbstractTurnout implements IpocsClientListener {
   private final static Logger log = LoggerFactory.getLogger(IpocsTurnout.class);
-  private IpocsPortController portController;
+  private final IpocsPortController portController;
 
   IpocsTurnout(IpocsPortController portController, String systemName, String userName) {
     super(systemName, userName);
@@ -59,6 +59,8 @@ public class IpocsTurnout extends AbstractTurnout implements IpocsClientListener
     // Not supported
   }
 
+  // ipocs turnouts don't support inversion, no need to override super.canInvert() reply
+
   @Override
   public void clientConnected(IpocsClientHandler client) {
     // Nothing to do when a client connects.
@@ -76,29 +78,25 @@ public class IpocsTurnout extends AbstractTurnout implements IpocsClientListener
     }
     // We have a status, let's interpret it.
     for (Packet packet : msg.getPackets()) {
-      switch (packet.getId()) {
-        case PointsStatusPacket.IDENT:
-          switch (((PointsStatusPacket) packet).getState()) {
-            case Left:
-              newKnownState(Turnout.THROWN);
-              break;
-            case Right:
-              newKnownState(Turnout.CLOSED);
-              break;
-            case Moving:
-              newKnownState(Turnout.INCONSISTENT);
-              break;
-            case OutOfControl:
-              newKnownState(Turnout.UNKNOWN);
-              break;
-            default:
-              log.error("Unknown turnout state {}", ((PointsStatusPacket) packet).getState().toString());
-              break;
-          }
-          break;
-        default:
-          break;
-      }
+        if (packet.getId() == PointsStatusPacket.IDENT) {
+            switch (((PointsStatusPacket) packet).getState()) {
+                case Left:
+                    newKnownState(Turnout.THROWN);
+                    break;
+                case Right:
+                    newKnownState(Turnout.CLOSED);
+                    break;
+                case Moving:
+                    newKnownState(Turnout.INCONSISTENT);
+                    break;
+                case OutOfControl:
+                    newKnownState(Turnout.UNKNOWN);
+                    break;
+                default:
+                    log.error("Unknown turnout state {}", ((PointsStatusPacket) packet).getState().toString());
+                    break;
+            }
+        }
     }
   }
 }

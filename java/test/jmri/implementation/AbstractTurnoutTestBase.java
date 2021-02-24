@@ -178,37 +178,43 @@ public abstract class AbstractTurnoutTestBase {
     }
 
     @Test
-    public void testGetAndSetInverted(){
-        Assume.assumeTrue(t.canInvert());  // skip test if can't invert.
-        Assert.assertFalse("Default Inverted State", t.getInverted());
-        t.setInverted(true);
-        Assert.assertTrue("set Inverted", t.getInverted());
+    public void testGetAndSetInverted() {
+        if (t.canInvert()) {
+            //Assume.assumeTrue(t.canInvert());  // skip test if can't invert.
+            Assert.assertFalse("Default Inverted State", t.getInverted());
+            t.setInverted(true);
+            Assert.assertTrue("set Inverted", t.getInverted());
+        }
     }
 
     @Test
     public void testInvertedCommandClosed() throws InterruptedException {
-        Assume.assumeTrue(t.canInvert());  // skip test if can't invert.
-        t.setInverted(true);
-        t.setCommandedState(Turnout.CLOSED);
-        // check
-        Assert.assertEquals("commanded state 1", Turnout.CLOSED, t.getCommandedState());
-        checkThrownMsgSent();
-        ((AbstractTurnout)t).setKnownStateToCommanded();
-        Assert.assertEquals("commanded state 2", Turnout.CLOSED, t.getState());
-        Assert.assertEquals("commanded state 3", "Closed", t.describeState(t.getState()));
+        if (t.canInvert()) {
+            //Assume.assumeTrue(t.canInvert());  // skip test if can't invert.
+            t.setInverted(true);
+            t.setCommandedState(Turnout.CLOSED);
+            // check
+            Assert.assertEquals("commanded state 1", Turnout.CLOSED, t.getCommandedState());
+            checkThrownMsgSent();
+            ((AbstractTurnout) t).setKnownStateToCommanded();
+            Assert.assertEquals("commanded state 2", Turnout.CLOSED, t.getState());
+            Assert.assertEquals("commanded state 3", "Closed", t.describeState(t.getState()));
+        }
     }
 
     @Test
     public void testInvertedCommandThrown() throws InterruptedException {
-        Assume.assumeTrue(t.canInvert());  // skip test if can't invert.
-        t.setInverted(true);
-        t.setCommandedState(Turnout.THROWN);
-        // check
-        Assert.assertEquals("commanded state 1", Turnout.THROWN, t.getCommandedState());
-        checkClosedMsgSent();
-        ((AbstractTurnout)t).setKnownStateToCommanded();
-        Assert.assertEquals("commanded state 2", Turnout.THROWN, t.getState());
-        Assert.assertEquals("commanded state 3", "Thrown", t.describeState(t.getState()));
+        if (t.canInvert()) {
+            //Assume.assumeTrue(t.canInvert());  // skip test if can't invert.
+            t.setInverted(true);
+            t.setCommandedState(Turnout.THROWN);
+            // check
+            Assert.assertEquals("commanded state 1", Turnout.THROWN, t.getCommandedState());
+            checkClosedMsgSent();
+            ((AbstractTurnout) t).setKnownStateToCommanded();
+            Assert.assertEquals("commanded state 2", Turnout.THROWN, t.getState());
+            Assert.assertEquals("commanded state 3", "Thrown", t.describeState(t.getState()));
+        }
     }
 
     @Test
