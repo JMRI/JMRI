@@ -24,7 +24,7 @@ import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 public class IfThenElse extends AbstractDigitalAction
         implements FemaleSocketListener {
 
-    private Type _type = Type.TRIGGER_ACTION;
+    private Type _type = Type.TriggerAction;
     private TriState _lastExpressionResult = TriState.Unknown;
     private String _ifExpressionSocketSystemName;
     private String _thenActionSocketSystemName;
@@ -74,7 +74,7 @@ public class IfThenElse extends AbstractDigitalAction
         TriState _expressionResult = TriState.getValue(result);
         
         // _lastExpressionResult may be Unknown
-        if ((_type == Type.CONTINOUS_ACTION) || (_expressionResult != _lastExpressionResult)) {
+        if ((_type == Type.ContinuousAction) || (_expressionResult != _lastExpressionResult)) {
             if (result) {
                 _thenActionSocket.execute();
             } else {
@@ -306,14 +306,14 @@ public class IfThenElse extends AbstractDigitalAction
          * that are finished will be called with execute(). Actions that have
          * child actions need to deal with this.
          */
-        TRIGGER_ACTION(Bundle.getMessage("IfThenElse_TriggerAction")),
+        TriggerAction(Bundle.getMessage("IfThenElse_TriggerAction")),
         
         /**
          * Action is executed when the expression is True but only as long as
          * the expression stays True. If the expression becomes False, the
          * action is aborted.
          */
-        CONTINOUS_ACTION(Bundle.getMessage("IfThenElse_ContinousAction"));
+        ContinuousAction(Bundle.getMessage("IfThenElse_ContinuousAction"));
         
         private final String _text;
         

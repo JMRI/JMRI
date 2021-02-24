@@ -70,8 +70,20 @@
             <xs:attribute name="type" use="required">
               <xs:simpleType>
                 <xs:restriction base="xs:token">
+                  <xs:enumeration value="TriggerAction"/>
+                  <xs:enumeration value="ContinuousAction"/>
+
+				  <!--
+                  To not cause problems during testing, these are accepted
+                  for now. But they should be removed before the production
+                  version. These where changed to CamelCase after people
+                  had started testing LogixNG.
+                  Remove TRIGGER_ACTION and CONTINOUS_ACTION in IfThenElseXml.java
+                  as well.
+                  -->
                   <xs:enumeration value="TRIGGER_ACTION"/>
                   <xs:enumeration value="CONTINOUS_ACTION"/>
+
                 </xs:restriction>
               </xs:simpleType>
             </xs:attribute>

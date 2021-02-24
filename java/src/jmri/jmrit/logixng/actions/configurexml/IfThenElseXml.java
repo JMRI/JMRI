@@ -81,8 +81,20 @@ public class IfThenElseXml extends jmri.managers.configurexml.AbstractNamedBeanM
     @Override
     public boolean load(Element shared, Element perNode) {
         
-        Attribute typeAttribute = shared.getAttribute("type");
-        IfThenElse.Type type = IfThenElse.Type.valueOf(typeAttribute.getValue());
+        String typeStr = shared.getAttribute("type").getValue();
+        
+        /*
+        To not cause problems during testing, these are accepted
+        for now. But they should be removed before the production
+        version. These where changed to CamelCase after people
+        had started testing LogixNG.
+        Remove TRIGGER_ACTION and CONTINOUS_ACTION in if-then-else-4.23.1.xsd
+        as well.
+        */
+        if ("TRIGGER_ACTION".equals(typeStr)) typeStr = "TriggerAction";
+        if ("CONTINOUS_ACTION".equals(typeStr)) typeStr = "ContinuousAction";
+        
+        IfThenElse.Type type = IfThenElse.Type.valueOf(typeStr);
         
         String sys = getSystemName(shared);
         String uname = getUserName(shared);

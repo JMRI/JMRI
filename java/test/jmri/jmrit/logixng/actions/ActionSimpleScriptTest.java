@@ -67,7 +67,7 @@ public class ActionSimpleScriptTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else. Continous action ::: Log error%n" +
+                "         If Then Else. Continuous action ::: Log error%n" +
                 "            ? If%n" +
                 "               Sensor IS1 is Active ::: Log error%n" +
                 "            ! Then%n" +
@@ -252,7 +252,7 @@ public class ActionSimpleScriptTest extends AbstractDigitalActionTestBase {
         conditionalNG.setEnabled(true);
         
         ifThenElse = new IfThenElse("IQDA321", null);
-        ifThenElse.setType(IfThenElse.Type.CONTINOUS_ACTION);
+        ifThenElse.setType(IfThenElse.Type.ContinuousAction);
         MaleSocket maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
         conditionalNG.getChild(0).connect(maleSocket);
