@@ -23,8 +23,10 @@ public class MessageTest {
   @Test
   public void testParse() {
     Message m = Message.parse(ByteBuffer.wrap(testMessage), testMessage.length);
+    assert m != null;
     assertEquals("Vx91", m.getObjectName());
     assertEquals(1, m.getPackets().size());
     assertEquals(SignOfLifePacket.class, m.getPackets().get(0).getClass());
   }
+
 }

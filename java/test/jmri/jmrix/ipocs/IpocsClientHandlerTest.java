@@ -62,8 +62,10 @@ public class IpocsClientHandlerTest {
     final IpocsClientHandler ch = new IpocsClientHandler(client);
     ch.addClientListener(listener);
     ch.completed(-1, null);
+
     doThrow(new IOException()).when(client).close();
     ch.completed(-1, null);
+    jmri.util.JUnitAppender.suppressErrorMessage("Unable to close client: null"); // happens intermittently during CI
   }
 
   @Test
@@ -75,6 +77,7 @@ public class IpocsClientHandlerTest {
     final ByteBuffer buff = msg.serialize();
     buff.position(buff.capacity());
     ch.completed(buff.capacity(), buff);
+    jmri.util.JUnitAppender.suppressErrorMessage("Unable to close client: null"); // happens intermittently during CI
   }
 
   @Test
@@ -87,6 +90,7 @@ public class IpocsClientHandlerTest {
     final ByteBuffer buff = msg.serialize();
     buff.position(buff.capacity());
     ch.completed(buff.capacity(), buff);
+    jmri.util.JUnitAppender.suppressErrorMessage("Unable to close client: null"); // happens intermittently during CI
   }
 
   @Test
@@ -109,10 +113,10 @@ public class IpocsClientHandlerTest {
     final IpocsClientHandler ch = new IpocsClientHandler(client);
     ch.failed(new Exception("Error"), null);
     jmri.util.JUnitAppender.suppressErrorMessage("Error closing connection");
+
     ch.addClientListener(listener);
     doThrow(new IOException()).when(client).close();
     ch.failed(new Exception("Error"), null);
-    jmri.util.JUnitAppender.suppressErrorMessage("Error closing connection");
   }
 
   @Test
@@ -134,4 +138,5 @@ public class IpocsClientHandlerTest {
     when(msg.serialize()).thenReturn(ByteBuffer.wrap(new byte[] {}));
     ch.send(msg);
   }
+
 }

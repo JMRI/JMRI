@@ -75,14 +75,14 @@ import javax.annotation.CheckForNull;
 public interface Turnout extends DigitalIO {
 
     /**
-     * Constant representing an "closed" state, either in readback or as a
+     * Constant representing a "closed" state, either in readback or as a
      * commanded state. Note that it's possible to be both CLOSED and THROWN at
      * the same time on some systems, which should be called INCONSISTENT
      */
     public static final int CLOSED = DigitalIO.ON;
 
     /**
-     * Constant representing an "thrown" state, either in readback or as a
+     * Constant representing a "thrown" state, either in readback or as a
      * commanded state. Note that it's possible to be both CLOSED and THROWN at
      * the same time on some systems, which should be called INCONSISTENT
      */

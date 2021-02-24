@@ -17,6 +17,7 @@ import jmri.jmrix.ipocs.protocol.packets.ThrowPointsPacket;
  * @since 4.21.2
  */
 public class IpocsTurnout extends AbstractTurnout implements IpocsClientListener {
+
   private final static Logger log = LoggerFactory.getLogger(IpocsTurnout.class);
   private final IpocsPortController portController;
 
@@ -46,8 +47,11 @@ public class IpocsTurnout extends AbstractTurnout implements IpocsClientListener
       case CLOSED:
         packet.setCommand(RqPointsCommand.Right);
         break;
+      case UNKNOWN:
+        // ignore, but not an error as normal during AbstractTurnout testCreate()
+        return;
       default:
-        log.error("Unknown turnout order state");
+        log.error("Unknown turnout order state: {}", s);
         return;
     }
     order.getPackets().add(packet);

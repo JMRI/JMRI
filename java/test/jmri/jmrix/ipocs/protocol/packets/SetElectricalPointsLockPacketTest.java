@@ -10,7 +10,7 @@ import org.junit.Test;
 import jmri.jmrix.ipocs.protocol.enums.RqPointsLockCommand;
 
 public class SetElectricalPointsLockPacketTest {
-  private byte[] testPacket = { RqPointsLockCommand.Lock.value };
+  private final byte[] testPacket = { RqPointsLockCommand.Lock.value };
 
   @Test
   public void getIdTest() {

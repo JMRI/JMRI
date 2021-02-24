@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 
 public class PacketTest {
   Packet pkt = null;
-  private byte[] testPacket = { 0x20, 0x03, 0x12 };
+  private final byte[] testPacket = { 0x20, 0x03, 0x12 };
 
   @BeforeEach
   public void beforeEach() {
@@ -63,4 +63,5 @@ public class PacketTest {
     assertEquals(ByteBuffer.wrap(testPacket), pkt.serialize());
     assertEquals(0x03, pkt.getLength());
   }
+
 }

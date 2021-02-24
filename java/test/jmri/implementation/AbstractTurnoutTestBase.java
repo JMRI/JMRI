@@ -40,6 +40,7 @@ public abstract class AbstractTurnoutTestBase {
 
     /**
      * @return number of listeners registered with the TrafficController by the object under test
+     * util for test clean up
      */
     abstract public int numListeners();
 
@@ -354,10 +355,9 @@ public abstract class AbstractTurnoutTestBase {
         s1.setKnownState(Sensor.INCONSISTENT);
         s2.setKnownState(Sensor.INCONSISTENT);
         Assert.assertEquals("state changed by TWOSENSOR feedback (INCONSISTENT, INCONSISTENT)", t.describeState(Turnout.INCONSISTENT), t.describeState(t.getKnownState()));
-        
     }
 
-    @Test 
+    @Test
     public void testDirectFeedback() throws Exception {
 
         // DIRECT mode is implemented in the AbstractTurnout class, so

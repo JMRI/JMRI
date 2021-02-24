@@ -4,6 +4,8 @@ import jmri.SystemConnectionMemo;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
 
+import javax.annotation.Nonnull;
+
 /**
  *
  * @author Fredrik Elestedt Copyright (C) 2020
@@ -20,7 +22,7 @@ public class IpocsTurnoutManager extends AbstractTurnoutManager {
   }
 
   @Override
-  protected Turnout createNewTurnout(String systemName, String userName) {
+  protected Turnout createNewTurnout(@Nonnull String systemName, String userName) {
     return new IpocsTurnout(getPortController(), systemName, userName);
   }
 }
