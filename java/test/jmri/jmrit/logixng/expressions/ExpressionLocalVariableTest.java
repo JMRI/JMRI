@@ -57,7 +57,7 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else ::: Log error%n" +
+                "         If Then Else. Trigger action ::: Log error%n" +
                 "            ? If%n" +
                 "               Local variable myVar is equal to \"\" ::: Log error%n" +
                 "                  ::: Local variable \"myVar\", init to String \"\"%n" +

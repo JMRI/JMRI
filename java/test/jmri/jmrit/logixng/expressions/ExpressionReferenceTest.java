@@ -19,7 +19,6 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
-import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -71,7 +70,7 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else ::: Log error%n" +
+                "         If Then Else. Trigger action ::: Log error%n" +
                 "            ? If%n" +
                 "               Reference '' is Nothing ::: Log error%n" +
                 "            ! Then%n" +

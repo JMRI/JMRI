@@ -11,7 +11,6 @@ import jmri.jmrit.logixng.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.jmrit.logixng.expressions.DigitalFormula.SocketData;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
-import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.JUnitUtil;
 
@@ -70,7 +69,7 @@ public class DigitalFormulaTest extends AbstractDigitalExpressionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else ::: Log error%n" +
+                "         If Then Else. Trigger action ::: Log error%n" +
                 "            ? If%n" +
                 "               Digital Formula: E1 ::: Log error%n" +
                 "                  ?* E1%n" +

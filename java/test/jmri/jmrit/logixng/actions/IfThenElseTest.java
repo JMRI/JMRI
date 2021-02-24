@@ -44,7 +44,7 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "If Then Else ::: Log error%n" +
+                "If Then Else. Trigger action ::: Log error%n" +
                 "   ? If%n" +
                 "      Sensor '' is Active ::: Log error%n" +
                 "   ! Then%n" +
@@ -59,7 +59,7 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else ::: Log error%n" +
+                "         If Then Else. Trigger action ::: Log error%n" +
                 "            ? If%n" +
                 "               Sensor '' is Active ::: Log error%n" +
                 "            ! Then%n" +
@@ -329,12 +329,15 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testToString() {
-        IfThenElse a1 = new IfThenElse("IQDA321", null);
-        a1.setType(IfThenElse.Type.TRIGGER_ACTION);
-        Assert.assertEquals("strings are equal", "If Then Else", a1.getShortDescription());
-        IfThenElse a2 = new IfThenElse("IQDA321", null);
-        a2.setType(IfThenElse.Type.CONTINOUS_ACTION);
-        Assert.assertEquals("strings are equal", "If Then Else", a2.getLongDescription());
+        IfThenElse action = new IfThenElse("IQDA321", null);
+        action.setType(IfThenElse.Type.TRIGGER_ACTION);
+        Assert.assertEquals("strings are equal", "If Then Else", action.getShortDescription());
+        Assert.assertEquals("strings are equal", "If Then Else. Trigger action", action.getLongDescription());
+        
+        action = new IfThenElse("IQDA321", null);
+        action.setType(IfThenElse.Type.CONTINOUS_ACTION);
+        Assert.assertEquals("strings are equal", "If Then Else", action.getShortDescription());
+        Assert.assertEquals("strings are equal", "If Then Else. Continous action", action.getLongDescription());
     }
     
     @Test
