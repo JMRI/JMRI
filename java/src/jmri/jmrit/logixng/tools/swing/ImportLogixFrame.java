@@ -206,7 +206,7 @@ public final class ImportLogixFrame extends JmriJFrame {
                 errorMessage.append("</td><td>");
                 errorMessage.append(e.getMessage());
                 errorMessage.append("</td></tr>");
-                log.error("Error thrown: {}", e.getMessage(), e);
+                log.error("Error thrown: {}", e, e);
                 error = true;
             }
         }

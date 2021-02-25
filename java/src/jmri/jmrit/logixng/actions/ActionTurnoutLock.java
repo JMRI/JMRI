@@ -17,11 +17,11 @@ import jmri.util.ThreadingUtil;
 import jmri.util.TypeConversionUtil;
 
 /**
- * This action sets the state of a turnout.
+ * This action sets the lock of a turnout.
  * 
- * @author Daniel Bergqvist Copyright 2018
+ * @author Daniel Bergqvist Copyright 2021
  */
-public class ActionTurnout extends AbstractDigitalAction implements VetoableChangeListener {
+public class ActionTurnoutLock extends AbstractDigitalAction implements VetoableChangeListener {
 
     private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
     private NamedBeanHandle<Turnout> _turnoutHandle;
@@ -29,14 +29,14 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     private String _localVariable = "";
     private String _formula = "";
     private ExpressionNode _expressionNode;
-    private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
-    private TurnoutState _turnoutState = TurnoutState.Thrown;
+    private NamedBeanAddressing _lockAddressing = NamedBeanAddressing.Direct;
+    private TurnoutLock _turnoutLock = TurnoutLock.Unlock;
     private String _stateReference = "";
     private String _stateLocalVariable = "";
     private String _stateFormula = "";
     private ExpressionNode _stateExpressionNode;
     
-    public ActionTurnout(String sys, String user)
+    public ActionTurnoutLock(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
@@ -47,18 +47,18 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
-        ActionTurnout copy = new ActionTurnout(sysName, userName);
+        ActionTurnoutLock copy = new ActionTurnoutLock(sysName, userName);
         copy.setComment(getComment());
         if (_turnoutHandle != null) copy.setTurnout(_turnoutHandle);
-        copy.setBeanState(_turnoutState);
+        copy.setTurnoutLock(_turnoutLock);
         copy.setAddressing(_addressing);
         copy.setFormula(_formula);
         copy.setLocalVariable(_localVariable);
         copy.setReference(_reference);
-        copy.setStateAddressing(_stateAddressing);
-        copy.setStateFormula(_stateFormula);
-        copy.setStateLocalVariable(_stateLocalVariable);
-        copy.setStateReference(_stateReference);
+        copy.setLockAddressing(_lockAddressing);
+        copy.setLockFormula(_stateFormula);
+        copy.setLockLocalVariable(_stateLocalVariable);
+        copy.setLockReference(_stateReference);
         return manager.registerAction(copy);
     }
     
@@ -145,53 +145,53 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         }
     }
     
-    public void setStateAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _stateAddressing = addressing;
-        parseStateFormula();
+    public void setLockAddressing(NamedBeanAddressing addressing) throws ParserException {
+        _lockAddressing = addressing;
+        parseLockFormula();
     }
     
-    public NamedBeanAddressing getStateAddressing() {
-        return _stateAddressing;
+    public NamedBeanAddressing getLockAddressing() {
+        return _lockAddressing;
     }
     
-    public void setBeanState(TurnoutState state) {
-        _turnoutState = state;
+    public void setTurnoutLock(TurnoutLock state) {
+        _turnoutLock = state;
     }
     
-    public TurnoutState getBeanState() {
-        return _turnoutState;
+    public TurnoutLock getTurnoutLock() {
+        return _turnoutLock;
     }
     
-    public void setStateReference(@Nonnull String reference) {
+    public void setLockReference(@Nonnull String reference) {
         if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
             throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
         }
         _stateReference = reference;
     }
     
-    public String getStateReference() {
+    public String getLockReference() {
         return _stateReference;
     }
     
-    public void setStateLocalVariable(@Nonnull String localVariable) {
+    public void setLockLocalVariable(@Nonnull String localVariable) {
         _stateLocalVariable = localVariable;
     }
     
-    public String getStateLocalVariable() {
+    public String getLockLocalVariable() {
         return _stateLocalVariable;
     }
     
-    public void setStateFormula(@Nonnull String formula) throws ParserException {
+    public void setLockFormula(@Nonnull String formula) throws ParserException {
         _stateFormula = formula;
-        parseStateFormula();
+        parseLockFormula();
     }
     
-    public String getStateFormula() {
+    public String getLockFormula() {
         return _stateFormula;
     }
     
-    private void parseStateFormula() throws ParserException {
-        if (_stateAddressing == NamedBeanAddressing.Formula) {
+    private void parseLockFormula() throws ParserException {
+        if (_lockAddressing == NamedBeanAddressing.Formula) {
             Map<String, Variable> variables = new HashMap<>();
             
             RecursiveDescentParser parser = new RecursiveDescentParser(variables);
@@ -207,7 +207,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
             if (evt.getOldValue() instanceof Turnout) {
                 if (evt.getOldValue().equals(getTurnout().getBean())) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("Turnout_TurnoutInUseTurnoutExpressionVeto", getDisplayName()), e); // NOI18N
+                    throw new PropertyVetoException(Bundle.getMessage("TurnoutLock_TurnoutInUseTurnoutExpressionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
@@ -231,9 +231,9 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         return true;
     }
     
-    private String getNewState() throws JmriException {
+    private String getNewLock() throws JmriException {
         
-        switch (_stateAddressing) {
+        switch (_lockAddressing) {
             case Reference:
                 return ReferenceUtil.getReference(
                         getConditionalNG().getSymbolTable(), _stateReference);
@@ -251,7 +251,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
                         : null;
                 
             default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _stateAddressing.name());
+                throw new IllegalArgumentException("invalid _addressing state: " + _lockAddressing.name());
         }
     }
     
@@ -260,7 +260,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     public void execute() throws JmriException {
         Turnout turnout;
         
-//        System.out.format("ActionTurnout.execute: %s%n", getLongDescription());
+//        System.out.format("ActionTurnoutLock.execute: %s%n", getLongDescription());
         
         switch (_addressing) {
             case Direct:
@@ -294,32 +294,39 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
         
-//        System.out.format("ActionTurnout.execute: turnout: %s%n", turnout);
+//        System.out.format("ActionTurnoutLock.execute: turnout: %s%n", turnout);
         
         if (turnout == null) {
 //            log.error("turnout is null");
             return;
         }
         
-        String name = (_stateAddressing != NamedBeanAddressing.Direct)
-                ? getNewState() : null;
+        String name = (_lockAddressing != NamedBeanAddressing.Direct)
+                ? getNewLock() : null;
         
-        TurnoutState state;
-        if ((_stateAddressing == NamedBeanAddressing.Direct)) {
-            state = _turnoutState;
+        TurnoutLock lock;
+        if ((_lockAddressing == NamedBeanAddressing.Direct)) {
+            lock = _turnoutLock;
         } else {
-            state = TurnoutState.valueOf(name);
+            lock = TurnoutLock.valueOf(name);
+        }
+
+        if (lock == TurnoutLock.Toggle) {
+            if (turnout.getLocked(Turnout.CABLOCKOUT)) {
+                lock = TurnoutLock.Unlock;
+            } else {
+                lock = TurnoutLock.Lock;
+            }
         }
         
+        // Variables used in lambda must be effectively final
+        TurnoutLock theLock = lock;
+        
         ThreadingUtil.runOnLayout(() -> {
-            if (state == TurnoutState.Toggle) {
-                if (turnout.getCommandedState() == Turnout.CLOSED) {
-                    turnout.setCommandedState(Turnout.THROWN);
-                } else {
-                    turnout.setCommandedState(Turnout.CLOSED);
-                }
-            } else {
-                turnout.setCommandedState(state.getID());
+            if (theLock == TurnoutLock.Lock) {
+                turnout.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, true);
+            } else if (theLock == TurnoutLock.Unlock) {
+                turnout.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
             }
         });
     }
@@ -336,7 +343,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "Turnout_Short");
+        return Bundle.getMessage(locale, "TurnoutLock_Short");
     }
 
     @Override
@@ -371,9 +378,9 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
         
-        switch (_stateAddressing) {
+        switch (_lockAddressing) {
             case Direct:
-                state = Bundle.getMessage(locale, "AddressByDirect", _turnoutState._text);
+                state = Bundle.getMessage(locale, "AddressByDirect", _turnoutLock._text);
                 break;
                 
             case Reference:
@@ -389,10 +396,10 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
                 break;
                 
             default:
-                throw new IllegalArgumentException("invalid _stateAddressing state: " + _stateAddressing.name());
+                throw new IllegalArgumentException("invalid _stateAddressing state: " + _lockAddressing.name());
         }
         
-        return Bundle.getMessage(locale, "Turnout_Long", namedBean, state);
+        return Bundle.getMessage(locale, "TurnoutLock_Long", namedBean, state);
     }
     
     /** {@inheritDoc} */
@@ -417,42 +424,15 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     }
 
     
-    // This constant is only used internally in TurnoutState but must be outside
-    // the enum.
-    private static final int TOGGLE_ID = -1;
-    
-    
-    public enum TurnoutState {
-        Closed(Turnout.CLOSED, InstanceManager.getDefault(TurnoutManager.class).getClosedText()),
-        Thrown(Turnout.THROWN, InstanceManager.getDefault(TurnoutManager.class).getThrownText()),
-        Toggle(TOGGLE_ID, Bundle.getMessage("TurnoutToggleStatus"));
+    public enum TurnoutLock {
+        Lock(Bundle.getMessage("TurnoutLock_Lock")),
+        Unlock(Bundle.getMessage("TurnoutLock_Unlock")),
+        Toggle(Bundle.getMessage("TurnoutLock_Toggle"));
         
-        private final int _id;
         private final String _text;
         
-        private TurnoutState(int id, String text) {
-            this._id = id;
+        private TurnoutLock(String text) {
             this._text = text;
-        }
-        
-        static public TurnoutState get(int id) {
-            switch (id) {
-                case Turnout.CLOSED:
-                    return Closed;
-                    
-                case Turnout.THROWN:
-                    return Thrown;
-                    
-                case TOGGLE_ID:
-                    return Toggle;
-                    
-                default:
-                    throw new IllegalArgumentException("invalid turnout state");
-            }
-        }
-        
-        public int getID() {
-            return _id;
         }
         
         @Override
@@ -462,6 +442,6 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionTurnout.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionTurnoutLock.class);
     
 }
