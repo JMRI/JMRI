@@ -428,7 +428,10 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>Added an option to <strong>Preferences &rArr; Display</strong> to limit the
+            number of rows when a combo box is using the <strong>setupComboBoxMaxRows</strong>
+            feature.  This is useful for large screens.
+            </li>
         </ul>
 
     <h3>Resources</h3>
