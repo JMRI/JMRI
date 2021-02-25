@@ -304,27 +304,22 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
         String name = (_stateAddressing != NamedBeanAddressing.Direct)
                 ? getNewState() : null;
         
+        LightState state;
+        if ((_stateAddressing == NamedBeanAddressing.Direct)) {
+            state = _lightState;
+        } else {
+            state = LightState.valueOf(name);
+        }
+        
         ThreadingUtil.runOnLayout(() -> {
-            if ((_stateAddressing == NamedBeanAddressing.Direct)) {
-                if (_lightState == LightState.Toggle) {
-                    if (light.getCommandedState() == Light.OFF) {
-                        light.setCommandedState(Light.ON);
-                    } else {
-                        light.setCommandedState(Light.OFF);
-                    }
+            if (state == LightState.Toggle) {
+                if (light.getCommandedState() == Turnout.CLOSED) {
+                    light.setCommandedState(Turnout.THROWN);
                 } else {
-                    light.setCommandedState(_lightState.getID());
+                    light.setCommandedState(Turnout.CLOSED);
                 }
             } else {
-                if (_lightState == LightState.Toggle) {
-                    if (light.getCommandedState() == Light.OFF) {
-                        light.setCommandedState(Light.ON);
-                    } else {
-                        light.setCommandedState(Light.OFF);
-                    }
-                } else {
-                    light.setCommandedState(LightState.valueOf(name)._id);
-                }
+                light.setCommandedState(state.getID());
             }
         });
     }

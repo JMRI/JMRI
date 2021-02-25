@@ -304,27 +304,22 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
         String name = (_stateAddressing != NamedBeanAddressing.Direct)
                 ? getNewState() : null;
         
+        SensorState state;
+        if ((_stateAddressing == NamedBeanAddressing.Direct)) {
+            state = _sensorState;
+        } else {
+            state = SensorState.valueOf(name);
+        }
+        
         ThreadingUtil.runOnLayout(() -> {
-            if ((_stateAddressing == NamedBeanAddressing.Direct)) {
-                if (_sensorState == SensorState.Toggle) {
-                    if (sensor.getCommandedState() == Sensor.INACTIVE) {
-                        sensor.setCommandedState(Sensor.ACTIVE);
-                    } else {
-                        sensor.setCommandedState(Sensor.INACTIVE);
-                    }
+            if (state == SensorState.Toggle) {
+                if (sensor.getCommandedState() == Sensor.INACTIVE) {
+                    sensor.setCommandedState(Sensor.ACTIVE);
                 } else {
-                    sensor.setCommandedState(_sensorState.getID());
+                    sensor.setCommandedState(Sensor.INACTIVE);
                 }
             } else {
-                if (_sensorState == SensorState.Toggle) {
-                    if (sensor.getCommandedState() == Sensor.INACTIVE) {
-                        sensor.setCommandedState(Sensor.ACTIVE);
-                    } else {
-                        sensor.setCommandedState(Sensor.INACTIVE);
-                    }
-                } else {
-                    sensor.setCommandedState(SensorState.valueOf(name)._id);
-                }
+                sensor.setCommandedState(state.getID());
             }
         });
     }

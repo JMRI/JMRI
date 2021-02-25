@@ -13,7 +13,6 @@ import javax.swing.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.tools.ImportLogix;
-import jmri.jmrit.logixng.tools.swing.Bundle;
 import jmri.util.JmriJFrame;
 import jmri.swing.JTitledSeparator;
 
