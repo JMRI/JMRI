@@ -185,7 +185,7 @@ git push github
         git add jmri4.21.6.shtml
         git commit -m"start new 4.21.6 next release note" jmri4.21.6.shtml
         git push github
-        cd ../../(local JMRI copy)
+        cd ../../JMRI
 ```
 
 - Check if any section headings were added to the release-note fragment
@@ -216,7 +216,7 @@ git push github
 - Commit release note, push and pull back
 
     cd ../website/releasenotes
-    git commit -m"updated 4.21.5 release note" jmri4.21.6.shtml jmri4.21.5.shtml
+    git commit -m"updated 4.21.5 release note" jmri4.*
     git push github
     git pull
     cd ../../JMRI
@@ -547,7 +547,7 @@ git push github
     
 Test version 4.21.5 of JMRI/DecoderPro is available for download.
 
-This is the next in a series of test releases that will culminate in a production release, hopefully in late in 2020. It’s really helpful when people download, install and use these test versions so we can find and fix any inadvertent new problems early.
+This is the next in a series of test releases that will culminate in a production release, hopefully in early 2021. It’s really helpful when people download, install and use these test versions so we can find and fix any inadvertent new problems early.
 
 - Alt: There have been a lot of updates in this version, so it should be considered experimental.
 - Alt: We're getting close to the end of the development series, so we'd appreciate feedback on whether or not this release works for your layout.
