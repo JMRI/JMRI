@@ -10,8 +10,11 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousSocketChannel;
 
+import jmri.util.JUnitUtil;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
@@ -65,7 +68,6 @@ public class IpocsClientHandlerTest {
 
     doThrow(new IOException()).when(client).close();
     ch.completed(-1, null);
-    jmri.util.JUnitAppender.suppressErrorMessage("Unable to close client: null"); // happens intermittently during CI
   }
 
   @Test
@@ -77,7 +79,6 @@ public class IpocsClientHandlerTest {
     final ByteBuffer buff = msg.serialize();
     buff.position(buff.capacity());
     ch.completed(buff.capacity(), buff);
-    jmri.util.JUnitAppender.suppressErrorMessage("Unable to close client: null"); // happens intermittently during CI
   }
 
   @Test
@@ -90,7 +91,6 @@ public class IpocsClientHandlerTest {
     final ByteBuffer buff = msg.serialize();
     buff.position(buff.capacity());
     ch.completed(buff.capacity(), buff);
-    jmri.util.JUnitAppender.suppressErrorMessage("Unable to close client: null"); // happens intermittently during CI
   }
 
   @Test
@@ -115,8 +115,10 @@ public class IpocsClientHandlerTest {
     jmri.util.JUnitAppender.suppressErrorMessage("Error closing connection");
 
     ch.addClientListener(listener);
-    doThrow(new IOException()).when(client).close();
+    client.close();
+
     ch.failed(new Exception("Error"), null);
+    jmri.util.JUnitAppender.suppressErrorMessage("Error closing connection");
   }
 
   @Test
@@ -137,6 +139,16 @@ public class IpocsClientHandlerTest {
     final Message msg = mock(Message.class);
     when(msg.serialize()).thenReturn(ByteBuffer.wrap(new byte[] {}));
     ch.send(msg);
+  }
+
+  @BeforeEach
+  public void setUp() {
+    jmri.util.JUnitUtil.setUp();
+  }
+
+  @AfterEach
+  public void tearDown() {
+    JUnitUtil.tearDown();
   }
 
 }

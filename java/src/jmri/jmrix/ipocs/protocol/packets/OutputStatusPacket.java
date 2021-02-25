@@ -13,7 +13,7 @@ import jmri.jmrix.ipocs.protocol.enums.RqOutputState;
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class OutputStatusPacket extends Packet {
   public final static byte IDENT = 22;
-  private RqOutputState state;
+  private RqOutputState state = null;
 
   @Override
   public byte getId() {

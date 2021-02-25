@@ -11,6 +11,7 @@ import jmri.jmrix.ipocs.protocol.packets.SignOfLifePacket;
 
 public class MessageTest {
   private final byte[] testMessage = { 0x09, 0x56, 0x78, 0x39, 0x31, 0x00, 0x17, 0x03, 0x00 };
+
   @Test
   public void testSerialize() {
     Message m = new Message();

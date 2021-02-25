@@ -73,7 +73,7 @@ public class IpocsClientHandler implements CompletionHandler<Integer, ByteBuffer
             client.write(response.serialize());
             break;
           default:
-            for(IpocsClientListener listener : clientListeners) {
+            for (IpocsClientListener listener : clientListeners) {
               listener.onMessage(this, msg);
             }
             break;
