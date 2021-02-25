@@ -47,7 +47,7 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Set turnout IT1 to state Lock ::: Log error%n");
+        return String.format("Set lock for turnout IT1 to Lock ::: Log error%n");
     }
     
     @Override
@@ -56,7 +56,7 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Set turnout IT1 to state Lock ::: Log error%n");
+                "         Set lock for turnout IT1 to Lock ::: Log error%n");
     }
     
     @Override
@@ -80,19 +80,19 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
         action2 = new ActionTurnoutLock("IQDA321", null);
         Assert.assertNotNull("object exists", action2);
         Assert.assertNull("Username matches", action2.getUserName());
-        Assert.assertEquals("String matches", "Set turnout '' to state Unlock", action2.getLongDescription());
+        Assert.assertEquals("String matches", "Set lock for turnout '' to Unlock", action2.getLongDescription());
         
         action2 = new ActionTurnoutLock("IQDA321", "My turnout");
         Assert.assertNotNull("object exists", action2);
         Assert.assertEquals("Username matches", "My turnout", action2.getUserName());
-        Assert.assertEquals("String matches", "Set turnout '' to state Unlock", action2.getLongDescription());
+        Assert.assertEquals("String matches", "Set lock for turnout '' to Unlock", action2.getLongDescription());
         
         action2 = new ActionTurnoutLock("IQDA321", null);
         action2.setTurnout(turnout);
         Assert.assertTrue("turnout is correct", turnout == action2.getTurnout().getBean());
         Assert.assertNotNull("object exists", action2);
         Assert.assertNull("Username matches", action2.getUserName());
-        Assert.assertEquals("String matches", "Set turnout IT1 to state Unlock", action2.getLongDescription());
+        Assert.assertEquals("String matches", "Set lock for turnout IT1 to Unlock", action2.getLongDescription());
         
         Turnout l = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         action2 = new ActionTurnoutLock("IQDA321", "My turnout");
@@ -100,7 +100,7 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue("turnout is correct", l == action2.getTurnout().getBean());
         Assert.assertNotNull("object exists", action2);
         Assert.assertEquals("Username matches", "My turnout", action2.getUserName());
-        Assert.assertEquals("String matches", "Set turnout IT1 to state Unlock", action2.getLongDescription());
+        Assert.assertEquals("String matches", "Set lock for turnout IT1 to Unlock", action2.getLongDescription());
         
         boolean thrown = false;
         try {
@@ -484,12 +484,12 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Set turnout", _base.getShortDescription());
+        Assert.assertEquals("String matches", "Set lock for turnout", _base.getShortDescription());
     }
     
     @Test
     public void testLongDescription() {
-        Assert.assertEquals("String matches", "Set turnout IT1 to state Lock", _base.getLongDescription());
+        Assert.assertEquals("String matches", "Set lock for turnout IT1 to Lock", _base.getLongDescription());
     }
     
     @Test
