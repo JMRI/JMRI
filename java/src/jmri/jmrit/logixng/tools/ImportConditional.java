@@ -22,24 +22,41 @@ import jmri.jmrit.logixng.util.TimerUnit;
  */
 public class ImportConditional {
 
-//    private final Logix _logix;
     private final jmri.Conditional _conditional;
-//    private final LogixNG _logixNG;
     private final ConditionalNG _conditionalNG;
+    private final boolean _dryRun;
     
-    public ImportConditional(jmri.Logix logix, Conditional conditional,
-            LogixNG logixNG, String conditionalNG_SysName) {
+    
+    /**
+     * Create instance of ImportConditional
+     * @param logix         the parent Logix of the conditional to import
+     * @param conditional   the Conditional to import
+     * @param logixNG       the parent LogixNG that the new ConditionalNG will be added to
+     * @param sysName       the system name of the new ConditionalNG
+     * @param dryRun        true if import without creating any new beans,
+     *                      false if to create new beans
+     */
+    public ImportConditional(
+            jmri.Logix logix,
+            Conditional conditional,
+            LogixNG logixNG,
+            String sysName,
+            boolean dryRun) {
         
-//        _logix = logix;
+        _dryRun = dryRun;
         _conditional = conditional;
-//        _logixNG = logixNG;
         String userName = conditional.getSystemName();
         if (conditional.getUserName() != null) {
             userName += ": " + conditional.getUserName();
         }
-//        _conditionalNG = new DefaultConditionalNG(conditionalNG_SysName, null);
-        _conditionalNG = InstanceManager.getDefault(jmri.jmrit.logixng.ConditionalNG_Manager.class)
-                .createConditionalNG(conditionalNG_SysName, userName);
+        
+        if (!_dryRun) {
+            _conditionalNG = InstanceManager.getDefault(
+                    jmri.jmrit.logixng.ConditionalNG_Manager.class)
+                    .createConditionalNG(sysName, userName);
+        } else {
+            _conditionalNG = null;
+        }
         
 //        log.debug("Import Logix {} to LogixNG {}", _logix.getSystemName(), _logixNG.getSystemName());
 //        log.error("AA: Import Conditional {} to ConditionalNG {}", _conditional.getSystemName(), _conditionalNG.getSystemName());
@@ -110,11 +127,13 @@ public class ImportConditional {
 //        DigitalActionBean action = new Many(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         buildAction(logix, conditionalActions);
         
-        MaleSocket expressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
-        logix.getChild(0).connect(expressionSocket);
-        
-        MaleSocket logixAction = InstanceManager.getDefault(DigitalActionManager.class).registerAction(logix);
-        _conditionalNG.getChild(0).connect(logixAction);
+        if (!_dryRun) {
+            MaleSocket expressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
+            logix.getChild(0).connect(expressionSocket);
+            
+            MaleSocket logixAction = InstanceManager.getDefault(DigitalActionManager.class).registerAction(logix);
+            _conditionalNG.getChild(0).connect(logixAction);
+        }
     }
     
     
@@ -176,8 +195,10 @@ public class ImportConditional {
             }
             
             if (newExpression != null) {
-                MaleSocket newExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(newExpression);
-                expression.getChild(i).connect(newExpressionSocket);
+                if (!_dryRun) {
+                    MaleSocket newExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(newExpression);
+                    expression.getChild(i).connect(newExpressionSocket);
+                }
             } else {
                 log.error("ImportConditional.doImport() did not created an expression for type: {} -> {}", cv.getType(), cv.getType().getItemType());
             }
@@ -215,8 +236,10 @@ public class ImportConditional {
             
             buildAction(booleanAction, ca);
             
-            MaleSocket newBooleanActionSocket = InstanceManager.getDefault(DigitalBooleanActionManager.class).registerAction(booleanAction);
-            logix.getChild(i+1).connect(newBooleanActionSocket);
+            if (!_dryRun) {
+                MaleSocket newBooleanActionSocket = InstanceManager.getDefault(DigitalBooleanActionManager.class).registerAction(booleanAction);
+                logix.getChild(i+1).connect(newBooleanActionSocket);
+            }
         }
     }
     
@@ -289,8 +312,10 @@ public class ImportConditional {
         }
 
         if (newAction != null) {
-            MaleSocket newActionSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(newAction);
-            action.getChild(0).connect(newActionSocket);
+            if (!_dryRun) {
+                MaleSocket newActionSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(newAction);
+                action.getChild(0).connect(newActionSocket);
+            }
         }
     }
     
@@ -725,9 +750,11 @@ public class ImportConditional {
                 delayedAction.setDelay(0);
                 delayedAction.setUnit(TimerUnit.MilliSeconds);
                 delayedAction.setResetIfAlreadyStarted(ca.getType() == Conditional.Action.RESET_DELAYED_SENSOR);
-                MaleSocket subActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
-                        .registerAction(subAction);
-                delayedAction.getChild(0).connect(subActionSocket);
+                if (!_dryRun) {
+                    MaleSocket subActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
+                            .registerAction(subAction);
+                    delayedAction.getChild(0).connect(subActionSocket);
+                }
                 return delayedAction;
                 
             case CANCEL_SENSOR_TIMERS:
@@ -800,9 +827,11 @@ public class ImportConditional {
                 delayedAction.setDelay(0);
                 delayedAction.setUnit(TimerUnit.MilliSeconds);
                 delayedAction.setResetIfAlreadyStarted(ca.getType() == Conditional.Action.RESET_DELAYED_TURNOUT);
-                MaleSocket subActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
-                        .registerAction(subAction);
-                delayedAction.getChild(0).connect(subActionSocket);
+                if (!_dryRun) {
+                    MaleSocket subActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
+                            .registerAction(subAction);
+                    delayedAction.getChild(0).connect(subActionSocket);
+                }
                 return delayedAction;
                 
             case CANCEL_TURNOUT_TIMERS:

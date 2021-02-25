@@ -14,14 +14,29 @@ public class ImportLogix {
 
     private final Logix _logix;
     private final LogixNG _logixNG;
+    private final boolean _dryRun;
     
     public ImportLogix(Logix logix) {
         this(logix, false);
     }
     
     public ImportLogix(Logix logix, boolean allowSystemImport) {
+        this(logix, allowSystemImport, false);
+    }
+    
+    /**
+     * Create instance of ImportConditional
+     * @param logix             the parent Logix of the conditional to import
+     * @param allowSystemImport true if system logixs is allowed to be imported,
+     *                          false otherwise
+     * @param dryRun            true if import without creating any new beans,
+     *                          false if to create new beans
+     */
+    public ImportLogix(Logix logix, boolean allowSystemImport, boolean dryRun) {
         
 //        System.out.format("RTX: %s%n", jmri.jmrit.beantable.LRouteTableAction.getLogixInitializer());
+        
+        _dryRun = dryRun;
         
         if ("SYS".equals(logix.getSystemName())) {
             if (allowSystemImport) {
@@ -52,9 +67,10 @@ public class ImportLogix {
             log.warn("Import Conditional {} to ConditionalNG {}", c.getSystemName(), _logixNG.getSystemName());
             ImportConditional ic = new ImportConditional(
                     _logix, c, _logixNG,
-                    InstanceManager.getDefault(ConditionalNG_Manager.class).getAutoSystemName());
+                    InstanceManager.getDefault(ConditionalNG_Manager.class).getAutoSystemName(),
+                    _dryRun);
             
-            _logixNG.addConditionalNG(ic.getConditionalNG());
+            if (!_dryRun) _logixNG.addConditionalNG(ic.getConditionalNG());
             
             try {
                 ic.doImport();
@@ -63,7 +79,7 @@ public class ImportLogix {
                 log.warn("Import Conditional {} to ConditionalNG {}", c.getSystemName(), _logixNG.getSystemName(), ex);
             }
             
-            ic.getConditionalNG().setEnabled(true);
+            if (!_dryRun) ic.getConditionalNG().setEnabled(true);
         }
     }
     

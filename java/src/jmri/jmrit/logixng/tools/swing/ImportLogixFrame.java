@@ -6,15 +6,14 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextArea;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.*;
+
+import jmri.*;
+import jmri.jmrit.logixng.tools.ImportLogix;
+import jmri.jmrit.logixng.tools.swing.Bundle;
 import jmri.util.JmriJFrame;
 import jmri.swing.JTitledSeparator;
 
@@ -28,6 +27,13 @@ public final class ImportLogixFrame extends JmriJFrame {
 //    private static final int panelWidth700 = 700;
 //    private static final int panelHeight500 = 500;
     
+    private JRadioButton _whichLogix_All;
+    private JRadioButton _whichLogix_AllActive;
+    private JRadioButton _whichLogix_Selected;
+    private JRadioButton _whatToDo_Nothing;
+    private JRadioButton _whatToDo_Disable;
+    private JRadioButton _whatToDo_Delete;
+    private JCheckBox _includeSystemLogixs;
     
     /**
      * Construct a LogixNGEditor.
@@ -45,37 +51,40 @@ public final class ImportLogixFrame extends JmriJFrame {
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 
         add(new JTitledSeparator(Bundle.getMessage("Import_WhichLogix")));
-        JRadioButton r1 = new JRadioButton("Import all Logixs");
-        JRadioButton r2 = new JRadioButton("Import all active Logixs");
-        JRadioButton r3 = new JRadioButton("Import selected Logixs");
+        _whichLogix_All = new JRadioButton(Bundle.getMessage("Import_WhichLogix_All"));
+        _whichLogix_AllActive = new JRadioButton(Bundle.getMessage("Import_WhichLogix_AllActive"));
+        _whichLogix_AllActive.setEnabled(false);
+        _whichLogix_Selected = new JRadioButton(Bundle.getMessage("Import_WhichLogix_Selected"));
+        _whichLogix_Selected.setEnabled(false);
         ButtonGroup buttonGroup = new ButtonGroup();
-        buttonGroup.add(r1);
-        buttonGroup.add(r2);
-        buttonGroup.add(r3);
-        r2.setSelected(true);
-        contentPanel.add(r1);
-        contentPanel.add(r2);
-        contentPanel.add(r3);
+        buttonGroup.add(_whichLogix_All);
+        buttonGroup.add(_whichLogix_AllActive);
+        buttonGroup.add(_whichLogix_Selected);
+        _whichLogix_All.setSelected(true);
+//        r2.setSelected(true);
+        contentPanel.add(_whichLogix_All);
+        contentPanel.add(_whichLogix_AllActive);
+        contentPanel.add(_whichLogix_Selected);
         
         contentPanel.add(Box.createRigidArea(new Dimension(0, 15)));    // vertical space.
         
         add(new JTitledSeparator(Bundle.getMessage("Import_WhatToDo")));
-        JRadioButton r4 = new JRadioButton("Nothing");
-        JRadioButton r5 = new JRadioButton("Disable the Logixs");
-        JRadioButton r6 = new JRadioButton("Delete the Logixs - Warning!");
+        _whatToDo_Nothing = new JRadioButton(Bundle.getMessage("Import_WhatToDo_Nothing"));
+        _whatToDo_Disable = new JRadioButton(Bundle.getMessage("Import_WhatToDo_Disable"));
+        _whatToDo_Delete = new JRadioButton(Bundle.getMessage("Import_WhatToDo_Delete"));
         ButtonGroup buttonGroup2 = new ButtonGroup();
-        buttonGroup2.add(r4);
-        buttonGroup2.add(r5);
-        buttonGroup2.add(r6);
-        r5.setSelected(true);
-        contentPanel.add(r4);
-        contentPanel.add(r5);
-        contentPanel.add(r6);
+        buttonGroup2.add(_whatToDo_Nothing);
+        buttonGroup2.add(_whatToDo_Disable);
+        buttonGroup2.add(_whatToDo_Delete);
+        _whatToDo_Disable.setSelected(true);
+        contentPanel.add(_whatToDo_Nothing);
+        contentPanel.add(_whatToDo_Disable);
+        contentPanel.add(_whatToDo_Delete);
         
         contentPanel.add(Box.createRigidArea(new Dimension(0, 15)));    // vertical space.
         
         add(new JTitledSeparator(Bundle.getMessage("Import_IncludeSystemLogixs")));
-        JCheckBox includeSystemLogixs = new JCheckBox(Bundle.getMessage("Import_IncludeSystemLogixs"));
+        _includeSystemLogixs = new JCheckBox(Bundle.getMessage("Import_IncludeSystemLogixs"));
 //        includeSystemLogixs.addItemListener((ItemEvent e) -> {
 //            if (includeSystemLogixs.isSelected()) {
 //                _systemName.setEnabled(false);
@@ -85,7 +94,7 @@ public final class ImportLogixFrame extends JmriJFrame {
 //                _sysNameLabel.setEnabled(true);
 //            }
 //        });
-        add(includeSystemLogixs);
+        add(_includeSystemLogixs);
         
         contentPanel.add(Box.createRigidArea(new Dimension(0, 15)));    // vertical space.
         
@@ -94,23 +103,11 @@ public final class ImportLogixFrame extends JmriJFrame {
         contentPanel.add(Box.createRigidArea(new Dimension(0, 15)));    // vertical space.
         
         add(new JTitledSeparator(Bundle.getMessage("Import_WarningMessage")));
-        String warningMessage
-                = "Warning\n"
-                + "The import tool will do its best to import the requested\n"
-                + "Logixs to LogixNG. But LogixNG works in a different way\n"
-                + "than Logix and therefore there may be subtle differences\n"
-                + "between the original Logix and the imported LogixNG.\n"
-                + "\n"
-                + "Also, there may be special Logixs not known to the import\n"
-                + "tool that should not be imported to LogixNG, for example\n"
-                + "the Logix that handles sensor groups. The import tool\n"
-                + "knows about some of these Logix (SYS and RTX), but there\n"
-                + "may be others not known to the import tool.";
-        JTextArea warning = new JTextArea(warningMessage);
-        warning.setEditable(false);
-//        warning.setAlignmentX(LEFT_ALIGNMENT);
-        warning.setColumns(60);
-        contentPanel.add(warning);
+        
+        JLabel warning = new JLabel(Bundle.getMessage("Import_WarningMessage_Long"));
+        JPanel warningPanel = new JPanel();
+        warningPanel.add(warning);
+        contentPanel.add(warningPanel);
         
         contentPanel.add(Box.createRigidArea(new Dimension(0, 15)));    // vertical space.
         
@@ -123,6 +120,7 @@ public final class ImportLogixFrame extends JmriJFrame {
         JButton importLogix = new JButton(Bundle.getMessage("Import_ButtonImport"));    // NOI18N
         panel5.add(importLogix);
         importLogix.addActionListener((ActionEvent e) -> {
+            doImport();
 //            dispose();
         });
 //        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
@@ -157,7 +155,78 @@ public final class ImportLogixFrame extends JmriJFrame {
         setVisible(true);
     }
     
+    private void doImport() {
+//        private JRadioButton _whichLogix_All;
+//        private JRadioButton _whichLogix_AllActive;
+//        private JRadioButton _whichLogix_Selected;
+//        private JRadioButton _whatToDo_Nothing;
+//        private JRadioButton _whatToDo_Disable;
+//        private JRadioButton _whatToDo_Delete;
+//        private JCheckBox _includeSystemLogixs;
+        List<Logix> logixs = new ArrayList<>();
+        if (_whichLogix_All.isSelected()) {
+            for (Logix logix : InstanceManager.getDefault(LogixManager.class).getNamedBeanSet()) {
+                boolean isSystemLogix =
+                        "SYS".equals(logix.getSystemName())
+                        || logix.getSystemName().startsWith(
+                                InstanceManager.getDefault(LogixManager.class)
+                                        .getSystemNamePrefix() + ":RTX");
+                
+                if (!isSystemLogix || _includeSystemLogixs.isSelected()) {
+                    logixs.add(logix);
+                }
+            }
+        } else if (_whichLogix_All.isSelected()) {
+            throw new RuntimeException("Currently not supported");
+        } else if (_whichLogix_All.isSelected()) {
+            throw new RuntimeException("Currently not supported");
+        } else {
+            throw new RuntimeException("No choice selected");
+        }
+        
+        boolean error = false;
+        StringBuilder errorMessage = new StringBuilder("<html><table border=\"1\" cellspacing=\"0\" cellpadding=\"2\">");
+        errorMessage.append("<tr><th>");
+        errorMessage.append("System name");
+        errorMessage.append("</th><th>");
+        errorMessage.append("User name");
+        errorMessage.append("</th><th>");
+        errorMessage.append("Error");
+        errorMessage.append("</th></tr>");
+        
+        for (Logix logix : logixs) {
+            ImportLogix importLogix = new ImportLogix(logix, _includeSystemLogixs.isSelected(), true);
+            try {
+                importLogix.doImport();
+            } catch (JmriException e) {
+                errorMessage.append("<tr><td>");
+                errorMessage.append(logix.getSystemName());
+                errorMessage.append("</td><td>");
+                errorMessage.append(logix.getUserName() != null ? logix.getUserName() : "");
+                errorMessage.append("</td><td>");
+                errorMessage.append(e.getMessage());
+                errorMessage.append("</td></tr>");
+                log.error("Error thrown: {}", e.getMessage(), e);
+                error = true;
+            }
+        }
+        
+        if (!error) {
+            for (Logix logix : logixs) {
+                ImportLogix importLogix = new ImportLogix(logix, _includeSystemLogixs.isSelected(), false);
+                try {
+                    importLogix.doImport();
+                } catch (JmriException e) {
+                    throw new RuntimeException("Unexpected error: "+e.getMessage(), e);
+                }
+            }
+        } else {
+            errorMessage.append("</table></html>");
+            JOptionPane.showMessageDialog(this, errorMessage.toString(), "Error during import", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ImportLogixFrame.class);
+    
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ImportLogixFrame.class);
 
 }
