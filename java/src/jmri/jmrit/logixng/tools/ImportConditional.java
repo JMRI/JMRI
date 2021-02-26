@@ -124,12 +124,18 @@ public class ImportConditional {
         }
         buildExpression(expression, conditionalVariables);
         
-//        DigitalActionBean action = new Many(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-        buildAction(logix, conditionalActions);
+        DigitalBooleanMany many =
+                new DigitalBooleanMany(InstanceManager.getDefault(
+                        DigitalBooleanActionManager.class).getAutoSystemName(), null);
+        
+        buildAction(many, conditionalActions);
         
         if (!_dryRun) {
             MaleSocket expressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
-            logix.getChild(0).connect(expressionSocket);
+            logix.getExpressionSocket().connect(expressionSocket);
+            
+            MaleSocket manySocket = InstanceManager.getDefault(DigitalBooleanActionManager.class).registerAction(many);
+            logix.getActionSocket().connect(manySocket);
             
             MaleSocket logixAction = InstanceManager.getDefault(DigitalActionManager.class).registerAction(logix);
             _conditionalNG.getChild(0).connect(logixAction);
@@ -206,7 +212,7 @@ public class ImportConditional {
     }
     
     
-    private void buildAction(Logix logix, List<ConditionalAction> conditionalActions)
+    private void buildAction(DigitalBooleanMany many, List<ConditionalAction> conditionalActions)
             throws SocketAlreadyConnectedException, JmriException {
         
         for (int i=0; i < conditionalActions.size(); i++) {
@@ -238,7 +244,7 @@ public class ImportConditional {
             
             if (!_dryRun) {
                 MaleSocket newBooleanActionSocket = InstanceManager.getDefault(DigitalBooleanActionManager.class).registerAction(booleanAction);
-                logix.getChild(i+1).connect(newBooleanActionSocket);
+                many.getChild(i).connect(newBooleanActionSocket);
             }
         }
     }
@@ -834,8 +840,32 @@ public class ImportConditional {
                 }
                 return delayedAction;
                 
-            case CANCEL_TURNOUT_TIMERS:
             case LOCK_TURNOUT:
+                ActionTurnoutLock action2 = new ActionTurnoutLock(InstanceManager.getDefault(DigitalActionManager.class)
+                                .getAutoSystemName(), null);
+                
+                action2.setTurnout(tn);
+                
+                switch (ca.getActionData()) {
+                    case jmri.Route.TOGGLE:
+                        action2.setTurnoutLock(ActionTurnoutLock.TurnoutLock.Toggle);
+                        break;
+                        
+                    case Turnout.LOCKED:
+                        action2.setTurnoutLock(ActionTurnoutLock.TurnoutLock.Lock);
+                        break;
+                        
+                    case Turnout.UNLOCKED:
+                        action2.setTurnoutLock(ActionTurnoutLock.TurnoutLock.Unlock);
+                        break;
+                        
+                    default:
+                        throw new InvalidConditionalVariableException(
+                                Bundle.getMessage("ActionBadTurnoutLock", ca.getActionData()));
+                }
+                return action2;
+                
+            case CANCEL_TURNOUT_TIMERS:
             default:
                 throw new InvalidConditionalVariableException(
                         Bundle.getMessage("ActionBadTurnoutType", ca.getType().toString()));

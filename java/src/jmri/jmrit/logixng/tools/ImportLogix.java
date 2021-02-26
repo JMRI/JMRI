@@ -54,17 +54,34 @@ public class ImportLogix {
             }
         }
         
-        _logix = logix;
-        _logixNG = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class)
-                .createLogixNG("Logix: "+_logix.getDisplayName());
+        LogixNG logixNG = null;
         
-        log.debug("Import Logix {} to LogixNG {}", _logix.getSystemName(), _logixNG.getSystemName());
+        if (!_dryRun) {
+            int counter = 0;
+            while ((logixNG == null) && counter < 100) {
+                String name = counter > 0 ? " - " + Integer.toString(counter) : "";
+                logixNG = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class)
+                        .createLogixNG("Logix: " + logix.getDisplayName() + name);
+                counter++;
+            }
+            
+            if (logixNG == null) throw new RuntimeException("Cannot create new LogixNG with name: \"Logix: " + logix.getDisplayName()+"\"");
+            
+            log.debug("Import Logix {} to LogixNG {}", logix.getSystemName(), logixNG.getSystemName());
+        }
+        
+        _logix = logix;
+        _logixNG = logixNG;
     }
     
     public void doImport() throws JmriException {
         for (int i=0; i < _logix.getNumConditionals(); i++) {
             Conditional c = _logix.getConditional(_logix.getConditionalByNumberOrder(i));
-            log.warn("Import Conditional {} to ConditionalNG {}", c.getSystemName(), _logixNG.getSystemName());
+            
+            if (!_dryRun) {
+                log.warn("Import Conditional {} to ConditionalNG {}", c.getSystemName(), _logixNG.getSystemName());
+            }
+            
             ImportConditional ic = new ImportConditional(
                     _logix, c, _logixNG,
                     InstanceManager.getDefault(ConditionalNG_Manager.class).getAutoSystemName(),
@@ -76,7 +93,10 @@ public class ImportLogix {
                 ic.doImport();
             } catch (SocketAlreadyConnectedException ex) {
 //                ex.printStackTrace();
-                log.warn("Import Conditional {} to ConditionalNG {}", c.getSystemName(), _logixNG.getSystemName(), ex);
+                if (!_dryRun) {
+                    log.warn("Exception during import of Conditional {} to ConditionalNG {}",
+                            c.getSystemName(), _logixNG.getSystemName(), ex);
+                }
             }
             
             if (!_dryRun) ic.getConditionalNG().setEnabled(true);
