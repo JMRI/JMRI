@@ -923,16 +923,153 @@ public class ImportConditional {
     
     
     private DigitalActionBean getSignalHeadAction(@Nonnull ConditionalAction ca, SignalHead s) throws JmriException {
-        return null;
+        ActionSignalHead action =
+                new ActionSignalHead(InstanceManager.getDefault(DigitalActionManager.class)
+                        .getAutoSystemName(), null);
+        
+        action.setAddressing(NamedBeanAddressing.Direct);
+        action.setOperationAddressing(NamedBeanAddressing.Direct);
+        action.setAppearanceAddressing(NamedBeanAddressing.Direct);
+        
+        action.setSignalHead(s);
+        
+        switch (ca.getType()) {
+            case SET_SIGNAL_APPEARANCE:
+                action.setOperationType(ActionSignalHead.OperationType.Appearance);
+                action.setAppearance(ca.getActionData());
+                break;
+                
+            case SET_SIGNAL_HELD:
+                action.setOperationType(ActionSignalHead.OperationType.Held);
+                break;
+                
+            case CLEAR_SIGNAL_HELD:
+                action.setOperationType(ActionSignalHead.OperationType.NotHeld);
+                break;
+                
+            case SET_SIGNAL_LIT:
+                action.setOperationType(ActionSignalHead.OperationType.Lit);
+                break;
+                
+            case SET_SIGNAL_DARK:
+                action.setOperationType(ActionSignalHead.OperationType.NotLit);
+                break;
+                
+            default:
+                throw new InvalidConditionalVariableException(
+                        Bundle.getMessage("ConditionalBadSignalHeadType", ca.getType().toString()));
+        }
+        
+        return action;
     }
     
     
     private DigitalActionBean getSignalMastAction(@Nonnull ConditionalAction ca, SignalMast sm) throws JmriException {
-        return null;
+        ActionSignalMast action =
+                new ActionSignalMast(InstanceManager.getDefault(DigitalActionManager.class)
+                        .getAutoSystemName(), null);
+        
+        action.setAddressing(NamedBeanAddressing.Direct);
+        action.setOperationAddressing(NamedBeanAddressing.Direct);
+        action.setAspectAddressing(NamedBeanAddressing.Direct);
+        
+        action.setSignalMast(sm);
+        
+        switch (ca.getType()) {
+            case SET_SIGNALMAST_ASPECT:
+                action.setOperationType(ActionSignalMast.OperationType.Aspect);
+                String aspect = ca.getActionString();
+                if (aspect != null && aspect.length() > 0 && aspect.charAt(0) == '@') {
+                    String memName = aspect.substring(1);
+                    action.setAspectAddressing(NamedBeanAddressing.Reference);
+                    action.setAspectReference("{" + memName + "}");
+                } else {
+                    action.setAspect(aspect);
+                }
+                break;
+                
+            case SET_SIGNALMAST_HELD:
+                action.setOperationType(ActionSignalMast.OperationType.Held);
+                break;
+                
+            case CLEAR_SIGNALMAST_HELD:
+                action.setOperationType(ActionSignalMast.OperationType.NotHeld);
+                break;
+                
+            case SET_SIGNALMAST_LIT:
+                action.setOperationType(ActionSignalMast.OperationType.Lit);
+                break;
+                
+            case SET_SIGNALMAST_DARK:
+                action.setOperationType(ActionSignalMast.OperationType.NotLit);
+                break;
+                
+            default:
+                throw new InvalidConditionalVariableException(
+                        Bundle.getMessage("ConditionalBadSignalMastType", ca.getType().toString()));
+        }
+        
+        return action;
     }
     
     
     private DigitalActionBean getEntryExitAction(@Nonnull ConditionalAction ca, DestinationPoints dp) throws JmriException {
+/*        
+        ActionEntryExit expression =
+                new ActionEntryExit(InstanceManager.getDefault(DigitalActionManager.class)
+                        .getAutoSystemName(), null);
+        
+        expression.setDestinationPoints(dp);
+        
+//        String devName = getDeviceName(ca);
+        
+        switch (ca.getType()) {
+            case SET_NXPAIR_ENABLED:
+//                        DestinationPoints dp = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(devName);
+//                        if (dp == null) {
+//                            errorList.add("Invalid NX Pair name in action - " + action.getDeviceName());  // NOI18N
+//                        } else {
+                            dp.setEnabled(true);
+//                        }
+                break;
+                
+            case SET_NXPAIR_DISABLED:
+                        dp = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(devName);
+                        if (dp == null) {
+                            errorList.add("Invalid NX Pair name in action - " + action.getDeviceName());  // NOI18N
+                        } else {
+                            dp.setEnabled(false);
+                        }
+                break;
+                
+            case SET_NXPAIR_SEGMENT:
+                        dp = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(devName);
+                        if (dp == null) {
+                            errorList.add("Invalid NX Pair name in action - " + action.getDeviceName());  // NOI18N
+                        } else {
+                            jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).
+                                    setSingleSegmentRoute(devName);
+                        }
+                break;
+                
+                
+                
+                
+            case ENTRYEXIT_ACTIVE:
+                expression.setBeanState(ExpressionEntryExit.EntryExitState.Active);
+                break;
+            case ENTRYEXIT_INACTIVE:
+                expression.setBeanState(ExpressionEntryExit.EntryExitState.Inactive);
+                break;
+            default:
+                throw new InvalidConditionalVariableException(
+                        Bundle.getMessage("ConditionalBadEntryExitType", cv.getType().toString()));
+        }
+        
+        expression.setTriggerOnChange(cv.doTriggerActions());
+        
+        return expression;
+*/
         return null;
     }
     
