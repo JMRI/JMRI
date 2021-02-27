@@ -360,6 +360,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
      * <p>
      * This is intended to be used only by testing subclasses.
      */
+    @Override
     public void terminateThreads() {
         threadStopRequest = true;
         if (xmtThread != null) {
