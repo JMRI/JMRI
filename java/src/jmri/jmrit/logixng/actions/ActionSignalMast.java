@@ -12,8 +12,6 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
 import jmri.util.TypeConversionUtil;
 
 /**

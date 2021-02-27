@@ -1176,7 +1176,36 @@ public class ImportConditional {
     
     
     private DigitalActionBean getScriptAction(@Nonnull ConditionalAction ca) throws JmriException {
-        return null;
+        SimpleScript action =
+                new SimpleScript(InstanceManager.getDefault(DigitalActionManager.class)
+                        .getAutoSystemName(), null);
+        
+        action.setOperationAddressing(NamedBeanAddressing.Direct);
+        action.setScriptAddressing(NamedBeanAddressing.Direct);
+        
+        String script = ca.getActionString();
+        if (script != null && script.length() > 0 && script.charAt(0) == '@') {
+            action.setScriptAddressing(NamedBeanAddressing.Direct);
+            action.setScriptReference(script.substring(1));
+        } else {
+            action.setScript(script);
+        }
+        
+        switch (ca.getType()) {
+            case RUN_SCRIPT:
+                action.setOperationType(SimpleScript.OperationType.RunScript);
+                break;
+                
+            case JYTHON_COMMAND:
+                action.setOperationType(SimpleScript.OperationType.JythonCommand);
+                break;
+                
+            default:
+                throw new InvalidConditionalVariableException(
+                        Bundle.getMessage("ConditionalBadEntryExitType", ca.getType().toString()));
+        }
+        
+        return action;
     }
     
     

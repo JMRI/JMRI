@@ -461,15 +461,65 @@ public class StoreAndLoadTest {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
-        ActionSimpleScript actionSimpleScript = new ActionSimpleScript(digitalActionManager.getAutoSystemName(), null);
-        maleSocket = digitalActionManager.registerAction(actionSimpleScript);
+        SimpleScript simpleScript = new SimpleScript(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(simpleScript);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         
-        actionSimpleScript = new ActionSimpleScript(digitalActionManager.getAutoSystemName(), null);
-        actionSimpleScript.setComment("A comment");
-        actionSimpleScript.setScript("import java\n");
-        maleSocket = digitalActionManager.registerAction(actionSimpleScript);
+        simpleScript = new SimpleScript(digitalActionManager.getAutoSystemName(), null);
+        simpleScript.setComment("A comment");
+        simpleScript.setScript("import java\n");
+        simpleScript.setOperationAddressing(NamedBeanAddressing.Direct);
+        simpleScript.setOperationFormula("a+b");
+        simpleScript.setOperationLocalVariable("myVar");
+        simpleScript.setOperationReference("{M1}");
+        simpleScript.setScriptAddressing(NamedBeanAddressing.Formula);
+        simpleScript.setScriptFormula("c+d");
+        simpleScript.setScriptLocalVariable("myOtherVar");
+        simpleScript.setScriptReference("{M2}");
+        maleSocket = digitalActionManager.registerAction(simpleScript);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        simpleScript = new SimpleScript(digitalActionManager.getAutoSystemName(), null);
+        simpleScript.setComment("A comment");
+        simpleScript.setScript("myFile.py");
+        simpleScript.setOperationAddressing(NamedBeanAddressing.Formula);
+        simpleScript.setOperationFormula("a+b");
+        simpleScript.setOperationLocalVariable("myVar");
+        simpleScript.setOperationReference("{M1}");
+        simpleScript.setScriptAddressing(NamedBeanAddressing.LocalVariable);
+        simpleScript.setScriptFormula("c+d");
+        simpleScript.setScriptLocalVariable("myOtherVar");
+        simpleScript.setScriptReference("{M2}");
+        maleSocket = digitalActionManager.registerAction(simpleScript);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        simpleScript = new SimpleScript(digitalActionManager.getAutoSystemName(), null);
+        simpleScript.setComment("A comment");
+        simpleScript.setScript("import java\n");
+        simpleScript.setOperationAddressing(NamedBeanAddressing.LocalVariable);
+        simpleScript.setOperationFormula("a+b");
+        simpleScript.setOperationLocalVariable("myVar");
+        simpleScript.setOperationReference("{M1}");
+        simpleScript.setScriptAddressing(NamedBeanAddressing.Reference);
+        simpleScript.setScriptFormula("c+d");
+        simpleScript.setScriptLocalVariable("myOtherVar");
+        simpleScript.setScriptReference("{M2}");
+        maleSocket = digitalActionManager.registerAction(simpleScript);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        simpleScript = new SimpleScript(digitalActionManager.getAutoSystemName(), null);
+        simpleScript.setComment("A comment");
+        simpleScript.setScript("import java\n");
+        simpleScript.setOperationAddressing(NamedBeanAddressing.Reference);
+        simpleScript.setOperationFormula("a+b");
+        simpleScript.setOperationLocalVariable("myVar");
+        simpleScript.setOperationReference("{M1}");
+        simpleScript.setScriptAddressing(NamedBeanAddressing.Direct);
+        simpleScript.setScriptFormula("c+d");
+        simpleScript.setScriptLocalVariable("myOtherVar");
+        simpleScript.setScriptReference("{M2}");
+        maleSocket = digitalActionManager.registerAction(simpleScript);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         

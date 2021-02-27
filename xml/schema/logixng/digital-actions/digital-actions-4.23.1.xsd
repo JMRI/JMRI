@@ -36,7 +36,6 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-sensor-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-signalhead-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-signalmast-4.23.1.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-simple-script-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-timer-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-turnout-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/call-module-4.23.1.xsd"/>
@@ -51,6 +50,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/many-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/sequence-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/shutdown-computer-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/simple-script-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/table-for-each-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/throttle-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/web-browser-4.23.1.xsd"/>
@@ -80,7 +80,6 @@
             <xs:element name="ActionSensor"      type="LogixNG_DigitalAction_ActionSensorType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionSignalHead"  type="LogixNG_DigitalAction_ActionSignalHeadType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionSignalMast"  type="LogixNG_DigitalAction_ActionSignalMastType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="ActionSimpleScript"  type="LogixNG_DigitalAction_ActionSimpleScriptType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionTimer"       type="LogixNG_DigitalAction_ActionTimerType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionTurnout"     type="LogixNG_DigitalAction_ActionTurnoutType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="CallModule"        type="LogixNG_DigitalAction_CallModuleType" minOccurs="0" maxOccurs="unbounded" />
@@ -95,6 +94,7 @@
             <xs:element name="DigitalMany"       type="LogixNG_DigitalAction_ManyType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="Sequence"          type="LogixNG_DigitalAction_SequenceType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ShutdownComputer"  type="LogixNG_DigitalAction_ShutdownComputerType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="SimpleScript"      type="LogixNG_DigitalAction_SimpleScriptType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="TableForEach"      type="LogixNG_DigitalAction_TableForEachType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="Throttle"          type="LogixNG_DigitalAction_ThrottleType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="WebBrowser"        type="LogixNG_DigitalAction_WebBrowserType" minOccurs="0" maxOccurs="unbounded" />
