@@ -114,7 +114,6 @@ public class SCWarrantTest extends WarrantTest {
         jmri.util.JUnitUtil.waitFor(() -> {
             return warrant.getRunningMessage().equals("Idle");
         }, "warrant not done");
-
     }
 
     @BeforeEach
@@ -217,7 +216,7 @@ public class SCWarrantTest extends WarrantTest {
     @AfterEach
     @Override
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+        //JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         super.tearDown();
     }
 
