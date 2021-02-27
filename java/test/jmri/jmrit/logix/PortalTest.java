@@ -24,14 +24,14 @@ public class PortalTest {
     @Test
     public void testCtor() {
         Portal p = null;
-        try {
-            p = _portalMgr.createNewPortal(null);
-        } catch (NullPointerException ex) {
-            // expected
-        }
-        assertThat(p).withFailMessage("Null User Name").isNull(); // Portals must have a user name
+//        try {
+//            p = _portalMgr.createNewPortal(null); // annotated as nonnull so should not be tested
+//        } catch (NullPointerException ex) {
+//            // expected: "Name cannot be null"
+//        }
+//        assertThat(p).withFailMessage("Null User Name").isNull();
         p = _portalMgr.createNewPortal("");
-        assertThat(p).withFailMessage("Empty User Name").isNull();
+        assertThat(p).withFailMessage("Empty User Name").isNull(); // Portals must have a user name
         p = _portalMgr.createNewPortal("portal_1");
         assertThat(p).withFailMessage("Has User Name").isNotNull();
     }

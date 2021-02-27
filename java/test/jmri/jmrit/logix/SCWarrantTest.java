@@ -31,7 +31,7 @@ public class SCWarrantTest extends WarrantTest {
         sWest.setState(Sensor.INACTIVE);
         sSouth.setState(Sensor.INACTIVE);
         sNorth.setState(Sensor.ACTIVE);     // start block of warrant
-        // TODO: use orders in test?
+
         ArrayList<BlockOrder> orders = new ArrayList<>();
         orders.add(new BlockOrder(_OBlockMgr.getOBlock("North"), "NorthToWest", "", "NorthWest"));
         BlockOrder viaOrder = new BlockOrder(_OBlockMgr.getOBlock("West"), "SouthToNorth", "NorthWest", "SouthWest");
@@ -41,6 +41,8 @@ public class SCWarrantTest extends WarrantTest {
 
         assertThat(((SCWarrant) warrant).isRouteFree()).withFailMessage("Route Free").isTrue();
         assertThat(((SCWarrant) warrant).isRouteAllocated()).withFailMessage("Route Allocated").isTrue();
+        assertThat(orders.size()).withFailMessage("Order size not 3").isEqualTo(3);
+        // TODO: use orders in test?
     }
 
     @Test
