@@ -719,7 +719,13 @@ public class ImportConditional {
                         new ActionSensor(InstanceManager.getDefault(DigitalActionManager.class)
                                 .getAutoSystemName(), null);
                 
-                action.setSensor(sn);
+                if (reference != null) {
+                    action.setAddressing(NamedBeanAddressing.Reference);
+                    action.setReference(reference);
+                } else {
+                    action.setAddressing(NamedBeanAddressing.Direct);
+                    action.setSensor(sn);
+                }
                 
                 switch (ca.getActionData()) {
                     case jmri.Route.TOGGLE:
@@ -796,7 +802,13 @@ public class ImportConditional {
                 action = new ActionTurnout(InstanceManager.getDefault(DigitalActionManager.class)
                                 .getAutoSystemName(), null);
                 
-                action.setTurnout(tn);
+                if (reference != null) {
+                    action.setAddressing(NamedBeanAddressing.Reference);
+                    action.setReference(reference);
+                } else {
+                    action.setAddressing(NamedBeanAddressing.Direct);
+                    action.setTurnout(tn);
+                }
                 
                 switch (ca.getActionData()) {
                     case jmri.Route.TOGGLE:
@@ -854,7 +866,13 @@ public class ImportConditional {
                 ActionTurnoutLock action2 = new ActionTurnoutLock(InstanceManager.getDefault(DigitalActionManager.class)
                                 .getAutoSystemName(), null);
                 
-                action2.setTurnout(tn);
+                if (reference != null) {
+                    action2.setAddressing(NamedBeanAddressing.Reference);
+                    action2.setReference(reference);
+                } else {
+                    action2.setAddressing(NamedBeanAddressing.Direct);
+                    action2.setTurnout(tn);
+                }
                 
                 switch (ca.getActionData()) {
                     case jmri.Route.TOGGLE:
@@ -902,7 +920,13 @@ public class ImportConditional {
                 action = new ActionLight(InstanceManager.getDefault(DigitalActionManager.class)
                                 .getAutoSystemName(), null);
                 
-                action.setLight(l);
+                if (reference != null) {
+                    action.setAddressing(NamedBeanAddressing.Reference);
+                    action.setReference(reference);
+                } else {
+                    action.setAddressing(NamedBeanAddressing.Direct);
+                    action.setLight(l);
+                }
                 
                 switch (ca.getActionData()) {
                     case jmri.Route.TOGGLE:
@@ -932,16 +956,22 @@ public class ImportConditional {
     }
     
     
-    private DigitalActionBean getSignalHeadAction(@Nonnull ConditionalAction ca, SignalHead s, String reference) throws JmriException {
+    private DigitalActionBean getSignalHeadAction(@Nonnull ConditionalAction ca, SignalHead sh, String reference) throws JmriException {
         ActionSignalHead action =
                 new ActionSignalHead(InstanceManager.getDefault(DigitalActionManager.class)
                         .getAutoSystemName(), null);
         
-        action.setAddressing(NamedBeanAddressing.Direct);
+        if (reference != null) {
+            action.setAddressing(NamedBeanAddressing.Reference);
+            action.setReference(reference);
+        } else {
+            action.setAddressing(NamedBeanAddressing.Direct);
+            action.setSignalHead(sh);
+        }
         action.setOperationAddressing(NamedBeanAddressing.Direct);
         action.setAppearanceAddressing(NamedBeanAddressing.Direct);
         
-        action.setSignalHead(s);
+        action.setSignalHead(sh);
         
         switch (ca.getType()) {
             case SET_SIGNAL_APPEARANCE:
@@ -979,11 +1009,15 @@ public class ImportConditional {
                 new ActionSignalMast(InstanceManager.getDefault(DigitalActionManager.class)
                         .getAutoSystemName(), null);
         
-        action.setAddressing(NamedBeanAddressing.Direct);
+        if (reference != null) {
+            action.setAddressing(NamedBeanAddressing.Reference);
+            action.setReference(reference);
+        } else {
+            action.setAddressing(NamedBeanAddressing.Direct);
+            action.setSignalMast(sm);
+        }
         action.setOperationAddressing(NamedBeanAddressing.Direct);
         action.setAspectAddressing(NamedBeanAddressing.Direct);
-        
-        action.setSignalMast(sm);
         
         switch (ca.getType()) {
             case SET_SIGNALMAST_ASPECT:
