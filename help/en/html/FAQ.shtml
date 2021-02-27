@@ -75,7 +75,7 @@
         <li><a href="apps/PanelPro/FAQ.shtml">PanelPro FAQ</a>
         <li><a href="apps/DecoderPro/FAQ.shtml">DecoderPro FAQ</a>
         <li><a href="setup/FAQ.shtml">JMRI Setup FAQ (TBD)</a>
-        <li><a href="../../install/FAQLinux.shtml">Linux FAQ</a>
+        <li><a href="../../../install/FAQLinux.shtml">Linux FAQ</a>
         <li><a href="doc/Technical/GitFAQ.shtml">Git (Development Tool) FAQ</a>
       </ul>      
     
