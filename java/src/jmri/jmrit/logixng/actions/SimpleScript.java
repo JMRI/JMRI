@@ -374,7 +374,6 @@ public class SimpleScript extends AbstractDigitalAction {
                     throw new IllegalArgumentException("invalid _operationType: " + _operationType.name());
             }
         } else {
-            System.out.format("Daniel: %s%n", Bundle.getMessage(locale, "SimpleScript_LongUnknownOper", operation, script));
             return Bundle.getMessage(locale, "SimpleScript_LongUnknownOper", operation, script);
         }
     }
