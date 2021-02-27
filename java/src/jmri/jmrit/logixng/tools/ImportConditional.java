@@ -252,64 +252,74 @@ public class ImportConditional {
     private void buildAction(DigitalBooleanActionBean action, ConditionalAction conditionalAction)
             throws SocketAlreadyConnectedException, JmriException {
         
+        
+        String reference = null;
+        String devName = conditionalAction.getDeviceName();
+        if (devName != null && devName.length() > 0 && devName.charAt(0) == '@') {
+            reference = "{"+devName.substring(1)+"}";
+        }
+        
         NamedBean nb = conditionalAction.getBean();
 //        System.err.format("nb: %s%n", nb == null ? null : nb.getSystemName());
         DigitalActionBean newAction;
         switch (conditionalAction.getType().getItemType()) {
             case SENSOR:
                 Sensor sn = (Sensor)nb;
-                newAction = getSensorAction(conditionalAction, sn);
+                newAction = getSensorAction(conditionalAction, sn, reference);
                 break;
             case TURNOUT:
                 Turnout tn = (Turnout)nb;
-                newAction = getTurnoutAction(conditionalAction, tn);
+                newAction = getTurnoutAction(conditionalAction, tn, reference);
                 break;
             case MEMORY:
                 Memory my = (Memory)nb;
-                newAction = getMemoryAction(conditionalAction, my);
+                newAction = getMemoryAction(conditionalAction, my, reference);
                 break;
             case LIGHT:
                 Light l = (Light)nb;
-                newAction = getLightAction(conditionalAction, l);
+                newAction = getLightAction(conditionalAction, l, reference);
                 break;
             case SIGNALHEAD:
                 SignalHead s = (SignalHead)nb;
-                newAction = getSignalHeadAction(conditionalAction, s);
+                newAction = getSignalHeadAction(conditionalAction, s, reference);
                 break;
             case SIGNALMAST:
                 SignalMast sm = (SignalMast)nb;
-                newAction = getSignalMastAction(conditionalAction, sm);
+                newAction = getSignalMastAction(conditionalAction, sm, reference);
                 break;
             case ENTRYEXIT:
                 DestinationPoints dp = (DestinationPoints)nb;
-                newAction = getEntryExitAction(conditionalAction, dp);
-                break;
-            case CONDITIONAL:
-                Conditional c = (Conditional)nb;
-                newAction = getConditionalAction(conditionalAction, c);
+                newAction = getEntryExitAction(conditionalAction, dp, reference);
                 break;
             case WARRANT:
                 Warrant w = (Warrant)nb;
-                newAction = getWarrantAction(conditionalAction, w);
+                newAction = getWarrantAction(conditionalAction, w, reference);
                 break;
             case OBLOCK:
                 OBlock b = (OBlock)nb;
-                newAction = getOBlockAction(conditionalAction, b);
+                newAction = getOBlockAction(conditionalAction, b, reference);
                 break;
                 
-                
-                
-                
-                
-//            case NONE:
             case LOGIX:
+                newAction = getEnableLogixAction(conditionalAction);
+                break;
+                
             case CLOCK:
+                newAction = getClockAction(conditionalAction);
+                break;
                 
             case AUDIO:
+                newAction = getAudioAction(conditionalAction);
+                break;
+                
             case SCRIPT:
+                newAction = getScriptAction(conditionalAction);
+                break;
+                
             case OTHER:
-                
-                
+                Route r = (Route) nb;
+                newAction = getRouteAction(conditionalAction, r, reference);
+                break;
                 
             default:
                 newAction = null;
@@ -701,7 +711,7 @@ public class ImportConditional {
     }
     
     
-    private DigitalActionBean getSensorAction(@Nonnull ConditionalAction ca, Sensor sn) throws JmriException {
+    private DigitalActionBean getSensorAction(@Nonnull ConditionalAction ca, Sensor sn, String reference) throws JmriException {
         
         switch (ca.getType()) {
             case SET_SENSOR:
@@ -735,7 +745,7 @@ public class ImportConditional {
                 ConditionalAction caTemp = new DefaultConditionalAction();
                 caTemp.setType(Conditional.Action.SET_SENSOR);
                 caTemp.setActionData(ca.getActionData());
-                DigitalActionBean subAction = getSensorAction(caTemp, sn);
+                DigitalActionBean subAction = getSensorAction(caTemp, sn, reference);
                 ExecuteDelayed delayedAction =
                         new ExecuteDelayed(InstanceManager.getDefault(DigitalActionManager.class)
                                 .getAutoSystemName(), null);
@@ -771,7 +781,7 @@ public class ImportConditional {
     }
     
     
-    private DigitalActionBean getTurnoutAction(@Nonnull ConditionalAction ca, Turnout tn) throws JmriException {
+    private DigitalActionBean getTurnoutAction(@Nonnull ConditionalAction ca, Turnout tn, String reference) throws JmriException {
 //        System.err.format("Turnout: %s%n", tn == null ? null : tn.getSystemName());
         
         ActionTurnout action;
@@ -812,7 +822,7 @@ public class ImportConditional {
                 ConditionalAction caTemp = new DefaultConditionalAction();
                 caTemp.setType(Conditional.Action.SET_TURNOUT);
                 caTemp.setActionData(ca.getActionData());
-                DigitalActionBean subAction = getTurnoutAction(caTemp, tn);
+                DigitalActionBean subAction = getTurnoutAction(caTemp, tn, reference);
                 ExecuteDelayed delayedAction =
                         new ExecuteDelayed(InstanceManager.getDefault(DigitalActionManager.class)
                                 .getAutoSystemName(), null);
@@ -878,12 +888,12 @@ public class ImportConditional {
     }
     
     
-    private DigitalActionBean getMemoryAction(@Nonnull ConditionalAction ca, Memory my) throws JmriException {
+    private DigitalActionBean getMemoryAction(@Nonnull ConditionalAction ca, Memory my, String reference) throws JmriException {
         return null;
     }
     
     
-    private DigitalActionBean getLightAction(@Nonnull ConditionalAction ca, Light l) throws JmriException {
+    private DigitalActionBean getLightAction(@Nonnull ConditionalAction ca, Light l, String reference) throws JmriException {
         
         ActionLight action;
         
@@ -922,7 +932,7 @@ public class ImportConditional {
     }
     
     
-    private DigitalActionBean getSignalHeadAction(@Nonnull ConditionalAction ca, SignalHead s) throws JmriException {
+    private DigitalActionBean getSignalHeadAction(@Nonnull ConditionalAction ca, SignalHead s, String reference) throws JmriException {
         ActionSignalHead action =
                 new ActionSignalHead(InstanceManager.getDefault(DigitalActionManager.class)
                         .getAutoSystemName(), null);
@@ -964,7 +974,7 @@ public class ImportConditional {
     }
     
     
-    private DigitalActionBean getSignalMastAction(@Nonnull ConditionalAction ca, SignalMast sm) throws JmriException {
+    private DigitalActionBean getSignalMastAction(@Nonnull ConditionalAction ca, SignalMast sm, String reference) throws JmriException {
         ActionSignalMast action =
                 new ActionSignalMast(InstanceManager.getDefault(DigitalActionManager.class)
                         .getAutoSystemName(), null);
@@ -1013,7 +1023,7 @@ public class ImportConditional {
     }
     
     
-    private DigitalActionBean getEntryExitAction(@Nonnull ConditionalAction ca, DestinationPoints dp) throws JmriException {
+    private DigitalActionBean getEntryExitAction(@Nonnull ConditionalAction ca, DestinationPoints dp, String reference) throws JmriException {
 /*        
         ActionEntryExit expression =
                 new ActionEntryExit(InstanceManager.getDefault(DigitalActionManager.class)
@@ -1074,17 +1084,69 @@ public class ImportConditional {
     }
     
     
-    private DigitalActionBean getConditionalAction(@Nonnull ConditionalAction ca, Conditional c) throws JmriException {
+    private DigitalActionBean getWarrantAction(@Nonnull ConditionalAction ca, Warrant w, String reference) throws JmriException {
         return null;
     }
     
     
-    private DigitalActionBean getWarrantAction(@Nonnull ConditionalAction ca, Warrant w) throws JmriException {
+    private DigitalActionBean getOBlockAction(@Nonnull ConditionalAction ca, OBlock b, String reference) throws JmriException {
         return null;
     }
     
     
-    private DigitalActionBean getOBlockAction(@Nonnull ConditionalAction ca, OBlock b) throws JmriException {
+    private DigitalActionBean getEnableLogixAction(@Nonnull ConditionalAction ca) throws JmriException {
+        EnableLogix action =
+                new EnableLogix(InstanceManager.getDefault(DigitalActionManager.class)
+                        .getAutoSystemName(), null);
+        
+        action.setAddressing(NamedBeanAddressing.Direct);
+        action.setOperationAddressing(NamedBeanAddressing.Direct);
+        
+        String devName = ca.getDeviceName();
+        if (devName != null) {
+            if (devName.length() > 0 && devName.charAt(0) == '@') {
+                String memName = devName.substring(1);
+                action.setOperationAddressing(NamedBeanAddressing.Reference);
+                action.setOperationReference("{" + memName + "}");
+            } else {
+                action.setLogix(devName);
+            }
+        }
+        
+        switch (ca.getType()) {
+            case ENABLE_LOGIX:
+                action.setOperationDirect(EnableLogix.Operation.Enable);
+                break;
+                
+            case DISABLE_LOGIX:
+                action.setOperationDirect(EnableLogix.Operation.Disable);
+                break;
+                
+            default:
+                throw new InvalidConditionalVariableException(
+                        Bundle.getMessage("ConditionalBadEntryExitType", ca.getType().toString()));
+        }
+        
+        return action;
+    }
+    
+    
+    private DigitalActionBean getClockAction(@Nonnull ConditionalAction ca) throws JmriException {
+        return null;
+    }
+    
+    
+    private DigitalActionBean getAudioAction(@Nonnull ConditionalAction ca) throws JmriException {
+        return null;
+    }
+    
+    
+    private DigitalActionBean getScriptAction(@Nonnull ConditionalAction ca) throws JmriException {
+        return null;
+    }
+    
+    
+    private DigitalActionBean getRouteAction(@Nonnull ConditionalAction ca, Route b, String reference) throws JmriException {
         return null;
     }
     

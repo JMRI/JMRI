@@ -98,6 +98,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.ActionThrottle.class);
         classes.add(jmri.jmrit.logixng.actions.ActionTurnout.class);
         classes.add(jmri.jmrit.logixng.actions.ActionTurnoutLock.class);
+        classes.add(jmri.jmrit.logixng.actions.EnableLogix.class);
         map.put(Category.ITEM, classes);
         
         classes = new ArrayList<>();
@@ -161,6 +162,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
     

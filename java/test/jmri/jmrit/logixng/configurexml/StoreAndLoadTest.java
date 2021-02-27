@@ -872,6 +872,72 @@ public class StoreAndLoadTest {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
+        EnableLogix enableLogix = new EnableLogix(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(enableLogix);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        enableLogix = new EnableLogix(digitalActionManager.getAutoSystemName(), null);
+        enableLogix.setComment("A comment");
+        enableLogix.setLogix(logixIX1);
+        enableLogix.setOperationDirect(EnableLogix.Operation.Enable);
+        enableLogix.setAddressing(NamedBeanAddressing.Direct);
+        enableLogix.setFormula("\"IT\"+index");
+        enableLogix.setLocalVariable("index");
+        enableLogix.setReference("{IM1}");
+        enableLogix.setOperationAddressing(NamedBeanAddressing.LocalVariable);
+        enableLogix.setOperationFormula("\"IT\"+index2");
+        enableLogix.setOperationLocalVariable("index2");
+        enableLogix.setOperationReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(enableLogix);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        enableLogix = new EnableLogix(digitalActionManager.getAutoSystemName(), null);
+        enableLogix.setComment("A comment");
+        enableLogix.setLogix(logixIX1);
+        enableLogix.setOperationDirect(EnableLogix.Operation.Disable);
+        enableLogix.setAddressing(NamedBeanAddressing.LocalVariable);
+        enableLogix.setFormula("\"IT\"+index");
+        enableLogix.setLocalVariable("index");
+        enableLogix.setReference("{IM1}");
+        enableLogix.setOperationAddressing(NamedBeanAddressing.Formula);
+        enableLogix.setOperationFormula("\"IT\"+index2");
+        enableLogix.setOperationLocalVariable("index2");
+        enableLogix.setOperationReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(enableLogix);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        enableLogix = new EnableLogix(digitalActionManager.getAutoSystemName(), null);
+        enableLogix.setComment("A comment");
+        enableLogix.setLogix(logixIX1);
+        enableLogix.setOperationDirect(EnableLogix.Operation.Enable);
+        enableLogix.setAddressing(NamedBeanAddressing.Formula);
+        enableLogix.setFormula("\"IT\"+index");
+        enableLogix.setLocalVariable("index");
+        enableLogix.setReference("{IM1}");
+        enableLogix.setOperationAddressing(NamedBeanAddressing.Reference);
+        enableLogix.setOperationFormula("\"IT\"+index2");
+        enableLogix.setOperationLocalVariable("index2");
+        enableLogix.setOperationReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(enableLogix);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        enableLogix = new EnableLogix(digitalActionManager.getAutoSystemName(), null);
+        enableLogix.setComment("A comment");
+        enableLogix.setLogix(logixIX1);
+        enableLogix.setOperationDirect(EnableLogix.Operation.Enable);
+        enableLogix.setAddressing(NamedBeanAddressing.Reference);
+        enableLogix.setFormula("\"IT\"+index");
+        enableLogix.setLocalVariable("index");
+        enableLogix.setReference("{IM1}");
+        enableLogix.setOperationAddressing(NamedBeanAddressing.Direct);
+        enableLogix.setOperationFormula("\"IT\"+index2");
+        enableLogix.setOperationLocalVariable("index2");
+        enableLogix.setOperationReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(enableLogix);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        
         ExecuteDelayed executeDelayed = new ExecuteDelayed(digitalActionManager.getAutoSystemName(), null);
         executeDelayed.setResetIfAlreadyStarted(false);
         maleSocket = digitalActionManager.registerAction(executeDelayed);

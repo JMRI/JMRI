@@ -42,6 +42,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/call-module-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/do-analog-action-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/do-string-action-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/enable-logix-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/executedelayed-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/for-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/if-then-else-4.23.1.xsd"/>
@@ -85,6 +86,7 @@
             <xs:element name="CallModule"        type="LogixNG_DigitalAction_CallModuleType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="DoAnalogAction"    type="LogixNG_DigitalAction_DoAnalogActionType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="DoStringAction"    type="LogixNG_DigitalAction_DoStringActionType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="EnableLogix"       type="LogixNG_DigitalAction_EnableLogixType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ExecuteDelayed"    type="LogixNG_DigitalAction_ExecuteDelayedType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="For"               type="LogixNG_DigitalAction_ForType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="IfThenElse"        type="LogixNG_DigitalAction_IfThenElseType" minOccurs="0" maxOccurs="unbounded" />
