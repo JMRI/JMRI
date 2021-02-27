@@ -577,6 +577,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             case LnConstants.OPC_LOCO_SND:
             case LnConstants.OPC_LOCO_SPD:
             case LnConstants.OPC_SLOT_STAT1:
+            case LnConstants.OPC_LINK_SLOTS:
+            case LnConstants.OPC_UNLINK_SLOTS:
                 i = m.getElement(1);
                 break;
 
@@ -801,11 +803,21 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             sendReadSlotDelayed(i,100);
         } else if (m.getOpCode() == LnConstants.OPC_MOVE_SLOTS) {
             // if a true move get the new from slot status
+            // the to slot status is sent in the reply, but not if dispatch or null
+            // as those return slot info.
+            int slotTwo;
+            slotTwo = m.getElement(2);
+            if (i != 0 && slotTwo != 0 && i != slotTwo) {
+                sendReadSlotDelayed(i,100);
+            }
+        } else if (m.getOpCode() == LnConstants.OPC_LINK_SLOTS ||
+                m.getOpCode() == LnConstants.OPC_UNLINK_SLOTS ) {
+            // unlink and link return first slot by not second (to or from)
             // the to slot status is sent in the reply
             int slotTwo;
             slotTwo = m.getElement(2);
             if (i != 0 && slotTwo != 0) {
-                sendReadSlotDelayed(i,100);
+                sendReadSlotDelayed(slotTwo,100);
             }
        }
     }
