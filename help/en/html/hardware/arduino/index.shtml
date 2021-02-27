@@ -143,7 +143,7 @@
     
     <p>
     One of the simplest ways to have your arduino communicate with JMRI is to install software that
-    allows it to emulate a CMRI node. [See <a href="../cmri/index.shtml">the CMRI help page</a> for  
+    allows it to emulate a CMRI node. [See <a href="../cmri/CMRI.shtml">the CMRI help page</a> for  
     information about using CMRI nodes with JMRI.] On the arduino, install one of the arduino 
     C/MRI libraries and include it in your sketch (for example, the library by Michael Adams
     <a href="https://github.com/madleech/ArduinoCMRI" target="blank_"> available on Github</a> (
