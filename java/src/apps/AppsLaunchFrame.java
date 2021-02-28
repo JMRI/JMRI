@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.util.EventObject;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -53,6 +54,7 @@ import org.slf4j.LoggerFactory;
  */
 public class AppsLaunchFrame extends jmri.util.JmriJFrame {
 
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.jython.JythonBundle");      // Link for script menu items  // NOI18N
     static String profileFilename;
 
     public AppsLaunchFrame(AppsLaunchPane containedPane, String name) {
@@ -75,12 +77,12 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
 
         // pack
         pack();
-        
+
         // center as default
         Dimension screen = getToolkit().getScreenSize();
         Dimension size = getSize();
         setLocation((screen.width - size.width) / 2, (screen.height - size.height) / 2);
-        
+
         // then try to load location and size from preferences
         setFrameLocation();
     }
@@ -104,6 +106,7 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
         toolsMenu(menuBar, wi);
         rosterMenu(menuBar, wi);
         panelMenu(menuBar, wi);
+        scriptMenu(menuBar, wi);
         // check to see if operations in main menu
         if (jmri.jmrit.operations.setup.Setup.isMainMenuEnabled()) {
             operationsMenu(menuBar, wi);
@@ -118,6 +121,12 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
     protected void fileMenu(JMenuBar menuBar, WindowInterface wi) {
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         menuBar.add(fileMenu);
+
+        fileMenu.add(new jmri.configurexml.LoadXmlUserAction(Bundle.getMessage("FileMenuItemLoad")));  // NOI18N
+        fileMenu.add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("FileMenuItemStore")));  // NOI18N
+        fileMenu.add(new jmri.jmrit.revhistory.swing.FileHistoryAction(Bundle.getMessage("FileMenuItemHistory")));  // NOI18N
+
+        fileMenu.add(new JSeparator());
 
         fileMenu.add(new PrintDecoderListAction(Bundle.getMessage("MenuPrintDecoderDefinitions"), wi.getFrame(), false));
         fileMenu.add(new PrintDecoderListAction(Bundle.getMessage("MenuPrintPreviewDecoderDefinitions"), wi.getFrame(), true));
@@ -225,10 +234,10 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
 
         d.add(new JSeparator());
         d.add(new WiThrottleCreationAction());
-        
+
         d.add(new JSeparator());
         d.add(new apps.TrainCrew.InstallFromURL());
-        
+
         // add final to menu bar
         menuBar.add(d);
 
@@ -236,19 +245,19 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
 
     /**
      * Add a script menu to a window menu bar.
-     * 
+     *
      * @param menuBar the menu bar to add the script menu to
-     * @param wi the window interface containing menuBar
-     * @deprecated since 4.17.5 without direct replacement; appears
-     * to have been empty method since 1.2.3
+     * @param wi      the window interface containing menuBar
      */
-    @Deprecated
     protected void scriptMenu(JMenuBar menuBar, WindowInterface wi) {
-        // temporarily remove Scripts menu; note that "Run Script"
-        // has been added to the Panels menu
-        // JMenu menu = new JMenu("Scripts");
-        // menuBar.add(menu);
+        JMenu scriptMenu = new JMenu(rb.getString("MenuScripting"));  // NOI18N
+        scriptMenu.add(new jmri.jmrit.jython.RunJythonScript(rb.getString("MenuItemScript")));  // NOI18N
+        scriptMenu.add(new jmri.jmrit.automat.monitor.AutomatTableAction(rb.getString("MenuItemMonitor")));  // NOI18N
+        scriptMenu.add(new jmri.jmrit.jython.JythonWindow(rb.getString("MenuItemScriptLog")));  // NOI18N
+        scriptMenu.add(new jmri.jmrit.jython.InputWindowAction(rb.getString("MenuItemScriptInput")));  // NOI18N
+        menuBar.add(scriptMenu);
     }
+
 
     protected void developmentMenu(JMenuBar menuBar, WindowInterface wi) {
         JMenu devMenu = new JMenu("Development");
