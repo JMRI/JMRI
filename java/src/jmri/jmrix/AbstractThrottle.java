@@ -752,8 +752,14 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         }
         // since Emergency Stop (estop) is speed 1, and a negative speed
         // is used for estop, subtract 1 from steps to avoid the estop
-        // Use ceil() to prevent smaller positive values from being 0
-        int value = (int) Math.ceil((steps - 1) * speed);
+        // To avoid large dead-zone at beginning of the scale,
+        // subtract 1 more from steps and add 1 to output value...
+        int value = 1 + (int) (steps - 2) * speed;
+        // ...unless input is very small
+        if (speed < 0.0001f)
+        {
+            value = 0;
+        }
         if (value < 0) {
             // if we get here, something is wrong and needs to be reported.
             Exception ex = new Exception("Error calculating speed. Please send logs to the JMRI developers.");
