@@ -750,6 +750,13 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         if (speed < 0) {
             return 1; // emergency stop
         }
+        // Subtract "half an output speed step" to prevent Math.ceil() to
+        // jump one speed step higher
+        // only if this does not make the value negative
+        if(speed > 1.0f / (2 * (steps - 1)) )
+        {
+            speed -= 1.0f / (2 * (steps - 1));
+        }
         // since Emergency Stop (estop) is speed 1, and a negative speed
         // is used for estop, subtract 1 from steps to avoid the estop
         // Use ceil() to prevent smaller positive values from being 0
