@@ -75,22 +75,22 @@ de la construction de paquets d'installation depuis la construction en d&#233;ve
 et de la construction des versions finales.
 <p>
 Notre machine Jenkins primaire est &#224;
-<a href="http://jmri.tagadab.com/jenkins/">http://jmri.tagadab.com/jenkins/</a>, avec
+<a href="https://builds.jmri.org/jenkins/">https://builds.jmri.org/jenkins/</a>, avec
 also known as &#224;
-<a href="http://builds.jmri.org/jenkins/">http://builds.jmri.org/jenkins/</a>.
+<a href="https://builds.jmri.org/jenkins/">https://builds.jmri.org/jenkins/</a>.
 <p>L'inter&#234;t des r&#233;sultats sp&#233;cifiques Jenkins</p>
 
 <ul>
-    <li>La page <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/">Constructions</a>
+    <li>La page <a href="https://builds.jmri.org/jenkins/job/Development/job/Builds/">Constructions</a>
     montrant l'&#233;tat des constructions fait apr&#232;s chaque s&#233;rie de soumissions.
     Les constructions r&#233;ussies sont suivies par les constructions d'installateurs via la
-    t&#226;che <a href="http://jmri.tagadab.com/jenkins/view/All/job/Development/job/Packages">Paquets</a>
+    t&#226;che <a href="https://builds.jmri.org/jenkins/view/All/job/Development/job/Packages">Paquets</a>
 
-    <li>La page <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/">SpotBugs</a>
+    <li>La page <a href="https://builds.jmri.org/jenkins/job/Development/job/Findbugs/">SpotBugs</a>
     montrant l'&#233;tat du test le plus extensif
     <a href="FindBugs.shtml">SpotBugs</a> fait p&#233;riodiquement.Il y a aussi les pages des
-    <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/changes">Plus r&#233;cents changements</a> et le
-    <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/lastBuild/">Les r&#233;sultats les plus
+    <a href="https://builds.jmri.org/jenkins/job/Development/job/Findbugs/changes">Plus r&#233;cents changements</a> et le
+    <a href="https://builds.jmri.org/jenkins/job/Development/job/Findbugs/lastBuild/">Les r&#233;sultats les plus
         r&#233;cents</a>.
     <p>
     Pour avoir plus d'informations sur l'usage de SpotBugs par JMRI, voir la
@@ -114,7 +114,7 @@ du code Hudson et supporte le  m&#234;me <a href="http://en.wikipedia.org/wiki/A
     <li>Dans la r&#233;sultat d&#233;roulant, compl&#233;ter les rubriques suivantes:
     <dl>
     <dt>Name</dt><dd>JMRI</dd>
-    <dt>URL</dt><dd>http://builds.jmri.org/jenkins/</dd>
+    <dt>URL</dt><dd>https://builds.jmri.org/jenkins/</dd>
     <dt>Auto refresh every X minutes</dt><dd>60 (changer la valeur de 5 par d&#233;faut pour &#233;viter de surcharger le serveur CI)
 	</dd>
     </dl>
