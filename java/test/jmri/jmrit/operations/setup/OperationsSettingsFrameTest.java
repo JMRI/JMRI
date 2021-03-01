@@ -23,7 +23,7 @@ import jmri.util.swing.JemmyUtil;
  * @author Dan Boudreau Copyright (C) 2009
  * @author Paul Bender Copyright (C) 2017
  */
-public class OperationsSetupFrameTest extends OperationsTestCase {
+public class OperationsSettingsFrameTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {

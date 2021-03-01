@@ -8,7 +8,7 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class OperationsSetupActionTest extends OperationsTestCase {
+public class OperationsSettingsActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {

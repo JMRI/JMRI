@@ -9,7 +9,7 @@ import jmri.jmrit.operations.OperationsTestCase;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class OperationsSetupPanelTest extends OperationsTestCase {
+public class OperationsSettingsPanelTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
