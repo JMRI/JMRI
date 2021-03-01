@@ -1560,7 +1560,7 @@ public class AbstractThrottleTest {
     @Test
     public void testGetSpeed_float() {
         Assert.assertEquals("Full Speed", 127, instance.intSpeed(1.0F));
-        float incre = 0.007874016f;
+        float incre = 1.0f / 126.0f;
         float speed = incre;
         // Cannot get speeedStep 1. range is 2 to 127
         int i = 2;
