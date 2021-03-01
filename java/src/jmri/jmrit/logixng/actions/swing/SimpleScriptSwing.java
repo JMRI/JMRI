@@ -149,6 +149,7 @@ public class SimpleScriptSwing extends AbstractDigitalActionSwing {
                 case Formula: _tabbedPaneScriptType.setSelectedComponent(_panelScriptTypeFormula); break;
                 default: throw new IllegalArgumentException("invalid _addressing state: " + action.getScriptAddressing().name());
             }
+            _scriptTextField.setText(action.getScript());
             _scriptReferenceTextField.setText(action.getScriptReference());
             _scriptLocalVariableTextField.setText(action.getScriptLocalVariable());
             _scriptFormulaTextField.setText(action.getScriptFormula());

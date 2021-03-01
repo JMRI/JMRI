@@ -365,14 +365,7 @@ public class SimpleScript extends AbstractDigitalAction {
         }
         
         if (_operationAddressing == NamedBeanAddressing.Direct) {
-            switch (_operationType) {
-                case RunScript:
-                    return Bundle.getMessage(locale, "SimpleScript_Long", script);
-                case JythonCommand:
-                    return Bundle.getMessage(locale, "SimpleScript_Long", operation);
-                default:
-                    throw new IllegalArgumentException("invalid _operationType: " + _operationType.name());
-            }
+            return Bundle.getMessage(locale, "SimpleScript_Long", operation, script);
         } else {
             return Bundle.getMessage(locale, "SimpleScript_LongUnknownOper", operation, script);
         }
