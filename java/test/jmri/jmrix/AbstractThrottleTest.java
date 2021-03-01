@@ -1592,11 +1592,11 @@ public class AbstractThrottleTest {
             int result = instance.intSpeed(speed, maxStepHi);
             Assert.assertNotSame(speed + "(" + maxStepHi + " steps) should not idle", 0, result);
             Assert.assertNotSame(speed + "(" + maxStepHi + " steps) should not eStop", 1, result);
-            Assert.assertTrue(speed + "(" + maxStepHi + " steps) should not exceed " + maxStepHi, result <= 127);
+            Assert.assertTrue(speed + "(" + maxStepHi + " steps) should not exceed " + maxStepHi, result <= maxStepHi);
             result = instance.intSpeed(speed, maxStepLo);
             Assert.assertNotSame(speed + "(" + maxStepLo + " steps) should not idle", 0, result);
             Assert.assertNotSame(speed + "(" + maxStepLo + " steps) should not eStop", 1, result);
-            Assert.assertTrue(speed + "(" + maxStepLo + " steps) should not exceed " + maxStepLo, result <= 127);
+            Assert.assertTrue(speed + "(" + maxStepLo + " steps) should not exceed " + maxStepLo, result <= maxStepLo);
             speed = speed + 0.001F;
         }
     }
