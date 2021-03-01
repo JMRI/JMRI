@@ -755,7 +755,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         // Since Emergency Stop (estop) is speed 1, subtract 1 from steps
         speed *= (steps - 1);
         // convert to integer by rounding
-        int value = (int) Math.round(speed);
+        int value = Math.round(speed);
 
         // Only return stop if value is actually 0, jump to first speed
         // step for small positive inputs.
