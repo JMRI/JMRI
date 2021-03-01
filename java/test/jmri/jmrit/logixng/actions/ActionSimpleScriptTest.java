@@ -18,7 +18,7 @@ import org.junit.Test;
  * 
  * @author Daniel Bergqvist 2021
  */
-public class SimpleScriptTest extends AbstractDigitalActionTestBase {
+public class ActionSimpleScriptTest extends AbstractDigitalActionTestBase {
 
     private final String _scriptText = "lights.provideLight(\"IL1\").commandedState = ON";
     
@@ -26,7 +26,7 @@ public class SimpleScriptTest extends AbstractDigitalActionTestBase {
     private LogixNG logixNG;
     private ConditionalNG conditionalNG;
     private IfThenElse ifThenElse;
-    private SimpleScript actionScript;
+    private ActionSimpleScript actionScript;
     private Sensor sensor;
     
     
@@ -71,7 +71,7 @@ public class SimpleScriptTest extends AbstractDigitalActionTestBase {
     
     @Override
     public NamedBean createNewBean(String systemName) {
-        return new SimpleScript(systemName, null);
+        return new ActionSimpleScript(systemName, null);
     }
     
     @Override
@@ -81,15 +81,15 @@ public class SimpleScriptTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testCtor() {
-        SimpleScript action2;
+        ActionSimpleScript action2;
         
-        action2 = new SimpleScript("IQDA321", null);
+        action2 = new ActionSimpleScript("IQDA321", null);
         action2.setScript(_scriptText);
         Assert.assertNotNull("object exists", action2);
         Assert.assertNull("Username matches", action2.getUserName());
         Assert.assertEquals("String matches", "Execute simple script: Jython command. Script lights.provideLight(\"IL1\").commandedState = ON", action2.getLongDescription());
         
-        action2 = new SimpleScript("IQDA321", "My action");
+        action2 = new ActionSimpleScript("IQDA321", "My action");
         action2.setScript(_scriptText);
         Assert.assertNotNull("object exists", action2);
         Assert.assertEquals("Username matches", "My action", action2.getUserName());
@@ -98,7 +98,7 @@ public class SimpleScriptTest extends AbstractDigitalActionTestBase {
         boolean thrown = false;
         try {
             // Illegal system name
-            new SimpleScript("IQA55:12:XY11", null);
+            new ActionSimpleScript("IQA55:12:XY11", null);
         } catch (IllegalArgumentException ex) {
             thrown = true;
         }
@@ -107,7 +107,7 @@ public class SimpleScriptTest extends AbstractDigitalActionTestBase {
         thrown = false;
         try {
             // Illegal system name
-            new SimpleScript("IQA55:12:XY11", "A name");
+            new ActionSimpleScript("IQA55:12:XY11", "A name");
         } catch (IllegalArgumentException ex) {
             thrown = true;
         }
@@ -213,7 +213,7 @@ public class SimpleScriptTest extends AbstractDigitalActionTestBase {
     @Test
     public void testAction_RunScript() throws Exception {
         
-        actionScript.setOperationType(SimpleScript.OperationType.RunScript);
+        actionScript.setOperationType(ActionSimpleScript.OperationType.RunScript);
         actionScript.setScript("java/test/jmri/jmrit/logixng/actions/SimpleScriptTest.py");
         
         // Test action
@@ -329,7 +329,7 @@ public class SimpleScriptTest extends AbstractDigitalActionTestBase {
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionSensor);
         ifThenElse.getChild(0).connect(maleSocket2);
         
-        actionScript = new SimpleScript(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
+        actionScript = new ActionSimpleScript(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         actionScript.setScript(_scriptText);
         MaleSocket socketActionSimpleScript = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionScript);
         ifThenElse.getChild(1).connect(socketActionSimpleScript);

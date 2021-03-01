@@ -24,7 +24,7 @@ import jmri.util.TypeConversionUtil;
  * 
  * @author Daniel Bergqvist Copyright 2021
  */
-public class SimpleScript extends AbstractDigitalAction {
+public class ActionSimpleScript extends AbstractDigitalAction {
 
     private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
     private OperationType _operationType = OperationType.JythonCommand;
@@ -40,7 +40,7 @@ public class SimpleScript extends AbstractDigitalAction {
     private String _scriptFormula = "";
     private ExpressionNode _scriptExpressionNode;
 
-    public SimpleScript(String sys, String user)
+    public ActionSimpleScript(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
@@ -51,7 +51,7 @@ public class SimpleScript extends AbstractDigitalAction {
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
-        SimpleScript copy = new SimpleScript(sysName, userName);
+        ActionSimpleScript copy = new ActionSimpleScript(sysName, userName);
         copy.setComment(getComment());
         copy.setScript(_script);
         copy.setOperationAddressing(_operationAddressing);
@@ -437,6 +437,6 @@ public class SimpleScript extends AbstractDigitalAction {
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SimpleScript.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSimpleScript.class);
     
 }

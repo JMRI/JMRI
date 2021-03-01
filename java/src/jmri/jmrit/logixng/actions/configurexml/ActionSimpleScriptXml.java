@@ -4,7 +4,7 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.NamedBeanAddressing;
-import jmri.jmrit.logixng.actions.SimpleScript;
+import jmri.jmrit.logixng.actions.ActionSimpleScript;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
@@ -15,9 +15,9 @@ import org.jdom2.Element;
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
  * @author Daniel Bergqvist Copyright (C) 2021
  */
-public class SimpleScriptXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
+public class ActionSimpleScriptXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
-    public SimpleScriptXml() {
+    public ActionSimpleScriptXml() {
     }
     
     /**
@@ -28,9 +28,9 @@ public class SimpleScriptXml extends jmri.managers.configurexml.AbstractNamedBea
      */
     @Override
     public Element store(Object o) {
-        SimpleScript p = (SimpleScript) o;
+        ActionSimpleScript p = (ActionSimpleScript) o;
 
-        Element element = new Element("SimpleScript");
+        Element element = new Element("ActionSimpleScript");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
@@ -55,7 +55,7 @@ public class SimpleScriptXml extends jmri.managers.configurexml.AbstractNamedBea
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        SimpleScript h = new SimpleScript(sys, uname);
+        ActionSimpleScript h = new ActionSimpleScript(sys, uname);
 
         loadCommon(h, shared);
 
@@ -67,7 +67,7 @@ public class SimpleScriptXml extends jmri.managers.configurexml.AbstractNamedBea
             
             Element queryType = shared.getChild("operationType");
             if (queryType != null) {
-                h.setOperationType(SimpleScript.OperationType.valueOf(queryType.getTextTrim()));
+                h.setOperationType(ActionSimpleScript.OperationType.valueOf(queryType.getTextTrim()));
             }
             
             elem = shared.getChild("operationReference");
@@ -111,5 +111,5 @@ public class SimpleScriptXml extends jmri.managers.configurexml.AbstractNamedBea
         return true;
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SimpleScriptXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSimpleScriptXml.class);
 }

@@ -8,7 +8,7 @@ import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.actions.SimpleScript;
+import jmri.jmrit.logixng.actions.ActionSimpleScript;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
@@ -17,7 +17,7 @@ import jmri.jmrit.logixng.util.parser.ParserException;
  * 
  * @author Daniel Bergqvist 2021
  */
-public class SimpleScriptSwing extends AbstractDigitalActionSwing {
+public class ActionSimpleScriptSwing extends AbstractDigitalActionSwing {
 
     public static final int NUM_COLUMNS_TEXT_FIELDS = 20;
     
@@ -27,7 +27,7 @@ public class SimpleScriptSwing extends AbstractDigitalActionSwing {
     private JPanel _panelOperationTypeLocalVariable;
     private JPanel _panelOperationTypeFormula;
     
-    private JComboBox<SimpleScript.OperationType> _operationComboBox;
+    private JComboBox<ActionSimpleScript.OperationType> _operationComboBox;
     private JTextField _scriptOperationReferenceTextField;
     private JTextField _scriptOperationLocalVariableTextField;
     private JTextField _scriptOperationFormulaTextField;
@@ -46,7 +46,7 @@ public class SimpleScriptSwing extends AbstractDigitalActionSwing {
     
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
-        SimpleScript action = (SimpleScript)object;
+        ActionSimpleScript action = (ActionSimpleScript)object;
         
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -71,7 +71,7 @@ public class SimpleScriptSwing extends AbstractDigitalActionSwing {
         _tabbedPaneOperationType.addTab(NamedBeanAddressing.Formula.toString(), _panelOperationTypeFormula);
         
         _operationComboBox = new JComboBox<>();
-        for (SimpleScript.OperationType e : SimpleScript.OperationType.values()) {
+        for (ActionSimpleScript.OperationType e : ActionSimpleScript.OperationType.values()) {
             _operationComboBox.addItem(e);
         }
         _panelOperationTypeDirect.add(new JLabel(Bundle.getMessage("SimpleScript_Operation")));
@@ -180,7 +180,7 @@ public class SimpleScriptSwing extends AbstractDigitalActionSwing {
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
         // Create a temporary action to test formula
-        SimpleScript action = new SimpleScript("IQDA1", null);
+        ActionSimpleScript action = new ActionSimpleScript("IQDA1", null);
         
         try {
             if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeReference) {
@@ -213,7 +213,7 @@ public class SimpleScriptSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
-        SimpleScript action = new SimpleScript(systemName, userName);
+        ActionSimpleScript action = new ActionSimpleScript(systemName, userName);
         updateObject(action);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
     }
@@ -221,15 +221,15 @@ public class SimpleScriptSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
-        if (! (object instanceof SimpleScript)) {
+        if (! (object instanceof ActionSimpleScript)) {
             throw new IllegalArgumentException("object must be an SimpleScript but is a: "+object.getClass().getName());
         }
-        SimpleScript action = (SimpleScript)object;
+        ActionSimpleScript action = (ActionSimpleScript)object;
         
         try {
             if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeDirect) {
                 action.setOperationAddressing(NamedBeanAddressing.Direct);
-                action.setOperationType((SimpleScript.OperationType)_operationComboBox.getSelectedItem());
+                action.setOperationType((ActionSimpleScript.OperationType)_operationComboBox.getSelectedItem());
             } else if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeReference) {
                 action.setOperationAddressing(NamedBeanAddressing.Reference);
                 action.setOperationReference(_scriptOperationReferenceTextField.getText());

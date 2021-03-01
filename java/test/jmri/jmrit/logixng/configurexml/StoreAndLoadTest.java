@@ -461,12 +461,12 @@ public class StoreAndLoadTest {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
-        SimpleScript simpleScript = new SimpleScript(digitalActionManager.getAutoSystemName(), null);
+        ActionSimpleScript simpleScript = new ActionSimpleScript(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(simpleScript);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         
-        simpleScript = new SimpleScript(digitalActionManager.getAutoSystemName(), null);
+        simpleScript = new ActionSimpleScript(digitalActionManager.getAutoSystemName(), null);
         simpleScript.setComment("A comment");
         simpleScript.setScript("import java\n");
         simpleScript.setOperationAddressing(NamedBeanAddressing.Direct);
@@ -480,7 +480,7 @@ public class StoreAndLoadTest {
         maleSocket = digitalActionManager.registerAction(simpleScript);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         
-        simpleScript = new SimpleScript(digitalActionManager.getAutoSystemName(), null);
+        simpleScript = new ActionSimpleScript(digitalActionManager.getAutoSystemName(), null);
         simpleScript.setComment("A comment");
         simpleScript.setScript("myFile.py");
         simpleScript.setOperationAddressing(NamedBeanAddressing.Formula);
@@ -494,7 +494,7 @@ public class StoreAndLoadTest {
         maleSocket = digitalActionManager.registerAction(simpleScript);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         
-        simpleScript = new SimpleScript(digitalActionManager.getAutoSystemName(), null);
+        simpleScript = new ActionSimpleScript(digitalActionManager.getAutoSystemName(), null);
         simpleScript.setComment("A comment");
         simpleScript.setScript("import java\n");
         simpleScript.setOperationAddressing(NamedBeanAddressing.LocalVariable);
@@ -508,7 +508,7 @@ public class StoreAndLoadTest {
         maleSocket = digitalActionManager.registerAction(simpleScript);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         
-        simpleScript = new SimpleScript(digitalActionManager.getAutoSystemName(), null);
+        simpleScript = new ActionSimpleScript(digitalActionManager.getAutoSystemName(), null);
         simpleScript.setComment("A comment");
         simpleScript.setScript("import java\n");
         simpleScript.setOperationAddressing(NamedBeanAddressing.Reference);
