@@ -1,6 +1,9 @@
 package jmri.jmrit.operations;
 
 import java.util.Locale;
+
+import org.openide.util.lookup.ServiceProvider;
+
 import jmri.jmrit.operations.automation.AutomationsTableFrameAction;
 import jmri.jmrit.operations.locations.LocationsTableAction;
 import jmri.jmrit.operations.rollingstock.cars.CarsTableAction;
@@ -11,7 +14,6 @@ import jmri.jmrit.operations.trains.TrainsTableAction;
 import jmri.jmrit.operations.trains.schedules.TrainsScheduleAction;
 import jmri.util.startup.AbstractStartupActionFactory;
 import jmri.util.startup.StartupActionFactory;
-import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Factory for Operations-related startup actions.
@@ -32,7 +34,7 @@ public final class OperationsStartupActionFactory extends AbstractStartupActionF
         } else if (clazz.equals(LocationsTableAction.class)) {
             return Bundle.getMessage(locale, "StartupLocationsTableAction"); // NOI18N
         } else if (clazz.equals(OperationsSettingsAction.class)) {
-            return Bundle.getMessage(locale, "StartupOperationsSetupAction"); // NOI18N
+            return Bundle.getMessage(locale, "StartupOperationsSettingsAction"); // NOI18N
         } else if (clazz.equals(RoutesTableAction.class)) {
             return Bundle.getMessage(locale, "StartupRoutesTableAction"); // NOI18N
         } else if (clazz.equals(TrainsScheduleAction.class)) {
