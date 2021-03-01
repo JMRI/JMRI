@@ -276,7 +276,7 @@ The release-4.21.4 branch has been created.
 
 Maintainers, please set the (next series) milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
 
-Jenkins will be creating files shortly at the [CI server](http://builds.jmri.org/jenkins/job/TestReleases/job/4.21.4/)
+Jenkins will be creating files shortly at the [CI server](https://builds.jmri.org/jenkins/job/TestReleases/job/4.21.4/)
 
 If you're developing any additional (post-4.21.4) changes that you want in the JMRI 4.22 production release, please start from this branch, i.e. do `git checkout -b release-4.21.4` to start your work.
 ```
@@ -288,7 +288,7 @@ If you're developing any additional (post-4.21.4) changes that you want in the J
 
 (If you can't build with Jenkins, see the "Local Build Alternative" section near the bottom)
 
-- Log in to the [Jenkins CI engine](http://builds.jmri.org/jenkins/job/TestReleases/) "Releases" section
+- Log in to the [Jenkins CI engine](https://builds.jmri.org/jenkins/job/TestReleases/) "Releases" section
 
 - Click "New Item"
 
@@ -321,7 +321,7 @@ and attach jvisualvm to the AllTest class when it appears. When that's done, put
 ================================================================================
 ## Put Files Out For Checking
 
-- Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force via ["Build Now"](http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/) update). Confirm visible on web.
+- Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force via ["Build Now"](https://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/) update). Confirm visible on web.
 
 - Announce the file set via email to jmri@jmri-developers.groups.io with a subject line 
 
@@ -532,7 +532,7 @@ git push github
     git pull
 ```
 
-- Wait for update on JMRI web server (or [ask Jenkins](http://builds.jmri.org/jenkins/job/website/) to speed it along; note there are multiple components that need to run)
+- Wait for update on JMRI web server (or [ask Jenkins](https://builds.jmri.org/jenkins/job/website/) to speed it along; note there are multiple components that need to run)
 
 - Check the [web page](https://www.jmri.org) just in case you didn't push properly, etc
 
@@ -663,7 +663,7 @@ Ant will do the various builds, construct the distribution directories, and fina
 To do a direct download:
 
 ```
-curl -o release.zip "http://builds.jmri.org/jenkins/job/TestReleases/job/4.21.5/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"" 
+curl -o release.zip "https://builds.jmri.org/jenkins/job/TestReleases/job/4.21.5/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"" 
 ```
 and expansion; 
 
@@ -769,7 +769,7 @@ github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.21.5 -n "JMRI.4.2
 Instructions for uploading javadoc, XSLT if not being done automatically
 
 
-- Create and upload the Javadocs (As of May 2016, the [Jenkins server](http://builds.jmri.org/jenkins/job/WebSite/job/generate-website/) was updating these from git weekly, in which case just start a run of that Jenkins job. Note that if you're doing this locally, it this might take an hour or more to upload on a home connection, and it's OK to defer the uploadjavadoc step): 
+- Create and upload the Javadocs (As of May 2016, the [Jenkins server](https://builds.jmri.org/jenkins/job/WebSite/job/generate-website/) was updating these from git weekly, in which case just start a run of that Jenkins job. Note that if you're doing this locally, it this might take an hour or more to upload on a home connection, and it's OK to defer the uploadjavadoc step): 
 ```
     ant javadoc-uml uploadjavadoc
 ```

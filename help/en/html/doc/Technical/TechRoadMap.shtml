@@ -226,7 +226,7 @@
       Java 8 will continue to be the requirement through at least Fall of 2020.
       This involves doing development, test and production release
       builds using Java 1.8.0_181. (We also 
-      <a href="http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JRE%208u151/">test
+      <a href="https://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JRE%208u151/">test
       on Jenkins with Java 1.8_0_151</a> to ensure Windows XP compatibility)
       
       <p>The current long-term-support Java release is
@@ -237,7 +237,7 @@
       Because some people will need to have that on their computers for other purposes,
       we ensure JMRI can build and run on Oracle Java 8 through 11
       and OpenJDK version 11 by using
-      <a href="http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/">Jenkins</a>
+      <a href="https://builds.jmri.org/jenkins/job/Development/job/VersionChecks/">Jenkins</a>
       to 
       <ul>
       <li>Build and run AllTest on each of the JDKs for Java 9, 10, 11; and

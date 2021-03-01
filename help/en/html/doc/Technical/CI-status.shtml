@@ -24,7 +24,7 @@
 		<table>
 		<tr><td align="right">
 		<a href="https://builds.jmri.org/jenkins/job/development/">Development</a>:</td><td>
-		  <a href='https://builds.jmri.org/jenkins/job/development/job/builds/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fbuilds' title="Builds"></a>
+		  <a href='https://builds.jmri.org/jenkins/job/development/job/builds/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fbuilds' title="Builds"></a>
 		  <a href='https://builds.jmri.org/jenkins/job/development/job/packages/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fpackages' title="Packages"></a>
 		<br/>
 		  <a href='https://builds.jmri.org/jenkins/job/development/job/alltest/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Falltest' title="AllTest"></a>
@@ -189,7 +189,7 @@
         <tr>
             <td>
                 <a href="https://builds.jmri.org/jenkins/job/development/job/builds/">Builds</a> - Regular Java warnings<br>
-              <a href='https://builds.jmri.org/jenkins/job/development/job/builds/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fbuilds' title="Builds"></a>
+              <a href='https://builds.jmri.org/jenkins/job/development/job/builds/'><img src='https://builds.jmri.org/jenkins/buildStatus/icon?job=development%2Fbuilds' title="Builds"></a>
 <!--              <a href="https://builds.jmri.org/jenkins/job/development/job/builds/lastBuild/warnings10Result/NORMAL/">-->
 <!--                    <img src="https://builds.jmri.org/jenkins/job/development/job/builds/warnings10/trendGraph/png?url=PRIORITY">-->
 <!--                </a>-->

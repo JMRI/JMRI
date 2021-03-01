@@ -337,26 +337,26 @@
 
       <ul>
         <li><a href=
-        "http://builds.jmri.org/jenkins/job/Development/job/JaCoCo/jacoco/">
+        "https://builds.jmri.org/jenkins/job/Development/job/JaCoCo/jacoco/">
         A plot of coverage as a whole</a>. Click on the graph to
         see a</li>
 
         <li><a href=
-        "http://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/">
+        "https://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/">
         summary by Java package</a>. Click on a package to see
         a</li>
 
         <li><a href=
-        "http://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/">
+        "https://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/">
         summary by file</a> (e.g. class, example shows BlockBoss). Click on a class to see
         a</li>
 
         <li><a href=
-        "http://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/">
+        "https://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/">
         summary by method</a> (example: BlockBossLogic). Click on a method to see</li>
 
         <li><a href=
-        "http://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/defineIO()/">
+        "https://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/defineIO()/">
         how each part of the code was covered</a> (may require
         scrolling down, to line #650 in this example).</li>
       </ul>
@@ -1001,12 +1001,11 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
           <br>
               will cause the test to be ignored in headless mode.  If a whole class is to be disable din headless
               mode, this same annotation may be applied to the test class.
-      </li>
+        </li>
 
         <li>
-        <a href="http://builds.jmri.org/jenkins/job/Development/job/Ignored%20Test%20Scan/lastBuild/testReport/">
-                    <img
-                            src="http://builds.jmri.org/jenkins/job/Development/job/Ignored%20Test%20Scan/warnings7/trendGraph/png?url=PRIORITY"
+        <a href="https://builds.jmri.org/jenkins/job/Development/job/Ignored%20Test%20Scan/lastBuild/testReport/">
+                    <img src="https://builds.jmri.org/jenkins/job/Development/job/Ignored%20Test%20Scan/warnings7/trendGraph/png?url=PRIORITY"
                             alt="Warnings Graph" align="right">
                 </a>
         <a href="https://junit.org/junit5/docs/5.0.0-M2/api/org/junit/jupiter/api/Disabled.html">@Disabled</a> -
