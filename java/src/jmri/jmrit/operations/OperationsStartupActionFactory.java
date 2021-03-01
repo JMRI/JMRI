@@ -6,7 +6,7 @@ import jmri.jmrit.operations.locations.LocationsTableAction;
 import jmri.jmrit.operations.rollingstock.cars.CarsTableAction;
 import jmri.jmrit.operations.rollingstock.engines.EnginesTableAction;
 import jmri.jmrit.operations.routes.RoutesTableAction;
-import jmri.jmrit.operations.setup.OperationsSetupAction;
+import jmri.jmrit.operations.setup.OperationsSettingsAction;
 import jmri.jmrit.operations.trains.TrainsTableAction;
 import jmri.jmrit.operations.trains.schedules.TrainsScheduleAction;
 import jmri.util.startup.AbstractStartupActionFactory;
@@ -31,7 +31,7 @@ public final class OperationsStartupActionFactory extends AbstractStartupActionF
             return Bundle.getMessage(locale, "StartupEnginesTableAction"); // NOI18N
         } else if (clazz.equals(LocationsTableAction.class)) {
             return Bundle.getMessage(locale, "StartupLocationsTableAction"); // NOI18N
-        } else if (clazz.equals(OperationsSetupAction.class)) {
+        } else if (clazz.equals(OperationsSettingsAction.class)) {
             return Bundle.getMessage(locale, "StartupOperationsSetupAction"); // NOI18N
         } else if (clazz.equals(RoutesTableAction.class)) {
             return Bundle.getMessage(locale, "StartupRoutesTableAction"); // NOI18N
@@ -49,7 +49,7 @@ public final class OperationsStartupActionFactory extends AbstractStartupActionF
             CarsTableAction.class,
             EnginesTableAction.class,
             LocationsTableAction.class,
-            OperationsSetupAction.class,
+            OperationsSettingsAction.class,
             RoutesTableAction.class,
             TrainsScheduleAction.class,
             TrainsTableAction.class};

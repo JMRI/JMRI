@@ -13,7 +13,7 @@ public class OperationsSetupPanelTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        OperationsSetupPanel t = new OperationsSetupPanel();
+        OperationsSettingsPanel t = new OperationsSettingsPanel();
         Assert.assertNotNull("exists",t);
     }
 
