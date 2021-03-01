@@ -20,7 +20,7 @@ import org.junit.Test;
  */
 public class SimpleScriptTest extends AbstractDigitalActionTestBase {
 
-    private final String _scriptText = "lights.provideLight(\"IL1\").commandedState = ON\n";
+    private final String _scriptText = "lights.provideLight(\"IL1\").commandedState = ON";
     
     
     private LogixNG logixNG;
@@ -51,7 +51,7 @@ public class SimpleScriptTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Execute simple script ::: Log error%n");
+                "Execute simple script: Jython command. Script lights.provideLight(\"IL1\").commandedState = ON ::: Log error%n");
     }
     
     @Override
@@ -64,7 +64,7 @@ public class SimpleScriptTest extends AbstractDigitalActionTestBase {
                 "            ? If%n" +
                 "               Sensor IS1 is Active ::: Log error%n" +
                 "            ! Then%n" +
-                "               Execute simple script ::: Log error%n" +
+                "               Execute simple script: Jython command. Script lights.provideLight(\"IL1\").commandedState = ON ::: Log error%n" +
                 "            ! Else%n" +
                 "               Socket not connected%n");
     }
@@ -84,14 +84,16 @@ public class SimpleScriptTest extends AbstractDigitalActionTestBase {
         SimpleScript action2;
         
         action2 = new SimpleScript("IQDA321", null);
+        action2.setScript(_scriptText);
         Assert.assertNotNull("object exists", action2);
         Assert.assertNull("Username matches", action2.getUserName());
-        Assert.assertEquals("String matches", "Execute simple script", action2.getLongDescription());
+        Assert.assertEquals("String matches", "Execute simple script: Jython command. Script lights.provideLight(\"IL1\").commandedState = ON", action2.getLongDescription());
         
         action2 = new SimpleScript("IQDA321", "My action");
+        action2.setScript(_scriptText);
         Assert.assertNotNull("object exists", action2);
         Assert.assertEquals("Username matches", "My action", action2.getUserName());
-        Assert.assertEquals("String matches", "Execute simple script", action2.getLongDescription());
+        Assert.assertEquals("String matches", "Execute simple script: Jython command. Script lights.provideLight(\"IL1\").commandedState = ON", action2.getLongDescription());
         
         boolean thrown = false;
         try {
@@ -137,8 +139,8 @@ public class SimpleScriptTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testDescription() {
-        Assert.assertTrue("Execute simple script".equals(actionScript.getShortDescription()));
-        Assert.assertTrue("Execute simple script".equals(actionScript.getLongDescription()));
+        Assert.assertEquals("Execute simple script", actionScript.getShortDescription());
+        Assert.assertEquals("Execute simple script: Jython command. Script lights.provideLight(\"IL1\").commandedState = ON", actionScript.getLongDescription());
     }
     
     @Test
