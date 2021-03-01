@@ -5358,7 +5358,6 @@ public class TrainBuilder extends TrainCommon {
      * build has failed due to cars in staging not having destinations this routine
      * removes those cars from the staging track by user request.
      * 
-     * @throws BuildFailedException
      */
     private void removeCarsFromStaging() {
         // Code check, only called if train was departing staging
