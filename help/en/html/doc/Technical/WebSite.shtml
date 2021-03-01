@@ -131,22 +131,22 @@
         and this content is updated from the JMRI repository without any additional work.</p>
         <ul>
         <li><a href=
-        "http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20JMRI%20repository/">static
+        "https://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20JMRI%20repository/">static
         content from JMRI/JMRI repository, e.g. help, xml, etc in JMRI distributions</a></li>
         <li><a href=
-        "http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/">static
+        "https://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/">static
         content from JMRI/website repository, e.g. website-only information</a></li>
         <li><a href=
-        "http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website-legal%20repository/">static
+        "https://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website-legal%20repository/">static
         content from JMRI/website-legal repository, e.g. content around the JMRI-Katzer legal case</a></li>
         </ul>
 
         <p>The regeneration of the Javadoc and xml content involves
         significantly more work than merely updating a directory, and so these are only done once per day, as needed,
         by the
-        <a href="http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/">Generate Website</a>
+        <a href="https://builds.jmri.org/jenkins/job/WebSite/job/generate-website/">Generate Website</a>
         job on the
-        <a href="http://jmri.tagadab.com/jenkins/">production Jenkins server</a>.</p>
+        <a href="https://builds.jmri.org/jenkins/">production Jenkins server</a>.</p>
 
         <a name="local"></a><h2>Local Web Site: Mac OS X</h2>
 
