@@ -41,7 +41,9 @@ public class SRCPThrottle extends AbstractThrottle {
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
-        this.speedSetting = 0;
+        synchronized(this) {
+            this.speedSetting = 0;
+        }
         // Functions default to false
         this.address = address;
         this.isForward = true;
@@ -108,7 +110,7 @@ public class SRCPThrottle extends AbstractThrottle {
      */
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
-    public void setSpeedSetting(float speed) {
+    public synchronized void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         sendUpdate();
@@ -139,7 +141,9 @@ public class SRCPThrottle extends AbstractThrottle {
 
         // direction and speed
         msg += (isForward ? " 1" : " 0");
-        msg += " " + ((int) (speedSetting * maxsteps));
+        synchronized(this) {
+            msg += " " + ((int) (speedSetting * maxsteps));
+        }
         msg += " ";
         msg += maxsteps;
 
@@ -202,7 +206,7 @@ public class SRCPThrottle extends AbstractThrottle {
     }
 
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         finishRecord();
     }
 

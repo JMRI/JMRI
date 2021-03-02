@@ -126,9 +126,11 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         moduleTable.setDefaultRenderer(JButton.class, new ButtonRenderer());
         moduleTable.setRowSelectionAllowed(true);
         moduleTable.getSelectionModel().addListSelectionListener(event -> {
-            if (moduleTable.getSelectedRow() > -1 && moduleTable.getSelectedRow() < moduleTable.getRowCount()) {
-                // print first column value from selected row
-                copyEntry((int) moduleTable.getValueAt(moduleTable.getSelectedRow(), 1), (int) moduleTable.getValueAt(moduleTable.getSelectedRow(), 2));
+            synchronized (this) {
+                if (moduleTable.getSelectedRow() > -1 && moduleTable.getSelectedRow() < moduleTable.getRowCount()) {
+                    // print first column value from selected row
+                    copyEntry((int) moduleTable.getValueAt(moduleTable.getSelectedRow(), 1), (int) moduleTable.getValueAt(moduleTable.getSelectedRow(), 2));
+                }
             }
         });
         // establish row sorting for the table

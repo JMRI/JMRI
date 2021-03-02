@@ -388,7 +388,6 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     static public void preClassInit() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
-        nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
 
         messages = new java.util.ArrayList<>();
         connection = new AbstractConnection() {
@@ -414,7 +413,7 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @AfterAll
     public static void postClassTearDown() {
-        if(memo != null && memo.getInterface() !=null ) {
+        if (memo != null && memo.getInterface() !=null ) {
             memo.getTrafficController().terminateThreads();
             memo.getInterface().dispose();
         }
@@ -423,6 +422,6 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         nodeID = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
-
     }
+
 }
