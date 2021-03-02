@@ -28,7 +28,9 @@ public class OlcbThrottle extends AbstractThrottle {
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
-        this.speedSetting = 0;
+        synchronized(this) {
+            this.speedSetting = 0;
+        }
         // Functions default to false
         this.isForward = true;
 
@@ -87,7 +89,7 @@ public class OlcbThrottle extends AbstractThrottle {
      */
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
-    public void setSpeedSetting(float speed) {
+    public synchronized void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         if (speed > 1.0) {
             log.warn("Speed was set too high: {}", speed);
@@ -113,7 +115,9 @@ public class OlcbThrottle extends AbstractThrottle {
     public void setIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
-        setSpeedSetting(speedSetting);  // send the command
+        synchronized(this) {
+            setSpeedSetting(speedSetting);  // send the command
+        }
         firePropertyChange(ISFORWARD, old, isForward);
     }
 
@@ -131,7 +135,7 @@ public class OlcbThrottle extends AbstractThrottle {
      * {@inheritDoc} 
      */
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         log.debug("throttleDispose() called");
         finishRecord();
     }

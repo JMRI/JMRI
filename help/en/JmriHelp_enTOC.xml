@@ -223,10 +223,6 @@
    <tocitem text="New Train " target="package.jmri.jmrit.dispatcher.NewTrain"/>
 
   </tocitem>
-  <tocitem text="Dispatcher System (Python Extension) " target="html.apps.DispatcherSystem.DispatcherSystem"/>
-
-  <tocitem text="Manifest Creator " target="html.apps.ManifestCreator.index"/>
-
   <tocitem text="OperationsPro " target="package.jmri.jmrit.operations.Operations">
    <tocitem text="Settings " target="package.jmri.jmrit.operations.Operations_Settings"/>
 
@@ -271,9 +267,16 @@
    <tocitem text="Intro " target="html.apps.SoundPro.SoundPro"/>
 
   </tocitem>
-  <tocitem text="Additional Applications with connections to JMRI " target="html.apps.index_addapp"/>
+  <tocitem text="Additional Applications with connections to JMRI " target="html.apps.index_addapp">
+    <tocitem text="Manifest Creator " target="html.apps.ManifestCreator.index"/>
 
- </tocitem>
+  </tocitem>
+  <tocitem text="Jython Apps for JMRI " target="html.tools.scripting.JythonApps">
+    <tocitem text="YAAT - YetAnotherAutoTrain " target="html.scripthelp.yaat.YAAT"/>
+
+    <tocitem text="Dispatcher System (Python Extension) " target="html.scripthelp.DispatcherSystem.DispatcherSystem"/>
+  </tocitem>
+ </tocitem> 
  <tocitem text="Panels " target="html.apps.PanelPro.index">
   <tocitem text="Panel Editor " target="package.jmri.jmrit.display.PanelEditor"/>
 
@@ -461,6 +464,8 @@
    <tocitem text="Scripting What...Where " target="html.tools.scripting.WhatWhere"/>
 
    <tocitem text="Jynstruments " target="html.tools.scripting.Jynstruments"/>
+
+   <tocitem text="Jython Apps for JMRI " target="html.tools.scripting.JythonApps"/>
 
    <tocitem text="Open Scripting Arch (Apple) " target="html.tools.scripting.AppleScript"/>
 

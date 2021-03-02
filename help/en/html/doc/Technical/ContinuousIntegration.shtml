@@ -212,7 +212,7 @@
       from development builds, and building final releases.
 
       <p>Our primary Jenkins engine is at <a href=
-      "http://builds.jmri.org/jenkins/">http://builds.jmri.org/jenkins/</a>.
+      "https://builds.jmri.org/jenkins/">https://builds.jmri.org/jenkins/</a>.
       Because it's hosted outside the US, we force its Java locale
       to US English by setting the <code>LC_ALL</code> environment
       variable to <code>en_US</code> in the master Jenkins
@@ -226,22 +226,22 @@
 
       <ul>
         <li><a href=
-        "http://builds.jmri.org/jenkins/job/Development/job/Builds/">
+        "https://builds.jmri.org/jenkins/job/Development/job/Builds/">
         Builds</a> page, showing status of the builds done after
         every series of commits. Successful builds are followed by
         builds installers via the <a href=
-        "http://builds.jmri.org/jenkins/job/Development/job/Packages">
+        "https://builds.jmri.org/jenkins/job/Development/job/Packages">
         Packages</a> job.</li>
 
         <li>
           <a href=
-          "http://builds.jmri.org/jenkins/job/Development/job/SpotBugs/">
+          "https://builds.jmri.org/jenkins/job/Development/job/SpotBugs/">
           SpotBugs</a> page, showing status of the more-extensive
           <a href="SpotBugs.shtml">SpotBugs</a> tests done
           periodically. There are also pages of the <a href=
-          "http://builds.jmri.org/jenkins/job/Development/job/SpotBugs/changes">
+          "https://builds.jmri.org/jenkins/job/Development/job/SpotBugs/changes">
           most recent changes</a> and the <a href=
-          "http://builds.jmri.org/jenkins/job/Development/job/SpotBugs/lastBuild/">
+          "https://builds.jmri.org/jenkins/job/Development/job/SpotBugs/lastBuild/">
           most recent results</a>.
 
           <p>For more information on JMRI's use of SpotBugs, see
@@ -288,7 +288,7 @@
 
             <dt>URL</dt>
 
-            <dd>http://builds.jmri.org/jenkins/</dd>
+            <dd>https://builds.jmri.org/jenkins/</dd>
 
             <dt>Auto refresh every X minutes</dt>
 

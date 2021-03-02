@@ -28,7 +28,9 @@ public class SerialThrottle extends AbstractThrottle {
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
-        this.speedSetting = 0;
+        synchronized(this) {
+            this.speedSetting = 0;
+        }
         // Functions default to false
         this.address = address;
         this.isForward = true;
@@ -61,12 +63,12 @@ public class SerialThrottle extends AbstractThrottle {
     }
     
     private final static int[] SERIAL_FUNCTION_CODES = new int[] {
-        0x000D, 0x001D, 0x001C, 0x0005, 0x0006, /** 0-4 */
-        0x0010, 0x0011, 0x0012, 0x0013, 0x0014, /** 5-9 */
-        0x0015, 0x0016, 0x0017, 0x0018, 0x0019, /** 10-14 */
-        0x0009, 0x001E, 0x0000, 0x0003, 0x0001, /** 15-19 */
-        0x0004, 0x0007, 0x0047, 0x0043, 0x0028, /** 20-24 */
-        0x0029, 0x002A, 0x002B, /** 25-27 */    
+        0x000D, 0x001D, 0x001C, 0x0005, 0x0006, /* 0-4 */
+        0x0010, 0x0011, 0x0012, 0x0013, 0x0014, /* 5-9 */
+        0x0015, 0x0016, 0x0017, 0x0018, 0x0019, /* 10-14 */
+        0x0009, 0x001E, 0x0000, 0x0003, 0x0001, /* 15-19 */
+        0x0004, 0x0007, 0x0047, 0x0043, 0x0028, /* 20-24 */
+        0x0029, 0x002A, 0x002B, /* 25-27 */
     };
 
     /**
@@ -77,8 +79,11 @@ public class SerialThrottle extends AbstractThrottle {
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
     public void setSpeedSetting(float speed) {
-        float oldSpeed = this.speedSetting;
-        this.speedSetting = speed;
+        float oldSpeed;
+        synchronized(this) {
+            oldSpeed = this.speedSetting;
+            this.speedSetting = speed;
+        }
         int value = (int) (32 * speed);     // -1 for rescale to avoid estop
         if (value > 31) {
             value = 31;    // max possible speed
@@ -97,7 +102,9 @@ public class SerialThrottle extends AbstractThrottle {
         tc.sendSerialMessage(m, null);
         tc.sendSerialMessage(m, null);
         tc.sendSerialMessage(m, null);
-        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
+        synchronized(this) {
+            firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
+        }
         record(speed);
     }
 
@@ -145,7 +152,7 @@ public class SerialThrottle extends AbstractThrottle {
      * {@inheritDoc}
      */
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         finishRecord();
     }
 

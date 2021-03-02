@@ -336,7 +336,8 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li>Zimo Swiss Mapping was updated bi Nigel Cliffe to V36+, adding features to select the dimming
+                  group for each output in the table and to set the dimming levels.</li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -428,7 +429,10 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>Added an option to <strong>Preferences &rArr; Display</strong> to limit the
+            number of rows when a combo box is using the <strong>setupComboBoxMaxRows</strong>
+            feature.  This is useful for large screens.
+            </li>
         </ul>
 
     <h3>Resources</h3>
@@ -510,7 +514,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Under the hood code clean up for  throttles (all systems), safe release of throttles.</li>
         </ul>
 
     <h3>Timetable</h3>

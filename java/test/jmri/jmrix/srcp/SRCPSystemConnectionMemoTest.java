@@ -7,8 +7,6 @@ import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
- * SRCPSystemConnectionMemoTest.java
- * <p>
  * Test for the jmri.jmrix.srcp.SRCPSystemConnectionMemo class
  *
  * @author Bob Jacobsen
