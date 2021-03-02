@@ -10,7 +10,7 @@ import org.junit.Test;
 import jmri.jmrix.ipocs.protocol.enums.RqOutputCommand;
 
 public class SetOutputPacketTest {
-  private byte[] testPacket = { RqOutputCommand.Off.value };
+  private final byte[] testPacket = { RqOutputCommand.Off.value };
 
   @Test
   public void getIdTest() {

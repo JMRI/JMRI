@@ -11,7 +11,7 @@ import jmri.jmrix.ipocs.protocol.enums.RqPointsState;
 import jmri.jmrix.ipocs.protocol.enums.RqReleaseState;
 
 public class PointsStatusPacketTest {
-  private byte[] testPacket = { RqPointsState.Left.value, RqReleaseState.LocalControl.value, 0x01, 0x23 };
+  private final byte[] testPacket = { RqPointsState.Left.value, RqReleaseState.LocalControl.value, 0x01, 0x23 };
 
   @Test
   public void getIdTest() {
