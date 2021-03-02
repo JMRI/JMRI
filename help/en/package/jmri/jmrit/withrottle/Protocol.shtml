@@ -994,11 +994,11 @@ MTA*&lt;;&gt;f112
       
       <p>This command allows a wiThrottle client to override the
       setting from the roster. For example:</p>
-      <pre class="code>
+      <pre class="code">
 MTA*&lt;;&gt;m112
 </pre>
       <p>will set function 12 to be momentary from now on, and</p>
-      <pre class="code>
+      <pre class="code">
 MTA*&lt;;&gt;m012
 </pre>
       <p>will set function 12 to be locking from now on. Actually, any
