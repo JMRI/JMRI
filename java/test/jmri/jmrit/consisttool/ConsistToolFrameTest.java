@@ -42,7 +42,7 @@ public class ConsistToolFrameTest {
     public void testCtorWithCSpossible() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // overwrite the default consist manager set in setUp for this test
-        // so that we can check initilization with CSConsists possible.
+        // so that we can check initialization with CSConsists possible.
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager() {
             @Override
             public boolean isCommandStationConsistPossible() {

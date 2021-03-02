@@ -32,7 +32,9 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
-        this.speedSetting = 0;
+        synchronized(this) {
+            this.speedSetting = 0;
+        }
         // Functions default to false
         this.address = address;
         this.isForward = true;
@@ -161,7 +163,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
      */
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
-    public void setSpeedSetting(float speed) {
+    public synchronized void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         sendSpeedCmd();
@@ -174,41 +176,42 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
         int value = 0;
         int cData1 = (isForward ? 0x20 : 0x00);
         cData1 = cData1 + (getFunction(0) ? 0x10 : 0x00);
-        if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_128) {
-            //m = Mx1Message.getSendSpeed128(addressLo, addressHi, value);
-            value = (int) ((127 - 1) * speedSetting);     // -1 for rescale to avoid estop
-            if (value > 0) {
-                value = value + 1;  // skip estop
-            }
-            if (value > 127) {
-                value = 127;    // max possible speed
-            }
-            if (value < 0) {
-                value = 1;        // emergency stop
-            }
-            value = (value & 0x7F);
-            cData1 = cData1 + 0xc;
-        } else if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_28) {
-            value = (int) ((28) * speedSetting); // -1 for rescale to avoid estop
-            if (value > 0) {
-                value = value + 3; // skip estop
-            }
-            if (value > 32) {
-                value = 31; // max possible speed
-            }
-            if (value < 0) {
-                value = 2; // emergency stop
-            }
-            int speedC = (value & 0x1F) >> 1;
-            int c = (value & 0x01) << 4; // intermediate speed step
+        synchronized(this) {
+            if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_128) {
+                //m = Mx1Message.getSendSpeed128(addressLo, addressHi, value);
+                value = (int) ((127 - 1) * speedSetting); // -1 for rescale to avoid estop
+                if (value > 0) {
+                    value = value + 1;  // skip estop
+                }
+                if (value > 127) {
+                    value = 127;    // max possible speed
+                }
+                if (value < 0) {
+                    value = 1;        // emergency stop
+                }
+                value = (value & 0x7F);
+                cData1 = cData1 + 0xc;
+            } else if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_28) {
+                value = (int) ((28) * speedSetting); // -1 for rescale to avoid estop
+                if (value > 0) {
+                    value = value + 3; // skip estop
+                }
+                if (value > 32) {
+                    value = 31; // max possible speed
+                }
+                if (value < 0) {
+                    value = 2; // emergency stop
+                }
+                int speedC = (value & 0x1F) >> 1;
+                int c = (value & 0x01) << 4; // intermediate speed step
 
-            speedC = speedC + c;
-            value = (isForward ? 0x60 : 0x40) | speedC;
-            cData1 = cData1 + 0x8;
+                speedC = speedC + c;
+                value = (isForward ? 0x60 : 0x40) | speedC;
+                cData1 = cData1 + 0x8;
+            }
         }
         m = Mx1Message.getLocoControl(address.getNumber(), value, true, cData1, getFunction1to8(), getFunction9to12());
         tc.sendMx1Message(m, this);
-
     }
 
     int getFunction1to8() {
@@ -239,13 +242,15 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
     public void setIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
-        setSpeedSetting(speedSetting);  // send the command
+        synchronized(this) {
+            setSpeedSetting(speedSetting);  // send the command
+        }
         log.debug("setIsForward= {}", forward);
         firePropertyChange(ISFORWARD, old, isForward);
     }
 
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         finishRecord();
     }
 

@@ -30,9 +30,9 @@ import jmri.web.server.WebServerPreferences;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012
  */
-public class OperationsSetupPanel extends OperationsPreferencesPanel implements PropertyChangeListener {
+public class OperationsSettingsPanel extends OperationsPreferencesPanel implements PropertyChangeListener {
 
-    private final static Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class);
+    private final static Logger log = LoggerFactory.getLogger(OperationsSettingsPanel.class);
 
     // labels
     private final JLabel textIconNorth = new JLabel(Bundle.getMessage("IconNorth"));
@@ -77,7 +77,6 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
     private final JCheckBox appendCheckBox = new JCheckBox(Bundle.getMessage("trainIconAppend"));
 
     // text field
-    // JTextField ownerTextField = new JTextField(10);
     JTextField panelTextField = new JTextField(30);
     JTextField railroadNameTextField = new JTextField(35);
     JTextField maxLengthTextField = new JTextField(5);
@@ -98,7 +97,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
     // text area
     private final JTextArea commentTextArea = new JTextArea(2, 80);
 
-    public OperationsSetupPanel() {
+    public OperationsSettingsPanel() {
         super();
 
         // the following code sets the frame's initial state
@@ -579,8 +578,8 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
         Setup.setComment(commentTextArea.getText());
 
         InstanceManager.getDefault(OperationsSetupXml.class).writeOperationsFile();
-        if (Setup.isCloseWindowOnSaveEnabled() && this.getTopLevelAncestor() instanceof OperationsSetupFrame) {
-            ((OperationsSetupFrame) this.getTopLevelAncestor()).dispose();
+        if (Setup.isCloseWindowOnSaveEnabled() && this.getTopLevelAncestor() instanceof OperationsSettingsFrame) {
+            ((OperationsSettingsFrame) this.getTopLevelAncestor()).dispose();
         }
 
     }

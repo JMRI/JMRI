@@ -472,7 +472,7 @@ public abstract class AbstractMRTrafficController {
                     AbstractMRMessage msg = pollMessage();
                     if (msg != null) {
                         // yes, send that
-                        log.debug("Sending poll, wait time {}", Long.toString(waitTimePoll));
+                        log.debug("Sending poll, wait time {}", waitTimePoll);
                         mCurrentState = WAITMSGREPLYSTATE;
                         forwardToPort(msg, pollReplyHandler());
                         // wait for reply
@@ -774,7 +774,7 @@ public abstract class AbstractMRTrafficController {
                     public void run() {
                         try {
                             transmitLoop();
-                        } catch(ThreadDeath td) {
+                        } catch (ThreadDeath td) {
                             if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", td, td);
                             // ThreadDeath must be thrown per Java API Javadocs
                             throw td;
@@ -838,7 +838,7 @@ public abstract class AbstractMRTrafficController {
             log.warn("disconnectPort: disconnect called from non-connected AbstractPortController");
         }
         controller = null;
-        threadStopRequest=true;
+        threadStopRequest = true;
     }
 
     /**
@@ -1031,7 +1031,7 @@ public abstract class AbstractMRTrafficController {
                 SwingUtilities.invokeLater(r);
             }
         } catch (InterruptedException ie) {
-            if(threadStopRequest) return;
+            if (threadStopRequest) return;
             log.error("Unexpected exception in invokeAndWait: {}{}", ie, ie.toString());
         } catch (java.lang.reflect.InvocationTargetException| RuntimeException e) {
             log.error("Unexpected exception in invokeAndWait: {}{}", e, e.toString());
