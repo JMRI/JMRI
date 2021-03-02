@@ -110,7 +110,7 @@
       configuration file, the Light is 'activated'; it is set up to monitor automatically
       any changes in state of these controls. When the controlling Sensor, Turnout, or Fast
       Clock changes, the Light is switched on or off. Lights can also be controlled by 
-      <a href="LogixTable.shtml">Logix</a> if more complicated control logic is needed.</p>   
+      <a href="Logix.shtml">Logix</a> if more complicated control logic is needed.</p>   
       
       <p>Depending on the hardware interfacing with your Lights, they can be specified as
       <a href="#variablelight">variable intensity</a> (brightness) rather than just on/off.
@@ -203,7 +203,7 @@
         <li>the JMRI Fast Clock, On for a specified time period, then Off</li>
         <li>two Sensors, On when either of the two Sensors is Active (or Inactive); two sensor 
         control is useful in controlling layout sounds or crossing gates</li>
-        <li>a Logix, as the action of one of its conditionals; <a href="LogixTable.shtml">Logix</a>
+        <li>a Logix, as the action of one of its conditionals; <a href="Logix.shtml">Logix</a>
         should be considered if you need more complex logic to control your Lights</li>
       </ul>
 

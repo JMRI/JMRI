@@ -11,7 +11,7 @@ import jmri.jmrix.ipocs.protocol.enums.RqDerailerState;
 import jmri.jmrix.ipocs.protocol.enums.RqReleaseState;
 
 public class DerailerStatusPacketTest {
-  private byte[] testPacket = { RqDerailerState.NonPassable.value, RqReleaseState.LocalControl.value, 0x01, 0x23 };
+  private final byte[] testPacket = { RqDerailerState.NonPassable.value, RqReleaseState.LocalControl.value, 0x01, 0x23 };
 
   @Test
   public void getIdTest() {

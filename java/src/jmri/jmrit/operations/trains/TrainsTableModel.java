@@ -242,6 +242,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             case BUILDBOX_COLUMN:
                 return Boolean.class;
             case ID_COLUMN:
+                return Integer.class;
             case TIME_COLUMN:
             case NAME_COLUMN:
             case DESCRIPTION_COLUMN:
@@ -288,7 +289,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
         switch (col) {
             case ID_COLUMN:
-                return train.getId();
+                return Integer.parseInt(train.getId());
             case TIME_COLUMN:
                 return train.getDepartureTime();
             case NAME_COLUMN:

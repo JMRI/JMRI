@@ -23,7 +23,7 @@ public class OperationsMenu extends JMenu {
 
         setText(Bundle.getMessage("MenuOperations"));
 
-        add(new jmri.jmrit.operations.setup.OperationsSetupAction());
+        add(new jmri.jmrit.operations.setup.OperationsSettingsAction());
         add(new jmri.jmrit.operations.locations.LocationsTableAction());
         add(new jmri.jmrit.operations.rollingstock.cars.CarsTableAction());
         add(new jmri.jmrit.operations.rollingstock.engines.EnginesTableAction());

@@ -25,7 +25,9 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
         super(memo);
         tc = memo.getTrafficController();
 
-        this.speedSetting = 0;
+        synchronized(this) {
+            this.speedSetting = 0;
+        }
         // Functions default to false
         this.address = address;
         this.isForward = true;
@@ -114,7 +116,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
      */
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
-    public void setSpeedSetting(float speed) {
+    public synchronized void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
 
@@ -128,7 +130,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
         } else {
             tc.sendMarklinMessage(MarklinMessage.setLocoSpeed(getCANAddress(), value), this);
         }
-        log.debug("Float speed = {} Int speed = ", speed, value);
+        log.debug("Float speed = {} Int speed = {}", speed, value);
         firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
         record(speed);
     }
@@ -189,7 +191,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
     }
 
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         active = false;
          finishRecord();
     }
@@ -213,40 +215,42 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
                     log.debug("Loco Direction {}", m.getElement(9));
                 }
                 //The CS2 sets the speed of the loco to Zero when changing direction, however it doesn't appear to broadcast it out.
-                switch (m.getElement(9)) {
-                    case 0x00:
-                        return; //No change
-                    case 0x01:
-                        if (!isForward) {
+                synchronized(this) {
+                    switch (m.getElement(9)) {
+                        case 0x00:
+                            return; //No change
+                        case 0x01:
+                            if (!isForward) {
+                                speedSetting = 0.0f;
+                                super.setSpeedSetting(speedSetting);
+                                isForward = true;
+                                firePropertyChange(ISFORWARD, false, isForward);
+                            }
+                            return;
+                        case 0x02:
+                            if (isForward) {
+                                speedSetting = 0.0f;
+                                super.setSpeedSetting(speedSetting);
+                                isForward = false;
+                                firePropertyChange(ISFORWARD, true, isForward);
+                            }
+                            return;
+                        case 0x03:
                             speedSetting = 0.0f;
                             super.setSpeedSetting(speedSetting);
-                            isForward = true;
-                            firePropertyChange(ISFORWARD, false, isForward);
-                        }
-                        return;
-                    case 0x02:
-                        if (isForward) {
-                            speedSetting = 0.0f;
-                            super.setSpeedSetting(speedSetting);
-                            isForward = false;
-                            firePropertyChange(ISFORWARD, true, isForward);
-                        }
-                        return;
-                    case 0x03:
-                        speedSetting = 0.0f;
-                        super.setSpeedSetting(speedSetting);
-                        isForward = !isForward;
-                        firePropertyChange(ISFORWARD, !isForward, isForward);
-                        return;
-                    default:
-                        log.error("No Match Found for loco direction {}", m.getElement(9));
-                        return;
+                            isForward = !isForward;
+                            firePropertyChange(ISFORWARD, !isForward, isForward);
+                            return;
+                        default:
+                            log.error("No Match Found for loco direction {}", m.getElement(9));
+                            return;
+                    }
                 }
             }
             if (m.getCommand() == MarklinConstants.LOCOSPEED) {
                 int speed = m.getElement(9);
                 speed = (speed << 8) + (m.getElement(10));
-                Float newSpeed = floatSpeed(speed);
+                float newSpeed = floatSpeed(speed);
                 log.debug("Speed raw {} float {}", speed, newSpeed);
                 super.setSpeedSetting(newSpeed);
             }

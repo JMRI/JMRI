@@ -913,7 +913,7 @@ public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @AfterEach
     @Override
     public void tearDown() {
-        ((LnThrottleManager)memo.getThrottleManager()).dispose();
+        memo.getThrottleManager().dispose();
         memo.dispose();
         lnis = null;
         JUnitUtil.tearDown();

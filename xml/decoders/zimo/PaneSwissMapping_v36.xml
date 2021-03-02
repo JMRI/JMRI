@@ -15,7 +15,7 @@
 <!-- version 1.1 - added groups 11 to 13, Main Beam and Speed Dependant Headlight, Mark Waters 26 Jan 2015  -->
 <!-- version 1.2 - Ronald Kuhn - add german translation -->
 <!-- version 1.3 - New file for V36+ decoders with groups 14 to 17 Alain Carasso 28 August 2017  -->
-
+<!-- version 1.4 - Nigel Cliffe. Added dimming group selection and dimming levels  14 Feb 2021 -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Swiss Mapping V36+</name>
   <name xml:lang="it">Mappatura Svizzera</name>
@@ -59,10 +59,10 @@
           <text> </text>
         </label>
         <label>
-          <text>                                                                                                         Function Output</text>
+          <text>                                                                                                         Function Output                                                                  Dimming Groups</text>
           <text xml:lang="it">                                                                                                         Funzioni Uscita</text>
           <text xml:lang="cs">                                                                                                         Funkční výstup</text>
-          <text xml:lang="de">                                                                                                        Funktionsausgang</text>
+          <text xml:lang="de">                                                                                                        Funktionsausgang                                                                 Dimmwert-Gruppen</text>
         </label>
       </column>
     </row>
@@ -75,7 +75,7 @@
           <text xml:lang="de">                      F-Taste</text>
         </label>
         <display item="Swiss Mapping Group 1 F-key" label="Group 1   ">
-          <label>Group  1  </label>
+          <label>Group  1   </label>
           <label xml:lang="it">Gruppo  1  </label>
           <label xml:lang="cs">Skupina  1  </label>
           <label xml:lang="de">Gruppe  1  </label>
@@ -154,11 +154,55 @@
           <label></label>
         </display>
       </column>
-    </row>
+      <label>
+        <text>        </text>
+      </label>
+      <column>
+        <label>
+          <text>  A1 F Dim</text>
+        </label>
+        <display item="Swiss Mapping Group 1 A1 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <label>
+          <text>  A2 F Dim</text>
+        </label>
+        <display item="Swiss Mapping Group 1 A2 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <label>
+          <text>  A1 R Dim</text>
+        </label>
+        <display item="Swiss Mapping Group 1 A1 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <label>
+          <text>  A2 R Dim</text>
+        </label>
+        <display item="Swiss Mapping Group 1 A2 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      </row>
     <row>
       <column>
         <display item="Swiss Mapping Group 2 F-key" label="Group 2   ">
-          <label>Group  2  </label>
+          <label>Group  2   </label>
          <label xml:lang="it">Gruppo  2  </label>
           <label xml:lang="cs">Skupina  2  </label>
          <label xml:lang="de">Gruppe  2  </label>
@@ -207,11 +251,43 @@
           <label></label>
         </display>
       </column>
-    </row>
+      <label>
+        <text>        </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 2 A1 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 2 A2 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 2 A1 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 2 A2 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
+	  </row>
     <row>
       <column>
         <display item="Swiss Mapping Group 3 F-key" label="Group 3   ">
-          <label>Group  3  </label>
+          <label>Group  3   </label>
          <label xml:lang="it">Gruppo  3  </label>
           <label xml:lang="cs">Skupina  3  </label>
          <label xml:lang="de">Gruppe  3  </label>
@@ -260,11 +336,44 @@
           <label></label>
         </display>
       </column>
-    </row>
+      <label>
+        <text>        </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 3 A1 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 3 A2 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 3 A1 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 3 A2 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
+
+	  </row>
     <row>
       <column>
         <display item="Swiss Mapping Group 4 F-key" label="Group 4   ">
-          <label>Group  4  </label>
+          <label>Group  4   </label>
           <label xml:lang="it">Gruppo  4  </label>
           <label xml:lang="cs">Skupina  4  </label>
           <label xml:lang="de">Gruppe  4  </label>
@@ -313,11 +422,43 @@
           <label></label>
         </display>
       </column>
-    </row>
+     <label>
+        <text>        </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 4 A1 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 4 A2 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 4 A1 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 4 A2 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
+	  </row>
     <row>
       <column>
         <display item="Swiss Mapping Group 5 F-key" label="Group 5   ">
-          <label>Group  5  </label>
+          <label>Group  5   </label>
           <label xml:lang="it">Gruppo  5  </label>
           <label xml:lang="cs">Skupina  5  </label>
           <label xml:lang="de">Gruppe  5  </label>
@@ -366,11 +507,43 @@
           <label></label>
         </display>
       </column>
-    </row>
+      <label>
+        <text>        </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 5 A1 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 5 A2 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 5 A1 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 5 A2 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
+	  </row>
     <row>
       <column>
         <display item="Swiss Mapping Group 6 F-key" label="Group 6   ">
-          <label>Group  6  </label>
+          <label>Group  6   </label>
           <label xml:lang="it">Gruppo  6  </label>
           <label xml:lang="cs">Skupina  6  </label>
           <label xml:lang="de">Gruppe  6  </label>
@@ -419,11 +592,43 @@
           <label></label>
         </display>
       </column>
-    </row>
+      <label>
+        <text>        </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 6 A1 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 6 A2 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 6 A1 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 6 A2 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
+	  </row>
     <row>
       <column>
         <display item="Swiss Mapping Group 7 F-key" label="Group 7   ">
-          <label>Group  7  </label>
+          <label>Group  7   </label>
           <label xml:lang="it">Gruppo  7  </label>
           <label xml:lang="cs">Skupina  7  </label>
           <label xml:lang="de">Gruppe  7  </label>
@@ -472,11 +677,43 @@
           <label></label>
         </display>
       </column>
-    </row>
+      <label>
+        <text>        </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 7 A1 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 7 A2 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 7 A1 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 7 A2 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
+	  </row>
     <row>
       <column>
         <display item="Swiss Mapping Group 8 F-key" label="Group 8   ">
-          <label>Group  8  </label>
+          <label>Group  8   </label>
           <label xml:lang="it">Gruppo  8  </label>
           <label xml:lang="cs">Skupina  8  </label>
           <label xml:lang="de">Gruppe  8  </label>
@@ -525,11 +762,43 @@
           <label></label>
         </display>
       </column>
+      <label>
+        <text>        </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 8 A1 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 8 A2 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 8 A1 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 8 A2 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
     </row>
     <row>
       <column>
         <display item="Swiss Mapping Group 9 F-key" label="Group 9   ">
-          <label>Group  9  </label>
+          <label>Group  9   </label>
           <label xml:lang="it">Gruppo  9  </label>
           <label xml:lang="cs">Skupina  9  </label>
           <label xml:lang="de">Gruppe  9  </label>
@@ -578,6 +847,38 @@
           <label></label>
         </display>
       </column>
+      <label>
+        <text>        </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 9 A1 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 9 A2 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 9 A1 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 9 A2 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
     </row>
     <row>
       <column>
@@ -616,7 +917,40 @@
           <label>  </label>
         </display>
       </column>
-    </row>
+      <label>
+        <text>        </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 10 A1 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 10 A2 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 10 A1 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 10 A2 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
+
+	  </row>
     <!-- options with fw v34 and higher -->
     <row>
       <column>
@@ -650,6 +984,38 @@
       <column>
         <display item="Swiss Mapping Group 11 A2 Rw" label="">
           <label>  </label>
+        </display>
+      </column>
+      <label>
+        <text>        </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 11 A1 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 11 A2 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 11 A1 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 11 A2 Rw DG" label="">
+          <label></label>
         </display>
       </column>
     </row>
@@ -687,6 +1053,38 @@
           <label>  </label>
         </display>
       </column>
+      <label>
+        <text>        </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 12 A1 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 12 A2 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 12 A1 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 12 A2 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
     </row>
     <row>
       <column>
@@ -720,6 +1118,38 @@
       <column>
         <display item="Swiss Mapping Group 13 A2 Rw" label="">
           <label>  </label>
+        </display>
+      </column>
+      <label>
+        <text>        </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 13 A1 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 13 A2 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 13 A1 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 13 A2 Rw DG" label="">
+          <label></label>
         </display>
       </column>
     </row>
@@ -758,6 +1188,38 @@
           <label>  </label>
         </display>
       </column>
+      <label>
+        <text>        </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 14 A1 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 14 A2 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 14 A1 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 14 A2 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
     </row>
     <row>
       <column>
@@ -791,6 +1253,38 @@
       <column>
         <display item="Swiss Mapping Group 15 A2 Rw" label="">
           <label>  </label>
+        </display>
+      </column>
+      <label>
+        <text>        </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 15 A1 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 15 A2 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 15 A1 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 15 A2 Rw DG" label="">
+          <label></label>
         </display>
       </column>
     </row>
@@ -828,6 +1322,38 @@
           <label>  </label>
         </display>
       </column>
+      <label>
+        <text>        </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 16 A1 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 16 A2 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 16 A1 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 16 A2 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
     </row>
     <row>
       <column>
@@ -861,6 +1387,38 @@
       <column>
         <display item="Swiss Mapping Group 17 A2 Rw" label="">
           <label>  </label>
+        </display>
+      </column>
+      <label>
+        <text>        </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 17 A1 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 17 A2 Fw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 17 A1 Rw DG" label="">
+          <label></label>
+        </display>
+      </column>
+      <label>
+        <text>  </text>
+      </label>
+      <column>
+        <display item="Swiss Mapping Group 17 A2 Rw DG" label="">
+          <label></label>
         </display>
       </column>
     </row>
@@ -899,7 +1457,8 @@
     <row>
     <column>
         <label>
-          <text>Dimmwert-Gruppen</text>
+          <text> Dimming Groups </text>
+          <text xml:lang="de">Dimmwert-Gruppen</text>
         </label>
     </column>
     </row>
@@ -907,36 +1466,92 @@
           <text> </text>
         </label>
     <row>
-     <column>
         <qualifier>
           <variableref>Decoder Version</variableref>
           <relation>ge</relation>
           <value>36</value>
         </qualifier>
+     <column>
         <display item="Swiss Dimming 1">
           <label>Group  1  </label>
           <label xml:lang="it">Gruppo  1  </label>
           <label xml:lang="cs">Skupina  1  </label>
           <label xml:lang="de">Gruppe  1  </label>
         </display>
+     </column>
+     <column>
+		<display item="Swiss Dimming 1 brightness">
+		  <label>  Brightness </label>
+		</display>
+	 </column>
+	</row>
+    <row>
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>ge</relation>
+          <value>36</value>
+        </qualifier>
+     <column>
         <display item="Swiss Dimming 2">
           <label>Group  2  </label>
           <label xml:lang="it">Gruppo  2  </label>
           <label xml:lang="cs">Skupina  2  </label>
           <label xml:lang="de">Gruppe  2  </label>
         </display>
+     </column>
+     <column>
+		<display item="Swiss Dimming 2 brightness">
+		  <label>  Brightness </label>
+		</display>
+     </column>
+     </row>
+    <row>
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>ge</relation>
+          <value>36</value>
+        </qualifier>
+     <column>
         <display item="Swiss Dimming 3">
           <label>Group  3  </label>
           <label xml:lang="it">Gruppo  3  </label>
           <label xml:lang="cs">Skupina  3  </label>
           <label xml:lang="de">Gruppe  3  </label>
         </display>
+     </column>
+     <column>
+		<display item="Swiss Dimming 3 brightness">
+		  <label>  Brightness </label>
+		</display>
+     </column>
+     </row>
+    <row>
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>ge</relation>
+          <value>36</value>
+        </qualifier>
+     <column>
         <display item="Swiss Dimming 4">
           <label>Group  4  </label>
           <label xml:lang="it">Gruppo  4  </label>
           <label xml:lang="cs">Skupina  4  </label>
           <label xml:lang="de">Gruppe  4  </label>
         </display>
+     </column>
+     <column>
+		<display item="Swiss Dimming 4 brightness">
+		  <label>  Brightness </label>
+		</display>
+     </column>
+     </row>
+    <row>
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>ge</relation>
+          <value>36</value>
+        </qualifier>
+     <column>
         <display item="Swiss Dimming 5">
           <label>Group  5  </label>
           <label xml:lang="it">Gruppo  5  </label>
@@ -944,6 +1559,12 @@
           <label xml:lang="de">Gruppe  5  </label>
         </display>
      </column>
-    </row>
+     <column>
+		<display item="Swiss Dimming 5 brightness">
+		  <label>  Brightness </label>
+		</display>
+     </column>
+     </row>
+    
   </column>
 </pane>

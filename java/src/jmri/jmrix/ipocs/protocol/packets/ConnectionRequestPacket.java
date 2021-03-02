@@ -12,7 +12,7 @@ import java.nio.ByteBuffer;
 public class ConnectionRequestPacket extends Packet {
   public final static byte IDENT = 1;
   private short protocolVersion;
-  private String siteDataVersion;
+  private String siteDataVersion = null;
 
   @Override
   public byte getId() {

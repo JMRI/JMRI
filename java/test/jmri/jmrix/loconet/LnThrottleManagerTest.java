@@ -134,7 +134,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
         memo.getSlotManager().message(lnis.outbound.elementAt(lnis.outbound.size()-1));
 
-        Assert.assertEquals("count is correct", 1, lnis.outbound.size());
+        Assert.assertEquals("count is incorrect", 1, lnis.outbound.size());
         LocoNetMessage cmdStationReply = new LocoNetMessage(new int[] {
                 0xe7, 0x0e, 0x11, 0x00, 0x34, 0x0, 0x0, 0x7, 0x0, 0x09, 0x0, 0x0, 0x0, 0x53});
         lnis.sendTestMessage(cmdStationReply);
@@ -1209,8 +1209,11 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
     @AfterEach
     public void tearDown() {
-        ((LnThrottleManager)tm).dispose();
+        tm.dispose();
         memo.dispose();
+        if (lnis != null) {
+            log.debug("numListeners on lnis = {}", lnis.numListeners()); // 5? no problem
+        }
         lnis = null;
         JUnitUtil.tearDown();
     }

@@ -38,7 +38,7 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         Assert.assertNotNull(t);
     }
 
-    // Test the initilization sequence.
+    // Test the initialization sequence.
     @Test
     public void testInitSequence() throws Exception {
         int num = ((DCCppTurnout)t).getNumber();

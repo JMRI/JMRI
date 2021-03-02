@@ -35,7 +35,9 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
-        this.speedSetting = 0;
+        synchronized(this) {
+            this.speedSetting = 0;
+        }
         // Functions default to false
         this.address = address;
         this.isForward = true;
@@ -175,8 +177,11 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
     public void setSpeedSetting(float speed) {
-        float oldSpeed = this.speedSetting;
-        this.speedSetting = speed;
+        float oldSpeed;
+        synchronized(this) {
+            oldSpeed = this.speedSetting;
+            this.speedSetting = speed;
+        }
         MrcMessage m;
         int value;
         if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_128) {
@@ -210,8 +215,9 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
             m = MrcMessage.getSendSpeed28(addressLo, addressHi, value, isForward);
         }
         tc.sendMrcMessage(m);
-
-        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
+        synchronized(this) {
+            firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
+        }
         record(speed);
     }
 
@@ -219,13 +225,15 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
     public void setIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
-        setSpeedSetting(speedSetting);  // send the command
+        synchronized(this) {
+            setSpeedSetting(speedSetting);  // send the command
+        }
         log.debug("setIsForward= {}", forward);
         firePropertyChange(ISFORWARD, old, isForward);
     }
 
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         finishRecord();
     }
 
@@ -245,64 +253,66 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
         }
         if (m.getLocoAddress() == address.getNumber()) {
             if (MrcPackets.startsWith(m, MrcPackets.THROTTLEPACKETHEADER)) {
-                if (m.getElement(10) == 0x02) {
-                    //128
-                    log.debug("speed Packet from another controller for our loco");
-                    int speed = m.getElement(8);
-                    if ((m.getElement(8) & 0x80) == 0x80) {
-                        //Forward
-                        if (!this.isForward) {
-                            this.isForward = true;
+                synchronized(this) {
+                    if (m.getElement(10) == 0x02) {
+                        //128
+                        log.debug("speed Packet from another controller for our loco");
+                        int speed = m.getElement(8);
+                        if ((m.getElement(8) & 0x80) == 0x80) {
+                            //Forward
+                            if (!this.isForward) {
+                                this.isForward = true;
+                                firePropertyChange(ISFORWARD, !isForward, isForward);
+                            }
+                            //speed = m.getElement(8);
+                        } else if (this.isForward) {
+                            //reverse
+                            this.isForward = false;
                             firePropertyChange(ISFORWARD, !isForward, isForward);
+                            //speed = m.getElement(8);
                         }
-                        //speed = m.getElement(8);
-                    } else if (this.isForward) {
-                        //reverse
-                        this.isForward = false;
-                        firePropertyChange(ISFORWARD, !isForward, isForward);
-                        //speed = m.getElement(8);
-                    }
-                    speed = (speed & 0x7f) - 1;
-                    if (speed < 0) {
-                        speed = 0;
-                    }
-                    float val = speed / 126.0f;
-                    
-                    // next line is the FE_FLOATING_POINT_EQUALITY annotated above
-                    if (val != this.speedSetting) {
-                        float old = this.speedSetting;
-                        this.speedSetting = val;
-                        firePropertyChange(SPEEDSETTING, old, this.speedSetting);
-                        record(val);
-                    }
-                } else if (m.getElement(10) == 0x00) {
-                    int value = m.getElement(8) & 0xff;
-                    //28 Speed Steps
-                    if ((m.getElement(8) & 0x60) == 0x60) {
-                        //Forward
-                        value = value - 0x60;
-                    } else {
-                        value = value - 0x40;
-                    }
-                    if (((value >> 4) & 0x01) == 0x01) {
-                        value = value - 0x10;
-                        value = (value << 1) + 1;
-                    } else {
-                        value = value << 1;
-                    }
-                    value = value - 3; //Turn into user expected 0-28
-                    float val = -1;
-                    if (value != -1) {
-                        if (value < 1) {
-                            value = 0;
+                        speed = (speed & 0x7f) - 1;
+                        if (speed < 0) {
+                            speed = 0;
                         }
-                        val = value / 28.0f;
-                    }
+                        float val = speed / 126.0f;
 
-                    if (val != this.speedSetting) {
-                        firePropertyChange(SPEEDSETTING, this.speedSetting, val);
-                        this.speedSetting = val;
-                        record(val);
+                        // next line is the FE_FLOATING_POINT_EQUALITY annotated above
+                        if (val != this.speedSetting) {
+                            float old = this.speedSetting;
+                            this.speedSetting = val;
+                            firePropertyChange(SPEEDSETTING, old, this.speedSetting);
+                            record(val);
+                        }
+                    } else if (m.getElement(10) == 0x00) {
+                        int value = m.getElement(8) & 0xff;
+                        //28 Speed Steps
+                        if ((m.getElement(8) & 0x60) == 0x60) {
+                            //Forward
+                            value = value - 0x60;
+                        } else {
+                            value = value - 0x40;
+                        }
+                        if (((value >> 4) & 0x01) == 0x01) {
+                            value = value - 0x10;
+                            value = (value << 1) + 1;
+                        } else {
+                            value = value << 1;
+                        }
+                        value = value - 3; //Turn into user expected 0-28
+                        float val = -1;
+                        if (value != -1) {
+                            if (value < 1) {
+                                value = 0;
+                            }
+                            val = value / 28.0f;
+                        }
+
+                        if (val != this.speedSetting) {
+                            firePropertyChange(SPEEDSETTING, this.speedSetting, val);
+                            this.speedSetting = val;
+                            record(val);
+                        }
                     }
                 }
             } else if (MrcPackets.startsWith(m, MrcPackets.FUNCTIONGROUP1PACKETHEADER)) {
