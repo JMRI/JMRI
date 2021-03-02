@@ -98,6 +98,9 @@ function displayCellValue(type, colName, value) {
 	if (value == null) {
 		return ""; //return empty string for any null value
 	}
+	if (type == "type" && colName == "name"){                         //if list is of json types, 
+		return "<a href='/tables/" + value + "' >" + value + "</a>";  //  create link to table for this type
+	}
 	if ($.isArray(value)) { 
 		if (value.length == 0) {
 			return "";
@@ -205,9 +208,9 @@ function hideEmptyColumns(selector) {
 $(document).ready(function () {
 	jmri = $.JMRI({});
 
-	// replace title with the table type
-	document.title = "JMRI Tables: " + $("html").data("table-type") + "s"; // TODO I18N using Bundle
-	$("#table-type").text($("html").data("table-type") + "s"); // TODO I18N (-s for plural won't work in all languages)
+	// add table type to heading and title
+	$("#table-type").text($("html").data("table-type"));
+	document.title = $("h1.title").text(); 
 
 	jmri = $.JMRI({
 		// when we get the hello message, send a websocket list request which
