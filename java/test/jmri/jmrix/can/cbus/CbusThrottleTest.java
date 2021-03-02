@@ -975,20 +975,19 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
                 return true;
             }
         });
-        instance = new CbusThrottle(memo,new DccLocoAddress(100,true),100);
+        instance = new CbusThrottle(memo, new DccLocoAddress(100,true),100);
     }
 
     @AfterEach
     @Override
     public void tearDown() {
-        if (instance!=null){
+        if (instance != null){
             instance.dispose(null);
         }
         memo.dispose();
         memo = null;
         tc.terminateThreads();
         tc = null;
-        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
 
     }

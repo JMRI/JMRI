@@ -62,7 +62,6 @@
       <pre>
       Set sensor S-Sensor active
       </pre>
-      </p>
 
       <p>
       Each train has its own text file, but they can coordinate actions by using JMRI sensors, etc.
@@ -273,7 +272,7 @@
       </p>
 
       <h3>Running the demo</h3>
-      After starting <strong>PanelPro</strong>, click on the <strong>Open Panel File</strong>
+      <p>After starting <strong>PanelPro</strong>, click on the <strong>Open Panel File</strong>
       button and select <strong>yaat demo.xml</strong>.</p>
 
       <div style="margin-left: 2em">
@@ -297,7 +296,9 @@
       </p>
 
       <h2>Advanced Features</h2>
-      <h3>Compiled Trains</h3><a name="CompTrains" id="CompTrains" />
+
+      <a name="CompTrains" id="CompTrains"></a>
+      <h3>Compiled Trains</h3>
 
       <p>
       The standard YAAT process compiles each train from its text file or from the embedded content.
@@ -311,7 +312,7 @@
       </p>
 
       <p>
-      A compiled train is located at the preference:yaatp/<trainname> directory.  When YAAT
+      A compiled train is located at the preference:yaatp/&lt;trainname&gt; directory.  When YAAT
       is started, the date/time for each train source file is checked.  If it is greater
       than the compiled train, if any, the compile will occur.  Otherwise the compiled
       version will be loaded.  Embedded trains are always compiled.

@@ -21,8 +21,8 @@ ini_set("display_errors", 1);
 // In many cases it is advisable to use libxml_use_internal_errors(true); before $dom->loadHTML($content);
 libxml_use_internal_errors(true);
 
-// $url = 'http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastStableBuild/jacoco/';
-$url = 'http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/';
+// $url = 'https://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastStableBuild/jacoco/';
+$url = 'https://builds.jmri.org/jenkins/job/Development/job/JaCoCo/';
 
 // Is the script run from the command line?
 if (isset($argc) && ($argc > 0)) {
@@ -236,7 +236,7 @@ function parse_page_prim($page, $url, $package, $isClassList, $buildNo)
 
 					if ($isClassList) {		// Class list
 						$href = $element->getAttribute('href');
-						$element->setAttribute('href', 'http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastStableBuild/jacoco/'.$package.'/'.$href);
+						$element->setAttribute('href', 'https://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastStableBuild/jacoco/'.$package.'/'.$href);
 					} else {				// Package list
 						$href = $element->nodeValue;
 						$element->setAttribute('href', 'jacoco_sort_report.php?package='.$href);

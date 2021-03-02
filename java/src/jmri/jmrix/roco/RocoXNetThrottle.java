@@ -89,7 +89,7 @@ public class RocoXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
      * the last user.
      */
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         active = false;
         stopStatusTimer();
         finishRecord();

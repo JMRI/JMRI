@@ -12,10 +12,10 @@ import jmri.jmrit.operations.OperationsFrame;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012
  */
-public class OperationsSetupFrame extends OperationsFrame {
+public class OperationsSettingsFrame extends OperationsFrame {
 
-    public OperationsSetupFrame() {
-        super(Bundle.getMessage("TitleOperationsSetup"), new OperationsSetupPanel());
+    public OperationsSettingsFrame() {
+        super(Bundle.getMessage("TitleOperationsSetup"), new OperationsSettingsPanel());
     }
 
     @Override

@@ -33,7 +33,7 @@ public class SRCPThrottleManager extends AbstractThrottleManager {
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         log.debug("new SRCPThrottle for {}", address);
         // Notify ready to go (without waiting for OK?)
-        if(address instanceof DccLocoAddress) {
+        if (address instanceof DccLocoAddress) {
            notifyThrottleKnown(new SRCPThrottle((SRCPBusConnectionMemo) adapterMemo, (DccLocoAddress) address), address);
         } else { 
           // we need to notify that the request failed, because the
@@ -102,7 +102,6 @@ public class SRCPThrottleManager extends AbstractThrottleManager {
             return true;
         }
         return false;
-        //LocoNetSlot tSlot = lnt.getLocoNetSlot();
     }
 
     private final static Logger log = LoggerFactory.getLogger(SRCPThrottleManager.class);
