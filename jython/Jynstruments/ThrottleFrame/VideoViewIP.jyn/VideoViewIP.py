@@ -5,73 +5,61 @@
 #
 # Build using https://github.com/sarxos/webcam-capture
 # You'll need webcam-capture-XXX.jar and bridj-XXX.jar copied from webcam-capture release to your JMRI lib folder
+# And webcam-capture-driver-ipcam-XXX.jar from there https://github.com/sarxos/webcam-capture/tree/master/webcam-capture-drivers/driver-ipcam
 #
 
 import java
 import java.awt
 import java.awt.event
 import java.beans
-import jmri
 import jmri.jmrit.jython.Jynstrument as Jynstrument
 import java.awt.BorderLayout as BorderLayout
 import java.awt.event.ItemListener as ItemListener
 import javax.swing.JCheckBoxMenuItem as JCheckBoxMenuItem
 import com.github.sarxos.webcam.Webcam as Webcam
 import com.github.sarxos.webcam.WebcamPanel as WebcamPanel
-import com.github.sarxos.webcam.WebcamPicker as WebcamPicker
-import com.github.sarxos.webcam.WebcamResolution as WebcamResolution
+import com.github.sarxos.webcam.ds.ipcam.IpCamDeviceRegistry as IpCamDeviceRegistry
+import com.github.sarxos.webcam.ds.ipcam.IpCamDriver as IpCamDriver
+import com.github.sarxos.webcam.ds.ipcam.IpCamMode as IpCamMode
 
-class VideoView(Jynstrument, ItemListener):
+class VideoViewIP(Jynstrument, ItemListener):
 
     def getExpectedContextClassName(self):
         # This Jynstrument likes to be in a ThrottleFrame and not anywhere else
         return "jmri.jmrit.throttle.ThrottleFrame"
 
     def init(self):
+        Webcam.setDriver( IpCamDriver() )
         self.setLayout( BorderLayout() )        
-        self.miSelector =  JCheckBoxMenuItem ( "Show camera selector" )
-        self.miSelector.addItemListener(self)
         self.miFill =  JCheckBoxMenuItem ( "Fill window" )
         self.miFill.addItemListener(self)
-        self.miMirror =  JCheckBoxMenuItem ( "Mirror", True )
-        self.miMirror.addItemListener(self)
         self.getPopUpMenu().add( self.miFill )
-        self.getPopUpMenu().add( self.miSelector )
-        self.getPopUpMenu().add( self.miMirror )
-        self.webcam = Webcam.getDefault()
+        self.miMirror =  JCheckBoxMenuItem ( "Mirror", True )        
+        self.miMirror.addItemListener(self)        
+        self.getPopUpMenu().add( self.miMirror )                
+        # Adjust bellow URL accordingly
+        IpCamDeviceRegistry.register("MyTest", "http://localhost:8080/?action=stream", IpCamMode.PUSH);        
         self.addCamPanel()
 
     def quit(self):   # very important to clean up everything to make sure GC will collect us
         self.webcamPanel.stop()
-        self.webcam.close()
-        self.webcam = None
+        IpCamDeviceRegistry.unregisterAll()        
+        self.webcamPanel = None
 
     def addCamPanel(self):
-        self.webcam.close()
-        self.webcam.setViewSize(WebcamResolution.VGA.getSize());
-        self.webcamPanel = WebcamPanel(self.webcam)
+        self.webcamPanel = WebcamPanel(Webcam.getWebcams().get(0))
         self.webcamPanel.setMirrored(self.miMirror.isSelected())
         if ( self.miFill.isSelected() ) :
             self.webcamPanel.setFillArea( True  )
         else :
             self.webcamPanel.setFitArea( True )
-        self.add(self.webcamPanel, BorderLayout.CENTER)
-        self.webcam.open()
+        self.add(self.webcamPanel, BorderLayout.CENTER)        
 
 # this is a good way to make sure that we're are actaully GCed 
     def __del__(self):  
         print "in destructor"
 
     def itemStateChanged(self, evt):
-        if (evt.getSource() == self.miSelector ):
-            if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED ) :                           
-                self.picker = WebcamPicker();
-                self.picker.addItemListener(self)
-                self.add(self.picker, BorderLayout.PAGE_END)                
-            else :
-                self.remove(self.picker)                 
-                self.picker = None                
-                self.revalidate()
         if (evt.getSource() == self.miFill ):
             if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED ) :
                 self.webcamPanel.setFillArea( True  )
@@ -79,10 +67,4 @@ class VideoView(Jynstrument, ItemListener):
                 self.webcamPanel.setFitArea( True )
         if (evt.getSource() == self.miMirror ):
             self.webcamPanel.setMirrored(self.miMirror.isSelected())
-        if (evt.getSource() == self.picker ):
-            self.webcamPanel.stop()
-            self.remove(self.webcamPanel)
-            self.webcam.close()
-            self.webcam = evt.getItem()
-            self.addCamPanel()
-            self.revalidate()
+
