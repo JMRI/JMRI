@@ -221,7 +221,6 @@ public interface ThrottleManager {
      * @param l       ThrottleListener canceling request for a throttle
      */
     void cancelThrottleRequest(int address, boolean isLong, ThrottleListener l);
-
     
     /**
      * Cancel a request for a throttle.
@@ -260,8 +259,7 @@ public interface ThrottleManager {
      */
     @Deprecated
     void stealThrottleRequest(LocoAddress address, ThrottleListener l, boolean steal);
-    
-    
+
     /**
      * Steal a requested throttle.
      * <p>
@@ -595,5 +593,14 @@ public interface ThrottleManager {
      * @return number of throttles for this address, or 0 if throttle does not exist
      */
     int getThrottleUsageCount(BasicRosterEntry re);
+
+    /**
+     * Allow to cleanly release the traffic controller in ThrottleManager Tests
+     * <ul>
+     *     <li>remove listeners, if any</li>
+     *     <li>stop timers, is any</li>
+     * </ul>
+     */
+    void dispose();
 
 }

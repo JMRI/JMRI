@@ -32,7 +32,7 @@
       To create a new Switchboard, from the Panels menu, choose New Panel &gt; Switchboard Editor.<br>
       A default pane with switches for Turnouts in the range 1 - 24 opens.<br>
       If any Turnouts were defined in JMRI beforehand, those switches will immediately show
-      their current state and immediately lets you control them.</p>
+      their current state and immediately let you control them.</p>
       <a href="images/SwitchboardEditor.png"><img src="images/SwitchboardEditor.png" width="247" height="214"
       align="right" alt="The Switchboard Editor"></a>
       <p>To the left, a small Switchboard Editor pane allows you to refine what this Switchboard will control.

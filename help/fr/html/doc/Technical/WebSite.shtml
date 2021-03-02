@@ -125,17 +125,17 @@ l'information <a href="http://jmri.org/xml/XSLT">human-readable </a> au sujet de
 compilation du projet sur les serveurs Jenkins. Les r&#233;pertoires list&#233;s ci-dessus constituent la majeure partie du site,
 et ce contenu est mis &#224; jour depuis le r&#233;pertoire JMRI sans aucun travail suppl&#233;mentaire.</p>
 <ul>
-    <li><a href="http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20JMRI%20repository/">Contenu statique depuis le r&#233;pertoire JMRI/JMRI, ex:e.g. help, xml, etc dans les distributions JMRI</a></li>
-    <li><a href="http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/">Contenu statique depuis le r&#233;pertoire JMRI/website, ex:. information website-only</a></li>
-<li><a href="http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website-legal%20repository/">Contenu statique depuis le r&#233;pertoire JMRI/website-legal , ex: contenu autour de l'affaire juridique JMRI-Katzer</a></li>
+    <li><a href="https://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20JMRI%20repository/">Contenu statique depuis le r&#233;pertoire JMRI/JMRI, ex:e.g. help, xml, etc dans les distributions JMRI</a></li>
+    <li><a href="https://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/">Contenu statique depuis le r&#233;pertoire JMRI/website, ex:. information website-only</a></li>
+<li><a href="https://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website-legal%20repository/">Contenu statique depuis le r&#233;pertoire JMRI/website-legal , ex: contenu autour de l'affaire juridique JMRI-Katzer</a></li>
 </ul>
 
 <p>La r&#233;g&#233;n&#233;ration de la JavaDoc et le contenu XML implique 
 beaucoup plus de travail qu'une simple mise &#224; jour d'un r&#233;pertoire, et ainsi celleci ne se fait qu'une fois par jour, selon les besoins,
 par la t&#226;che 
-<a href="http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/">G&#233;n&#233;rer site Web</a>
+<a href="https://builds.jmri.org/jenkins/job/WebSite/job/generate-website/">G&#233;n&#233;rer site Web</a>
 sur la
-<a href="http://jmri.tagadab.com/jenkins/">production serveur Jenkins</a>.</p>
+<a href="https://builds.jmri.org/jenkins/">production serveur Jenkins</a>.</p>
 
 <a name="local" id="local"></a><h2>Local Web Site: Mac OS X</h2>
 

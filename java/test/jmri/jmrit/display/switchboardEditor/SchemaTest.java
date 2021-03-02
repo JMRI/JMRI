@@ -26,4 +26,5 @@ public class SchemaTest extends SchemaTestBase {
     public void schemaTest(File file, boolean pass) {
         super.validate(file, pass);
     }
+
 }

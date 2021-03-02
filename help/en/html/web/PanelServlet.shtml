@@ -64,7 +64,7 @@
 
       <p>This chapter shows an overview of how JMRI Web Server operates between the JMRI application and the Web
       Browser to demonstrate what code is involved, using Panels as an example.</p>
-      <p>
+
       <p>In <a href="#exampleA">part A</a> we show at how a panel initially shows up in the browser of a
       (remote) user logged on to JMRI Web Server.</p>
       <p><a href="#exampleB">Part B</a> focuses on the opposing flow of information. You will discover how user
@@ -233,7 +233,7 @@
         <li>Next, the HTML is written:<br>
           <code><br>
           $("#panel-area").append("&lt;div id=" + $widget.id + "r class='" +<br>
-          $widget.classes + "' " + $hoverText + "&gt;&lt/div&gt;");<br>
+          $widget.classes + "' " + $hoverText + "&gt;&lt;/div&gt;");<br>
           </code><br>
         </li>
 
