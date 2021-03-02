@@ -18,7 +18,7 @@ import jmri.jmrix.ipocs.protocol.packets.SetOutputPacket;
  */
 public class IpocsLight extends AbstractLight implements IpocsClientListener {
   private final static Logger log = LoggerFactory.getLogger(IpocsLight.class);
-  private IpocsPortController portController;
+  private final IpocsPortController portController;
 
   public IpocsLight(IpocsPortController portController, String systemName, String userName) {
     super(systemName, userName);
@@ -38,6 +38,9 @@ public class IpocsLight extends AbstractLight implements IpocsClientListener {
       case OFF:
         packet.setCommand(RqOutputCommand.Off);
         break;
+      case UNKNOWN:
+        // ignore, but not an error as normal during AbstractTurnout testCreate()
+        return;
       default:
         log.error("Unknown light order state");
         return;
@@ -87,7 +90,7 @@ public class IpocsLight extends AbstractLight implements IpocsClientListener {
               setState(Light.OFF);
               break;
             default:
-              log.error("Unknown turnout state {}", ((OutputStatusPacket) packet).getState().toString());
+              log.error("Unknown light state {}", ((OutputStatusPacket) packet).getState().toString());
               break;
           }
           break;
