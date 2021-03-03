@@ -98,11 +98,7 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
                                 log.warn("Unhandled msg length: {}", (opCode & 0x60) >> 5);
                                 break;
                         }
-                        if (msg == null) {
-                            log.error("msg is null!");
-                            return;
-                        }
-                        // message exists, now fill it
+                        // message never null, now fill it
                         msg.setOpCode(opCode);
                         msg.setElement(1, byte2);
                         int len = msg.getNumDataElements();
@@ -133,10 +129,10 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
 
         try {
             clientSocket.close();
-        } catch (IOException ex1) {
+        } catch (IOException ignore) {
         }
 
-        LnTcpServer.getDefault().removeClient(this);
+        LnTcpServer.getDefault().removeClient(this); // NPE here:
         log.info("ClientRxHandler: Exiting");
     }
 
