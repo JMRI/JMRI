@@ -10,7 +10,7 @@ import org.junit.Test;
 import jmri.jmrix.ipocs.protocol.enums.RqDisconnect;
 
 public class DisconnectPacketTest {
-  private byte[] testPacket = { RqDisconnect.UnitClosingDown.value };
+  private final byte[] testPacket = { RqDisconnect.UnitClosingDown.value };
 
   @Test
   public void getIdTest() {

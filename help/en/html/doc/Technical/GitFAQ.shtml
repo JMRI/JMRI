@@ -65,7 +65,7 @@
             <li>It comes with the GitHub Desktop application,
             available from the <a href=
             "https://desktop.github.com" target="_blank">Git desktop download
-            page</a> (OS X and Windows only).</li>
+            page</a> (OS X and Windows only).See <a href="githubdesktopintro.shtml">here for an intro.</a></li>
 
             <li>On the Mac, it's included when you <a href=
             "https://developer.apple.com/xcode/download/">install
@@ -85,7 +85,7 @@
           (also on GitHub):
 
           <a href="/web/images/GitHubWorkflow.png">
-            <img src="/web/images/GitHubWorkflow.png" align="right" height="25%" width="25%">
+            <img src="/web/images/GitHubWorkflow.png" align="right" height="25%" width="25%" alt="GitHub Work Flow">
           </a>
             
           <p>That horizontal arrow is the "Pull Request" (and
@@ -128,7 +128,7 @@
             and</li>
 
             <li>press the green compare icon <img src=
-            "/web/images/GitHubPR1.png">, then click on Create Pull
+            "/web/images/GitHubPR1.png" alt="GitHub PR1">, then click on Create Pull
             Request.</li>
 
             <li>After your pull request has been reviewed, it can
@@ -261,7 +261,7 @@
             <p>
             For more on GitHub Desktop,
             please see our
-            <a href="githubdesktopinto.shtml">page on using GitHub Desktop</a>.
+            <a href="githubdesktopintro.shtml">page on using GitHub Desktop</a>.
             
               <ul>
                 <li>Clone the JMRI repo to your local system by
@@ -383,7 +383,7 @@
         <dt id="branchexamples">Branch Examples</dt>
         
         <dd>
-        <img src="images/git_branch_baseline.png" align="right">
+        <img src="images/git_branch_baseline.png" align="right" alt="Branch Baseline">
         The figure to the right shows a couple examples
         of how we use branches in Git. 
         The black line
@@ -416,7 +416,7 @@
         If just a couple changes have been made, they rarely overlap.
         This motivates our "merge often" philosophy.
 
-        <img src="images/git_branch_merge_master.png" align="right">
+        <img src="images/git_branch_merge_master.png" align="right" alt="Branch merge">
         
         <p>
         Sometimes development goes on for such a long time that

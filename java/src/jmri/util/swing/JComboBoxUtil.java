@@ -76,6 +76,13 @@ public class JComboBoxUtil {
             // remove the dummy element
             inComboBox.removeItemAt(0);
         }
+
+        // Adjust max rows if the Preferences => Display setting is greater than zero.
+        int maxRows = jmri.InstanceManager.getDefault(jmri.util.gui.GuiLafPreferencesManager.class).getMaxComboRows();
+        if (maxRows > 0) {
+            c = Math.min(c, maxRows);
+        }
+
         inComboBox.setMaximumRowCount(c);
     }
 

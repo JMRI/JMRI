@@ -34,4 +34,5 @@ public class IpocsSocketAcceptor implements CompletionHandler<AsynchronousSocket
   public void failed(Throwable exc, Object attachment) {
     log.error("Unable to accept socket");
   }
+
 }

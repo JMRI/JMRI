@@ -10,37 +10,38 @@ import jmri.jmrix.ipocs.protocol.enums.RqInputState;
 import jmri.jmrix.ipocs.protocol.packets.InputStatusPacket;
 
 public class IpocsSensorTest {
+
   @Test
   public void constructorTest() {
     IpocsPortController portController = mock(IpocsPortController.class);
-    assertNotNull(new IpocsSensor(portController, "ee33", "Li91"));
+    assertNotNull(new IpocsSensor(portController, "ES33", "Li91"));
   }
 
   @Test
   public void requestUpdateFromLayout() {
     IpocsPortController portController = mock(IpocsPortController.class);
-    IpocsSensor sensor  = new IpocsSensor(portController, "ee33", "Li91");
+    IpocsSensor sensor  = new IpocsSensor(portController, "ES33", "Li91");
     sensor.requestUpdateFromLayout();
   }
 
   @Test
   public void clientConnectedTest() {
     IpocsPortController portController = mock(IpocsPortController.class);
-    IpocsSensor sensor  = new IpocsSensor(portController, "ee33", "Li91");
+    IpocsSensor sensor  = new IpocsSensor(portController, "ES33", "Li91");
     sensor.clientConnected(mock(IpocsClientHandler.class));
   }
   
   @Test
   public void clientDisconnectedTest() {
     IpocsPortController portController = mock(IpocsPortController.class);
-    IpocsSensor sensor  = new IpocsSensor(portController, "ee33", "Li91");
+    IpocsSensor sensor  = new IpocsSensor(portController, "ES33", "Li91");
     sensor.clientDisconnected(mock(IpocsClientHandler.class));
   }
     
   @Test
   public void onMessageTest() {
     IpocsPortController portController = mock(IpocsPortController.class);
-    IpocsSensor sensor  = new IpocsSensor(portController, "ee33", "Li91");
+    IpocsSensor sensor  = new IpocsSensor(portController, "ES33", "Li91");
     IpocsClientHandler client = mock(IpocsClientHandler.class);
     Message msg = new Message();
     msg.setObjectName("Li92");
@@ -56,4 +57,5 @@ public class IpocsSensorTest {
     pkt.setState(RqInputState.Undefined);
     sensor.onMessage(client, msg);
   }
+
 }

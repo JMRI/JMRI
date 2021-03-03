@@ -16,7 +16,7 @@ public class AlarmPacket extends Packet {
   public final static byte IDENT = 16;
   private short alarmCode;
   private byte alarmLevel;
-  private RqAlarmState alarmState;
+  private RqAlarmState alarmState = null;
   private int parameter1;
   private int parameter2;
 

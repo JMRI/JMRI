@@ -31,7 +31,9 @@ public class EasyDccThrottle extends AbstractThrottle {
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
-        this.speedSetting = 0;
+        synchronized (this) {
+            this.speedSetting = 0;
+        }
         // Functions default to false
         this.address = address;
         this.isForward = true;
@@ -127,9 +129,11 @@ public class EasyDccThrottle extends AbstractThrottle {
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
     public void setSpeedSetting(float speed) {
-        float oldSpeed = this.speedSetting;
-        this.speedSetting = speed;
-
+        float oldSpeed;
+        synchronized (this) {
+            oldSpeed = this.speedSetting;
+            this.speedSetting = speed;
+        }
         byte[] result;
 
         if (super.speedStepMode == SpeedStepMode.NMRA_DCC_128) {
@@ -194,8 +198,9 @@ public class EasyDccThrottle extends AbstractThrottle {
         }
 
         tc.sendEasyDccMessage(m, null);
-
-        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
+        synchronized (this) {
+            firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
+        }
         record(speed);
     }
 
@@ -203,11 +208,13 @@ public class EasyDccThrottle extends AbstractThrottle {
     public void setIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
-        setSpeedSetting(speedSetting);  // send the command
+        synchronized (this) {
+            setSpeedSetting(speedSetting);  // send the command
+        }
         firePropertyChange(ISFORWARD, old, isForward);
     }
 
-    private DccLocoAddress address;
+    private final DccLocoAddress address;
     EasyDccTrafficController tc;
 
     @Override
@@ -216,7 +223,7 @@ public class EasyDccThrottle extends AbstractThrottle {
     }
 
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         active = false;
         finishRecord();
     }
