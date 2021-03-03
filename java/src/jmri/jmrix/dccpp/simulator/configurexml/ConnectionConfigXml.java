@@ -1,10 +1,12 @@
 package jmri.jmrix.dccpp.simulator.configurexml;
 
-import jmri.jmrix.SerialPortAdapter;
-import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
+import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
+//import jmri.jmrix.dccpp.configurexml.AbstractDCCppSerialConnectionConfigXml;
 import jmri.jmrix.dccpp.simulator.ConnectionConfig;
 import jmri.jmrix.dccpp.simulator.DCCppSimulatorAdapter;
 import org.jdom2.Element;
+
+import javax.annotation.Nonnull;
 
 /**
  * Handle XML persistence of layout connections by persisting the
@@ -20,13 +22,11 @@ import org.jdom2.Element;
  * @author Paul Bender Copyright: Copyright (c) 2009
  * @author Mark Underwood Copyright: Copyright (c) 2015
  */
-public class ConnectionConfigXml extends AbstractConnectionConfigXml {
+public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml { //AbstractDCCppSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {
         super();
     }
-
-    protected SerialPortAdapter adapter;
 
     /**
      * A Simulator connection needs no extra information, so we reimplement the
@@ -47,7 +47,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) {
+    public boolean load(@Nonnull Element shared, Element perNode) {
         boolean result = true;
         // start the "connection"
         getInstance();
@@ -74,6 +74,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         }
     }
 
+    @Override
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig) object).getAdapter();
     }

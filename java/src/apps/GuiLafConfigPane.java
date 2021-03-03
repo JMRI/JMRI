@@ -89,6 +89,8 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         add(p);
         doEditorUseOldLocSize(p = new JPanel());
         add(p);
+        doMaxComboRows(p = new JPanel());
+        add(p);
         doToolTipDismissDelay(p = new JPanel());
         add(p);
     }
@@ -237,6 +239,21 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
                 fontSizeComboBox.setSelectedItem(manager.getDefaultFontSize());
             }
         });
+    }
+
+    private JSpinner maxComboRowsSpinner;
+
+    public void doMaxComboRows(JPanel panel) {
+        GuiLafPreferencesManager manager = InstanceManager.getDefault(GuiLafPreferencesManager.class);
+        JLabel maxComboRowsLabel = new JLabel(ConfigBundle.getMessage("GUIMaxComboRows"));
+        maxComboRowsSpinner = new JSpinner(new SpinnerNumberModel(manager.getMaxComboRows(), 0, 999, 1));
+        this.maxComboRowsSpinner.addChangeListener((ChangeEvent e) -> {
+            manager.setMaxComboRows((int) maxComboRowsSpinner.getValue());
+        });
+        this.maxComboRowsSpinner.setToolTipText(ConfigBundle.getMessage("GUIMaxComboRowsToolTip"));
+        maxComboRowsLabel.setToolTipText(this.maxComboRowsSpinner.getToolTipText());
+        panel.add(maxComboRowsLabel);
+        panel.add(maxComboRowsSpinner);
     }
 
     private JSpinner toolTipDismissDelaySpinner;

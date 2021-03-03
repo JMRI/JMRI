@@ -10,8 +10,11 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousSocketChannel;
 
+import jmri.util.JUnitUtil;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
@@ -62,6 +65,7 @@ public class IpocsClientHandlerTest {
     final IpocsClientHandler ch = new IpocsClientHandler(client);
     ch.addClientListener(listener);
     ch.completed(-1, null);
+
     doThrow(new IOException()).when(client).close();
     ch.completed(-1, null);
   }
@@ -109,8 +113,10 @@ public class IpocsClientHandlerTest {
     final IpocsClientHandler ch = new IpocsClientHandler(client);
     ch.failed(new Exception("Error"), null);
     jmri.util.JUnitAppender.suppressErrorMessage("Error closing connection");
+
     ch.addClientListener(listener);
-    doThrow(new IOException()).when(client).close();
+    client.close();
+
     ch.failed(new Exception("Error"), null);
     jmri.util.JUnitAppender.suppressErrorMessage("Error closing connection");
   }
@@ -134,4 +140,15 @@ public class IpocsClientHandlerTest {
     when(msg.serialize()).thenReturn(ByteBuffer.wrap(new byte[] {}));
     ch.send(msg);
   }
+
+  @BeforeEach
+  public void setUp() {
+    jmri.util.JUnitUtil.setUp();
+  }
+
+  @AfterEach
+  public void tearDown() {
+    JUnitUtil.tearDown();
+  }
+
 }

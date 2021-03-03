@@ -24,11 +24,12 @@ public abstract class AbstractProgrammer extends PropertyChangeSupport implement
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public String decodeErrorCode(int code) {
         if (code == ProgListener.OK) {
             return Bundle.getMessage("StatusOK");
         }
-        StringBuilder sbuf = new StringBuilder("");
+        StringBuilder sbuf = new StringBuilder();
         // add each code; terminate each string with ";" please.
         if ((code & ProgListener.NoLocoDetected) != 0) {
             sbuf.append(Bundle.getMessage("NoLocoDetected")).append(" ");
@@ -174,7 +175,8 @@ public abstract class AbstractProgrammer extends PropertyChangeSupport implement
     }
 
     @Override
-    abstract @Nonnull public List<ProgrammingMode> getSupportedModes();
+    @Nonnull
+    abstract public List<ProgrammingMode> getSupportedModes();
 
     /** {@inheritDoc} 
      * Basic implementation. Override this to turn writing on and off globally.

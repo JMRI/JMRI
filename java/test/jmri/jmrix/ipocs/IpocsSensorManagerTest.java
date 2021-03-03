@@ -19,6 +19,7 @@ public class IpocsSensorManagerTest {
     final IpocsPortController portController = mock(IpocsPortController.class);
     when(memo.getPortController()).thenReturn(portController);
     final IpocsSensorManager manager = new IpocsSensorManager(memo);
-    manager.createNewSensor("AA33", "Li91");
+    assertNotNull(manager.createNewSensor("AS33", "Li91"));
   }
+
 }

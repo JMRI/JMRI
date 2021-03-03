@@ -11,7 +11,7 @@ import org.junit.jupiter.api.*;
  */
 public class BundleTest  {
     @Test public void testGoodKeyMessage() {
-        Assert.assertEquals("JMRI Tables", Bundle.getMessage("TablesTitle"));
+        Assert.assertEquals("JMRI Table", Bundle.getMessage("TablesTitle"));
     }
 
     @Test
@@ -20,7 +20,7 @@ public class BundleTest  {
     }
 
     @Test public void testGoodKeyMessageArg() {
-        Assert.assertEquals("JMRI Tables", Bundle.getMessage("TablesTitle", new Object[]{}));
+        Assert.assertEquals("JMRI Table", Bundle.getMessage("TablesTitle", new Object[]{}));
         Assert.assertEquals("About Test", Bundle.getMessage("TitleAbout", "Test"));
     }
 

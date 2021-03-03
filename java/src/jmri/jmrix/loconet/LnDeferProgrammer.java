@@ -177,6 +177,7 @@ public class LnDeferProgrammer implements Programmer {
         }
     }
 
+    @Nonnull
     @Override
     public String decodeErrorCode(int i) {
         SlotManager m = memo.getSlotManager();

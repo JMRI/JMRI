@@ -238,7 +238,6 @@ public abstract class AbstractSensorTestBase {
 
         t.setKnownState(Sensor.INCONSISTENT);
         Assert.assertEquals("INCONSISTENT", Sensor.INCONSISTENT, t.getState());
-
     }
 
     //dispose of t.
