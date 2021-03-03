@@ -16,10 +16,10 @@
     <!--#include virtual="../Sidebar.shtml" -->
     <div id="mainContent">
 
-      <h1>JMRI: OperationsPro</h1>
+      <h1>JMRI: OperationsPro&trade;</h1>
  
     <p>
-    JMRI OperationsPro allows you to generate train Manifests and switch lists that detail the work a crew will perform during
+    JMRI OperationsPro&trade; allows you to generate train Manifests and switch lists that detail the work a crew will perform during
     an operations session.  JMRI provides extensive documentation on using JMRI to support operating sessions.  There are also
     numerous blogs and videos on the internet about model train operating sessions.
     </p>
