@@ -5,7 +5,6 @@ import java.beans.PropertyChangeListener;
 import java.awt.Component;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -14,7 +13,6 @@ import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -78,24 +76,8 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
     /**
      * Prompt whether to invoke the Store process.
      * The options are "No" and "Yes".
-     * The selected option can be "remembered" in which case the selection will
-     * be automatically performed in the future.
      */
     void notifyStoreNeeded() {
-        // Check "remembered" answer
-        final jmri.UserPreferencesManager p;
-        p = jmri.InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
-        int quitOption = p == null ? 0 : p.getMultipleChoiceOption(getClassName(), "store");
-        switch (quitOption) {
-            case 1:
-                return;
-            case 2:
-                new jmri.configurexml.StoreXmlUserAction("").actionPerformed(null);
-                return;
-            default:
-                break;
-        }
-
         // Provide option to invoke the store process before the shutdown.
         final JDialog dialog = new JDialog();
         dialog.setTitle(Bundle.getMessage("QuestionTitle"));     // NOI18N
@@ -107,10 +89,6 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
         question.setAlignmentX(Component.CENTER_ALIGNMENT);
         container.add(question);
 
-        final JCheckBox remember = new JCheckBox(Bundle.getMessage("MessageRememberSetting"));  // NOI18N
-        remember.setFont(remember.getFont().deriveFont(10f));
-        remember.setAlignmentX(Component.CENTER_ALIGNMENT);
-
         JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));    // NOI18N
         JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));      // NOI18N
         JPanel button = new JPanel();
@@ -120,9 +98,6 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
         container.add(button);
 
         noButton.addActionListener((ActionEvent e) -> {
-            if (p != null && remember.isSelected()) {
-                p.setMultipleChoiceOption(getClassName(), "store", 1);  // NOI18N
-            }
             dialog.dispose();
             return;
         });
@@ -130,14 +105,10 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
         yesButton.addActionListener((ActionEvent e) -> {
             dialog.setVisible(false);
             new jmri.configurexml.StoreXmlUserAction("").actionPerformed(null);
-            if (p != null && remember.isSelected()) {
-                p.setMultipleChoiceOption(getClassName(), "store", 2);  // NOI18N
-            }
             dialog.dispose();
             return;
         });
 
-        container.add(remember);
         container.setAlignmentX(Component.CENTER_ALIGNMENT);
         container.setAlignmentY(Component.CENTER_ALIGNMENT);
         dialog.getContentPane().add(container);
