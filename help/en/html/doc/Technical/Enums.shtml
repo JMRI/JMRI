@@ -1,15 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="en">
-<head>
 
+<head>
     <title>
  	JMRI: Using Enums
     </title>
     <meta name="author" content="YOUR NAME HERE">
     <meta name="keywords" content="SOME KEYWORDS">
-
 <!--#include virtual="/Style.shtml" -->
 </head>
+
 <body>
 <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
@@ -242,5 +242,6 @@
 
 </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody, was opened by Sidebar -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

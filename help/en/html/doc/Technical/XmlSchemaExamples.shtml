@@ -1,21 +1,12 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: XML Schema Examples</title>
+<head>
+    <title>JMRI: XML Schema Examples</title>
     <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI technical code xml schema usage">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
-  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-  <!-- or change them to reflect your alternative logo -->
-  <!--#include virtual="/Style.shtml" -->
+    <meta name="keywords" content=
+    "JMRI technical code xml schema usage">
+    <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -164,5 +155,6 @@ elsewhere:
         <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>
