@@ -7,8 +7,6 @@ import org.junit.jupiter.api.*;
 import jmri.util.junit.rules.RetryRule;
 
 /**
- * XNetThrottleTest.java
- * <p>
  * Test for the jmri.jmrix.lenz.XNetThrottle class
  *
  * @author Paul Bender Copyright (C) 2008-2016
@@ -36,7 +34,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         t.throttleDispose();
     }
 
-    // Test the initilization sequence.
+    // Test the initialization sequence.
     @Test
     public void testInitSequenceNormalUnitSpeedStep128() throws Exception {
         int n = tc.outbound.size();
@@ -177,7 +175,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         // Sending the not supported message should make the throttle change
         // state to idle, and then we can test what we really want to.
-        // in this case, we are just checking for proper initilization.
+        // in this case, we are just checking for proper initialization.
         // and finaly, verify that getSpeedStepMode returns the right mode and
         // get speedIncrement reports the correct value.
         Assert.assertEquals("SpeedStepMode", jmri.SpeedStepMode.NMRA_DCC_14, t.getSpeedStepMode());
@@ -264,7 +262,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         // Sending the not supported message should make the throttle change
         // state to idle, and then we can test what we really want to.
-        // in this case, we are just checking for proper initilization.
+        // in this case, we are just checking for proper initialization.
         // and finaly, verify that getSpeedStepMode returns the right mode and
         // get speedIncrement reports the correct value.
         Assert.assertEquals("SpeedStepMode", jmri.SpeedStepMode.NMRA_DCC_28, t.getSpeedStepMode());
@@ -340,7 +338,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         // Sending the not supported message should make the throttle change
         // state to idle, and then we can test what we really want to.
-        // in this case, we are just checking for proper initilization.
+        // in this case, we are just checking for proper initialization.
         // and finaly, verify that getSpeedStepMode returns the right mode and
         // get speedIncrement reports the correct value.
         Assert.assertEquals("SpeedStepMode", jmri.SpeedStepMode.NMRA_DCC_128, t.getSpeedStepMode());
@@ -431,7 +429,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         // Sending the not supported message should make the throttle change
         // state to idle, and then we can test what we really want to.
-        // in this case, we are just checking for proper initilization.
+        // in this case, we are just checking for proper initialization.
         // and finaly, verify that getSpeedStepMode returns the right mode and
         // get speedIncrement reports the correct value.
         Assert.assertEquals("SpeedStepMode", jmri.SpeedStepMode.NMRA_DCC_27, t.getSpeedStepMode());
@@ -1488,8 +1486,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         instance.setF28(f28);
     }
 
-    // run the throttle through the initilization sequence, 
-    // without assertions, so post initilization tests can be
+    // run the throttle through the initialization sequence,
+    // without assertions, so post initialization tests can be
     // performed.
     protected void initThrottle(XNetThrottle t, int n) {
         // before we send any commands, make sure the software version is
@@ -1553,8 +1551,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // state to idle, and then we can test what we really want to.
     }
 
-    // run the throttle through the initilization sequence, 
-    // without assertions, so post initilization tests can be
+    // run the throttle through the initialization sequence,
+    // without assertions, so post initialization tests can be
     // performed.  This version sets the command station to version 3.5
     protected void initThrottlev35(XNetThrottle t, int n) {
         if (n == 0) {

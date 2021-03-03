@@ -44,7 +44,7 @@ public class LearnWarrantTest {
 
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/LearnWarrantTest.xml");
-        /* This layout designed so that the block and path will define a unique
+        /* This layout was designed so that the block and path will define a unique
          * route from origin to destination.  i.e. the review and select route
          * never needs to be displayed.  All possible EastBound Routes:
          * OB1/Main - OB5/main (default)    Route {OB1, OB2, OB3, OB4, OB5}
@@ -57,6 +57,7 @@ public class LearnWarrantTest {
          * OB1/WestSiding - OB6/EastSiding  Route {OB1, OB6}
         */
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         InstanceManager.getDefault(SensorManager.class);
@@ -142,6 +143,7 @@ public class LearnWarrantTest {
         JFrameOperator jfo2 = new JFrameOperator(tableFrame);
         jfo2.requestClose();
         ControlPanelEditor panel = (ControlPanelEditor)jmri.util.JmriJFrame.getFrame("LearnWarrantTest");
+        assert panel != null;
         panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
 //        jmri.util.JUnitAppender.assertWarnMessage("Path NorthToWest in block North has length zero. Cannot run NXWarrants or ramp speeds through blocks with zero length.");
     }
@@ -159,16 +161,16 @@ public class LearnWarrantTest {
         // the previous version of this message verified the text string
         // in the dialog matched the passed message value.  We need to
         // determine how to do that using Jemmy.
-        JDialogOperator jdo = new JDialogOperator(wo,title);
-        JButtonOperator jbo = new JButtonOperator(jdo,buttonLabel);
+        JDialogOperator jdo = new JDialogOperator(wo, title);
+        JButtonOperator jbo = new JButtonOperator(jdo, buttonLabel);
         jbo.push();
     }
 
     /**
      * @param route Array of OBlock names
-     * @param throttle
+     * @param throttle assigned to run the train
      * @return Active end sensor
-     * @throws Exception
+     * @throws Exception when null throttle was set
      */
     private Sensor recordtimes(String[] route, DccThrottle throttle) throws Exception {
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
@@ -178,6 +180,7 @@ public class LearnWarrantTest {
         }
         throttle.setSpeedSetting(speed);
         OBlock block = _OBlockMgr.getBySystemName(route[0]);
+        assert block != null;
         Sensor sensor = block.getSensor();
         for (int i=1; i<route.length; i++) {
             // Need to have some time elapse between commands. - Especially the last

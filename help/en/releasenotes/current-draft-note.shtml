@@ -21,15 +21,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>
-                    Andrew Crosland added a second current meter instance for SPROG Generation 5 hardware.
-                </li>
-                <li>
-                    Corrected links to images on SPROG Generation 5 hardware help page.
-                </li>
-                <li>
-                    Changed trademark recognition to &reg; for register trademarks, rather than &trade;.
-                </li>
+                <li></li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -69,7 +61,7 @@
 
         <h4>IPOCSMR</h4>
             <ul>
-                <li></li>
+                <li>Test and code were cleaned up</li>
             </ul>
 
         <h4>JMRI Simple Server/JMRI Client</h4>
@@ -154,7 +146,8 @@
 
         <h4>Uhlenbrock Intellibox</h4>
             <ul>
-                <li></li>
+                <li>LNCV Programing of the Daisy II manual throttle and FunkMaster Wireless Hub was added.<br>
+                  Use a DecoderPro definition with a Ops Mode roster entry.</li>
             </ul>
 
         <h4>Zimo MXULF</h4>
@@ -324,7 +317,7 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li>Added new definitions to program Power4, Power8 (boosters) and IntelliLight module.</li>
+                <li></li>
             </ul>
 
         <h4>Umelec</h4>
@@ -344,7 +337,8 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li>Zimo Swiss Mapping was updated bi Nigel Cliffe to V36+, adding features to select the dimming
+                  group for each output in the table and to set the dimming levels.</li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -379,14 +373,13 @@
    <h3>Internationalization</h3>
         <a id="I18N" name="I18N"></a>
         <ul>
-            <li>Dutch translations added for the Where Used, Meters and Issue Reporting tools.</li>
+            <li></li>
         </ul>
 
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li>A problem storing and reading LE controlpoint values for users with a non-default Locale has been fixed
-            .</li>
+	        <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -403,9 +396,7 @@
     <h3>Meters and MeterFrames</h3>
         <a id="Meters" name="Meters"></a>
         <ul>
-          <li>The Settings menu was slightly reorganized with submenus for each value.</li>
-          <li>When no meters are available, both Meters menus and the Units Settings menu show a short explanation.</li>
-          <li>Meters will honor the JMRI Locale/regional setting for the decimal separator (. or ,))</li>
+            <li></li>
         </ul>
 
     <h3>Operations</h3>
@@ -439,7 +430,10 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>Added an option to <strong>Preferences &rArr; Display</strong> to limit the
+            number of rows when a combo box is using the <strong>setupComboBoxMaxRows</strong>
+            feature.  This is useful for large screens.
+            </li>
         </ul>
 
     <h3>Resources</h3>
@@ -463,8 +457,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>Turnouts with 1 Sensor Feedback update to Inconsistent state when the Sensor being followed enters an Unknown or Inconsistent state.
-            <br>See <a href="https://www.jmri.org/help/en/package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout_Feedback">Turnout Feedback</a></li>
+            <li></li>
         </ul>
 
     <h3>Scripting</h3>
@@ -522,7 +515,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>Fix Jynstrument instantiation on Windows (cleaner URI to path method). <a href="https://groups.io/g/jmriusers/topic/the_jynstruments/78674589"> User message 78674589</a></li>
+            <li>Under the hood code clean up for  throttles (all systems), safe release of throttles.</li>
         </ul>
 
     <h3>Timetable</h3>

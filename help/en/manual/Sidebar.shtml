@@ -83,24 +83,13 @@
     </ul>
     </dd> -->
 
-<dt><h3>Supported Computers</h3></dt>
-    <dd> 
-    <ul>
-		<li><a href="https://jmri.org/install/WindowsNew.shtml">Windows</a>
-		<li><a href="https://jmri.org/install/MacOSX.shtml">Mac OS X</a>
-		<li><a href="https://jmri.org/install/Linux.shtml">Linux</a>
-		<li><a href="../html/setup/index.shtml">Setup JMRI</a>
-    </ul>
-    </dd>  
+<!--#include virtual="/help/en/parts/SidebarInstall.shtml" -->
   
 </dl>
 
+<!--#include virtual="/help/en/parts/SidebarTail.shtml" -->
+
 </div> <!-- close #manual -->
 </div> <!-- close #side -->
-
-<!-- Sidebar-Tail -->
-    <script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
-    <script type="text/javascript" src="/web/js/here.js"></script>
-<!-- /Sidebar-Tail -->
 
 <!-- /Sidebar -->

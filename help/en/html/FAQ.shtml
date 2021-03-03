@@ -75,7 +75,7 @@
         <li><a href="apps/PanelPro/FAQ.shtml">PanelPro FAQ</a>
         <li><a href="apps/DecoderPro/FAQ.shtml">DecoderPro FAQ</a>
         <li><a href="setup/FAQ.shtml">JMRI Setup FAQ (TBD)</a>
-        <li><a href="../../install/FAQLinux.shtml">Linux FAQ</a>
+        <li><a href="../../../install/FAQLinux.shtml">Linux FAQ</a>
         <li><a href="doc/Technical/GitFAQ.shtml">Git (Development Tool) FAQ</a>
       </ul>
 
@@ -152,8 +152,8 @@
         None - to use most of the functions of JMRI.  Advanced JMRI capabilities use programming-like logic
         (such as the <a href="tools/Logix.shtml">Logix </a>tool), but basic capabilities necessary to run your railroad are always available with a simpler
         interface (such as the <a href="tools/Routes.shtml">Routes </a>and <a href="tools/LRoutes.shtml">LRoutes </a>tools).  Those with computer programming knowledge can write <a href="tools/scripting/index.shtml">
-        “scripts” </a> and even develop complete applications that use the underlying JMRI functions
-        (for example, <a href="http://cats4ctc.wikidot.com/" target="_blank">CATS </a> and <a href="apps/index.shtml#addapp">many others</a>).
+        "scripts" </a> and even develop complete applications that use the underlying JMRI functions
+        (for example, <a href="http://cats4ctc.wikidot.com/">CATS </a> and <a href="apps/index.shtml#addapp">many others</a>).
         </dd>
 
         <dt id="commandsta">Is JMRI a DCC command station?</dt>
@@ -173,7 +173,7 @@
         <dt id="problem">What if I have a problem using JMRI?</dt>
 
         <dd>
-        There many people who are available via the user group (<a href="https://groups.io/g/jmriusers" target="_blank">JMRI Users at groups.io</a>)
+        There many people who are available via the user group (<a href="https://groups.io/g/jmriusers">JMRI Users at groups.io</a>)
         to assist you.  Just ask a question! There are also dozens of blogs and videos on the internet posted by people, just like you,
         who want to help. <strong> The important thing is...  don't give up!</strong> We all want you to succeed in using JMRI, making your model railroad
         as good as it can be.
@@ -191,7 +191,7 @@
         <dd>
         JMRI is open source and maintained by JMRI community volunteers.  They are proud of their work and want it to be "bug
         free". As JMRI continously develops, there will be bugs. If you find one, please report it on JMRI Users forum or directly to
-        <a href="https://github.com/JMRI/JMRI/issues" target="_blank">the JMRI issues lists on Github.</a> The many developers will review them and work
+        <a href="https://github.com/JMRI/JMRI/issues">the JMRI issues lists on Github.</a> The many developers will review them and work
         to resolve the issue.  What this means is that you can't get a schedule of what bugs will be fixed when,
         but you can count on the community to address bugs that are stopping you from enjoying JMRI as quickly as they can.  In some cases,
         that might even be a day or less;  in others, unfortunately, it could be months.  Remember that all who work on JMRI are

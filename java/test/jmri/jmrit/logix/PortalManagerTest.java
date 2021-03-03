@@ -68,7 +68,8 @@ public class PortalManagerTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        
+        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
@@ -118,6 +119,7 @@ public class PortalManagerTest {
         // passed test - cleanup.
         JFrameOperator jfo = new JFrameOperator(tableFrame);
         jfo.requestClose();
+        assert panel != null;
         panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }
 
@@ -140,7 +142,7 @@ public class PortalManagerTest {
     @AfterEach
     public void tearDown() {
         _portalMgr = null;
-        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -24,7 +24,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * via a serial com port. Normally controlled by the SerialDriverFrame class.
  * <p>
  * The current implementation only handles the 9,600 baud rate. It uses the
- * first configuraiont variable for the modem initilization string.
+ * first configuraiont variable for the modem initialization string.
  *
  * @author Paul Bender Copyright (C) 2004
  */

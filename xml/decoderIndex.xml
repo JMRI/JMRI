@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.21.5ish+egbertbroerse+20210207T0856Z+R7e79725766 on Sun Feb 07 09:56:33 CET 2021-->
-  <decoderIndex version="1034">
+  <!--Written by JMRI version 4.21.5ish+jake+20210220T0554Z+R870cc14fbf on Fri Feb 19 21:54:14 PST 2021-->
+  <decoderIndex version="1040">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -15579,7 +15579,7 @@
           <functionlabel num="10" lockable="true">Lights</functionlabel>
         </functionlabels>
       </family>
-      <family name="Rolling Stock Lighting" mfg="North Coast Engineering" file="NCE_Caboose.xml">
+      <family name="Rolling Stock Lighting" mfg="North Coast Engineering" lowVersionID="1" highVersionID="1" file="NCE_Caboose.xml">
         <model model="Athearn Genesis Caboose" numOuts="6" formFactor="HO" />
         <functionlabels>
           <functionlabel num="0" lockable="true">Headlight</functionlabel>
@@ -20519,6 +20519,71 @@
           <functionlabel num="28" lockable="true">FX7,8 Output</functionlabel>
         </functionlabels>
       </family>
+      <family name="Tsunami2 Steam OEM Genesis" mfg="SoundTraxx (Throttle-Up)" lowVersionID="71" comment="These are the - OEM - version Tsunami2 Steam decoders" file="SoundTraxx_Tsu2_Steam_OEM_Genesis.xml">
+        <model model="TSU-21PNEM Big Boy" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="946" comment="Model ATHG04014">
+          <size length="30.5" width="15.5" height="6.5" units="mm" />
+        </model>
+        <output name="3" label="  FX3  " />
+        <output name="4" label="  FX4  " />
+        <output name="5" label="Whistle| ">
+          <label xml:lang="it">Fischio| </label>
+        </output>
+        <output name="6" label="Bell| ">
+          <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="Dynamo| ">
+          <label xml:lang="it">Dynamo| </label>
+        </output>
+        <output name="8" label="Short|Whistle">
+          <label xml:lang="it">Breve|Tromba</label>
+        </output>
+        <output name="9" label="Cylinder|Cocks">
+          <label xml:lang="it">Cilindro|Cazzi</label>
+        </output>
+        <output name="10" label="Water|Stop">
+          <label xml:lang="it">Acqua|Stop</label>
+        </output>
+        <output name="11" label="Dimming| ">
+          <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+          <label xml:lang="it">Silenzio| </label>
+        </output>
+        <output name="13" label="|" />
+        <!-- Not used for for this decoder -->
+        <output name="14" label="Brakes| " />
+        <output name="15" label="Coupler| ">
+          <label xml:lang="it">Accoppiatore| </label>
+        </output>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Whistle</functionlabel>
+          <functionlabel num="3" lockable="true">Short Whistle</functionlabel>
+          <functionlabel num="4" lockable="true">Cylinder Cocks</functionlabel>
+          <functionlabel num="5" lockable="true">FX3 FX4</functionlabel>
+          <functionlabel num="6" lockable="true">FX5 FX6</functionlabel>
+          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Alt Mixer</functionlabel>
+          <functionlabel num="10" lockable="true">Blow Down</functionlabel>
+          <functionlabel num="11" lockable="true">Brake Set/Release</functionlabel>
+          <functionlabel num="12" lockable="true">Brake Select</functionlabel>
+          <functionlabel num="13" lockable="true">Coupler</functionlabel>
+          <functionlabel num="14" lockable="true">Half Speed</functionlabel>
+          <functionlabel num="15" lockable="true">Wheel Chains</functionlabel>
+          <functionlabel num="16" lockable="true">Water Stop</functionlabel>
+          <functionlabel num="17" lockable="true">Fuel Loading</functionlabel>
+          <functionlabel num="18" lockable="true">Ash Dump</functionlabel>
+          <functionlabel num="19" lockable="true">Wheel Slip</functionlabel>
+          <functionlabel num="20" lockable="true">Injectors</functionlabel>
+          <functionlabel num="21" lockable="true">Sander Valve</functionlabel>
+          <functionlabel num="22" lockable="true">Cab Chatter</functionlabel>
+          <functionlabel num="23" lockable="true">All Abord</functionlabel>
+          <functionlabel num="26" lockable="true">Cutoff +</functionlabel>
+          <functionlabel num="27" lockable="true">Cutoff -</functionlabel>
+        </functionlabels>
+      </family>
       <family name="Tsunami Diesel" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Tsunami diesel decoders" file="SoundTraxx_Tsu_Diesel.xml">
         <model model="TSU-750 Alco 244" numOuts="2" numFns="14" connector="other" productID="827004" comment="Model 827004">
           <versionCV lowVersionID="64" />
@@ -22214,6 +22279,42 @@
             <functionlabel num="6" lockable="true">Lighted # Boards</functionlabel>
           </functionlabels>
         </model>
+        <model model="EMD E7" numOuts="4" numFns="14" connector="other" productID="EMD_E7" comment="(HO scale) Dual Prime Mover END567">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="Mars|Light">
+            <label xml:lang="it">Flash|Luci</label>
+          </output>
+          <output name="4" label="# Board|Lights">
+            <label xml:lang="it"># Board|Luci</label>
+          </output>
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|dinam</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <functionlabels>
+            <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Mars Light</functionlabel>
+            <functionlabel num="6" lockable="true">Lighted # Boards</functionlabel>
+          </functionlabels>
+        </model>
         <model model="EMD F7A" numOuts="2" numFns="14" connector="other" productID="EMD_F7A" formFactor="HO" comment="Diesel Prime Mover EMD567 Non-Turbo">
           <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17">
@@ -22290,6 +22391,37 @@
           </output>
           <output name="7" label="|" />
           <!-- Not used for for this decoder -->
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+        </model>
+        <model model="EMD GP30" numOuts="2" numFns="14" connector="other" productID="EMD_GP30" formFactor="HO" comment="Diesel Prime Mover EMD567D3 Turbo">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|dinam</label>
+          </output>
           <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
           </output>
@@ -22434,7 +22566,75 @@
             <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
           </functionlabels>
         </model>
+        <model model="EMD SD70ACe + dl" numOuts="4" numFns="14" connector="other" productID="EMD_SD70ACe_dl" formFactor="HO" comment="Diesel Prime Mover EMD 16-710 G3C-T2 with Ditch Lights">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|dinam</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <functionlabels>
+            <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+          </functionlabels>
+        </model>
         <model model="GE ES44AC" numOuts="2" numFns="14" connector="other" productID="GE_ES44AC" formFactor="HO" comment="Diesel Prime Mover GE GEVO V12">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|dinam</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <functionlabels>
+            <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="GE ES44AC +dl" numOuts="4" numFns="14" connector="other" productID="GE_ES44AC_dl" formFactor="HO" comment="Diesel Prime Mover GE GEVO V12 with Ditch Lights">
           <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -31134,7 +31334,8 @@
         <model model="Quad-LNv1" comment="4 Servo Driver" lowVersionID="5" />
       </family>
       <family name="Quad-LN_S" mfg="Tam Valley Depot" type="stationary" comment="The Quad-LN_S is programmed in OPs mode except for the device address." file="TamValleyDepot_QuadLn_S_11.xml">
-        <model model="Quad-LN_S_v1" comment="4 Servo Driver with Signaling or 4 additonal Servos" lowVersionID="6" />
+        <model model="Quad-LN_S_v1" comment="4 or 8 Servo Driver with Signaling and Detection options" lowVersionID="6" />
+        <model model="Quad-LN_S_v3" comment="4, 8, 12 or 16 Servo Driver with Signaling and Detection options" lowVersionID="7" />
       </family>
       <family name="Lokommander" mfg="Tehnologistic (train-O-matic)" file="TrainOMatic_NMJ_224.xml">
         <model model="Lokommander Mini" numOuts="4" lowVersionID="23" highVersionID="255">
@@ -36061,6 +36262,18 @@
         <model model="Power8" productID="6328" maxTotalCurrent="7A" formFactor="Stationary" comment="7A Multiprotocol Booster">
           <versionCV />
           <size length="104" width="58" height="33" units="mm" />
+        </model>
+      </family>
+      <family name="Track-Control" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_TrackControl_6922.xml">
+        <model model="Turnout Module" productID="6922" formFactor="Stationary" comment="Control Panel Turnout Activator/Indicator">
+          <versionCV />
+          <size length="40" width="25" height="12" units="mm" />
+        </model>
+      </family>
+      <family name="Track-Control" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_TrackControl_6923.xml">
+        <model model="Signal Module" productID="6923" formFactor="Stationary" comment="Control Panel Signal Indicator">
+          <versionCV />
+          <size length="40" width="25" height="12" units="mm" />
         </model>
       </family>
       <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero" file="Umelec_ATL2051.xml">

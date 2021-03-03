@@ -31,6 +31,11 @@ public class LnSensorTest extends jmri.implementation.AbstractSensorTestBase {
         // to send.
     }
     
+    @Override
+    public void testSensorSetKnownState() {
+        // status not currently updated when set UNKNOWN / INCONSISTENT
+    }
+    
     // LnSensor test for incoming status message
     @Test
     public void testLnSensorStatusMsg() {

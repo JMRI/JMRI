@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LncvDevice {
     private int deviceAddress; // Module address in reply, value of -1 is ignored, LNCV default address : 1
-    private final int artNum; // used as LNCV ProductID, must be int to pass as part of CV "art.cv"
+    private final int artNum; // used as LNCV ProductID, must be int to pass as part of CV "art.cv", usually 4 digits
     private String deviceName;
     private String rosterEntryName;
     private int swVersion;

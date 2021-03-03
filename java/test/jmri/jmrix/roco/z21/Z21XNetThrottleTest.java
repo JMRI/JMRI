@@ -33,8 +33,8 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
         Assert.assertNotNull(instance);
     }
 
-    // run the throttle through the initilization sequence,
-    // without assertions, so post initilization tests can be
+    // run the throttle through the initialization sequence,
+    // without assertions, so post initialization tests can be
     // performed.
     @Override
     protected void initThrottle(XNetThrottle t,int n){
@@ -290,9 +290,9 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
     @Override
     public void tearDown() throws Exception {
         ((Z21XNetThrottle)instance).throttleDispose();
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        tc.terminateThreads();
+        tc = null;
         JUnitUtil.tearDown();
-
     }
 
 }

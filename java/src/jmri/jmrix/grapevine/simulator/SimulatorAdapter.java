@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
 import jmri.jmrix.grapevine.SerialMessage;
 import jmri.jmrix.grapevine.SerialPortController; // no special xSimulatorController
@@ -73,7 +74,6 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
             log.debug("tempPipeI created");
             pout = new DataOutputStream(tempPipeI);
             inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
-            log.debug("inpipe created {}", inpipe != null);
             PipedOutputStream tempPipeO = new ImmediatePipedOutputStream();
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
@@ -247,10 +247,10 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
                 if (r != null) { // ignore errors
                     writeReply(r);
                     if (log.isDebugEnabled()) {
-                        StringBuffer buf = new StringBuffer();
+                        StringBuilder buf = new StringBuilder();
                         buf.append("Grapevine Simulator Thread sent reply: ");
                         for (int i = 0; i < r.getNumDataElements(); i++) {
-                            buf.append(Integer.toHexString(0xFF & r.getElement(i)) + " ");
+                            buf.append(Integer.toHexString(0xFF & r.getElement(i))).append(" ");
                         }
                         log.debug(buf.toString());
                     }
@@ -366,19 +366,16 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
      *
      * @param r reply on message
      */
-    private void writeReply(SerialReply r) {
-        if (r == null) {
-            return; // there is no reply to be sent
-        }
+    private void writeReply(@Nonnull SerialReply r) {
         for (int i = 0; i < r.getNumDataElements(); i++) {
             try {
                 outpipe.writeByte((byte) r.getElement(i));
-            } catch (java.io.IOException ex) {
+            } catch (java.io.IOException ignored) {
             }
         }
         try {
             outpipe.flush();
-        } catch (java.io.IOException ex) {
+        } catch (java.io.IOException ignored) {
         }
     }
 

@@ -27,8 +27,7 @@
       <a name="hardware" id="hardware"></a>
       <h2>Supported Hardware</h2>
 
-      <h3>Command Station</h3>
-
+      <h3>Command Stations</h3>
       <ul>
         <li>Intellibox</li>
         <li>Intellibox IR</li>
@@ -39,6 +38,14 @@
 
         <li>Fleischmann Twin Center (software version 1.1 or
         later)</li>
+      </ul>
+
+      <h3>Uhlenbrock stationary decoder definitions (LNCV protocol)</h3>
+      <ul>
+        <li>Power4, Power8 (boosters)</li>
+        <li>Switch Module (art. 63410)</li>
+        <li>IntelliLight 28x00 modules</li>
+        <li>Track-Control, including the Direct Message Protocol (art. 69220 Turnout and 69230 Signal Module)</li>
       </ul>
 
       <a name="limitations" id="limitations"></a>
@@ -184,9 +191,10 @@
 
         <li><span class="since">Since
         <a href="https://jmri.org/releasenotes/jmri4.21.4.shtml" target="_blank">
-        JMRI 4.21.4</a></span><em>EXPERIMENTAL</em>: The Uhlenbrock USB Adapter part #63120 will only work with a
+        JMRI 4.21.4</a></span> The Uhlenbrock USB Adapter part #63120 will only work with a
         Windows OS, as it requires special Uhlenbrock supplied drivers to be installed. Follow the manufacturers
-        instruction for that install.<br>
+        instruction for that install. Basic connectivity was tested over LocoNet to a Digitrax Zephyr. The Slot Monitor,
+        Power Control are working correctly an Programming looks to be working.<br>
         In the JMRI Connection Preferences, verify the (default) settings. The options as stored in the adapter should
         only be configured from a LocoNet throttle, for example the Daisy.<br>
         Since JMRI can only communicate via the connection, it could lose contact during configuration.</li>
@@ -201,8 +209,27 @@
       <a name="tools" id="tools"></a>
       <h2>JMRI Uhlenbrock Tools</h2>
 
+      <h3>LNCV Programmer</h3>
+      <span class="since">Since
+      <a href="https://jmri.org/releasenotes/jmri4.21.4.shtml" target="_blank">JMRI 4.21.4</a></span>
+      <a href="images/LncvProgrammer/LncvProgrammerPane.png"><img
+              src="images/LncvProgrammer/LncvProgrammerPane.png" align="right"
+              width="293" height="187" alt="LNCV Programming Tool can't find a matching definition"></a>
+      <p>The <a href="../../../package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml">Lncv Programming
+        tool</a> is
+        located in the LocoNet menu.
+        It allows to discover stationary LNCV devices and read and write individual LNCVs.<br>
+        Enter the first 4 digits of the device as the Article Number before starting a Programming Session, or the
+        modules will not respond. Once a session is running, use the responses collected in the LNCV Monitor table to
+        navigate to your Roster to access the full functionality of each device. When a matching definition is found
+        in the JMRI Decoder Index, a [Create Entry] button will show. If your device responded to a general call but
+        is not yet supported, the button will read [No Match] (and it won't do much). Once you have a Roster Entry,
+        the button will read [Program] and will directly open the entry tabs.<br>
+        Check the 'Direct Mode' checkbox to access a row of state buttons to set LEDs etc. on Track-Control items.</p>
+
       <p>The Intellibox Command Stations can't be configured over their
-      LocoNet connection. Please use the keyboard and consult the manual.</p>
+      LocoNet connection.<br>
+      Please use the keyboard and consult the manual.</p>
 
       <hr class="hide">
       <!--#include virtual="/Footer.shtml" -->

@@ -64,7 +64,6 @@
       Set sensor S-Sensor active
       </pre>
 
-
       <p>
       Each train has its own text file, but they can coordinate actions by using JMRI sensors, etc.
       </p>
@@ -275,8 +274,12 @@
       </p>
 
       <h3>Running the demo</h3>
+<<<<<<< HEAD
       <p>
       After starting <strong>PanelPro</strong>, click on the <strong>Open Panel File</strong>
+=======
+      <p>After starting <strong>PanelPro</strong>, click on the <strong>Open Panel File</strong>
+>>>>>>> master
       button and select <strong>yaat demo.xml</strong>.</p>
 
       <div style="margin-left: 2em">
@@ -300,7 +303,13 @@
       </p>
 
       <h2>Advanced Features</h2>
+<<<<<<< HEAD
       <h3>Compiled Trains</h3><a name="CompTrains" id="CompTrains"></a>
+=======
+
+      <a name="CompTrains" id="CompTrains"></a>
+      <h3>Compiled Trains</h3>
+>>>>>>> master
 
       <p>
       The standard YAAT process compiles each train from its text file or from the embedded content.

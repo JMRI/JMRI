@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  */
 public class Throttle extends AbstractThrottle {
 
-    private CommandStation tcl = null;
+    private CommandStation tcl;
 
     /**
      * Constructor.
@@ -26,7 +26,9 @@ public class Throttle extends AbstractThrottle {
         tcl = tc;
 
         // cache settings.
-        this.speedSetting = 0;
+        synchronized(this) {
+            this.speedSetting = 0;
+        }
         // Functions default to false
         this.address = address;
         this.isForward = true;
@@ -83,7 +85,7 @@ public class Throttle extends AbstractThrottle {
      */
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     @Override
-    public void setSpeedSetting(float speed) {
+    public synchronized void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         int value = (int) ((127 - 1) * speed); // -1 for rescale to avoid estop
@@ -118,12 +120,14 @@ public class Throttle extends AbstractThrottle {
     public void setIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
-        setSpeedSetting(speedSetting);  // send the command
+        synchronized(this) {
+            setSpeedSetting(speedSetting);  // send the command
+        }
         firePropertyChange(ISFORWARD, old, isForward);
     }
 
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         finishRecord();
     }
 

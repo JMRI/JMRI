@@ -71,7 +71,7 @@
         <li>Block Detector - Blink</li>
         <li>Servo (LocoServo ports 5-12 only)</li>
       </ul>
-      <p>Since rev 1.49</p>
+      <p>Since LocoIO rev 1.49</p>
       <ul>
         <li>Port Not In Use</li>
         <li>On older boards, you are advised to configure unused ports as Output Fixed to prevent accidental
@@ -85,16 +85,18 @@
 
       <a name="current" id="current"></a>
       <h2>LocoIO Programmer via Roster</h2>
+      <span class="since">Since
+      <a href="https://jmri.org/releasenotes/jmri4.21.2.shtml" target="_blank">JMRI 4.21.2</a></span>
       <p>The <a href=
       "../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">Public_Domain_HDL_LocoIO</a> Decoder
       Definition in the "Public Domain and DIY" category supports set-up of a wide range of LocoIO
-      devices up to rev 1.54 LocoIO/LocoBooster/LocoRCD/LocoServo hardware since 2020.
+      devices up to LocoIO/LocoBooster/LocoRCD/LocoServo rev 1.54 hardware since 2020.
 
       <p>To use the current LocoIO Programmer follow these steps:</p>
       <ol>
         <li>Turn on the layout and power up the LocoIO hardware. No jumpers or buttons on the LocoIO need touching in
           order to preceed.</li>
-        <li>Open DecoderPro or the Roster menu option in PanelPro.</li>>
+        <li>Open DecoderPro or the Roster menu option in PanelPro.</li>
         <li>In the Decoder Installed box, navigate to
           "Public-domain and DIY" &gt; "Hans Deloof LocoIO".</li>
         <li>Looking at your hardware, select the correct PIC programmer firmware version from the list. It often is
@@ -221,7 +223,7 @@
       <h3>Third Party info</h3>
       <ul>
       <li>For more information on the LocoIO and how to use the boards, see <a
-      href="http://users.telenet.be/deloof/">LocoHDL</a></li>.
+      href="http://users.telenet.be/deloof/">LocoHDL</a>.</li>
       <li>Original LocoIO DIY project description is available at
       <a href="http://www.locobuffer.com/LocoIO/LocoIO.htm">www.locobuffer.com</a></li>
       </ul>
