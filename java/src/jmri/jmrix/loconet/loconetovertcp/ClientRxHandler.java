@@ -98,7 +98,11 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
                                 log.warn("Unhandled msg length: {}", (opCode & 0x60) >> 5);
                                 break;
                         }
-                        // message never null, now fill it
+                        if (msg == null) { // IDE may flag, spotbugs warns it can be null at this point, so keep this check
+                            log.error("msg is null!");
+                            return;
+                        }
+                        // message exists, now fill it
                         msg.setOpCode(opCode);
                         msg.setElement(1, byte2);
                         int len = msg.getNumDataElements();
