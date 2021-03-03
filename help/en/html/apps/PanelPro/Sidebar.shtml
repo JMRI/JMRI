@@ -28,5 +28,6 @@
     <!--#include virtual="/help/en/parts/SidebarTail.shtml" -->    
 
 </div> <!-- close #side -->
-
+<!-- button is in /Header -->
+<script src="/js/side.js"></script>
 <!-- /Sidebar.shtml -->

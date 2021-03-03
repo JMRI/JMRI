@@ -32,4 +32,6 @@
 	    
 	</div> <!-- closes #side -->
 
+<!-- button is in /Header -->
+<script src="/js/side.js"></script>
 <!-- /Sidebar.shtml -->

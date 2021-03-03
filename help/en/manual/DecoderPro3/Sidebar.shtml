@@ -101,5 +101,8 @@
     </dd>
     
 </dl>
-</div>
+
+  </div>
+  <!-- button is in /Header -->
+  <script src="/js/side.js"></script>
 <!-- /Sidebar -->

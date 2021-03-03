@@ -1,7 +1,6 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -11,13 +10,7 @@
   <meta name="author" content="Egbert Broerse">
   <meta name="keywords" content=
   "model railroad JMRI decoderpro panelpro operations GUI I18N">
-  <!-- Style -->
-  <meta http-equiv="content-type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
   <!-- Sortable tables -->
   <!-- <script src="../../../web/js/sorttable.js"></script> for local testing -->
 
@@ -54,6 +47,7 @@ table.sortable th {
 
       <p>Click a heading to sort the list up or down.</p>
 
+    <div class="wide">
       <table class="sortable">
         <!-- The JMRI Glossary table, sort by clicking a header -->
         <!-- Copy all edits to help/en/glossary/index.shtml as well to keep both up to date -->
@@ -2369,9 +2363,11 @@ table.sortable th {
           <td class="da"></td>
         </tr>
       </table><!-- end of Glossary table -->
+    </div><!-- end of wide-table div -->
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+<script src="/js/main.js"></script>
 </body>
 </html>

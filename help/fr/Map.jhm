@@ -1108,7 +1108,7 @@
 
 <mapID target="package.jmri.jmrix.AbstractMonFrame" url="package/jmri/jmrix/AbstractMonFrame.shtml"/>
 
-<mapID target="TemplatePlain" url="TemplatePlain.shtml"/>
+<mapID target="TemplatePlain" url="template-no-sidebar.shtml"/>
 
 <mapID target="package.jmri.jmrit.powerpanel.PowerPanelFrame" url="package/jmri/jmrit/powerpanel/PowerPanelFrame.shtml"/>
 

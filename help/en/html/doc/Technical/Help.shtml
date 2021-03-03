@@ -119,8 +119,8 @@
         "https://httpd.apache.org/docs/1.3/howto/ssi.html">server-side
         includes</a>.</li>
 
-        <li>When you create a new page, start with a copy of either the help/en/TemplateBar.shtml
-        or help/en/TemplatePlain.shtml template file, depending on whether or not you want to include
+        <li>When you create a new page, start with a copy of either the help/en/template-sidebar.shtml
+        or help/en/template-no-sidebar.shtml template file, depending on whether or not you want to include
         a "sidebar" (via a file named Sidebar.shtml). This template will put the proper top and bottom
         matter in place to get the page properly displayed.
         </li>

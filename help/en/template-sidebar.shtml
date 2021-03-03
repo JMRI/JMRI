@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+    JMRI: ... Title ...
+  </title>
+  <meta name="author" content="YOUR NAME HERE">
+  <meta name="keywords" content="JMRI SOME KEYWORDS"> <!-- make these specific, always include JMRI -->
+  <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
+
+    <h1>JMRI: Page Title???</h1>
+      Content???? This file shows the
+      top and bottom matter for a page <strong>with a side menu
+      bar</strong> (on the web), which comes from the "Sidebar"
+      file in the same directory.
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>
