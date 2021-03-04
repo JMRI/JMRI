@@ -105,11 +105,9 @@ public class AppsMainMenu {
      * @param f the frame to associate with the java help reference
      * @param l Java Help reference
      */
-//     protected void setPrefsFrameHelp(JmriJFrame f, String l) {
-//         f.addHelpMenu(l, true);
-//     }
-//
-//     Action prefsAction;
+    protected void setPrefsFrameHelp(JmriJFrame f, String l) {
+        f.addHelpMenu(l, true);
+    }
 
     static private void editMenu(JMenuBar menuBar, WindowInterface wi) {
 
