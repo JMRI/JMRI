@@ -6,6 +6,8 @@ import jmri.jmrix.ecos.EcosPreferences;
 import jmri.jmrix.ecos.networkdriver.ConnectionConfig;
 import jmri.jmrix.ecos.networkdriver.NetworkDriverAdapter;
 import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persistening the
@@ -36,7 +38,10 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     protected void extendElement(Element e) {
         Element ecosPrefElem = new Element("commandStationPreferences");
         EcosPreferences p = ((jmri.jmrix.ecos.EcosSystemConnectionMemo) adapter.getSystemConnectionMemo()).getPreferenceManager();
-
+        if (p == null) {
+            log.warn("Null EcosPrefManager");
+            return;
+        }
         if (p.getAddTurnoutsToEcos() == 0x01) {
             ecosPrefElem.setAttribute("addTurnoutToCS", "no");
         } else if (p.getAddTurnoutsToEcos() == 0x02) {
@@ -121,7 +126,10 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     protected void unpackElement(Element shared, Element perNode) {
         List<Element> ecosPref = shared.getChildren("commandStationPreferences");
         EcosPreferences p = ((jmri.jmrix.ecos.EcosSystemConnectionMemo) adapter.getSystemConnectionMemo()).getPreferenceManager();
-
+        if (p == null) {
+            log.warn("Null EcosPrefManager");
+            return;
+        }
         for (Element element : ecosPref) {
             if (element.getAttribute("addTurnoutToCS") != null) {
                 String yesno = element.getAttribute("addTurnoutToCS").getValue();
@@ -258,5 +266,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     protected void register() {
         this.register(new ConnectionConfig(adapter));
     }
+
+    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class);
 
 }
