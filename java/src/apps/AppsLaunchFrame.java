@@ -80,5 +80,5 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
     // GUI members
     private JMenuBar menuBar;
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AppsLaunchFrame.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AppsLaunchFrame.class);
 }
