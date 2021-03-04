@@ -230,6 +230,8 @@ where the date at the end should be the date (and optionally time) of the last r
 ================================================================================
 ## Create the Release Branch
 
+- disable the Jenkins Packages job to prevent any hybrid development releases
+
 - one more check that everything is committed (you should _not_ have any modified and added (e.g. green) files showing in `git status`, which might interfere)
 
 ```
@@ -446,6 +448,9 @@ Note there's a little progress bar that has to go across & "Uploading your relea
 - Click "Publish Release"
 
 - Wait for completion, which might be a while with big uploads
+
+- Reenable the Jenkins Packages job to restart creation of development releases
+
 
 ====================================================================================
 ## Check for Unmerged Changes
