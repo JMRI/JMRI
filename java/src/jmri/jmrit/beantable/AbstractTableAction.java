@@ -292,6 +292,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
      * @param ex the exception that occurred
      */
     protected void displayHwError(String curAddress, Exception ex) {
+        log.warn("Invalid Entry: {}",ex.getMessage());
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager .class).
                 showErrorMessage(Bundle.getMessage("ErrorTitle"),
                         Bundle.getMessage("ErrorConvertHW", curAddress),"" + ex,"",

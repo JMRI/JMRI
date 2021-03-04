@@ -32,6 +32,12 @@ public class InternalReporterManagerTest extends jmri.managers.AbstractReporterM
     @Test
     @Override
     public void testMakeSystemNameWithPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testIncorrectGetNextValidAddress() {}
+    
 
     @BeforeEach
     @Override
