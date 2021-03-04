@@ -29,6 +29,7 @@ import jmri.jmrit.withrottle.WiThrottleCreationAction;
 import jmri.jmrix.ActiveSystemsMenu;
 import jmri.util.FileUtil;
 import jmri.util.HelpUtil;
+import jmri.util.JmriJFrame;
 import jmri.util.SystemType;
 import jmri.util.WindowMenu;
 import jmri.util.swing.WindowInterface;
@@ -95,18 +96,6 @@ public class AppsMainMenu {
                 }
             });
         }
-    }
-
-    /**
-     * Set the location of the window-specific help for the preferences pane.
-     * Made a separate method so if can be overridden for application specific
-     * preferences help
-     *
-     * @param f the frame to associate with the java help reference
-     * @param l Java Help reference
-     */
-    protected void setPrefsFrameHelp(JmriJFrame f, String l) {
-        f.addHelpMenu(l, true);
     }
 
     static private void editMenu(JMenuBar menuBar, WindowInterface wi) {
