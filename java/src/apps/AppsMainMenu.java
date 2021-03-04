@@ -68,7 +68,7 @@ public class AppsMainMenu {
         toolsMenu(menuBar, wi);
         rosterMenu(menuBar, wi, pane);
         panelMenu(menuBar, wi);
-        //          scriptMenu(menuBar, wi);
+        scriptMenu(menuBar, wi);
         // check to see if operations should be in the main menu
         if (jmri.jmrit.operations.setup.Setup.isMainMenuEnabled()) {
             operationsMenu(menuBar, wi);
@@ -82,6 +82,12 @@ public class AppsMainMenu {
     static private void fileMenu(JMenuBar menuBar, WindowInterface wi) {
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));  // NOI18N
         menuBar.add(fileMenu);
+
+        fileMenu.add(new jmri.configurexml.LoadXmlUserAction(Bundle.getMessage("FileMenuItemLoad")));  // NOI18N
+        fileMenu.add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("FileMenuItemStore")));  // NOI18N
+        fileMenu.add(new jmri.jmrit.revhistory.swing.FileHistoryAction(Bundle.getMessage("FileMenuItemHistory")));  // NOI18N
+
+        fileMenu.add(new JSeparator());
 
         fileMenu.add(new PrintDecoderListAction(Bundle.getMessage("MenuPrintDecoderDefinitions"), wi.getFrame(), false));  // NOI18N
         fileMenu.add(new PrintDecoderListAction(Bundle.getMessage("MenuPrintPreviewDecoderDefinitions"), wi.getFrame(), true));  // NOI18N
@@ -134,6 +140,21 @@ public class AppsMainMenu {
 
     static private void toolsMenu(JMenuBar menuBar, WindowInterface wi) {
         menuBar.add(new ToolsMenu(Bundle.getMessage("MenuTools")));  // NOI18N
+    }
+
+    /**
+     * Add a script menu to the main menu bar.
+     *
+     * @param menuBar the menu bar to add the script menu to
+     * @param wi      the window interface containing menuBar
+     */
+    static private void scriptMenu(JMenuBar menuBar, WindowInterface wi) {
+        JMenu scriptMenu = new JMenu(rb.getString("MenuScripting"));  // NOI18N
+        scriptMenu.add(new jmri.jmrit.jython.RunJythonScript(rb.getString("MenuItemScript")));  // NOI18N
+        scriptMenu.add(new jmri.jmrit.automat.monitor.AutomatTableAction(rb.getString("MenuItemMonitor")));  // NOI18N
+        scriptMenu.add(new jmri.jmrit.jython.JythonWindow(rb.getString("MenuItemScriptLog")));  // NOI18N
+        scriptMenu.add(new jmri.jmrit.jython.InputWindowAction(rb.getString("MenuItemScriptInput")));  // NOI18N
+        menuBar.add(scriptMenu);
     }
 
     static private void operationsMenu(JMenuBar menuBar, WindowInterface wi) {
@@ -192,22 +213,6 @@ public class AppsMainMenu {
 
         // add final to menu bar
         menuBar.add(d);
-    }
-
-    /**
-     * Add a script menu to a window menu bar.
-     *
-     * @param menuBar the menu bar to add the script menu to
-     * @param wi the window interface containing menuBar
-     * @deprecated since 4.17.5 without direct replacement; appears
-     * to have been empty method since 1.2.3
-     */
-    @Deprecated
-    protected void scriptMenu(JMenuBar menuBar, WindowInterface wi) {
-        // temporarily remove Scripts menu; note that "Run Script"
-        // has been added to the Panels menu
-        // JMenu menu = new JMenu("Scripts");
-        // menuBar.add(menu);
     }
 
 //     protected void developmentMenu(JMenuBar menuBar, WindowInterface wi) {
