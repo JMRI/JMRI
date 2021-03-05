@@ -3,7 +3,6 @@ package jmri.jmrit.logixng.tools;
 import java.awt.GraphicsEnvironment;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
 
 import jmri.*;
 import jmri.jmrit.entryexit.DestinationPoints;
@@ -11,6 +10,7 @@ import jmri.jmrit.logix.*;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.rules.*;
 
 import org.junit.*;
 
@@ -27,6 +27,9 @@ import org.junit.*;
  * @author Dave Sand         (C) 2021 (Dave Sand created the panel file)
  */
 public class ImportEntryExitTest {
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
     private LogixManager logixManager;
     private LogixNG_Manager logixNG_Manager;
