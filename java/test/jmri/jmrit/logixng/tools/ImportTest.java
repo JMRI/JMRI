@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.tools;
 
+import java.awt.GraphicsEnvironment;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -11,11 +12,7 @@ import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test import of Logix to LogixNG.
@@ -49,53 +46,6 @@ public class ImportTest {
             logixManager.deleteLogix(l);
         }
     }
-/*    
-    @Test
-    public void testRouteFree() throws JmriException {
-        cv.setType(Conditional.Type.ROUTE_FREE);
-        ImportLogix importLogix = new ImportLogix(logix);
-        importLogix.doImport();
-        Assert.assertNotNull(importLogix.getLogixNG().getConditionalNG(0));
-    }
-    
-    @Test
-    public void testRouteOccupied() throws JmriException {
-        cv.setType(Conditional.Type.ROUTE_OCCUPIED);
-        ImportLogix importLogix = new ImportLogix(logix);
-        importLogix.doImport();
-        Assert.assertNotNull(importLogix.getLogixNG().getConditionalNG(0));
-    }
-    
-    @Test
-    public void testRouteAllocated() throws JmriException {
-        cv.setType(Conditional.Type.ROUTE_ALLOCATED);
-        ImportLogix importLogix = new ImportLogix(logix);
-        importLogix.doImport();
-        Assert.assertNotNull(importLogix.getLogixNG().getConditionalNG(0));
-    }
-    
-    @Test
-    public void testRouteSet() throws JmriException {
-        cv.setType(Conditional.Type.ROUTE_SET);
-        ImportLogix importLogix = new ImportLogix(logix);
-        importLogix.doImport();
-        Assert.assertNotNull(importLogix.getLogixNG().getConditionalNG(0));
-    }
-    
-    @Test
-    public void testTrainRunning() throws JmriException {
-        cv.setType(Conditional.Type.TRAIN_RUNNING);
-        ImportLogix importLogix = new ImportLogix(logix);
-        importLogix.doImport();
-        Assert.assertNotNull(importLogix.getLogixNG().getConditionalNG(0));
-    }
-*/    
-    
-//    @Ignore
-//    @Test
-//    public void testSomething() throws InterruptedException, JmriException {
-//        
-//    }
     
     private boolean destinationPointsIsEnabled(DestinationPoints dp) throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 //        Method retrieveItems = dp.getClass().getDeclaredMethod("isEnabled", String.class);
@@ -159,83 +109,7 @@ public class ImportTest {
         // Test entry/exit
         runTestEntryExit(dp, sensor201);
     }
-/*    
-    private void doSomething() {
-        java.beans.PropertyChangeEvent evt = null;
-        Conditional c = logixManager.getBySystemName("IX:AUTO:0001").getConditional("IX:AUTO:0001C1");
-//        c.calculate(true, evt);
-        ConditionalVariable cv2 = c.getCopyOfStateVariables().get(0);
-        System.out.format("Logic: %s, %s, triggerOnChange: %b%n", c.getLogicType().name(), c.getAntecedentExpression(), c.getTriggerOnChange());
-        System.out.format("trig: %b, bean: %s, data: %s, beanHandle: %s, beanData: %s, n1: %d, n2: %d, oper: %s, operStr: %s, state: %d, typeStr: %s, type: %s, neg: %b%n",
-            cv2.doTriggerActions(),
-            cv2.getBean() != null ? cv2.getBean().getSystemName() : null,
-            cv2.getDataString(),
-            cv2.getNamedBean() != null ? cv2.getNamedBean().getBean().getSystemName() : null,
-            cv2.getNamedBeanData(),
-            cv2.getNum1(),
-            cv2.getNum2(),
-            cv2.getOpern().name(),
-            cv2.getOpernString(),
-            cv2.getState(),
-            cv2.getTestTypeString(),
-            cv2.getType().name(),
-            cv2.isNegated()
-        );
-        ConditionalAction ca = c.getCopyOfActions().get(0);
-        System.out.format("data: %s, dataStr: %s, str: %s, bean: %s, device: %s, namedBean: %s, option: %d, optionStr: %s, type: %s, typeStr: %s%n",
-            ca.getActionData(),
-            ca.getActionDataString(),
-            ca.getActionString(),
-            ca.getBean() != null ? ca.getBean().getSystemName() : null,
-            ca.getDeviceName(),
-            ca.getNamedBean() != null ? ca.getNamedBean().getBean().getSystemName() : null,
-            ca.getOption(),
-            ca.getOptionString(true),
-            ca.getType().name(),
-            ca.getTypeString()
-        );
-        ca = c.getCopyOfActions().get(1);
-        System.out.format("data: %s, dataStr: %s, str: %s, bean: %s, device: %s, namedBean: %s, option: %d, optionStr: %s, type: %s, typeStr: %s%n",
-            ca.getActionData(),
-            ca.getActionDataString(),
-            ca.getActionString(),
-            ca.getBean() != null ? ca.getBean().getSystemName() : null,
-            ca.getDeviceName(),
-            ca.getNamedBean() != null ? ca.getNamedBean().getBean().getSystemName() : null,
-            ca.getOption(),
-            ca.getOptionString(true),
-            ca.getType().name(),
-            ca.getTypeString()
-        );
-    }
     
-    @Ignore
-    @Test
-    public void testOBlock() throws InterruptedException, JmriException {
-        // OBLOCK
-        // SET_BLOCK_ERROR
-        
-    }
-    
-    @Ignore
-    @Test
-    public void testWarrant() throws InterruptedException, JmriException {
-        // WARRANT
-        // ALLOCATE_WARRANT_ROUTE
-        for (Sensor r : InstanceManager.getDefault(SensorManager.class).getNamedBeanSet()) {
-            System.out.format("Sensor: %s, %s%n", r.getSystemName(), r.getUserName());
-        }
-        
-        
-        Sensor sensor203 = InstanceManager.getDefault(SensorManager.class).getBySystemName("IS203");
-        Assert.assertNotNull(sensor203);
-        
-        for (Warrant r : InstanceManager.getDefault(WarrantManager.class).getNamedBeanSet()) {
-            System.out.format("Warrant: %s, %s%n", r.getSystemName(), r.getUserName());
-        }
-//        Warrant w = InstanceManager.getDefault(WarrantManager.class).getWarrant(_name);
-    }
-*/    
     private void runTestSetRoute(Turnout turnout101, Turnout turnout102, Sensor sensor) throws JmriException {
         turnout101.setState(Turnout.THROWN);
         Assert.assertEquals(Turnout.THROWN, turnout101.getState());
@@ -289,6 +163,9 @@ public class ImportTest {
     // The minimal setup for log4J
     @Before
     public void setUp() throws JmriException {
+        
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();

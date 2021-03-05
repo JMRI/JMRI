@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.tools;
 
+import java.awt.GraphicsEnvironment;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -11,11 +12,7 @@ import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test import of Logix to LogixNG.
@@ -146,6 +143,9 @@ public class ImportEntryExitTest {
     // The minimal setup for log4J
     @Before
     public void setUp() throws JmriException {
+        
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
