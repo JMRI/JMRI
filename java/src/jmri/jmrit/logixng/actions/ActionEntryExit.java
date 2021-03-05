@@ -323,16 +323,14 @@ public class ActionEntryExit extends AbstractDigitalAction implements VetoableCh
         ThreadingUtil.runOnLayout(() -> {
             switch (theOper) {
                 case SetNXPairEnabled:
-                      entryExit.setEnabled(true);
-//                    turnout = _turnoutHandle != null ? _turnoutHandle.getBean() : null;
+                    entryExit.setEnabled(true);
                     break;
                 case SetNXPairDisabled:
-                      entryExit.setEnabled(false);
-//                    turnout = _turnoutHandle != null ? _turnoutHandle.getBean() : null;
+                    entryExit.setEnabled(false);
                     break;
                 case SetNXPairSegment:
-//                    entryExit;
-//                    turnout = _turnoutHandle != null ? _turnoutHandle.getBean() : null;
+                    jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).
+                            setSingleSegmentRoute(entryExit.getSystemName());
                     break;
                 default:
                     throw new IllegalArgumentException("invalid oper state: " + theOper.name());
