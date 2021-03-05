@@ -57,6 +57,7 @@ public class TrackerTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
         // clear IconFamily warning, fixed in 4.21.5
         // fixed: JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
 
@@ -122,7 +123,7 @@ public class TrackerTest {
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

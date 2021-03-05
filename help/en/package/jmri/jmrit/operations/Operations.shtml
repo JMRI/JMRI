@@ -349,7 +349,7 @@
 
         <li><a href="#TrainManifestOptions">Train Manifest Options</a></li>
 
-        <li><a href="#TrainScripts">Scripts</a></li>
+        <li><a href="#EditTrainScripts">Scripts</a></li>
         
         <li><a href="#CopyTrain">Copy Train</a></li>
         
@@ -382,7 +382,7 @@
         
         <li><a href="#TrainsCopyTrain">Copy Train</a></li>
         
-        <li><a href="#TrainsScripts">Scripts</a></li>
+        <li><a href="#TrainScripts">Train Scripts</a></li>
         
         <li><a href="#PrintSavedTrainManifests">Print or Preview Saved Train Manifests</a></li>
 
@@ -4511,7 +4511,7 @@
    <p>Use this tool to make a copy of an existing train. You will need to enter a name for the
     new train.</p>
 
-   <a name="TrainScripts" id="TrainScripts"></a>
+   <a name="EditTrainScripts" id="EditTrainScripts"></a>
    <h3>Scripts</h3>
    If you want to run a <a href="../../../../html/tools/scripting/index.shtml">script</a> when a
    train is built, moves or terminates, select under the "Edit Train-&gt;Tools-&gt;Scripts". This
@@ -5126,8 +5126,8 @@
    This tool allows you to copy an existing train. Enter a new name for the train you wish to copy,
    then select the train you want to copy, then press the "Copy" button.
    
-   <a name="TrainsScripts" id="TrainScripts"></a>
-   <h4>Scripts</h4>
+   <a name="TrainScripts" id="TrainScripts"></a>
+   <h4>Train Scripts</h4>
    You can run a script when starting and / or shutting down OperationsPro. Use the "Add Script" buttons to
    select the scripts you want to run. 
    

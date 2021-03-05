@@ -18,7 +18,6 @@ import jmri.jmrix.dccpp.DCCppPacketizer;
 import jmri.jmrix.dccpp.DCCppReply;
 import jmri.jmrix.dccpp.DCCppSimulatorPortController;
 import jmri.jmrix.dccpp.DCCppTrafficController;
-import jmri.jmrix.dccpp.network.DCCppEthernetAdapter;
 import jmri.util.ImmediatePipedOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,11 +46,11 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     final static int SENSOR_MSG_RATE = 10;
 
     private boolean outputBufferEmpty = true;
-    private boolean checkBuffer = true;
+    private final boolean checkBuffer = true;
     private boolean trackPowerState = false;
     // One extra array element so that i can index directly from the
     // CV value, ignoring CVs[0].
-    private int[] CVs = new int[DCCppConstants.MAX_DIRECT_CV + 1];
+    private final int[] CVs = new int[DCCppConstants.MAX_DIRECT_CV + 1];
 
     private java.util.TimerTask keepAliveTimer; // Timer used to periodically
     private static final long keepAliveTimeoutValue = 30000; // Interval 
@@ -310,7 +309,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     r = "H 1 27 3 1"; //TODO: do this for real
                 } else {
                     log.debug("TURNOUT_CMD detected");
-                    r = "H" + msg.getTOIDString() + " " + Integer.toString(msg.getTOStateInt());
+                    r = "H" + msg.getTOIDString() + " " + msg.getTOStateInt();
                 }
                 reply = DCCppReply.parseDCCppReply(r);
                 log.debug("Reply generated = '{}'", reply);
@@ -441,7 +440,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     // CMD: <R CV CALLBACKNUM CALLBACKSUB>
                     // Response: <r CALLBACKNUM|CALLBACKSUB|CV Value>
                     r = "r " + m.group(2) + "|" + m.group(3) + "|" + m.group(1) + " "
-                            + Integer.toString(cvVal);
+                            + cvVal;
 
                     reply = DCCppReply.parseDCCppReply(r);
                     log.debug("Reply generated = {}", reply.toString());
@@ -460,13 +459,13 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             case DCCppConstants.TRACK_POWER_ON:
                 log.debug("TRACK_POWER_ON detected");
                 trackPowerState = true;
-                reply = DCCppReply.parseDCCppReply("p " + (trackPowerState ? "1" : "0"));
+                reply = DCCppReply.parseDCCppReply("p 1");
                 break;
 
             case DCCppConstants.TRACK_POWER_OFF:
                 log.debug("TRACK_POWER_OFF detected");
                 trackPowerState = false;
-                reply = DCCppReply.parseDCCppReply("p " + (trackPowerState ? "1" : "0"));
+                reply = DCCppReply.parseDCCppReply("p 0");
                 break;
 
             case DCCppConstants.READ_TRACK_CURRENT:
@@ -515,7 +514,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         String rs = "c CurrentMAIN " + (trackPowerState ? Double.toString(currentmA) : "0") + " C Milli 0 1997 1 1997";
         DCCppReply r = new DCCppReply(rs);
         writeReply(r);       
-        r = new DCCppReply("c VoltageMAIN " + Double.toString(voltageV) + " V NoPrefix 0 18.0 0.1 16.0");
+        r = new DCCppReply("c VoltageMAIN " + voltageV + " V NoPrefix 0 18.0 0.1 16.0");
         writeReply(r);
         rs = "a " + (trackPowerState ? Integer.toString((1997/currentmA)*100) : "0");
         r = DCCppReply.parseDCCppReply(rs);
@@ -529,7 +528,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         Random valueGenerator = new Random();
         int value = valueGenerator.nextInt(2); // Generate state value between 0 and 1
 
-        String reply = (value == 1 ? "Q " : "q ") + Integer.toString(sensorNum);
+        String reply = (value == 1 ? "Q " : "q ") + sensorNum;
 
         DCCppReply r = DCCppReply.parseDCCppReply(reply);
         writeReply(r);
@@ -563,7 +562,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
      */
     private DCCppMessage loadChars() throws java.io.IOException {
         // Spin waiting for start-of-frame '<' character (and toss it)
-        StringBuilder s = new StringBuilder("");
+        StringBuilder s = new StringBuilder();
         byte char1;
         boolean found_start = false;
 
@@ -589,7 +588,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             } else {
                 log.debug("msg read byte {}", char1);
                 char c = (char) (char1 & 0x00FF);
-                s.append(Character.toString(c));
+                s.append(c);
             }
         }
         // TODO: Still need to strip leading and trailing whitespace.

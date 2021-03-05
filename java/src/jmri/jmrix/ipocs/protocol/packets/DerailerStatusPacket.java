@@ -14,8 +14,8 @@ import jmri.jmrix.ipocs.protocol.enums.RqReleaseState;
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class DerailerStatusPacket extends Packet {
   public final static byte IDENT = 18;
-  private RqDerailerState state;
-  private RqReleaseState releaseState;
+  private RqDerailerState state = null;
+  private RqReleaseState releaseState = null;
   private short operationTime;
 
   @Override

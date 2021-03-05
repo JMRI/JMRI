@@ -393,12 +393,12 @@ public class Mx1ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
               return true;
            }
            @Override
-           public void sendMx1Message(Mx1Message m,Mx1Listener reply) {
+           public void sendMx1Message(Mx1Message m, Mx1Listener reply) {
            }
         };
         memo = new Mx1SystemConnectionMemo(tc);
-        instance = new Mx1Throttle(memo,new jmri.DccLocoAddress(42,false));
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new Mx1ThrottleManager(memo));
+        instance = new Mx1Throttle(memo, new jmri.DccLocoAddress(42,false));
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, new Mx1ThrottleManager(memo));
     }
 
     @AfterEach

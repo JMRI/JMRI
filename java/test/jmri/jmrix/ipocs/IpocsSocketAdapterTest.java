@@ -16,6 +16,7 @@ public class IpocsSocketAdapterTest {
     AsynchronousServerSocketChannel serverSocket = mock(AsynchronousServerSocketChannel.class);
     assertNotNull(new IpocsSocketAcceptor(portController, serverSocket));
   }
+
   @Test
   public void completedTest() {
     IpocsPortController portController = mock(IpocsPortController.class);
@@ -34,4 +35,5 @@ public class IpocsSocketAdapterTest {
     acceptor.failed(new Exception(), null);
     jmri.util.JUnitAppender.suppressErrorMessage("Unable to accept socket");
   }
+
 }

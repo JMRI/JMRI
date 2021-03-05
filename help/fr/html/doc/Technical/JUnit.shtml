@@ -132,16 +132,16 @@ part de code ex&#233;cut&#233;, appel&#233;e "couverture de code". Nous utilison
 <a href="http://eclemma.org/jacoco/">outil JaCoCo</a> 
 pour faire le d&#233;compte. Il fournit des rapports d&#233;taill&#233;s &#224; des niveaux multiples:
 <ul>
-<li><a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/jacoco/">Une parcelle de couverture dans son
+<li><a href="https://builds.jmri.org/jenkins/job/Development/job/JaCoCo/jacoco/">Une parcelle de couverture dans son
     ensemble</a>.Cliquez sur le graphique pour en voir une</li>
-<li><a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/">Sommaire par paquet Java
+<li><a href="https://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/">Sommaire par paquet Java
     package</a>. Cliquez sur un paquet pour en voir un</li>
 <li><a
-href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/">Sommaire par fichier</a> (ex: class). Cliquez sur une class pour en voir une</li>
+href="https://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/">Sommaire par fichier</a> (ex: class). Cliquez sur une class pour en voir une</li>
 <li><a
-href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/">Sommaire par proc&#233;d&#233;</a>. Cliquez sur un proc&#233;d&#233; pour voir</li>
+href="https://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/">Sommaire par proc&#233;d&#233;</a>. Cliquez sur un proc&#233;d&#233; pour voir</li>
 <li><a
-href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/defineIO()/">Comment chaque partie du code a &#233;t&#233; couvert</a> (peut n&#233;cessiter un d&#233;filement).</li>
+href="https://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/defineIO()/">Comment chaque partie du code a &#233;t&#233; couvert</a> (peut n&#233;cessiter un d&#233;filement).</li>
 </ul>
 
 <h2><a name="write">&#201;criture de Tests</a></h2>

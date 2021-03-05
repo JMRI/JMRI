@@ -14,8 +14,8 @@ import jmri.jmrix.ipocs.protocol.enums.RqReleaseState;
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class LevelCrossingStatusPacket extends Packet {
   public final static byte IDENT = 19;
-  private RqLevelCrossingState state;
-  private RqReleaseState releaseState;
+  private RqLevelCrossingState state = null;
+  private RqReleaseState releaseState = null;
   private short operationTime;
 
   @Override

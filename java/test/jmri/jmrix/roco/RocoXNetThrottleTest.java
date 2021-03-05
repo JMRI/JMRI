@@ -26,8 +26,8 @@ public class RocoXNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
         Assert.assertNotNull(t);
     }
 
-    // run the throttle through the initilization sequence, 
-    // without assertions, so post initilization tests can be
+    // run the throttle through the initialization sequence,
+    // without assertions, so post initialization tests can be
     // performed.
     @Override
     protected void initThrottle(XNetThrottle t, int n) {
@@ -64,42 +64,32 @@ public class RocoXNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
         Assert.assertNotNull(instance);
     }
 
-    // Test the initilization sequence.
+    // Test the initialization sequence.
     @Override
-    @Disabled("parent class method creates a new throttle")
-    @ToDo("rewrite test to create proper throttle")
     @Test
     @Timeout(1000)
     public void testInitSequenceNormalUnitSpeedStep128() throws Exception {
     }
 
     @Override
-    @Disabled("parent class method creates a new throttle")
-    @ToDo("rewrite test to create proper throttle")
     @Test
     @Timeout(1000)
     public void initSequenceNormalUnitSpeedStep14() throws Exception {
     }
 
     @Override
-    @Disabled("parent class method creates a new throttle")
-    @ToDo("rewrite test to create proper throttle")
     @Test
     @Timeout(1000)
     public void initSequenceMUAddress28SpeedStep() throws Exception {
     }
 
     @Override
-    @Disabled("parent class method creates a new throttle")
-    @ToDo("rewrite test to create proper throttle")
     @Test
     @Timeout(1000)
     public void initSequenceMuedUnitSpeedStep128() throws Exception {
     }
 
     @Override
-    @Disabled("parent class method creates a new throttle")
-    @ToDo("rewrite test to create proper throttle")
     @Test
     @Timeout(1000)
     public void initSequenceDHUnitSpeedStep27() throws Exception {
@@ -215,6 +205,20 @@ public class RocoXNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
         memo.setThrottleManager(new RocoXNetThrottleManager(memo));
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, memo.getThrottleManager());
         instance = new RocoXNetThrottle(memo, new jmri.DccLocoAddress(3, false), tc);
+    }
+
+    @Override
+    @AfterEach
+    public void tearDown() throws Exception {
+        // no need to dispose of instance
+        if (memo.getThrottleManager() != null) {
+            memo.getThrottleManager().dispose();
+        }
+        memo.dispose();
+        memo = null;
+        tc.terminateThreads();
+        tc = null;
+        JUnitUtil.tearDown();
     }
 
 }

@@ -25,7 +25,6 @@ public class WarrantPreferencesPanelTest extends PreferencesPanelTestBase<Warran
     @AfterEach
     public void tearDown() {
         prefsPanel = null;
-        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 

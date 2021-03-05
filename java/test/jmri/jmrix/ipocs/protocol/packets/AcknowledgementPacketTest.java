@@ -9,7 +9,7 @@ import org.junit.Test;
 
 
 public class AcknowledgementPacketTest {
-  private byte[] testPacket = { 0x00, 0x02 };
+  private final byte[] testPacket = { 0x00, 0x02 };
 
   @Test
   public void getIdTest() {
