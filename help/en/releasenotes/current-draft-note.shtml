@@ -352,6 +352,24 @@
             <li></li>
         </ul>
 
+    <h3>PanelPro</h3>
+      <a id="PanelPro" name="PanelPro"></a>
+      <ul>
+        <li>The main PanelPro menu has changed.
+          <ul>
+            <li>The Load, Store, and History menu items have moved from the <strong>Panels</strong>
+            menu to the <strong>File</strong> menu.</li>
+            <li>The script related menu items have been moved to a new <strong>Scripting</strong> menu.</li>
+            <li>A <strong>Delete Panel</strong> menu item has been added to the Panels menu.</li>
+            <li>When a panel window <strong>Close</strong> button is clicked, the window will hide.  The
+            hide notification can be suppressed.
+            Use <strong>Panels &rArr; Show Panels</strong> or the <strong>Window</strong> menu to make it visible.</li>
+            <li>A dialog will be displayed if a second load is invoked.</li>
+            <li>When a file is loaded, the file name will be display in the JMRI System Console (Help &rArr; System Console).
+          </ul>
+        </li>
+      </ul>
+
     <h3>CTC Tool</h3>
         <a id="PE-CTC" name="PE-CTC"></a>
         <ul>
