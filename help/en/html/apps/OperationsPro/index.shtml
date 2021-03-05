@@ -36,8 +36,8 @@
     
     <p>
     OperationsPro functions can be accessed from the PanelPro main menu by clicking the "<strong>Operations</strong>" pulldown 
-    {<i>prior to JMRI 4.22:</i> Tools&rArr;Operations}.<br>
-    <img src="images/OpsProPulldownRel422.jpg" align="left" height="276" width="646" alt="OperationsPro pulldown">
+    {<i>prior to JMRI 4.24, also at:</i> Tools&rArr;Operations}.<br>
+    <img src="images/OpsProPulldownRel422.jpg" align="left" height="276" width="648" alt="OperationsPro pulldown">
     </p>
 
      <!--#include virtual="/Footer.shtml" -->
