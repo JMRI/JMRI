@@ -25,6 +25,7 @@
             "
         >
 
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-entry-exit-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-light-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-listen-on-beans-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-local-variable-4.23.1.xsd"/>
@@ -53,6 +54,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/shutdown-computer-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/table-for-each-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/throttle-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/trigger-route-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/web-browser-4.23.1.xsd"/>
 
     <xs:complexType name="LogixNG_DigitalActionManagerType">
@@ -69,6 +71,7 @@
         <!-- Permit any of these tags in any order in any number -->
         <xs:choice minOccurs="0" maxOccurs="unbounded">
             
+            <xs:element name="ActionEntryExit"   type="LogixNG_DigitalAction_ActionEntryExitType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionLight"       type="LogixNG_DigitalAction_ActionLightType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionListenOnBeans"  type="LogixNG_DigitalAction_ActionListenOnBeansType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionLocalVariable"  type="LogixNG_DigitalAction_ActionLocalVariableType" minOccurs="0" maxOccurs="unbounded" />
@@ -97,6 +100,7 @@
             <xs:element name="ShutdownComputer"  type="LogixNG_DigitalAction_ShutdownComputerType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="TableForEach"      type="LogixNG_DigitalAction_TableForEachType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="Throttle"          type="LogixNG_DigitalAction_ThrottleType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="TriggerRoute"      type="LogixNG_DigitalAction_TriggerRouteType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="WebBrowser"        type="LogixNG_DigitalAction_WebBrowserType" minOccurs="0" maxOccurs="unbounded" />
             
           </xs:choice>

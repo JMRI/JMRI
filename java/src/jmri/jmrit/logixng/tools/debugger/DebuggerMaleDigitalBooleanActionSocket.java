@@ -13,7 +13,8 @@ import jmri.jmrit.logixng.MaleDigitalBooleanActionSocket;
  */
 public class DebuggerMaleDigitalBooleanActionSocket extends AbstractDebuggerMaleSocket implements MaleDigitalBooleanActionSocket {
     
-    private boolean _nextStatus;
+    private boolean _nextHasChangedToTrue;
+    private boolean _nextHasChangedToFalse;
     
     public DebuggerMaleDigitalBooleanActionSocket(BaseManager<MaleDigitalBooleanActionSocket> manager, MaleDigitalBooleanActionSocket maleSocket) {
         super(manager, maleSocket);
@@ -22,7 +23,9 @@ public class DebuggerMaleDigitalBooleanActionSocket extends AbstractDebuggerMale
     /** {@inheritDoc} */
     @Override
     public String getBeforeInfo() {
-        return Bundle.getMessage("DigitalBooleanAction_InfoBefore", _nextStatus ? Bundle.getMessage("True") : Bundle.getMessage("False"));
+        return Bundle.getMessage("DigitalBooleanAction_InfoBefore",
+                _nextHasChangedToTrue ? Bundle.getMessage("True") : Bundle.getMessage("False"),
+                _nextHasChangedToFalse ? Bundle.getMessage("True") : Bundle.getMessage("False"));
     }
     
     /** {@inheritDoc} */
@@ -32,10 +35,11 @@ public class DebuggerMaleDigitalBooleanActionSocket extends AbstractDebuggerMale
     }
     
     @Override
-    public void execute(boolean status) throws JmriException {
-        _nextStatus = status;
+    public void execute(boolean hasChangedToTrue, boolean hasChangedToFalse) throws JmriException {
+        _nextHasChangedToTrue = hasChangedToTrue;
+        _nextHasChangedToFalse = hasChangedToFalse;
         before();
-        ((MaleDigitalBooleanActionSocket) _maleSocket).execute(_nextStatus);
+        ((MaleDigitalBooleanActionSocket) _maleSocket).execute(hasChangedToTrue, hasChangedToFalse);
         after();
     }
 

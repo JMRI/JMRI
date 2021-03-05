@@ -249,48 +249,48 @@ public class DigitalBooleanOnChangeTest extends AbstractDigitalBooleanActionTest
         _actionTurnout.setBeanState(ActionTurnout.TurnoutState.Thrown);
         
         // Ensure last execute is false
-        _actionOnChange.execute(false);
+        _actionOnChange.execute(false, false);
         
         // Test Trigger.CHANGE
         _actionOnChange.setTrigger(Trigger.CHANGE);
         turnout.setState(Turnout.CLOSED);
-        _actionOnChange.execute(true);
+        _actionOnChange.execute(true, false);
         Assert.assertEquals(Turnout.THROWN, turnout.getState());
         turnout.setState(Turnout.CLOSED);
-        _actionOnChange.execute(false);
+        _actionOnChange.execute(false, false);
         Assert.assertEquals(Turnout.THROWN, turnout.getState());
         turnout.setState(Turnout.CLOSED);
-        _actionOnChange.execute(true);
+        _actionOnChange.execute(true, false);
         Assert.assertEquals(Turnout.THROWN, turnout.getState());
         
         // Ensure last execute is false
-        _actionOnChange.execute(false);
+        _actionOnChange.execute(false, false);
         
         // Test Trigger.CHANGE_TO_FALSE
         _actionOnChange.setTrigger(Trigger.CHANGE_TO_FALSE);
         turnout.setState(Turnout.CLOSED);
-        _actionOnChange.execute(true);
+        _actionOnChange.execute(true, false);
         Assert.assertEquals(Turnout.CLOSED, turnout.getState());
         turnout.setState(Turnout.CLOSED);
-        _actionOnChange.execute(false);
+        _actionOnChange.execute(false, true);
         Assert.assertEquals(Turnout.THROWN, turnout.getState());
         turnout.setState(Turnout.CLOSED);
-        _actionOnChange.execute(true);
+        _actionOnChange.execute(true, false);
         Assert.assertEquals(Turnout.CLOSED, turnout.getState());
         
         // Ensure last execute is false
-        _actionOnChange.execute(false);
+        _actionOnChange.execute(false, false);
         
         // Test Trigger.CHANGE_TO_TRUE
         _actionOnChange.setTrigger(Trigger.CHANGE_TO_TRUE);
         turnout.setState(Turnout.CLOSED);
-        _actionOnChange.execute(true);
+        _actionOnChange.execute(true, false);
         Assert.assertEquals(Turnout.THROWN, turnout.getState());
         turnout.setState(Turnout.CLOSED);
-        _actionOnChange.execute(false);
+        _actionOnChange.execute(false, false);
         Assert.assertEquals(Turnout.CLOSED, turnout.getState());
         turnout.setState(Turnout.CLOSED);
-        _actionOnChange.execute(true);
+        _actionOnChange.execute(true, false);
         Assert.assertEquals(Turnout.THROWN, turnout.getState());
     }
     

@@ -25,16 +25,16 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalExpression_ExpressionEntryExit">
+    <xs:complexType name="LogixNG_DigitalAction_ActionEntryExitType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a ExpressionEntryExit class.
+          Define the XML stucture for storing the contents of a EnableLogix class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionEntryExitXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.EnableLogixXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
-
+        
             <xs:sequence>
 
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
@@ -47,32 +47,30 @@
               <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
 
-			  <xs:element name="is_isNot" type="LogixNG_Is_IsNot_Type" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="operationAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
 
-              <xs:element name="stateAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
-
-              <xs:element name="entryExitState" minOccurs="1" maxOccurs="1">
+              <xs:element name="operationDirect" minOccurs="0" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
-                    <xs:enumeration value="Inactive"/>
-                    <xs:enumeration value="Active"/>
-                    <xs:enumeration value="Other"/>
+                    <xs:enumeration value="SetNXPairEnabled"/>
+                    <xs:enumeration value="SetNXPairDisabled"/>
+                    <xs:enumeration value="SetNXPairSegment"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
 
-              <xs:element name="stateReference" type="xs:string" minOccurs="0" maxOccurs="1" />
-              <xs:element name="stateLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
-              <xs:element name="stateFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="operationReference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="operationLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="operationFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
 
 <!--              <xs:element name="enabled" type="yesNoType" /> -->
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
-<!--            <xs:attribute name="enabled" type="yesNoType" /> -->
-            <xs:attribute name="class" type="classType" use="required"/>
-
+            
+			<xs:attribute name="class" type="classType" use="required"/>
+        
     </xs:complexType>
 
 </xs:schema>

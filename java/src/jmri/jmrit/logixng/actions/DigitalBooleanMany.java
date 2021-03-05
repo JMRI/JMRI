@@ -117,9 +117,9 @@ public class DigitalBooleanMany extends AbstractDigitalBooleanAction
 
     /** {@inheritDoc} */
     @Override
-    public void execute(boolean hasChangedToTrue) throws JmriException {
+    public void execute(boolean hasChangedToTrue, boolean hasChangedToFalse) throws JmriException {
         for (ActionEntry actionEntry : _actionEntries) {
-            actionEntry._socket.execute(hasChangedToTrue);
+            actionEntry._socket.execute(hasChangedToTrue, hasChangedToFalse);
         }
     }
 

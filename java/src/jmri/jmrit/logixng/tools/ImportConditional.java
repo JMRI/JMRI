@@ -122,7 +122,23 @@ public class ImportConditional {
             default:
                 return;
         }
-        buildExpression(expression, conditionalVariables);
+        
+        // Is the Conditional a RTXINITIALIZER?
+        if ((conditionalVariables.size() == 1) && (conditionalVariables.get(0).getType().getItemType() == Conditional.ItemType.NONE)) {
+            TriggerOnce triggerOnceExpression =
+                    new TriggerOnce(InstanceManager.getDefault(DigitalExpressionManager.class)
+                            .getAutoSystemName(), null);
+            MaleSocket socket = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(triggerOnceExpression);
+            expression.getChild(0).connect(socket);
+            
+            True trueExpression =
+                    new True(InstanceManager.getDefault(DigitalExpressionManager.class)
+                            .getAutoSystemName(), null);
+            socket = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(trueExpression);
+            triggerOnceExpression.getChild(0).connect(socket);
+        } else {
+            buildExpression(expression, conditionalVariables);
+        }
         
         DigitalBooleanMany many =
                 new DigitalBooleanMany(InstanceManager.getDefault(
@@ -148,7 +164,6 @@ public class ImportConditional {
         for (int i=0; i < conditionalVariables.size(); i++) {
             jmri.ConditionalVariable cv = conditionalVariables.get(i);
             NamedBean nb = cv.getBean();
-//            NamedBean nb = cv.getNamedBeanData();
             DigitalExpressionBean newExpression;
             switch (cv.getType().getItemType()) {
                 case SENSOR:
@@ -196,7 +211,7 @@ public class ImportConditional {
                     break;
                 default:
                     newExpression = null;
-                    log.error("Unexpected type in ImportConditional.doImport(): {} -> {}", cv.getType(), cv.getType().getItemType());
+                    log.error("Unexpected type in ImportConditional.doImport(): {} -> {}", cv.getType().name(), cv.getType().getItemType().name());
                     break;
             }
             
@@ -206,7 +221,7 @@ public class ImportConditional {
                     expression.getChild(i).connect(newExpressionSocket);
                 }
             } else {
-                log.error("ImportConditional.doImport() did not created an expression for type: {} -> {}", cv.getType(), cv.getType().getItemType());
+                log.error("ImportConditional.doImport() did not created an expression for type: {} -> {}", cv.getType().name(), cv.getType().getItemType().name());
             }
         }
     }
@@ -332,6 +347,8 @@ public class ImportConditional {
                 MaleSocket newActionSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(newAction);
                 action.getChild(0).connect(newActionSocket);
             }
+        } else {
+            log.error("ImportConditional.doImport() did not created an action for type: {} -> {}", conditionalAction.getType(), conditionalAction.getType().getItemType());
         }
     }
     
@@ -1058,63 +1075,35 @@ public class ImportConditional {
     
     
     private DigitalActionBean getEntryExitAction(@Nonnull ConditionalAction ca, DestinationPoints dp, String reference) throws JmriException {
-/*        
-        ActionEntryExit expression =
+        ActionEntryExit action =
                 new ActionEntryExit(InstanceManager.getDefault(DigitalActionManager.class)
                         .getAutoSystemName(), null);
         
-        expression.setDestinationPoints(dp);
-        
-//        String devName = getDeviceName(ca);
+        if (reference != null) {
+            action.setAddressing(NamedBeanAddressing.Reference);
+            action.setReference(reference);
+        } else {
+            action.setAddressing(NamedBeanAddressing.Direct);
+            action.setDestinationPoints(dp);
+        }
+        action.setOperationAddressing(NamedBeanAddressing.Direct);
         
         switch (ca.getType()) {
             case SET_NXPAIR_ENABLED:
-//                        DestinationPoints dp = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(devName);
-//                        if (dp == null) {
-//                            errorList.add("Invalid NX Pair name in action - " + action.getDeviceName());  // NOI18N
-//                        } else {
-                            dp.setEnabled(true);
-//                        }
+                action.setOperationDirect(ActionEntryExit.Operation.SetNXPairEnabled);
                 break;
-                
             case SET_NXPAIR_DISABLED:
-                        dp = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(devName);
-                        if (dp == null) {
-                            errorList.add("Invalid NX Pair name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            dp.setEnabled(false);
-                        }
+                action.setOperationDirect(ActionEntryExit.Operation.SetNXPairDisabled);
                 break;
-                
             case SET_NXPAIR_SEGMENT:
-                        dp = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(devName);
-                        if (dp == null) {
-                            errorList.add("Invalid NX Pair name in action - " + action.getDeviceName());  // NOI18N
-                        } else {
-                            jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).
-                                    setSingleSegmentRoute(devName);
-                        }
-                break;
-                
-                
-                
-                
-            case ENTRYEXIT_ACTIVE:
-                expression.setBeanState(ExpressionEntryExit.EntryExitState.Active);
-                break;
-            case ENTRYEXIT_INACTIVE:
-                expression.setBeanState(ExpressionEntryExit.EntryExitState.Inactive);
+                action.setOperationDirect(ActionEntryExit.Operation.SetNXPairSegment);
                 break;
             default:
                 throw new InvalidConditionalVariableException(
-                        Bundle.getMessage("ConditionalBadEntryExitType", cv.getType().toString()));
+                        Bundle.getMessage("ConditionalBadEntryExitType", ca.getType().toString()));
         }
         
-        expression.setTriggerOnChange(cv.doTriggerActions());
-        
-        return expression;
-*/
-        return null;
+        return action;
     }
     
     
@@ -1210,7 +1199,35 @@ public class ImportConditional {
     
     
     private DigitalActionBean getRouteAction(@Nonnull ConditionalAction ca, Route b, String reference) throws JmriException {
-        return null;
+        TriggerRoute action =
+                new TriggerRoute(InstanceManager.getDefault(DigitalActionManager.class)
+                        .getAutoSystemName(), null);
+        
+        action.setAddressing(NamedBeanAddressing.Direct);
+        action.setOperationAddressing(NamedBeanAddressing.Direct);
+        
+        String devName = ca.getDeviceName();
+        if (devName != null) {
+            if (devName.length() > 0 && devName.charAt(0) == '@') {
+                String memName = devName.substring(1);
+                action.setOperationAddressing(NamedBeanAddressing.Reference);
+                action.setOperationReference("{" + memName + "}");
+            } else {
+                action.setRoute(devName);
+            }
+        }
+        
+        switch (ca.getType()) {
+            case TRIGGER_ROUTE:
+                action.setOperationDirect(TriggerRoute.Operation.TriggerRoute);
+                break;
+                
+            default:
+                throw new InvalidConditionalVariableException(
+                        Bundle.getMessage("ConditionalBadEntryExitType", ca.getType().toString()));
+        }
+        
+        return action;
     }
     
     

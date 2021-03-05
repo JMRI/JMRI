@@ -39,7 +39,7 @@ public class ExpressionEntryExitXml extends jmri.managers.configurexml.AbstractN
 
         NamedBeanHandle entryExit = p.getEntryExit();
         if (entryExit != null) {
-            element.addContent(new Element("entryExit").addContent(entryExit.getName()));
+            element.addContent(new Element("destinationPoints").addContent(entryExit.getName()));
         }
         
         element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
@@ -66,7 +66,7 @@ public class ExpressionEntryExitXml extends jmri.managers.configurexml.AbstractN
 
         loadCommon(h, shared);
 
-        Element entryExitName = shared.getChild("entryExit");
+        Element entryExitName = shared.getChild("destinationPoints");
         if (entryExitName != null) {
             DestinationPoints t = InstanceManager.getDefault(EntryExitPairs.class)
                     .getNamedBean(entryExitName.getTextTrim());

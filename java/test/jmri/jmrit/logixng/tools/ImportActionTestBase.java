@@ -104,6 +104,7 @@ public abstract class ImportActionTestBase {
         ImportLogix importLogix = new ImportLogix(logix);
         importLogix.doImport();
         
+        logix.setEnabled(false);
         logixManager.deleteLogix(logix);
         
         check.runTest("Logix is removed and LogixNG is not activated", false);
@@ -147,6 +148,7 @@ public abstract class ImportActionTestBase {
         ImportLogix importLogix = new ImportLogix(logix);
         importLogix.doImport();
         
+        logix.setEnabled(false);
         logixManager.deleteLogix(logix);
         
         check.runTest("Logix is removed and LogixNG is not activated", false);
@@ -214,6 +216,7 @@ public abstract class ImportActionTestBase {
         ImportLogix importLogix = new ImportLogix(logix);
         importLogix.doImport();
         
+        logix.setEnabled(false);
         logixManager.deleteLogix(logix);
         
         check.runTest("Logix is removed and LogixNG is not activated", false);

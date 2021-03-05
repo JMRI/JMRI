@@ -26,10 +26,10 @@ public final class DefaultFemaleDigitalBooleanActionSocket
     }
     
     @Override
-    public void execute(boolean hasChangedToTrue) throws JmriException {
+    public void execute(boolean hasChangedToTrue, boolean hasChangedToFalse) throws JmriException {
         if (isConnected()) {
             ((MaleDigitalBooleanActionSocket)getConnectedSocket())
-                    .execute(hasChangedToTrue);
+                    .execute(hasChangedToTrue, hasChangedToFalse);
         }
     }
 

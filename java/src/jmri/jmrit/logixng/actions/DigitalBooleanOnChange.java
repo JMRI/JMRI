@@ -60,7 +60,7 @@ public class DigitalBooleanOnChange extends AbstractDigitalBooleanAction
     
     /** {@inheritDoc} */
     @Override
-    public void execute(boolean hasChangedToTrue) throws JmriException {
+    public void execute(boolean hasChangedToTrue, boolean hasChangedToFalse) throws JmriException {
         if (_socket.isConnected()) {
             switch (_trigger) {
                 case CHANGE_TO_TRUE:
@@ -71,7 +71,7 @@ public class DigitalBooleanOnChange extends AbstractDigitalBooleanAction
                     break;
                 case CHANGE_TO_FALSE:
                     // Call execute() if change to false
-                    if (!hasChangedToTrue) {
+                    if (hasChangedToFalse) {
                         _socket.execute();
                     }
                     break;

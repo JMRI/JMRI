@@ -163,6 +163,7 @@ public abstract class ImportExpressionComplexTestBase {
         ImportLogix importLogix = new ImportLogix(logix);
         importLogix.doImport();
         
+//        logix.setEnabled(false);
 //        logixManager.deleteLogix(logix);
 //        ConditionalManager conditionalManager = InstanceManager.getDefault(ConditionalManager.class);
 //        SortedSet<Conditional> set = conditionalManager.getNamedBeanSet();

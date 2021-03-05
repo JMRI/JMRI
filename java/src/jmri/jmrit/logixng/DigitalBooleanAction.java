@@ -12,10 +12,10 @@ public interface DigitalBooleanAction extends Base {
     /**
      * Execute this DigitalActionBean.
      * 
-     * @param status true if the expression has changed to true.
-     * false if the expression has changed to false
+     * @param hasChangedToTrue true if the expression has changed to true, false otherwise
+     * @param hasChangedToFalse true if the expression has changed to false, false otherwise
      * @throws JmriException when an exception occurs
      */
-    public void execute(boolean status) throws JmriException;
+    public void execute(boolean hasChangedToTrue, boolean hasChangedToFalse) throws JmriException;
     
 }

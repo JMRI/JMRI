@@ -20,6 +20,7 @@ import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.*;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.*;
 
@@ -988,6 +989,68 @@ public class StoreAndLoadTest {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         
         
+        ActionEntryExit entryExit = new ActionEntryExit(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(entryExit);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        entryExit = new ActionEntryExit(digitalActionManager.getAutoSystemName(), null);
+        entryExit.setComment("A comment");
+        entryExit.setOperationDirect(ActionEntryExit.Operation.SetNXPairDisabled);
+        entryExit.setAddressing(NamedBeanAddressing.Direct);
+        entryExit.setFormula("\"IT\"+index");
+        entryExit.setLocalVariable("index");
+        entryExit.setReference("{IM1}");
+        entryExit.setOperationAddressing(NamedBeanAddressing.LocalVariable);
+        entryExit.setOperationFormula("\"IT\"+index2");
+        entryExit.setOperationLocalVariable("index2");
+        entryExit.setOperationReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(entryExit);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        entryExit = new ActionEntryExit(digitalActionManager.getAutoSystemName(), null);
+        entryExit.setComment("A comment");
+        entryExit.setOperationDirect(ActionEntryExit.Operation.SetNXPairEnabled);
+        entryExit.setAddressing(NamedBeanAddressing.LocalVariable);
+        entryExit.setFormula("\"IT\"+index");
+        entryExit.setLocalVariable("index");
+        entryExit.setReference("{IM1}");
+        entryExit.setOperationAddressing(NamedBeanAddressing.Formula);
+        entryExit.setOperationFormula("\"IT\"+index2");
+        entryExit.setOperationLocalVariable("index2");
+        entryExit.setOperationReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(entryExit);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        entryExit = new ActionEntryExit(digitalActionManager.getAutoSystemName(), null);
+        entryExit.setComment("A comment");
+        entryExit.setOperationDirect(ActionEntryExit.Operation.SetNXPairSegment);
+        entryExit.setAddressing(NamedBeanAddressing.Formula);
+        entryExit.setFormula("\"IT\"+index");
+        entryExit.setLocalVariable("index");
+        entryExit.setReference("{IM1}");
+        entryExit.setOperationAddressing(NamedBeanAddressing.Reference);
+        entryExit.setOperationFormula("\"IT\"+index2");
+        entryExit.setOperationLocalVariable("index2");
+        entryExit.setOperationReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(entryExit);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        entryExit = new ActionEntryExit(digitalActionManager.getAutoSystemName(), null);
+        entryExit.setComment("A comment");
+        entryExit.setOperationDirect(ActionEntryExit.Operation.SetNXPairDisabled);
+        entryExit.setAddressing(NamedBeanAddressing.Reference);
+        entryExit.setFormula("\"IT\"+index");
+        entryExit.setLocalVariable("index");
+        entryExit.setReference("{IM1}");
+        entryExit.setOperationAddressing(NamedBeanAddressing.Direct);
+        entryExit.setOperationFormula("\"IT\"+index2");
+        entryExit.setOperationLocalVariable("index2");
+        entryExit.setOperationReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(entryExit);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        
         ExecuteDelayed executeDelayed = new ExecuteDelayed(digitalActionManager.getAutoSystemName(), null);
         executeDelayed.setResetIfAlreadyStarted(false);
         maleSocket = digitalActionManager.registerAction(executeDelayed);
@@ -1255,6 +1318,20 @@ public class StoreAndLoadTest {
         
         
         
+        TriggerRoute triggerRoute =
+                new TriggerRoute(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(triggerRoute);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        triggerRoute = new TriggerRoute(digitalActionManager.getAutoSystemName(), null);
+        triggerRoute.setComment("A comment");
+        triggerRoute.setOperationDirect(TriggerRoute.Operation.TriggerRoute);
+        maleSocket = digitalActionManager.registerAction(triggerRoute);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+        
+        
+        
         ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null);
         ifThenElse.setComment("A comment");
         ifThenElse.setType(IfThenElse.Type.TriggerAction);
@@ -1403,7 +1480,6 @@ public class StoreAndLoadTest {
         
         expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         expressionEntryExit.setComment("A comment");
-        expressionEntryExit.setDestinationPoints("Something");
         expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Inactive);
         expressionEntryExit.setAddressing(NamedBeanAddressing.Direct);
         expressionEntryExit.setFormula("\"IT\"+index");
@@ -1419,7 +1495,6 @@ public class StoreAndLoadTest {
         
         expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         expressionEntryExit.setComment("A comment");
-        expressionEntryExit.setDestinationPoints("Something");
         expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Inactive);
         expressionEntryExit.setAddressing(NamedBeanAddressing.LocalVariable);
         expressionEntryExit.setFormula("\"IT\"+index");
@@ -1435,7 +1510,6 @@ public class StoreAndLoadTest {
         
         expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         expressionEntryExit.setComment("A comment");
-        expressionEntryExit.setDestinationPoints("Something");
         expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Inactive);
         expressionEntryExit.setAddressing(NamedBeanAddressing.Formula);
         expressionEntryExit.setFormula("\"IT\"+index");
@@ -1451,7 +1525,6 @@ public class StoreAndLoadTest {
         
         expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         expressionEntryExit.setComment("A comment");
-        expressionEntryExit.setDestinationPoints("Something");
         expressionEntryExit.setBeanState(ExpressionEntryExit.EntryExitState.Inactive);
         expressionEntryExit.setAddressing(NamedBeanAddressing.Reference);
         expressionEntryExit.setFormula("\"IT\"+index");
@@ -2617,10 +2690,12 @@ public class StoreAndLoadTest {
             }
         }
         
-        JUnitAppender.assertWarnMessage("destinationPoints \"Something\" is not found");
-        JUnitAppender.assertWarnMessage("destinationPoints \"Something\" is not found");
-        JUnitAppender.assertWarnMessage("destinationPoints \"Something\" is not found");
-        JUnitAppender.assertWarnMessage("destinationPoints \"Something\" is not found");
+        
+//        for (LoggingEvent evt : JUnitAppender.getBacklog()) {
+//            System.out.format("Log: %s, %s%n", evt.getLevel(), evt.getMessage());
+//        }
+        
+        
         JUnitAppender.assertWarnMessage("script has not initialized params._scriptClass");
         JUnitAppender.assertWarnMessage("warrant \"Something\" is not found");
         JUnitAppender.assertWarnMessage("warrant \"Something\" is not found");

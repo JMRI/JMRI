@@ -182,7 +182,7 @@ public class DigitalBooleanActionManagerTest extends AbstractManagerTestBase {
         }
 
         @Override
-        public void execute(boolean hasChangedToTrue) throws JmriException {
+        public void execute(boolean hasChangedToTrue, boolean hasChangedToFalse) throws JmriException {
             throw new UnsupportedOperationException("Not supported");
         }
 

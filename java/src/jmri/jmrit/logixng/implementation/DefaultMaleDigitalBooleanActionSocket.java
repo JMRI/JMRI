@@ -60,7 +60,7 @@ public class DefaultMaleDigitalBooleanActionSocket
     
     /** {@inheritDoc} */
     @Override
-    public void execute(boolean hasChangedToTrue) throws JmriException {
+    public void execute(boolean hasChangedToTrue, boolean hasChangedToFalse) throws JmriException {
         if (! _enabled) {
             return;
         }
@@ -76,7 +76,7 @@ public class DefaultMaleDigitalBooleanActionSocket
         
         try {
             conditionalNG.getSymbolTable().createSymbols(_localVariables);
-            _action.execute(hasChangedToTrue);
+            _action.execute(hasChangedToTrue, hasChangedToFalse);
         } catch (JmriException e) {
             handleError(this, Bundle.getMessage("ExceptionExecuteBooleanAction", e.getLocalizedMessage()), e, log);
         } catch (RuntimeException e) {

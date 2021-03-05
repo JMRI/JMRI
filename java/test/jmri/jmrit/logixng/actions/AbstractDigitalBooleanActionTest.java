@@ -129,7 +129,7 @@ public class AbstractDigitalBooleanActionTest {
         }
 
         @Override
-        public void execute(boolean hasChangedToTrue) {
+        public void execute(boolean hasChangedToTrue, boolean hasChangedToFalse) {
             throw new UnsupportedOperationException("Not supported.");
         }
 

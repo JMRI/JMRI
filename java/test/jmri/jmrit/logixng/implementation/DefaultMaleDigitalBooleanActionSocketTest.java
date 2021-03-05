@@ -58,14 +58,19 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
         
         action.je = null;
         action.re = null;
-        socket.execute(false);
-        Assert.assertFalse(action._value);
-        socket.execute(true);
-        Assert.assertTrue(action._value);
+        socket.execute(false, false);
+        Assert.assertFalse(action._hasChangedToTrue);
+        Assert.assertFalse(action._hasChangedToFalse);
+        socket.execute(true, false);
+        Assert.assertTrue(action._hasChangedToTrue);
+        Assert.assertFalse(action._hasChangedToFalse);
+        socket.execute(false, true);
+        Assert.assertFalse(action._hasChangedToTrue);
+        Assert.assertTrue(action._hasChangedToFalse);
         
         action.je = new JmriException("Test JmriException");
         action.re = null;
-        Throwable thrown = catchThrowable( () -> socket.execute(false));
+        Throwable thrown = catchThrowable( () -> socket.execute(false, false));
         assertThat(thrown)
                 .withFailMessage("Evaluate throws an exception")
                 .isNotNull()
@@ -74,7 +79,7 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
         
         action.je = null;
         action.re = new RuntimeException("Test RuntimeException");
-        thrown = catchThrowable( () -> socket.execute(false));
+        thrown = catchThrowable( () -> socket.execute(false, false));
         assertThat(thrown)
                 .withFailMessage("Evaluate throws an exception")
                 .isNotNull()
@@ -84,7 +89,7 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
         // If the socket is not enabled, it shouldn't do anything
         socket.setEnabled(false);
         action.re = new RuntimeException("Test RuntimeException");
-        thrown = catchThrowable( () -> socket.execute(false));
+        thrown = catchThrowable( () -> socket.execute(false, false));
         assertThat(thrown)
                 .withFailMessage("Evaluate does nothing")
                 .isNull();
@@ -96,16 +101,27 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
         action.je = null;
         action.re = null;
         config._dontExecute = true;
-        action._value = false;
-        socket.execute(true);
-        Assert.assertFalse(action._value);
-        action._value = true;
-        socket.execute(false);
-        Assert.assertTrue(action._value);
+        action._hasChangedToTrue = false;
+        action._hasChangedToFalse = false;
+        socket.execute(true, false);
+        Assert.assertFalse(action._hasChangedToTrue);
+        Assert.assertFalse(action._hasChangedToFalse);
+        action._hasChangedToTrue = false;
+        action._hasChangedToFalse = false;
+        socket.execute(false, false);
+        Assert.assertFalse(action._hasChangedToTrue);
+        Assert.assertFalse(action._hasChangedToFalse);
         config._dontExecute = false;
-        action._value = false;
-        socket.execute(true);
-        Assert.assertTrue(action._value);
+        action._hasChangedToTrue = false;
+        action._hasChangedToFalse = false;
+        socket.execute(true, false);
+        Assert.assertTrue(action._hasChangedToTrue);
+        Assert.assertFalse(action._hasChangedToFalse);
+        action._hasChangedToTrue = false;
+        action._hasChangedToFalse = false;
+        socket.execute(false, true);
+        Assert.assertFalse(action._hasChangedToTrue);
+        Assert.assertTrue(action._hasChangedToFalse);
     }
     
     @Test
@@ -195,7 +211,8 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
         
         JmriException je = null;
         RuntimeException re = null;
-        boolean _value = false;
+        boolean _hasChangedToTrue = false;
+        boolean _hasChangedToFalse = false;
         boolean _vetoChange = false;
         
         MyDigitalBooleanAction(String sysName) {
@@ -253,10 +270,11 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
         }
 
         @Override
-        public void execute(boolean hasChangedToTrue) throws JmriException {
+        public void execute(boolean hasChangedToTrue, boolean hasChangedToFalse) throws JmriException {
             if (je != null) throw je;
             if (re != null) throw re;
-           _value = hasChangedToTrue;
+           _hasChangedToTrue = hasChangedToTrue;
+           _hasChangedToFalse = hasChangedToFalse;
         }
         
         @Override
