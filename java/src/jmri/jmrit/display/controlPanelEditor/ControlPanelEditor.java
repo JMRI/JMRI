@@ -417,7 +417,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _menuBar.add(_fileMenu, 0);
         _fileMenu.add(new jmri.jmrit.display.NewPanelAction(Bundle.getMessage("MenuItemNew")));
 
-        _fileMenu.add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("MenuItemStore")));
+        _fileMenu.add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("FileMenuItemStore")));
         JMenuItem storeIndexItem = new JMenuItem(Bundle.getMessage("MIStoreImageIndex"));
         _fileMenu.add(storeIndexItem);
         storeIndexItem.addActionListener((ActionEvent event) -> InstanceManager.getDefault(CatalogTreeManager.class).storeImageIndex());
@@ -1407,7 +1407,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
      */
     @Override
     protected void targetWindowClosingEvent(java.awt.event.WindowEvent e) {
-        targetWindowClosing(true);
+        targetWindowClosing();
     }
 
     @Override
