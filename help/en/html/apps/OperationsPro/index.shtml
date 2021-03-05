@@ -30,6 +30,7 @@
         <li><a href="https://www.jmri.org/manual/howtooperations/">"How To's"</a>(step-by-step instructions for common tasks)</li>
         <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml#TroubleShooting">Troubleshooting</a></li>
         <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml#PrintingManifests">Printing manifests</a></li>
+        <li><a href="../../web/Operations.shtml">Viewing from mobile devices</li>
         <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml">Detailed information</a> (see the Table of Contents for this page)</li>
         
     </ul>
