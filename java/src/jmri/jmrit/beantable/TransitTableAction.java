@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -117,12 +118,12 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             }
 
             @Override
-            public Transit getBySystemName(String name) {
+            public Transit getBySystemName(@Nonnull String name) {
                 return InstanceManager.getDefault(jmri.TransitManager.class).getBySystemName(name);
             }
 
             @Override
-            public Transit getByUserName(String name) {
+            public Transit getByUserName(@Nonnull String name) {
                 return InstanceManager.getDefault(jmri.TransitManager.class).getByUserName(name);
             }
 

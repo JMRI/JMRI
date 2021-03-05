@@ -59,19 +59,19 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnect
     public void configureManagers() {
 
         PowerManager powerManager = new MarklinPowerManager(getTrafficController());
-        store(powerManager,PowerManager.class);
+        store(powerManager, PowerManager.class);
         jmri.InstanceManager.store(powerManager, PowerManager.class);
 
         TurnoutManager turnoutManager = new MarklinTurnoutManager(this);
-        store(turnoutManager,TurnoutManager.class);
+        store(turnoutManager, TurnoutManager.class);
         jmri.InstanceManager.setTurnoutManager(turnoutManager);
 
         ThrottleManager throttleManager = new MarklinThrottleManager(this);
-        store(throttleManager,ThrottleManager.class);
+        store(throttleManager, ThrottleManager.class);
         jmri.InstanceManager.setThrottleManager(throttleManager);
 
         SensorManager sensorManager = new jmri.jmrix.marklin.MarklinSensorManager(this);
-        store(sensorManager,SensorManager.class);
+        store(sensorManager, SensorManager.class);
         jmri.InstanceManager.setSensorManager(sensorManager);
 
         register();

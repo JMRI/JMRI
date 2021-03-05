@@ -88,6 +88,21 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         f.pack();
         f.setVisible(true);
     }
+    
+    /**
+     * Notification that column visibility for the JTable has updated.
+     * <p>
+     * This is overridden by classes which have column visibility Checkboxes on bottom bar.
+     * <p>
+     * 
+     * Called on table startup and whenever a column goes hidden / visible.
+     * 
+     * @param colsVisible   array of ALL table columns and their visibility
+     *                      status in order of main Table Model, NOT XTableColumnModel.
+     */
+    protected void columnsVisibleUpdated(boolean[] colsVisible){
+        log.debug("columns updated {}",colsVisible);
+    }
 
     public BeanTableDataModel<E> getTableDataModel() {
         createModel();
@@ -216,11 +231,12 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
 
     /**
      * Configure the combo box listing managers.
+     * Can be placed on Add New pane to select a connection for the new item.
      *
      * @param comboBox     the combo box to configure
      * @param manager      the current manager
      * @param managerClass the implemented manager class for the current
-     *                     mananger; this is the class used by
+     *                     manager; this is the class used by
      *                     {@link InstanceManager#getDefault(Class)} to get the
      *                     default manager, which may or may not be the current
      *                     manager
@@ -276,6 +292,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
      * @param ex the exception that occurred
      */
     protected void displayHwError(String curAddress, Exception ex) {
+        log.warn("Invalid Entry: {}",ex.getMessage());
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager .class).
                 showErrorMessage(Bundle.getMessage("ErrorTitle"),
                         Bundle.getMessage("ErrorConvertHW", curAddress),"" + ex,"",

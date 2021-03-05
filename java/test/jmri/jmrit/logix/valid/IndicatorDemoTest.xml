@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
-<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+<?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>19</minor>
-    <test>1</test>
+    <minor>21</minor>
+    <test>3</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -250,7 +250,7 @@
       <systemName>IM4</systemName>
       <userName>TrainName</userName>
     </memory>
-    <memory value="2:50 PM">
+    <memory value="11:40 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -789,377 +789,6 @@
       </portal>
     </oblock>
   </oblocks>
-  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml">
-    <warrant systemName="IW1" userName="WestToEastOnMain" wtype="normal">
-      <blockOrder pathName="westMain" entryName="" exitName="westMain">
-        <block systemName="OB1" userName="West" />
-      </blockOrder>
-      <blockOrder pathName="main" entryName="westMain" exitName="eastMain">
-        <block systemName="OB2" userName="Main" />
-      </blockOrder>
-      <blockOrder pathName="eastMain" entryName="eastMain" exitName="">
-        <block systemName="OB3" userName="East" />
-      </blockOrder>
-      <throttleCommand time="219" command="Speed" value="0.0" block="OB1" />
-      <throttleCommand time="3703" command="Speed" value="0.007936508" block="OB1" />
-      <throttleCommand time="203" command="Set Sensor" value="active" block="IS50" />
-      <throttleCommand time="203" command="Speed" value="0.17460318" block="OB1" />
-      <throttleCommand time="234" command="Speed" value="0.2857143" block="OB1" />
-      <throttleCommand time="203" command="Speed" value="0.35714287" block="OB1" />
-      <throttleCommand time="8672" command="NoOp" value="Enter Block" block="OB2" />
-      <throttleCommand time="3157" command="NoOp" value="Enter Block" block="OB3" />
-      <throttleCommand time="1640" command="Speed" value="0.2857143" block="OB3" />
-      <throttleCommand time="1203" command="Set Sensor" value="inactive" block="IS50" />
-      <throttleCommand time="1203" command="Speed" value="0.103174604" block="OB3" />
-      <throttleCommand time="1219" command="Speed" value="0.03968254" block="OB3" />
-      <throttleCommand time="1594" command="Speed" value="0.0" block="OB3" />
-      <train trainId="Hudson" dccAddress="502" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="PDQX" />
-    </warrant>
-    <warrant systemName="IW2" userName="WestToEastOnSiding" wtype="normal">
-      <blockOrder pathName="westSiding" entryName="" exitName="westSiding">
-        <block systemName="OB1" userName="West" />
-      </blockOrder>
-      <blockOrder pathName="siding" entryName="westSiding" exitName="eastSiding">
-        <block systemName="OB4" userName="Siding" />
-      </blockOrder>
-      <blockOrder pathName="Siding2Main" entryName="eastSiding" exitName="East-FarEast">
-        <block systemName="OB3" userName="East" />
-      </blockOrder>
-      <throttleCommand time="0" command="Speed" value="0.0" block="OB1" />
-      <throttleCommand time="2781" command="F0" value="true" block="OB1" />
-      <throttleCommand time="1656" command="F2" value="true" block="OB1" />
-      <throttleCommand time="110" command="F2" value="false" block="OB1" />
-      <throttleCommand time="500" command="F2" value="true" block="OB1" />
-      <throttleCommand time="125" command="F2" value="false" block="OB1" />
-      <throttleCommand time="1359" command="Speed" value="0.007936508" block="OB1" />
-      <throttleCommand time="437" command="Speed" value="0.46825397" block="OB1" />
-      <throttleCommand time="6329" command="NoOp" value="Enter Block" block="OB4" />
-      <throttleCommand time="4609" command="Speed" value="0.32539684" block="OB4" />
-      <throttleCommand time="7625" command="NoOp" value="Enter Block" block="OB3" />
-      <throttleCommand time="7578" command="Speed" value="0.0" block="OB3" />
-      <throttleCommand time="1313" command="F0" value="false" block="OB3" />
-      <train trainId="SantaFe" dccAddress="4882" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="EZX1" />
-    </warrant>
-    <warrant systemName="IW4" userName="EastToReallyFarAway" wtype="normal">
-      <blockOrder pathName="eastMain" entryName="" exitName="East-FarEast">
-        <block systemName="OB3" userName="East" />
-      </blockOrder>
-      <blockOrder pathName="T0FarAway" entryName="East-FarEast" exitName="FarEast-FarAway">
-        <block systemName="OB21" userName="FarEast" />
-      </blockOrder>
-      <blockOrder pathName="CrossOverToFarEast" entryName="FarEast-FarAway" exitName="FarAway-FarMiddle">
-        <block systemName="OB30" userName="FarAway" />
-      </blockOrder>
-      <blockOrder pathName="Main" entryName="FarAway-FarMiddle" exitName="FarMiddle-ReallyFar">
-        <block systemName="OB34" userName="FarMiddle" />
-      </blockOrder>
-      <blockOrder pathName="Main" entryName="FarMiddle-ReallyFar" exitName="">
-        <block systemName="OB32" userName="ReallyFarAway" />
-      </blockOrder>
-      <throttleCommand time="0" command="Speed" value="0.0" block="OB3" />
-      <throttleCommand time="2187" command="Speed" value="0.023809524" block="OB3" />
-      <throttleCommand time="500" command="Speed" value="0.50793654" block="OB3" />
-      <throttleCommand time="4157" command="NoOp" value="Enter Block" block="OB21" />
-      <throttleCommand time="9578" command="NoOp" value="Enter Block" block="OB30" />
-      <throttleCommand time="6812" command="NoOp" value="Enter Block" block="OB34" />
-      <throttleCommand time="6813" command="NoOp" value="Enter Block" block="OB32" />
-      <throttleCommand time="3797" command="Speed" value="0.0" block="OB32" />
-      <train trainId="Decapod" dccAddress="1110" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="1110" />
-    </warrant>
-    <warrant systemName="IW6" userName="FarEastToFarWestOnMain" wtype="normal">
-      <blockOrder pathName="Main" entryName="" exitName="East-FarEast">
-        <block systemName="OB21" userName="FarEast" />
-      </blockOrder>
-      <blockOrder pathName="eastMain" entryName="East-FarEast" exitName="eastMain">
-        <block systemName="OB3" userName="East" />
-      </blockOrder>
-      <blockOrder pathName="main" entryName="eastMain" exitName="westMain">
-        <block systemName="OB2" userName="Main" />
-      </blockOrder>
-      <blockOrder pathName="westMain" entryName="westMain" exitName="West-FarWest">
-        <block systemName="OB1" userName="West" />
-      </blockOrder>
-      <blockOrder pathName="Main" entryName="West-FarWest" exitName="FarWest-Infinity">
-        <block systemName="OB22" userName="FarWest" />
-      </blockOrder>
-      <throttleCommand time="78" command="Speed" value="0.0" block="OB21" />
-      <throttleCommand time="2062" command="F2" value="true" block="OB21" />
-      <throttleCommand time="110" command="F2" value="false" block="OB21" />
-      <throttleCommand time="578" command="F2" value="true" block="OB21" />
-      <throttleCommand time="141" command="F2" value="false" block="OB21" />
-      <throttleCommand time="1296" command="Speed" value="0.007936508" block="OB21" />
-      <throttleCommand time="485" command="Speed" value="0.18253969" block="OB21" />
-      <throttleCommand time="6734" command="NoOp" value="Enter Block" block="OB3" />
-      <throttleCommand time="5985" command="Speed" value="0.31746033" block="OB3" />
-      <throttleCommand time="3281" command="NoOp" value="Enter Block" block="OB2" />
-      <throttleCommand time="6890" command="Speed" value="0.44444445" block="OB2" />
-      <throttleCommand time="5625" command="NoOp" value="Enter Block" block="OB1" />
-      <throttleCommand time="2000" command="Sensor" value="active" block="" />
-      <throttleCommand time="3000" command="Speed" value="0.31746033" block="OB1" />
-      <throttleCommand time="5734" command="NoOp" value="Enter Block" block="OB22" />
-      <throttleCommand time="5469" command="Speed" value="0.03968254" block="OB22" />
-      <throttleCommand time="0" command="Sensor" value="inactive" block="" />
-      <throttleCommand time="859" command="Speed" value="0.015873017" block="OB22" />
-      <train trainId="Hudson" dccAddress="502" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="PDQX" />
-    </warrant>
-    <warrant systemName="IW7" userName="WayFarToWest" wtype="normal">
-      <blockOrder pathName="ToFarAway" entryName="" exitName="WayFarAwaySouth">
-        <block systemName="OB31" userName="WayFarAway" />
-      </blockOrder>
-      <blockOrder pathName="Main" entryName="WayFarAwaySouth" exitName="FarAway-FarMiddle">
-        <block systemName="OB30" userName="FarAway" />
-      </blockOrder>
-      <blockOrder pathName="MiddleCrosstoInfinity" entryName="FarAway-FarMiddle" exitName="FarMiddle-Infinity">
-        <block systemName="OB34" userName="FarMiddle" />
-      </blockOrder>
-      <blockOrder pathName="IntoInfinity" entryName="FarMiddle-Infinity" exitName="FarWest-Infinity">
-        <block systemName="OB20" userName="Infinity&amp;Beyond" />
-      </blockOrder>
-      <blockOrder pathName="Main" entryName="FarWest-Infinity" exitName="West-FarWest">
-        <block systemName="OB22" userName="FarWest" />
-      </blockOrder>
-      <blockOrder pathName="westSiding" entryName="West-FarWest" exitName="westSiding">
-        <block systemName="OB1" userName="West" />
-      </blockOrder>
-      <throttleCommand time="0" command="Speed" value="0.0" block="OB31" />
-      <throttleCommand time="2828" command="Speed" value="0.015873017" block="OB31" />
-      <throttleCommand time="328" command="Speed" value="0.3888889" block="OB31" />
-      <throttleCommand time="6375" command="F2" value="true" block="OB31" />
-      <throttleCommand time="94" command="F2" value="false" block="OB31" />
-      <throttleCommand time="2672" command="NoOp" value="Enter Block" block="OB31" />
-      <throttleCommand time="31" command="NoOp" value="Enter Block" block="OB30" />
-      <throttleCommand time="4000" command="F2" value="true" block="OB30" />
-      <throttleCommand time="141" command="F2" value="false" block="OB30" />
-      <throttleCommand time="5093" command="NoOp" value="Enter Block" block="OB34" />
-      <throttleCommand time="4453" command="F2" value="true" block="OB34" />
-      <throttleCommand time="94" command="F2" value="false" block="OB34" />
-      <throttleCommand time="4844" command="NoOp" value="Enter Block" block="OB20" />
-      <throttleCommand time="8078" command="NoOp" value="Enter Block" block="OB22" />
-      <throttleCommand time="5844" command="NoOp" value="Enter Block" block="OB1" />
-      <throttleCommand time="6859" command="Speed" value="0.0" block="OB1" />
-      <train trainId="Decapod" dccAddress="1110" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="XYZ" />
-    </warrant>
-    <warrant systemName="IW8" userName="Spur1ToEast" wtype="normal">
-      <blockOrder pathName="Spur1" entryName="" exitName="sidingYard">
-        <block systemName="OB4Y" userName="SidingYard" />
-      </blockOrder>
-      <blockOrder pathName="yard" entryName="sidingYard" exitName="westSiding">
-        <block systemName="OB4" userName="Siding" />
-      </blockOrder>
-      <blockOrder pathName="westSiding" entryName="westSiding" exitName="West-FarWest">
-        <block systemName="OB1" userName="West" />
-      </blockOrder>
-      <blockOrder pathName="Main" entryName="West-FarWest" exitName="FarWest-Infinity">
-        <block systemName="OB22" userName="FarWest" />
-      </blockOrder>
-      <blockOrder pathName="Main" entryName="FarWest-Infinity" exitName="FarEast-Infinity">
-        <block systemName="OB20" userName="Infinity&amp;Beyond" />
-      </blockOrder>
-      <blockOrder pathName="Main" entryName="FarEast-Infinity" exitName="East-FarEast">
-        <block systemName="OB21" userName="FarEast" />
-      </blockOrder>
-      <blockOrder pathName="eastMain" entryName="East-FarEast" exitName="eastMain">
-        <block systemName="OB3" userName="East" />
-      </blockOrder>
-      <throttleCommand time="15" command="Speed" value="0.0" block="OB4Y" />
-      <throttleCommand time="1875" command="Speed" value="0.007936508" block="OB4Y" />
-      <throttleCommand time="438" command="Speed" value="0.44444445" block="OB4Y" />
-      <throttleCommand time="4391" command="NoOp" value="Enter Block" block="OB4Y" />
-      <throttleCommand time="31" command="NoOp" value="Enter Block" block="OB4" />
-      <throttleCommand time="6250" command="NoOp" value="Enter Block" block="OB1" />
-      <throttleCommand time="6250" command="Speed" value="0.54761904" block="OB1" />
-      <throttleCommand time="3172" command="NoOp" value="Enter Block" block="OB22" />
-      <throttleCommand time="5234" command="NoOp" value="Enter Block" block="OB20" />
-      <throttleCommand time="5594" command="Speed" value="0.34126985" block="OB20" />
-      <throttleCommand time="4031" command="NoOp" value="Enter Block" block="OB21" />
-      <throttleCommand time="4344" command="NoOp" value="Enter Block" block="OB3" />
-      <throttleCommand time="5437" command="Speed" value="0.07936508" block="OB3" />
-      <throttleCommand time="282" command="Speed" value="0.0" block="OB3" />
-      <train trainId="SantaFe" dccAddress="4882" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="4882" />
-    </warrant>
-    <warrant systemName="IW11" userName="Spur2 toMain" wtype="normal">
-      <blockOrder pathName="Spur2" entryName="" exitName="sidingYard">
-        <block systemName="OB4Y" userName="SidingYard" />
-      </blockOrder>
-      <blockOrder pathName="yard" entryName="sidingYard" exitName="westSiding">
-        <block systemName="OB4" userName="Siding" />
-      </blockOrder>
-      <blockOrder pathName="westSiding" entryName="westSiding" exitName="West-FarWest">
-        <block systemName="OB1" userName="West" />
-      </blockOrder>
-      <blockOrder pathName="Main" entryName="West-FarWest" exitName="FarWest-Infinity">
-        <block systemName="OB22" userName="FarWest" />
-      </blockOrder>
-      <blockOrder pathName="Main" entryName="FarWest-Infinity" exitName="FarEast-Infinity">
-        <block systemName="OB20" userName="Infinity&amp;Beyond" />
-      </blockOrder>
-      <blockOrder pathName="Main" entryName="FarEast-Infinity" exitName="East-FarEast">
-        <block systemName="OB21" userName="FarEast" />
-      </blockOrder>
-      <blockOrder pathName="eastMain" entryName="East-FarEast" exitName="eastMain">
-        <block systemName="OB3" userName="East" />
-      </blockOrder>
-      <blockOrder pathName="main" entryName="eastMain" exitName="westMain">
-        <block systemName="OB2" userName="Main" />
-      </blockOrder>
-      <throttleCommand time="0" command="Speed" value="0.0" block="OB4Y" />
-      <throttleCommand time="4297" command="Speed" value="0.007936508" block="OB4Y" />
-      <throttleCommand time="500" command="Speed" value="0.36507937" block="OB4Y" />
-      <throttleCommand time="297" command="Speed" value="0.43650794" block="OB4Y" />
-      <throttleCommand time="10234" command="NoOp" value="Enter Block" block="OB4Y" />
-      <throttleCommand time="16" command="NoOp" value="Enter Block" block="OB4" />
-      <throttleCommand time="8969" command="NoOp" value="Enter Block" block="OB1" />
-      <throttleCommand time="12406" command="NoOp" value="Enter Block" block="OB22" />
-      <throttleCommand time="9047" command="NoOp" value="Enter Block" block="OB20" />
-      <throttleCommand time="17672" command="NoOp" value="Enter Block" block="OB21" />
-      <throttleCommand time="5922" command="NoOp" value="Enter Block" block="OB3" />
-      <throttleCommand time="9531" command="Speed" value="0.30952382" block="OB3" />
-      <throttleCommand time="2422" command="NoOp" value="Enter Block" block="OB2" />
-      <throttleCommand time="7250" command="Speed" value="0.0" block="OB2" />
-      <train trainId="Consolidation153" dccAddress="153" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="153" />
-    </warrant>
-    <warrant systemName="IW12" userName="FarAway" wtype="normal">
-      <blockOrder pathName="Main" entryName="" exitName="FarMiddle-ReallyFar">
-        <block systemName="OB32" userName="ReallyFarAway" />
-      </blockOrder>
-      <blockOrder pathName="Main" entryName="FarMiddle-ReallyFar" exitName="FarAway-FarMiddle">
-        <block systemName="OB34" userName="FarMiddle" />
-      </blockOrder>
-      <blockOrder pathName="Main" entryName="FarAway-FarMiddle" exitName="WayFarAwaySouth">
-        <block systemName="OB30" userName="FarAway" />
-      </blockOrder>
-      <blockOrder pathName="ToFarAway" entryName="WayFarAwaySouth" exitName="WayFarAwayWest">
-        <block systemName="OB31" userName="WayFarAway" />
-      </blockOrder>
-      <throttleCommand time="31" command="Speed" value="0.0" block="OB32" />
-      <throttleCommand time="1781" command="Speed" value="0.015873017" block="OB32" />
-      <throttleCommand time="547" command="Speed" value="0.31746033" block="OB32" />
-      <throttleCommand time="1547" command="F2" value="true" block="OB32" />
-      <throttleCommand time="610" command="F2" value="false" block="OB32" />
-      <throttleCommand time="3828" command="NoOp" value="Enter Block" block="OB34" />
-      <throttleCommand time="5656" command="NoOp" value="Enter Block" block="OB30" />
-      <throttleCommand time="6641" command="F2" value="true" block="OB30" />
-      <throttleCommand time="625" command="F2" value="false" block="OB30" />
-      <throttleCommand time="2953" command="NoOp" value="Enter Block" block="OB31" />
-      <throttleCommand time="2047" command="F2" value="true" block="OB31" />
-      <throttleCommand time="859" command="F2" value="false" block="OB31" />
-      <throttleCommand time="1953" command="Speed" value="0.0" block="OB31" />
-      <train trainId="Zephr" dccAddress="101" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="ZEP" />
-    </warrant>
-    <warrant systemName="IW!W7" userName="EastToWest" wtype="normal">
-      <blockOrder pathName="eastMain" entryName="" exitName="East-FarEast">
-        <block systemName="OB3" userName="East" />
-      </blockOrder>
-      <blockOrder pathName="Main" entryName="East-FarEast" exitName="FarEast-Middle">
-        <block systemName="OB21" userName="FarEast" />
-      </blockOrder>
-      <blockOrder pathName="Main" entryName="FarEast-Middle" exitName="Middle-Infinity">
-        <block systemName="OB24" userName="Middle" />
-      </blockOrder>
-      <blockOrder pathName="Main" entryName="Middle-Infinity" exitName="FarWest-Infinity">
-        <block systemName="OB20" userName="Infinity&amp;Beyond" />
-      </blockOrder>
-      <blockOrder pathName="Main" entryName="FarWest-Infinity" exitName="West-FarWest">
-        <block systemName="OB22" userName="FarWest" />
-      </blockOrder>
-      <blockOrder pathName="westMain" entryName="West-FarWest" exitName="westMain">
-        <block systemName="OB1" userName="West" />
-      </blockOrder>
-      <throttleCommand time="16" command="Speed" value="0.0" block="OB3" />
-      <throttleCommand time="2000" command="F0" value="false" block="OB3" />
-      <throttleCommand time="1297" command="Speed" value="0.023809524" block="OB3" />
-      <throttleCommand time="312" command="Speed" value="0.3888889" block="OB3" />
-      <throttleCommand time="6797" command="NoOp" value="Enter Block" block="OB21" />
-      <throttleCommand time="3782" command="NoOp" value="Enter Block" block="OB24" />
-      <throttleCommand time="4843" command="F2" value="true" block="OB24" />
-      <throttleCommand time="110" command="F2" value="false" block="OB24" />
-      <throttleCommand time="4109" command="NoOp" value="Enter Block" block="OB20" />
-      <throttleCommand time="2516" command="F2" value="true" block="OB20" />
-      <throttleCommand time="93" command="F2" value="false" block="OB20" />
-      <throttleCommand time="6329" command="F2" value="true" block="OB20" />
-      <throttleCommand time="109" command="F2" value="false" block="OB20" />
-      <throttleCommand time="1687" command="NoOp" value="Enter Block" block="OB22" />
-      <throttleCommand time="5782" command="NoOp" value="Enter Block" block="OB1" />
-      <throttleCommand time="2390" command="Speed" value="0.0" block="OB1" />
-      <train trainId="Consolidation153" dccAddress="153" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="153" />
-    </warrant>
-    <warrant systemName="IWIM9" userName="LoopEastToEast" wtype="normal">
-      <blockOrder pathName="Siding2Main" entryName="" exitName="eastSiding">
-        <block systemName="OB3" userName="East" />
-      </blockOrder>
-      <blockOrder pathName="siding" entryName="eastSiding" exitName="westSiding">
-        <block systemName="OB4" userName="Siding" />
-      </blockOrder>
-      <blockOrder pathName="westSiding" entryName="westSiding" exitName="West-FarWest">
-        <block systemName="OB1" userName="West" />
-      </blockOrder>
-      <blockOrder pathName="Main" entryName="West-FarWest" exitName="FarWest-Infinity">
-        <block systemName="OB22" userName="FarWest" />
-      </blockOrder>
-      <blockOrder pathName="IntoInfinity" entryName="FarWest-Infinity" exitName="FarMiddle-Infinity">
-        <block systemName="OB20" userName="Infinity&amp;Beyond" />
-      </blockOrder>
-      <blockOrder pathName="MiddleCrosstoInfinity" entryName="FarMiddle-Infinity" exitName="FarAway-FarMiddle">
-        <block systemName="OB34" userName="FarMiddle" />
-      </blockOrder>
-      <blockOrder pathName="CrossOverToFarEast" entryName="FarAway-FarMiddle" exitName="FarEast-FarAway">
-        <block systemName="OB30" userName="FarAway" />
-      </blockOrder>
-      <blockOrder pathName="T0FarAway" entryName="FarEast-FarAway" exitName="East-FarEast">
-        <block systemName="OB21" userName="FarEast" />
-      </blockOrder>
-      <blockOrder pathName="eastMain" entryName="East-FarEast" exitName="eastMain">
-        <block systemName="OB3" userName="East" />
-      </blockOrder>
-      <viaOrder pathName="siding" entryName="" exitName="">
-        <block systemName="OB4" userName="Siding" />
-      </viaOrder>
-      <train trainId="Hudson" dccAddress="502" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="FOO" />
-    </warrant>
-    <warrant systemName="IWLOOP" userName="LoopWestToEast" wtype="normal">
-      <blockOrder pathName="Main" entryName="" exitName="FarWest-Infinity">
-        <block systemName="OB20" userName="Infinity&amp;Beyond" />
-      </blockOrder>
-      <blockOrder pathName="Main" entryName="FarWest-Infinity" exitName="West-FarWest">
-        <block systemName="OB22" userName="FarWest" />
-      </blockOrder>
-      <blockOrder pathName="westMain" entryName="West-FarWest" exitName="westMain">
-        <block systemName="OB1" userName="West" />
-      </blockOrder>
-      <blockOrder pathName="main" entryName="westMain" exitName="eastMain">
-        <block systemName="OB2" userName="Main" />
-      </blockOrder>
-      <blockOrder pathName="eastMain" entryName="eastMain" exitName="East-FarEast">
-        <block systemName="OB3" userName="East" />
-      </blockOrder>
-      <blockOrder pathName="Main" entryName="East-FarEast" exitName="FarEast-Middle">
-        <block systemName="OB21" userName="FarEast" />
-      </blockOrder>
-      <blockOrder pathName="Main" entryName="FarEast-Middle" exitName="Middle-Infinity">
-        <block systemName="OB24" userName="Middle" />
-      </blockOrder>
-      <blockOrder pathName="Main" entryName="Middle-Infinity" exitName="FarWest-Infinity">
-        <block systemName="OB20" userName="Infinity&amp;Beyond" />
-      </blockOrder>
-      <throttleCommand time="0" command="Speed" value="0.0" block="OB20" />
-      <throttleCommand time="1875" command="Speed" value="0.031746034" block="OB20" />
-      <throttleCommand time="703" command="Speed" value="0.4920635" block="OB20" />
-      <throttleCommand time="3094" command="NoOp" value="Enter Block" block="OB22" />
-      <throttleCommand time="5234" command="NoOp" value="Enter Block" block="OB1" />
-      <throttleCommand time="3625" command="NoOp" value="Enter Block" block="OB2" />
-      <throttleCommand time="4688" command="NoOp" value="Enter Block" block="OB3" />
-      <throttleCommand time="3453" command="NoOp" value="Enter Block" block="OB21" />
-      <throttleCommand time="1000" command="Speed" value="0" block="OB21" />
-      <throttleCommand time="2000" command="Wait Sensor" value="Active" block="IS51" />
-      <throttleCommand time="0" command="Wait Sensor" value="Active" block="IS52" />
-      <throttleCommand time="3406" command="NoOp" value="Enter Block" block="OB24" />
-      <throttleCommand time="4485" command="NoOp" value="Enter Block" block="OB20" />
-      <throttleCommand time="1000" command="Set Sensor" value="Inactive" block="IS51" />
-      <throttleCommand time="0" command="Set Sensor" value="Inactive" block="IS52" />
-      <throttleCommand time="3000" command="Speed" value="0.0" block="OB20" />
-      <train trainId="Hudson" dccAddress="502" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="502" />
-    </warrant>
-  </warrants>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
@@ -1376,24 +1005,7 @@
     </conditional>
   </conditionals>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue Dec 28 12:04:15 PST 2010" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
-  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="Indicator Demo 1" x="1966" y="27" height="458" width="1249" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="horizontal" redBackground="238" greenBackground="238" blueBackground="238" state="0" shapeSelect="yes">
-    <icons>
-      <visible>
-        <url>program:resources/icons/throttles/RoundRedCircle20.png</url>
-      </visible>
-      <path_edit>
-        <url>program:resources/icons/greenSquare.gif</url>
-      </path_edit>
-      <hidden>
-        <url>program:resources/icons/Invisible.gif</url>
-      </hidden>
-      <to_arrow>
-        <url>program:resources/icons/track/toArrow.gif</url>
-      </to_arrow>
-      <from_arrow>
-        <url>program:resources/icons/track/fromArrow.gif</url>
-      </from_arrow>
-    </icons>
+  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="Indicator Demo 1" x="2005" y="398" height="409" width="1249" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="horizontal" redBackground="238" greenBackground="238" blueBackground="238" state="0" shapeSelect="yes">
     <indicatortrackicon x="266" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "West"</tooltip>
       <occupancyblock>OB1</occupancyblock>
@@ -4732,6 +4344,7 @@
         <path>OutOfInfinity</path>
       </paths>
     </indicatorturnouticon>
+    <!-- next element logs: WARN  - getIconMap failed. family "null" not found in item type "Portal" Be sure to assertWarnMessage in TrackerTest test -->
     <PortalIcon x="31" y="132" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="WayFarAwayWest" toBlockName="Infinity&amp;Beyond" fromBlockName="WayFarAway" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>Portal "WayFarAwayWest" between OBlocks "WayFarAway" and "null"</tooltip>
     </PortalIcon>
@@ -4739,71 +4352,104 @@
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Wed Dec 18 14:45:03 PST 2019</date>
+      <date>Wed Oct 28 14:40:48 PDT 2020</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Wed Dec 18 14:45:14 PST 2019</date>
-      <filename>/C:/jmriPanels/IndicatorDemoTest.xml</filename>
+      <date>Wed Oct 28 14:41:35 PDT 2020</date>
+      <filename>/C:/Git/JMRI/java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Wed Dec 18 14:23:11 PST 2019</date>
+          <date>Wed Oct 28 11:39:13 PDT 2020</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Wed Dec 18 14:23:22 PST 2019</date>
-          <filename>/C:/jmriPanels/IndicatorDemoTest.xml</filename>
+          <date>Wed Oct 28 11:39:47 PDT 2020</date>
+          <filename>/C:/Git/JMRI/java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Wed Dec 18 11:28:52 PST 2019</date>
+              <date>Wed Dec 18 14:45:03 PST 2019</date>
               <filename>JMRI program</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Wed Dec 18 11:29:03 PST 2019</date>
+              <date>Wed Dec 18 14:45:14 PST 2019</date>
               <filename>/C:/jmriPanels/IndicatorDemoTest.xml</filename>
               <filehistory>
                 <operation>
                   <type>app</type>
-                  <date>Tue Dec 17 17:08:25 PST 2019</date>
+                  <date>Wed Dec 18 14:23:11 PST 2019</date>
                   <filename>JMRI program</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Tue Dec 17 17:08:55 PST 2019</date>
-                  <filename>/C:/Git/jmri/java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml</filename>
-                  <filehistory />
+                  <date>Wed Dec 18 14:23:22 PST 2019</date>
+                  <filename>/C:/jmriPanels/IndicatorDemoTest.xml</filename>
+                  <filehistory>
+                    <operation>
+                      <type>app</type>
+                      <date>Wed Dec 18 11:28:52 PST 2019</date>
+                      <filename>JMRI program</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Wed Dec 18 11:29:03 PST 2019</date>
+                      <filename>/C:/jmriPanels/IndicatorDemoTest.xml</filename>
+                      <filehistory>
+                        <operation>
+                          <type>app</type>
+                          <date>Tue Dec 17 17:08:25 PST 2019</date>
+                          <filename>JMRI program</filename>
+                        </operation>
+                        <operation>
+                          <type>Load OK</type>
+                          <date>Tue Dec 17 17:08:55 PST 2019</date>
+                          <filename>/C:/Git/jmri/java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml</filename>
+                        </operation>
+                        <operation>
+                          <type>Store</type>
+                          <date>Tue Dec 17 17:20:55 PST 2019</date>
+                          <filename />
+                        </operation>
+                      </filehistory>
+                    </operation>
+                    <operation>
+                      <type>Store</type>
+                      <date>Wed Dec 18 11:44:10 PST 2019</date>
+                      <filename />
+                    </operation>
+                  </filehistory>
                 </operation>
                 <operation>
                   <type>Store</type>
-                  <date>Tue Dec 17 17:20:55 PST 2019</date>
+                  <date>Wed Dec 18 14:44:46 PST 2019</date>
                   <filename />
                 </operation>
               </filehistory>
             </operation>
             <operation>
               <type>Store</type>
-              <date>Wed Dec 18 11:44:10 PST 2019</date>
+              <date>Wed Dec 18 14:50:47 PST 2019</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Wed Dec 18 14:44:46 PST 2019</date>
+          <date>Wed Oct 28 12:43:21 PDT 2020</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Wed Dec 18 14:50:47 PST 2019</date>
+      <date>Wed Oct 28 14:41:50 PDT 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.19.1ish+pete_+2019-12-18T22:44:56Z+Rb4ee00879e on Wed Dec 18 14:50:47 PST 2019-->
+  <!--Written by JMRI version 4.21.3ish+pete_+2020-10-28T21:40:37Z+R65b6992216 on Wed Oct 28 14:41:50 PDT 2020-->
 </layout-config>

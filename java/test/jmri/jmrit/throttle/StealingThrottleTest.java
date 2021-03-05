@@ -8,7 +8,7 @@ import jmri.util.junit.rules.RetryRule;
 import org.junit.*;
 
 /**
- * Test stealing functionality of ThrottleFrame
+ * Test stealing functionality of ThrottleFrame.
  *
  * @author Paul Bender Copyright (C) 2018
  */
@@ -24,7 +24,7 @@ public class StealingThrottleTest {
     @Test
     public void testSetAndReleaseWithSteal() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
+        to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
         to.typeAddressValue(42);
         to.pushSetButton();
 
@@ -41,7 +41,7 @@ public class StealingThrottleTest {
     @Test
     public void testSetAndRefuseSteal() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
+        to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
         to.typeAddressValue(42);
         to.pushSetButton();
 
@@ -56,7 +56,7 @@ public class StealingThrottleTest {
     @Test
     public void testRefuseOneStealOne() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
+        to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
         to.typeAddressValue(42);
         to.pushSetButton();
 
@@ -94,7 +94,6 @@ public class StealingThrottleTest {
             panel = new ThrottleFrame(frame);
             frame.setExtendedState(frame.getExtendedState() | java.awt.Frame.MAXIMIZED_BOTH);
             panel.toFront();
-            to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
         }
     }
 
@@ -113,4 +112,5 @@ public class StealingThrottleTest {
         to = null;
         JUnitUtil.tearDown();
     }
+
 }

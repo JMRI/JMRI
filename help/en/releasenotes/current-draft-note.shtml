@@ -4,22 +4,32 @@
           <li></li>
         </ul>
 
+        <h4>Acela CTI</h4>
+            <ul>
+                <li></li>
+            </ul>
+
 	    <h4>Anyma DMX512</h4>
             <ul>
                 <li></li>
             </ul>
-		
+
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-		
+
+        <h4>CBUS</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
             </ul>
 
-        <h4>DCC++</h4>
+        <h4>DCC++ and DCC-EX</h4>
             <ul>
                 <li></li>
             </ul>
@@ -44,10 +54,14 @@
                 <li></li>
             </ul>
 
+        <h4>Internal</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>IPOCSMR</h4>
             <ul>
-                <li>Initial support added.</li>
-                <li>Turnouts, Lights (on/off) and Sensors</li>
+                <li>Test and code were cleaned up</li>
             </ul>
 
         <h4>JMRI Simple Server/JMRI Client</h4>
@@ -70,14 +84,14 @@
                 <li></li>
             </ul>
 
-        <h4>MERG CBUS</h4>
+        <h4>MERG</h4>
             <ul>
-                <li>Default Output Interval reduced to 100ms.</li>
+                <li></li>
             </ul>
 
         <h4>MQTT</h4>
             <ul>
-                <li>Fixed a bug that caused an erroneous ERROR message on operating MQTT Lights</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -97,7 +111,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a></h4>
             <ul>
-                <li>Default Output Interval reduced to 100ms.</li>
+                <li></li>
             </ul>
 
         <h4>RFID</h4>
@@ -132,7 +146,8 @@
 
         <h4>Uhlenbrock Intellibox</h4>
             <ul>
-                <li></li>
+                <li>LNCV Programing of the Daisy II manual throttle and FunkMaster Wireless Hub was added.<br>
+                  Use a DecoderPro definition with a Ops Mode roster entry.</li>
             </ul>
 
         <h4>Zimo MXULF</h4>
@@ -284,7 +299,7 @@
             <ul>
                 <li></li>
             </ul>
-	    
+
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -322,7 +337,8 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li>Zimo Swiss Mapping was updated bi Nigel Cliffe to V36+, adding features to select the dimming
+                  group for each output in the table and to set the dimming levels.</li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -377,6 +393,12 @@
           <li></li>
         </ul>
 
+    <h3>Meters and MeterFrames</h3>
+        <a id="Meters" name="Meters"></a>
+        <ul>
+            <li></li>
+        </ul>
+
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
@@ -404,11 +426,14 @@
             <ul>
                 <li></li>
             </ul>
-   
+
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>Added an option to <strong>Preferences &rArr; Display</strong> to limit the
+            number of rows when a combo box is using the <strong>setupComboBoxMaxRows</strong>
+            feature.  This is useful for large screens.
+            </li>
         </ul>
 
     <h3>Resources</h3>
@@ -423,12 +448,12 @@
             <li></li>
         </ul>
 
-    <h3>Routes</h3>    
+    <h3>Routes</h3>
         <a id="Routes" name="Routes"></a>
        <ul>
             <li></li>
        </ul>
-       
+
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
@@ -460,7 +485,7 @@
             <ul>
                 <li></li>
             </ul>
-            
+
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
@@ -468,7 +493,7 @@
 
 	    <h4>Cab Signals</h4>
             <ul>
-                <li></li>
+                <li>Better set row height in table.</li>
             </ul>
 
     	<h4>Simple Signal Logic</h4>
@@ -490,7 +515,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Under the hood code clean up for  throttles (all systems), safe release of throttles.</li>
         </ul>
 
     <h3>Timetable</h3>
@@ -528,7 +553,13 @@
         <ul>
             <li></li>
         </ul>
-        
+
+   <h3>Web Server</h3>
+        <a id="server" name="server"></a>
+        <ul>
+            <li></li>
+        </ul>
+
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
@@ -538,8 +569,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>The Ant version invoked by Maven was bumped to 1.10.8.  No user
-                action required, but developers need to be online the first time
-                they build using Maven.</li>
+            <li></li>
         </ul>
 

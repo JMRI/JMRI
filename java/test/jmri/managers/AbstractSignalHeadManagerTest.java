@@ -29,6 +29,16 @@ public class AbstractSignalHeadManagerTest extends AbstractManagerTestBase<jmri.
         l = null;
         JUnitUtil.tearDown();
     }
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     // private final static Logger log = LoggerFactory.getLogger(AbstractSignalHeadManagerTest.class);
 

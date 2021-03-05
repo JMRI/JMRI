@@ -114,14 +114,14 @@ public class InputWindow extends JPanel {
 
         JPanel p = new JPanel();
         p.setLayout(new FlowLayout());
-        p.add(loadButton = new JButton(Bundle.getMessage("ButtonLoad")));
-        p.add(storeButton = new JButton(Bundle.getMessage("ButtonStore")));
+        p.add(loadButton = new JButton(Bundle.getMessage("ButtonLoad_")));
+        p.add(storeButton = new JButton(Bundle.getMessage("ButtonStore_")));
         p.add(this.languages);
         p.add(button = new JButton(Bundle.getMessage("ButtonExecute")));
 
-        alwaysOnTopCheckBox.setText("Window always on Top");
+        alwaysOnTopCheckBox.setText(Bundle.getMessage("WindowAlwaysOnTop"));
         alwaysOnTopCheckBox.setVisible(true);
-        alwaysOnTopCheckBox.setToolTipText("If checked, this window be always be displayed in front of any other window");
+        alwaysOnTopCheckBox.setToolTipText(Bundle.getMessage("WindowAlwaysOnTopToolTip"));
         p.add(alwaysOnTopCheckBox);
 
         status = new JLabel("         ");   // create some space for the counters
@@ -219,8 +219,8 @@ public class InputWindow extends JPanel {
                 // check for possible overwrite
                 if (file.exists()) {
                     int selectedValue = JOptionPane.showConfirmDialog(null,
-                            "File " + file.getName() + " already exists, overwrite it?",
-                            "Overwrite file?",
+                            Bundle.getMessage("ConfirmDialogMessage", file.getName()),
+                            Bundle.getMessage("ConfirmDialogTitle"),
                             JOptionPane.OK_CANCEL_OPTION);
                     if (selectedValue != JOptionPane.OK_OPTION) {
                         results = false; // user clicked no to override

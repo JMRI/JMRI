@@ -17,17 +17,15 @@ import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import javax.swing.JComponent;
-import javax.swing.JDesktopPane;
-import javax.swing.JFileChooser;
-import javax.swing.JInternalFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+
+import javax.swing.*;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
+
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
@@ -39,7 +37,7 @@ import jmri.jmrit.jython.JynstrumentFactory;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.iharder.dnd.URIDrop;
-import jmri.util.iharder.dnd.URIDrop.Listener;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -183,16 +181,17 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
             Document doc = XmlFile.newDocument(root, XmlFile.getDefaultDtdLocation() + "throttle-config.dtd");
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/throttle.xsl"?>
-/*   java.util.Map<String,String> m = new java.util.HashMap<String,String>();
+            /*   java.util.Map<String,String> m = new java.util.HashMap<String, String>();
              m.put("type", "text/xsl");
-             m.put("href", jmri.jmrit.XmlFile.xsltLocation+"throttle.xsl");
+             m.put("href", jmri.jmrit.XmlFile.xsltLocation + "throttle.xsl");
              ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
              doc.addContent(0,p);*/
             Element throttleElement = getXml();
             // don't save the loco address or consist address
-//   throttleElement.getChild("AddressPanel").removeChild("locoaddress");
-//   throttleElement.getChild("AddressPanel").removeChild("locoaddress");
-            if ((this.getRosterEntry() != null) && (getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml").compareTo(sfile) == 0) // don't save function buttons labels, they're in roster entry
+            //   throttleElement.getChild("AddressPanel").removeChild("locoaddress");
+            //   throttleElement.getChild("AddressPanel").removeChild("locoaddress");
+            if ((this.getRosterEntry() != null) &&
+                    (getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml").compareTo(sfile) == 0) // don't save function buttons labels, they're in roster entry
             {
                 throttleElement.getChild("FunctionPanel").removeChildren("FunctionButton");
             }
@@ -215,9 +214,6 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
                 return;
             }
             sfile = file.getAbsolutePath();
-            if (sfile == null) {
-                return;
-            }
         }
 
         boolean switchAfter = false;
@@ -300,7 +296,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         int width = 3 * (FunctionButton.BUT_WDTH) + 2 * 3 * 5 + 10;   // = 192
         int height = 6 * (FunctionButton.BUT_HGHT) + 2 * 6 * 5 + 20; // = 240 (but there seems to be another 10 needed for some LAFs)
 
-        if (preferences.isUsingIcons()) {
+        if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
             width = FunctionButton.BUT_WDTH * 3 + 2 * 3 * 5 + 10;
             height = FunctionButton.BUT_IMG_SIZE * 2 + FunctionButton.BUT_HGHT * 4 + 2 * 6 * 5 + 20;
         }
@@ -338,7 +334,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         if (controlPanel.getHeight() > functionPanel.getHeight() + addressPanel.getHeight()) {
             addressPanel.setSize(addressPanel.getWidth(), controlPanel.getHeight() - functionPanel.getHeight());
         }
-        if (!(preferences.isUsingIcons())
+        if (!(preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon())
                 && (functionPanel.getWidth() < addressPanel.getWidth())) {
             functionPanel.setSize(addressPanel.getWidth(), functionPanel.getHeight());
         }
@@ -361,13 +357,8 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         add(functionPanel, PANEL_LAYER_FRAME);
         add(addressPanel, PANEL_LAYER_FRAME);
         add(speedPanel, PANEL_LAYER_FRAME);
-
+        
         if (preferences.isUsingExThrottle()) {
-            /*         if ( preferences.isUsingTransparentCtl() ) {
-             setTransparent(functionPanel);
-             setTransparent(addressPanel);
-             setTransparent(controlPanel);
-             }*/
             if (preferences.isUsingRosterImage()) {
                 backgroundPanel = new BackgroundPanel();
                 backgroundPanel.setAddressPanel(addressPanel); // reusing same way to do it than existing thing in functionPanel
@@ -377,7 +368,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
                 add(backgroundPanel, BACKPANEL_LAYER);
             }
             addComponentListener(this); // to force sub windows repositionning
-        }
+        }        
 
         frameList = new JInternalFrame[NUM_FRAMES];
         frameList[ADDRESS_PANEL_INDEX] = addressPanel;
@@ -390,16 +381,13 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
                 Math.max(addressPanel.getHeight() + functionPanel.getHeight(), controlPanel.getHeight())));
 
         // #JYNSTRUMENT# Bellow prepare drag'n drop receptacle:
-        new URIDrop(this, new Listener() {
-            @Override
-            public void URIsDropped(java.net.URI[] files) {
+        new URIDrop(this, uris -> {
                 if (isEditMode) {
-                    for (java.net.URI file : files) {
-                        ynstrument(file.getPath());
+                    for (URI uri : uris ) {
+                        ynstrument(new File(uri).getPath());
                     }
                 }
-            }
-        });
+            });
 
         KeyListenerInstaller.installKeyListenerOnAllComponents(new FrameCyclingKeyListener(), this);
         try {
@@ -651,9 +639,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
                         }
                     }
                 } catch (Exception exc) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("Got exception, can ignore :{}", exc);
-                    }
+                    log.debug("Got exception, can ignore: ", exc);
                 }
             }
         }
@@ -819,9 +805,9 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 
         List<Element> jinsts = e.getChildren("Jynstrument");
         if ((jinsts != null) && (jinsts.size() > 0)) {
-            for (int i = 0; i < jinsts.size(); i++) {
-                JInternalFrame jif = ynstrument(FileUtil.getExternalFilename(jinsts.get(i).getAttributeValue("JynstrumentFolder")));
-                Element window = jinsts.get(i).getChild("window");
+            for (Element jinst : jinsts) {
+                JInternalFrame jif = ynstrument(FileUtil.getExternalFilename(jinst.getAttributeValue("JynstrumentFolder")));
+                Element window = jinst.getChild("window");
                 if (jif != null) {
                     if (window != null) {
                         WindowPreferences.setPreferences(jif, window);
@@ -831,8 +817,8 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
                     while ((j < cmps2.length) && (!(cmps2[j] instanceof Jynstrument))) {
                         j++;
                     }
-                    if ((j < cmps2.length) && (cmps2[j] instanceof Jynstrument) && (jinsts.get(i) != null)) {
-                        ((Jynstrument) cmps2[j]).setXml(jinsts.get(i));
+                    if ((j < cmps2.length) && (cmps2[j] instanceof Jynstrument)) {
+                        ((Jynstrument) cmps2[j]).setXml(jinst);
                     }
 
                     jif.repaint();

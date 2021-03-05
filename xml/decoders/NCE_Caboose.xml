@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2004, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="John Crellin" version="1" lastUpdated="20200924"/>
+  <version author="Marc Fournier" version="2" lastUpdated="20210206"/>
+  <!-- Version 1 -->
+  <!-- Version 2  - Added CV22, Added low/high value 1 for CV7 -->
+  <decoder>
+    <family name="Rolling Stock Lighting" mfg="North Coast Engineering" lowVersionID="1" highVersionID="1" >
+      <model model="Athearn Genesis Caboose" numOuts="6" formFactor="HO"/>
+      <functionlabels>
+        <functionlabel num="0" lockable="true">Headlight</functionlabel>
+        <functionlabel num="1" lockable="true">not used</functionlabel>
+        <functionlabel num="2" lockable="true">not used</functionlabel>
+        <functionlabel num="3" lockable="true">FWD Sec Marker</functionlabel>
+        <functionlabel num="4" lockable="true">REV Sec Marker</functionlabel>
+        <functionlabel num="5" lockable="true">Interior</functionlabel>
+        <functionlabel num="6" lockable="true">AUX Lights</functionlabel>
+      </functionlabels>
+    </family>
+    <programming direct="byteOnly" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <!-- Included files -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddr.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22_F12.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
+      <!-- NCE-caboose specific variables -->
+      <variable CV="11" item="Packet Time-out Value">
+        <decVal/>
+        <label>Packet Time-out Value</label>
+      </variable>
+      <variable CV="162" mask="VVVVVVVV" item="Global lighting option 1" default="5" tooltip="Value in 1/4 second increments after F2 goes off">
+        <decVal/>
+        <label>Ditch light hold time</label>
+      </variable>
+      <variable CV="133" item="Global lighting option 2" default="75" tooltip="Suggest you use half of brightness value">
+        <decVal/>
+        <label>Brightness when output 1 is dimmed</label>
+      </variable>
+      <variable CV="137" item="Global lighting option 3" default="75" tooltip="Suggest you use half of brightness value">
+        <decVal/>
+        <label>Brightness when output 2 is dimmed</label>
+      </variable>
+      <variable CV="141" item="Global lighting option 4" default="75" tooltip="Suggest you use half of brightness value">
+        <decVal/>
+        <label>Brightness when output 3 is dimmed</label>
+      </variable>
+      <variable CV="145" item="Global lighting option 5" default="75" tooltip="Suggest you use half of brightness value">
+        <decVal/>
+        <label>Brightness when output 4 is dimmed</label>
+      </variable>
+      <variable CV="149" item="Global lighting option 6" default="75" tooltip="Suggest you use half of brightness value">
+        <decVal/>
+        <label>Brightness when output 5 is dimmed</label>
+      </variable>
+      <variable CV="153" item="Global lighting option 7" default="75" tooltip="Suggest you use half of brightness value">
+        <decVal/>
+        <label>Brightness when output 6 is dimmed</label>
+      </variable>
+      <variable item="Output 1 effect generated" CV="131" mask="XXVVVVXX" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/nce/CabooseEnumLightEffect.xml"/>
+        <label>Output 1 effect generated</label>
+      </variable>
+      <variable CV="131" mask="XXXXXXVV" minOut="1" item="Output 1 behavior">
+        <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputActive.xml"/>
+        <label>Output 1 active</label>
+      </variable>
+      <variable CV="130" item="Output 1 options" default="5" comment="Range 0-28">
+        <decVal max="28"/>
+        <label>Function Number output 1 will respond to</label>
+        <tooltip>Range 0-28</tooltip>
+      </variable>
+      <variable CV="132" item="Output 1 option 1" default="150" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>Brightness for Output 1</label>
+        <tooltip>Range 0-255</tooltip>
+      </variable>
+      <variable item="Output 2 effect generated" CV="135" mask="XXVVVVXX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/nce/CabooseEnumLightEffect.xml"/>
+        <label>Output 2 effect generated</label>
+      </variable>
+      <variable CV="135" mask="XXXXXXVV" minOut="2" item="Output 2 behavior">
+        <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputActive.xml"/>
+        <label>Output 2 active</label>
+      </variable>
+      <variable CV="134" item="Output 2 options" default="6" comment="Range 0-28">
+        <decVal max="28"/>
+        <label>Function Number output 2 will respond to</label>
+        <tooltip>Range 0-28</tooltip>
+      </variable>
+      <variable CV="136" item="Output 2 option 1" default="150" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>Brightness for Output 2</label>
+        <tooltip>Range 0-255</tooltip>
+      </variable>
+      <variable item="Output 3 effect generated" CV="139" mask="XXVVVVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/nce/CabooseEnumLightEffect.xml"/>
+        <label>Output 3 effect generated</label>
+      </variable>
+      <variable CV="139" mask="XXXXXXVV" minOut="3" item="Output 3 behavior" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputActive.xml"/>
+        <label>Output 3 active</label>
+      </variable>
+      <variable CV="138" item="Output 3 options" default="0" comment="Range 0-28">
+        <decVal max="28"/>
+        <label>Function Number output 3 will respond to</label>
+        <tooltip>Range 0-28</tooltip>
+      </variable>
+      <variable CV="140" item="Output 3 option 1" default="150" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>Brightness for Output 3</label>
+        <tooltip>Range 0-255</tooltip>
+      </variable>
+      <variable item="Output 4 effect generated" CV="143" mask="XXVVVVXX" minOut="4" default="4">
+        <xi:include href="http://jmri.org/xml/decoders/nce/CabooseEnumLightEffect.xml"/>
+        <label>Output 4 effect generated</label>
+      </variable>
+      <variable CV="143" mask="XXXXXXVV" minOut="4" item="Output 4 behavior">
+        <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputActive.xml"/>
+        <label>Output 4 active</label>
+      </variable>
+      <variable CV="142" item="Output 4 options" default="0" comment="Range 0-28">
+        <decVal max="28"/>
+        <label>Function Number output 4 will respond to</label>
+        <tooltip>Range 0-28</tooltip>
+      </variable>
+      <variable CV="144" item="Output 4 option 1" default="150" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>Brightness for Output 4</label>
+        <tooltip>Range 0-255</tooltip>
+      </variable>
+      <variable item="Output 5 effect generated" CV="147" mask="XXVVVVXX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/nce/CabooseEnumLightEffect.xml"/>
+        <label>Output 5 effect generated</label>
+      </variable>
+      <variable CV="147" mask="XXXXXXVV" minOut="5" item="Output 5 behavior">
+        <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputActive.xml"/>
+        <label>Output 5 active</label>
+      </variable>
+      <variable CV="146" item="Output 5 options" default="3" comment="Range 0-28">
+        <decVal max="28"/>
+        <label>Function Number output 5 will respond to</label>
+        <tooltip>Range 0-28</tooltip>
+      </variable>
+      <variable CV="148" item="Output 5 option 1" default="150" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>Brightness for Output 5</label>
+        <tooltip>Range 0-255</tooltip>
+      </variable>
+      <variable item="Output 6 effect generated" CV="151" mask="XXVVVVXX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/nce/CabooseEnumLightEffect.xml"/>
+        <label>Output 6 effect generated</label>
+      </variable>
+      <variable CV="151" mask="XXXXXXVV" minOut="6" item="Output 6 behavior">
+        <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputActive.xml"/>
+        <label>Output 6 active</label>
+      </variable>
+      <variable CV="150" item="Output 6 options" default="3" comment="Range 0-28">
+        <decVal max="28"/>
+        <label>Function Number output 6 will respond to</label>
+        <tooltip>Range 0-28</tooltip>
+      </variable>
+      <variable CV="152" item="Output 6 option 1" default="150" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>Brightness for Output 6</label>
+        <tooltip>Range 0-255</tooltip>
+      </variable>
+      <variable item="Analog Mode Function Status - F1" CV="161" mask="XXXXXXXV" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Output 1</label>
+        <tooltip>Check to enable output 1 when the unit is operating in Analog power mode</tooltip>
+      </variable>
+      <variable item="Analog Mode Function Status - F2" CV="161" mask="XXXXXXVX" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Output 2</label>
+        <tooltip>Check to enable output 2 when the unit is operating in Analog power mode</tooltip>
+      </variable>
+      <variable item="Analog Mode Function Status - F3" CV="161" mask="XXXXXVXX" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Output 3</label>
+        <tooltip>Check to enable output 3 when the unit is operating in Analog power mode</tooltip>
+      </variable>
+      <variable item="Analog Mode Function Status - F4" CV="161" mask="XXXXVXXX" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Output 4</label>
+        <tooltip>Check to enable output 4 when the unit is operating in Analog power mode</tooltip>
+      </variable>
+      <variable item="Analog Mode Function Status - F5" CV="161" mask="XXXVXXXX" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Output 5</label>
+        <tooltip>Check to enable output 5 when the unit is operating in Analog power mode</tooltip>
+      </variable>
+      <variable item="Analog Mode Function Status - F6" CV="161" mask="XXVXXXXX" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Output 6</label>
+        <tooltip>Check to enable output 6 when the unit is operating in Analog power mode</tooltip>
+      </variable>
+    </variables>
+  </decoder>
+  	<!-- Decoder Lock Pane -->
+  <pane>
+    <name>NCE</name>
+    <column>
+      <display item="Decoder Lock ID number"/>
+      <label>
+        <text>Tip: you must set CV15 equal to this number to unlock the decoder for programming</text>
+      </label>
+      <label>
+        <text>Multi-decoder control in the tools menu will set CV15 as needed.</text>
+      </label>
+    </column>
+  </pane>
+</decoder-config>

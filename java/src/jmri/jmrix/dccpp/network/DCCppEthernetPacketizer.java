@@ -46,7 +46,7 @@ public class DCCppEthernetPacketizer extends jmri.jmrix.dccpp.serial.SerialDCCpp
         SwingUtilities.invokeLater(r);
         
         // stream to port in single write, as that's needed by serial
-        byte msg[] = new byte[lengthOfByteStream(m)];
+        byte[] msg = new byte[lengthOfByteStream(m)];
         // add header
         int offset = addHeaderToOutput(msg, m);
         
@@ -62,8 +62,8 @@ public class DCCppEthernetPacketizer extends jmri.jmrix.dccpp.serial.SerialDCCpp
             if (ostream != null) {
                 if (log.isDebugEnabled()) {
                     StringBuilder f = new StringBuilder("formatted message: ");
-                    for (int i = 0; i < msg.length; i++) {
-                        f.append(Integer.toHexString(0xFF & msg[i]));
+                    for (byte b : msg) {
+                        f.append(Integer.toHexString(0xFF & b));
                         f.append(" ");
                     }
                     log.debug(f.toString());
@@ -76,12 +76,15 @@ public class DCCppEthernetPacketizer extends jmri.jmrix.dccpp.serial.SerialDCCpp
                         break;
                     } else if (m.getRetries() >= 0) {
                         if (log.isDebugEnabled()) {
-                            log.debug("Retry message: {} attempts remaining: {}", m.toString(), m.getRetries());
+                            log.debug("Retry message: '{}' attempts remaining: {}", m, m.getRetries());
                         }
                         m.setRetries(m.getRetries() - 1);
                         try {
+                            int timeOut = m.getTimeout();
                             synchronized (xmtRunnable) {
-                                xmtRunnable.wait(m.getTimeout());
+                                if (timeOut > 0) {
+                                    xmtRunnable.wait(timeOut);
+                                }
                             }
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later

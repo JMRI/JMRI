@@ -52,6 +52,7 @@ public class DCCppPacketizer extends DCCppTrafficController {
     @Override
     public void sendDCCppMessage(DCCppMessage m, DCCppListener reply) {
         if (m.length() != 0) {
+            log.debug("Sending: '{}'", m);            
             sendMessage(m, reply);
             // why the next line?
             // https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html#yield--
@@ -71,9 +72,7 @@ public class DCCppPacketizer extends DCCppTrafficController {
     // DCCppTrafficController class?
     @Override
     protected int addHeaderToOutput(byte[] msg, jmri.jmrix.AbstractMRMessage m) {
-        if (log.isDebugEnabled()) {
-            log.debug("Appending '<' to start of outgoing message. msg length = {}", msg.length);
-        }
+        log.debug("Appending '<' to start of outgoing message. msg length = {}", msg.length);
         msg[0] = (byte) '<';
         return 1;
     }
@@ -129,15 +128,12 @@ public class DCCppPacketizer extends DCCppTrafficController {
      * @param istream character source.
      * @throws java.io.IOException when presented by the input source.
      */
-    //TODO: Can this method be folded back up into the parent
-    // DCCppTrafficController class?
+    // TODO: Can this method be folded back up into the parent DCCppTrafficController class?
     @Override
     protected void loadChars(jmri.jmrix.AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
         int i;
-        StringBuilder m = new StringBuilder("");
-        if (log.isDebugEnabled()) {
-            log.debug("loading characters from port");
-        }
+        StringBuilder m = new StringBuilder();
+        log.debug("loading characters from port");
 
         if (!(msg instanceof DCCppReply)) {
             log.error("SerialDCCppPacketizer.loadChars called on non-DCCppReply msg!");
@@ -149,19 +145,19 @@ public class DCCppPacketizer extends DCCppTrafficController {
             // Spin waiting for '<'
             char1 = readByteProtected(istream);
         }
-        log.debug("Serial: Message started...");
+        log.trace("Serial: Message started...");
         // Pick up the rest of the command
         for (i = 0; i < msg.maxSize(); i++) {
             char1 = readByteProtected(istream);
             if (char1 == '>') {
-                log.debug("Received: {}", m);
+                log.debug("Received: '{}'", m);
                 // NOTE: Cast is OK because we checked runtime type of msg above.
                 ((DCCppReply) msg).parseReply(m.toString());
                 break;
             } else {
-                m.append(Character.toString((char) char1));
+                m.append((char) char1);
                 //char1 = readByteProtected(istream);
-                log.debug("msg char[{}]: {} ({})", i, char1, Character.toString((char) char1));
+                log.trace("msg char[{}]: {} ({})", i, char1, (char) char1);
                 //msg.setElement(i, char1 & 0xFF);
             }
         }

@@ -2,8 +2,10 @@ package jmri.jmrix.can.cbus;
 
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+
 import jmri.beans.PreferencesBean;
 import jmri.jmrix.can.cbus.node.CbusNode;
+import jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSprog3PlusModeSwitcherFrame;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
 
@@ -28,8 +30,11 @@ public class CbusPreferences extends PreferencesBean {
     private boolean _saveRestoreEventTable = true;
     private int minimumNumBackupsToKeep = 10;
     private int bootWriteDelay = CbusNode.BOOT_PROG_TIMEOUT_FAST;
+    // Default to no programmers available. The p[rogrammer manager will validate
+    // the preferences for the hardware connection in use.
     private boolean _isGlobalProgrammerAvailable = true;
     private boolean _isAddressedModePossible = true;
+    private int _progTrackMode = SprogCbusSprog3PlusModeSwitcherFrame.PROG_OFF_MODE;
     
     public CbusPreferences() {
         super(ProfileManager.getDefault().getActiveProfile());
@@ -60,6 +65,8 @@ public class CbusPreferences extends PreferencesBean {
             "globalprogrammer", this.isGlobalProgrammerAvailable() );
         this._isAddressedModePossible = sharedPreferences.getBoolean(
             "addressedprogrammer", this.isAddressedModePossible() );
+
+        this._progTrackMode = sharedPreferences.getInt("progtrackmode", this.getProgTrackMode() );
     }
 
     public void savePreferences() {
@@ -81,6 +88,8 @@ public class CbusPreferences extends PreferencesBean {
 
         sharedPreferences.putBoolean("globalprogrammer", this.isGlobalProgrammerAvailable() );
         sharedPreferences.putBoolean("addressedprogrammer", this.isAddressedModePossible() );
+        
+        sharedPreferences.putInt("progtrackmode", this.getProgTrackMode() );
         
         try {
             sharedPreferences.sync();
@@ -311,6 +320,23 @@ public class CbusPreferences extends PreferencesBean {
     public void setProgrammersAvailable(boolean global, boolean addressed) {
         setGlobalProgrammerAvailable(global);
         setAddressedModePossible(addressed);
+    }
+    
+    /**
+     * Get the programming track mode
+     * @return the mode
+     */
+    public int getProgTrackMode() {
+        return _progTrackMode;
+    }
+    
+    /**
+     * Set programming track mode
+     * @param mode to be set
+     */
+    public void setProgTrackMode(int mode) {
+        _progTrackMode = mode;
+        savePreferences();
     }
     
     private final static Logger log = LoggerFactory.getLogger(CbusPreferences.class);

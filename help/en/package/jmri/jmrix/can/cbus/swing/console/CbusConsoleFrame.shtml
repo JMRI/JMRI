@@ -6,19 +6,10 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: MERG CBUS Console Tool</title>
+  <title>JMRI: CBUS&reg; Console Tool</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI MERG CBUS help monitor console log logging event long short">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="JMRI CBUS help monitor console log logging event long short">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -26,7 +17,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-     <h1>JMRI : MERG CBUS Console Tool</h1>
+     <h1>JMRI : CBUS Console Tool</h1>
      
      <ul class="snav">
       <li><a href="#logtofile">Logging</a></li>
@@ -47,9 +38,9 @@
         <p>Once you open a Console window, it will automatically
         display all traffic.<br>
         The left part contains the raw CAN frames. The right part
-        interprets their MERG CBUS meaning.</p>
+        interprets their CBUS meaning.</p>
         
-        <p>If the MERG CBUS event table is running, the event table will be queried for 
+        <p>If the CBUS event table is running, the event table will be queried for 
         event and node names.</p>
         
         <p>You can open multiple console windows, whereby an 
@@ -61,7 +52,7 @@
         <p>You can drag the window boundaries between these to suit your display.</p>
         <p>The vertical scrollbar synchronises both windows.</p>
         
-        <p>Short MERG CBUS events appear in the Console with a node number of 00.</p>
+        <p>Short CBUS events appear in the Console with a node number of 00.</p>
         
     <h3>Buttons</h3>
         <img src="../../../../../../../html/hardware/can/cbus/images/swing/console/merg-cbus-console-max-400x396.png"
@@ -86,7 +77,7 @@
         box.</dd>
 
         <dt>Priorities</dt>
-        <dd>If you'd like each message to be preceded by the MERG CBUS
+        <dd>If you'd like each message to be preceded by the CBUS
         priorities used in sending the message, check this
         box.</dd>
         
@@ -130,7 +121,7 @@
         and then pasted into an email.</p>
     
         <img src="../../../../../../../html/hardware/can/cbus/images/swing/console/merg-cbus-console-logging-771x49.png"
-        width="771" height="49" alt="MERG CBUS Console Logging to File">
+        width="771" height="49" alt="CBUS Console Logging to File">
     
         <p>If you want to capture more, you can have the window write
         a log file on your computer's disk. To do this:</p>
@@ -161,7 +152,7 @@
     <h2><a name="stats" id="stats">Statistics</a></h2>
         <div>
         <img src="../../../../../../../html/hardware/can/cbus/images/swing/console/merg-cbus-console-statistics-608x73.png"
-        width="608" height="73" alt="MERG CBUS Console Statistics">
+        width="608" height="73" alt="CBUS Console Statistics">
     
     
         <p>This part of the window shows the
@@ -172,13 +163,13 @@
     <h2><a name="packet" id="packet">Packets</a></h2>
         <div>
         <img src="../../../../../../../html/hardware/can/cbus/images/swing/console/merg-cbus-console-packets-810x131.png"
-        width="810" height="131" alt="MERG CBUS Console Packets">
+        width="810" height="131" alt="CBUS Console Packets">
     
         <p>This displays the most
         recent packet received from the layout, along with a send packet tool.
         <br>The individual
         elements displayed are dynamic and minor priority, the first
-        data byte which is the MERG CBUS opcode and the remaining, up to
+        data byte which is the CBUS opcode and the remaining, up to
         seven, data bytes.</p>
 
       <dl>
@@ -199,7 +190,7 @@
     <h2><a name="cbusSend" id="cbusSend">Send Event</a></h2>
         <div>
         <img src="../../../../../../../html/hardware/can/cbus/images/swing/console/merg-cbus-console-send-event-494x59.png"
-        width="494" height="59" alt="MERG CBUS Console Send Event">
+        width="494" height="59" alt="CBUS Console Send Event">
     
         <p>At the bottom part of the Console, you can construct an Event
         packet to be sent to the layout. For normal operation, do not
@@ -246,7 +237,7 @@
         following the order of the list for any applicable categories.</p>
 
         <img src="../../../../../../../html/hardware/can/cbus/images/swing/filter/filter-426x254.png"
-        width="426" height="254" alt="MERG CBUS Filter">        
+        width="426" height="254" alt="CBUS Filter">        
         
         <p>The filter listens for new nodes heard on the network,
         when a new node is heard it is listed under Nodes and is filterable.</p>
@@ -271,7 +262,7 @@
         
         <h3>Filter Categories</h3>
         <img src="../../../../../../../html/hardware/can/cbus/images/swing/filter/events-426x413.png"
-        width="426" height="413" align="right" alt="MERG CBUS Event Filter">
+        width="426" height="413" align="right" alt="CBUS Event Filter">
         
         <ul>
         <li>Incoming</li>
@@ -313,7 +304,7 @@
         </li>
         <li>Command Station
                 <img src="../../../../../../../html/hardware/can/cbus/images/swing/filter/nodes-426x247.png"
-        width="426" height="247" align="right" alt="MERG CBUS Node Filter">
+        width="426" height="247" align="right" alt="CBUS Node Filter">
             <ul>
             <li>Acquire / Release / Consist</li>
             <li>Keep-Alive</li>
@@ -346,7 +337,7 @@
     <h2><a name="highlighter" id="highlighter">Event Highlighter</a></h2>        
         <div>
         <img src="../../../../../../../html/hardware/can/cbus/images/swing/highlighter/merg-cbus-highlighter-460x337.png"
-        width="460" height="337" alt="MERG CBUS Event Highlighter">  
+        width="460" height="337" alt="CBUS Event Highlighter">  
         
         <p>This window can be accessed from the Display options at top of the main console.</p>
         
@@ -355,7 +346,7 @@
         <p>You will need at least 1 type ( or / off ) and 1 direction ( in / out ) to activate the highlight.</p>
         
         <img src="../../../../../../../html/hardware/can/cbus/images/swing/highlighter/merg-cbus-console-highlighter-output-616x146.png"
-        width="616" height="146" alt="MERG CBUS Event Highlighter Output"> 
+        width="616" height="146" alt="CBUS Event Highlighter Output"> 
         </div>
 
     <h2><a name="eventcapture" id="eventcapture">Event Capture</a></h2>
@@ -385,11 +376,15 @@
 
     <h3>JMRI Help</h3>
       
-      <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the MERG CBUS Console window.</p>
+      <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the CBUS Console window.</p>
       
-      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI MERG CBUS Help page</a>.</p>
+      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Help page</a>.</p>
         
         
+        <h2></h2>
+        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
+        <p></p>
+
         
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

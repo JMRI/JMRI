@@ -134,7 +134,7 @@ public class AllocationRequest {
         //This forces us to rescan the allocation list if the section has gone unoccupied, thus this might get re-allocated
         if (e.getPropertyName().equals("occupancy")) {
             if (((Integer) e.getNewValue()).intValue() == jmri.Section.UNOCCUPIED) {
-                InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
+                InstanceManager.getDefault(DispatcherFrame.class).queueScanOfAllocationRequests();
             }
         }
     }
@@ -172,7 +172,7 @@ public class AllocationRequest {
                     if (e.getPropertyName().equals("Held")) {
                         if (!((Boolean) e.getNewValue()).booleanValue()) {
                             mWaitingForSignalMast.removePropertyChangeListener(mSignalMastListener);
-                            InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
+                            InstanceManager.getDefault(DispatcherFrame.class).queueScanOfAllocationRequests();
                         }
                     }
                 }
@@ -198,7 +198,7 @@ public class AllocationRequest {
                     if (e.getPropertyName().equals("state")) {
                         if (((Integer) e.getNewValue()).intValue() == jmri.Block.UNOCCUPIED) {
                             mWaitingOnBlock.removePropertyChangeListener(mWaitingOnBlockListener);
-                            InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
+                            InstanceManager.getDefault(DispatcherFrame.class).queueScanOfAllocationRequests();
                         }
                     }
                 }

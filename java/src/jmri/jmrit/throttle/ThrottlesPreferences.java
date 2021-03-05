@@ -17,6 +17,8 @@ public class ThrottlesPreferences {
     private boolean _useExThrottle = true;
     private boolean _useToolBar = true;
     private boolean _useFunctionIcon = false;
+    private boolean _useLargeSpeedSlider = false;
+    private boolean _hideSpeedStepSelector = false;
     private boolean _resizeWinImg = false;
     private boolean _useRosterImage = true;
     private boolean _enableRosterSearch = true;
@@ -98,6 +100,12 @@ public class ThrottlesPreferences {
         if ((a = e.getAttribute("isSilentShare")) != null) {
             setSilentShare(a.getValue().compareTo("true") == 0);
         }
+        if ((a = e.getAttribute("isUsingLargeSpeedSlider")) != null) {
+            setUseLargeSpeedSlider(a.getValue().compareTo("true") == 0);
+        }
+        if ((a = e.getAttribute("isHidingSpeedStepSelector")) != null) {
+            setHideSpeedStepSelector(a.getValue().compareTo("true") == 0);
+        }
         this.dirty = false;
     }
 
@@ -131,6 +139,8 @@ public class ThrottlesPreferences {
         e.setAttribute("isIgnoringThrottlePosition", "" + isIgnoringThrottlePosition());
         e.setAttribute("isSilentSteal", "" + isSilentSteal());
         e.setAttribute("isSilentShare", "" + isSilentShare());
+        e.setAttribute("isUsingLargeSpeedSlider", "" + isUsingLargeSpeedSlider());
+        e.setAttribute("isHidingSpeedStepSelector", "" + isHidingSpeedStepSelector());
         return e;
     }
 
@@ -138,7 +148,7 @@ public class ThrottlesPreferences {
         setWindowDimension(tp.getWindowDimension());
         setUseExThrottle(tp.isUsingExThrottle());
         setUsingToolBar(tp.isUsingToolBar());
-        setUsingFunctionIcon(tp._useFunctionIcon);
+        setUsingFunctionIcon(tp.isUsingFunctionIcon());
         setResizeWindow(tp.isResizingWindow());
         setSaveThrottleOnLayoutSave(tp.isSavingThrottleOnLayoutSave());
         setUseRosterImage(tp.isUsingRosterImage());
@@ -148,7 +158,9 @@ public class ThrottlesPreferences {
         setIgnoreThrottlePosition(tp.isIgnoringThrottlePosition());
         setSilentSteal(tp.isSilentSteal());
         setSilentShare(tp.isSilentShare());
-
+        setUseLargeSpeedSlider(tp.isUsingLargeSpeedSlider());
+        setHideSpeedStepSelector(tp.isHidingSpeedStepSelector());
+        
         if (listeners != null) {
             for (int i = 0; i < listeners.size(); i++) {
                 PropertyChangeListener l = listeners.get(i);
@@ -170,7 +182,9 @@ public class ThrottlesPreferences {
                 || isAutoLoading() != tp.isAutoLoading()
                 || isHidingUndefinedFuncButt() != tp.isHidingUndefinedFuncButt()
                 || isSilentSteal() != tp.isSilentSteal()
-                || isSilentShare() != tp.isSilentShare());
+                || isSilentShare() != tp.isSilentShare()
+                || isUsingLargeSpeedSlider() != tp.isUsingLargeSpeedSlider()
+                || isHidingSpeedStepSelector() != tp.isHidingSpeedStepSelector());
     }
 
     public void save() {
@@ -257,16 +271,6 @@ public class ThrottlesPreferences {
         this.dirty = true;
     }
 
-    /**
-     * Retrun true if throttle icons should be shown; this returns
-     * isUsingExThrottle() &quot;&quot; isUsingFunctionIcon()
-     * 
-     * @return true if throttle icons should be used.
-     */
-    public boolean isUsingIcons() {
-        return (isUsingExThrottle() && isUsingFunctionIcon());
-    }
-
     public boolean isResizingWindow() {
         return _resizeWinImg;
     }
@@ -347,7 +351,27 @@ public class ThrottlesPreferences {
         _isSilentShare = b;
         this.dirty = true;
     }
+
     
+    public void setUseLargeSpeedSlider(boolean b) {
+        _useLargeSpeedSlider = b;
+        this.dirty = true;
+    }
+    
+    public boolean isUsingLargeSpeedSlider() {
+        return _useLargeSpeedSlider;
+    }
+    
+    
+    public void setHideSpeedStepSelector(boolean b) {
+        _hideSpeedStepSelector = b;
+        this.dirty = true;
+    }
+    
+    public boolean isHidingSpeedStepSelector() {
+        return _hideSpeedStepSelector;
+    }
+         
     /**
      * Add an AddressListener. 
      * AddressListeners are notified when the user
@@ -372,9 +396,7 @@ public class ThrottlesPreferences {
         if (listeners == null) {
             return;
         }
-        if (listeners.contains(l)) {
-            listeners.remove(l);
-        }
+        listeners.remove(l);
     }
 
     private final static Logger log = LoggerFactory.getLogger(ThrottlesPreferences.class);

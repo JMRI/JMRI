@@ -263,11 +263,7 @@
             <p>&nbsp;</p>
           </dd>
 
-          <dt class="im"><a href="http://www.merg.org.uk/">
-            <img src="http://www.merg.org.uk/merg_images/merg_logo.png"
-            alt="MERG logo" height="45" width="100"></a>
-          </dt>
-          <dt><a href="can/cbus/index.shtml">MERG CBUS</a></dt>
+          <dt><a href="can/cbus/index.shtml">CBUS&reg;</a></dt>
           <dd>
             <p class="dl">Configuration: <a href="can/cbus/index.shtml">
             r&#233;seaux CBUS MERG</a></p>

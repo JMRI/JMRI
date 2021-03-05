@@ -1,27 +1,19 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
-import java.awt.BasicStroke;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridLayout;
-import java.awt.Label;
-import java.awt.event.*;
-import java.awt.geom.*;
-import java.text.DecimalFormat;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import java.util.List;
 import java.util.*;
-import javax.annotation.*;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
-import javax.swing.border.*;
-import jmri.*;
+
 import jmri.NamedBean.DisplayOptions;
+import jmri.*;
 import jmri.jmrit.display.layoutEditor.*;
-import jmri.jmrit.display.layoutEditor.LayoutTurntable.RayTrack;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
@@ -46,6 +38,7 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
     | Edit Layout Slip |
     \*================*/
     // variables for Edit slip Crossing pane
+    private LayoutSlipView layoutSlipView = null;
     private LayoutSlip layoutSlip = null;
 
     private JmriJFrame editLayoutSlipFrame = null;
@@ -64,11 +57,12 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
      * Edit a Slip.
      */
     @Override
-    public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
-        if ( layoutTrack instanceof LayoutSlip ) {
-            this.layoutSlip = (LayoutSlip) layoutTrack;
+    public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrackView) {
+        if ( layoutTrackView instanceof LayoutSlipView ) {
+            this.layoutSlipView = (LayoutSlipView) layoutTrackView;
+            this.layoutSlip = this.layoutSlipView.getSlip();
         } else {
-            log.error("editLayoutTrack called with wrong type {}", layoutTrack, new Exception("traceback"));
+            log.error("editLayoutTrack called with wrong type {}", layoutTrackView, new Exception("traceback"));
         }
         sensorList.clear();
 
@@ -168,7 +162,7 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
             contentPane.add(panel5);
         }
 
-        editLayoutSlipHiddenBox.setSelected(layoutSlip.isHidden());
+        editLayoutSlipHiddenBox.setSelected(layoutSlipView.isHidden());
 
         // Set up for Edit
         List<Turnout> currentTurnouts = new ArrayList<>();
@@ -206,11 +200,11 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
      * with fixed geometry
      */
     private void drawSlipState(Graphics2D g2, int state) {
-        Point2D cenP = layoutSlip.getCoordsCenter();
-        Point2D A = MathUtil.subtract(layoutSlip.getCoordsA(), cenP);
-        Point2D B = MathUtil.subtract(layoutSlip.getCoordsB(), cenP);
-        Point2D C = MathUtil.subtract(layoutSlip.getCoordsC(), cenP);
-        Point2D D = MathUtil.subtract(layoutSlip.getCoordsD(), cenP);
+        Point2D cenP = layoutSlipView.getCoordsCenter();
+        Point2D A = MathUtil.subtract(layoutSlipView.getCoordsA(), cenP);
+        Point2D B = MathUtil.subtract(layoutSlipView.getCoordsB(), cenP);
+        Point2D C = MathUtil.subtract(layoutSlipView.getCoordsC(), cenP);
+        Point2D D = MathUtil.subtract(layoutSlipView.getCoordsD(), cenP);
 
         Point2D ctrP = new Point2D.Double(20.0, 20.0);
         A = MathUtil.add(MathUtil.normalize(A, 18.0), ctrP);
@@ -389,7 +383,7 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
         }
         if (!layoutSlip.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
-            layoutSlip.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
+            layoutSlipView.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             editLayoutSlipNeedsRedraw = true;
             editLayoutSlipNeedsBlockUpdate = true;
         }
@@ -438,7 +432,7 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
         }
         if (!layoutSlip.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
-            layoutSlip.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
+            layoutSlipView.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             editLayoutSlipNeedsRedraw = true;
             layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             editLayoutSlipNeedsBlockUpdate = true;
@@ -448,9 +442,9 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
         }
 
         // set hidden
-        boolean oldHidden = layoutSlip.isHidden();
-        layoutSlip.setHidden(editLayoutSlipHiddenBox.isSelected());
-        if (oldHidden != layoutSlip.isHidden()) {
+        boolean oldHidden = layoutSlipView.isHidden();
+        layoutSlipView.setHidden(editLayoutSlipHiddenBox.isSelected());
+        if (oldHidden != layoutSlipView.isHidden()) {
             editLayoutSlipNeedsRedraw = true;
         }
 

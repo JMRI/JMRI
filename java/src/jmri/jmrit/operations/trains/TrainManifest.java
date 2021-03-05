@@ -152,23 +152,29 @@ public class TrainManifest extends TrainCommon {
 
                 // engine change or helper service?
                 if (train.getSecondLegOptions() != Train.NO_CABOOSE_OR_FRED) {
-                    if (rl == train.getSecondLegStartLocation()) {
+                    if (rl == train.getSecondLegStartRouteLocation()) {
                         printChange(fileOut, rl, train, train.getSecondLegOptions());
                     }
-                    if (rl == train.getSecondLegEndLocation() && train.getSecondLegOptions() == Train.HELPER_ENGINES) {
-                        newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText
-                                .getStringRemoveHelpers(), new Object[]{splitString(rl.getName()), train.getName(),
-                                        train.getDescription()}));
+                    if (rl == train.getSecondLegEndRouteLocation() &&
+                            train.getSecondLegOptions() == Train.HELPER_ENGINES) {
+                        newLine(fileOut,
+                                MessageFormat.format(messageFormatText = TrainManifestText.getStringRemoveHelpers(),
+                                        new Object[] { splitString(rl.getName()), train.getName(),
+                                                train.getDescription(), train.getSecondLegNumberEngines(),
+                                                train.getSecondLegEngineModel(), train.getSecondLegEngineRoad() }));
                     }
                 }
                 if (train.getThirdLegOptions() != Train.NO_CABOOSE_OR_FRED) {
-                    if (rl == train.getThirdLegStartLocation()) {
+                    if (rl == train.getThirdLegStartRouteLocation()) {
                         printChange(fileOut, rl, train, train.getThirdLegOptions());
                     }
-                    if (rl == train.getThirdLegEndLocation() && train.getThirdLegOptions() == Train.HELPER_ENGINES) {
-                        newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText
-                                .getStringRemoveHelpers(), new Object[]{splitString(rl.getName()), train.getName(),
-                                        train.getDescription()}));
+                    if (rl == train.getThirdLegEndRouteLocation() &&
+                            train.getThirdLegOptions() == Train.HELPER_ENGINES) {
+                        newLine(fileOut,
+                                MessageFormat.format(messageFormatText = TrainManifestText.getStringRemoveHelpers(),
+                                        new Object[] { splitString(rl.getName()), train.getName(),
+                                                train.getDescription(), train.getThirdLegNumberEngines(),
+                                                train.getThirdLegEngineModel(), train.getThirdLegEngineRoad() }));
                     }
                 }
 
@@ -294,8 +300,21 @@ public class TrainManifest extends TrainCommon {
     private void printChange(PrintWriter fileOut, RouteLocation rl, Train train, int legOptions)
             throws IllegalArgumentException {
         if ((legOptions & Train.HELPER_ENGINES) == Train.HELPER_ENGINES) {
-            newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText.getStringAddHelpers(),
-                    new Object[]{splitString(rl.getName()), train.getName(), train.getDescription()}));
+            // assume 2nd leg for helper change
+            String numberEngines = train.getSecondLegNumberEngines();
+            String endLocationName = train.getSecondLegEndLocationName();
+            String engineModel = train.getSecondLegEngineModel();
+            String engineRoad = train.getSecondLegEngineRoad();
+            if (rl == train.getThirdLegStartRouteLocation()) {
+                numberEngines = train.getThirdLegNumberEngines();
+                endLocationName = train.getThirdLegEndLocationName();
+                engineModel = train.getThirdLegEngineModel();
+                engineRoad = train.getThirdLegEngineRoad();
+            }
+            newLine(fileOut,
+                    MessageFormat.format(messageFormatText = TrainManifestText.getStringAddHelpers(),
+                            new Object[] { splitString(rl.getName()), train.getName(), train.getDescription(),
+                                    numberEngines, endLocationName, engineModel, engineRoad }));
         } else if ((legOptions & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
                 ((legOptions & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE ||
                         (legOptions & Train.ADD_CABOOSE) == Train.ADD_CABOOSE)) {

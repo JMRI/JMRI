@@ -48,7 +48,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
     JTextField userName = new JTextField(15);
 
     /**
-     * Standard constructor
+     * Standard constructor.
      *
      * @param title Title of this AudioFrame
      * @param model AudioTableDataModel holding Audio data
@@ -59,7 +59,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
     }
 
     /**
-     * Method to layout the frame.
+     * Layout the frame.
      * <p>
      * This contains common items.
      * <p>

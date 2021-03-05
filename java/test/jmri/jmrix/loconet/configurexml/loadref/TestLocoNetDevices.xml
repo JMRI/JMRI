@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
-<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+<?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>17</minor>
-    <test>5</test>
+    <minor>19</minor>
+    <test>7</test>
     <modifier>ish</modifier>
   </jmriversion>
-  <sensors class="jmri.jmrix.loconet.configurexml.LnSensorManagerXml">
-    <sensor inverted="false">
-      <systemName>LS2</systemName>
-    </sensor>
-  </sensors>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
     <sensor inverted="false">
       <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <sensors class="jmri.jmrix.loconet.configurexml.LnSensorManagerXml">
+    <sensor inverted="false">
+      <systemName>LS2</systemName>
     </sensor>
   </sensors>
   <turnouts class="jmri.jmrix.loconet.configurexml.LnTurnoutManagerXml">
@@ -55,43 +55,19 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Sat Nov 30 11:20:11 PST 2019</date>
+      <date>Sun May 17 08:07:48 PDT 2020</date>
       <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrix/loconet/configurexml/load/TestLocoNetDevices.xml</filename>
-      <filehistory>
-        <operation>
-          <type>app</type>
-          <date>Fri Dec 30 17:24:03 PST 2016</date>
-          <filename>JMRI program</filename>
-        </operation>
-        <operation>
-          <type>Store</type>
-          <date>Fri Dec 30 17:25:42 PST 2016</date>
-          <filename />
-        </operation>
-      </filehistory>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Sat Nov 30 11:20:12 PST 2019</date>
+      <date>Sun May 17 08:07:48 PDT 2020</date>
       <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrix/loconet/configurexml/load/TestLocoNetDevices.xml</filename>
-      <filehistory>
-        <operation>
-          <type>app</type>
-          <date>Fri Dec 30 17:24:03 PST 2016</date>
-          <filename>JMRI program</filename>
-        </operation>
-        <operation>
-          <type>Store</type>
-          <date>Fri Dec 30 17:25:42 PST 2016</date>
-          <filename />
-        </operation>
-      </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sat Nov 30 11:20:12 PST 2019</date>
+      <date>Sun May 17 08:07:48 PDT 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.17.5ish+jake+20191130T1918Z+Rdf73700a5a on Sat Nov 30 11:20:12 PST 2019-->
+  <!--Written by JMRI version 4.19.7ish+jake+20200517T1506Z+R7ffe685590 on Sun May 17 08:07:48 PDT 2020-->
 </layout-config>

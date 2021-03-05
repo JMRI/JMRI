@@ -29,6 +29,7 @@ public class MrcThrottleManagerTest extends jmri.managers.AbstractThrottleManage
 
     @AfterEach
     public void tearDown() {
+        // no need for separate dispose of memo, tc
         JUnitUtil.tearDown();
     }
 

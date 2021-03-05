@@ -929,9 +929,7 @@
         to the Tables</li>
 
         <li>Steve Rawlinson, who fixed a bug in Layout Blocks and
-        generously provides the <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Packages/">Jenkins server</a>
-        where we integrate our code and build the packages that we release to 
-        our users.
+        generously provided the previous Jenkins CI server.
         </li>
 
         <li>Simon Reader, who improved the throttle, added a check
@@ -1163,8 +1161,10 @@
         Also wrote all the slip code for the web server.
         </li>
 
-        <li>Mark Waters, who provided numerous Zimo decoder
-        definitions and new Zimo MX620 definitions.</li>
+        <li>Mark Waters, <!-- markw16 -->
+        who provided numerous Zimo decoder
+        definitions, new Zimo MX620 definitions
+        and install instructions for Linux Mint.</li>
 
         <li>Howard Watkins, who helped test the CBUS support and
         provide a sample script for Layout Editor</li>

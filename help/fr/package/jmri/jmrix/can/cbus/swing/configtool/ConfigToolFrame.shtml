@@ -8,7 +8,7 @@
   <!-- Copyright ($Author$) 2008 -->
   <!-- Translated  by Blorec Herv&#233; le 2011-11-1-->
 
-  <title>JMRI: CBUS Event Capture Tool</title>
+  <title>JMRI: CBUS&reg; Event Capture Tool</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -27,7 +27,7 @@
     <div id="mainContent">
 
       <h1>JMRI: Outil de capture
-      d'&eacute;v&eacute;nement CBUS</h1>CBUS <a href=
+      d'&eacute;v&eacute;nement CBUS&reg;</h1>CBUS <a href=
       "../../../../../../../html/hardware/can/images/ConfigTool.jpg">
       <img src=
       "../../../../../../../html/hardware/can/images/ConfigTool.jpg"

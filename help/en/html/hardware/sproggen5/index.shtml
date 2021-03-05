@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI Hardware Support - SPROG Generation 5 </title>
+  <meta name="author" content="Andrew Crosland">
+  <meta name="keywords" content=
+  "SPROG java model railroad JMRI install windows linux mac osx">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp.shtml" -->
+    <div id="mainContent">
+
+      <h1>Hardware Support: SPROG Generation 5</h1>
+      <ul class="snav">
+        <li><a href="hardware.shtml#setup">Hardware Setup with JMRI</a></li>
+        <li><a href="#documentation">Documentation</a></li>
+        <li><a href="#support">Support</a></li>
+      </ul>
+
+      <p>Generation 5 is new generation of SPROG products using CBUS&reg; as the
+          protocol interface with the host computer.</p>
+      
+      <h2><a name="documentation" id="documentation">Documentation</a></h2>
+      <p>Please refer to the <a href="https://www.sprog-dcc.co.uk/download-page"> 
+              SPROG DCC Ltd download page</a> for up-to-date documentation.</p>
+      
+      <h2><a name="support" id="support">Support</a></h2>
+      
+      <h2></h2>
+      <p>CBUS is a registered trade mark of Dr Michael Bolton</p>
+      
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

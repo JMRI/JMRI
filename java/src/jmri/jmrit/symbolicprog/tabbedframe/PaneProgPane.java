@@ -876,9 +876,7 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
         // nothing to program, end politely
-        if (log.isDebugEnabled()) {
-            log.debug("nextRead found nothing to do");
-        }
+        log.debug("nextRead found nothing to do");
         readChangesButton.setSelected(false);
         readAllButton.setSelected(false);  // reset both, as that's final state we want
         setBusy(false);
@@ -890,10 +888,10 @@ public class PaneProgPane extends javax.swing.JPanel
      * If there are any more compare operations to be done on this pane, do the
      * next one.
      * <p>
-     * Each invocation of this method compare one CV; completion of that request
+     * Each invocation of this method compares one CV; completion of that request
      * will cause it to happen again, reading the next one, until there's
      * nothing left to read.
-     * <p>
+     *
      * @return true is a compare has been started, false if the pane is
      *         complete.
      */
@@ -990,7 +988,7 @@ public class PaneProgPane extends javax.swing.JPanel
             writeAllButton.setSelected(true);
             writeAllButton.setEnabled(true);
         }
-        if (container.isBusy() == false) {
+        if (!container.isBusy()) {
             container.enableButtons(false);
         }
         setToWrite(justChanges, true);
@@ -2420,9 +2418,7 @@ public class PaneProgPane extends javax.swing.JPanel
     ArrayList<JPanel> panelList = new ArrayList<>();
 
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
+        log.debug("dispose");
 
         // remove components
         removeAll();

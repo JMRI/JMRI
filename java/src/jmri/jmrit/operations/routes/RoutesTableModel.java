@@ -134,11 +134,11 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
-            case ID_COLUMN:
             case NAME_COLUMN:
             case COMMENT_COLUMN:
             case STATUS_COLUMN:
                 return String.class;
+            case ID_COLUMN:
             case MIN_LENGTH_COLUMN:
             case MAX_LENGTH_COLUMN:
                 return Integer.class;
@@ -170,7 +170,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         }
         switch (col) {
             case ID_COLUMN:
-                return route.getId();
+                return Integer.parseInt(route.getId());
             case NAME_COLUMN:
                 return route.getName();
             case COMMENT_COLUMN:

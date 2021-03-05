@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ThrottleManager extends AbstractThrottleManager {
 
-    private CommandStation tc = null;
+    private CommandStation tc;
     /**
      * Constructor for a Direct ThrottleManager.
      * @param memo system connection.

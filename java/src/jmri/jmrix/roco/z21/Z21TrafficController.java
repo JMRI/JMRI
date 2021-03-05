@@ -468,7 +468,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
     public void terminateThreads() {
         threadStopRequest = true;
         // ensure socket closed to end pending operations
-        if ( controller!=null && ((Z21Adapter) controller).getSocket()!=null) ((Z21Adapter) controller).getSocket().close();
+        if ( controller != null && ((Z21Adapter) controller).getSocket() != null) ((Z21Adapter) controller).getSocket().close();
         
         // usual stop process
         super.terminateThreads();

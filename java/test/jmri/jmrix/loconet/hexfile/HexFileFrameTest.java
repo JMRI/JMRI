@@ -34,7 +34,7 @@ public class HexFileFrameTest {
         f.sourceThread.stop();
         f.sourceThread.join();
         f.dispose();   
- }   
+ }
 
     @BeforeEach
     public void setUp() {

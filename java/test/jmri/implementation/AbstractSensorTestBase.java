@@ -25,9 +25,9 @@ public abstract class AbstractSensorTestBase {
     // return number of listeners registered with the TrafficController
     abstract public int numListeners();
 
-    abstract public void checkOnMsgSent();
+    abstract public void checkActiveMsgSent();
 
-    abstract public void checkOffMsgSent();
+    abstract public void checkInactiveMsgSent();
 
     abstract public void checkStatusRequestMsgSent();
 
@@ -109,6 +109,20 @@ public abstract class AbstractSensorTestBase {
         Assert.assertEquals("state 2", "Active", t.describeState(t.getState()));
     }
 
+    @Test
+    public void testCommandSentActive() throws JmriException {
+        t.setState(Sensor.ACTIVE);
+        Assert.assertEquals("Sensor goes active", Sensor.ACTIVE, t.getState());
+        checkActiveMsgSent();
+    }
+    
+    @Test
+    public void testCommandSentInactive() throws JmriException {
+        t.setState(Sensor.INACTIVE);
+        Assert.assertEquals("sensor goes inactive", Sensor.INACTIVE, t.getState());
+        checkInactiveMsgSent();
+    }
+    
     @Test
     public void testInvertAfterInactive() throws JmriException {
         Assume.assumeTrue(t.canInvert());
@@ -202,6 +216,28 @@ public abstract class AbstractSensorTestBase {
         t.setState(Sensor.OFF);
         jmri.util.JUnitUtil.waitFor(()->{return t.getCommandedState() == Sensor.OFF;}, "commanded state = OFF");
         Assert.assertTrue("Sensor is ON", t.getCommandedState() == Sensor.OFF);
+    }
+    
+    @Test
+    public void testSensorSetKnownState() throws JmriException {
+
+        // Assert.assertEquals("ACTIVE", t.describeState(Sensor.ACTIVE), t.describeState(t.getState()));
+        
+        t.setKnownState(Sensor.ACTIVE);
+        Assert.assertEquals("ACTIVE", Sensor.ACTIVE, t.getState());
+
+        t.setKnownState(Sensor.INACTIVE);
+        Assert.assertEquals("INACTIVE", Sensor.INACTIVE, t.getState());
+
+        t.setKnownState(Sensor.UNKNOWN);
+        Assert.assertEquals("UNKNOWN", Sensor.UNKNOWN, t.getState());
+
+        // Reset known state to something normal
+        t.setKnownState(Sensor.ACTIVE);
+        Assert.assertEquals("ACTIVE", Sensor.ACTIVE, t.getState());
+
+        t.setKnownState(Sensor.INCONSISTENT);
+        Assert.assertEquals("INCONSISTENT", Sensor.INCONSISTENT, t.getState());
     }
 
     //dispose of t.

@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <!-- no need to translate the following, as it generally only appears -->
 <!-- in the function map selection pane -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2014</year>
     <holder>JMRI</holder>
@@ -31,6 +31,12 @@
         <surname>Le Marchand</surname>
       </personname>
     </author>
+    <author>
+      <personname>
+        <firstname>Wouter</firstname>
+        <surname>Kok</surname>
+      </personname>
+    </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
@@ -45,18 +51,26 @@
       <authorinitials>ALM</authorinitials>
       <revremark>Added enum for Decoder ID</revremark>
     </revision>
+    <revision>
+      <revnumber>3</revnumber>
+      <date>2020-12-12</date>
+      <authorinitials>WK</authorinitials>
+      <revremark>Added ID SD05A and Dutch translating inserted</revremark>
+    </revision>
    </revhistory>
     <variable item="Manufacturer 2" CV="260" readOnly="yes" default="97">
       <decVal min="97" max="97"/>
         <label>Manufacturer</label>
         <label xml:lang="de">Herstellerkennung</label>
         <label xml:lang="ca">Fabricant</label>
+        <label xml:lang="nl">Produzent</label>
     </variable>
     <variable item="Decoder ID" CV="261" readOnly="yes" default="0">
       <decVal min="0" max="250"/>
         <label>Decoder ID</label>
         <label xml:lang="de">Decoderkennzeichen</label>
         <label xml:lang="ca">ID del decoder</label>
+        <label xml:lang="nl">Decoder-ID</label>
     </variable>
     <variable item="Decoder ID Text" CV="261" readOnly="yes" default="0">
         <enumVal>
@@ -64,6 +78,7 @@
                 <choice>Unknown</choice>
                 <choice xml:lang="de">Unbekannt</choice>
                 <choice xml:lang="fr">Inconnu</choice>
+                <choice xml:lang="nl">Onbekend</choice>
             </enumChoice>
             <enumChoice choice="DHP160" value ="16"/>
             <enumChoice choice="DHP250" value ="25"/>
@@ -88,6 +103,7 @@
             <enumChoice choice="FH22A" value ="192"/>
             <enumChoice choice="PD05A" value ="131"/>
             <enumChoice choice="PD12A" value ="130"/>
+            <enumChoice choice="SD05A" value ="205"/>
             <enumChoice choice="SD10A" value ="210"/>
             <enumChoice choice="SD16A" value ="216"/>
             <enumChoice choice="SD18A" value ="218"/>
@@ -97,29 +113,35 @@
         <label>Decoder ID</label>
         <label xml:lang="de">Decoderkennzeichen</label>
         <label xml:lang="ca">ID del decoder</label>
+        <label xml:lang="nl">Decoder-ID</label>
     </variable>
     <variable item="Decoder Version 2" CV="262" readOnly="yes" default="0">
       <decVal min="0" max="250"/>
         <label>Firmware Version</label>
         <label xml:lang="de">Versionsnummer</label>
          <label xml:lang="ca">Versió número</label>
+         <label xml:lang="nl">Versie-nummer</label>
     </variable>
     <variable item="Date 1" CV="263" readOnly="yes" default="0">
       <decVal min="0" max="255"/>
         <label>Date</label>
         <label xml:lang="de">Datum</label>
-         <label xml:lang="ca">Data</label>
+        <label xml:lang="ca">Data</label>
+        <label xml:lang="nl">Datum</label>
     </variable>
     <variable item="Revision 2" CV="264" readOnly="yes" default="0">
       <decVal min="0" max="255"/>
         <label>Revision</label>
         <label xml:lang="de">Revisionsnummer</label>
         <label xml:lang="ca">Número de revisió</label>
+        <label xml:lang="nl">Revisie-nummer
+</label>
     </variable>
     <variable item="Date 2" CV="265" readOnly="yes" default="0">
       <decVal min="0" max="255"/>
         <label>Date</label>
         <label xml:lang="de">Datum</label>
-         <label xml:lang="ca">Data</label>
+        <label xml:lang="ca">Data</label>
+        <label xml:lang="nl">Datum</label> 
     </variable>
 </variables>

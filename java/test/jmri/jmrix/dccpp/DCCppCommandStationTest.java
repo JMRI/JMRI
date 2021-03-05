@@ -41,28 +41,66 @@ public class DCCppCommandStationTest {
         c.setCommandStationInfo(r);
         // Assert.assertTrue(c.getBaseStationType().equals("UNO_1.0"));
         //Assert.assertTrue(c.getBaseStationType().equals("MEGA / ARDUINO MOTOR SHIELD"));
-        log.debug("Base Station: {}", c.getBaseStationType());
-        log.debug("Code Date: {}", c.getCodeBuildDate());
-        Assert.assertTrue(c.getBaseStationType().equals("DCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD"));
-        Assert.assertTrue(c.getCodeBuildDate().equals("23 Feb 2015 09:23:57"));
+        log.debug("Station Type: {}", c.getStationType());
+        log.debug("Build: {}", c.getBuild());
+        log.debug("Version: {}", c.getVersion());
+        Assert.assertTrue(c.getStationType().equals("DCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD"));
+        Assert.assertTrue(c.getBuild().equals("23 Feb 2015 09:23:57"));
+        Assert.assertTrue(c.getVersion().equals("0.0.0"));
+    }
+
+    @Test
+    public void testVersion3() {
+        // test setting the command station version from a v3+ DCCppReply
+        DCCppCommandStation c = new DCCppCommandStation();
+        DCCppReply r = DCCppReply.parseDCCppReply(
+                "iDCC-EX V-3.0.0 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36");
+        Assert.assertNotNull(r);
+        log.debug("Status Reply: {}", r.toString());
+        c.setCommandStationInfo(r);
+        log.debug("Station Type: {}", c.getStationType());
+        log.debug("Build: {}", c.getBuild());
+        log.debug("Version: {}", c.getVersion());
+        Assert.assertTrue("verifying v3+ station type", c.getStationType().equals("DCC-EX"));
+        Assert.assertTrue("verifying v3+ build", c.getBuild().equals("9db6d36"));
+        Assert.assertTrue("verifying v3+ version", c.getVersion().equals("3.0.0"));
+    }
+
+    @Test
+    public void testIsFunctionRefreshRequired() {
+        //verify v3+ does not need refresh
+        DCCppCommandStation c = new DCCppCommandStation();
+        DCCppReply r = DCCppReply.parseDCCppReply(
+                "iDCC-EX V-3.0.0 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36");
+        c.setCommandStationInfo(r);
+        log.debug("Version: {}", c.getVersion());
+        Assert.assertFalse("v3+ does not require function refresh", c.isFunctionRefreshRequired());
+
+        //verify < v3 does need refresh
+        c = new DCCppCommandStation();
+        r = DCCppReply.parseDCCppReply(
+                "iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
+        c.setCommandStationInfo(r);
+        log.debug("Version: {}", c.getVersion());
+        Assert.assertTrue("< v3 requires function refresh", c.isFunctionRefreshRequired());
     }
 
     @Test
     public void testSetBaseStationTypeString() {
         DCCppCommandStation c = new DCCppCommandStation();
-        c.setBaseStationType("MEGA_4.3");
-        Assert.assertTrue(c.getBaseStationType().equals("MEGA_4.3"));
-        c.setBaseStationType("UNO_1.7");
-        Assert.assertTrue(c.getBaseStationType().equals("UNO_1.7"));
+        c.setStationType("MEGA_4.3");
+        Assert.assertTrue(c.getStationType().equals("MEGA_4.3"));
+        c.setStationType("UNO_1.7");
+        Assert.assertTrue(c.getStationType().equals("UNO_1.7"));
     }
 
     @Test
     public void testSetCodeBuildDateString() {
         DCCppCommandStation c = new DCCppCommandStation();
-        c.setCodeBuildDate("17 May 2007 10:15:07");
-        Assert.assertTrue(c.getCodeBuildDate().equals("17 May 2007 10:15:07"));
-        c.setCodeBuildDate("03 Jan 1993 23:59:59");
-        Assert.assertTrue(c.getCodeBuildDate().equals("03 Jan 1993 23:59:59"));
+        c.setBuild("17 May 2007 10:15:07");
+        Assert.assertTrue(c.getBuild().equals("17 May 2007 10:15:07"));
+        c.setBuild("03 Jan 1993 23:59:59");
+        Assert.assertTrue(c.getBuild().equals("03 Jan 1993 23:59:59"));
     }
 
     @Test

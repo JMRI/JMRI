@@ -5,6 +5,7 @@ import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
+import org.junit.Assume;
 
 /**
  * Test common functioning of LayoutTrack.
@@ -22,18 +23,17 @@ public class LayoutTrackTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
-        if (!GraphicsEnvironment.isHeadless()) {
-            le = new LayoutEditor();
-        }
+        
+        // eventually we'll be using
+        // LayoutModels instead of the full LayoutEditor 
+        // for context, in which case this will be OK headless
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le = new LayoutEditor();
     }
     
     @AfterEach
     public void tearDown() {
-        JUnitUtil.tearDown();
-        if (le != null) {
-            JUnitUtil.dispose(le);
-        }
         le = null;
+        JUnitUtil.tearDown();
     }
 }

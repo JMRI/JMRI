@@ -11,6 +11,8 @@ import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppInitializationManager;
 import jmri.jmrix.dccpp.DCCppSerialPortController;
 import jmri.jmrix.dccpp.DCCppTrafficController;
+import jmri.jmrix.dccpp.network.DCCppEthernetAdapter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -20,14 +22,15 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to DCC++ via a FTDI Virtual Com Port. Normally controlled by
- * the lenz.liusb.LIUSBFrame class.
+ * Provide access to DCC++ via a FTDI Virtual Com Port.
  *
  * @author Mark Underwood Copyright (C) 2015
  *
  * Based on jmri.jmirx.lenz.liusb.LIUSBAdapter by Paul Bender
  */
 public class DCCppAdapter extends DCCppSerialPortController {
+    private java.util.TimerTask keepAliveTimer; 
+    private static final long keepAliveTimeoutValue = 30000;     
 
     public DCCppAdapter() {
         super();
@@ -72,19 +75,21 @@ public class DCCppAdapter extends DCCppSerialPortController {
             purgeStream(serialStream);
 
             // report status?
-            if (log.isInfoEnabled()) {
-                // report now
-                log.info("{} port opened at {} baud with DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
-            }
+            log.info("{} port opened at {} baud with DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
+
             if (log.isDebugEnabled()) {
                 // report additional status
                 log.debug(" port flow control shows {}", activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"); // NOI18N
 
                 // log events
                 setPortEventLogging(activeSerialPort);
+
             }
 
             opened = true;
+
+            //start the keepAliveTimer to send periodic 's'tatus messages
+            keepAliveTimer();
 
         } catch (NoSuchPortException p) {
 
@@ -150,6 +155,28 @@ public class DCCppAdapter extends DCCppSerialPortController {
         }
         return null;
     }
+
+    /**
+     * Set up the keepAliveTimer, and start it.
+     */
+    private void keepAliveTimer() {
+        if (keepAliveTimer == null) {
+            keepAliveTimer = new java.util.TimerTask(){
+                    @Override
+                    public void run() {
+                        // If the timer times out, send a request for status
+                        DCCppAdapter.this.getSystemConnectionMemo().getDCCppTrafficController()
+                            .sendDCCppMessage(
+                                              jmri.jmrix.dccpp.DCCppMessage.makeCSStatusMsg(),
+                                              null);
+                    }
+                };
+        } else {
+            keepAliveTimer.cancel();
+        }
+        jmri.util.TimerUtil.schedule(keepAliveTimer, keepAliveTimeoutValue, keepAliveTimeoutValue);
+    }
+    
 
     @Override
     public boolean status() {

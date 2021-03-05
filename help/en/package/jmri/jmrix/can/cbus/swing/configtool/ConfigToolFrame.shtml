@@ -5,18 +5,9 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <meta name="keywords" content="JMRI help MERG CBUS event capture">
-  <title>JMRI: MERG CBUS Event Capture Tool</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="JMRI help CBUS event capture">
+  <title>JMRI: CBUS&reg; Event Capture Tool</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -24,7 +15,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-     <h1>JMRI: MERG CBUS Event Capture Tool</h1>
+     <h1>JMRI: CBUS Event Capture Tool</h1>
       
       <ul class="nav">
       <li><a href="#examinemultipleevents">Examine Multiple Events</a></li>
@@ -36,7 +27,7 @@
       <img src="../../../../../../../html/hardware/can/cbus/images/swing/event-capture/event-capture-413x677.png"
        alt="Event Capture Tool screenshot" width="413" height="677" align="right">
 
-      <p>The MERG CBUS Event Capture tool can simplify configuring JMRI
+      <p>The CBUS Event Capture tool can simplify configuring JMRI
       to work well with your <a href=
       "../../../../../../../html/hardware/can/cbus/index.shtml">CBUS</a>
       installation.</p>
@@ -44,7 +35,7 @@
       <p>To <a href=
       "../../../../../../../html/hardware/can/cbus/index.shtml">configure
       JMRI Sensors, Turnouts and Lights</a>, you need to identify the
-      associated MERG CBUS events. There are several ways to do this.</p>
+      associated CBUS events. There are several ways to do this.</p>
       
       <p>This page uses the capture tool to configure a Sensor as an example, 
       similar methods work for Turnouts and Lights.</p>
@@ -52,13 +43,13 @@
      <h3><a name="examinemultipleevents" id="examinemultipleevents" 
      >Examine Multiple Events</a></h3>
       <p>The upper part of the screen
-      can capture multiple MERG CBUS Events, which you can then use to
+      can capture multiple CBUS Events, which you can then use to
       create Sensors and Turnouts.
 
-      <p>When a new MERG CBUS message comes it, it will be captured in
+      <p>When a new CBUS message comes it, it will be captured in
       the highest line that has the "Capture" box checked. The box
       will then be unchecked so the captured message is not
-      overwritten by later MERG CBUS messages. If you check a series of
+      overwritten by later CBUS messages. If you check a series of
       boxes, you can capture a series of messages.</p>
 
       <p>Once you've captured the Event you want, you can copy and
@@ -89,7 +80,7 @@
 
       <p>If you press the "Capture Next" button next to one of the
       Event fields, it will stay down (activated) until the next
-      MERG CBUS Event (CAN frame) is seen by the program. That Event is
+      CBUS Event (CAN frame) is seen by the program. That Event is
       captured into the neighboring field for later use.</p>
 
       <p>You can separately capture the two Events for a Sensor,
@@ -121,7 +112,7 @@
 
     <h3>JMRI Help</h3>
     
-      <p>Once you've created a MERG CBUS Sensor or
+      <p>Once you've created a CBUS Sensor or
       Turnout, you can use the <a href=
       "../../../../../jmrit/beantable/SensorTable.shtml">Sensor
       Table</a>, <a href=
@@ -130,13 +121,17 @@
       "../../../../../jmrit/beantable/LightTable.shtml">Light
       Table</a> to adjust the details.</p>
 
-      <p>The <a href="../console/CbusConsoleFrame.shtml">MERG CBUS
+      <p>The <a href="../console/CbusConsoleFrame.shtml">CBUS
       Console</a> can help you figure out what events are happening
       on your layout.</p>
       
-      <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the MERG CBUS Event Capture window.</p>
+      <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the CBUS Event Capture window.</p>
       
-      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI MERG CBUS Support page</a>.</p>
+      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Support page</a>.</p>
+
+        <h2></h2>
+        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
+        <p></p>
 
       
       <!--#include virtual="/Footer.shtml" -->

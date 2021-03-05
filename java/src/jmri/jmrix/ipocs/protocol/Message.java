@@ -22,7 +22,7 @@ public class Message {
   private final static Logger log = LoggerFactory.getLogger(Message.class);
   private byte length;
   private String objectName;
-  private List<Packet> packets = new ArrayList<Packet>();
+  private final List<Packet> packets = new ArrayList<Packet>();
 
   public byte getLength() {
     return length;

@@ -13,25 +13,9 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Set;
+import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
-import javax.swing.AbstractCellEditor;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import jmri.Block;
@@ -156,12 +140,12 @@ public class BlockTableAction extends AbstractTableAction<Block> {
             }
 
             @Override
-            public Block getBySystemName(String name) {
+            public Block getBySystemName(@Nonnull String name) {
                 return InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(name);
             }
 
             @Override
-            public Block getByUserName(String name) {
+            public Block getByUserName(@Nonnull String name) {
                 return InstanceManager.getDefault(jmri.BlockManager.class).getByUserName(name);
             }
 
@@ -207,6 +191,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     } else if (b.getCurvature() == Block.SEVERE) {
                         c.setSelectedItem(severeText);
                     }
+                    c.addActionListener(super::comboBoxAction);
                     return c;
                 } else if (col == LENGTHCOL) {
                     double len = 0.0;
@@ -227,6 +212,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     JComboBox<String> c = new JComboBox<>(speedList);
                     c.setEditable(true);
                     c.setSelectedItem(speed);
+                    c.addActionListener(super::comboBoxAction);
                     return c;
                 } else if (col == STATECOL) {
                     switch (b.getState()) {
@@ -247,6 +233,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                         name = sensor.getDisplayName();
                     }
                     c.setSelectedItem(name);
+                    c.addActionListener(super::comboBoxAction);
                     return c;
                 } else if (col == REPORTERCOL) {
                     Reporter reporter = b.getReporter();
@@ -256,6 +243,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                         name = reporter.getDisplayName();
                     }
                     rs.setSelectedItem(name);
+                    rs.addActionListener(super::comboBoxAction);
                     return rs;
                 } else if (col == CURRENTREPCOL) {
                     return Boolean.valueOf(b.isReportingCurrent());
@@ -343,7 +331,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
 
                         @Override
                         public void run() {
-                            editButton(b); // don't really want to stop Route w/o user action
+                            editButton(b); // don't really want to stop Block w/o user action
                         }
                     }
                     WindowMaker t = new WindowMaker(b);
@@ -503,8 +491,6 @@ public class BlockTableAction extends AbstractTableAction<Block> {
 
             @Override
             public void configureTable(JTable table) {
-                table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
-                table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
                 table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
                 jmri.InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
                 jmri.InstanceManager.getDefault(jmri.ReporterManager.class).addPropertyChangeListener(this);
@@ -757,7 +743,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
      * inchBoxChanged() and centimeterBoxChanged() methods
      */
     @Override
-    public void addToFrame(BeanTableFrame f) {
+    public void addToFrame(BeanTableFrame<Block> f) {
         //final BeanTableFrame finalF = f; // needed for anonymous ActionListener class
         f.addToBottomBox(inchBox, this.getClass().getName());
         inchBox.setToolTipText(Bundle.getMessage("InchBoxToolTip"));
@@ -786,7 +772,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
      * @param f the JFrame of this table
      */
     @Override
-    public void setMenuBar(BeanTableFrame f) {
+    public void setMenuBar(BeanTableFrame<Block> f) {
         final jmri.util.JmriJFrame finalF = f; // needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
         int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenus before 'Window' and 'Help'
@@ -1042,7 +1028,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
         }
 
         // Add some entry pattern checking, before assembling sName and handing it to the blockManager
-        String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameBlock"));
+        StringBuilder statusMessage = new StringBuilder(Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameBlock")));
 
         for (int x = 0; x < numberOfBlocks; x++) {
             if (x != 0) { // start at 2nd Block
@@ -1119,16 +1105,16 @@ public class BlockTableAction extends AbstractTableAction<Block> {
             }
             // add first and last names to statusMessage user feedback string
             if (x == 0 || x == numberOfBlocks - 1) {
-                statusMessage = statusMessage + " " + sName + " (" + user + ")";
+                statusMessage.append(" ").append(sName).append(" (").append(user).append(")");
             }
             if (x == numberOfBlocks - 2) {
-                statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
+                statusMessage.append(" ").append(Bundle.getMessage("ItemCreateUpTo")).append(" ");
             }
             // only mention first and last of addRangeCheckBox added
         } // end of for loop creating addRangeCheckBox of Blocks
 
         // provide feedback to user
-        statusBar.setText(statusMessage);
+        statusBar.setText(statusMessage.toString());
         statusBar.setForeground(Color.gray);
 
         pref.setSimplePreferenceState(systemNameAuto, _autoSystemNameCheckBox.isSelected());

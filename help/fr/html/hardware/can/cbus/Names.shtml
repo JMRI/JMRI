@@ -4,7 +4,7 @@
 <html lang="fr">
 <head>
 <!-- Updated by Blorec Herv&#233;  2017-01-19-->
-<title>JMRI Mat&#233;riel - CBUS - D&#233;signation</title>
+<title>JMRI Mat&#233;riel - CBUS&reg; - D&#233;signation</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -22,7 +22,7 @@
     <div id="mainContent">
         <!-- Page Body -->
 
-<h1>Structure Mat&#233;riel: CBUS - D&#233;signation</h1>
+<h1>Structure Mat&#233;riel: CBUS&reg; - D&#233;signation</h1>
 <p>
 Cette page explique comment JMRI utilise les Noms Syst&#232;mes pour acc&#233;der aux ressources li&#233;es &#224; CBUS.
 

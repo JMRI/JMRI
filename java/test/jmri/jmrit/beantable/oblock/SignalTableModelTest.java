@@ -5,8 +5,6 @@ import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  *
@@ -16,10 +14,10 @@ public class SignalTableModelTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TableFrames f = new TableFrames();
-        SignalTableModel t = new SignalTableModel(f);
-        Assert.assertNotNull("exists",t);
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
+        TableFrames tf = new TableFrames();
+        SignalTableModel stm = new SignalTableModel(tf);
+        Assertions.assertNotNull(stm, "exists");
     }
 
     @BeforeEach

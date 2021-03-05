@@ -10,7 +10,7 @@ import org.junit.Test;
 import jmri.jmrix.ipocs.protocol.enums.RqReleaseCommand;
 
 public class LocalReleasePacketTest {
-  private byte[] testPacket = { RqReleaseCommand.LocalControl.value };
+  private final byte[] testPacket = { RqReleaseCommand.LocalControl.value };
 
   @Test
   public void getIdTest() {

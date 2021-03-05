@@ -134,18 +134,18 @@ public class TrainCsvCommon extends TrainCommon {
 
     protected final void checkForEngineOrCabooseChange(CSVPrinter fileOut, Train train, RouteLocation rl) throws IOException {
         if (train.getSecondLegOptions() != Train.NO_CABOOSE_OR_FRED) {
-            if (rl == train.getSecondLegStartLocation()) {
+            if (rl == train.getSecondLegStartRouteLocation()) {
                 engineCsvChange(fileOut, rl, train.getSecondLegOptions());
             }
-            if (rl == train.getSecondLegEndLocation()) {
+            if (rl == train.getSecondLegEndRouteLocation()) {
                 printRemoveHelpers(fileOut);
             }
         }
         if (train.getThirdLegOptions() != Train.NO_CABOOSE_OR_FRED) {
-            if (rl == train.getThirdLegStartLocation()) {
+            if (rl == train.getThirdLegStartRouteLocation()) {
                 engineCsvChange(fileOut, rl, train.getThirdLegOptions());
             }
-            if (rl == train.getThirdLegEndLocation()) {
+            if (rl == train.getThirdLegEndRouteLocation()) {
                 printRemoveHelpers(fileOut);
             }
         }

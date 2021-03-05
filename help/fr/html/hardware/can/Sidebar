@@ -31,11 +31,11 @@
 				<li><a href="index.shtml">CAN</a>
                     <ul>
                         <li><a href="scripting.shtml">CAN Scripts</a>
-                        <li><a href="cbus/index.shtml">MERG CBUS</a>
+                        <li><a href="cbus/index.shtml">CBUS&reg;</a>
                         <li><a href="cbus/Names.shtml">D&#233;signation CBUS</a>
                         <li><a href="cbus/Details.shtml">D&eacute;tails de Connection CBUS</a>
                     </ul>
-				<li><a href="../can/cbus/index.shtml">MERG CBUS</a>
+				<li><a href="../can/cbus/index.shtml">CBUS</a>
 				<li><a href="../modbus/index.shtml">Modbus</a>
                 <li><a href="../mqtt/index.shtml">MQTT</a>
 				<li><a href="../mrc/index.shtml">MRC</a>

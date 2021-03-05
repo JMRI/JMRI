@@ -52,8 +52,8 @@
       Warrant</b> window is displayed:</p>
 
       <a href="images/NxWarrantCreate1.png"><img
-      src="images/NxWarrantCreate1.png" align="right" width="365"
-      height="180" alt="Warrants Preferences pane in in JMRI 4.10"></a>
+      src="images/NxWarrantCreate1.png" class="floatRight" width="547"
+      height="347" alt="Warrants Preferences pane in in JMRI 4.10"></a>
 
       <h3>Set the Route</h3>
       <p>First establish the route for the train by entering OBlocks
@@ -114,11 +114,11 @@
       for exit and entry. Also check that the paths have the 
       needed portals for exit and entry.</p>
 
-      <p>Once the route has been chosen, the pane changes to
-      show choices for the running parameters of the NX Warrant:
+      <p>Once the route has been chosen, the window changes to
+      show choices for the running parameters of the NX Warrant:<br>
       <a href="images/NxWarrantCreate2.png"><img
-      src="images/NxWarrantCreate2.png" align="right" width="347"
-      height="121" hspace="0" vspace="0" alt="Warrants Preferences
+      src="images/NxWarrantCreate2.png" class="floatRight" width="591"
+      height="330" alt="Warrants Preferences
       pane in in JMRI 4.10"></a>
       </p>
 
@@ -161,13 +161,18 @@
       <p>Next set values for the maximum speed the train should achieve
       when track conditions are at a <i>Clear</i> aspect.</p>
       <ul>
-        <li><b>Max Throttle setting</b> must be a positive decimal
-        not greater than 1.0</li>
+        <li><b>Max Throttle setting</b> Percent of full Throttle.
+        Invalid entries will be discarded.</li>
 
-        <li><b>Scale Speed</b> If a speed profile exists, you may enter
-        maximum scale speed you want and the speed profile will set
-        the maximum throttle setting. You may choose either Miles 
-        per hour or Kilometers per hour.</li>
+        <li><b>Scale Speed</b> or <b>Track speed</b> - The label depends
+        upon the units you choose to express the train's speed.
+        The "<i><b>units"</b></i> button cycles through the choices:
+        Miles per hour, Kilometers per hour, millimeters per
+        second, inches per second.
+        If a speed profile exists. it is used to make the 
+        conversion to throttle setting percent. Otherwise the
+        throttle factor settings of Warrant Preferences are
+        used.</li>
         
         <li><b>Start Distance</b> is the position of the train in
         the Origin block. Set the distance of the train's position
@@ -180,7 +185,13 @@
         desired stop point. You may choose either inches or 
         centimeters for units.</li>
       </ul>
- 
+
+      <p>NXWarrants ramp up and ramp down the train speed in increments 
+      to provide a prototypical appearance when leaving the Origin
+      block and ending in the Destination block. The parameters for
+      the increments to use are set by the <b>Ramp Step Time</b>
+      and <b>Ramp Step Throttle</b> fields.</p>
+
       <p>Next, set the direction of travel. <i><b>It is important to
       set this correctly</b></i> because the throttle commands will
       correspond to track conditions.  Be ready to issue an
@@ -188,16 +199,22 @@
       <ul>
         <li>Radio buttons <b>Forward</b> and <b>Reverse</b> Set the
         direction of the locomotive.</li>
-        <li>A checkbox <b>Don't Ramp Speed changes</b> Sets an
+      </ul>
+
+      <p>On the right is a list of some options to consider for 
+      running the warrant.</p>
+      <ul>
+        <li>The checkbox <b>Don't Ramp Speed changes</b> Sets an
         option on how to change the speed when a signal or rogue
         occupation is detected ahead. The default is to incrementally 
         slow the train before reaching the end of the approach block. 
         Selecting the option will make an immediate speed change upon 
         entering the approach block.</li>
-      </ul>
 
-      <p>Finally, there are some options to consider for running:</p>
-      <ul>
+        <li>The checkbox <b>Skip Sound Commands</b> Sounding the
+        horn or whistle at the start and end of the NXWarrant are
+        eliminated.</li>
+
         <li>The checkbox <b>EStop at Destination Block</b> to have the
         train make an emergency stop upon entering the last block.
         <i>Rarely Needed.</i></li>
@@ -211,7 +228,11 @@
         another Warrant to acquire clearance to run ahead of
         the Warrant.  The additional Warrant will cause this Warrant
         to halt and wait for occupation to clear ahead before
-        remuning speed.</li>
+        resuming speed.</li>
+
+        <li>The checkbox <b>Add Tracker after run completes</b>
+        launches a tracker marker to follow the manual operation
+        of the train after the warrant has finished.</li>
       </ul>
 
       <p>An NX Warrant can be issued for a manual operator. Here the
@@ -219,9 +240,12 @@
       operator must acquire the throttle and drive the train.</p>
 
       <ul>
-        <li>Radio buttons <b>Run Auto</b> for an Automated Warrant
-        and <b>Run Manual</b> to dispatch a route for a manual
-        operator</li>
+        <li>Radio button <b>Run Auto</b> launches the Automated 
+        Warrant</li>
+        <li> <b>Run Manual</b> allocates and sets the route for 
+        a manual operator. This is similar to setting a Tracker
+        where the route is prescribed and highlighted on the
+        layout.</li>
       </ul>
 
       <p>At the bottom of the pane are three buttons:</p>
@@ -233,8 +257,8 @@
       </ul>
 
       <h3>The Script Algorithm</h3>
-      <p>The NX Warrant script sets the direction, turns the light on,
-      blows two horn/whistle blasts and starts to ramp up speed.<br>
+      The NX Warrant script sets the direction, turns the light on,
+      blows two horn/whistle blasts and starts to ramp up speed.
       There should be a
       reasonable estimate for block length know for each OBlock. 
       If the length of the route is not known, you will be prompted 
@@ -242,7 +266,7 @@
       The algorithm will ramp up to the maximum speed and
       ramp down to a stop in the last block.
       After stopping in the last block, the script blows one
-      horn/whistle blast and turns off the light.</p>
+      horn/whistle blast and turns off the light.
 
       <p>For a series of short blocks the length needed to
       ramp up or ramp down is distributed over as many blocks as
@@ -252,21 +276,27 @@
       modified so ramp up and ramp down can finish without
       over-running the last block.</p>
 
-      <p>The Warrant's block synchronization adjusts the
-      elapsed times so event time are relative to the entry
-      of the block.<br>
+      <p>The elapsed times to traverse each block is computed
+      from what is known about the engine's speed profile and
+      the length of the path in each block. 
       <b>Note!</b> if the route includes a
       <i>Dark</i> block, i.e. no occupancy detection, it is 
       important it's block length is known since in this case,
       synchronization cannot be done.</p>
 
       <h3>Saving NX Warrants to make them Permanent</h3>
-      <p>If you press the <b>Edit</b> button on the Warrant List
-      Table of the NX Warrant while it is still executing, the
-      Create/Edit Warrant Window for the NX Warrant will open.<br>
-      Press the <b>Copy</b> button. After providing a name for
-      the copy press <b>Save</b> to make a permanent Warrant
-      that can be edited later.</p>
+      When the <b>Run NX Warrant</b> button is pressed and the
+      NXWarrant starts its run, the warrant is listed in the 
+      Warrant List table with the name 
+      <b>NX(</b><i>address</i><b>)</b>. If the table is 
+      not visible, it will be displayed.
+      Notice that the <b>Edit</b> button label for the 
+      warrant is <b>Save</b>.
+      <p>If you press this button before the warrant completes,
+      a Create/Edit Warrant Window for the NX Warrant will open.
+      This window has a copy of the NXWarrant. After providing 
+      a name and any other information you want changed,
+      press the <b>Save</b> button to make a permanent warrant.
 
       <h3>Some Tips for Smooth Start Up and Slow Down</h3>
       <p>It is
@@ -288,16 +318,16 @@
       other Warrant parameters can be set.</p>
 
       <a href="images/WarrantsPrefs.png"><img
-      src="images/WarrantsPrefs.png" align="right" width="471"
-      height="196" hspace="0" vspace="0" alt="Warrants Preferences
+      src="images/WarrantsPrefs.png" class="floatRight" width="629"
+      height="428" alt="Warrants Preferences
       pane in in JMRI 4.10"></a>
 
       <a name="prefs" id="prefs"></a>
       <h2>Warrant Preferences</h2>
       <p>From the general JMRI Preferences, select the Warrants tab
-      and check the options set for:</p>
+        and check the options set for:</p>
       <ul>
-        <li><b>Layout Scale</b> - Setting the modelling scale
+        <li><b>Layout Scale</b> - Setting the modeling scale
         of your layout is essential so conversion to scale speeds
         is correct.</li>
 
@@ -305,7 +335,7 @@
           Route</b>) as mentioned above when looking for routes.</li>
 
         <li>The value of the <b>Throttle Setting/Speed Factor</b>
-        is used by Warrants when no speed profile is available.</li>
+        is used by Warrants when no Speed Profile is available.</li>
 
         <li><b>Ramp Step time increment</b> and <b>Ramp Step Throttle
         Increment</b> regulate the smoothness and prototypical look

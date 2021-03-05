@@ -25,10 +25,10 @@ import jmri.util.swing.SplitButtonColorChooserPanel;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012, 2013
  */
-public class PrintOptionPanel extends OperationsPreferencesPanel {
+public class PrintOptionPanel extends OperationsPreferencesPanel implements java.beans.PropertyChangeListener {
 
     private static final Logger log = LoggerFactory.getLogger(PrintOptionPanel.class);
-    
+
     private String ADD = "+";
     private String DELETE = "-";
 
@@ -90,8 +90,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
     // text area
     JTextArea commentTextArea = new JTextArea(2, 90);
 
-    JScrollPane commentScroller = new JScrollPane(commentTextArea,
-            JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+            JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
     // combo boxes
     JComboBox<String> fontComboBox = new JComboBox<>();
@@ -164,13 +164,11 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         deleteLocalComboboxButton.setToolTipText(Bundle.getMessage("DeleteMessageComboboxTip"));
 
         addSwitchListPickupComboboxButton.setToolTipText(Bundle.getMessage("AddMessageComboboxTip"));
-        deleteSwitchListPickupComboboxButton.setToolTipText(Bundle
-                .getMessage("DeleteMessageComboboxTip"));
+        deleteSwitchListPickupComboboxButton.setToolTipText(Bundle.getMessage("DeleteMessageComboboxTip"));
         addSwitchListDropComboboxButton.setToolTipText(Bundle.getMessage("AddMessageComboboxTip"));
         deleteSwitchListDropComboboxButton.setToolTipText(Bundle.getMessage("DeleteMessageComboboxTip"));
         addSwitchListLocalComboboxButton.setToolTipText(Bundle.getMessage("AddMessageComboboxTip"));
-        deleteSwitchListLocalComboboxButton
-                .setToolTipText(Bundle.getMessage("DeleteMessageComboboxTip"));
+        deleteSwitchListLocalComboboxButton.setToolTipText(Bundle.getMessage("DeleteMessageComboboxTip"));
 
         // Manifest panel
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -198,15 +196,13 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         manifestFormatComboBox.setSelectedItem(Setup.getManifestFormat());
 
         JPanel pOrientation = new JPanel();
-        pOrientation.setBorder(BorderFactory.createTitledBorder(Bundle
-                .getMessage("BorderLayoutOrientation")));
+        pOrientation.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutOrientation")));
         pOrientation.add(manifestOrientationComboBox);
 
         JPanel pPickupColor = new JPanel();
-        pPickupColor.setBorder(BorderFactory.createTitledBorder(Bundle
-                .getMessage("BorderLayoutPickupColor")));
+        pPickupColor.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutPickupColor")));
         pickupColorChooser = new JColorChooser(Setup.getPickupColor());
-        AbstractColorChooserPanel pickupColorPanels[] = {new SplitButtonColorChooserPanel()};
+        AbstractColorChooserPanel pickupColorPanels[] = { new SplitButtonColorChooserPanel() };
         pickupColorChooser.setChooserPanels(pickupColorPanels);
         pickupColorChooser.setPreviewPanel(new JPanel());
         pPickupColor.add(pickupColorChooser);
@@ -214,16 +210,15 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         JPanel pDropColor = new JPanel();
         pDropColor.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutDropColor")));
         dropColorChooser = new JColorChooser(Setup.getDropColor());
-        AbstractColorChooserPanel dropColorPanels[] = {new SplitButtonColorChooserPanel()};
+        AbstractColorChooserPanel dropColorPanels[] = { new SplitButtonColorChooserPanel() };
         dropColorChooser.setChooserPanels(dropColorPanels);
         dropColorChooser.setPreviewPanel(new JPanel());
         pDropColor.add(dropColorChooser);
 
         JPanel pLocalColor = new JPanel();
-        pLocalColor.setBorder(BorderFactory.createTitledBorder(Bundle
-                .getMessage("BorderLayoutLocalColor")));
+        pLocalColor.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutLocalColor")));
         localColorChooser = new JColorChooser(Setup.getLocalColor());
-        AbstractColorChooserPanel localColorPanels[] = {new SplitButtonColorChooserPanel()};
+        AbstractColorChooserPanel localColorPanels[] = { new SplitButtonColorChooserPanel() };
         localColorChooser.setChooserPanels(localColorPanels);
         localColorChooser.setPreviewPanel(new JPanel());
         pLocalColor.add(localColorChooser);
@@ -247,17 +242,16 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         pSwitchFormat.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutSwitchListFormat")));
         pSwitchFormat.add(formatSwitchListCheckBox);
 
-        pSwitchListOrientation.setBorder(BorderFactory.createTitledBorder(Bundle
-                .getMessage("BorderLayoutSwitchListOrientation")));
+        pSwitchListOrientation
+                .setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutSwitchListOrientation")));
         pSwitchListOrientation.add(switchListOrientationComboBox);
-        
 
         pSl.add(pSwitchFormat);
         pSl.add(pSwitchListOrientation);
 
         JPanel pM = new JPanel();
         pM.setLayout(new BoxLayout(pM, BoxLayout.X_AXIS));
-        
+
         // Switch List options
         JPanel pSwitchOptions = new JPanel();
         pSwitchOptions.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutSwitchListOptions")));
@@ -266,20 +260,19 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
 
         // Manifest options
         JPanel pManifestOptions = new JPanel();
-        pManifestOptions.setBorder(BorderFactory.createTitledBorder(Bundle
-                .getMessage("BorderLayoutManifestOptions")));
+        pManifestOptions.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutManifestOptions")));
         pManifestOptions.add(printLocCommentsCheckBox);
         pManifestOptions.add(printRouteCommentsCheckBox);
         pManifestOptions.add(departureTimeCheckBox);
         pManifestOptions.add(truncateCheckBox);
-        
+
         pM.add(pSwitchOptions);
         pM.add(pManifestOptions);
 
         // Manifest and Switch List options
         JPanel pManifestSwtichListOptions = new JPanel();
-        pManifestSwtichListOptions.setBorder(BorderFactory.createTitledBorder(Bundle
-                .getMessage("BorderLayoutManifestSwitchListOptions")));
+        pManifestSwtichListOptions.setBorder(
+                BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutManifestSwitchListOptions")));
         pManifestSwtichListOptions.add(printValidCheckBox);
         pManifestSwtichListOptions.add(printLoadsEmptiesCheckBox);
         pManifestSwtichListOptions.add(printCabooseLoadCheckBox);
@@ -294,8 +287,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
 
         // Use text editor for manifest
         JPanel pEdit = new JPanel();
-        pEdit.setBorder(BorderFactory.createTitledBorder(Bundle
-                .getMessage("BorderLayoutManifestPreview")));
+        pEdit.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutManifestPreview")));
         pEdit.add(editManifestCheckBox);
 
         // manifest logo
@@ -315,14 +307,12 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         // missing cars comment
         JPanel pComment = new JPanel();
         pComment.setLayout(new GridBagLayout());
-        pComment.setBorder(BorderFactory.createTitledBorder(Bundle
-                .getMessage("BorderLayoutCommentOptions")));
+        pComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutCommentOptions")));
         addItem(pComment, commentScroller, 0, 0);
 
         // Hazardous comment
         JPanel pHazardous = new JPanel();
-        pHazardous
-                .setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutHazardous")));
+        pHazardous.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutHazardous")));
         pHazardous.add(hazardousTextField);
 
         pComments.add(pComment);
@@ -367,9 +357,9 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         printValidCheckBox.setSelected(Setup.isPrintValidEnabled());
         sortByTrackCheckBox.setSelected(Setup.isSortByTrackNameEnabled());
         printHeadersCheckBox.setSelected(Setup.isPrintHeadersEnabled());
-        truncateCheckBox.setSelected(Setup.isTruncateManifestEnabled());
+        truncateCheckBox.setSelected(Setup.isPrintTruncateManifestEnabled());
         departureTimeCheckBox.setSelected(Setup.isUseDepartureTimeEnabled());
-        trackSummaryCheckBox.setSelected(Setup.isTrackSummaryEnabled());
+        trackSummaryCheckBox.setSelected(Setup.isPrintTrackSummaryEnabled());
         trackSummaryCheckBox.setEnabled(Setup.isSwitchListRealTime());
         routeLocationCheckBox.setSelected(Setup.isSwitchListRouteLocationCommentEnabled());
         editManifestCheckBox.setSelected(Setup.isManifestEditorEnabled());
@@ -421,6 +411,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         addCheckBoxAction(truncateCheckBox);
 
         addComboBoxAction(manifestFormatComboBox);
+
+        Setup.getDefault().addPropertyChangeListener(this);
 
         initMinimumSize();
     }
@@ -504,8 +496,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
     }
 
     @Override
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
-            justification = "checks for instance of PrintOptionFrame") // NOI18N
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "checks for instance of PrintOptionFrame") // NOI18N
     public void checkBoxActionPerformed(ActionEvent ae) {
         if (ae.getSource() == tabFormatCheckBox) {
             loadFontComboBox();
@@ -520,8 +511,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         }
         if (ae.getSource() == truncateCheckBox && truncateCheckBox.isSelected()) {
             if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("EnableTruncateWarning"),
-                    Bundle.getMessage("TruncateManifests?"),
-                    JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+                    Bundle.getMessage("TruncateManifests?"), JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
                 truncateCheckBox.setSelected(false);
             }
         }
@@ -563,8 +553,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         return null;
     }
 
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
-            justification = "checks for instance of PrintOptionFrame") // NOI18N
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "checks for instance of PrintOptionFrame") // NOI18N
     private void updateLogoButtons() {
         boolean flag = Setup.getManifestLogoURL().equals(Setup.NONE);
         addLogoButton.setVisible(flag);
@@ -599,8 +588,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         // loco pick up message format
         pEngPickup.removeAll();
         enginePickupMessageList.clear();
-        pEngPickup.setBorder(BorderFactory.createTitledBorder(Bundle
-                .getMessage("BorderLayoutPickupEngine")));
+        pEngPickup.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutPickupEngine")));
         pEngPickup.add(pickupEngPrefix);
         pickupEngPrefix.setText(Setup.getPickupEnginePrefix());
         String[] format = Setup.getPickupEngineMessageFormat();
@@ -685,8 +673,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         // switch list car pickup message format
         pSwPickup.removeAll();
         switchListCarPickupMessageList.clear();
-        pSwPickup.setBorder(BorderFactory.createTitledBorder(Bundle
-                .getMessage("BorderLayoutSwitchListPickupCar")));
+        pSwPickup.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutSwitchListPickupCar")));
         pSwPickup.add(switchListPickupCarPrefix);
         switchListPickupCarPrefix.setText(Setup.getSwitchListPickupCarPrefix());
         pickFormat = Setup.getPickupSwitchListMessageFormat();
@@ -702,8 +689,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         // switch list car drop message format
         pSwDrop.removeAll();
         switchListCarDropMessageList.clear();
-        pSwDrop.setBorder(BorderFactory.createTitledBorder(Bundle
-                .getMessage("BorderLayoutSwitchListDropCar")));
+        pSwDrop.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutSwitchListDropCar")));
         pSwDrop.add(switchListDropCarPrefix);
         switchListDropCarPrefix.setText(Setup.getSwitchListDropCarPrefix());
         dropFormat = Setup.getDropSwitchListMessageFormat();
@@ -719,8 +705,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         // switch list local car move message format
         pSwLocal.removeAll();
         switchListLocalMessageList.clear();
-        pSwLocal.setBorder(BorderFactory.createTitledBorder(Bundle
-                .getMessage("BorderLayoutSwitchListLocal")));
+        pSwLocal.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutSwitchListLocal")));
         pSwLocal.add(switchListLocalPrefix);
         switchListLocalPrefix.setText(Setup.getSwitchListLocalPrefix());
         localFormat = Setup.getLocalSwitchListMessageFormat();
@@ -850,10 +835,10 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         Setup.setSortByTrackNameEnabled(sortByTrackCheckBox.isSelected());
         Setup.setPrintHeadersEnabled(printHeadersCheckBox.isSelected());
         Setup.setPrintTrainScheduleNameEnabled(printTrainScheduleNameCheckBox.isSelected());
-        Setup.setTruncateManifestEnabled(truncateCheckBox.isSelected());
+        Setup.setPrintTruncateManifestEnabled(truncateCheckBox.isSelected());
         Setup.setUseDepartureTimeEnabled(departureTimeCheckBox.isSelected());
         Setup.setManifestEditorEnabled(editManifestCheckBox.isSelected());
-        Setup.setTrackSummaryEnabled(trackSummaryCheckBox.isSelected());
+        Setup.setPrintTrackSummaryEnabled(trackSummaryCheckBox.isSelected());
         Setup.setSwitchListRouteLocationCommentEnabled(routeLocationCheckBox.isSelected());
 
         // reload combo boxes if tab changed
@@ -874,8 +859,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         if ( // font name
         !Setup.getFontName().equals(fontComboBox.getSelectedItem())
         // font size
-                ||
-                Setup.getManifestFontSize() != (Integer) fontSizeComboBox.getSelectedItem()
+                || Setup.getManifestFontSize() != (Integer) fontSizeComboBox.getSelectedItem()
                 // page orientation
                 ||
                 !Setup.getManifestOrientation().equals(manifestOrientationComboBox.getSelectedItem()) ||
@@ -905,11 +889,11 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
                 Setup.isSortByTrackNameEnabled() != sortByTrackCheckBox.isSelected() ||
                 Setup.isPrintHeadersEnabled() != printHeadersCheckBox.isSelected() ||
                 Setup.isPrintTrainScheduleNameEnabled() != printTrainScheduleNameCheckBox.isSelected() ||
-                Setup.isTruncateManifestEnabled() != truncateCheckBox.isSelected() ||
+                Setup.isPrintTruncateManifestEnabled() != truncateCheckBox.isSelected() ||
                 Setup.isUseDepartureTimeEnabled() != departureTimeCheckBox.isSelected() ||
                 Setup.isManifestEditorEnabled() != editManifestCheckBox.isSelected() ||
                 Setup.isSwitchListRouteLocationCommentEnabled() != routeLocationCheckBox.isSelected() ||
-                Setup.isTrackSummaryEnabled() != trackSummaryCheckBox.isSelected() ||
+                Setup.isPrintTrackSummaryEnabled() != trackSummaryCheckBox.isSelected() ||
                 Setup.isTabEnabled() != this.tabFormatCheckBox.isSelected()) {
             return true;
         }
@@ -991,5 +975,16 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         }
         return !Setup.getSwitchListLocalPrefix().equals(this.switchListLocalPrefix.getText()) ||
                 !Arrays.equals(Setup.getLocalSwitchListMessageFormat(), format);
+    }
+
+    @Override
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
+        if (Control.SHOW_PROPERTY) {
+            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(),
+                    e.getNewValue());
+        }
+        if (e.getPropertyName().equals(Setup.REAL_TIME_PROPERTY_CHANGE)) {
+            trackSummaryCheckBox.setEnabled(Setup.isSwitchListRealTime());
+        }
     }
 }

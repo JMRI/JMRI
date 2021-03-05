@@ -968,7 +968,7 @@
     <label xml:lang="cs">Metoda DC zastavení v závislosti na polaritě</label>
     <label xml:lang="de">polaritätsabhängige DC-Bremsabschnitte</label>
   </variable>
-  <variable CV="124" item="SUSI" mask="VXXXXXXX" default="0" minOut="6" exclude="195,197,228,226,232,235,247,MX689_v30">
+  <variable CV="124" item="SUSI" mask="VXXXXXXX" default="0" minOut="6" exclude="177,195,197,228,226,232,235,247,MX689_v30">
     <!-- value 0 => Susi,  value 1 => normal function outputs -->
     <enumVal>
       <enumChoice choice="SUSI Serial interface for sound board">

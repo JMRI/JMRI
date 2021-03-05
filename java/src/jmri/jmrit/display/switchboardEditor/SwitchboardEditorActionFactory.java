@@ -1,5 +1,6 @@
 package jmri.jmrit.display.switchboardEditor;
 
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import jmri.jmrit.display.EditorActionFactory;
 import org.openide.util.lookup.ServiceProvider;
@@ -17,6 +18,7 @@ public final class SwitchboardEditorActionFactory implements EditorActionFactory
     }
 
     @Override
+    @Nonnull
     public String getTitle() {
         return Bundle.getMessage("SwitchboardEditor");
     }

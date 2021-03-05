@@ -535,7 +535,7 @@ public class VSDecoder implements PropertyChangeListener {
             log.debug("Train is null.");
             return null;
         }
-        RouteLocation rloc = t.getCurrentLocation();
+        RouteLocation rloc = t.getCurrentRouteLocation();
         if (rloc == null) {
             log.debug("RouteLocation is null.");
             return null;

@@ -16,7 +16,7 @@ import jmri.web.servlet.ServletUtil;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * Provide web UI for data, such as turnouts, sensors, etc.
+ * Provide web UI for data, such as turnouts, sensors, etc. displayed in tables
  *
  * Each method of this Servlet responds to a unique URL pattern.
  *
@@ -37,6 +37,7 @@ public class TablesServlet extends HttpServlet {
 
         String[] path = request.getRequestURI().split("/"); // NOI18N
         String tableType = URLDecoder.decode(path[path.length - 1], StandardCharsets.UTF_8.name());
+        if (tableType.equals("tables")) tableType = "type"; // NOI18N redirect to list of table types if none passed in
 
         //print the html, using the replacement values listed to fill in the calculated stuff
         response.setHeader("Connection", "Keep-Alive"); // NOI18N

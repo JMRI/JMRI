@@ -8,6 +8,7 @@ import java.util.concurrent.DelayQueue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppListener;
 import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppPacketizer;
@@ -43,10 +44,12 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
     final DelayQueue<DCCppMessage> resendFunctions = new DelayQueue<>();
 
     boolean activeBackgroundRefresh = true;
-
-    public SerialDCCppPacketizer(final jmri.jmrix.dccpp.DCCppCommandStation pCommandStation) {
+    private DCCppCommandStation cs;
+    
+    public SerialDCCppPacketizer(final DCCppCommandStation pCommandStation) {
         super(pCommandStation);
         log.debug("Loading Serial Extention to DCCppPacketizer");
+        cs = pCommandStation; //remember this for later
     }
 
     /**
@@ -115,8 +118,11 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
 
         super.sendDCCppMessage(m, reply);
 
-        if (isFunction)
-            enqueueFunction(m);
+        if (isFunction) { //repeat the message if the command station needs JMRI to send the refresh
+            if (cs.isFunctionRefreshRequired()) {  
+                enqueueFunction(m);
+            }
+        }
     }
 
     /**

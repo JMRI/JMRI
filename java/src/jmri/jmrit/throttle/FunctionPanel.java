@@ -219,7 +219,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                 Bundle.getMessage(Throttle.getFunctionString(i))
                 : Throttle.getFunctionString(i) );
             functionButton[i].setDisplay(true);
-            if ((i < 3) && preferences.isUsingIcons()) {
+            if ((i < 3) && preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
                 switch (i) {
                     case 0:
                         functionButton[i].setIconPath("resources/icons/throttles/Light.png");
@@ -304,7 +304,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                     if (text != null) {
                         functionButton[i].setDisplay(true);
                         functionButton[i].setButtonLabel(text);
-                        if (preferences.isUsingIcons()) {
+                        if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
                             functionButton[i].setIconPath(rosterEntry.getFunctionImage(i));
                             functionButton[i].setSelectedIconPath(rosterEntry.getFunctionSelectedImage(i));
                         } else {

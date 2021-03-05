@@ -2,6 +2,7 @@ package jmri.jmrit.beantable.signalmast;
 
 import java.util.HashMap;
 import java.util.Vector;
+import javax.annotation.Nonnull;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
@@ -120,12 +121,12 @@ public class SignalMastTableDataModel extends BeanTableDataModel<SignalMast> {
     }
 
     @Override
-    protected SignalMast getBySystemName(String name) {
+    protected SignalMast getBySystemName(@Nonnull String name) {
         return InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name);
     }
 
     @Override
-    protected SignalMast getByUserName(String name) {
+    protected SignalMast getByUserName(@Nonnull String name) {
         return InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName(name);
     }
 

@@ -34,7 +34,7 @@ public class SRCPTurnout extends AbstractTurnout {
         // set the traffic controller
         tc = memo.getTrafficController();
 
-        // send message requesting initilization
+        // send message requesting initialization
         String text = "INIT " + _bus + " GA " + _number + " N\n";
 
         // create and send the message itself

@@ -26,7 +26,7 @@ public abstract class AbstractDCCppSerialConnectionConfigXml extends AbstractSer
     
     @Override
     protected void getInstance(Object object) {
-        adapter=((AbstractDCCppSerialConnectionConfig) object).getAdapter();
+        adapter = ((AbstractDCCppSerialConnectionConfig) object).getAdapter();
     }
 
 }

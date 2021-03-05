@@ -9,6 +9,7 @@ import jmri.NamedBeanHandle;
 import jmri.Path;
 import jmri.Section;
 import jmri.Transit;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -466,7 +467,7 @@ public class ActiveTrain {
                             getDelaySensor().removePropertyChangeListener(delaySensorListener);
                             InstanceManager.getDefault(DispatcherFrame.class).removeDelayedTrain(at);
                             setStarted();
-                            InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
+                            InstanceManager.getDefault(DispatcherFrame.class).queueScanOfAllocationRequests();
                             if (resetStartSensor) {
                                 try {
                                     getDelaySensor().setKnownState(jmri.Sensor.INACTIVE);
@@ -499,7 +500,7 @@ public class ActiveTrain {
                             restartSensorListener = null;
                             InstanceManager.getDefault(DispatcherFrame.class).removeDelayedTrain(at);
                             restart();
-                            InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
+                            InstanceManager.getDefault(DispatcherFrame.class).queueScanOfAllocationRequests();
                             if (resetRestartSensor) {
                                 try {
                                     getRestartSensor().setKnownState(jmri.Sensor.INACTIVE);
@@ -529,7 +530,7 @@ public class ActiveTrain {
                         if (((Integer) e.getNewValue()).intValue() == jmri.Sensor.INACTIVE) {
                             restartAllocationSensor.getBean().removePropertyChangeListener(restartAllocationSensorListener);
                             restartAllocationSensorListener = null;
-                            InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
+                            InstanceManager.getDefault(DispatcherFrame.class).queueScanOfAllocationRequests();
                         }
                     }
                 }
@@ -708,9 +709,6 @@ public class ActiveTrain {
             return;
         }
         mAllocatedSections.remove(index);
-        if (mAutoRun) {
-            mAutoActiveTrain.removeAllocatedSection(as);
-        }
         if (InstanceManager.getDefault(DispatcherFrame.class).getNameInAllocatedBlock()) {
             as.getSection().clearNameInUnoccupiedBlocks();
             as.getSection().suppressNameUpdate(false);
@@ -741,6 +739,7 @@ public class ActiveTrain {
         }
         for (AllocatedSection as : sectionsToRelease) {
             InstanceManager.getDefault(DispatcherFrame.class).releaseAllocatedSection(as, true); // need to find Allocated Section
+            InstanceManager.getDefault(DispatcherFrame.class).queueWaitForEmpty(); //ensure release processed before proceding.
             as.getSection().setState(jmri.Section.FREE);
         }
         if (mLastAllocatedSection != null) {
@@ -748,6 +747,8 @@ public class ActiveTrain {
         }
         resetAllAllocatedSections();
         clearAllocations();
+        // wait for autoallocate to do its stuffbefore continuing
+        InstanceManager.getDefault(DispatcherFrame.class).queueWaitForEmpty();
         if (mAutoRun) {
             mAutoActiveTrain.allocateAFresh();
         }
@@ -1005,7 +1006,7 @@ public class ActiveTrain {
             return null;
         }
         if (!InstanceManager.getDefault(DispatcherFrame.class).requestAllocation(this,
-                mNextSectionToAllocate, mNextSectionDirection, mNextSectionSeqNumber, true, null)) {
+                mNextSectionToAllocate, mNextSectionDirection, mNextSectionSeqNumber, true, null, true)) {
             log.error("Allocation request failed for first allocation of {}", getActiveTrainName());
         }
         if (InstanceManager.getDefault(DispatcherFrame.class).getRosterEntryInBlock() && getRosterEntry() != null) {
@@ -1095,6 +1096,25 @@ public class ActiveTrain {
         }
         InstanceManager.getDefault(DispatcherFrame.class).addDelayedTrain(this);
     }
+
+    protected boolean isInAllocatedList(AllocatedSection as) {
+        for (int i = 0; i < mAllocatedSections.size(); i++) {
+            if (mAllocatedSections.get(i) == as) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected boolean isInAllocatedList(Section s) {
+        for (int i = 0; i < mAllocatedSections.size(); i++) {
+            if ((mAllocatedSections.get(i)).getSection() == s) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     boolean restartPoint = false;
 

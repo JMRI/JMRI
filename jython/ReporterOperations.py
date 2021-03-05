@@ -34,8 +34,8 @@ class ReporterOperations(java.beans.PropertyChangeListener):
   def start(self, reporterName ) :
     # connect the object to the reporter, and start to work
     jmri.InstanceManager.getDefault(jmri.ReporterManager).provideReporter(reporterName).addPropertyChangeListener(self)
-    self.cm = jmri.jmrit.operations.rollingstock.cars.CarManager.instance()
-    self.em = jmri.jmrit.operations.rollingstock.engines.EngineManager.instance()
+    self.cm = jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarManager)
+    self.em = jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.engines.EngineManager)
     return
 
   def stop(self) :
@@ -53,7 +53,7 @@ class ReporterOperations(java.beans.PropertyChangeListener):
 
     #check to see if this IdTag is associated with any rolling stock.
     if (rs == None) :
-      result = "Unknown Rolling Stock for IdTag " + inputString
+      result = "Unknown Rolling Stock for IdTag " + inputString.toString()
     else :
       dest = rs.getDestination()
       if (dest==None):

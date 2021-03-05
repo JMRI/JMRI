@@ -12,7 +12,7 @@ public class DCCppStreamConnectionConfigTest extends jmri.jmrix.AbstractConnecti
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
-        cc = new DCCppStreamConnectionConfig();
+        cc = new DCCppStreamConnectionConfig(new DCCppStreamPortController()); // adapter assumed in test
     }
 
     @AfterEach
