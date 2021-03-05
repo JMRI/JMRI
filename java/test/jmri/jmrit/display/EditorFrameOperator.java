@@ -27,7 +27,7 @@ public class EditorFrameOperator extends JFrameOperator {
         // if OK to here, close window
         this.requestClose();
 
-        dismissClosingDialogs();
+//         dismissClosingDialogs();
     }
 
     public void deleteViaFileMenuWithConfirmations(){
@@ -38,15 +38,15 @@ public class EditorFrameOperator extends JFrameOperator {
     }
 
     private void dismissClosingDialogs(){
-        // the reminder dialog doesn't appear every time we close, so put 
-        // pressing the button in that dialog into a thread by itself.  If 
-        // the dialog appears, it will get clicked, but it's not an error 
+        // the reminder dialog doesn't appear every time we close, so put
+        // pressing the button in that dialog into a thread by itself.  If
+        // the dialog appears, it will get clicked, but it's not an error
         // if it doesn't appear.
         Thread t = new Thread( () -> {
            try {
-              JDialogOperator d = new JDialogOperator(Bundle.getMessage("ReminderTitle"));
+              JDialogOperator d = new JDialogOperator(Bundle.getMessage("PanelHideTitle"));
               // Find the button that deletes the panel
-              JButtonOperator bo = new JButtonOperator(d,Bundle.getMessage("ButtonDeletePanel"));
+              JButtonOperator bo = new JButtonOperator(d,Bundle.getMessage("ButtonHide"));
 
               // Click button to delete panel and close window
               bo.push();
@@ -74,6 +74,6 @@ public class EditorFrameOperator extends JFrameOperator {
            // do nothing, this isn't an error in this test.
            return;
         }*/
-    }    
+    }
 
 }
