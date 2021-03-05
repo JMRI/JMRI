@@ -170,6 +170,7 @@ public class TrainBuilder extends TrainCommon {
         showTrainCarTypes(); // show car types that this train will service
         showTrainLoadNames(); // show load names that this train will service
         loadRemoveAndListCars(); // remove unwanted cars and list available cars by location
+        sortCarsOnFifoLifoTracks(); // sort cars on FIFO or LIFO tracks
         addCabooseOrFredToTrain(); // do all caboose and FRED changes in the train's route
         removeCaboosesAndCarsWithFred(); // done assigning cabooses and cars with FRED, remove the rest
         saveCarFinalDestinations(); // save car's final destination and schedule id in case of train reset
@@ -1221,14 +1222,14 @@ public class TrainBuilder extends TrainCommon {
                 int locos = 0;
                 // first find an "A" unit
                 for (Engine engine : singleLocos) {
-                    if (engine.isBunit() && locos == 0) {
+                    if (engine.isBunit()) {
                         continue;
                     }
                     if (setLocoDestination(engine, rl, rld, terminateStageTrack)) {
                         _engineList.remove(engine);
                         singleLocos.remove(engine);
                         locos++;
-                        break;
+                        break; // found "A" unit
                     }
                 }
                 // did we find an "A" unit?
@@ -1243,8 +1244,8 @@ public class TrainBuilder extends TrainCommon {
                             return true; // done
                         }
                     }
-                    // list the engines found
                 } else {
+                    // list the "B" units found
                     for (Engine engine : singleLocos) {
                         if (engine.isBunit()) {
                             addLine(_buildReport, FIVE,
@@ -1398,11 +1399,10 @@ public class TrainBuilder extends TrainCommon {
         }
         for (_carIndex = 0; _carIndex < _carList.size(); _carIndex++) {
             Car car = _carList.get(_carIndex);
-            // check for car on FIFO or LIFO track?
-            car = getCarServiceOrder(car);
             if (!car.hasFred()) {
                 continue;
             }
+            showCarServiceOrder(car);
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarHasFRED"),
                     new Object[] { car.toString(), car.getRoadName(), car.getLocationName() }));
             // all cars with FRED departing staging must leave with train
@@ -1503,11 +1503,11 @@ public class TrainBuilder extends TrainCommon {
         boolean foundCaboose = false;
         for (_carIndex = 0; _carIndex < _carList.size(); _carIndex++) {
             Car car = _carList.get(_carIndex);
-            // check for car on FIFO or LIFO track?
-            car = getCarServiceOrder(car);
             if (!car.isCaboose()) {
                 continue;
             }
+            showCarServiceOrder(car);
+
             cabooseTip = false; // found at least one caboose, so they exist!
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarIsCaboose"),
                     new Object[] { car.toString(), car.getRoadName(), car.getLocationName(), car.getTrackName() }));
@@ -2062,6 +2062,51 @@ public class TrainBuilder extends TrainCommon {
         return;
     }
 
+    private void sortCarsOnFifoLifoTracks() {
+        addLine(_buildReport, SEVEN, Bundle.getMessage("buildSortCarsByLastDate"));
+        for (_carIndex = 0; _carIndex < _carList.size(); _carIndex++) {
+            Car car = _carList.get(_carIndex);
+            if (car.getTrack().getServiceOrder().equals(Track.NORMAL)) {
+                continue;
+            }
+            addLine(_buildReport, SEVEN,
+                    MessageFormat.format(Bundle.getMessage("buildTrackModePriority"),
+                            new Object[] { car.toString(), car.getTrack().getTrackType(), car.getTrackName(),
+                                    car.getTrack().getServiceOrder(), car.getLastDate() }));
+            Car bestCar = car;
+            for (int i = _carIndex + 1; i < _carList.size(); i++) {
+                Car testCar = _carList.get(i);
+                if (testCar.getTrack() == car.getTrack()) {
+                    log.debug("{} car ({}) last moved date: {}", car.getTrack().getTrackType(), testCar.toString(),
+                            testCar.getLastDate()); // NOI18N
+                    if (car.getTrack().getServiceOrder().equals(Track.FIFO)) {
+                        if (bestCar.getLastMoveDate().after(testCar.getLastMoveDate()) &&
+                                bestCar.getLoadPriority().equals(testCar.getLoadPriority())) {
+                            bestCar = testCar;
+                            log.debug("New best car ({})", bestCar.toString());
+                        }
+                    } else if (car.getTrack().getServiceOrder().equals(Track.LIFO)) {
+                        if (bestCar.getLastMoveDate().before(testCar.getLastMoveDate()) &&
+                                bestCar.getLoadPriority().equals(testCar.getLoadPriority())) {
+                            bestCar = testCar;
+                            log.debug("New best car ({})", bestCar.toString());
+                        }
+                    }
+                }
+            }
+            if (car != bestCar) {
+                addLine(_buildReport, SEVEN,
+                        MessageFormat.format(Bundle.getMessage("buildTrackModeCarPriority"),
+                                new Object[] { car.getTrack().getTrackType(), car.getTrackName(),
+                                        car.getTrack().getServiceOrder(), bestCar.toString(), bestCar.getLastDate(),
+                                        car.toString(), car.getLastDate() }));
+                _carList.remove(bestCar); // change sort
+                _carList.add(_carIndex, bestCar);
+            }
+        }
+        addLine(_buildReport, SEVEN, BLANK_LINE);
+    }
+
     /**
      * Verifies that all cars in the kernel have the same departure track. Also
      * checks to see if the kernel has a lead car and the lead car is in service.
@@ -2544,8 +2589,7 @@ public class TrainBuilder extends TrainCommon {
                 continue; // no
             }
 
-            // check for car order?
-            car = getCarServiceOrder(car);
+            showCarServiceOrder(car);
 
             // is car departing staging and generate custom load?
             if (!generateCarLoadFromStaging(car)) {
@@ -3933,55 +3977,13 @@ public class TrainBuilder extends TrainCommon {
         return si;
     }
 
-    /**
-     * Checks all of the cars on a yard or interchange track and returns the oldest
-     * (FIFO) or newest (LIFO) car residing on that track. Note that cars with high
-     * priority loads will be serviced first.
-     *
-     * @param car the car being pulled from a yard or interchange track
-     * @return The FIFO car at this track
-     */
-    private Car getCarServiceOrder(Car car) {
-        if (car.getTrack().getServiceOrder().equals(Track.NORMAL)) {
-            return car;
-        }
-        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrackModePriority"), new Object[] {
-                car.toString(), car.getTrack().getTrackType(), car.getTrackName(), car.getTrack().getServiceOrder() }));
-        log.debug("Get {} car ({}) from {} ({}), last moved date: {}", car.getTrack().getServiceOrder(), car.toString(),
-                car.getTrack().getTrackType(), car.getTrackName(), car.getLastDate()); // NOI18N
-        Car bestCar = car;
-        for (int i = _carIndex; i < _carList.size(); i++) {
-            Car testCar = _carList.get(i);
-            if (testCar.getTrack() == car.getTrack()) {
-                log.debug("{} car ({}) last moved date: {}", car.getTrack().getTrackType(), testCar.toString(),
-                        testCar.getLastDate()); // NOI18N
-                if (car.getTrack().getServiceOrder().equals(Track.FIFO)) {
-                    if (bestCar.getLastMoveDate().after(testCar.getLastMoveDate()) &&
-                            bestCar.getLoadPriority().equals(testCar.getLoadPriority())) {
-                        bestCar = testCar;
-                        log.debug("New best car ({})", bestCar.toString());
-                    }
-                } else if (car.getTrack().getServiceOrder().equals(Track.LIFO)) {
-                    if (bestCar.getLastMoveDate().before(testCar.getLastMoveDate()) &&
-                            bestCar.getLoadPriority().equals(testCar.getLoadPriority())) {
-                        bestCar = testCar;
-                        log.debug("New best car ({})", bestCar.toString());
-                    }
-                }
-            }
-        }
-        if (car != bestCar) {
+    private void showCarServiceOrder(Car car) {
+        if (!car.getTrack().getServiceOrder().equals(Track.NORMAL)) {
             addLine(_buildReport, SEVEN,
-                    MessageFormat.format(Bundle.getMessage("buildTrackModeCarPriority"),
-                            new Object[] { car.getTrack().getTrackType(), car.getTrackName(),
-                                    car.getTrack().getServiceOrder(), bestCar.toString(), bestCar.getLastDate(),
-                                    car.toString(), car.getLastDate() }));
-            if (_carIndex < _carList.size()) {
-                _carList.remove(bestCar); // change sort
-                _carList.add(_carIndex, bestCar);
-            }
+                    MessageFormat.format(Bundle.getMessage("buildTrackModePriority"),
+                            new Object[] { car.toString(), car.getTrack().getTrackType(), car.getTrackName(),
+                                    car.getTrack().getServiceOrder(), car.getLastDate() }));
         }
-        return bestCar;
     }
 
     /**
@@ -4168,8 +4170,10 @@ public class TrainBuilder extends TrainCommon {
             }
             // any moves left at this location?
             if (rld.getCarMoves() >= rld.getMaxCarMoves()) {
-                addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildNoAvailableMovesDest"),
-                        new Object[] { _train.getRoute().getName(), rld.getId(), rld.getName() }));
+                addLine(_buildReport, FIVE,
+                        MessageFormat.format(Bundle.getMessage("buildNoAvailableMovesDest"),
+                                new Object[] { rld.getCarMoves(), rld.getMaxCarMoves(), _train.getRoute().getName(),
+                                        rld.getId(), rld.getName() }));
                 continue;
             }
             // is the train length okay?
@@ -4365,8 +4369,10 @@ public class TrainBuilder extends TrainCommon {
             }
             // any moves left at this location?
             if (rld.getCarMoves() >= rld.getMaxCarMoves()) {
-                addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildNoAvailableMovesDest"),
-                        new Object[] { _train.getRoute().getName(), rld.getId(), rld.getName() }));
+                addLine(_buildReport, FIVE,
+                        MessageFormat.format(Bundle.getMessage("buildNoAvailableMovesDest"),
+                                new Object[] { rld.getCarMoves(), rld.getMaxCarMoves(), _train.getRoute().getName(),
+                                        rld.getId(), rld.getName() }));
                 continue;
             }
             // get the destination

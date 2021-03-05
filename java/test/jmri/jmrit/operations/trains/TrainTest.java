@@ -2359,80 +2359,6 @@ public class TrainTest extends OperationsTestCase {
         c5.setKernel(k1);
         c13.setKernel(k1);
 
-//        Assert.assertTrue(train1.build());
-
-//        // Schedule sch1 should cause c2 to be delivered to Chelmsford Freight 2
-//        Assert.assertEquals("c2 destination", "Chelmsford Freight 2", c2.getDestinationTrackName());
-//        Assert.assertEquals("c2 next load", "", c2.getNextLoadName());
-//        // Schedule sch1 and sch2 should reject c3, to be delivered to Chelmsford Yard 3
-//        Assert.assertEquals("c3 destination", "Chelmsford Yard 3", c3.getDestinationTrackName());
-//        Assert.assertEquals("c3 next load", "", c3.getNextLoadName());
-//        Assert.assertEquals("c4 destination", "Chelmsford Yard 3", c4.getDestinationTrackName());
-//        // Schedule sch1 should cause c5 & c13 to be delivered to Chelmsford Freight 2
-//        Assert.assertEquals("c5 destination", "Chelmsford Freight 2", c5.getDestinationTrackName());
-//        Assert.assertEquals("c5 next load", "Tin", c5.getNextLoadName());
-//        Assert.assertEquals("c6 destination", "Chelmsford Yard 3", c6.getDestinationTrackName());
-//        Assert.assertEquals("c7 destination", "Chelmsford Freight 4", c7.getDestinationTrackName());
-//        Assert.assertEquals("c9 destination", "Chelmsford Freight 1", c9.getDestinationTrackName());
-//        Assert.assertEquals("c9 next load", "Scrap", c9.getNextLoadName());
-//        Assert.assertEquals("c10 destination", "Chelmsford Freight 4", c10.getDestinationTrackName());
-//        Assert.assertEquals("c11 destination", "Chelmsford Freight 4", c11.getDestinationTrackName());
-//        // C13 is part of kernel
-//        Assert.assertEquals("c13 destination", "Chelmsford Freight 2", c13.getDestinationTrackName());
-//        Assert.assertEquals("c13 next load", "Tin", c13.getNextLoadName());
-//
-//        // move and terminate train
-//        train1.move();
-//        train1.move();
-//        train1.move();
-//
-//        Assert.assertEquals("c1 track", "Chelmsford Freight 1", c1.getTrackName());
-//        Assert.assertEquals("c1 load", "Tin", c1.getLoadName());
-//        Assert.assertEquals("c2 track", "Chelmsford Freight 2", c2.getTrackName());
-//        Assert.assertEquals("c2 load", "L", c2.getLoadName());
-//        Assert.assertEquals("c3 track", "Chelmsford Yard 3", c3.getTrackName());
-//        Assert.assertEquals("c3 load", "L", c3.getLoadName());
-//        Assert.assertEquals("c4 track", "Chelmsford Yard 3", c4.getTrackName());
-//        Assert.assertEquals("c4 load", "E", c4.getLoadName());
-//        Assert.assertEquals("c5 track", "Chelmsford Freight 2", c5.getTrackName());
-//        Assert.assertEquals("c5 load", "Tin", c5.getLoadName());
-//        Assert.assertEquals("c6 track", "Chelmsford Yard 3", c6.getTrackName());
-//        Assert.assertEquals("c6 load", "L", c6.getLoadName());
-//        Assert.assertEquals("c7 track", "Chelmsford Freight 4", c7.getTrackName());
-//        Assert.assertEquals("c7 load", "L", c7.getLoadName());
-//        Assert.assertEquals("c8 track", "Westford Yard 2", c8.getTrackName());
-//        Assert.assertEquals("c8 load", "E", c8.getLoadName());
-//        Assert.assertEquals("c9 track", "Chelmsford Freight 1", c9.getTrackName());
-//        Assert.assertEquals("c9 load", "Scrap", c9.getLoadName());
-//        Assert.assertEquals("c10 track", "Chelmsford Freight 4", c10.getTrackName());
-//        Assert.assertEquals("c10 load", "E", c10.getLoadName());
-//        Assert.assertEquals("c11 track", "Chelmsford Freight 4", c11.getTrackName());
-//        Assert.assertEquals("c11 load", "E", c11.getLoadName());
-//        Assert.assertEquals("c12 track", "Westford Yard 1", c12.getTrackName());
-//        Assert.assertEquals("c12 load", "E", c12.getLoadName());
-//        Assert.assertEquals("c13 track", "Chelmsford Freight 2", c13.getTrackName());
-//        Assert.assertEquals("c13 load", "Tin", c13.getLoadName());
-//
-//        // create a route to staging to test remove schedule load
-//        // Create route with 2 location
-//        Route rte2;
-//        rte2 = rmanager.newRoute("Chelmsford to Staging");
-//        RouteLocation r2rl1 = rte2.addLocation(newChelmsford);
-//        r2rl1.setTrainDirection(RouteLocation.EAST);
-//        r2rl1.setMaxCarMoves(12);
-//        RouteLocation r2rl3 = rte2.addLocation(newBedford);
-//        r2rl3.setTrainDirection(RouteLocation.EAST);
-//        r2rl3.setMaxCarMoves(12);
-//
-//        train1.setRoute(rte2);
-//        train1.setName("Chelmsford to Bedford");
-//        Assert.assertTrue(train1.build());
-//
-//        // move and terminate train
-//        train1.move();
-//        train1.move();
-//        train1.move();
-
         Assert.assertEquals("c1 track to staging", "Bedford Yard 1", c1.getTrackName());
         Assert.assertEquals("c1 load to staging", "E", c1.getLoadName());
         Assert.assertEquals("c2 track to staging", "Bedford Yard 1", c2.getTrackName());
@@ -2460,7 +2386,6 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("c13 track to staging", "Bedford Yard 1", c13.getTrackName());
         Assert.assertEquals("c13 load to staging", "E", c13.getLoadName());
 
-//        bedfordYard1.setRemoveCustomLoadsEnabled(false);
         bedfordYard1.setAddCustomLoadsAnySpurEnabled(true); // generate schedule loads
 
         Assert.assertTrue(train1.build());
