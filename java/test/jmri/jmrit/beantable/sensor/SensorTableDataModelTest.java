@@ -5,6 +5,7 @@ import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -20,6 +21,26 @@ public class SensorTableDataModelTest extends jmri.jmrit.beantable.AbstractBeanT
     @Override
     public int getModelColumnCount(){
         return 13;
+    }
+    
+    @Test
+    public void testGetColumnNames() {
+        assertEquals("Column5 - INVERTCOL",Bundle.getMessage("Inverted"),
+            t.getColumnName(SensorTableDataModel.INVERTCOL));
+        assertEquals("Column6 - EDITCOL","",
+            t.getColumnName(SensorTableDataModel.EDITCOL));
+        assertEquals("Column7 - USEGLOBALDELAY",Bundle.getMessage("SensorUseGlobalDebounce"),
+            t.getColumnName(SensorTableDataModel.USEGLOBALDELAY));
+        assertEquals("Column8 - ACTIVEDELAY",Bundle.getMessage("SensorActiveDebounce"),
+            t.getColumnName(SensorTableDataModel.ACTIVEDELAY));
+        assertEquals("Column9 - INACTIVEDELAY",Bundle.getMessage("SensorInActiveDebounce"),
+            t.getColumnName(SensorTableDataModel.INACTIVEDELAY));
+        assertEquals("Column10 - PULLUPCOL",Bundle.getMessage("SensorPullUp"),
+            t.getColumnName(SensorTableDataModel.PULLUPCOL));
+        assertEquals("Column11 - FORGETCOL",Bundle.getMessage("StateForgetHeader"),
+            t.getColumnName(SensorTableDataModel.FORGETCOL));
+        assertEquals("Column12 - QUERYCOL",Bundle.getMessage("StateQueryHeader"),
+            t.getColumnName(SensorTableDataModel.QUERYCOL));
     }
 
     @BeforeEach
