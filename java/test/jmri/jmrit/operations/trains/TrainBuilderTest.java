@@ -506,6 +506,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Engine e1 = emanager.newRS("E", "1");
         e1.setModel("GP40");
         e1.setLocation(depart, departureTrack);
+        e1.setLength("50");
 
         Engine e2 = emanager.newRS("E", "2");
         e2.setModel("GP40");
@@ -518,6 +519,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Engine e4 = emanager.newRS("E", "4");
         e4.setModel("GP40");
         e4.setLocation(depart, departureTrack);
+        
+        Assert.assertEquals("Model GP40 length", "50", e4.getLength());
 
         new TrainBuilder().build(train);
         Assert.assertFalse("Train should not build", train.isBuilt());
@@ -525,16 +528,25 @@ public class TrainBuilderTest extends OperationsTestCase {
         // allow consist to be built out of single locos
         train.setBuildConsistEnabled(true);
 
+        train.reset();
         new TrainBuilder().build(train);
         Assert.assertTrue("Train should build", train.isBuilt());
 
         train.setNumberEngines("5");
+        train.reset();
         new TrainBuilder().build(train);
         Assert.assertFalse("Train should not build, only 4 locos", train.isBuilt());
 
         train.setNumberEngines("4");
+        train.reset();
         new TrainBuilder().build(train);
         Assert.assertTrue("Train should build", train.isBuilt());
+        
+        // make termination track too short for 4 engines
+        train.reset();
+        terminateTrack.setLength(100);
+        new TrainBuilder().build(train);
+        Assert.assertFalse("Train should fail, track too short", train.isBuilt());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
@@ -867,6 +879,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // require a caboose, should fail, both cabooses have destination Chelmsford
         train1.setRequirements(Train.CABOOSE);
+        train1.reset();
         new TrainBuilder().build(train1);
         Assert.assertFalse("train status", train1.isBuilt());
 
@@ -939,6 +952,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // Set car with FRED destination to be the terminal
         Assert.assertEquals("set caboose destination", Track.OKAY, c4.setDestination(acton, actonYard2));
+        train1.reset();
         new TrainBuilder().build(train1);
         Assert.assertTrue("train status", train1.isBuilt());
 
@@ -5864,7 +5878,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 469, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 471, in.lines().count());
         in.close();
 
         // TODO search and confirm limit message in build report
@@ -5903,7 +5917,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 260, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 262, in.lines().count());
         in.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
@@ -5927,37 +5941,47 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // note any changes to operations data could change the number of lines in the
         // build report
-        JUnitOperationsUtil.initOperationsData();
+        Route route = JUnitOperationsUtil.createFiveLocationRoute();
 
-        // place 125 Boxcar in NI yard 2
-        Location locationNI = lmanager.getLocationById("20");
-        Track NIyard2 = locationNI.addTrack("NI Yard 2", Track.YARD);
-        NIyard2.setLength(125 * 50);
-
-        for (int i = 0; i < 125; i++) {
-            JUnitOperationsUtil.createAndPlaceCar("BB", Integer.toString(i), "Boxcar", "40", NIyard2, 0);
-        }
-
-        // place 125 "BOXCAR" in NI yard 3, "BOXCAR" isn't serviced by train
-        Track NIyard3 = locationNI.addTrack("NI Yard 3", Track.YARD);
-        NIyard3.setLength(125 * 50);
-        locationNI.addTypeName("BOXCAR");
-        NIyard3.addTypeName("BOXCAR");
+        // place 125 Boxcar in Acton yard 1
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actionYard1 = acton.getTrackByName("Acton Yard 1", null);
+        actionYard1.setLength(125 * 50);
 
         for (int i = 0; i < 125; i++) {
-            JUnitOperationsUtil.createAndPlaceCar("BC", Integer.toString(i), "BOXCAR", "40", NIyard3, 0);
+            JUnitOperationsUtil.createAndPlaceCar("BB", Integer.toString(i), "Boxcar", "40", actionYard1, i);
         }
 
-        Train train1 = tmanager.getTrainById("1");
-        Assert.assertTrue(new TrainBuilder().build(train1));
+        // place 125 "BOXCAR" in Acton yard 3, "BOXCAR" isn't serviced by train
+        Track actonYard3 = acton.addTrack("Acton Yard 3", Track.YARD);
+        actonYard3.setLength(125 * 50);
+        acton.addTypeName("BOXCAR");
+        actonYard3.addTypeName("BOXCAR");
+
+        for (int i = 0; i < 125; i++) {
+            JUnitOperationsUtil.createAndPlaceCar("BC", Integer.toString(i), "BOXCAR", "40", actonYard3, i);
+        }
+        
+        // place 125 Boxcar in Boston yard 1
+        Location boston = lmanager.getLocationByName("Boston");
+        Track bostonYard1 = boston.getTrackByName("Boston Yard 1", null);
+        bostonYard1.setLength(125 * 50);
+
+        for (int i = 0; i < 125; i++) {
+            JUnitOperationsUtil.createAndPlaceCar("BD", Integer.toString(i), "Boxcar", "40", bostonYard1, i);
+        }
+
+        Train train = tmanager.newTrain("Test_100_Limit");
+        train.setRoute(route);
+        Assert.assertTrue(new TrainBuilder().build(train));
 
         // confirm by checking number of lines in the build report
-        File buildReport = InstanceManager.getDefault(TrainManagerXml.class).getTrainBuildReportFile(train1.getName());
+        File buildReport = InstanceManager.getDefault(TrainManagerXml.class).getTrainBuildReportFile(train.getName());
         Assert.assertTrue(buildReport.exists());
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 385, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 635, in.lines().count());
         in.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
@@ -13945,7 +13969,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
-    // test private method getCarOrder
+    // test private method sortCarsOnFifoLifoTracks
     @Test
     public void testCarOrderNORMAL() {
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
@@ -13985,16 +14009,16 @@ public class TrainBuilderTest extends OperationsTestCase {
         c.setLocation(A, interchangeTrack);
 
         // NOTE: this test uses reflection to test a private method.
-        java.lang.reflect.Method getCarOrderMethod = null;
+        java.lang.reflect.Method sortCarsOnFifoLifoTracks = null;
         try {
-            getCarOrderMethod = tb.getClass().getDeclaredMethod("getCarServiceOrder", Car.class);
+            sortCarsOnFifoLifoTracks = tb.getClass().getDeclaredMethod("sortCarsOnFifoLifoTracks");
         } catch (java.lang.NoSuchMethodException nsm) {
-            Assert.fail("Could not find method getCarOrder in TrackBuilder class: ");
+            Assert.fail("Could not find method sortCarsOnFifoLifoTracks in TrackBuilder class: ");
         }
 
         // override the default permissions.
-        Assert.assertNotNull(getCarOrderMethod);
-        getCarOrderMethod.setAccessible(true);
+        Assert.assertNotNull(sortCarsOnFifoLifoTracks);
+        sortCarsOnFifoLifoTracks.setAccessible(true);
 
         // and set the car list up.
         tb._carList = new java.util.ArrayList<>();
@@ -14005,12 +14029,10 @@ public class TrainBuilderTest extends OperationsTestCase {
         try {
             // with Track.NORMAL order, the car you ask for is the
             // car you get.
-            Car d = (Car) getCarOrderMethod.invoke(tb, a);
-            Assert.assertEquals("NORMAL Order, 123 first", a, d);
-            d = (Car) getCarOrderMethod.invoke(tb, b);
-            Assert.assertEquals("NORMAL Order, 321 second", b, d);
-            d = (Car) getCarOrderMethod.invoke(tb, c);
-            Assert.assertEquals("NORMAL Order, 111 last", c, d);
+            sortCarsOnFifoLifoTracks.invoke(tb);
+            Assert.assertEquals("NORMAL Order, 123 first", a, tb._carList.get(0));
+            Assert.assertEquals("NORMAL Order, 321 second", b, tb._carList.get(1));
+            Assert.assertEquals("NORMAL Order, 111 last", c, tb._carList.get(2));
         } catch (java.lang.IllegalAccessException iae) {
             Assert.fail("Could not access method getCarOrder in TrackBuilder class");
         } catch (java.lang.reflect.InvocationTargetException ite) {
@@ -14058,31 +14080,29 @@ public class TrainBuilderTest extends OperationsTestCase {
         c.setLocation(A, interchangeTrack);
 
         // NOTE: this test uses reflection to test a private method.
-        java.lang.reflect.Method getCarOrderMethod = null;
+        java.lang.reflect.Method sortCarsOnFifoLifoTracks = null;
         try {
-            getCarOrderMethod = tb.getClass().getDeclaredMethod("getCarServiceOrder", Car.class);
+            sortCarsOnFifoLifoTracks = tb.getClass().getDeclaredMethod("sortCarsOnFifoLifoTracks");
         } catch (java.lang.NoSuchMethodException nsm) {
-            Assert.fail("Could not find method getCarOrder in TrackBuilder class: ");
+            Assert.fail("Could not find method sortCarsOnFifoLifoTracks in TrackBuilder class: ");
         }
 
         // override the default permissions.
-        Assert.assertNotNull(getCarOrderMethod);
-        getCarOrderMethod.setAccessible(true);
+        Assert.assertNotNull(sortCarsOnFifoLifoTracks);
+        sortCarsOnFifoLifoTracks.setAccessible(true);
 
         // and set the car list up.
         tb._carList = new java.util.ArrayList<>();
+        tb._carList.add(c);
         tb._carList.add(a);
         tb._carList.add(b);
-        tb._carList.add(c);
 
         try {
-            // FIFO order should always return 123.
-            Car d = (Car) getCarOrderMethod.invoke(tb, a);
-            Assert.assertEquals("FIFO Order, 123 first", a, d);
-            d = (Car) getCarOrderMethod.invoke(tb, b);
-            Assert.assertEquals("FIFO Order, 123 second", a, d);
-            d = (Car) getCarOrderMethod.invoke(tb, c);
-            Assert.assertEquals("FIFO Order, 123 third", a, d);
+            // FIFO
+            sortCarsOnFifoLifoTracks.invoke(tb);
+            Assert.assertEquals("FIFO Order, 123 first", a, tb._carList.get(0));
+            Assert.assertEquals("FIFO Order, 321 second", b, tb._carList.get(1));
+            Assert.assertEquals("FIFO Order, 111 last", c, tb._carList.get(2));
         } catch (java.lang.IllegalAccessException iae) {
             Assert.fail("Could not access method getCarOrder in TrackBuilder class");
         } catch (java.lang.reflect.InvocationTargetException ite) {
@@ -14130,31 +14150,29 @@ public class TrainBuilderTest extends OperationsTestCase {
         c.setLocation(A, interchangeTrack);
 
         // NOTE: this test uses reflection to test a private method.
-        java.lang.reflect.Method getCarOrderMethod = null;
+        java.lang.reflect.Method sortCarsOnFifoLifoTracks = null;
         try {
-            getCarOrderMethod = tb.getClass().getDeclaredMethod("getCarServiceOrder", Car.class);
+            sortCarsOnFifoLifoTracks = tb.getClass().getDeclaredMethod("sortCarsOnFifoLifoTracks");
         } catch (java.lang.NoSuchMethodException nsm) {
-            Assert.fail("Could not find method getCarOrder in TrackBuilder class: ");
+            Assert.fail("Could not find method sortCarsOnFifoLifoTracks in TrackBuilder class: ");
         }
 
         // override the default permissions.
-        Assert.assertNotNull(getCarOrderMethod);
-        getCarOrderMethod.setAccessible(true);
+        Assert.assertNotNull(sortCarsOnFifoLifoTracks);
+        sortCarsOnFifoLifoTracks.setAccessible(true);
 
         // and set the car list up.
         tb._carList = new java.util.ArrayList<>();
+        tb._carList.add(c);
         tb._carList.add(a);
         tb._carList.add(b);
-        tb._carList.add(c);
 
         try {
-            // LIFO order should always return 111.
-            Car d = (Car) getCarOrderMethod.invoke(tb, c);
-            Assert.assertEquals("LIFO Order, 111 first", c, d);
-            d = (Car) getCarOrderMethod.invoke(tb, b);
-            Assert.assertEquals("LIFO Order, 111 second", c, d);
-            d = (Car) getCarOrderMethod.invoke(tb, a);
-            Assert.assertEquals("LIFO Order, 111 third", c, d);
+            // LIFO
+            sortCarsOnFifoLifoTracks.invoke(tb);
+            Assert.assertEquals("LIFO Order, 123 first", c, tb._carList.get(0));
+            Assert.assertEquals("LIFO Order, 321 second", b, tb._carList.get(1));
+            Assert.assertEquals("LIFO Order, 111 last", a, tb._carList.get(2));
         } catch (java.lang.IllegalAccessException iae) {
             Assert.fail("Could not access method getCarOrder in TrackBuilder class");
         } catch (java.lang.reflect.InvocationTargetException ite) {
