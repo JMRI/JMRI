@@ -48,13 +48,22 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
     private Manager<Sensor> senManager = null;
     protected boolean _graphicState = false; // icon state col updated from prefs
 
+    /**
+     * Create a new Sensor Table Data Model.
+     * The default Manager for the bean type will be a Proxy Manager.
+     */
     public SensorTableDataModel() {
         super();
     }
 
+    /**
+     * Create a new Sensor Table Data Model.
+     * The default Manager for the bean type will be a Proxy Manager unless
+     * one is specified here.
+     * @param manager Bean Manager.
+     */
     public SensorTableDataModel(Manager<Sensor> manager) {
         super(manager);
-        this.setManager(manager);
         updateNameList();
         // load graphic state column display preference
         _graphicState = InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
@@ -136,12 +145,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
     @Override
     protected void clickOn(Sensor t) {
         try {
-            int state = t.getKnownState();
-            if (state == Sensor.INACTIVE) {
-                t.setKnownState(Sensor.ACTIVE);
-            } else {
-                t.setKnownState(Sensor.INACTIVE);
-            }
+            t.setKnownState(t.getKnownState() == Sensor.INACTIVE ? Sensor.ACTIVE : Sensor.INACTIVE );
         } catch (JmriException e) {
             log.warn("Error setting state", e);
         }
@@ -294,7 +298,6 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
             case PULLUPCOL:
                 PullResistanceComboBox c = new PullResistanceComboBox(Sensor.PullResistance.values());
                 c.setSelectedItem(s.getPullResistance());
-                c.addActionListener(super::comboBoxAction);
                 return c;
             case FORGETCOL:
                 return Bundle.getMessage("StateForgetButton");
@@ -461,7 +464,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 loadIcons();
                 log.debug("icons loaded");
             }
-            return updateLabel((String) value, row);
+            return updateLabel((String) value, row, table);
         }
 
         /**
@@ -476,10 +479,10 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 loadIcons();
                 log.debug("icons loaded");
             }
-            return updateLabel((String) value, row);
+            return updateLabel((String) value, row, table);
         }
 
-        public JLabel updateLabel(String value, int row) {
+        public JLabel updateLabel(String value, int row, JTable table) {
             if (iconHeight > 0) { // if necessary, increase row height;
                 table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5)); // adjust table row height for Sensor icon
             }
@@ -555,11 +558,8 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
      */
     @Override
     public void configureTable(JTable table) {
-        this.table = table;
         super.configureTable(table);
     }
-
-    protected JTable table;
 
     void editButton(Sensor s) {
         jmri.jmrit.beantable.beanedit.SensorEditAction beanEdit = new jmri.jmrit.beantable.beanedit.SensorEditAction();
@@ -571,8 +571,9 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
      * Show or hide the Debounce columns.
      * USEGLOBALDELAY, ACTIVEDELAY, INACTIVEDELAY
      * @param show true to display, false to hide.
+     * @param table the JTable to set column visibility on.
      */
-    public void showDebounce(boolean show) {
+    public void showDebounce(boolean show, JTable table) {
         XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
         TableColumn column = columnModel.getColumnByModelIndex(USEGLOBALDELAY);
         columnModel.setColumnVisible(column, show);
@@ -586,19 +587,20 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
      * Show or hide the Pullup column.
      * PULLUPCOL
      * @param show true to display, false to hide.
+     * @param table the JTable to set column visibility on.
      */
-    public void showPullUp(boolean show) {
+    public void showPullUp(boolean show, JTable table) {
         XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
         TableColumn column = columnModel.getColumnByModelIndex(PULLUPCOL);
         columnModel.setColumnVisible(column, show);
     }
 
     /**
-     * Show or hide the State - Forget and Query columns.
-     * FORGETCOL, QUERYCOL
+     * Show or hide the State - Forget and Query columns.FORGETCOL, QUERYCOL
      * @param show true to display, false to hide.
+     * @param table the JTable to set column visibility on.
      */
-    public void showStateForgetAndQuery(boolean show) {
+    public void showStateForgetAndQuery(boolean show, JTable table) {
         XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
         TableColumn column = columnModel.getColumnByModelIndex(FORGETCOL);
         columnModel.setColumnVisible(column, show);
@@ -610,7 +612,6 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
         return jmri.jmrit.beantable.SensorTableAction.class.getName();
     }
 
-//    public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
     public String getClassDescription() {
         return Bundle.getMessage("TitleSensorTable");
     }

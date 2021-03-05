@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.HashMap;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -83,6 +84,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         };
         setMenuBar(f); // comes after the Help menu is added by f = new
                        // BeanTableFrame(etc.) in stand alone application
+        configureTable(dataTable);
         setTitle();
         addToFrame(f);
         f.pack();
@@ -144,6 +146,15 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
      */
     protected void setManager(@Nonnull Manager<E> man) {
     }
+    
+    /**
+     * Get the Bean Manager in use by the TableAction.
+     * @return Bean Manager, could be Proxy or normal Manager, may be null.
+     */
+    @CheckForNull
+    protected Manager<E> getManager(){
+        return null;
+    }
 
     /**
      * Allow subclasses to alter the frame's Menubar without having to actually
@@ -156,6 +167,13 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
 
     public JPanel getPanel() {
         return null;
+    }
+    
+    /**
+     * Perform configuration of the JTable as required by a specific TableAction.
+     * @param table 
+     */
+    protected void configureTable(JTable table){
     }
 
     public void dispose() {

@@ -64,6 +64,7 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
         init = true;
     }
 
+    @Override
     abstract protected Manager<E> getManager();
 
     abstract protected AbstractTableAction<E> getNewTableAction(String choice);
@@ -193,6 +194,7 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
             RowSorterUtil.setSortOrder(sorter, BeanTableDataModel.USERNAMECOL, SortOrder.ASCENDING);
 
             dataModel.configureTable(dataTable);
+            tableAction.configureTable(dataTable);
 
             java.awt.Dimension dataTableSize = dataTable.getPreferredSize();
             // width is right, but if table is empty, it's not high
