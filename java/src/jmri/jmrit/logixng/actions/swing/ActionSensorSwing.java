@@ -18,6 +18,7 @@ import jmri.jmrit.logixng.actions.ActionSensor.SensorState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ActionSensor object with a Swing JPanel.
@@ -93,6 +94,7 @@ public class ActionSensorSwing extends AbstractDigitalActionSwing {
         for (SensorState e : SensorState.values()) {
             _stateComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
         
         _panelSensorStateDirect.add(_stateComboBox);
         

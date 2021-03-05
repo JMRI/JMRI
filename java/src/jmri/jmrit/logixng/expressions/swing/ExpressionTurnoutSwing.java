@@ -18,6 +18,7 @@ import jmri.jmrit.logixng.expressions.ExpressionTurnout.TurnoutState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionTurnout object with a Swing JPanel.
@@ -37,7 +38,7 @@ public class ExpressionTurnoutSwing extends AbstractDigitalExpressionSwing {
     private JComboBox<Is_IsNot_Enum> _is_IsNot_ComboBox;
     
     private JTabbedPane _tabbedPaneTurnoutState;
-    private JComboBox<TurnoutState> stateComboBox;
+    private JComboBox<TurnoutState> _stateComboBox;
     private JPanel _panelTurnoutStateDirect;
     private JPanel _panelTurnoutStateReference;
     private JPanel _panelTurnoutStateLocalVariable;
@@ -84,6 +85,7 @@ public class ExpressionTurnoutSwing extends AbstractDigitalExpressionSwing {
         for (Is_IsNot_Enum e : Is_IsNot_Enum.values()) {
             _is_IsNot_ComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_is_IsNot_ComboBox);
         
         
         _tabbedPaneTurnoutState = new JTabbedPane();
@@ -97,12 +99,13 @@ public class ExpressionTurnoutSwing extends AbstractDigitalExpressionSwing {
         _tabbedPaneTurnoutState.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelTurnoutStateLocalVariable);
         _tabbedPaneTurnoutState.addTab(NamedBeanAddressing.Formula.toString(), _panelTurnoutStateFormula);
         
-        stateComboBox = new JComboBox<>();
+        _stateComboBox = new JComboBox<>();
         for (TurnoutState e : TurnoutState.values()) {
-            stateComboBox.addItem(e);
+            _stateComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
         
-        _panelTurnoutStateDirect.add(stateComboBox);
+        _panelTurnoutStateDirect.add(_stateComboBox);
         
         _turnoutStateReferenceTextField = new JTextField();
         _turnoutStateReferenceTextField.setColumns(30);
@@ -141,7 +144,7 @@ public class ExpressionTurnoutSwing extends AbstractDigitalExpressionSwing {
                 case Formula: _tabbedPaneTurnoutState.setSelectedComponent(_panelTurnoutStateFormula); break;
                 default: throw new IllegalArgumentException("invalid _addressing state: " + expression.getAddressing().name());
             }
-            stateComboBox.setSelectedItem(expression.getBeanState());
+            _stateComboBox.setSelectedItem(expression.getBeanState());
             _turnoutStateReferenceTextField.setText(expression.getStateReference());
             _turnoutStateLocalVariableTextField.setText(expression.getStateLocalVariable());
             _turnoutStateFormulaTextField.setText(expression.getStateFormula());
@@ -249,7 +252,7 @@ public class ExpressionTurnoutSwing extends AbstractDigitalExpressionSwing {
             
             if (_tabbedPaneTurnoutState.getSelectedComponent() == _panelTurnoutStateDirect) {
                 expression.setStateAddressing(NamedBeanAddressing.Direct);
-                expression.setBeanState((TurnoutState)stateComboBox.getSelectedItem());
+                expression.setBeanState((TurnoutState)_stateComboBox.getSelectedItem());
             } else if (_tabbedPaneTurnoutState.getSelectedComponent() == _panelTurnoutStateReference) {
                 expression.setStateAddressing(NamedBeanAddressing.Reference);
                 expression.setStateReference(_turnoutStateReferenceTextField.getText());

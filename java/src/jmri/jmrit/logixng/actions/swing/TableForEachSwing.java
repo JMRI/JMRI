@@ -11,6 +11,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.TableForEach;
 import jmri.jmrit.logixng.actions.TableForEach.TableRowOrColumn;
 import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an TableForEach object with a Swing JPanel.
@@ -18,7 +19,7 @@ import jmri.util.swing.BeanSelectCreatePanel;
 public class TableForEachSwing extends AbstractDigitalActionSwing {
 
     private BeanSelectCreatePanel<NamedTable> tableBeanPanel;
-    private JComboBox<TableRowOrColumn> _tableRowOrColumn;
+    private JComboBox<TableRowOrColumn> _tableRowOrColumnComboBox;
     private JTextField _rowOrColumnName;
     private JTextField _localVariable;
     
@@ -33,14 +34,15 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         
-        _tableRowOrColumn = new JComboBox<>();
+        _tableRowOrColumnComboBox = new JComboBox<>();
         for (TableForEach.TableRowOrColumn item : TableForEach.TableRowOrColumn.values()) {
-            _tableRowOrColumn.addItem(item);
+            _tableRowOrColumnComboBox.addItem(item);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_tableRowOrColumnComboBox);
         
         JPanel tableRowOrColumnPanel = new JPanel();
         tableRowOrColumnPanel.add(new JLabel(Bundle.getMessage("TableForEachSwing_RowOrColumn")));
-        tableRowOrColumnPanel.add(_tableRowOrColumn);
+        tableRowOrColumnPanel.add(_tableRowOrColumnComboBox);
         panel.add(tableRowOrColumnPanel);
         
         JPanel tableBeanPanelPanel = new JPanel();
@@ -85,7 +87,7 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
             if (action.getTable() != null) {
                 tableBeanPanel.setDefaultNamedBean(action.getTable().getBean());
             }
-            _tableRowOrColumn.setSelectedItem(action.getTableRowOrColumn());
+            _tableRowOrColumnComboBox.setSelectedItem(action.getTableRowOrColumn());
             _rowOrColumnName.setText(action.getRowOrColumnName());
             _localVariable.setText(action.getLocalVariableName());
         }
@@ -124,7 +126,7 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
                     action.setTable(handle);
                 }
             }
-            action.setTableRowOrColumn((TableForEach.TableRowOrColumn)_tableRowOrColumn.getSelectedItem());
+            action.setTableRowOrColumn((TableForEach.TableRowOrColumn)_tableRowOrColumnComboBox.getSelectedItem());
             action.setRowOrColumnName(_rowOrColumnName.getText());
             action.setLocalVariableName(_localVariable.getText());
         } catch (JmriException ex) {

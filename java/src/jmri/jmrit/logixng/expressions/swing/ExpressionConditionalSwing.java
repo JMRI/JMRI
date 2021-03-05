@@ -12,6 +12,7 @@ import jmri.jmrit.logixng.expressions.ExpressionConditional;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionTurnout object with a Swing JPanel.
@@ -28,7 +29,7 @@ public class ExpressionConditionalSwing extends AbstractDigitalExpressionSwing {
     private JTextField _conditionalLocalVariableTextField;
     private JTextField _conditionalFormulaTextField;
     
-    private JComboBox<Is_IsNot_Enum> is_IsNot_ComboBox;
+    private JComboBox<Is_IsNot_Enum> _is_IsNot_ComboBox;
     
     private JTabbedPane _tabbedPaneConditionalState;
     private JComboBox<ExpressionConditional.ConditionalState> _stateComboBox;
@@ -74,10 +75,11 @@ public class ExpressionConditionalSwing extends AbstractDigitalExpressionSwing {
         _panelConditionalFormula.add(_conditionalFormulaTextField);
         
         
-        is_IsNot_ComboBox = new JComboBox<>();
+        _is_IsNot_ComboBox = new JComboBox<>();
         for (Is_IsNot_Enum e : Is_IsNot_Enum.values()) {
-            is_IsNot_ComboBox.addItem(e);
+            _is_IsNot_ComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_is_IsNot_ComboBox);
         
         
         _tabbedPaneConditionalState = new JTabbedPane();
@@ -95,6 +97,7 @@ public class ExpressionConditionalSwing extends AbstractDigitalExpressionSwing {
         for (ExpressionConditional.ConditionalState e : ExpressionConditional.ConditionalState.values()) {
             _stateComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
         
         _panelConditionalStateDirect.add(_stateComboBox);
         
@@ -126,7 +129,7 @@ public class ExpressionConditionalSwing extends AbstractDigitalExpressionSwing {
             _conditionalLocalVariableTextField.setText(expression.getLocalVariable());
             _conditionalFormulaTextField.setText(expression.getFormula());
             
-            is_IsNot_ComboBox.setSelectedItem(expression.get_Is_IsNot());
+            _is_IsNot_ComboBox.setSelectedItem(expression.get_Is_IsNot());
             
             switch (expression.getStateAddressing()) {
                 case Direct: _tabbedPaneConditionalState.setSelectedComponent(_panelConditionalStateDirect); break;
@@ -143,7 +146,7 @@ public class ExpressionConditionalSwing extends AbstractDigitalExpressionSwing {
         
         JComponent[] components = new JComponent[]{
             _tabbedPaneConditional,
-            is_IsNot_ComboBox,
+            _is_IsNot_ComboBox,
             _tabbedPaneConditionalState};
         
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
@@ -239,7 +242,7 @@ public class ExpressionConditionalSwing extends AbstractDigitalExpressionSwing {
                 throw new IllegalArgumentException("_tabbedPaneConditional has unknown selection");
             }
             
-            expression.set_Is_IsNot((Is_IsNot_Enum)is_IsNot_ComboBox.getSelectedItem());
+            expression.set_Is_IsNot((Is_IsNot_Enum)_is_IsNot_ComboBox.getSelectedItem());
             
             if (_tabbedPaneConditionalState.getSelectedComponent() == _panelConditionalStateDirect) {
                 expression.setStateAddressing(NamedBeanAddressing.Direct);

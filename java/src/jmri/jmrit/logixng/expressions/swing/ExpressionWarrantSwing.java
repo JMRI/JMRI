@@ -18,6 +18,7 @@ import jmri.jmrit.logixng.expressions.ExpressionWarrant.WarrantState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionWarrant object with a Swing JPanel.
@@ -34,7 +35,7 @@ public class ExpressionWarrantSwing extends AbstractDigitalExpressionSwing {
     private JTextField _warrantLocalVariableTextField;
     private JTextField _warrantFormulaTextField;
     
-    private JComboBox<Is_IsNot_Enum> is_IsNot_ComboBox;
+    private JComboBox<Is_IsNot_Enum> _is_IsNot_ComboBox;
     
     private JTabbedPane _tabbedPaneWarrantState;
     private JComboBox<WarrantState> _stateComboBox;
@@ -80,10 +81,11 @@ public class ExpressionWarrantSwing extends AbstractDigitalExpressionSwing {
         _panelWarrantFormula.add(_warrantFormulaTextField);
         
         
-        is_IsNot_ComboBox = new JComboBox<>();
+        _is_IsNot_ComboBox = new JComboBox<>();
         for (Is_IsNot_Enum e : Is_IsNot_Enum.values()) {
-            is_IsNot_ComboBox.addItem(e);
+            _is_IsNot_ComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_is_IsNot_ComboBox);
         
         
         _tabbedPaneWarrantState = new JTabbedPane();
@@ -101,6 +103,7 @@ public class ExpressionWarrantSwing extends AbstractDigitalExpressionSwing {
         for (WarrantState e : WarrantState.values()) {
             _stateComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
         
         _panelWarrantStateDirect.add(_stateComboBox);
         
@@ -132,7 +135,7 @@ public class ExpressionWarrantSwing extends AbstractDigitalExpressionSwing {
             _warrantLocalVariableTextField.setText(expression.getLocalVariable());
             _warrantFormulaTextField.setText(expression.getFormula());
             
-            is_IsNot_ComboBox.setSelectedItem(expression.get_Is_IsNot());
+            _is_IsNot_ComboBox.setSelectedItem(expression.get_Is_IsNot());
             
             switch (expression.getStateAddressing()) {
                 case Direct: _tabbedPaneWarrantState.setSelectedComponent(_panelWarrantStateDirect); break;
@@ -149,7 +152,7 @@ public class ExpressionWarrantSwing extends AbstractDigitalExpressionSwing {
         
         JComponent[] components = new JComponent[]{
             _tabbedPaneWarrant,
-            is_IsNot_ComboBox,
+            _is_IsNot_ComboBox,
             _tabbedPaneWarrantState};
         
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
@@ -251,7 +254,7 @@ public class ExpressionWarrantSwing extends AbstractDigitalExpressionSwing {
                 throw new IllegalArgumentException("_tabbedPaneWarrant has unknown selection");
             }
             
-            expression.set_Is_IsNot((Is_IsNot_Enum)is_IsNot_ComboBox.getSelectedItem());
+            expression.set_Is_IsNot((Is_IsNot_Enum)_is_IsNot_ComboBox.getSelectedItem());
             
             if (_tabbedPaneWarrantState.getSelectedComponent() == _panelWarrantStateDirect) {
                 expression.setStateAddressing(NamedBeanAddressing.Direct);

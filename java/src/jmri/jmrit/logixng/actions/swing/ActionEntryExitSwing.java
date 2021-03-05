@@ -17,6 +17,7 @@ import jmri.jmrit.logixng.actions.ActionEntryExit.Operation;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an EntryExit object with a Swing JPanel.
@@ -94,6 +95,7 @@ public class ActionEntryExitSwing extends AbstractDigitalActionSwing {
         for (Operation e : Operation.values()) {
             _stateComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
         
         _panelOperationDirect.add(_stateComboBox);
         

@@ -11,6 +11,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionPower;
 import jmri.jmrit.logixng.actions.ActionPower.PowerState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ActionPower object with a Swing JPanel.
@@ -32,6 +33,7 @@ public class ActionPowerSwing extends AbstractDigitalActionSwing {
         for (PowerState e : PowerState.values()) {
             _stateComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
         
         if (action != null) {
             _stateComboBox.setSelectedItem(action.getBeanState());

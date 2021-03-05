@@ -13,6 +13,7 @@ import jmri.jmrit.logixng.expressions.ExpressionLocalVariable.CompareTo;
 import jmri.jmrit.logixng.expressions.ExpressionLocalVariable.VariableOperation;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionLocalVariable object with a Swing JPanel.
@@ -20,7 +21,7 @@ import jmri.util.swing.BeanSelectCreatePanel;
 public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing {
 
     private JTextField _localVariableTextField;
-    private JComboBox<VariableOperation> _memoryOperationComboBox;
+    private JComboBox<VariableOperation> _variableOperationComboBox;
     
     private JTabbedPane _tabbedPane;
     
@@ -36,8 +37,8 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
     
     
     private void enableDisableCompareTo() {
-        VariableOperation vo = _memoryOperationComboBox.getItemAt(
-                        _memoryOperationComboBox.getSelectedIndex());
+        VariableOperation vo = _variableOperationComboBox.getItemAt(
+                        _variableOperationComboBox.getSelectedIndex());
         boolean enable = vo.hasExtraValue();
         _tabbedPaneCompareTo.setEnabled(enable);
         ((JPanel)_tabbedPaneCompareTo.getSelectedComponent())
@@ -58,12 +59,13 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
         
         _localVariableTextField = new JTextField(30);
         
-        _memoryOperationComboBox = new JComboBox<>();
+        _variableOperationComboBox = new JComboBox<>();
         for (VariableOperation e : VariableOperation.values()) {
-            _memoryOperationComboBox.addItem(e);
+            _variableOperationComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_variableOperationComboBox);
         
-        _memoryOperationComboBox.addActionListener((e) -> { enableDisableCompareTo(); });
+        _variableOperationComboBox.addActionListener((e) -> { enableDisableCompareTo(); });
         
         _tabbedPane = new JTabbedPane();
         
@@ -108,7 +110,7 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
                 case LocalVariable: _tabbedPaneCompareTo.setSelectedComponent(_compareToLocalVariable); break;
                 default: throw new IllegalArgumentException("invalid _addressing state: " + expression.getCompareTo().name());
             }
-            _memoryOperationComboBox.setSelectedItem(expression.getVariableOperation());
+            _variableOperationComboBox.setSelectedItem(expression.getVariableOperation());
             _compareToConstantTextField.setText(expression.getConstantValue());
             _compareToLocalVariableTextField.setText(expression.getOtherLocalVariable());
             _compareToRegExTextField.setText(expression.getRegEx());
@@ -116,7 +118,7 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
         
         JComponent[] components = new JComponent[]{
             _localVariableTextField,
-            _memoryOperationComboBox,
+            _variableOperationComboBox,
             _tabbedPane
         };
         
@@ -151,7 +153,7 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
         ExpressionLocalVariable expression = (ExpressionLocalVariable)object;
         
         expression.setLocalVariable(_localVariableTextField.getText());
-        expression.setVariableOperation(_memoryOperationComboBox.getItemAt(_memoryOperationComboBox.getSelectedIndex()));
+        expression.setVariableOperation(_variableOperationComboBox.getItemAt(_variableOperationComboBox.getSelectedIndex()));
         
         
         try {

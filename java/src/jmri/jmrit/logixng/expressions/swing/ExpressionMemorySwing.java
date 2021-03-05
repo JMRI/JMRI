@@ -13,6 +13,7 @@ import jmri.jmrit.logixng.expressions.ExpressionMemory.CompareTo;
 import jmri.jmrit.logixng.expressions.ExpressionMemory.MemoryOperation;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionMemory object with a Swing JPanel.
@@ -62,6 +63,7 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         for (MemoryOperation e : MemoryOperation.values()) {
             _memoryOperationComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_memoryOperationComboBox);
         
         _memoryOperationComboBox.addActionListener((e) -> { enableDisableCompareTo(); });
         

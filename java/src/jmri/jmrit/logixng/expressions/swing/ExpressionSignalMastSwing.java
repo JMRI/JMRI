@@ -19,6 +19,7 @@ import jmri.jmrit.logixng.expressions.ExpressionSignalMast;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionSignalMast object with a Swing JPanel.
@@ -134,6 +135,8 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
         for (ExpressionSignalMast.QueryType e : ExpressionSignalMast.QueryType.values()) {
             _operationComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_operationComboBox);
+        
         _operationComboBox.addActionListener(e -> {
             if ((_operationComboBox.getSelectedItem() == ExpressionSignalMast.QueryType.Aspect)
                     || (_operationComboBox.getSelectedItem() == ExpressionSignalMast.QueryType.NotAspect)) {
@@ -264,6 +267,7 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
                     _signalMastAspectComboBox.addItem(aspect);
                     if (aspect.equals(expression.getAspect())) _signalMastAspectComboBox.setSelectedItem(aspect);
                 }
+                JComboBoxUtil.setupComboBoxMaxRows(_signalMastAspectComboBox);
             }
         }
         

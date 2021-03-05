@@ -13,6 +13,7 @@ import jmri.jmrit.logixng.expressions.ExpressionLight.LightState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionLight object with a Swing JPanel.
@@ -79,6 +80,7 @@ public class ExpressionLightSwing extends AbstractDigitalExpressionSwing {
         for (Is_IsNot_Enum e : Is_IsNot_Enum.values()) {
             _is_IsNot_ComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_is_IsNot_ComboBox);
         
         
         _tabbedPaneLightState = new JTabbedPane();
@@ -96,6 +98,7 @@ public class ExpressionLightSwing extends AbstractDigitalExpressionSwing {
         for (LightState e : LightState.values()) {
             _stateComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
         
         _panelLightStateDirect.add(_stateComboBox);
         

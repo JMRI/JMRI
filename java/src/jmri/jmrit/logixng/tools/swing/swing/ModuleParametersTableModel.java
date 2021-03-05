@@ -18,6 +18,7 @@ import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.Module.Parameter;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable.DefaultParameter;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Table model for local variables
@@ -231,6 +232,7 @@ public class ModuleParametersTableModel extends AbstractTableModel {
             for (InitialValueType type : InitialValueType.values()) {
                 typeComboBox.addItem(type);
             }
+            JComboBoxUtil.setupComboBoxMaxRows(typeComboBox);
             
             typeComboBox.setSelectedItem(value);
             typeComboBox.addActionListener(this);
@@ -285,6 +287,7 @@ public class ModuleParametersTableModel extends AbstractTableModel {
                 if ((menu == Menu.MoveDown) && (row+1 == _tableModel._parameters.size())) continue;
                 menuComboBox.addItem(menu);
             }
+            JComboBoxUtil.setupComboBoxMaxRows(menuComboBox);
             
             menuComboBox.setSelectedItem(value);
             menuComboBox.addActionListener(this);

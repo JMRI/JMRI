@@ -18,6 +18,7 @@ import jmri.jmrit.logixng.actions.ActionLight.LightState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ActionLight object with a Swing JPanel.
@@ -93,6 +94,7 @@ public class ActionLightSwing extends AbstractDigitalActionSwing {
         for (LightState e : LightState.values()) {
             _stateComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
         
         _panelLightStateDirect.add(_stateComboBox);
         

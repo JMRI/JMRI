@@ -11,6 +11,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionSimpleScript;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an SimpleScript object with a Swing JPanel.
@@ -74,6 +75,7 @@ public class ActionSimpleScriptSwing extends AbstractDigitalActionSwing {
         for (ActionSimpleScript.OperationType e : ActionSimpleScript.OperationType.values()) {
             _operationComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_operationComboBox);
         _panelOperationTypeDirect.add(new JLabel(Bundle.getMessage("SimpleScript_Operation")));
         _panelOperationTypeDirect.add(_operationComboBox);
         

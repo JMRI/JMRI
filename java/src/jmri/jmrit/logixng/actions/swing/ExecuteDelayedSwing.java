@@ -12,6 +12,7 @@ import jmri.jmrit.logixng.actions.ExecuteDelayed;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.TimerUnit;
 import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExecuteDelayed object with a Swing JPanel.
@@ -21,7 +22,7 @@ import jmri.jmrit.logixng.util.parser.ParserException;
 public class ExecuteDelayedSwing extends AbstractDigitalActionSwing {
 
     private final JLabel _unitLabel = new JLabel(Bundle.getMessage("ExecuteDelayedSwing_Unit"));
-    private JComboBox<TimerUnit> _unit;
+    private JComboBox<TimerUnit> _unitComboBox;
     private JCheckBox _resetIfAlreadyStarted;
     
     private JTabbedPane _tabbedPaneDelay;
@@ -103,10 +104,11 @@ public class ExecuteDelayedSwing extends AbstractDigitalActionSwing {
         JPanel unitPanel = new JPanel();
         unitPanel.add(_unitLabel);
         
-        _unit = new JComboBox<>();
-        for (TimerUnit u : TimerUnit.values()) _unit.addItem(u);
-        if (action != null) _unit.setSelectedItem(action.getUnit());
-        unitPanel.add(_unit);
+        _unitComboBox = new JComboBox<>();
+        for (TimerUnit u : TimerUnit.values()) _unitComboBox.addItem(u);
+        JComboBoxUtil.setupComboBoxMaxRows(_unitComboBox);
+        if (action != null) _unitComboBox.setSelectedItem(action.getUnit());
+        unitPanel.add(_unitComboBox);
         
         panel.add(unitPanel);
         
@@ -166,7 +168,7 @@ public class ExecuteDelayedSwing extends AbstractDigitalActionSwing {
         
         ExecuteDelayed action = (ExecuteDelayed)object;
         
-        action.setUnit(_unit.getItemAt(_unit.getSelectedIndex()));
+        action.setUnit(_unitComboBox.getItemAt(_unitComboBox.getSelectedIndex()));
         action.setResetIfAlreadyStarted(_resetIfAlreadyStarted.isSelected());
         
         

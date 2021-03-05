@@ -15,6 +15,7 @@ import jmri.jmrit.logixng.Module.Parameter;
 import jmri.jmrit.logixng.Module.ParameterData;
 import jmri.jmrit.logixng.Module.ReturnValueType;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Table model for CallModule parameters
@@ -225,6 +226,7 @@ public class CallModuleParameterTableModel extends AbstractTableModel {
             for (InitialValueType type : InitialValueType.values()) {
                 initialValueTypeComboBox.addItem(type);
             }
+            JComboBoxUtil.setupComboBoxMaxRows(initialValueTypeComboBox);
             
             initialValueTypeComboBox.setSelectedItem(value);
             initialValueTypeComboBox.addActionListener(this);
@@ -272,6 +274,7 @@ public class CallModuleParameterTableModel extends AbstractTableModel {
             for (ReturnValueType type : ReturnValueType.values()) {
                 returnValueTypeComboBox.addItem(type);
             }
+            JComboBoxUtil.setupComboBoxMaxRows(returnValueTypeComboBox);
             
             returnValueTypeComboBox.setSelectedItem(value);
             returnValueTypeComboBox.addActionListener(this);

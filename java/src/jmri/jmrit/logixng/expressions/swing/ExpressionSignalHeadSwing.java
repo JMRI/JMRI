@@ -19,6 +19,7 @@ import jmri.jmrit.logixng.expressions.ExpressionSignalHead;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionSignalHead object with a Swing JPanel.
@@ -134,6 +135,8 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
         for (ExpressionSignalHead.QueryType e : ExpressionSignalHead.QueryType.values()) {
             _operationComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_operationComboBox);
+        
         _operationComboBox.addActionListener(e -> {
             if ((_operationComboBox.getSelectedItem() == ExpressionSignalHead.QueryType.Appearance)
                     || (_operationComboBox.getSelectedItem() == ExpressionSignalHead.QueryType.NotAppearance)) {
@@ -268,6 +271,7 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
                     _signalHeadAppearanceComboBox.addItem(sha);
                     if (expression.getAppearance() == s) _signalHeadAppearanceComboBox.setSelectedItem(sha);
                 }
+                JComboBoxUtil.setupComboBoxMaxRows(_signalHeadAppearanceComboBox);
             }
         }
         

@@ -12,6 +12,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.AbstractDigitalAction;
 import jmri.jmrit.logixng.actions.ActionTimer;
 import jmri.jmrit.logixng.util.TimerUnit;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
@@ -22,7 +23,7 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
     
     private JCheckBox _startImmediately;
     private JCheckBox _runContinuously;
-    private JComboBox<TimerUnit> _unit;
+    private JComboBox<TimerUnit> _unitComboBox;
     private JTextField _numTimers;
     private JButton _addTimer;
     private JButton _removeTimer;
@@ -59,13 +60,14 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
         _startImmediately = new JCheckBox(Bundle.getMessage("ActionTimerSwing_StartImmediately"));
         _runContinuously = new JCheckBox(Bundle.getMessage("ActionTimerSwing_RunContinuously"));
         
-        _unit = new JComboBox<>();
-        for (TimerUnit u : TimerUnit.values()) _unit.addItem(u);
-        _unit.setSelectedItem(action.getUnit());
+        _unitComboBox = new JComboBox<>();
+        for (TimerUnit u : TimerUnit.values()) _unitComboBox.addItem(u);
+        JComboBoxUtil.setupComboBoxMaxRows(_unitComboBox);
+        _unitComboBox.setSelectedItem(action.getUnit());
         
         panel.add(_startImmediately);
         panel.add(_runContinuously);
-        panel.add(_unit);
+        panel.add(_unitComboBox);
         
         JPanel numActionsPanel = new JPanel();
         _numTimers = new JTextField(Integer.toString(numActions));
@@ -175,7 +177,7 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
         
         action.setStartImmediately(_startImmediately.isSelected());
         action.setRunContinuously(_runContinuously.isSelected());
-        action.setUnit(_unit.getItemAt(_unit.getSelectedIndex()));
+        action.setUnit(_unitComboBox.getItemAt(_unitComboBox.getSelectedIndex()));
         action.setNumActions(numActions);
         
         for (int i=0; i < numActions; i++) {

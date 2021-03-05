@@ -14,6 +14,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.logixng.MaleSocket.ErrorHandlingType;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Preferences panel for LogixNG
@@ -28,7 +29,7 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
     JCheckBox _startLogixNGOnLoadCheckBox;
     JCheckBox _installDebuggerCheckBox;
     JCheckBox _showSystemUserNamesCheckBox;
-    private JComboBox<ErrorHandlingType> errorHandlingComboBox;
+    private JComboBox<ErrorHandlingType> _errorHandlingComboBox;
     
     
     public LogixNGPreferencesPanel() {
@@ -67,7 +68,7 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
         preferences.setStartLogixNGOnStartup(_startLogixNGOnLoadCheckBox.isSelected());
         preferences.setInstallDebugger(_installDebuggerCheckBox.isSelected());
         preferences.setShowSystemUserNames(_showSystemUserNamesCheckBox.isSelected());
-        preferences.setErrorHandlingType(errorHandlingComboBox.getItemAt(errorHandlingComboBox.getSelectedIndex()));
+        preferences.setErrorHandlingType(_errorHandlingComboBox.getItemAt(_errorHandlingComboBox.getSelectedIndex()));
         return didSet;
     }
     
@@ -93,17 +94,18 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
         _installDebuggerCheckBox.setSelected(preferences.getInstallDebugger());
         _showSystemUserNamesCheckBox.setSelected(preferences.getShowSystemUserNames());
         
-        errorHandlingComboBox = new JComboBox<>();
+        _errorHandlingComboBox = new JComboBox<>();
         for (ErrorHandlingType type : ErrorHandlingType.values()) {
             // ErrorHandlingType.Default cannot be used as default
             if (type != ErrorHandlingType.Default) {
-                errorHandlingComboBox.addItem(type);
+                _errorHandlingComboBox.addItem(type);
                 if (preferences.getErrorHandlingType() == type) {
-                    errorHandlingComboBox.setSelectedItem(type);
+                    _errorHandlingComboBox.setSelectedItem(type);
                 }
             }
         }
-        gridPanel.add(errorHandlingComboBox);
+        JComboBoxUtil.setupComboBoxMaxRows(_errorHandlingComboBox);
+        gridPanel.add(_errorHandlingComboBox);
         
         panel.setLayout(new FlowLayout(FlowLayout.CENTER, 40, 0));
         panel.add(gridPanel);

@@ -19,6 +19,7 @@ import jmri.jmrit.logixng.actions.ActionSignalMast;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ActionSignalMast object with a Swing JPanel.
@@ -134,6 +135,8 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
         for (ActionSignalMast.OperationType e : ActionSignalMast.OperationType.values()) {
             _operationComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_operationComboBox);
+        
         _operationComboBox.addActionListener(e -> {
             if (_operationComboBox.getSelectedItem() == ActionSignalMast.OperationType.Aspect) {
                 setEnableOperationComboBox(true);
@@ -262,6 +265,7 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
                     _signalMastAspectComboBox.addItem(aspect);
                     if (aspect.equals(action.getAspect())) _signalMastAspectComboBox.setSelectedItem(aspect);
                 }
+                JComboBoxUtil.setupComboBoxMaxRows(_signalMastAspectComboBox);
             }
         }
         

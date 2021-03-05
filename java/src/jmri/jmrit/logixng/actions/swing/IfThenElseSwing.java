@@ -14,13 +14,14 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.jmrit.logixng.actions.IfThenElse.Type;
 import jmri.jmrit.logixng.util.TimerUnit;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
  */
 public class IfThenElseSwing extends AbstractDigitalActionSwing {
 
-    private JComboBox<Type> _type;
+    private JComboBox<Type> _typeComboBox;
     
     
     @Override
@@ -33,11 +34,12 @@ public class IfThenElseSwing extends AbstractDigitalActionSwing {
         
         panel = new JPanel();
         
-        _type = new JComboBox<>();
-        for (Type type : Type.values()) _type.addItem(type);
-        if (action != null) _type.setSelectedItem(action.getType());
+        _typeComboBox = new JComboBox<>();
+        for (Type type : Type.values()) _typeComboBox.addItem(type);
+        JComboBoxUtil.setupComboBoxMaxRows(_typeComboBox);
+        if (action != null) _typeComboBox.setSelectedItem(action.getType());
         
-        panel.add(_type);
+        panel.add(_typeComboBox);
     }
     
     /** {@inheritDoc} */
@@ -63,7 +65,7 @@ public class IfThenElseSwing extends AbstractDigitalActionSwing {
         
         IfThenElse action = (IfThenElse)object;
         
-        action.setType(_type.getItemAt(_type.getSelectedIndex()));
+        action.setType(_typeComboBox.getItemAt(_typeComboBox.getSelectedIndex()));
     }
     
     /** {@inheritDoc} */

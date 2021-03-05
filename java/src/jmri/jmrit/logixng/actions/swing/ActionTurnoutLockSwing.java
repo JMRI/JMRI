@@ -18,6 +18,7 @@ import jmri.jmrit.logixng.actions.ActionTurnoutLock.TurnoutLock;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ActionTurnoutLock object with a Swing JPanel.
@@ -93,6 +94,7 @@ public class ActionTurnoutLockSwing extends AbstractDigitalActionSwing {
         for (TurnoutLock e : TurnoutLock.values()) {
             _stateComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
         
         _panelTurnoutLockDirect.add(_stateComboBox);
         

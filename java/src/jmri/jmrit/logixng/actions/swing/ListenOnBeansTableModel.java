@@ -13,6 +13,7 @@ import javax.swing.table.TableCellEditor;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanType;
 import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanReference;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Table model for ListenOnBeans named beans
@@ -199,6 +200,7 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
             for (NamedBeanType type : NamedBeanType.values()) {
                 returnValueTypeComboBox.addItem(type);
             }
+            JComboBoxUtil.setupComboBoxMaxRows(returnValueTypeComboBox);
             
             returnValueTypeComboBox.setSelectedItem(value);
             returnValueTypeComboBox.addActionListener(this);
@@ -260,6 +262,7 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
                         }
                     }
                 }
+                JComboBoxUtil.setupComboBoxMaxRows(namedBeanComboBox);
             } else {
                 namedBeanComboBox.addItem("");
             }

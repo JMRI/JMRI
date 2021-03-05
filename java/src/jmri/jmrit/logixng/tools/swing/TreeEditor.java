@@ -26,6 +26,7 @@ import jmri.jmrit.logixng.swing.SwingTools;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.jmrit.logixng.util.parser.swing.FunctionsHelpDialog;
 import jmri.util.ThreadingUtil;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Base class for LogixNG editors
@@ -286,6 +287,7 @@ public class TreeEditor extends TreeViewer {
         for (Category item : list) {
             _categoryComboBox.addItem(item);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_categoryComboBox);
         
         for (ItemListener l : _categoryComboBox.getItemListeners()) {
             _categoryComboBox.removeItemListener(l);
@@ -305,6 +307,7 @@ public class TreeEditor extends TreeViewer {
                         log.error("Class {} has no swing configurator interface", clazz.getName());
                     }
                 }
+                JComboBoxUtil.setupComboBoxMaxRows(_swingConfiguratorComboBox);
             }
         });
         

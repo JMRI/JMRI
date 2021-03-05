@@ -11,6 +11,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionPower;
 import jmri.jmrit.logixng.expressions.ExpressionPower.PowerState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionPower object with a Swing JPanel.
@@ -19,7 +20,7 @@ import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
  */
 public class ExpressionPowerSwing extends AbstractDigitalExpressionSwing {
 
-    private JComboBox<Is_IsNot_Enum> is_IsNot_ComboBox;
+    private JComboBox<Is_IsNot_Enum> _is_IsNot_ComboBox;
     private JComboBox<PowerState> _stateComboBox;
     
     
@@ -29,23 +30,25 @@ public class ExpressionPowerSwing extends AbstractDigitalExpressionSwing {
         
         panel = new JPanel();
         
-        is_IsNot_ComboBox = new JComboBox<>();
+        _is_IsNot_ComboBox = new JComboBox<>();
         for (Is_IsNot_Enum e : Is_IsNot_Enum.values()) {
-            is_IsNot_ComboBox.addItem(e);
+            _is_IsNot_ComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_is_IsNot_ComboBox);
         
         _stateComboBox = new JComboBox<>();
         for (PowerState e : PowerState.values()) {
             _stateComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
         
         if (expression != null) {
-            is_IsNot_ComboBox.setSelectedItem(expression.get_Is_IsNot());
+            _is_IsNot_ComboBox.setSelectedItem(expression.get_Is_IsNot());
             _stateComboBox.setSelectedItem(expression.getBeanState());
         }
         
         JComponent[] components = new JComponent[]{
-            is_IsNot_ComboBox,
+            _is_IsNot_ComboBox,
             _stateComboBox};
         
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
@@ -81,7 +84,7 @@ public class ExpressionPowerSwing extends AbstractDigitalExpressionSwing {
             throw new IllegalArgumentException("object must be an ExpressionPower but is a: "+object.getClass().getName());
         }
         ExpressionPower expression = (ExpressionPower)object;
-        expression.set_Is_IsNot((Is_IsNot_Enum)is_IsNot_ComboBox.getSelectedItem());
+        expression.set_Is_IsNot((Is_IsNot_Enum)_is_IsNot_ComboBox.getSelectedItem());
         expression.setBeanState((PowerState)_stateComboBox.getSelectedItem());
     }
     

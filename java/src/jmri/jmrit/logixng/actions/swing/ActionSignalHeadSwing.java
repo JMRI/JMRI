@@ -19,6 +19,7 @@ import jmri.jmrit.logixng.actions.ActionSignalHead;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ActionSignalHead object with a Swing JPanel.
@@ -134,6 +135,7 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
         for (ActionSignalHead.OperationType e : ActionSignalHead.OperationType.values()) {
             _operationComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_operationComboBox);
         _operationComboBox.addActionListener(e -> {
             if (_operationComboBox.getSelectedItem() == ActionSignalHead.OperationType.Appearance) {
                 setEnableOperationComboBox(true);
@@ -266,6 +268,7 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
                     _signalHeadAppearanceComboBox.addItem(sha);
                     if (action.getAppearance() == s) _signalHeadAppearanceComboBox.setSelectedItem(sha);
                 }
+                JComboBoxUtil.setupComboBoxMaxRows(_signalHeadAppearanceComboBox);
             }
         }
         

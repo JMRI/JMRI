@@ -14,6 +14,7 @@ import javax.swing.table.TableCellEditor;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.SymbolTable.VariableData;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Table model for local variables
@@ -226,6 +227,7 @@ public class LocalVariableTableModel extends AbstractTableModel {
             for (InitialValueType type : InitialValueType.values()) {
                 typeComboBox.addItem(type);
             }
+            JComboBoxUtil.setupComboBoxMaxRows(typeComboBox);
             
             typeComboBox.setSelectedItem(value);
             typeComboBox.addActionListener(this);
@@ -280,6 +282,7 @@ public class LocalVariableTableModel extends AbstractTableModel {
                 if ((menu == Menu.MoveDown) && (row+1 == _tableModel._variables.size())) continue;
                 menuComboBox.addItem(menu);
             }
+            JComboBoxUtil.setupComboBoxMaxRows(menuComboBox);
             
             menuComboBox.setSelectedItem(value);
             menuComboBox.addActionListener(this);

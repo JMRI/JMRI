@@ -18,6 +18,7 @@ import jmri.jmrit.logixng.actions.ActionTurnout.TurnoutState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
@@ -93,6 +94,7 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
         for (TurnoutState e : TurnoutState.values()) {
             _stateComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
         
         _panelTurnoutStateDirect.add(_stateComboBox);
         

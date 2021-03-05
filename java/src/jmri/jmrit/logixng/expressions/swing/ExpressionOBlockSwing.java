@@ -17,6 +17,7 @@ import jmri.jmrit.logixng.expressions.ExpressionOBlock;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionOBlock object with a Swing JPanel.
@@ -33,7 +34,7 @@ public class ExpressionOBlockSwing extends AbstractDigitalExpressionSwing {
     private JTextField _oblockLocalVariableTextField;
     private JTextField _oblockFormulaTextField;
     
-    private JComboBox<Is_IsNot_Enum> is_IsNot_ComboBox;
+    private JComboBox<Is_IsNot_Enum> _is_IsNot_ComboBox;
     
     private JTabbedPane _tabbedPaneOBlockState;
     private JComboBox<OBlock.OBlockStatus> _stateComboBox;
@@ -79,10 +80,11 @@ public class ExpressionOBlockSwing extends AbstractDigitalExpressionSwing {
         _panelOBlockFormula.add(_oblockFormulaTextField);
         
         
-        is_IsNot_ComboBox = new JComboBox<>();
+        _is_IsNot_ComboBox = new JComboBox<>();
         for (Is_IsNot_Enum e : Is_IsNot_Enum.values()) {
-            is_IsNot_ComboBox.addItem(e);
+            _is_IsNot_ComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_is_IsNot_ComboBox);
         
         
         _tabbedPaneOBlockState = new JTabbedPane();
@@ -100,6 +102,7 @@ public class ExpressionOBlockSwing extends AbstractDigitalExpressionSwing {
         for (OBlock.OBlockStatus e : OBlock.OBlockStatus.values()) {
             _stateComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
         
         _panelOBlockStateDirect.add(_stateComboBox);
         
@@ -131,7 +134,7 @@ public class ExpressionOBlockSwing extends AbstractDigitalExpressionSwing {
             _oblockLocalVariableTextField.setText(expression.getLocalVariable());
             _oblockFormulaTextField.setText(expression.getFormula());
             
-            is_IsNot_ComboBox.setSelectedItem(expression.get_Is_IsNot());
+            _is_IsNot_ComboBox.setSelectedItem(expression.get_Is_IsNot());
             
             switch (expression.getStateAddressing()) {
                 case Direct: _tabbedPaneOBlockState.setSelectedComponent(_panelOBlockStateDirect); break;
@@ -148,7 +151,7 @@ public class ExpressionOBlockSwing extends AbstractDigitalExpressionSwing {
         
         JComponent[] components = new JComponent[]{
             _tabbedPaneOBlock,
-            is_IsNot_ComboBox,
+            _is_IsNot_ComboBox,
             _tabbedPaneOBlockState};
         
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
@@ -250,7 +253,7 @@ public class ExpressionOBlockSwing extends AbstractDigitalExpressionSwing {
                 throw new IllegalArgumentException("_tabbedPaneOBlock has unknown selection");
             }
             
-            expression.set_Is_IsNot((Is_IsNot_Enum)is_IsNot_ComboBox.getSelectedItem());
+            expression.set_Is_IsNot((Is_IsNot_Enum)_is_IsNot_ComboBox.getSelectedItem());
             
             if (_tabbedPaneOBlockState.getSelectedComponent() == _panelOBlockStateDirect) {
                 expression.setStateAddressing(NamedBeanAddressing.Direct);

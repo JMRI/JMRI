@@ -61,7 +61,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     private final JTextField _systemName = new JTextField(20);
     private final JTextField _addUserName = new JTextField(20);
     
-    NamedBeanComboBox<LogixNG> _comboNameBox = null;
+    private NamedBeanComboBox<LogixNG> _nameComboBox = null;
     
     
     /**
@@ -97,8 +97,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     // ------------ Select LogixNG/ConditionalNG Variables ------------
     JPanel _selectLogixNGPanel = null;
     JPanel _selectConditionalNGPanel = null;
-    JComboBox<String> _selectLogixNGBox = new JComboBox<>();
-    JComboBox<String> _selectConditionalNGBox = new JComboBox<>();
+    private JComboBox<String> _selectLogixNGComboBox = new JComboBox<>();
+    private JComboBox<String> _selectConditionalNGComboBox = new JComboBox<>();
     TreeMap<String, String> _selectLogixNGMap = new TreeMap<>();
     ArrayList<String> _selectConditionalNGList = new ArrayList<>();
 

@@ -18,6 +18,7 @@ import jmri.jmrit.logixng.expressions.ExpressionEntryExit.EntryExitState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionEntryExit object with a Swing JPanel.
@@ -34,7 +35,7 @@ public class ExpressionEntryExitSwing extends AbstractDigitalExpressionSwing {
     private JTextField _entryExitLocalVariableTextField;
     private JTextField _entryExitFormulaTextField;
     
-    private JComboBox<Is_IsNot_Enum> is_IsNot_ComboBox;
+    private JComboBox<Is_IsNot_Enum> _is_IsNot_ComboBox;
     
     private JTabbedPane _tabbedPaneEntryExitState;
     private JComboBox<EntryExitState> _stateComboBox;
@@ -80,10 +81,11 @@ public class ExpressionEntryExitSwing extends AbstractDigitalExpressionSwing {
         _panelEntryExitFormula.add(_entryExitFormulaTextField);
         
         
-        is_IsNot_ComboBox = new JComboBox<>();
+        _is_IsNot_ComboBox = new JComboBox<>();
         for (Is_IsNot_Enum e : Is_IsNot_Enum.values()) {
-            is_IsNot_ComboBox.addItem(e);
+            _is_IsNot_ComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_is_IsNot_ComboBox);
         
         
         _tabbedPaneEntryExitState = new JTabbedPane();
@@ -101,6 +103,7 @@ public class ExpressionEntryExitSwing extends AbstractDigitalExpressionSwing {
         for (EntryExitState e : EntryExitState.values()) {
             _stateComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
         
         _panelEntryExitStateDirect.add(_stateComboBox);
         
@@ -132,7 +135,7 @@ public class ExpressionEntryExitSwing extends AbstractDigitalExpressionSwing {
             _entryExitLocalVariableTextField.setText(expression.getLocalVariable());
             _entryExitFormulaTextField.setText(expression.getFormula());
             
-            is_IsNot_ComboBox.setSelectedItem(expression.get_Is_IsNot());
+            _is_IsNot_ComboBox.setSelectedItem(expression.get_Is_IsNot());
             
             switch (expression.getStateAddressing()) {
                 case Direct: _tabbedPaneEntryExitState.setSelectedComponent(_panelEntryExitStateDirect); break;
@@ -149,7 +152,7 @@ public class ExpressionEntryExitSwing extends AbstractDigitalExpressionSwing {
         
         JComponent[] components = new JComponent[]{
             _tabbedPaneEntryExit,
-            is_IsNot_ComboBox,
+            _is_IsNot_ComboBox,
             _tabbedPaneEntryExitState};
         
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
@@ -251,7 +254,7 @@ public class ExpressionEntryExitSwing extends AbstractDigitalExpressionSwing {
                 throw new IllegalArgumentException("_tabbedPaneEntryExit has unknown selection");
             }
             
-            expression.set_Is_IsNot((Is_IsNot_Enum)is_IsNot_ComboBox.getSelectedItem());
+            expression.set_Is_IsNot((Is_IsNot_Enum)_is_IsNot_ComboBox.getSelectedItem());
             
             if (_tabbedPaneEntryExitState.getSelectedComponent() == _panelEntryExitStateDirect) {
                 expression.setStateAddressing(NamedBeanAddressing.Direct);

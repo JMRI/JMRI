@@ -13,6 +13,7 @@ import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.ShutdownComputer;
 import jmri.jmrit.logixng.actions.ShutdownComputer.Operation;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
@@ -30,6 +31,7 @@ public class ShutdownComputerSwing extends AbstractDigitalActionSwing {
         for (Operation e : Operation.values()) {
             _operationComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_operationComboBox);
         panel.add(_operationComboBox);
         if (action != null) {
             _operationComboBox.setSelectedItem(action.getOperation());

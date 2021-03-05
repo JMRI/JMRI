@@ -17,6 +17,7 @@ import jmri.jmrit.logixng.Module.ReturnValueType;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.actions.DigitalCallModule;
 import jmri.jmrit.logixng.tools.swing.CallModuleParameterTableModel;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ModuleDigitalAction object with a Swing JPanel.
@@ -53,6 +54,7 @@ public class DigitalCallModuleSwing extends AbstractDigitalActionSwing {
                 }
             }
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_moduleComboBox);
         beanPanel.add(_moduleComboBox);
         panel.add(beanPanel);
         

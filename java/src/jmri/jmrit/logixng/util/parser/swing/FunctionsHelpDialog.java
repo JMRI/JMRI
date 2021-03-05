@@ -12,6 +12,7 @@ import javax.swing.*;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.util.parser.Function;
 import jmri.jmrit.logixng.util.parser.FunctionManager;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Show a dialog that shows information about the functions for formula
@@ -62,6 +63,7 @@ public class FunctionsHelpDialog implements jmri.InstanceManagerAutoDefault {
         for (Module module : list) {
             _moduleComboBox.addItem(module);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_moduleComboBox);
         _moduleComboBox.addActionListener((ActionEvent e) -> {
             initFunctionsComboBox();
         });
@@ -191,6 +193,7 @@ public class FunctionsHelpDialog implements jmri.InstanceManagerAutoDefault {
             for (SortableFunction function : list) {
                 _functionComboBox.addItem(function);
             }
+            JComboBoxUtil.setupComboBoxMaxRows(_functionComboBox);
         }
     }
     

@@ -12,6 +12,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.MaleSocket.ErrorHandlingType;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 import jmri.jmrit.logixng.swing.AbstractSwingConfigurator;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Abstract class for SwingConfiguratorInterface
@@ -71,6 +72,8 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
                 errorHandlingComboBox.setSelectedItem(type);
             }
         }
+        JComboBoxUtil.setupComboBoxMaxRows(errorHandlingComboBox);
+        
         panel.add(errorHandlingComboBox, c);
         
         c.gridx = 0;

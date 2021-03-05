@@ -18,6 +18,7 @@ import jmri.jmrit.logixng.expressions.ExpressionSensor.SensorState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionSensor object with a Swing JPanel.
@@ -34,7 +35,7 @@ public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
     private JTextField _sensorLocalVariableTextField;
     private JTextField _sensorFormulaTextField;
     
-    private JComboBox<Is_IsNot_Enum> is_IsNot_ComboBox;
+    private JComboBox<Is_IsNot_Enum> _is_IsNot_ComboBox;
     
     private JTabbedPane _tabbedPaneSensorState;
     private JComboBox<SensorState> _stateComboBox;
@@ -80,10 +81,11 @@ public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
         _panelSensorFormula.add(_sensorFormulaTextField);
         
         
-        is_IsNot_ComboBox = new JComboBox<>();
+        _is_IsNot_ComboBox = new JComboBox<>();
         for (Is_IsNot_Enum e : Is_IsNot_Enum.values()) {
-            is_IsNot_ComboBox.addItem(e);
+            _is_IsNot_ComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_is_IsNot_ComboBox);
         
         
         _tabbedPaneSensorState = new JTabbedPane();
@@ -101,6 +103,7 @@ public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
         for (SensorState e : SensorState.values()) {
             _stateComboBox.addItem(e);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
         
         _panelSensorStateDirect.add(_stateComboBox);
         
@@ -132,7 +135,7 @@ public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
             _sensorLocalVariableTextField.setText(expression.getLocalVariable());
             _sensorFormulaTextField.setText(expression.getFormula());
             
-            is_IsNot_ComboBox.setSelectedItem(expression.get_Is_IsNot());
+            _is_IsNot_ComboBox.setSelectedItem(expression.get_Is_IsNot());
             
             switch (expression.getStateAddressing()) {
                 case Direct: _tabbedPaneSensorState.setSelectedComponent(_panelSensorStateDirect); break;
@@ -149,7 +152,7 @@ public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
         
         JComponent[] components = new JComponent[]{
             _tabbedPaneSensor,
-            is_IsNot_ComboBox,
+            _is_IsNot_ComboBox,
             _tabbedPaneSensorState};
         
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
@@ -251,7 +254,7 @@ public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
                 throw new IllegalArgumentException("_tabbedPaneSensor has unknown selection");
             }
             
-            expression.set_Is_IsNot((Is_IsNot_Enum)is_IsNot_ComboBox.getSelectedItem());
+            expression.set_Is_IsNot((Is_IsNot_Enum)_is_IsNot_ComboBox.getSelectedItem());
             
             if (_tabbedPaneSensorState.getSelectedComponent() == _panelSensorStateDirect) {
                 expression.setStateAddressing(NamedBeanAddressing.Direct);
