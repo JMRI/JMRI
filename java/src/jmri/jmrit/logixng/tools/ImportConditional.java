@@ -51,9 +51,22 @@ public class ImportConditional {
         }
         
         if (!_dryRun) {
-            _conditionalNG = InstanceManager.getDefault(
-                    jmri.jmrit.logixng.ConditionalNG_Manager.class)
-                    .createConditionalNG(sysName, userName);
+            ConditionalNG conditionalNG = null;
+            int counter = 0;
+            while ((conditionalNG == null) && counter < 100) {
+                String name = counter > 0 ? " - " + Integer.toString(counter) : "";
+                conditionalNG = InstanceManager.getDefault(jmri.jmrit.logixng.ConditionalNG_Manager.class)
+                        .createConditionalNG(userName + name);
+                counter++;
+            }
+            
+            if (conditionalNG == null) throw new RuntimeException("Cannot create new ConditionalNG with name: \"" + userName + "\"");
+            
+            _conditionalNG = conditionalNG;
+            
+//            _conditionalNG = InstanceManager.getDefault(
+//                    jmri.jmrit.logixng.ConditionalNG_Manager.class)
+//                    .createConditionalNG(sysName, userName);
         } else {
             _conditionalNG = null;
         }
@@ -125,17 +138,18 @@ public class ImportConditional {
         
         // Is the Conditional a RTXINITIALIZER?
         if ((conditionalVariables.size() == 1) && (conditionalVariables.get(0).getType().getItemType() == Conditional.ItemType.NONE)) {
-            TriggerOnce triggerOnceExpression =
+            expression =
                     new TriggerOnce(InstanceManager.getDefault(DigitalExpressionManager.class)
                             .getAutoSystemName(), null);
-            MaleSocket socket = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(triggerOnceExpression);
-            expression.getChild(0).connect(socket);
             
             True trueExpression =
                     new True(InstanceManager.getDefault(DigitalExpressionManager.class)
                             .getAutoSystemName(), null);
-            socket = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(trueExpression);
-            triggerOnceExpression.getChild(0).connect(socket);
+            if (!_dryRun) {
+                MaleSocket socket = InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .registerExpression(trueExpression);
+                expression.getChild(0).connect(socket);
+            }
         } else {
             buildExpression(expression, conditionalVariables);
         }

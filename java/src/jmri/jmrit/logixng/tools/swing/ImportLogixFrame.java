@@ -70,12 +70,15 @@ public final class ImportLogixFrame extends JmriJFrame {
         add(new JTitledSeparator(Bundle.getMessage("Import_WhatToDo")));
         _whatToDo_Nothing = new JRadioButton(Bundle.getMessage("Import_WhatToDo_Nothing"));
         _whatToDo_Disable = new JRadioButton(Bundle.getMessage("Import_WhatToDo_Disable"));
+        _whatToDo_Disable.setEnabled(false);
         _whatToDo_Delete = new JRadioButton(Bundle.getMessage("Import_WhatToDo_Delete"));
+        _whatToDo_Delete.setEnabled(false);
         ButtonGroup buttonGroup2 = new ButtonGroup();
         buttonGroup2.add(_whatToDo_Nothing);
         buttonGroup2.add(_whatToDo_Disable);
         buttonGroup2.add(_whatToDo_Delete);
-        _whatToDo_Disable.setSelected(true);
+        _whatToDo_Nothing.setSelected(true);
+//        _whatToDo_Disable.setSelected(true);
         contentPanel.add(_whatToDo_Nothing);
         contentPanel.add(_whatToDo_Disable);
         contentPanel.add(_whatToDo_Delete);
