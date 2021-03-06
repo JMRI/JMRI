@@ -616,7 +616,7 @@ public class XmlTest extends OperationsTestCase {
         super.setUp();
 
         Setup.setBuildAggressive(false);
-        Setup.setTrainIntoStagingCheckEnabled(true);
+        Setup.setStagingTrainCheckEnabled(true);
         Setup.setMaxTrainLength(1000);
         Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
     }

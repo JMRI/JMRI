@@ -5,7 +5,13 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.swing.JComboBox;
+
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.InstanceManagerAutoInitialize;
@@ -17,9 +23,6 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manages schedules.
@@ -308,7 +311,7 @@ public class ScheduleManager extends PropertyChangeSupport implements InstanceMa
         for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
             for (Track spur : location.getTracksByNameList(Track.SPUR)) {
                 if (spur.getScheduleId().equals(schedule.getId())) {
-                    LocationTrackPair ltp = new LocationTrackPair(location, spur);
+                    LocationTrackPair ltp = new LocationTrackPair(spur);
                     box.addItem(ltp);
                 }
             }
