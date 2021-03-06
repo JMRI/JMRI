@@ -171,7 +171,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
     
     /**
      * Perform configuration of the JTable as required by a specific TableAction.
-     * @param table 
+     * @param table The table to configure.
      */
     protected void configureTable(JTable table){
     }

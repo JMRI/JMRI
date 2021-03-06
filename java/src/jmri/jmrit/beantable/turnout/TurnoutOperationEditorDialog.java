@@ -29,6 +29,7 @@ public class TurnoutOperationEditorDialog extends JDialog {
     /**
      * Pop up a TurnoutOperationConfig Dialog for the turnout.
      *
+     * @param op TunoutOperation to edit.
      * @param t   turnout
      * @param box JComboBox that triggered the edit, currently unused.
      */
