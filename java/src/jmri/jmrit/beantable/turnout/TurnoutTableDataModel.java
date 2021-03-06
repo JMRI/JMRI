@@ -666,6 +666,9 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
 
     @Override
     public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @CheckForNull RowSorter<? extends TableModel> sorter) {
+        if (!(model instanceof TurnoutTableDataModel)){
+            throw new IllegalArgumentException("Model is not a TurnoutTableDataModel");
+        }
         return configureJTable(name, new TurnoutTableJTable((TurnoutTableDataModel)model), sorter);
     }
     
