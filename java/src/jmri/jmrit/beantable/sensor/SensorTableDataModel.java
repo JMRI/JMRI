@@ -439,7 +439,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
      * Renderer and Editor are identical, as the cell contents are not actually
      * edited, only used to toggle state using {@link #clickOn}.
      */
-    class ImageIconRenderer extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
+    static class ImageIconRenderer extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
 
         protected JLabel label;
         protected String rootPath = "resources/icons/misc/switchboard/"; // also used in display.switchboardEditor
