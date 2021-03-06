@@ -1029,6 +1029,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * <p>
      * The proper reminder dialog cannot be used since the Editor class cannot
      * be initialized by the preference load process.
+     * @param save save flag
      */
     protected void targetWindowClosing(boolean save) {
         //this.setVisible(false);   // doesn't remove the editor!
