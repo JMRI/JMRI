@@ -3727,7 +3727,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // create a problem, don't allow Boxcar into staging or NI
         l3staging1.deleteTypeName("Boxcar");
-        Setup.setTrainIntoStagingCheckEnabled(false); // allow train to carry "Boxcar"
+        Setup.setStagingTrainCheckEnabled(false); // allow train to carry "Boxcar"
         locationNorthIndustries.deleteTypeName("Boxcar");
 
         train1.reset();
@@ -5210,12 +5210,12 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car X10001 NOT assigned to train 2", null, c3.getTrain());
 
         // turn off staging check
-        Setup.setTrainIntoStagingCheckEnabled(false);
+        Setup.setStagingTrainCheckEnabled(false);
         train2.reset();
         Assert.assertTrue(new TrainBuilder().build(train2));
         Assert.assertTrue("Train 2 will now build ignoring BOXCAR", train2.isBuilt());
         Assert.assertNull("Car X10001 NOT assigned to train 2", c3.getTrain());
-        Setup.setTrainIntoStagingCheckEnabled(true);
+        Setup.setStagingTrainCheckEnabled(true);
 
         train2.deleteTypeName("BOXCAR");
         c3.setTypeName("Boxcar");
@@ -5299,7 +5299,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Train train1 = tmanager.newTrain("Test turn to staging");
         train1.setRoute(route);
 
-        Setup.setAllowReturnToStagingEnabled(false);
+        Setup.setStagingAllowReturnEnabled(false);
         // train should build, there's enough room at yard for 2 cars departing staging
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertTrue("Train 1 status", train1.isBuilt());
@@ -5327,7 +5327,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // there's also a global setting allowing trains to return to staging
         train1.setAllowReturnToStagingEnabled(false);
-        Setup.setAllowReturnToStagingEnabled(true);
+        Setup.setStagingAllowReturnEnabled(true);
 
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
@@ -5402,7 +5402,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // there's also a global setting allowing trains to return to staging
         train1.setAllowReturnToStagingEnabled(false);
-        Setup.setAllowReturnToStagingEnabled(true);
+        Setup.setStagingAllowReturnEnabled(true);
 
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
@@ -5416,7 +5416,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertNotEquals("car load is not", "E", c4.getLoadName());
 
         // now test that returning to staging isn't acceptable
-        Setup.setAllowReturnToStagingEnabled(false);
+        Setup.setStagingAllowReturnEnabled(false);
 
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
@@ -5878,7 +5878,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 471, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 528, in.lines().count());
         in.close();
 
         // TODO search and confirm limit message in build report
@@ -5996,7 +5996,7 @@ public class TrainBuilderTest extends OperationsTestCase {
     @Test
     public void testStagingPromptFrom() {
 
-        Setup.setPromptFromStagingEnabled(true);
+        Setup.setStagingPromptFromEnabled(true);
 
         JUnitOperationsUtil.initOperationsData();
 
@@ -6042,7 +6042,7 @@ public class TrainBuilderTest extends OperationsTestCase {
     @Test
     public void testStagingPromptTo() {
 
-        Setup.setPromptToStagingEnabled(true);
+        Setup.setStagingPromptToEnabled(true);
 
         JUnitOperationsUtil.initOperationsData();
 
@@ -6382,7 +6382,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertFalse(new TrainBuilder().build(train1));
 
         // now allow restrictive staging tracks
-        Setup.setTrainIntoStagingCheckEnabled(false);
+        Setup.setStagingTrainCheckEnabled(false);
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
 
@@ -6861,7 +6861,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         northEndStaging1.setAddCustomLoadsAnyStagingTrackEnabled(true);
 
         // now allow restrictive staging tracks
-        Setup.setTrainIntoStagingCheckEnabled(false);
+        Setup.setStagingTrainCheckEnabled(false);
 
         // train2 doesn't require caboose, so it will be handled like the other cars in
         // staging
@@ -14788,7 +14788,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         train.reset();
         // need to change how staging tracks are selected or build will fail
-        Setup.setTrainIntoStagingCheckEnabled(false);
+        Setup.setStagingTrainCheckEnabled(false);
         new TrainBuilder().build(train);
         Assert.assertTrue(train.isBuilt());
 
@@ -15511,7 +15511,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
         // increase test coverage
         Setup.setGenerateCsvManifestEnabled(true);
-        Setup.setAllowReturnToStagingEnabled(true);
+        Setup.setStagingAllowReturnEnabled(true);
         Setup.setPrintHeadersEnabled(true);
         // use all of the car attributes when creating Manifests
         Setup.setDropManifestMessageFormat(Setup.getCarAttributes());

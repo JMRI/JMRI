@@ -336,11 +336,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         if (ltp == null) {
             return "";
         }
-        String mode = Bundle.getMessage("Sequential");
-        if (ltp.getTrack().getScheduleMode() == Track.MATCH) {
-            mode = Bundle.getMessage("Match");
-        }
-        return mode;
+        return ltp.getTrack().getScheduleModeName();
     }
 
     private void removePropertyChangeSchedules() {
