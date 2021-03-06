@@ -27,7 +27,7 @@ public class EditorFrameOperator extends JFrameOperator {
         // if OK to here, close window
         this.requestClose();
 
-//         dismissClosingDialogs();
+        dismissClosingDialogs();
     }
 
     public void deleteViaFileMenuWithConfirmations(){
@@ -44,9 +44,9 @@ public class EditorFrameOperator extends JFrameOperator {
         // if it doesn't appear.
         Thread t = new Thread( () -> {
            try {
-              JDialogOperator d = new JDialogOperator(Bundle.getMessage("PanelHideTitle"));
+              JDialogOperator d = new JDialogOperator(Bundle.getMessage("ReminderTitle"));
               // Find the button that deletes the panel
-              JButtonOperator bo = new JButtonOperator(d,Bundle.getMessage("ButtonHide"));
+              JButtonOperator bo = new JButtonOperator(d,Bundle.getMessage("ButtonDeletePanel"));
 
               // Click button to delete panel and close window
               bo.push();
