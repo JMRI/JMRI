@@ -356,7 +356,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
          prefix has been set, therefore we can just return ""*/
         try {
             return _rosterAttribute.substring(11);
-        } catch (java.lang.StringIndexOutOfBoundsException e) {
+        } catch (java.lang.StringIndexOutOfBoundsException ignore) {
         }
         return null;
     }
