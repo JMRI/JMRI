@@ -138,7 +138,7 @@ public class DCCppPacketizer extends DCCppTrafficController {
     @Override
     protected void loadChars(jmri.jmrix.AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
         int i;
-        StringBuilder m = new StringBuilder("");
+        StringBuilder m = new StringBuilder();
         log.trace("loading characters from port");
 
         if (!(msg instanceof DCCppReply)) {
