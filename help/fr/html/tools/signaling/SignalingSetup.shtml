@@ -1,7 +1,9 @@
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR"
 "http://www.w3.org/TR/html4/strict.dtd">
 
 <html lang="fr">
+
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -85,7 +87,9 @@ Vous avez probablement quelques emplacements ( dans une section cach&#233;e ) o&
 physique mais dans le prototype r&#233;el il y aurait un - dans ce cas ajoutez un signal Virtuel du type appropri&#233; 
 en utilisant une connexion type Virtuelle dans le  <a href="SignalMasts.shtml">Tableau M&#226;t de Signalisation</a>.</li> 
 
- <li>Clic-droit sur chaque signal et cliquez "Logique M&#226;t de Signalisation --> D&#233;couvrir". JMRI va alors 
+
+ <li>Clic-droit sur chaque signal et cliquez "Logique M&#226; de Signalisation --> D&#233;couvrir". JMRI va alors 
+
  cr&#233;er par magie toute la logique n&#233;cessaire pour configurer l'aspect de ce signal, bas&#233; sur les 
  aiguillages et les aspects des signaux suivants sur tous les itin&#233;raires possibles.</li> 
      
