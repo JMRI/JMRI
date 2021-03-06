@@ -85,13 +85,6 @@ public class DCCppAdapter extends DCCppSerialPortController {
 
             opened = true;
 
-            log.info("Sleeping for 1.5 seconds to avoid Arduino restart");
-            try {
-                Thread.sleep(1500);
-            } catch (InterruptedException ignore) {
-            }
-
-
         } catch (NoSuchPortException p) {
 
             return handlePortNotFound(p, portName, log);
