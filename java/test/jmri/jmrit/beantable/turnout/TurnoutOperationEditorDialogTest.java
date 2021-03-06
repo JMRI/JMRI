@@ -15,7 +15,7 @@ public class TurnoutOperationEditorDialogTest {
     
     @Test
     public void testCTor() {
-        
+        Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
         Turnout testedTurnout = InstanceManager.getDefault(TurnoutManager.class).provide("IS1");
         TurnoutOperation proto = InstanceManager.getDefault(TurnoutOperationManager.class).getMatchingOperationAlways(testedTurnout);
         Assert.assertNotNull("proto exists",proto);
