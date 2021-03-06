@@ -458,6 +458,7 @@
       <xs:enumeration value="yellow"/>
       <xs:enumeration value="red"/>
       <xs:enumeration value="lunar"/>
+      <xs:enumeration value="blue"/>
       <xs:enumeration value="flashgreen"/>
       <xs:enumeration value="flashyellow"/>
       <xs:enumeration value="flashred"/>
