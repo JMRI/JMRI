@@ -1,89 +1,150 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR"
 "http://www.w3.org/TR/html4/strict.dtd">
 
 <html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright ($Author$) 2008 -->
-  <!-- $Id$ -->
-  <!-- translated by Herv&#233; Blorec 2013-09-19 -->
 
-  <title>JMRI: TAMs Master Control Support</title><!-- Style -->
+  <title>JMRI Hardware Support - Tams MasterControl</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  "text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp.shtml" -->
     <div id="mainContent">
-      <h1>JMRI: Support TAMs</h1>JMRI peut se connecter &agrave;
-      une centrale MasterControl TAMS en utilisant l'interface USB
-      int&eacute;gr&eacute;e et/ou l'interface s&eacute;rie.<br>
-      L'interface USB est livr&eacute; avec les pilotes pour
-      &eacute;muler un port s&eacute;rie.<br>
-      Le port USB fonctionne sous Linux et Windows - les deux ont
-      &eacute;t&eacute; test&eacute;s<br>
-      . Les connecteurs USB et interface s&eacute;rie peuvent
-      &ecirc;tre utilis&eacute;s en m&ecirc;me temps.<br>
 
-      <p>Le TAMS MC utilise le protocole P50X
-      (Uhlenbrock/M&auml;rklin).</p>
+      <h1>Support mat&#233;riel : Tams MasterControl</h1>
 
-      <p><b>Cette interface est encore en d&eacute;veloppement, si
-      vous rencontrez des probl&egrave;mes alors s'il vous
-      pla&icirc;t interroger le groupe d'utilisateurs Yahoo</b></p>
+      <p>La fonctionnalit&#233; suivante est disponible pour une
+      Unit&#233; Tams connect&#233;e au JMRI : 
+      <ol>
+      <li>Assistance &#224; la commande et &#224; la programmation des locomotives
+      <li>D&#233;finir et commander les aiguillages connect&#233;s via le DCC 
+      <li>D&#233;finir et obtenir un retour d'information des capteurs connect&#233;s au S88
+      <li>Surveiller les commandes Tams
+      <li>Envoyer les commandes Tams
+      <li>commande de l'alimentation
+      <li>Lire la base de donn&#233;es Tams Loco
+      <li>Lire la version du micrologiciel et le num&#233;ro de s&#233;rie de la centrale Tams
+      <li>Connexion au simulateur  tams
+      </ol>
+
+      <p>Le soutien &#224; Tams MC a &#233;t&#233; disponible pour la premi&#232;re fois pour la version <a href=
+      "https://jmri.org/releasenotes/jmri2.99.7.shtml">JMRI
+      2.99.7</a>.</p>
+
+      <a name="limitations" id="limitations"></a>
+      <h2>Limitations</h2>
+
+      <p>Limitations connues :
+      <ol>
+      <li>Une seule Tams MasterControl peut &#234;tre
+      connect&#233;e 
+      <li>R&#233;gulateurs : En raison de limitations techniques dans
+      l'ancien protocole P50, JMRI ne peut contr&#244;ler et afficher que 14 fonctions
+      et il ne peut saisir que les changements de statut provenant de
+      l'ext&#233;rieur de JMRI pour f1 &#224; f8. Apr&#232;s le le premier changement de R&#233;gulateur JMRI
+      les 14 fonctions s'afficheront &#224; nouveau correctement en
+      cas de divergence. La vitesse, la direction et la lumi&#232;re devraient &#234;tre pris en 
+      compte. Une am&#233;lioration du protocole P50 a &#233;t&#233; r&#233;alis&#233;e de mani&#232;re &#224; ce que
+      les fonctions f15 &#224; f24 peuvent &#233;galement &#234;tre correctement contr&#244;l&#233;es, mais cela
+      n'est pas encore impl&#233;ment&#233;e dans cette version. 
+      <li>Moniteur de commande  tams : Les messages binaires ne sont pas vraiment lisibles par l'homme
+      <li>Envoyer les commandes  Tams : Seul un ensemble limit&#233; de r&#233;ponses aux commandes est
+      interpr&#233;t&#233;e par JMRI, bien qu'elles soient toutes correctement affich&#233;es dans
+      le moniteur de commande
+      </ol>
+
+      <p><b>Cette interface sera encore am&#233;lior&#233;e, si vous  trouvez un probl&#232;me
+      veuillez alors le signaler au groupe des  utilisateurs de JMRI.
+      </b> <a name="connecting" id="connecting"></a></p>
+
+      <h2>Connexion</h2>
+
+      <h3>C&#226;blage</h3>
+
+      <p>JMRI peut se connecter &#224; une commande Tams MasterControl (MC)
+      Station utilisant l'interface USB et/ou s&#233;rie int&#233;gr&#233;e.<br>
+      Les interfaces USB et s&#233;rie peuvent &#234;tre utilis&#233;es en m&#234;me temps
+      .</p>
+
+      <p>L'interface USB est livr&#233;e avec des pilotes pour &#233;muler un port s&#233;rie
+      <br>
+      Le port USB fonctionne sous Linux et Windows - les deux ont &#233;t&#233;
+      test&#233;.</p>
+
+      <h3>R&#233;glages</h3>
+
+      <p>Le Tams MC utilise le protocole (Uhlenbrock/M&auml;rklin) P50X
+      .</p>
 
       <p>Pour configurer la connexion:</p>
 
       <ul>
-        <li>Ouvrez les "Pr&eacute;f&eacute;rences" JMRI dans le
-        menu "Edition"</li>
+        <li>Ouvrir les "Pr&#233;f&#233;rences" de JMRI dans le menu "Edition"</li>
 
-        <li>S&eacute;lectionnez "TAMS" comme fabricant, puis le
-        type de connexion,</li>
+        <li>S&#233;lectionnez "Tams" comme fabricant</li>
 
-        <li>S&eacute;lectionnez l'interface s&eacute;rie
-        appropri&eacute;.</li>
+        <li>S&#233;lectionnez l'interface s&#233;rie appropri&#233;e comme
+        Type de connexion</li>
 
-        <li>La vitesse de transmission configur&eacute;e dans la MC
-        sur le port USB est fix&eacute; &agrave; 57600 bps (8n1: 8
-        bits, sans parit&eacute;, 1 bit d'arr&ecirc;t).</li>
+        <li>Le d&#233;bit en bauds configur&#233; dans le MC sur le port USB est
+        fix&#233; &#224; 57600 bps (8n1 : 8bit, pas de parit&#233;, 1 stop bit)</li>
 
-        <li>Sur le port s&eacute;rie de la vitesse par
-        d&eacute;faut est fix&eacute;e &agrave; 2400 bps. Ceci peut
-        &ecirc;tre chang&eacute; sur le MC dans les &eacute;tapes
-        habituelles entre 1200 et 57600 bps</li>
+        <li>Sur le port s&#233;rie, la vitesse par d&#233;faut est fix&#233;e &#224; 2400
+        bps. Cela peut &#234;tre modifi&#233; sur le MC en suivant les &#233;tapes habituelles
+        entre 1200 et 57600 bps</li>
 
-        <li>cliquez sur "Enregistrer".</li>
+        <li>Cliquez sur "Sauvegarder" et red&#233;marrez JMRI.</li>
+      </ul><a name="documentation" id="documentation"></a>
+
+      <a name="tools" id="tools"></a>
+      <h2>Outils JMRI Tams</h2>
+
+      <ul>
+        <li>Le trafic du r&#233;seau Tams peut &#234;tre visualis&#233; avec le Moniteur Tams </li>
+
+        <li>Les messages peuvent &#234;tre envoy&#233;s aux appareils Tams avec <a href=
+        "../../../package/jmri/jmrix/tams/swing/packetgen/PacketGenFrame.shtml">
+        Envoyer des paquets Tams</a></li>
+
+        <li>Le <a href=
+        "../../../package/jmri/jmrix/tams/locodatabase/LocoDataFrame.shtml">
+          L'outil LocoData</a> vous permet de lire et d'&#233;crire donn&#233;es de la locomotive dans la 
+          Centrale Tams.</li>
       </ul>
 
-      <p>Le support pour les Aiguillages, R&eacute;gulateurs et
-      alimentation est disponible pour une unit&eacute; de TAM
-      connect&eacute;e JMRI.</p>
+      <h2>Documentation</h2>
 
-      <p>Consistant, capteurs et RailCom ne sont pas encore en
-      charge.</p>
+      <h3>Information sur les tiers</h3>
 
-      <p>Turnout, Programming, Throttle and power support is
-      available for a JMRI-connected TAMs unit.</p>
+      <p>Site web et infos principalement en allemand, manuels d'utilisation &#233;galement en
+      Anglais (et autres langues) &#224; t&#233;l&#233;charger</p>
 
-      <p>Couplage, Capteurs et RailCom ne sont pas
-      support&eacute;s.</p>
-
-      <p>Le Support pour TAMS MC &eacute;tait d'abord disponible
-      sur la version <a href=
-      "http://jmri.org/releasenotes/jmri2.99.7.shtml">JMRI
-      2.99.7</a>. <!--#include virtual="/Footer" --></p>
-    </div>
-  </div>
+      <p>La page Web de <a href="http://Tams-online.de/MasterControl">Tams
+       MasterControl</a></p>
+       <p>Traduction 2021-02-05</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
+
+  
+
+
+    

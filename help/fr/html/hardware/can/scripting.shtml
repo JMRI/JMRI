@@ -20,9 +20,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div id="mBody">
-      <!--#include virtual="Sidebar.shtml" -->
+
+<!--#include virtual="/Header.shtml" -->
+  <div class="nomenu" id="mBody">
+
     <div id="mainContent">
 
       <h1>Assistance mat&#233;riel : Script - CAN </h1>
@@ -81,11 +82,13 @@ jmri.jmrix.can.TrafficController.instance().addCanListener(MyCanListener())
 
       <h3>Aide JMRI</h3>
 
+
       <ul>
-        <li>Retour &#224; la Page d'Aide <a href="index.shtml">R&#233;seau CAN principal
+        <li>Retour &#224; la Page d'Aide principale <a href="index.shtml">R&#233;seau CAN 
        </a>.</li>
       </ul><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+
 </body>
 </html>

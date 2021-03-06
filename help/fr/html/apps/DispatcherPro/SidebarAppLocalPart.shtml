@@ -1,0 +1,12 @@
+<!-- SidebarAppLocalPart.shtml -->
+<!-- Ceci est la d&#233;finition de la partie locale de la barre lat&#233;rale pour les pages html/apps/DispatcherPro -->
+            
+            <dt><h3>DispatcherPro&trade;</h3></dt>
+            <dd>
+            <ul>
+               <li><a href="../../tools/signaling/index.shtml">Signalisation</a></li>
+               <li><a href="../../setup/index.shtml">D&#233;marrage JMRI </a></li>
+            </ul>
+            </dd>
+
+<!-- /SidebarAppLocalPart.shtml -->

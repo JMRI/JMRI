@@ -1,377 +1,732 @@
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!--  $Id$ -->
-<!-- UpDated by Blorec Herv&#233;  2016-08-09-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="fr">
-<head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+    <head>
+        <title>JMRI: Building with Apache NetBeans</title>
+        <meta name="author" content="Bob Jacobsen">
+        <meta name="author" content="B. Milhaupt">
+        <meta name="keywords" content="JMRI technical code Apache NetBeans">
+        <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+        <!-- are an arbitrary design pattern used by the update.pl script to -->
+        <!-- easily replace the common header/footer code for all the web pages -->
+        <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+        <!-- or change them to reflect your alternative logo -->
+        <!-- Style -->
+        <meta http-equiv="Content-Type" content=
+              "text/html; charset=iso-8859-1">
+        <link rel="stylesheet" type="text/css" href="/css/default.css"
+              media="screen">
+        <link rel="stylesheet" type="text/css" href="/css/print.css"
+              media="print">
+        <link rel="icon" href="/images/jmri.ico" type="image/png">
+        <link rel="home" title="Home" href="/">
+        <!-- /Style -->
+    </head>
 
-  <title>JMRI: Construire avec NetBeans</title>
-  <meta content="Bob Jacobsen" name="Author">
-  <meta name="keywords" content="JMRI technical code NetBeans">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
-</head>
-
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-
-	<div id="mainContent">
-	    <!-- -------- -->
-	    <!--  Teaser  --> <!-- Optional -->
-	    <!-- -------- -->
-
-
-	    <H1>JMRI: Construire avec NetBeans</H1>
- <ul>
-        <li><a href="#intro">Introduction</a>
-        <li><a href="#installing">Obtention et Installation de NetBeans</a>
-        <li><a href="#checkout">V&#233;rification sur le code</a>
-        <li><a href="#updating">Actualisation du code depuis Git</a>
-        <li><a href="#buildandrun">Construction et Ex&#233;cution de JMRI</a>
-        <li><a href="#jar">Faire un Fichier Jar</a>
-        <li><a href="#nsis">Faire un paquet deparution pour Windows en utilisant NSIS</a></li>
-        <li><a href="#xmltools">Utilisation des outils XML de NetBeans</a></li>
-        <li><a href="#findbugs">Ex&#233;cuter FindBugs</a></li>
-        <li><a href="#compileIndividualFile">NetBeans et la compilation de fichiers individuels</a></li>            
-        <li><a href="#patch">R&#233;alisation d'uin Fichier Patch</a>
-    </ul>
-<a href="#SeeAlso">Voir Aussi</a>    
-    <h2><a id="intro">Introduction</a></h2>
-    <p>NetBeans 8 (disponible sur le site<a href="http://www.netbeans.org"> www.netbeans.org</a>)
-     est une plate-forme id&#233;ale pour travailler avec JMRI.
-     Le code JMRI est configur&#233; pour travailler avec NetBeans avec presque pas de
-     configuration suppl&#233;mentaire.
-     (La description ci-dessous est exacte pour la version Windows de NetBeans 8.
-     NetBeans est <i>cens&#233;</i> &#234;tre identique sur toutes les plateformes, mais cela n'a pas
-     &#233;t&#233; v&#233;rifi&#233; pour toutes).</p>
-     NetBeans est un environnement tr&#232;s puissant de D&#233;veloppement Int&#233;gr&#233; (IDE),
-     qui peut rendre le travail avec le code JMRI assez facile. Mais cela prend un peu de temps
-     pour s'y habituer, et lire les tutoriels sur le site web depuis le
-    <a href="http://netbeans.org">site web NetBeans </a> 
-     sera utile.
-  </p>
-
-    <h2><a id="installing">Obtention et Installation de NetBeans</h2>
-    <ul>
-        <li> T&#233;l&#233;charger Netbeans 8 (La version Java SE est tr&#232;s bien) depuis 
-		       <a href="www.netbeans.org"> www.netbeans.org</a><br>
-				(Si vous n'avez pas le Kit de D&#233;veloppement Java 8 (JDK) install&#233; sur votre 
-				syst&#232;me, t&#233;l&#233;chargez un paquet JDK-NetBeans sur la	page de t&#233;l&#233;chargement de NetBeans, 
-				regarder aussi pour un lien similaire pour "JDK with NetBeans IDE Java SE bundle".</li>
-       <li> Ex&#233;cutez le paquet d'installation de netbeans</li>
-</ul>
-		<p>Beaucoup de distribution Linux ont NetBeans disponible dans leur r&#233;pertoire de logiciels
-	- Chercher NetBeans dans votre logith&#232;que (NetBeans 8.1 pour Ubuntu 16.04LTS).</p>
-  </ul>
-
-    <h3>Note Importante pour les utilisateurs de Windows</h3>
-
-		<p>En raison d'une gestion diff&#233;rente des caract&#232;res de Fin de Ligne	( <code>LF/CR LF</code> ) entre Windows et les autres syst&#232;mes - nomm&#233;ment Unix et OS X
-				( voir <a href="GitFAQ.shtml#lineends">Gestion des Fins de Lignes</a> ) - il est de la plus haute importance que tous les utilisateurs Windows
-		adoptent les r&#233;glages suivants pour leur environnement de d&#233;veloppement. Ceci est absolument n&#233;cessaire pour que Git ppuisse suivre les modifications individuelles sur les fichiers que vous soumettez. </P>
-		<p>Si vous ne suivez pas ces instructions, vous aurez ab&#238;mer les terminaisons de ligne dans les fichiers que vous soumettez, qui &#224; son tour va
-		rendre leur historique de r&#233;vision beaucoup plus difficile d'acc&#232;s. Dans ces conditions, les fichiers ne serons pas accept&#233;s lors d'un "pull request"</p>
-
-		<p>Comme premi&#232;re &#233;tape, comme JMRI a adopt&#233; <code>LF</code> comme convention de Fin de Ligne,
-				il est n&#233;cessaire de r&#233;gler le param&#232;tre <code>core.autocrlf</code> &#224; <code>true</code>
-				(voir <a href=https://help.github.com/articles/dealing-with-line-endings>"Dealing with line endings" on GitHub Help)</a> </p>
-    
-		<h4>Note Suppl&#233;mentaire Importante pour les utilisateurs de NetBean sous Windows</h4>
-
-		<p><em>En outre, si vous utilisez <b>NetBeans</b> sous Windows, vous <u>installez</u> le Plug-in
-        <a href="http://plugins.netbeans.org/plugin/46829/change-line-endings-on-save">"Change Line Endings on Save"</a>
-				avant d'utiliser Git via NetBeans.</em>
-		<p>Installez le plug-in pour &#234;tre s&#251;r que NetBeans maintienne
-			  proprement les caract&#232;res LF &#224; la fin des lignes de code-source.</p>
-		<p>Actuellement le plug-in est d&#233;j&#224; disponible dans la distribution NetBeans,
-			  donc allez <code>Tools > Plugins > Available Plugins</code>	
-			  et l&#224; s&#233;lectionnez <code>Change Line Endings on Save</code> et ensuite <code>Install</code>.</p>
-		<p>Vous pouvez v&#233;rifier que le plug-in est proprement install&#233; en allant &#224; <code>Tools > Plugins > Installed</code>,
-				o&#249 vous pouvez voir quelque chose comme ceci (les versions peuvent diff&#233;r&#233;es):</p>
-		<p><a href="images/NetbeansChangeLineEndingsPluginInstalled.png"><img src="images/NetbeansChangeLineEndingsPluginInstalled.png" align="center" height="102" width="224"></a></p>
-
-  	<p>Une fois le plug-in install&#233; et activ&#233;, il est n&#233;cessaire de le configurer pour le caract&#232;re de fin de ligne souhait&#233;, via l'onglet  <code>Tools > Options > Editor > Line Endings</code>.</p>   
-		<p>Pour JMRI, nous voulons utiliser le caract&#232;re de fin de ligne du style Unix, <code>LF</code>.</p> 
-		<p><a href="images/NetbeansChangeLineEndingsPluginConfiguration.png"><img src="images/NetbeansChangeLineEndingsPluginConfiguration.png" align="center" height="168" width="237"></a></p>
-
-		<p>Le plug-in peut &#234;tre activ&#233; depuis un bouton sur la barre d'outil
-		<a href="images/NetbeansChangeLineEndingsPluginEnabled.png"><img src="images/NetbeansChangeLineEndingsPluginEnabled.png" align="center" height="19" width="55"></a></p>
-
-		<p>Et le plug-in peut &#234;tre desactiv&#233; depuis ce bouton
-		<a href="images/NetbeansChangeLineEndingsPluginDisabled.png"><img src="images/NetbeansChangeLineEndingsPluginDisabled.png" align="center" height="19" width="55"></a></p>
-
-		<p>Quand un fichier est sauvegard&#233; ( en supposant que le plug-in est configur&#233; et est activ&#233; ) et ce fichier n'a pas les caract&#232;res de fin de ligne correspondant au type configur&#233; par le plug-in, le message suivant s'affiche.</p>
-		<p><a href="images/NetbeansChangeLineEndingsPluginPopUpWarmingUponSavingAFileWithImproperLineEndings.png"><img src="images/NetbeansChangeLineEndingsPluginPopUpWarmingUponSavingAFileWithImproperLineEndings.png" align="center" height="50" width="174"></a></p>
-
-		<p>Quand "OK" est s&#233;lectionn&#233;, le plug-in actualise les fins de lignes pour la forme configur&#233;e et sauvegarde le fichier. Si "CANCEL" est s&#233;lectionn&#233;, le fichier sera sauvegarder SANS changement des fins de lignes.</p> 
-
-    <h2><a id="gituse" name="gituse"></a>UTilisation de NetBeans avec le r&#233;pertoire Git du Code JMRI</h2>
-    
-      <p>Git fournit un r&#233;pertoire de Code JMRI par l'utilisation de l'outil Git.
-				 Pour plus d'information sur la fa&#231;on dont JMRI utilise Git, voir l'Aide JMRI dans
-				 <a href="getgitcode.shtml">Obtention du code via Git</a> et
-         <a href="GitFAQ.shtml">FAQ Git</a>.
-
-        <p>une fois configur&#233;, Netbeans fournit un support int&#233;gr&#233; 
-					 pour l'utilisation de Git
-
-        <p>Pour plus d'information sur Git et NetBeans , voir la 
-        <a href="https://netbeans.org/kb/docs/ide/git.html">page d'aide NetBeans Git</a>
-
-    <h3><a id="setup" name="setup"></a>V&#233;rification du Code</h3>
-      <li>Dans NetBeans, sous le menu "Team", s&#233;lectionnez Git, puis le Clone Repository.
-				Entrez l'URL du r&#233;pertoire  https://github.com/JMRI/JMRI.git repository depuis la 
-				<a href="https://github.com/JMRI/JMRI">page JMRI GitHub</a>
-				dans le formulaire NetBeans "Repository URL". Nous vous recommendons 
-				&#233;galement d'entrer vos identifiants GitHub, ainsi nous pourrons plus tard, 
-				vous attibuer vos contributions. Cliquze "Next".
-				Soyez s&#251;r que la case "master" est coch&#233;e pour r&#233;cup&#233;rer la version 
-				principale du Code. Cliquez "Next", et ensuite cliquez"Finish".
-				<p>
-				La r&#233;cup&#233;ration de la copie du code peut prendre du temps
-				( notez la barre de progression un bas &#224; droite).
-        
-     <h3>Soumissions Locales</h3>
-
-				Quand vous utilisez Git, l'op&#233;ration de" soumission" est localis&#233;e &#224; votre ordinateur.
-				Elle ne fait aucun changement dans le r&#233;pertoire principal JMRI.
-				<p>
-				Vous &#234;tes encourag&#233;s &#224; soumettre souvent, ainsi vos changements seront stock&#233;s en toute s&#233;curit&#233;
-				loin de votre r&#233;pertoire de travail et chaque petit changement est enregistr&#233; s&#233;par&#233;ment.
-
-    <h3><a id="updating" name="updating"></a>Mise &#224; jour du code depuis Git</h3>				
-    
-        <p>De temps en temps, vous voudrez mettre &#224; jour votre copie locale du code pour qu'elle
-					 corresponde au contenu de "HEAD" du r&#233;pertoire principal JMRi Git.
-					 Le processus basique est de r&#233;cup&#233;rer 
-					 la version la plus r&#233;cente depuis le r&#233;pertoire principal JMRI faire toute fusion qui 
-					 est n&#233;cessaire si vous avez apport&#233; des modifications conflictuelles, et ensuite et mettre le r&#233;sultat
-					 dans votre propre r&#233;pertoire GitHub.
-
-				<p>Pour le faire, utilisez le choix suivant du menu NetBeans: [Team] -&gt; [Remote] -&gt; [Pull from Upstream].
- 					 Demandez &#224; NetBeans de r&#233;cup&#233;rer depuis le "github" distant que vous avez d&#233;fini ci-dessus.
-
-			 	<p>Vous pouvez aussi actualiser un simple fichier ou le contenu d'un dossier, en 
-					 clic droit sur un &#233;l&#233;ments de la fen&#234;tre "Files", et ensuite en s&#233;lectionnant
-					 [Git] -&gt; [Remote] -&gt; [Pull from Upstream].</p>
-
-    <h3><a id="pullreq" name="pullreq"></a>Cr&#233;ation d'un Pull Request</h3>
-
-				<p>Un "Pull Request" ( PR ) est un moyen ais&#233; de rassembler tous vos changements, m&#234;me
-					 s'ils couvrent plusieurs fichiers, dans quelque chose que vous pouvez ensuite soumettre 
-					 pour inclusion dans le r&#233;pertoire principal JMRI.
-
-				<p>Premi&#232;rement, vous devez d&#233;finir un compte GitHub et votre 
-					 propre r&#233;pertoire.
-					<ul>
-					<li>Obtenez un <a href="https://github.com/join">compte GitHub</a> et connectez-vous
-          <li>Demandez &#224; GitHub de <a href="https://help.github.com/articles/fork-a-repo/">"fork" le r&#233;pertoire JMRI</a> 					 
-					dans votre propre r&#233;pertoire. Il y a une 
-					 <a href="https://help.github.com/articles/fork-a-repo/">bonne page d'aide</a>,
-					mais basiquement vous allez &#224; la 
-          <a href="https://github.com/JMRI/JMRI">page r&#233;pertoire JMRI</a>
-					et cliquez sur le bouton "Fork" en haut &#224; droite.
-
-					</ul>
-
-					Ceci vous donne votre propre r&#233;pertoire, avec lequel vous pouvez travailler librement
-
-					<p>
-					Ensuite, pousser les changements dans votre r&#233;pertoire. ( Tout le monde peut pousser dans son 
-					r&#233;pertoire personnel, mais tout le monde n'a pas la permission de modifier directement le
-					r&#233;pertoire principal JMRI; c'est pourquoi le "pull request" est n&#233;cessaire ). Pour le faire:
-					<ul>
-					<li>Utilisez le choix [Team] &gt; [Remote] &gt; [Push ...] dans le menu NetBeans. ( Si vous essayez d'utiliser 
-					le choix "Push to Upstream", il essaiera d'&#233;crire &#224; nouveau dans le r&#233;pertoire principal, et il &#233;chouera. )
-					<li>Cliquez sur "Specify Git Repository", et entrez l'URL pour votre r&#233;pertoire personnel, ex: https://github.com/yourname/JMRI.git
-					<li>Puis cliquez next.
-					<li>
-					NetBeans va v&#233;rifier avec le r&#233;pertoire et montrer une indication de branche pour pousser
-					ex: "master -&gt; master"
-					Cochez la case appropri&#233;e pour la branche sur laquelle vous voulez travailler.
-					<li>Cliquez Next et Finish.
-					NetBeans fera la pouss&#233;e r&#233;elle vers votre r&#233;pertoire. </ Url>
-					</ul>				
-					Vous pouvez r&#233;p&#233;ter ceci aussi souvent que vous le voulez quand vous travaillez sur vos changements.
-					&#192; chaque fois, les changements les plus r&#233;cents sont pouss&#233;s et rendu disponibles.
-					<P>Finalement, quand votre changement est pr&#234;t &#224; &#234;tre soumis, allez sur
-					le site web de GitHub pour
-					<a href="gitdeveloper.shtml#pull">Remplir et soumettre un "Pull Request"</a>
-					<p>&#201;ventuellement, quelqu'un regardera le "Pull Request" et d&#233;cidera de 
-					fusionner. Parfois, ils vont demander des modifications suppl&#233;mentaires. Dans ce
-					cas vous pouvez actualiser le pull request en poussant juste vos derniers changements
-					dans votre r&#233;pertoire, d'o&#249 ils sont automatiquement pr&#233;lev&#233;s.
-
-    <h2><a id="buildandrun">Construction et Ex&#233;cution de JMRI</a></h2>
-    <p>		Pour construire et ex&#233;cuter DecoderPRo, tout ce que vous avez &#224; faire est de s&#233;lectionner
-					"Run Project" ( JMRI ) dans le menu Run, ou cliquer l'ic&#242ne Run dans la barre d'outil.
-		
-		</p>
-
-		<ul>
-				<li>[Run] -> [Run Project (JMRI)] compilera et appellera DecoderPro 
-        <li>Vous pouvez choisir un autre objectif ( ex: PanelPro... ) en changeant
-								 [File]-&gt;[Project Properties (JMRI)]-&gt;[Build and Run]-&gt;[Run Project]
-
-		</ul>
-		<p>
-				Si vous voulez ex&#233;cuter le programme sous le d&#233;bogueur NetBeans,
-        premi&#232;rement configurez JMRI pour &#234;tre le projet principal via [Run]-&gt;[Set Main Project]-&gt;[JMRI] 
-				puis s&#233;lectionnez "Debug Main Project" dans le menu "Debug".
-		</p>
-
-     <h2> <a id="jar"> Cr&#233;ation d'un fichier Jar</a></h2>
-
-     La plupart du code dans une installation normale JMRI est dans un fichier appel&#233;
-     jmri.jar. Si vous voulez le remplacer par la version actualis&#233;e, vous avez
-     besoin de cr&#233;er un nouveau fichierjmri.jar &#224; partir de votre code modifi&#233;.
-     <P>
-     Pour ce faire,
-     ctrl-clic (ou un clic droit) sur le nom du projet "JMRI" dans la
-     Fen&#234;tre "Project". Cela ouvrira un menu contextuel, sur lequel vous
-     trouverez "Make Jar File". S&#233;lectionnez cela, et un nouveau fichier jmri.jar sera
-     produit dans le r&#233;pertoire principal du projet.
-     <p> Sinon, &#224; partir de la fen&#234;tre "Files", cliquez-droit sur le fichier build.xml,
-         et s&#233;lectionner "Run Target", puis "jar".</p>
-
-
-     <h2> <a id="nsis"> Faire un package de mise &#224; disposition pour Windows en utilisant NSIS</a></h2>
-
-     <p>Il est possible pour les utilisateurs de NetBeans de cr&#233;er un package de mise &#224; disposition sur
-         la plate-forme Windows. Cela n&#233;cessite l'installation du Nullsoft Scriptable
-         Install System (NSIS), qui peut &#234;tre t&#233;l&#233;charg&#233; &#224; partir du
-         <a href="http://sourceforge.net/projects/nsis"> site web du projet NSIS</a> sur SourceForge.</p>
-     <p>Une fois que NSIS est install&#233; sur l'ordinateur, il est n&#233;cessaire de cr&#233;er un fichier appel&#233;
-         local.properties dans le m&#234;me r&#233;pertoire que le fichier build.xml de JMRI. Ce fichier <i>n'est
-         pas</i> sp&#233;cifiquement enregistr&#233; via SVN, aussi les chemins d'installation de l'outil de 
-				 votre machine sp&#233;cifique ne <i>ne sont pas</i> archiv&#233;s dans SVN. Cr&#233;ez le fichier,
-         et ajouter une d&#233;finition de variable avec le chemin d'acc&#232;s dans le r&#233;pertoire qui
-         comprend l'ex&#233;cutable NSIS, tels que:</p>
-     <p style="font-family: monospace"> nsis.home = C:Program Files (x86)NSIS</p>
-     <p> ou</p>
-		 <p style="font-family: monospace"> nsis.home=/opt/nsis/nsis-2.46/</p>
-     <p>Si vous installez un outil "findbugs", vous d&#233;finirez &#233;galement findbugs.home
-         dans ce fichier. Vous pouvez &#233;galement d&#233;finir plusieurs autres machines sp&#233;cifiques et
-         les informations sp&#233;cifiques utilisateur, comme d&#233;crit dans divers endroits du
-         fichier build.xml.<p>
-     <p>Avec le paquet  NSIS install&#233; sur votre ordinateur, il est n&#233;cessaire de cr&#233;er un fichier appel&#233;
-				 local.properties dans le m&#234;me r&#233;pertoire que le fichier build.xml de JMRI. Ce fichier n'est
-				 sp&#233;cifiquement <i>pas</i> v&#233;rifi&#233; via SVN afin que vos chemins d'installation d'outils sp&#233;cifiques 
-				 &#224; la machine ne sont <i>pas</i> v&#233;rifi&#233; dans SVN. Cr&#233;er ce fichier,
-				 et ajouter une d&#233;finition de variable avec le chemin correcte pour le r&#233;pertoire qui
-				 inclus les ex&#233;cutables NSIS, tel que:</p>
-    <p style="font-family: monospace">nsis.home=C:/Program  Files (x86)/NSIS</p>
-    <p>ou</p>
-    <p style="font-family: monospace">nsis.home=/opt/nsis/nsis-2.46/</p> 
-		<p>Si vous installez un outil "findbugs", vous devez aussi d&#233;finir findbugs.home
-			  dans ce fichier. Vous pouvez aussi d&#233;finir plusieurs autres informations  machine-specific ou
-				user-specific, comme d&#233;crit dans des emplacements vari&#233;s dans le
-				fichier build.xml.</p>
-		<p>Avec le paquet NSIS install&#233; sur votre ordinateur, et build.xml proprement
-						modifi&#233;, le paquet Windows peut &#234;tre cr&#233;&#233; en ex&#233;cutant la
-						 cible ant "package-windows" dans build.xml.</p>
-
- 		<h2><a id="xmltools">Utilisation des outils NetBeans XML</a></h2>
-
-		NetBeans a de bons outils pour travailler avec des fichiers XML, y compris 
-		l'&#233;dition et leur validation. JMRI utilise XInclude pour inclure 
-		des "fragments" de fichiers XML dans d'autres via l'URL qui pointe 
-		sur le site web de JMRI: http://jmri.org/xml/decoders/types/foo.xml
-		Les programmes JMRI les convertissent au moment de l'ex&#233;cution en fichiers locaux de r&#233;f&#233;rences,
-		mais par d&#233;faut NetBeans ne sait pas faire cela.
-		<p>
-		Vous pouvez demander &#224; NetBeans comment g&#233;rer cela en ajoutant le
-		fichier xml/catalog.xml ( depuis la distribution JMRI pour NetBeans
-		dans les Outils --> DTDs et Sch&#233;mas XML. )
-		Ceci permet &#224; NetBeans d'utiliser votre sch&#233;ma local lors de la validation d'un document XML dans l'&#233;diteur.
-		Notez que ceci est un r&#233;glage global dans NetBeans, donc si vous travaillez sur de multiple branches JMRI,
-		quelque soit la branche que vous ajoutez au catalogue, ce sch&#233;ma de branche est celui qui est utilis&#233;.
-
-     <h2> <a id="findbugs"> Ex&#233;cution de FindBugs </a></h2>
-
-     <p> L'outil FindBugs est un outil d'analyse de code statique qui examine le code source Java
-         pour les questions de codage courantes. L'installation d'un outil FindBugs permet une t&#226;che ant
-         d&#233;finie dans le build.xml pour ex&#233;cuter l'analyse FindBugs &#224; travers l'ensemble du code source Java
-         dans JMRI.<p>
-     <p> Il semble que le fichier build.xml ne soit pas configur&#233; pour permettre au "plug-in" NetBeans
-         FindBugs de lancer l'analyse sur le code JMRI sauf sur un one-file-at-a-time-basis. 
-				 En tant que tel, il semble conseill&#233; de t&#233;l&#233;charger et d'installer 
-				 l'outil appropri&#233; FindBugs autonome pour votre syst&#232;me d'exploitation. Les t&#233;l&#233;chargements FindBugs
-          peuvent &#234;tre trouv&#233;s &#224; l'adresse du <a href="http://findbugs.sourceforge.net"> 
-         Site web FindBugs </a>.
-		<p> Une fois que vous avez l'outil FindBugs install&#233;, vous devez fournir un chemin vers le
-         r&#233;pertoire contenant l'ex&#233;cutable pour une utilisation par le fichier ant build.xml. 
-         Si n&#233;cessaire, cr&#233;ez le fichier local.properties dans le m&#234;me r&#233;pertoire que
-         le fichier JMRI build.xml. Dans le fichier local.properties, ajouter la variable
-         findbugs.home avec un chemin vers l'ex&#233;cutable findbugs, tels que: </p>
-		<p style="font-family: monospace"> findbugs.home=C:/findbugs-1.3.8</p>
-		<p>ou</p>
-		<p style="font-family: monospace"> findbugs.home =/opt/findbugs-1.3.8</p>
-    <p> Pour ex&#233;cuter l'outil FindBugs sur le code JMRI,ex&#233;cutez la cible ant "findbugs"
-        qui est d&#233;fini dans build.xml. Dans NetBeans cela peut &#234;tre accompli 
-				par un clic droit sur le fichier build.xml  dans le volet "Files" et " Run"ing La cible "Findbugs". 
-				Quand FindBugs est termin&#233;, la fen&#234;tre de sortie NetBeans va montrer 
-				le chemin vers un fichier de rapport au format HTML. Ouvrez ce fichier avec un navigateur 
-				pour examiner les r&#233;sultats FindBugs .<p>
-
-
-		<h2><a id="compileIndividualFile"> NetBeans et la compilation des fichiers individuels</a></h2>
-        <p> L'IDE NetBeans affiche des ic&#244;nes sur le c&#244;t&#233; de chaque objet dans la fen&#234;tre Projects ,
-            et sur le c&#244;t&#233; de chaque fichier dans la fen&#234;tre Files. Ces ic&#244;nes peuvent refl&#233;ter l'
-            &#233;tat de chaque &#233;l&#233;ment, y compris le changement local et le v&#233;ritable statut d'ach&#232;vement.</p>
-        <p> A cette &#233;poque, les fichiers ( dans project's nbproject/directory) qui
-            contr&#244;le la fa&#231;on dont NetBeans effectue la compilation des fichiers individuels, ne refl&#232;tent pas 
-						correctement toutes les exigences du projet JMRI. <i>Tant que ces fichiers ne 
-            sont correctement mis &#224; jour, les ic&#244;nes d'erreur vont persister dans le projet JMRI.</i>
-            Ces ic&#244;nes d'erreur <i>n'affectent pas</i> la capacit&#233; de NetBeans de compiler les
-            fichiers sources en utilisant les t&#226;ches Ant d&#233;finies dans le fichier build.xml du projet.</p>
-        <p> Construire le fichier JMRI.jar, et l'ex&#233;cution d'un outil JMRI de l'int&#233;rieur
-            NetBeans est g&#233;n&#233;ralement effectu&#233;e via des t&#226;ches Ant, qui sont d&#233;finies dans le fichier 
-						de projet build.xml. Les d&#233;veloppeurs de JMRI ont g&#233;n&#233;ralement gard&#233; ce dossier &#224; jour, ainsi
-             la cr&#233;ation du fichier JMRI.jar et l'ex&#233;cution d'un outil JMRI au sein de NetBeans
-            g&#233;n&#233;ralement ne souffriront pas des lacunes de l'information de configuration
-            trouv&#233;es dans les fichiers dans le nbproject/r&#233;pertoire du projet.</p> 
-       
-	 <h1> <a id="SeeAlso"> Voir aussi </a></h1>
-        <p> <a href="http://netbeans.org/"> Le site Web d'Environnement de d&#233;veloppement int&#233;gr&#233; NetBeans </a></p>
-        <p> <a href="http://subversion.apache.org/"> Le site Web du projet Subversion de Apache.org</a></p>
-        <p> <a href="http://sourceforge.net/projects/nsis"> Le site web du projet NSIS</a></p>
-        <p> <a href="http://findbugs.sourceforge.net"> Le site webSource Forge FindBugs</a></p>
-
-		<h2><a id="patch">Cr&#233;ation d'un fichier patch</a></h2>
-    
-			<p> Un "diff patch file" est un moyen facile de rassembler toutes vos modifications, m&#234;me
-	    si elles s'&#233;tendent sur plusieurs dossiers, en un seul fichier.
-			&#199;a peut &#234;tre utilis&#233; par exemple pour soumettre un Patch.
-			Maintenant que nous utilisons Git et GitHub, cependant, nous pr&#233;f&#233;rons que vous
-			contribuez au changements de code par un
-			<a href="gitdeveloper.shtml">GitHub Pull Requests</a>.
-			</p>
-
-			<p>
-    	Pour cr&#233;er le fichier "patch diff" <strong>[deprecated]</strong>( obsolète ):
-     <ul>
- 
-     <li> Depuis le menu [Team], s&#233;lectionnez "Export Diff Patch..."
-     <li> Un explorateur de fichiers s'ouvre, saisissez un nouveau nom de fichier &#224; 
-         l'endroit de votre choix et cliquez sur "Save" ou "Open",
-         selon ce que la bo&#238;te de dialogue affiche.
-     <li> Apr&#232;s la fin du calcul des diffs, le fichier que vous avez s&#233;lectionn&#233; contiendra
-         les patchs, avec un en-t&#234;te de l'information.
-    </ul>
-
-  <!--#include virtual="/Footer" -->
-
-  </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
-</body>
+    <body>
+        <!--#include virtual="/Header.shtml" -->
+        <div id="mBody">
+            <!--#include virtual="Sidebar.shtml" -->
+            <div id="mainContent">
+            <!-- this was created by running the command `asciidoctorj -a toc NetBeans.adoc`
+                and copying the contents of body element in the resultant NetBeans.html file -->
+            <div id="header">
+            <h1>Code JMRI : Construction avec Apache NetBeans</h1>
+            <div id="toc" class="toc">
+            <div id="toctitle">Table des mati&#232;res</div>
+            <ul class="sectlevel1">
+            <li><a href="#_introduction">Introduction</a></li>
+            <li><a href="#_installation">Installation</a>
+            <ul class="sectlevel2">
+            <li><a href="#_linux">Linux</a></li>
+            <li><a href="#_macos">macOS</a></li>
+            <li><a href="#_windows">Windows</a></li>
+            </ul>
+            </li>
+            <li><a href="#_using_apache_netbeans_with_jmris_git_code_repository">Utilisation d' Apache NetBeans avec le r&#233;pertoire JMRI&#8217;s Git Code </a>
+            <ul class="sectlevel2">
+            <li><a href="#_checking_out_code">Contr&#244;le du code</a></li>
+            <li><a href="#_local_commits">Local Commits</a></li>
+            <li><a href="#_updating_the_code_from_git">Mise &#224; jour du code de Git</a></li>
+            <li><a href="#_creating_a_pull_request">Cr&#233;er une demande d'extraction</a></li>
+            </ul>
+            </li>
+            <li><a href="#_building_and_running_jmri">Construire et faire fonctionner JMRI</a>
+            <ul class="sectlevel2">
+            <li><a href="#_prime">Prime</a></li>
+            <li><a href="#_build">Construire</a></li>
+            <li><a href="#_run_an_application">Ex&#233;cuter une application</a></li>
+            <li><a href="#_debug_an_application">D&#233;bugger une application</a></li>
+            <li><a href="#_profil_une_application">Profil d'une application</a></li>
+            </ul>
+            </li>
+            <li><a href="#_making_a_jar_file">Cr&#233;ation d'un fichier JAR e</a></li>
+            <li><a href="#_making_a_release_package_for_windows_using_nsis">Fabrication d'un paquet de lib&#233;ration pour Windows &#224; l'aide de NSIS</a></li>
+            <li><a href="#_using_apache_netbeans_xml_tools">Utilisation des outils XML Apache NetBeans</a></li>
+            <li><a href="#_running_spotbugs">Ex&#233;cution de SpotBugs</a></li>
+            <li><a href="#_loading_a_specific_branch_from_github">Charger une branche sp&#233;cifique depuis GitHub</a></li>
+            </ul>
+            </div>
+            </div>
+            <div id="content">
+            <div class="sect1">
+            <h2><a id="introduction" name="introduction"></a>Introduction</h2>
+            <div class="sectionbody">
+            <div class="paragraph">
+            <p><a href="https://netbeans.apache.org">Apache NetBeans</a> constitue une excellente plateforme pour travailler avec JMRI. Le code JMRI est configur&#233; pour fonctionner avec Apache NetBeans sans pratiquement aucune configuration suppl&#233;mentaire.
+            </div>
+            <div class="paragraph">
+            <p>Apache NetBeans est un environnement de d&#233;veloppement int&#233;gr&#233; (IDE) tr&#232;s puissant, qui peut rendre le travail avec le code JMRI assez facile. Mais il faut un peu de temps pour s'y habituer, et la lecture des <a href="https://netbeans.apache.org/help">tutoriels</a> sera utile.</p>
+            </div>
+            </div>
+            </div>
+            <div class="sect1">
+            <h2><a id="installation" name="installation"></a>Installation</h2>
+            <div class="sectionbody">
+            <div class="olist arabic">
+            <ol class="arabic">
+            <li>
+            <p>T&#233;l&#233;chargez et installez un Java 8 ou plus r&#233;cent <a href="https://adoptopenjdk.net">Java Development Kit (JDK)</a> (Il est recommand&#233; d'utiliser un gestionnaire de paquets si possible pour garantir que les mises &#224; jour de s&#233;curit&#233; peuvent &#234;tre install&#233;es automatiquement)</p>
+            </li>
+            <li>
+            <p>T&#233;l&#233;chargez Apache NetBeans depuis <a href="http://netbeans.apache.org/download">netbeans.apache.org</a> (Il est recommand&#233; d'utiliser un gestionnaire de paquets si possible pour s'assurer que les mises &#224; jour de s&#233;curit&#233; peuvent &#234;tre install&#233;es automatiquement)</p>
+            </li>
+            <li>
+            <p>Ex&#233;cuter l'installateur Apache NetBeans</p>
+            </li>
+            </ol>
+            </div>
+            <div class="sect2">
+            <h3><a id="linux" name="linux"></a>Linux</h3>
+            <div class="paragraph">
+            <p>Apache NetBeans peut &#233;galement &#234;tre install&#233; sous forme de <a href="https://snapcraft.io/netbeans">paquetsnap</a> pour Linux.</p>
+            </div>
+            </div>
+            <div class="sect2">
+            <h3><a id="macos" name="macos"></a>macOS</h3>
+            <div class="paragraph">
+            <p>Apache NetBeans et le JDK Java 8 peuvent &#234;tre install&#233;s en utilisant <a href="https://brew.io">Homebrew</a> &#224; partir du terminal:</p>
+            </div>
+            <div class="listingblock">
+            <div class="content">
+            <pre>brew cask install adoptopenjdk8 netbeans</pre>
+            </div>
+            </div>
+            </div>
+            <div class="sect2">
+            <h3><a id="windows" name="windows"></a>Windows</h3>
+            <div class="admonitionblock note">
+            <table>
+            <tr>
+            <td class="icon">
+            <div class="title">Note</div>
+            </td>
+            <td class="content">
+            <div class="paragraph">
+            <p>D&#251; &#224; un traitement diff&#233;rent des caract&#232;res de fin de ligne (<code>LF/CR LF</code>)
+            entre Windows et d'autres syst&#232;mes - &#224; savoir Unix et OS X (voir
+            <a href="GitFAQ.shtml#lineends">Retour Fin de ligne</a>) - il est de la plus haute importance
+            que tous les utilisateurs de Windows adoptent les param&#232;tres suivants pour leur
+            environnement de d&#233;veloppement. Cela est absolument n&#233;cessaire pour que Git puisse
+            suivre les changements individuels sur les fichiers que vous commettez.</p>
+            </div>
+            <div class="paragraph">
+            <p>Si vous ne suivez pas ces instructions, vous risquez de fausser les fins de ligne
+            dans les fichiers que vous commettez, qui feront &#224; leur tour que l'historique de leur r&#233;vision sera
+            beaucoup plus difficile d'acc&#232;s. Les fichiers dans cet &#233;tat ne seront pas accept&#233;s comme
+            les demandes d'extraction.</p>
+            </div>
+            <div class="paragraph">
+            <p>Dans un premier temps, comme JMRI a adopt&#233; <code>LF</code> comme convention pour Fin de Ligne
+            , il est n&#233;cessaire de d&#233;finir le param&#232;tre <code>core.autocrlf</code> &#224; <code>true</code>.
+            (voir <a href="https://help.github.com/articles/dealing-with-line-endings">"Traitement 
+            des fins de lignes" sur GitHub Help)</a></p>
+            </div>
+            </td>
+            </tr>
+            </table>
+            </div>
+            <div class="admonitionblock important">
+            <table>
+            <tr>
+            <td class="icon">
+            <div class="title">Important</div>
+            </td>
+            <td class="content">
+            <div class="paragraph">
+            <p>Vous <strong>devez</strong> installez et configurez le <a href="http://plugins.netbeans.org/plugin/46829/change-line-endings-on-save">plugin "Change Line Endings on Save" </a> avant d'utiliser Git via Apache NetBeans.</p>
+            </div>
+            </td>
+            </tr>
+            </table>
+            </div>
+            <div class="sect3">
+            <h4>Plugin <a id="change_line_endings_on_save_plugin" name="change_line_endings_on_save_plugin"></a><em>Change Line Endings on Save</em> </h4>
+            <div class="sect4">
+            <h5><a id="installation_2" name="installation_2"></a>Installation</h5>
+            <div class="olist arabic">
+            <ol class="arabic">
+            <li>
+            <p>Choisissez <span class="menuseq"><b class="menu">Outils</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Plugins</b></span></p>
+            </li>
+            <li>
+            <p>Clic <b class="button">R&#233;glages</b></p>R&#233;glages
+            </li>
+            <li>
+            <p>S&#233;lectionner <em>Netbeans Plugin Portal</em> et s'assurer qu'il est actif</p>
+            </li>
+            <li>
+            <p>Clic <b class="button">Plugins disponibles</b></p>
+            </li>
+            <li>
+            <p>S&#233;lectionner <em>Changer la fin des lignes sur Save</em></p>
+            </li>
+            <li>
+            <p>Clic <b class="button">Install</b></p>
+            </li>
+            <li>
+            <p>Suivre les invites pour terminer l'installation</p>
+            </li>
+            <li>
+            <p>Red&#233;marrez Apache NetBeans lorsque vous y &#234;tes invit&#233;</p>
+            </li>
+            </ol>
+            </div>
+            </div>
+            </div>
+            <div class="sect3">
+            <h4><a id="configuration" name="configuration"></a>Configuration</h4>
+            <div class="paragraph">
+            <p><a href="images/NetbeansChangeLineEndingsPluginConfiguration.png"><span class="image related right"><img src="images/NetbeansChangeLineEndingsPluginConfiguration.png" alt="Fen&#234;tre de configuration" width="237" height="168"></span></a></p>
+            </div>
+            <div class="olist arabic">
+            <ol class="arabic">
+            <li>
+            <p>Choisissez <span class="menuseq"><b class="menu">Outils</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Options</b></span></p>
+            </li>
+            <li>
+            <p>Cliquez <b class="button">Editeur</b></p>.
+            </li>
+            <li>
+            <p>Clic <b class="button">Fin de ligne</b></p>
+            </li>
+            <li>
+            <p>S&#233;lectionner <em>Autoriser l'ajustement des fins de ligne</em></p>
+            </li>
+            <li>
+            <p>Choisissez <em>Unix (LF)</em> dans le menu d&#233;roulant</p>
+            </li>
+            <li>
+            <p>Pour &#234;tre invit&#233; avant d'ajuster les fins de ligne, s&#233;lectionnez <em>Show confirmation dialog before adjusting the line endings</em></p>
+            </li>
+            <li>
+            <p>Cliquez <b class="button">OK</b>
+            Vous pouvez v&#233;rifier que le plug-in est correctement install&#233; en allant sur
+            <code>Tools &gt ; Plugins &gt ; Installed</code>, oú vous devez
+            voir quelque chose comme ceci (les versions peuvent diff&#233;rer):</p>
+            </ol>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            <div class="sect1">
+            <h2><a id="using_apache_netbeans_with_jmris_git_code_repository" name="using_apache_netbeans_with_jmris_git_code_repository"></a>Using Apache NetBeans with JMRI&#8217;s Git Code Repository</h2>
+            <div class="sectionbody">
+            <div class="paragraph">
+            <p>GitHub fournit le d&#233;p&#244;t de code JMRI&#8217s en utilisant l'outil Git. Pour avoir plus
+            d' informations sur la fa&#231;on dont  JMRI utilise Git, voir l'aide de  JMRI sur
+            <a href="getgitcode.shtml">Avoir le code via Git</a> et
+            <a href="GitFAQ.shtml">Git FAQ</a>.</p>
+            </div>
+            <div class="paragraph">
+            <p>Une fois configur&#233;, Apache NetBeans fournit un support int&#233;gr&#233; pour l'utilisation de Git.</p>
+            </div>
+            <div class="paragraph">
+            <p>Pour plus d'informations sur Git et Apache NetBeans, voir la
+            <a href="https://netbeans.org/kb/docs/ide/git.html">Page d'aide de NetBeans Git</a></p>
+            </div>
+            <div class="sect2">
+            <h3><a id="checking_out_code" name="checking_out_code"></a>V&#233;rification du code</h3>
+            <div class="paragraph">
+            <p>Dans Apache NetBeans, dans le menu "Team", s&#233;lectionnez Git, puis Clone
+            D&#233;p&#244;t. Entrez l'URL du d&#233;p&#244;t <a href="https://github.com/JMRI/JMRI.git" class="bare">https://github.com/JMRI/JMRI.git</a>du d&#233;p&#244;t
+            de la page <a href="https://github.com/JMRI/JMRI">JMRI GitHub</a> sur le formulaire Apache
+            NetBeans sous "Repository URL". Nous vous recommandons d'entrer &#233;galement
+            votre nom d'utilisateur et votre mot de passe GitHub sur le formulaire, afin que nous puissions vous attribuer
+            des contributions plus tard. Cliquez sur "Suivant". Assurez-vous que le "master*"
+            est coch&#233;e pour faire appara&#238;tre la version principale du code. Cliquez sur "Suivant",
+            et cliquez ensuite sur "Terminer".</p>
+            </div>
+            <div class="paragraph">
+            <p>Il faudra beaucoup de temps pour obtenir une copie du code (notez la
+            barre de progression en bas &#224; droite), mais ensuite vous &#234;tes pr&#234;t &#224; commencer.</p>
+            </div>
+            </div>
+            <div class="sect2">
+            <h3><a id="local_commits" name="local_commits"></a>Local Commits</h3>
+            <div class="paragraph">
+            <p>Lorsque vous utilisez Git, l'op&#233;ration "commit" est locale &#224; votre ordinateur. Il
+            n&#8217apporte aucune modification au d&#233;p&#244;t principal de l&#8217JMRI.</p>
+            </div>
+            <div class="paragraph">
+            <p>Vous &#234;tes encourag&#233;s &#224; committer souvent, afin que vos changements soient 
+            stock&#233;s en s&#233;curit&#233; loin de votre r&#233;pertoire de travail. Avoir chaque petite modification
+            enregistr&#233; s&#233;par&#233;ment peut &#234;tre incroyablement utile plus tard si vous devez
+            trouver o&#249; un probl&#232;me a &#233;t&#233; introduit.</p>
+            </div>
+            </div>
+            <div class="sect2">
+            <h3><a id="updating_the_code_from_git" name="updating_the_code_from_git"></a>Mise &#224; jour du code &#224; partir de Git</h3>
+            <div class="paragraph">
+            <p> De temps en temps, vous devez mettre &#224; jour votre copie locale du code pour
+            correspondent &#224; la "T&#202;TE" actuelle du contenu principal du d&#233;p&#244;t Git de JMRI.
+            Le processus de base consiste &#224; extraire les copies les plus r&#233;centes de JMRI
+            de faire les fusions n&#233;cessaires si vous avez r&#233;solus des conflits
+            et ensuite de l'ajouter &#224; votre propre d&#233;p&#244;t GitHub.
+            </div>
+            <div class="paragraph">
+            <P></P>Pour ce faire, utilisez les NetBeans Apache [Team] &#8594; [Remote] &#8594; [Pull depuis
+            Choix de menu [Upstream]. Dites &#224; Apache NetBeans de se d&#233;connecter du "github"
+            distant que vous avez d&#233;fini ci-dessus.</p>
+            </div>
+            <div class="paragraph">
+            <p>Vous pouvez &#233;galement mettre &#224; jour un seul fichier ou le contenu d'un dossier, en
+            en faisant un clic droit sur un &#233;l&#233;ment dans la fen&#234;tre "Fichiers", puis en s&#233;lectionnant [Git] &#8594;
+            [Remote] &#8594; [Pull from Upstream].</p>
+            </div>
+            </div>
+            <div class="sect2">
+            <h3><a id="creating_a_pull_request" name="creating_a_pull_request"></a>Cr&#233;er une demande d'extraction</h3>
+            <div class="paragraph">
+            <p>Une "demande de retrait" (RP) est un moyen facile de rassembler tous vos changements, m&#234;me
+            s'ils couvrent plusieurs dossiers, en quelque chose que vous pouvez ensuite soumettre &#224;
+            l'inclusion dans le d&#233;p&#244;t principal de JMRI.</p>
+            </div>
+            <div class="paragraph">
+            <p>Tout d'abord, vous devez cr&#233;er un compte GitHub et votre propre d&#233;p&#244;t.
+            </div>
+            <div class="ulist">
+            <ul>
+            <li>
+            <p> Obtenez un <a href="https://github.com/join">compte GitHub</a> et connectez-vous</p>.
+            </li>
+            <li>
+            <p>Demandez &#224; GitHub un <a href="https://help.github.com/articles/fork-a-repo/">"fork"
+            JMRI&#8217;s repository</a> dans un des v&#244;tres. Il y a un
+            <a href="https://help.github.com/articles/fork-a-repo/">bonne page d'aide</a>,En gros, 
+            vous allez sur la page du <a href="https://github.com/JMRI/JMRI">d&#233;p&#244;t JMRI
+            </a> et cliquez sur le bouton "fork" en haut &#224; droite.</p>
+            </li>
+            </ul>
+            </div>
+            <div class="paragraph">
+            <p>Cela vous donne votre propre d&#233;p&#244;t, avec lequel vous pouvez ensuite travailler librement.</p>
+            </div>
+            <div class="paragraph">
+            <p>Ensuite, poussez les changements jusqu'&#224; votre d&#233;p&#244;t. (N'importe qui peut pousser vers son propre r&#233;pertoire
+            mais la plupart des gens n&#8217ont pas la permission de modifier directement
+            le d&#233;p&#244;t principal JMRI ; c&#8217est pourquoi la demande de retrait est n&#233;cessaire) Pour faire
+            ceci:</p>
+            </div>
+            <div class="ulist">
+            <ul>
+            <li>
+            <p>Utilisez le choix de menu Apache NetBeans [Team] ; [Remote] ; [Push &#8230 ; &#8203 ;].
+            (Si vous essayez d'utiliser le choix "Push to Upstream", il essaiera d'&#233;crire
+            sur le d&#233;p&#244;t principal, et &#233;chouera.)</p>
+            </li>
+            <li>
+            <p>Cliquez sur Specify Git Repository, et entrez l'URL pour votre propre
+            d&#233;p&#244;t, par exemple <a href="https://github.com/yourname/JMRI.git" class="bare">https://github.com/yourname/JMRI.git</a></p>
+            </li>
+            <li>
+            <p>Cliquez ensuite sur suivant.</p>
+            </li>
+            <li>
+            <p>Apache NetBeans v&#233;rifiera avec le r&#233;f&#233;rentiel, et affichera une indication
+            de branches &#224; pousser, par exemple "master &#8594; master" Cochez la case appropri&#233;e pour
+            pour la branche sur laquelle vous avez travaill&#233;.
+            </li>
+            <li>
+            <p>Cliquez sur Suivant et Terminer. Netbeans fera la pouss&#233;e r&#233;elle vers votre
+            d&#233;p&#244;t.</p>
+            </li>
+            </ul>
+            </div>
+            <div class="paragraph">
+            <p>Vous pouvez r&#233;p&#233;ter ceci autant de fois que vous le souhaitez, car vous travaillez sur
+            vos changements. &#192; chaque fois, les changements les plus r&#233;cents sont pouss&#233;s vers le haut et sont
+            disponibles.</p>
+            </div>
+            <div class="paragraph">
+            <p>Enfin, lorsque votre changement est pr&#234;t &#224; &#234;tre soumis, allez sur le site web de GitHub
+            pour <a href="gitdeveloper.shtml#pull">remplir et soumettre une demande d'extraction</a>.</p>
+            </div>
+            <div class="paragraph">
+            <p>&#201;ventuellement, quelqu'un examinera la demande de retrait et d&#233;cidera de
+            la fusionner. Parfois, ils demandent des modifications suppl&#233;mentaires. Dans ce cas,
+            vous pouvez mettre &#224; jour la demande de retrait en appuyant simplement sur les nouvelles modifications de votre r&#233;pertoire
+            o&#249; ils seront automatiquement r&#233;cup&#233;r&#233;s.
+            </div>
+            </div>
+            </div>
+            </div>
+            <div class="sect1">
+            <h2><a id="building_and_running_jmri" name="building_and_running_jmri"></a>Construction et Ex&#233;cution de JMRI</h2>
+            <div class="sectionbody">
+            <div class="admonitionblock tip">
+            <table>
+            <tr>
+            <td class="icon">
+            <div class="title">Astuce: </div>
+            </td>
+            <td class="content">
+            Assurez-vous que votre ordinateur est connect&#233; &#224; Internet la premi&#232;re fois que vous construisez, testez ou ex&#233;cutez JMRI apr&#232;s avoir v&#233;rifi&#233; une nouvelle copie de JMRI sur GitHub afin de permettre le t&#233;l&#233;chargement automatique de toute d&#233;pendance externe ou outil de construction potentiellement manquant.
+            </td>
+            </tr>
+            </table>
+            </div>
+            <div class="sect2">
+            <h3><a id="prime" name="prime"></a>Prime</h3>
+            <div class="paragraph">
+            <p><a href="images/netbeans-project-warning.png"><span class="image related right"><img src="images/netbeans-project-warning.png" alt="Avertissements du projet" width="192"></span></a>
+            La premi&#232;re fois que vous ouvrirez le projet JMRI dans Apache NetBeans, une ic&#244;ne d'avertissement sera affich&#233;e sur le projet. Cet avertissement indique qu'Apache NetBeans a un probl&#232;me avec le projet. Habituellement, le premier avertissement indique que des artefacts de compilation sont manquants.
+            </div>
+            <div class="paragraph">
+            <p>Pour r&#233;soudre ce probl&#232;me:</p>
+            </div>
+            <div class="olist arabic">
+            <ol class="arabic">
+            <li>
+            <p>S&#233;lectionner le projet JMRI</p>
+            </li>
+            <li>
+            <p>Choisissez <span class="menuseq"><b class="menu">le menu raccourci</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">R&#233;soudre les probl&#232;mes du projet&#8230;&#8203;</b></span> (le menu raccourci est g&#233;n&#233;ralement ouvert en cliquant sur le projet avec le bouton droit de la souris)
+            <a href="images/netbeans-resolve-project-problems-menu.png">Afficher l'exemple&#8230;&#8203;</a></p>
+            </li>
+            <li>
+            <p><a href="images/netbeans-resolve-project-problems.png"><span class="image related right"><img src="images/netbeans-resolve-project-problems.png" alt="Dialogue R&#233;soudre les probl&#232;mes du projet" width="331"></span></a>Cliquez <b class="button">R&#233;soudre&#8230;&#8203;</b></p>R&#233;soudre
+            </li>
+            <li>
+            <p>Cliquez sur <b class="button">Fermez</b> une fois que l'ic&#244;ne d'avertissement se transforme en ic&#244;ne OK</p>.
+            </li>
+            </ol>
+            </div>
+            <div class="admonitionblock note">
+            <table>
+            <tr>
+            <td class="icon">
+            <div class="title">Note</div>
+            </td>
+            <td class="content">
+            Vous pouvez &#233;galement voir une ic&#244;ne d'erreur si vous utilisez une version du JDK sup&#233;rieure &#224; 8 en raison de changements dans la fa&#231;on dont Java interagit avec macOS dans les versions 9 ou plus r&#233;centes du JDK.
+            </td>
+            </tr>
+            </table>
+            </div>
+            </div>
+            <div class="sect2">
+            <h3><a id="build" name="build"></a>Construction</h3>
+            <div class="paragraph">
+            <p>Pour construire JMRI, choisissez <span class="menuseq"><b class="menu">Run</b>&#160;<b class="caret">&#8250; </b> <b class="menuitem">Projet de construction (JMRI)</b></span> ou <span class="menuseq"><b class="menu">Run</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Projet de nettoyage et de construction (JMRI)</b></span>. </p>
+            </div>
+            <div class="admonitionblock tip">
+            <table>
+            <tr>
+            <td class="icon">
+            <div class="title">Astuce: </div>
+            </td>
+            <td class="content">
+            Pour ne construire que le code source Java de JMRI, ex&#233;cutez la phase du cycle de vie de maven <code>compiler</code>.
+            </td>
+            </tr>
+            </table>
+            </div>
+            </div>
+            <div class="sect2">
+            <h3><a id="run_an_application" name="run_an_application"></a>Ex&#233;cuter une application</h3>
+            <div class="paragraph">
+            <p><a href="images/netbeans-run-project.png"><span class="image related right"><img src="images/netbeans-run-project.png" alt="Dialogue de s&#233;lection de la classe principale pour l'ex&#233;cution" width="246"></span></a>
+            Pour lancer une application JMRI, choisissez <span class="menuseq"><b class="menu">Run</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Run Project (JMRI)</b></span> ou cliquez sur l'ic&#244;ne Run dans la barre d'outils. Vous serez invit&#233; &#224; ex&#233;cuter la classe principale JMRI la premi&#232;re fois que vous ex&#233;cuterez le projet.</p>
+            </div>
+            <div class="paragraph">
+            <p>Les applications JMRI sont lanc&#233;es &#224; partir des classes principales:</p>
+            </div>
+            <div class="hdlist">
+            <table>
+            <tr>
+            <td class="hdlist1">
+            DecoderPro
+            </td>
+            <td class="hdlist2">
+            <p><code>apps.DecoderPro.DecoderPro</code></p>
+            </td>
+            </tr>
+            <tr>
+            <td class="hdlist1">
+            PanelPro
+            </td>
+            <td class="hdlist2">
+            <p><code>apps.PanelPro.PanelPro</code></p>
+            </td>
+            </tr>
+            <tr>
+            <td class="hdlist1">
+            SoundPro
+            </td>
+            <td class="hdlist2">
+            <p><code>apps.SoundPro.SoundPro</code></p>
+            </td>
+            </tr>
+            </table>
+            </div>
+            <div class="admonitionblock tip">
+            <table>
+            <tr>
+            <td class="icon">
+            <div class="title">Astuce: </div>
+            </td>
+            <td class="content">
+            Une nouvelle v&#233;rification de JMRI devrait &#234;tre construite proprement.. Sinon, veuillez consulter le <a href="https://jmri-developers.groups.io">groupe de d&#233;veloppeurs</a> ou le <a href="https://github.com/JMRI/JMRI/issues">projet</a> pour obtenir de l'aide.
+            </td>
+            </tr>
+            </table>
+            </div>
+            </div>
+            <div class="sect2">
+            <h3><a id="debug_an_application" name="debug_an_application"></a>D&#233;boguer une application</h3>
+            <div class="paragraph">
+            <p> Pour d&#233;boguer une application JMRI, choisissez <span class="menuseq"><b class="menu">Debug</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Debug Project (JMRI)</b></span> ou cliquez sur l'ic&#244;ne Debug dans la barre d'outils. Vous serez invit&#233; &#224; d&#233;boguer la classe principale JMRI la premi&#232;re fois que vous ex&#233;cuterez le projet.</p>
+            </div>
+            </div>
+            <div class="sect2">
+            <h3><a id="profile_an_application" name="profile_an_application"></a>Profiler une application</h3>
+            <div class="paragraph">
+            <p>Pour &#233;tablir le profil d'une application JMRI, choisissez <span class="menuseq"><b class="menu">Profil</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Profil Projet (JMRI)</b></span> ou cliquez sur l'ic&#244;ne Profil dans la barre d'outils. La premi&#232;re fois que vous ex&#233;cutez le projet, la classe principale JMRI vous demandera d'&#233;tablir un profil.</p>
+            </div>
+            </div>
+            </div>
+            </div>
+            <div class="sect1">
+            <h2><a id="making_a_jar_file" name="making_a_jar_file"></a>Faire un fichier Jar</h2>
+            <div class="sectionbody">
+            <div class="paragraph">
+            <p>La plus grande partie du code dans une installation JMRI normale vit dans un fichier appel&#233;
+            jmri.jar. Si vous souhaitez remplacer cette version par votre version mise &#224; jour, vous
+           devez cr&#233;er un nouveau fichier jmri.jar &#224; partir de votre code modifi&#233;.
+            </div>
+            <div class="paragraph">
+            <p>Pour ce faire, ctrl-clic (ou clic droit) sur le nom "JMRI".
+            dans la fen&#234;tre "Projets". Cela ouvrira un menu contextuel, sur lequel
+            vous trouverez "Make Jar File". S&#233;lectionnez cette option, et un nouveau fichier jmri.jar
+            sera produit dans le r&#233;pertoire principal du projet.</p>
+            </div>
+            <div class="paragraph">
+            <p>Autrement, dans la fen&#234;tre "Fichiers", faites un clic droit sur le fichier build.xml,
+            et s&#233;lectionnez "Run Target", puis "jar".</p>
+            </div>
+            </div>
+            </div>
+            <div class="sect1">
+            <h2><a id="making_a_release_package_for_windows_using_nsis" name="making_a_release_package_for_windows_using_nsis"></a>Faire un paquet de version pour Windows en utilisant NSIS</h2>
+            <div class="sectionbody">
+            <div class="paragraph">
+            <p>Il est possible pour les utilisateurs d'Apache NetBeans de cr&#233;er un paquet de lib&#233;ration pour
+            sur la plate-forme Windows. Cela n&#233;cessite l'installation du logiciel Nullsoft
+            Scriptable Install System (NSIS), qui peut &#234;tre t&#233;l&#233;charg&#233; &#224; partir de
+            <a href="http://sourceforge.net/projects/nsis">le site web du projet NSIS</a> sur
+            SourceForge.</p>
+            </div>
+            <div class="paragraph">
+            <p>Une fois que le NSIS est install&#233; sur l'ordinateur, il est n&#233;cessaire de cr&#233;er un fichier
+            appel&#233; local.properties dans le m&#234;me r&#233;pertoire que le fichier build.xml de JMRI.
+            Ce fichier <em> n'est pas</em> sp&#233;cifiquement  enregistr&#233; via GitHub, de sorte que vos
+            chemins d'installation des outils sp&#233;cifiques aux OS <em>ne sont pas</em> enregistr&#233;s dans GitHub.
+            Cr&#233;ez le fichier, et ajoutez une d&#233;finition de variable avec le chemin d'acc&#232;s correct au
+            r&#233;pertoire qui comprend l'ex&#233;cutable NSIS, tel que:</p>
+            </div>
+            <div class="paragraph">
+            <p>nsis.home=C:/Program Files (x86)/NSIS/</p>
+            </div>
+            <div class="paragraph">
+            <p>ou</p>
+            </div>
+            <div class="paragraph">
+            <p>nsis.home=/opt/nsis/nsis-2.46/</p>
+            </div>
+            <div class="paragraph">
+            <p><em>Note:</em> Assurez-vous que la trace / est pr&#233;sente.</p>
+            </div>
+            <div class="paragraph">
+            <p>Avec le paquet NSIS install&#233; sur votre ordinateur, et construisez le .xml correctement
+            modifi&#233;, le paquet Windows peut &#234;tre cr&#233;&#233; en ex&#233;cutant le
+            "package-windows" ant cible dans build.xml.</p>
+            </div>
+            </div>
+            </div>
+            <div class="sect1">
+            <h2><a id="using_apache_netbeans_xml_tools" name="using_apache_netbeans_xml_tools"></a>Utilisation des outils XML d'Apache NetBeans</h2>
+            <div class="sectionbody">
+            <div class="paragraph">
+            <p>Apache NetBeans dispose de bons outils pour travailler avec des fichiers XML, notamment
+            en les &#233;ditant et en les validant. JMRI utilise XInclude pour inclure des fragments XML
+            dans d'autres fichiers XML via des URL vers <a href="https://jmri.org/xml">le site web du JMRI</a>. Les programmes JMRI les convertissent au moment de l'ex&#233;cution en r&#233;f&#233;rences de fichiers locaux ; cependant, Apache NetBeans doit &#234;tre configur&#233; pour le faire si vous voulez &#233;diter des fichiers XML JMRI hors ligne.</p>
+            </div>
+            <div class="paragraph">
+            <p>Pour configurer Apache NetBeans de mani&#232;re &#224; permettre l'&#233;dition XML hors ligne:</p>
+            </div>
+            <div class="olist arabic">
+            <ol class="arabic">
+            <li>
+            <p>Choisissez <span class="menuseq"><b class="menu">Outils</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">DTDs et sch&#233;mas XML</b></span></p>
+            </li>
+            <li>
+            <p>Cliquez <b class="button">Ajouter le catalogue&#8230;&#8203;</b></p>.
+            </li>
+            <li>
+            <p>S&#233;lectionner le <em>Type de catalogue</em> <code>R&#233;solveur de catalogue OASIS</code></p>
+            </li>
+            <li>
+            <p>Cliquez <b class="button">Naviguez&#8230;&#8203;</b></p>.
+            </li>
+            <li>
+            <p>Naviguer vers <code>/path-to-your-JMRI-project/xml/catalog.xml</code></p>
+            </li>
+            <li>
+            <p>Cliquez <b class="button">OK</b></p>Cliquez
+            </li>
+            <li>
+            <p>Cliquez <b class="button">OK</b></p>Cliquez
+            </li>
+            <li>
+            <p>Clic <b class="button">Fermer</b></p>Fermer
+            </li>
+            </ol>
+            </div>
+            <div class="admonitionblock note">
+            <table>
+            <tr>
+            <td class="icon">
+            <div class="title">Remarque: </div>
+            </td>
+            <td class="content">
+            l'emplacement du catalogue XML n'est pas sp&#233;cifique &#224; un projet, donc si vous travaillez sur plusieurs projets JMRI, quel que soit le projet que vous ajoutez, c'est le catalogue qui sera utilis&#233;, et non le projet en cours.
+            </td>
+            </tr>
+            </table>
+            </div>
+            </div>
+            </div>
+            <div class="sect1">
+            <h2><a id="running_spotbugs" name="running_spotbugs"></a>Running SpotBugs</h2>
+            <div class="sectionbody">
+            <div class="paragraph">
+            <p>L'outil SpotBugs est un outil d'analyse de code statique qui examine le code source JAVA
+             pour les questions de codage communes.</p>
+            </div>
+            <div class="paragraph">
+            <p>Pour faire fonctionner l'outil SpotBugs sur le code JMRI, ex&#233;cuter l'objectif maven
+            <em>spotbugs:check</em> qui est d&#233;fini dans pom.xml. Dans Apache NetBeans
+            Pour ce faire, il suffit de cliquer sur JMRI dans le volet <em>Projets</em> et
+            puis en cliquant sur "spotbugs <strong>check</strong>" dans le volet <em>Navigator</em>. Lorsque SpotBugs
+            s'ach&#232;ve, la fen&#234;tre de sortie d'Apache NetBeans affichera les r&#233;sultats SpotBugs
+            .</p>
+            </div>
+            </div>
+            </div>
+            <div class="sect1">
+            <h2><a id="loading_a_specific_branch_from_github" name="loading_a_specific_branch_from_github"></a>Chargement d'une branche sp&#233;cifique depuis GitHub</h2>
+            <div class="sectionbody">
+            <div class="paragraph">
+            <p>Le processus de construction &#224; partir d'une branche (c'est-&#224;-dire celle o&#249; quelqu'un a
+            mis une modification) est un peu diff&#233;rente des instructions standard. (
+            Voici NetBeans 8.2, mais il ne varie pas beaucoup selon les versions)</p>
+            </div>
+            <div class="ulist">
+            <ul>
+            <li>
+            <p>USous "Team" &#8594; "Remote" s&#233;lectionner "Fetch" (pas Fetch from Upstream)<br>
+            <a href="images/38030695-285ba828-324e-11e8-8e73-7ff0f6c32125.png"><span class="image"><img src="images/38030695-285ba828-324e-11e8-8e73-7ff0f6c32125.png" alt="image" width="236" height="212"></span></a></p>
+            </li>
+            <li>
+            <p> Remplissez le formulaire pour sp&#233;cifier le d&#233;p&#244;t de l&#8217utilisateur correct (Apr&#232;s
+            la premi&#232;re fois, vous pourrez faire une s&#233;lection par nom dans la partie sup&#233;rieure
+            choix)<br>
+            <a href="images/38030828-932040d8-324e-11e8-933f-cee0bf6f45e2.png"><span class="image"><img src="images/38030828-932040d8-324e-11e8-933f-cee0bf6f45e2.png" alt="image" width="247" height="147"></span></a></p>
+            </li>
+            <li>
+            <p>Sur l'&#233;cran suivant pour s&#233;lectionner une branche, vous pouvez soit les s&#233;lectionner toutes 
+            (il y a un bouton) ou trouver et s&#233;lectionner juste le nom de la branche
+            qui maintient le changement souhait&#233;:<br>
+            <a href="images/38030974-fa9a7b52-324e-11e8-86f2-23c0c8735c9c.png"><span class="image"><img src="images/38030974-fa9a7b52-324e-11e8-86f2-23c0c8735c9c.png" alt="image" width="339" height="101"></span></a></p>
+            </li>
+            <li>
+            <p>Cliquez sur "Terminer"</p>
+            </li>
+            </ul>
+            </div>
+            <div class="paragraph">
+            <p>&#192; ce stade, vous avez transf&#233;r&#233; mes modifications sur votre machine locale, mais
+            vous ne les utilisez pas encore. Pour que ces fichiers apparaissent en local pour Apache
+            NetBeans &#224; construire:</p>
+            </div>
+            <div class="ulist">
+            <ul>
+            <li>
+            <p>Retournez au menu principal, s&#233;lectionnez "Team" &#8594; "Checkout" &#8594; "Checkout
+            Revision&#8230;&#8203;". Dans la fen&#234;tre qui s'affiche, cliquez sur "Select":<br>
+            <a href="images/38031217-94948748-324f-11e8-8d61-8451af389d2e.png"><span class="image"><img src="images/38031217-94948748-324f-11e8-8d61-8451af389d2e.png" alt="image" width="268" height="208"></span></a></p>
+            </li>
+            <li>
+            <p>En haut &#224; gauche, trouvez la branche import&#233;e que vous souhaitez, qui dans 
+            l'exemple est "bobjacobsen/ast-clock-power-bit". Cliquez pour mettre en &#233;vidence
+            (show) et cliquez ensuite sur "Select", ou double-cliquez simplement dessus. (Ne vous inqui&#233;tez pas
+            sur la case sup&#233;rieure droite ou inf&#233;rieure, ils seront automatiquement r&#233;gl&#233;s
+            droite)<br>
+            <a href="images/38031418-024b9f92-3250-11e8-9d52-aca1db8d4435.png"><span class="image"><img src="images/38031418-024b9f92-3250-11e8-9d52-aca1db8d4435.png" alt="image" width="321" height="259"></span></a></p>
+            </li>
+            <li>
+            <p>Retour &#224; la fen&#234;tre "Checkout Revision &#8230;&#8203 ;", assurez-vous que la fen&#234;tre "Checkout as
+            Nouvelle branche" <span class="underline">n'est pas</span> coch&#233;, puis cliquez sur "Commander"</p>
+            </li>
+            </ul>
+            </div>
+            <div class="paragraph">
+            <p></p>Vous avez maintenant une copie de mes modifications comme source de v&#233;rification. Vous
+            devrez faire un "projet de nettoyage et de construction" pour s'assurer que vous obtenez une
+            compilation coh&#233;rente, et vous devriez &#234;tre en mesure de l'ex&#233;cuter.</p>
+            </div>
+            <div class="admonitionblock important">
+            <table>
+            <tr>
+            <td class="icon">
+            <div class="title">Important</div>
+            </td>
+            <td class="content">
+            Lorsque vous voulez revenir &#224; la version JMRI
+            <em>standard</em> , &#224; partir du d&#233;p&#244;t principal, vous avez besoin
+            de v&#233;rifier la branche <code>master</code>. Le processus est similaire et plus simple.
+            Choisissez <span class="menuseq"><b class="menu">Team</b>&#160;<b class="caret">&#8250;</b> <b class="submenu">Checkout</b>&#160 ; <b class="caret">&#8250;</b> <b class="menuitem">Checkout Revision&#8230;&#8203;</b></span>, type <code>master</code>
+            dans la case <em>Checkout Selected Revision</em>, et cliquez sur <b class="button">Checkout</b>
+            </td>
+            </tr>
+            </table>
+            </div>
+            </div>
+            </div>
+            </div>
+            <div id="footer">
+            <div id="footer-text">
+            Derni&#232;re traduction-2021-02-01
+            </div>
+            </div>
+            <!--#include virtual="/Footer.shtml" -->
+            </div><!-- closes #mainContent-->
+        </div><!-- closes #mBody-->
+    </body>
 </html>
+
+    

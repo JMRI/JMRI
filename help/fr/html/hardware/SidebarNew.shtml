@@ -1,0 +1,23 @@
+<!-- Sidebar.shtml -->
+<!-- Il s'agit de la d&#233;finition commune de la barre lat&#233;rale pour les pages html/mat&#233;riel -->
+
+	  <hr class="hide">
+	  <div id="side"> <!-- Bloc de texte sur le c&#244;t&#233; gauche de la page -->
+	    <div style="text-align : center">JMRI&reg ; se connecte &#224;...</div>
+	    <dl>
+
+        <!--#include virtual="/help/fr/parts/SidebarSupportedHardwareNew.shtml" -->    
+
+       <!--#include virtual="/help/en/parts/SidebarApplications.shtml" -->
+
+       <!--#include virtual="/help/en/parts/SidebarTools.shtml" -->
+
+       <!--#include virtual="/help/en/parts/SidebarLayoutAutomation.shtml" -->
+		
+    </dl>
+
+    <!--#include virtual="/help/en/parts/SidebarTail.shtml" -->
+
+	</div> <!-- closes #side -->
+
+<!-- /Sidebar.shtml -->

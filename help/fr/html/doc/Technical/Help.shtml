@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updatedted by Blorec Herv&#233;  2016-07-20-->  
+<!-- Updatedted by Blorec Herv&#233;  2020-12-17-->  
 <html lang="fr">
 <head>
     <title>
@@ -20,200 +20,473 @@
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
+		
+		<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = --> 
+     <a name="helpTop" id="helpTop"></a>     
+     <h1>Code JMRI : Cr&#233;ation de pages d'Aide et Utilisation de JavaHelp</h1>
 
-		    <h1>JMRI: Utiliser une Aide Java</h1>
+    <div class="para">      
+     <p>Cette page traite des aspects techniques de l'aide fournie par JMRI 
+     en utilisant <a href="https://javahelp.java.net">JavaHelp</a> et <a href=
+      "https://sourceforge.net/projects/jhelpdev/">JHelpDev</a> ainsi que quelques 
+      suggestions sur des approches communes pour les pages d'aide.     </p>
 
-Cette page parle des aspects techniques de la fa&#231;on dont JMRI fournit des informations d'aide
-en utilisant
-<a href="https://javahelp.java.net">JavaHelp</a> et
-<a href="http://jhelpdev.sourceforge.net/">JHelpDev</a>.
+	    <ul class="snav">
+		<li><a href="#web">Acc&#232;s au Web</a></li>
+		<li><a href="#limitations">Normes et limites</a></li>
+        <li><a href="#hwhelp">Cr&#233;ation d'une aide/d'un site web pour les nouveaux mat&#233;riels</a></li>
+    	<li><a href="#check">V&#233;rification des changements</a></li>
+        <li><a href="#tocAndIndex">TOC et Index</a></li>
+        <li><a href="#jhelpdev">Cr&#233;ation de fichiers de contr&#244;le</a></li>
+        <li><a href="#code">Aide Acc&#232;s en code</a></li>
+        <li><a href="#site">Mise &#224; jour du site web</a></li>               
+	    </ul>
 
-<h2>Organisation des fichiers aide</h2>
+       </div>
+ 
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = --> 
+  <h2>Organisation des Fichiersd'Aide</h2>
 
-Les fichiers d'aide sont situ&#233;s dans le r&#233;pertoire "help" 
-dans le r&#233;pertoire de distribution JMRI.
+    <div class="para">      
 
-<p>
-La copie maître de ceux-ci est stock&#233;e dans notre r&#233;pertoire comme le r&#233;pertoire "help" 
-dans le r&#233;f&#233;rentiel de code JMRI.
-Cela signifie que pour obtenir votre propre copie locale, il suffit de suivres les &#233;tapes 
-sur la page <a href="getgitcode.shtml">obtention du code</a>
+      Les fichiers d'aide sont les suivants
+situ&#233; dans le r&#233;pertoire "Aide" du r&#233;pertoire la distribution JMRI .
 
-<p>
-Dans ce cadre, tous les fichiers de langue Anglaise sont situ&#233;es
-dans le sous-r&#233;pertoire "en". Eventuellement ce sera &#224; vous
-d'internationaliser les pages d'aide.
-<p>
-Dans ce cadre, il y a plusieurs arbres de  fichiers:
-<ul>
-<li> Package  - organis&#233; comme l'arbre paquet source,
-il contient les fichiers d'aide sp&#233;cifiques au code pour  par exemple une 
-fen&#234;tre particuli&#232;re ou d'un composant. Par exemple, une fen&#234;tre qui a cr&#233;&#233;
-par la classe <code>jmri.jmrit.speedometer.SpeedometerFrame</code>
-(depuis le fichier <code>src/jmri/jmrit/speed/SpeedometerFrame.java </code>)
-devrait disposer de sa fen&#234;tre d'aide sp&#233;cifique dans un fichier de
-<code>package/jmri/jmrit/speed/SpeedometerFrame.shtml</code>.
-<li> html - une description g&#233;n&#233;rale, des tutoriels, etc. 
-Ceux-ci organis&#233;s &#224; leur tour dans des r&#233;pertoires qui repr&#233;sentent des domaines g&#233;n&#233;raux.
-<li> Manuel - une version du manuel DecoderPro reformat&#233;e pour une
-utilisation dans le syst&#232;me d'aide.( Les plus anciens sont stock&#233;s dans le <a href="WebSite.shtml">site internet principal</a>)
+      <p>La copie originale de ce document est stock&#233;e dans notre r&#233;pertoire en tant que
+     r&#233;pertoire "help" dans le d&#233;p&#244;t de code JMRI. Cela signifie que
+      pourobtenir votre propre copie locale, il suffit de suivre les &#233;tapes pour
+      "<a href="getgitcode.shtml">obtenir le code</a>" page.</p>
 
-</ul>
+      <p>Avec cela, tous les fichiers en langue anglaise sont localis&#233;s
+      dans le sous-r&#233;pertoire "en". A terme, cela nous permettra
+     d' internationaliser les pages d'aide.</p>
 
-A long terme, nous voulons seulement deux branches dans cette structure: la partie "package" 
-de l'arbre pour aider &#224; l'information qui est sp&#233;cifique &#224;
-un morceau de code particulier,
-et une autre partie de l'arbre pour plus d'informations g&#233;n&#233;rales.
-(C'est une question de religion si cette 2&#232;me partie devrait &#234;tre appel&#233;
-"html" ou "manuel "; l'essentiel est qu'on se retrouve avec un seul).
-Le web est cens&#233; &#234;tre un  <em>web </em>, avec de nombreux chemins &#224; suivre pour 
-atteindre le contenu. La deuxi&#232;me partie de l'arbre devrait &#233;galement &#234;tre organis&#233;
-comme "une page, un th&#232;me", avec des liens pour les connecter au besoin
+      <p>Il y a plusieurs arborescences de fichiers:</p>
 
-<a name="limitations">
-<h3>Limitations de JavaHelp HTML</h3></a>
+      <ul>
+        <li>package - organis&#233; comme l'arbre des paquets sources, celui-ci
+        contient des fichiers d'aide sp&#233;cifiques au code, par exemple pour un
+        fen&#234;tre ou composant. Par exemple, une fen&#234;tre qui est cr&#233;&#233;e
+        par le <code>jmri.jmrit.speedometer.SpeedometerFrame</code>
+        (de la classe
+        <code>src/jmri/jmrit/speedometer/SpeedometerFrame.java</code>
+        ) devrait avoir son aide sp&#233;cifique &#224; la fen&#234;tre dans un fichier &#224;
+        <code>package/jmri/jmrit/speedometer/SpeedometerFrame.shtml</code>.</li>
 
-JavaHelp affiche "un bon vieux HTML 4.0", sans fournir certains des
-sucre syntaxique fourni par de nombreux navigateurs pour permettre de pauvres rendus HTML.
-En particulier, il y a quelques choses &#224; surveiller.
-<ul>
-<li>Les balises d'ancrage demande un format sp&#233;cifique.
-sp&#233;cifiquement, elles doivent &#234;tre &#233;crites
-<code><pre>
-&lt;a name="pull" id="pull"&gt;&lt;/a&gt;
-</pre></code>
-
-Par exemple, pour mettre une balise d'ancrage sur un titre, faire
-<code><pre>
-&lt;a name="foo" id="foo"&gt;&lt;/a&gt;&lt;h2&gt;Foo!&lt;/h2&gt;
-</pre></code>
-
-<p>
-Note: des balises d'ancrage incorrectement structur&#233;es ( pas comme ci-dessus )
-souvent provoque juste l'apparition d'un 
-caract&#232;re &lt; sur la page de rendu d'aide
-<li>Les d'Ancrage ont aussi besoin d'utiliser l'attribut "name" plut&#244;t que 
-l'attribut "id". Voir l'article ci-dessus pour un exemple.
-
-<li> Vous ne pouvez pas compter sur un endroit particulier pour vos fichiers
-sur la machine locale, aussi tous les liens vers les autres pages d'aide  doivent &#234;tre relatifs.
-
-<li> les liens vers des pages Web en dehors du syst&#232;me d'aide de travail,
-mais JavaHelp ne peut pas afficher les fichiers PDF. Les Liens vers ceux-ci
-doivent &#234;tre repr&#233;sent&#233;s de fa&#231;on explicite comme des liens, afin qu'ils puissent &#234;tre copi&#233;s sur
-un navigateur Web ext&#233;rieur..
-
-</ul>
-
-<a name="web" id="web"></a><h2>Acc&#232;s Web &#224; l'aide </h2>
-
-Il est g&#233;nant d'avoir &#224; maintenir deux pages Web distinctes pour les
-site web principaux et le syst&#232;me d'aide. Pour r&#233;duire le besoin pour cela, nous
-utilisons un formulaire particulier pour les pages web dans le syst&#232;me d'aide.
-<ul>
-<li> utilisation de l'extensions de fichiers ". shtml"  de telle sorte que
-les serveurs Web principaux  recherchent les fichiers pour
-<A href="http://httpd.apache.org/docs/1.3/howto/ssi.html"> les serveurs inclus </a>.
-<li> Lorsque vous cr&#233;ez une nouvelle page, commencez par une copie
-soit du fichier mod&#232;le Aide/fr/TemplateBar.shtml ou de l'aide/fr/TemplatePlain.shtml
-, selon que vous souhaitez ou non inclure une "Sidebar"
-via un fichier du m&#234;me nom. Cela mettra en haut et en bas la
-mati&#232;re en place pour obtenir que la page s'affiche correctement.
-</ul>
-
-<a name="code"<h2> Acc&#232;s au code</h2>
-
-Dans le code JMRI, l'acc&#232;s au syst&#232;me d'aide est obtenu
-via la classe jmri.util.HelpUtil.
-(Pour des raisons historiques, il y a un peu de code
-dans apps.Apps, mais vous devriez l'ignorer).
-<p>
-La fa&#231;on la plus simple d'ajouter un menu d'aide &#224; un
-cadre est d'avoir soit un JmriJFrame (que vous
-devrez faire de toute fa&#231;on), et appel&#233; addHelpMenu (...)
-apr&#232;s que vous ayez construit les autres menus.
-
-<p>
-Par convention, nous utilisons une arborescence de fichiers similaire pour
-les fichiers de code source et d'aide. Par exemple,
-la <code>jmri.jmrit.simpleclock.SimpleClockFrame</code>
-classe h&#233;rite de JmriJFrame, et ajoute un menu d'aide avec la ligne
-<PRE>
-<CODE>
-   addHelpMenu ("package.jmri.jmrit.simpleclock.SimpleClockFrame", true);
-</Code>
-</PRE>
-Le fichier d'aide est alors situ&#233;e &#224;
-<code>help/fr/package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml </code>.
-<p>
-Un certain nombre de fichiers d'aide ont &#233;t&#233; mis en place sans contenu;
-j'esp&#232;re que certains utilisateurs les modifierons et renverrons l'ascenseur.
-
-<a name="jhelpdev" id="jhelpdev"></a><h2> Cr&#233;ation des fichiers de contr&#244;le avec JHelpDev </h2>
-
-JavaHelp utilise divers fichiers XML pour
-contr&#244;ler la fa&#231;on dont la table des mati&#232;res et l'index sont affich&#233;s.
-Nous cr&#233;ons les <A href="http://jhelpdev.sourceforge.net/"> JHelpDev</a>.
-S'il vous pla&#238;t ne pas les modifier manuellement.
-
-<p>
-JHelpDev est maintenant inclut dans la distribution JMRI. Pour utiliser cet outil:
-<OL>
-<li>Assurez-vous que vous avez ex&#233;cut&#233; "update" depuis SVN avant de commencer.</Li>
-<li> D&#233;marrez l'outil en cliquant sur le fichier jhelpdev.jar. (Si cela ne fonctionne pas, essayez en
-ex&#233;cutant JHelpDev.csh ou JHelpDev.bat, selon le type d'ordinateur que vous avez) </li>
-
-<li>Une fois que la fen&#234;tre s'affiche, s&#233;lectionnez "Ouvrir un projet" dans le menu "Fichier". </Li>
-
-<li>Naviguez vers le r&#233;pertoire "help" dans votre copie extraite du code,
-puis le r&#233;pertoire "fr" dans ce cadre, puis s&#233;lectionnez le fichier "JHelpDev.xml"
-et cliquez sur "Open". </li>
-<p>Vous pouvez avoir un message"[Fatal Error] index.html:1:3: Les d&#233;clarations de balisage contenues ou point&#233;es par le document type de d&#233;claration doivent &#234;tre bien form&#233;es. "
-Bien qu'il dit qu'il est fatal, il n'est pas vraiment un probl&#232;me. N'y faites pas attention. Au d&#233;marrage de la carte (un fichier contenant l'index JHelpDev de tous les points d'ancrage dans le syst&#232;me d'aide JMRI) est r&#233;g&#233;n&#233;r&#233;.
-"
-<li>Cliquez sur l'onglet "Index Editor" ou "TOC Editor" pour r&#233;actualiser les entr&#233;es d'Aides. Une ligne rouge marque un lien hypertexte que JHelpDev ne peut pas localiser sur le disque. Faites un clic droit sur une telle ligne pour ouvrir le menu Edit context. </Li>
-
-<li>Cliquez sur le bouton "Create All" pour recr&#233;er le TOC, Index, etc.</li>
-
-<li>Puis, de retour sur la ligne de commande et dans le r&#233;pertoire de help/fr, appelez
-"ant" pour cr&#233;er l'index Web et les pages de la table des mati&#232;res  (Ou si vous utilisez
-Eclipse, faites un clic droit sur le fichier help/fr/build.xml et s&#233;lectionnez Ex&#233;cuter en tant que construction Ant.) </li>
-</OL>
-
-<p>
-Les diff&#233;rents fichiers de contr&#244;le qui utilise JavaHelp sont stock&#233;s dans notre r&#233;f&#233;rentiel de code,
-donc, une fois que vous avez fait ceci ils seront montr&#233;s comme modifi&#233;.
-S'il vous pla&#238;t v&#233;rifier les lorsque vous v&#233;rifiez de nouveaux fichiers d'aide pour que les autres
-personnes n'aient pas &#224; recr&#233;er les fichiers de contr&#244;le eux-m&#234;mes.
-<a href="http://jhelpdev.sourceforge.net/">site web JHelpDev</a>.
-
-<a name="tocAndIndex" id="tocAndIndex"></a><h3>Table des Mati&#232;res (TOC) et Index</h3>
-
-Aide Java inclut une
-<a href="http://jmri.org/help/en/webtoc.shtml">table des mati&#232;res (toc)</a> et un 
-<a href="http://jmri.org/help/en/webindex.shtml">index</a>. Ils sont les eux disponibles 
-comme un lien hyperliens sur le web, et fournis via une agr&#233;able interface utilisateur lors de
-l'utilisation dans le programme.
-<p>
-L'information sous-jacente doit &#234;rte maintenue manuellement dans ls fichiers respectifs 
-help/fr/JmriHelp_enTOC.xml and help/fr/JmriHelp_enIndex.xml. JHelpDev fait alors les fichiers dont Java Help a besoin,
-et une &#233;tape "ant" dans le r&#233;pertoire fait les fichiers webtoc.shtml et webindex.shtml qui sont affich&#233;s sur le web.
-<p>
-vous pouvez aussi utiliser l'outil JHelpDev pour ajouter des articles &#225; la table des mati&#232;res 
-et &#225; l'index si vous voulez.
-Il y a plus d'infos sur comment le faire sur le 
-<a href="http://jhelpdev.sourceforge.net/">site web JHelpDev</a>.Rappelez-vous d'ex&#233;cuter "ant" apr&#232;s chaque ajout pour actualiser les versions web.
-
-<a name="site" id="site"></a><h2> Mise &#224; jour du site JMRI.org </h2>
-Des changements pour les pages d'aide qui sont v&#233;rifi&#233;es devrait appara&#238;tre automatiquement sur le site JMRI.org
-apr&#232;s un court moment.Il y a une
-<a href="http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/">t&#226;che Jenkins</a>
-qui manipule p&#233;riodiquement les actualisations pour les pages statistiques ( depuis le r&#233;pertoire, comme JavaDoc )
+        <li>html - descriptions g&#233;n&#233;rales, tutoriels, etc.Ceci est organis&#233; en r&#233;pertoires qui repr&#233;sentent des domaines g&#233;n&#233;raux.
 
 
-<!--#include virtual="/Footer" -->
+        <li>manuel - la version la plus r&#233;cente du DecoderPro et
+        tous les manuels ont &#233;t&#233; reformat&#233;s pour &#234;tre utilis&#233;s dans le syst&#232;me d'aide. (Les anciens
+        sont stock&#233;es dans le <a href="WebSite.shtml">site web principal
+        </a>)</li>
+ (Les anciens
+        sont stock&#233;es dans le <a href="WebSite.shtml">r&#233;seau principal
+        site</a>)</li>
+      </ul>
+      
+      <p>M&#234;me si c'est ainsi que nous aimerions que nos fichiers d'aide soient organis&#233;s, les pages d'aide sont cr&#233;&#233;es
+      par les membres de la communaut&#233; et parfois des descriptions g&#233;n&#233;rales sont mises dans le paquet
+      plut&#244;t que le r&#233;pertoire html et vice versa. [Si vous voyez quelque chose qui 
+      doit &#234;tre d&#233;plac&#233;, veuillez poster une note sur le forum jmri-developers online groups.io
+      car il y a des membres qui essaient parfois de faire un peu de m&#233;nage.]</p>
+      <p>&#192; long terme, nous ne voulons que deux branches &#224; la structure du fichier d'aide : 
+      la partie "package" de l'arbre pour les informations d'aide qui sont sp&#233;cifiques &#224; un morceau de code particulier,
+      et une autre partie de l'arbre pour des informations plus g&#233;n&#233;rales.
+      (Il s'agit d'une question religieuse de savoir si cette deuxi&#232;me partie doit &#234;tre
+      appel&#233; "html" ou "manuel" ; l'essentiel est que nous nous retrouvions avec
+      juste un). Le web est cens&#233; &#234;tre un <em>web</em>, avec de nombreux chemins d'acc&#232;s pour acc&#233;der au contenu.  La deuxi&#232;me partie de 
+      ("html") doit &#233;galement &#234;tre organis&#233;e comme "une page, un sujet", avec
+      des liens pour les connecter en fonction des besoins.
+      
+             <p><a href="#helpTop">[Aller en haut de la page]</a></p>
+       </div>
+ 
 
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = --> 
+      <a name="web" id="web"></a>
+      <h2>Acc&#232;s Internet aux Pages d'Aide</h2>
+
+    <div class="para">      
+      Il n'est pas pratique de devoir maintenir deux pages web s&#233;par&#233;es pour le site web 
+      principal et le syst&#232;me d'aide.  Afin de r&#233;duire la n&#233;cessit&#233; de ce syst&#232;me, nous 
+      utilisons un formulaire particulier pour les pages web du syst&#232;me d'aide.
+      [Des informations compl&#233;mentaires sont &#233;galement disponibles <a href="WebSite.shtml">ici.</a>]
+
+      <ul>
+        <li>Utilisez les extensions de fichiers ".shtml" pour que les principaux serveurs web recherchent les fichiers <a href=
+        "https://httpd.apache.org/docs/1.3/howto/ssi.html">c&#244;t&#233; serveur comprend</a>.</li>
+
+
+        <li>Lorsque vous cr&#233;ez une nouvelle page, commencez par une copie du fichier help/fr/TemplateBar.shtml
+        ou le fichier mod&#232;le help/fr/TemplatePlain.shtml, selon que vous souhaitez ou non inclure
+        une "sidebar" (via un fichier nomm&#233; Sidebar.shtml). Ce gabarit mettra le haut et le bas appropri&#233;s
+        pour que la page s'affiche correctement.
+        </li>
+        
+        <li>En g&#233;n&#233;ral, tous les fichiers d'aide dans l'arborescence des r&#233;pertoires html utilisent une barre lat&#233;rale.  En g&#233;n&#233;ral, les fichiers
+         dans la partie du paquet de l'arbre ne le font pas. Si vous utilisez une barre lat&#233;rale, vous en trouverez peut-&#234;tre une qui convient
+         votre objectif dans le sous-r&#233;pertoire sp&#233;cifique dans lequel vous travaillez, dans son r&#233;pertoire parent, ou,
+         dans de rares cas, vous pouvez utiliser celui du r&#233;pertoire html lui-m&#234;me (soit /help/fr/html soit /help/fr/html).
+        
+        <p> Si aucun de ces &#233;l&#233;ments ne r&#233;pond &#224; vos besoins (ou n'existe), vous pouvez cr&#233;er une barre lat&#233;rale .shtml dans le sous-r&#233;pertoire,
+         auquel cas, vous devez suivre le format des autres fichiers Sidebar.shtml dans d'autres sous-r&#233;pertoires du 
+         de m&#234;me niveau ou dans le r&#233;pertoire parent. En 2020, un effort important a &#233;t&#233; fait pour normaliser les fichiers de la barre lat&#233;rale,
+         en utilisant les includes c&#244;t&#233; serveur pour les fichiers de parties communes dans le <a href="../../../parts">
+         /help/en/parts directory</a>.En g&#233;n&#233;ral, un fichier Sidebar.shtml dans un sous-r&#233;pertoire de terminal (sans niveau inf&#233;rieur) r&#233;f&#233;rencera en outre une "partie locale" dans un fichier du m&#234;me sous-r&#233;pertoire et nomm&#233; 
+         Sidebar[type]LocalPart.shtml, o&#250; [type] serait bas&#233; sur le nom du r&#233;pertoire parent, tel que Hardware ou Tool. Cette utilisation des fichiers de la partie locale permet aux fichiers Sidebar.shtml dans le sous-r&#233;pertoire terminal d'utiliser un code identique, ce qui facilite consid&#233;rablement la maintenance.</p>
+
+        <p class="noted"> Si vous n'avez pas besoin d'une partie locale, vous pouvez inclure le Sidebar.shtml du r&#233;pertoire parent 
+         mais UNIQUEMENT si ce fichier n'a pas d'URL relatives (URL avec "../" et similaires). Si c'est le cas, les liens lat&#233;raux ne fonctionneront pas lorsqu'ils seront int&#233;gr&#233;s &#224; votre page. Regardez le contenu de Sidebar.shtml dans le r&#233;pertoire parent avant d'essayer de le r&#233;f&#233;rencer.</p>
+        </li>
+
+        <li>Tout le formatage des pages de l'aide JMRI et des autres pages web se fait par le biais de CSS inclus
+        cr&#233;&#233;s &#224; l'origine par John Plocher. Ils sont inclus &#224; partir de "/css" via Server-Side
+        Comprend (SSI).  Le fichier principal se trouve &#224; <a href="../../../../../css/default.css">/css/default.css</a>
+        et travaille avec quelques autres fichiers dans ce m&#234;me r&#233;pertoire. Comme l'aide Java ignore le SSI, le formatage CSS est ignor&#233; lorsque l'aide Java affiche les pages dans JMRI Lui-m&#234;me.
+        Dans ce cas, JavaHelp fournit le formatage.
+        </li>
+ 
+       </ul>
+
+             <p><a href="#helpTop">[Aller en haut de la page]</a></p>
+       </div>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = --> 
+      <a name="limitations" id="limitations"></a>     
+      <h2>Normes et Limites de l'Aide Java HTML</h2>
+
+    <div class="para">      
+      JavaHelp affiche "plainld HTML 4.0", sans fournir une partie du sucre syntaxique
+      fournis par de nombreux navigateurs pour permettre un rendu HTML pauvre. 
+      Ne pas inclure d'options de formatage particuli&#232;res, notamment les commandes CSS int&#233;gr&#233;es. 
+      Il y a quelques points sp&#233;cifiques &#224; surveiller :
+
+      <ul>
+        <li> Les balises d'ancrage ont besoin d'un format sp&#233;cifique. Plus pr&#233;cis&#233;ment, elles doivent &#234;tre &#233;crites
+          <pre style="font-family : monospace ;">
+&lt;a name="pull" id="pull"&gt ;...&lt;/a&gt ;
+</pre>
+          autour du contenu du texte uniquement. Il n'y a pas de probl&#232;me &#224; ce qu'il y ait du vide entre les balises d'ouverture et de fermeture.
+          Il n'est pas acceptable de les combiner en un seul <code>&lt;a name="pull"/&gt;</code>. 
+          ne faites pas &#231;a, car cela pourrait embrouiller JavaHelp.
+
+          <p>Par exemple, pour mettre une ancre sur un titre, faites
+          <pre style="font-family : monospace ;">
+&lt;h2&gt &lt;a name="foo" id="foo"&gt;Foo!&lt;/a&gt;&lt;/h2&gt ;
+</pre>
+
+          <p>Note : Les balises d'ancrage mal structur&#233;es (pas comme -
+          ci-dessus) ne provoquent souvent qu'un &lt ; le personnage apparaissant par
+          lui-m&#234;me sur la page d'aide rendue.</p>
+        </li>
+
+        <li> Les ancres doivent utiliser l'attribut "name" ainsi que l'attribut "id" pour les futures 
+        compatibilit&#233;. Le nom est reconnu par JavaHelp mais pas par les derni&#232;res versions de html alors que id
+        n'est pas reconnu par JavaHelp. Voir l'article ci-dessus pour un exemple.</li>
+
+        <li>Ne pas utiliser d'espaces ou de <code>%20</code> dans les noms d'ancre.
+        Si vous devez utiliser une phrase pour un nom, utilisez le caract&#232;re de soulignement :
+        "This_Anchor", et non "This Anchor.</li>
+
+        <li>Vous pouvez utiliser l'&#233;l&#233;ment <code>&lt;code&gt;</code>, ou
+        l'&#233;l&#233;ment <code>&lt;pre&gt;</code>, mais vous ne pouvez pas utiliser
+        les deux ensemble. <code>&lt;code&gt;</code> est bon pour
+        mettre en &#233;vidence le texte en ligne comme &#233;tant un code (comme nous l'avons utilis&#233;
+        ici) ; <code>&lt;pre&gt;</code> est bon pour donner une bonne apparence &#224; un bloc de HTML ou de Java en ligne.  Pour donner une apparence de code &#224; un bloc, enveloppez-le dans <code>&lt;pre
+        style="font-family : monospace ;"&gt;</code></li>
+        <li>Pour d&#233;crire une s&#233;quence d'actions ou de pulldowns de l'utilisateur, utilisez la double fl&#232;che droite pour indiquer la s&#233;quence, balise HTML 4 ampersand-rArr-semicolon, identifiez la s&#233;quence de trous comme "forte" et mettez la commande terminale entre guillemets :
+        <br>
+        <strong>File&rArr ; "Store Panels"</strong>
+        <br>
+        </li>
+
+        <li>Vous ne pouvez pas compter sur un emplacement particulier pour vos fichiers sur la machine locale, donc tous les liens
+        aux autres pages d'aide doivent &#234;tre relatives. Les liens vers des contenus XML doivent &#233;galement &#234;tre relatifs, m&#234;me si
+        ils ne sont pas affich&#233;s par JavaHelp.</li>
+
+    <!--    
+        <li>NOTE:Utilisation d'URL enti&#232;rement qualifi&#233;es pour les r&#233;f&#233;rences aux JavaDocs 
+        (par exemple, https://www.jmri.org/JavaDoc/doc/jmri/managers/AbstractManager.html). Ces fichiers sont mis dans
+        diff&#233;rents endroits &#224; diff&#233;rents moments du processus de d&#233;veloppement, de sorte que les adresses relatives peuvent ou peuvent
+        ne pas travailler.</li>
+     -->
+     <li>Les liens vers des pages web en dehors du syst&#232;me d'aide fonctionnent et doivent &#234;tre sp&#233;cifi&#233;s comme pleinement qualifi&#233;s, 
+        de pr&#233;f&#233;rence avec https://. Dans la plupart des cas, elles seront automatiquement ouvertes dans un navigateur web externe.
+        Si vous consultez d&#233;j&#224; la page d'aide dans un navigateur externe, ces pages peuvent &#234;tre ouvertes dans un
+        nouvel onglet ou dans le m&#234;me onglet (en &#233;crasant la page en cours), selon la fa&#231;on dont la personne qui a &#233;crit la
+        page d'aide a cod&#233; la r&#233;f&#233;rence. Au moment de la r&#233;daction du pr&#233;sent document (2020/04/04), un d&#233;bat est en cours sur la
+        m&#233;thode pr&#233;f&#233;r&#233;e.]</li>
+      </ul>
+
+             <p><a href="#helpTop">[Aller en haut de la page]</a></p>
+       </div>
+
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = --> 
+      <a name= "hwhelp" id="hwhelp"></a>
+      <h2>Cr&#233;er de l'aide/des pages Web pour les Nouveaux Mat&#233;riels</h2>
+
+    <div class="para">      
+      <p>Lorsque vous int&#233;grez la prise en charge d'un nouveau mat&#233;riel 
+      dans JMRI, vous devez &#233;galement cr&#233;er une ou plusieurs pages
+		pour le syst&#232;me d'aide et le web.   Plusieurs &#233;tapes sont n&#233;cessaires 
+		pour garantir l'int&#233;gration de votre nouvelle aide mat&#233;rielle
+      dans le syst&#232;me d'aide JMRI et sur son site web. Toutes les r&#233;f&#233;rences 
+      aux fichiers ci-dessous renvoient au 
+      <a href="https://github.com/JMRI/JMRI" target="_blank"> JMRI Structure du d&#233;p&#244;t </a> &#224; Github. Note d'utilisation
+      de la capitalisation dans les r&#233;f&#233;rences au produit (fictif) "X" du fabricant "M":</p>
+
+      <ol>
+        <li>Cr&#233;er la ou les pages d'aide g&#233;n&#233;rale pour le nouveau mat&#233;riel :
+          <ul>
+            <li>Voir <a href="../../hardware/index.shtml">autres pages d'aide sur le mat&#233;riel li&#233;es &#224; la page Index du mat&#233;riel</a>
+            pour des exemples avant de commencer.  Il existe diff&#233;rents styles en fonction de la quantit&#233; d'informations que vous souhaitez fournir.
+            Vous pouvez &#233;galement fournir un lien vers des pages de fabricants externes.
+            <li>Cr&#233;ez votre page d'aide et placez-la dans "/help/fr/html/hardware", soit directement sous "X.shtml" s'il s'agit d'un seul fichier, soit dans son propre sous-r&#233;pertoire "/help/fr/html/hardware/m/" s'il s'agit de plusieurs pages.    Vous devez
+            nommer le premier fichier "index.shtml" lorsqu'il se trouve dans son propre sous-r&#233;pertoire.</li>
+            <li>Si vos pages d'aide comportent des images, cr&#233;ez un sous-r&#233;pertoire "/help/fr/html/hardware/m/images" pour les stocker.
+            <li>Mettre dans la barre lat&#233;rale standard par un "include" de "/help/fr/html/hardware/Sidebar.shtml" (en utilisant
+           une adresse relative appropri&#233;e) dans votre ou vos pages d'aide.  [Quelques cr&#233;ateurs de mat&#233;riel et de familles de mat&#233;riel 
+            cr&#233;ent leur propre fichier "SidebarHardwareLocalPart.shtml" dans le sous-r&#233;pertoire "m" pour avoir des informations personnalis&#233;es dans le 
+            sidebar. Cela n&#233;cessite &#233;galement la cr&#233;ation d'un fichier "Sidebar.shtml" au "format standard" dans le sous-r&#233;pertoire "m". Voir
+            certaines entr&#233;es de mat&#233;riel existantes telles que <a href="../../hardware/arduino/index.shtml">
+            celui-ci</a> pour les exemples.]</li>
+          </ul>
+        </li>
+        <li>Cr&#233;er une ou plusieurs pages d'aide "sp&#233;cifiques au code" pour 
+        le nouveau mat&#233;riel :
+          <ul>
+            <li>Comme indiqu&#233; dans la premi&#232;re section de cette page, 
+            l'aide "sp&#233;cifique au code" (c'est-&#224;-dire li&#233;e &#224; une fen&#234;tre 
+            particuli&#232;re ou) doit se trouver dans les pages d'une autre 
+            partie de l'arborescence des r&#233;pertoires de fichiers. Toutes 
+            les pages que vous cr&#233;ez pour
+            expliquer les fen&#234;tres ou le code doit &#234;tre plac&#233; sous la 
+            branche "/help/en/package/" en fonction de l'endroit o&#250; le 
+            code r&#233;el est stock&#233;.</li>
+            <li> Assurez-vous de fournir des liens vers ces pages dans 
+            vos pages d'aide g&#233;n&#233;rale. </li>
+          </ul>
+        </li>
+        <li>Cr&#233;er des entr&#233;es dans la page d'index du mat&#233;riel :
+          <ul>
+            <li>Ajouter une entr&#233;e de liste de mat&#233;riel et un paragraphe d
+            ans <a href="../../hardware/index.shtml"> "/help/en/html/hardware/index.shtml"</a
+            > en suivant les formats et la cat&#233;gorisation d'autres mat&#233;riels similaires.</li>
+            <li>Ajouter une entr&#233;e pour "M X" &#224; la cat&#233;gorie/index alphab&#233;tique 
+            &#224; l'endroit appropri&#233; pr&#232;s du haut de
+            "hardware/index.shtml".</li>
+          </ul>
+        </li>
+        <li>Cr&#233;er une entr&#233;e dans la "partie lat&#233;rale" du mat&#233;riel support&#233; :
+          <ul>
+            <li>Ajouter une entr&#233;e par ordre alphab&#233;tique pour "M X" &#224; la 
+            partie "Hardware" de la barre lat&#233;rale "/help/en/parts/SidebarSupportedHardware.shtml".</li>
+          </ul>
+        </li>
+        <li>Cr&#233;er la Table des Contenus (TOC) de l'Aide et les Entr&#233;es Index :
+          <ul>
+            <li>Ajouter une entr&#233;e pour "M X" sous "Hardware Support" au fichier "JMRIHelp_enTOC.xml" qui se trouve dans le r&#233;pertoire /help/en/. </li>
+            <li>Ajouter une ou plusieurs entr&#233;es pour "M X" telles que "X (M)" ou d'autres &#233;l&#233;ments d'index utiles au fichier "JMRIHelp_enindex.xml". 
+            se trouve dans le r&#233;pertoire /help/fr/.</li>
+            <li>Voir la section ci-dessous sur <a href="#tocAndIndex">Aidez 
+            la table des mati&#232;res et l'index</a> pour les &#233;tapes suppl&#233;mentaires de mise &#224; jour
+            le TOC et l'index.</li>
+          </ul>
+        </li>
+      </ol>
+        <p>En suivant toutes ces &#233;tapes, vous vous assurez que les autres 
+        utilisateurs pourront trouver et utiliser le nouveau mat&#233;riel que vous avez int&#233;gr&#233;
+        dans JMRI.</p>
+
+             <p><a href="#helpTop">[Aller en haut de la page]</a></p>
+       </div>
+
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = --> 
+      <a name= "check" id="check"></a>
+      <h2>V&#233;rifier vos Changements</h2>
+
+    <div class="para">      
+      
+      <p>Le processus <a href="ContinuousIntegration.shtml">Int&#233;gration continue</a> v&#233;rifie toutes 
+      les modifications apport&#233;es aux fichiers d'aide deJMRIJ pour s'assurer 
+      qu'ils sont corrects.  Si vous souhaitez effectuer cette m&#234;me v&#233;rification
+      pendant que vous travaillez, faites:</p>
+<pre style="font-family : monospace ;">   
+    ant scanhelp   
+</pre>
+      <p>Si vous n'avez pas acc&#232;s &#224; ant, vous devez utiliser l'un des programmes de validation HTML disponibles
+      en ligne, par exemple &#224; partir de <a href="https://validator.w3.org/" target="_blank">la validation du balisage du W3C
+      Service.</a> Ces services trouveront de nombreuses erreurs courantes (balises non appari&#233;es, etc.), mais aussi parfois
+      donner des messages d'avertissement ou m&#234;me d'erreur qui n'ont pas d'incidence sur l'int&#233;gration de JMRI.</p>
+
+             <p><a href="#helpTop">[Aller en haut de la page]</a></p>
+       </div>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = --> 
+      <a name="tocAndIndex" id= "tocAndIndex"></a>
+      <h2>Aide Table des Mati&#232;res et Index</h2>
+
+    <div class="para">      
+      
+      L'aide Java comprend un
+      <a href="../../../webtoc.shtml">tableau de
+      contenus</a> et un <a href=
+      "../../../webindex.shtml">index</a>. Il sont
+      tous deux disponibles sous forme d'hyperliens sur le web, et fournis via une
+      une interface utilisateur plus agr&#233;able lorsque l'on utilise l'aide Java dans le programme.
+
+      <p>Les informations sous-jacentes doivent &#234;tre g&#233;r&#233;es manuellement dans
+      les fichiers  help/fr/JmriHelp_enTOC.xml et
+      help/fr/JmriHelp_enIndex.xml, respectivement. JHelpDev
+      fait ensuite les fichiers dont l'aide Java a besoin, et une &#233;tape "fourmi
+      dans le r&#233;pertoire fait le webtoc.shtml et le webindex.shtml
+      qui sont affich&#233;s sur le web.</p>
+
+      <p>Note : Cela signifie que vous ne devez pas modifier manuellement le
+      les fichiers webToc.shtml et webindex.shtml, car ces modifications
+      seront &#233;cras&#233;es par des &#233;tapes ult&#233;rieures.</p>
+      <p> Les fichiers JmriHelp_enTOC.xml et JmriHelp_enIndex.xml sont des 
+      fichiers XML directement utilisables, et vous pouvez les modifier 
+      manuellement. Assurez-vous d'ex&#233;cuter l'&#233;tape "cr&#233;er tout" de JHelpDev et "ant" apr&#232;s l'avoir fait.
+
+
+      <p>Vous pouvez &#233;galement utiliser l'outil JHelpDev pour ajouter des &#233;l&#233;ments &#224; la
+      table des mati&#232;res et index si vous le souhaitez. Plus d'informations
+      sur la fa&#231;on de le faire sur le <a href=
+      "http://jhelpdev.sourceforge.net/">Site web de JHelpDev</a>.
+      N'oubliez pas de lancer "ant" apr&#232;s cela pour inclure vos mises &#224; jour sur
+      les versions web.</p>
+
+             <p><a href="#helpTop">[Aller en haut de la page]</a></p>
+       </div>
+
+      
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = --> 
+      <a name="jhelpdev" id="jhelpdev"></a>
+      <h2>Cr&#233;ation des Fichiers de Contr&#244;le avec JHelpDev</h2>
+
+    <div class="para">      
+      
+      JavaHelp
+      utilise divers fichiers XML pour contr&#244;ler la fa&#231;on dont la table des mati&#232;res
+      et l'index sont affich&#233;s. Nous les cr&#233;ons avec <a href=
+      "http://jhelpdev.sourceforge.net/">JHelpDev</a>. S'il vous pla&#238;t, ne pas
+      les &#233;diter manuellement.
+
+      <p>JHelpDev est maintenant inclus dans la dist. de JMRIJ Pour utiliser l'
+     outlil:</p>
+
+      <ol>
+        <li>V&#233;rifiez que vous avez bien mis &#224; jour la version la plus 
+        r&#233;cente dans le d&#233;p&#244;t de code avant de commencer.</li>
+
+        <li>Vous pouvez ex&#233;cuter en mode batch en lan&#231;ant <code>ant</code> 
+        depuis la ligne de commande dans le r&#233;pertoire <code>help/en/</code>. 
+        Il ouvrira toujours des fen&#234;tres, mais devrait s'ex&#233;cuter tout seul.   
+        Cela peut prendre environ une minute.
+        
+        <li>Si vous souhaitez l'utiliser manuellement, veuillez 
+        suivre le reste de ces points.
+        (Ou si vous utilisez Eclipse, cliquez avec le bouton droit de la souris sur le
+        help/en/build.xml et s&#233;lectionnez Run As Ant Build.)</li>
+        
+        <li>D&#233;marrez l'outil en cliquant sur le fichier jhelpdev.jar.
+        (Si cela ne fonctionne pas, essayez d'ex&#233;cuter soit JHelpDev.csh, soit
+        JHelpDev.bat, en fonction du type d'ordinateur que vous avez)
+     </li>
+
+        <li>Une fois que la fen&#234;tre appara&#238;t, s&#233;lectionnez "Open Project" sous
+        le menu "Fichier".</li>
+        <li>Naviguez vers le r&#233;pertoire "help" dans votre copie v&#233;rifi&#233;e 
+        du code, puis vers le r&#233;pertoire "en" &#224; l'int&#233;rieur de celui-ci, puis
+        s&#233;lectionnez le fichier "JHelpDev.xml" et cliquez sur "Open".</li>
+        
+        <li style="list-style : none">
+          <p>Vous pourriez recevoir un message sur "[Erreur fatale] 
+          index.html:1:3 : Les d&#233;clarations de balisage contenues ou
+          point&#233; par la d&#233;claration de type de document doit &#234;tre
+          bien form&#233;". Bien qu'il soit dit que c'est fatal, c'est vraiment
+          pas un probl&#232;me. Il suffit de l'ignorer. Au d&#233;marrage, la carte (un fichier
+          contenant l'indice JHelpDev de tous les ancrages du syst&#232;me d'aide JMRI
+          ) est r&#233;g&#233;n&#233;r&#233;.</p>
+        </li>
+
+        <li>En cliquant sur l'onglet "&#201;diteur de l'index" ou sur l'&#233;diteur de la table des mati&#232;res
+        , revoir et mettre &#224; jour les entr&#233;es de l'aide. Une ligne rouge marque un
+        hyperlien que JHelpDev ne peut pas localiser sur le disque. Cliquez 
+        avec le bouton droit de la souris sur une telle ligne pour ouvrir 
+        le menu contextuel Edit.</li>
+
+        <li>Cliquez sur le bouton "Cr&#233;er tout" pour recr&#233;er lindex TOC,
+        , etc.</li>
+
+        <li>Retour sur la ligne de commande et dans l'aide/fr
+        invoquez "ant index TOC" pour cr&#233;er les pages de l'index web et de la table des mati&#232;res.  </li>
+      </ol>
+
+      <p>Les diff&#233;rents fichiers de contr&#244;le utilis&#233;s par JavaHelp sont stock&#233;s dans
+      notre d&#233;p&#244;t de codes, donc une fois que vous aurez fait cela, ils montreront
+      tel que modifi&#233;. Veuillez les v&#233;rifier lorsque vous consultez la nouvelle aide
+      afin que d'autres personnes n'aient pas &#224; recr&#233;er ces contr&#244;les
+      pour eux-m&#234;mes.</p>
+
+             <p><a href="#helpTop">[Aller en haut de la page]</a></p>
+       </div>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = --> 
+      <a name="code" id="code"></a> 
+      <h2>Acc&#232;s &#224; l'Aide du Code</h2>
+
+    <div class="para">      
+      
+      Dans le code JMRI, acc&#233;dez au
+      syst&#232;me d'aide vient via la classe jmri.util.HelpUtil. (Pour les
+      pour des raisons historiques, il y a un peu de code dans
+      apps.Apps, mais vous devriez l'ignorer).
+      <p> La fa&#231;on la plus simple d'ajouter un menu d'aide &#224; un cadre est 
+      d'utiliser un JmriJFrame (ce que vous devriez faire de toute fa&#231;on), et d'appeler
+      addHelpMenu(...) apr&#232;s avoir construit d'autres menus.</p>
+
+      <p> Par convention, nous utilisons une arborescence de fichiers similaire pour la source
+      et dles fichiers d'aide. Par exemple, le
+      <code>jmri.jmrit.simpleclock.SimpleClockFrame</code> class
+      h&#233;rite de JmriJFrame, et ajoute un menu d'aide avec la ligne
+      </p>
+      <pre style="font-family : monospace ;">
+  addHelpMenu("package.jmri.jmrit.simpleclock.SimpleClockFrame", true) ;
+</pre>Le fichier d'aide se trouve alors &#224;
+<code>help/en/package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml</code>.
+      <p>Vous devez ajouter la nouvelle page &#224; l'index JHelpDev pour que JMRI 
+      l'accepte comme cible de l'aide (voir le titre suivant).</p>
+      <p>Un certain nombre de fichiers d'aide ont &#233;t&#233; mis en place sans
+      Il est &#224; esp&#233;rer que certains utilisateurs les modifieront et y contribueront.
+
+
+             <p><a href="#helpTop">[Aller en haut de la page]</a></p>
+       </div>
+      
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = --> 
+      <a name="site" id="site"></a>
+      <h2>Mise &#224; Jour du Site web JMRI.org</h2>
+
+    <div class="para">      
+      
+      <p>Les modifications apport&#233;es aux pages d'aide qui sont enregistr&#233;es 
+      devraient s'afficher automatiquement sur le
+      <a href="WebSite.shtml">Site web JMRI.org </a>apr&#232;s un court instant. Il y a un <a href=
+      "http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/">
+      Jenkins job</a> qui s'occupe des mises &#224; jour p&#233;riodiques pour le
+      (&#224; partir du d&#233;p&#244;t, contrairement &#224; Javadoc par exemple) pages.</p>
+
+             <p><a href="#helpTop">[Aller en haut de la page]</a></p>
+
+       </div>
+
+ <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
-  </div> <!-- closes #mBody-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

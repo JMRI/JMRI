@@ -21,7 +21,7 @@
   <!-- or change them to reflect your alternative logo -->
   <!-- Style -->
   <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
+  "text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -31,7 +31,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
@@ -174,7 +174,7 @@ options disponibles, et n'oublions pas ... de faire circuler une locomotive.</p>
 </table>
 <br>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div>
 </body>
 </html>

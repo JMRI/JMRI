@@ -5,7 +5,7 @@
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
 <!-- $Id$ -->
- <!--Updated et Translated by Herv&#233; Blorec le 2017-10-10 -->
+ <!--Updated et Translated by Herv&#233; Blorec le 202021-01-06 -->
 <title>JMRI: DecoderPro User Guide - Creating A Custom Decoder File</title>
 
 <!-- Style -->
@@ -18,8 +18,8 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="Sidebar.shtml" -->
 <div id="mainContent">
 
 <h1>JMRI: Guide Utilisateur DecoderPro</h1>
@@ -77,7 +77,7 @@ et ce qui ne l'a pas &#233;t&#233; .
 <dt class=left>Contenu du fichier: En-t&#234;te XML </dt>
 <dd>
 <p>Vous verrez quelque chose comme ceci en haut du fichier ( les exemples viennent d'un fichier <a
-HREF="../../../../../xml/decoders/0NMRA.xml">0NMRA.xml</a> )
+HREF="../../../../../xml/decoders/0NMRA.xml">NMRA.xml</a> )
 
 <p class="exemple">
 &lt;?xml version="1.0" encoding="utf-8"?&gt;<br>
@@ -94,10 +94,10 @@ HREF="../../../../../xml/decoders/0NMRA.xml">0NMRA.xml</a> )
 <dt class=left>Contenu du fichier: Author  </dt>
 <dd>
 <p>L'&#233;l&#233;ment suivant d&#233;crit l'auteur et la version de ce fichier de d&#233;codeur:
-<p class=example>
-&lt;version author="jake@physics.berkeley.edu" <br>
-&nbsp;&nbsp;&nbsp;&nbsp;version="1" lastUpdated="20011201"/&gt;
-</p>
+<p class="example">&lt;version
+          author="jake@physics.berkeley.edu"<br>
+              version="1" lastUpdated="20011201"/&gt;</p>
+
 <p>Ces attributs ne sont lus que par les gens, pas par le programme, 
 ainsi leur format exact n'est pas critique. Mais nous vous encourageons &#224; ins&#233;rer 
 votre adresse courriel dans les fichiers que vous cr&#233;ez ou modifiez; ainsi celui qui
@@ -113,16 +113,17 @@ num&#233;ro suivant.</p>
 <dd>
 Les lignes suivantes identifient la "famille" de d&#233;codeurs que ce fichier 
 d&#233;crit:
-<p class=example>
-&lt;decoder&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;family name="Digitrax 1x2" mfg="Digitrax"<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lowVersionID="240" highVersionID="242"<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;comment="Digitrax DH142, etc" &gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DH142" numOuts="4" numFns="2"/&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DN142" numOuts="4" numFns="2"/&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DH083" numOuts="5" numFns="2"/&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;/family&gt;
-</p>
+ <p class="example">&lt;decoder&gt;<br>
+              &lt;family name="Digitrax 1x2" mfg="Digitrax"<br>
+                  lowVersionID="240" highVersionID="242"<br>
+                  comment="Digitrax DH142, etc" &gt;<br>
+                  &lt;model model="DH142" numOuts="4"
+          numFns="2"/&gt;<br>
+                  &lt;model model="DN142" numOuts="4"
+          numFns="2"/&gt;<br>
+                  &lt;model model="DH083" numOuts="5"
+          numFns="2"/&gt;<br>
+              &lt;/family&gt;</p>
 
 <p>L'espacement n'est pas important, mais il est utilis&#233; pour indent&#233; le fichier
 et le rendre plus lisible. XML utilise "&#233;l&#233;ments" 
@@ -130,11 +131,10 @@ et "attributs" pour porter les informations. les choses &lt;model&gt; sont
 des &#233;l&#233;ments; les attributs comme numOuts sont fix&#233;s &#225; des valeurs sp&#233;cifiques &#225; l'int&#233;rieur des &#233;l&#233;ments.
 Dans la 2&#232;me &#225; la 4&#232;me lignes ci-dessus
 
-<p class=example>
-&lt;family name="Digitrax 1x2" mfg="Digitrax"<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;lowVersionID="240" highVersionID="242"<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;comment="Digitrax DH142, etc" &gt;
-</p>
+<p class="example">&lt;nom de famille="Digitrax 1x2"
+          mfg="Digitrax"<br>
+              lowVersionID="240" highVersionID="242"<br>
+              comment="Digitrax DH142, etc" &gt;</p>
 
 <p>L'&#233;l&#233;ment est "family", avec les attributs "name", "mfg",
 "lowVersionID", "highVersionID", et "comment".  Un attribut est 
@@ -157,20 +157,18 @@ le programmateur peut v&#233;rifier si ce fichier est utilis&#233; avec le type 
 Si une valeur est valide, d&#233;finissez les attributs 
 lowVersionID et highVersionID avec la m&#234;me valeur par exemple
 
-<p class=example>
-&nbsp;&nbsp;&nbsp;&nbsp;lowVersionID="123"&nbsp;highVersionID="123"
+<p class=example> lowVersionID="123"&nbsp;highVersionID="123"
 </p>
 Si le type de d&#233;codeur peut avoir plus d'une rang&#233;e de num&#233;ro,
 par exemple parce que le fabricant a fait plusieurs mise &#225; jour
 d&#233;finissez les deux attributs pour couvrir la gamme:
 
-<p class="example">
-&nbsp;&nbsp;&nbsp;&nbsp;lowVersionID="21"&nbsp;highVersionID="42"
+<p class="example"> lowVersionID="21"&nbsp;highVersionID="42"
 </p>
 Si vous ne connaissez pas le num&#233;ro de version, ne d&#233;finissez pas 
 un de ces attributs.Laissez les juste &#225; off.
 lowVersionID par d&#233;fauts &#225; 0, highVersionID par d&#233;fauts &#225; 255
-afin qu'ensemble, les valeurs par d&#233;faut signifie «toute valeur».
+afin qu'ensemble, les valeurs par d&#233;faut signifie "toute valeur".
 
 <li><dfn>comment</dfn> - Ceci est optionnel. Vous pouvez inclure votre nom, ou autre 
 info au sujet du changement dans le fichier.
@@ -183,8 +181,8 @@ info au sujet du changement dans le fichier.
               &lt;model model="DN142" numOuts="4"
           numFns="2"/&gt;<br>
               &lt;model model="DH083" numOuts="5"
-numFns="2"/&gt;</p>vous permettent de lister un nombre de mod&#232;le de d&#233;codeurs diff&#233;rents qui peuvent utiliser 
-ce fichier. Pour un simple d&#233;codeur, enlever tout sauf un 
+numFns="2"/&gt;</p>vous permettent d'&#233;num&#233;rer un nombre de mod&#232;le de d&#233;codeurs diff&#233;rents qui peuvent utiliser 
+ce fichier. Pour un d&#233;codeur unique, enlever tout les "mod&#232;les" sauf un 
 et donnez lui le nom du "mod&#232;le" de d&#233;codeur. Le numOuts
 et numFns sont d&#233;crit plus tard, mais pour le moment vous pouvez les effacer 
 laissant quelque chose comme: </p>
@@ -216,7 +214,7 @@ de d&#233;codeur dans une entr&#233;e existante de l'inventaire</p>
           paged="yes"<br>
 register="yes" ops="yes"&gt;&lt;/programming&gt;</p>
 
-<p>Paged, registerer et ops peuvent &#234;tre r&#233;gler soit &#225; "yes" ou &#225; "no".  Direct
+<p>Paged, register et ops peuvent &#234;tre r&#233;gler soit &#225; "yes" ou &#225; "no".  Direct
 peut &#234;tre fix&#233; &#225; "no", "bitOnly", "byteOnly", ou "yes". Le 
 programmateur utilise ces informations pour s&#233;lectionner le mode de programmation &#225; 
 utiliser pour travailler avec le d&#233;codeur.</p>
@@ -241,7 +239,7 @@ Un exemple:</p>
 <br>
  (suivie par plusieurs entr&#233;es de &lt;variables&gt;)<BR>
   <BR>
-  &nbsp;&nbsp;(Ins&#233;rer les nouvells &#224; la fin)<BR>
+(Ins&#233;rer les nouvells &#224; la fin)<BR>
 &lt;/variables&gt;  
 </p>
 
@@ -262,12 +260,30 @@ pour trouver quelque chose de similaire, et utilisez le "nom" attribu&#233;.
 </li>
 <li><dfn>CV</dfn> - Quel CV contient l'information de configuration
 pour cette variable.</li>
-<li><dfn>mask</dfn> - Un mod&#232;le comme "XXXVVVXX" qui commande quels 
-bits dans le CV mettent la variable up . Chaque "V" est un bit 
-qui est inclut, et "X" sont des bits qui ne sont pas 
-inclus.  Il est mieux d'avoir huit caract&#232;res,comme cela 
-nous savons o&#249; nous allons. Si la variable 
-est un Octet complet, cette attribut peut &#234;tre omit .</Li>
+<li><dfn>mask</dfn> - Un mod&#232;le comme "XXXVVVXX" qui commande  les bits du CV qui constituent la variable.
+ Chaque "V" est un bit qui est inclus, et les "X" sont des bits
+ qui ne doivent pas &#234;tre inclus. Il est pr&#233;f&#233;rable d'avoir huit caract&#232;res,car cela permet de mieux comprendre ce qui se passe.
+ Si la variable est un octet complet, cet attribut peut &#234;tre
+ omis.
+ <p>
+            En g&#233;n&#233;ral, les caract&#232;res V doivent &#234;tre un bloc contigu 
+            de bits comme sp&#233;cifi&#233; dans la documentation du fabricant
+            pour le d&#233;codeur.  Dans certains cas rares, le
+            la disposition du d&#233;codeur pourrait
+            exigent un mod&#233;2le diff&#233;rent comme XXVVXXVV, mais 
+            dans ces cas, veuillez v&#233;rifier le fonctionnement de la 
+            la d&#233;finition du &#233;codeur qui en r&#233;sulte, en prenant soin de s'assurer qu'il 
+            fait ce que vous voulez.
+            
+            <p>
+            Dans un autre cas particulier, il peut &#233;galement &#234;tre utilis&#233; (en m&#234;me temps que 
+            quelques autres attributs) pour traiter les CV qui sont cod&#233;s en
+            bases autres que binaires :  Celles qui stockent leur 
+            parties sous forme de chiffres d&#233;cimaux, ou m&#234;me en base 3 ou 5.
+            C'est un peu plus technique, c'est rarement n&#233;cessaire, mais 
+            si vous en avez besoin, consultez le 
+            <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/symbolicprog/VariableValue.html">javadoc pour plus de d&#233;tails</a>.
+
 <li><dfn>default</dfn> - la valeur par d&#233;faut pour cette varable. C'est 
 utilis&#233; pour un nouveau d&#233;codeur, ou quand vous voulez remettre le 
 d&#233;codeur &#225; ses r&#233;glages d'usine.</li>
@@ -289,11 +305,12 @@ est &#233;dit&#233;e, mais n'est pas fournie aux simples utilisateurs de Decoder
 le curseur la variable &#225; l'&#233;cran.</p>
 </dd>
 
-<dt class=left> File contents: Creating new Variable definitions </dt>
+<dt class=left> Contenu du fichier : Cr&#233;ation de nouvelles d&#233;finitions de variable
+       </dt>
 <dd>
 <p>Vous pouvez aussi d&#233;finir de nouvelles variables. Un bon point de d&#233;part est de 
 copier une d&#233;finition similaire, changer son nom d'&#233;l&#233;ment par une nouvelle valeur et 
-&#233;diter son contenu.</p>
+modifier son contenu.</p>
 
 <p> Pour d&#233;finir comment la nouvelle variable est affich&#233;e et &#233;dit&#233;e, vous 
 ajoutez l'&#233;l&#233;ment au sein de l'&#233;l&#233;ment "variable". Il y a plusieurs 
@@ -303,28 +320,29 @@ formes possibles:</p>
 l'exemple ci-dessus. Les deux attributs possibles sont min et max, 
 qui d&#233;finissent la fourchette de valeurs acceptables. Si vous les omettez 
 les valeurs entre 0 et 255 seront permises.</li>
+
 <li>Si vous pr&#233;f&#233;rez entrer et afficher des valeurs en hexad&#233;cimal, utilisez 
 l'&#233;l&#233;ment "hexVal".c'est le m&#234;me que l'&#233;l&#233;ment 
 "decVal" dont nous avons d&#233;j&#225; discut&#233; mais en hexa.</li>
+
 <li><p>Si votre d&#233;codeur supporte les adresses longues, vous pouvez ajouter
 un &#233;l&#233;ment 'longAddress'. C'est peut &#234;tre plus simple de copier ceci 
 depuis un autre fichier, ou depuis cet exemple:</p>
 
-<p class=example>
-&lt;variable name=&quot;Long Address&quot; CV=&quot;17&quot;&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;longAddressVal/&gt;<BR>
-&lt;/variable&gt;
-</p>
+<p class=example>">&lt;variable item="Adresse longue"
+              CV="17"&gt;<br>
+                  &lt;longAddressVal/&gt;<br>
+              &lt;/variable&gt;</p>
 
-<li><p>Si votre d&#233;codeur le supporte, vous pouvez entrer un &#233;l&#233;ment "speedTableVal"
+<li><p>Si votre d&#233;codeur le prend en charge, vous pouvez entrer un &#233;l&#233;ment "speedTableVal"
  pour la table de vitesse. Les attributs optionnels sont  "entries","min", "max" et 
  "mfx" (quand vrai active le style  M&auml;rklin mfx&reg; de la table de vitesse. Exemple:</p>
 
-<p class=example>
-&lt;variable name=&quot;Speed Table&quot; CV=&quot;67&quot;&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;speedTableVal/&gt;<BR>
-&lt;/variable&gt;
-</p>
+ <p class="example">&lt;variable item="Speed Table"
+              CV="67"&gt;<br>
+                  &lt;speedTableVal/&gt;<br>
+              &lt;/variable&gt;</p>
+            </li>
 
 <li>Quelques options de d&#233;codeur sont mieux repr&#233;senter par "choisir un
 choix".Elles sont repr&#233;sent&#233;es par un &#233;l&#233;ment enumVariable. Exemple:
@@ -352,6 +370,39 @@ value="32"/&gt;</p>
 </li>
 </ul>
 </dd>
+<dt class="left">Incluant les fragments de fichiers</dt>
+        <dd>
+          <p>Les d&#233;finitions des d&#233;codeurs peuvent inclure des "fragments de fichiers".
+          qui fournissent des d&#233;finitions communes de certains CV.
+          Cela pr&#233;sente l'avantage qu'ils sont d&#233;j&#224; cr&#233;&#233;s et 
+          test&#233;s, et comprennent souvent des textes d'aide, des traductions 
+          et d'autres caract&#233;ristiques int&#233;ressantes.  Voir les d&#233;finitions des d&#233;codeurs existants pour 
+          <a href="https://jmri.org/xml/decoders/nmra">exemples</a>.  
+          Quelques exemples cl&#233;s:</p>
+
+              <ul>
+                <li>CV1, l'adresse primaire ou courte, 
+                    CV17 et 18, l'adresse &#233;tendue ou longue,
+                    et les bits CV29 correspondants peuvent 
+                    &#234;tre pris en charge par l'un d'entre eux, selon
+                    sur ce que le d&#233;codage supporte :
+                    <ul>
+                    <li>xml/decoders/nmra/shortAddressOnly.xml
+                    <li>xml/decoders/nmra/shortAndLongAddress.xml
+                    </ul>
+                <li>CV19, l'adresse et la direction du couplage, 
+                    peut &#234;tre g&#233;r&#233; par l'un d'entre eux :
+                    <ul>
+                    <li>xml/decoders/nmra/consistAddr.xml	
+                    <li>xml/decoders/nmra/consistAddrDirection.xml
+                    </ul>
+                 <li>La fonction de verrouillage du d&#233;codeur CV16/CV15 peut&#234;tre 
+                    g&#233;r&#233; par le fragments de fichiers xml/decoders/nmra/decoderLockId16.xml
+                    . Notez que seul le CV16 est inclus ;
+                    
+<p>Vous pouvez &#233;galement utiliser des fragments de fichiers pour inclure (d'o&#249; la simplification)
+         <a href="https://jmri.org/xml/decoders/parts">ensembles communs de choix d'&#233;num&#233rations</a>.</p> 
+        </dd>
 
 <dt class=left>V&#233;rification des erreurs de syntaxe </dt>
 <dd>
@@ -379,11 +430,11 @@ d&#233;codeurs disponibles est construite .</p>
 <p>F&#233;licitations!  Vous avez fini.  Ensuite, ouvrez l'application  programmateur et essayez le</p>
 
  <p>Pour des informations plus avanc&#233;es sur le contenu des fichiers, svp voir la page 
-<a href="CreateDecoderAdvanced.shtml">Advanced Decoder Definitions</a>
+<a href="CreateDecoderAdvanced.shtml">D&#233;finitions Avanc&#233;es des D&#233;codeurs</a>
 
 
-<!--#include virtual="/Footer" --></p>
-</div><!-- closes #mainContent-->
+<!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
 </html>

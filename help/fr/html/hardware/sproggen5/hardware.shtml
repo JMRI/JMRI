@@ -1,0 +1,108 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI Hardware Support - SPROG Generation 5 Hardware Support</title>
+  <meta name="author" content="Andrew Crosland">
+  <meta name="keywords" content=
+  "SPROG java model railroad JMRI install windows linux mac osx">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp.shtml" -->
+    <div id="mainContent">
+
+      <h1>Support mat&#233;riel : Mat&#233;riel SPROG Generation 5 </h1>
+      <ul class="snav">
+        <li><a href="#pisprog3">Pi-SPROG 3</a></li>
+        <li><a href="#sprog3plus">SPROG 3 plus</a></li>
+        <li><a href="#sprog3plus">Pi-SPROG 3 plus</a></li>
+        <li><a href="#canisb">CANISB</a></li>
+        <li><a href="#setup">Configuration du mat&#233;riel avec JMRI</a></li>
+        <li><a href="index.shtml#documentation">Documentation</a></li>
+        <li><a href="index.shtml#support">Support</a></li>
+      </ul>
+
+      <h2><a name="pisprog3" id="pisprog3">Pi-SPROG 3</a></h2>
+      
+      <p>Disponible sous la forme d'une mise &#224; jour du micrologiciel du Pi-SPROG One original, le 
+          Pi-SPROG 3 transforme un module Raspberry Pi en un v&#233;ritable 
+          Programmeur DCC autonome et centrale.</p>
+      
+      <h2><a name="sprog3plus" id="sprog3plus">SPROG 3 Plus et Pi-SPROG Plus</a></h2>
+      
+      <p>Centrales et programmateurs DCC avec adaptateurs int&#233;gr&#233;s CBUS&reg;  (pas 
+          besoin d'un adaptateur USB - CAN s&#233;par&#233;) et de sorties &#224; double voie.</p>
+      
+      <p>Caract&#233;ristiques</p>
+      
+      <ul>
+          <li>Deux sorties de voie permettent l'exploitation et la programmation en simultan&#233;es.</li>
+          <li>Sortie de la voie principale jusqu'&#224; 2,5 Amps</li>
+          <li>Flexibilit&#233; des caract&#233;ristiques de sortie de la deuxi&#232;me voie :
+            <ul>
+                <li> 2,5 Amp&#232;res de sortie</li>
+                <li>Peut &#234;tre d&#233;sactiv&#233; quand elle n'est pas en programmation</li>
+                <li>Peut suivre la sortie de la voie principale lorsque la programmation ne permet pas
+                    de conduire des locomotives sur une voie de programmation isol&#233;e.</li>
+                <li>Peut &#234;tre utilis&#233; comme une sortie de zone de puissance auto-reverse (
+                    programmation en mode service non disponible dans ce mode.</li>
+            </ul>
+          </li>
+          <li>interface CAN (&#224; activer dans une prochaine version du micrologiciel) pour 
+            une Connectivit&#233; CBUS compl&#232;te.</li>
+      </ul>
+      
+      <h2><a name="canisb" id="canisb">Adaptateur CANISB CAN USB isol&#233;</a></h2>
+      
+      <p>Un adaptateur CAN USB isol&#233; &#233;lectriquement qui supprime toute
+         connexion entre l'interface USB de l'ordinateur h&#244;te et le r&#233;seau CBUS
+          .</p>
+      
+      <h2><a name="setup" id="setup">Configuration du mat&#233;riel avec JMRI</a></h2>
+      
+      <p>Cr&#233;er un nouveau profil. L'exemple pr&#233;sent&#233; concerne le mat&#233;riel Pi-PSROG 3.
+          Saisissez le nom et cliquez sur OK.<br><br></p>
+      <img src="images/Setup/NewProfile1.png" alt="JMRI new profile 1">
+      <p></p>
+
+      <p>S&#233;lectionnez le nouveau profil et cliquez sur OK<br><br></p>
+      <img src="images/Setup/NewProfile2.png" alt="JMRI new profile 2">
+      <p></p>
+      
+      <p>Cliquez sur Suivant lorsque l'assistant appara&#238;t.<br><br></p>      
+      <img src="images/Setup/NewProfile3.png" alt="JMRI new profile 3">
+      <p></p>
+
+      Faites les s&#233;lections suivantes :
+      <ul>
+          <li>Fabricant du syst&#232;me : SPROG DCC Generation 5</li>
+          <li>Connexion au syst&#232;me : S&#233;lectionnez votre mat&#233;riel, par exemple, en affichant Pi-SPROG 3<li>
+          <li>Port s&#233;rie : la s&#233;lection d&#233;pendra de l'ordinateur h&#244;te et du syst&#232;me d'exploitation</li>
+      </ul>
+      <br>
+      <img src="images/Setup/NewProfile4.png" alt="JMRI new profile 41">
+      <p></p>
+      
+      <p>Cliquez sur Suivant pour terminer la configuration.</p>
+      
+      <h2></h2>
+      <p>CBUS est une marque d&#233;pos&#233;e du Dr Michael Bolton</p>
+
+<p>Traduction 2021-02-05</p>
+      
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
+
+    

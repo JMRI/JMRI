@@ -1,117 +1,168 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR"
 "http://www.w3.org/TR/html4/strict.dtd">
 
 <html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
-  <!-- UpDated  by Blorec Herv&#233; 2013-09-26-->
 
-  <title>JMRI: The Python/Jython language</title><!-- Style -->
+  <title>JMRI: The Python/Jython language</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  "text/html; charset="iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <!-- Page Body -->
 
-      <h2>JMRI: Le langage Python/Jython</h2><a href=
-      "http://www.python.org">Python</a> est un langage de script
-      couramment utilis&eacute; qui est disponible sur de nombreux
-      types d'ordinateurs. Une variante bas&eacute;e sur Java,
-      appel&eacute; <a href="http://www.jython.org">Jython</a> , a
-      &eacute;t&eacute; int&eacute;gr&eacute; avec JMRI pour rendre
-      facile le contr&ocirc;le d'un chemin de fer miniature
-      &agrave; partir de la ligne de commande d'un ordinateur. Pour
-      nos besoins, les deux langages sont enti&egrave;rement
-      identiques.
+      <h1>JMRI : Le langage Python/Jython</h1><a href=
+      "http://www.python.org" target="_blank">Python</a> est un script largement utilis&#233;
+      qui est disponible sur de nombreux types d'ordinateurs. Une
+      variante bas&#233;e sur Java, appel&#233;e <a href=
+      "http://www.jython.org" target="_blank">Jython</a>, a &#233;t&#233; int&#233;gr&#233;e &#224;
+      JMRI pour faciliter le contr&#244;le d'un chemin de fer miniature depuis la
+      ligne de commande d'un ordinateur. Pour nos besoins, les deux
+     langages sont tout &#224; fait les m&#234;mes.
 
-      <p>Si comme moi vous pr&eacute;f&eacute;rez lire le papier,
-      il y a beaucoup de livres disponibles sur Python.
-      Peut-&ecirc;tre l'un des meilleurs pour les d&eacute;butants
-      est <a href=
-      "http://www.oreilly.com/catalog/lpython2/">"Learning
-      Python"</a> publi&eacute; par O'Reilly. Il contient plus que
-      ce que que vous devez vraiment savoir, cependant.</p>
+      <p>Si comme moi vous pr&#233;f&#233;rez lire sur papier, il y a beaucoup de
+      livres disponibles sur Python. Peut-&#234;tre l'un des meilleurs pour
+      d&#233;butant est <a href=
+      "http://www.oreilly.com/catalog/lpython2/" target="_blank">"Apprentissage
+      Python"</a> publi&#233; par O'Reilly. Il contient cependant plus 
+      que ce que vous avez r&#233;ellement besoin de savoir.</p>
 
-      <p>Le <a href="http://www.jython.org">site jython.org</a> a
-      quelques informations d'introduction, m&ecirc;me si leur
-      <a href="http://www.python.org/doc/tut/tut.html">tutoriel</a>
-      (lien cass&eacute; le 19/01/2012) passe trop de temps sur les
-      d&eacute;tails d'ing&eacute;nierie au d&eacute;but. Vous
-      pouvez sauter &agrave; la partie <a href=
-      "http://www.python.org/doc/tut/node5.html">sur la langue
-      elle-m&ecirc;me</a> .(lien cass&eacute; le 19/01/2012)</p>
+      <p>Le <a href="http://www.jython.org" target="_blank">site jython.org</a>
+      a quelques informations pr&#233;liminaires, bien que leur <a href=
+      "http://www.python.org/doc/tut/tut.html" target="_blank">tutoriel</a> passe 
+      trop de temps sur les d&#233;tails techniques au d&#233;but.
+      Vous pouvez passer &#224; la page <a href=
+      "http://www.python.org/doc/tut/node5.html" target="_blank">partie du langage
+      lui-m&#234;me</a>.</p>
 
-      <p>Les non-programmeurs pourraient vouloir commencer avec
-      quelques-unes des ressources r&eacute;pertori&eacute;es
-      <a href="http://www.python.org/moin/BeginnersGuide">pour
-      eux</a> sur le site de python.</p>
+      <p>Les non-programmeurs pourraient vouloir commencer par lire sur le site python certaines des
+      <a href="http://www.python.org/moin/BeginnersGuide" target="_blank">ressources pr&#233;vues
+      pour eux </a>.</p>
 
-      <p>Si vous &ecirc;tes int&eacute;ress&eacute;s par les
-      techniques sous-jacentes du langage, IBM developerWorks a
-      deux bons articles <a href=
-      "http://www-106.ibm.com/developerworks/java/library/j-jython.html">
-      ici</a> et <a href=
-      "http://www-106.ibm.com/developerworks/java/library/j-alj07064/">
-      ici</a> . Ils ont aussi un tutoriel int&eacute;ressant
+      <p>Si vous &#234;tes int&#233;ress&#233;s par les aspects techniques sous-jacents du
+      langage, IBM Developerworks a deux bons articles
       <a href=
-      "http://www-106.ibm.com/developerworks/java/edu/j-dw-java-jython1-i.html?S_TACT=104AHW02">
-      ici</a> , m&ecirc;me si vous avez besoin de vous enregistrer
-      avec votre adresse email pour y acc&eacute;der.</p>
+      "http://www-106.ibm.com/developerworks/java/library/j-jython.html" target="_blank">
+      ici</a> et <a href=
+      "http://www-106.ibm.com/developerworks/java/library/j-alj07064/" target="_blank">
+      ici</a>. Ils ont aussi un joli tutoriel <a href=
+      "http://www-106.ibm.com/developerworks/java/edu/j-dw-java-jython1-i.html?S_TACT=104AHW02" target="_blank">
+      ici</a>, bien qu'ils exigent que vous vous inscriviez avec votre
+      adresse &#233;lectronique pour y acc&#233;der.</p>
 
-      <p>Regarder les exemples du r&eacute;pertoire "jython" de la
-      distribution JMRI pourrait aussi vous aider.</p>
+      <p>L'examen des exemples dans le r&#233;pertoire "jython" de la distribution JMRI sera &#233;galement utile.
+      Voir la page <a href="Examples.shtml">examples</a> pour les liens vers ces exemples de scripts. </p>
 
-      <h3>Les choses que quelqu'un devrait vous indiquer</h3>La
-      seule chose la plus bizarre sur Python est l'indentation des
-      questions. Au lieu d'utiliser les caract&egrave;res {et} pour
-      indiquer le d&eacute;but et la fin d'un bloc ou d'une
-      fonction, c'est fait avec l'indentation en Python. Bien
-      s&ucirc;r,comme dans un C le langage populaire en
-      g&eacute;n&eacute;ral l'indentation est faite n'importe
-      o&ugrave;, mais il faut un peu d'habitude pour que vous
-      <em>arriviez</em> &agrave; le faire en Python.
+        <h2>Comment Jython et Python diff&#232;rent-ils ? </h2>
 
-      <p>Par exemple, cela est une erreur de syntaxe:</p>
+      <div class="para">
+        <p>Pour l'&#233;criture des scripts JMRI, ils ne
+        diff&#232;rent pas beaucoup. La plupart de ces diff&#233;rences 
+        concernent des cas d'erreurs quelque peu artificielles.. Il y a aussi
+        certaines restrictions sur ce que vous pouvez faire avec les
+        informations de configuration, etc. en Jython, mais ce sont
+        pas des choses dont un script JMRI est susceptible d'avoir besoin.</p>
+
+        <p>Des informations compl&#233;mentaires sur les diff&#233;rences sont
+        <a href=
+        "http://jython.sourceforge.net/docs/differences.html" target="_blank">disponible
+        ici</a>.</p>
+      </div>
+
+            
+      <h2>INFORMATIONS IMPORTANTES SUR LA FORMATION DES PROGRAMMES : questions d'indentation</h2>
+      <div class="para">      
+      La seule et
+      la plus &#233;trange avec Python, c'est que l'indentation est importante.
+      Au lieu d'utiliser les caract&#232;res { et } pour indiquer le d&#233;but
+      et la fin d'un bloc ou d'une fonction,  on utilise l'indentation
+      en Python.  
+      Bien sûr, dans un langage de type C, les gens ont l'habitude de 
+      faire des blocs de toute fa&#231;on, mais il faut s'habituer un peu &#224; 
+      ce que vous <em>avez</em> pour le faire en Python.
+      Vous devez faire une indentation avec quatre espaces pour chaque niveau
+      dans votre code.
+      (Quatre est une convention, mais cela aide vraiment &#224; la lisibilit&#233; ; 
+      l'utilisation d'onglets peut causer beaucoup de confusion et n'est pas recommand&#233;e.
+      Le m&#233;lange d'espaces et de tabulations risque de provoquer beaucoup de confusion ; 
+      ne faites pas cela)
+
+      <p> Par exemple, il s'agit d'une erreur de syntaxe:</p>
       <pre>
-    A = 15
-        print a
-    b = 21
-   
-</pre>parce que ces d&eacute;clarations, bien que logiquement
-regroup&eacute;s au m&ecirc;me niveau dans le programme, ne sont
-pas indent&eacute;es de la m&ecirc;me mani&egrave;re. Cela sonne
-comme une douleur au d&eacute;but, mais vous vous habituerez
-rapidement &agrave; elle. Ensuite, il rend les choses comme suit
-assez facile &agrave; lire, sans avoir &agrave; s'inqui&eacute;ter
-de savoir o&ugrave; l'{et }aller:
+   a = 15
+      imprimer un
+   b = 21  
+</pre>
+
+car ces d&#233;clarations, bien que logiquement regroup&#233;es au
+de m&#234;me niveau dans le programme, ne sont pas indent&#233;es de la m&#234;me fa&#231;on. Cela 
+peut sembler fastidieux au d&#233;but, mais on s'y habitue rapidement. Ensuite, cela fait
+des choses comme les suivantes assez faciles &#224; lire, sans avoir &#224;
+s'inqui&#233;ter de la destination des { et } :
       <pre>
-         if now == -1):
-                 done = 1
-         else:
-                 done = 0
-         print done
-  
-</pre>Si vous obtenez un message &agrave; propos de "Syntax error",
-regardez le num&eacute;ro de la ligne indiqu&eacute;e pour voir si
-votre indentation n'est pas align&eacute;e. 
-<!--#include virtual="/Footer" -->
-    </div>
-  </div>
+        if ( maintenant == -1 ) :
+                donne = 1
+        else :
+                donne = 0
+        impression effectu&#233;e 
+</pre>
+
+Si vous recevez un message concernant une "erreur de syntaxe", consultez
+ le num&#233;ro de ligne indiqu&#233; pour voir si votre bloc n'est pas align&#233;.
+
+       </div>
+       
+         <a id="newJython"></a>
+        <h2>Le support de JMRI pour Python est-il complet ?</h2>
+        Le scriptage utilise <a href="http://www.jython.org" target="_blank">Jython</a>, un
+        forme du langage Python. Le langage de base est assez
+        complet, mais toutes les biblioth&#232;ques Python ne sont pas
+        disponibles. Quelques d&#233;clarations "d'importation" que vous pourriez lire dans
+        un livre peut ne pas fonctionner en raison de biblioth&#232;ques manquantes.
+
+        <p>Mais le soutien s'am&#233;liore sans cesse, et vous pourriez
+        veuloirt essayer une version plus moderne de Jython que celle
+        que JMRI distribue. Pour ce faire, installez Jython sur votre ordinateur
+        puis ajoutez un fichier python.properties dans votre 
+        <a href="../../setup/Files.shtml">r&#233;pertoire des fichiers  l'utilisateur</a>
+        ou
+        <a href="../../setup/Files.shtml">r&#233;pertoire des pr&#233;f&#233;rences</a>
+        qui d&#233;finit les variables de configuration python,
+        par exemple sur Windows:</p>
+<pre style="font-family : monospace ;">
+python.path = C:\\\jython2.7.0\\\\Lib\\\_site\_packages
+python.startup = 
+</pre>
+<p>Notez que les doubles barres obliques inverses sont n&#233;cessaires.  
+Ils appara&#238;tront comme des barres obliques simples
+dans la valeur finale, que vous pouvez v&#233;rifier avec l'&#233;l&#233;ment 
+"Contexte" du menu principal de JMRI
+. Sur Mac, utilisez quelque chose comme :</p>
+<pre style="font-family : monospace ;">
+python.path = /Users/username/jython2.7.0/Lib/site-packages
+python.startup = 
+</pre>
+ou &#224; tout autre endroit o&#249; vous avez install&#233; le nouveau Jython. Pour Linux c'est similaire.
+
+
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

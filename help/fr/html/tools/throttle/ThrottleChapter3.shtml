@@ -1,5 +1,5 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Blorec Herv&#233; 2017-01-07-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional/FR"
+"http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
   <meta name="generator" content=
@@ -15,7 +15,7 @@
   <meta name="Robots" content="Index, Follow">
   <meta name="Revisit-After" content="7 Days"><!-- Style -->
   <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
+  "text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -25,12 +25,13 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
+    
+<h1> Version Actuelle de ladocumentation du R&#233;gulateur</h1>
 
-<div id="mainContent">
-<h1 style="color:#ff0000">Mise &#224; jour de la Version documentation du R&#233;gulateur
-</span></h1>
 <p>S'il vous pla&#238;t noter que cette documentation a &#233;t&#233; mise &#224; jour, reportez-vous aux liens ci-dessous:</p>
   <ul>
   <li>Le <a href="ToolsMenuThrottleEntry.shtml">Menu R&#233;gulateur dans JMRI</a></li>
@@ -42,7 +43,9 @@
   <li>Le <a href="ThrottlesPreferencesPane.shtml">Volet pr&#233;f&#233;rences R&#233;gulateurs</a></li>
   </ul>
 
-<h1>Configuration Avanc&#233;e du Panneau Fonction</h1>
+<h1>R&#233;gulateurs dans JMRI v2.x</h1>
+
+<h2>Configuration Avanc&#233;e du Panneau Fonction</h2>
 Quand une fen&#234;tre d'un nouveau r&#233;gulateur est
         initialis&#233;e, toutes les &#233;tiquettes des bouton de fonction sont mises en place avec un ensemble
          par d&#233;faut (F1. .. F2 ... F3 ... etc.) Celles-ci sont &#233;troitement li&#233;es au r&#233;gulateur &#224; main
@@ -190,9 +193,9 @@ situ&#233; juste sous la barre de titre principal de la fen&#234;tre.</p>
 <br>
 <a name="ViewPanels"></a>
 
-<h2><h2>Voir (panneaux)</h2>
-<dir>
+<h2>Voir (panneaux)</h2>
 
+<div style="margin-left: 2em">
    <table border="0" width="100%" cellpadding="0" cellspacing="0">
      <tbody>
                <td align="left" valign="top"><p>cliquer sur le bouton "<big>Voir</big>" option menu
@@ -225,14 +228,12 @@ situ&#233; juste sous la barre de titre principal de la fen&#234;tre.</p>
        <tr>
     </tbody>
   </table>
-</dir>
-<br>
-<br>
-<br>
-<a name="EditFrameProperties"></a>
+</div><a name="EditFrameProperties" id=
+      "EditFrameProperties"></a>
 
 <h2>Edition (Propri&#233;t&#233;s du Cadre)</h2>
-<dir>
+
+ <div style="margin-left: 2em">
 
    <table border="0" width="100%" cellpadding="0" cellspacing="0">
      <tbody>
@@ -272,7 +273,7 @@ situ&#233; juste sous la barre de titre principal de la fen&#234;tre.</p>
      </tr>
    </tbody>
  </table>
-</dir>
+</div>
 <br>
 
 <p>Ce chapitre termine les options avanc&#233;es du r&#233;gulateur qui sont actuellement
@@ -300,7 +301,7 @@ Vous pouvez utiliser la fl&#232;che de droite ci-dessous pour aller &#224; ce ch
  </tbody>
 </table>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->

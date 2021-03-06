@@ -3,14 +3,18 @@
 
 	  <hr class="hide">
 	  <div id="side"> <!-- Bloc de texte sur le c&#244;t&#233; gauche de la page -->
-	    <div style="text-align : center">JMRI&reg ; se connecte à...</div>
+
+	    <div style="text-align : center">JMRI&reg; se connecte &#224;...</div>
+
 	    <dl>
 
 		<dt><h3 style="padding-left : 1em ;"><a href="index.shtml">DCC++</a><</h3></dt>
 		<dd>
 		    <ul>
-			<li><a href="Sensors.shtml">DCC++ Capteurs</a></li>
-			<li><a href="Turnouts.shtml">DCC++ Aiguillages</a></li>
+
+			<li><a href="Sensors.shtml">Capteurs DCC++ </a></li>
+			<li><a href="Turnouts.shtml"> Aiguillages DCC++ </a></li>
+
 		    </ul>
 		</dd>
 		
@@ -26,6 +30,8 @@
 
         <!--#include virtual="/help/en/parts/SidebarTail.shtml" -->
    
-	</div> <!-- ferme #side -->
+
+	</div> <!-- closes #side -->
+
    
 <!-- /Sidebar.shtml -->

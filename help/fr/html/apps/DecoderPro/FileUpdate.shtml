@@ -1,27 +1,31 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 
-<html lang="fr">
+<html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$
-<!-- Translated by Herv&#233. BLOREC <bzh56420@yahoo.fr> on 2017-10-12 -->
-<title>JMRI: DecoderPro User Guide - Updating Decoder Definitions</title>
-
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+<!-- Translated by Herv&#233. BLOREC <bzh56420@yahoo.fr> on 2020-11-25 -->
+<title>JMRI: DecoderPro User Guide - Updating Decoder
+  Definitions</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
 
 
 	<H1> Guide Utilisateur DecoderPro </H1>
@@ -47,10 +51,10 @@
 	d&#233;crit l'addition d'une nouvelle d&#233;finition de d&#233;codeur 
 	quand vous &#234;tes utilisateur de JMRI version v 2.3.6 et apr&#232;s.</a>
 
-	<h3><a name="after236" id="after236">Charger une d&#233;finition 
-	depuis le web</h3><a name="after236" id="after236"> Si vous 
+	<h3><Charger une d&#233;finition 
+	depuis le web</h3>Si vous 
 	avez un URL pour une d&#233;finition de d&#233;codeur, elle peut &#234;tre copi&#233;e depuis 
-	une page web ou un 	courriel, et si votre ordinateur a une connexion Internet 
+	une page web ou un courriel, et si votre ordinateur a une connexion Internet 
 	active , vous pouvez directement installer la d&#233;finition.</a>
 .
 
@@ -64,8 +68,8 @@
 		<li>Vous serez invitez &#224; saisir l'URL. Entr&#233; le ou collez le, 
 		et cliquez OK.</li>
 
-	</ul>Sauf s'il y a des erreurs, le fichier sera copier sur v
-	otre ordinateur local et install&#233; dans votre r&#233;pertoire 
+	</ul>Sauf s'il y a des erreurs, le fichier sera copier sur votre 
+	ordinateur local et install&#233; dans votre r&#233;pertoire 
 	preference JMRI .<br>
 	Voir les Fichiers de Configuration <a href="../../setup/Files.shtml">JMRI </a> 
 
@@ -119,9 +123,9 @@
 	Cette section d&#233;crit l'addition d'une nouvelle d&#233;finition de d&#233;codeur quand vous utilisez la version JMRI 2.3.5 
 	ou avant.</a>
 
-	<h3><a name="before236" id="before236">Sur un syst&#232;me Windows</a></h3>
+	<h3>Sur un syst&#232;me Windows</a></h3>
 	<UL>
-	<LI>><a name="before236" id="before236"> Dans Windows Explorer,allez au menu de fichiers o&#249; le fichier decoder.xml est localis&#233; et cliquer-droit sur le fichier.<br>
+	<LI>> Dans Windows Explorer,allez au menu de fichiers o&#249; le fichier decoder.xml est localis&#233; et cliquer-droit sur le fichier.<br>
 
   (Ne faites pas un double click ou vous ouvrez le fichier au lieu de le sauver.)</a></li> 
 	<LI>Choisissez la s&#233;lection du menu "Enregistrer comme...
@@ -158,7 +162,7 @@
 	<li>depuis le menu d&#233;roulant D&#233;bogage, choisissez l'&#233;l&#233;ment " Reconstruire Index D&#233;codeur". Apr&#232;s que vous ayez 
 	reconstruit le nouvel index d&#233;codeur, le nouveau d&#233;codeur devrait &#234;tre visible dans la liste d&#233;roulante du 
 	Programmeur.</li>
-	 </ul><!--#include virtual="/Footer" -->
+	  <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

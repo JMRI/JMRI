@@ -26,7 +26,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <!--#include virtual="Sidebar" -->
 <div id="mainContent
 <h1>L'utilisation de la Fen&#234;tre R&#233;gulateur  </h1>
@@ -250,7 +250,7 @@ Voir <a href="../scripting/Jynstruments.shtml"> l&#224; pour plus d'informations
 <br>
 La fen&#234;tre du R&#233;gulateur est jynstrumentable, en particulier avec des commandes de fonction plus avanc&#233;es. <br>
 <br>
-A l'heure actuelle <a href="http://jmri.org/jython/Jynstruments/ThrottleFrame/"> 3 &#233;chantillons Jynstruments  sont livr&#233;s </a>,
+A l'heure actuelle <a href="https://jmri.org/jython/Jynstruments/ThrottleFrame/"> 3 &#233;chantillons Jynstruments  sont livr&#233;s </a>,
 un pour la lumi&#232;re, l'un pour la corne et un pour le sifflet (fonction 0, 1 et 2).
 Mais ce n'est qu'un &#233;chantillon, ayez un &#339;il sur le code et personnalisez le pour vos besoins sp&#233;cifiques sur votre d&#233;codeur. <br>
 
@@ -259,7 +259,7 @@ Mais ce n'est qu'un &#233;chantillon, ayez un &#339;il sur le code et personnali
 Jynstrumentable, donc ici nous d&#233;posons le Jynstruments sur </span> <span style="font-style: italic;"> le contenu fen&#234;tre </span> <span style="font-style: italic;">
 lui-m&#234;me, non pas sur la barre d'outils. <br>
 </span>
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->

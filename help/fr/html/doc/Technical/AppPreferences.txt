@@ -1,0 +1,107 @@
+
+Pr&#233;f&#233;rences JMRI
+================
+
+Les pr&#233;f&#233;rences dans JMRI sont stock&#233;es dans deux formats diff&#233;rents dans trois espaces diff&#233;rents.
+
+La structure d'acc&#232;s aux pr&#233;f&#233;rences de JMRI est bas&#233;e sur la structure d'acc&#232;s aux propri&#233;t&#233;s du projet (appel&#233;e Configuration auxiliaire pour un projet) et aux pr&#233;f&#233;rences dans l'EDI NetBeans.
+
+Il existe deux API, *PreferencesManager* et *PreferencesPanel* qui mettent en &#339;uvre l'acc&#232;s et le contr&#244;le des pr&#233;f&#233;rences au sein d'une application JMRI.
+
+# Espaces de pr&#233;f&#233;rences
+
+## Le profil actuel
+
+La plupart des pr&#233;f&#233;rences sont stock&#233;es ensemble dans un seul *Profil*. Il y a deux espaces dans un *Profil*, l'espace **partag&#233;** et l'espace **priv&#233;**.
+
+Un profil a un emplacement, un nom et une identit&#233;. L'identit&#233; est form&#233;e de deux parties, une version "s&#251;re" du nom qui peut &#234;tre utilis&#233;e dans les noms de fichiers ou de r&#233;pertoires, et un nombre al&#233;atoire (8 chiffres hexad&#233;cimaux) pour assurer l'unicit&#233;.
+
+Il est recommand&#233; que les emplacements des profils portent l'extension "jmri" pour permettre d'attribuer aux profils un identificateur de type uniforme (UTI) dans iOS et macOS. Les applications JMRI incluent par d&#233;faut l'extension dans l'emplacement du profil lors de la cr&#233;ation d'un profil, mais l'utilisation de cette extension n'est pas obligatoire. Voir [Startup Scripts](StartUpScripts.shtml) pour plus de d&#233;tails sur les UTI et leur utilisation.
+
+### Partag&#233;
+
+Les pr&#233;f&#233;rences partag&#233;es sont des pr&#233;f&#233;rences au sein d'un profil unique qui sont partag&#233;es entre plusieurs ordinateurs ex&#233;cutant ce profil. Un exemple de pr&#233;f&#233;rence partag&#233;e est l'utilisation de la connexion LocoNet "LocoNet".
+
+Les pr&#233;f&#233;rences partag&#233;es sont stock&#233;es &#224; la racine du r&#233;pertoire "profile" dans le profil.
+
+### Priv&#233;
+
+Les pr&#233;f&#233;rences priv&#233;es sont des pr&#233;f&#233;rences au sein d'un profil unique qui ne sont utilis&#233;es que sur un seul ordinateur ex&#233;cutant ce profil. Un exemple de pr&#233;f&#233;rence priv&#233;e est l'utilisation du port "COM3" pour acc&#233;der au syst&#232;me utilis&#233; par la connexion "LocoNet".
+
+Les pr&#233;f&#233;rences priv&#233;es sont stock&#233;es dans des r&#233;pertoires nomm&#233;s "jmri-UUID-ID" o&#249; "UUID" est un identifiant unique et universel pour l'ordinateur et "ID" est le chiffre al&#233;atoire de l'identit&#233; du profil. Un r&#233;pertoire de pr&#233;f&#233;rences priv&#233;es unique est cr&#233;&#233; pour chaque utilisateur sur chaque ordinateur sur lequel un profil est utilis&#233;.
+
+## R&#233;pertoire des param&#232;tres
+
+Le r&#233;pertoire des param&#232;tres est l'endroit o&#249; JMRI conserve les pr&#233;f&#233;rences qui ne sont pas stock&#233;es dans un profil unique, et qui ne sont utilis&#233;es que sur un seul ordinateur. Un exemple de pr&#233;f&#233;rence dans le r&#233;pertoire des param&#232;tres est la fa&#231;on dont une application JMRI s&#233;lectionne le profil &#224; utiliser.
+
+Le r&#233;pertoire des param&#232;tres est par compte d'utilisateur sur un seul ordinateur.
+
+# Formats de pr&#233;f&#233;rence
+
+Les pr&#233;f&#233;rences au sein d'une application JMRI peuvent &#234;tre stock&#233;es sous forme d'&#233;l&#233;ments XML ou de pr&#233;f&#233;rences Java.
+
+## Él&#233;ments XML
+
+Les &#233;l&#233;ments XML pour les pr&#233;f&#233;rences JMRI sont stock&#233;s dans deux fichiers diff&#233;rents dans un seul espace : "profile.xml" (ou "preferences.xml") et "user-interface.xml". Dans les deux fichiers diff&#233;rents, les pr&#233;f&#233;rences sont stock&#233;es en utilisant les m&#234;mes moyens et la m&#234;me structure, mais l'intention des deux fichiers est diff&#233;rente.
+
+Un gestionnaire de pr&#233;f&#233;rences utilisant l'un ou l'autre de ces fichiers g&#232;re un type de pr&#233;f&#233;rence, par exemple, les configurations de connexion ou l'&#233;tat des tables. Le gestionnaire utilise les m&#233;thodes de [AuxiliaryConfiguration] (http://www.jmri.org/JavaDoc/doc/jmri/profile/AuxiliaryConfiguration.html) pour obtenir, mettre ou supprimer ces &#233;l&#233;ments XML. Ces m&#233;thodes requi&#232;rent toutes le nom de l'&#233;l&#233;ment ou de l'&#233;l&#233;ment et si l'&#233;l&#233;ment est partag&#233; ou priv&#233;.
+
+Les &#233;l&#233;ments XML pour les pr&#233;f&#233;rences JMRI doivent tous avoir des espaces de noms valides et r&#233;solvables. Ces espaces de noms *ne doivent pas* &#234;tre uniques ou d&#233;finis dans le site web jmri.org.
+
+### preferences.xml
+
+Le fichier " preferences.xml " *devrait* contenir les pr&#233;f&#233;rences qui ont &#233;t&#233; explicitement d&#233;finies par l'utilisateur dans l'interface utilisateur des pr&#233;f&#233;rences de JMRI. Ces pr&#233;f&#233;rences ont tendance &#224; avoir un impact significatif sur le fonctionnement d'une application et peuvent n&#233;cessiter le red&#233;marrage de l'application pour prendre effet.
+
+Le fichier *preferences.xml* contient uniquement les pr&#233;f&#233;rences qui s'appliquent &#224; tous les profils fonctionnant sous un seul utilisateur sur un seul ordinateur.
+
+### profile.xml
+
+Le fichier "profile.xml" *devrait* contenir les pr&#233;f&#233;rences qui ont &#233;t&#233; explicitement d&#233;finies par l'utilisateur dans l'interface utilisateur des pr&#233;f&#233;rences de JMRI. Ces pr&#233;f&#233;rences ont tendance &#224; avoir un impact significatif sur le fonctionnement d'une application et peuvent n&#233;cessiter le red&#233;marrage de l'application pour prendre effet.
+
+Les versions partag&#233;es et priv&#233;es de "profile.xml" sont conserv&#233;es dans un seul profil.
+
+### user-interface.xml
+
+Le fichier user-interface.xml contient des pr&#233;f&#233;rences implicites, telles que la taille et l'emplacement des fen&#234;tres, l'ordre de tri des tableaux et d'autres &#233;tats de l'interface utilisateur captur&#233;s qui sont automatiquement restaur&#233;s si n&#233;cessaire.
+
+user-interface.xml n'est priv&#233; que dans un seul profil.
+
+## Pr&#233;f&#233;rences Java
+
+Les pr&#233;f&#233;rences de l'application JMRI qu'un simple (un nombre, un bool&#233;en ou une cha&#238;ne) ou une liste de pr&#233;f&#233;rences simples, et qui ne peuvent &#234;tre utilis&#233;es de mani&#232;re significative qu'une seule fois dans un seul profil, sont candidates pour &#234;tre stock&#233;es en tant que [Pr&#233;f&#233;rences Java] (https://docs.oracle.com/javase/8/docs/api/java/util/prefs/Preferences.html).
+
+JMRI utilise un format Properties pour stocker les pr&#233;f&#233;rences Java dans le fichier "profile.properties" dans les espaces partag&#233;s et priv&#233;s d'un m&#234;me profil. Le fichier "preferences.properties" est utilis&#233; pour stocker les pr&#233;f&#233;rences qui s'appliquent &#224; tous les profils g&#233;r&#233;s par un seul utilisateur sur un seul ordinateur.
+
+JMRI contraint en outre les pr&#233;f&#233;rences de Java en les pla&#231;ant dans des "espaces de noms" s&#233;par&#233;s bas&#233;s sur les noms des paquets. Cela permet aux pr&#233;f&#233;rences de deux paquets diff&#233;rents d'utiliser le m&#234;me nom pour une pr&#233;f&#233;rence (par exemple, le serveur Web et le serveur simple de JMRI ont tous deux une propri&#233;t&#233; "port", mais comme ils sont dans des paquets diff&#233;rents, ils ne sont pas en conflit).
+
+# Acc&#232;s aux pr&#233;f&#233;rences
+
+Si une autre classe contr&#244;le d&#233;j&#224; les pr&#233;f&#233;rences auxquelles vous voulez acc&#233;der, utilisez les m&#233;thodes de cette classe pour acc&#233;der &#224; cette pr&#233;f&#233;rence. Sinon, cr&#233;ez une classe pour g&#233;rer cette pr&#233;f&#233;rence au nom des autres classes dans une application JMRI.
+
+L'acc&#232;s direct aux fichiers de pr&#233;f&#233;rences d&#233;crits ci-dessus est fortement d&#233;conseill&#233;, car il pourrait entra&#238;ner l'&#233;crasement des pr&#233;f&#233;rences d'un gestionnaire de pr&#233;f&#233;rences par celles d'un autre gestionnaire. Utilisez les m&#233;thodes de [ProfileUtils](http://www.jmri.org/JavaDoc/doc/jmri/profile/ProfileUtils.html) pour acc&#233;der &#224; la configuration auxiliaire et aux pr&#233;f&#233;rences Java pour un profil unique ou aux param&#232;tres de l'application (passez "null" pour le profil afin d'obtenir les param&#232;tres de l'application).
+
+# Gestionnaires de pr&#233;f&#233;rences
+
+[PreferenceManagers](http://www.jmri.org/JavaDoc/doc/jmri/spi/PreferencesManager.html) sont les principaux gestionnaires de la recherche et du stockage des pr&#233;f&#233;rences dans les applications JMRI.
+
+La biblioth&#232;que JMRI dispose d'un certain nombre de gestionnaires de pr&#233;f&#233;rences. Ces gestionnaires fournissent tous une impl&#233;mentation de l'interface PreferencesManager pour permettre de les d&#233;couvrir. Les gestionnaires de pr&#233;f&#233;rences sont charg&#233;s par le gestionnaire de configuration JMRI, qui utilise l'API [ServiceLoader] (https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html) pour cr&#233;er une instance de chaque gestionnaire de pr&#233;f&#233;rences (cela permet &#224; des JAR tiers d'impl&#233;menter des gestionnaires de pr&#233;f&#233;rences ; voir la documentation de l'API ServiceLoader pour plus de d&#233;tails sur son fonctionnement et la documentation de l'API [jmri.spi] (https://jmri.org/JavaDoc/doc/jmri/spi/package-summary.html) pour plus de d&#233;tails sur la mani&#232;re dont JMRI r&#233;pond aux exigences de l'API ServiceLoader).
+
+Comme le m&#233;canisme par lequel les gestionnaires de pr&#233;f&#233;rences sont d&#233;couverts n'a pas d'ordre d&#233;terministe, l'API des gestionnaires de pr&#233;f&#233;rences comprend des m&#233;thodes qui permettent &#224; un gestionnaire de pr&#233;f&#233;rences d'exiger que d'autres gestionnaires de pr&#233;f&#233;rences sp&#233;cifiques soient correctement initialis&#233;s avant qu'il ne soit initialis&#233;.
+
+# Panneaux de pr&#233;f&#233;rences
+
+Les [PreferencePanels](http://www.jmri.org/JavaDoc/doc/jmri/swing/PreferencesPanel.html) sont l'interface utilisateur permettant d'interagir avec les gestionnaires de pr&#233;f&#233;rences dans la fen&#234;tre des pr&#233;f&#233;rences d'une application JMRI.
+
+Lorsque la fen&#234;tre des pr&#233;f&#233;rences est initialis&#233;e, elle utilise l'API ServiceLoader pour cr&#233;er une instance de chaque panneau de pr&#233;f&#233;rences (cela permet &#224; des JAR tiers de mettre en &#339;uvre des panneaux de pr&#233;f&#233;rences).
+
+Les panneaux de pr&#233;f&#233;rences fournissent des conseils pour regrouper les panneaux, mais ne fournissent pas de conseils pour commander les panneaux de pr&#233;f&#233;rences. Certains groupes de panels de pr&#233;f&#233;rences sont bien connus dans la fen&#234;tre des pr&#233;f&#233;rences et sont donn&#233;s dans un ordre sp&#233;cifique, apr&#232;s quoi tous les autres groupes de panels de pr&#233;f&#233;rences sont class&#233;s par ordre alphab&#233;tique.
+
+# Scripts
+
+Les scripts suivants inclus dans la distribution JMRI montrent comment acc&#233;der aux pr&#233;f&#233;rences dans un script :
+
+- __[PreferencesExamples.py](https://jmri.org/jython/PreferencesExamples.py)__ - Exemple de code Jython qui montre &#233;galement comment utiliser un autre script Jython ([preferences.py](https://jmri.org/jython/preferences.py)) dans un script
+- __[zeroconf-preferences.js](https://jmri.org/jython/zeroconf-preferences.js)__ - Script JavaScript ou ECMAScript fonctionnel qui contr&#244;le certaines pr&#233;f&#233;rences du r&#233;seau ZeroConf
+
+   
+

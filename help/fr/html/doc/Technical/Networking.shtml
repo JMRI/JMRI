@@ -1,12 +1,14 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Blorec Herv&#233; 2013-09-07-->
+
 
 <html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+<!-- UpDated by Blorec Herv&#233; 2020-12-17-->
   <title>JMRI: Acc&egrave;s au r&eacute;seau</title>
   <meta content="Bob Jacobsen" name="Author">
   <meta name="keywords" content="JMRI network access">
@@ -90,12 +92,42 @@
             </li>
           </ul>
         </li>
+  
+   <li>C/MRI
 
+          <ul>
+            <li>Cela permet d'&#233;changer le protocole de question/r&#233;ponse C/MRI via
+           un <a href=
+            "../../hardware/TerminalServer.shtml">serveur terminal
+            </a></li>
+          </ul>
+        </li>
+        
+        <li>CAN via l'interface du r&#233;seau MERG
+         <ul>
+         <li>L'interface r&#233;seau peut &#234;tre utilis&#233;e pour le serveur CANEther, CANGC1e, CANPi et CBUS&trade.
+         </li>
+          <li>
+          Le serveur CBUS est un <a href="https://nodejs.org/en/">Node.js</a> programme permettant des connexions multiples au r&#233;seau  par
+         un MERG CANUSB4.
+          <a href="https://github.com/phillipsnj/mergCbusServer">Serveur CBUS</a>
+          </li>
+         </ul>
+        </li>
+  
         <li>EasyDCC
 
           <ul>
             <li><a href="../../hardware/TerminalServer.shtml">Via
             serveur terminal</a></li>
+          </ul>
+        </li>
+
+		<li>JMRIClient
+
+          <ul>
+            <li><a href="../../hardware/jmriclient/index.shtml">Via
+            connexion r&#233;seau &#224; un serveur JMRI simple</a></li>
           </ul>
         </li>
 
@@ -220,9 +252,16 @@
       Discovery" pour la mise en r&eacute;seau.</p>
 
       <p>Voir aussi "man dns-sd" pour de plus d'informations sur
-      l'outil DNS-SD de d&eacute;bogage en ligne de commande. 
+      l'outil DNS-SD de d&eacute;bogage en ligne de commande.
+      <h2></h2>
+        <p>CBUS&trade; est une marque d&#233;pos&#233;e du Dr Michael Bolton</p>
+        <p></p>
+       
       <!--#include virtual="/Footer" --></p>
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
 </html>
+
+   
+

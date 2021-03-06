@@ -1,59 +1,162 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
+"http://www.w3.org/TR/html4/loose.dtd">
+<!-- updated on 2020-12-06 -->
 <html lang="fr">
-<!-- Translated by Herv&#233; BLOREC bzh56420@yahoo.fr on 2017-01-01 -->
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI Setup - Configuration Profiles</title><!-- Style -->
+  <title>JMRI Setup - Configuration Profiles</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  "text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
+      <!-- Page Body -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+      <h1>Installation JMRI: Configuration des Profils</h1>
 
-<!-- Page Body -->
-<h1>R&#233;glages JMRI: Profils de Configuration</h1>
+      <p><em>Profils de Configuration</em> permettent de lancer une seule 
+      application JMRI avec l'une des configurations sp&#233;cifi&#233;es par plusieurs 
+      utilisateurs. Un Profil de Configuration contient toutes les Pr&#233;f&#233;rences 
+      telles qu'elles sont d&#233;finies dans le dialogue des pr&#233;f&#233;rences JMRIP, et 
+      peut - en option - inclure des fichiers utilisateur, un Inventaire      
+      <p>Par d&#233;faut, un seul Profil est utilis&#233; et il n'est pas tr&#232;s visible 
+      pour l'utilisateur.  Mais il peut &#234;tre utile d'avoir plusieurs Profils :
+      <ul>
+      <li> Par exemple, vous pouvez avoir un Profil dans votre ordinateur portable qui 
+      d&#233;finit toutes vos connexions mat&#233;rielles, et une autre qui d&#233;finit 
+      les m&#234;mes comme des connexions "simul&#233;es".
+      En choisissant l'un ou l'autre au d&#233;marrage, vous pouvez  &#224; la fois 
+      travailler sur le r&#233;seau avec des connexions r&#233;elles et travailler 
+      &#233;galement hors ligne, sans le r&#233;seau mat&#233;riel connect&#233;.</li>
+      <li>Un autre exemple serait un Profil pour votre propre r&#233;seau, et 
+      un autre pour l'utilisation de DecoderPro dans votre club local.</li>
+      </ul>
 
-<p><em> Les Profils de Configuration</em> permettent &#224; une simple application JMRI d&#39;&#234;tre lanc&#233;e avec une des multiples Configurations sp&#233;cifi&#233;es par l&#39;utilisateur. Un Profil de Configuration contient toutes les pr&#233;f&#233;rences telles qu&#39;elles ont &#233;t&#233; d&#233;finies dans le chapitre Pr&#233;f&#233;rences JMRI, et peut &#8211; optionnellement &#8211; inclure des fichiers utilisateur, un Inventaire, et de R&#233;gulateurs..</p>
+      <p><a href="images/Config_ProfileMigrate314.png"><img src=
+      "images/Config_ProfileMigrate314.png" width="438" height=
+      "114" align="right" alt=
+      "Ecran de dialogue de conversion de la configuration du Profil"></a> Lors 
+      de l'ouverture d'une ancienne configuration (avant JMRI 3.9) dans 
+      une des nouvelles applications, la mani&#232;re dont les pr&#233;f&#233;rences sont stock&#233;es est convertie.
+      L'application vous en informe par ce dialogue:</p>
 
-<p>Quand une application JMRI ( version 3.9 et plus r&#233;centes) est lanc&#233;e pour la premi&#232;re fois, elle cherche un profil de configuration. S&#39;il n&#39;y a pas de Profil, l&#39;application cr&#233;era un profil par d&#233;faut et l&#39;utilise sans vous inviter. Si seulement  un simple Profil est trouv&#233;, l&#39;application l&#39;utilisera sans vous inviter. S&#39;il y a plusieurs Profils, l&#39;application vous demandera quel profil utiliser. Vous pouvez sp&#233;cifier que l&#39;application d&#233;marrera toujours avec le m&#234;me Profil..</p>
+      <p>Lorsqu'une application JMRI (version 3.9 et plus) est lanc&#233;e ou 
+      la premi&#232;re fois, elle v&#233;rifie un Profil de configuration. Si aucun 
+      Profil n'existe, l'application cr&#233;era un Profil par d&#233;faut et 
+      l'utilisera sans vous le demander. Si un seul fichier est trouv&#233;, 
+      l'application utilisera ce Profil sans vous le demander. S'il existe 
+      plusieurs Profils, l'application vous demandera de les utiliser. 
+      Vous pouvez sp&#233;cifier que l'application doit toujours commencer par le m&#234;me Profil.</p>
 
-<p>Par d&#233;faut quand un application JMRI d&#233;marre, elle invite l&#39;utilisateur &#224; choisir le Profil de Configuration &#224; utiliser: <img src="images/Set_Active_Profile.png"></p>
-<p>Si l&#39;utilisateur ne s&#233;lectionne pas un nouveau Profil et clique OK, le programme continuera avec le Profil par d&#233;faut apr&#232;s un cour d&#233;lai. Vous pouvez cochez une case dans les pr&#233;f&#233;rences pour passer cette &#233;tape et aller directement au dernier Profil utilis&#233;..</p>
 
-<h2>Gestion des Profils</h2>
+      <p>Par d&#233;faut, lorsqu'une application JMRI d&#233;marre avec plusieurs Profils, 
+      il indique &#224; l'utilisateur quel Profil de configuration il doit utiliser : 
+      </p>
+        
+        <img src="images/Set_Active_Profile.png">
+      <p>Si l'utilisateur ne s&#233;lectionne pas un nouveau Profil et ne clique 
+      pas sur OK, le programme continuera avec le Profil par d&#233;faut apr&#232;s 
+      un court d&#233;lai. Vous pouvez cocher une case dans les pr&#233;f&#233;rences 
+      pour contourner cette &#233;tape et passer directement au dernier Profil utilis&#233;.
 
-<p>Les Profils de configuration peuvent &#234;tre g&#233;r&#233;s dans l&#39;application pr&#233;f&#233;rences, dans l&#39;onglet Conf Profil.</p>
+      <h2>Gestion des Profils</h2>
 
-<img src="images/Profile_Preferences_prompt.png">
+      <p>Les Profils de configuration peuvent &#234;tre g&#233;r&#233;s dans les pr&#233;f&#233;rences 
+      de l'application, sous la configuration du Profil
+      tab.</p><img src="images/Profile_Preferences_prompt.png">
+      <p>La ligne marqu&#233;e "Profil actif actuel" dans la colonne Statut est 
+      utilis&#233;e par ce lancement de l'application JMRI, et c'est &#233;galement 
+      l&#224; que les modifications des pr&#233;f&#233;rences seront enregistr&#233;es.</p>
 
-<p>La ligne "Profil Actuel Actif" dans la colonne statuts est utilis&#233; par ce d&#233;marrage de l&#39;application JMRI, c&#39;est aussi o&#249; seront sauvegard&#233;s les changements des Pr&#233;f&#233;rences</p>
+      <p>Pour utiliser ou configurer un Profil diff&#233;rent, s&#233;lectionnez-le, 
+      cliquez sur "Activer", sauvegardez et red&#233;marrez l'application.</p>
 
-<p>Pour utiliser ou configurer un Profil diff&#233;rent, s&#233;lectionnez le, cliquez  "Activer", Sauvegarder et red&#233;marrer l&#39;application.</p>
 
-<p>Pour plus d&#39;information sur comment configurer JMRI pour partager ces fichiers de configurations entre des ordinateurs multiples, voir la page d&#39;aide sur <a href="Dropbox.shtml">l&#39;usage de Dropbox avec JMRI</a>.
+      <p>Pour plus d'informations sur la fa&#231;on de configurer JMRI pour partager 
+      ses fichiers de configuration entre plusieurs ordinateurs, voir le
+      <a href="Dropbox.shtml">page d'aide sur l'utilisation de Dropbox avec
+      JMRI</a>.</p>
+      <p>Nous recommandons que les noms des r&#233;pertoires de Profils se 
+      terminent par <code>.jmri</code> afin que d'autres applications 
+      puissent utiliser cette extension pour reconna&#238;tre un Profil par 
+      extension. JMRI ajoute automatiquement <code>.jmri</code> au nom du 
+      r&#233;pertoire pour les nouveaux Profils. Si <code>.jmri</code> est ajout&#233; 
+      au nom d'un r&#233;pertoire de Profils existant, JMRI devrait automatiquement
+          reconna&#238;tre et g&#233;rer ce changement.</p>
+
+      <h2>Partage des Profils</h2>
+
+      <h3>Exportation</h3>
+
+      <p>Les Profils peuvent &#234;tre export&#233;s &#224; partir de la section "Profil" 
+      des pr&#233;f&#233;rences de l'application. Un Profil export&#233; est une archive 
+      compress&#233;e contenant le contenu du Profil, et contiendra &#233;ventuellement 
+      les fichiers et la liste des utilisateurs s'ils sont stock&#233;s en dehors du Profil.</p>
+
+      <h3>Importation</h3>
+
+      <p>JMRI ne prend pas encore en charge directement l'importation de Profils.</p>
+
+      <p>Un Profil peut &#234;tre import&#233; en le d&#233;compressant &#224; l'aide de 
+      l'utilitaire de gestion des archives dans un nouveau r&#233;pertoire, 
+      puis en l'ouvrant au lancement de JMRI ou &#224; partir des Pr&#233;f&#233;rences 
+      de l'application en cliquant sur le bouton "Ajouter un Profil existant...".
+
+      <p>Notez que l'utilisation de la capacit&#233; d'importation/exportation 
+      de Profil pour copier les donn&#233;es JMRI dans les deux sens entre deux 
+      ordinateurs n'est ni support&#233;e ni recommand&#233;e.</p>
+
+      <h2>Mise &#224; jour des versions ant&#233;rieures de JMRI</h2>
+
+      <p>Lorsque vous ex&#233;cutez une application JMRI pour la premi&#232;re 
+      fois apr&#232;s avoir mis &#224; niveau une version ant&#233;rieure de JMRI, 
+      l'application copie la configuration existante dans un nouveau 
+      Profil et utilise Profil. Si vous utilisez une application JMRI 
+      que vous n'aviez pas utilis&#233;e avant la mise &#224; niveau, l'application s
+      e comportera comme d&#233;crit ci-dessus.</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
+
 
 <h2>Partage de Profils</h2>
 <h3>Exportation</h3>
-<p>Les Profils peuvent &#234;tre export&#233;s depuis la section Config Profil de l&#39;application pr&#233;f&#233;rences. Un Profil export&#233; est une archive compress&#233;e contenant le contenu du Profil, et Contient &#233;ventuellement les fichiers utilisateur et inventaire S&#39;ils sont stock&#233;s en dehors du Profil.</p>
+<p>Les Profils peuvent &#234;tre export&#233;s depuis la section Config Profil de 
+l&#39;application pr&#233;f&#233;rences. Un Profil export&#233; est une archive 
+compress&#233;e contenant le contenu du Profil, et Contient &#233;ventuellement 
+les fichiers utilisateur et inventaire S&#39;ils sont stock&#233;s en dehors du Profil.</p>
 <h3>Importation</h3>
 <p>JMRI ne supporte pas encore directement l&#39;importation de Profils..</p>
-<p>Un Profil peut &#234;tre import&#233; en le d&#233;compressant en utilisant un gestionnaire d&#39;archive dans un nouveau r&#233;pertoire et puis en l&#39;ouvrant lors du lancement de JMRI ou depuis les pr&#233;f&#233;rences de l&#39;application en cliquant sur le bouton "Ajouter un existant"..</p>
-<p>Notez que l&#39;utilisation de la possibilit&#233; d&#39;Importer/Exporter le Profil pour recopier des donn&#233;es JMRI entre deux n&#39;est ni prise en charge ni recommand&#233;e.</p>
+<p>Un Profil peut &#234;tre import&#233; en le d&#233;compressant en utilisant un 
+gestionnaire d&#39;archive dans un nouveau r&#233;pertoire et puis en l&#39;ouvrant 
+lors du lancement de JMRI ou depuis les pr&#233;f&#233;rences de l&#39;application en 
+cliquant sur le bouton "Ajouter un existant"..</p>
+<p>Notez que l&#39;utilisation de la possibilit&#233; d&#39;Importer/Exporter le Profil 
+pour recopier des donn&#233;es JMRI entre deux n&#39;est ni prise en charge ni recommand&#233;e.</p>
 
 <h2> Actualiser pour une Version plus R&#233;centes de JMRI</h2>
-<p>Quand vous d&#233;marrer pour la premi&#232;re fois apr&#232;s une mise &#224; jour pour une version plus r&#233;cente de JMRI, l&#39;application copiera ses configurations existantes vers un nouveau Profil, et utilise ce Profil. Si vous utilisez une application JMRI que vous n&#39;aviez pas utilis&#233;e avant la mise &#224; niveau, l&#39;application se comporte comme d&#233;crit ci-dessus..</p>
+<p>Quand vous d&#233;marrer pour la premi&#232;re fois apr&#232;s une mise &#224; jour
+pour une version plus r&#233;cente de JMRI, l&#39;application copiera ses configurations
+existantes vers un nouveau Profil, et utilise ce Profil. Si vous utilisez une application 
+JMRI que vous n&#39;aviez pas utilis&#233;e avant la mise &#224; niveau, l&#39;application 
+se comporte comme d&#233;crit ci-dessus..</p>
 
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->

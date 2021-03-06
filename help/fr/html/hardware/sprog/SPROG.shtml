@@ -1,209 +1,270 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- UpDated  by Blorec Herv&#233; 2013-09-19-->
 
 <html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI Hardware Guide: SPROG</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <title>JMRI Hardware Support - SPROG</title>
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
-  "SPROG java model railroad JMRI install windows"><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  "SPROG java model railroad JMRI install windows linux mac osx">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp.shtml" -->
     <div id="mainContent">
-      <h2>JMRI Guide Mat&eacute;riel: SPROG</h2>
 
-      <h3>Mat&eacute;riel Support&eacute;</h3>JMRI supporte le
-      Sprog &agrave; la fois en tant que programmateur
-      d&eacute;codeur, et aussi comme une mini-centrale. Pour plus
-      d'informations sur ses capacit&eacute;s, voir le <a href=
-      "http://www.sprog-dcc.co.uk/downloads/SprogIIUserGuide.pdf">manuel
-      Sprog</a> sur le <a href="http://www.sprog-dcc.co.uk/">site
-      web Sprog</a> .
+      <h1>Support mat&#233;riel : SPROG</h1>
 
-      <p>Remarquez qu'il existe plusieurs versions du
-      mat&eacute;riel Sprog, et encore plus de versions du logiciel
-      Sprog .</p>
+      <ul class="snav">
+        <!-- TOC -->
 
-      <h3>Installation</h3>
+        <li><a href="#hardware">Mat&#233;riel</a></li>
+
+        <li><a href="#limitations">Limitations</a></li>
+
+        <li><a href="#connecting">Connexions</a></li>
+
+        <li><a href="#tools">Outils</a></li>
+
+        <li><a href="#documentation">Documentation</a></li>
+      </ul>
+
+      <a name="hardware" id="hardware"></a>
+      <h2>Mat&#233;riel support&#233;</h2>
+
+      <h3>Interfaces informatiques</h3>
+      JMRI soutient le SPROG &#224; la fois en tant que
+      Programmeur de d&#233;codeur, et comme mini-station de commande. Pour en savoir plus
+       ces capacit&#233;s, voir le <a href=
+      "http://www.sprog-dcc.co.uk/downloads/SprogIIUserGuide.pdf">Manuel SPROG
+     </a> sur le <a href="http://www.sprog-dcc.co.uk/"> site web SPROG</a>.
+
+      <p>Notez qu'il existe plusieurs versions diff&#233;rentes du
+      mat&#233;riel SPROG, et encore plus de versions du software SPROG
+      software.<br>
+      Les mod&#232;les SPROG suivants fonctionnent avec la version actuelle de JMRI:</p>
+      <ul>
+        <li>SPROG II</li>
+        <li>SPROG II USB</li>
+        <li>SPROG 3 (USB)</li>
+        <li>SPROG Nano (uniquement en tant que centrale, en utilisant un booster externe)</li>
+        <li>Pi SPROG One</li>
+        <li>Pi SPROG Nano</li>
+      </ul>
+
+      <a name="connecting" id="connecting"></a>
+      <h2>Connexion</h2>
+
+      <h3>C&#226;blage</h3>
+
+      <p>Les SPROG originaux &#233;taient connect&#233;s par un c&#226;ble s&#233;rie &#224; 9 broches.<br>
+      Les SPROG actuels ne sont disponibles qu'en USB.<br>
+      Connectez votre SPROG &#224; l'aide du c&#226;ble appropri&#233; et mettez-le sous tension.</p>
+
+      <h3>R&#233;glages</h3>
 
       <ol>
-        <li>Les SPROGs originales &eacute;taient connect&eacute;es
-        via un c&acirc;ble s&eacute;rie &agrave; 9 broches. Les
-        SPROGs actuelles sont disponibles en USB uniquement.
-        Connectez votre Sprog en utilisant le c&acirc;ble
-        appropri&eacute; et le mettre en place.</li>
+        <li>Drivers USB
+        <ul>
+          <li>Sur Windows 10, les SPROG connect&#233;s par USB fonctionneront en utilisant les
+          Pilotes USB install&#233;s dans le syst&#232;me d'exploitation. Lorsque vous branchez le SPROG,
+          il appara&#238;tra sous Mat&#233;riel comme ceci:<br>
+          <img src="images/SprogWin10Devices.png" width="244" height="112"><br>
+          Si vous avez d&#233;j&#224; install&#233; un pilote USB sp&#233;cial, d&#233;sinstallez-le sous Windows 10
+          avant de poursuivre.</li>
 
-        <li>La connexion USB SPROGs sous Windows peut avoir besoin
-        un pilote install&eacute;. Pour plus d'informations
-        &agrave; ce sujet, voir le <a href=
-        "http://www.sprog-dcc.co.uk/downloads/SprogIIUserGuide.pdf">
-        manuel SPROG</a> sur le <a href=
-        "http://www.sprog-dcc.co.uk/">site web SPROG</a> . Les
-        utilisateurs de Windows 7 peuvent &eacute;galement
-        &ecirc;tre int&eacute;ress&eacute;s par <a href=
-        "http://www.youtube.com/watch?v=JUG7dsXi2cI">cette
-        vid&eacute;o</a>.</li>
+          <li>Sur Windows 7 et les versions ant&#233;rieures, les utilisateurs peuvent avoir besoin d'un driver
+          install&#233;. Pour plus d'informations &#224; ce sujet, voir le
+          <a href=
+          "http://www.sprog-dcc.co.uk/downloads/SprogIIUserGuide.pdf">
+          Manuel SPROG</a> sur le <a href=
+          "http://www.sprog-dcc.co.uk/">Site web de SPROG</a>.<br>
+          Les utilisateurs de Windows 7 peuvent &#233;galement &#234;tre int&#233;ress&#233;s par <a href=
+          "https://www.youtube.com/watch?v=JUG7dsXi2cI">cette video</a>.</li>
 
-        <li>Assurez vous d'avoir la derni&egrave;re version de
-        JMRI, puis allez dans le Panneau des
-        pr&eacute;f&eacute;rences d'un programme bas&eacute; sur
-        JMRI. Celui-ci s'ouvre automatiquement la premi&egrave;re
-        fois qu'un programme est ex&eacute;cut&eacute;, ou vous
-        pouvez le s&eacute;lectionner c'est &agrave; partir du menu
-        "&eacute;dition"</li>
+          <li>Sur MacOS, aucun pilote USB pour SPROG ne doit &#234;tre install&#233; pour utiliser SPROG IIv3, SPROG IIv4, SPROG3 ou
+          SPROG Nano.
+          Ils sont conformes &#224; la norme USB CDC (Communications Class Device) et utilisent les pilotes par d&#233;faut
+          inclus avec macOS.</li>
 
-        <li>Sprog peut &ecirc;tre soit un programmateur
-        d&eacute;codeur autonome, ou il peut &ecirc;tre
-        r&eacute;gl&eacute; pour agir comme un mini-centrale pour
-        les trains. Vous devez s&eacute;lectionner le mode &agrave;
-        utiliser dans les pr&eacute;f&eacute;rences, et puis JMRI
-        configure les options n&eacute;cessaires &agrave; la Sprog.
+          <li>Pour Linux, il existe de nombreuses variantes d'installation du syst&#232;me Linux, et des variations dans l'installation
+          du support USB peut &#234;tre rencontr&#233;, mais en g&#233;n&#233;ral les dispositifs USB CDC sont support&#233;s directement.</li>
+        </ul>
+
+        <li>Assurez-vous d'avoir la derni&#232;re version de JMRI. D&#233;marrez
+        une des applications JMRI.</li>
+
+        <li>Aller &#224; l'onglet <b>Connexions</b> des pr&#233;f&#233;rences JMRI
+        . Il s'ouvre automatiquement la premi&#232;re fois qu'un programme est
+        ou vous pouvez le s&#233;lectionner dans le menu "Edition".
+
+        <li>S&#233;lectionnez "SPROG DCC" dans la liste comme syst&#232;me
+        Fabricant.
+        <img src="images/SprogConnectOptions.png" width="272" height="157" align="right">
+        </li>
+
+        <li>Suivant, s&#233;lectionnez l'une des options de connexion au syst&#232;me disponibles;<br>
+        SPROG peut soit fonctionner comme un programmeur d&#233;codeur autonome
+        ou il peut &#234;tre configur&#233; pour agir comme une mini-centrale
+         pour la circulation des trains.<br>
+        Une fois votre choix s&#233;lectionn&#233; et enregistr&#233;, JMRI configure les options n&#233;cessaires dans le SPROG.
 
           <ul>
-            <li>Pour les op&eacute;rations de programmation DCC,
-            s&eacute;lectionnez "Sprog" dans la bo&icirc;te de
-            s&eacute;lection sup&eacute;rieure</li>
+            <li>Pour le fonctionnement du programmeur, s&#233;lectionnez soit "SPROG", soit "Pi-SPROG One programmeur".
+            commeSyst&#232;me de Connexion, comme illustr&#233;:<br>
+            <a href="images/SprogPreferences.jpg">
+            <img src="images/SprogPreferences.jpg" width="322" height="203">
+            </a>
+            <p>Dans ce mode, la barre d'&#233;tat en bas du Volet de l'Inventaire DecoderPro
+             la fonction inactive en rouge, comme ceci:<br>
+            <a href="images/SprogDPStatusbar.png">
+            <img src="images/SprogDPStatusbar.png" width="332" height="24"></a></p>
+            <p>Si les deux champs de gauche s'affichent en rouge, vous avez peut-&#234;tre
+           s&#233;lectionn&#233; la mauvaise connexion au syst&#232;me SPROG.</p>
+            </li>
 
-            <li>Pour l'exploitation de la centrale,
-            s&eacute;lectionnez "centrale de commande Sprog" dans
-            la bo&icirc;te de s&eacute;lection en haut.</li>
+            <li>Pour le fonctionnement de la centrale , s&#233;lectionnez un des choiw "... Centrales".
+            .</li>
+
+
+		<li>Pour utiliser JMRI sans SPROG physique connect&#233;, s&#233;lectionnez "SPROG Simulator".
+            Le simulateur imitera le fonctionnement de base en tant que programmeur (par d&#233;faut)
+            ou une Centrale. Vous pouvez r&#233;gler le mode sous Param&#232;tres Connexion suppl&#233;mentaire
+            .</li>
           </ul>
         </li>
 
-        <li>Vous pouvez ensuite s&eacute;lectionner le bon port
-        s&eacute;rie dans la seconde bo&icirc;te de
-        s&eacute;lection . Notez que les pilotes USB Sprog
-        appara&icirc;tront comme un port s&eacute;rie.</li>
+        <li>Ensuite, sous Param&#232;tres, s&#233;lectionnez le port s&#233;rie appropri&#233;, sauf pour le Simulateur.
+        Notez que les pilotes USB SPROG appara&#238;tront dans la liste comme un port s&#233;rie,
+        comme <tt>cu.usbmodem1411</tt>.</li>
 
-        <li>La s&eacute;rie de boutons radio
-        &eacute;tiquet&eacute;s "style graphique" vous permet de
-        S&eacute;lectionnez l'aspect dont le programme va
-        apparaitre. "Metal" est l'apparence native de Java
-        disponible sur tous les types. D'autres choix peuvent
-        varier avec le type de votre ordinateur. "Motif",
-        "Windows", "MacOS" et "MacOS Adaptive" apparence native
-        sous Linux, Windows, MacOS "Classic" et Mac OS X,
-        respectivement.</li>
+        <li> Acceptez le pr&#233;fixe et le nom de connexion sugg&#233;r&#233;s,
+        ou le remplacer par un autre plus adapt&#233;. Veillez &#224; ce qu'il soit unique.</li>
 
-        <li>Dans la bo&icirc;te de s&eacute;lection en bas, vous
-        pouvez choisir le format programmateur par d&eacute;faut .
-        Vous pouvez le remplacer &agrave; chaque fois que vous
-        ouvrez le programmeur, donc c'est ici juste par
-        commodit&eacute;.</li>
+        <li>Cliquez sur "Sauvegarder". On vous demandera si vous voulez le faire 
+        pour red&#233;marrer le programme, cliquez sur "Red&#233;marrer" ou "Plus tard".</li>
 
-        <li>Cliquez sur "Enregistrer". Il vous sera demand&eacute;
-        si c'est vous voulez quitter le programme , cliquez sur
-        "Oui".</li>
-
-        <li>Red&eacute;marrez le programme. Vous devriez &ecirc;tre
-        op&eacute;rationnel.</li>
+        <li>Apr&#232;s le red&#233;marrage de JMRI, vous devriez &#234;tre op&#233;rationnel avec la nouvelle connexion.</li>
       </ol>
 
-      <h3>Configuration de SPROG</h3>
+      <h4>Configuration de SPROG</h4>
 
-      <p>Sprog utilise un " Mode Mot" pour r&eacute;gler un certain
-      nombre de modes de fonctionnement en option</p>
+      <p>SPROG utilise un "Mot Mode" pour d&#233;finir un certain nombre de
+      modes de fonctionnement.</p>
 
-      <p>Dans toutes les SPROGs r&eacute;centes, la valeur par
-      d&eacute;faut, le Mode Mot, est correcte pour le modes de
-      programmation et et le mode centrale. Pour les anciennes
-      SPROGs vous pouvez v&eacute;rifier ou modifier le mot de mode
-      comme suit</p>
+      <p>Dans tous les SPROGs r&#233;cents, la valeur par d&#233;faut du Mot Mode
+      est correcte pour les modes "programmeur" et "centrale". Pour
+      les SPROG plus anciens, vous pouvez v&#233;rifier ou modifier le mot mode comme
+      suit:</p>
 
-      <p>Ouvrez le Moniteur de commande et la Fen&ecirc;tres
-      Envoyer commande dans le menu Sprog et envoyer une commande
-      "M" . Vous devriez voir une r&eacute;ponse dans la
-      fen&ecirc;tre du moniteur de commande quelque chose
-      comme:<br></p>
+      <p>Ouvrir le <fort>Moniteur de commande</fort> et lui
+      <strong>Envoyer la commande</strong> outils du menu SPROG. Envoyer
+      une commande "M" utilisant  <strong>Envoyer Commande</strong> dans le panneau de commande
+      .<br>
+      Vous devriez voir une r&#233;ponse dans la fen&#234;tre du moniteur de commande,
+      quelque chose comme:<br></p>
 
-      <div style="margin-left: 2em">
-        <tt>P&gt; M = h800<br></tt>
+      <div style="margin-left : 2em">
+        <tt>P&gt;M=h800<br></tt>
       </div>
 
-      <p>Le pr&eacute;fixe h indique une valeur
-      hexad&eacute;cimale. Si la valeur que vous voyez est
-      diff&eacute;rente, alors elle devrait &ecirc;tre
-      chang&eacute; en envoyant la commande "M h800". Suivez ceci
-      avec la commande "W" pour enregistrer le changement de SPROGs
-      dans la m&eacute;moire EEPROM afin qu'elle soit
-      enregistr&eacute;e pour les fois suivantes &agrave; chaque
-      fois que vous allumerez le Sprog. Sinon, la nouvelle valeur
-      sera perdue lorsque vous &eacute;teignez la Sprog. S'il vous
-      pla&icirc;t ne soyez pas tent&eacute;s d'exp&eacute;rimenter
-      avec d'autres valeurs dans le mode mot cela pourrait
-      entra&icirc;ner un fonctionnement erratique de votre
-      Sprog</p>
+      <p>Le pr&#233;fixe <tt>h</tt> indique une valeur hexad&#233;cimale. Si le pr&#233;fixe
+      valeur que vous voyez est diff&#233;rente, alors il faut le changer en envoyant
+      la commande "M h800". Faites suivre cette commande de la commande "W" pour
+      enregistrer le changement dans la m&#233;moire EEPROM de SPROG afin qu'il soit
+      efficace &#224; chaque fois que vous mettez le SPROG sous tension. Sinon, 
+      la nouvelle valeur sera perdue lorsque vous &#233;teignez le SPROG.<br>
+      Ne soyez pas tent&#233;s d'exp&#233;rimenter avec d'autres valeurs de Mode Word
+      car cela pourrait entra&#238;ner un comportement erratique de votre SPROG.</p>
 
-      <h3>Identifcation de la version du Firmware SPROG</h3>Ouvrez
-      le Moniteur de commande et sa fen&ecirc;tre Envoyer commande
-      depuis le menu Sprog et envoyer une commande "?" . Vous
-      devriez voir une r&eacute;ponse dans la fen&ecirc;tre du
-      moniteur de commande quelque chose comme:<br>
+      <h4>Identification de la version du micrologiciel de votre SPROG</h4>
 
-      <div style="margin-left: 2em">
-        <tt>Sprog II USB Ver 2.3<br>
+      <p>Ouvrir le panneau d'outils de la console SPROG &#224; partir du
+      SPROG et envoyer une commande " ?
+      Vous devriez voir une r&#233;ponse appara&#238;tre dans l'historique des commandes,
+      quelque chose comme:<br></p>
+
+      <div style="margin-left : 2em">
+        <tt>SPROG II USB Ver 2.3<br>
         P&gt;<br></tt>
       </div>
 
-      <h3>Mises &agrave; jour du firmware</h3>
+      <a name="tools" id="tools"></a>
+      <h2>Outils JMRI SPROG </h2>
+      <img src="images/SprogMenu.png" width="267" height="181" align="right">
 
-      <p>Sprog comprend un "chargeur de boot" qui permet au
-      firmware (le logiciel interne qui g&egrave;re le Sprog)
-      d'&ecirc;tre mis &agrave; jour par l'utilisateur.</p>
+      <p>Les outils suivants sont disponibles dans le menu SPROG lorsque 
+      la connexion est active:</p>
 
-      <p>Le bootloader est fonctionnel dans la version USB Sprog II
-      2.2 et plus tard</p>
+      <h4><a href=
+      "../../../package/jmri/jmrix/sprog/sprogslotmon/SprogSlotMonFrame.shtml">
+      Moniteur de Slots Sprog</a></h4>
+      (Le moniteur de Slot n'est pas disponible lorsque le SPROG fonctionne en tant que programmeur).
 
-      <p>Dans certaines versions ant&eacute;rieures le bootloader
-      n'est pas compl&egrave;tement fonctionnel et les outils de
-      mise &agrave; jour du firmware de JMRI ne devraient PAS
-      &ecirc;tre utilis&eacute;s sans d'abord v&eacute;rifier la
-      version actuelle du firmware (voir ci-dessus) et en
-      communiquant avec Sprog DCC de v&eacute;rifier si cette
-      version peut &ecirc;tre mise &agrave; jour par
-      l'utilisateur.</p>
+      <h4><a href=
+      "../../../package/jmri/jmrix/sprog/sprogmon/SprogMonFrame.shtml">
+      Moniteur de Commande Sprog</a></h4>
 
-      <p>vous ne devez en aucun cas exp&eacute;rimenter avec
-      l'outil de mise &agrave; jour si vous n'avez pas un fichier
-      valide mis &agrave; jour disponible. Cela pourrait
-      entra&icirc;ner votre Sprog &agrave; ne plus devenir
-      r&eacute;cepteur. Elle devra ensuite &ecirc;tre
-      retourn&eacute;e au fabricant (ou son repr&eacute;sentant
-      local) pour le d&eacute;verrouillage.</p>
+      <h4><a href=
+      "../../../package/jmri/jmrix/sprog/packetgen/SprogPacketGenFrame.shtml">
+      Envoyer la commande</a></h4>
 
-      <h3>D&eacute;bogage</h3>
+      <h4><a href=
+      "../../../package/jmri/jmrix/sprog/console/SprogConsoleFrame.shtml">
+      Console SPROG</a></h4>
 
-      <p>Pour plus d'informations sur le Sprog, s'il vous
-      pla&icirc;t voir <a href="http://www.sprog-dcc.co.uk/">les
-      pages web Sprog</a> .</p>
+      <h4><a href=
+      "../../../package/jmri/jmrix/sprog/update/SprogVersionFrame.shtml">
+      Version du micrologiciel SPROG</a></h4>
 
-      <p>Il y en a une <a href=
-      "http://www.sprog-dcc.co.uk/faq.html">page FAQ</a> .</p>
+      <a name="update" id="update"></a>
+      <h4>Mise &#224; jour du firmware</h4>
 
-      <p>Il existe un <a href=
-      "http://uk.groups.yahoo.com/group/sprog-dcc/">groupe de
-      discussion Yahoo</a> pour Sprog. 
-      <!--#include virtual="/Footer" --></p>
-    </div>
-  </div>
+      <p>SPROG comprend un outil de "mise &#224; jour du microprogramme" qui permet 
+      au micrologiciel du SPROG (le logiciel interne qui fait fonctionner le SPROG) 
+      d'&#234;tre mis &#224; jour par l'utilisateur. L'<a href="../../../package/jmri/jmrix/sprog/update/SprogIIUpdateFrame.shtml">
+      outil de mise &#224; jour</a>.<br> prend en charge USB SPROG II (&#224; partir de la version 2.2), SPROG 3 (toutes les versions)
+	  et Pi-SPROG One (&#224; partir de la version 2.5). Pour plus d'informations, contactez le fabricant
+	  <a href="http://www.sprog-dcc.co.uk/">SPROG DCC</a>
+
+      <a name="documentation" id="documentation"></a>
+      <h2>Documentation</h2>
+
+      <h3>Information sur les tiers</h3>
+
+      <p>Pour plus d'informations sur le SPROG, voir <a href=
+      "http://www.sprog-dcc.co.uk/index.shtml">le site web de SPROG
+      site</a>.<br>
+      Ils ont un <a href=
+      "http://www.sprog-dcc.co.uk/faq.shtml#General">page FAQ 
+      </a> utile.</p>
+
+      <p>Il y a un groupe d'utilisateurs SPROG en<a href="https://groups.io/g/sprog-dcc/topics"></a>.</p>
+      <p>langue n&#233;erlandaise <a
+      href="https://in03.hostcontrol.com/resources/510743ee26f0d6/cd00fcd9b6/file-object/Handleiding%20Sprog%20v2-2017.pdf">
+        Le Manuel du d&#233;butant SPROG</a> est disponible en format PDF &#224; l'adresse suivante
+      <a href="https://domburgtrainsupport.nl/informatie/dts-producten">Soutien aux trains de Bombourg</a>.</p>      
+      <p>Traduction 2021-02-05</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
+</html>
+
+    
+
+
+
+   
+
 </html>

@@ -1,0 +1,256 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Use of Javadoc and UML</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI technical code">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>IRMJ : Utilisation de Javadoc et UML</h1>
+
+      <p>La biblioth&#232;que JMRI fournit la majorit&#233; de sa documentation
+       API via <a href=
+      "http://java.sun.com/j2se/javadoc/writingdoccomments/">Javadoc</a>
+      et <a href=
+      "http://en.wikipedia.org/wiki/Unified_Modeling_Language">UML</a>.</p>
+
+      <p>Nous utilisons &#233;galement Java <a href=
+      "http://java.sun.com/docs/books/tutorial/java/javaOO/annotations.html">
+      annotations</a> pour documenter notre structure de code.</p>
+
+      <p>Nous utilisons le <a href="http://www.umlgraph.org">UmlGraph</a>
+      pour cr&#233;er automatiquement les diagrammes UML dans notre
+      Pages Javadoc.</p>
+
+      <h2>Javadoc pour les d&#233;veloppeurs</h2>
+      
+      Le <a href=
+      "http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html">
+      Le tutoriel Javadoc</a> est bon, mais un peu long, <a href=
+      "http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html">
+      introduction &#224; Javadoc</a>. Un bref r&#233;sum&#233; du
+      formatage et des balises se trouvent dans <a href=
+      "http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#documentationcomments">
+      la r&#233;f&#233;rence</a>.
+
+      <p>Traditionnellement, les paquets Java dans JMRI ont utilis&#233; des fichiers
+      <code>package.html</code> pour contenir tout ce qui est n&#233;cessaire &#224;
+      la documentation au niveau du paquet. C'est maintenant <a href=
+      "http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#packagecomment">
+      recommand&#233;</a> que tout paquet Java significatif contienne un
+      <a href=
+      "http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#packagecomment">
+      <code>package-info.java</code></a> fichier pour cela. Seuls quelques
+      de ces derniers ont &#233;t&#233; inclus dans JMRI jusqu'&#224; pr&#233;sent, et ce n'est pas un
+      priorit&#233; &#233;lev&#233;e au remplacement des <code>package.html</code> existants
+      mais les nouveaux paquets devraient inclure un
+      <code>package-info.java</code> copi&#233; de
+      <code>java/package-info.java</code>.</p>
+
+      <p>Une belle discussion sur la fa&#231;on d'utiliser le label "deprecated" dans
+      la documentation est disponible sur le site <a href=
+      "http://docs.oracle.com/javase/7/docs/technotes/guides/javadoc/deprecation/deprecation.html">
+      "Comment et quand d&#233;pr&#233;cier les pages API"</a>.</p>
+
+    <a name="html" item="html"></a>
+    <h3>HTML en Javadoc</h3>
+    
+      <p>Le contenu du Javadoc est interpr&#233;t&#233; comme du HTML 4.01, donc il
+      doit &#234;tre valide HTML 4.01. Si ce n'est pas le cas, il ne sera probablement pas
+      afficher correctement lorsque quelqu'un veut comprendre votre code,
+      il est donc dans votre int&#233;r&#234;t bien recevoir les commentaires 
+      de Javadoc.</p>
+
+      <p>Par exemple, il faut bien manipuler &amp; et &lt;
+      pour montrer un type g&#233;n&#233;rique, par exemple. Pour ce faire, placez le
+      test dans les blocs {@literal ...} ou {@code ...}.</p>
+
+      <p>Vous devez &#233;galement (parfois) terminer vos balises de paragraphe 
+      pour faire appara&#238;tr un autre type d'&#233;l&#233;ment, par exemple listes:</p>
+ <pre style="font-family : monospace ;">
+ * Certains textes qui forment un paragraphe
+ * &lt;p&gt;
+ * Encore un peu de texte. 
+ * &lt;p&gt;
+ * Dernier texte, liste de d&#233;part. Notez la balise de fin de paragraphe.
+  * &lt;/p&gt;&lt;ul&gt;
+ *    &lt;li&gt;List item
+ * &lt;/ul&gt; /ul&gt;
+</pre>
+Notez que le HTML 4.01 veut que les balises de paragraphe se terminent par
+&lt;/p&gt;, et que vous ne pouvez pas avoir une liste &#224; l'int&#233;rieur d'un paragraphe.
+
+      <p>Certains messages d'erreur et leurs traductions:</p>
+
+      <dl>
+        <dt> "HTML malformed"</dt>
+
+        <dt> "bad HTML entity"</dt>
+
+        <dd>Utilisation probable de caract&#232;re &amp;,&lt; ou &gt; sur la
+        ligne indiqu&#233;e</dd>
+
+        <dt> "bad use of '&gt;'"</dt>
+
+        <dd>En utilisant probablement '&gt;' comme carat&#232;re, par exemple A -&gt; B.
+        Si c'est le cas, remplacez par "&amp;gt;" ou entourez la ligne avec
+        @literal</dd>
+      </dl>Enfin, notez que cette ligne Javadoc est malform&#233;e :
+ <pre style="font-family : monospace ;">
+  * @param foo
+</pre>
+car il ne contient aucun texte explicatif. La ligne
+doit comprendre un texte explicatif :
+ <pre style="font-family : monospace ;">
+ * @param foo contient la derni&#232;re instance du Barreau
+</pre>
+
+    <a name="inherit" id="inherit"></a>
+    <h3>H&#233;ritage des commentaires de Javadoc</h3>
+    <p>Lorsque vous &#233;crivez une m&#233;thode qui remplace une m&#233;thode (ou une signature) dans une superclasse,
+        vous devez toujours utiliser l'annotation <code>@Overrides</code> pour 
+        indiquer cela :
+<pre style="font-family : monospace ;">
+  @Override
+  public void methodName() {
+    // faire quelque chose
+  }
+</pre>
+      <p>Si la m&#233;thode est suffisamment similaire &#224; la m&#233;thode de la superclasse, vous pouvez simplement "h&#233;riter" du 
+      Javadoc de la superclasse :
+<pre style="font-family : monospace ;">
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void methodName() {
+    // faire quelque chose
+  }
+</pre>
+    <p>(S'il n'y a pas de Javadoc dans la superclasse, pensez &#224; y ajouter vos commentaires plut&#244;t que de vous prononcer 
+    sur votre nouvelle m&#233;thode et d'en h&#233;riter; qui fait d'une pierre deux coups)
+    <p> Vous pouvez ajouter ou remplacer une partie de la documentation, par exemple 
+<pre style="font-family: monospace;">
+  /**
+   * {@inheritDoc}
+   * 
+   * This implementation uses the ReallyMarvelous algorithm for improved speed.
+   */
+  @Override
+  public void methodName() {
+    // doing something
+  }
+</pre>             
+    <p>Les commentaires g&#233;n&#233;raux s'ajoutent &#224; la documentation de la superclasse ; 
+     Les balises @param et @return remplacent la documentation de la superclasse.
+     
+    <a name="missing" id="missing"></a>
+    <h3>R&#233;duire le nombre de commentaires manquants</h3>
+     <p>Nous sommes en train de supprimer la classe "manquante" des
+      avertissements, qui pr&#233;viennent de l'absence de balises @param ou @return. Notez que 
+      Javadoc lancera une erreur si le nombre d'avertissements "manquants"
+      d&#233;passe 2300 (au 2017-10-01, contre 3975 au 2017-02-20 ; progr&#232;s !). 
+      Une fois que le nombre de ces avertissements
+      est r&#233;duit &#224; un niveau g&#233;rable, nous cesserons de les supprimer.</p>
+
+      <p>Pour un r&#233;sum&#233; des erreurs Javadoc actuelles dans le code, voir
+      <a href=
+      "http://jmri.tagadab.com/jenkins/job/Development/job/Builds/lastBuild/warnings3Result/">
+      Construire avec Jenkins</a>.</p>
+
+      <h2>UML et UmlGraph pour les d&#233;veloppeurs</h2>UML est un
+      un langage profond pour d&#233;crire la structure, la conception et
+      le comportement des syst&#232;mes informatiques. JMRI utilise principalement la classe UML
+      des diagrammes pour documenter sa structure. De nombreux tutoriels UML
+      sont disponibles sur le web. En particulier, un bon d&#233;part
+       est l' <a href=
+      "http://www.objectmentor.com/resources/articles/umlClassDiagrams.pdf">
+      Introduction aux diagrammes de classe par Object Mentor</a>. Pour en savoir plus
+      d&#233;tail, voir <a href=
+      "http://web.archive.org/web/20110704185440/http://atlas.kennesaw.edu/~dbraun/csis4650/A&amp;D/UML_tutorial/class.htm">
+      l'Atlas des Cours UML </a> ou <a href=
+      "http://edn.embarcadero.com/article/31863">Introduction au logiciel Embarcadero
+      </a>.
+
+      <p>Notre traitement Ant Javadoc fait des diagrammes de classe UML de base
+      automatiquement. Pour un exemple, voir le <a href=
+      "http://jmri.org/JavaDoc/doc/jmri/Sensor.html">Capteur
+      interface Javadoc</a>, puis cliquez sur "Show UML Class Diagram
+      link" pour voir le <a href=
+      "http://jmri.org/JavaDoc/doc/jmri/Sensor.png">diagramme des classes
+      int&#233;gr&#233; dans le syst&#232;me. Pour un exemple plus complexe, voir <a href=
+      "http://jmri.org/JavaDoc/doc/jmri/jmrit/progsupport/ProgModeSelector.html">
+      ProgModeSelector classe Javadoc</a> puis cliquez sur le bouton "Show UML
+      Lien vers le diagramme de classe" pour voir le <a href=
+      "http://jmri.org/JavaDoc/doc/jmri/jmrit/progsupport/ProgModeSelector.png">
+      diagramme de classe int&#233;gr&#233; dans l'application
+
+      <p>Vous pouvez &#233;galement d&#233;finir des diagrammes UML personnalis&#233;s en utilisant <a href=
+      "http://plantuml.com">PlantUML</a>. Pour un exemple 
+      pour d&#233;finir les diagrammes d'&#233;tat et de s&#233;quence, voir la
+      <a href=
+      "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/lenz/XNetProgrammer.java#L32">
+      java/src/jmri/jmrix/lenz/XNetProgrammer.java</a> fichier. Le fichier
+   diagramme r&#233;sultant est visible dans la fen&#234;tre <a href=
+      "http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/lenz/XNetProgrammer.html">
+      Sortie Javadoc</a>.
+      <p>PlantUml peut &#233;galement &#234;tre utilis&#233; pour des diagrammes autonomes, c.f.
+      <a href="SystemStructure.shtml">le diagramme de s&#233;quence de connexion</a>.
+      Pour ce faire, cr&#233;ez un fichier .txt, puis traitez manuellement avec
+      <pre>
+      java -jar lib/plantuml.jar help/fr/mon/fichier/chemin/nom
+      </pre>
+      Un .png avec le diagramme sera cr&#233;&#233; &#224; c&#244;t&#233; de la source.
+
+      <h2>Traitement</h2>
+      
+      La construction standard JMRI ANT fournit trois
+     cibles de documentation :
+
+      <dl>
+        <dt>javadoc</dt>
+
+        <dd>Cr&#233;er le texte Javadocs dans le r&#233;pertoire doc/ local.
+        Ouvrez le fichier doc/index.html pour y acc&#233;der. </dd>
+
+        <dt>javadoc-uml</dt>
+
+        <dd>Cr&#233;er les diagrammes UML et les Javadocs dans le document local/
+        r&#233;pertoire. Ouvrez le fichier doc/index.html pour y acc&#233;der.
+
+        <dt>uploadjavadoc</dt>
+
+        <dd>T&#233;l&#233;chargez la documentation actuelle dans le document local/
+       du site web jmri.org. Ceci est fait
+        automatiquement par le <a href=
+        "ContinuousIntegration.shtml">syst&#232;me CI</a>, donc vous
+      n'avez g&#233;n&#233;ralement pas &#224; vous en occuper.</dd>
+      </dl>
+
+      
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

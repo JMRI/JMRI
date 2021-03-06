@@ -1,274 +1,347 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
+"http://www.w3.org/TR/html4/loose.dtd">
 
 <html lang="fr">
+<!-- translate on 2020-12-17 -->
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
-  <!-- UpDated  by Blorec Herv&#233; 2013-09-27-->
-
-  <title>JMRI: Getting Started with Scripting</title><!-- Style -->
+<meta name="keywords" content="start jmri jython, hello world jython, jython layout commands,
+      jython access jmri objects, access jmri tables">
+  <title>JMRI: Getting Started with Scripting</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  "text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <!-- Page Body -->
 
-      <h2>JMRI: Mise en Route avec des Scripts</h2>
+<h1><a id="StartTopOfPage" name="StartTopOfPage">JMRI : D&#233;marrer avec le Scriptage</a></h1>
 
-      <h3>Ex&eacute;cuter "Bonjour le monde"</h3>Il y a plusieurs
-      fa&ccedil;ons d'utiliser des scripts Python avec JMRI. Le
-      plus simple est d'utiliser le support int&eacute;gr&eacute;
-      dans les applications standards de JMRI : PanelPro,
-      DecoderPro, etc. Pour ce faire:
+	  <p>Le moyen le plus simple d'apprendre &#224; utiliser des scripts dans le cadre de JMRI est d'&#233;tudier d'abord les exemples les plus simples
+      et de travailler sur des d&#233;tails plus complexes. Les sections ci-dessous abordent divers aspects de la sc&#233;narisation
+      qui vous aidera &#224; comprendre les scripts plus complexes qui se trouvent dans la <a href="Examples.shtml" target="_blank">
+      Biblioth&#232;que d'exemples JMRI</a> inclus dans la distribution et en ligne:</p>
+	  
+      <ul>
+	  <li><a href="#helloworld">R&#233;aliser "Hello World"</a></li>
+      <li><a href="#debugging">Outils de d&#233;bogage de base dans JMRI</a></li>
+      <li><a href="#layoutcommands">Exemples de commandes de r&#233;seau</a></li>
+	  <li><a href="#objects">Acc&#232;s aux objets de JMRI</a></li>
+	  <li><a href="#scripts">Fichiers scripts, auditeurs et classes</a></li>
+	  </ul>
+      
+	  <h4>Attention : Python et sa variante Jython n'utilisent pas d'accolades, de crochets ou de parenth&#232;ses pour
+	  indiquent la structure du programme, mais s'appuient plut&#244;t sur le formatage, notamment l'indentation.  Pour &#233;viter 
+	de la confusion, il est fortement recommand&#233; de ne pas utiliser de tableaux mais plut&#244;t d'utiliser des espaces (quatre est typique)
+	  pour montrer les d&#233;clarations qui font partie d'une classe ou d'une structure contr&#244;l&#233;e o&#250; vous avez pu utiliser des parenth&#232;ses.
+	  La plupart des &#233;diteurs de programmes sont configur&#233;s de mani&#232;re &#224; modifier automatiquement les tabulations en un nombre d&#233;termin&#233; d'espaces pour faciliter la t&#226;che.</H4>
+	  
+      <h2><a id="helloworld" name="helloworld">R&#233;aliser "Hello World"</a></h2>
+      
+      <div class="para">
+      
+      Il existe plusieurs fa&#231;ons d'utiliser
+      Scripts Python avec JMRI. Le plus simple est d'utiliser la fonction int&#233;gr&#233;e
+      dans les applications standard de JMRI : PanelPro,
+      DecoderPro, etc.<br>
+      Pour ce faire :
 
       <ul>
-        <li>Dans le menu "Panneaux" , s&eacute;lectionnez
-        "entr&eacute;e de script". Cela vous donnera une
-        fen&ecirc;tre o&ugrave; vous pourrez taper une ou plusieurs
-        commandes &agrave; ex&eacute;cuter. (Notez que cela
-        pourrait prendre un peu de temps la premi&egrave;re fois
-        que vous faites cela tandis que le programme trouve ses
-        biblioth&egrave;ques, il sera plus rapide la prochaine
-        fois) Les commandes restent dans la fen&ecirc;tre, donc
-        vous pouvez les &eacute;diter et les relancer
-        jusqu'&agrave; ce qu'elles vous conviennent.</li>
+        <li><a href=
+        "../../../package/jmri/jmrit/beantable/images/jmriScriptWindow.png">
+        <img src=
+        "../../../package/jmri/jmrit/beantable/images/jmriScriptWindow.png"
+        width="250" height="136" align="right" alt="JMRI Jython Script Window"></a>Depuis le
+        Menu "Panneaux", s&#233;lectionnez "Saisie du script". Vous obtiendrez ainsi une
+        fen&#234;tre o&#250; vous pouvez taper une ou plusieurs commandes &#224; ex&#233;cuter.
+        (Notez que cela peut prendre un peu de temps la premi&#232;re fois que vous
+        ferez cela au fur et &#224; mesure que le programme trouve ses biblioth&#232;ques ; il sera
+        plus rapide la fois suivante) Les commandes restent dans la fen&#234;tre, donc
+        vous pouvez les &#233;diter et les relancer jusqu'&#224; ce qu'ils vous plaisent.</li>
 
-        <li>Dans le menu "Panneaux" , s&eacute;lectionnez "sortie
-        du script". Cela cr&eacute;e une fen&ecirc;tre qui montre
-        la sortie de la commandes de script que vous
-        &eacute;mettez.</li>
+        <li>Dans le menu "Panneaux", s&#233;lectionnez "Sortie du script". Cela
+        cr&#233;e une fen&#234;tre qui affiche le r&#233;sultat des commandes 
+de script que vous &#233;mettez.</li>
 
-        <li>Pour le voir en fonctionnement, tapez
-          <pre>
-print "Bonjour le monde"
-</pre>dans la fen&ecirc;tre de saisie et cliquez sur
-"Ex&eacute;cuter". Vous devriez voir imm&eacute;diatement la
-fen&ecirc;tre sortie du script :
-          <pre>
-print "Bonjour le monde"
-Bonjour le monde
+
+        <li> Pour voir cela en fonctionnement, tapez
+          <pre style="font-family : monospace ;">
+        print "Bonjour le monde
+        
+</pre> dans la fen&#234;tre de saisie, et cliquez sur "Ex&#233;cuter". Vous devriez voir le
+dans la fen&#234;tre de sortie du script imm&#233;diatement :
+          <pre style="font-family : monospace ;">
+        <pre style="font-family : monospace ;"> ; print "Hello World"
+        Hello World
+        
 </pre>
         </li>
 
-        <li>Python &eacute;value &eacute;galement les expressions,
-        etc. Retirez le contenu de la fen&ecirc;tre d'entr&eacute;e
-        (le s&eacute;lectionner et appuyez sur supprimer), et entre
-          <pre>
-print 1+2
-</pre>puis cliquez sur ex&eacute;cuter. La fen&ecirc;tre de sortie
-doit alors montrer quelque chose comme
-          <pre>
-print 1+2
-3
+        <li>Python &#233;value &#233;galement les expressions, etc. Supprimez
+        le contenu de la fen&#234;tre de saisie (s&#233;lectionnez-le et appuyez sur "Supprimer"),
+        et entrez
+          <pre style="font-family : monospace ;">
+        print 1+2
+        
+</pre>puis cliquez sur ex&#233;cuter. La fen&#234;tre de sortie devrait alors afficher
+quelque chose comme :
+          <pre style="font-family : monospace ;">
+        <pre style="font-family : monospace ;"> ; print 1+2
+        3
+        
 </pre>
         </li>
       </ul>
 
-      <h3>Commandes Simples r&eacute;seau</h3>
-      <pre>
+    <p><a href="#StartTopOfPage">[Aller en haut de la page]</a></p>
+    </div>  
+  
+      <h2><a id="debugging" name="debugging">Outils de d&#233;bogage de base dans JMRI</a></h2>
+      <!--Section ajout&#233;e par Jerry Grochow 2018-10-18 sur la base des commentaires trouv&#233;s dans le forum en ligne des utilisateurs de l'IRMJ de 
+      Cliff in BajaSoCal et Bob Jacobson-->
+      
+      <div class="para">
+      <p>JMRI ne fournit pas un "environnement de d&#233;veloppement" complet, mais il fournit quelques informations de base
+      qui peut vous aider &#224; d&#233;boguer vos scripts.  
+      
+      <p>Ouvrir la fen&#234;tre de la console syst&#232;me JMRI (Aide->Console syst&#232;me).
+      Vous obtiendrez ainsi des informations instantan&#233;es sur les messages AVERTISSEMENT et ERREUR. Le texte peut &#234;tre copi&#233; dans un
+      &#233;diteur de texte pour un examen plus approfondi.</p>
+      
+      <p>Ouvrir la fen&#234;tre de sortie du script (Panneaux->Sortie du script).  Cela affichera les r&#233;sultats de tout les &#233;tats
+      "imprimer"  dans votre script ainsi que certains messages d'erreur (NOTEZ que certaines erreurs vont ici et
+      certaines &#224; la console syst&#232;me, de sorte que vous devriez avoir les deux fen&#234;tres ouvertes lorsque vous d&#233;boguez).
+       Le texte peut &#234;tre copi&#233; dans un &#233;diteur de texte pour un examen plus approfondi.
 
-&gt;&gt;&gt; lt1 = turnouts.provideTurnout("1")
+      <p>Recherchez les informations trouv&#233;es dans la 
+      <a href="../../doc/Technical/Logging.shtml" target="_blank">r&#233;f&#233;rence technique</a>
+      pour &#234;tre mieux en mesure d'ins&#233;rer davantage de vos propres messages DEBUG et INFO dans le fichier session.log, 
+      et aussi la fen&#234;tre de la console du syst&#232;me JMRI.  Vous pouvez &#233;galement examiner le fichier "default.lcf" qui est
+      d&#233;crit dans ce lien.
+      
+      <p>Note aux utilisateurs de Mac OS : BBEdit et d'autres outils similaires v&#233;rifient la syntaxe. Pour les utilisateurs de PC, Notepad++
+      est un bon outil pour obtenir une indentation correcte.</p>
 
-&gt;&gt;&gt; lt1.setCommandedState CLOSED #(DROIT)
+      <p><a href="#StartTopOfPage">[Aller en haut de la page]</a></p>      
+      </div>
+      
+	  
+      <h2><a id="layoutcommands">Exemples de commandes de r&#233;seau </a></h2>
+      
+      <div class="para">
+     <pre style="font-family : monospace ;">
 
-&gt;&gt;&gt; print lt1.commandedState
+lt1 = turnouts.provideTurnout("1")
+
+lt1.setCommandedState(CLOSED)
+
+print lt1.commandedState
 2
 
-&gt;&gt;&gt; lt1.commandedState = THROWN  #(D&Eacute;VI&Eacute;)
+lt1.commandedState = THROWN
 
-&gt;&gt;&gt; print lt1.commandedState
+print lt1.commandedState
 4
 
-&gt;&gt;&gt; turnouts.provideTurnout("1").getCommandedState()
+turnouts.provideTurnout("1").getCommandedState()
 1
+    </pre>
 
-</pre>Notez que ce n'est qu'en ex&eacute;cutant une version
-compl&egrave;te de l'application JMRI; toutes les fen&ecirc;tres et
-les menus sont pr&eacute;sent&eacute;s de la m&ecirc;me
-fa&ccedil;on, la configuration est faite par le panneau des
-pr&eacute;f&eacute;rences, etc. que la connexion Jython ajoute une
-ligne de commande &agrave; partir de laquelle vous pouvez manipuler
-directement les choses.<br>
-      Cela montre aussi certaines des simplifications que Jython et
-      le langage Python apporte &agrave; l'usage du code JMRI. La
-      fonction membre de Java:
-      <pre>
-turnout.SetCommandedState (jmri.Turnout.CLOSED);
-</pre>peut aussi &ecirc;tre exprim&eacute;e en Jython:
-      <pre>
-turnout.commandedState = CLOSED  # DROIT
-</pre><br>
-      Il en r&eacute;sulte un code beaucoup plus facile &agrave;
-      lire.
+      <p>Notez que ceci ex&#233;cute une version compl&#232;te de l'application JMRI
+       ; toutes les fen&#234;tres et les menus sont pr&#233;sent&#233;s de la m&#234;me fa&#231;on
+      La configuration se fait par le panneau de pr&#233;f&#233;rences, etc. La ligne 
+      Jython connection adds est une ligne de commande &#224; partir de laquelle vous pouvez
+      manipuler directement les choses.
 
-      <p>Il ya beaucoup de livres utiles et de didacticiels Python
-      en ligne. Pour plus d'informations sur le langage Jython et
-      en relations avec Java, la meilleure r&eacute;f&eacute;rence
-      est le <a href=
-      "http://www.oreilly.com/catalog/jythoness/">Jython
-      Essentials</a> livre publi&eacute; par O'Reilly. Le <a href=
-      "http://www.jython.org/">site web jython.org</a> est
-      &eacute;galement tr&egrave;s utile.</p>
+      <p>Cela montre &#233;galement certaines des simplifications que Jython
+      et que le langage Python apporte &#224; l'utilisation du code JMRI . La fonction membre Java:</p>
+     
+    <pre style="font-family : monospace ;">
+        turnout.SetCommandedState(jmri.Turnout.CLOSED) ;
+    </pre>
+      
+      peut &#233;galement &#234;tre exprim&#233; en Jython comme :
+      
+     <pre style="font-family : monospace ;">
+        turnout.commandedState = CLOSED
+    </pre>
 
-      <h3>Acc&egrave;s &agrave; JMRI</h3>JMRI utilise longuement le
-      mod&egrave;le-type pour obtenir l'acc&egrave;s aux objets. En
-      Java il en r&eacute;sulte un code verbeux comme a
-      <pre>
-    L'aiguillage t2 = InstanceManager.turnoutManagerInstance () newTurnout ("LT2", "turnout 2.");
-    t2.SetCommandedState (Turnout.THROWN)
-</pre>Jython simplifie ceci, en nous permettant de fournir des
-variables utiles, et par le raccourcissement de certaines
-m&eacute;thodes d'appels
+      <p>Il en r&#233;sulte un code beaucoup plus facile &#224; lire.</p>
 
-      <p>Pour avoir acc&egrave;s &agrave; des gestionnaires Cible
-      Signal, capteur et aiguillage et de l'objet CommandStation,
-      plusieurs variables raccourcies sont d&eacute;finies:</p>
+      <p>Il y a beaucoup de livres Python utiles et de  tutoriaux en ligne
+     . Pour plus d'informations sur le langage Jython et
+      ces  relations avec Java, la meilleure r&#233;f&#233;rence est le <a href=
+      "http://www.oreilly.com/catalog/jythoness/" target="_blank">Jython
+      Essentials</a> livre publi&#233; par O'Reilly. Le <a href=
+      "https://www.jython.org/" target="_blank">site web de jython.org</a> est &#233;galement tr&#232;s
+      utile.</p>
+
+      <p><a href="#StartTopOfPage">[Aller en haut de la page]</a></p>
+      </div>
+      
+      <h2><a id="objets" name="objets">Acc&#232;s aux objets JMRI</a><</h2>
+	  
+      <div class="para">
+      
+      JMRI utilise le mod&#232;le standard
+      pour avoir acc&#232;s aux objets. En Java, cela se traduit par
+      un code verbeux comme
+      <pre style="font-family : monospace ;">
+   Aiguillage t2 = InstanceManager.getDefault(TurnoutManager.class).newTurnout("LT2", "aiguillage 2") ;
+   t2.SetCommandedState(Turnout.THROWN)
+</pre>Jython simplifie tout cela en nous permettant de fournir des 
+variables utiles, et en raccourcissant certains appels de m&#233;thode.
+
+
+      <p>Pour acc&#233;der plus facilement au SignalHead, au capteur et &#224; l'aiguillage
+      et l'objet CommandStation, plusieurs 
+     variables raccourcies sont d&#233;finies : </p>
 
       <ul>
         <li>capteurs</li>
 
-        <li>aiguillages</li>
+      <li>turnouts</li>
 
-        <li>lumi&egrave;res</li>
+        <li>lights</li>
 
-        <li>Signaux (Cibles Signal)</li>
+        <li>signals (SignalHeads)</li>
 
-        <li>m&acirc;ts (M&acirc;ts Signal)</li>
+        <li>masts (SignalMasts)</li>
 
-        <li>itin&eacute;raires</li>
+        <li>routes</li>
 
-        <li>Cantons</li>
+        <li>blocks</li>
 
-        <li>Rapports</li>
+        <li>reporters</li>
 
-        <li>m&eacute;moires</li>
+        <li>memories</li>
 
-        <li>gestionnaire d'alimentation</li>
+        <li>powermanager</li>
 
-        <li>programmateurs</li>
+        <li>addressedProgrammers</li>
+        <li>globalProgrammers</li>
 
-        <li>DCC (centrale digitale)</li>
+        <li>dcc (centralel)</li>
 
-        <li>arr&ecirc;t (gestionnaire d'arr&ecirc;t en cours)</li>
+        <li>audio</li>
 
-        <li>audio/</li>
-      </ul>Ceux-ci peuvent ensuite &ecirc;tre
-      r&eacute;f&eacute;renc&eacute;es directement dans Jython
-      comme a
-      <pre>
-    t2 = turnouts.provideTurnout ("12");
-   
-    dcc.sendPacket (new byte [] {0x12, 0x32, 0x4E}, 5)
-</pre>Notez que la variable T2 n'a pas besoin d'&ecirc;tre
-d&eacute;clar&eacute;e.
+        <li>shutdown (gestionnaire d'arr&#234;t actuel)</li>
+        
+        <li>layoutblocks</li>
 
-      <p>Jython fournit un raccourci pour les param&egrave;tres qui
-      ont &eacute;t&eacute; d&eacute;finis avec les m&eacute;thodes
-      obtenir et d&eacute;finir comme Java-Bean:</p>
-      <pre>
-    t2.SetCommandedState (Turnout.THROWN)
-</pre>peut &ecirc;tre &eacute;crite comme
-      <pre>
-    t2.commandedState = THROWN #(DEVIE)
-</pre>O&ugrave; l'attribution invoque en r&eacute;alit&eacute; la
-m&eacute;thode d'ensemble. Notez &eacute;galement que THROWN a
-&eacute;t&eacute; d&eacute;fini lors de l'ex&eacute;cution du
-script Python au d&eacute;marrage, CLOSED, ACTIVE, INACTIVE, RED,
-YELLOW et GREEN sont &eacute;galement d&eacute;finis. (Les
-raccourcis sont tous d&eacute;finis dans un fichier appel&eacute;
-"jmri_defaults.py" que vous pouvez trouver dans le
-r&eacute;pertoire "jython" de la distribution)
+        <li> bulletins</li>
 
-      <p>Un m&eacute;canisme similaire peut &ecirc;tre
-      utilis&eacute; pour v&eacute;rifier l'&eacute;tat de
-      chose:</p>
-      <pre>
-&gt;&gt; Sensors.provideSensor&gt; print ("3"). KnownState == ACTIVE
+      </ul> Elles peuvent alors &#234;tre r&#233;f&#233;renc&#233;es directement dans Jython comme
+      <pre style="font-family : monospace ;">t2 = turnouts.provideTurnout("12") ;
+</pre>Notez que la variable t2 n'avait pas besoin d'&#234;tre d&#233;clar&#233;e.
+
+      <p>Jython fournit un raccourci pour les param&#232;tres qui ont &#233;t&#233;
+      d&#233;fini avec les m&#233;thodes get et set de type Java-Bean:</p>
+      <pre style="font-family : monospace ;">
+    t2.SetCommandedState(Turnout.THROWN)
+</pre> peut &#234;tre &#233;crit comme
+      <pre style="font-family : monospace ;">
+    t2.commandedState = THROWN
+</pre>
+
+<p>o&#250; l' affectation invoque effectivement la m&#233;thode d&#233;finie.</p>
+        
+    <p>A noter &#233;galement que THROWN a &#233;t&#233; d&#233;fini lors de l'ex&#233;cution du script Python &#224;
+        startup;<br> CLOSED, ACTIVE, INACTIVE, RED, YELLOW et GREEEN sont &#233;galement
+    d&#233;finis. ( <a 
+    href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/script/JmriScriptEngineManager.java">Ces 
+       raccourcis sont d&#233;finis dans Java</a> )
+    </p>
+      <p>Un m&#233;canisme similaire peut &#234;tre utilis&#233; pour v&#233;rifier l'&#233;tat de
+      quelque chose:</p>
+      <pre style="font-family : monospace ;">
+<pre style="font-family : monospace ;"> ; print sensors.provideSensor("3").knownState == ACTIVE
 1
-&gt; Sensors.provideSensor&gt;&gt; print ("3"). KnownState == INACTIVE
+print sensors.provideSensor("3").knownState == INACTIVE
 0
+</pre>Note que Jython utilise "1" pour indiquer vrai, et "0" pour
+indiquent faux, donc le capteur 3 est actuellement actif dans cet exemple.
+Vous pouvez &#233;galement utiliser les symboles "Vrai" et "Faux" respectivement.
 
-</pre>Notez que Jython utilise des "1" pour indiquer vrai, et "0"
-pour indiquer faux, de sorte que capteur 3 est actuellement actif
-dans cet exemple. Vous pouvez &eacute;galement utiliser les
-symboles "true" et "false", respectivement.
-
-      <p>Vous pouvez appeler directement des m&eacute;thodes plus
-      compliqu&eacute;es, par exemple envoyer un paquet DCC sur les
-      rails, vous tapez:</p>
-      <pre>
-    dcc.sendPacket ([0x01, 0x03, 0xbb], 4)
+      <p>Vous pouvez invoquer directement des m&#233;thodes plus compliqu&#233;es, par exemple pour
+      envoyer un paquet DCC aux rails que vous tapez:</p>
+      <pre style="font-family : monospace ;">
+   
+    dcc.sendPacket([0x01, 0x03, 0xbb], 4)
 </pre>Cela envoie ce paquet de trois octets quatre fois, puis
-retourne &agrave; la ligne de commande.
+retourne &#224; la ligne de commande.
 
-      <h3>Les fichiers de script, les auditeurs et les
-      classes</h3>Scripting ne serait pas tr&egrave;s
-      int&eacute;ressant si vous aviez &agrave; taper les commandes
-      &agrave; chaque fois. Ainsi, vous pouvez mettre des scripts
-      dans un fichier texte et les ex&eacute;cuter en
-      s&eacute;lectionnant l'&eacute;l&eacute;ment de menu
-      "Ex&eacute;cuter le script ..." , ou en utilisant les
-      "Pr&eacute;f&eacute;rences avanc&eacute;es" pour
-      ex&eacute;cuter le fichier script et le programme commence.
+Voir aussi <a href="WhatWhere.shtml#names">JMRI Jython : La diff&#233;rence entre les Noms Syst&#232;me et les Noms Utilisateur</a>
 
-      <p>Bien que les &eacute;nonc&eacute;es ci-dessus que nous
-      avons montr&eacute;es &eacute;taient si rapides que vous ne
-      pouviez pas les voir, le reste du programme a
-      &eacute;t&eacute; en attente pendant que vous ex&eacute;cutez
-      ces &eacute;chantillons. Ce n'est pas un probl&egrave;me pour
-      un couple de d&eacute;clarations, ou pour un fichier de
-      script qui n'a tout simplement que peu de choses
-      (peut-&ecirc;tre fixer un couple d'aiguillage, etc) et
-      quitter. Mais vous voudrez peut-&ecirc;tre que les choses se
-      passent sur une plus longue p&eacute;riode, ou
-      peut-&ecirc;tre m&ecirc;me attendre que quelque chose se
-      passe sur le r&eacute;seau avant que certaines partie de
-      votre script ne s'ex&eacute;cutent. Par exemple, vous voudrez
-      peut-&ecirc;tre inverser une locomotive lorsque certains
-      capteurs indiquent qu'il a atteint la fin de la voie.</p>
+    <p><a href="#StartTopOfPage">[Aller en haut de la page]</a></p>
+    
+     </div>
 
-      <p>Il y a deux fa&ccedil;ons de faire cela. D'abord, votre
-      script peut d&eacute;finir un "auditeur", et l'attacher
-      &agrave; un capteur particulier, l'aiguillage , etc Un
-      auditeur est une petite sous-routine qui est appel&eacute;e
-      quand tout ce qui lui est attach&eacute; a un changement
-      d'&eacute;tat. Par exemple, un sous-programme auditeur
-      attach&eacute; &agrave; un aiguillage particulier est
-      appel&eacute; lorsque l'aiguillage va de d&eacute;vi&eacute;
-      &agrave; droit, ou de droit &agrave; d&eacute;vi&eacute;. La
-      sous-routine peut alors regarder autour, et d&eacute;cider
-      que faire, et ex&eacute;cuter les commandes
-      n&eacute;cessaires. Lorsque les sous-routines retournent, le
-      reste du programme se poursuit ensuite jusqu'&agrave; ce que
-      l'auditeur a un nouveau le changement d'&eacute;tat de
-      l'objet , alors le processus se r&eacute;p&egrave;te.</p>
+      <h2><a id="scripts" name="scripts">Fichiers scripts, auditeurs et classes</a></h2>
+	  
+      <div class="para">
+      
+      <p>[Voir aussi <a href="HowTo.shtml" target="_blank">la page "Comment" de scripting</a> pour plus d'informations
+      sur ces sujets.]</p>
+      
+      <p>Scriptage 
+      ne serait pas tr&#232;s int&#233;ressant si vous deviez taper les commandes &#224; chaque
+      fois. Vous pouvez donc mettre des scripts dans un fichier texte et les ex&#233;cuter
+      en s&#233;lectionnant l'&#233;l&#233;ment de menu "Ex&#233;cuter le script...", ou en utilisant les
+      "Pr&#233;f&#233;rences avanc&#233;es" pour ex&#233;cuter le fichier script au
+      d&#233;marrage du programme.</p>
 
-      <p>Pour les choses plus compliqu&eacute;es, o&ugrave; vous
-      voulez vraiment que votre code de script soit autonome dans
-      le programme, vous d&eacute;finissez une "classe" qui fait ce
-      que vous voulez. Dans la forme courte, cela vous donne un
-      moyen d'avoir une ex&eacute;cution de code
-      ind&eacute;pendante &agrave; l'int&eacute;rieur du programme.
-      Mais ne vous souciez pas de cela jusqu'&agrave; ce que vous
-      ayez eu plus d'exp&eacute;rience avec les scripts. 
-      <!--#include virtual="/Footer" --></p>
-    </div>
-  </div>
+      <p>Bien que les d&#233;clarations que nous avons montr&#233;es ci-dessus aient &#233;t&#233; si rapides, vous
+      ne pouviez pas le voir, le reste du programme attendait pendant que
+      vous analysez ces exemples. Ce n'est pas un probl&#232;me pour un couple d'&#233;tats
+      ou pour un fichier script qui ne fait qu'un tas de
+       choses (peut-&#234;tre en d&#233;finissant un ou deux aiguillages, etc.) et quittes.
+      Mais vous pourriez vouloir que les choses se fassent sur une plus longue p&#233;riode, ou
+      peut-&#234;tre m&#234;me attendre que quelque chose se passe sur le r&#233;seau
+      avant qu'une partie de votre sc&#233;nario ne soit ex&#233;cut&#233;e. Par exemple, vous pourriez
+      veulent faire reculer une locomotive lorsqu'un capteur indique qu'elle
+      a atteint la fin du parcours.</p>
+
+      <p>Il y a plusieurs fa&#231;ons de le faire. Premi&#232;rement, votre script
+      pourrait d&#233;finir un "surveillant", et le rattacher &#224; un
+      capteur, aiguillage, etc. Un surveillant est une petite sous-routine qui
+      est appel&#233;e lorsque ce &#224; quoi il est rattach&#233; voit son &#233;tat
+      changer. Par exemple, un sous-programme de surveillance  attach&#233; &#224; un
+      aiguillage particulier est appel&#233;e lorsque l'aiguillage passe de
+      direct &#224; d&#233;vi&#233; , ou de d&#233;vi&#233; &#224; direct. La sous-routine
+      peut alors regarder autour de lui, d&#233;cider de ce qu'il faut faire et ex&#233;cuter
+      les commandes n&#233;cessaires. Lorsque le sous-programme revient, le reste du
+       programme se poursuit ensuite jusqu'&#224; ce que l'objet surveill&#233; ait
+       encore un changement d'&#233;tat, quand le processus se r&#233;p&#232;te.</p>
+
+      <p>Pour les choses plus compliqu&#233;es, o&#250; vous voulez vraiment votre
+  code de script soit libre dans le programme, vous d&#233;finissez
+      une "classe" qui fait ce que vous voulez. En bref, cela donne
+      vous un moyen d'avoir un code ind&#233;pendant &#224; ex&#233;cuter &#224; l'int&#233;rieur du programme.
+      Mais ne vous inqui&#233;tez pas de cela avant d'avoir d'autres
+      exp&#233;rience en mati&#232;re de Scriptage.</p>
+
+      <p><a href="#StartTopOfPage">[Aller en haut de la page]</a></p>
+
+      </div>
+
+
+      
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
