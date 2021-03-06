@@ -6,7 +6,7 @@
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
 
-title>JMRI: Signaling introduction</title>
+<title>JMRI: Signaling introduction</title>
 <meta name="Author" content="Bob Jacobsen">
 <meta name="Author" content="Egbert Broerse">
 <meta name="Date.Modified" content="20151214"/>
@@ -34,7 +34,7 @@ JMRI: Signalisation
 				et pointe vers les m&#233;thodes plus avanc&#233;es.</p>
 <p>La mod&#233;lisation de la Signalisation ferroviaire sur un r&#233;seau peut &#234;tre faite 
 de diff&#233;rentes fa&#231;ons, allant du simple "feu rouge" pour terminer 
-par l'&#233;mulation les signaux d'un mod&#231;le particulier. 
+par l'&#233;mulation les signaux d'un mod&#232;le particulier. 
 JMRI fournit une combinaison d'outils pour mettre en &#339;uvre 
 La Signalisation. JMRI supporte la <a href=
 "AspectSignaling.shtml">signalisation r&#233;aliste</a> bas&#233;e sur 
