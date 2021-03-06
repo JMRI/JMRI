@@ -691,18 +691,6 @@
 </li>
   
 <li>
-<a href="html/apps/DispatcherSystem/DispatcherSystem.shtml">Dispatcher System (Python Extension) </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="html/apps/ManifestCreator/index.shtml">Manifest Creator </a>
-<ul></ul>
-</li>
-
-  
-<li>
 <a href="package/jmri/jmrit/operations/Operations.shtml">OperationsPro </a>
 <ul>
    
@@ -840,9 +828,35 @@
   
 <li>
 <a href="html/apps/index.shtml#addapp">Additional Applications with connections to JMRI </a>
+<ul>
+   
+<li>
+<a href="html/apps/ManifestCreator/index.shtml">Manifest Creator </a>
 <ul></ul>
 </li>
 
+  
+</ul>
+</li>
+  
+<li>
+<a href="html/tools/scripting/JythonApps.shtml">Jython Apps for JMRI </a>
+<ul>
+   
+<li>
+<a href="html/scripthelp/yaat/YAAT.shtml">YAAT - YetAnotherAutoTrain </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/scripthelp/DispatcherSystem/DispatcherSystem.shtml">Dispatcher System (Python Extension) </a>
+<ul></ul>
+</li>
+
+  
+</ul>
+</li>
  
 </ul>
 </li>
@@ -1423,6 +1437,12 @@
    
 <li>
 <a href="html/tools/scripting/Jynstruments.shtml">Jynstruments </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/tools/scripting/JythonApps.shtml">Jython Apps for JMRI </a>
 <ul></ul>
 </li>
 
