@@ -5,8 +5,8 @@
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
 
- <!--Updated et Translated by Herv&#233; Blorec le 2020-11-25 -->
-
+<!-- $Id$ -->
+ 
 <title>JMRI: DecoderPro User Guide - Creating A Custom Decoder File</title>
 
 <!-- Style -->
@@ -190,8 +190,11 @@ info au sujet du changement dans le fichier.
               &lt;model model="DN142" numOuts="4"
           numFns="2"/&gt;<br>
               &lt;model model="DH083" numOuts="5"
+
 numFns="2"/&gt;</p>vous permettent d'&#233;num&#233;rer un nombre de mod&#232;le de d&#233;codeurs diff&#233;rents qui peuvent utiliser 
 ce fichier. Pour un d&#233;codeur unique, enlever tout les "mod&#232;les" sauf un 
+
+
 et donnez lui le nom du "mod&#232;le" de d&#233;codeur. Le numOuts
 et numFns sont d&#233;crit plus tard, mais pour le moment vous pouvez les effacer 
 laissant quelque chose comme: </p>
@@ -210,7 +213,9 @@ de d&#233;codeur dans une entr&#233;e existante de l'inventaire</p>
    <li> Il peut y avoir plusieurs instances de la famille 'y'
    (dans diff&#233;rents fichiers de d&#233;codeur) mais le mod&#232;le 'x' 
    peut seulement apparaitre au sein d'un de celles-ci.</li>
-   <li>La restriction d'unicit&#233; 'family' et 'model" s'applique 
+
+   <li>La restriction d'unicit&#233; 'family'+'model" s'applique 
+
    ind&#233;pendamment du fabricant.</li>
  </ul>
  </dd>
@@ -223,7 +228,9 @@ de d&#233;codeur dans une entr&#233;e existante de l'inventaire</p>
           paged="yes"<br>
 register="yes" ops="yes"&gt;&lt;/programming&gt;</p>
 
+
 <p>Paged, register et ops peuvent &#234;tre r&#233;gler soit &#225; "yes" ou &#225; "no".  Direct
+
 peut &#234;tre fix&#233; &#225; "no", "bitOnly", "byteOnly", ou "yes". Le 
 programmateur utilise ces informations pour s&#233;lectionner le mode de programmation &#225; 
 utiliser pour travailler avec le d&#233;codeur.</p>
@@ -248,7 +255,9 @@ Un exemple:</p>
 <br>
  (suivie par plusieurs entr&#233;es de &lt;variables&gt;)<BR>
   <BR>
+
 (Ins&#233;rer les nouvells &#224; la fin)<BR>
+
 &lt;/variables&gt;  
 </p>
 
@@ -269,6 +278,7 @@ pour trouver quelque chose de similaire, et utilisez le "nom" attribu&#233;.
 </li>
 <li><dfn>CV</dfn> - Quel CV contient l'information de configuration
 pour cette variable.</li>
+
 <li><dfn>mask</dfn> - Un mod&#232;le comme "XXXVVVXX" qui commande  les bits du CV qui constituent la variable.
  Chaque "V" est un bit qui est inclus, et les "X" sont des bits
  qui ne doivent pas &#234;tre inclus. Il est pr&#233;f&#233;rable d'avoir huit caract&#232;res,car cela permet de mieux comprendre ce qui se passe.
@@ -292,6 +302,7 @@ pour cette variable.</li>
             C'est un peu plus technique, c'est rarement n&#233;cessaire, mais 
             si vous en avez besoin, consultez le 
             <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/symbolicprog/VariableValue.html">javadoc pour plus de d&#233;tails</a>.
+
 
 <li><dfn>default</dfn> - la valeur par d&#233;faut pour cette varable. C'est 
 utilis&#233; pour un nouveau d&#233;codeur, ou quand vous voulez remettre le 
@@ -330,9 +341,11 @@ l'exemple ci-dessus. Les deux attributs possibles sont min et max,
 qui d&#233;finissent la fourchette de valeurs acceptables. Si vous les omettez 
 les valeurs entre 0 et 255 seront permises.</li>
 
+
 <li>Si vous pr&#233;f&#233;rez entrer et afficher des valeurs en hexad&#233;cimal, utilisez 
 l'&#233;l&#233;ment "hexVal".c'est le m&#234;me que l'&#233;l&#233;ment 
 "decVal" dont nous avons d&#233;j&#225; discut&#233; mais en hexa.</li>
+
 
 <li><p>Si votre d&#233;codeur supporte les adresses longues, vous pouvez ajouter
 un &#233;l&#233;ment 'longAddress'. C'est peut &#234;tre plus simple de copier ceci 
@@ -379,6 +392,7 @@ value="32"/&gt;</p>
 </li>
 </ul>
 </dd>
+
 <dt class="left">Incluant les fragments de fichiers</dt>
         <dd>
           <p>Les d&#233;finitions des d&#233;codeurs peuvent inclure des "fragments de fichiers".
@@ -444,6 +458,7 @@ d&#233;codeurs disponibles est construite .</p>
 
 <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
+
   </div><!-- closes #mBody-->
 </body>
 </html>
