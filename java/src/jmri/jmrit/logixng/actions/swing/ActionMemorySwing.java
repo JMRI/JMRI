@@ -10,7 +10,6 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionMemory;
 import jmri.jmrit.logixng.actions.ActionMemory.MemoryOperation;
-import jmri.jmrit.logixng.actions.swing.Bundle;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectCreatePanel;
