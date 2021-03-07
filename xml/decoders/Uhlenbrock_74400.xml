@@ -50,7 +50,7 @@
         <label>Vhigh</label>
         <comment>Speed setting between 1 and 63</comment>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" default="1">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="1">
         <decVal/>
         <label>Manufacturer Version No: </label>
         <label xml:lang="it">Versione Decoder: </label>

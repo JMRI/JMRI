@@ -69,13 +69,13 @@
 			<decVal min="50" max="120"/>
 		</variable>
 
-		<variable label="Version del programa " CV="7" readOnly="yes"
-			item="Decoder Version" default="27">
+		<variable CV="7" item="Decoder Version" label="Version del programa " readOnly="yes"
+			default="27">
 			<decVal/>
 		</variable>
 
-		<variable label="Numero de Fabricante asignado por NMRA" CV="8" readOnly="yes"
-			item="Manufacturer" default="56">
+		<variable CV="8" item="Manufacturer" label="Numero de Fabricante asignado por NMRA" readOnly="yes"
+			default="56">
 			<decVal/>
 		</variable>
 

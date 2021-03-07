@@ -72,8 +72,8 @@
 			<decVal min="50" max="120"/>
 		</variable>
 
-		<variable label="Version del programa " CV="7" readOnly="yes"
-			item="Decoder Version" default="26">
+		<variable CV="7" item="Decoder Version" label="Version del programa " readOnly="yes"
+			default="26">
 			<decVal/>
 		</variable>
 

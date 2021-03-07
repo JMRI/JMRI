@@ -30,11 +30,11 @@
         <label>Pushbutton lockout</label>
       </variable>
 
-      <variable label="Revision" CV="7" readOnly="yes">
+      <variable CV="7" item="Decoder Version" readOnly="yes">
         <label>Revision</label>
       </variable>
 
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" default="94">
+      <variable CV="8" item="Manufacturer" readOnly="yes" default="94">
         <label>Manufacturer ID</label>
       </variable>
 

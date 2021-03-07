@@ -117,7 +117,7 @@
     <xi:include href="http://jmri.org/xml/decoders/kuehn/analogModeFunction_k.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/kuehn/functionmap_ext.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/kuehn/vStartHighMid_k.xml"/>
-    <variable CV="7" default="35" readOnly="yes" item="Decoder Version">
+    <variable CV="7" default="35" item="Decoder Version" readOnly="yes">
     <decVal/>
       <label>Version ID</label>
       <label xml:lang="it">Versione Decoder: </label>

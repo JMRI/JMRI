@@ -29,7 +29,7 @@
     </programming>
 <variables>
      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-	<variable label="Manufacturer Version No: " CV="7" readOnly="yes" item="Decoder Version" default="20" tooltip="The manufacturer's version number (read only)">
+	<variable label="Manufacturer Version No: " CV="7" item="Decoder Version" readOnly="yes" default="20" tooltip="The manufacturer's version number (read only)">
 			<decVal/>
 	</variable>
 	<variable label="Manufacturer ID: " CV="8"  readOnly="yes" comment="8 to reset" item="Manufacturer" default="29" tooltip="The manufacturer's ID number (read only)">

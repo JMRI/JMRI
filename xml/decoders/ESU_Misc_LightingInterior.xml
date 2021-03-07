@@ -92,7 +92,7 @@
         </programming>
         <variables>
             <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-            <variable CV="7" readOnly="yes" default="000" item="Decoder Version">
+            <variable CV="7" item="Decoder Version" readOnly="yes" default="000">
                 <decVal/>
                 <label>Software Version Number</label>
                 <label xml:lang="it">Versione Decoder: </label>
