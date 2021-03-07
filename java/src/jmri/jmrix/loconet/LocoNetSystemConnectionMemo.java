@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
 
-
     /**
      * Must manually register() after construction is complete.
      * @param lt Traffic controller to be used

@@ -4,7 +4,6 @@ import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -20,7 +19,7 @@ public class ClientRxHandlerTest {
     @Test
     public void testCTor() {
         ClientRxHandler t = new ClientRxHandler("127.0.0.1", new java.net.Socket(), lnis);
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull(t, "exists");
         t.dispose();
     }
 
@@ -30,6 +29,7 @@ public class ClientRxHandlerTest {
         JUnitUtil.resetInstanceManager();
 
         memo = new LocoNetSystemConnectionMemo();
+        jmri.InstanceManager.setDefault(LocoNetSystemConnectionMemo.class, memo); // register now to prevent having to wait for register() to complete (or test fail)
         // ensure memo exists in order to later use InstanceManager.getDefault()
         lnis = new LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);

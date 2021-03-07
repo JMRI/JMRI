@@ -32,6 +32,18 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
     public static final String TITLE = "title";
     private final SortedSet<Editor> set = Collections.synchronizedSortedSet(new TreeSet<>(Comparator.comparing(Editor::getTitle)));
 
+    boolean panelSetChanged = false;
+
+    /**
+     * Panel adds occur during xml data file loading and manual adds.
+     * This sets the change flag for manual adds.
+     * After a Store is complete, the flag is cleared.
+     * @param flag The new value for the panelSetChanged boolean.
+     */
+    public void setChanged(boolean flag) {
+        panelSetChanged = flag;
+    }
+
     public EditorManager() {
         super(false);
     }
@@ -97,7 +109,7 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
     public Editor get(@Nonnull String name) {
         return getAll().stream().filter(e -> e.getTitle().equals(name)).findFirst().orElse(null);
     }
-    
+
     /**
      * Get the editor with the given name or the editor with the given target frame name.
      *

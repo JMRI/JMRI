@@ -38,9 +38,9 @@ public class EditorFrameOperator extends JFrameOperator {
     }
 
     private void dismissClosingDialogs(){
-        // the reminder dialog doesn't appear every time we close, so put 
-        // pressing the button in that dialog into a thread by itself.  If 
-        // the dialog appears, it will get clicked, but it's not an error 
+        // the reminder dialog doesn't appear every time we close, so put
+        // pressing the button in that dialog into a thread by itself.  If
+        // the dialog appears, it will get clicked, but it's not an error
         // if it doesn't appear.
         Thread t = new Thread( () -> {
            try {
@@ -74,6 +74,6 @@ public class EditorFrameOperator extends JFrameOperator {
            // do nothing, this isn't an error in this test.
            return;
         }*/
-    }    
+    }
 
 }

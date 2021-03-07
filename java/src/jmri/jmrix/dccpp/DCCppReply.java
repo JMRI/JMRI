@@ -225,10 +225,12 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public void parseReply(String s) {
         DCCppReply r = DCCppReply.parseDCCppReply(s);
         log.debug("in parseReply() string: {}", s);
-        this.myRegex = r.myRegex;
-        this.myReply = r.myReply;
-        this._nDataChars = r._nDataChars;
-        log.debug("copied: this: {}", this.toString());
+        if (r != null) {
+            this.myRegex = r.myRegex;
+            this.myReply = r.myReply;
+            this._nDataChars = r._nDataChars;
+            log.trace("copied: this: {}", this);
+        }
     }
 
     ///
@@ -245,7 +247,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      */
     public static DCCppReply parseDCCppReply(String s) {
 
-        log.debug("Parse charAt(0): {}", s.charAt(0));
+        if (log.isTraceEnabled()) {
+            log.trace("Parse charAt(0): {}", s.charAt(0));
+        }
         DCCppReply r = new DCCppReply(s);
         switch (s.charAt(0)) {
             case DCCppConstants.STATUS_REPLY:

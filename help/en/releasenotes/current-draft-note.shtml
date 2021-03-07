@@ -61,7 +61,7 @@
 
         <h4>IPOCSMR</h4>
             <ul>
-                <li>Test and code were cleaned up</li>
+                <li></li>
             </ul>
 
         <h4>JMRI Simple Server/JMRI Client</h4>
@@ -146,8 +146,7 @@
 
         <h4>Uhlenbrock Intellibox</h4>
             <ul>
-                <li>LNCV Programing of the Daisy II manual throttle and FunkMaster Wireless Hub was added.<br>
-                  Use a DecoderPro definition with a Ops Mode roster entry.</li>
+                <li></li>
             </ul>
 
         <h4>Zimo MXULF</h4>
@@ -337,8 +336,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>Zimo Swiss Mapping was updated bi Nigel Cliffe to V36+, adding features to select the dimming
-                  group for each output in the table and to set the dimming levels.</li>
+                <li></li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -351,6 +349,21 @@
         <ul>
             <li></li>
         </ul>
+
+    <h3>PanelPro</h3>
+      <a id="PanelPro" name="PanelPro"></a>
+      <ul>
+        <li>The main PanelPro menu has changed.
+          <ul>
+            <li>The Load, Store, and History menu items have moved from the <strong>Panels</strong>
+            menu to the <strong>File</strong> menu.</li>
+            <li>The script related menu items have been moved to a new <strong>Scripting</strong> menu.</li>
+            <li>A <strong>Delete Panel</strong> menu item has been added to the Panels menu.</li>
+            <li>A dialog will be displayed if a second load is invoked.</li>
+            <li>When a file is loaded, the file name will be display in the JMRI System Console (Help &rArr; System Console).
+          </ul>
+        </li>
+      </ul>
 
     <h3>CTC Tool</h3>
         <a id="PE-CTC" name="PE-CTC"></a>
@@ -430,10 +443,7 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li>Added an option to <strong>Preferences &rArr; Display</strong> to limit the
-            number of rows when a combo box is using the <strong>setupComboBoxMaxRows</strong>
-            feature.  This is useful for large screens.
-            </li>
+            <li></li>
         </ul>
 
     <h3>Resources</h3>
@@ -515,7 +525,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>Under the hood code clean up for  throttles (all systems), safe release of throttles.</li>
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
