@@ -9,7 +9,7 @@ Scenario Outline: Basic Http requests
    @firefox
    Examples: Firefox Tests
    | browser | PageURL | PageTitle |
-#   | firefox | http://localhost:12080/       | My JMRI Railroad |
+   | firefox | http://localhost:12080/       | My JMRI Railroad |
 #   | firefox | http://localhost:12080/index.html | My JMRI Railroad |
 #   | firefox | http://localhost:12080/panel | Panels \| My JMRI Railroad |
 #   | firefox | http://localhost:12080/roster | Roster \| My JMRI Railroad |
