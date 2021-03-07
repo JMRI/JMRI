@@ -938,7 +938,37 @@ public class ImportConditional {
     
     
     private DigitalActionBean getMemoryAction(@Nonnull ConditionalAction ca, Memory my, String reference) throws JmriException {
-        return null;
+        
+        ActionMemory action;
+        
+        action = new ActionMemory(InstanceManager.getDefault(DigitalActionManager.class)
+                        .getAutoSystemName(), null);
+        
+        if (reference != null) {
+            action.setAddressing(NamedBeanAddressing.Reference);
+            action.setReference(reference);
+        } else {
+            action.setAddressing(NamedBeanAddressing.Direct);
+            action.setMemory(my);
+        }
+        
+        switch (ca.getType()) {
+            case SET_MEMORY:
+                action.setMemoryOperation(ActionMemory.MemoryOperation.SetToString);
+                action.setOtherConstantValue(ca.getActionString());
+                break;
+                
+            case COPY_MEMORY:
+                action.setMemoryOperation(ActionMemory.MemoryOperation.CopyMemoryToMemory);
+                action.setOtherMemory(ca.getActionString());
+                break;
+                
+            default:
+                throw new InvalidConditionalVariableException(
+                        Bundle.getMessage("ActionBadMemoryType", ca.getActionData()));
+        }
+        
+        return action;
     }
     
     

@@ -41,6 +41,12 @@
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
               <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1"/>
+
+              <xs:element name="addressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+              <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
+
               <xs:element name="otherMemory" type="beanNameType" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="memoryOperation" minOccurs="0" maxOccurs="1">
@@ -55,9 +61,14 @@
                 </xs:simpleType>
               </xs:element>
 
+              <!-- Keep these for backward compability for now. Remove for 4.24 -->
               <xs:element name="constant" type="xs:string" minOccurs="0" maxOccurs="1"/>
               <xs:element name="variable" type="xs:string" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <!-- Keep these for backward compability for now. Remove for 4.24 -->
+
+              <xs:element name="otherConstant" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="otherVariable" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="otherFormula" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 

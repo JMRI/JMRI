@@ -342,7 +342,7 @@ public class ForTest extends AbstractDigitalActionTestBase {
         ActionMemory lm = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
         lm.setMemory("IM_RESULT");
         lm.setMemoryOperation(ActionMemory.MemoryOperation.CopyVariableToMemory);
-        lm.setLocalVariable("result");
+        lm.setOtherLocalVariable("result");
         m1.getChild(4).connect(digitalActionManager.registerAction(lm));
 /*        
         lv = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);

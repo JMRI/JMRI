@@ -7,11 +7,10 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.*;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.MaleSocket;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionMemory;
 import jmri.jmrit.logixng.actions.ActionMemory.MemoryOperation;
+import jmri.jmrit.logixng.actions.swing.Bundle;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectCreatePanel;
@@ -21,7 +20,15 @@ import jmri.util.swing.BeanSelectCreatePanel;
  */
 public class ActionMemorySwing extends AbstractDigitalActionSwing {
 
+    private JTabbedPane _tabbedPaneMemory;
     private BeanSelectCreatePanel<Memory> _memoryBeanPanel;
+    private JPanel _panelMemoryDirect;
+    private JPanel _panelMemoryReference;
+    private JPanel _panelMemoryLocalVariable;
+    private JPanel _panelMemoryFormula;
+    private JTextField _memoryReferenceTextField;
+    private JTextField _memoryLocalVariableTextField;
+    private JTextField _memoryFormulaTextField;
     
     private JTabbedPane _tabbedPaneMemoryOperation;
     private BeanSelectCreatePanel<Memory> _copyMemoryBeanPanel;
@@ -41,7 +48,31 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
         
         panel = new JPanel();
         
+        _tabbedPaneMemory = new JTabbedPane();
+        _panelMemoryDirect = new javax.swing.JPanel();
+        _panelMemoryReference = new javax.swing.JPanel();
+        _panelMemoryLocalVariable = new javax.swing.JPanel();
+        _panelMemoryFormula = new javax.swing.JPanel();
+        
+        _tabbedPaneMemory.addTab(NamedBeanAddressing.Direct.toString(), _panelMemoryDirect);
+        _tabbedPaneMemory.addTab(NamedBeanAddressing.Reference.toString(), _panelMemoryReference);
+        _tabbedPaneMemory.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelMemoryLocalVariable);
+        _tabbedPaneMemory.addTab(NamedBeanAddressing.Formula.toString(), _panelMemoryFormula);
+        
         _memoryBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(MemoryManager.class), null);
+        _panelMemoryDirect.add(_memoryBeanPanel);
+        
+        _memoryReferenceTextField = new JTextField();
+        _memoryReferenceTextField.setColumns(30);
+        _panelMemoryReference.add(_memoryReferenceTextField);
+        
+        _memoryLocalVariableTextField = new JTextField();
+        _memoryLocalVariableTextField.setColumns(30);
+        _panelMemoryLocalVariable.add(_memoryLocalVariableTextField);
+        
+        _memoryFormulaTextField = new JTextField();
+        _memoryFormulaTextField.setColumns(30);
+        _panelMemoryFormula.add(_memoryFormulaTextField);
         
         _tabbedPaneMemoryOperation = new JTabbedPane();
         
@@ -73,9 +104,20 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
         
         
         if (action != null) {
+            switch (action.getAddressing()) {
+                case Direct: _tabbedPaneMemory.setSelectedComponent(_panelMemoryDirect); break;
+                case Reference: _tabbedPaneMemory.setSelectedComponent(_panelMemoryReference); break;
+                case LocalVariable: _tabbedPaneMemory.setSelectedComponent(_panelMemoryLocalVariable); break;
+                case Formula: _tabbedPaneMemory.setSelectedComponent(_panelMemoryFormula); break;
+                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
+            }
             if (action.getMemory() != null) {
                 _memoryBeanPanel.setDefaultNamedBean(action.getMemory().getBean());
             }
+            _memoryReferenceTextField.setText(action.getReference());
+            _memoryLocalVariableTextField.setText(action.getLocalVariable());
+            _memoryFormulaTextField.setText(action.getFormula());
+            
             if (action.getOtherMemory() != null) {
                 _copyMemoryBeanPanel.setDefaultNamedBean(action.getOtherMemory().getBean());
             }
@@ -88,12 +130,12 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
                 default: throw new IllegalArgumentException("invalid _addressing state: " + action.getMemoryOperation().name());
             }
             _setToConstantTextField.setText(action.getConstantValue());
-            _copyLocalVariableTextField.setText(action.getLocalVariable());
-            _calculateFormulaTextField.setText(action.getFormula());
+            _copyLocalVariableTextField.setText(action.getOtherLocalVariable());
+            _calculateFormulaTextField.setText(action.getOtherFormula());
         }
         
         JComponent[] components = new JComponent[]{
-            _memoryBeanPanel,
+            _tabbedPaneMemory,
             _tabbedPaneMemoryOperation
         };
         
@@ -106,6 +148,34 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
+        // Create a temporary action to test formula
+        ActionMemory action = new ActionMemory("IQDA1", null);
+        
+        try {
+            if (_tabbedPaneMemory.getSelectedComponent() == _panelMemoryReference) {
+                action.setReference(_memoryReferenceTextField.getText());
+            }
+        } catch (IllegalArgumentException e) {
+            errorMessages.add(e.getMessage());
+            return false;
+        }
+        
+        try {
+            action.setFormula(_memoryFormulaTextField.getText());
+            if (_tabbedPaneMemory.getSelectedComponent() == _panelMemoryDirect) {
+                action.setAddressing(NamedBeanAddressing.Direct);
+            } else if (_tabbedPaneMemory.getSelectedComponent() == _panelMemoryReference) {
+                action.setAddressing(NamedBeanAddressing.Reference);
+            } else if (_tabbedPaneMemory.getSelectedComponent() == _panelMemoryLocalVariable) {
+                action.setAddressing(NamedBeanAddressing.LocalVariable);
+            } else if (_tabbedPaneMemory.getSelectedComponent() == _panelMemoryFormula) {
+                action.setAddressing(NamedBeanAddressing.Formula);
+            } else {
+                throw new IllegalArgumentException("_tabbedPane has unknown selection");
+            }
+        } catch (ParserException e) {
+            errorMessages.add("Cannot parse formula: " + e.getMessage());
+        }
         return true;
     }
     
@@ -155,19 +225,34 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
         }
         
         try {
+            if (_tabbedPaneMemory.getSelectedComponent() == _panelMemoryDirect) {
+                action.setAddressing(NamedBeanAddressing.Direct);
+            } else if (_tabbedPaneMemory.getSelectedComponent() == _panelMemoryReference) {
+                action.setAddressing(NamedBeanAddressing.Reference);
+                action.setReference(_memoryReferenceTextField.getText());
+            } else if (_tabbedPaneMemory.getSelectedComponent() == _panelMemoryLocalVariable) {
+                action.setAddressing(NamedBeanAddressing.LocalVariable);
+                action.setLocalVariable(_memoryLocalVariableTextField.getText());
+            } else if (_tabbedPaneMemory.getSelectedComponent() == _panelMemoryFormula) {
+                action.setAddressing(NamedBeanAddressing.Formula);
+                action.setFormula(_memoryFormulaTextField.getText());
+            } else {
+                throw new IllegalArgumentException("_tabbedPaneMemory has unknown selection");
+            }
+            
             if (_tabbedPaneMemoryOperation.getSelectedComponent() == _setToNull) {
                 action.setMemoryOperation(ActionMemory.MemoryOperation.SetToNull);
             } else if (_tabbedPaneMemoryOperation.getSelectedComponent() == _setToConstant) {
                 action.setMemoryOperation(ActionMemory.MemoryOperation.SetToString);
-                action.setConstantValue(_setToConstantTextField.getText());
+                action.setOtherConstantValue(_setToConstantTextField.getText());
             } else if (_tabbedPaneMemoryOperation.getSelectedComponent() == _copyMemory) {
                 action.setMemoryOperation(ActionMemory.MemoryOperation.CopyMemoryToMemory);
             } else if (_tabbedPaneMemoryOperation.getSelectedComponent() == _copyVariable) {
                 action.setMemoryOperation(ActionMemory.MemoryOperation.CopyVariableToMemory);
-                action.setLocalVariable(_copyLocalVariableTextField.getText());
+                action.setOtherLocalVariable(_copyLocalVariableTextField.getText());
             } else if (_tabbedPaneMemoryOperation.getSelectedComponent() == _calculateFormula) {
                 action.setMemoryOperation(ActionMemory.MemoryOperation.CalculateFormula);
-                action.setFormula(_calculateFormulaTextField.getText());
+                action.setOtherFormula(_calculateFormulaTextField.getText());
             } else {
                 throw new IllegalArgumentException("_tabbedPaneMemoryOperation has unknown selection");
             }
