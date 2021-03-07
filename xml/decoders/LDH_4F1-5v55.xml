@@ -14,22 +14,19 @@
 <!-- for more details.                                                      -->
 
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version author="Egbert Broerse" version="3" lastUpdated="20210306"/> <!-- xinclude for CV34-38 -->
   <version author="Bob Jacobsen" version="2" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
-	<version author="LDH"
-				version="1" lastUpdated="20170215" />
+	<version author="LDH" version="1" lastUpdated="20170215" />
 
 <decoder>
 	<family name="LDH decoders" mfg="LDH" lowVersionID="55">
 	<model model="LDH 4F1.5 v55" numOuts="6" numFns="6">
-		
-		     <output name="1" label="A - Blanco" />
+		  <output name="1" label="A - Blanco" />
 			<output name="2" label="B - Amarillo" />
 			<output name="3" label="C - Verde" />
 			<output name="4" label="D - Marron" />
 			<output name="5" label="E - Blanco" />
 			<output name="6" label="F - Amarillo" />
-
-			
 	</model>
 	</family>
 
@@ -94,43 +91,43 @@
 			<decVal/>
 		</variable>
 
-		<variable label="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" tooltip="CV 13 bit 0">
+		<variable item="Analog Mode Function Status - F1" label="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" tooltip="CV 13 bit 0">
 			<enumVal>
 				<enumChoice choice="off"/>
 				<enumChoice choice="on"/>
 				</enumVal></variable>
-		<variable label="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" tooltip="CV 13 bit 1">
+		<variable item="Analog Mode Function Status - F2" label="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" tooltip="CV 13 bit 1">
 			<enumVal>
 				<enumChoice choice="off"/>
 				<enumChoice choice="on"/>
 				</enumVal></variable>
-		<variable label="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" tooltip="CV 13 bit 2">
+		<variable item="Analog Mode Function Status - F3" label="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" tooltip="CV 13 bit 2">
 			<enumVal>
 				<enumChoice choice="off"/>
 				<enumChoice choice="on"/>
 				</enumVal></variable>
-		<variable label="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" tooltip="CV 13 bit 3">
+		<variable item="Analog Mode Function Status - F4" label="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" tooltip="CV 13 bit 3">
 			<enumVal>
 				<enumChoice choice="off"/>
 				<enumChoice choice="on"/>
 				</enumVal></variable>
 
-		<variable label="Analog Mode Function Status - FL(f)" CV="14" mask="XXXXXXXV" tooltip="CV 14 bit 0" default="1">
+		<variable item="Analog Mode Function Status - FL(f)" label="Analog Mode Function Status - FL(f)" CV="14" mask="XXXXXXXV" tooltip="CV 14 bit 0" default="1">
 			<enumVal>
 				<enumChoice choice="off"/>
 				<enumChoice choice="on"/>
 				</enumVal></variable>
-		<variable label="Analog Mode Function Status - FL(r)" CV="14" mask="XXXXXXVX" tooltip="CV 14 bit 1" default="1">
+		<variable item="Analog Mode Function Status - FL(r)" label="Analog Mode Function Status - FL(r)" CV="14" mask="XXXXXXVX" tooltip="CV 14 bit 1" default="1">
 			<enumVal>
 				<enumChoice choice="off"/>
 				<enumChoice choice="on"/>
 				</enumVal></variable>        
         
-    <variable label="Codigo de Bloqueo de CVs" CV="15" default="4" comment="Cuando el CV15 coincide con el CV16 desbloquea CVS">
+    <variable item="Codigo de Bloqueo de CVs" label="Codigo de Bloqueo de CVs" CV="15" default="4" comment="Cuando el CV15 coincide con el CV16 desbloquea CVS">
 			<decVal min="0" max="255"/>
 		</variable>
 
-	 <variable label="Codigo de Bloqueo" CV="16" default="4" comment="Un valor distinto al de CV15 bloquea cambios">
+	 <variable item="Codigo de Bloqueo" label="Codigo de Bloqueo" CV="16" default="4" comment="Un valor distinto al de CV15 bloquea cambios">
 			<decVal min="0" max="255"/>
 		</variable>
     
@@ -242,104 +239,9 @@
 			</enumVal>
 		</variable>
 
-			<variable label="FL(f) controls output 1" CV="33" default="1" mask="XXXXXXXV"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="FL(f) controls output 2" CV="33" mask="XXXXXXVX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="FL(f) controls output 3" CV="33" mask="XXXXXVXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="FL(f) controls output 4" CV="33" mask="XXXXVXXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="FL(f) controls output 5" CV="33" mask="XXXVXXXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="FL(f) controls output 6" CV="33" mask="XXVXXXXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="FL(f) controls output 7" CV="33" mask="XVXXXXXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			
-			
-			<variable label="FL(r) controls output 1" CV="34" mask="XXXXXXXV"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="FL(r) controls output 2" CV="34" default="1" mask="XXXXXXVX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="FL(r) controls output 3" CV="34" mask="XXXXXVXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="FL(r) controls output 4" CV="34" mask="XXXXVXXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="FL(r) controls output 5" CV="34" mask="XXXVXXXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="FL(r) controls output 6" CV="34" mask="XXVXXXXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="FL(r) controls output 7" CV="34" mask="XVXXXXXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			
-			
-			
-			<variable label="F1 controls output 1" CV="35" mask="XXXXXXXV"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F1 controls output 2" CV="35" mask="XXXXXXVX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F1 controls output 3" CV="35" default="1" mask="XXXXXVXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F1 controls output 4" CV="35" mask="XXXXVXXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F1 controls output 5" CV="35" mask="XXXVXXXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F1 controls output 6" CV="35" mask="XXVXXXXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F1 controls output 7" CV="35" mask="XVXXXXXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			
-			
-			
-			<variable label="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F2 controls output 2" CV="36" mask="XXXXXXVX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F2 controls output 3" CV="36" mask="XXXXXVXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F2 controls output 4" CV="36" default="1" mask="XXXXVXXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F2 controls output 5" CV="36" mask="XXXVXXXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F2 controls output 6" CV="36" mask="XXVXXXXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F2 controls output 7" CV="36" mask="XVXXXXXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			
-			
-			
-			<variable label="F3 controls output 1" CV="37" mask="XXXXXXXV"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F3 controls output 2" CV="37" mask="XXXXXXVX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F3 controls output 3" CV="37" mask="XXXXXVXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F3 controls output 4" CV="37" mask="XXXXVXXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F3 controls output 5" CV="37" default="1" mask="XXXVXXXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F3 controls output 6" CV="37" mask="XXVXXXXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-      <variable label="F3 controls output 7" CV="37" mask="XVXXXXXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>			
-	
+    <xi:include href="http://jmri.org/xml/decoders/ldh/cv33-39mapping.xml"/>
 
-      <variable label="F4 controls output 1" CV="38" mask="XXXXXXXV"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F4 controls output 2" CV="38" mask="XXXXXXVX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F4 controls output 3" CV="38" mask="XXXXXVXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F4 controls output 4" CV="38" mask="XXXXVXXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F4 controls output 5" CV="38" mask="XXXVXXXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F4 controls output 6" CV="38" default="1" mask="XXVXXXXX"> <enumVal> 
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-      		
-
-	<variable label="Compensacion de velocidad minima. Sin BEMF se suma a CV2 (1-100)" CV="48"
+	  <variable label="Compensacion de velocidad minima. Sin BEMF se suma a CV2 (1-100)" CV="48"
 			default="5" comment ="Rango 1-100" item="EMF Option 1" tooltip="CV48">
 			<decVal min="1" max="100"/>
 		</variable>
@@ -533,40 +435,11 @@
 			default="120" item="EMF Option 3" comment="Rango 1-255" tooltip="CV 64">
 			<decVal min="1" max="255"/>
 		</variable>		
-		<variable label="Speed Table" CV="67" default="1">
+		<variable item="Speed Table" label="Speed Table" CV="67" default="1">
 			<speedTableVal/>
 		</variable>
 
-	
-		
-    <variable label="Valores" CV="67" default="1"><decVal/></variable>
-    <variable label="Valores" CV="68" default="3"><decVal/></variable>
-    <variable label="Valores" CV="69" default="6"><decVal/></variable>
-    <variable label="Valores" CV="70" default="10"><decVal/></variable>
-    <variable label="Valores" CV="71" default="15"><decVal/></variable>
-    <variable label="Valores" CV="72" default="21"><decVal/></variable>
-    <variable label="Valores" CV="73" default="28"><decVal/></variable>
-    <variable label="Valores" CV="74" default="36"><decVal/></variable>
-    <variable label="Valores" CV="75" default="44"><decVal/></variable>
-    <variable label="Valores" CV="76" default="52"><decVal/></variable>
-    <variable label="Valores" CV="77" default="60"><decVal/></variable>
-    <variable label="Valores" CV="78" default="69"><decVal/></variable>
-    <variable label="Valores" CV="79" default="78"><decVal/></variable>
-    <variable label="Valores" CV="80" default="87"><decVal/></variable>
-    <variable label="Valores" CV="81" default="96"><decVal/></variable>
-    <variable label="Valores" CV="82" default="105"><decVal/></variable>
-    <variable label="Valores" CV="83" default="114"><decVal/></variable>
-    <variable label="Valores" CV="84" default="123"><decVal/></variable>
-    <variable label="Valores" CV="85" default="131"><decVal/></variable>
-    <variable label="Valores" CV="86" default="140"><decVal/></variable>
-    <variable label="Valores" CV="87" default="150"><decVal/></variable>
-    <variable label="Valores" CV="88" default="160"><decVal/></variable>
-    <variable label="Valores" CV="89" default="170"><decVal/></variable>
-    <variable label="Valores" CV="90" default="180"><decVal/></variable>
-    <variable label="Valores" CV="91" default="190"><decVal/></variable>
-    <variable label="Valores" CV="92" default="200"><decVal/></variable>
-    <variable label="Valores" CV="93" default="210"><decVal/></variable>
-    <variable label="Valores" CV="94" default="220"><decVal/></variable>
+    <xi:include href="http://jmri.org/xml/decoders/ldh/cv67-94speed.xml"/>
 
 		<variable label="Libre para usuario 1" CV="105"
 			item="User Id #1" default="0"
@@ -611,7 +484,7 @@
 				<enumChoice choice="gradual"/>
 				</enumVal></variable>
   			
-	<variable label="Distancia de frenado fija" CV="109" default="40">	<decVal min="20" max="255"/>
+	<variable item="Braking Distance" label="Distancia de frenado fija" CV="109" default="40">	<decVal min="20" max="255"/>
 				</variable>
 	<variable label="Potencia del motor en lectura de CVs" item="Motor Option 2" 
 	          tooltip="aumentar valor si el consumo del motor es muy bajo"
@@ -621,6 +494,3 @@
 </decoder>
 
 </decoder-config>
-
-
- 	  	 

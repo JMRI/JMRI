@@ -14,7 +14,7 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Nigel Cliffe, ncliffe@btinternet.com" version="1" lastUpdated="20110511"/>
   <version author="John Stather, steam.bloke@tesco.net" version="2" lastUpdated="20120125"/>
- <version author="Brian Jackson, brian-jackson1@blueyonder.co.uk" version="3" lastUpdated="20181021"/>
+  <version author="Brian Jackson, brian-jackson1@blueyonder.co.uk" version="3" lastUpdated="20181021"/>
   <!-- Version 1.0 - based on correspondance with Richard Johnson of DCC Concepts -->
   <!-- Version 2.0 - Correction of compound accel/decel CVs, add CV3/4 to Momentum page and add dither amplitude and frequency CV56/57 -->
   <!-- Version 3.0 - Error message Found mfg 36 (DCCconcepts) version 18; no such decoder defined
