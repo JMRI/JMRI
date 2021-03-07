@@ -15,6 +15,8 @@ import jmri.util.zeroconf.ZeroConfService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Implementation of the LocoNetOverTcp LbServer Server Protocol.
  *
@@ -31,23 +33,18 @@ public class LnTcpServer {
     private ZeroConfService service = null;
 
     private int portNumber;
-    private LnTrafficController tc;
+    private final LnTrafficController tc;
 
-    private LnTcpServer(LocoNetSystemConnectionMemo memo) {
+    private LnTcpServer(@Nonnull LocoNetSystemConnectionMemo memo) {
         tc = memo.getLnTrafficController(); // store tc in order to know where to send messages
         LnTcpPreferences pm = LnTcpPreferences.getDefault();
         portNumber = pm.getPort();
         pm.addPropertyChangeListener((PropertyChangeEvent evt) -> {
-            switch (evt.getPropertyName()) {
-                case LnTcpPreferences.PORT:
-                    // only change the port if stopped
-                    if (!isEnabled()) {
-                        portNumber = pm.getPort();
-                    }
-                    break;
-                default:
-                    // ignore uninteresting property changes
-                    break;
+            // ignore uninteresting property changes
+            if (LnTcpPreferences.PORT.equals(evt.getPropertyName())) {// only change the port if stopped
+                if (!isEnabled()) {
+                    portNumber = pm.getPort();
+                }
             }
         });
     }
@@ -55,7 +52,7 @@ public class LnTcpServer {
     /**
      * Get the default server instance, creating it if necessary.
      *
-     * @return the default server instance
+     * @return the default LnTcpServer instance
      */
     public static synchronized LnTcpServer getDefault() {
         return InstanceManager.getOptionalDefault(LnTcpServer.class).orElseGet(() -> {
@@ -98,7 +95,7 @@ public class LnTcpServer {
                 if (serverSocket != null) {
                     serverSocket.close();
                 }
-            } catch (IOException ex) {
+            } catch (IOException ignore) {
             }
 
             updateServerStateListeners();
@@ -109,8 +106,8 @@ public class LnTcpServer {
             synchronized (clients) {
                 clientsArray = clients.toArray();
             }
-            for (int i = 0; i < clientsArray.length; i++) {
-                ((ClientRxHandler) clientsArray[i]).close();
+            for (Object o : clientsArray) {
+                ((ClientRxHandler) o).close();
             }
         }
         if (this.service != null) {

@@ -1,8 +1,8 @@
 package jmri.jmrix.ecos.networkdriver;
 
+import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -11,20 +11,29 @@ import org.junit.jupiter.api.*;
  */
 public class NetworkDriverAdapterTest {
 
+    private EcosSystemConnectionMemo memo;
+
     @Test
     public void testCTor() {
         NetworkDriverAdapter t = new NetworkDriverAdapter();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
+    }
+
+    @Test
+    public void testMemoCTor() {
+        NetworkDriverAdapter tm = new NetworkDriverAdapter();
+        Assertions.assertNotNull(tm, "exists");
     }
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        memo = new EcosSystemConnectionMemo();
     }
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        memo.dispose();
         JUnitUtil.tearDown();
     }
 

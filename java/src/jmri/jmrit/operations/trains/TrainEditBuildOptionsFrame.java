@@ -892,7 +892,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
                 _train.getTrainDepartsRouteLocation().getName().equals(
                         _train.getTrainTerminatesRouteLocation().getName())) {
             allowThroughCarsCheckBox.setEnabled(false);
-            if (Setup.isAllowReturnToStagingEnabled()) {
+            if (Setup.isStagingAllowReturnEnabled()) {
                 returnStagingCheckBox.setEnabled(false);
                 returnStagingCheckBox.setSelected(true);
                 returnStagingCheckBox.setToolTipText(Bundle.getMessage("TipReturnToStaging"));

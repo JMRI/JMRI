@@ -9,7 +9,7 @@ import org.junit.jupiter.api.*;
 import org.junit.Assume;
 
 /**
- * Tests for the Bundle class
+ * Tests for the EcosPreferences class
  *
  * @author Paul Bender Copyright (C) 2016
  */

@@ -1789,6 +1789,10 @@ public class TrainCommon {
                 buf.append(TrainManifestHeaderText.getStringHeader_RWE() + SPACE);
             } else if (attribute.equals(Setup.COMMENT)) {
                 buf.append(TrainManifestHeaderText.getStringHeader_Comment() + SPACE);
+            } else if (attribute.equals(Setup.DROP_COMMENT)) {
+                buf.append(TrainManifestHeaderText.getStringHeader_Drop_Comment() + SPACE);
+            } else if (attribute.equals(Setup.PICKUP_COMMENT)) {
+                buf.append(TrainManifestHeaderText.getStringHeader_Pickup_Comment() + SPACE);
             } else if (attribute.equals(Setup.TAB)) {
                 buf.append(createTabIfNeeded(Setup.getTab1Length()));
             } else if (attribute.equals(Setup.TAB2)) {
@@ -1951,8 +1955,6 @@ public class TrainCommon {
     }
 
     private static int getLineLength(String orientation, String fontName, int fontStyle, int fontSize) {
-        // Metrics don't always work for the various font names, so use
-        // Monospaced
         Font font = new Font(fontName, fontStyle, fontSize); // NOI18N
         JLabel label = new JLabel();
         FontMetrics metrics = label.getFontMetrics(font);
@@ -1964,7 +1966,7 @@ public class TrainCommon {
         // compute lines and columns within margins
         int charLength = getPageSize(orientation).width / charwidth;
         if (charLength % 2 != 0) {
-            charLength++; // make it even
+            charLength--; // make it even
         }
         return charLength;
     }
