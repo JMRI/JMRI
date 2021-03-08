@@ -370,7 +370,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
     }
 
     @Override
-    protected void cleanup() {
+    public void cleanup() {
         if (initialised) {
             al.alDeleteBuffers(1, dataStorageBuffer, 0);
         }
