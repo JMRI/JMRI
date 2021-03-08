@@ -16,9 +16,9 @@ import javax.swing.*;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.JTextComponent;
 
-import jmri.*;
-
 import jmri.jmrit.logixng.LogixNGPreferences;
+
+import jmri.*;
 
 import apps.jmrit.DebugMenu;
 
