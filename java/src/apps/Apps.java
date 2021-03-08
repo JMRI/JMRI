@@ -22,9 +22,9 @@ import apps.jmrit.DebugMenu;
 
 import jmri.jmrit.ToolsMenu;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
+import jmri.jmrit.logixng.LogixNGPreferences;
 import jmri.jmrit.decoderdefn.PrintDecoderListAction;
 import jmri.jmrit.display.PanelMenu;
-import jmri.jmrit.logixng.LogixNGPreferences;
 import jmri.jmrit.jython.*;
 import jmri.jmrit.operations.OperationsMenu;
 import jmri.jmrit.revhistory.FileHistory;
