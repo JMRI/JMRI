@@ -6,8 +6,8 @@ import javax.swing.JFileChooser;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.jmrit.logixng.LogixNGPreferences;
+import jmri.JmriException;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorManager;
 
