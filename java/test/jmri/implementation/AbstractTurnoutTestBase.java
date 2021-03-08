@@ -4,11 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.beans.PropertyChangeListener;
 
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Sensor;
+import jmri.*;
 import jmri.util.JUnitUtil;
-import jmri.Turnout;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;

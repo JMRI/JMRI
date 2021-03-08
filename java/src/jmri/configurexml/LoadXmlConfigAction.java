@@ -3,9 +3,12 @@ package jmri.configurexml;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JFileChooser;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.jmrit.logixng.LogixNGPreferences;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,6 +58,13 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
                         // insure logix etc fire up
                         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
                         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+                        
+                        jmri.jmrit.logixng.LogixNG_Manager logixNG_Manager =
+                                InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
+                        logixNG_Manager.setupAllLogixNGs();
+                        if (InstanceManager.getDefault(LogixNGPreferences.class).getStartLogixNGOnStartup()) {
+                            logixNG_Manager.activateAllLogixNGs();
+                        }
                     }
                 }
             } catch (JmriException e) {
