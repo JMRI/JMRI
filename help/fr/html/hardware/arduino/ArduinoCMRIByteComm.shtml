@@ -1,4 +1,7 @@
 
+
+
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
@@ -40,8 +43,8 @@
 		Lumi&#232;res (sortie), et un ou deux bits dans le cas des aiguillages (voir la page d'aide du CMRI
         <a href="../cmri/CMRI.shtml#L405">section sur la mise en place des aiguillages et des lumi&#232;res</a> pour une utilisation avec
         CMRI). Avec l'introduction de la technologie des microcontr&#244;leurs 
-        comme l'<a href="https://arduino.cc" target="_blank">arduino</a>
-        Les n&#339;uds CMRI n'ont plus besoin d'&#234;tre limit&#233;s pour faire fonctionner le mat&#233;riel du r&#233;seau bas&#233; sur des commandes &#224; un 
+        comme l'<a href="https://arduino.cc" target="_blank">arduino</a>, 
+        les n&#339;uds CMRI n'ont plus besoin d'&#234;tre limit&#233;s pour faire fonctionner le mat&#233;riel du r&#233;seau bas&#233; sur des commandes &#224; un 
         (ou deux) bit.Les Arduinos sont des ordinateurs tr&#232;s performants qui peuvent traiter les messages CMRINet et agir sur 
         ce qu'ils re&#231;oivent sous le contr&#244;le d'un programme local. 
 		Les Arduinos sont des ordinateurs tr&#232;s performants qui peuvent traiter les messages CMRINet et
@@ -69,7 +72,7 @@
         un carrousel rotatif). L'arduino peut modifier la vitesse du moteur et renvoyer un num&#233;ro indiquant 
         la vitesse actuelle (peut-&#234;tre 1 &#224; 8) en codant ce nombre en plusieurs bits pour &#234;tre envoy&#233; dans le 
         cadre de la transmission CMRINet. Un <a href="../../tools/scripting/index.shtml"> script JMRI</a> peut &#234;tre 
-        <a href="../../tools/scripting/HowTo.shtml#multturnouts">une &#233;coute pour modifier</a> dans ces bits "rapides" 
+        <a href="../../tools/scripting/HowTo.shtml#multturnouts">une surveillance pour modifier</a> dans ces bits "rapides" 
         et les utiliser pour cr&#233;er un nombre d&#233;cimal dans une <a href="../../tools/Memories.shtml"></a>variable 
         m&#233;moire JMRI pour affichage sur un panneau, comme illustr&#233; dans  <a href="https://www.jmri.org/jython/CmriBitsToBytes.py" 
         target="_blank">cet exemple de script.</a> L'image ici montre les capteurs 0, 1, 2 et 3 actifs qui
@@ -89,15 +92,15 @@
 		</div>
 
 		<div class="list">
-		<h1>Exemple de mise en place de JIRM</h1>
+		<h1>Exemple de mise en place de JMRI</h1>
         
 		<p>Les &#233;tapes sont assez simples:</p>
 		<dl>
 		    <dt class="left">Configurer un n&#339;ud CMRI</dt>
 		    <dd class="first">
 			<p><a href="../cmri/CMRI.shtml#L268">Configurer un n&#339;ud CMRI</a>
-            repr&#233;sentant le nombre de bits de sortie (JMRI-&amp;gt;n&#339;ud CMRI) et de bits d'entr&#233;e 
-            (CMRI node-&amp;gt;JMRI) souhait&#233;e.Rappelez-vous que <a href="../cmri/CMRI.shtml#L391">JMRI les 
+            repr&#233;sentant le nombre de bits de sortie (JMRI -> n&#339;ud CMRI) et de bits d'entr&#233;e 
+            (n&#339;ud CMRI -> JMRI) souhait&#233;e.Rappelez-vous que <a href="../cmri/CMRI.shtml#L391">JMRI les 
             lumi&#232;res et les sorties des aiguillages vers les capteurs CMRI et JMRI fournissent des entr&#233;es</a> 
             (pensez &#224; cela en termes de n&#339;ud CMRI : 
             les capteurs physiques fournissent des informations au n&#339;ud ; le n&#339;ud fournit ensuite des informations 
@@ -117,7 +120,7 @@ et recevoir des informations en changeant l'&#233;tat des objets JMRI:</p>
           (toute entr&#233;e CMRI).</li>
         </ul>
 
-        <p>Les objets JMRIsont associ&#233;s &#224; un seul bit CMRI dans le cas des capteurs (entr&#233;e) et 
+        <p>Les objets JMRI sont associ&#233;s &#224; un seul bit CMRI dans le cas des capteurs (entr&#233;e) et 
 Lumi&#232;res (sortie), et un ou deux bits dans le cas des aiguillages (voir la page d'aide du CMRI
         <a href="../cmri/CMRI.shtml#L405">section sur la mise en place des aiguillages et des lumi&#232;res</a> pour une utilisation avec
         CMRI). Avec l'introduction de la technologie des microcontr&#244;leurs 
@@ -127,7 +130,7 @@ Les Arduinos sont des ordinateurs tr&#232;s performants qui peuvent traiter les 
         <a href="index.shtml#CMRI">Un arduino &#233;mulant un n&#339;ud CMRI </a>peut &#234;tre programm&#233; pour
         lancer des animations, jouer une s&#233;rie de sons, &#233;clairer des b&#226;timents de fa&#231;on r&#233;aliste ou contr&#244;ler la vitesse de moteurs accessoires - &#224; peu pr&#232;s tout ce que le mod&#233;liste
         peut r&#234;ver. </p>
-        <p>De m&#234;me, il est &#233;galement possible de renvoyer des informations &#224; l'IRMJ par CMRINet sous la forme de chiffres ou de lettres, ou de toute cha&#238;ne pouvant &#234;tre encod&#233;e dans quelques octets de l'information.  JMRI recevra chaque octet comme d&#233;finissant l'&#233;tat de huit capteurs, mais un simple script JMRI peut traduire cette information binaire en d&#233;cimal le nombre ou le caract&#232;re qu'il repr&#233;sente.</p>
+        <p>De m&#234;me, il est &#233;galement possible de renvoyer des informations &#224; JMRI par CMRINet sous la forme de chiffres ou de lettres, ou de toute cha&#238;ne pouvant &#234;tre encod&#233;e dans quelques octets de l'information.  JMRI recevra chaque octet comme d&#233;finissant l'&#233;tat de huit capteurs, mais un simple script JMRI peut traduire cette information binaire en d&#233;cimal le nombre ou le caract&#232;re qu'il repr&#233;sente.</p>
         
         <p class="note">Il est &#233;galement possible d'envoyer des chiffres et des caract&#232;res directement &#224; JMRI d'arduinos en utilisant <a href="index.shtml#serial">communications par s&#233;rie </a> sans tirer parti des capacit&#233;s CMRInet du JMRI.  Chaque approche a ses avantages et inconv&#233;nients, comme discut&#233;<a href="index.shtml#connect"> ici.</a></p>
 
@@ -151,8 +154,8 @@ Les Arduinos sont des ordinateurs tr&#232;s performants qui peuvent traiter les 
 		    <dt class="left">Configurer un n&#339;ud CMRI</dt>
 		    <dd class="first">
 			<p><a href="../cmri/CMRI.shtml#L268">Configurer un n&#339;ud CMRI</a>
-            repr&#233;sentant le nombre de bits de sortie (JMRI-&amp;gt;n&#339;ud CMRI) et de bits d'entr&#233;e 
-            (CMRI node-&amp;gt;JMRI) souhait&#233;e.Rappelez-vous que <a href="../cmri/CMRI.shtml#L391">JMRI les lumi&#232;res et les sorties des aiguillages vers les capteurs CMRI et JMRI fournissent des entr&#233;es</a> (pensez &#224; cela en termes de n&#339;ud CMRI : 
+            repr&#233;sentant le nombre de bits de sortie (JMRI -> n&#339;ud CMRI) et de bits d'entr&#233;e 
+            (n&#339;ud CMRI -> JMRI) souhait&#233;e.Rappelez-vous que <a href="../cmri/CMRI.shtml#L391">JMRI les lumi&#232;res et les sorties des aiguillages vers les capteurs CMRI et JMRI fournissent des entr&#233;es</a> (pensez &#224; cela en termes de n&#339;ud CMRI : 
             les capteurs physiques fournissent des informations au n&#339;ud ; le n&#339;ud fournit ensuite des informations pour contr&#244;ler les aiguillages et les lumi&#232;res physiques).</p>
 		    </dd
  
@@ -182,7 +185,7 @@ Les Arduinos sont des ordinateurs tr&#232;s performants qui peuvent traiter les 
 
             <dt class="left">Ex&#233;cuter le script</dt>
 		    <dd>
-			<p>Create <a href="../../tools/scripting/HowTo.shtml#multturnouts">un script d'&#233;coute</a>
+			<p>Cr&#233;er <a href="../../tools/scripting/HowTo.shtml#multturnouts">un script d'&#233;coute</a>
             comme indiqu&#233; ci-dessus, pour traduire les &#233;tats du capteur en bits et cr&#233;er un 
             nombre de lettres dans la variable m&#233;moire. Un exemple de script pour convertir huit &#233;tats de capteur (bits) en 
             un nombre peut &#234;tre trouv&#233; 
@@ -194,7 +197,7 @@ Les Arduinos sont des ordinateurs tr&#232;s performants qui peuvent traiter les 
 		</div> <!-- closes #list -->
     
     <!--#include virtual="/Footer.shtml" -->
-
+<P>Traduction 2021-03-19</P>
     </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody, from before Sidebar -->
 </body>
