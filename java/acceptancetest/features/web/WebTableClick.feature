@@ -12,7 +12,7 @@ Scenario Outline: Web Table requests with click testing
    @firefox
    Examples: Firefox Table Click Tests
    | browser | panel | table | item | column | before | after |
-#   | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Turnouts | IT0 | state | closed | thrown |
+   | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Turnouts | IT0 | state | closed | thrown |
 #   | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Turnouts | IT1 | state | unknown | thrown |
 #   | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Lights | IL0 | state | off | on |
 #   | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Sensors | ISCLOCKRUNNING | state | active | inactive |

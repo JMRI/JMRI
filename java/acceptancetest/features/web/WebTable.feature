@@ -10,7 +10,7 @@ Scenario Outline: Web Table requests
    @firefox
    Examples: Firefox Table Tests
    | browser | panel | table | item | column | state |
-#   | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Turnouts | IT0 | state |closed |
+   | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Turnouts | IT0 | state |closed |
 #   | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Turnouts | IT1 | state |unknown |
 
    @chrome
