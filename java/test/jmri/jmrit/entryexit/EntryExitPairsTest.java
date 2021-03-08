@@ -96,8 +96,8 @@ public class EntryExitPairsTest {
         t.start();
     }
 
-    @BeforeAll
-    public static void before() throws Exception {
+    @BeforeEach
+    public void before() throws Exception {
         JUnitUtil.setUp();
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.util.JUnitUtil.resetProfileManager();
@@ -111,8 +111,8 @@ public class EntryExitPairsTest {
         tm = InstanceManager.getDefault(TurnoutManager.class);
     }
 
-    @AfterAll
-    public static void after() {
+    @AfterEach
+    public void after() {
         panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
         eep = null;
         lbm = null;
