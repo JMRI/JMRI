@@ -113,7 +113,9 @@ public class EntryExitPairsTest {
 
     @AfterEach
     public void after() {
-        panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
+        if (panels != null) {
+            panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
+        }
         eep = null;
         lbm = null;
         sm = null;
