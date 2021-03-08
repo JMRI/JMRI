@@ -13,11 +13,11 @@ Scenario Outline: Web Table requests with click testing
    Examples: Firefox Table Click Tests
    | browser | panel | table | item | column | before | after |
    | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Turnouts | IT0 | state | closed | thrown |
-#   | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Turnouts | IT1 | state | unknown | thrown |
-#   | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Lights | IL0 | state | off | on |
-#   | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Sensors | ISCLOCKRUNNING | state | active | inactive |
-#   | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Memories | IMRATEFACTOR | value | 1.0 | 1.0 |
-#   | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Signal Heads | IH8 | lit | true | true |
+   | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Turnouts | IT1 | state | unknown | thrown |
+   | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Lights | IL0 | state | off | on |
+   | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Sensors | ISCLOCKRUNNING | state | active | inactive |
+   | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Memories | IMRATEFACTOR | value | 1.0 | 1.0 |
+   | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Signal Heads | IH8 | lit | true | true |
 
    @chrome
    Examples: Chrome Table Click Tests
