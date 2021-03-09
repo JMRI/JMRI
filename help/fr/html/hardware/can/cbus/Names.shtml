@@ -687,6 +687,767 @@
 
 
         <ul>
+        <li>ASON / ASOF Surveillant Permanent</li>
+        <li>ACON / ACOF Surveillant Permanent</li>
+        <li>ARON / AROF Surveillant Permanent</li>
+        <li>ARSON / ARSOF Surveillant Permanent</li>
+        </ul>      
+        
+        <p>Cela n'inclut pas actuellement l'&#233;v&#233;nement de donn&#233;es &#233;tendues OPC's.</p>
+        
+      <h4>Rapport OPCs</h4>
+        <p>
+        <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusReporter.java" >CbusReporter.java</a>
+      
+        <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusReporterManager.java" >CbusReporterManager.java</a>
+        </p>
+        <p>Les messages envoy&#233;s et re&#231;us par JMRI sont trait&#233;s de la m&#234;me mani&#232;re par les rapports du CBUS.
+        <ul>
+        <li>DDES - Surveillant Permanent</li>
+        <li>DDRS - Surveillant Permanent</li>
+        <li>ACDAT - Surveillant Permanent</li>
+        <li>ARDAT - Surveillant Permanent</li>
+        </ul>        
+        
+        
+      <h4>Command Station OPCs</h4>
+       
+        <p>
+        <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusCommandStation.java" >CbusCommandStation.java</a>
+        </p>
+        
+        <ul>
+        <li>RDCC3 - Message envoy&#233;</li>
+        <li>KLOC - Message envoy&#233;</li>
+        <li>DKEEP - Message envoy&#233;</li>
+        <li>DSPD - Message envoy&#233;</li>
+        <li>DFUN - Message envoy&#233;</li>
+        <li>STMOD - Message envoy&#233;</li>
+        </ul>
+        
+        
+        <p>
+        <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusDccOpsModeProgrammer.java" >CbusDccOpsModeProgrammer.java</a>
+        </p>
+        <ul>
+        <li>WCVOA - Message envoy&#233;</li>
+        </ul>
+        
+        <p>
+        <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusDccProgrammer.java" >CbusDccProgrammer.java</a>
+        </p>
+        <ul>
+        <li>WCVS - Message envoy&#233;</li>
+        <li>QCVS - Message envoy&#233;</li>
+        </ul>
+        
+        <p>Re&#231;u par JMRI en &#233;tat de programmation interne</p>
+        <ul>
+        <li>SSTAT</li>
+        <li>PCVS</li>
+        </ul>
+        
+        <p>
+        <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusPowerManager.java" >CbusPowerManager.java</a>
+        </p>
+
+        <ul>
+        <li>RTON - Message envoy&#233;</li>
+        <li>RTOF - Message envoy&#233;</li>
+        </ul>
+        <p>Re&#231;u par JMRI</p>
+        <ul>
+        <li>TON - Surveillant Permanent</li>
+        <li>TOF - Surveillant Permanent</li>
+        <li>ARST - Surveillant Permanent</li>
+        </ul>
+        
+
+        
+        <p>
+        <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusThrottle.java" >CbusThrottle.java</a>
+        <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusThrottleManager.java" >CbusThrottleManager.java</a>
+        </p>
+        <p>Messages envoy&#233;s par JMRI</p>
+        <ul>
+        <li>RLOC - Envoy&#233; par JMRI</li>
+        </ul>
+        
+        <p>Ecouteurs des messages envoy&#233;s par JMRI</p>
+        <ul>
+        <li>ESTOP - Surveillant Permanent</li>
+        <li>RESTP - Surveillant Permanent</li>
+        <li>KLOC - Surveillant Permanent</li>
+        </ul>
+        <p>Ecouteurs des messages re&#231;us par JMRI</p>
+        <ul>
+        <li>PLOC - Surveillant Permanent</li>
+        <li>ERR - Surveillant Permanent + Erreurs traduites &#224; partir des codes d'erreur</li>
+        <li>DSPD - Surveillant Permanent</li>
+        <li>DFUN - Surveillant Permanent</li>
+        <li>DFNON - Surveillant Permanent</li>
+        <li>DFNOF - Surveillant Permanent</li>
+        <li>ESTOP - Surveillant Permanent</li>
+        <li>RESTP - Surveillant Permanent</li>
+        </ul>
+        
+       </div>
+       
+      
+     <h2>Aide JMRI</h2>
+      <div>
+      <p><a href="index.shtml">Page principale de support CBUS JMRI</a>.</p>
+      
+      <p><a href="../scripting.shtml">JMRI Scripting</a> pour les trames CAN avec CanExample.py</p>
+      
+      <p><a href="index.shtml#thirdparty">Liens tiers de la CBUS</a> Voir le lien pour le guide des d&#233;veloppeurs de la CBUS</p>
+      </div>
+      
+        <h2></h2>
+        <p>CBUS&trade; est une marque d&#233;pos&#233;e du Dr Michael Bolton</p>
+        <p></p>
+
+
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
+
+            <br>TO_1 est +1 et le retour d'information est +10001 pour un sens 
+            et +11001 pour l'autre sens. 
+            <br>
+            En utilisant des &#233;v&#233;nements courts (ou des num&#233;ros d'appareils) 
+            de cette mani&#232;re, on simplifie la vie avec JMRI. 
+            <br>Ils contr&#244;lent &#233;galement les d&#233;parts des CANCAB (&#233;galement  
+            Smartphone,R&#233;gulateur), cela se refl&#232;te dans le panneau JMRI et fait plaisir !
+            <br>Le panneau de contr&#244;le du r&#233;seau est sur un &#233;cran tactile  c
+            onnect&#233; &#224; un RPi 3B fonctionnant avec JMRI, avec des tableaux de 
+            commande suppl&#233;mentaires gr&#226;ce &#224;  <a href="../../../web/index.shtml">Serveur Web JMRI</a>.
+            </p>
+
+
+            
+            
+            <Une autre utilisation de la segmentation des &#233;v&#233;nements pourrait 
+            &#234;tre la mise en place de modules au sein d'un clubs , dans lesquels les 
+            diff&#233;rents membres du club construisent un module chez eux, 
+            puis le rassemblent en un grande r&#233;seau.
+            <br>
+            Le module 1 comporterait des &#233;v&#233;nements de 1 000 > 1 999 
+            Le module 2 comporterait des &#233;v&#233;nements de 2 000 > 2 999 etc.
+            </p>
+
+           
+            <h4>Suggestion &#201;v&#233;nements Longs </h4>
+            
+            <p>Suggestion de Pete Brownlow:</p>
+            <p>Pete utilise presque exclusivement des &#233;v&#233;nements longs.
+            <br>Pour les &#233;v&#233;nements envoy&#233;s par JMRI, il segmente par 
+            num&#233;ro de n&#339;ud que JMRI g&#233;n&#232;re  (par exemple, le n&#339;ud 99 pour 
+            les aiguillages, le n&#339;ud 98 pour les signaux et le n&#339;ud 97 pour 
+            les capteurs de contr&#244;le). 
+            <br>Il est ainsi tr&#232;s facile de voir &#224; quoi servent les 
+            &#233;v&#233;nements lorsqu'on consulte un journal des &#233;v&#233;nements. 
+            <br>Pour tous les capteurs d'entr&#233;e du CBUS, il laisse 
+            l'&#233;v&#233;nement long tel que g&#233;n&#233;r&#233; par le module CBUS,  il conservera 
+            donc le num&#233;ro de n&#339;ud de ce module,  (par exemple, le n&#339;ud 256, 
+            &#233;v&#233;nement 1), il n'y a donc aucun risque de g&#233;n&#233;rer le m&#234;me &#233;v&#233;nement 
+            qu'un TCO.  
+            <br>Parce qu'il n'utilise pas d'&#233;v&#233;nements courts, il n'est 
+            pas n&#233;cessaire de segmenter par le num&#233;ro d'&#233;v&#233;nement/de dispositif.  
+            Il &#233;vite &#233;galement d'avoir &#224; enseigner les &#233;v&#233;nements du 
+            producteur, en utilisant simplement ce qui provient des modules par d&#233;faut. 
+            </p>
+            
+            
+
+            <h4>Polarit&#233; des &#233;v&#233;nements</h4>
+            
+            <p> Vous pouvez inverser la polarit&#233; des &#233;v&#233;nements ON et OFF</p>
+      <ul>
+      <li> sur le module producteur initial </li>
+      <li>Format de d&#233;signation du mat&#233;riel lorsqu'il est saisi en tant 
+      que capteur JMRI, aiguillage ou lumi&#232;re</li>
+      <li>R&#233;glages du capteur ou de l'aiguillage au sein de JMRI</li>
+      </ul>
+
+        <h4>&#201;v&#233;nements de d&#233;but de Session</h4>
+        
+        <p>Lorsque JMRI est lanc&#233;e, elle ne suppose pas que tous les capteurs, 
+        les aiguillages etles feux sont actifs ou inactifs, ils ont un statut inconnu.</p>
+        
+        <p> La grande majorit&#233; des kits de modules MERG peuvent envoyer le statut 
+        actuel de leur  les entr&#233;es ou sorties en r&#233;ponse &#224; un &#233;v&#233;nement 
+         SOD enseign&#233; &#224; ce module.</p>
+        
+        <p>JMRI peut stocker des informations crois&#233;es telles que les Variables 
+        de M&#233;moire et les Valeurs de Canton ( valeur du descripteur de train )</p>      
+        
+        <p>Lorsque JMRI charge un panneau, et que l'alimentation de la voie 
+        est activ&#233;e, les valeurs des cantons des sessions pr&#233;c&#233;dentes sont 
+        charg&#233;es si le canton est actif.</p>
+        
+        <p>Il peut &#234;tre judicieux de r&#233;gler l'alimentation de la voie sur 
+        Off au d&#233;marrage de JMRI et lorsqu'un panneau se charge,  mettree 
+        sous tension de la voie apr&#232;s que le panneau ait &#233;t&#233; enti&#232;rement charg&#233;.</p>
+      
+      <h4><a name="automatic" id="automatic">Capteurs - Cr&#233;ation automatique JMRI</a></h4>
+
+        <p>JMRI NE TENTE PAS de cr&#233;er des objets capteurs &#224; partir du trafic 
+        qu'il entend sur le r&#233;seau CBUS,  contrairement &#224; certains autres 
+        syst&#232;mes mat&#233;riels.</p>
+        
+        <p>C'est parce que le CBUS est essentiellement un protocole de 
+        r&#233;seau,  et non un g&#233;n&#233;rateur de capteurs.
+        Les &#233;v&#233;nements ne sont pas intrins&#232;quement associ&#233;s &#224;  des objets 
+        mat&#233;riels sp&#233;cifiques, les gens peuvent utiliser les &#233;v&#233;nements 
+        de nombreuses fa&#231;ons.</p>
+        
+        <p>Vous pouvez demander l'&#233;tat d'un capteur en cliquant sur Requ&#234;te 
+        dans le Tableau des Capteurs. </p>
+      
+       <h4><a name="aiguillage" id="aiguillage">Op&#233;ration Aiguillage</a></h4>
+      
+      <p>CBUS est configur&#233; dans JMRI pour 4 types de retour d'information sur les sorties.
+      <p> Les aiguillages ont 2 &#233;tats, l'&#233;tat command&#233; et l'&#233;tat de 
+      r&#233;trosignalisation qui est utilis&#233; sur les TCO et ailleurs.
+      
+      <ul>
+      <li>Direct - Lorsque l'&#233;tat command&#233; est modifi&#233;,  l'&#233;tat de 
+      r&#233;troaction refl&#233;tera l'&#233;tat command&#233;.</li>
+      <li>Retard&#233; - Lorsque l'&#233;tat command&#233; est modifi&#233;, l'&#233;tat de 
+      r&#233;troaction refl&#233;tera l'&#233;tat command&#233; apr&#232;s un bref d&#233;lai.</li>
+      <li>1 Capteur - Lorsque l'&#233;tat command&#233; est modifi&#233;, l'&#233;tat de 
+      r&#233;troaction ne change pas.
+      <br>L'&#233;tat de r&#233;troaction change lorsque le capteur connect&#233; change 
+      d'&#233;tat (par exemple, &#233;v&#233;nements de microcommutateur unique)</li>
+      <li>2 Capteur - Lorsque l'&#233;tat command&#233; est modifi&#233;, l'&#233;tat de r&#233;troaction ne change pas.
+      <br>L'&#233;tat de r&#233;troaction change lorsque les deux capteurs s'accordent 
+      sur l'&#233;tat (par exemple, les &#233;v&#233;nements de fin de course du servo).
+      </ul>
+      
+      <p>Vous pouvez demander l'&#233;tat d'un aiguillage en cliquant sur
+      "Requ&#234;te" dans le tableau des aiguillages. </p>
+      <p>Si un aiguillage utilise 1 ou 2 capteurs, ces &#233;tats seront &#233;galement demand&#233;s.
+      
+      <p>See <a href="../../../doc/Technical/AiguillageFeedback.shtml">JMRI : 
+      R&#233;trosignalisation Aiguillage</a> pour plus d'info.</p>
+      
+      
+      <h4><a name="reporters" id="reporters">Donn&#233;es des rapports (y compris 
+      RFID) de CBUS</a></h4>
+      <p><a href="../../../tools/Reporters.shtml"> Les Rapports JMRI </a> 
+      n'ont pas d'&#233;v&#233;nements Off ou On, ils utilisent simplement un dispositif 
+      (&#233;v&#233;nement court) ou un num&#233;ro de n&#339;ud.
+        
+        <p>Les rapports sont cr&#233;&#233;s en cliquant sur le bouton "Nouveau" dans le  *
+        <a href="../../../../package/jmri/jmrit/beantable/ReporterTable.shtml">Tableau de rapport</a>.</p>
+        <p> Vous pouvez cr&#233;er plusieurs rapports en cochant l'option Ajouter une plage s&#233;quentielle.</p>
+        
+        <p>Comme les Aiguillages, les Capteurs et les Lumi&#232;res , ceux-ci ne sont pas cr&#233;&#233;s automatiquement dans CBUS.</p>
+        
+      <p>Un nom syst&#232;me typique pour un rapport serait   <code>MR123</code> 
+      ou <code>MR1234</code> ( aucun &#233;v&#233;nement activ&#233; ou d&#233;sactiv&#233; ) .</p>
+      <p>La DDES et l'ACDAT d'OPC sont utilis&#233;s pour les donn&#233;es des d&#233;clarants.
+      <p>Quand un DDES ou un ACDAT d'OPC entrant est entendu sur le r&#233;seau,  JMRI c
+      herchera un rapport correspondant au num&#233;ro de l'appareil ou du n&#339;ud dans le Tableau des Rapports.
+      
+      <p>Si un rapport existe, la <a href="../../../tools/IdTags.shtml">balise ID</a> 
+        dans les 5 octets de donn&#233;es seront recherch&#233;s dans le 
+      <a href="../../../../package/jmri/jmrit/beantable/IdTagTable.shtml">Table &#201;tiquette ID </a>.</p>
+      
+      <p>S'il n'y a pas d'&#201;tiquette ID correspondant dans la Table, une sera cr&#233;&#233;e et mise &#224; jour.</p>
+      
+      <p>Si la balise ID &#233;tait pr&#233;c&#233;demment active pour un autre rapport, 
+      le rapport pr&#233;c&#233;dent verra la balise supprim&#233;e de son rapport.</p>
+      
+      <p>Les num&#233;ros de d&#233;clarants valides sont au minimum 0, au maximum 65535.</p>
+      <Les messages DDES (donn&#233;es relatives au num&#233;ro de l'appareil) et ACDAT 
+      ( donn&#233;es relatives aux n&#339;uds) sont actuellement trait&#233;s exactement de la m&#234;me mani&#232;re
+      c'est-&#224;-dire que les 2 premiers octets sont utilis&#233;s comme identifiant du rapport.</p>
+      <p>Cela signifie qu'un rapport cr&#233;&#233; via un num&#233;ro 77 r&#233;pondra  &#224; la fois 
+      au dispositif DDES 77 et l'ACDAT du n&#339;ud 77.</p>
+      
+    <p>Les rapports sont enregistr&#233;s dans votre fichier de panneau principal, avec les aiguillages et les capteurs, etc.</p>
+      <p>ID Balise la session crois&#233;e automatiquement, aucune sauvegarde n'est n&#233;cessaire.</p>
+      </div>
+      
+      <h2><a name="sysname" id="sysname">Noms Syst&#232;mes</a></h2>
+       <div>
+        <p>Lors de l'ajout d'un &#233;l&#233;ment &#224; votre JMRI
+        <a href="../../../../package/jmri/jmrit/beantable/AiguillageTable.shtml">Tableau Aiguillage</a>,
+        <a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Tableau Capteurs</a>,
+        <a href="../../../../package/jmri/jmrit/beantable/LightTable.shtml">Tableau Lumi&#232;res</a> ou
+        <a href="../../../../package/jmri/jmrit/beantable/ReporterTable.shtml">Tableau Rapports</a>,
+
+        un nomsyst&#232;me JMRI est automatiquement cr&#233;&#233; &#224; partir de l'adresse du mat&#233;riel que vous saisissez.
+        </p>
+      
+        <p><strong>C'est vraiment tout ce que vous devez savoir pour commencer</strong>, le reste des informations sur cette page 
+        est destin&#233; aux cas d'utilisation avanc&#233;s, au d&#233;bogage des fichiers xml du panneau et au d&#233;veloppement du syst&#232;me.
+      
+        <p>JMRI associe en interne les &#233;v&#233;nements CBUS &#224; des objets JMRI individuels  (capteurs, aiguillages, feux, etc.) via le <a href="../../../doc/Technical/Names.shtml">Noms Syst&#232;mes JMRI</a>.
+        </p>        
+
+        <p>Selon les ID d'&#233;v&#233;nements CBUS utilis&#233;s sur un
+        r&#233;seau particulier, ces noms  syst&#232;mes peuvent devenir tr&#232;s longs, en
+        auquel cas les "noms utilisateur" sont beaucoup plus utiles.</p>
+        
+        <p>La 1&#232;re lettre du nom d'un capteur, d'un aiguillage ou d'un syst&#232;me de lumi&#232;re est le Lettre syst&#232;me JMRI , g&#233;n&#233;ralement "M" pour les connexions MERG.
+        </p>
+        
+        <ul>
+        <li><a href="../../../tools/Sensors.shtml">Capteurs  JMRI</a> utilisez la lettre "S",  par exemple <code>MS+123;-345</code>" d&#233;finit un Capteur qui suit les &#233;v&#233;nements "123 ON" et "345 OFF" pour changer d'&#233;tat. </li>
+        <li><a href="../../../tools/Aiguillages.shtml">Aiguillages JMRI</a> utilisez la lettre "T", par exemple <code>MT+123;-345</code> </li>
+        <li><a href="../../../tools/Lights.shtml">Lumi&#232;res JMRI Lights</a> utilisez la lettre "L", par exemple <code>ML+123;-345</code></li>
+        <li><a href="../../../tools/Reporters.shtml">Rapports JMRI</a> utilisez la lettre "R", par exemple <code>MR123</code></li>
+        </ul>         
+      
+      
+      <h3><a name="summary" id="summary">R&#233;sum&#233; des &#233;v&#233;nements CBUS ( Capteurs, Aiguillages et Lumi&#232;res)</a></h3>
+      
+      <table border="1">
+        <tbody><tr>
+          <th>E/S/</th>
+          <th>Entr&#233;e comme adresse mat&#233;rielle</th>
+          <th>Signification</th>
+          <th>fait le nom syst&#232;me</th>
+          <th>Masque</th>
+          <th>Equivalent</th>
+          <th>Min.</th>
+          <th>Max.</th>
+          <th>Notes</th>
+        </tr>
+        <tr>
+          <td>les deux</td>
+          <td>+18</td>
+          <td>&#233;v&#233;nement 18 On ;
+            <br>&#233;v&#233;nement 18 Off</td>
+          <td>MT+18</td>
+          <td>Entier</td>
+          <td>+18;-18</td>
+          <td>01</td>
+          <td>65535
+          </td>
+          <td>SLiM &#201;v&#233;nement Court ASON / ASOF
+          </td>
+        </tr>
+        <tr>
+          <td>les deux</td>
+          <td>+N2E18</td>
+          <td>N&#339;ud 2 &#201;v&#233;nement 18 ;  &#201;v&#233;nement On= Actif ; 
+          <br> &#201;v&#233;nement Off = Inactif</td>
+          <td>MT+N2E18;-N2E18</td>
+          <td></td>
+          <td></td>
+          <td>N1E1;<br>N1E1</td>
+          <td>N 65535 E 65535 ;
+          <br>N 65535 E 65535</td>
+          <td>FLiM &#201;v&#233;nement Long ACON / ACOF</td>
+        </tr>
+        <tr>
+          <td>les deuxh</td>
+          <td>+18;+21</td>
+          <td>event 18 On ;
+          <br>&#233;v&#233;nement 21 On</td>
+          <td>MT18;21</td>
+          <td>int&#233;gral;integer</td>
+          <td>+18;+21</td>
+          <td> 1 ; 1</td>
+          <td> 65535 ; 65535</td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>les deux</td>
+          <td>+18;-21</td>
+          <td>event 18 On ; 
+          <br>event21 Off</td>
+          <td>MT+18;-21</td>
+          <td>idem sign&#233;</td>
+          <td>+18;-21</td>
+          <td> </td>
+          <td> </td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>les deux</td>
+          <td>X90002D002E;X91FFFFFFFE</td>
+          <td>hex CAN frame msg. Active ;
+          <br>hex CAN frame msg. Inactif</td>
+          <td>MTX90002D002E;X91FFFFFFFE</td>
+          <td>hex;hex</td>
+          <td>N/A</td>
+          <td colspan="2">D&#233;pend de l'opcode</td>
+          <td>Par exemple, D&#233;vi&#233; envoie l'&#233;v&#233;nement long N 45 E 46 <br> Direct envoie l'&#233;v&#233;nement long N 65535 E 65534 </td>
+        </tr>
+        <tr>
+          <td>les deux</td>
+          <td>200018</td>
+          <td>N&#339;ud 2 &#201;v&#233;nementt 18 ; &#233;v&#233;nement On  = Actif ; 
+          <br>&#201;v&#233;nement Off  = Inactif</td>
+          <td>MS200018</td>
+          <td>N&#339;ud + (5 chiffres)</td>
+          <td>N2E18</td>
+          <td> 100001</td>
+          <td> 6553565535</td>
+          <td> Le maximum actuel qui peut &#234;tre saisi (JMRI 4.12) est 2147483647</td>
+        </tr>
+        </body></table>
+        
+        
+ <!-- ce tableau est un exception du tableau dans le fichier help/fr/html/doc/Technical/Names.shtml 
+ bas&#233; sur les informations des pages d'aide Hardware par Egbert Broerse @silverailscolo Juillet 2017 
+      
+      
+      Veuillez &#233;galement mettre &#224; jour cette page lorsque vous ajoutez / am&#233;liorez des noms qui fonctionneront ou non
+      
+      
+      -->
+        
+        <p>65 536 n&#339;uds et 65 535 &#233;v&#233;nements donne environ 4 294 901 760 combinaisons d'&#233;v&#233;nements.</p>
+        
+        <p>65 535 est irr&#233;aliste pour les &#233;v&#233;nements &#224; l'int&#233;rieur d'un n&#339;ud mais permet une segmentation utile des plages d'&#233;v&#233;nements.</p>
+        <p>Les kits de modules MERG peuvent utiliser toute la gamme des num&#233;ros d'&#233;v&#233;nements CBUS, lors d'un d&#233;marrage de r&#233;initialisation fonctionnant en mode d'&#233;v&#233;nements courts SLiM.
+        <br>Un kit MERG CANLED peut prendre en charge jusqu'&#224; 255 &#233;v&#233;nements enseign&#233;s</p>
+
+       </div>
+
+      <h2><a name="namingspec" id="namingspec">Sp&#233;cification de l'Appellation des &#201;v&#233;nements</a></h2>
+      <div>
+      <p>Un capteur est d&#233;fini par deux
+      &#233;v&#233;nements : Celui qui le met ACTIF, et celui qui le met
+      INACTIF. 
+      <br>Si celles-ci sont mises en correspondance avec les images ON et 
+      OFF avec le  m&#234;me num&#233;ro d'identification de l'&#233;v&#233;nement, respectivement, 
+      uniquement le num&#233;ro d'identification de l'&#233;v&#233;nement doit &#234;tre pr&#233;cis&#233;:<br> 
+      <code>MS18</code>  Le nombre est d&#233;cimal.</p>
+
+      <p>Pour accro&#238;tre la polyvalence, il est possible d'utiliser diff&#233;rents  
+      num&#233;ros d'identification des &#233;v&#233;nements pour la transition ACTIVE 
+      (par d&#233;faut, une trame ON ) et la transition INACTIVE (par d&#233;faut, une trame OFF ):<br>  <code>MS18;21</code></p>
+
+      <p>Le codage ON et OFF du CBUS n'est pas enti&#232;rement coh&#233;rent
+      avec le mod&#232;le de l'&#233;v&#233;nement, 
+      <br>il peut &#234;tre utile pour relier les Passage ACTIF ou INACTIF d'un 
+      capteur JMRI &#224; un &#233;tat OFF ou respectivement sur la trame CBUS. 
+      <br>Caract&#232;res "+" et "-" en t&#234;te peut le faire. Par exemple,<br>
+      <code>MS-18;+21</code><br>
+      d&#233;finit un capteur qui devient ACTIF lorsqu'une image OFF avec le num&#233;ro ID 18 est re&#231;u,
+      <br>et devient INACTIVE lorsqu'une image ON avec le num&#233;ro d'identification 21 est re&#231;u.</p>
+
+      <p>Les num&#233;ros d'&#233;v&#233;nement CBUS (g&#233;n&#233;ralement) contiennent un num&#233;ro de n&#339;ud dans
+      leurs octets les plus importants. 
+      <br>Vous pouvez sp&#233;cifier le num&#233;ro de n&#339;ud soit en utilisant un nombre 
+      complet de 5 chiffres d&#233;cimaux pour le num&#233;ro de l'&#233;v&#233;nement lui-m&#234;me, pr&#233;c&#233;d&#233; du num&#233;ro de n&#339;ud:<br>
+      <code>MS200018</code><br>
+      ou en utilisant les lettres "N" et "E" pour pr&#233;ciser les parts:<br>
+      <code>MSN2E18</code><br></p>
+
+      <p>Vous pouvez masquer une partie du paquet CBUS, donc toute valeur dans 
+      la partie masqu&#233;e correspondra toujours, en utilisant le format "M  lettre.<br>
+      <code>MS200018M07</code><br>  "M" indique le d&#233;but d'un masque hexad&#233;cimal 
+      qui sera appliqu&#233;, o&#249; 1 bit dans le masque sera z&#233;ro bit dans le valeur r&#233;sultante.
+      
+      <br>Dans l'exemple ci-dessus, "18" &#224; "1F" correspondra. 
+      <br>C'est particuli&#232;rement utile pour la correspondance, par exemple, 
+      des &#233;v&#233;nements courts CBUS, o&#249; des parties du paquet comprennent le num&#233;ro 
+      de n&#339;ud qui doit (g&#233;n&#233;ralement) &#234;tre ignor&#233;.</p>
+      
+      </div>
+
+    <h2><a name="hex" id="hex">Envoi de Cha&#238;nes Hexad&#233;cimales</a></h2>
+     <div>
+      
+      <p>La num&#233;rotation hexad&#233;cimale est bas&#233;e sur la puissance de 16, en utilisant 0-9, puis A-F.</p>
+      
+      <p>Les modules CBUS communiquent par des messages &#224; format fixe : Un octet d'information 
+      de commande et de longueur, suivi &#233;ventuellement d'autres octets de donn&#233;es.</p>
+
+      <p>Dans sa forme la plus simple, ceci est utilis&#233; pour envoyer des "&#233;v&#233;nements" 
+      identifiables. En retour, les &#233;v&#233;nements se pr&#233;sentent sous deux formes  types : "ON" et "OFF", avec deux formes, courte ( SLiM ), et longue ( FiLM ).</p>
+      
+      <p> Elles sont en fait envoy&#233;es &#224; travers un r&#233;seau CBUS sous la forme d'un opcode, 
+      les informations de commande.</p>
+      
+      <p>Il y a 255 opcodes, la longueur de la cha&#238;ne de donn&#233;es suivant l'opcode change selon l'opcode utilis&#233;.</p>
+      
+      <p>Il y a plusieurs opcodes pour les &#233;v&#233;nements, le contr&#244;le et la programmation 
+      des dispositifs DCC,couplages DCC, la programmation des n&#339;uds avec des variables 
+      de n&#339;ud, la programmation des n&#339;uds avec des &#233;v&#233;nements, les informations d'horloge 
+      et de temp&#233;rature rapides, les donn&#233;es de lecteur RfID, et bien d'autres encore.</p>
+      
+      <p>Quatre d'entre eux sont les opcodes communs pour les &#233;v&#233;nements :</p>
+      
+      <table border="1">
+      <tr>
+      <th>Nom Ops Code
+      <br>( journal de la console du MERG ) </th>
+      <th>D&#233;cimale
+      <br>opcode</th>
+      <th>Hexad&#233;cimal
+      <br>opcode</th>
+      <th></th>
+      </tr>
+      <tr>
+      <td>ASON</td>
+      <td>152</td>
+      <td>98</td>
+      <td>&#201;v&#233;nement Court On <td
+      </tr>
+      <tr>
+      <td>ASOF</td>
+      <td>153</td>
+      <td>99</td>
+      <td>&#201;v&#233;nement Court Off</td>
+      </tr>
+      <tr>
+      <td>ACON</td>
+      <td>144</td>
+      <td>90</td>
+      <td>&#201;v&#233;nement Long On</td>
+      </tr>
+      <tr>
+      <td>ACOF</td>
+      <td>145</td>
+      <td>91</td>
+      <td>&#201;v&#233;nement Long  Off</td>
+      </tr>      
+      </table>
+      
+      <p>Il est possible de connecter un capteur &#224; des CAN en sp&#233;cifiant leur contenu de donn&#233;es sous forme de cha&#238;ne hexad&#233;cimale,  indiqu&#233; par "X".</p>
+      
+      Cela permet &#224; un capteur ou &#224; un aiguillage d'ignorer toute signification intrins&#232;que pour
+      "ON" et "OFF", et lui permet de r&#233;pondre ou d'&#233;mettre n'importe quelle image
+      sur la mise en page.</p>
+      
+      
+      <p> Ces opcodes d'&#233;v&#233;nements particuliers utilisent une cha&#238;ne hexad&#233;cimale de 4 chiffres, divis&#233;e en Haut puis Bas :</p>
+      
+      <img src="images/web/merg-add-aiguillage-hex-620x147.png" align= "right" 
+      alt="merg cbus add new aiguillage hexadecimal hex" width="620" height="147">
+      
+      <table border="1">
+      <tr>
+      <th>Entr&#233;e comme Hex</th>
+      <th>Ops Code</th>
+      <th>Hexe restant</th>
+      <th>N&#339;ud D&#233;cimale</th>
+      <th>Ev&#232;nement D&#233;cimal</th>
+      </tr>
+      <tr>
+      <td><code>X9900000013</code></td>
+      <td>ASOF</td>
+      <td><code>00 00 00 13</code></td>
+      <td>0</td>
+      <td>19</td>
+      </tr>
+      <tr>
+      <td><code>X980000002D</code></td>
+      <td>ASON</td>
+      <td><code>00 00 00 2D</code></td>
+      <td>0</td>
+      <td>45</td>
+      </tr>
+      <tr>
+      <td><code>X980000BD2A</code></td>
+      <td>ASON</td>
+      <td><code>00 00 BD 2A</code></td>
+      <td>0</td>
+      <td>48426</td>
+      </tr>      
+      <tr>
+      <td><code>X990000FFFF</code></td>
+      <td>ASOF</td>
+      <td><code>00 00 FF FF</code></td>
+      <td>0</td>
+      <td>65535</td>
+      </tr>
+      <tr>
+      <td><code>X9100130013</code></td>
+      <td>ACOF</td>
+      <td><code>00 14 00 13</code></td>
+      <td>20</td>
+      <td>19</td>
+      </tr>
+      <tr>
+      <td><code>X90002D002E</code></td>
+      <td>ACON</td>
+      <td><code>00 2D 00 2E</code></td>
+      <td>45</td>
+      <td>46</td>
+      </tr>
+      <tr>
+      <td><code>X90BD2BBD2A</code></td>
+      <td>ACON</td>
+      <td><code>BD 2B BD 2A</code></td>
+      <td>48427</td>
+      <td>48426</td>
+      </tr>      
+      <tr>
+      <td><code>X91FFFFFFFE</code></td>
+      <td>ACOF</td>
+      <td><code>FF FF FF FE</code></td>
+      <td>65535</td>
+      <td>65534</td>
+      </tr>
+      </table>
+      
+      <p>Assurez-vous d'utiliser le bon opscode, par exemple si vous incluez des N&#339;uds pour une adresse FiLM, utilisez ACON au lieu de ASON.</p>
+      
+      <p>Les capteurs, les aiguillages et les lumi&#232;res stock&#233;s en tant qu'&#233;v&#233;nements de r&#233;ponse hexad&#233;cimale utilisant les OPC de r&#233;ponse longue et courte ne seront pas reconnus car ils sont traduits en &#233;v&#233;nements standard de marche et d'arr&#234;t 
+      juste avant la v&#233;rification de la concordance du message interne (capteur ou voyant).
+      <br>
+      En dehors de ces OPC sp&#233;cifiques, les aiguillages ou les lumi&#232;res &#224; capteurs peuvent stocker n'importe quelle combinaison d'hexagones, 
+      ils ont besoin d'un c&#244;t&#233; "on" et d'un c&#244;t&#233; "off" s&#233;par&#233;s par un " ;".
+      </p>
+      
+      <p>Les trames CAN peuvent envoyer des opcodes CBUS sous la forme hexad&#233;cimale du code dont vous avez besoin.
+      <br>
+      par exemple, pour mettre en place un capteur permettant d'envoyer (arr&#234;t d'urgence du DCC / mise sous tension de la voie) des opcodes sur le CBUS, 
+      <br> vous pourriez utiliser une adresse mat&#233;rielle de <code>X0A;X05</code>
+      </p>
+
+      <table border="1">
+      <tr>
+      <th>Entr&#233;e comme Hex</th>
+      <th>Vu dans JMRI MERG CONSOLE</th>
+      <th>Vue dans CBUS SERVER</th>
+      <th>Ops Code</th>
+      </tr>
+      <tr>
+      <td><code>X0A</code></td>
+      <td><code>[x[7f]0A]</code></td>
+      <td><code>S0FE0N0A;</code></td>
+      <td>(RESTP) Demande d'arr&#234;t d'urgence de TOUS les trains
+      <br>Une station de commande CBUS confirme la demande avec un opcode ESTOP 06.</td>
+      </tr> 
+      <tr>
+      <td><code>X05</code></td>
+      <td><code>[x[7f]05]</code></td>
+      <td><code>S0FE0N05;</code></td>
+      <td>(TON) Suivi de la mise sous tension, normalement diffus&#233; &#224; partir d'un poste de commande</td>
+      </tr> 
+      </table>
+
+      <p>
+      Tous ces messages opcode sont envoy&#233;s avec la trame d'&#233;v&#233;nement Standard CAN, 
+      Toutefois, le protocole permet &#233;galement d'acc&#233;der &#224; des trames CAN &#233;tendues.
+      <Ces trames permettent le d&#233;marrage des modules (mises &#224; jour du micrologiciel), 
+      alors que les utilisations futures de ce syst&#232;me pourraient &#233;galement &#234;tre la diffusion de m&#233;dias locaux en continu (par exemple, le transfert d'images de trains ou de fichiers sonores entre les modules).
+      <br>Les images &#233;tendues n'interf&#232;rent pas avec les images standard, 
+      Les modules peuvent donc &#234;tre cibl&#233;s pour le chargement par num&#233;ro de module, 
+      sans affecter la mise en page normale des messages.</p>
+      
+      <p>Les trames CAN &#233;tendues (qui ne sont pas des messages CBUS) peuvent &#234;tre surveill&#233;es dans le 
+      <a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml"
+        >CBUS console</a>, et sont filtr&#233;s de tous les autres objets JMRI ( Capteurs, Aiguillages etc. ).</p>
+      
+      <p>Les mises &#224; jour du micrologiciel du module sont prises en charge par le <a href=../../../../package/jmri/jmrix/can/cbus/swing.bootloader/CbusBootloaderPane.shtml>
+            CBUS bootloader </a> et par un logiciel tiers (FCU - FLiM Configuration Utility), 
+            disponible gratuitement en t&#233;l&#233;chargement pour les membres du MERG.
+      </p>
+      
+      <p>Pour le d&#233;veloppement de syst&#232;mes avanc&#233;s et la preuve par paquets, vous pouvez pr&#233;f&#233;rer consulter le paquet complet dans diverses applications, par exemple CBUS SERVER.</p>
+      
+      <img src="images/web/merg-cbus-server-400x256.png"
+      width="400" height="256" alt="merg cbus server" align="right"
+
+       
+        <p>L'<a href="../../../../package/jmri/jmrix/can/cbus/swing/consoleCbusConsoleFrame.shtml">
+        Outil Console CBUS JMRI </a> peut &#234;tre tr&#232;s utile pour voir ce qui est 
+        envoy&#233; &#224; travers le r&#233;seau par les adresses mat&#233;rielles que vous cr&#233;ez.
+        <br>La console est con&#231;ue comme un outil pour aider les utilisateurs 
+        &#224; surveiller les paquets en utilisant des &#233;v&#233;nements courts et longs, et 
+        peut tenter d'embellir la sortie.</p>      
+      
+        <p>Consultez le wiki CBUS et le guide du d&#233;veloppeur pour plus d'informations et les sp&#233;cifications absolues.</p>
+      
+      
+     </div>
+      
+     <h2><a name="opc" id="opc">Codes Op&#233;ration Support&#233; par JMRI (Opcodes)</a></h2>
+      <div>
+        <p>La majorit&#233; des opcodes, selon le guide des d&#233;veloppeurs 6b de la CBUS, 
+        sont pris en charge sous une forme ou une autre.</p>
+
+        <Tous les messages CBUS JMRI sortants ont leur priorit&#233; OPC ajout&#233;e &#224; 
+        la section d'en-t&#234;te du message.
+        
+        <p>Plusieurs fonctions de'JMRI utilisent le support de l'OPC dans : </p>
+        
+        <ul>
+        <li>
+        <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusOpCodes.java" >CbusOpCodes.java</a>
+        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusOpCodes.html">JavaDoc</a>
+        </li>
+
+        <li>
+        <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusConstants.java" >CbusConstants.java</a>
+        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusConstants.html" >JavaDoc</a>
+        </li>
+        
+        <li><a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusMessage.java" >CbusMessage.java</a>
+        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusMessage.html" >JavaDoc</a>
+        </li>
+        
+        <li><a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusBundle.properties"
+        >CbusBundle.properties</a> pour les traductions en anglais des OPC.
+        </li>
+        
+        <li><a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusProgrammer.java"
+        >CbusProgrammer.java</a>
+        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusProgrammer.html" >JavaDoc</a>
+        Fonctions de programmation des n&#339;uds (les fonctions de l'outil de configuration des n&#339;uds doivent &#234;tre d&#233;plac&#233;es ici)
+        </li>
+        
+        </ul>
+
+       <h4>Opcodes utilis&#233;s dans les outils JMRI CBUS</h4>
+       
+       <p>Il y a une liste des OPC pris en charge pour chaque outil CBUS de la JMRI page de support.</p>
+        
+       <ul>
+       <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml#opc" >Tableau des &#233;v&#233;nements</a> - Principalement les OPC d'&#233;v&#233;nements</li>
+       <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/N&#339;udConfigToolPane.shtml#opc" >Configuration des N&#339;uds</a> - Configuration des N&#339;uds OPCs</li>
+       <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml#opc" >Moniteur de poste de commandement</a>
+       -Moniteur de poste de commandement OPCs</li>
+        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#opc" >Console</a> - Tous les OPC</li>
+        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml#opc" >Simulateur</a> - La plupart des OPC</li>
+        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/eventrequestmonitor/CbusEventRequestTablePane.shtml#opc" >Moniteur de Requ&#234;te d'&#201;v&#233;nements
+         </a> - Ev&#233;nement Principal OPCs</li>
+
+       </ul>        
+        
+        <h4> OPCs Capteur, Aiguillage et Lumi&#232;re </h4>
+      
+        <p>
+        <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusSensor.java"
+        >CbusSensor.java</a> 
+        <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusSensorManager.java" >CbusSensorManager.java</a></p>
+      
+        <p>
+        <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusAiguillage.java" >CbusAiguillage.java</a> 
+        <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusAiguillageManager.java" >CbusAiguillageManager.java</a></p>
+      
+        <p>
+        <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusLight.java" >CbusLight.java</a> 
+        <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusLightManager.java" >CbusLightManager.java</a>
+        </p>
+
+        <p>La flexibilit&#233; de la forme hexad&#233;cimale pour la cr&#233;ation de Capteurs, d'Aiguillages et de Lumi&#232;re  permet d'envoyer ou de recevoir tout OPC en tant qu'entr&#233;e.</p>
+        
+        <p>Lorsque l'adresse est utilis&#233;e sous forme abr&#233;g&#233;e, par exemple "+N123E456" : </p>
+      
+        <ul>
+        <li>ASON / ASOF Envoy&#233; lorsque le statut a chang&#233;, num&#233;ro de n&#339;ud = 0</li>
+        <li>ACON / ACOF Envoy&#233; lorsque le statut a chang&#233;, num&#233;ro de n&#339;ud > 0</li>
+        </ul>
+        
+
+
+        <ul>
         <li>ASON / ASOF Auditeur Permanent</li>
         <li>ACON / ACOF Auditeur Permanent</li>
         <li>ARON / AROF Auditeur Permanent</li>
