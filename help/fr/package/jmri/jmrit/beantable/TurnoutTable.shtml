@@ -1,6 +1,8 @@
+
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Herv&#233; Blorec  2013-10-13-->
+
 
 <html lang="fr">
 <head>
@@ -12,7 +14,7 @@
   <meta name="keywords" content="JMRI help Turnout Table">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  "text/html; charset=iso-">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -22,7 +24,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -33,12 +35,22 @@
       changer l'&eacute;tat d'un des aiguillage, changer le mode de
       r&eacute;tro-signalisation, entrez descapteurs de
       r&eacute;tro-signalisation, l'inverser, le verrouiller, et le
-      supprimer.</p>
+      supprimer.<a name="columns" id=
+      "columns"></a></p>
 
       <h2>Colonnes du Tableau Aiguillage</h2>
+		<p class="im">
+		<img src="images/TurnoutTableColumnList.jpg" alt="Colonnes du tableau Aiguillage (Rel 4.20)" style="float:right" height="438" width="150">
+      Le contenu du tableau d' Aiguillage est affich&eacute; en le s&eacute;lectionnant sous <strong>Outils&rArr;Tables</strong>.
+      Comme pour toutes les tables des outils JMRI, vous pouvez ajouter ou supprimer des colonnes de l'affichage en cliquant avec le bouton droit de la souris n'importe où
+      dans l'en-tête de la colonne et en s&eacute;lectionnant ou d&eacute;s&eacute;lectionnant les colonnes souhait&eacute;es dans le menu qui apparaît (voir image &agrave; droite).
+      Vous pouvez modifier l'ordre des colonnes en faisant glisser leurs titres, modifier la largeur des colonnes en faisant glisser la ligne verticale
+      entre les colonnes, et triez les lignes en cliquant sur le titre de la colonne (un triangle apparaîtra pour indiquer la direction du tri).
+      </p>
 
+	
       <dl>
-        <dt>Nom Syst&egrave;me</dt>
+        <dt><strong>Nom Syst&egrave;me</strong></dt>
 
         <dd>Le Nom Syst&egrave;me ne peut pas &ecirc;tre
         chang&eacute; une fois entr&eacute; dans le tableau. Le
@@ -51,19 +63,27 @@
         "../../../../html/doc/Technical/Names.shtml">Noms</a> pour
         plus d'info sur le format.</dd>
 
-        <dt>Nom Utilisateur</dt>
+        <dt><strong>Nom Utilisateur</strong></dt>
 
         <dd>Vous pouvez saisir directement ou modifier le champ
         "Nom Utilisateur" pour un aiguillage existants. Ceci peut
         &ecirc;tre tout vous ce que souhaitez pour d&eacute;crire
         l'aiguillage.</dd>
+        
+        <dt><strong>&Eacute;tat</strong></dt>
+		<dd>
+        En appuyant sur un des boutons/ic&ocirc;nes de la colonne "&Eacute;tat", vous modifierez l'&eacute;tat de cet aiguillage particulier.
+        Choisissez entre l'affichage textuel et graphique de l'&eacute;tat de l'aiguillage
+        dans le <a href="../../../apps/TabbedPreferences.shtml#Display">Afficheur
+        pr&eacute;f&eacute;rences</a>.<br>
+        <img src="images/TurnoutTableText.png" height="140" width="406"
+        alt="Textual Turnout state column">
+       <img src="images/TurnoutTableGraphic.png" height="96" width="399"
+        alt="Graphic Turnout state column">
+        </dd>
 
-        <dt>Cmd</dt>
 
-        <dd>Appuyer sur le bouton "Cmd" va changer l'&eacute;tat
-        d'un aiguillage existant.</dd>
-
-        <dt>Supprimer</dt>
+        <dt><strong>Supprimer</strong></dt>
 
         <dd>
           Appuyer sur le bouton "Supprimer" supprimera l'aiguillage
@@ -80,7 +100,7 @@
           cet aiguillage.</p>
         </dd>
 
-        <dt>Inverser</dt>
+        <dt><strong>Invers&eacute;</strong></dt>
 
         <dd>Quand elle est coch&eacute;e, la commande d'aiguillage
         et le statut de et vers le r&eacute;seau sont
@@ -91,7 +111,7 @@
         &ecirc;tre invers&eacute;s sont gris&eacute; et ne peuvent
         pas &ecirc;tre coch&eacute;s</dd>
 
-        <dt>Verrouiller</dt>
+        <dt<strong>>Verrouill&eacute;</strong></dt>
 
         <dd>Quand elle est coch&eacute;e, l'aiguillage est
         verrouill&eacute;. Il y a deux types de verrouillages
@@ -114,12 +134,18 @@
         gris&eacute;es et ne peuvent pas &ecirc;tre coch&eacute;s.
         Voir <a href="#Turnout%20lock%20feature">fonction de
         verrouillage Aiguillage</a> ci-dessous.</dd>
+        
+         <dt><strong>Modifier</strong></dt>
+         
+         <dd>Cliquez sur ce bouton pour contr&ocirc;ler et r&eacute;gler les param&egrave;tres de Base,
+        R&eacute;trosignalisation, verrouillage, vitesse, utilisation et propri&eacute;t&eacute;s (personnalis&eacute;es) d'un
+        Aiguillage particulier dans un panneau &agrave; onglets.</dd>
 
-        <dt>R&eacute;tro signalisation</dt>
+        <dt><strong>R&eacute;tro signalisation</strong></dt>
 
         <dd>Cela montre l'&eacute;tat connu de l'aiguillage.</dd>
 
-        <dt>Mode</dt>
+        <dt><strong>Mode</strong></dt>
 
         <dd>La liste d&eacute;roulante des bo&icirc;tes vous
         permettent de s&eacute;lectionner la m&eacute;thode d'
@@ -127,29 +153,35 @@
         "#Turnout%20Feedback">R&eacute;tro Signalisation
         Aiguillage</a> ci-dessous.</dd>
 
-        <dt>Capteur 1</dt>
+        <dt><strong>Capteur 1</strong></dt>
 
         <dd>Affiche le nom syst&egrave;me du Capteur en option qui
         offre la R&eacute;tro Signalisation pour un des aiguillage.
         Vous pouvez aussi directement entrer ou changer le nom
         syst&egrave;me du Capteur 1 pour un aiguillage.</dd>
 
-        <dt>Capteur 2</dt>
+        <dt><strong>Capteur 2</strong></dt>
 
         <dd>Affiche le nom syst&egrave;me du Capteur en option qui
         offre la R&eacute;tro Signalisation pour un aiguillage.
         Vous pouvez aussi directement entrer ou changer le nom
         syst&egrave;me du Capteur 2 pour un aiguillage.</dd>
 
-        <dt>Automatiser</dt>
+        <dt><strong>Automatiser</strong>></dt>
 
         <dd>Indique si une des m&eacute;thodes sp&eacute;cifiques
-        de tentatives a &eacute;t&eacute; configur&eacute;e pour
+        de tentatives d'essai a &eacute;t&eacute; configur&eacute;e pour
         cette aiguillage. Voir la section sur <a href=
         "#automation">l'Automatisation Aiguillage</a>
         ci-dessous.</dd>
-
-        <dt><a name="Lock Mode"></a> Mode de Verrouillage</dt>
+        
+        <dt><strong>Modifier Auto</strong></dt>
+		
+		<dd>Cliquez sur ce bouton pour d&eacute;finir des valeurs de r&eacute;essai personnalis&eacute;es pour un
+        aiguillage sp&eacute;cifique. Ce bouton est inactif lorsque l'automatisation est
+        r&eacute;gl&eacute; sur Off ou Usage Global.</dd>
+        
+        <dt><a name="Lock Mode"></a> <strong>Mode de Verrouillage</strong></dt>
 
         <dd>Affiche les verrouillages, le cas
         &eacute;ch&eacute;ant, qui sont actifs pour cet aiguillage.
@@ -174,7 +206,7 @@
         "#%20Turnout%20lock%20feature">voir ci-dessous</a></dd>
 
         <dt><a name="decodercol" id=
-        "decodercol">D&eacute;codeur</a></dt>
+        "decodercol"><strong>D&eacute;codeur</strong></a></dt>
 
         <dd>
           Lorsque vous utilisez la fonction de verrouillage, le
@@ -203,11 +235,11 @@
           verrouillage de bouton-poussoirs.</p>
         </dd>
 
-        <dt><a name="speeds" id="speeds">Vitesse Droit et
-        D&eacute;vi&eacute;</a></dt>
+        <dt><a name="speeds" id="speeds"><strong>Vitesse Direct et
+        D&eacute;vi&eacute;</strong></a></dt>
 
         <dd>
-          La vitesse Droit et D&eacute;vi&eacute; est
+          La vitesse Direct et D&eacute;vi&eacute; est
           utilis&eacute; avec certains outils d'automatisation et
           de logique, pour aider &agrave; d&eacute;terminer la
           vitesse &agrave; laquelle un train peut &ecirc;tre
@@ -235,7 +267,7 @@
           l'outil d'automatisation d'ignorer le param&eacute;trage
           de la vitesse &agrave; travers cet aiguillage, l'outil
           doit alors seulement envisager des vitesses qui sont
-          fix&eacute;es sur les cantons.</p>
+          fix&eacute;es sur <a href="BlockTable.shtml#BlockSpeed"> les cantons.</p>
         </dd>
       </dl>
 
@@ -244,11 +276,20 @@
       qui commande son fonctionnement.
 
       <dl>
-        <dt>Ajouter</dt>
+        <dt>Ajouter...</dt>
 
         <dd>Appuyer sur ce bouton ouvre une fen&ecirc;tre o&ugrave;
         vous pouvez <a href="TurnoutAddEdit.shtml">Ajouter de
         Nouveaux Aiguillages</a>.</dd>
+        
+         <dt>R&eacute;p&eacute;tition automatique</dt>
+
+        <dd>Lorsque cette option est coch&eacute;e, elle active l'option de r&eacute;glage  Automatique ou - Global par D&eacute;faut
+        de <em>tous</em> les Aiguillages. Actuellement, le Global par
+        D&eacute;faut n'entraîne pas de nouveaux essais pour les Aiguillages. Voir la
+        section sur <a href="#automation">Automatisation des Aiguillages</a>
+        ci-dessous pour plus d'informations, c'est-&agrave;-dire pour d&eacute;finir les propri&eacute;t&eacute;s d'automatisation
+        pour un Aiguillage individuel.</dd>
 
         <dt>Montrer Informations R&eacute;tro Signalisation</dt>
 
@@ -261,17 +302,32 @@
         <dd>Quand elle est coch&eacute;e, les colonnes optionnelles
         de verrouillage sont repr&eacute;sent&eacute;es.</dd>
 
-        <dt>Tentative Automatique</dt>
+		  <dt>Montrer les informations sur la vitesse sur les Aiguillages</dt>
 
-        <dd>Quand elle est coch&eacute;e, permet d'automatiser le
-        r&eacute;glage globale par d&eacute;faut pour les
-        aiguillages. Actuellement, le global par d&eacute;faut ne
-        provoque pas de tentatives pour les aiguillages. Voir la
-        section sur l'<a href="#automation">Automatisation des
-        Aiguillages</a> ci-dessous pour plus d'informations.</dd>
+        <dd>Quand il est coch&eacute;, vous permet de r&eacute;gler les vitesses D&eacute;vi&eacute; et Direct
+        pour chaque Aiguillage. Choisissez soit la vitesse du Canton, soit l'une des options suivantes
+        les valeurs de vitesse de la liste.</dd>
+
+        <dt>Montrer les actions de requête d'&eacute;tat</dt>
+
+        <dd>Lorsque cette option est coch&eacute;e, les colonnes options "Capteur Etat Demand&eacute;" et "Etat D'Oubli"
+         sont affich&eacute;es.
+
+        <dt>Menu automatique</dt>
+
+        <dd>Pour lire ou d&eacute;finir un aiguillage global (&agrave; l'&eacute;chelle du syst&egrave;me), 
+        choisissez le menu Automatisation -&gt; Modification... .Modifier
+        le nombre de tentatives et l'intervalle entre celles-ci.</dd>
+
+        <dt>Menu des vitesses</dt>
+
+        <dd>Pour lire ou d&eacute;finir les vitesses sur l'aiguillage global (&agrave; l'&eacute;chelle du syst&egrave;me) <a href=
+        "#speeds"></a>, choisissez le menu Vitesses -&gt; D&eacute;fauts...
+        .</dd>
       </dl>
 
-      <h3><a name="Turnout Feedback"></a> R&eacute;tro
+
+              <h3><a name="Turnout Feedback"></a> R&eacute;tro
       Signalisations Aiguillages</h3>
 
       <p>Les Mod&eacute;listes veulent des choses
@@ -366,7 +422,7 @@
       sont:</p>
 
       <dl>
-        <dt>DROIT</dt>
+        <dt>DIRECT</dt>
 
         <dd>La valeur par d&eacute;faut dans de nombreux cas. Quand
         quelque chose dit &agrave; l'aiguillage de changer, c'est
@@ -380,29 +436,190 @@
         Lorsque le capteur est actif, l'aiguillage est connu pour
         &ecirc;tre dans la position "D&eacute;vi&eacute;" .
         Lorsqu'il est inactif, l'aiguillage est connu pour
-        &ecirc;tre dans la position "Droit".</dd>
+        &ecirc;tre dans la position "Direct".</dd>
+        
+        <table style="border: 1px solid gray;" cellpadding="5" cellspacing="5">
+        <thead>
+        <tr>
+        <th>Capteur 1</th>
+        <th>Etat R&eacute;tro (connu)</th>
+        </tr>
+        </thead>
+        
+        <tbody>
+        <tr>
+        <td>Actif</td>
+        <td>D&eacute;vi&eacute;</td>
+        </tr>
+        
+        <tr>
+        <td>Inactif</td>
+        <td>Direct</td>
+        </tr>
+        
+        <tr>
+        <td>Inconnu</td>
+        <td>Incoh&eacute;rent <span class="since"> depuis 4.21.5</span></td>
+        </tr>
+        
+        <tr>
+        <td>Incoh&eacute;rent</td>
+        <td>Incoh&eacute;rent <span class="since">depuis 4.21.5</span></td>
+        </tr>
+        
+        </tbody>
+        </table>
+        </dd>
 
         <dt>DEUX CAPTEURS</dt>
 
         <dd>L'aiguillage montres les deux capteurs d&eacute;finis
         par les colonnes "Capteur 1" et "Capteur 2" , qui sont
-        probablement deux micro-contacts accroch&eacute;s &agrave;
-        chaque extr&eacute;mit&eacute; de la barre de de commande
-        de l'aiguillage. Lorsque le capteur 1 est actif,
-        l'aiguillage est connu pour &ecirc;tre d&eacute;vi&eacute;.
-        Lorsque le capteur 2 est actif, l'aiguillage est connu pour
-        &ecirc;tre droit(normal).</dd>
+        deux micro-contacts accroch&eacute;s &agrave;
+        l' extr&eacute;mit&eacute; de la barre de de commande
+        de l'aiguillage ou sur le servo. <br>
+        
+        L'&eacute;tat de R&eacute;tro-Signalisation de l'Aiguillage est d&eacute;termin&eacute; par les deux capteurs :
+        
+        <-- Tableau dans le même ordre que les tests de 2 unit&eacute;s de r&eacute;tro-signalisation  de capteurs dans AbstractTurnoutTestBase -->
 
-        <dt>SUIVI</dt>
+        <table style="border: 1px solid gray;" cellpadding="5" cellspacing="5">
+        <thead>
+        <tr>
+        <th>Capteur 1</th>
+        <th>Capteur 2</th>
+        <th>Etat R&eacute;tro (connu)</th>
+        </tr>
+        </thead>
+        
+        <tbody>
+        
+        <tr>
+        <td>Actif</td>
+        <td>Inactf</td>
+        <td>D&eacute;vi&eacute;</td>
+        </tr>
+        
+        <tr>
+        <td>Inactif</td>
+        <td>Actif</td>
+        <td>Direct</td>
+        </tr>
+        
+        <tr>
+        <td>Inactif</td>
+        <td>Inactif</td>
+        <td>Incoh&eacute;rent</td>
+        <td>Condition typique d'un Aiguillage entre-deux</td>
+        </tr>
+        
+        <tr>
+        <td>Inconnu</td>
+        <td>Inconnu</td>
+        <td>Inconnu</td>
+        <td>Condition typique d'un d&eacute;marrage</td>
+        </tr>
+        
+        <tr>
+        <td>Actif</td>
+        <td>Actif</td>
+        <td>Incoh&eacute;rent</td>
+        </tr>
+        
+        <tr>
+        <td>Actif</td>
+        <td>Incoh&eacute;rent</td>
+        <td>Incoh&eacute;rent</td>
+        <td>Chang&eacute; d'Inconnu > Incoh&eacute;rent 4.21.5</td>
+        </tr>
+        
+        <tr>
+        <td>Inactif</td>
+        <td>Incoh&eacute;rent</td>
+        <td>Incoh&eacute;rent</td>
+        </tr>
+        
+        <tr>
+        <td>Incoh&eacute;rent</td>
+        <td>Actif</td>
+        <td>Incoh&eacute;rent</td>
+        </tr>
+        
+        <tr>
+        <td>Incoh&eacute;rent</td>
+        <td>Inactif</td>
+        <td>Incoh&eacute;rent</td>
+        </tr>
+        
+        <tr>
+        <td>Inconnu</td>
+        <td>Actif</td>
+        <td>Incoh&eacute;rent</td>
+        </tr>
+        
+        <tr>
+        <td>Inconnu</td>
+        <td>Inactif</td>
+        <td>Incoh&eacute;rent</td>
+        </tr>
+        
+        <tr>
+        <td>Inconnu</td>
+        <td>Incoh&eacute;rent</td>
+        <td>Incoh&eacute;rent</td>
+        </tr>
+        
+        <tr>
+        <td>Incoh&eacute;rent</td>
+        <td>Inconnu</td>
+        <td>Incoh&eacute;rent</td>
+        <td>Chang&eacute; d'Inconnu > Incoh&eacute;rent 4.21.5</td>
+        </tr>
+        
+        
+        
+        <tr>
+        <td>Actif</td>
+        <td>Inconnu</td>
+        <td>Incoh&eacute;rent</td>
+        </tr>
+        
+        <tr>
+        <td>Inactif</td>
+        <td>Inconnu</td>
+        <td>Incoh&eacute;rent</td>
+        </tr>
+        
+        <tr>
+        <td>Incoh&eacute;rentt</td>
+        <td>Incoh&eacute;rent</td>
+        <td>Incoh&eacute;rent</td>
+        <td>Chang&eacute; d'Inconnu > Incoh&eacute;rent 4.21.5</td>
+        </tr>
+        
+        
+        </tbody>
+        </table>
+        
+        </dd>>
 
-        <dd>Option par d&eacute;faut des aiguillages LocoNet (et
-        probablement XpressNet bient&ocirc;t), et disponible pour
-        des NCE. Lorsqu'elle est s&eacute;lectionn&eacute;e, le
-        r&eacute;seau est surveill&eacute; par des messages sur
-        l'&eacute;tat de l'aiguillage. Ce mode est disponible
-        uniquement pour certains syst&egrave;mes, &agrave; savoir
-        que certains syst&egrave;mes ne peuvent pas faire le suivi
-        correctement, et n'ont pas ce choix.</dd>
+		<dt>RETARD&Eacute;</dt>
+
+        <dd>Quand quelque chose dit &agrave; l'Aiguillage de changer, 
+        il lance imm&eacute;diatement l'op&eacute;ration et se met &agrave;
+        l'&eacute;tat INCOHERENTT pour refl&eacute;ter que les pointes
+        sont en mouvement.  Apr&egrave;s un d&eacute;lai de quelques secondes, l'
+        l'op&eacute;ration se termine et l'&eacute;tat final est communiqu&eacute;.</dd>
+
+        <dt>MONITORING</dt>
+
+        <dd>Par d&eacute;faut pour les aiguillages de LocoNet (et probablement XpressNet
+        bient&ocirc;t), et disponible pour les NCE. Une fois s&eacute;lectionn&eacute;, le r&eacute;seau est
+        surveill&eacute; pour les messages concernant l'&eacute;tat de l'Aiguillage.
+        Ce mode n'est disponible que pour certains syst&egrave;mes, c'est-&agrave;-dire que certains
+        ne peuvent pas effectuer le suivi correctement, et n'ont pas
+        ce choix.</dd>
+
 
         <dt>INDIRECTES</dt>
 
@@ -425,8 +642,8 @@
         "../../../../html/hardware/loconet/DS54.shtml">DS54</a>.</dd>
       </dl>
 
-      <h3><a name="automation" id="automation"></a> Automatisation
-      de l'Aiguillage'</h3>JMRI peut regarder un aiguillage et
+      <h2><a name="automation" id="automation"></a> Automatisation
+      de l'Aiguillage'</h2>JMRI peut regarder un aiguillage et
       automatiser certaines op&eacute;rations. Cela a
       &eacute;t&eacute; initialement ajout&eacute; pour traiter le
       cas des "Habituellement, je dois cliquez sur cette aiguillage
@@ -486,8 +703,8 @@
       ceux-ci. Voir la section menu "Automatiser" pour modifier ces
       param&egrave;tres par d&eacute;faut.</p>
 
-      <h3><a name="Turnout lock feature"></a> Aiguillage Fonction
-      de Verrouillage</h3>
+      <h2><a name="Turnout lock feature"></a> Aiguillage Fonction
+      de Verrouillage</h2>
 
       <p>La fonction de verrouillage des aiguillages vous permet de
       d&eacute;sactiver de mani&egrave;re s&eacute;lective des
@@ -497,7 +714,7 @@
       r&eacute;gl&eacute; set (verrouill&eacute;) ou unset
       (d&eacute;verrouill&eacute;) &agrave; partir d'un case dans
       Le Tableau Aiguillage, &agrave; partir d'un itin&eacute;raire
-      <a href="itin%C3%A9raireAddEdit.shtml#lock"></a> ou de Logix,
+      <a href="RouteAddEdit.shtml#lock"></a> ou de Logix,
       ou &agrave; partir de scripts.</p>
 
       <h4>Verrouillage Pupitre</h4>Pour ce faire le verrouillage de
@@ -542,8 +759,12 @@
       dans l'itin&eacute;raire seront verrouill&eacute;s. Voir la
       <a href="RouteTable.shtml">page Itin&eacute;raire</a> pour
       plus d'informations &agrave; ce sujet. 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
+      <p>traduction 2021-03-11</p>
     </div>
   </div>
 </body>
 </html>
+
+   
+
