@@ -40,7 +40,7 @@ delay4double = 500 # delay for double tap on button (ms)
 depErr="""Required dependency must be installed!
 
  You need to install WiiRemoteJ library :
-       https://github.com/micromu/WiiRemoteJ/blob/master/WiiRemoteJ.jar
+       https://github.com/micromu/WiiRemoteJ/raw/master/WiiRemoteJ.jar
 
  Copy the jar file your JMRI lib folder. 
     """

@@ -31,7 +31,7 @@ valueSpeedIncrement = 0.01
 depErr="""Required dependency must be installed!
 
  You need to install WiiRemoteJ library :
-       https://github.com/micromu/WiiRemoteJ/blob/master/WiiRemoteJ.jar
+       https://github.com/micromu/WiiRemoteJ/raw/master/WiiRemoteJ.jar
 
  Copy the jar file your JMRI lib folder. 
     """
