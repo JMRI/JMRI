@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * <li>DIY: (mfgID == 13) CV47 is the highest byte, CV48 is high byte, CV49 is
  * low byte, CV50 is the lowest byte; (CV47 == 1) is reserved for the Czech
  * Republic</li>
- * <li>Doehler & Haass: (mfgID == 97) CV261 is ID from 2020 firmwares</li>
+ * <li>Doehler &amp; Haass: (mfgID == 97) CV261 is ID from 2020 firmwares</li>
  * </ul>
  * <dl>
  * <dt>Optional CVs:</dt>
@@ -136,7 +136,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read decoder product ID #1 CV 47");
             readCV("47");
             return false;
-        } else if (mfgID == 97) {  // Doehler & Haass
+        } else if (mfgID == 97) {  // Doehler and Haass
             statusUpdate("Read optional decoder ID CV 261");
             setOptionalCv(true);
             readCV("261");
@@ -189,7 +189,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read decoder product ID #2 CV 48");
             readCV("48");
             return false;
-        } else if (mfgID == 97) {  // Doehler & Haass
+        } else if (mfgID == 97) {  // Doehler and Haass
             if (isOptionalCv()) {
                 return true;
             }
