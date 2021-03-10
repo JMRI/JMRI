@@ -22,11 +22,11 @@
     <programming direct="yes" paged="no" register="no" ops="yes"/>
 
     <variables>
-      <variable label="Decoder Address lo" CV="1" default="03">
+      <variable item="Decoder Address lo" CV="1" default="03">
         <label>Decoder address low byte</label>
       </variable>
 
-      <variable label="Pushbutton lockout" CV="2" default="01">
+      <variable item="Pushbutton lockout" CV="2" default="01">
         <label>Pushbutton lockout</label>
       </variable>
 
@@ -38,11 +38,11 @@
         <label>Manufacturer ID</label>
       </variable>
 
-      <variable label="Decoder Address hi" CV="9" default="0">
+      <variable item="Decoder Address hi" CV="9" default="0">
         <label>Decoder address high byte</label>
       </variable>
 
-      <variable label="Configuration" CV="29" readOnly="yes" default="192">
+      <variable item="Configuration" CV="29" readOnly="yes" default="192">
         <label>Configuration</label>
       </variable>
 

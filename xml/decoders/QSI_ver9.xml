@@ -1546,8 +1546,9 @@
       <variable label="Speed Step 1 Delay" CV="56.6" default="1" item="CV56.6">
         <decVal/>
       </variable>
-      <variable label="SMPH-BEMF Ratio" CV="56.7.0">
+      <variable item="SMPH-BEMF Ratio" CV="56.7.0">
         <splitVal highCV="56.7.1"/>
+        <label>SMPH-BEMF Ratio</label>
       </variable>
       <variable label="BEMF Offset" CV="56.8" mask="XVVVVVVV" default="0" item="CV56.8 Value">
         <decVal/>
@@ -1599,11 +1600,13 @@
         <indexedPairVal highCVname="56.24.1"/>
       </ivariable>
 -->
-      <variable label="Locomotive Scale" CV="56.25.0" include="">
+      <variable item="Locomotive Scale" CV="56.25.0" include="">
         <splitVal highCV="56.25.1"/>
+        <label>Locomotive Scale</label>
       </variable>
-      <variable label="Scale Wheel Diameter" CV="56.26.0" include="3104,3109">
+      <variable item="Scale Wheel Diameter" CV="56.26.0" include="3104,3109">
         <splitVal highCV="56.26.1"/>
+        <label>Scale Wheel Diameter</label>
       </variable>
       <!-- In PDF manual but not yet in default value firl from QSI
       <ivariable label="Room Temperature" CVname="56.32.0" CV="56" PI="32" SI="0" default="1" item="CV56.32.0">
@@ -1657,14 +1660,17 @@
       <variable label="Product Model" CV="56.254.5" readOnly="yes" item="Product Number">
         <splitVal highCV="56.254.4"/>
       </variable>
-      <variable label="Sound Set Number" CV="56.254.14" readOnly="yes">
+      <variable item="Sound Set Number" CV="56.254.14" readOnly="yes">
         <splitVal highCV="56.254.15"/>
+        <label>Sound Set Number</label>
       </variable>
-      <variable label="Power Conversion Stopping Distance" CV="58.10.0">
+      <variable item="Power Conversion Stopping Distance" CV="58.10.0">
         <splitVal highCV="58.10.1"/>
+        <label>Power Conversion Stopping Distance</label>
       </variable>
-      <variable label="BEMF-SMPH Calibration Distance" CV="58.20.0" include="1115,1123,1127,1173,1130,1132,3109">
+      <variable item="BEMF-SMPH Calibration Distance" CV="58.20.0" include="1115,1123,1127,1173,1130,1132,3109">
         <splitVal highCV="58.20.1"/>
+        <label>BEMF-SMPH Calibration Distance</label>
       </variable>
       <!-- CV 115.PI.SI Light Ports -->
       <variable label="Front Headlight" CV="115.70.0" default="1" item="CV115.70.0">
