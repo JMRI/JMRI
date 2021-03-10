@@ -21,7 +21,7 @@
         -->
   <decoder>
     <family name="Function Decoders (firmware 3.05 - Oct 2014)" mfg="Doehler und Haass">
-      <model model="FH05B v3.05.15 (firmware 3.05+)" replacementModel="FH05B v3.12.050 (firmware 3.12+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="15" highVersionID="15" numOuts="6" numFns="16" productID="FH05B_2014.10" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from October 2014" maxInputVolts="30V" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+      <model model="FH05B v3.05.15 (firmware 3.05+)" replacementModel="FH05B (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="15" highVersionID="15" numOuts="6" numFns="16" productID="FH05B_2014.10" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from October 2014" maxInputVolts="30V" maxTotalCurrent="0.5A" connector="Wires/NEM651">
         <output name="1" label="Front|Light" maxcurrent="150mA"/>
         <output name="2" label="Rear|Light" maxcurrent="150mA"/>
         <output name="3" label="AUX|1" maxcurrent="300mA"/>

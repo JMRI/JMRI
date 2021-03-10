@@ -40,7 +40,7 @@
   -->
   <decoder>
     <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass">
-      <model model="DH05C" replacementModel="DH05C v3.12.050 (firmware 3.12+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="3" highVersionID="3" numOuts="4" numFns="16" productID="DH05C" comment="DH05C-0 / DH05C-1 / DH05C-3" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+      <model model="DH05C" replacementModel="DH05C (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="3" highVersionID="3" numOuts="4" numFns="16" productID="DH05C" comment="DH05C-0 / DH05C-1 / DH05C-3" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
         <output name="1" label="Front|Light" maxcurrent="150mA"/>
         <output name="2" label="Rear|Light" maxcurrent="150mA"/>
         <output name="3" label="AUX|1" maxcurrent="300mA"/>
@@ -55,7 +55,7 @@
           <protocol>selectrix</protocol>
         </protocols>
       </model>
-	  <model model="DH10C" replacementModel="DH10C v3.12.050 (firmware 3.12+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="3" highVersionID="3" numOuts="4" numFns="16" productID="DH10C" comment="DH10C-0 / DH10C-1 / DH10C-3" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
+	  <model model="DH10C" replacementModel="DH10C (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="3" highVersionID="3" numOuts="4" numFns="16" productID="DH10C" comment="DH10C-0 / DH10C-1 / DH10C-3" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
         <output name="1" label="Front|Light" maxcurrent="150mA"/>
         <output name="2" label="Rear|Light" maxcurrent="150mA"/>
         <output name="3" label="AUX|1" maxcurrent="300mA"/>
@@ -70,7 +70,7 @@
           <protocol>selectrix</protocol>
         </protocols>
       </model>
-	  <model model="DH12A" replacementModel="DH12A v3.12.050 (firmware 3.12+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="3" highVersionID="3" numOuts="6" numFns="16" productID="DH12A" comment="DH12A" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX12">
+	  <model model="DH12A" replacementModel="DH12A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="3" highVersionID="3" numOuts="6" numFns="16" productID="DH12A" comment="DH12A" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX12">
         <output name="1" label="Front|Light" maxcurrent="150mA"/>
         <output name="2" label="Rear|Light" maxcurrent="150mA"/>
         <output name="3" label="AUX|1" maxcurrent="300mA"/>
@@ -85,7 +85,7 @@
           <protocol>selectrix</protocol>
         </protocols>
       </model>
-	  <model model="DH16A" replacementModel="DH16A v3.12.050 (firmware 3.12+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="3" highVersionID="3" numOuts="6" numFns="16" productID="DH16A" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX16">
+	  <model model="DH16A" replacementModel="DH16A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="3" highVersionID="3" numOuts="6" numFns="16" productID="DH16A" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX16">
         <output name="1" label="Front|Light" maxcurrent="150mA"/>
         <output name="2" label="Rear|Light" maxcurrent="150mA"/>
         <output name="3" label="AUX|1" maxcurrent="300mA"/>
@@ -100,7 +100,7 @@
           <protocol>selectrix</protocol>
         </protocols>
       </model>
-	  <model model="DH18A" replacementModel="DH18A v3.12.050 (firmware 3.12+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="3" highVersionID="3" numOuts="6" numFns="16" productID="DH18A" comment="DH18A" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Next18">
+	  <model model="DH18A" replacementModel="DH18A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="3" highVersionID="3" numOuts="6" numFns="16" productID="DH18A" comment="DH18A" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Next18">
         <output name="1" label="Front|Light" maxcurrent="150mA"/>
         <output name="2" label="Rear|Light" maxcurrent="150mA"/>
         <output name="3" label="AUX|1" maxcurrent="300mA"/>

@@ -24,7 +24,7 @@
         -->
   <decoder>
     <family name="Function Decoders (2016)" mfg="Doehler und Haass">
-      <model model="FH05B v3.06.26 (firmware 3.06+)" replacementModel="FH05B v3.12.050 (firmware 3.12+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="26" highVersionID="26" numOuts="6" numFns="16" productID="FH05B_2016.03" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from March 2016" maxInputVolts="30V" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+      <model model="FH05B v3.06.26 (firmware 3.06+)" replacementModel="FH05B (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="26" highVersionID="26" numOuts="6" numFns="16" productID="FH05B_2016.03" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from March 2016" maxInputVolts="30V" maxTotalCurrent="0.5A" connector="Wires/NEM651">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -65,7 +65,7 @@
           <protocol>selectrix</protocol>
         </protocols>
       </model>
-      <model model="FH22A v3.06.26 (firmware 3.06+)" replacementModel="FH22A v3.12.050 (firmware 3.12+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="26" highVersionID="26" numOuts="8" numFns="16" productID="FH22A_2016.03" comment="FH22A with update from March 2016" maxInputVolts="30V" maxTotalCurrent="2.0A" connector="PluX22">
+      <model model="FH22A v3.06.26 (firmware 3.06+)" replacementModel="FH22A (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="26" highVersionID="26" numOuts="8" numFns="16" productID="FH22A_2016.03" comment="FH22A with update from March 2016" maxInputVolts="30V" maxTotalCurrent="2.0A" connector="PluX22">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -114,7 +114,7 @@
           <protocol>selectrix</protocol>
         </protocols>
       </model>
-      <model model="FH05B v3.07.66 (firmware 3.07+)" replacementModel="FH05B v3.12.050 (firmware 3.12+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="66" highVersionID="66" numOuts="6" numFns="16" productID="FH05B_2016.06" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from June 2016" maxInputVolts="30V" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+      <model model="FH05B v3.07.66 (firmware 3.07+)" replacementModel="FH05B (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="66" highVersionID="66" numOuts="6" numFns="16" productID="FH05B_2016.06" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from June 2016" maxInputVolts="30V" maxTotalCurrent="0.5A" connector="Wires/NEM651">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -155,7 +155,7 @@
           <protocol>selectrix</protocol>
         </protocols>
       </model>
-      <model model="FH22A v3.07.66 (firmware 3.07+)" replacementModel="FH22A v3.12.050 (firmware 3.12+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="66" highVersionID="66" numOuts="8" numFns="16" productID="FH22A_2016.06" comment="FH22A with update from June 2016" maxInputVolts="30V" maxTotalCurrent="2.0A" connector="PluX22">
+      <model model="FH22A v3.07.66 (firmware 3.07+)" replacementModel="FH22A (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="66" highVersionID="66" numOuts="8" numFns="16" productID="FH22A_2016.06" comment="FH22A with update from June 2016" maxInputVolts="30V" maxTotalCurrent="2.0A" connector="PluX22">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>

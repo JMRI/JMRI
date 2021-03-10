@@ -18,7 +18,7 @@
         -->
   <decoder>
     <family name="Function Decoders (2020)" mfg="Doehler und Haass">
-      <model model="FH05B v3.12.050 (firmware 3.12+)" lowVersionID="50" highVersionID="50" numOuts="6" numFns="16" productID="41" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from May 2020" maxInputVolts="30V" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+      <model model="FH05B (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="6" numFns="16" productID="41" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from May 2020" maxInputVolts="30V" maxTotalCurrent="0.5A" connector="Wires/NEM651">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -59,7 +59,7 @@
           <protocol>selectrix</protocol>
         </protocols>
       </model>
-      <model model="FH18A v3.12.050 (firmware 3.12+)" lowVersionID="50" highVersionID="50" numOuts="8" numFns="18" productID="170" comment="FH18A with update from May 2020" maxInputVolts="30V" maxTotalCurrent="1.0A" connector="Next18">
+      <model model="FH18A (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="8" numFns="18" productID="170" comment="FH18A with update from May 2020" maxInputVolts="30V" maxTotalCurrent="1.0A" connector="Next18">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -106,7 +106,7 @@
           <protocol>selectrix</protocol>
         </protocols>
       </model>
-      <model model="FH22A v3.12.050 (firmware 3.12+)" lowVersionID="50" highVersionID="50" numOuts="8" numFns="18" productID="192" comment="FH22A with update from May 2020" maxInputVolts="30V" maxTotalCurrent="2.0A" connector="PluX22">
+      <model model="FH22A (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="8" numFns="18" productID="192" comment="FH22A with update from May 2020" maxInputVolts="30V" maxTotalCurrent="2.0A" connector="PluX22">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>

@@ -31,7 +31,7 @@
         -->
   <decoder>
     <family name="Train Decoders (2017)" mfg="Doehler und Haass">
-      <model model="DH05C v3.08.27 (firmware 3.08+)" replacementModel="DH05C v3.12.050 (firmware 3.12+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="27" highVersionID="27" numOuts="4" numFns="16" productID="DH05C_2017_02" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from February 2017" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+      <model model="DH05C v3.08.27 (firmware 3.08+)" replacementModel="DH05C (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="27" highVersionID="27" numOuts="4" numFns="16" productID="DH05C_2017_02" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from February 2017" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -73,7 +73,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="DH10C v3.08.27 (firmware 3.08+)" replacementModel="DH10C v3.12.050 (firmware 3.12+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="27" highVersionID="27" numOuts="4" numFns="16" productID="DH10C_2017_02" comment="DH10C-0 / DH10C-1 / DH10C-3 with update from February 2017" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
+      <model model="DH10C v3.08.27 (firmware 3.08+)" replacementModel="DH10C (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="27" highVersionID="27" numOuts="4" numFns="16" productID="DH10C_2017_02" comment="DH10C-0 / DH10C-1 / DH10C-3 with update from February 2017" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum frontal</label>
@@ -115,7 +115,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="DH12A v3.08.27 (firmware 3.08+)" replacementModel="DH12A v3.12.050 (firmware 3.12+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="27" highVersionID="27" numOuts="6" numFns="16" productID="DH12A_2017_02" comment="DH12A with update from February 2017" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX12">
+      <model model="DH12A v3.08.27 (firmware 3.08+)" replacementModel="DH12A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="27" highVersionID="27" numOuts="6" numFns="16" productID="DH12A_2017_02" comment="DH12A with update from February 2017" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX12">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum frontal</label>
@@ -155,7 +155,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="DH16A v3.08.27 (firmware 3.08+)" replacementModel="DH16A v3.12.050 (firmware 3.12+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="27" highVersionID="27" numOuts="6" numFns="16" productID="DH16A_2017_02" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3 with update from February 2017" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX16">
+      <model model="DH16A v3.08.27 (firmware 3.08+)" replacementModel="DH16A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="27" highVersionID="27" numOuts="6" numFns="16" productID="DH16A_2017_02" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3 with update from February 2017" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX16">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum frontal</label>
@@ -195,7 +195,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="DH18A v3.08.27 (firmware 3.08+)" replacementModel="DH18A v3.12.050 (firmware 3.12+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="27" highVersionID="27" numOuts="8" numFns="16" productID="DH18A_2017_02" comment="DH18A with update from February 2017" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Next18">
+      <model model="DH18A v3.08.27 (firmware 3.08+)" replacementModel="DH18A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="27" highVersionID="27" numOuts="8" numFns="16" productID="DH18A_2017_02" comment="DH18A with update from February 2017" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Next18">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -243,7 +243,7 @@
             <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="DH21A v3.08.27 (firmware 3.08+)" replacementModel="DH21A v3.12.050 (firmware 3.12+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="27" highVersionID="27" numOuts="8" numFns="16" productID="DH21A_2017_02" comment="DH21A with update from February 2017" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
+      <model model="DH21A v3.08.27 (firmware 3.08+)" replacementModel="DH21A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="27" highVersionID="27" numOuts="8" numFns="16" productID="DH21A_2017_02" comment="DH21A with update from February 2017" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum frontal</label>
@@ -291,7 +291,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="DH22A v3.08.27 (firmware 3.08+)" replacementModel="DH22A v3.12.050 (firmware 3.12+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="27" highVersionID="27" numOuts="6" numFns="16" productID="DH22A_2017_02" comment="DH22A with update from February 2017" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="PluX22">
+      <model model="DH22A v3.08.27 (firmware 3.08+)" replacementModel="DH22A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="27" highVersionID="27" numOuts="6" numFns="16" productID="DH22A_2017_02" comment="DH22A with update from February 2017" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="PluX22">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum frontal</label>
@@ -331,7 +331,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="PD12A v3.08.27 (firmware 3.08+)" replacementModel="PD12A v3.12.050 (firmware 3.12+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="27" highVersionID="27" numOuts="4" numFns="16" productID="PD12A" comment="PD12A-0 / PD12A-2 / PD12A-3 / PD12A-4 with update from February 2017" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="PluX12">
+      <model model="PD12A v3.08.27 (firmware 3.08+)" replacementModel="PD12A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="27" highVersionID="27" numOuts="4" numFns="16" productID="PD12A" comment="PD12A-0 / PD12A-2 / PD12A-3 / PD12A-4 with update from February 2017" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="PluX12">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum frontal</label>
@@ -361,7 +361,7 @@
           <protocol>dcc</protocol>
         </protocols>
       </model>
-      <model model="DH05C v3.09.117 (firmware 3.09+)" replacementModel="DH05C v3.12.050 (firmware 3.12+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="117" highVersionID="117" numOuts="4" numFns="16" productID="DH05C_2017_11" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from November 2017" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+      <model model="DH05C v3.09.117 (firmware 3.09+)" replacementModel="DH05C (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="117" highVersionID="117" numOuts="4" numFns="16" productID="DH05C_2017_11" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from November 2017" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum frontal</label>
@@ -403,7 +403,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="DH10C v3.09.117 (firmware 3.09+)" replacementModel="DH10C v3.12.050 (firmware 3.12+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="117" highVersionID="117" numOuts="4" numFns="16" productID="DH10C_2017_11" comment="DH10C-0 / DH10C-1 / DH10C-3 with update from November 2017" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
+      <model model="DH10C v3.09.117 (firmware 3.09+)" replacementModel="DH10C (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="117" highVersionID="117" numOuts="4" numFns="16" productID="DH10C_2017_11" comment="DH10C-0 / DH10C-1 / DH10C-3 with update from November 2017" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -446,7 +446,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="DH12A v3.09.117 (firmware 3.09+)" replacementModel="DH12A v3.12.050 (firmware 3.12+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="117" highVersionID="117" numOuts="6" numFns="16" productID="DH12A_2017_11" comment="DH12A with update from November 2017" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX12">
+      <model model="DH12A v3.09.117 (firmware 3.09+)" replacementModel="DH12A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="117" highVersionID="117" numOuts="6" numFns="16" productID="DH12A_2017_11" comment="DH12A with update from November 2017" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX12">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum frontal</label>
@@ -486,7 +486,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="DH16A v3.09.117 (firmware 3.09+)" replacementModel="DH16A v3.12.050 (firmware 3.12+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="117" highVersionID="117" numOuts="6" numFns="16" productID="DH16A_2017_11" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3 with update from November 2017" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX16">
+      <model model="DH16A v3.09.117 (firmware 3.09+)" replacementModel="DH16A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="117" highVersionID="117" numOuts="6" numFns="16" productID="DH16A_2017_11" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3 with update from November 2017" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX16">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -526,7 +526,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="DH18A v3.09.117 (firmware 3.09+)" replacementModel="DH18A v3.12.050 (firmware 3.12+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="117" highVersionID="117" numOuts="8" numFns="16" productID="DH18A_2017_11" comment="DH18A with update from November 2017" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Next18">
+      <model model="DH18A v3.09.117 (firmware 3.09+)" replacementModel="DH18A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="117" highVersionID="117" numOuts="8" numFns="16" productID="DH18A_2017_11" comment="DH18A with update from November 2017" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Next18">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -574,7 +574,7 @@
             <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="DH21A v3.09.117 (firmware 3.09+)" replacementModel="DH21A v3.12.050 (firmware 3.12+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="117" highVersionID="117" numOuts="8" numFns="16" productID="DH21A_2017_11" comment="DH21A with update from November 2017" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
+      <model model="DH21A v3.09.117 (firmware 3.09+)" replacementModel="DH21A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="117" highVersionID="117" numOuts="8" numFns="16" productID="DH21A_2017_11" comment="DH21A with update from November 2017" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum frontal</label>
@@ -622,7 +622,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="DH22A v3.09.117 (firmware 3.09+)" replacementModel="DH22A v3.12.050 (firmware 3.12+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="117" highVersionID="117" numOuts="6" numFns="16" productID="DH22A_2017_11" comment="DH22A with update from November 2017" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="PluX22">
+      <model model="DH22A v3.09.117 (firmware 3.09+)" replacementModel="DH22A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="117" highVersionID="117" numOuts="6" numFns="16" productID="DH22A_2017_11" comment="DH22A with update from November 2017" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="PluX22">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -662,7 +662,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="PD05A v3.09.117 (firmware 3.09+)" replacementModel="PD05A v3.12.050 (firmware 3.12+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="117" highVersionID="117" numOuts="2" numFns="16" productID="PD05A" comment="PD05A-0 / PD05A-2 / PD05A-3 with update from November 2017" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+      <model model="PD05A v3.09.117 (firmware 3.09+)" replacementModel="PD05A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="117" highVersionID="117" numOuts="2" numFns="16" productID="PD05A" comment="PD05A-0 / PD05A-2 / PD05A-3 with update from November 2017" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -684,7 +684,7 @@
           <protocol>dcc</protocol>
         </protocols>
       </model>
-      <model model="PD12A v3.09.117 (firmware 3.09+)" replacementModel="PD12A v3.12.050 (firmware 3.12+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="117" highVersionID="117" numOuts="4" numFns="16" productID="PD12A" comment="PD12A-0 / PD12A-2 / PD12A-3 / PD12A-4 with update from November 2017" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="PluX12">
+      <model model="PD12A v3.09.117 (firmware 3.09+)" replacementModel="PD12A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="117" highVersionID="117" numOuts="4" numFns="16" productID="PD12A" comment="PD12A-0 / PD12A-2 / PD12A-3 / PD12A-4 with update from November 2017" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="PluX12">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
