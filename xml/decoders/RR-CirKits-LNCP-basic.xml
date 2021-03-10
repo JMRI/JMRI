@@ -5027,7 +5027,7 @@
       <variable item="LT1 Var2 Mode" CV="257.0" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
       </variable>
-      <variable item="LT1 Opcode "CV="257.0" mask="XXXXXVVV" default="0">
+      <variable item="LT1 Opcode" CV="257.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOpcode.xml"/>
       </variable>
       <variable item="LT1 Function" CV="257.0" mask="XXXXXXXV" default="0">
