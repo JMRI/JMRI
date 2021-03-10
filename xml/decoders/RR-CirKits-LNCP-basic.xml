@@ -5006,49 +5006,41 @@
         <label>OUT8 Secondary 2 Type</label>
       </variable>
       <!-- End Outputs -->
+
       <constant item="PICV" default="32" comment="CV used for Primary Index"/>
       <!-- NMRA CV.PI formatted items -->
       <!-- Index 0 items -->
+
       <!-- Logic Table entry #1 -->
       <variable item="LT1 Block End" CV="257.0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEnd.xml"/>
-        <label>LT1 Block End</label>
       </variable>
       <variable item="LT1 Statement Enable" CV="257.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSkip.xml"/>
-        <label>LT1 Statement Enable</label>
       </variable>
-      <variable CV="257.0" mask="XXVXXXXX" default="0" item="LT1 Output Mode">
+      <variable item="LT1 Output Mode" CV="257.0" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT1 Output Mode</label>
       </variable>
       <variable item="LT1 Var1 Mode" CV="257.0" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT1 Var1 Mode</label>
       </variable>
       <variable item="LT1 Var2 Mode" CV="257.0" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT1 Var2 Mode</label>
       </variable>
-      <variable CV="257.0" mask="XXXXXVVV" default="0" item="LT1 Opcode">
+      <variable item="LT1 Opcode "CV="257.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOpcode.xml"/>
-        <label>LT1 Opcode</label>
       </variable>
       <variable item="LT1 Function" CV="257.0" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
-        <label>LT1 Function</label>
       </variable>
       <variable item="LT1 Re-trigger" CV="258.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT1 Re-trigger</label>
       </variable>
       <variable item="LT1 Multiplier" CV="258.0" mask="XVVVVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiplier.xml"/>
-        <label>LT1 Multiplier</label>
       </variable>
       <variable item="LT1 Interval" CV="258.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInterval.xml"/>
-        <label>LT1 Interval</label>
       </variable>
       <variable item="LT1 Output Address" CV="259.0" mask="VVVVVVVV">
         <qualifier>
@@ -5057,7 +5049,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="260.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT1 Output Address</label>
       </variable>
       <variable item="LT1 Output Mast" CV="259.0" mask="VVVVVVVV">
         <qualifier>
@@ -5066,7 +5057,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="260.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT1 Output Mast</label>
       </variable>
       <variable item="LT1 Output Send" CV="260.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -5075,7 +5065,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSkip.xml"/>
-        <label>LT1 Output Send</label>
       </variable>
       <variable item="LT1 Output CT" CV="260.0" mask="XVXXXXXX">
         <qualifier>
@@ -5084,7 +5073,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT1 Output CT</label>
       </variable>
       <variable item="LT1 Output Type" CV="260.0" mask="XXVVXXXX">
         <qualifier>
@@ -5093,7 +5081,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT1 Output Type</label>
       </variable>
       <variable item="LT1 Output Aspect" CV="260.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -5102,7 +5089,6 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT1 Output Aspect</label>
       </variable>
       <variable item="LT1 Var1 Address" CV="261.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -5111,7 +5097,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="262.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT1 Var1 Address</label>
       </variable>
       <variable item="LT1 Var1 Mast" CV="261.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -5120,7 +5105,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="262.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT1 Var1 Mast</label>
       </variable>
       <variable item="LT1 Var1 Evaluate" CV="262.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -5129,7 +5113,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEvaluate.xml"/>
-        <label>LT1 Var1 Evaluate</label>
       </variable>
       <variable item="LT1 Var1 CT" CV="262.0" mask="XVXXXXXX">
         <qualifier>
@@ -5138,7 +5121,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT1 Var1 CT</label>
       </variable>
       <variable item="LT1 Var1 Type" CV="262.0" mask="XXVVXXXX" default="0">
         <qualifier>
@@ -5147,7 +5129,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT1 Var1 Type</label>
       </variable>
       <variable item="LT1 Var1 Aspect" CV="262.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -5156,7 +5137,6 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT1 Var1 Aspect</label>
       </variable>
       <variable item="LT1 Var2 Address" CV="263.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -5165,7 +5145,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="264.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT1 Var2 Address</label>
       </variable>
       <variable item="LT1 Var2 Mast" CV="263.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -5174,7 +5153,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="264.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT1 Var2 Mast</label>
       </variable>
       <variable item="LT1 Var2 Evaluate" CV="264.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -5183,7 +5161,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEvaluate.xml"/>
-        <label>LT1 Var2 Evaluate</label>
       </variable>
       <variable item="LT1 Var2 CT" CV="264.0" mask="XVXXXXXX">
         <qualifier>
@@ -5192,7 +5169,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT1 Var2 CT</label>
       </variable>
       <variable item="LT1 Var2 Type" CV="264.0" mask="XXVVXXXX" default="0">
         <qualifier>
@@ -5201,7 +5177,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT1 Var2 Type</label>
       </variable>
       <variable item="LT1 Var2 Aspect" CV="264.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -5210,48 +5185,37 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT1 Var2 Aspect</label>
       </variable>
       <!-- Logic Table entry #2 -->
       <variable item="LT2 Block End" CV="265.0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEnd.xml"/>
-        <label>LT2 Block End</label>
       </variable>
       <variable item="LT2 Statement Enable" CV="265.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSkip.xml"/>
-        <label>LT2 Statement Enable</label>
       </variable>
       <variable item="LT2 Output Mode" CV="265.0" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT2 Output Mode</label>
       </variable>
       <variable item="LT2 Var1 Mode" CV="265.0" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT2 Var1 Mode</label>
       </variable>
       <variable item="LT2 Var2 Mode" CV="265.0" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT2 Var2 Mode</label>
       </variable>
       <variable item="LT2 Opcode" CV="265.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOpcode.xml"/>
-        <label>LT2 Opcode</label>
       </variable>
       <variable item="LT2 Function" CV="265.0" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
-        <label>LT2 Function</label>
       </variable>
       <variable item="LT2 Re-trigger" CV="266.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT2 Re-trigger</label>
       </variable>
       <variable item="LT2 Multiplier" CV="266.0" mask="XVVVVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiplier.xml"/>
-        <label>LT2 Multiplier</label>
       </variable>
       <variable item="LT2 Interval" CV="266.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInterval.xml"/>
-        <label>LT2 Interval</label>
       </variable>
       <variable item="LT2 Output Address" CV="267.0" mask="VVVVVVVV">
         <qualifier>
@@ -5260,7 +5224,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="268.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT2 Output Address</label>
       </variable>
       <variable item="LT2 Output Mast" CV="267.0" mask="VVVVVVVV">
         <qualifier>
@@ -5269,7 +5232,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="268.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT2 Output Mast</label>
       </variable>
       <variable item="LT2 Output Send" CV="268.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -5278,7 +5240,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSkip.xml"/>
-        <label>LT2 Output Send</label>
       </variable>
       <variable item="LT2 Output CT" CV="268.0" mask="XVXXXXXX">
         <qualifier>
@@ -5287,7 +5248,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT2 Output CT</label>
       </variable>
       <variable item="LT2 Output Type" CV="268.0" mask="XXVVXXXX">
         <qualifier>
@@ -5296,7 +5256,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT2 Output Type</label>
       </variable>
       <variable item="LT2 Output Aspect" CV="268.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -5305,7 +5264,6 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT2 Output Aspect</label>
       </variable>
       <variable item="LT2 Var1 Address" CV="269.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -5314,7 +5272,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="270.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT2 Var1 Address</label>
       </variable>
       <variable item="LT2 Var1 Mast" CV="269.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -5323,7 +5280,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="270.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT2 Var1 Mast</label>
       </variable>
       <variable item="LT2 Var1 Evaluate" CV="270.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -5332,7 +5288,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEvaluate.xml"/>
-        <label>LT2 Var1 Evaluate</label>
       </variable>
       <variable item="LT2 Var1 CT" CV="270.0" mask="XVXXXXXX">
         <qualifier>
@@ -5341,7 +5296,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT2 Var1 CT</label>
       </variable>
       <variable item="LT2 Var1 Type" CV="270.0" mask="XXVVXXXX" default="0">
         <qualifier>
@@ -5350,7 +5304,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT2 Var1 Type</label>
       </variable>
       <variable item="LT2 Var1 Aspect" CV="270.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -5359,7 +5312,6 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT2 Var1 Aspect</label>
       </variable>
       <variable item="LT2 Var2 Address" CV="271.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -5368,7 +5320,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="272.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT2 Var2 Address</label>
       </variable>
       <variable item="LT2 Var2 Mast" CV="271.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -5377,7 +5328,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="272.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT2 Var2 Mast</label>
       </variable>
       <variable item="LT2 Var2 Evaluate" CV="272.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -5386,7 +5336,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEvaluate.xml"/>
-        <label>LT2 Var2 Evaluate</label>
       </variable>
       <variable item="LT2 Var2 CT" CV="272.0" mask="XVXXXXXX">
         <qualifier>
@@ -5395,7 +5344,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT2 Var2 CT</label>
       </variable>
       <variable item="LT2 Var2 Type" CV="272.0" mask="XXVVXXXX" default="0">
         <qualifier>
@@ -5404,7 +5352,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT2 Var2 Type</label>
       </variable>
       <variable item="LT2 Var2 Aspect" CV="272.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -5413,48 +5360,37 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT2 Var2 Aspect</label>
       </variable>
       <!-- Logic Table entry #3 -->
       <variable item="LT3 Block End" CV="273.0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEnd.xml"/>
-        <label>LT3 Block End</label>
       </variable>
       <variable item="LT3 Statement Enable" CV="273.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSkip.xml"/>
-        <label>LT3 Statement Enable</label>
       </variable>
       <variable item="LT3 Output Mode" CV="273.0" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT3 Output Mode</label>
       </variable>
       <variable item="LT3 Var1 Mode" CV="273.0" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT3 Var1 Mode</label>
       </variable>
       <variable item="LT3 Var2 Mode" CV="273.0" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT3 Var2 Mode</label>
       </variable>
       <variable item="LT3 Opcode" CV="273.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOpcode.xml"/>
-        <label>LT3 Opcode</label>
       </variable>
       <variable item="LT3 Function" CV="273.0" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
-        <label>LT3 Function</label>
       </variable>
       <variable item="LT3 Re-trigger" CV="274.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT3 Re-trigger</label>
       </variable>
       <variable item="LT3 Multiplier" CV="274.0" mask="XVVVVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiplier.xml"/>
-        <label>LT3 Multiplier</label>
       </variable>
       <variable item="LT3 Interval" CV="274.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInterval.xml"/>
-        <label>LT3 Interval</label>
       </variable>
       <variable item="LT3 Output Address" CV="275.0" mask="VVVVVVVV">
         <qualifier>
@@ -5463,7 +5399,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="276.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT3 Output Address</label>
       </variable>
       <variable item="LT3 Output Mast" CV="275.0" mask="VVVVVVVV">
         <qualifier>
@@ -5472,7 +5407,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="276.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT3 Output Mast</label>
       </variable>
       <variable item="LT3 Output Send" CV="276.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -5481,7 +5415,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSkip.xml"/>
-        <label>LT3 Output Send</label>
       </variable>
       <variable item="LT3 Output CT" CV="276.0" mask="XVXXXXXX">
         <qualifier>
@@ -5490,7 +5423,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT3 Output CT</label>
       </variable>
       <variable item="LT3 Output Type" CV="276.0" mask="XXVVXXXX">
         <qualifier>
@@ -5499,7 +5431,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT3 Output Type</label>
       </variable>
       <variable item="LT3 Output Aspect" CV="276.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -5508,7 +5439,6 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT3 Output Aspect</label>
       </variable>
       <variable item="LT3 Var1 Address" CV="277.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -5517,7 +5447,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="278.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT3 Var1 Address</label>
       </variable>
       <variable item="LT3 Var1 Mast" CV="277.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -5526,7 +5455,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="278.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT3 Var1 Mast</label>
       </variable>
       <variable item="LT3 Var1 Evaluate" CV="278.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -5535,7 +5463,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEvaluate.xml"/>
-        <label>LT3 Var1 Evaluate</label>
       </variable>
       <variable item="LT3 Var1 CT" CV="278.0" mask="XVXXXXXX">
         <qualifier>
@@ -5544,7 +5471,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT3 Var1 CT</label>
       </variable>
       <variable item="LT3 Var1 Type" CV="278.0" mask="XXVVXXXX" default="0">
         <qualifier>
@@ -5553,7 +5479,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT3 Var1 Type</label>
       </variable>
       <variable item="LT3 Var1 Aspect" CV="278.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -5562,7 +5487,6 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT3 Var1 Aspect</label>
       </variable>
       <variable item="LT3 Var2 Address" CV="279.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -5571,7 +5495,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="280.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT3 Var2 Address</label>
       </variable>
       <variable item="LT3 Var2 Mast" CV="279.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -5580,7 +5503,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="280.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT3 Var2 Mast</label>
       </variable>
       <variable item="LT3 Var2 Evaluate" CV="280.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -5589,7 +5511,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEvaluate.xml"/>
-        <label>LT3 Var2 Evaluate</label>
       </variable>
       <variable item="LT3 Var2 CT" CV="280.0" mask="XVXXXXXX">
         <qualifier>
@@ -5598,7 +5519,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT3 Var2 CT</label>
       </variable>
       <variable item="LT3 Var2 Type" CV="280.0" mask="XXVVXXXX" default="0">
         <qualifier>
@@ -5607,7 +5527,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT3 Var2 Type</label>
       </variable>
       <variable item="LT3 Var2 Aspect" CV="280.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -5616,48 +5535,37 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT3 Var2 Aspect</label>
       </variable>
       <!-- Logic Table entry #4 -->
       <variable item="LT4 Block End" CV="281.0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEnd.xml"/>
-        <label>LT4 Block End</label>
       </variable>
       <variable item="LT4 Statement Enable" CV="281.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSkip.xml"/>
-        <label>LT4 Statement Enable</label>
       </variable>
       <variable item="LT4 Output Mode" CV="281.0" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>Output Mode</label>
       </variable>
       <variable item="LT4 Var1 Mode" CV="281.0" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT4 Var1 Mode</label>
       </variable>
       <variable item="LT4 Var2 Mode" CV="281.0" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT4 Var2 Mod</label>
       </variable>
       <variable item="LT4 Opcode" CV="281.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOpcode.xml"/>
-        <label>LT4 Opcode</label>
       </variable>
       <variable item="LT4 Function" CV="281.0" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
-        <label>LT4 Function</label>
       </variable>
       <variable item="LT4 Re-trigger" CV="282.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT4 Re-trigger</label>
       </variable>
       <variable item="LT4 Multiplier" CV="282.0" mask="XVVVVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiplier.xml"/>
-        <label>LT4 Multiplier</label>
       </variable>
       <variable item="LT4 Interval" CV="282.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInterval.xml"/>
-        <label>LT4 Interval</label>
       </variable>
       <variable item="LT4 Output Address" CV="283.0" mask="VVVVVVVV">
         <qualifier>
@@ -5666,7 +5574,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="284.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT4 Output Address</label>
       </variable>
       <variable item="LT4 Output Mast" CV="283.0" mask="VVVVVVVV">
         <qualifier>
@@ -5675,7 +5582,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="284.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT4 Output Mast</label>
       </variable>
       <variable item="LT4 Output Send" CV="284.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -5684,7 +5590,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSkip.xml"/>
-        <label>LT4 Output Send</label>
       </variable>
       <variable item="LT4 Output CT" CV="284.0" mask="XVXXXXXX">
         <qualifier>
@@ -5693,7 +5598,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT4 Output CT</label>
       </variable>
       <variable item="LT4 Output Type" CV="284.0" mask="XXVVXXXX">
         <qualifier>
@@ -5702,7 +5606,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT4 Output Type</label>
       </variable>
       <variable item="LT4 Output Aspect" CV="284.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -5711,7 +5614,6 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT4 Output Aspect</label>
       </variable>
       <variable item="LT4 Var1 Address" CV="285.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -5720,7 +5622,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="286.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT4 Var1 Address</label>
       </variable>
       <variable item="LT4 Var1 Mast" CV="285.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -5729,7 +5630,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="286.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT4 Var1 Mast</label>
       </variable>
       <variable item="LT4 Var1 Evaluate" CV="286.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -5738,7 +5638,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEvaluate.xml"/>
-        <label>LT4 Var1 Evaluate</label>
       </variable>
       <variable item="LT4 Var1 CT" CV="286.0" mask="XVXXXXXX">
         <qualifier>
@@ -5747,7 +5646,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT4 Var1 CT</label>
       </variable>
       <variable item="LT4 Var1 Type" CV="286.0" mask="XXVVXXXX" default="0">
         <qualifier>
@@ -5756,7 +5654,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT4 Var1 Type</label>
       </variable>
       <variable item="LT4 Var1 Aspect" CV="286.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -5765,7 +5662,6 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT4 Var1 Aspect</label>
       </variable>
       <variable item="LT4 Var2 Address" CV="287.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -5774,7 +5670,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="288.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT4 Var2 Address</label>
       </variable>
       <variable item="LT4 Var2 Mast" CV="287.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -5783,7 +5678,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="288.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT4 Var2 Mast</label>
       </variable>
       <variable item="LT4 Var2 Evaluate" CV="288.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -5792,7 +5686,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEvaluate.xml"/>
-        <label>LT4 Var2 Evaluate</label>
       </variable>
       <variable item="LT4 Var2 CT" CV="288.0" mask="XVXXXXXX">
         <qualifier>
@@ -5801,7 +5694,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT4 Var2 CT</label>
       </variable>
       <variable item="LT4 Var2 Type" CV="288.0" mask="XXVVXXXX" default="0">
         <qualifier>
@@ -5810,7 +5702,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT4 Var2 Type</label>
       </variable>
       <variable item="LT4 Var2 Aspect" CV="288.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -5819,48 +5710,37 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT4 Var2 Aspect</label>
       </variable>
       <!-- Logic Table entry #5 -->
       <variable item="LT5 Block End" CV="289.0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEnd.xml"/>
-        <label>LT5 Block End</label>
       </variable>
       <variable item="LT5 Statement Enable" CV="289.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSkip.xml"/>
-        <label>LT5 Statement Enable</label>
       </variable>
       <variable item="LT5 Output Mode" CV="289.0" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT5 Output Mode</label>
       </variable>
       <variable item="LT5 Var1 Mode" CV="289.0" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT5 Var1 Mode</label>
       </variable>
       <variable item="LT5 Var2 Mode" CV="289.0" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT5 Var2 Mode</label>
       </variable>
       <variable item="LT5 Opcode" CV="289.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOpcode.xml"/>
-        <label>LT5 Opcode</label>
       </variable>
       <variable item="LT5 Function" CV="289.0" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
-        <label>LT5 Function</label>
       </variable>
       <variable item="LT5 Re-trigger" CV="290.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT5 Re-trigger</label>
       </variable>
       <variable item="LT5 Multiplier" CV="290.0" mask="XVVVVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiplier.xml"/>
-        <label>LT5 Multiplier</label>
       </variable>
       <variable item="LT5 Interval" CV="290.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInterval.xml"/>
-        <label>LT5 Interval</label>
       </variable>
       <variable item="LT5 Output Address" CV="291.0" mask="VVVVVVVV">
         <qualifier>
@@ -5869,7 +5749,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="292.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT5 Output Address</label>
       </variable>
       <variable item="LT5 Output Mast" CV="291.0" mask="VVVVVVVV">
         <qualifier>
@@ -5878,7 +5757,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="292.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT5 Output Mast</label>
       </variable>
       <variable item="LT5 Output Send" CV="292.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -5887,7 +5765,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSkip.xml"/>
-        <label>LT5 Output Send</label>
       </variable>
       <variable item="LT5 Output CT" CV="292.0" mask="XVXXXXXX">
         <qualifier>
@@ -5896,7 +5773,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT5 Output CT</label>
       </variable>
       <variable item="LT5 Output Type" CV="292.0" mask="XXVVXXXX">
         <qualifier>
@@ -5905,7 +5781,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT5 Output Type</label>
       </variable>
       <variable item="LT5 Output Aspect" CV="292.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -5914,7 +5789,6 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT5 Output Aspect</label>
       </variable>
       <variable item="LT5 Var1 Address" CV="293.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -5923,7 +5797,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="294.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT5 Var1 Address</label>
       </variable>
       <variable item="LT5 Var1 Mast" CV="293.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -5932,7 +5805,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="294.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT5 Var1 Mast</label>
       </variable>
       <variable item="LT5 Var1 Evaluate" CV="294.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -5941,7 +5813,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEvaluate.xml"/>
-        <label>LT5 Var1 Evaluate</label>
       </variable>
       <variable item="LT5 Var1 CT" CV="294.0" mask="XVXXXXXX">
         <qualifier>
@@ -5950,7 +5821,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT5 Var1 CT</label>
       </variable>
       <variable item="LT5 Var1 Type" CV="294.0" mask="XXVVXXXX" default="0">
         <qualifier>
@@ -5959,7 +5829,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT5 Var1 Type</label>
       </variable>
       <variable item="LT5 Var1 Aspect" CV="294.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -5968,7 +5837,6 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT5 Var1 Aspect</label>
       </variable>
       <variable item="LT5 Var2 Address" CV="295.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -5977,7 +5845,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="296.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT5 Var2 Address</label>
       </variable>
       <variable item="LT5 Var2 Mast" CV="295.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -5986,7 +5853,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="296.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT5 Var2 Mast</label>
       </variable>
       <variable item="LT5 Var2 Evaluate" CV="296.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -5995,7 +5861,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEvaluate.xml"/>
-        <label>LT5 Var2 Evaluate</label>
       </variable>
       <variable item="LT5 Var2 CT" CV="296.0" mask="XVXXXXXX">
         <qualifier>
@@ -6004,7 +5869,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT5 Var2 CT</label>
       </variable>
       <variable item="LT5 Var2 Type" CV="296.0" mask="XXVVXXXX" default="0">
         <qualifier>
@@ -6013,7 +5877,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT5 Var2 Type</label>
       </variable>
       <variable item="LT5 Var2 Aspect" CV="296.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -6022,48 +5885,37 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT5 Var2 Aspect</label>
       </variable>
       <!-- Logic Table entry #6 -->
       <variable item="LT6 Block End" CV="297.0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEnd.xml"/>
-        <label>LT6 Block End</label>
       </variable>
       <variable item="LT6 Statement Enable" CV="297.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSkip.xml"/>
-        <label>LT6 Statement Enable</label>
       </variable>
       <variable item="LT6 Output Mode" CV="297.0" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT6 Output Mode</label>
       </variable>
       <variable item="LT6 Var1 Mode" CV="297.0" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT6 Var1 Mode</label>
       </variable>
       <variable item="LT6 Var2 Mode" CV="297.0" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT6 Var2 Mode</label>
       </variable>
       <variable item="LT6 Opcode" CV="297.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOpcode.xml"/>
-        <label>LT6 Opcode</label>
       </variable>
       <variable item="LT6 Function" CV="297.0" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
-        <label>LT6 Function</label>
       </variable>
       <variable item="LT6 Re-trigger" CV="298.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT6 Re-trigger</label>
       </variable>
       <variable item="LT6 Multiplier" CV="298.0" mask="XVVVVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiplier.xml"/>
-        <label>LT6 Multiplier</label>
       </variable>
       <variable item="LT6 Interval" CV="298.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInterval.xml"/>
-        <label>LT6 Interval</label>
       </variable>
       <variable item="LT6 Output Address" CV="299.0" mask="VVVVVVVV">
         <qualifier>
@@ -6072,7 +5924,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="300.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT6 Output Address</label>
       </variable>
       <variable item="LT6 Output Mast" CV="299.0" mask="VVVVVVVV">
         <qualifier>
@@ -6081,7 +5932,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="300.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT6 Output Mast</label>
       </variable>
       <variable item="LT6 Output Send" CV="300.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -6090,7 +5940,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSkip.xml"/>
-        <label>LT6 Output Send</label>
       </variable>
       <variable item="LT6 Output CT" CV="300.0" mask="XVXXXXXX">
         <qualifier>
@@ -6099,7 +5948,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT6 Output CT</label>
       </variable>
       <variable item="LT6 Output Type" CV="300.0" mask="XXVVXXXX">
         <qualifier>
@@ -6108,7 +5956,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT6 Output Type</label>
       </variable>
       <variable item="LT6 Output Aspect" CV="300.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -6117,7 +5964,6 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT6 Output Aspect</label>
       </variable>
       <variable item="LT6 Var1 Address" CV="301.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -6126,7 +5972,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="302.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT6 Var1 Address</label>
       </variable>
       <variable item="LT6 Var1 Mast" CV="301.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -6135,7 +5980,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="302.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT6 Var1 Mast</label>
       </variable>
       <variable item="LT6 Var1 Evaluate" CV="302.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -6144,7 +5988,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEvaluate.xml"/>
-        <label>LT6 Var1 Evaluate</label>
       </variable>
       <variable item="LT6 Var1 CT" CV="302.0" mask="XVXXXXXX">
         <qualifier>
@@ -6153,7 +5996,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT6 Var1 CT</label>
       </variable>
       <variable item="LT6 Var1 Type" CV="302.0" mask="XXVVXXXX" default="0">
         <qualifier>
@@ -6162,7 +6004,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT6 Var1 Type</label>
       </variable>
       <variable item="LT6 Var1 Aspect" CV="302.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -6171,7 +6012,6 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT6 Var1 Aspect</label>
       </variable>
       <variable item="LT6 Var2 Address" CV="303.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -6180,7 +6020,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="304.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT6 Var2 Address</label>
       </variable>
       <variable item="LT6 Var2 Mast" CV="303.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -6189,7 +6028,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="304.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT6 Var2 Mast</label>
       </variable>
       <variable item="LT6 Var2 Evaluate" CV="304.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -6198,7 +6036,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEvaluate.xml"/>
-        <label>LT6 Var2 Evaluate</label>
       </variable>
       <variable item="LT6 Var2 CT" CV="304.0" mask="XVXXXXXX">
         <qualifier>
@@ -6207,7 +6044,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT6 Var2 CT</label>
       </variable>
       <variable item="LT6 Var2 Type" CV="304.0" mask="XXVVXXXX" default="0">
         <qualifier>
@@ -6216,7 +6052,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT6 Var2 Type</label>
       </variable>
       <variable item="LT6 Var2 Aspect" CV="304.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -6225,48 +6060,37 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT6 Var2 Aspect</label>
       </variable>
       <!-- Logic Table entry #7 -->
       <variable item="LT7 Block End" CV="305.0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEnd.xml"/>
-        <label>LT7 Block End</label>
       </variable>
       <variable item="LT7 Statement Enable" CV="305.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSkip.xml"/>
-        <label>LT7 Statement Enable</label>
       </variable>
       <variable CV="305.0" mask="XXVXXXXX" default="0" item="LT7 Output Mode">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT7 Output Mode</label>
       </variable>
       <variable item="LT7 Var1 Mode" CV="305.0" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT7 Var1 Mode</label>
       </variable>
       <variable item="LT7 Var2 Mode" CV="305.0" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT7 Var2 Mode</label>
       </variable>
       <variable CV="305.0" mask="XXXXXVVV" default="0" item="LT7 Opcode">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOpcode.xml"/>
-        <label>LT7 Opcode</label>
       </variable>
       <variable item="LT7 Function" CV="305.0" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
-        <label>LT7 Function</label>
       </variable>
       <variable item="LT7 Re-trigger" CV="306.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT7 Re-trigger</label>
       </variable>
       <variable item="LT7 Multiplier" CV="306.0" mask="XVVVVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiplier.xml"/>
-        <label>LT7 Multiplier</label>
       </variable>
       <variable item="LT7 Interval" CV="306.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInterval.xml"/>
-        <label>LT7 Interval</label>
       </variable>
       <variable item="LT7 Output Address" CV="307.0" mask="VVVVVVVV">
         <qualifier>
@@ -6275,7 +6099,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="308.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT7 Output Address</label>
       </variable>
       <variable item="LT7 Output Mast" CV="307.0" mask="VVVVVVVV">
         <qualifier>
@@ -6284,7 +6107,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="308.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT7 Output Mast</label>
       </variable>
       <variable item="LT7 Output Send" CV="308.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -6293,7 +6115,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSkip.xml"/>
-        <label>LT7 Output Send</label>
       </variable>
       <variable item="LT7 Output CT" CV="308.0" mask="XVXXXXXX">
         <qualifier>
@@ -6302,7 +6123,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT7 Output CT</label>
       </variable>
       <variable item="LT7 Output Type" CV="308.0" mask="XXVVXXXX">
         <qualifier>
@@ -6311,7 +6131,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT7 Output Type</label>
       </variable>
       <variable item="LT7 Output Aspect" CV="308.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -6320,7 +6139,6 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT7 Output Aspect</label>
       </variable>
       <variable item="LT7 Var1 Address" CV="309.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -6329,7 +6147,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="310.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT7 Var1 Address</label>
       </variable>
       <variable item="LT7 Var1 Mast" CV="309.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -6338,7 +6155,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="310.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT7 Var1 Mast</label>
       </variable>
       <variable item="LT7 Var1 Evaluate" CV="310.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -6347,7 +6163,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEvaluate.xml"/>
-        <label>LT7 Var1 Evaluate</label>
       </variable>
       <variable item="LT7 Var1 CT" CV="310.0" mask="XVXXXXXX">
         <qualifier>
@@ -6356,7 +6171,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT7 Var1 CT</label>
       </variable>
       <variable item="LT7 Var1 Type" CV="310.0" mask="XXVVXXXX" default="0">
         <qualifier>
@@ -6365,7 +6179,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT7 Var1 Type</label>
       </variable>
       <variable item="LT7 Var1 Aspect" CV="310.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -6374,7 +6187,6 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT7 Var1 Aspect</label>
       </variable>
       <variable item="LT7 Var2 Address" CV="311.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -6383,7 +6195,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="312.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT7 Var2 Address</label>
       </variable>
       <variable item="LT7 Var2 Mast" CV="311.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -6392,7 +6203,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="312.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT7 Var2 Mast</label>
       </variable>
       <variable item="LT7 Var2 Evaluate" CV="312.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -6401,7 +6211,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEvaluate.xml"/>
-        <label>LT7 Var2 Evaluate</label>
       </variable>
       <variable item="LT7 Var2 CT" CV="312.0" mask="XVXXXXXX">
         <qualifier>
@@ -6410,7 +6219,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT7 Var2 CT</label>
       </variable>
       <variable item="LT7 Var2 Type" CV="312.0" mask="XXVVXXXX" default="0">
         <qualifier>
@@ -6419,7 +6227,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT7 Var2 Type</label>
       </variable>
       <variable item="LT7 Var2 Aspect" CV="312.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -6428,48 +6235,37 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT7 Var2 Aspect</label>
       </variable>
       <!-- Logic Table entry #8 -->
       <variable item="LT8 Block End" CV="313.0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEnd.xml"/>
-        <label>LT8 Block End</label>
       </variable>
       <variable item="LT8 Statement Enable" CV="313.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSkip.xml"/>
-        <label>LT8 Statement Enable</label>
       </variable>
       <variable item="LT8 Output Mode" CV="313.0" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT8 Output Mode</label>
       </variable>
       <variable item="LT8 Var1 Mode" CV="313.0" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT8 Var1 Mode</label>
       </variable>
       <variable item="LT8 Var2 Mode" CV="313.0" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT8 Var2 Mode</label>
       </variable>
       <variable item="LT8 Opcode" CV="313.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOpcode.xml"/>
-        <label>LT8 Opcode</label>
       </variable>
       <variable item="LT8 Function" CV="313.0" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
-        <label>LT8 Function</label>
       </variable>
       <variable item="LT8 Re-trigger" CV="314.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT8 Re-trigger</label>
       </variable>
       <variable item="LT8 Multiplier" CV="314.0" mask="XVVVVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiplier.xml"/>
-        <label>LT8 Multiplier</label>
       </variable>
       <variable item="LT8 Interval" CV="314.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInterval.xml"/>
-        <label>LT8 Interval</label>
       </variable>
       <variable item="LT8 Output Address" CV="315.0" mask="VVVVVVVV">
         <qualifier>
@@ -6478,7 +6274,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="316.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT8 Output Address</label>
       </variable>
       <variable item="LT8 Output Mast" CV="315.0" mask="VVVVVVVV">
         <qualifier>
@@ -6487,7 +6282,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="316.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT8 Output Mast</label>
       </variable>
       <variable item="LT8 Output Send" CV="316.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -6496,7 +6290,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSkip.xml"/>
-        <label>LT8 Output Send</label>
       </variable>
       <variable item="LT8 Output CT" CV="316.0" mask="XVXXXXXX">
         <qualifier>
@@ -6505,7 +6298,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT8 Output CT</label>
       </variable>
       <variable item="LT8 Output Type" CV="316.0" mask="XXVVXXXX">
         <qualifier>
@@ -6514,7 +6306,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT8 Output Type</label>
       </variable>
       <variable item="LT8 Output Aspect" CV="316.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -6523,7 +6314,6 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT8 Output Aspect</label>
       </variable>
       <variable item="LT8 Var1 Address" CV="317.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -6532,7 +6322,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="318.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT8 Var1 Address</label>
       </variable>
       <variable item="LT8 Var1 Mast" CV="317.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -6541,7 +6330,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="318.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT8 Var1 Mast</label>
       </variable>
       <variable item="LT8 Var1 Evaluate" CV="318.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -6550,7 +6338,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEvaluate.xml"/>
-        <label>LT8 Var1 Evaluate</label>
       </variable>
       <variable item="LT8 Var1 CT" CV="318.0" mask="XVXXXXXX">
         <qualifier>
@@ -6559,7 +6346,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT8 Var1 CT</label>
       </variable>
       <variable item="LT8 Var1 Type" CV="318.0" mask="XXVVXXXX" default="0">
         <qualifier>
@@ -6568,7 +6354,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT8 Var1 Type</label>
       </variable>
       <variable item="LT8 Var1 Aspect" CV="318.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -6577,7 +6362,6 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT8 Var1 Aspect</label>
       </variable>
       <variable item="LT8 Var2 Address" CV="319.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -6586,7 +6370,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="320.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT8 Var2 Address</label>
       </variable>
       <variable item="LT8 Var2 Mast" CV="319.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -6595,7 +6378,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="320.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT8 Var2 Mast</label>
       </variable>
       <variable item="LT8 Var2 Evaluate" CV="320.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -6604,7 +6386,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEvaluate.xml"/>
-        <label>LT8 Var2 Evaluate</label>
       </variable>
       <variable item="LT8 Var2 CT" CV="320.0" mask="XVXXXXXX">
         <qualifier>
@@ -6613,7 +6394,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT8 Var2 CT</label>
       </variable>
       <variable item="LT8 Var2 Type" CV="320.0" mask="XXVVXXXX" default="0">
         <qualifier>
@@ -6622,7 +6402,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT8 Var2 Type</label>
       </variable>
       <variable item="LT8 Var2 Aspect" CV="320.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -6631,48 +6410,37 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT8 Var2 Aspect</label>
       </variable>
       <!-- Logic Table entry #9 -->
       <variable item="LT9 Block End" CV="321.0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEnd.xml"/>
-        <label>LT9 Block End</label>
       </variable>
       <variable item="LT9 Statement Enable" CV="321.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSkip.xml"/>
-        <label>LT9 Statement Enable</label>
       </variable>
       <variable item="LT9 Output Mode" CV="321.0" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT9 Output Mode</label>
       </variable>
       <variable item="LT9 Var1 Mode" CV="321.0" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT9 Var1 Mode</label>
       </variable>
       <variable item="LT9 Var2 Mode" CV="321.0" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT9 Var2 Mode</label>
       </variable>
       <variable item="LT9 Opcode" CV="321.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOpcode.xml"/>
-        <label>LT9 Opcode</label>
       </variable>
       <variable item="LT9 Function" CV="321.0" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
-        <label>LT9 Function</label>
       </variable>
       <variable item="LT9 Re-trigger" CV="322.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT9 Re-trigger</label>
       </variable>
       <variable item="LT9 Multiplier" CV="322.0" mask="XVVVVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiplier.xml"/>
-        <label>LT9 Multiplier</label>
       </variable>
       <variable item="LT9 Interval" CV="322.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInterval.xml"/>
-        <label>LT9 Interval</label>
       </variable>
       <variable item="LT9 Output Address" CV="323.0" mask="VVVVVVVV">
         <qualifier>
@@ -6681,7 +6449,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="324.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT9 Output Address</label>
       </variable>
       <variable item="LT9 Output Mast" CV="323.0" mask="VVVVVVVV">
         <qualifier>
@@ -6690,7 +6457,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="324.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT9 Output Mast</label>
       </variable>
       <variable item="LT9 Output Send" CV="324.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -6699,7 +6465,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSkip.xml"/>
-        <label>LT9 Output Send</label>
       </variable>
       <variable item="LT9 Output CT" CV="324.0" mask="XVXXXXXX">
         <qualifier>
@@ -6708,7 +6473,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT9 Output CT</label>
       </variable>
       <variable item="LT9 Output Type" CV="324.0" mask="XXVVXXXX">
         <qualifier>
@@ -6717,7 +6481,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT9 Output Type</label>
       </variable>
       <variable item="LT9 Output Aspect" CV="324.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -6726,7 +6489,6 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT9 Output Aspect</label>
       </variable>
       <variable item="LT9 Var1 Address" CV="325.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -6735,7 +6497,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="326.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT9 Var1 Address</label>
       </variable>
       <variable item="LT9 Var1 Mast" CV="325.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -6744,7 +6505,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="326.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT9 Var1 Mast</label>
       </variable>
       <variable item="LT9 Var1 Evaluate" CV="326.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -6753,7 +6513,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEvaluate.xml"/>
-        <label>LT9 Var1 Evaluate</label>
       </variable>
       <variable item="LT9 Var1 CT" CV="326.0" mask="XVXXXXXX">
         <qualifier>
@@ -6762,7 +6521,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT9 Var1 CT</label>
       </variable>
       <variable item="LT9 Var1 Type" CV="326.0" mask="XXVVXXXX" default="0">
         <qualifier>
@@ -6771,7 +6529,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT9 Var1 Type</label>
       </variable>
       <variable item="LT9 Var1 Aspect" CV="326.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -6780,7 +6537,6 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT9 Var1 Aspect</label>
       </variable>
       <variable item="LT9 Var2 Address" CV="327.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -6789,7 +6545,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="328.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT9 Var2 Address</label>
       </variable>
       <variable item="LT9 Var2 Mast" CV="327.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -6798,7 +6553,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="328.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT9 Var2 Mast</label>
       </variable>
       <variable item="LT9 Var2 Evaluate" CV="328.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -6807,7 +6561,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEvaluate.xml"/>
-        <label>LT9 Var2 Evaluate</label>
       </variable>
       <variable item="LT9 Var2 CT" CV="328.0" mask="XVXXXXXX">
         <qualifier>
@@ -6816,7 +6569,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT9 Var2 CT</label>
       </variable>
       <variable item="LT9 Var2 Type" CV="328.0" mask="XXVVXXXX" default="0">
         <qualifier>
@@ -6825,7 +6577,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT9 Var2 Type</label>
       </variable>
       <variable item="LT9 Var2 Aspect" CV="328.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -6834,48 +6585,37 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT9 Var2 Aspect</label>
       </variable>
       <!-- Logic Table entry #10 -->
       <variable item="LT10 Block End" CV="329.0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEnd.xml"/>
-        <label>LT10 Block End</label>
       </variable>
       <variable item="LT10 Statement Enable" CV="329.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSkip.xml"/>
-        <label>LT10 Statement Enable</label>
       </variable>
       <variable item="LT10 Output Mode" CV="329.0" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT10 Output Mode</label>
       </variable>
       <variable item="LT10 Var1 Mode" CV="329.0" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT10 Var1 Mode</label>
       </variable>
       <variable item="LT10 Var2 Mode" CV="329.0" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT10 Var2 Mode</label>
       </variable>
       <variable item="LT10 Opcode" CV="329.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOpcode.xml"/>
-        <label>LT10 Opcode</label>
       </variable>
       <variable item="LT10 Function" CV="329.0" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
-        <label>LT10 Function</label>
       </variable>
       <variable item="LT10 Re-trigger" CV="330.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT10 Re-trigger</label>
       </variable>
       <variable item="LT10 Multiplier" CV="330.0" mask="XVVVVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiplier.xml"/>
-        <label>LT10 Multiplier</label>
       </variable>
       <variable item="LT10 Interval" CV="330.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInterval.xml"/>
-        <label>LT10 Interval</label>
       </variable>
       <variable item="LT10 Output Address" CV="331.0" mask="VVVVVVVV">
         <qualifier>
@@ -6884,7 +6624,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="332.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT10 Output Address</label>
       </variable>
       <variable item="LT10 Output Mast" CV="331.0" mask="VVVVVVVV">
         <qualifier>
@@ -6893,7 +6632,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="332.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT10 Output Mast</label>
       </variable>
       <variable item="LT10 Output Send" CV="332.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -6902,7 +6640,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSkip.xml"/>
-        <label>LT10 Output Send</label>
       </variable>
       <variable item="LT10 Output CT" CV="332.0" mask="XVXXXXXX">
         <qualifier>
@@ -6911,7 +6648,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT10 Output CT</label>
       </variable>
       <variable item="LT10 Output Type" CV="332.0" mask="XXVVXXXX">
         <qualifier>
@@ -6920,7 +6656,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT10 Output Type</label>
       </variable>
       <variable item="LT10 Output Aspect" CV="332.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -6929,7 +6664,6 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT10 Output Aspect</label>
       </variable>
       <variable item="LT10 Var1 Address" CV="333.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -6938,7 +6672,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="334.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT10 Var1 Address</label>
       </variable>
       <variable item="LT10 Var1 Mast" CV="333.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -6947,7 +6680,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="334.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT10 Var1 Mast</label>
       </variable>
       <variable item="LT10 Var1 Evaluate" CV="334.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -6956,7 +6688,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEvaluate.xml"/>
-        <label>LT10 Var1 Evaluate</label>
       </variable>
       <variable item="LT10 Var1 CT" CV="334.0" mask="XVXXXXXX">
         <qualifier>
@@ -6965,7 +6696,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT10 Var1 CT</label>
       </variable>
       <variable item="LT10 Var1 Type" CV="334.0" mask="XXVVXXXX" default="0">
         <qualifier>
@@ -6974,7 +6704,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT10 Var1 Type</label>
       </variable>
       <variable item="LT10 Var1 Aspect" CV="334.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -6983,7 +6712,6 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT10 Var1 Aspect</label>
       </variable>
       <variable item="LT10 Var2 Address" CV="335.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -6992,7 +6720,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="336.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT10 Var2 Address</label>
       </variable>
       <variable item="LT10 Var2 Mast" CV="335.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -7001,7 +6728,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="336.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT10 Var2 Mast</label>
       </variable>
       <variable item="LT10 Var2 Evaluate" CV="336.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -7010,7 +6736,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEvaluate.xml"/>
-        <label>LT10 Var2 Evaluate</label>
       </variable>
       <variable item="LT10 Var2 CT" CV="336.0" mask="XVXXXXXX">
         <qualifier>
@@ -7019,7 +6744,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT10 Var2 CT</label>
       </variable>
       <variable item="LT10 Var2 Type" CV="336.0" mask="XXVVXXXX" default="0">
         <qualifier>
@@ -7028,7 +6752,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT10 Var2 Type</label>
       </variable>
       <variable item="LT10 Var2 Aspect" CV="336.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -7037,48 +6760,37 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT10 Var2 Aspect</label>
       </variable>
       <!-- Logic Table entry #11 -->
       <variable item="LT11 Block End" CV="337.0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEnd.xml"/>
-        <label>LT11 Block End</label>
       </variable>
       <variable item="LT11 Statement Enable" CV="337.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSkip.xml"/>
-        <label>LT11 Statement Enable</label>
       </variable>
       <variable item="LT11 Output Mode" CV="337.0" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT11 Output Mode</label>
       </variable>
       <variable item="LT11 Var1 Mode" CV="337.0" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT11 Var1 Mode</label>
       </variable>
       <variable item="LT11 Var2 Mode" CV="337.0" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT11 Var2 Mode</label>
       </variable>
       <variable item="LT11 Opcode" CV="337.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOpcode.xml"/>
-        <label>LT11 Opcode</label>
       </variable>
       <variable item="LT11 Function" CV="337.0" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
-        <label>LT11 Function</label>
       </variable>
       <variable item="LT11 Re-trigger" CV="338.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT11 Re-trigger</label>
       </variable>
       <variable item="LT11 Multiplier" CV="338.0" mask="XVVVVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiplier.xml"/>
-        <label>LT11 Multiplier</label>
       </variable>
       <variable item="LT11 Interval" CV="338.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInterval.xml"/>
-        <label>LT11 Interval</label>
       </variable>
       <variable item="LT11 Output Address" CV="339.0" mask="VVVVVVVV">
         <qualifier>
@@ -7087,7 +6799,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="340.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT11 Output Address</label>
       </variable>
       <variable item="LT11 Output Mast" CV="339.0" mask="VVVVVVVV">
         <qualifier>
@@ -7096,7 +6807,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="340.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT11 Output Mast</label>
       </variable>
       <variable item="LT11 Output Send" CV="340.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -7105,7 +6815,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSkip.xml"/>
-        <label>LT11 Output Send</label>
       </variable>
       <variable item="LT11 Output CT" CV="340.0" mask="XVXXXXXX">
         <qualifier>
@@ -7114,7 +6823,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT11 Output CT</label>
       </variable>
       <variable item="LT11 Output Type" CV="340.0" mask="XXVVXXXX">
         <qualifier>
@@ -7123,7 +6831,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT11 Output Type</label>
       </variable>
       <variable item="LT11 Output Aspect" CV="340.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -7132,7 +6839,6 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT11 Output Aspect</label>
       </variable>
       <variable item="LT11 Var1 Address" CV="341.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -7141,7 +6847,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="342.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT11 Var1 Address</label>
       </variable>
       <variable item="LT11 Var1 Mast" CV="341.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -7150,7 +6855,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="342.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT11 Var1 Mast</label>
       </variable>
       <variable item="LT11 Var1 Evaluate" CV="342.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -7159,7 +6863,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEvaluate.xml"/>
-        <label>LT11 Var1 Evaluate</label>
       </variable>
       <variable item="LT11 Var1 CT" CV="342.0" mask="XVXXXXXX">
         <qualifier>
@@ -7168,7 +6871,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT11 Var1 CT</label>
       </variable>
       <variable item="LT11 Var1 Type" CV="342.0" mask="XXVVXXXX" default="0">
         <qualifier>
@@ -7177,7 +6879,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT11 Var1 Type</label>
       </variable>
       <variable item="LT11 Var1 Aspect" CV="342.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -7186,7 +6887,6 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT11 Var1 Aspect</label>
       </variable>
       <variable item="LT11 Var2 Address" CV="343.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -7195,7 +6895,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="344.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT11 Var2 Address</label>
       </variable>
       <variable item="LT11 Var2 Mast" CV="343.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -7204,7 +6903,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="344.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT11 Var2 Mast</label>
       </variable>
       <variable item="LT11 Var2 Evaluate" CV="344.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -7213,7 +6911,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEvaluate.xml"/>
-        <label>LT11 Var2 Evaluate</label>
       </variable>
       <variable item="LT11 Var2 CT" CV="344.0" mask="XVXXXXXX">
         <qualifier>
@@ -7222,7 +6919,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT11 Var2 CT</label>
       </variable>
       <variable item="LT11 Var2 Type" CV="344.0" mask="XXVVXXXX" default="0">
         <qualifier>
@@ -7231,7 +6927,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT11 Var2 Type</label>
       </variable>
       <variable item="LT11 Var2 Aspect" CV="344.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -7240,16 +6935,13 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT11 Var2 Aspect</label>
       </variable>
       <!-- Logic Table entry #12 -->
       <variable item="LT12 Block End" CV="345.0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEnd.xml"/>
-        <label>LT12 Block End</label>
       </variable>
       <variable item="LT12 Statement Enable" CV="345.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSkip.xml"/>
-        <label>LT12 Statement Enable</label>
       </variable>
       <variable item="LT12 Output Mode" CV="345.0" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -7257,31 +6949,24 @@
       </variable>
       <variable item="LT12 Var1 Mode" CV="345.0" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT12 Var1 Mode</label>
       </variable>
       <variable item="LT12 Var2 Mode" CV="345.0" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT12 Var2 Mode</label>
       </variable>
       <variable item="LT12 Opcode" CV="345.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOpcode.xml"/>
-        <label>LT12 Opcode</label>
       </variable>
       <variable item="LT12 Function" CV="345.0" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
-        <label>LT12 Function</label>
       </variable>
       <variable item="LT12 Re-trigger" CV="346.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT12 Re-trigger</label>
       </variable>
       <variable item="LT12 Multiplier" CV="346.0" mask="XVVVVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiplier.xml"/>
-        <label>LT12 Multiplier</label>
       </variable>
       <variable item="LT12 Interval" CV="346.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInterval.xml"/>
-        <label>LT12 Interval</label>
       </variable>
       <variable item="LT12 Output Address" CV="347.0" mask="VVVVVVVV">
         <qualifier>
@@ -7290,7 +6975,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="348.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT12 Output Address</label>
       </variable>
       <variable item="LT12 Output Mast" CV="347.0" mask="VVVVVVVV">
         <qualifier>
@@ -7299,7 +6983,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="348.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT12 Output Mast</label>
       </variable>
       <variable item="LT12 Output Send" CV="348.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -7308,7 +6991,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSkip.xml"/>
-        <label>LT12 Output Send</label>
       </variable>
       <variable item="LT12 Output CT" CV="348.0" mask="XVXXXXXX">
         <qualifier>
@@ -7317,7 +6999,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT12 Output CT</label>
       </variable>
       <variable item="LT12 Output Type" CV="348.0" mask="XXVVXXXX">
         <qualifier>
@@ -7326,7 +7007,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT12 Output Type</label>
       </variable>
       <variable item="LT12 Output Aspect" CV="348.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -7335,7 +7015,6 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT12 Output Aspect</label>
       </variable>
       <variable item="LT12 Var1 Address" CV="349.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -7344,7 +7023,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="350.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT12 Var1 Address</label>
       </variable>
       <variable item="LT12 Var1 Mast" CV="349.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -7353,7 +7031,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="350.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT12 Var1 Mast</label>
       </variable>
       <variable item="LT12 Var1 Evaluate" CV="350.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -7362,7 +7039,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEvaluate.xml"/>
-        <label>LT12 Var1 Evaluate</label>
       </variable>
       <variable item="LT12 Var1 CT" CV="350.0" mask="XVXXXXXX">
         <qualifier>
@@ -7371,7 +7047,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT12 Var1 CT</label>
       </variable>
       <variable item="LT12 Var1 Type" CV="350.0" mask="XXVVXXXX" default="0">
         <qualifier>
@@ -7380,7 +7055,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT12 Var1 Type</label>
       </variable>
       <variable item="LT12 Var1 Aspect" CV="350.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -7389,7 +7063,6 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT12 Var1 Aspect</label>
       </variable>
       <variable item="LT12 Var2 Address" CV="351.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -7398,7 +7071,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="352.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT12 Var2 Address</label>
       </variable>
       <variable item="LT12 Var2 Mast" CV="351.0" mask="VVVVVVVV" default="0">
         <qualifier>
@@ -7407,7 +7079,6 @@
           <value>1</value>
         </qualifier>
         <splitVal highCV="352.0" offset="1" upperMask="XXXXXVVV"/>
-        <label>LT12 Var2 Mast</label>
       </variable>
       <variable item="LT12 Var2 Evaluate" CV="352.0" mask="VXXXXXXX" default="1">
         <qualifier>
@@ -7416,7 +7087,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEvaluate.xml"/>
-        <label>LT12 Var2 Evaluate</label>
       </variable>
       <variable item="LT12 Var2 CT" CV="352.0" mask="XVXXXXXX">
         <qualifier>
@@ -7425,7 +7095,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/>
-        <label>LT12 Var2 CT</label>
       </variable>
       <variable item="LT12 Var2 Type" CV="352.0" mask="XXVVXXXX" default="0">
         <qualifier>
@@ -7434,7 +7103,6 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>LT12 Var2 Type</label>
       </variable>
       <variable item="LT12 Var2 Aspect" CV="352.0" mask="VVVVVXXX" default="0">
         <qualifier>
@@ -7443,48 +7111,37 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/>
-        <label>LT12 Var2 Aspect</label>
       </variable>
       <!-- Logic Table entry #13 -->
       <variable item="LT13 Block End" CV="353.0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEnd.xml"/>
-        <label>LT13 Block End</label>
       </variable>
       <variable item="LT13 Statement Enable" CV="353.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSkip.xml"/>
-        <label>LT13 Statement Enable</label>
       </variable>
       <variable item="LT13 Output Mode" CV="353.0" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT13 Output Mode</label>
       </variable>
       <variable item="LT13 Var1 Mode" CV="353.0" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT13 Var1 Mode</label>
       </variable>
       <variable item="LT13 Var2 Mode" CV="353.0" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
-        <label>LT13 Var2 Mode</label>
       </variable>
       <variable item="LT13 Opcode" CV="353.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOpcode.xml"/>
-        <label>LT13 Opcode</label>
       </variable>
       <variable item="LT13 Function" CV="353.0" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
-        <label>LT13 Function</label>
       </variable>
       <variable item="LT13 Re-trigger" CV="354.0" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT13 Re-trigger</label>
       </variable>
       <variable item="LT13 Multiplier" CV="354.0" mask="XVVVVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiplier.xml"/>
-        <label>LT13 Multiplier</label>
       </variable>
       <variable item="LT13 Interval" CV="354.0" mask="XXXXXVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInterval.xml"/>
-        <label>LT13 Interval</label>
       </variable>
       <variable item="LT13 Output Address" CV="355.0" mask="VVVVVVVV">
         <qualifier>
@@ -7493,7 +7150,6 @@
           <value>0</value>
         </qualifier>
         <splitVal highCV="356.0" offset="1" upperMask="XXXXVVVV"/>
-        <label>LT13 Output Address</label>
       </variable>
       <variable item="LT13 Output Mast" CV="355.0" mask="VVVVVVVV">
         <qualifier>
