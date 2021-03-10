@@ -98,7 +98,7 @@
         <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
         <!-- New from fw3.03  -->
           <label xml:lang="de">AUX 4|(o. SUSI ZDAT)</label>
-		  <label xml:lang="ca">AUX 4 |(o SUSI ZDAT</label>
+      <label xml:lang="ca">AUX 4 |(o SUSI ZDAT</label>
         </output>
         <output name="7" label="Dimmed|Lights">
           <label xml:lang="de">Abblend-|licht</label>
@@ -210,7 +210,7 @@
         </output>
         <output name="4" label="AUX|2" maxcurrent="300mA">
           <label xml:lang="de">AUX 2</label>
-	      <label xml:lang="ca">AUX 2</label>
+        <label xml:lang="ca">AUX 2</label>
         </output>
         <output name="5" label="AUX|3" maxcurrent="NC - Logic Level">
           <label xml:lang="de">AUX 3</label>

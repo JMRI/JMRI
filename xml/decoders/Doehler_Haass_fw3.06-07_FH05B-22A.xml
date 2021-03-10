@@ -93,7 +93,7 @@
         <output name="7" label="AUX 5|(or SUSI ZCLK)" maxcurrent="20mA">
         <!-- New from fw3.03  -->
           <label xml:lang="de">AUX 5|(o. SUSI ZCLK)</label>
-		  <label xml:lang="ca">AUX 5| SUSI ZCLK</label>
+      <label xml:lang="ca">AUX 5| SUSI ZCLK</label>
         </output>
         <output name="8" label="AUX 6|(or SUSI ZDAT)" maxcurrent="20mA">
         <!-- New from fw3.03  -->

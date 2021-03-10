@@ -51,21 +51,21 @@
       <!-- SECTION 2 - Standard variables for decoders released after around 2012  -->
       <!--  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_base.xml"/> -->
       <!--  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_dc.xml"/> -->
-      <!-- SECTION 3	- Analog functions  -->
+      <!-- SECTION 3  - Analog functions  -->
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv29_analog.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv14_analogModeFunction.xml"/>
-      <!-- SECTION 4	- Basic Railcom feedback  -->
+      <!-- SECTION 4  - Basic Railcom feedback  -->
       <!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv28-29_railcom_base.xml"/> -->
-      <!-- SECTION 5	- Extra Railcom feedback options as of fw3.03 -->
+      <!-- SECTION 5  - Extra Railcom feedback options as of fw3.03 -->
       <!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv135-136_railcom_fw3.03.xml"/> -->
-      <!-- SECTION 6	- Extra general options as of fw3.03 -->
+      <!-- SECTION 6  - Extra general options as of fw3.03 -->
       <!-- RK xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_energysaving_fw3.03.xml"/-->
-      <!-- SECTION 7	- Extra SUSI options as of fw3.03 -->
+      <!-- SECTION 7  - Extra SUSI options as of fw3.03 -->
       <!-- RK xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_susi_fw3.03.xml"/-->
-      <!-- SECTION 8	- Motorola format as of fw3.04 -->
+      <!-- SECTION 8  - Motorola format as of fw3.04 -->
       <!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv12_motorola.xml"/> -->
-      <!-- SECTION 9	- Extra SUSI options as of fw3.05 -->
+      <!-- SECTION 9  - Extra SUSI options as of fw3.05 -->
       <!-- RK xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_susi_fw3.05.xml"/-->
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137.xml"/>
     </variables>
