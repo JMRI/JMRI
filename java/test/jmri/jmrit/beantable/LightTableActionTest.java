@@ -744,12 +744,6 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
                         created.getLightControlList().get(0).getControlType()));
     }
 
-    // test the feedback message displayed in-pane for an Edit / New Light pane WITH variable intensity
-    private void checkEditLightFeedback( String toTest, JFrameOperator jfo){
-        JLabelOperator lblFeedback = new JLabelOperator(jfo, 11);
-        Assert.assertEquals("Message did not appear", toTest, lblFeedback.getText());
-    }
-
     @BeforeEach
     @Override
     public void setUp() {
