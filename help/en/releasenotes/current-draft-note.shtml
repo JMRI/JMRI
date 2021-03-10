@@ -161,7 +161,7 @@
 
     <h3>New / Updated decoder definitions</h3>
         <ul>
-          <li>The XML validation schema "decoder-4-15-2.xsd" from now on requires an "item" attribute on each variable
+          <li>All decoder.xsd XML validation schema from now on require an "item" attribute on each variable
           element. It is needed to apply qualifier selections to translated definitions.<br>
           All current decoder definitions in JMRI were updated where necessary (see below for specific ESU, LDH and
           Zimo series).</li>
@@ -204,7 +204,19 @@
 
         <h4>Doehler &amp; Haas</h4>
             <ul>
-                <li></li>
+                <li>New - for all new D&amp;H definitions: decoder model (product ID) is now detected automatically thanks to the introduction of CV 261 in updated firmware.</li>
+                <li>DH05C (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>DH10C (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>DH12A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>DH16A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>DH18A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>DH21A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>DH22A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>PD05A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>PD12A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>FH05B (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>FH18A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>FH22A (fw 3.12.050 - including update path from older fw versions definitions)</li>
             </ul>
 
         <h4>ESU</h4>
@@ -340,8 +352,9 @@
 
         <h4>ZIMO</h4>
             <ul>
+                <li>MX605 (Kato type plug N sound decoder for ICE 4)</li>
                 <li>Missing "item" attributes were added to the CVSwissMapping_v36.xml include and the Decoder
-                  Version was copied into CV1-CV99.xml in order to allow customization for Swiss Mapping.</li>
+                Version was copied into CV1-CV99.xml in order to allow customization for Swiss Mapping.</li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -586,4 +599,3 @@
         <ul>
             <li></li>
         </ul>
-
