@@ -30,12 +30,12 @@ import javax.swing.JOptionPane as JOptionPane
 import javax.swing.JTextArea as JTextArea
 import javax.swing.JFrame as JFrame
 try:
-  import com.github.sarxos.webcam.Webcam as Webcam
-  import com.github.sarxos.webcam.WebcamPanel as WebcamPanel
-  import com.github.sarxos.webcam.WebcamPicker as WebcamPicker
-  import com.github.sarxos.webcam.WebcamResolution as WebcamResolution
+    import com.github.sarxos.webcam.Webcam as Webcam
+    import com.github.sarxos.webcam.WebcamPanel as WebcamPanel
+    import com.github.sarxos.webcam.WebcamPicker as WebcamPicker
+    import com.github.sarxos.webcam.WebcamResolution as WebcamResolution
 except:
-  JOptionPane.showMessageDialog(JFrame(), JTextArea(depErr), "Missing dependency", JOptionPane.ERROR_MESSAGE);
+    JOptionPane.showMessageDialog(JFrame(), JTextArea(depErr), "Missing dependency", JOptionPane.ERROR_MESSAGE);
 
 class VideoView(Jynstrument, ItemListener):
 

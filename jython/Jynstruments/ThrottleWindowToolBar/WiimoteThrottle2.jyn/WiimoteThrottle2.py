@@ -56,12 +56,12 @@ import javax.swing.JOptionPane as JOptionPane
 import javax.swing.JTextArea as JTextArea
 import javax.swing.JFrame as JFrame
 try:
-  import wiiremotej.event.WiiRemoteListener as WiiRemoteListener
-  import wiiremotej.event.WiiDeviceDiscoveryListener as WiiDeviceDiscoveryListener
-  import wiiremotej.WiiRemoteJ as WiiRemoteJ
-  import wiiremotej.event.WRButtonEvent as WRButtonEvent
+    import wiiremotej.event.WiiRemoteListener as WiiRemoteListener
+    import wiiremotej.event.WiiDeviceDiscoveryListener as WiiDeviceDiscoveryListener
+    import wiiremotej.WiiRemoteJ as WiiRemoteJ
+    import wiiremotej.event.WRButtonEvent as WRButtonEvent
 except:
-  JOptionPane.showMessageDialog(JFrame(), JTextArea(depErr), "Missing dependency", JOptionPane.ERROR_MESSAGE);
+    JOptionPane.showMessageDialog(JFrame(), JTextArea(depErr), "Missing dependency", JOptionPane.ERROR_MESSAGE);
 
 
 class WiimoteThrottle2(Jynstrument, PropertyChangeListener, AddressListener, WiiDeviceDiscoveryListener, WiiRemoteListener, Runnable):

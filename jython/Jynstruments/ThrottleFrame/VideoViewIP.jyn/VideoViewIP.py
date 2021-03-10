@@ -32,13 +32,13 @@ import javax.swing.JOptionPane as JOptionPane
 import javax.swing.JTextArea as JTextArea
 import javax.swing.JFrame as JFrame
 try:
-	import com.github.sarxos.webcam.Webcam as Webcam
-	import com.github.sarxos.webcam.WebcamPanel as WebcamPanel
-	import com.github.sarxos.webcam.ds.ipcam.IpCamDeviceRegistry as IpCamDeviceRegistry
-	import com.github.sarxos.webcam.ds.ipcam.IpCamDriver as IpCamDriver
-	import com.github.sarxos.webcam.ds.ipcam.IpCamMode as IpCamMode
+    import com.github.sarxos.webcam.Webcam as Webcam
+    import com.github.sarxos.webcam.WebcamPanel as WebcamPanel
+    import com.github.sarxos.webcam.ds.ipcam.IpCamDeviceRegistry as IpCamDeviceRegistry
+    import com.github.sarxos.webcam.ds.ipcam.IpCamDriver as IpCamDriver
+    import com.github.sarxos.webcam.ds.ipcam.IpCamMode as IpCamMode
 except:
-  JOptionPane.showMessageDialog(JFrame(), JTextArea(depErr), "Missing dependency", JOptionPane.ERROR_MESSAGE);
+    JOptionPane.showMessageDialog(JFrame(), JTextArea(depErr), "Missing dependency", JOptionPane.ERROR_MESSAGE);
 
 class VideoViewIP(Jynstrument, ItemListener):
 
