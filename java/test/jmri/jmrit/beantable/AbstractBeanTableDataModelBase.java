@@ -113,6 +113,17 @@ public abstract class AbstractBeanTableDataModelBase<B extends jmri.NamedBean> {
     }
     
     /**
+     * Test of setValueAt method with no column in model.
+     * Should NOT be overridden by implementing Tests.
+     */
+    @Test
+    public void testSetValueAtNoColumn() {
+        createBean(); // ensure there is a row 0
+        t.setValueAt(null,0,t.getColumnCount());
+        JUnitAppender.assertErrorMessage("btdm setvalueat 0 " + t.getColumnCount());
+    }
+    
+    /**
      * Test of getValueAt method with no column in model.
      * Should NOT be overridden by implementing Tests
      */
