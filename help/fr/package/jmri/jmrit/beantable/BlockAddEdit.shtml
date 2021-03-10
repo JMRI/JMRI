@@ -41,9 +41,9 @@
 
       <h2>Ajouter des propri&#233;t&#233;s de canton</h2>
 
-      </p> <p>Pour ajouter les d&#233;tails d'un nouveau b&#226;timent, fermez le volet Ajouter un b&#226;timent
+      </p> <p>Pour ajouter les d&#233;tails d'un nouveau canton, fermez le volet Ajouter un b&#226;timent
       en cliquant sur Annuler ou sur le bouton Fermer/X et cliquez sur
-      <strong><a href="CantonEdit.shtml">Editer</a></strong> &#224; la
+      <strong><a href="CantonEdit.shtml">Modifier</a></strong> &#224; &#224;
       droite de la nouvelle entr&#233;e dans le tableau des cantons.</p>
 
       <p>Voir <a href=
@@ -52,7 +52,7 @@
 
       <p>Retour &#224; la page <a href="CantonTable.shtml">aide Tableaux de cantons
       </a>.</p>
-<P>TRADUCTION2021-03-10</P>
+<p>Traduction 2021-03-10</P>
       <!--#include virtual="/Footer.shtml" --></p>
     </div>
   </div>
