@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 25 Apr 2019 Ronald Kuhn - CVs for firmware v37 and above-->
+<!-- version 1.1  10 Mar 2021  Nigel Cliffe - minor change to menu called for CV309 to improve visual appearance in panes -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <variable CV="22" item="Auto Consist" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -224,7 +225,7 @@
       <tooltip xml:lang="de">Welche Funktionstaste löst das Kurvenquietschen aus</tooltip>
   </variable>
   <variable CV="309" item="Brake key" default="0">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/Zimo/Choice-F1-F28.xml"/>
     <label>Brake key</label>
     <label xml:lang="de">Bremstaste</label>
       <tooltip> </tooltip>
