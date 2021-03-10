@@ -50,7 +50,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     /* According to the specification, DCC++ has a maximum timing
      interval of 500 milliseconds during normal communications */
     protected static final int DCCppProgrammingTimeout = 10000;  // TODO: Appropriate value for DCC++?
-    private static int DCCppMessageTimeout = 2000;  // TODO: Appropriate value for DCC++?
+    private static int DCCppMessageTimeout = 5000;  // TODO: Appropriate value for DCC++?
 
     //private ArrayList<Integer> valueList = new ArrayList<>();
     private StringBuilder myMessage;
@@ -2044,8 +2044,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * <p>
      * reads current being drawn on main operations track
      * <p>
-     * @return {@code <a CURRENT>} where CURRENT = 0-1024, based on
+     * @return (for DCC-EX), 1 or more of  {@code <c MeterName value C/V unit min max res warn>}
+     * where name and settings are used to define arbitrary meters on the DCC-EX side
+     * AND {@code <a CURRENT>} where CURRENT = 0-1024, based on 
      * exponentially-smoothed weighting scheme
+     * 
      */
     public static DCCppMessage makeReadTrackCurrentMsg() {
         return (new DCCppMessage(DCCppConstants.READ_TRACK_CURRENT, DCCppConstants.READ_TRACK_CURRENT_REGEX));

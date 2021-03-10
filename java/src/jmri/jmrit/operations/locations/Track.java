@@ -479,6 +479,13 @@ public class Track extends PropertyChangeSupport {
     public int getScheduleMode() {
         return _mode;
     }
+    
+    public String getScheduleModeName() {
+        if (getScheduleMode() == Track.MATCH) {
+            return Bundle.getMessage("Match");
+        }
+        return Bundle.getMessage("Sequential");
+    }
 
     public void setAlternateTrack(Track track) {
         Track oldTrack = _location.getTrackById(_alternateTrackId);
@@ -1912,7 +1919,7 @@ public class Track extends PropertyChangeSupport {
             return MessageFormat.format(Bundle.getMessage("carHasA"), new Object[] { CUSTOM, LOAD, car.getLoadName() });
         }
         log.debug("Track ({}) has schedule ({}) mode {} ({})", getName(), getScheduleName(), getScheduleMode(),
-                getScheduleMode() == SEQUENTIAL ? "Sequential" : "Match"); // NOI18N
+                getScheduleModeName()); // NOI18N
 
         ScheduleItem si = getCurrentScheduleItem();
         if (si == null) {
@@ -2108,7 +2115,7 @@ public class Track extends PropertyChangeSupport {
         }
         ScheduleItem currentSi = getCurrentScheduleItem();
         log.debug("Destination track ({}) has schedule ({}) item id ({}) mode: {} ({})", getName(), getScheduleName(),
-                getScheduleItemId(), getScheduleMode(), getScheduleMode() == SEQUENTIAL ? "Sequential" : "Match"); // NOI18N
+                getScheduleItemId(), getScheduleMode(), getScheduleModeName()); // NOI18N
         if (currentSi != null &&
                 (currentSi.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) ||
                         InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId()
@@ -2142,13 +2149,9 @@ public class Track extends PropertyChangeSupport {
             if (sch != null) {
                 currentTrainScheduleName = sch.getName();
             }
-            String mode = Bundle.getMessage("sequential");
-            if (getScheduleMode() == 1) {
-                mode = Bundle.getMessage("match");
-            }
             return SCHEDULE +
                     MessageFormat.format(Bundle.getMessage("sequentialMessage"),
-                            new Object[] { getScheduleName(), mode, car.toString(), car.getTypeName(), scheduleName,
+                            new Object[] { getScheduleName(), getScheduleModeName(), car.toString(), car.getTypeName(), scheduleName,
                                     car.getRoadName(), car.getLoadName(), currentSi.getTypeName(),
                                     currentTrainScheduleName, currentSi.getRoadName(),
                                     currentSi.getReceiveLoadName() });

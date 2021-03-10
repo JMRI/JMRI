@@ -23,6 +23,17 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class DCCppTrafficController extends AbstractMRTrafficController implements DCCppInterface {
 
+    @Override
+    protected void transmitLoop() {
+        log.debug("Don't start sending for 1.5 seconds to avoid Arduino restart");
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException ignore) {
+            Thread.currentThread().interrupt();
+        }
+        super.transmitLoop();
+    }
+
     /**
      * Create a new DCCppTrafficController instance.
      * Must provide a DCCppCommandStation reference at creation time.

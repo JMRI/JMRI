@@ -27,7 +27,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnection
         InstanceManager.store(this, EcosSystemConnectionMemo.class); // also register as specific type
         InstanceManager.store(cf = new jmri.jmrix.ecos.swing.EcosComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
-        store(new EcosPreferences(this),EcosPreferences.class);
+        store(new EcosPreferences(this), EcosPreferences.class);
     }
 
     public EcosSystemConnectionMemo() {
@@ -36,7 +36,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnection
         //Needs to be implemented
         InstanceManager.store(cf = new jmri.jmrix.ecos.swing.EcosComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
-        store(new EcosPreferences(this),EcosPreferences.class);
+        store(new EcosPreferences(this), EcosPreferences.class);
     }
 
     jmri.jmrix.swing.ComponentFactory cf = null;
@@ -131,7 +131,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnection
     }
 
     public EcosProgrammerManager getProgrammerManager() {
-        return (EcosProgrammerManager) classObjectMap.computeIfAbsent(EcosProgrammerManager.class,(Class c) ->
+        return (EcosProgrammerManager) classObjectMap.computeIfAbsent(EcosProgrammerManager.class, (Class c) ->
             new EcosProgrammerManager(new EcosProgrammer(getTrafficController()), this));
     }
 
@@ -140,7 +140,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnection
         EcosLocoAddressManager locoManager = get(EcosLocoAddressManager.class);
         if (locoManager != null) {
             locoManager.dispose();
-            deregister(locoManager,EcosLocoAddressManager.class);
+            deregister(locoManager, EcosLocoAddressManager.class);
         }
         et = null;
         InstanceManager.deregister(this, EcosSystemConnectionMemo.class);
@@ -148,9 +148,9 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnection
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
         }
         EcosPreferences prefManager = get(EcosPreferences.class);
-        if(prefManager!=null) {
+        if (prefManager != null) {
             InstanceManager.getDefault(ShutDownManager.class).deregister(prefManager.ecosPreferencesShutDownTask);
-            deregister(prefManager,EcosPreferences.class);
+            deregister(prefManager, EcosPreferences.class);
         }
         super.dispose();
     }
