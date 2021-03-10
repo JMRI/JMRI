@@ -253,7 +253,7 @@ public class ExportLocations extends XmlFile {
                             pickUpRestriction,
                             pickUpRestrictions.toString(),
                             track.getScheduleName(),
-                            Bundle.getMessage(track.getScheduleMode() == Track.MATCH ? "Match" : "Sequential"),
+                            track.getScheduleModeName(),
                             alternateTrackName,
                             track.getPoolName(),
                             track.getMinimumLength(),

@@ -43,6 +43,7 @@ public class TrackerTableActionTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
         // clear IconFamily warning, fixed in 4.21.5
         // fixed: JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 1 Editor");
@@ -104,6 +105,7 @@ public class TrackerTableActionTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
         // clear IconFamily warning, fixed in 4.21.5
         // fixed: JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 1 Editor");
@@ -149,6 +151,7 @@ public class TrackerTableActionTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
         // clear IconFamily warning, fixed in 4.21.5
         // fixed: JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 1 Editor");
@@ -215,7 +218,7 @@ public class TrackerTableActionTest {
     public void tearDown() {
         _OBlockMgr.dispose();
         _OBlockMgr = null;
-        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

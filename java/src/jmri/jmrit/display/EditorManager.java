@@ -2,15 +2,12 @@ package jmri.jmrit.display;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+
 import jmri.InstanceManagerAutoDefault;
 import jmri.beans.Bean;
 
@@ -34,6 +31,18 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
     public static final String EDITORS = "editors";
     public static final String TITLE = "title";
     private final SortedSet<Editor> set = Collections.synchronizedSortedSet(new TreeSet<>(Comparator.comparing(Editor::getTitle)));
+
+    boolean panelSetChanged = false;
+
+    /**
+     * Panel adds occur during xml data file loading and manual adds.
+     * This sets the change flag for manual adds.
+     * After a Store is complete, the flag is cleared.
+     * @param flag The new value for the panelSetChanged boolean.
+     */
+    public void setChanged(boolean flag) {
+        panelSetChanged = flag;
+    }
 
     public EditorManager() {
         super(false);
@@ -99,6 +108,21 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
     @CheckForNull
     public Editor get(@Nonnull String name) {
         return getAll().stream().filter(e -> e.getTitle().equals(name)).findFirst().orElse(null);
+    }
+
+    /**
+     * Get the editor with the given name or the editor with the given target frame name.
+     *
+     * @param name the name of the editor or target frame
+     * @return the editor or null
+     */
+    @CheckForNull
+    public Editor getTargetFrame(@Nonnull String name) {
+        Editor editor = get(name);
+        if (editor != null) {
+            return editor;
+        }
+        return getAll().stream().filter(e -> e.getTargetFrame().getTitle().equals(name)).findFirst().orElse(null);
     }
 
     /**

@@ -23,12 +23,12 @@ import jmri.util.swing.JemmyUtil;
  * @author Dan Boudreau Copyright (C) 2009
  * @author Paul Bender Copyright (C) 2017
  */
-public class OperationsSetupFrameTest extends OperationsTestCase {
+public class OperationsSettingsFrameTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        OperationsSetupFrame t = new OperationsSetupFrame();
+        OperationsSettingsFrame t = new OperationsSettingsFrame();
         Assert.assertNotNull("exists",t);
     }
 
@@ -38,10 +38,10 @@ public class OperationsSetupFrameTest extends OperationsTestCase {
         // it may be possible to make this a headless test by only initializing the panel, not the frame
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
-        OperationsSetupFrame f = new OperationsSetupFrame();
+        OperationsSettingsFrame f = new OperationsSettingsFrame();
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents();
-        OperationsSetupPanel p = (OperationsSetupPanel) f.getContentPane();
+        OperationsSettingsPanel p = (OperationsSettingsPanel) f.getContentPane();
 
         // first confirm that setup has all directions selected
         Assert.assertEquals("All directions selected", Setup.EAST + Setup.WEST + Setup.NORTH + Setup.SOUTH,
@@ -74,10 +74,10 @@ public class OperationsSetupFrameTest extends OperationsTestCase {
         // force creation of backup
         Setup.setCarTypes(Setup.AAR);
 
-        OperationsSetupFrame f = new OperationsSetupFrame();
+        OperationsSettingsFrame f = new OperationsSettingsFrame();
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents();
-        OperationsSetupPanel p = (OperationsSetupPanel) f.getContentPane();
+        OperationsSettingsPanel p = (OperationsSettingsPanel) f.getContentPane();
 
         JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("TitleOperationsSetup"));
 
@@ -113,10 +113,10 @@ public class OperationsSetupFrameTest extends OperationsTestCase {
         jfo.dispose();
 
         // it may be possible to make this a headless test by only initializing the panel, not the frame
-        OperationsSetupFrame frameRead = new OperationsSetupFrame();
+        OperationsSettingsFrame frameRead = new OperationsSettingsFrame();
         frameRead.setLocation(0, 0); // entire panel must be visible for tests to work properly
         frameRead.initComponents();
-        OperationsSetupPanel panelRead = (OperationsSetupPanel) frameRead.getContentPane();
+        OperationsSettingsPanel panelRead = (OperationsSettingsPanel) frameRead.getContentPane();
 
         JFrameOperator jfo2 = new JFrameOperator(Bundle.getMessage("TitleOperationsSetup"));
 

@@ -305,15 +305,11 @@ public class PrintLocationsAction extends AbstractAction {
                         s = s + NEW_LINE;
                         writer.write(s);
                         // show the schedule's mode
-                        String mode = Bundle.getMessage("Sequential");
-                        if (spur.getScheduleMode() == Track.MATCH) {
-                            mode = Bundle.getMessage("Match");
-                        }
                         s = padOutString("", MAX_NAME_LENGTH) +
                                 SPACE +
                                 Bundle.getMessage("ScheduleMode") +
                                 ": " +
-                                mode +
+                                spur.getScheduleModeName() +
                                 NEW_LINE;
                         writer.write(s);
                         // show alternate track if there's one

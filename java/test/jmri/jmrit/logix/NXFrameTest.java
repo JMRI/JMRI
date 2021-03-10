@@ -24,11 +24,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
- * Tests for the NXFrame class, and it's interactions with Warrants.
+ * Tests for the NXFrame class, and its interactions with Warrants.
  *
  * @author Pete Cressman 2015
  *
- * todo - test error conditions
+ * TODO - test error conditions
  */
 @Timeout(30)
 public class NXFrameTest {
@@ -76,6 +76,8 @@ public class NXFrameTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
@@ -144,6 +146,8 @@ public class NXFrameTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
@@ -260,6 +264,8 @@ public class NXFrameTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
@@ -303,6 +309,8 @@ public class NXFrameTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
@@ -451,7 +459,7 @@ public class NXFrameTest {
 
     @AfterEach
     public void tearDown() throws Exception {
-        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         InstanceManager.getDefault(WarrantManager.class).dispose();
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();

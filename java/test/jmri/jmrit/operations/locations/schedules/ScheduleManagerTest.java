@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.JComboBox;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -190,7 +190,6 @@ public class ScheduleManagerTest extends OperationsTestCase {
         JComboBox<LocationTrackPair> box3 = sm.getSpursByScheduleComboBox(s1);
         LocationTrackPair ltp = box3.getItemAt(0);
 
-        Assert.assertEquals("Location track pair location", l, ltp.getLocation());
         Assert.assertEquals("Location track pair track", t, ltp.getTrack());
 
         // remove all schedules

@@ -63,6 +63,7 @@
         <li><a href="tools/consisttool/ConsistTool.shtml">Consist Basics</a>
         <li><a href="tools/scripting/HowTo.shtml">Scripting "How To"</a>
         <li><a href="../package/jmri/jmrit/logix/Warrant.shtml">Getting Started with Warrants</a>
+        <li><a href="../package/jmri/jmrit/operations/Operations.shtml#QuickStartHelp">OperationsPro Quick Start</a>
       </ul>      
            
       </div>
@@ -75,7 +76,7 @@
         <li><a href="apps/PanelPro/FAQ.shtml">PanelPro FAQ</a>
         <li><a href="apps/DecoderPro/FAQ.shtml">DecoderPro FAQ</a>
         <li><a href="setup/FAQ.shtml">JMRI Setup FAQ (TBD)</a>
-        <li><a href="../../install/FAQLinux.shtml">Linux FAQ</a>
+        <li><a href="../../../install/FAQLinux.shtml">Linux FAQ</a>
         <li><a href="doc/Technical/GitFAQ.shtml">Git (Development Tool) FAQ</a>
       </ul>      
     
@@ -122,7 +123,8 @@
         locomotives using <a href="apps/DecoderPro/index.shtml">DecoderPro </a>.  You can then start running trains using a throttle 
         in JMRI, a <a href="../package/jmri/jmrit/withrottle/UserInterface.shtml">wireless throttle, or your smartphone / tablet.</a>  Alternatively,
         you can dig right in entering layout information on a Layout Editor Panel in PanelPro (<a href="apps/PanelPro/GettingStarted.shtml">tutorial</a>).
-        Before moving on to DispatcherPro and OperationsPro, make sure you have a working Panel. More advanced operations using these modules requires a 
+        Before moving on to <a href="apps/DispatcherPro/index.shtml">DispatcherPro</a> and <a href="apps/OperationsPro/index.shtml">OperationsPro</a>, 
+        make sure you have a working Panel. More advanced operations using these modules requires a 
         more complex setup before they will work properly. The KEY... Don't do too much at once.  Get the more basic aspects of JMRI working before you take
         the next step.
         </dd>

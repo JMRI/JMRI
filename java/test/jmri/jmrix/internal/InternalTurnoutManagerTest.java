@@ -179,6 +179,11 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
     @Test
     @Override
     public void testMakeSystemNameWithPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testIncorrectGetNextValidAddress() {}
 
     // from here down is testing infrastructure
     @Override

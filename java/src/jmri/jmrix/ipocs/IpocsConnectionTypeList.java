@@ -1,5 +1,7 @@
 package jmri.jmrix.ipocs;
 
+import javax.annotation.Nonnull;
+
 /**
  *
  * @author Fredrik Elestedt Copyright (C) 2020
@@ -15,6 +17,7 @@ public class IpocsConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
   }
 
   @Override
+  @Nonnull
   public String[] getAvailableProtocolClasses() {
     return new String[] {
       IpocsConnectionConfig.class.getName(),
@@ -22,6 +25,7 @@ public class IpocsConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
   }
 
   @Override
+  @Nonnull
   public String[] getManufacturers() {
     return new String[] { IPOCSMR };
   }

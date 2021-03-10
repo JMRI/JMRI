@@ -11,14 +11,15 @@ import org.junit.jupiter.api.*;
  **/
 public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionConfigTestBase  {
 
-   @BeforeEach
-   @Override
-   public void setUp() {
+    @BeforeEach
+    @Override
+    public void setUp() {
         JUnitUtil.setUp();
 
         JUnitUtil.initDefaultUserMessagePreferences();
         cc = new ConnectionConfig();
-   }
+        ((ConnectionConfig)cc).setInstance(); // create an adapter assumed to exist in tests
+    }
 
    @AfterEach
    @Override

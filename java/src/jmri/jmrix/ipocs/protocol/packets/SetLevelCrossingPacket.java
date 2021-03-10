@@ -13,7 +13,7 @@ import jmri.jmrix.ipocs.protocol.enums.RqLevelCrossingCommand;
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class SetLevelCrossingPacket extends Packet {
   public final static byte IDENT = 12;
-  private RqLevelCrossingCommand command;
+  private RqLevelCrossingCommand command = null;
   private short delay;
   private byte track;
 

@@ -29,4 +29,5 @@ public class RampDataTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
 }

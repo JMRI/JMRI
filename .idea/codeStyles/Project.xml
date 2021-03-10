@@ -30,9 +30,10 @@
     </codeStyleSettings>
     <codeStyleSettings language="Properties">
       <option name="ALIGN_GROUP_FIELD_DECLARATIONS" value="true" />
+      <option name="BLANK_LINES_BEFORE_FILE_END" value="1" />
     </codeStyleSettings>
     <codeStyleSettings language="XML">
-      <option name="BLANK_LINES_BEFORE_CLASS_END" value="1" />
+      <option name="BLANK_LINES_BEFORE_FILE_END" value="1" />
       <indentOptions>
         <option name="INDENT_SIZE" value="2" />
         <option name="TAB_SIZE" value="2" />

@@ -82,9 +82,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     * Generate text translations of replies for use in the DCCpp monitor.
     *
     * @return representation of the DCCppReply as a string.
-    */
+    **/
     @Override
-   public String toMonitorString(){
+    public String toMonitorString(){
         // Beautify and display
         String text;
 
@@ -107,7 +107,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                         int boardAddr = getTOAddressInt();
                         int boardIndex = getTOAddressIndexInt();
                         int dccAddress = (((boardAddr - 1) * 4) + boardIndex) + 1;
-                        text += "DCC Address: " + Integer.toString(dccAddress) + ", ";
+                        text += "DCC Address: " + dccAddress + ", ";
                     }
                     text += "Direction: " + getTOStateString();
                 } else {
@@ -157,14 +157,13 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     text += "Callback Sub: " + getCallbackSubString() + ", ";
                     text += "CV: " + getCVString() + ", ";
                     text += "CV Bit: " + getProgramBitString() + ", ";
-                    text += "Value: " + getReadValueString();
                 } else {
                     text = "Program Reply: ";
                     text += "Callback Num: " + getCallbackNumString() + ", ";
                     text += "Callback Sub: " + getCallbackSubString() + ", ";
                     text += "CV: " + getCVString() + ", ";
-                    text += "Value: " + getReadValueString();
                 }
+                text += "Value: " + getReadValueString();
                 break;
             case DCCppConstants.STATUS_REPLY:
                 text = "Status:";
@@ -204,7 +203,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 break;
             case DCCppConstants.COMM_TYPE_REPLY:
                 text = "Comm Type Reply ";
-                text += "Type: " + Integer.toString(getCommTypeInt());
+                text += "Type: " + getCommTypeInt();
                 text += " Port: " + getCommTypeValueString();
                 break;
             case DCCppConstants.MADC_FAIL_REPLY:
@@ -230,7 +229,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             this.myRegex = r.myRegex;
             this.myReply = r.myReply;
             this._nDataChars = r._nDataChars;
-            log.debug("copied: this: {}", this.toString());
+            log.trace("copied: this: {}", this);
         }
     }
 
@@ -244,13 +243,15 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      * Parses a string and generates a DCCppReply from the string contents
      *
      * @param s String to be parsed
-     * @return DCCppReply or null if not a valid formatted string
+     * @return DCCppReply or empty string if not a valid formatted string
      */
     public static DCCppReply parseDCCppReply(String s) {
 
-        log.debug("Parse charAt(0): {} ({})", s.charAt(0), Character.toString(s.charAt(0)));
+        if (log.isTraceEnabled()) {
+            log.trace("Parse charAt(0): {}", s.charAt(0));
+        }
         DCCppReply r = new DCCppReply(s);
-        switch(s.charAt(0)) {
+        switch (s.charAt(0)) {
             case DCCppConstants.STATUS_REPLY:
                 if (s.matches(DCCppConstants.STATUS_REPLY_BSC_REGEX)) {
                     log.debug("BSC Status Reply: '{}'", r);
@@ -455,11 +456,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     //is there a match at idx?
     public boolean valueExists(int idx) {
         Matcher m = DCCppReply.match(myReply.toString(), myRegex, "gvs");
-        if ((m != null) && (idx <= m.groupCount())) {
-            return true;
-        } else {
-            return false;
-        }
+        return (m != null) && (idx <= m.groupCount());
     }
 
     public int getValueInt(int idx) {
@@ -921,8 +918,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         if (this.isMeterReply()) {
             String us = this.getValueString(4);
             AbstractXmlAdapter.EnumIO<jmri.Meter.Unit> map = new AbstractXmlAdapter.EnumIoNames<>(jmri.Meter.Unit.class);
-            jmri.Meter.Unit u = map.inputFromString(us);
-            return(u);
+            return(map.inputFromString(us));
         } else {
             log.error("MeterReply Parser called on non-MeterReply message type '{}' message '{}'", this.getOpCodeChar(), this.toString());
             return(jmri.Meter.Unit.NoPrefix);

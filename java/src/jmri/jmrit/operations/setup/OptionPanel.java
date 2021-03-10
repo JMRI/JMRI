@@ -69,11 +69,11 @@ public class OptionPanel extends OperationsPreferencesPanel {
         localSpurCheckBox.setSelected(Setup.isLocalSpurMovesEnabled());
         localYardCheckBox.setSelected(Setup.isLocalYardMovesEnabled());
         // staging options
-        trainIntoStagingCheckBox.setSelected(Setup.isTrainIntoStagingCheckEnabled());
+        trainIntoStagingCheckBox.setSelected(Setup.isStagingTrainCheckEnabled());
         stagingAvailCheckBox.setSelected(Setup.isStagingTrackImmediatelyAvail());
-        stagingTurnCheckBox.setSelected(Setup.isAllowReturnToStagingEnabled());
-        promptToTrackStagingCheckBox.setSelected(Setup.isPromptToStagingEnabled());
-        promptFromTrackStagingCheckBox.setSelected(Setup.isPromptFromStagingEnabled());
+        stagingTurnCheckBox.setSelected(Setup.isStagingAllowReturnEnabled());
+        promptToTrackStagingCheckBox.setSelected(Setup.isStagingPromptToEnabled());
+        promptFromTrackStagingCheckBox.setSelected(Setup.isStagingPromptFromEnabled());
         tryNormalStagingCheckBox.setSelected(Setup.isStagingTryNormalBuildEnabled());
         // router
         routerCheckBox.setSelected(Setup.isCarRoutingEnabled());
@@ -305,11 +305,11 @@ public class OptionPanel extends OperationsPreferencesPanel {
         Setup.setLocalSpurMovesEnabled(localSpurCheckBox.isSelected());
         Setup.setLocalYardMovesEnabled(localYardCheckBox.isSelected());
         // Staging options
-        Setup.setTrainIntoStagingCheckEnabled(trainIntoStagingCheckBox.isSelected());
+        Setup.setStagingTrainCheckEnabled(trainIntoStagingCheckBox.isSelected());
         Setup.setStagingTrackImmediatelyAvail(stagingAvailCheckBox.isSelected());
-        Setup.setAllowReturnToStagingEnabled(stagingTurnCheckBox.isSelected());
-        Setup.setPromptFromStagingEnabled(promptFromTrackStagingCheckBox.isSelected());
-        Setup.setPromptToStagingEnabled(promptToTrackStagingCheckBox.isSelected());
+        Setup.setStagingAllowReturnEnabled(stagingTurnCheckBox.isSelected());
+        Setup.setStagingPromptFromEnabled(promptFromTrackStagingCheckBox.isSelected());
+        Setup.setStagingPromptToEnabled(promptToTrackStagingCheckBox.isSelected());
         Setup.setStagingTryNormalBuildEnabled(tryNormalStagingCheckBox.isSelected());
         // Car routing enabled?
         Setup.setCarRoutingEnabled(routerCheckBox.isSelected());
@@ -345,11 +345,11 @@ public class OptionPanel extends OperationsPreferencesPanel {
                 && Setup.isLocalSpurMovesEnabled() == localSpurCheckBox.isSelected()
                 && Setup.isLocalYardMovesEnabled() == localYardCheckBox.isSelected()
                 // Staging options
-                && Setup.isTrainIntoStagingCheckEnabled() == trainIntoStagingCheckBox.isSelected()
+                && Setup.isStagingTrainCheckEnabled() == trainIntoStagingCheckBox.isSelected()
                 && Setup.isStagingTrackImmediatelyAvail() == stagingAvailCheckBox.isSelected()
-                && Setup.isAllowReturnToStagingEnabled() == stagingTurnCheckBox.isSelected()
-                && Setup.isPromptFromStagingEnabled() == promptFromTrackStagingCheckBox.isSelected()
-                && Setup.isPromptToStagingEnabled() == promptToTrackStagingCheckBox.isSelected()
+                && Setup.isStagingAllowReturnEnabled() == stagingTurnCheckBox.isSelected()
+                && Setup.isStagingPromptFromEnabled() == promptFromTrackStagingCheckBox.isSelected()
+                && Setup.isStagingPromptToEnabled() == promptToTrackStagingCheckBox.isSelected()
                 && Setup.isStagingTryNormalBuildEnabled() == tryNormalStagingCheckBox.isSelected()
                 // Car routing enabled?
                 && Setup.isCarRoutingEnabled() == routerCheckBox.isSelected()
