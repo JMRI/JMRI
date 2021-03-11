@@ -399,7 +399,7 @@ public class AddEditSingleLightControlFrame extends jmri.util.JmriJFrame {
     protected void updateControlPressed(ActionEvent e) {
         commitEdits();
         LightControl newLc = new DefaultLightControl();
-        List<LightControl> withoutExistingLc = lcp.getControlList();
+        ArrayList<LightControl> withoutExistingLc = new ArrayList<>(lcp.getControlList());
         withoutExistingLc.remove(lc);
         if (setControlInformation(newLc,withoutExistingLc)) {
             lcp.updateControlPressed(lc,newLc);
