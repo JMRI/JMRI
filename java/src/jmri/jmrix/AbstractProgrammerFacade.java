@@ -13,6 +13,7 @@ import jmri.ProgrammingMode;
  * facade classes.
  *
  * @author Bob Jacobsen Copyright (C) 2013
+ * @author Andrew Crosland Copyright (C) 2021
  */
 public abstract class AbstractProgrammerFacade implements Programmer {
 
@@ -60,6 +61,15 @@ public abstract class AbstractProgrammerFacade implements Programmer {
      */
     @Override
     public void readCV(String CV, ProgListener p) throws ProgrammerException {
+        prog.readCV(CV, p);
+    }
+
+    /**
+     * {@inheritDoc}
+     * Override for systems that support CV hints when reading
+     */
+    @Override
+    public void readCV(String CV, ProgListener p, int startVal) throws ProgrammerException {
         prog.readCV(CV, p);
     }
 

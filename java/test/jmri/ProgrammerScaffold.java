@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
  *
  * @see jmri.Programmer
  * @author Bob Jacobsen Copyright (C) 2008, 2014
+ * @author Andrew Crosland Copyright (C) 2008, 2021
  */
 public class ProgrammerScaffold implements Programmer {
 
@@ -38,6 +39,14 @@ public class ProgrammerScaffold implements Programmer {
 
     @Override
     public void readCV(String CV, ProgListener p) throws ProgrammerException {}
+
+    /** {@inheritDoc}
+     * Basic implementation. Override this in systems that support hints when reading CVs.
+     */
+    @Override
+    public void readCV(String CV, ProgListener p, int startVal) throws ProgrammerException {
+        readCV(CV, p);
+    }
 
     @Override
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {}

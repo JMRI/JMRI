@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
  * TODO Fully support numberformat "113.12" in ProgDebugger (used in LOCONETLNCVMODE and LOCONETBDOPSWMODE)
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007, 2013
+ * @author Andrew Crosland Copyright (C) 2021
  */
 public class ProgDebugger extends PropertyChangeSupport implements AddressedProgrammer {
 
@@ -265,6 +266,15 @@ public class ProgDebugger extends PropertyChangeSupport implements AddressedProg
 
     }
 
+    /**
+     * For now, ignore the hint and fall back to then old CVread method.
+     * {@inheritDoc}
+     */
+    @Override
+    public void readCV(String CVname, ProgListener p, int startVal) throws ProgrammerException {
+        readCV(CVname, p);
+    }
+    
     // handle mode
     protected ProgrammingMode mode;
 

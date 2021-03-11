@@ -41,6 +41,7 @@ import static jmri.jmrix.loconet.uhlenbrock.LncvMessageContents.createCvWriteReq
  * @author Bob Jacobsen Copyright (C) 2002
  * @author B. Milhaupt, Copyright (C) 2018
  * @author Egbert Broerse, Copyright (C) 2020
+ * @author Andrew Crosland, Copyright (C) 2021
  */
 public class LnOpsModeProgrammer extends PropertyChangeSupport implements AddressedProgrammer, LocoNetListener {
 
@@ -297,6 +298,15 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
         }
     }
 
+    /**
+     * For now, ignore the hint and fall back to then old CVread method.
+     * {@inheritDoc}
+     */
+    @Override
+    public void readCV(String CVname, ProgListener p, int startVal) throws ProgrammerException {
+        readCV(CVname, p);
+    }
+    
     /**
      * {@inheritDoc}
      */

@@ -88,6 +88,20 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         _val = -1;
         startProgramming(_val, CV);
     }
+    
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    synchronized public void readCV(String CVname, jmri.ProgListener p, int startVal) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
+        if (log.isDebugEnabled()) {
+            log.debug("readCV {} mode {} listens {}", CV, getMode(), p);
+        }
+        useProgrammer(p);
+        _val = -1;
+        startProgramming(_val, CV, startVal);
+    }
 
     private jmri.ProgListener _usingProgrammer = null;
 
@@ -104,6 +118,27 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         try {
             startLongTimer();
             controller().sendSprogMessage(progTaskStart(getMode(), val, CV), this);
+        } catch (Exception e) {
+            // program op failed, go straight to end
+            log.error("program operation failed, exception {}",e);
+            progState = NOTPROGRAMMING;
+        }
+    }
+
+    /**
+     * Send the command to start programming operation.
+     * 
+     * @param val       Value to be written, or -1 for read
+     * @param CV        CV to read/write
+     * @param startVal  Hint of what current CV value may be
+     */
+    private void startProgramming(int val, int CV, int startVal) {
+        // here ready to send the read/write command
+        progState = COMMANDSENT;
+        // see why waiting
+        try {
+            startLongTimer();
+            controller().sendSprogMessage(progTaskStart(getMode(), val, CV, startVal), this);
         } catch (Exception e) {
             // program op failed, go straight to end
             log.error("program operation failed, exception {}",e);
@@ -140,6 +175,23 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         // val = -1 for read command; mode is direct, etc
         if (val < 0) {
             return SprogMessage.getReadCV(cvnum, mode);
+        } else {
+            return SprogMessage.getWriteCV(cvnum, val, mode);
+        }
+    }
+
+    /**
+     * Internal method to create the SprogMessage for programmer task start.
+     * @param mode Mode to be used
+     * @param val value to be written
+     * @param cvnum CV address to write to 
+     * @param startVal Hint of what the Cv may contain
+     * @return formatted message to do programming operation
+     */
+    protected SprogMessage progTaskStart(ProgrammingMode mode, int val, int cvnum, int startVal) {
+        // val = -1 for read command; mode is direct, etc
+        if (val < 0) {
+            return SprogMessage.getReadCV(cvnum, mode, startVal);
         } else {
             return SprogMessage.getWriteCV(cvnum, val, mode);
         }
