@@ -12,6 +12,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version version="2" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20210308"/>
+<!--  Added update paths to newest fw 3.12.050 -->
   <version version="1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="2016-12-14"/>
   <!--  Creation (new firmware).
         3 firmware versions are defined here (3.05 = 3.05.104, 3.05.114, 3.05.15).
@@ -19,7 +21,7 @@
         -->
   <decoder>
     <family name="Function Decoders (firmware 3.05 - Oct 2014)" mfg="Doehler und Haass">
-      <model model="FH05B v3.05.15 (firmware 3.05+)" lowVersionID="15" highVersionID="15" numOuts="6" numFns="16" productID="FH05B_2014.10" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from October 2014" maxInputVolts="30V" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+      <model model="FH05B v3.05.15 (firmware 3.05+)" replacementModel="FH05B (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="15" highVersionID="15" numOuts="6" numFns="16" productID="FH05B_2014.10" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from October 2014" maxInputVolts="30V" maxTotalCurrent="0.5A" connector="Wires/NEM651">
         <output name="1" label="Front|Light" maxcurrent="150mA"/>
         <output name="2" label="Rear|Light" maxcurrent="150mA"/>
         <output name="3" label="AUX|1" maxcurrent="300mA"/>
@@ -49,21 +51,21 @@
       <!-- SECTION 2 - Standard variables for decoders released after around 2012  -->
       <!--  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_base.xml"/> -->
       <!--  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_dc.xml"/> -->
-      <!-- SECTION 3	- Analog functions  -->
+      <!-- SECTION 3  - Analog functions  -->
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv29_analog.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv14_analogModeFunction.xml"/>
-      <!-- SECTION 4	- Basic Railcom feedback  -->
+      <!-- SECTION 4  - Basic Railcom feedback  -->
       <!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv28-29_railcom_base.xml"/> -->
-      <!-- SECTION 5	- Extra Railcom feedback options as of fw3.03 -->
+      <!-- SECTION 5  - Extra Railcom feedback options as of fw3.03 -->
       <!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv135-136_railcom_fw3.03.xml"/> -->
-      <!-- SECTION 6	- Extra general options as of fw3.03 -->
+      <!-- SECTION 6  - Extra general options as of fw3.03 -->
       <!-- RK xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_energysaving_fw3.03.xml"/-->
-      <!-- SECTION 7	- Extra SUSI options as of fw3.03 -->
+      <!-- SECTION 7  - Extra SUSI options as of fw3.03 -->
       <!-- RK xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_susi_fw3.03.xml"/-->
-      <!-- SECTION 8	- Motorola format as of fw3.04 -->
+      <!-- SECTION 8  - Motorola format as of fw3.04 -->
       <!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv12_motorola.xml"/> -->
-      <!-- SECTION 9	- Extra SUSI options as of fw3.05 -->
+      <!-- SECTION 9  - Extra SUSI options as of fw3.05 -->
       <!-- RK xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_susi_fw3.05.xml"/-->
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137.xml"/>
     </variables>
