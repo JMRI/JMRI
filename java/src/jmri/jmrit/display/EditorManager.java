@@ -53,6 +53,7 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
     /**
      * Set the title for the Preferences / Messages tab.
      * Called by JmriUserPreferencesManager.
+     * @return the title string.
      */
     public String getClassDescription() {
         return Bundle.getMessage("TitlePanelDialogs");  // NOI18N
