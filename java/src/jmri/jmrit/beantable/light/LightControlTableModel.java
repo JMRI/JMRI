@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
@@ -23,6 +22,8 @@ import static jmri.jmrit.beantable.LightTableAction.getDescriptionText;
 
 /**
  * Table model for Light Controls in the Add/Edit Light windows.
+ * No direct access to this class is normally required, access via
+ * LightControlPane.java
  * 
  * Code originally within LightTableAction.
  * 
@@ -98,8 +99,12 @@ public class LightControlTableModel extends javax.swing.table.AbstractTableModel
         lcp = pane;
     }
     
-    public ArrayList<LightControl> getControlList(){
-        return new ArrayList<>(controlList);
+    /**
+     * Get the Current Light Control List for the Table.
+     * @return unmodifiable List of Light Controls.
+     */
+    public List<LightControl> getControlList(){
+        return java.util.Collections.unmodifiableList(controlList);
     }
     
     public void setTableToLight(Light light){

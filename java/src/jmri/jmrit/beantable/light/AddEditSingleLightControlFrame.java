@@ -399,7 +399,7 @@ public class AddEditSingleLightControlFrame extends jmri.util.JmriJFrame {
     protected void updateControlPressed(ActionEvent e) {
         commitEdits();
         LightControl newLc = new DefaultLightControl();
-        ArrayList<LightControl> withoutExistingLc = lcp.getControlList();
+        List<LightControl> withoutExistingLc = lcp.getControlList();
         withoutExistingLc.remove(lc);
         if (setControlInformation(newLc,withoutExistingLc)) {
             lcp.updateControlPressed(lc,newLc);
@@ -442,7 +442,7 @@ public class AddEditSingleLightControlFrame extends jmri.util.JmriJFrame {
      * @param currentList current Light Control List, used to check that Fast Clock Times are OK.
      * @return 'true' if no errors or warnings
      */
-    private boolean setControlInformation(LightControl g, ArrayList<LightControl> currentList) {
+    private boolean setControlInformation(LightControl g, List<LightControl> currentList) {
         // Get control information
         if (LightControlTableModel.sensorControl.equals(typeBox.getSelectedItem())) {
             // Set type of control

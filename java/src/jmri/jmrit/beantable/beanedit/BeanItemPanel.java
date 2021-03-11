@@ -1,6 +1,7 @@
 package jmri.jmrit.beantable.beanedit;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.JPanel;
@@ -55,11 +56,11 @@ public class BeanItemPanel extends JPanel {
     }
 
     /**
-     * Get Copy of List of Bean Edit Items
-     * @return copy of Array List.
+     * Get List of Bean Edit Items
+     * @return unmodifiable List.
      */
     public List<BeanEditItem> getListOfItems() {
-        return new ArrayList<>(items);
+        return Collections.unmodifiableList(items);
     }
 
     private String name;

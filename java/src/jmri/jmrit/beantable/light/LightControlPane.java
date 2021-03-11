@@ -2,7 +2,7 @@ package jmri.jmrit.beantable.light;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -122,20 +122,38 @@ public class LightControlPane extends JPanel {
         addEditControlWindow(lc);
     }
     
+    /**
+     * Add a Single Light Control to the Table.
+     * @param lc the Light Control to add.
+     */
     protected void addControlToTable(LightControl lc) {
         lightControlTableModel.addControl(lc);
     }
 
-    public ArrayList<LightControl> getControlList(){
+    /**
+     * Get Light Control List currently displayed in the Table.
+     * Returned by the TableModel as unmodifiable.
+     * @return List of Light Controls.
+     */
+    public List<LightControl> getControlList(){
         return lightControlTableModel.getControlList();
     }
     
+    /**
+     * Set the Table to the Light Controls of a single Light.
+     * @param l the Light to set display for.
+     */
     public final void setToLight(Light l){
         lightControlTableModel.setTableToLight(l);
     }
     
     private AddEditSingleLightControlFrame addEditCtrlFrame;
     
+    /**
+     * UI Function to get Last Selected Light Control Index within
+     * AddEditSingleLightControl.java
+     * @return Light Control Index.
+     */
     protected int getLastSelectedControlIndex(){
         return defaultControlIndex;
     }
