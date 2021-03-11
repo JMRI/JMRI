@@ -30,7 +30,7 @@ import javax.annotation.Nonnull;
  * Starting in JMRI 3.5.5, the CV addresses are Strings for generality. The
  * methods that use ints for CV addresses will later be deprecated.
  * <p>
- * 
+ * Added possibility to supply CV value hint to the system
  * <hr>
  * This file is part of JMRI.
  * <p>
