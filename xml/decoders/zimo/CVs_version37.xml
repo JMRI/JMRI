@@ -225,7 +225,7 @@
       <tooltip xml:lang="de">Welche Funktionstaste löst das Kurvenquietschen aus</tooltip>
   </variable>
   <variable CV="309" item="Brake key" default="0">
-    <xi:include href="http://jmri.org/xml/decoders/Zimo/Choice-F1-F28.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F1-F28.xml"/>
     <label>Brake key</label>
     <label xml:lang="de">Bremstaste</label>
       <tooltip> </tooltip>
