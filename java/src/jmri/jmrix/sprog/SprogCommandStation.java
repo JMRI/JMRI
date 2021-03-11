@@ -90,7 +90,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
          * Create a default length queue
          */
         slots = new LinkedList<>();
-        numSlots = SprogSlotMonDataModel.getSlotCount();
+        numSlots = controller.getAdapterMemo().getNumSlots();
         for (int i = 0; i < numSlots; i++) {
             slots.add(new SprogSlot(i));
         }
@@ -252,6 +252,30 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         return (null);
     }
 
+    private SprogSlot findF13to20Packet(DccLocoAddress address) {
+        for (SprogSlot s : slots) {
+            if (s.isActiveAddressMatch(address) && s.isF13to20Packet()) {
+                return s;
+            }
+        }
+        if (getInUseCount() < numSlots) {
+            return findFree();
+        }
+        return (null);
+    }
+
+    private SprogSlot findF21to28Packet(DccLocoAddress address) {
+        for (SprogSlot s : slots) {
+            if (s.isActiveAddressMatch(address) && s.isF21to28Packet()) {
+                return s;
+            }
+        }
+        if (getInUseCount() < numSlots) {
+            return findFree();
+        }
+        return (null);
+    }
+
     public void forwardCommandChangeToLayout(int address, boolean closed) {
 
         SprogSlot s = this.findFree();
@@ -293,6 +317,38 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             boolean f12, boolean f12Momentary) {
         SprogSlot s = this.findF9to12Packet(address);
         s.f9to12packet(address.getNumber(), address.isLongAddress(), f9, f9Momentary, f10, f10Momentary, f11, f11Momentary, f12, f12Momentary);
+        notifySlotListeners(s);
+    }
+
+    public void function13Through20Packet(DccLocoAddress address,
+            boolean f13, boolean f13Momentary,
+            boolean f14, boolean f14Momentary,
+            boolean f15, boolean f15Momentary,
+            boolean f16, boolean f16Momentary,
+            boolean f17, boolean f17Momentary,
+            boolean f18, boolean f18Momentary,
+            boolean f19, boolean f19Momentary,
+            boolean f20, boolean f20Momentary) {
+        SprogSlot s = this.findF13to20Packet(address);
+        s.f13to20packet(address.getNumber(), address.isLongAddress(),
+                f13, f13Momentary, f14, f14Momentary, f15, f15Momentary, f16, f16Momentary,
+                f17, f17Momentary, f18, f18Momentary, f19, f19Momentary, f20, f20Momentary);
+        notifySlotListeners(s);
+    }
+
+    public void function21Through28Packet(DccLocoAddress address,
+            boolean f21, boolean f21Momentary,
+            boolean f22, boolean f22Momentary,
+            boolean f23, boolean f23Momentary,
+            boolean f24, boolean f24Momentary,
+            boolean f25, boolean f25Momentary,
+            boolean f26, boolean f26Momentary,
+            boolean f27, boolean f27Momentary,
+            boolean f28, boolean f28Momentary) {
+        SprogSlot s = this.findF21to28Packet(address);
+        s.f21to28packet(address.getNumber(), address.isLongAddress(),
+                f21, f21Momentary, f22, f22Momentary, f23, f23Momentary, f24, f24Momentary,
+                f25, f25Momentary, f26, f26Momentary, f27, f27Momentary, f28, f28Momentary);
         notifySlotListeners(s);
     }
 
