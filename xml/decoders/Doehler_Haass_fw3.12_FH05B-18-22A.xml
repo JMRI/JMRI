@@ -12,6 +12,10 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version version="1.1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20210312"/>
+  <!--  Removed Firmware pane (outdated since fw 3.06 and
+        introduction of CVs260-265: fw info now on "DH Info" page)
+        -->
   <version version="1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20210308"/>
   <!--  Creation (new firmware 3.12.050).
         Based on Doehler_Haass_fw3.10-11_FH05B-18-22A.xml
@@ -232,7 +236,6 @@
   <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_common_fw3.10.xml"/>
 <!-- relevant für FH ??? Ende-->
   <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_info.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_firmware.xml"/>
   <!-- Pane(s) valid for some decoders only  -->
   <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_railcom.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_motorola.xml"/>
