@@ -148,8 +148,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     final public static Color HIGHLIGHT_COLOR = new Color(204, 207, 88);
 
-    final public static String REMEMBER_HIDE = "jmri.jmrit.display.Editor:RememberHide";  // NOI18N
-
     public static final String POSITIONABLE_FLAVOR = DataFlavor.javaJVMLocalObjectMimeType
             + ";class=jmri.jmrit.display.Positionable";
 
@@ -1015,99 +1013,26 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /*
      * *********************** end Options setup **********************
      */
-    protected void targetWindowClosing() {
-        targetWindowClosing(true);
-    }
-
-    boolean showCloseInfoMessage = true;
-
-    /**
-     * Handle closing the target window.
+    /*
+     * Handle closing (actually hiding due to HIDE_ON_CLOSE) the target window.
      * <p>
      * The target window has been requested to close, don't delete it at this
      * time. Deletion must be accomplished via the Delete this panel menu item.
-     * <p>
-     * The proper reminder dialog cannot be used since the Editor class cannot
-     * be initialized by the preference load process.
-     * @param save save flag
      */
-    protected void targetWindowClosing(boolean save) {
-        //this.setVisible(false);   // doesn't remove the editor!
-        // display info message on panel close
-        if (showCloseInfoMessage) {
-            String name = "Panel";
-            String message;
-            if (save) {
-                message = Bundle.getMessage("Reminder1") + " " + Bundle.getMessage("Reminder2")
-                        + "\n" + Bundle.getMessage("Reminder3");
-            } else {
-                message = Bundle.getMessage("PanelCloseQuestion") + "\n"
-                        + Bundle.getMessage("PanelCloseHelp");
-            }
-            Container ancestor = _targetPanel.getTopLevelAncestor();
-            if (ancestor instanceof JFrame) {
-                name = ((JFrame) ancestor).getTitle();
-            }
-            if (!InstanceManager.getDefault(ShutDownManager.class).isShuttingDown()) {
-                int selectedValue = JOptionPane.showOptionDialog(_targetPanel,
-                        MessageFormat.format(message, name), Bundle.getMessage("ReminderTitle"),
-                        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
-                        null, new Object[]{Bundle.getMessage("ButtonHide"), Bundle.getMessage("ButtonDeletePanel"),
-                            Bundle.getMessage("ButtonDontShow")}, Bundle.getMessage("ButtonHide"));
-                switch (selectedValue) {
-                    case 0:
-                        _targetFrame.setVisible(false);   // doesn't remove the editor!
-                        break;
-                    case 1:
-                        if (deletePanel()) { // disposes everything
-                            dispose();
-                        }
-                        break;
-                    case 2:
-                        showCloseInfoMessage = false;
-                        _targetFrame.setVisible(false);   // doesn't remove the editor!
-                        break;
-                    default:    // dialog closed - do nothing
-                        _targetFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-                }
-                log.debug("targetWindowClosing: selectedValue= {}", selectedValue);
-            } else {
-                _targetFrame.setVisible(false);
-            }
-        } else {
-            _targetFrame.setVisible(false);   // doesn't remove the editor!
+    protected void targetWindowClosing() {
+        String name = "Panel";
+        Container ancestor = _targetPanel.getTopLevelAncestor();
+        if (ancestor instanceof JFrame) {
+            name = ((JFrame) ancestor).getTitle();
+        }
+        if (!InstanceManager.getDefault(ShutDownManager.class).isShuttingDown()) {
+            InstanceManager.getDefault(jmri.UserPreferencesManager.class).showInfoMessage(
+                    Bundle.getMessage("PanelHideTitle"), Bundle.getMessage("PanelHideNotice", name),  // NOI18N
+                    "jmri.jmrit.display.EditorManager", "skipHideDialog"); // NOI18N
+            InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceItemDetails(
+                    "jmri.jmrit.display.EditorManager", "skipHideDialog", Bundle.getMessage("PanelHideSkip"));  // NOI18N
         }
     }
-
-
-
-
-//     protected void targetWindowClosing() {
-//         final jmri.UserPreferencesManager p;
-//         p = jmri.InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
-//         String name = "Panel";
-//         Container ancestor = _targetPanel.getTopLevelAncestor();
-//         if (ancestor instanceof JFrame) {
-//             name = ((JFrame) ancestor).getTitle();
-//         }
-//         if (!InstanceManager.getDefault(ShutDownManager.class).isShuttingDown()) {
-//             if (!p.getSimplePreferenceState(REMEMBER_HIDE)) {
-//                 int selectedValue = JOptionPane.showOptionDialog(_targetPanel,
-//                         Bundle.getMessage("PanelHideNotice", name),  // NOI18N
-//                         Bundle.getMessage("PanelHideTitle"),  // NOI18N
-//                         JOptionPane.YES_NO_OPTION,
-//                         JOptionPane.QUESTION_MESSAGE,
-//                         null,
-//                         new Object[]{Bundle.getMessage("ButtonHide"), Bundle.getMessage("ButtonDontShow")},  // NOI18N
-//                         Bundle.getMessage("ButtonHide"));  // NOI18N
-//
-//                 if (selectedValue == 1) {
-//                     p.setSimplePreferenceState(REMEMBER_HIDE, true);
-//                 }
-//             }
-//             _targetFrame.setVisible(false);
-//         }
-//     }
 
     protected Editor changeView(String className) {
         JFrame frame = getTargetFrame();
