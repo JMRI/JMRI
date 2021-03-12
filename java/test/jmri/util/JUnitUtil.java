@@ -739,6 +739,15 @@ public class JUnitUtil {
                 .deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
     }
 
+    public static void deregisterEditorManagerShutdownTask() {
+        if (! InstanceManager.isInitialized(ShutDownManager.class)) return;
+        if (! InstanceManager.isInitialized(EditorManager.class)) return;
+
+        InstanceManager
+                .getDefault(ShutDownManager.class)
+                .deregister(InstanceManager.getDefault(EditorManager.class).shutDownTask);
+    }
+
     public static void initWarrantManager() {
         WarrantManager w = new WarrantManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
