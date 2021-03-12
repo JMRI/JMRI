@@ -75,6 +75,7 @@ public class TurnoutTableDataModelTest extends jmri.jmrit.beantable.AbstractBean
         if (t!=null){
             t.dispose();
         }
+        t = null;
         JUnitUtil.tearDown();
     }
 
