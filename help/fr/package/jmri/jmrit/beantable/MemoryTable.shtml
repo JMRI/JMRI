@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- UpDated by Herv&#233; Blorec  2013-10-11-->
-
 <html lang="fr">
 <head>
   <meta name="generator" content=
@@ -15,7 +13,7 @@
   <meta name="keywords" content="JMRI help Memory Table">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  "text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -25,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -51,7 +49,8 @@
       consultez le <a href=
       "../../../../html/tools/Memories.shtml">page d'aide
       m&eacute;moire</a>.<br>
-      <!--#include virtual="/Footer" --></p>
+      <p> Traduction2021-03-12</p>
+      <!--#include virtual="/Footer.shtml" --></p>
     </div>
   </div>
 </body>
