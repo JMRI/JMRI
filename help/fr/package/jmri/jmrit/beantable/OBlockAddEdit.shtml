@@ -1,0 +1,80 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Adding OCantons Help</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=iso-8859-1">
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help Block Table">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+      <h1>Ajouter des OCantons</h1>
+
+      <p>Pour ajouter un nouvel OCanton dans l'interface &#224; onglets, cliquez sur le bouton <strong>Ajouter un OCanton...</strong>
+      sur le bord inf&#233;rieur gauche du volet Tableaux Occupation.
+      </p><img src="images/OCantonAdd.png" width="723" height="274" alt="Volet d'&#233;dition d'OCanton">.
+
+      </p><p>Dans le volet qui s'ouvre, saisissez un Nom Syst&#232;me valide pour
+      l'OCanton et, si vous le souhaitez, entrez un Nom Utilisateur. Par exemple, un
+      Nom Syst&#232;me valide pour une disposition LocoNet pourrait &#234;tre OB456.<br>
+      <br>Le Nom Utilisateur est facultatif, &#224; moins que vous ne cochiez "G&#233;n&#233;rer automatiquement le Nom Syst&#232;me",
+      et si vous en saisissez un, il doit &#234;tre unique dans votre configuration JMRI. 
+      Voir la page d'aide " <a href="../../../../html/doc/Technical/Names.shtml">Noms</a>"
+      pour plus d'informations.</p>
+      <p>Cliquez sur [Cr&#233;er] pour terminer cette &#233;tape. Cliquez sur [Annuler] pour fermer 
+      le volet (ne vous inqui&#233;tez pas, les &#233;l&#233;ments d&#233;j&#224; cr&#233;&#233;s resteront).</p>
+
+      </p> <p>Compl&#233;tez la d&#233;finition du nouvel OCanton en fermant le 
+      Volet Ajouter un nouvel OCanton et en cliquant sur le bouton <strong>Modifier</strong>
+      &#224; droite de l'entr&#233;e du Canton nouvellement cr&#233;&#233; dans le volet
+      <a href="OCantonTable.shtml">Tableau OCanton</a>.<br>
+      Remplissez tous les champs comme d&#233;crit sur la page d'aide <a href="BlockEdit.shtml">
+      Attributs Cantons</a>.</p>
+
+      <h2>Cr&#233;er un certain nombre d'OCantons</h2>
+
+      <p>Il est &#233;galement possible de cr&#233;er un certain nombre de Cantons en une seule op&#233;ration
+      .<br>
+      Lorsqu'elle est prise en charge, la case &#224; cocher " Ajouter une plage s&#233;quentielle " sera
+      activ&#233;e.</p>
+
+      </p> <p>En cochant la case "Ajouter une plage s&#233;quentielle", vous activerez
+      le champ "Nombre d'&#233;l&#233;ments". D&#233;finissez le nombre d'OCantons que
+      vous souhaitez ajouter. En cliquant sur [Cr&#233;er], vous cr&#233;erez un certain nombre de Cantonss num&#233;rot&#233;s de mani&#232;re s&#233;quentielle.<br>
+      Si un Nom Utilisateur a &#233;t&#233; saisi, un num&#233;ro sera ajout&#233; &#224;
+      la fin de ce nom (en commen&#231;ant par le n° 2) pour que chaque Nom Utilisateur de Canton reste unique.</p>
+
+      <h2>Ajouter des propri&#233;t&#233;s dd'OCantons</h2>
+
+      </p> <p>Pour ajouter les d&#233;tails d'un nouvel OCanton, fermez le volet Ajouter OCanton
+      en cliquant sur Annuler ou sur le bouton Fermer/X et cliquez sur
+      <strong><a href="OCantonEdit.shtml">Modifier</a></strong> &#224; la droite de la nouvelle entr&#233;e dans le tableau OCanton.</p>
+
+      <p>Voir <a href=
+      "../../../../html/doc/Technical/Names.shtml">Noms</a> sous la rubrique
+      Aide g&#233;n&#233;rale pour plus d'informations sur la d&#233;nomination des objets JMRI.</p>
+
+      <p>Retour &#224; la page d'<a href="OCantonTable.shtml">aide Tableau OCanton
+      </a>.</p>
+      <p> Traduction 2021-03-12</p>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
+
+    
+
