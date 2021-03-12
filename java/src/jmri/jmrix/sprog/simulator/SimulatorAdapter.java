@@ -53,6 +53,10 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
         control = new SprogTrafficController(this.getSystemConnectionMemo());
         this.getSystemConnectionMemo().setSprogTrafficController(control);
 
+        options.put("NumSlots", // NOI18N
+                new Option(Bundle.getMessage("MakeLabel", Bundle.getMessage("NumSlotOptions")), // NOI18N
+                        new String[]{"16", "8", "32", "48", "64"}, true));
+
         options.put("OperatingMode", // NOI18N
                 new Option(Bundle.getMessage("MakeLabel", Bundle.getMessage("SprogSimOption")), // NOI18N
                         new String[]{Bundle.getMessage("SprogProgrammerTitle"),
@@ -122,9 +126,19 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
         } else { // default, also used after Locale change
             operatingMode = SprogMode.OPS;
         }
-        this.getSystemConnectionMemo().setSprogMode(operatingMode); // first update mode in memo
-        this.getSystemConnectionMemo().configureCommandStation();   // CS only if in OPS mode, memo will take care of that
-        this.getSystemConnectionMemo().configureManagers();         // wait for mode to be correct
+        
+        String slots = getOptionState("NumSlots");
+        int numSlots;
+        try {
+            numSlots = Integer.parseInt(slots);
+        }
+        catch (NumberFormatException e) {
+            numSlots = 16;
+        }
+        
+        this.getSystemConnectionMemo().setSprogMode(operatingMode);         // first update mode in memo
+        this.getSystemConnectionMemo().configureCommandStation(numSlots);   // CS only if in OPS mode, memo will take care of that
+        this.getSystemConnectionMemo().configureManagers();                 // wait for mode to be correct
 
         if (getOptionState("TrackPowerState") != null && getOptionState("TrackPowerState").equals(Bundle.getMessage("PowerStateOn"))) {
             try {
