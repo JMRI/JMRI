@@ -10,7 +10,7 @@
 
   <title>JMRI: Logix Table Help</title>
   <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  "text/html; charset=ido-8859-1">
   <meta content="Bob Jacobsen" name="Author">
   <meta name="keywords" content="JMRI help Logix Table">
   <!-- Style -->
@@ -25,7 +25,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -205,8 +205,34 @@
       <p> Pour plus d'informations, consultez la <a href =
       "../../../../html/tools/Logix.shtml"> Documentation principale Logix
       </a>.</p>
-      <! - # include virtual = "/ Footer" ->
-   </div> <! - ferme #mainContent ->
- </div> <! - ferme #mBody ->
+       <h2> Documentation Logix, Pages List&#233;es Logiquement </h2>
+      
+      <p>
+        La documentation de Logix est divis&#233;e en huit pages d'aide diff&#233;rentes.  Celles-ci sont r&#233;f&#233;renc&#233;es par des liens &#224; diff&#233;rents endroits,
+        ne sont pas tous faciles &#224; trouver (peut-être trois liens plus bas). Elles sont en outre &#233;num&#233;r&#233;es ici pour des raisons de commodit&#233;.
+        </p>
+
+      <ul>
+        <li><a href="../../../../html/tools/Logix.shtml">Description et explication de Logix principal</a></li>
+
+        <li><a href="../../../../html/tools/Logix.shtml#notes">FAQ</a></li>
+
+        <li><a href="LogixTable.shtml">Description du contenu et de l'utilisation du Tableau Logix</a></li>
+
+        <li><a href="LogixAddEdit.shtml">Tableau Logix, ajouter et modifier la description de l'action</a> [cette page]</li>
+
+        <li><a href="../conditional/StateVariableActionList.shtml">&#201;num&#233;ration des variables d'&#233;tat et des actions conditionnelles de Logix</a></li>
+
+        <li><a href="../conditional/ConditionalListEditor.shtml">Instructions de l'&#233;diteur de liste de conditions de Logix</a></li>
+
+        <li><a href="../conditional/ConditionalTreeEditor.shtml">Instructions de l'&#233;diteur d'arbres conditions de Logix</a></li>
+
+        <li><a href="../conditional/ConditionalCopy.shtml">Instructions de copie des conditions de Logix</a></li>
+
+      </ul>
+      <p>Traduction 2021-03-12</p>
+      <! - # include virtual = "/ Footer.shtml" ->
+   </div> <! - cloces #mainContent ->
+ </div> <! - closes #mBody ->
 </body>
 </html>
