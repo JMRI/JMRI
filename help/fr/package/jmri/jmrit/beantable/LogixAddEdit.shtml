@@ -1,7 +1,7 @@
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!--UpDated by Herv&#233; Blorec  2013-10-11-->
 
 <html lang="fr">
 <head>
@@ -10,14 +10,14 @@
 
   <title>JMRI: Adding/Editing Logix</title>
   <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  "text/html; charset=iso-8859-1">
   <meta content="Bob Jacobsen" name="Author">
   <meta name="keywords" content="JMRI help Logix Add Edit">
   <!--#include virtual="/Style" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -81,7 +81,7 @@
       fermeture pour fermer la fen&#234;tre. <Span class = "since"> depuis la 
       4.7.3</span> <p> <div style = "margin-left: 2em"> <a href = 
       "images/ConditionalBrowser. png "> <img src =
-      " images/ConditionalBrowser.png "alt =" Fen&#234;tre du navigateur Logix 
+      " images/ConditionalBrowser.png "alt =" Logix Browser Window 
       "height =" 296 "width =" 562 ">
       </a>
      </div>
@@ -94,9 +94,9 @@
 		  height = "165" width = " 644 ">
       </a>
      </div>
-      <p> Entrez le nom syst&#232;me et le nom utilisateur, puis cliquez sur 
+      <p> Entrez les noms syst&#232;me et utilisateur, puis cliquez sur 
       <strong> Copier</strong>. Une zone de saisie sera affich&#233;e pour 
-      chaque condition dans le Logix d’origine.</P> <div style = "margin-left: 2em">
+      chaque condition dans le Logix d'origine.</P> <div style = "margin-left: 2em">
       <a href="images/CopyConditional.png"> <img src = 
       "images/CopyConditional.png" alt = "Ajouter une fen&#234;tre Logix" 
       height = "179" width = "541">
@@ -111,12 +111,37 @@
       s&#233;lectionn&#233; et tous ses conditions. Une bo&#238;te de dialogue de 
       confirmation sera affich&#233;e.
 
-      <p> Pour plus d'informations, consultez la <a href =
-      "../../../../html/tools/Logix.shtml">main Logix
-      documentation </a>.</p>
+     <h2> Documentation Logix, Pages List&#233;es Logiquement </h2>
+      
+      <p>
+        La documentation de Logix est divis&#233;e en huit pages d'aide diff&#233;rentes.  Celles-ci sont r&#233;f&#233;renc&#233;es par des liens &#224; diff&#233;rents endroits,
+        ne sont pas tous faciles &#224; trouver (peut-être trois liens plus bas). Elles sont en outre &#233;num&#233;r&#233;es ici pour des raisons de commodit&#233;.
+        </p>
+
+      <ul>
+        <li><a href="../../../../html/tools/Logix.shtml">Description et explication de Logix principal</a></li>
+
+        <li><a href="../../../../html/tools/Logix.shtml#notes">FAQ</a></li>
+
+        <li><a href="LogixTable.shtml">Description du contenu et de l'utilisation du Tableau Logix</a></li>
+
+        <li><a href="LogixAddEdit.shtml">Tableau Logix, ajouter et modifier la description de l'action</a> [cette page]</li>
+
+        <li><a href="../conditional/StateVariableActionList.shtml">&#201;num&#233;ration des variables d'&#233;tat et des actions conditionnelles de Logix</a></li>
+
+        <li><a href="../conditional/ConditionalListEditor.shtml">Instructions de l'&#233;diteur de liste de conditions de Logix</a></li>
+
+        <li><a href="../conditional/ConditionalTreeEditor.shtml">Instructions de l'&#233;diteur d'arbres conditions de Logix</a></li>
+
+        <li><a href="../conditional/ConditionalCopy.shtml">Instructions de copie des conditions de Logix</a></li>
+
+      </ul>
+      <p>Traduction 2021-03-12</p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
 </html>
 </html>
+
+   
