@@ -93,6 +93,7 @@ public class AddEntryExitPairPanelTest {
         }
         panels = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

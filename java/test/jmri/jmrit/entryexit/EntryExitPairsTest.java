@@ -123,6 +123,7 @@ public class EntryExitPairsTest {
         panels = null;
         tools = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

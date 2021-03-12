@@ -54,6 +54,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
             e = null;
         }
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
