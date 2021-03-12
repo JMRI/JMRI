@@ -79,7 +79,7 @@ public final class SprogConstants {
      * 
      */
     /* Default */
-    public final int DEFAULT_MAX_SLOTS = 16;
+    public final static int DEFAULT_MAX_SLOTS = 16;
 
     /* Minimum number of slots */
     public final static int MIN_SLOTS = 8;
