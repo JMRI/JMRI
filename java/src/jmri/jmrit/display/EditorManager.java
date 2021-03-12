@@ -8,7 +8,9 @@ import java.util.stream.Collectors;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
+import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
+import jmri.UserPreferencesManager;
 import jmri.beans.Bean;
 
 /**
@@ -34,6 +36,10 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
 
     boolean panelSetChanged = false;
 
+    public EditorManager() {
+        super(false);
+    }
+
     /**
      * Panel adds occur during xml data file loading and manual adds.
      * This sets the change flag for manual adds.
@@ -44,8 +50,27 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
         panelSetChanged = flag;
     }
 
-    public EditorManager() {
-        super(false);
+    /**
+     * Set the title for the Preferences / Messages tab.
+     * Called by JmriUserPreferencesManager.
+     * @return the title string.
+     */
+    public String getClassDescription() {
+        return Bundle.getMessage("TitlePanelDialogs");  // NOI18N
+    }
+
+    /**
+     * Set the details for Preferences / Messages tab.
+     * Called by JmriUserPreferencesManager.
+     * <p>
+     * The dialogs are in jmri.configurexml.LoadXmlConfigAction and jmri.jmrit.display.Editor.
+     * They are anchored here since the preferences system appears to need a class that can instantiated.
+     */
+    public void setMessagePreferencesDetails() {
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceItemDetails(
+                "jmri.jmrit.display.EditorManager", "skipHideDialog", Bundle.getMessage("PanelHideSkip"));  // NOI18N
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceItemDetails(
+                "jmri.jmrit.display.EditorManager", "skipDupLoadDialog", Bundle.getMessage("DuplicateLoadSkip"));  // NOI18N
     }
 
     /**
