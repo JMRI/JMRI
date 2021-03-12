@@ -128,7 +128,7 @@ public class SprogSystemConnectionMemo extends DefaultSystemConnectionMemo imple
         return slotThread;
     }
     
-    private int numSlots = SprogConstants.MAX_SLOTS;
+    private int numSlots = SprogConstants.DEFAULT_MAX_SLOTS;
     
     /**
      * Get the number of command station slots

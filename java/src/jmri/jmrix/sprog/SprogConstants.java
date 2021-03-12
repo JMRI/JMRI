@@ -25,7 +25,6 @@ public final class SprogConstants {
 
     /* The following parameters may be overridden by scripts if the user desires */
     /**
-    /**
      * Threshold to warn of long delays between DCC packets to the rails.
      * 
      * Worst case DCC packet transmission time is ~10 ms, which equates to 100
@@ -80,7 +79,7 @@ public final class SprogConstants {
      * 
      */
     /* Default */
-    public static int MAX_SLOTS = 16;
+    public final int DEFAULT_MAX_SLOTS = 16;
 
     /* Minimum number of slots */
     public final static int MIN_SLOTS = 8;
