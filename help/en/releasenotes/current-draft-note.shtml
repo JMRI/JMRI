@@ -379,6 +379,9 @@
             <li>A <strong>Delete Panel</strong> menu item has been added to the Panels menu.</li>
             <li>A dialog will be displayed if a second load is invoked.</li>
             <li>When a file is loaded, the file name will be display in the JMRI System Console (Help &rArr; System Console).
+            <li>When the Close button on a panel window is clicked, a dialog will be displayed to
+            indicate that the panel has been hidden.  The message includes instructions on making the
+            panel visible and how to delete the panel.  The message can be suppressed using the checkbox.</li>
           </ul>
         </li>
       </ul>

@@ -25,17 +25,6 @@ public final class SprogConstants {
 
     /* The following parameters may be overridden by scripts if the user desires */
     /**
-     * Maximum number of slots for soft command station 
-     * 
-     * More slots allows more throttles to be opened but the refresh rate for
-     * each throttle will reduce.
-     * 
-     * The code limits the value used to between 8 and 32 inclusive
-     *
-     */
-    public static int MAX_SLOTS = 16;
-
-    /**
      * Threshold to warn of long delays between DCC packets to the rails.
      * 
      * Worst case DCC packet transmission time is ~10 ms, which equates to 100
@@ -82,11 +71,21 @@ public final class SprogConstants {
     public final static int SLOT_FREE = 0;
     public final static int SLOT_IN_USE = 1;
 
+    /*
+     * Maximum number of slots for soft command station 
+     * 
+     * More slots allows more throttles to be opened but the refresh rate for
+     * each throttle will reduce.
+     * 
+     */
+    /* Default */
+    public final static int DEFAULT_MAX_SLOTS = 16;
+
     /* Minimum number of slots */
     public final static int MIN_SLOTS = 8;
     
     /* Maimum number of slots */
-    public final static int SLOTS_LIMIT = 32;
+    public final static int SLOTS_LIMIT = 64;
     
     /* various bit masks */
     public final static int F8 = 0x100; /* Function 8 bit */

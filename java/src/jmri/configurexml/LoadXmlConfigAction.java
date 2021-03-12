@@ -48,10 +48,11 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
     protected boolean loadFile(JFileChooser fileChooser) {
         Set<Editor> editors = InstanceManager.getDefault(EditorManager.class).getAll();
         if (!editors.isEmpty()) {
-            InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                showInfoMessage(Bundle.getMessage("DuplicateLoadTitle"),  // NOI18N
-                    Bundle.getMessage("DuplicateLoadMessage"),  // NOI18N
-                    "Editor", "remindDuplicatePanel"); // NOI18N
+            InstanceManager.getDefault(jmri.UserPreferencesManager.class).showWarningMessage(
+                    Bundle.getMessage("DuplicateLoadTitle"), Bundle.getMessage("DuplicateLoadMessage"),  // NOI18N
+                    "jmri.jmrit.display.EditorManager",  "skipDupLoadDialog", false, true);  //NOI18N
+            InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceItemDetails(
+                    "jmri.jmrit.display.EditorManager", "skipDupLoadDialog", Bundle.getMessage("DuplicateLoadSkip"));  // NOI18N
         }
 
         boolean results = false;
