@@ -442,6 +442,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             default:
                 NamedBeanPropertyDescriptor<?> desc = getPropertyColumnDescriptor(col);
                 if (desc == null) {
+                    log.error("btdm setvalueat {} {}",row,col);
                     break;
                 }
                 if (value instanceof JComboBox) {
@@ -466,7 +467,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      *
      * @param bean NamedBean to delete
      */
-    void doDelete(T bean) {
+    protected void doDelete(T bean) {
         try {
             getManager().deleteBean(bean, "DoDelete");
         } catch (PropertyVetoException e) {
