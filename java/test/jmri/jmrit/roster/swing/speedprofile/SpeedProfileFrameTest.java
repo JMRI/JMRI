@@ -27,6 +27,7 @@ public class SpeedProfileFrameTest extends jmri.util.JmriJFrameTestBase {
     @Override
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         super.tearDown();
     }
 

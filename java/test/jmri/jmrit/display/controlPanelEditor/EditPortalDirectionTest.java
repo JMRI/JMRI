@@ -26,7 +26,7 @@ public class EditPortalDirectionTest {
     public void testSetup() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-        
+
         ControlPanelEditor frame = new ControlPanelEditor("EditPortalDirectionTest");
         frame.makeCircuitMenu(true);
         CircuitBuilder cb = frame.getCircuitBuilder();
@@ -41,7 +41,7 @@ public class EditPortalDirectionTest {
 
         EditPortalDirection dFrame = new EditPortalDirection("Edit Direction Arrows", cb, ob1);
         Assert.assertNotNull("exists", dFrame);
-        
+
         JUnitUtil.dispose(frame);
 //        JUnitUtil.dispose(dFrame);    // OK button should close dFrame
     }
@@ -57,6 +57,7 @@ public class EditPortalDirectionTest {
     public void tearDown() {
         blkMgr.dispose();
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         //JUnitUtil.clearShutDownManager();  // only needed intermittently; better to find and remove, but that would require lots o' refactoring
         JUnitUtil.tearDown();
     }

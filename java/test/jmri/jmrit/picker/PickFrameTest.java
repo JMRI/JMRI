@@ -74,6 +74,7 @@ public class PickFrameTest extends JmriJFrameTestBase {
     @Override
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         super.tearDown();
     }
 }
