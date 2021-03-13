@@ -82,7 +82,7 @@
       </ul>
 
       <p>Remember to save your setup and configured items by choosing Store Panels... from the File menu.<br>
-      Note: The menu item changes as of 4.23.1 to <strong>Store ALL table content and panels</strong>.
+      Note: The menu item changes as of 4.23.3 to <strong>Store ALL table content and panels</strong>.
       For details, see <a href="../../../../html/apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>.<br>
       You can have your Switchboards open automatically upon startup by setting them as as an "Open File"
       Startup Action under Preferences &gt; Startup.</p>

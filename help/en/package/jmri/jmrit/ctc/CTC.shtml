@@ -1148,7 +1148,7 @@
     <h3>GUIObjects.xml</h3>
     It contains all of the basic GUI JMRI objects necessary for creating a "raw" CTC panel in the Panel
     Editor.  It can be loaded at any time using the <strong>File &rArr; Load table content and panels...</strong>
-    {<em>Old: <strong>Panels &rArr; Load Panels...</strong></em>} <span class="since">since 4.23.1</span>
+    {<em>Old: <strong>Panels &rArr; Load Panels...</strong></em>} <span class="since">since 4.23.3</span>
     menu (on the main JMRI screen)
     and specifying this location and filename to load.
     <h3>InternalSensors.xml</h3>

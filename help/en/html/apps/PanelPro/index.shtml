@@ -28,7 +28,7 @@
     <div id="mainContent">
 
       <h1>JMRI: PanelPro</h1>
-            <div class="noted"><span class="since">since 4.23.1</span>
+            <div class="noted"><span class="since">since 4.23.3</span>
             <p>Note: The PanelPro main menu is being changed.
             See <a href="../LoadStoreWork.shtml">Loading and Storing Your Work</a> for details.
             The menu references below are for the new menu structure with the old

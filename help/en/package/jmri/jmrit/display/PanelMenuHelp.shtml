@@ -26,7 +26,7 @@
 
       <h1>JMRI: Panels Menu</h1>
         <div class="noted">
-        <span class="since">since 4.23.1</span>
+        <span class="since">since 4.23.3</span>
         <p>Note: The PanelPro main menu is being changed.
         See <a href="../../../../html/apps/LoadStoreWork.shtml">Loading and Storing Your Work</a> for details.
         The menu references below are the for the new menu structure.

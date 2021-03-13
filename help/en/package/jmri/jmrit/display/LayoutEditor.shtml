@@ -594,7 +594,7 @@
       panels.</p>
 
       <ul>
-        <li><strong>Store ALL table content and panels...</strong> {<em>Old: <strong>Store Panels...</strong></em>} <span class="since">since 4.23.1</span>
+        <li><strong>Store ALL table content and panels...</strong> {<em>Old: <strong>Store Panels...</strong></em>} <span class="since">since 4.23.3</span>
         See <a href="../../../../html/apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>.</li>
 
         <li><strong>Delete this Panel...</strong> - This item deletes the

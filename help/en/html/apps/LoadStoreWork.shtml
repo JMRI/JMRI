@@ -26,8 +26,8 @@
       load and store the data you create and update in JMRI. A companion page with more information for advanced
       users about when, how, and where JMRI stores data is available <a href="DataManagement.shtml"> here.</a></p>
 
-      <div class="noted"><span class="since">since 4.23.1</span>
-        <p>The main PanelPro menu has changed as of JMRI release 4.23.1.</p>
+      <div class="noted"><span class="since">since 4.23.3</span>
+        <p>The main PanelPro menu has changed as of JMRI release 4.23.3.</p>
         <ul>
           <li><strong>Panels &rArr; Load Panels...</strong> has moved to <strong>File &rArr; Load table content and panels...</strong></li>
           <li><strong>Panels &rArr; Store Panels...</strong> has moved to <strong>File &rArr; Store ALL table content and panels...</strong></li>

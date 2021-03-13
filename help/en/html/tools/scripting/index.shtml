@@ -23,7 +23,7 @@
 
       <h2>JMRI: Scripting</h2>
 
-      <div class="noted"><span class="since">since 4.23.1</span>
+      <div class="noted"><span class="since">since 4.23.3</span>
       <p>Note: The PanelPro main menu is being changed.
       The four scripting related menu items have moved from the <strong>Panels</strong>
       menu item to the new <strong>Scripting</strong> menu item.
