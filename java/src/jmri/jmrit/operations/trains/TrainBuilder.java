@@ -4845,6 +4845,7 @@ public class TrainBuilder extends TrainCommon {
                 MessageFormat.format(Bundle.getMessage("buildSearchTrackLoadStaging"),
                         new Object[] { car.toString(), car.getTypeName(), car.getLoadName(), car.getLocationName(),
                                 car.getTrackName(), stageTrack.getLocation().getName(), stageTrack.getName() }));
+        String oldLoad = car.getLoadName(); // save car's "E" load
         for (int i = loads.size() - 1; i >= 0; i--) {
             String load = loads.get(i);
             log.debug("Try custom load ({}) for car ({})", load, car.toString());
@@ -4871,20 +4872,17 @@ public class TrainBuilder extends TrainCommon {
                 loads.remove(i);
                 continue;
             }
-            // are there trains that can carry the car type and load to the staging track?
-            String oldLoad = car.getLoadName(); // save existing "E" load
+            // are there trains that can carry the car type and load to the staging track?   
             car.setLoadName(load);
             if (!router.isCarRouteable(car, _train, stageTrack, _buildReport)) {
                 loads.remove(i); // no remove this load
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildStagingTrackNotReachable"),
                         new Object[] { stageTrack.getLocation().getName(), stageTrack.getName(), load }));
             }
-            car.setLoadName(oldLoad); // restore car's load
         }
         // Use random loads rather that the first one that works to create interesting
         // loads
         if (loads.size() > 0) {
-            String oldLoad = car.getLoadName(); // save load in case we fail
             int rnd = (int) (Math.random() * loads.size());
             car.setLoadName(loads.get(rnd));
             // check to see if car is now accepted by staging
@@ -4903,10 +4901,10 @@ public class TrainBuilder extends TrainCommon {
                         new Object[] { car.getLoadName(), car.toString() }));
                 return true;
             }
-            car.setLoadName(oldLoad); // restore load and report failure
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCanNotDropCarBecause"),
                     new Object[] { car.toString(), stageTrack.getName(), status, stageTrack.getTrackTypeName() }));
         }
+        car.setLoadName(oldLoad); // restore load and report failure
         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildUnableNewLoadStaging"), new Object[] {
                 car.toString(), car.getTrackName(), stageTrack.getLocation().getName(), stageTrack.getName() }));
         return false;
