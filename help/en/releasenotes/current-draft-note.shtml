@@ -588,7 +588,9 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Reduced audio buffer consumption for Diesel sounds.</li>
+            <li>Minimum time for a sub-buffer increased from 100 to 150 milliseconds.</li>
+            <li>Fixed bug with last accel-limit values less than 100 in config.xml.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
