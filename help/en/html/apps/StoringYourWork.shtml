@@ -3,7 +3,7 @@
 <html lang="en">
 <head><title>JMRI: Redirected Page</title>
 <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
-<META HTTP-EQUIV="Refresh" CONTENT="0; URL=LoadStoreWork.shtml ">
+<META HTTP-EQUIV="Refresh" CONTENT="6; URL=LoadStoreWork.shtml ">
 </head>
 <body>
 <p>This page has been moved to another location
@@ -11,7 +11,7 @@
 as part of updating our web site.</p>
 <p>Please update your bookmarks.</p>
 <p>If you got to this page from another JMRI page, please let us know so we can fix it.</p>
-<p>You should be redirected to the new page immediately.</p>
+<p>You should be redirected to the new location within 6 seconds, or click the link above.</p>
 </body>
 </html>
 
