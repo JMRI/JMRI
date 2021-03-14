@@ -12,11 +12,21 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+<version version="1.1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20210312"/>
+<!--  Fixed/added low and high versionIDs (should be 050, not 098 for this firmware
+      Fixed productIDs to match numerical IDs of D&H as present now in CV261, to allow for automated decoder identification.
+      Of note: SD21A-4 & SD21A-5 have been defined seperatly starting from this fw version
+      (it wasn't the case before: SD21A was defined as a unique decoder).
+      IMHO: SD21A is a single same decoder model (as attested by CV261). The different connector declinations with which
+      the decoder can be equipped do not qualify as a distinct decoders according to JMRI standards, unless the Manufacturer
+      provides a different Product ID, which is not the case. This will need to be defined again as a single decoder
+      in the next fw update definition, to maintain consistency, and avoid hundreds of redundant decoder variations for D&H.
+      -->
 <version version="1" author="Wouter Kok" lastUpdated="2020-05-02"/>
 <!-- Creation Decoder template for the Doehler & Haass combo sound decoder with Firmware v1.12-->
 <decoder>
   <family name="Sound Decoders (2020)" mfg="Doehler und Haass">
-    <model model="SD05A (firmware 1.12+)" numOuts="8" numFns="16" productID="SD05A_1.12" comment="SD05A-0 / SD05A-1 / SD05A-3 from July 2020" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A">
+    <model model="SD05A (firmware 1.12+)" lowVersionID="050" highVersionID="050" numOuts="8" numFns="16" productID="205" comment="SD05A-0 / SD05A-1 / SD05A-3 from July 2020" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A">
       <!--lowVersionID="098" highVersionID="098"-->
       <output name="1" label="Front|Light" maxcurrent="150mA">
         <label xml:lang="de">LV</label>
@@ -51,7 +61,7 @@
         <protocol>motorola</protocol>
       </protocols>
     </model>
-    <model model="SD10A (firmware 1.12+)" numOuts="8" numFns="16" productID="SD10A_1.12" comment="SD10A-0 / SD10A-1 / SD10A-3 with update from July 2020" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A">
+    <model model="SD10A (firmware 1.12+)" lowVersionID="050" highVersionID="050" numOuts="8" numFns="16" productID="210" comment="SD10A-0 / SD10A-1 / SD10A-3 with update from July 2020" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A">
     <!--lowVersionID="098" highVersionID="098"-->
     <output name="1" label="Front|Light" maxcurrent="150mA">
       <label xml:lang="de">LV</label>
@@ -86,7 +96,7 @@
       <protocol>motorola</protocol>
     </protocols>
   </model>
-    <model model="SD16A (firmware 1.12+)" numOuts="10" numFns="16" productID="SD16A_1.12" comment="SD16A-0 / SD16A-2 / SD16A-3 / SD16A-4 with update from October 2020" maxInputVolts="30V" maxMotorCurrent="1,5A" maxTotalCurrent="1,5A">
+    <model model="SD16A (firmware 1.12+)" lowVersionID="050" highVersionID="050" numOuts="10" numFns="16" productID="216" comment="SD16A-0 / SD16A-2 / SD16A-3 / SD16A-4 with update from October 2020" maxInputVolts="30V" maxMotorCurrent="1,5A" maxTotalCurrent="1,5A">
      <output name="1" label="Front|Light" maxcurrent="150mA">
       <label xml:lang="de">LV</label>
       <label xml:lang="nl">Kop|lampen</label>
@@ -116,7 +126,7 @@
       <protocol>motorola</protocol>
     </protocols>
   </model>
-    <model model="SD18A (firmware 1.12+)" numOuts="8" numFns="16" productID="SD18A_1.12" comment="SD18A with update from October 2020" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
+    <model model="SD18A (firmware 1.12+)" lowVersionID="050" highVersionID="050" numOuts="8" numFns="16" productID="218" comment="SD18A with update from October 2020" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
     <!--lowVersionID="098" highVersionID="098"-->
     <output name="1" label="Front|Light" maxcurrent="150mA">
       <label xml:lang="de">LV</label>
@@ -151,7 +161,7 @@
       <protocol>motorola</protocol>
     </protocols>
   </model>
-    <model model="SD21A-4 (firmware 1.12+)" lowVersionID="098" highVersionID="098" numOuts="10" numFns="16" productID="SD21A_1.12" comment="SD21A-4 with update from October 2020" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
+    <model model="SD21A-4 (firmware 1.12+)" lowVersionID="050" highVersionID="050" numOuts="10" numFns="16" productID="221" comment="SD21A-4 with update from October 2020" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
     <output name="1" label="Front|Light" maxcurrent="150mA">
       <label xml:lang="de">LV</label>
       <label xml:lang="nl">Kop|lampen</label>
@@ -181,7 +191,7 @@
       <protocol>motorola</protocol>
     </protocols>
   </model>
-    <model model="SD21A-5 (firmware 1.12+)" lowVersionID="098" highVersionID="098" numOuts="10" numFns="16" productID="SD21A_1.12" comment="SD21A-5 with update from October 2020" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
+    <model model="SD21A-5 (firmware 1.12+)" lowVersionID="050" highVersionID="050" numOuts="10" numFns="16" productID="221" comment="SD21A-5 with update from October 2020" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
     <output name="1" label="Front|Light" maxcurrent="150mA">
       <label xml:lang="de">LV</label>
       <label xml:lang="nl">Kop|lampen</label>
@@ -211,7 +221,7 @@
       <protocol>motorola</protocol>
     </protocols>
   </model>
-    <model model="SD22A (firmware 1.12+)" lowVersionID="098" highVersionID="098" numOuts="12" numFns="16" productID="SD22A_1.12" comment="SD22A-0 / SD22A-2 / SD22A-3 / SD22A-4 with update from October 2020" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A">
+    <model model="SD22A (firmware 1.12+)" lowVersionID="050" highVersionID="050" numOuts="12" numFns="16" productID="222" comment="SD22A-0 / SD22A-2 / SD22A-3 / SD22A-4 with update from October 2020" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A">
     <output name="1" label="Front|Light" maxcurrent="150mA">
       <label xml:lang="de">LV</label>
       <label xml:lang="nl">Kop|lampen</label>
@@ -255,7 +265,7 @@
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv65_fw3.08.xml"/>
     <!-- Standard variables for decoders released after around 2018  -->
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv9_fw3.11.xml"/>
-    
+
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv144_fw3.10.xml"/>
     <!-- Analog functions  -->
     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
