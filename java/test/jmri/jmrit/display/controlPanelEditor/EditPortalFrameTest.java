@@ -41,7 +41,7 @@ public class EditPortalFrameTest {
 
         EditPortalFrame portalFrame = new EditPortalFrame("Edit Portal Frame", cb, ob1);
         Assert.assertNotNull("exists", portalFrame);
-        
+
         JUnitUtil.dispose(frame);
         JUnitUtil.dispose(portalFrame);
     }
@@ -57,6 +57,7 @@ public class EditPortalFrameTest {
     public void tearDown() {
         blkMgr.dispose();
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         //JUnitUtil.clearShutDownManager();  // only needed intermittently; better to find and remove, but that would require lots o' refactoring
         JUnitUtil.tearDown();
     }

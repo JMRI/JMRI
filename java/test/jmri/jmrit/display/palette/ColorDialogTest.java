@@ -17,7 +17,7 @@ import static org.assertj.core.api.ThrowableAssert.catchThrowable;
 
 /**
  *
- * @author Pete Cressman Copyright (C) 2018 
+ * @author Pete Cressman Copyright (C) 2018
  */
 @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class ColorDialogTest {
@@ -143,7 +143,7 @@ public class ColorDialogTest {
 
             Color c;
             switch (_type) {
-                case ColorDialog.ONLY: 
+                case ColorDialog.ONLY:
                     c = _cpe.getTargetPanel().getBackground();
                     break;
                 case ColorDialog.BORDER:
@@ -178,6 +178,7 @@ public class ColorDialogTest {
         EditorFrameOperator efo = new EditorFrameOperator(_cpe.getTargetFrame());
         efo.closeFrameWithConfirmations();
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

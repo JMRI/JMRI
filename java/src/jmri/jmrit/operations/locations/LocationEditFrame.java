@@ -102,7 +102,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         // Set up the jtable in a Scroll Pane..
         typePane = new JScrollPane(panelCheckBoxes);
         typePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-        typePane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Types")));
+        typePane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TypesLocation")));
 
         yardPane = new JScrollPane(yardTable);
         yardPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);

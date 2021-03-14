@@ -56,7 +56,7 @@
         <label xml:lang="de">Höchstgeschwindigkeit</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable CV="7" readOnly="yes" tooltip="=19, Read Only" item="Decoder Version" default="19">
+      <variable CV="7" item="Decoder Version" readOnly="yes" tooltip="=19, Read Only" default="19">
         <decVal/>
         <label>Version ID</label>
         <label xml:lang="it">Versione Decoder: </label>

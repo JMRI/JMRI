@@ -241,7 +241,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
              * @param bean of the Logix to delete
              */
             @Override
-            void doDelete(Logix bean) {
+            protected void doDelete(Logix bean) {
                 bean.deActivateLogix();
                 // delete the Logix and all its Conditionals
                 _logixManager.deleteLogix(bean);

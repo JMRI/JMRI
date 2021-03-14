@@ -266,7 +266,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
              * it.
              */
             @Override
-            void doDelete(SignalGroup bean) {
+            protected void doDelete(SignalGroup bean) {
                 //((SignalGroup)bean).deActivateSignalGroup();
                 super.doDelete(bean);
             }
