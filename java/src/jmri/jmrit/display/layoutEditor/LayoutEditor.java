@@ -1339,14 +1339,14 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         hideTrackSegmentConstructionLinesCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("HideTrackConLines"));
         trackMenu.add(hideTrackSegmentConstructionLinesCheckBoxMenuItem);
         hideTrackSegmentConstructionLinesCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            int show = TrackSegment.SHOWCON;
+            int show = TrackSegmentView.SHOWCON;
 
             if (hideTrackSegmentConstructionLinesCheckBoxMenuItem.isSelected()) {
-                show = TrackSegment.HIDECONALL;
+                show = TrackSegmentView.HIDECONALL;
             }
 
-            for (TrackSegment ts : getTrackSegments()) {
-                ts.hideConstructionLines(show);
+            for (TrackSegmentView tsv : getTrackSegmentViews()) {
+                tsv.hideConstructionLines(show);
             }
             redrawPanel();
         });
