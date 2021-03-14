@@ -38,6 +38,7 @@ public class LayoutEditorAction extends AbstractAction {
         panel.setAllEditable(true);
         panel.setCurrentPositionAndSize();
         InstanceManager.getDefault(EditorManager.class).add(panel);
+        InstanceManager.getDefault(EditorManager.class).setChanged(true);
         panel.newPanelDefaults();
     }
 }

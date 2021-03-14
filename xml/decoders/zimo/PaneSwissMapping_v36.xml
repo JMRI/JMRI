@@ -103,7 +103,8 @@
           <label>Group  1   </label>
           <label xml:lang="it">Gruppo  1  </label>
           <label xml:lang="cs">Skupina  1  </label>
-          <label xml:lang="de">Gruppe  1  </label>
+          <label xml:lang="de">Gruppe  1 </label>
+          <label xml:lang="nl">Groep  1  </label>
         </display>
       </column>
     <column>  <!-- spacer column -->
@@ -120,12 +121,12 @@
         </label>
         </row>
         <row>
-		<label>
-          <text>  M-Key       M-Key Outputs                               </text>
-          <text xml:lang="it">    Tasto M</text>
-          <text xml:lang="cs">    M klávesa</text>
-          <text xml:lang="de">    M-Taste</text>
-        </label>
+          <label>
+            <text>  M-Key       M-Key Outputs                               </text>
+            <text xml:lang="it">    Tasto M</text>
+            <text xml:lang="cs">    M klávesa</text>
+            <text xml:lang="de">    M-Taste</text>
+          </label>
         </row>
         <row>  <!-- first row of M-keys -->
           <display item="Swiss Mapping Group 1 M-key v33" label="">
@@ -153,7 +154,10 @@
                 <value>255</value>
               </qualifier>
               <row>
-                  <label><text> (M-Key options not applicable)    </text></label>
+                  <label>
+                    <text> (M-Key options not applicable)    </text>
+                    <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                  </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
@@ -165,10 +169,11 @@
       <row>
         <column>
          <display item="Swiss Mapping Group 2 F-key">
-          <label>Group  2   </label>
-          <label xml:lang="it">Gruppo  2  </label>
-          <label xml:lang="cs">Skupina  2  </label>
-          <label xml:lang="de">Gruppe  2  </label>
+            <label>Group  2   </label>
+            <label xml:lang="it">Gruppo  2  </label>
+            <label xml:lang="cs">Skupina  2  </label>
+            <label xml:lang="de">Gruppe  2  </label>
+            <label xml:lang="nl">Groep  2  </label>
          </display>
         </column>
         <column>  <!-- spacer column -->
@@ -203,7 +208,10 @@
                 <value>255</value>
               </qualifier>
               <row>
-                  <label><text> (M-Key options not applicable)    </text></label>
+                  <label>
+                    <text> (M-Key options not applicable)    </text>
+                    <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                  </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
@@ -218,6 +226,7 @@
               <label xml:lang="it">Gruppo  3  </label>
               <label xml:lang="cs">Skupina  3  </label>
               <label xml:lang="de">Gruppe  3  </label>
+              <label xml:lang="nl">Groep  3  </label>
             </display>
         </column>
         <column>  <!-- spacer column -->
@@ -252,7 +261,10 @@
                 <value>255</value>
               </qualifier>
               <row>
-                  <label><text> (M-Key options not applicable)    </text></label>
+                  <label>
+                    <text> (M-Key options not applicable)    </text>
+                    <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                  </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
@@ -266,6 +278,7 @@
           <label xml:lang="it">Gruppo  4  </label>
           <label xml:lang="cs">Skupina  4  </label>
           <label xml:lang="de">Gruppe  4  </label>
+          <label xml:lang="nl">Groep  4  </label>
         </display>
         <column>  <!-- spacer column -->
          <row>
@@ -299,7 +312,10 @@
                 <value>255</value>
               </qualifier>
               <row>
-                  <label><text> (M-Key options not applicable)    </text></label>
+                  <label>
+                    <text> (M-Key options not applicable)    </text>
+                    <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                  </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
@@ -313,6 +329,7 @@
           <label xml:lang="it">Gruppo  5  </label>
           <label xml:lang="cs">Skupina  5  </label>
           <label xml:lang="de">Gruppe  5  </label>
+          <label xml:lang="nl">Groep  5  </label>
         </display>
         <column>  <!-- spacer column -->
          <row> <label> <text>        </text> <!-- col1 to col2 space --></label></row>
@@ -342,7 +359,10 @@
                 <value>255</value>
               </qualifier>
               <row>
-                  <label><text> (M-Key options not applicable)    </text></label>
+                  <label>
+                    <text> (M-Key options not applicable)    </text>
+                    <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                  </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
@@ -357,6 +377,7 @@
           <label xml:lang="it">Gruppo  6  </label>
           <label xml:lang="cs">Skupina  6  </label>
           <label xml:lang="de">Gruppe  6  </label>
+          <label xml:lang="nl">Groep  6  </label>
         </display>
         <column>  <!-- spacer column -->
          <row> <label> <text>        </text> <!-- col1 to col2 space --></label></row>
@@ -386,7 +407,10 @@
                 <value>255</value>
               </qualifier>
               <row>
-                  <label><text> (M-Key options not applicable)    </text></label>
+                  <label>
+                    <text> (M-Key options not applicable)    </text>
+                    <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                  </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
@@ -400,6 +424,7 @@
           <label xml:lang="it">Gruppo  7  </label>
           <label xml:lang="cs">Skupina  7  </label>
           <label xml:lang="de">Gruppe  7  </label>
+          <label xml:lang="nl">Groep  7  </label>
         </display>
         <column>  <!-- spacer column -->
          <row> <label> <text>        </text> <!-- col1 to col2 space --></label></row>
@@ -429,7 +454,10 @@
                 <value>255</value>
               </qualifier>
               <row>
-                  <label><text> (M-Key options not applicable)    </text></label>
+                  <label>
+                    <text> (M-Key options not applicable)    </text>
+                    <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                  </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
@@ -443,6 +471,7 @@
           <label xml:lang="it">Gruppo  8  </label>
           <label xml:lang="cs">Skupina  8  </label>
           <label xml:lang="de">Gruppe  8  </label>
+          <label xml:lang="nl">Groep  8  </label>
         </display>
         <column>  <!-- spacer column -->
          <row> <label> <text>        </text> <!-- col1 to col2 space --></label></row>
@@ -472,7 +501,10 @@
                 <value>255</value>
               </qualifier>
               <row>
-                  <label><text> (M-Key options not applicable)    </text></label>
+                  <label>
+                    <text> (M-Key options not applicable)    </text>
+                    <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                  </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
@@ -486,6 +518,7 @@
           <label xml:lang="it">Gruppo  9  </label>
           <label xml:lang="cs">Skupina  9  </label>
           <label xml:lang="de">Gruppe  9  </label>
+          <label xml:lang="nl">Groep  9  </label>
         </display>
         <column>  <!-- spacer column -->
          <row> <label> <text>        </text> <!-- col1 to col2 space --></label></row>
@@ -515,7 +548,10 @@
                 <value>255</value>
               </qualifier>
               <row>
-                  <label><text> (M-Key options not applicable)    </text></label>
+                  <label>
+                    <text> (M-Key options not applicable)    </text>
+                    <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                  </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
@@ -529,6 +565,7 @@
           <label xml:lang="it">Gruppo  10  </label>
           <label xml:lang="cs">Skupina  10  </label>
           <label xml:lang="de">Gruppe  10  </label>
+          <label xml:lang="nl">Groep  10  </label>
         </display>
         <column>  <!-- spacer column -->
          <row> <label> <text>        </text> <!-- col1 to col2 space --></label></row>
@@ -558,7 +595,10 @@
                 <value>255</value>
               </qualifier>
               <row>
-                  <label><text> (M-Key options not applicable)    </text></label>
+                  <label>
+                    <text> (M-Key options not applicable)    </text>
+                    <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                  </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
@@ -574,6 +614,7 @@
           <label xml:lang="it">Gruppo  11  </label>
           <label xml:lang="cs">Skupina  11  </label>
           <label xml:lang="de">Gruppe  11  </label>
+          <label xml:lang="nl">Groep  11  </label>
         </display>
         <column>  <!-- spacer column -->
          <row> <label> <text>        </text> <!-- col1 to col2 space --></label></row>
@@ -603,7 +644,10 @@
                 <value>255</value>
               </qualifier>
               <row>
-                  <label><text> (M-Key options not applicable)    </text></label>
+                  <label>
+                    <text> (M-Key options not applicable)    </text>
+                    <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                  </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
@@ -617,6 +661,7 @@
           <label xml:lang="it">Gruppo  12  </label>
           <label xml:lang="cs">Skupina  12  </label>
           <label xml:lang="de">Gruppe  12  </label>
+          <label xml:lang="nl">Groep  12  </label>
         </display>
         <column>  <!-- spacer column -->
          <row> <label> <text>        </text> <!-- col1 to col2 space --></label></row>
@@ -646,7 +691,10 @@
                 <value>255</value>
               </qualifier>
               <row>
-                  <label><text> (M-Key options not applicable)    </text></label>
+                  <label>
+                    <text> (M-Key options not applicable)    </text>
+                    <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                  </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
@@ -660,6 +708,7 @@
           <label xml:lang="it">Gruppo  13  </label>
           <label xml:lang="cs">Skupina  13  </label>
           <label xml:lang="de">Gruppe  13  </label>
+          <label xml:lang="nl">Groep  13  </label>
         </display>
         <column>  <!-- spacer column -->
          <row> <label> <text>        </text> <!-- col1 to col2 space --></label></row>
@@ -689,7 +738,10 @@
                 <value>255</value>
               </qualifier>
               <row>
-                  <label><text> (M-Key options not applicable)    </text></label>
+                  <label>
+                    <text> (M-Key options not applicable)    </text>
+                    <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                  </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
@@ -703,6 +755,7 @@
           <label xml:lang="it">Gruppo  14  </label>
           <label xml:lang="cs">Skupina  14  </label>
           <label xml:lang="de">Gruppe  14  </label>
+          <label xml:lang="nl">Groep  14  </label>
         </display>
         <column>  <!-- spacer column -->
          <row> <label> <text>        </text> <!-- col1 to col2 space --></label></row>
@@ -732,7 +785,10 @@
                 <value>255</value>
               </qualifier>
               <row>
-                  <label><text> (M-Key options not applicable)    </text></label>
+                <label>
+                  <text> (M-Key options not applicable)    </text>
+                  <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
@@ -746,6 +802,7 @@
           <label xml:lang="it">Gruppo  15  </label>
           <label xml:lang="cs">Skupina  15  </label>
           <label xml:lang="de">Gruppe  15  </label>
+          <label xml:lang="nl">Groep  15  </label>
         </display>
         <column>  <!-- spacer column -->
          <row> <label> <text>        </text> <!-- col1 to col2 space --></label></row>
@@ -772,7 +829,10 @@
                 <value>255</value>
               </qualifier>
               <row>
-                  <label><text> (M-Key options not applicable)    </text></label>
+                <label>
+                  <text> (M-Key options not applicable)    </text>
+                  <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
@@ -787,6 +847,7 @@
           <label xml:lang="it">Gruppo  16  </label>
           <label xml:lang="cs">Skupina  16  </label>
           <label xml:lang="de">Gruppe  16  </label>
+          <label xml:lang="nl">Groep  16  </label>
         </display>
         <column>  <!-- spacer column -->
          <row> <label> <text>        </text> <!-- col1 to col2 space --></label></row>
@@ -813,7 +874,10 @@
                 <value>255</value>
               </qualifier>
               <row>
-                  <label><text> (M-Key options not applicable)    </text></label>
+                <label>
+                  <text> (M-Key options not applicable)    </text>
+                  <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
@@ -827,6 +891,7 @@
           <label xml:lang="it">Gruppo  17  </label>
           <label xml:lang="cs">Skupina  17  </label>
           <label xml:lang="de">Gruppe  17  </label>
+          <label xml:lang="nl">Groep  17  </label>
         </display>
         <column>  <!-- spacer column -->
          <row> <label> <text>        </text> <!-- col1 to col2 space --></label></row>
@@ -854,7 +919,10 @@
                 <value>255</value>
               </qualifier>
               <row>
-                  <label><text> (M-Key options not applicable)    </text></label>
+                <label>
+                  <text> (M-Key options not applicable)    </text>
+                  <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                </label>
               </row>
             </group>
             <!--checkboxes for bit 7 -->
@@ -1987,6 +2055,7 @@
           <label xml:lang="it">Gruppo  1  </label>
           <label xml:lang="cs">Skupina  1  </label>
           <label xml:lang="de">Gruppe  1  </label>
+          <label xml:lang="nl">Groep  1  </label>
         </display>
      </column>
      <column>
@@ -2007,6 +2076,7 @@
           <label xml:lang="it">Gruppo  2  </label>
           <label xml:lang="cs">Skupina  2  </label>
           <label xml:lang="de">Gruppe  2  </label>
+          <label xml:lang="nl">Groep  2  </label>
         </display>
      </column>
      <column>
@@ -2027,6 +2097,7 @@
           <label xml:lang="it">Gruppo  3  </label>
           <label xml:lang="cs">Skupina  3  </label>
           <label xml:lang="de">Gruppe  3  </label>
+          <label xml:lang="nl">Groep  3  </label>
         </display>
      </column>
      <column>
@@ -2047,6 +2118,7 @@
           <label xml:lang="it">Gruppo  4  </label>
           <label xml:lang="cs">Skupina  4  </label>
           <label xml:lang="de">Gruppe  4  </label>
+          <label xml:lang="nl">Groep  4  </label>
         </display>
      </column>
      <column>
@@ -2067,6 +2139,7 @@
           <label xml:lang="it">Gruppo  5  </label>
           <label xml:lang="cs">Skupina  5  </label>
           <label xml:lang="de">Gruppe  5  </label>
+          <label xml:lang="nl">Groep  5  </label>
         </display>
      </column>
      <column>

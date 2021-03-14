@@ -264,7 +264,7 @@
         <label xml:lang="de">Bremszeit (1-255)</label>
         <tooltip>&lt;html&gt;For this CV, the value in a SoundCar decoder should match the value&lt;br&gt;in a SoundTraxx Digital Sound Decoder equipped locomotive when in a consist.&lt;br&gt;</tooltip>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" default="85" tooltip="&lt;html&gt;This is the decoder product family identifier.&lt;br&gt;85 = OEM SoundCar&lt;/html&gt;">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="85" tooltip="&lt;html&gt;This is the decoder product family identifier.&lt;br&gt;85 = OEM SoundCar&lt;/html&gt;">
         <decVal/>
         <label>Manufacturer Version ID</label>
         <label xml:lang="it">Versione Decoder: </label>

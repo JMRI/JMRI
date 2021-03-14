@@ -26,13 +26,14 @@ public class EditConnectionPreferencesDialogTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.resetPreferencesProviders();
-        
+
         jmri.InstanceManager.setDefault(TabbedPreferences.class, new TabbedPreferences());
     }
 
     @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

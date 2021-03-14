@@ -25,16 +25,16 @@ public class DefaultLogixManagerTest extends AbstractManagerTestBase<jmri.LogixM
     @Test
     public void testCreateForms() {
         LogixManager m = l;
-        
+
         Logix l1 = m.createNewLogix("User name 1");
         Logix l2 = m.createNewLogix("User name 2");
 
         Assert.assertNotNull(m.getByUserName("User name 1"));
         Assert.assertNotNull(m.getByUserName("User name 2"));
-        
+
         Assert.assertTrue(l1 != l2);
         Assert.assertTrue(! l1.equals(l2));
-        
+
         Assert.assertNotNull(m.getBySystemName(l1.getSystemName()));
         Assert.assertNotNull(m.getBySystemName(l2.getSystemName()));
 
@@ -47,33 +47,33 @@ public class DefaultLogixManagerTest extends AbstractManagerTestBase<jmri.LogixM
 
         // test of some fails
         Assert.assertNull(m.createNewLogix(l1.getUserName()));
-        Assert.assertNull(m.createNewLogix(l1.getSystemName(),""));  
+        Assert.assertNull(m.createNewLogix(l1.getSystemName(),""));
     }
 
     @Test
     public void testEmptyUserName() {
         LogixManager m = l;
-        
+
         Logix l1 = m.createNewLogix("IX01", "");
         Logix l2 = m.createNewLogix("IX02", "");
-        
+
         Assert.assertTrue(l1 != l2);
         Assert.assertTrue(! l1.equals(l2));
-        
+
         Assert.assertNotNull(m.getBySystemName(l1.getSystemName()));
         Assert.assertNotNull(m.getBySystemName(l2.getSystemName()));
 
         m.createNewLogix("IX03", "User name 3");
-        
+
         // test of some fails
-        Assert.assertNull(m.createNewLogix(l1.getSystemName(),""));      
+        Assert.assertNull(m.createNewLogix(l1.getSystemName(),""));
     }
 
     // No manager-specific system name validation at present
     @Test
     @Override
     public void testMakeSystemNameWithNoPrefixNotASystemName() {}
-    
+
     // No manager-specific system name validation at present
     @Test
     @Override
@@ -94,6 +94,7 @@ public class DefaultLogixManagerTest extends AbstractManagerTestBase<jmri.LogixM
     public void tearDown() {
         l = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }
