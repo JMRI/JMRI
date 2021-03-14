@@ -63,10 +63,13 @@
         Both are loaded automatically at VSD start respectively JMRI start.</li>
 
         <li>Reporters and Blocks are not saved to a file.<br>
-        If you want to store Reporters or Blocks to a file, go to Tools-&gt;Tables-&gt;table-&gt;File-&gt;Store...<br>
+        If you want to store Reporters or Blocks to a file, go to
+        <strong>Tools &rArr; Tables &rArr; table &rArr; File &rArr; Store...</strong><br>
         In case you have an open Panel with a reference to a location, store that Panel.<br>
-        Reporters or Blocks must be loaded manually (Panels-&gt;Load Panels) or via JMRI Preferences
-        Startup Action (Open File).</li>
+        Reporters or Blocks must be loaded manually or via JMRI Preferences
+        Startup Action (Open File).<br>
+        See <a href="../../../../../html/apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>
+        for details on loading and storing.</li>
 
         <li>If you add new Reporters, Blocks or Locations you must close and re-open
         the Manage VSD Locations window to have them appear.</li>
@@ -82,7 +85,7 @@
       </ul>
 
       <a id="prefs" name="prefs">(This is the
-      jmri.jmrit.vsdecoder.swing.ManageLocationsFrame help page) 
+      jmri.jmrit.vsdecoder.swing.ManageLocationsFrame help page)
       <!--#include virtual="/Footer.shtml" --></a>
     </div>
   </div>

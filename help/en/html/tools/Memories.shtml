@@ -104,12 +104,10 @@
 
       <p>Memories are is kept in your <i>layout configuration</i>, along
       with Turnouts, Sensors, Signal Heads, etc. To store this
-      information on disk, allowing to
+      information on disk, allowing you to
       <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
-      it</a> next time you run JMRI, use <b>Store Configuration...</b> in the
-      <b>File</b> menu at the top of the Memory Variable Table (or other
-      tables from the Tools menu), or select <b>Store Panel...</b>
-      in the <b>Panel</b> menu.</p>
+      it</a> next time you run JMRI, see <a href="../apps/LoadStoreWork.shtml">
+      Loading and Storing Your Work</a>.
 
        <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

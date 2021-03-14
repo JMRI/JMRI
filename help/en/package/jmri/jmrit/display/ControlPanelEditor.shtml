@@ -63,7 +63,8 @@
       <ul>
         <li><b>New Panel</b></li>
 
-        <li><b>Store Panels...</b></li>
+        <li><b>Store ALL table content and panels...</b> {<em>Old: <strong>Store Panels...</strong></em>} <span class="since">since 4.23.3</span>
+        See <a href="../../../../html/apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>.</li>
 
         <li><b>Store Image Index</b></li>
 
