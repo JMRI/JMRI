@@ -66,15 +66,6 @@ public abstract class AbstractProgrammerFacade implements Programmer {
 
     /**
      * {@inheritDoc}
-     * Override for systems that support CV hints when reading
-     */
-    @Override
-    public void readCV(String CV, ProgListener p, int startVal) throws ProgrammerException {
-        prog.readCV(CV, p);
-    }
-
-    /**
-     * {@inheritDoc}
      */
     @Override
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {

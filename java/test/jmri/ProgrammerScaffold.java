@@ -40,14 +40,6 @@ public class ProgrammerScaffold implements Programmer {
     @Override
     public void readCV(String CV, ProgListener p) throws ProgrammerException {}
 
-    /** {@inheritDoc}
-     * Basic implementation. Override this in systems that support hints when reading CVs.
-     */
-    @Override
-    public void readCV(String CV, ProgListener p, int startVal) throws ProgrammerException {
-        readCV(CV, p);
-    }
-
     @Override
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {}
 

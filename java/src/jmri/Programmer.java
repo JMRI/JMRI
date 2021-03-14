@@ -96,7 +96,8 @@ public interface Programmer {
 
     /**
      * Perform a CV read in the system-specific manner, and using the specified
-     * programming mode.
+     * programming mode, possibly using a hint of the current value to speed up
+     * programming.
      * <p>
      * Handles a general address space through a String address. Each programmer
      * defines the acceptable formats.
@@ -109,6 +110,8 @@ public interface Programmer {
      * a ProgListener to hear about completion. For simplicity, expect the return to be on the 
      * <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">GUI thread</a>.
      * <p>
+     * Defaults to the normal read method if not overridden in a specific implementation.
+     * <p>
      * Exceptions will only be
      * thrown at the start, not during the actual programming sequence. A
      * typical exception would be due to an invalid mode (though that should be
@@ -119,7 +122,9 @@ public interface Programmer {
      * @param startVal  a hint of what the current value might be
      * @throws jmri.ProgrammerException if unable to communicate
      */
-    void readCV(String CV, ProgListener p, int startVal) throws ProgrammerException;
+    public default void readCV(String CV, ProgListener p, int startVal) throws ProgrammerException {
+        readCV(CV, p);
+    }
 
     /**
      * Confirm the value of a CV using the specified programming mode. On some

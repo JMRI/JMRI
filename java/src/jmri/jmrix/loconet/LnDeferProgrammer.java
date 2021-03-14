@@ -48,15 +48,6 @@ public class LnDeferProgrammer implements Programmer {
         }
     }
 
-    /**
-     * For now, ignore the hint and fall back to then old CVread method.
-     * {@inheritDoc}
-     */
-    @Override
-    public void readCV(String CVname, ProgListener p, int startVal) throws ProgrammerException {
-        readCV(CVname, p);
-    }
-    
     /** {@inheritDoc} */
     @Override
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
