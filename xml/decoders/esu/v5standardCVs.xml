@@ -431,7 +431,7 @@
         <tooltip>Value multiplied by 0.896 = Time from Full Speed to Stop.</tooltip>
         <tooltip xml:lang="de">Wert multipliziert mit 0.896 = Zeit von Maximalgeschwindigkeit bis Stop</tooltip>
     </variable>
-    <variable CV="7" readOnly="yes" item="Decoder Version">
+    <variable CV="7" item="Decoder Version" readOnly="yes">
         <decVal/>
         <label>Decoder Version</label>
         <label xml:lang="cs">Verze dekodéru: </label>

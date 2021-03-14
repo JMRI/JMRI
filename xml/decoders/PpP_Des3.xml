@@ -26,14 +26,14 @@
         <decVal min="1" max="255"/>
         <label>Output 4. Pulse time</label>
       </variable>
-      <variable item="Decoder Version" CV="7" readOnly="yes" default="22">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="22">
         <decVal min="0" max="255"/>
         <label>Decoder Version</label>
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
       </variable>
-      <variable item="Manufacturer" CV="8" readOnly="yes" default="74">
+      <variable CV="8" item="Manufacturer" readOnly="yes" default="74">
         <decVal min="0" max="255"/>
         <label>Manufacturer</label>
         <label xml:lang="it">ID Costruttore: </label>

@@ -74,7 +74,7 @@
         </enumVal>
         <label>Speed Curve Select</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" tooltip="is the Decoder ID,  Read Only">
+      <variable CV="7" item="Decoder Version" readOnly="yes" tooltip="is the Decoder ID,  Read Only">
         <decVal/>
         <label>Manufacturer Version Number</label>
         <label xml:lang="it">Versione Decoder: </label>

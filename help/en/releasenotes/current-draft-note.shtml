@@ -161,7 +161,10 @@
 
     <h3>New / Updated decoder definitions</h3>
         <ul>
-          <li></li>
+          <li>All decoder.xsd XML validation schema from now on require an "item" attribute on each variable
+          element. It is needed to apply qualifier selections to translated definitions.<br>
+          All current decoder definitions in JMRI were updated where necessary (see below for specific ESU, LDH and
+          Zimo series).</li>
         </ul>
 
         <h4>Arnold</h4>
@@ -220,7 +223,7 @@
 
         <h4>ESU</h4>
             <ul>
-                <li></li>
+                <li>Missing "item" attributes were added to the v4fnOutCv and v5fnOutCv includes.</li>
             </ul>
 
         <h4>Hornby</h4>
@@ -238,9 +241,10 @@
                 <li></li>
             </ul>
 
-        <h4><a href="http://www.ldhtrenes.com.ar">LDH</a></h4>
+        <h4>LDH</h4>
             <ul>
-                <li></li>
+              <li>Missing "item" attributes were added to the v4fnOutCv and v5fnOutCv includes.<br>
+                Common CVs were moved to cv33-39mapping.xml and cv67-94speed.xml respectively.</li>
             </ul>
 
         <h4>Lenz</h4>
@@ -351,6 +355,8 @@
         <h4>ZIMO</h4>
             <ul>
                 <li>MX605 (Kato type plug N sound decoder for ICE 4)</li>
+                <li>Missing "item" attributes were added to the CVSwissMapping_v36.xml include and the Decoder
+                Version was copied into CV1-CV99.xml in order to allow customization for Swiss Mapping.</li>
             </ul>
 
         <h4>Miscellaneous</h4>
