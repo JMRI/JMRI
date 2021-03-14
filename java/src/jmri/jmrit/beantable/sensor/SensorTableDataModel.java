@@ -559,6 +559,9 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
     @Override
     public void configureTable(JTable table) {
         super.configureTable(table);
+        XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
+        columnModel.getColumnByModelIndex(FORGETCOL).setHeaderValue(null);
+        columnModel.getColumnByModelIndex(QUERYCOL).setHeaderValue(null);
     }
 
     void editButton(Sensor s) {

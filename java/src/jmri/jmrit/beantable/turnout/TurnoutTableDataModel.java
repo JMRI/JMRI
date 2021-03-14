@@ -419,21 +419,9 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
             editTurnoutOperation(t, cb);
             fireTableRowsUpdated(row, row);
         } else if (col == EDITCOL) {
-            class WindowMaker implements Runnable {
-
-                final Turnout t;
-
-                WindowMaker(Turnout t) {
-                    this.t = t;
-                }
-
-                @Override
-                public void run() {
-                    editButton(t);
-                }
-            }
-            WindowMaker w = new WindowMaker(t);
-            javax.swing.SwingUtilities.invokeLater(w);
+            javax.swing.SwingUtilities.invokeLater(() -> {
+                editButton(t);
+            });
         } else if (col == LOCKOPRCOL) {
             @SuppressWarnings("unchecked")
             String lockOpName = (String) ((JComboBox<String>) value)
@@ -609,6 +597,9 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
         
         // and then set user prefs
         super.configureTable(tbl);
+        
+        columnModel.getColumnByModelIndex(FORGETCOL).setHeaderValue(null);
+        columnModel.getColumnByModelIndex(QUERYCOL).setHeaderValue(null);
         
     }
 
