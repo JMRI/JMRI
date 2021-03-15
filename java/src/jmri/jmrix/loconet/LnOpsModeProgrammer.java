@@ -41,7 +41,6 @@ import static jmri.jmrix.loconet.uhlenbrock.LncvMessageContents.createCvWriteReq
  * @author Bob Jacobsen Copyright (C) 2002
  * @author B. Milhaupt, Copyright (C) 2018
  * @author Egbert Broerse, Copyright (C) 2020
- * @author Andrew Crosland, Copyright (C) 2021
  */
 public class LnOpsModeProgrammer extends PropertyChangeSupport implements AddressedProgrammer, LocoNetListener {
 

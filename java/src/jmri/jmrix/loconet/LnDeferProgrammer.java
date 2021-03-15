@@ -15,7 +15,6 @@ import jmri.ProgrammingMode;
  * that might be provided later. This is done by connecting through a LocoNetSystemConnectionMemo.
  *
  * @author Bob Jacobsen Copyright (C) 2018
- * @author Andrew Crosland Copyright (C) 2021
  */
 public class LnDeferProgrammer implements Programmer {
 

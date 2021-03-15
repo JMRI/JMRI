@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * TODO Fully support numberformat "113.12" in ProgDebugger (used in LOCONETLNCVMODE and LOCONETBDOPSWMODE)
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007, 2013
- * @author Andrew Crosland Copyright (C) 2021
  */
 public class ProgDebugger extends PropertyChangeSupport implements AddressedProgrammer {
 

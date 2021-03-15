@@ -22,7 +22,6 @@ import javax.annotation.Nonnull;
  *
  * @see jmri.Programmer
  * @author Bob Jacobsen Copyright (C) 2008, 2014
- * @author Andrew Crosland Copyright (C) 2008, 2021
  */
 public class ProgrammerScaffold implements Programmer {
 

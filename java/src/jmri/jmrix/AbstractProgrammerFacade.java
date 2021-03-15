@@ -13,7 +13,6 @@ import jmri.ProgrammingMode;
  * facade classes.
  *
  * @author Bob Jacobsen Copyright (C) 2013
- * @author Andrew Crosland Copyright (C) 2021
  */
 public abstract class AbstractProgrammerFacade implements Programmer {
 
