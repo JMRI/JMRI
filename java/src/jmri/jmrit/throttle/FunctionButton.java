@@ -296,7 +296,7 @@ public class FunctionButton extends JToggleButton {
      */
     @Override
     public void setSelected(boolean newState){
-        log.debug("function selected {}", newState);
+        LOG.debug("function selected {}", newState);
         super.setSelected(newState);
         for (int i = 0; i < listeners.size(); i++) {
             listeners.get(i).notifyFunctionStateChanged(identity, newState);
@@ -459,7 +459,7 @@ public class FunctionButton extends JToggleButton {
             }
             updateLnF();
         } catch (org.jdom2.DataConversionException ex) {
-            log.error("DataConverstionException in setXml: {}", ex);
+            LOG.error("DataConverstionException in setXml: {}", ex);
         }
     }
 
@@ -567,6 +567,6 @@ public class FunctionButton extends JToggleButton {
         return _throttle;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(FunctionButton.class);
+    private final static Logger LOG = LoggerFactory.getLogger(FunctionButton.class);
 
 }
