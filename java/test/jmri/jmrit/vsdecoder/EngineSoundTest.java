@@ -27,6 +27,7 @@ public class EngineSoundTest {
         // this created an audio manager, clean that up
         jmri.InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

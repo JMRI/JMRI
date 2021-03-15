@@ -172,6 +172,7 @@ public class LogixActionTest {
     public void tearDown() {
         InstanceManager.getDefault(WarrantManager.class).dispose();
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

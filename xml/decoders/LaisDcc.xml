@@ -473,7 +473,7 @@
                 <comment xml:lang="cs">Meze 0-255. 0 v CV2, CV6, CV5 způsobí lineární zrychlení.</comment>
                 <tooltip xml:lang="cs">Nastavení napětí na motoru pro střední rychlostní krok. Meze 0-255.</tooltip>
             </variable>
-            <variable CV="7" readOnly="yes" item="Decoder Version" tooltip="Decoder Version, Read Only">
+            <variable CV="7" item="Decoder Version" readOnly="yes" tooltip="Decoder Version, Read Only">
                 <decVal/>
                 <label>Manufacturer Version No: </label>
                 <label xml:lang="it">Versione Decoder: </label>

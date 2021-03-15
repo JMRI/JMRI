@@ -610,12 +610,12 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedStepBox = new JComboBox<>(speedStepModes.toArray(new SpeedStepMode[speedStepModes.size()]));
 
         forwardButton = new JRadioButton();
-        setupButton(forwardButton, preferences, "resources/icons/throttles/up-red.png",
-            "resources/icons/throttles/up-green.png", "ButtonForward");
+        setupButton(forwardButton, preferences, "resources/icons/throttles/dirFwdOff.png",
+            "resources/icons/throttles/dirFwdOn.png", "ButtonForward");
 
         reverseButton = new JRadioButton();
-        setupButton(reverseButton, preferences, "resources/icons/throttles/down-red.png",
-            "resources/icons/throttles/down-green.png", "ButtonReverse");
+        setupButton(reverseButton, preferences, "resources/icons/throttles/dirBckOff.png",
+            "resources/icons/throttles/dirBckOn.png", "ButtonReverse");
 
         propertiesPopup = new JPopupMenu();
 

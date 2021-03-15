@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-      <variable CV="7" readOnly="yes" item="Decoder Version" tooltip="=41-46 for all TCS with Back EMF models, Read Only">
+      <variable CV="7" item="Decoder Version" readOnly="yes" tooltip="=41-46 for all TCS with Back EMF models, Read Only">
         <decVal/>
         <label>Version ID</label>
         <label xml:lang="it">ID Versione</label>

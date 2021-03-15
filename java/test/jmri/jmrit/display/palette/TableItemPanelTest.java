@@ -114,7 +114,7 @@ public class TableItemPanelTest {
             JButtonOperator but = new JButtonOperator(jdo, label);
             but.doClick();
         }).start();
- */       
+ */
         editor.dispose();
     }
 
@@ -127,6 +127,7 @@ public class TableItemPanelTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

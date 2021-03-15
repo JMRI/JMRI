@@ -37,8 +37,8 @@ public class ConditionalListCopyTest {
         Assert.assertNotNull(x3);
 
         ConditionalListCopy listCopy = new ConditionalListCopy("IX102", x3);
-        
-        JFrameOperator copyFrame = new JFrameOperator(Bundle.getMessage("TitleCopyFromLogix", 
+
+        JFrameOperator copyFrame = new JFrameOperator(Bundle.getMessage("TitleCopyFromLogix",
                 listCopy._curLogix.getDisplayName(DisplayOptions.QUOTED_USERNAME_SYSTEMNAME)));
         Assert.assertNotNull(copyFrame);
 
@@ -62,7 +62,7 @@ public class ConditionalListCopyTest {
 
         new JButtonOperator(copyFrame, Bundle.getMessage("ButtonDone")).push();  // NOI18N
     }
-    
+
     @Test
     public void CopyConditionalFullEditTest() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -70,8 +70,8 @@ public class ConditionalListCopyTest {
         Assert.assertNotNull(x3);
 
         ConditionalListCopy listCopy = new ConditionalListCopy("IX102", x3);
-        
-        JFrameOperator copyFrame = new JFrameOperator(Bundle.getMessage("TitleCopyFromLogix", 
+
+        JFrameOperator copyFrame = new JFrameOperator(Bundle.getMessage("TitleCopyFromLogix",
                 listCopy._curLogix.getDisplayName(DisplayOptions.QUOTED_USERNAME_SYSTEMNAME)));
         Assert.assertNotNull(copyFrame);
 
@@ -93,7 +93,7 @@ public class ConditionalListCopyTest {
 
         new JButtonOperator(copyFrame, Bundle.getMessage("ButtonDone")).push();  // NOI18N
     }
-    
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -107,6 +107,7 @@ public class ConditionalListCopyTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

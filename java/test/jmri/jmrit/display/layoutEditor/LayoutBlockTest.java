@@ -43,8 +43,8 @@ public class LayoutBlockTest {
 
         // get a memory and associate it with the layout block.
         Memory mem = jmri.InstanceManager.getDefault(jmri.MemoryManager.class).provideMemory("IM1");
-    
-        layoutBlock.setMemory(mem,"IM1"); 
+
+        layoutBlock.setMemory(mem,"IM1");
 
         // verify the memory is associated
         Assert.assertEquals("memory saved",mem,layoutBlock.getMemory());
@@ -67,8 +67,8 @@ public class LayoutBlockTest {
 
         // get a memory and associate it with the layout block.
         Memory mem = jmri.InstanceManager.getDefault(jmri.MemoryManager.class).provideMemory("IM1");
-    
-        layoutBlock.setMemory(mem,"IM1"); 
+
+        layoutBlock.setMemory(mem,"IM1");
 
         // verify the memory is associated
         Assert.assertEquals("memory saved",mem,layoutBlock.getMemory());
@@ -93,8 +93,8 @@ public class LayoutBlockTest {
 
         // get a memory and associate it with the layout block.
         Memory mem = jmri.InstanceManager.getDefault(jmri.MemoryManager.class).provideMemory("IM1");
-    
-        layoutBlock.setMemory(mem,"IM1"); 
+
+        layoutBlock.setMemory(mem,"IM1");
 
         // verify the memory is associated
         Assert.assertEquals("memory saved",mem,layoutBlock.getMemory());
@@ -125,6 +125,7 @@ public class LayoutBlockTest {
     public void tearDown() throws Exception {
         layoutBlock = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutBlockTest.class);
