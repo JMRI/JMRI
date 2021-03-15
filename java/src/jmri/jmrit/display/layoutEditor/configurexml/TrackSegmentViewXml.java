@@ -285,7 +285,7 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
         }
 
         if ( getAttributeBooleanValue(element, "hideConLines", false) ) {
-            lv.hideConstructionLines(TrackSegment.HIDECON);
+            lv.hideConstructionLines(TrackSegmentView.HIDECON);
         }
         // load decorations
         Element decorationsElement = element.getChild("decorations");
