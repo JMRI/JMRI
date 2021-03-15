@@ -21,7 +21,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>Simulated Connections - Output Interval option added to Additional Connection Settings.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -111,7 +111,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a></h4>
             <ul>
-                <li></li>
+                <li>Simulated Connections - Output Interval option added to Additional Connection Settings.</li>
             </ul>
 
         <h4>RFID</h4>
