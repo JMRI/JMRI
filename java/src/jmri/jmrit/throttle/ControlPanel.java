@@ -1,16 +1,11 @@
 package jmri.jmrit.throttle;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.EnumSet;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.MouseInputAdapter;
 
 import jmri.*;
 import jmri.jmrit.roster.Roster;
@@ -571,9 +566,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         reverseButton = new JRadioButton();
         setupButton(reverseButton, preferences, "resources/icons/throttles/dirBckOff.png",
             "resources/icons/throttles/dirBckOn.png", "ButtonReverse");
-
-        propertiesPopup = new JPopupMenu();
-
+        
         layoutSliderPanel();
         speedControlPanel.add(sliderPanel);
         speedSlider.setOrientation(JSlider.VERTICAL);
@@ -771,11 +764,11 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
         JMenuItem propertiesItem = new JMenuItem(Bundle.getMessage("ControlPanelProperties"));
         propertiesItem.addActionListener(this);
+        propertiesPopup = new JPopupMenu();        
         propertiesPopup.add(propertiesItem);
 
         // Add a mouse listener all components to trigger the popup menu.
-        MouseInputAdapter popupListener = new PopupListener(propertiesPopup, this);
-        MouseInputAdapterInstaller.installMouseInputAdapterOnAllComponents(popupListener, this);
+        MouseInputAdapterInstaller.installMouseListenerOnAllComponents(new PopupListener(), this);
 
         // set by default which speed selection method is on top
         setSpeedController(_displaySlider);
@@ -913,8 +906,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        ControlPanelPropertyEditor editor
-                = new ControlPanelPropertyEditor(this);
+        ControlPanelPropertyEditor editor = new ControlPanelPropertyEditor(this);
+        editor.setLocation(this.getLocationOnScreen());
         editor.setVisible(true);
     }
 
@@ -922,54 +915,40 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * A PopupListener to handle mouse clicks and releases. Handles the popup
      * menu.
      */
-    static class PopupListener extends MouseInputAdapter {
-
-        private final JPopupMenu _menu;
-        private final JInternalFrame parentFrame;
-
-        PopupListener(JPopupMenu menu, JInternalFrame parent) {
-            parentFrame = parent;
-            _menu = menu;
-        }
-
+    private class PopupListener extends MouseAdapter {
         /**
          * If the event is the popup trigger, which is dependent on the
-         * platform, present the popup menu. Otherwise change the state of the
-         * function depending on the locking state of the button.
-         *
+         * platform, present the popup menu.
+         * @param e The MouseEvent causing the action.
+         */
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            checkTrigger(e);
+        }
+        
+        /**
+         * If the event is the popup trigger, which is dependent on the
+         * platform, present the popup menu.
          * @param e The MouseEvent causing the action.
          */
         @Override
         public void mousePressed(MouseEvent e) {
-            if (e.isPopupTrigger() && parentFrame.isSelected()) {
-                try {
-                    _menu.show(e.getComponent(),
-                            e.getX(), e.getY());
-                } catch (java.awt.IllegalComponentStateException cs) {
-                    // Message sent to a hidden component, so we need
-                }
-                e.consume();
-            }
+            checkTrigger( e);
         }
 
         /**
          * If the event is the popup trigger, which is dependent on the
-         * platform, present the popup menu. Otherwise change the state of the
-         * function depending on the locking state of the button.
-         *
+         * platform, present the popup menu.
          * @param e The MouseEvent causing the action.
          */
         @Override
         public void mouseReleased(MouseEvent e) {
+            checkTrigger( e);
+        }
+        
+        private void checkTrigger( MouseEvent e) {
             if (e.isPopupTrigger()) {
-                try {
-                    _menu.show(e.getComponent(),
-                            e.getX(), e.getY());
-                } catch (java.awt.IllegalComponentStateException cs) {
-                    // Message sent to a hidden component, so we need
-                }
-
-                e.consume();
+                propertiesPopup.show(e.getComponent(), e.getX(), e.getY());
             }
         }
     }
