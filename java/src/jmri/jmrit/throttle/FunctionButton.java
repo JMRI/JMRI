@@ -42,7 +42,6 @@ public class FunctionButton extends JToggleButton {
     private boolean dirty = false;
     private boolean isImageOK = false;
     private boolean isSelectedImageOK = false;
-    private int actionKey;
     private String buttonLabel;
     private final JPopupMenu popup;
     private String iconPath;
@@ -123,29 +122,6 @@ public class FunctionButton extends JToggleButton {
      */
     public int getIdentity() {
         return identity;
-    }
-
-    /**
-     * Set the keycode that this button should respond to.
-     * <p>
-     * Later, when a key is being processed, checkKeyCode will determine if
-     * there's a match between the key that was pressed and the key for this
-     * button
-     * @param key KeyCode value.
-     */
-    public void setKeyCode(int key) {
-        actionKey = key;
-    }
-
-    /**
-     * Check to see whether a particular KeyCode corresponds to this function
-     * button.
-     *
-     * @param keycode keycode to check against.
-     * @return true if the button should respond to this key
-     */
-    public boolean checkKeyCode(int keycode) {
-        return keycode == actionKey;
     }
 
     /**

@@ -1,20 +1,11 @@
 package jmri.jmrit.throttle;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseWheelEvent;
 import java.util.EnumSet;
 
 import javax.swing.*;
@@ -26,6 +17,7 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.MouseInputAdapterInstaller;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 
@@ -83,17 +75,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     private final long trackSliderMinIntervalMin = 50;       // milliseconds
     private final long trackSliderMinIntervalMax = 1000;     // milliseconds
     private long lastTrackedSliderMovementTime = 0;
-
-    public int accelerateKey = 107; // numpad +;
-    public int decelerateKey = 109; // numpad -;
-    public int accelerateKey1 = KeyEvent.VK_LEFT; // Left Arrow
-    public int decelerateKey1 = KeyEvent.VK_RIGHT; // Left Arrow
-    public int accelerateKey2 = KeyEvent.VK_PAGE_UP; // Left Arrow
-    public int decelerateKey2 = KeyEvent.VK_PAGE_DOWN; // Left Arrow
-    public int reverseKey = KeyEvent.VK_DOWN;
-    public int forwardKey = KeyEvent.VK_UP;
-    public int stopKey = 111; // numpad /
-    public int idleKey = 106; // numpad *
 
     // LocoNet really only has 126 speed steps i.e. 0..127 - 1 for em stop
     private int intSpeedSteps = 126;
@@ -565,19 +546,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSlider.setValue(0);
         speedSlider.setFocusable(false);
 
-        // add mouse-wheel support
-        speedSlider.addMouseWheelListener((MouseWheelEvent e) -> {
-            if (e.getWheelRotation() > 0) {
-                for (int i = 0; i < e.getScrollAmount(); i++) {
-                    decelerate1();
-                }
-            } else {
-                for (int i = 0; i < e.getScrollAmount(); i++) {
-                    accelerate1();
-                }
-            }
-        });
-
         speedSliderContinuous = new JSlider(-intSpeedSteps, intSpeedSteps);
         if (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()) {
             speedSliderContinuous.setUI(new ControlPanelCustomSliderUI(speedSlider));
@@ -585,19 +553,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSliderContinuous.setValue(0);
         speedSliderContinuous.setOpaque(false);
         speedSliderContinuous.setFocusable(false);
-
-        // add mouse-wheel support
-        speedSliderContinuous.addMouseWheelListener((MouseWheelEvent e) -> {
-            if (e.getWheelRotation() > 0) {
-                for (int i = 0; i < e.getScrollAmount(); i++) {
-                    decelerate1();
-                }
-            } else {
-                for (int i = 0; i < e.getScrollAmount(); i++) {
-                    accelerate1();
-                }
-            }
-        });
 
         speedSpinner = new JSpinner();
 
@@ -788,29 +743,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             stop();
         });
 
-        stopButton.addMouseListener(
-                new MouseListener() {
-                    @Override
-                    public void mousePressed(MouseEvent e) {
-                        stop();
-                    }
-
-                    @Override
-                    public void mouseExited(MouseEvent e) {
-                    }
-
-                    @Override
-                    public void mouseEntered(MouseEvent e) {
-                    }
-
-                    @Override
-                    public void mouseReleased(MouseEvent e) {
-                    }
-
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                    }
-                });
         idleButton = new JButton();
         setupButton(idleButton, preferences, "resources/icons/throttles/stop.png",
             "resources/icons/throttles/stop24.png", "ButtonIdle");
@@ -845,12 +777,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         MouseInputAdapter popupListener = new PopupListener(propertiesPopup, this);
         MouseInputAdapterInstaller.installMouseInputAdapterOnAllComponents(popupListener, this);
 
-        // Install the Key bindings on all Components
-        KeyListenerInstaller.installKeyListenerOnAllComponents(new ControlPadKeyListener(), this);
-
         // set by default which speed selection method is on top
         setSpeedController(_displaySlider);
-    }
+    }    
 
     /**
      * Perform an emergency stop.
@@ -891,143 +820,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             }
             mainPanel.remove(buttonPanel);
             mainPanel.add(buttonPanel, BorderLayout.SOUTH);
-        }
-    }
-
-    /* Accelerate of 1
-     *
-     */
-    private void accelerate1() {
-        if (speedSlider.isEnabled()) {
-            if (speedSlider.getValue() != speedSlider.getMaximum()) {
-                speedSlider.setValue(speedSlider.getValue() + 1);
-            }
-        } else if (speedSpinner != null && speedSpinner.isEnabled()) {
-            if (((Integer) speedSpinner.getValue()) < ((Integer) speedSpinnerModel.getMaximum())
-                    && ((Integer) speedSpinner.getValue()) >= ((Integer) speedSpinnerModel.getMinimum())) {
-                speedSpinner.setValue(((Integer) speedSpinner.getValue()) + 1);
-            }
-        } else if (speedSliderContinuous != null && speedSliderContinuous.isEnabled()) {
-            if (speedSliderContinuous.getValue() != speedSliderContinuous.getMaximum()) {
-                speedSliderContinuous.setValue(speedSliderContinuous.getValue() + 1);
-            }
-        }
-    }
-
-    /* Accelerate of 10
-     *
-     */
-    private void accelerate10() {
-        if (speedSlider.isEnabled()) {
-            if (speedSlider.getValue() != speedSlider.getMaximum()) {
-                speedSlider.setValue(speedSlider.getValue() + 10);
-            }
-        } else if (speedSpinner != null && speedSpinner.isEnabled()) {
-            if (((Integer) speedSpinner.getValue()) < ((Integer) speedSpinnerModel.getMaximum())
-                    && ((Integer) speedSpinner.getValue()) >= ((Integer) speedSpinnerModel.getMinimum())) {
-                Integer speedvalue = ((Integer) speedSpinner.getValue()) + 10;
-                if (speedvalue < ((Integer) speedSpinnerModel.getMaximum())) {
-                    speedSpinner.setValue(speedvalue);
-                } else {
-                    speedSpinner.setValue(speedSpinnerModel.getMaximum());
-                }
-            }
-        } else if (speedSliderContinuous != null && speedSliderContinuous.isEnabled()) {
-            if (speedSliderContinuous.getValue() != speedSliderContinuous.getMaximum()) {
-                speedSliderContinuous.setValue(speedSliderContinuous.getValue() + 10);
-            }
-        }
-    }
-
-    /* Decelerate of 1
-     *
-     */
-    private void decelerate1() {
-        if (speedSlider.isEnabled()) {
-            if (speedSlider.getValue() != speedSlider.getMinimum()) {
-                speedSlider.setValue(speedSlider.getValue() - 1);
-            }
-        } else if (speedSpinner != null && speedSpinner.isEnabled()) {
-            if (((Integer) speedSpinner.getValue()) <= ((Integer) speedSpinnerModel.getMaximum())
-                    && ((Integer) speedSpinner.getValue()) > ((Integer) speedSpinnerModel.getMinimum())) {
-                speedSpinner.setValue(((Integer) speedSpinner.getValue()) - 1);
-            }
-        } else if (speedSliderContinuous != null && speedSliderContinuous.isEnabled()) {
-            if (speedSliderContinuous.getValue() != speedSliderContinuous.getMinimum()) {
-                speedSliderContinuous.setValue(speedSliderContinuous.getValue() - 1);
-            }
-        }
-    }
-
-    /* Decelerate of 10
-     *
-     */
-    private void decelerate10() {
-        if (speedSlider.isEnabled()) {
-            if (speedSlider.getValue() != speedSlider.getMinimum()) {
-                speedSlider.setValue(speedSlider.getValue() - 10);
-            }
-        } else if (speedSpinner != null && speedSpinner.isEnabled()) {
-            if (((Integer) speedSpinner.getValue()) <= ((Integer) speedSpinnerModel.getMaximum())
-                    && ((Integer) speedSpinner.getValue()) > ((Integer) speedSpinnerModel.getMinimum())) {
-                Integer speedvalue = ((Integer) speedSpinner.getValue()) - 10;
-                if (speedvalue > ((Integer) speedSpinnerModel.getMinimum())) {
-                    speedSpinner.setValue(speedvalue);
-                } else {
-                    speedSpinner.setValue(speedSpinnerModel.getMinimum());
-                }
-            }
-        } else if (speedSliderContinuous != null && speedSliderContinuous.isEnabled()) {
-            if (speedSliderContinuous.getValue() != speedSliderContinuous.getMinimum()) {
-                speedSliderContinuous.setValue(speedSliderContinuous.getValue() - 10);
-            }
-        }
-    }
-
-    /**
-     * A KeyAdapter that listens for the keys that work the control pad buttons
-     *
-     * @author glen
-     */
-    class ControlPadKeyListener extends KeyAdapter {
-
-        /**
-         * Description of the Method
-         *
-         * @param e Description of the Parameter
-         */
-        @Override
-        public void keyPressed(KeyEvent e) {
-            if (e.isAltDown() || e.isControlDown() || e.isMetaDown() || e.isShiftDown()) {
-                return; // we don't want speed change while changing Frame/Panel/Window
-            }
-            if ((e.getKeyCode() == accelerateKey) || (e.getKeyCode() == accelerateKey1)) {
-                accelerate1();
-            } else if (e.getKeyCode() == accelerateKey2) {
-                accelerate10();
-            } else if ((e.getKeyCode() == decelerateKey) || (e.getKeyCode() == decelerateKey1)) {
-                decelerate1();
-            } else if (e.getKeyCode() == decelerateKey2) {
-                decelerate10();
-            } else if (e.getKeyCode() == forwardKey) {
-                if (forwardButton.isEnabled()) {
-                    forwardButton.doClick();
-                }
-            } else if (e.getKeyCode() == reverseKey) {
-                if (reverseButton.isEnabled()) {
-                    reverseButton.doClick();
-                }
-            } else if (e.getKeyCode() == stopKey) {
-                if (speedSlider.isEnabled()
-                        || (speedSpinner != null && speedSpinner.isEnabled())) {
-                    stop();
-                }
-            } else if (e.getKeyCode() == idleKey) {
-                if (speedSlider.isEnabled()
-                        || (speedSpinner != null && speedSpinner.isEnabled())) {
-                    speedSlider.setValue(0);
-                }
-            }
         }
     }
 
@@ -1149,9 +941,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
          */
         @Override
         public void mousePressed(MouseEvent e) {
-            if (log.isDebugEnabled()) {
-                log.debug("pressed {} {} {}" + (" " + MouseEvent.ALT_DOWN_MASK + "/" + MouseEvent.META_DOWN_MASK + "/" + MouseEvent.CTRL_DOWN_MASK), e.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK, e.isPopupTrigger(), e.getModifiersEx() & (MouseEvent.ALT_DOWN_MASK + MouseEvent.META_DOWN_MASK + MouseEvent.CTRL_DOWN_MASK));
-            }
             if (e.isPopupTrigger() && parentFrame.isSelected()) {
                 try {
                     _menu.show(e.getComponent(),
@@ -1172,9 +961,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
          */
         @Override
         public void mouseReleased(MouseEvent e) {
-            if (log.isDebugEnabled()) {
-                log.debug("released {} {} {}", e.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK, e.isPopupTrigger(), e.getModifiersEx() & (MouseEvent.ALT_DOWN_MASK + InputEvent.META_DOWN_MASK + MouseEvent.CTRL_DOWN_MASK));
-            }
             if (e.isPopupTrigger()) {
                 try {
                     _menu.show(e.getComponent(),

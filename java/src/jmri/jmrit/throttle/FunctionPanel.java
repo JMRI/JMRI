@@ -1,20 +1,20 @@
 package jmri.jmrit.throttle;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.*;
 import java.util.Arrays;
+
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.WindowConstants;
+
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
 import jmri.Throttle;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -178,7 +178,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         mainPanel.add(alt2Button);
 
         resetFnButtons();
-        KeyListenerInstaller.installKeyListenerOnAllComponents(new FunctionButtonKeyListener(), this);
     }
 
     /**
@@ -247,36 +246,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                 functionButton[i].setVisible(true);
             }
         }
-        functionButton[0].setKeyCode(KeyEvent.VK_NUMPAD0);
-        functionButton[1].setKeyCode(KeyEvent.VK_NUMPAD1);
-        functionButton[2].setKeyCode(KeyEvent.VK_NUMPAD2);
-        functionButton[3].setKeyCode(KeyEvent.VK_NUMPAD3);
-        functionButton[4].setKeyCode(KeyEvent.VK_NUMPAD4);
-        functionButton[5].setKeyCode(KeyEvent.VK_NUMPAD5);
-        functionButton[6].setKeyCode(KeyEvent.VK_NUMPAD6);
-        functionButton[7].setKeyCode(KeyEvent.VK_NUMPAD7);
-        functionButton[8].setKeyCode(KeyEvent.VK_NUMPAD8);
-        functionButton[9].setKeyCode(KeyEvent.VK_NUMPAD9);
-        functionButton[10].setKeyCode(110); // numpad decimal (f10 button causes problems)
-        functionButton[11].setKeyCode(KeyEvent.VK_F11);
-        functionButton[12].setKeyCode(KeyEvent.VK_F12);
-        functionButton[13].setKeyCode(KeyEvent.VK_F13);
-        functionButton[14].setKeyCode(KeyEvent.VK_F14);
-        functionButton[15].setKeyCode(KeyEvent.VK_F15);
-        functionButton[16].setKeyCode(KeyEvent.VK_F16);
-        functionButton[17].setKeyCode(KeyEvent.VK_F17);
-        functionButton[18].setKeyCode(KeyEvent.VK_F18);
-        functionButton[19].setKeyCode(KeyEvent.VK_F19);
-        functionButton[20].setKeyCode(KeyEvent.VK_F20);
-        functionButton[21].setKeyCode(KeyEvent.VK_F21);
-        functionButton[22].setKeyCode(KeyEvent.VK_F22);
-        functionButton[23].setKeyCode(KeyEvent.VK_F23);
-        functionButton[24].setKeyCode(KeyEvent.VK_F24);
-        functionButton[25].setKeyCode(0xF00C);   // keycodes 25 - 28 don't exist in KeyEvent
-        functionButton[26].setKeyCode(0xF00D);
-        functionButton[27].setKeyCode(0xF00E);
-        functionButton[28].setKeyCode(0xF00F);
-
         alt1Button.setVisible(true);
         alt2Button.setVisible(true);
         buttonActionCmdPerformed();
@@ -331,44 +300,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                 alt1Button.setVisible(false);
                 alt2Button.setVisible(false);
             }
-        }
-    }
-
-    /**
-     * A KeyAdapter that listens for the keys that work the function buttons.
-     *
-     * @author glen
-     */
-    private class FunctionButtonKeyListener extends KeyAdapter {
-
-        private boolean keyReleased = true;
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void keyPressed(KeyEvent e) {
-            if (keyReleased) {
-                for (int i = 0; i < NUM_FUNCTION_BUTTONS; i++) {
-                    if (functionButton[i].checkKeyCode(e.getKeyCode())) {
-                        functionButton[i].setState(!functionButton[i].isSelected());
-                    }
-                }
-            }
-            keyReleased = false;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void keyReleased(KeyEvent e) {
-            for (int i = 0; i < NUM_FUNCTION_BUTTONS; i++) {
-                if ((functionButton[i].checkKeyCode(e.getKeyCode())) && (!functionButton[i].getIsLockable())) {
-                    functionButton[i].setState(!functionButton[i].isSelected());
-                }
-            }
-            keyReleased = true;
         }
     }
 

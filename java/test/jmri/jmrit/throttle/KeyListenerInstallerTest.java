@@ -13,7 +13,7 @@ public class KeyListenerInstallerTest {
 
     @Test
     public void testCTor() {
-        KeyListenerInstaller t = new KeyListenerInstaller();
+        InputsListenerInstaller t = new InputsListenerInstaller();
         Assert.assertNotNull("exists",t);
     }
 
