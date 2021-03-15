@@ -196,6 +196,139 @@ public class TrackSegmentViewTest extends LayoutTrackViewTest {
         }
     }
 
+    @Test
+    public void testConstructionLinesRead() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        segmentView.showConstructionLine = 0;
+        Assert.assertTrue("From 0", segmentView.isShowConstructionLines());
+        Assert.assertTrue("From 0", segmentView.hideConstructionLines());
+
+        segmentView.showConstructionLine = TrackSegmentView.HIDECONALL;
+        Assert.assertFalse("HIDECONALL", segmentView.isShowConstructionLines());
+        Assert.assertTrue("HIDECONALL", segmentView.hideConstructionLines());
+
+        segmentView.showConstructionLine = TrackSegmentView.HIDECON;
+        Assert.assertFalse("HIDECON", segmentView.isShowConstructionLines());
+        Assert.assertTrue("HIDECON", segmentView.hideConstructionLines());
+
+        segmentView.showConstructionLine = TrackSegmentView.SHOWCON;
+        Assert.assertTrue("SHOWCON", segmentView.isShowConstructionLines());
+        Assert.assertFalse("SHOWCON", segmentView.hideConstructionLines());
+
+        segmentView.showConstructionLine = TrackSegmentView.SHOWCON | TrackSegmentView.HIDECON | TrackSegmentView.HIDECONALL;
+        Assert.assertFalse("all", segmentView.isShowConstructionLines());
+        Assert.assertFalse("all", segmentView.hideConstructionLines());
+
+    }
+
+    @Test
+    public void hideConstructionLinesOfInt() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        segmentView.showConstructionLine = 0;
+        segmentView.hideConstructionLines(TrackSegmentView.SHOWCON);
+        Assert.assertEquals(segmentView.showConstructionLine, TrackSegmentView.SHOWCON);
+
+        segmentView.showConstructionLine = 0;
+        segmentView.hideConstructionLines(TrackSegmentView.HIDECON);
+        Assert.assertEquals(segmentView.showConstructionLine, TrackSegmentView.HIDECON);
+
+        segmentView.showConstructionLine = 0;
+        segmentView.hideConstructionLines(TrackSegmentView.HIDECONALL);
+        Assert.assertEquals(segmentView.showConstructionLine, TrackSegmentView.HIDECONALL);
+
+        // ----
+        segmentView.showConstructionLine = TrackSegmentView.SHOWCON;
+        segmentView.hideConstructionLines(TrackSegmentView.SHOWCON);
+        Assert.assertEquals(segmentView.showConstructionLine, TrackSegmentView.SHOWCON);
+
+        segmentView.showConstructionLine = TrackSegmentView.SHOWCON;
+        segmentView.hideConstructionLines(TrackSegmentView.HIDECON);
+        Assert.assertEquals(segmentView.showConstructionLine, TrackSegmentView.HIDECON);
+
+        segmentView.showConstructionLine = TrackSegmentView.SHOWCON;
+        segmentView.hideConstructionLines(TrackSegmentView.HIDECONALL);
+        Assert.assertEquals(segmentView.showConstructionLine, TrackSegmentView.SHOWCON | TrackSegmentView.HIDECONALL);
+
+        // ----
+        segmentView.showConstructionLine = TrackSegmentView.HIDECON;
+        segmentView.hideConstructionLines(TrackSegmentView.SHOWCON);
+        Assert.assertEquals(segmentView.showConstructionLine, TrackSegmentView.SHOWCON);
+
+        segmentView.showConstructionLine = TrackSegmentView.HIDECON;
+        segmentView.hideConstructionLines(TrackSegmentView.HIDECON);
+        Assert.assertEquals(segmentView.showConstructionLine, TrackSegmentView.HIDECON);
+
+        segmentView.showConstructionLine = TrackSegmentView.HIDECON;
+        segmentView.hideConstructionLines(TrackSegmentView.HIDECONALL);
+        Assert.assertEquals(segmentView.showConstructionLine, TrackSegmentView.HIDECON | TrackSegmentView.HIDECONALL);
+
+        // ----
+        segmentView.showConstructionLine = TrackSegmentView.HIDECONALL;
+        segmentView.hideConstructionLines(TrackSegmentView.SHOWCON);
+        Assert.assertEquals(segmentView.showConstructionLine, 0);
+
+        segmentView.showConstructionLine = TrackSegmentView.HIDECONALL;
+        segmentView.hideConstructionLines(TrackSegmentView.HIDECON);
+        Assert.assertEquals(segmentView.showConstructionLine, TrackSegmentView.HIDECON);
+
+        segmentView.showConstructionLine = TrackSegmentView.HIDECONALL;
+        segmentView.hideConstructionLines(TrackSegmentView.HIDECONALL);
+        Assert.assertEquals(segmentView.showConstructionLine, TrackSegmentView.HIDECONALL);
+
+        // ----
+        segmentView.showConstructionLine = TrackSegmentView.HIDECON | TrackSegmentView.HIDECONALL;
+        segmentView.hideConstructionLines(TrackSegmentView.SHOWCON);
+        Assert.assertEquals(segmentView.showConstructionLine, TrackSegmentView.HIDECON);
+
+        segmentView.showConstructionLine = TrackSegmentView.HIDECON | TrackSegmentView.HIDECONALL;
+        segmentView.hideConstructionLines(TrackSegmentView.HIDECON);
+        Assert.assertEquals(segmentView.showConstructionLine, TrackSegmentView.HIDECON);
+
+        segmentView.showConstructionLine = TrackSegmentView.HIDECON | TrackSegmentView.HIDECONALL;
+        segmentView.hideConstructionLines(TrackSegmentView.HIDECONALL);
+        Assert.assertEquals(segmentView.showConstructionLine, TrackSegmentView.HIDECON | TrackSegmentView.HIDECONALL);
+
+        // ----
+        segmentView.showConstructionLine = TrackSegmentView.SHOWCON | TrackSegmentView.HIDECONALL;
+        segmentView.hideConstructionLines(TrackSegmentView.SHOWCON);
+        Assert.assertEquals(segmentView.showConstructionLine, TrackSegmentView.SHOWCON);
+
+        segmentView.showConstructionLine = TrackSegmentView.SHOWCON | TrackSegmentView.HIDECONALL;
+        segmentView.hideConstructionLines(TrackSegmentView.HIDECON);
+        Assert.assertEquals(segmentView.showConstructionLine, TrackSegmentView.HIDECON);
+
+        segmentView.showConstructionLine = TrackSegmentView.SHOWCON | TrackSegmentView.HIDECONALL;
+        segmentView.hideConstructionLines(TrackSegmentView.HIDECONALL);
+        Assert.assertEquals(segmentView.showConstructionLine, TrackSegmentView.SHOWCON | TrackSegmentView.HIDECONALL);
+
+        // ----
+        segmentView.showConstructionLine = TrackSegmentView.SHOWCON | TrackSegmentView.HIDECON;
+        segmentView.hideConstructionLines(TrackSegmentView.SHOWCON);
+        Assert.assertEquals(segmentView.showConstructionLine, TrackSegmentView.SHOWCON);
+
+        segmentView.showConstructionLine = TrackSegmentView.SHOWCON | TrackSegmentView.HIDECON;
+        segmentView.hideConstructionLines(TrackSegmentView.HIDECON);
+        Assert.assertEquals(segmentView.showConstructionLine, TrackSegmentView.HIDECON);
+
+        segmentView.showConstructionLine = TrackSegmentView.SHOWCON | TrackSegmentView.HIDECON;
+        segmentView.hideConstructionLines(TrackSegmentView.HIDECONALL);
+        Assert.assertEquals(segmentView.showConstructionLine, TrackSegmentView.SHOWCON | TrackSegmentView.HIDECON | TrackSegmentView.HIDECONALL);
+
+        // ----
+        segmentView.showConstructionLine = TrackSegmentView.SHOWCON | TrackSegmentView.HIDECON | TrackSegmentView.HIDECONALL;
+        segmentView.hideConstructionLines(TrackSegmentView.SHOWCON);
+        Assert.assertEquals(segmentView.showConstructionLine, TrackSegmentView.SHOWCON | TrackSegmentView.HIDECON);
+
+        segmentView.showConstructionLine = TrackSegmentView.SHOWCON | TrackSegmentView.HIDECON | TrackSegmentView.HIDECONALL;
+        segmentView.hideConstructionLines(TrackSegmentView.HIDECON);
+        Assert.assertEquals(segmentView.showConstructionLine, TrackSegmentView.HIDECON);
+
+        segmentView.showConstructionLine = TrackSegmentView.SHOWCON | TrackSegmentView.HIDECON | TrackSegmentView.HIDECONALL;
+        segmentView.hideConstructionLines(TrackSegmentView.HIDECONALL);
+        Assert.assertEquals(segmentView.showConstructionLine, TrackSegmentView.SHOWCON | TrackSegmentView.HIDECON | TrackSegmentView.HIDECONALL);
+    }
 
     /*
         Bridge Decorations

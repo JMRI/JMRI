@@ -1408,12 +1408,14 @@ public class TrainBuilder extends TrainCommon {
             // all cars with FRED departing staging must leave with train
             if (car.getTrack() == departTrack) {
                 foundCarWithFred = false;
-                // departing and terminating into staging?
-                if (car.getTrack().isAddCustomLoadsAnyStagingTrackEnabled() &&
-                        rld.getLocation() == _terminateLocation &&
-                        _terminateStageTrack != null) {
-                    // try and generate a custom load for this car with FRED
-                    generateLoadCarDepartingAndTerminatingIntoStaging(car, _terminateStageTrack);
+                if (!generateCarLoadFromStaging(car, rld)) {
+                    // departing and terminating into staging?
+                    if (car.getTrack().isAddCustomLoadsAnyStagingTrackEnabled() &&
+                            rld.getLocation() == _terminateLocation &&
+                            _terminateStageTrack != null) {
+                        // try and generate a custom load for this car with FRED
+                        generateLoadCarDepartingAndTerminatingIntoStaging(car, _terminateStageTrack);
+                    }
                 }
                 if (checkAndAddCarForDestinationAndTrack(car, rl, rld)) {
                     if (car.getTrain() == _train) {
@@ -1521,12 +1523,14 @@ public class TrainBuilder extends TrainCommon {
             // car departing staging must leave with train
             if (car.getTrack() == departTrack) {
                 foundCaboose = false;
-                // departing and terminating into staging?
-                if (car.getTrack().isAddCustomLoadsAnyStagingTrackEnabled() &&
-                        rld.getLocation() == _terminateLocation &&
-                        _terminateStageTrack != null) {
-                    // try and generate a custom load for this caboose
-                    generateLoadCarDepartingAndTerminatingIntoStaging(car, _terminateStageTrack);
+                if (!generateCarLoadFromStaging(car, rld)) {
+                    // departing and terminating into staging?
+                    if (car.getTrack().isAddCustomLoadsAnyStagingTrackEnabled() &&
+                            rld.getLocation() == _terminateLocation &&
+                            _terminateStageTrack != null) {
+                        // try and generate a custom load for this caboose
+                        generateLoadCarDepartingAndTerminatingIntoStaging(car, _terminateStageTrack);
+                    }
                 }
                 if (checkAndAddCarForDestinationAndTrack(car, rl, rld)) {
                     if (car.getTrain() == _train) {
@@ -3623,6 +3627,10 @@ public class TrainBuilder extends TrainCommon {
         log.debug("routeToSpurFound is {}", routeToTrackFound);
         return routeToTrackFound; // done
     }
+    
+    private boolean generateCarLoadFromStaging(Car car) throws BuildFailedException {
+        return generateCarLoadFromStaging(car, null);
+    }
 
     /**
      * Used to generate a car's load from staging. Search for a spur with a schedule
@@ -3631,7 +3639,7 @@ public class TrainBuilder extends TrainCommon {
      * @param car the car
      * @throws BuildFailedException
      */
-    private boolean generateCarLoadFromStaging(Car car) throws BuildFailedException {
+    private boolean generateCarLoadFromStaging(Car car, RouteLocation rld) throws BuildFailedException {
         // Code Check, car should have a track assignment
         if (car.getTrack() == null) {
             throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorRsNoLoc"),
@@ -3659,7 +3667,8 @@ public class TrainBuilder extends TrainCommon {
             return false; // no load generated for this car
         }
         addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildSearchTrackNewLoad"), new Object[] {
-                car.toString(), car.getTypeName(), car.getLoadName(), car.getLocationName(), car.getTrackName() }));
+                car.toString(), car.getTypeName(), car.getLoadName(), car.getLocationName(), car.getTrackName(),
+                rld != null ? rld.getLocation().getName() : ""}));
         // check to see if car type has custom loads
         if (carLoads.getNames(car.getTypeName()).size() == 2) {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarNoCustomLoad"),
@@ -3678,6 +3687,10 @@ public class TrainBuilder extends TrainCommon {
         List<Location> locationsNotServiced = new ArrayList<>();
         for (Track track : tracks) {
             if (locationsNotServiced.contains(track.getLocation())) {
+                continue;
+            }
+            if (rld != null && track.getLocation() != rld.getLocation()) {
+                locationsNotServiced.add(track.getLocation());
                 continue;
             }
             if (!car.getTrack().isDestinationAccepted(track.getLocation())) {
@@ -4872,7 +4885,7 @@ public class TrainBuilder extends TrainCommon {
                 loads.remove(i);
                 continue;
             }
-            // are there trains that can carry the car type and load to the staging track?   
+            // are there trains that can carry the car type and load to the staging track?
             car.setLoadName(load);
             if (!router.isCarRouteable(car, _train, stageTrack, _buildReport)) {
                 loads.remove(i); // no remove this load
