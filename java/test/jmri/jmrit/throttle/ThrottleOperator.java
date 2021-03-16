@@ -241,8 +241,8 @@ public class ThrottleOperator extends JFrameOperator {
         openFunctionPopupMenu(function);
         JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("ButtonEditFunction"));
         (new JCheckBoxOperator(jdo, Bundle.getMessage("CheckBoxLockable"))).doClick();
-        (new JButtonOperator(jdo, Bundle.getMessage("ButtonOK"))).doClick();
-
+        (new JButtonOperator(jdo, Bundle.getMessage("ButtonApply"))).doClick();
+        (new JButtonOperator(jdo, Bundle.getMessage("ButtonClose"))).doClick();
     }
 
     // Control (Speed and Direction) panel operations
@@ -307,7 +307,8 @@ public class ThrottleOperator extends JFrameOperator {
         openControlPanelPopupMenu();
         JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("TitleEditSpeedControlPanel"));
         (new JRadioButtonOperator(jdo, Bundle.getMessage("ButtonDisplaySpeedSteps"))).doClick();
-        (new JButtonOperator(jdo, Bundle.getMessage("ButtonOK"))).doClick();
+        (new JButtonOperator(jdo, Bundle.getMessage("ButtonApply"))).doClick();
+        (new JButtonOperator(jdo, Bundle.getMessage("ButtonClose"))).doClick();
 
     }
 
