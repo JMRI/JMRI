@@ -31,6 +31,7 @@ public class PanelEditorAction extends AbstractAction {
         }
         PanelEditor frame = new PanelEditor(name);
         InstanceManager.getDefault(EditorManager.class).add(frame);
+        InstanceManager.getDefault(EditorManager.class).setChanged(true);
         frame.setLocation(20, 20);
 
         frame.setTitle();

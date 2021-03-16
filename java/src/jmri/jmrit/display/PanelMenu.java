@@ -44,21 +44,15 @@ public class PanelMenu extends JMenu {
                 .forEach(factory -> newPanel.add(factory.createAction()));
         super.add(newPanel);
 
-        super.add(new jmri.configurexml.LoadXmlUserAction(Bundle.getMessage("MenuItemLoad")));
-        super.add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("MenuItemStore")));
-        super.add(new jmri.jmrit.revhistory.swing.FileHistoryAction(Bundle.getMessage("MenuItemShowHistory")));
-        super.add(new JSeparator());
         panelsSubMenu = new JMenu(Bundle.getMessage("MenuShowPanel"));
         // Add the 'No Panels' item to the sub-menu
         noPanelsItem = new JMenuItem(Bundle.getMessage("MenuItemNoPanels"));
         noPanelsItem.setEnabled(false);
         panelsSubMenu.add(noPanelsItem);
         super.add(panelsSubMenu);
-        super.add(new JSeparator());
-        super.add(new jmri.jmrit.jython.RunJythonScript(Bundle.getMessage("MenuItemScript")));
-        super.add(new jmri.jmrit.automat.monitor.AutomatTableAction(Bundle.getMessage("MenuItemMonitor")));
-        super.add(new jmri.jmrit.jython.JythonWindow(Bundle.getMessage("MenuItemScriptLog")));
-        super.add(new jmri.jmrit.jython.InputWindowAction(Bundle.getMessage("MenuItemScriptInput")));
+
+        super.add(new jmri.jmrit.display.PanelDeleteAction(Bundle.getMessage("MenuItemDeletePanel")));  // NOI18N
+
         InstanceManager.getDefault(EditorManager.class).addPropertyChangeListener(listener);
         updateMenu(null);
     }
@@ -68,7 +62,9 @@ public class PanelMenu extends JMenu {
         panelsSubMenu.removeAll();
         if (editors.isEmpty()) {
             panelsSubMenu.add(noPanelsItem);
+            this.getItem(2).setEnabled(false);  // Disable Delete Panel...
         } else {
+            this.getItem(2).setEnabled(true);   // Enable Delete Panel...
             editors.forEach(editor -> {
                 JMenuItem menuItem = new JMenuItem(editor.getTitle());
                 ActionListener action = event -> {

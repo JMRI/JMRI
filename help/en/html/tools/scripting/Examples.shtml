@@ -30,7 +30,9 @@
 
       <p>To run one of these scripts, start DecoderPro or PanelPro (set
       preferences to "LocoNet Simulator" to run without connecting
-      to a layout), then under the Panels manu, select Run Script.
+      to a layout), then under the <strong>Scripting</strong>
+      {<em>Old: <strong>Panels</strong></em>} menu, select <strong>Run Script</strong>.
+      In DecoderPro, Run Script is in the <strong>Actions</strong> menu.
       Find and select the desired script file in the "jython" folder of
       the JMRI program directory and click the Run button.</p>
 
@@ -176,7 +178,8 @@
       it causes the data to be displayed on the Java console and the
       "Data entry" panel to disappear. To see the output on the
       Java console you need to open the Java console or select
-      "Script Output" from the JMRI "Panels" menu.</p>
+      <strong>Script Output</strong> from the PanelPro <strong>Scripting</strong>
+      {<em>Old: <strong>Panels</strong></em>} menu.</p>
 
       <p><a href=
       "../../../../../jython/JButtonExample.py">JButtonExample.py</a></p>

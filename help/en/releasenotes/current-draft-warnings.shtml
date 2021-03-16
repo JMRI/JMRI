@@ -1,40 +1,7 @@
 
     <!-- contains new warnings for the release under development -->
     <li>
-        <h4>LogixNG</h4>
-            <ul>
-                <li>
-                This version of LogixNG is not backward compatible with previous versions.
-                If anyone has a panel file with LogixNG that doesn't load with this new version,
-                request help for it on the JMRI developers list or the JMRI users list and the author
-                of LogixNG, Daniel Bergqvist, will fix it.
-                <br>
-                An updated tutorial profile due to this: <a href="http://jmri.bergqvist.se/Tutorial/PreviewLogixNG.jmri.zip">Tutorial/PreviewLogixNG.jmri.zip</a>
-                </li>
-                <li>
-                The action <i>If Then Else</i> now has the options <i>Trigger action</i> and <i>Continuous action</i>.
-                If <i>Trigger action</i>, the child actions will only be executed if the expression changes
-                its result. If <i>Continuous action</i>, the child actions will always get executed.
-                </li>
-                <li>
-                Menu item <i>Tools -> LogixNG -> Import Logix</i> now supports importing Logix to LogixNG.
-                The user can select whenether import system Logixs or not (SYS and RTX). Currently,
-                the import Logix dialog doesn't support importing a subset of Logixs. It will be a
-                later feature. Note that the import tool allows the user to import the same Logix
-                multiple times since it doesn't remember which Logixs that has already been imported.
-                </li>
-                <li>
-                There are a couple of actions not implemented yet. <i>Warrant</i>, <i>OBlock</i>, <i>Clock</i>,
-                <i>Audio</i> and <i>Set Light Intensity</i>. If you try to import Logixs that uses any of
-                these actions, the import will fail and an error dialog will be shown. No Logixs will be
-                imported in this case.
-                </li>
-                <li>
-                If you are using local variables, the action <i>Log local variables</i> may be useful. When
-                it's executed, it logs all the current local variables and their values as WARN messages
-                to the log.
-                </li>
-            </ul>
+        The main PanelPro menu has been changed.  See the <strong>PanelPro</strong> section for details.
     </li>
     <li>
     </li>

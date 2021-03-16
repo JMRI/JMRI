@@ -197,16 +197,8 @@
 
       <h2>Saving Sections to Disk</h2>
 
-      <p>Use the <strong>Store</strong> item in the <strong>File</strong> menu of the
-      Section Table (or the <strong>Store Panels...</strong> item in the
-      <strong>Panels</strong> menu of the main JMRI window) to save Section
-      information to disk. This information (and any modified
-      Signal Mast Logic information) is saved with the configuration and
-      Panels in an XML file, along with Control Panel setup and
-      similar stuff. To store your panels in the same file
-      (recommended), select <strong>File&gt;Store&gt;Store Configuration
-      and Panels To File...</strong> or select <strong>Panels&gt;Store
-      Panels...</strong> in the main JMRI window.</p>
+      <p>See <a href="../../../../html/apps/LoadStoreWork.shtml">
+      Loading and Storing Your Work</a>.</p>
 
       <p>Back to <a href=
       "../../../../html/tools/Sections.shtml">Sections Documentation</a>.</p>

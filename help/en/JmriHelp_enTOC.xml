@@ -223,7 +223,10 @@
    <tocitem text="New Train " target="package.jmri.jmrit.dispatcher.NewTrain"/>
 
   </tocitem>
-  <tocitem text="OperationsPro " target="package.jmri.jmrit.operations.Operations">
+
+  <tocitem text="OperationsPro " target="html.apps.OperationsPro.index">
+   <tocitem text="OperationsPro Information " target="package.jmri.jmrit.operations.Operations"/>
+
    <tocitem text="Settings " target="package.jmri.jmrit.operations.Operations_Settings"/>
 
    <tocitem text="Locations " target="package.jmri.jmrit.operations.Operations_Locations">

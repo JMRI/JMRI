@@ -31,7 +31,7 @@
         <label>Low 7 bytes of Address CV1</label>
       </variable>
       <!-- CV7 and 8 values not yet set 
-		<variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version"  default="133" >
+		<variable label="Version ID" CV="7" item="Decoder Version" readOnly="yes"  default="133" >
 				<decVal/>
 			</variable>
 		<variable label="Manufacturer ID" CV="8" readOnly="yes"	item="Manufacturer" default="13" >

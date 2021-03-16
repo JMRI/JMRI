@@ -70,7 +70,7 @@ public class LearnWarrantTest {
 
         JFrameOperator jfo = new JFrameOperator(frame);
         pressButton(jfo, Bundle.getMessage("Calculate"));
-        
+
         JUnitUtil.waitFor(() -> (frame.getOrders() != null), "Found orders");
         List<BlockOrder> orders = frame.getOrders();
         assertThat(orders.size()).withFailMessage("5 BlockOrders").isEqualTo(5);
@@ -108,7 +108,7 @@ public class LearnWarrantTest {
         assertThat(list.size()).withFailMessage("12 ThrottleCommands").isEqualTo(12);
 
         // now playback using engine 111
-        NXFrameTest.setAndConfirmSensorAction(lastSensor, Sensor.INACTIVE, 
+        NXFrameTest.setAndConfirmSensorAction(lastSensor, Sensor.INACTIVE,
                 _OBlockMgr.getOBlock(route[route.length-1]));
         // change address and run
         frame._speedUtil.setAddress("111");
@@ -128,7 +128,7 @@ public class LearnWarrantTest {
         final OBlock block4 = _OBlockMgr.getOBlock(route[4]);
         sensor = block4.getSensor();
         NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.ACTIVE, block4);
-        
+
         JUnitUtil.waitFor(() -> oBlockOccupiedOrAllocated(block4), "Train 111 occupies last block ");
         new org.netbeans.jemmy.QueueTool().waitEmpty(100); // wait for script to complete
 
@@ -145,7 +145,7 @@ public class LearnWarrantTest {
         ControlPanelEditor panel = (ControlPanelEditor)jmri.util.JmriJFrame.getFrame("LearnWarrantTest");
         assert panel != null;
         panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
-//        jmri.util.JUnitAppender.assertWarnMessage("Path NorthToWest in block North has length zero. Cannot run NXWarrants or ramp speeds through blocks with zero length."); 
+//        jmri.util.JUnitAppender.assertWarnMessage("Path NorthToWest in block North has length zero. Cannot run NXWarrants or ramp speeds through blocks with zero length.");
     }
 
     private boolean oBlockOccupiedOrAllocated(OBlock b){
@@ -235,6 +235,7 @@ public class LearnWarrantTest {
             }
         }
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -86,10 +86,10 @@ public class JUnitUtil {
      * Public in case modification is needed from a test or script.
      */
     static final public int DEFAULT_RELEASETHREAD_DELAY = 50;
-    
+
     /**
      * Default standard time step (in mSec) when looping in a waitFor operation.
-     */    
+     */
     static final private int DEFAULT_WAITFOR_DELAY_STEP = 5;
 
     /**
@@ -98,7 +98,7 @@ public class JUnitUtil {
      * Public in case modification is needed from a test or script.
      * This value is always reset to {@value #DEFAULT_WAITFOR_DELAY_STEP}
      * during setUp().
-     */    
+     */
     static public int WAITFOR_DELAY_STEP = DEFAULT_WAITFOR_DELAY_STEP;
 
     /**
@@ -108,7 +108,7 @@ public class JUnitUtil {
      * is failing anyway, and some of the LayoutEditor/SignalMastLogic tests
      * are slow. But too long will cause CI jobs to time out before this logs
      * the error....
-     */    
+     */
     static final private int DEFAULT_WAITFOR_MAX_DELAY = 10000;
 
     /**
@@ -116,7 +116,7 @@ public class JUnitUtil {
      * <p>
      * Public in case modification is needed from a test or script.
      * This value is always reset to {@value #DEFAULT_WAITFOR_MAX_DELAY} during setUp().
-     */    
+     */
     static public int WAITFOR_MAX_DELAY = DEFAULT_WAITFOR_MAX_DELAY;
 
     /**
@@ -128,7 +128,7 @@ public class JUnitUtil {
     static boolean printSetUpTearDownNames = Boolean.getBoolean("jmri.util.JUnitUtil.printSetUpTearDownNames"); // false unless set true
 
     /**
-     * When true, checks that calls to setUp and tearDown properly alterante, printing an 
+     * When true, checks that calls to setUp and tearDown properly alterante, printing an
      * error message with context information on System.err if inconsistent calls are observed.
      * <p>
      * Set from the jmri.util.JUnitUtil.checkSetUpTearDownSequence environment variable.
@@ -166,7 +166,7 @@ public class JUnitUtil {
     static long    checkTestDurationMax =   Long.getLong("jmri.util.JUnitUtil.checkTestDurationMax", 5000); // milliseconds
 
     static long    checkTestDurationStartTime = 0;  // working value
-    
+
     static private boolean didSetUp = false;    // If true, last saw setUp, waiting tearDown normally
     static private boolean didTearDown = true;  // If true, last saw tearDown, waiting setUp normally
 
@@ -176,7 +176,7 @@ public class JUnitUtil {
     static private String lastTearDownClassName = "<unknown>";
     static private String lastTearDownThreadName = "<unknown>";
     static private StackTraceElement[] lastTearDownStackTrace = new StackTraceElement[0];
-    
+
     static private boolean isLoggingInitialized = false;
     static private String initPrefsDir = null;
 
@@ -236,12 +236,12 @@ public class JUnitUtil {
         // Log and/or check the use of setUp and tearDown
         if (checkSetUpTearDownSequence || printSetUpTearDownNames) {
             lastSetUpClassName = getTestClassName();
-        
+
             if (printSetUpTearDownNames) System.err.println(">> Starting test in "+lastSetUpClassName);
-        
+
             if ( checkSetUpTearDownSequence)  {
                 if (checkSequenceDumpsStack)  lastSetUpThreadName = Thread.currentThread().getName();
-                
+
                 if (didSetUp || ! didTearDown) {
                     System.err.println("   "+getTestClassName()+".setUp on thread "+lastSetUpThreadName+" unexpectedly found setUp="+didSetUp+" tearDown="+didTearDown+"; last setUp was in "+lastSetUpClassName+" thread "+lastSetUpThreadName);
                     if (checkSequenceDumpsStack) {
@@ -254,14 +254,14 @@ public class JUnitUtil {
                         System.err.println("----------------------");
                     }
                 }
-                
+
                 didTearDown = false;
                 didSetUp = true;
 
                 if (checkSequenceDumpsStack) lastSetUpStackTrace = Thread.currentThread().getStackTrace();
             }
         }
-        
+
         // checking time?
         if (checkTestDuration) {
             checkTestDurationStartTime = System.currentTimeMillis();
@@ -277,7 +277,7 @@ public class JUnitUtil {
     public static void setUp() {
         WAITFOR_DELAY_STEP = DEFAULT_WAITFOR_DELAY_STEP;
         WAITFOR_MAX_DELAY = DEFAULT_WAITFOR_MAX_DELAY;
-        
+
         // all the setup for a MockInstanceManager applies
         setUpLoggingAndCommonProperties();
 
@@ -285,7 +285,7 @@ public class JUnitUtil {
         resetInstanceManager();
 
     }
-    
+
     /**
      * Teardown from tests. This should be the last line in the {@code @After}
      * annotated method.
@@ -297,7 +297,7 @@ public class JUnitUtil {
 
         // check for hanging shutdown tasks
         checkShutDownManager();
-        
+
         // checking time?
         if (checkTestDuration) {
             long duration = System.currentTimeMillis() - checkTestDurationStartTime;
@@ -312,7 +312,7 @@ public class JUnitUtil {
 
             if (checkSetUpTearDownSequence) {
                 if (checkSequenceDumpsStack) lastTearDownThreadName = Thread.currentThread().getName();
-                
+
                 if (! didSetUp || didTearDown) {
                     System.err.println("   "+getTestClassName()+".tearDown on thread "+lastTearDownThreadName+" unexpectedly found setUp="+didSetUp+" tearDown="+didTearDown+"; last tearDown was in "+lastTearDownClassName+" thread "+lastTearDownThreadName);
                     if (checkSequenceDumpsStack) {
@@ -325,18 +325,18 @@ public class JUnitUtil {
                         System.err.println("----------------------");
                     }
                 }
-                
+
                 didSetUp = false;
                 didTearDown = true;
-            
+
                 if (checkSequenceDumpsStack) lastTearDownStackTrace = Thread.currentThread().getStackTrace();
             }
-        
+
             // To save time & space, only print end when doing full check
             if (printSetUpTearDownNames && checkSetUpTearDownSequence)  System.err.println("<<   Ending test in "+lastTearDownClassName);
 
         }
-        
+
         // ideally this would be resetWindows(false, true) to force an error if an earlier
         // test left a window open, but different platforms seem to have just
         // enough differences that this is, for now, turned off
@@ -350,16 +350,16 @@ public class JUnitUtil {
         JUnitAppender.verifyNoBacklog();
         JUnitAppender.resetUnexpectedMessageFlags(severity);
         Assert.assertFalse("Unexpected "+severity+" or higher messages emitted: "+unexpectedMessageContent, unexpectedMessageSeen);
-        
+
         // Optionally, handle any threads left running
         if (checkRemnantThreads || killRemnantThreads) {
             handleThreads();
         }
-        
+
         // Optionally, print whatever is on the Swing queue to see what's keeping things alive
         //Object entry = java.awt.Toolkit.getDefaultToolkit().getSystemEventQueue().peekEvent();
         //if (entry != null) System.err.println("entry: "+entry);
-        
+
         // Optionally, check that the Swing queue is idle
         //new org.netbeans.jemmy.QueueTool().waitEmpty(250);
 
@@ -746,10 +746,19 @@ public class JUnitUtil {
     public static void deregisterBlockManagerShutdownTask() {
         if (! InstanceManager.isInitialized(ShutDownManager.class)) return;
         if (! InstanceManager.isInitialized(BlockManager.class)) return;
-        
+
         InstanceManager
                 .getDefault(ShutDownManager.class)
                 .deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
+    }
+
+    public static void deregisterEditorManagerShutdownTask() {
+        if (! InstanceManager.isInitialized(ShutDownManager.class)) return;
+        if (! InstanceManager.isInitialized(EditorManager.class)) return;
+
+        InstanceManager
+                .getDefault(ShutDownManager.class)
+                .deregister(InstanceManager.getDefault(EditorManager.class).shutDownTask);
     }
 
     public static void initWarrantManager() {
@@ -994,11 +1003,11 @@ public class JUnitUtil {
 
         ZeroConfServiceManager manager = InstanceManager.getDefault(ZeroConfServiceManager.class);
         manager.stopAll();
-        
+
         JUnitUtil.waitFor(() -> {
             return (manager.allServices().isEmpty());
         }, "Stopping all ZeroConf Services");
-        
+
         manager.dispose();
     }
 
@@ -1015,8 +1024,8 @@ public class JUnitUtil {
      * Leaves ShutDownManager, if any, in place,
      * but removes its contents.  Instead of using this,
      * it's better to have your test code remove _and_ _check_
-     * for specific items; this just suppresses output from the 
-     * {@link #checkShutDownManager()} check down as part of the 
+     * for specific items; this just suppresses output from the
+     * {@link #checkShutDownManager()} check down as part of the
      * default end-of-test code.
      *
      * @see #checkShutDownManager()
@@ -1062,12 +1071,12 @@ public class JUnitUtil {
      */
     static void checkShutDownManager() {
         if (!  InstanceManager.containsDefault(ShutDownManager.class)) return; // not present, stop (don't create)
-        
+
         ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
         List<ShutDownTask> list = sm.tasks();
         while (!list.isEmpty()) {
             ShutDownTask task = list.get(0);
-            log.error("Test {} left ShutDownTask registered: {} (of type {})", getTestClassName(), task.getName(), task.getClass(), 
+            log.error("Test {} left ShutDownTask registered: {} (of type {})", getTestClassName(), task.getName(), task.getClass(),
                         LoggingUtil.shortenStacktrace(new Exception("traceback")));
             sm.deregister(task);
             list = sm.tasks();  // avoid ConcurrentModificationException
@@ -1075,7 +1084,7 @@ public class JUnitUtil {
         List<Callable<Boolean>> callables = sm.getCallables();
         while (!callables.isEmpty()) {
             Callable<Boolean> callable = callables.get(0);
-            log.error("Test {} left registered shutdown callable of type {}", getTestClassName(), callable.getClass(), 
+            log.error("Test {} left registered shutdown callable of type {}", getTestClassName(), callable.getClass(),
                         LoggingUtil.shortenStacktrace(new Exception("traceback")));
             sm.deregister(callable);
             callables = sm.getCallables(); // avoid ConcurrentModificationException
@@ -1083,7 +1092,7 @@ public class JUnitUtil {
         List<Runnable> runnables = sm.getRunnables();
         while (!runnables.isEmpty()) {
             Runnable runnable = runnables.get(0);
-            log.error("Test {} left registered shutdown runnable of type {}", getTestClassName(), runnable.getClass(), 
+            log.error("Test {} left registered shutdown runnable of type {}", getTestClassName(), runnable.getClass(),
                         LoggingUtil.shortenStacktrace(new Exception("traceback")));
             sm.deregister(runnable);
             runnables = sm.getRunnables(); // avoid ConcurrentModificationException
@@ -1098,13 +1107,13 @@ public class JUnitUtil {
         } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
             log.error("Failed to reset DefaultShutDownManager shuttingDown field", x);
         }
-        
+
     }
 
     /**
      * Creates a new ShutDownManager.
      * Does not remove the contents (i.e. kill the future actions) of any existing ShutDownManager.
-     * Normally, this is not needed for tests, as 
+     * Normally, this is not needed for tests, as
      * a {@link MockShutDownManager} is created and provided when a {@link ShutDownManager}
      * is requested from the {@link InstanceManager} via a {@link InstanceManager#getDefault()} call.
      * @see #clearShutDownManager()
@@ -1286,7 +1295,7 @@ public class JUnitUtil {
 
         return "<unknown class>";
     }
-        
+
     /**
      * Dispose of any disposable windows. This should only be used if there is
      * no ability to actually close windows opened by a test using
@@ -1368,19 +1377,19 @@ public class JUnitUtil {
      */
     public static void dispose(@Nonnull Window window) {
         java.util.Objects.requireNonNull(window, "Window cannot be null");
-        
+
         ThreadingUtil.runOnGUI(() -> {
             window.dispose();
         });
     }
-        
+
     public static Thread getThreadByName(String threadName) {
         for (Thread t : Thread.getAllStackTraces().keySet()) {
             if (t.getName().equals(threadName)) return t;
         }
         return null;
     }
-    
+
     public static Thread getThreadStartsWithName(String threadName) {
         for (Thread t : Thread.getAllStackTraces().keySet()) {
             if (t.getName().startsWith(threadName)) return t;
@@ -1421,7 +1430,7 @@ public class JUnitUtil {
     static List<Thread> threadsSeen = new ArrayList<>();
 
     /**
-     * Do a diagnostic check of threads, 
+     * Do a diagnostic check of threads,
      * providing a traceback if any new ones are still around.
      * <p>
      * First implementation is rather simplistic.
@@ -1429,16 +1438,16 @@ public class JUnitUtil {
     static void handleThreads() {
         // now check for extra threads
         ThreadGroup main = Thread.currentThread().getThreadGroup();
-        while (main.getParent() != null ) {main = main.getParent(); }        
+        while (main.getParent() != null ) {main = main.getParent(); }
         Thread[] list = new Thread[main.activeCount()+2];  // space on end
         int max = main.enumerate(list);
-        
-        for (int i = 0; i<max; i++) { 
+
+        for (int i = 0; i<max; i++) {
             Thread t = list[i];
             Thread.State topState = t.getState();
             if (t.getState() == Thread.State.TERMINATED) { // going away, just not cleaned up yet
                 threadsSeen.remove(t);  // don't want to prevent gc
-                continue; 
+                continue;
             }
             if (threadsSeen.contains(t)) continue;
             String name = t.getName();
@@ -1460,9 +1469,9 @@ public class JUnitUtil {
                  || group.contains("FailOnTimeoutGroup")) // JUnit timeouts
                  || name.startsWith("SocketListener(")
                  || (name.startsWith("SwingWorker-pool-1-thread-") && ( group.contains("FailOnTimeoutGroup") || group.contains("main") )
-                )) {  
-                
-                        if (t.getState() == Thread.State.TERMINATED) {  
+                )) {
+
+                        if (t.getState() == Thread.State.TERMINATED) {
                             // might have transitioned during above (logging slow)
                             continue;
                         }
@@ -1476,7 +1485,7 @@ public class JUnitUtil {
                             action = "Skipping";
                             kill = false;
                         }
-           
+
                         // for anonymous threads, show the traceback in hopes of finding what it is
                         if (name.startsWith("Thread-")) {
                             Exception ex = new Exception("traceback of numbered thread");
@@ -1523,6 +1532,7 @@ public class JUnitUtil {
                                            LoggingUtil.shortenStacktrace(timeoutException));
                                }
                             }
+                            e.dispose();
                         }));
     }
 
@@ -1530,7 +1540,7 @@ public class JUnitUtil {
 
     /**
      * Get the content pane of a dialog.
-     * 
+     *
      * @param title the dialog title
      * @return the content pane
      */
@@ -1540,7 +1550,7 @@ public class JUnitUtil {
 
     /**
      * Press a button after finding it in a container by title.
-     * 
+     *
      * @param frame container containing button to press
      * @param text button title
      * @return the pressed button

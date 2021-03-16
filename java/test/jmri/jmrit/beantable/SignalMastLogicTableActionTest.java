@@ -265,7 +265,7 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase<Sign
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
-        helpTarget = "package.jmri.jmrit.beantable.SignalMastLogicTable"; 
+        helpTarget = "package.jmri.jmrit.beantable.SignalMastLogicTable";
         a = new SignalMastLogicTableAction();
     }
 
@@ -274,6 +274,7 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase<Sign
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

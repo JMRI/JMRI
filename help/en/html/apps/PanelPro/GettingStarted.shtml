@@ -93,7 +93,7 @@
             configuration.</li>
       <li>Clickable <span class="reflink">keywords</span> are provided that link to detail help pages.</li>
       <li>The screenshots are based on macOS 10.15.5, they will look different depending on the operating system.</li>
-      <li>The Store and Load process is documented at <a href="../StoringYourWork.shtml">Storing your work</a>.</li>
+      <li>The Store and Load process is documented at <a href="../LoadStoreWork.shtml">Loading and Storing your work</a>.</li>
     </ul>
 
     <p>A <a href="GettingStarted.zip">GettingStarted.zip</a> file is available

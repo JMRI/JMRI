@@ -564,7 +564,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         tmanager.setBuildReportEnabled(false);
 
         Setup.setBuildAggressive(false);
-        Setup.setTrainIntoStagingCheckEnabled(true);
+        Setup.setStagingTrainCheckEnabled(true);
         Setup.setMaxTrainLength(1000);
         Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
         Setup.setLocalInterchangeMovesEnabled(false);
@@ -572,10 +572,10 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Setup.setLocalYardMovesEnabled(false);
         Setup.setCarMoves(5);
         Setup.setMaxNumberEngines(6);
-        Setup.setTrainIntoStagingCheckEnabled(true);
-        Setup.setAllowReturnToStagingEnabled(false);
+        Setup.setStagingTrainCheckEnabled(true);
+        Setup.setStagingAllowReturnEnabled(false);
         Setup.setGenerateCsvManifestEnabled(false);
-        Setup.setPromptToStagingEnabled(false);
+        Setup.setStagingPromptToEnabled(false);
         Setup.setCarRoutingEnabled(true);
 
         // improve test coverage

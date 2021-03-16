@@ -16,7 +16,7 @@
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV1-6.xml"/>
-  <variable CV="7" readOnly="yes" item="Decoder Version" tooltip="=86-90 for all TCS with Back EMF models, Read Only">
+  <variable CV="7" item="Decoder Version" readOnly="yes" tooltip="=86-90 for all TCS with Back EMF models, Read Only">
     <decVal/>
     <label>Version ID</label>
     <label xml:lang="it">ID Versione</label>

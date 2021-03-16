@@ -34,7 +34,7 @@ public class ThrottlesListPanel extends JPanel {
     private void initGUI() {
         throttleFrames = new JTable(throttleFramesLM);
         throttleFrames.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        throttleFrames.setRowHeight(ThrottlesTableCellRenderer.height);
+        throttleFrames.setRowHeight(ThrottlesTableCellRenderer.LINE_HEIGHT);
         throttleFrames.setTableHeader(null);
         throttleFrames.setDefaultRenderer(Object.class, new ThrottlesTableCellRenderer());
         throttleFrames.addMouseListener(new MouseListener() {

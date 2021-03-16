@@ -59,7 +59,7 @@
       this section: The <strong>Save</strong> button!</p>
 
       <p><img src="images/PrefsRestart.png" height="112" width=
-      "390" align="right">Be sure to click "Save" when leaving
+      "390" align="right" alt="Restart">Be sure to click "Save" when leaving
       this window. Your changes to the Preferences don't take
       effect until the program is stopped and restarted, so the
       program will prompt you to do that after saving the
@@ -184,7 +184,7 @@
 
         <dt>Open file</dt>
 
-        <dd>Automatically load a Panel file or Configuration file
+        <dd>Automatically load a PanelPro xml data file or Configuration file
         when the program starts up. You can load as many files
         as you'd like; each will be completely loaded before
         the next is started.</dd>

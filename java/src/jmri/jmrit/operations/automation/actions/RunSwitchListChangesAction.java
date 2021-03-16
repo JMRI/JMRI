@@ -96,6 +96,7 @@ public class RunSwitchListChangesAction extends Action {
                     location.setStatus(Location.PRINTED);
                     location.setSwitchListState(Location.SW_PRINTED);
                     InstanceManager.getDefault(TrainCustomSwitchList.class).addCVSFile(csvFile);
+                    log.info("Queued switch list CSV file location ({}) for custom processing", location.getName());
                 }
             }
             // Processes the CSV Manifest files using an external custom program.
