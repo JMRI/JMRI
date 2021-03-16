@@ -5989,7 +5989,7 @@ final public class LayoutEditorTools {
     /*
      * Sets up a Logix to set a sensor active if a turnout is set against
      *  a track.  This routine creates an internal sensor for the purpose.
-     * Note: The sensor and logix are named IS or IX followed by TTT_X_HHH where
+     * Note: The sensor and logix are named pref + S or pref + X followed by TTT_X_HHH where
      *  TTT is the system name of the turnout, X is either C or T depending
      *  on "continuing", and HHH is the system name of the signal head.
      * Note: If there is any problem, a string of "" is returned, and a warning
@@ -6002,8 +6002,9 @@ final public class LayoutEditorTools {
         if (!continuing) {
             namer = turnoutName + "_C_" + head.getSystemName();
         }
-        String sensorName = "IS" + namer;
-        String logixName = "IX" + namer;
+        String pref = InstanceManager.getDefault(jmri.LogixManager.class).getSystemPrefix();
+        String sensorName = pref + "S" + namer;
+        String logixName = pref + "X" + namer;
         try {
             InstanceManager.sensorManagerInstance().provideSensor(sensorName);
         } catch (IllegalArgumentException ex) {
@@ -6011,18 +6012,15 @@ final public class LayoutEditorTools {
             return "";
 
         }
-        if (InstanceManager.getDefault(LogixManager.class
-        ).getBySystemName(logixName) == null) {
+        if (InstanceManager.getDefault(LogixManager.class).getBySystemName(logixName) == null) {
             //Logix does not exist, create it
-            Logix x = InstanceManager.getDefault(LogixManager.class
-            ).createNewLogix(logixName, "");
+            Logix x = InstanceManager.getDefault(LogixManager.class).createNewLogix(logixName, "");
             if (x == null) {
                 log.error("Trouble creating logix {} while setting up signal logic.", logixName);
                 return "";
             }
             String cName = x.getSystemName() + "C1";
-            Conditional c = InstanceManager.getDefault(ConditionalManager.class
-            ).
+            Conditional c = InstanceManager.getDefault(ConditionalManager.class).
                     createNewConditional(cName, "");
             if (c == null) {
                 log.error("Trouble creating conditional {} while setting up Logix.", cName);
@@ -6043,12 +6041,12 @@ final public class LayoutEditorTools {
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
                     Conditional.Action.SET_SENSOR, sensorName,
                     Sensor.INACTIVE, ""));
-            c.setAction(actionList); //string data
+            c.setAction(actionList); // string data
             x.addConditional(cName, -1);
             x.activateLogix();
         }
         return sensorName;
-    }   //setupNearLogix
+    }
 
     /*
      * Adds the sensor specified to the open BlockBossLogic, provided it is not already there and
@@ -13639,8 +13637,9 @@ final public class LayoutEditorTools {
         String farTurnoutName = farTurn.getDisplayName();
 
         String logixPrefix = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNamePrefix();
+        String pref = InstanceManager.getDefault(jmri.LogixManager.class).getSystemPrefix();
         String logixName = logixPrefix + ":IX_LAYOUTSLIP:" + slip.getId();
-        String sensorName = "IS:" + logixName + "C" + number;
+        String sensorName = pref + "S:" + logixName + "C" + number;
         try {
             InstanceManager.sensorManagerInstance().provideSensor(sensorName);
         } catch (IllegalArgumentException ex) {

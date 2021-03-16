@@ -3042,7 +3042,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
         File file = InstanceManager.getDefault(TrainManagerXml.class).getTrainCsvManifestFile(getName());
         if (!file.exists()) {
-            log.warn("CSV manifest file was not created for train {}", getName());
+            log.warn("CSV manifest file was not created for train ({})", getName());
             return null;
         }
         return file;
