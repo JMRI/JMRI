@@ -31,7 +31,7 @@ public class FunctionButtonPropertyEditor extends JDialog {
 
     /**
      * Constructor. Create it and pack it.
-     * @param btn
+     * @param btn the functionButton
      */
     public FunctionButtonPropertyEditor(FunctionButton btn) {
         button = btn;
