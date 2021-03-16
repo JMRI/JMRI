@@ -555,7 +555,8 @@
             <li>Mousewheel speed control now available on whole throttle window</li>
             <li>Function and Control panel property panes reworked</li>
             <li>Ticks on graphical speed slider</li>
-            <li>Pressing Enter in AdressPanel when entering an address will actually request it</li>            
+            <li>Pressing Enter in AdressPanel when entering an address will actually request it</li>
+            <li>Jythons scripts with direct access to the JMRI UI are now deprecated (AAR105.py, RailDriver.py, USBThrottle.py, xboxThrottle.py). Use USBThrottleAsJynstrument.py instead, or direct Jynstrument in <a href="https://github.com/JMRI/JMRI/tree/master/jython/Jynstruments/ThrottleWindowToolBar/USBThrottle.jyn">jython/Jynstruments/ThrottleWindowToolBar/USBThrottle.jyn</a> , specific drivers are proposed for AAR105 and Raildriver, they may have to be adjusted.</li>
         </ul>
 
     <h3>Timetable</h3>
