@@ -285,7 +285,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
                                 Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     } else {
                         // Add csv manifest file to our collection to be processed.
-                        InstanceManager.getDefault(TrainCustomManifest.class).addCVSFile(train.createCSVManifestFile());
+                        InstanceManager.getDefault(TrainCustomManifest.class).addCsvFile(train.createCsvManifestFile());
                         train.setPrinted(true);
                     }
                 }

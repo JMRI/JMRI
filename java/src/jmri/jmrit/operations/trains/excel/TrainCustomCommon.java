@@ -69,7 +69,7 @@ public abstract class TrainCustomCommon {
      *
      */
     @SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification = "FindBugs incorrectly reports not guarded by conditional control flow")
-    public synchronized boolean addCVSFile(File csvFile) {
+    public synchronized boolean addCsvFile(File csvFile) {
         // Ignore null files...
         if (csvFile == null || !excelFileExists()) {
             return false;

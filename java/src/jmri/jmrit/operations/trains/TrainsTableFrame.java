@@ -369,7 +369,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
                                 Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     } else if (train.isBuilt()) {
                         // Add csv manifest file to our collection to be processed.
-                        tcm.addCVSFile(train.createCSVManifestFile());
+                        tcm.addCsvFile(train.createCsvManifestFile());
                         train.setPrinted(true);
                     }
                 }
