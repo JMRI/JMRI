@@ -27,7 +27,6 @@ public class ThrottleWindowInputsListener implements KeyListener, MouseWheelList
     
     @Override
     public void keyTyped(KeyEvent e) {
- 
     }
 
     @Override
@@ -63,10 +62,6 @@ public class ThrottleWindowInputsListener implements KeyListener, MouseWheelList
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if (e.isAltDown() || e.isControlDown() || e.isMetaDown() || e.isShiftDown()) {
-            return;
-        }
-        
         // Throttle commands
         DccThrottle throttle = tw.getCurrentThrottleFrame().getAddressPanel().getThrottle();
         if (throttle != null) {
@@ -124,6 +119,9 @@ public class ThrottleWindowInputsListener implements KeyListener, MouseWheelList
     }
         
     private void toFront(JInternalFrame jif) {
+        if (jif == null) {
+            return;
+        }
         jif.requestFocus();
         jif.toFront();
         try {
@@ -134,6 +132,9 @@ public class ThrottleWindowInputsListener implements KeyListener, MouseWheelList
     }
     
     private void incrementSpeed(DccThrottle throttle, float increment) {
+        if (throttle == null) {
+            return;
+        }
         float speed;
         if (tw.getCurrentThrottleFrame().getControlPanel().getDisplaySlider() == ControlPanel.SLIDERDISPLAYCONTINUOUS ) {
             if (throttle.getIsForward()) {
@@ -171,17 +172,20 @@ public class ThrottleWindowInputsListener implements KeyListener, MouseWheelList
     public void mouseWheelMoved(MouseWheelEvent e) {
         // Throttle commands
         DccThrottle throttle = tw.getCurrentThrottleFrame().getAddressPanel().getThrottle();
-        
         if (throttle != null) {
+            float multiplier = 0;
             if (e.getWheelRotation() > 0) {
-                for (int i = 0; i < e.getScrollAmount(); i++) {
-                    incrementSpeed(throttle, -throttle.getSpeedIncrement());                    
+                multiplier = -1f;
+                if ( e.isControlDown() ) {
+                    multiplier = - MORE_SPEED_MULTIPLIER;
                 }
             } else {
-                for (int i = 0; i < e.getScrollAmount(); i++) {
-                    incrementSpeed(throttle, throttle.getSpeedIncrement());
+                multiplier = 1f;
+                if ( e.isControlDown() ) {
+                    multiplier = MORE_SPEED_MULTIPLIER;
                 }
             }
+            incrementSpeed(throttle, throttle.getSpeedIncrement() * multiplier);
         }        
     }
 

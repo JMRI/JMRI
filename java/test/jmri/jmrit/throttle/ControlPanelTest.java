@@ -162,30 +162,6 @@ public class ControlPanelTest {
         Assert.assertEquals(throttle.getSpeedSetting(), 0.0, 1e-7);
         Assert.assertEquals(throttle.getSpeedStepMode(), mode);
 
-        // Set the speed controller mode to slider.
-        panel.setSpeedController(ControlPanel.SLIDERDISPLAY);
-        JSlider speedSlider = panel.getSpeedSlider();
-
-        // Test that the throttle speed defaults to 0, the maximum is
-        // greater than zero and the minimum is zero.
-        panel.setSpeedStepsMode(mode);
-        Assert.assertEquals(speedSlider.getValue(), 0);
-        Assert.assertTrue(speedSlider.getMaximum() > 0);
-        Assert.assertEquals(speedSlider.getMinimum(), 0);
-        Assert.assertEquals(throttle.getSpeedSetting(), 0.0, 1e-7);
-
-        // Set the speed controller mode to shunting slider.
-        panel.setSpeedController(ControlPanel.SLIDERDISPLAYCONTINUOUS);
-        JSlider speedSliderContinuous = panel.getSpeedSliderContinuous();
-
-        // Test that the throttle speed defaults to 0, the maximum is
-        // greater than zero and the minimum is zero.
-        Assert.assertEquals(speedSliderContinuous.getValue(), 0);
-        Assert.assertTrue(speedSliderContinuous.getMaximum() > 0);
-        Assert.assertTrue(speedSliderContinuous.getMinimum() < 0);
-        Assert.assertTrue(speedSliderContinuous.getMaximum() ==
-            -speedSliderContinuous.getMinimum());
-        Assert.assertEquals(throttle.getSpeedSetting(), 0.0, 1e-7);
     }
 
     @BeforeEach
