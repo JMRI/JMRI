@@ -140,6 +140,10 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
                     numberToAddSpinner, rangeBox, addButton, cancelListener, rangeListener, statusBarLabel));
             // tooltip for hwAddressTextField will be assigned later by canAddRange()
             canAddRange(null);
+            
+            addFrame.setEscapeKeyClosesWindow(true);
+            addFrame.getRootPane().setDefaultButton(addButton);
+            
         }
         hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
         addButton.setName("createButton"); // for GUI test NOI18N

@@ -884,7 +884,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             JButton ok;
             panelBottom.add(ok = new JButton(Bundle.getMessage("ButtonCreate")));
             ok.addActionListener(this::okPressed);
-
+            addFrame.getRootPane().setDefaultButton(ok);
             addFrame.getContentPane().add(panelBottom, BorderLayout.PAGE_END);
         } else {
             // clear older entries
@@ -892,6 +892,8 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             userNameTextField.setText("");
         }
         typeBox.setSelectedIndex(2);  // force GUI status consistent. Default set to Double Head type
+        
+        addFrame.setEscapeKeyClosesWindow(true);
         addFrame.pack();
         addFrame.setVisible(true);
     }
