@@ -18,7 +18,7 @@ import jmri.util.swing.EditableResizableImagePanel;
  */
 public class FunctionButtonPropertyEditor extends JDialog {
 
-    private FunctionButton button;
+    private final FunctionButton button;
 
     private JTextField textField;
     private JCheckBox lockableCheckBox;
@@ -31,10 +31,12 @@ public class FunctionButtonPropertyEditor extends JDialog {
 
     /**
      * Constructor. Create it and pack it.
+     * @param btn
      */
-    public FunctionButtonPropertyEditor() {
+    public FunctionButtonPropertyEditor(FunctionButton btn) {
+        button = btn;
         initGUI();
-        super.pack();
+        resetProperties();
     }
 
     /**
@@ -130,18 +132,29 @@ public class FunctionButtonPropertyEditor extends JDialog {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 2, 4, 4));
 
-        JButton saveButton = new JButton(Bundle.getMessage("ButtonOK"));
-        saveButton.addActionListener(this::saveProperties);
+        JButton applyButton = new JButton(Bundle.getMessage("ButtonApply"));
+        applyButton.addActionListener((ActionEvent e) -> {
+            saveProperties();
+        });
+                
+        JButton resetButton = new JButton(Bundle.getMessage("ButtonReset"));
+        resetButton.addActionListener((ActionEvent e) -> {
+            resetProperties();           
+        });        
+        
+        JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
+        closeButton.addActionListener((ActionEvent e) -> {
+            finishEdit();
+        });
 
-        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-        cancelButton.addActionListener(this::finishEdit);
-
-        buttonPanel.add(saveButton);
-        buttonPanel.add(cancelButton);
+        buttonPanel.add(resetButton);
+        buttonPanel.add(closeButton);        
+        buttonPanel.add(applyButton);
 
         mainPanel.add(propertyPanel, BorderLayout.CENTER);
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
+        pack();
     }
 
     /**
@@ -151,8 +164,7 @@ public class FunctionButtonPropertyEditor extends JDialog {
      *
      * @param button The FunctionButton to edit.
      */
-    public void setFunctionButton(FunctionButton button) {
-        this.button = button;
+    private void resetProperties() {
         textField.setText(button.getButtonLabel());
         lockableCheckBox.setSelected(button.getIsLockable());
         idField.setText(String.valueOf(button.getIdentity()));
@@ -169,9 +181,8 @@ public class FunctionButtonPropertyEditor extends JDialog {
 
     /**
      * Save the user-modified properties back to the FunctionButton.
-     * @param e unused
      */
-    private void saveProperties(ActionEvent e) {
+    private void saveProperties() {
         if (isDataValid()) {
             button.setButtonLabel(textField.getText());
             button.setIsLockable(lockableCheckBox.isSelected());
@@ -186,7 +197,6 @@ public class FunctionButtonPropertyEditor extends JDialog {
             button.setSelectedIconPath(_imagePressedFilePath.getImagePath());
             button.setDirty(true);
             button.updateLnF();
-            finishEdit(null);
         }
     }
 
@@ -194,7 +204,7 @@ public class FunctionButtonPropertyEditor extends JDialog {
      * Finish the editing process. Hide the dialog.
      * @param e unused.
      */
-    private void finishEdit(ActionEvent e) {
+    private void finishEdit() {
         this.setVisible(false);
     }
 

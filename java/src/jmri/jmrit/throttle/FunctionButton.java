@@ -1,29 +1,29 @@
 package jmri.jmrit.throttle;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
+
 import jmri.Throttle;
 import jmri.util.FileUtil;
 import jmri.util.swing.ResizableImagePanel;
 import jmri.util.swing.ToggleOrPressButtonModel;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * A JButton to activate functions on the decoder. FunctionButtons have a
- * right-click popup menu with several configuration options:
- * <ul>
+ right-click popupMenu menu with several configuration options:
+ <ul>
  * <li> Set the text
  * <li> Set the locking state
  * <li> Set visibility
@@ -43,7 +43,8 @@ public class FunctionButton extends JToggleButton {
     private boolean isImageOK = false;
     private boolean isSelectedImageOK = false;
     private String buttonLabel;
-    private final JPopupMenu popup;
+    private JPopupMenu popupMenu;
+    private FunctionButtonPropertyEditor editor ;
     private String iconPath;
     private String selectedIconPath;
     private ToggleOrPressButtonModel _model;
@@ -80,25 +81,24 @@ public class FunctionButton extends JToggleButton {
      */
     public FunctionButton() {
         super();
-        popup = new JPopupMenu();
         listeners = new ArrayList<>();
-        init();
+        initGUI();
     }
     
-    final void init(){
+    private void initGUI(){
+        popupMenu = new JPopupMenu();
         
         _model = new ToggleOrPressButtonModel(this, true);
         setModel(_model);
-        
+       
+        editor = new FunctionButtonPropertyEditor(this);                  
         JMenuItem propertiesItem = new JMenuItem(Bundle.getMessage("MenuItemProperties"));
         propertiesItem.addActionListener((ActionEvent e) -> {
-            FunctionButtonPropertyEditor editor = new FunctionButtonPropertyEditor();
-            editor.setFunctionButton(this);
-            editor.setLocation(this.getLocationOnScreen());
+            editor.setLocation(MouseInfo.getPointerInfo().getLocation());
             editor.setVisible(true);
-          });
-        popup.add(propertiesItem);
-        //Add listener to components that can bring up popup menus.
+        });
+        popupMenu.add(propertiesItem);
+        //Add listener to components that can bring up popupMenu menus.
         addMouseListener(new PopupListener());
         setFont(new Font("Monospaced", Font.PLAIN, 12));
         setMargin(new Insets(2, 2, 2, 2));
@@ -339,13 +339,12 @@ public class FunctionButton extends JToggleButton {
 
     /**
      * A PopupListener to handle mouse clicks and releases.
-     * Handles the popup menu.
+     * Handles the popupMenu menu.
      */
     private class PopupListener extends MouseAdapter {
 
         /**
-         * If the event is the popup trigger, which is dependent on the
-         * platform, present the popup menu.
+         * If the event is the popupMenu trigger, which is dependent on the platform, present the popupMenu menu.
          * @param e The MouseEvent causing the action.
          */
         @Override
@@ -354,8 +353,7 @@ public class FunctionButton extends JToggleButton {
         }
         
         /**
-         * If the event is the popup trigger, which is dependent on the
-         * platform, present the popup menu.
+         * If the event is the popupMenu trigger, which is dependent on the platform, present the popupMenu menu.
          * @param e The MouseEvent causing the action.
          */
         @Override
@@ -364,8 +362,7 @@ public class FunctionButton extends JToggleButton {
         }
 
         /**
-         * If the event is the popup trigger, which is dependent on the
-         * platform, present the popup menu.
+         * If the event is the popupMenu trigger, which is dependent on the  platform, present the popupMenu menu.
          * @param e The MouseEvent causing the action.
          */
         @Override
@@ -375,7 +372,7 @@ public class FunctionButton extends JToggleButton {
         
         private void checkTrigger( MouseEvent e) {
             if (e.isPopupTrigger()) {
-                popup.show(e.getComponent(), e.getX(), e.getY());
+                popupMenu.show(e.getComponent(), e.getX(), e.getY());
             }
         }
     }

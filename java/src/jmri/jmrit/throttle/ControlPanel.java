@@ -25,7 +25,7 @@ import org.jdom2.Element;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  */
-public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, ActionListener, AddressListener {
+public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, AddressListener {
     private DccThrottle throttle;
 
     private JSlider speedSlider;
@@ -40,11 +40,12 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     private JPanel topButtonPanel;
     private boolean internalAdjust = false; // protecting the speed slider, continuous slider and spinner when doing internal adjust
 
-    private JPopupMenu propertiesPopup;
+    private JPopupMenu popupMenu;
+    private ControlPanelPropertyEditor propertyEditor;
     private JPanel speedControlPanel;
     private JPanel spinnerPanel;
     private JPanel sliderPanel;
-    private JPanel speedSliderContinuousPanel;
+    private JPanel speedSliderContinuousPanel;    
 
     private AddressPanel addressPanel; //for access to roster entry
     /* Constants for speed selection method */
@@ -762,16 +763,22 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         layoutButtonPanel();
         layoutTopButtonPanel();
 
-        JMenuItem propertiesItem = new JMenuItem(Bundle.getMessage("ControlPanelProperties"));
-        propertiesItem.addActionListener(this);
-        propertiesPopup = new JPopupMenu();        
-        propertiesPopup.add(propertiesItem);
+        JMenuItem propertiesMenuItem = new JMenuItem(Bundle.getMessage("ControlPanelProperties"));
+        propertiesMenuItem.addActionListener((ActionEvent e) -> {
+            propertyEditor.setLocation(MouseInfo.getPointerInfo().getLocation());
+            propertyEditor.setVisible(true);
+        });
+        popupMenu = new JPopupMenu();        
+        popupMenu.add(propertiesMenuItem);
 
         // Add a mouse listener all components to trigger the popup menu.
         MouseInputAdapterInstaller.installMouseListenerOnAllComponents(new PopupListener(), this);
 
         // set by default which speed selection method is on top
         setSpeedController(_displaySlider);
+        
+        // PropertyPanel
+        propertyEditor = new ControlPanelPropertyEditor(this);
     }    
 
     /**
@@ -883,18 +890,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     }
 
     /**
-     * Handle the selection from the popup menu.
-     *
-     * @param e The ActionEvent causing the action.
-     */
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        ControlPanelPropertyEditor editor = new ControlPanelPropertyEditor(this);
-        editor.setLocation(this.getLocationOnScreen());
-        editor.setVisible(true);
-    }
-
-    /**
      * A PopupListener to handle mouse clicks and releases. Handles the popup
      * menu.
      */
@@ -931,7 +926,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         
         private void checkTrigger( MouseEvent e) {
             if (e.isPopupTrigger()) {
-                propertiesPopup.show(e.getComponent(), e.getX(), e.getY());
+                popupMenu.show(e.getComponent(), e.getX(), e.getY());
             }
         }
     }
