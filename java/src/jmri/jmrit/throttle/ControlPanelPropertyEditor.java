@@ -176,7 +176,7 @@ public class ControlPanelPropertyEditor extends JDialog {
     /**
      * Update values from the controlPanel
      */
-    private void resetProperties() {
+    public void resetProperties() {
         // type of slider
         _displaySlider = control.getDisplaySlider();        
         displaySlider.setSelected(_displaySlider == ControlPanel.SLIDERDISPLAY);

@@ -158,13 +158,10 @@ public class FunctionButtonPropertyEditor extends JDialog {
     }
 
     /**
-     * Set the FunctionButton this dialog will edit. 
-     * <p>
-     * Method will initialize GUI from button properties.
+     * Initialize GUI from button properties.
      *
-     * @param button The FunctionButton to edit.
      */
-    private void resetProperties() {
+    public void resetProperties() {
         textField.setText(button.getButtonLabel());
         lockableCheckBox.setSelected(button.getIsLockable());
         idField.setText(String.valueOf(button.getIdentity()));

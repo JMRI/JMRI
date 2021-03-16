@@ -94,6 +94,7 @@ public class FunctionButton extends JToggleButton {
         editor = new FunctionButtonPropertyEditor(this);                  
         JMenuItem propertiesItem = new JMenuItem(Bundle.getMessage("MenuItemProperties"));
         propertiesItem.addActionListener((ActionEvent e) -> {
+            editor.resetProperties();
             editor.setLocation(MouseInfo.getPointerInfo().getLocation());
             editor.setVisible(true);
         });

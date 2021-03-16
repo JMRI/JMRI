@@ -766,6 +766,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         JMenuItem propertiesMenuItem = new JMenuItem(Bundle.getMessage("ControlPanelProperties"));
         propertiesMenuItem.addActionListener((ActionEvent e) -> {
             propertyEditor.setLocation(MouseInfo.getPointerInfo().getLocation());
+            propertyEditor.resetProperties();
             propertyEditor.setVisible(true);
         });
         popupMenu = new JPopupMenu();        
