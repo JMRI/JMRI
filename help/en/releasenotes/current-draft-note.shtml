@@ -551,7 +551,11 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Keyboard shortcuts now available on whole throttle window</li>
+            <li>Mousewheel speed control now available on whole throttle window</li>
+            <li>Function and Control panel property panes reworked</li>
+            <li>Ticks on graphical speed slider</li>
+            <li>Pressing Enter in AdressPanel when entering an address will actually request it</li>            
         </ul>
 
     <h3>Timetable</h3>
