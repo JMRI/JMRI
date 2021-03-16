@@ -54,7 +54,7 @@ bar = JMenuBar()
 jmri.util.HelpUtil.helpMenu(bar, 'html.apps.DispatcherSystem.DispatcherSystem' , True)
 frame.setJMenuBar(bar)
 #
-
+logLevel = 0
 
 ###info
 import os
@@ -407,6 +407,7 @@ def CreateTransits_action(event):
     global g
     global le
     global DisplayProgress_global
+    global logLevel
     
     #the displayProgress is in CreateTransits
     CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
@@ -432,30 +433,30 @@ def CreateTransits_action(event):
     progress = 10
     dpg.Update(str(progress)+ "% complete")
     
-    print "updating logic"
+    if logLevel > 0: print "updating logic"
     CreateSignalLogic = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateSignalLogicAndSections.py')
     exec(open (CreateSignalLogic).read())
     usl = Update_Signal_Logic()
-    
+
     #print "updating logic stage1"
-    usl.create_autologic_and_sections()
-    
-    #print "updating logic stage2"
-    usl.update_logic(run_file)
-    print "updated logic"
-    
-    progress = 15
-    dpg.Update(str(progress)+ "% complete")
+    ans = usl.create_autologic_and_sections()
+     
+    if ans == True: 
+        print "updating logic stage2"
+        usl.update_logic(run_file)
+        
+        progress = 15
+        dpg.Update(str(progress)+ "% complete")
 
-    #print "Creating Transits"
-    CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
-    exec(open (CreateTransits).read())
+        #print "Creating Transits"
+        CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
+        exec(open (CreateTransits).read())
 
-    #print "about to run CreateTransits"
-    ct = CreateTransits()
-    
-    ct.run_transits(icons_file, run_file)
-    #print "ran CreateTransits"
+        #print "about to run CreateTransits"
+        ct = CreateTransits()
+        
+        ct.run_transits(icons_file, run_file)
+        #print "ran CreateTransits"
 
     dpg.killLabel()
 
