@@ -199,7 +199,6 @@ public class FunctionButtonPropertyEditor extends JDialog {
 
     /**
      * Finish the editing process. Hide the dialog.
-     * @param e unused.
      */
     private void finishEdit() {
         this.setVisible(false);
