@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.*;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -82,18 +83,13 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
      */
     public AbstractLogixNGTableAction(String s) {
         super(s);
-        // set up managers - no need to use InstanceManager since both managers are
-        // Default only (internal). We use InstanceManager to get managers for
-        // compatibility with other facilities.
-//        _logixNG_Manager = InstanceManager.getNullableDefault(LogixNG_Manager.class);
-        // disable ourself if there is no manager
-        if (getManager() == null) {
-            setEnabled(false);
-        }
+        super.setEnabled(false);
     }
 
     protected abstract AbstractLogixNGEditor<E> getEditor(BeanTableFrame<E> f, BeanTableDataModel<E> m, String sName);
     
+    @Nonnull
+    @Override
     protected abstract Manager<E> getManager();
     
     protected abstract void enableAll(boolean enable);
@@ -233,7 +229,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
              * @param bean of the NamedBean to delete
              */
             @Override
-            void doDelete(E bean) {
+            protected void doDelete(E bean) {
                 // delete the LogixNG
                 AbstractLogixNGTableAction.this.deleteBean(bean);
             }
