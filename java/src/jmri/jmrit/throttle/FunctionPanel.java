@@ -310,12 +310,21 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         Element window = e.getChild("window");
         WindowPreferences.setPreferences(this, window);
 
-        java.util.List<Element> buttonElements
-                = e.getChildren("FunctionButton");
+        java.util.List<Element> buttonElements = e.getChildren("FunctionButton");
 
         if (buttonElements != null && buttonElements.size() > 0) {
+            // just in case
+            if ( buttonElements.size() > functionButtons.length) {
+                mainPanel.removeAll();
+                functionButtons = new FunctionButton[buttonElements.size()];                
+                for (int i = 0; i < functionButtons.length; i++) {
+                    functionButtons[i] = new FunctionButton();
+                    mainPanel.add(functionButtons[i]);            
+                    functionButtons[i].setThrottle(mThrottle);
+                }
+            }
             int i = 0;
-            for (Element buttonElement : buttonElements) {
+            for (Element buttonElement : buttonElements) {                
                 functionButtons[i++].setXml(buttonElement);
             }
         }
