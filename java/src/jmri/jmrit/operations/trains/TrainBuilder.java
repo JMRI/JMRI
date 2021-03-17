@@ -183,12 +183,11 @@ public class TrainBuilder extends TrainCommon {
         showCarsNotRoutable(); // list cars that couldn't be routed
 
         // done building
-        _train.setCurrentLocation(_train.getTrainDepartsRouteLocation());
-        _train.setBuilt(true);
-        _train.moveTrainIcon(_train.getTrainDepartsRouteLocation()); // create and place train icon
-
         addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTime"),
                 new Object[] { _train.getName(), new Date().getTime() - _startTime.getTime() }));
+        
+        _buildReport.flush();
+        _buildReport.close();
 
         // now make Manifests
         new TrainManifest(_train);
@@ -199,14 +198,17 @@ public class TrainBuilder extends TrainCommon {
             throw new BuildFailedException(ex);
         }
         new TrainCsvManifest(_train);
-
-        _buildReport.flush();
-        _buildReport.close();
-
+        
         // notify locations have been modified by this train's build
         for (Location location : _modifiedLocations) {
             location.setStatus(Location.MODIFIED);
         }
+        
+        // automations use wait for train built to create custom manifests and switch lists
+        _train.setCurrentLocation(_train.getTrainDepartsRouteLocation());
+        _train.setBuilt(true);
+        _train.moveTrainIcon(_train.getTrainDepartsRouteLocation()); // create and place train icon
+
         log.debug("Done building train ({})", _train.getName());
     }
 
