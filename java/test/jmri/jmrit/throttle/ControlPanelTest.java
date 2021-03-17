@@ -8,7 +8,6 @@ import java.awt.Rectangle;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
 
 import jmri.util.JUnitUtil;
 import jmri.DccThrottle;
