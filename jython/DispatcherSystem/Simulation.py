@@ -163,7 +163,7 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
         self.activeTrain = activeTrain
         self.activeTrainName = activeTrainName
         #trains_being_simulated.append(activeTrainName)
-        self.logLevel = 0
+        self.logLevel = 1
         if self.logLevel > 0: print 'Simulate_instance' + activeTrainName + activeTrain.getTrainName() + activeTrain.getActiveTrainName()
 
     def setup(self):
@@ -218,7 +218,9 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
         return state
         
     def make_first_block_unoccupied(self, block_list):
+        if self.logLevel > 0: print ("******make_first_block_unoccupied",self.activeTrainName, self.getPrintStatus(self.activeTrain.getStatus()), self.activeTrain.getTrainName(),"\n")
         block_list[self.start_position].getSensor().setState(INACTIVE)
+        if self.logLevel > 0: print "Success", "Set block ", self.start_position, "inactive"
         self.start_position += 1
         
     def make_next_block_occupied(self, block_list):
@@ -230,9 +232,8 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
         else:
             if self.activeTrain.getStatus() == self.activeTrain.RUNNING:
                 self.end_position +=1
-                if self.element_in_allocation():
-                    block_list[self.end_position].getSensor().setState(ACTIVE)
-                if self.logLevel > 0: print "Success"
+                block_list[self.end_position].getSensor().setState(ACTIVE)
+                if self.logLevel > 0: print "Success", "Set block ", self.end_position
                 ret = "Success"
             else:
                 #msg = "status is not Running, hence not proceeding " + str(self.activeTrain.getStatusText())
@@ -240,7 +241,7 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
                 #JOptionPane.showMessageDialog(None, msg, title, JOptionPane.WARNING_MESSAGE)      # uncomment for debugging
                 if self.logLevel > 0: print "Waiting"
                 ret = "Waiting"
-        self.waitMsec(500)     # to stop an error message
+        self.waitMsec(1500)     # to stop an error message
         return ret
         
     def getPrintStatus(self, status):
@@ -248,8 +249,5 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
             return "status = running"
         else:
             return "status = not running"
-                
-    def element_in_allocation(self):
-        return True
-        
+                        
 

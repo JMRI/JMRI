@@ -4,7 +4,7 @@
 # Some Swing dialogs
 # 
 # class NewTrainMaster *
-# Sets up a tran in a section
+# Sets up a train in a section
 #
 # class StopMaster *
 # Turns the dispatch system off
@@ -19,7 +19,7 @@
 #
 # class MoveTrain
 # Calls dispatcher to move train from one station to another
-# diven engine and start and end positions
+# given engine and start and end positions
 #
 # class DispatchMaster *
 # monitors the station buttons, and dependent on the mode one is in
@@ -82,7 +82,7 @@ execfile(CreateSimulation)
 #class OptionDialog( java.lang.Runnable ) :
 class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
     CLOSED_OPTION = False
-    
+    logLevel = 0
     
     def List(self, title, list_items):
         list = JList(list_items)
@@ -287,11 +287,11 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
     # we make the allocated flag global as we will use it in DispatchMaster when we dispatch a train
     
     global trains_allocated
-    
+    logLevel = 0
     #instanceList = []   # List of file based instances
     
     def init(self):
-        self.logLevel = 0
+        self.logLevel = 1
         if self.logLevel > 0: print 'Create Stop Thread'
 
     def setup(self):
@@ -471,7 +471,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
                        
     def add_to_train_list_and_set_new_train_location(self, train_name, station_block_name):
         # trains is a dictionary, with keys of the train_name
-        # each value is itself a dictioary with 3 items
+        # each value is itself a dictionary with 3 items
         # edge
         # penultimate_block_name
         # direction
@@ -764,7 +764,7 @@ class OffActionMaster(jmri.jmrit.automat.AbstractAutomaton):
     def handle(self):
         if self.logLevel > 0: print "started handle"
         #for pairs of buttons, if one goes off the other is set on
-        self.button_sensors_to_watch = self.run_sensor_to_look_for
+        #self.button_sensors_to_watch = self.run_sensor_to_look_for
         if self.logLevel > 0: print "button to watch" , str(self.button_sensors_to_watch)
         #wait for one to go active
         button_sensors_to_watch_JavaList = java.util.Arrays.asList(self.button_sensors_to_watch)      
