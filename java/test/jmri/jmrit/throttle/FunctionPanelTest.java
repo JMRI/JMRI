@@ -28,7 +28,7 @@ public class FunctionPanelTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         FunctionButton fba[] = frame.getFunctionButtons();
         Assert.assertNotNull("Function Button Array exists", fba);
-        Assert.assertEquals("Function Button Array has right length", 33, fba.length);
+        Assert.assertEquals("Function Button Array has right length", 17, fba.length);
     }
 
     @BeforeEach

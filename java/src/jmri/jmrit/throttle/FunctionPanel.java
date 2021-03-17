@@ -204,6 +204,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             }
         }
         setFnButtons();
+        repaint();
     }
 
     // Update buttons value from slot + load buttons definition from roster if any
@@ -222,6 +223,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                 functionButtons[i].setIdentity(i); // full reset of function
                 functionButtons[i].setThrottle(mThrottle);
                 functionButtons[i].setState(mThrottle.getFunction(i)); // reset button state
+                functionButtons[i].setIsLockable(!mThrottle.getFunctionMomentary(i));
                 if (rosterEntry != null) { // from here, update button text with roster data
                     String text = rosterEntry.getFunctionLabel(i);
                     if (text != null) {
