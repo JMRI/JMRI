@@ -435,11 +435,6 @@ public class FunctionButton extends JToggleButton {
             this.setIsLockable(e.getAttribute("isLockable").getBooleanValue());
             boolean isVisible = e.getAttribute("isVisible").getBooleanValue();
             this.setDisplay(isVisible);
-            if (this.getIdentity() < FunctionPanel.NUM_FUNC_BUTTONS_INIT) {
-                this.setVisible(isVisible);
-            } else {
-                this.setVisible(false);
-            }
             this.setFont(new Font("Monospaced", Font.PLAIN, e.getAttribute("fontSize").getIntValue()));
             if ((e.getAttribute("iconPath") != null) && (e.getAttribute("iconPath").getValue().length() > 0)) {
                 if (checkFile(FileUtil.getUserResourcePath() + e.getAttribute("iconPath").getValue())) {

@@ -157,54 +157,6 @@ public class ThrottleOperator extends JFrameOperator {
         new JButtonOperator(getFunctionPanelOperator(), Function).push();
     }
 
-    public void pushAlt1Button() {
-        JToggleButton alt1Button = (JToggleButton) findSubComponent(
-                new ComponentChooser() {
-            @Override
-            public boolean checkComponent(Component c) {
-                if (c instanceof JToggleButton) {
-                    if (((JToggleButton) c).getText().equals("*")) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            }
-
-            @Override
-            public String getDescription() {
-                return "Find Function Button";
-            }
-        });
-        JemmyUtil.enterClickAndLeave(alt1Button);
-    }
-
-    public void pushAlt2Button() {
-        JToggleButton alt1Button = (JToggleButton) findSubComponent(
-                new ComponentChooser() {
-            @Override
-            public boolean checkComponent(Component c) {
-                if (c instanceof JToggleButton) {
-                    if (((JToggleButton) c).getText().equals("#")) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            }
-
-            @Override
-            public String getDescription() {
-                return "Find Function Button";
-            }
-        });
-        JemmyUtil.enterClickAndLeave(alt1Button);
-    }
-
     public FunctionButton getFunctionButton(int function) {
         FunctionButton retval = (FunctionButton) findSubComponent(
                 new ComponentChooser() {
