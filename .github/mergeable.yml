@@ -72,6 +72,18 @@ mergeable: # see https://github.com/mergeability/mergeable
         created_at:
           days: 1
           message: 'PR needs to be at least 1 day old in order to merge'
+    pass:
+      - do: checks
+        status: 'success'
+        payload:
+          title: 'PR old enough'
+          summary: 'PR over one day old, can be merged.'
+    fail:
+      - do: checks
+        status: 'failure'
+        payload:
+          title: 'PR too young'
+          summary: 'Waiting for the PR to be one day old.'
   - when: pull_request.*, pull_request_review.*
     name: 'Approved after last commit, no changes requested'
     validate:
