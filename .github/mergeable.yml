@@ -70,7 +70,7 @@ mergeable: # see https://github.com/mergeability/mergeable
     validate:
       - do: age
         created_at:
-            days: 1
+          days: 1
     pass:
       - do: checks
         status: 'success'
