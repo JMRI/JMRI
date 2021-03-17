@@ -19,10 +19,6 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
 
     private SprogSystemConnectionMemo _memo = null;
     private SprogVersion _sv = null;
-    private String _cvname;
-    private jmri.ProgListener _p;
-    private int _startVal;
-    
 
     public SprogProgrammer(SprogSystemConnectionMemo memo) {
         _memo = memo;
