@@ -140,10 +140,10 @@ public class WrapLayout extends FlowLayout {
             dim.width += horizontalInsetsAndGap;
             dim.height += insets.top + insets.bottom + vgap * 2;
 
-            //	When using a scroll pane or the DecoratedLookAndFeel we need to
-            //  make sure the preferred size is less than the size of the
-            //  target containter so shrinking the container size works
-            //  correctly. Removing the horizontal gap is an easy way to do this.
+            // When using a scroll pane or the DecoratedLookAndFeel we need to
+            // make sure the preferred size is less than the size of the
+            // target containter so shrinking the container size works
+            // correctly. Removing the horizontal gap is an easy way to do this.
             Container scrollPane = SwingUtilities.getAncestorOfClass(JScrollPane.class, target);
 
             if (scrollPane != null && target.isValid()) {
@@ -155,12 +155,12 @@ public class WrapLayout extends FlowLayout {
     }
 
     /*
-	 *  A new row has been completed. Use the dimensions of this row
-	 *  to update the preferred size for the container.
-	 *
-	 *  @param dim update the width and height when appropriate
-	 *  @param rowWidth the width of the row to add
-	 *  @param rowHeight the height of the row to add
+     *  A new row has been completed. Use the dimensions of this row
+     *  to update the preferred size for the container.
+     *
+     *  @param dim update the width and height when appropriate
+     *  @param rowWidth the width of the row to add
+     *  @param rowHeight the height of the row to add
      */
     private void addRow(Dimension dim, int rowWidth, int rowHeight) {
         dim.width = Math.max(dim.width, rowWidth);
