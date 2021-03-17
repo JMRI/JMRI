@@ -65,16 +65,13 @@ mergeable: # see https://github.com/mergeability/mergeable
         mode: 'add'
       - do: checks
         status: 'success'
-  - when: schedule.repository
+  - when: pull_request.*, pull_request_review.*
     name: 'Allow merge after one day'
     validate:
-      - do: stale
-        days: 1
-        type: pull_request
+      - do: age
+        created_at:
+            days: 1
     pass:
-      - do: comment  # No initial event, can't actually block merge, so for now we're adding a comment.
-        payload:
-          body: This is one day old, and can now be merged if CI and reviews allow.
       - do: checks
         status: 'success'
         payload:
