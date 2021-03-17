@@ -141,7 +141,7 @@ public class SprogVersion {
 
     /**
      * Check if the SPROG supports use of CV hints when reading. This means
-     * SPROG IIv4 or SPROG 3v4 with minor version >= 5
+     * SPROG IIv4 or SPROG 3v4 version 4.5 or higher
      *
      * @return boolean if the current SPROG supports CV hints when reading
      */
