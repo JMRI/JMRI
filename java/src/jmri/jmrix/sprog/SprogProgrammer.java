@@ -6,7 +6,6 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrix.AbstractProgrammer;
-import jmri.jmrix.sprog.Bundle;
 import jmri.jmrix.sprog.update.*;
 
 /**
