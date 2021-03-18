@@ -769,6 +769,8 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             create.setToolTipText(Bundle.getMessage("LogixCreateButtonHint"));  // NOI18N
         }
         _inAddMode = true;
+        addLogixFrame.setEscapeKeyClosesWindow(true);
+        addLogixFrame.getRootPane().setDefaultButton(create);
         addLogixFrame.pack();
         addLogixFrame.setVisible(true);
         _autoSystemName.setSelected(false);

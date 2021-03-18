@@ -322,7 +322,8 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         // reset statusBarLabel text
         statusBarLabel.setText(Bundle.getMessage("HardwareAddStatusEnter"));
         statusBarLabel.setForeground(Color.gray);
-
+        addFrame.setEscapeKeyClosesWindow(true);
+        addFrame.getRootPane().setDefaultButton(addButton);
         addFrame.pack();
         addFrame.setVisible(true);
     }

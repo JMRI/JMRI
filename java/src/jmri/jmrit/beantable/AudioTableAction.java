@@ -159,6 +159,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
         }
         sourceFrame.updateBufferList();
         sourceFrame.resetFrame();
+        sourceFrame.setEscapeKeyClosesWindow(true);
         sourceFrame.pack();
         sourceFrame.setVisible(true);
     }
@@ -168,6 +169,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
             bufferFrame = new AudioBufferFrame(Bundle.getMessage("TitleAddAudioBuffer"), buffers);
         }
         bufferFrame.resetFrame();
+        bufferFrame.setEscapeKeyClosesWindow(true);
         bufferFrame.pack();
         bufferFrame.setVisible(true);
     }
