@@ -763,23 +763,11 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         layoutButtonPanel();
         layoutTopButtonPanel();
 
-        JMenuItem propertiesMenuItem = new JMenuItem(Bundle.getMessage("ControlPanelProperties"));
-        propertiesMenuItem.addActionListener((ActionEvent e) -> {
-            propertyEditor.setLocation(MouseInfo.getPointerInfo().getLocation());
-            propertyEditor.resetProperties();
-            propertyEditor.setVisible(true);
-        });
-        popupMenu = new JPopupMenu();        
-        popupMenu.add(propertiesMenuItem);
-
         // Add a mouse listener all components to trigger the popup menu.
         MouseInputAdapterInstaller.installMouseListenerOnAllComponents(new PopupListener(), this);
 
         // set by default which speed selection method is on top
         setSpeedController(_displaySlider);
-        
-        // PropertyPanel
-        propertyEditor = new ControlPanelPropertyEditor(this);
     }    
 
     /**
@@ -927,8 +915,25 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         
         private void checkTrigger( MouseEvent e) {
             if (e.isPopupTrigger()) {
+                initPopupMenu();
                 popupMenu.show(e.getComponent(), e.getX(), e.getY());
             }
+        }
+    }
+    
+    private void initPopupMenu() {
+        if (popupMenu == null) {               
+            JMenuItem propertiesMenuItem = new JMenuItem(Bundle.getMessage("ControlPanelProperties"));
+            propertiesMenuItem.addActionListener((ActionEvent e) -> {
+                if (propertyEditor == null) {
+                    propertyEditor = new ControlPanelPropertyEditor(this);                    
+                }
+                propertyEditor.setLocation(MouseInfo.getPointerInfo().getLocation());
+                propertyEditor.resetProperties();
+                propertyEditor.setVisible(true);
+            });
+            popupMenu = new JPopupMenu();        
+            popupMenu.add(propertiesMenuItem);
         }
     }
 

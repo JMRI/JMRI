@@ -1,8 +1,7 @@
 package jmri.jmrit.throttle;
 
 import java.awt.*;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseWheelListener;
+import java.awt.event.*;
 import java.util.Arrays;
 
 import javax.swing.*;
@@ -26,12 +25,12 @@ import org.slf4j.LoggerFactory;
  */
 public class FunctionPanel extends JInternalFrame implements FunctionListener, java.beans.PropertyChangeListener, AddressListener {
 
-    private static final int DEFAULT_FUNCTION_BUTTONS = 22; // just enough to fill the initial pane
+    private static final int DEFAULT_FUNCTION_BUTTONS = 24; // just enough to fill the initial pane
     private DccThrottle mThrottle;
     
     private JPanel mainPanel;
     private FunctionButton[] functionButtons;
-
+    
     private AddressPanel addressPanel = null; // to access roster infos
 
     /**
@@ -114,21 +113,32 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             boolean lockable = functionButton.getIsLockable();
             String imagePath = functionButton.getIconPath();
             String imageSelectedPath = functionButton.getSelectedIconPath();
-            if (functionButton.isDirty() && !text.equals(rosterEntry.getFunctionLabel(functionNumber))) {
-                functionButton.setDirty(false);
-                if (text.isEmpty()) {
-                    text = null;  // reset button text to default
+            if (functionButton.isDirty()) {
+                if (!text.equals(rosterEntry.getFunctionLabel(functionNumber))) {
+                    if (text.isEmpty()) {
+                        text = null;  // reset button text to default
+                    }
+                    rosterEntry.setFunctionLabel(functionNumber, text);
                 }
-                rosterEntry.setFunctionLabel(functionNumber, text);
+                String fontSizeKey = "function"+functionNumber+"_ThrottleFontSize";
+                if (rosterEntry.getAttribute(fontSizeKey) != null && functionButton.getFont().getSize() == FunctionButton.DEFAULT_FONT_SIZE) {
+                    rosterEntry.deleteAttribute(fontSizeKey);
+                }
+                if (functionButton.getFont().getSize() != FunctionButton.DEFAULT_FONT_SIZE) {
+                    rosterEntry.putAttribute(fontSizeKey, ""+functionButton.getFont().getSize());
+                }
+                functionButton.setDirty(false);                
             }
             if (rosterEntry.getFunctionLabel(functionNumber) != null ) {
                 if( lockable != rosterEntry.getFunctionLockable(functionNumber)) {
                     rosterEntry.setFunctionLockable(functionNumber, lockable);
                 }
-                if ( imagePath.compareTo(rosterEntry.getFunctionImage(functionNumber)) != 0) {
+                if ( (!imagePath.isEmpty() && rosterEntry.getFunctionImage(functionNumber) == null )
+                        || (rosterEntry.getFunctionImage(functionNumber) != null && imagePath.compareTo(rosterEntry.getFunctionImage(functionNumber)) != 0)) {
                     rosterEntry.setFunctionImage(functionNumber, imagePath);
                 }
-                if ( imageSelectedPath.compareTo(rosterEntry.getFunctionSelectedImage(functionNumber)) != 0) {
+                if ( (!imageSelectedPath.isEmpty() && rosterEntry.getFunctionSelectedImage(functionNumber) == null )
+                        || (rosterEntry.getFunctionSelectedImage(functionNumber) != null && imageSelectedPath.compareTo(rosterEntry.getFunctionSelectedImage(functionNumber)) != 0)) {
                     rosterEntry.setFunctionSelectedImage(functionNumber, imageSelectedPath);
                 }
             }
@@ -258,6 +268,16 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                             && preferences.isHidingUndefinedFuncButt()) {
                         functionButtons[i].setDisplay(false);
                         functionButtons[i].setVisible(false);
+                    }
+                    String fontSize = rosterEntry.getAttribute("function"+i+"_ThrottleFontSize");
+                    if (fontSize != null) {
+                        try {
+                            int size = new Integer(fontSize);
+                            functionButtons[i].setFont(new Font("Monospaced", Font.PLAIN, size));
+                            functionButtons[i].updateLnF();
+                        } catch (NumberFormatException e) {
+                            log.debug("setFnButtons(): can't parse font size attribute ");
+                        }
                     }
                 }                
             }
@@ -399,6 +419,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     @Override
     public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
     }
-
+    
     private final static Logger log = LoggerFactory.getLogger(FunctionPanel.class);
 }

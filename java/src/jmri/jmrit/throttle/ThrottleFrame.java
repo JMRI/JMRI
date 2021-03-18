@@ -288,13 +288,9 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         // assumes button width of 54, height of 30 (set in class FunctionButton) with
         // horiz and vert gaps of 5 each (set in FunctionPanel class)
         // with 3 buttons across and 6 rows high
-        int width = 3 * (FunctionButton.BUT_WDTH) + 2 * 3 * 5 + 10;   // = 192
-        int height = 6 * (FunctionButton.BUT_HGHT) + 2 * 6 * 5 + 20; // = 240 (but there seems to be another 10 needed for some LAFs)
+        int width = 3 * (FunctionButton.getButtonWidth()) + 2 * 3 * 5 + 10;   // = 192
+        int height = 8 * (FunctionButton.getButtonHeight()) + 2 * 6 * 5 + 20; // = 240 (but there seems to be another 10 needed for some LAFs)
 
-        if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
-            width = FunctionButton.BUT_WDTH * 3 + 2 * 3 * 5 + 10;
-            height = FunctionButton.BUT_IMG_SIZE * 2 + FunctionButton.BUT_HGHT * 4 + 2 * 6 * 5 + 20;
-        }
         functionPanel.setSize(width, height);
         functionPanel.setLocation(controlPanel.getWidth(), 0);
         functionPanel.setVisible(true);
@@ -315,7 +311,9 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         addressPanel.setIconifiable(true);
         addressPanel.setTitle(Bundle.getMessage("ThrottleMenuViewAddressPanel"));
         addressPanel.pack();
-        //                if (addressPanel.getWidth()<functionPanel.getWidth()) {addressPanel.setSize(functionPanel.getWidth(),addressPanel.getHeight());}
+        if (addressPanel.getWidth()<functionPanel.getWidth()) {
+            addressPanel.setSize(functionPanel.getWidth(),addressPanel.getHeight());
+        }
         addressPanel.setLocation(controlPanel.getWidth(), functionPanel.getHeight());
         addressPanel.setVisible(true);
         addressPanel.addInternalFrameListener(frameListener);

@@ -16,7 +16,7 @@ import jmri.util.swing.EditableResizableImagePanel;
 /**
  * A very specific dialog for editing the properties of a FunctionButton object.
  */
-public class FunctionButtonPropertyEditor extends JDialog {
+public final class FunctionButtonPropertyEditor extends JDialog {
 
     private final FunctionButton button;
 

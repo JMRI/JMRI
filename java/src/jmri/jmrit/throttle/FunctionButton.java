@@ -50,15 +50,11 @@ public class FunctionButton extends JToggleButton {
     private ToggleOrPressButtonModel _model;
     private Throttle _throttle;
 
-    final static int BUT_HGHT;
-    final static int BUT_WDTH;
-    final static int BUT_IMG_SIZE = 45;
-
-    static {
-        JButton sample = new JButton(" Light ");
-        BUT_HGHT = java.lang.Math.max(sample.getPreferredSize().height, 30);
-        BUT_WDTH = java.lang.Math.max(sample.getPreferredSize().width, 56);
-    }
+    private final static int BUT_HGHT = 24;    
+    private final static int BUT_MAX_WDTH = 256;
+    private final static int BUT_MIN_WDTH = 100;    
+    private final static int BUT_IMG_SIZE = 48;
+    final static int DEFAULT_FONT_SIZE = 12;
 
     /**
      * Get Button Height.
@@ -73,7 +69,7 @@ public class FunctionButton extends JToggleButton {
      * @return width.
      */
     public static int getButtonWidth() {
-        return BUT_WDTH;
+        return BUT_MIN_WDTH;
     }
 
     /**
@@ -85,23 +81,12 @@ public class FunctionButton extends JToggleButton {
         initGUI();
     }
     
-    private void initGUI(){
-        popupMenu = new JPopupMenu();
-        
+    private void initGUI(){      
         _model = new ToggleOrPressButtonModel(this, true);
-        setModel(_model);
-       
-        editor = new FunctionButtonPropertyEditor(this);                  
-        JMenuItem propertiesItem = new JMenuItem(Bundle.getMessage("MenuItemProperties"));
-        propertiesItem.addActionListener((ActionEvent e) -> {
-            editor.resetProperties();
-            editor.setLocation(MouseInfo.getPointerInfo().getLocation());
-            editor.setVisible(true);
-        });
-        popupMenu.add(propertiesItem);
+        setModel(_model);       
         //Add listener to components that can bring up popupMenu menus.
         addMouseListener(new PopupListener());
-        setFont(new Font("Monospaced", Font.PLAIN, 12));
+        setFont(new Font("Monospaced", Font.PLAIN, DEFAULT_FONT_SIZE));
         setMargin(new Insets(2, 2, 2, 2));
         setRolloverEnabled(false);
         updateLnF();
@@ -262,14 +247,20 @@ public class FunctionButton extends JToggleButton {
         setContentAreaFilled(!isImageOK());
         setText( isImageOK() ? null : getButtonLabel() );
         if (isImageOK()) { // adjust button for image
+            setMinimumSize(new Dimension(FunctionButton.BUT_IMG_SIZE, FunctionButton.BUT_IMG_SIZE));
+            setMaximumSize(new Dimension(FunctionButton.BUT_IMG_SIZE, FunctionButton.BUT_IMG_SIZE));
             setPreferredSize(new Dimension(FunctionButton.BUT_IMG_SIZE, FunctionButton.BUT_IMG_SIZE));
         }
         else { // adjust button for text
+            setMinimumSize(new Dimension(FunctionButton.BUT_MIN_WDTH, FunctionButton.BUT_HGHT));
+            setMaximumSize(new Dimension(FunctionButton.BUT_MAX_WDTH, FunctionButton.BUT_HGHT));
             if (getButtonLabel() != null) {
-                int butWidth = getFontMetrics(getFont()).stringWidth(getButtonLabel()) + 20; // pad out the width a bit
-                setPreferredSize(new Dimension( Math.max(butWidth, FunctionButton.BUT_WDTH), FunctionButton.BUT_HGHT));
+                int butWidth = getFontMetrics(getFont()).stringWidth(getButtonLabel()) + 64; // pad out the width a bit
+                butWidth = Math.min(butWidth, FunctionButton.BUT_MAX_WDTH );
+                butWidth = Math.max(butWidth, FunctionButton.BUT_MIN_WDTH );                
+                setPreferredSize(new Dimension( butWidth, FunctionButton.BUT_HGHT));
             } else {
-                setPreferredSize(new Dimension(BUT_WDTH, BUT_HGHT));
+                setPreferredSize(new Dimension(BUT_MIN_WDTH, BUT_HGHT));
             }
         }
     }    
@@ -373,11 +364,28 @@ public class FunctionButton extends JToggleButton {
         
         private void checkTrigger( MouseEvent e) {
             if (e.isPopupTrigger()) {
+                initPopupMenu();
                 popupMenu.show(e.getComponent(), e.getX(), e.getY());
             }
         }
     }
-
+    
+    private void initPopupMenu() {
+        if (popupMenu == null) {
+            JMenuItem propertiesItem = new JMenuItem(Bundle.getMessage("MenuItemProperties"));
+            propertiesItem.addActionListener((ActionEvent e) -> {
+                if (editor == null) {
+                    editor = new FunctionButtonPropertyEditor(this);            
+                }
+                editor.resetProperties();
+                editor.setLocation(MouseInfo.getPointerInfo().getLocation());
+                editor.setVisible(true);
+            });
+            popupMenu = new JPopupMenu();
+            popupMenu.add(propertiesItem);
+        }
+    }
+    
     /**
      * Collect the prefs of this object into XML Element.
      * <ul>
