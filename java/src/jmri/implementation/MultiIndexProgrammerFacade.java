@@ -123,7 +123,6 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
     void parseCV(String cv) {
         valuePI = -1;
         valueSI = -1;
-        _startVal = -1;
         if (cv.contains(".")) {
             if (cvFirst) {
                 String[] splits = cv.split("\\.");
@@ -258,26 +257,7 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
 
     @Override
     synchronized public void readCV(String CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-        useProgrammer(p);
-        parseCV(CV);
-        if (valuePI == -1) {
-            lastValuePI = -1;  // next indexed operation needs to write PI, SI
-            lastValueSI = -1;
-
-            state = ProgState.PROGRAMMING;
-            prog.readCV(_cv, this);
-        } else if (useCachePiSi()) {
-            // indexed operation with set values is same as non-indexed operation
-            state = ProgState.PROGRAMMING;
-            prog.readCV(_cv, this);
-        } else {
-            lastValuePI = valuePI;  // after check in 'if' statement
-            lastValueSI = valueSI;
-
-            // write index first
-            state = ProgState.FINISHREAD;
-            prog.writeCV(indexPI, valuePI, this);
-        }
+        readCV(_cv, this, NO_DEFAULT_CV);
     }
 
     @Override
@@ -290,10 +270,18 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
             lastValueSI = -1;
 
             state = ProgState.PROGRAMMING;
-            prog.readCV(_cv, this, _startVal);
+            if (startVal == NO_DEFAULT_CV) {
+                prog.readCV(_cv, this);
+            } else {
+                prog.readCV(_cv, this, _startVal);
+            }
         } else if (useCachePiSi()) {
             // indexed operation with set values is same as non-indexed operation
-            state = ProgState.PROGRAMMING;
+            if (startVal == NO_DEFAULT_CV) {
+                prog.readCV(_cv, this);
+            } else {
+                prog.readCV(_cv, this, _startVal);
+            }
             prog.readCV(_cv, this, _startVal);
         } else {
             lastValuePI = valuePI;  // after check in 'if' statement
@@ -403,7 +391,7 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
                 if (valueSI == -1) {
                     try {
                         state = ProgState.PROGRAMMING;
-                        if (_startVal == -1) {
+                        if (_startVal == NO_DEFAULT_CV) {
                             prog.readCV(_cv, this);
                         } else {
                             prog.readCV(_cv, this, _startVal);
