@@ -307,13 +307,13 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
             case 'C':
             case 'V':
                 log.debug("Read/Write CV detected");
-                reply = new SprogReply("= " + msg.toString().substring(2) + "\n"); // echo CV value (hex)
+                reply = new SprogReply("= h" + msg.toString().substring(2) + "\n"); // echo CV value (hex)
                 break;
 
             case 'D':
             case 'U':
                 log.debug("Read/Write CV with hint detected");
-                reply = new SprogReply("= " + msg.toString().substring(2) + "\n"); // echo CV hint value (hex)
+                reply = new SprogReply("= h" + msg.toString().substring(2) + "\n"); // echo CV hint value (hex)
                 break;
 
             case 'O':
