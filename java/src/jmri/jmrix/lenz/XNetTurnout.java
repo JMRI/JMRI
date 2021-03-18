@@ -275,10 +275,12 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public synchronized void setInverted(boolean inverted) {
         log.debug("Inverting Turnout State for turnout {}T{}", _prefix, mNumber);
-        _inverted = inverted;
         if (inverted) {
             _mThrown = jmri.Turnout.CLOSED;
             _mClosed = jmri.Turnout.THROWN;
