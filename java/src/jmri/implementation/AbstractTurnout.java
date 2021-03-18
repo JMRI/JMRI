@@ -232,6 +232,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * This method is not intended for general use, e.g. for users to set the
      * KnownState, so it doesn't appear in the Turnout interface.
      *
+     * On change, fires Property Change "KnownState".
+     * 
      * @param s New state value
      */
     public void newKnownState(int s) {
@@ -387,7 +389,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         throw new IllegalArgumentException("Unexpected mode: " + mode);
     }
 
-    /** {@inheritDoc} */
+    /** 
+     * On change, fires Property Change "feedbackchange".
+     * {@inheritDoc}
+     */
     @Override
     public void setFeedbackMode(int mode) throws IllegalArgumentException {
         // check for error - following removed the low bit from mode
@@ -438,7 +443,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
     }
 
-    /** {@inheritDoc} */
+    /** 
+     * On change, fires Property Change "inverted".
+     * {@inheritDoc}
+     */
     @Override
     public void setInverted(boolean inverted) {
         boolean oldInverted = _inverted;
@@ -482,11 +490,15 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     /**
      * Turnouts that are locked should only respond to JMRI commands to change
-     * state. We simulate a locked turnout by monitoring the known state
-     * (turnout feedback is required) and if we detect that the known state has
-     * changed, negate it by forcing the turnout to return to the commanded
-     * state. Turnouts that have local buttons can also be locked if their
+     * state.
+     * We simulate a locked turnout by monitoring the known state (turnout 
+     * feedback is required) and if we detect that the known state has
+     * changed, 
+     * negate it by forcing the turnout to return to the commanded
+     * state.
+     * Turnouts that have local buttons can also be locked if their
      * decoder supports it.
+     * On change, fires Property Change "locked".
      *
      * @param turnoutLockout lockout state to monitor. Possible values
      *                       {@link #CABLOCKOUT}, {@link #PUSHBUTTONLOCKOUT}.
@@ -578,8 +590,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     /**
      * When true, report to console anytime a cab attempts to change the state
-     * of a turnout on the layout. When a turnout is cab locked, only JMRI is
+     * of a turnout on the layout.
+     * When a turnout is cab locked, only JMRI is
      * allowed to change the state of a turnout.
+     * On setting changed, fires Property Change "reportlocked".
      *
      * @param reportLocked report locked state
      */
@@ -629,10 +643,17 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         return _decoderName;
     }
 
-    /** {@inheritDoc} */
+    /** 
+     * {@inheritDoc} 
+     * On change, fires Property Change "decoderNameChange".
+     */
     @Override
-    public void setDecoderName(String decoderName) {
-        _decoderName = decoderName;
+    public void setDecoderName(final String decoderName) {
+        if (!(java.util.Objects.equals(_decoderName, decoderName))) {
+            String oldName = _decoderName;
+            _decoderName = decoderName;
+            firePropertyChange("decoderNameChange", oldName, decoderName);
+        }
     }
 
     abstract protected void turnoutPushbuttonLockout(boolean locked);
@@ -660,7 +681,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         return myTurnoutOperation;
     }
 
-    /** {@inheritDoc} */
+    /** 
+     * {@inheritDoc} 
+     * Fires Property Change "TurnoutOperationState".
+     */
     @Override
     public void setTurnoutOperation(TurnoutOperation toper) {
         log.debug("setTurnoutOperation Called for turnout {}.  Operation type {}", this.getSystemName(), toper);
@@ -754,6 +778,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
     }
 
+    /** 
+     * On change, fires Property Change "TurnoutFeedbackFirstSensorChange".
+     * {@inheritDoc}
+     */
     public void provideFirstFeedbackNamedSensor(NamedBeanHandle<Sensor> s) {
         // remove existing if any
         Sensor temp = getFirstSensor();
@@ -762,6 +790,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
 
         _firstNamedSensor = s;
+        firePropertyChange("turnoutFeedbackFirstSensorChange", temp, s);
 
         // if need be, set listener
         temp = getFirstSensor();  // might have changed
@@ -803,6 +832,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
     }
 
+    /** 
+     * On change, fires Property Change "TurnoutFeedbackSecondSensorChange".
+     * {@inheritDoc}
+     */
     public void provideSecondFeedbackNamedSensor(NamedBeanHandle<Sensor> s) {
         // remove existing if any
         Sensor temp = getSecondSensor();
@@ -811,6 +844,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
 
         _secondNamedSensor = s;
+        firePropertyChange("turnoutFeedbackSecondSensorChange", temp, s);
 
         // if need be, set listener
         temp = getSecondSensor();  // might have changed
@@ -1041,7 +1075,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         return _divergeSpeed;
     }
 
-    /** {@inheritDoc} */
+    /** 
+     * {@inheritDoc} 
+     * On change, fires Property Change "TurnoutDivergingSpeedChange".
+     */
     @Override
     public void setDivergingSpeed(String s) throws JmriException {
         if (s == null) {
@@ -1107,7 +1144,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         return _straightSpeed;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     * On change, fires Property Change "TurnoutStraightSpeedChange".
+     */
     @Override
     public void setStraightSpeed(String s) throws JmriException {
         if (s == null) {
