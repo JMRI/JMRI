@@ -66,6 +66,7 @@ public class StealingThrottleTest {
 
         Assert.assertFalse("release button disabled", to.releaseButtonEnabled());
         Assert.assertTrue("set button enabled", to.setButtonEnabled());
+        Assert.assertTrue("address field enabled", to.addressFieldEnabled());
 
         to.typeAddressValue(45);
         to.pushSetButton();

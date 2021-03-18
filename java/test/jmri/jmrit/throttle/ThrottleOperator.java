@@ -64,6 +64,13 @@ public class ThrottleOperator extends JFrameOperator {
         JTextFieldOperator jtfo = new JTextFieldOperator(ifo); // only one text field in the address panel.
         jtfo.typeText("" + address);
     }
+    
+    // is the address field enabled
+    public boolean addressFieldEnabled() {
+        JInternalFrameOperator ifo = getAddressPanelOperator();
+        JTextFieldOperator jtfo = new JTextFieldOperator(ifo); // only one text field in the address panel.
+        return jtfo.isEnabled();
+    }
 
     // get the address value.
     public DccLocoAddress getAddressValue() {
