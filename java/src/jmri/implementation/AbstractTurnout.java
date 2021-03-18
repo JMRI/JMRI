@@ -780,7 +780,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     /** 
      * On change, fires Property Change "TurnoutFeedbackFirstSensorChange".
-     * {@inheritDoc}
      */
     public void provideFirstFeedbackNamedSensor(NamedBeanHandle<Sensor> s) {
         // remove existing if any
@@ -834,7 +833,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     /** 
      * On change, fires Property Change "TurnoutFeedbackSecondSensorChange".
-     * {@inheritDoc}
      */
     public void provideSecondFeedbackNamedSensor(NamedBeanHandle<Sensor> s) {
         // remove existing if any
