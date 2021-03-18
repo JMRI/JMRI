@@ -116,7 +116,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
      * @param CVname    Index of CV to read
      * @param p         Programming listener
      * @param startVal  CV default value, Use NO_DEFAULT_CV if no default available
-     * @throws jmri.ProgrammerException 
+     * @throws jmri.ProgrammerException if programming operation fails
      */
     synchronized public void readCVWithDefault(String CVname, jmri.ProgListener p, int startVal) throws jmri.ProgrammerException {
         final int CV = Integer.parseInt(CVname);
