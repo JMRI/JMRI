@@ -1,6 +1,8 @@
 package jmri.jmrit.throttle;
 
 import java.awt.*;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseWheelListener;
 import java.util.Arrays;
 
 import javax.swing.*;
@@ -24,7 +26,7 @@ import org.slf4j.LoggerFactory;
  */
 public class FunctionPanel extends JInternalFrame implements FunctionListener, java.beans.PropertyChangeListener, AddressListener {
 
-    private static final int DEFAULT_FUNCTION_BUTTONS = 17;
+    private static final int DEFAULT_FUNCTION_BUTTONS = 22; // just enough to fill the initial pane
     private DccThrottle mThrottle;
     
     private JPanel mainPanel;
@@ -151,6 +153,27 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         setContentPane(scrollPane);
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     }
+    
+    private void rebuildFnButons() {
+        mainPanel.removeAll();
+        if (this.mThrottle == null) {
+            functionButtons = new FunctionButton[DEFAULT_FUNCTION_BUTTONS];
+        } else {
+            functionButtons = new FunctionButton[mThrottle.getFunctions().length];
+        }
+        for (int i = 0; i < functionButtons.length; i++) {
+            functionButtons[i] = new FunctionButton();
+            mainPanel.add(functionButtons[i]);
+            functionButtons[i].setThrottle(mThrottle);
+            // Copy mouse and keyboard controls to new components
+            for (KeyListener kl:this.getKeyListeners()) {
+                functionButtons[i].addKeyListener(kl);
+            }
+            for (MouseWheelListener mwl:this.getMouseWheelListeners()) {
+                functionButtons[i].addMouseWheelListener(mwl);
+            }
+        }
+    }
 
     /**
      * Make sure that all function buttons are being displayed if buttons label
@@ -158,16 +181,9 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      */
     public void resetFnButtons() {
         final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences();
-        mainPanel.removeAll();
-        if (this.mThrottle == null) {
-            functionButtons = new FunctionButton[DEFAULT_FUNCTION_BUTTONS];
-        } else {
-            functionButtons = new FunctionButton[mThrottle.getFunctions().length];
-        }
+        rebuildFnButons();
         // Buttons names, ids,
-        for (int i = 0; i < functionButtons.length; i++) {
-            functionButtons[i] = new FunctionButton();
-            mainPanel.add(functionButtons[i]);            
+        for (int i = 0; i < functionButtons.length; i++) {                      
             functionButtons[i].setThrottle(mThrottle);
             functionButtons[i].setIdentity(i);
             functionButtons[i].addFunctionListener(this);
@@ -315,13 +331,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         if (buttonElements != null && buttonElements.size() > 0) {
             // just in case
             if ( buttonElements.size() > functionButtons.length) {
-                mainPanel.removeAll();
-                functionButtons = new FunctionButton[buttonElements.size()];                
-                for (int i = 0; i < functionButtons.length; i++) {
-                    functionButtons[i] = new FunctionButton();
-                    mainPanel.add(functionButtons[i]);            
-                    functionButtons[i].setThrottle(mThrottle);
-                }
+                rebuildFnButons();
             }
             int i = 0;
             for (Element buttonElement : buttonElements) {                

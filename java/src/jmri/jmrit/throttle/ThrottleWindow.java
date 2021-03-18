@@ -78,7 +78,7 @@ public class ThrottleWindow extends JmriJFrame {
         myInputsListener = new ThrottleWindowInputsListener(this);
         powerMgr = InstanceManager.getNullableDefault(PowerManager.class);
         if (powerMgr == null) {
-            LOG.info("No power manager instance found, panel not active");
+            log.info("No power manager instance found, panel not active");
         }
         initGUI();
     }
@@ -296,7 +296,7 @@ public class ThrottleWindow extends JmriJFrame {
     public Jynstrument ynstrument(String path) {
         Jynstrument it = JynstrumentFactory.createInstrument(path, this);
         if (it == null) {
-            LOG.error("Error while creating Jynstrument {}", path);
+            log.error("Error while creating Jynstrument {}", path);
             return null;
         }
         ThrottleFrame.setTransparent(it, true);
@@ -430,7 +430,7 @@ public class ThrottleWindow extends JmriJFrame {
                 try {
                     powerMgr.setPower(PowerManager.ON);
                 } catch (JmriException e1) {
-                    LOG.error("Error when setting power: ", e1);
+                    log.error("Error when setting power: ", e1);
                 }
             });
 
@@ -440,7 +440,7 @@ public class ThrottleWindow extends JmriJFrame {
                 try {
                     powerMgr.setPower(PowerManager.OFF);
                 } catch (JmriException e1) {
-                    LOG.error("Error when setting power: ", e1);
+                    log.error("Error when setting power: ", e1);
                 }
             });
 
@@ -504,7 +504,7 @@ public class ThrottleWindow extends JmriJFrame {
 
     public void setCurrentThrottleFrame(ThrottleFrame tf) {
         if (getCurrentThrottleFrame() != null) {
-            LOG.debug("setCurrentThrottleFrame from {} to {}", getCurrentThrottleFrame().getAddressPanel().getCurrentAddress(), tf.getAddressPanel().getCurrentAddress());
+            log.debug("setCurrentThrottleFrame from {} to {}", getCurrentThrottleFrame().getAddressPanel().getCurrentAddress(), tf.getAddressPanel().getCurrentAddress());
         }
         pcs.firePropertyChange("ThrottleFrame", getCurrentThrottleFrame(), tf);
         currentThrottleFrame = tf;
@@ -515,7 +515,7 @@ public class ThrottleWindow extends JmriJFrame {
         {
             cardCounterNB--;
             if (getCurrentThrottleFrame() == tf) {
-                LOG.debug("Closing last created");
+                log.debug("Closing last created");
             }
             throttlesPanel.remove(tf);
             throttleFrames.remove(tf.getTitle());
@@ -672,7 +672,7 @@ public class ThrottleWindow extends JmriJFrame {
                         }
 
                     } catch (Exception ex) {
-                        LOG.debug("Got exception (no panic): ", ex);
+                        log.debug("Got exception (no panic): ", ex);
                     }
                 }
             }
@@ -751,5 +751,5 @@ public class ThrottleWindow extends JmriJFrame {
         }
     }    
 
-    private final static Logger LOG = LoggerFactory.getLogger(ThrottleWindow.class);
+    private final static Logger log = LoggerFactory.getLogger(ThrottleWindow.class);
 }

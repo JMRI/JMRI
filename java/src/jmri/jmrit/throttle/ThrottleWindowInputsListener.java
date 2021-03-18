@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 public class ThrottleWindowInputsListener implements KeyListener, MouseWheelListener {
 
     private final ThrottleWindow tw;
-    private final static float MORE_SPEED_MULTIPLIER = 10f;
     
     ThrottleWindowInputsListener(ThrottleWindow tw) {
         this.tw = tw;
@@ -31,7 +30,7 @@ public class ThrottleWindowInputsListener implements KeyListener, MouseWheelList
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.isAltDown() || e.isControlDown() || e.isMetaDown() || e.isShiftDown()) {
+        if (e.isAltDown() || e.isMetaDown() || e.isShiftDown()) {
             return;
         }
         
@@ -40,13 +39,21 @@ public class ThrottleWindowInputsListener implements KeyListener, MouseWheelList
         if (throttle != null) {
             // speed
             if ( IntStream.of(ThrottleWindowKeyboardControls.ACCELERATE_KEYS).anyMatch(x->x==e.getKeyCode()) ) {
-                incrementSpeed(throttle, throttle.getSpeedIncrement());
+                if (e.isControlDown()) {
+                    incrementSpeed(throttle, throttle.getSpeedIncrement()*ThrottleWindowKeyboardControls.MORE_SPEED_MULTIPLIER);
+                } else {
+                    incrementSpeed(throttle, throttle.getSpeedIncrement());
+                }
             } else if (IntStream.of(ThrottleWindowKeyboardControls.DECELERATE_KEYS).anyMatch(x->x==e.getKeyCode()) ) {
-                incrementSpeed(throttle, -throttle.getSpeedIncrement());
+                if (e.isControlDown()) {
+                    incrementSpeed(throttle, -throttle.getSpeedIncrement()*ThrottleWindowKeyboardControls.MORE_SPEED_MULTIPLIER);
+                } else {                
+                    incrementSpeed(throttle, -throttle.getSpeedIncrement());
+                }
             } else if (IntStream.of(ThrottleWindowKeyboardControls.ACCELERATEMORE_KEYS).anyMatch(x->x==e.getKeyCode()) ) {
-                incrementSpeed(throttle, throttle.getSpeedIncrement()*MORE_SPEED_MULTIPLIER);
+                incrementSpeed(throttle, throttle.getSpeedIncrement()*ThrottleWindowKeyboardControls.MORE_SPEED_MULTIPLIER);
             } else if (IntStream.of(ThrottleWindowKeyboardControls.DECELERATEMORE_KEYS).anyMatch(x->x==e.getKeyCode()) ) {
-                incrementSpeed(throttle, -throttle.getSpeedIncrement()*MORE_SPEED_MULTIPLIER);
+                incrementSpeed(throttle, -throttle.getSpeedIncrement()*ThrottleWindowKeyboardControls.MORE_SPEED_MULTIPLIER);
             }
             // momentary function buttons
             for (int i=0;i<ThrottleWindowKeyboardControls.FUNCTIONS_KEY.length;i++) {
@@ -127,7 +134,7 @@ public class ThrottleWindowInputsListener implements KeyListener, MouseWheelList
         try {
             jif.setSelected(true);
         } catch (java.beans.PropertyVetoException ex) {
-            LOG.debug("JInternalFrame selection vetoed");
+            log.debug("JInternalFrame selection vetoed");
         }
     }
     
@@ -177,17 +184,17 @@ public class ThrottleWindowInputsListener implements KeyListener, MouseWheelList
             if (e.getWheelRotation() > 0) {
                 multiplier = -1f;
                 if ( e.isControlDown() ) {
-                    multiplier = - MORE_SPEED_MULTIPLIER;
+                    multiplier = - ThrottleWindowKeyboardControls.MORE_SPEED_MULTIPLIER;
                 }
             } else {
                 multiplier = 1f;
                 if ( e.isControlDown() ) {
-                    multiplier = MORE_SPEED_MULTIPLIER;
+                    multiplier = ThrottleWindowKeyboardControls.MORE_SPEED_MULTIPLIER;
                 }
             }
             incrementSpeed(throttle, throttle.getSpeedIncrement() * multiplier);
         }        
     }
 
-    private final static Logger LOG = LoggerFactory.getLogger(ThrottleWindowInputsListener.class);    
+    private final static Logger log = LoggerFactory.getLogger(ThrottleWindowInputsListener.class);    
 }

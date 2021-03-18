@@ -7,6 +7,8 @@ import java.awt.event.KeyEvent;
  * @author Lionel Jeanson - 2021
  */
 public class ThrottleWindowKeyboardControls {
+    // speed multiplier
+    static final float MORE_SPEED_MULTIPLIER = 5f;
     
     // moving through throttle windows
     static final int[] NEXT_THROTTLE_WINDOW_KEYS = { 
@@ -50,10 +52,12 @@ public class ThrottleWindowKeyboardControls {
     }; 
     
     static final int[] IDLE_KEYS = {
-        KeyEvent.VK_MULTIPLY  // numpad *
+        KeyEvent.VK_MULTIPLY,  // numpad *
+        KeyEvent.VK_SPACE
     };
     static final int[] STOP_KEYS = {
-        KeyEvent.VK_DIVIDE // numpad /
+        KeyEvent.VK_DIVIDE, // numpad /
+        KeyEvent.VK_ESCAPE
     };
     
     static final int[] ACCELERATE_KEYS = {
