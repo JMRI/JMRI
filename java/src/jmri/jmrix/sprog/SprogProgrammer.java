@@ -67,7 +67,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         }
         useProgrammer(p);
         _val = val;
-        startProgramming(_val, CV);
+        startProgramming(_val, CV, NO_DEFAULT_CV);
     }
 
     /** 
@@ -83,13 +83,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
      */
     @Override
     synchronized public void readCV(String CVname, jmri.ProgListener p) throws jmri.ProgrammerException {
-        final int CV = Integer.parseInt(CVname);
-        if (log.isDebugEnabled()) {
-            log.debug("readCV {} mode {} listens {}", CV, getMode(), p);
-        }
-        useProgrammer(p);
-        _val = -1;
-        startProgramming(_val, CV);
+        readCVWithDefault(CVname, p, NO_DEFAULT_CV);
     }
     
     /** 
@@ -101,25 +95,33 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
             if (_sv.supportsCVHints()) {
                 // Connected hardware supports CV hint
                 log.debug("Hardware supports hints");
-                readCVWithHint(CVname, p, startVal);
+                readCVWithDefault(CVname, p, startVal);
             } else {
                 // Fallback to not using a hint
                 log.debug("Hardware does not support hints");
-                readCV(CVname, p);
+                readCVWithDefault(CVname, p, NO_DEFAULT_CV);
             }
         } else {
             // The SPROG version is not known yet so request the version for later
             // and fall back to normal CV read this time
             log.debug("SPROG version is unknown");
+            readCVWithDefault(CVname, p, NO_DEFAULT_CV);
             _memo.getSprogVersionQuery().requestVersion(this);
-            readCV(CVname, p);
         }
     }
 
-    synchronized public void readCVWithHint(String CVname, jmri.ProgListener p, int startVal) throws jmri.ProgrammerException {
+    /**
+     * Internal method to read a CV with a possible default value
+     * 
+     * @param CVname    Index of CV to read
+     * @param p         Programming listener
+     * @param startVal  CV default value, Use NO_DEFAULT_CV if no default available
+     * @throws jmri.ProgrammerException 
+     */
+    synchronized public void readCVWithDefault(String CVname, jmri.ProgListener p, int startVal) throws jmri.ProgrammerException {
         final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
-            log.debug("readCV with {} mode {} hint {} listens {}", CV, startVal, getMode(), p);
+            log.debug("readCV {} mode {} hint {} listens {}", CV, getMode(), startVal, p);
         }
         useProgrammer(p);
         _val = -1;
@@ -127,26 +129,6 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     }
 
     private jmri.ProgListener _usingProgrammer = null;
-
-    /**
-     * Send the command to start programming operation.
-     * 
-     * @param val   Value to be written, or -1 for read
-     * @param CV    CV to read/write
-     */
-    private void startProgramming(int val, int CV) {
-        // here ready to send the read/write command
-        progState = COMMANDSENT;
-        // see why waiting
-        try {
-            startLongTimer();
-            controller().sendSprogMessage(progTaskStart(getMode(), val, CV), this);
-        } catch (Exception e) {
-            // program op failed, go straight to end
-            log.error("program operation failed, exception {}",e);
-            progState = NOTPROGRAMMING;
-        }
-    }
 
     /**
      * Send the command to start programming operation.
@@ -192,29 +174,17 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
      * @param mode Mode to be used
      * @param val value to be written
      * @param cvnum CV address to write to 
-     * @return formatted message to do programming operation
-     */
-    protected SprogMessage progTaskStart(ProgrammingMode mode, int val, int cvnum) {
-        // val = -1 for read command; mode is direct, etc
-        if (val < 0) {
-            return SprogMessage.getReadCV(cvnum, mode);
-        } else {
-            return SprogMessage.getWriteCV(cvnum, val, mode);
-        }
-    }
-
-    /**
-     * Internal method to create the SprogMessage for programmer task start.
-     * @param mode Mode to be used
-     * @param val value to be written
-     * @param cvnum CV address to write to 
-     * @param startVal Hint of what the Cv may contain
+     * @param startVal Hint of what the CV may contain
      * @return formatted message to do programming operation
      */
     protected SprogMessage progTaskStart(ProgrammingMode mode, int val, int cvnum, int startVal) {
         // val = -1 for read command; mode is direct, etc
         if (val < 0) {
-            return SprogMessage.getReadCV(cvnum, mode, startVal);
+            if (startVal == NO_DEFAULT_CV) {
+                return SprogMessage.getReadCV(cvnum, mode);
+            } else {
+                return SprogMessage.getReadCV(cvnum, mode, startVal);
+            }
         } else {
             return SprogMessage.getWriteCV(cvnum, val, mode);
         }
