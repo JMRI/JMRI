@@ -272,8 +272,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                     String fontSize = rosterEntry.getAttribute("function"+i+"_ThrottleFontSize");
                     if (fontSize != null) {
                         try {
-                            int size = Integer.valueOf(fontSize);
-                            functionButtons[i].setFont(new Font("Monospaced", Font.PLAIN, size));
+                            functionButtons[i].setFont(new Font("Monospaced", Font.PLAIN, Integer.parseInt(fontSize)));
                             functionButtons[i].updateLnF();
                         } catch (NumberFormatException e) {
                             log.debug("setFnButtons(): can't parse font size attribute ");
