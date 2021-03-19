@@ -65,13 +65,14 @@ public abstract class TrainCustomCommon {
      * Adds one CSV file path to the collection of files to be processed.
      *
      * @param csvFile The File to add.
+     * @return true if successful
      *
      */
     @SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification = "FindBugs incorrectly reports not guarded by conditional control flow")
-    public synchronized void addCVSFile(File csvFile) {
+    public synchronized boolean addCsvFile(File csvFile) {
         // Ignore null files...
         if (csvFile == null || !excelFileExists()) {
-            return;
+            return false;
         }
 
         // once the process starts, we can't add files to the common file
@@ -98,7 +99,9 @@ public abstract class TrainCustomCommon {
             log.debug("Queuing file {} to list", csvFile.getAbsolutePath());
         } catch (IOException e) {
             log.error("Unable to write to {}", csvNamesFile, e);
+            return false;
         }
+        return true;
     }
 
     /**

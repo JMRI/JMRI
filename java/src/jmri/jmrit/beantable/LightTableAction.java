@@ -253,6 +253,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
         // reset statusBar text
         status1.setText(Bundle.getMessage("LightCreateInst"));
         status1.setForeground(Color.gray);
+        
+        addFrame.setEscapeKeyClosesWindow(true);
+        addFrame.getRootPane().setDefaultButton(create);
 
         addFrame.pack();
         addFrame.setVisible(true);

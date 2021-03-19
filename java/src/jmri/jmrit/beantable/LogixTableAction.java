@@ -769,6 +769,8 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             create.setToolTipText(Bundle.getMessage("LogixCreateButtonHint"));  // NOI18N
         }
         _inAddMode = true;
+        addLogixFrame.setEscapeKeyClosesWindow(true);
+        addLogixFrame.getRootPane().setDefaultButton(create);
         addLogixFrame.pack();
         addLogixFrame.setVisible(true);
         _autoSystemName.setSelected(false);
@@ -1013,7 +1015,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             if (x != null) {
                 // Logix with this user name already exists
                 JOptionPane.showMessageDialog(getFrame(),
-                        Bundle.getMessage("LogixError3"), Bundle.getMessage("ErrorTitle"), // NOI18N
+                        Bundle.getMessage("LogixError3"), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
                 return false;
             }
@@ -1023,9 +1025,9 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
 
     /**
      * Check for a valid Logix system name.
-     * A valid name has a Logix prefix, normally IX, and at least 1 additional character.
-     * The prefix will be added if necessary.
-     * makeSystemName errors are logged to the system console and a dialog is displayed.
+     * A valid name starts with the Logix prefix consisting of the Internal system prefix (normally I) + X,
+     * and at least 1 additional character. The prefix will be added if necessary.
+     * Any makeSystemName errors are logged to the system console and a dialog is displayed.
      * @return true if the name is now valid.
      */
     boolean checkLogixSysName() {
@@ -1035,7 +1037,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             sName = InstanceManager.getDefault(jmri.LogixManager.class).makeSystemName(sName);
         } catch (jmri.NamedBean.BadSystemNameException ex) {
             JOptionPane.showMessageDialog(getFrame(),
-                    Bundle.getMessage("LogixError8"), Bundle.getMessage("ErrorTitle"), // NOI18N
+                    Bundle.getMessage("LogixError8"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }

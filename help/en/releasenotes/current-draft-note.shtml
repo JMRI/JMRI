@@ -21,7 +21,8 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>Fixed Internal Sensor Manager set as default, not CBUS Sensor Manager, affecting 4.19.6 onwards.</li>
+                <li>Simulated Connections - Output Interval option added to Additional Connection Settings.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -111,7 +112,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a></h4>
             <ul>
-                <li></li>
+                <li>Simulated Connections - Output Interval option added to Additional Connection Settings.</li>
             </ul>
 
         <h4>RFID</h4>
@@ -419,7 +420,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+            <li>Fix <strong>Options &rArr; Track Options &rArr; Hide Track Construction Lines</strong>.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
