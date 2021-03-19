@@ -7,8 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright ($Author$) 2008 -->
   <!-- $Id$ -->
-  <!-- Translated  by Blorec Hervé le 2011-11-1-->
-
+  
   <title>JMRI: CBUS Event Capture Tool</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -21,18 +20,24 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h1>JMRI: Outil de capture
-      d'&Atilde;&copy;v&Atilde;&copy;nement CBUS</h1>CBUS <a href=
-      "../../../../../../../html/hardware/can/images/ConfigTool.jpg">
-      <img src=
-      "../../../../../../../html/hardware/can/images/ConfigTool.jpg"
-      width="363" height="336" alt="Ecran Config Tool" align=
-      "right"></a><br>
-      L'outil de capture de l'&Atilde;&copy;v&Atilde;&copy;nement
+      d'&#233;v&#233;nement CBUS</h1>
+      
+      <ul class="nav">
+      <li><a href="#examinemultipleevents">Examiner Év&#233;n&#233;ments Multiples</a></li>
+      <li><a href="#eventid">Entr&#233;e Manuelle d'ID d'Év&#233;nements</a></li>
+      <li><a href="#capturenextevent">Capturer l'&#233;v&#233;nement suivant</a></li>
+      <li><a href="#filterhighlight">Filtrer et Mettre en Évidence les Év&#233;nements</a></li>      
+      </ul>
+      
+      <img src="../../../../../../../html/hardware/can/cbus/images/swing/event-capture/event-capture-413x677.png"
+       alt="Event Capture Tool screenshot" width="413" height="677" align="right">
+      
+      L'outil de capture d'&#233;v&#233;nement
       CBUS peut simplifier la configuration de JMRI pour bien
       travailler avec votre installation <a href=
       "../../../../../../../html/hardware/can/cbus/index.html">CBUS</a>
@@ -40,93 +45,119 @@
 
       <p>Pour <a href=
       "../../../../../../../html/hardware/can/cbus/index.html">configurer
-      les capteurs et les aiguillages JMRI</a> , vous avez besoin
-      d'identifier les &Atilde;&copy;v&Atilde;&copy;nements
-      associ&Atilde;&copy;s CBUS. Il y a plusieurs
-      fa&Atilde;&sect;ons de le faire. Le reste de cette page passe
-      par des alternatives, en utilisant la configuration d'un
-      capteur comme un exemple. Des m&Atilde;&copy;thodes
-      similaires travaillent pour les branchements.</p>
+      les Capteurs et les Aiguillages et les Lumi&#232;res</a> , vous avez besoin
+      d'identifier les &#233;v&#233;nements
+      associ&#233;s CBUS. Il y a plusieurs
+      fa&#231;ons de le faire.</p>
+      
+      <p>Cette page utilise l'outil de capture pour configurer un capteur 
+      &#224; titre d'exemple, des m&#233;thodes similaires fonctionnent pour les 
+      aiguillages et les lumi&#232;res.</p>.
+     
+     <h3><a name="examinemultipleevents" id="examinemultipleevents" 
+     >Examiner Év&#233;n&#233;ments Multiples</h3>
+     
+     <p>Cette page utilise l'outil de capture pour configurer un 
+     capteur &#224; titre d'exemple, <p>La partie sup&#233;rieure de l'&#233;cran. 
+     peut capturer plusieurs &#233;v&#233;nements CBUS, que vous pouvez ensuite utiliser pour
+      cr&#233;er des capteurs et des aiguillages.
 
-      <h3>Fournir l'ID
-      d'&Atilde;&copy;v&Atilde;&copy;nement</h3>Vous pouvez
-      simplement taper une <a href=
-      "../../../../../../../html/hardware/can/cbus/index.html">ID
-      d'&Atilde;&copy;v&Atilde;&copy;nement</a> dans le champ
-      &Atilde;  c&Atilde;&acute;t&Atilde;&copy; de "Actif On", puis
-      appuyez sur "Cr&Atilde;&copy;er". Un capteur sera
-      cr&Atilde;&copy;&Atilde;&copy; qui devient actif lorsque
-      l'&Atilde;&copy;v&Atilde;&copy;nement est On, et inactif
-      lorsque l'&Atilde;&copy;v&Atilde;&copy;nement
-      oppos&Atilde;&copy; (ON oppos&Atilde;&copy; &Atilde;  OFF)
-      est vu.
+      <p>Lorsqu'un nouveau message CBUS arrive, il est captur&#233; sur la 
+      ligne la plus haute  dont la case "Capture" est coch&#233;e. La case
+      sera ensuite d&#233;coch&#233;e afin que le message captur&#233; ne soit pas 
+      &#233;cras&#233; par des messages CBUS ult&#233;rieurs. Si vous cochez une s&#233;rie de
+      cases, vous pouvez capturer une s&#233;rie de messages.</p>des m&#233;thodes 
+      similaires fonctionnent pour les aiguillages et les feux.</p>
+      
+      <p>Une fois que vous avez captur&#233; l'&#233;v&#233;nement que vous voulez, 
+      vous pouvez le copier et le coller dans les cases situ&#233;es dans 
+      la partie inf&#233;rieure de la fen&#234;tre. Si votre ordinateur le permet, 
+      vous pouvez aussi simplement glisser et d&#233;poser la
+      valeur dans le champ inf&#233;rieur.</p>
+      
+      <h3><a name="eventid" id="eventid">Entr&#233;e Manuelle d'ID d'Év&#233;nements</a></h3>
 
-      <p>Si vous souhaitez associer actifs et inactifs &Atilde; 
-      des &Atilde;&copy;v&Atilde;&copy;nements
-      compl&Atilde;&uml;tements s&Atilde;&copy;par&Atilde;&copy;s,
-      vous pouvez entrer les ID des
-      &Atilde;&copy;v&Atilde;&copy;nement dans les deux champs et
-      cliquez sur "Cr&Atilde;&copy;er".</p>
+       <p>Vous pouvez simplement taper un <a href=]
+      "../../../../../../../html/hardware/can/cbus/index.shtml">Év&#233;nement
+      ID</a> dans le champ situ&#233; &#224; c&#244;t&#233; de "Actif On", puis appuyez sur
+      "Cr&#233;er". Un capteur, un aiguillage ou une lampe sera cr&#233;&#233;(e) et 
+      deviendra Actif(ve) lorsque l'&#233;v&#233;nement est vu, et Inactif lorsque 
+      l'&#233;v&#233;nement oppos&#233; (ON vs OFF) est vu.</p>
 
-      <h3>Capturer l'&Atilde;&copy;v&Atilde;&copy;nement
-      Suivant</h3>Si vous pouvez faire &Atilde;&copy;mettre par le
-      r&Atilde;&copy;seau l'&Atilde;&copy;v&Atilde;&uml;nement
-      d&Atilde;&copy;sir&Atilde;&copy;, par exemple en appuyant sur
-      un interrupteur du TCO d&Atilde;&copy;viant un aiguillage,
-      vous pouvez capturer cet &Atilde;&copy;v&Atilde;&copy;nement
-      et l'utiliser.
+      </p> <p>Si vous voulez associer Actif et Inactif &#224; des
+      &#233;v&#233;nements compl&#232;tement distincts, vous pouvez entrer les ID 
+      des &#233;v&#233;nements dans les deux champs et cliquer sur " Cr&#233;er ".</p>
 
-      <p>Si vous appuyez sur la "Capture Suivante"
-      situ&Atilde;&copy;e pr&Atilde;&uml;s de l'un des champs
-      d'&Atilde;&copy;v&Atilde;&copy;nement, il va rester bas
-      (activ&Atilde;&copy;) jusqu'&Atilde;  ce que le prochain
-      &Atilde;&copy;v&Atilde;&uml;nement CBUS (trame CAN)soit
-      consid&Atilde;&copy;r&Atilde;&copy; par le programme. Cet
-      &Atilde;&copy;v&Atilde;&copy;nement est captur&Atilde;&copy;
-      dans le champ voisin pour une utilisation
-      ult&Atilde;&copy;rieure.</p>
 
-      <p>Vous pouvez capturer s&Atilde;&copy;par&Atilde;&copy;ment
-      les deux &Atilde;&copy;v&Atilde;&copy;nements pour un
-      capteur, si d&Atilde;&copy;sir&Atilde;&copy;.</p>
+     <h3><a name="capturenextevent" id="capturenextevent"
+     >Capturer le Prochain Év&#233;nement</a></h3>.
 
-      <h3>Examiner des &Atilde;&copy;v&Atilde;&copy;nements
-      multiples</h3>La partie sup&Atilde;&copy;rieure de
-      l'&Atilde;&copy;cran peut capturer plusieurs
-      &Atilde;&copy;v&Atilde;&copy;nements CBUS, que vous pouvez
-      ensuite utiliser pour cr&Atilde;&copy;er des capteurs et des
-      branchements.
+      </p> <p>Si vous voulez associer Actif et Inactif &#224; des
+      &#233;v&#233;nements compl&#232;tement distincts, vous pouvez entrer les ID 
+      des &#233;v&#233;nements dans les
+      les deux champs et cliquer sur " Cr&#233;er ".</p>
+		
+	
 
-      <p>Quand un nouveau message CBUS survient, il sera
-      captur&Atilde;&copy; dans la plus haute ligne qui a la case
-      "Capture" coch&Atilde;&copy;e. La bo&Atilde;&reg;te sera
-      alors d&Atilde;&copy;sactiv&Atilde;&copy;e afin que le
-      message captur&Atilde;&copy; ne soit pas
-      &Atilde;&copy;cras&Atilde;&copy; par la suite par des
-      messages CBUS. Si vous cochez une s&Atilde;&copy;rie de
-      bo&Atilde;&reg;tes, vous pouvez capturer une
-      s&Atilde;&copy;rie de messages.</p>
+     <h3><a name="capturenextevent" id="capturenextevent"
+     >Capturer le prochain &#233;v&#233;nement</a></h3>.
+      </p> <p>Si vous pouvez faire en sorte que le r&#233;seau &#233;mette l'&#233;v&#233;nement 
+      souhait&#233;, par exemple en appuyant sur un
+      interrupteur ou en d&#233;viant un aiguillage, vous pouvez capturer 
+      cet Év&#233;nement et l'utiliser.</p>
 
-      <p>Une fois que vous avez captur&Atilde;&copy;
-      l'&Atilde;&copy;v&Atilde;&copy;nement que vous souhaitez,
-      vous pouvez le copier et coller dans les cases de la partie
-      inf&Atilde;&copy;rieure de la fen&Atilde;&ordf;tre. Si votre
-      ordinateur le permet, vous pouvez aussi simplement faire
-      glisser et d&Atilde;&copy;poser la valeur dans le champ
-      inf&Atilde;&copy;rieur.</p>
+      </p> <p>Si vous appuyez sur le bouton "Capturer suivant" &#224; c&#244;t&#233; de l'un des
+      champs d'&#233;v&#233;nement, il restera abaiss&#233; (activ&#233;) jusqu'&#224; ce que le prochain
+      Év&#233;nement CBUS (trame CAN) suivant soit vu par le programme. Cet &#233;v&#233;nement est
+      captur&#233; dans le champ voisin pour une utilisation ult&#233;rieure.</p>
 
-      <h3>Autres Outils</h3>Une fois que vous avez
-      cr&Atilde;&copy;&Atilde;&copy; un capteur ou un aiguillage,
-      vous pouvez utiliser la <a href=
-      "../../../../../jmrit/beantable/SensorTable.shtml">Table
-      Capteur</a> ou <a href=
-      "../../../../../jmrit/beantable/TurnoutTable.shtml">Table
-      Aiguillage</a> pour ajuster les d&Atilde;&copy;tails.
+      <p>Vous pouvez capturer s&#233;par&#233;ment les deux Év&#233;nements pour un Capteur,
+      un Aiguillage ou une Lumi&#232;re, si vous le souhaitez.</p> <p>
 
-      <p>l' <a href="../console/CbusConsoleFrame.shtml">console
-      CBUS</a> peut vous aider &Atilde;  comprendre quels
-      &Atilde;&copy;v&Atilde;&copy;nements sont survenus sur votre
-      R&Atilde;&copy;seau. <!--#include virtual="/Footer" --></p>
+		<h3><a name="filterhighlight" id="filterhighlight"
+     >Filtrer et Mettre en Évidence</a></h3>	
+     
+     </p> <p>Vous pouvez ouvrir une nouvelle fen&#234;tre de
+      <a href="../console/CbusConsoleFrame.shtml#filter">filtre</a> ou 
+      <a href="../console/CbusConsoleFrame.shtml#highlighter">mise en 
+      &#233;vidence des &#233;v&#233;nements</a>
+       en cliquant sur les boutons en haut de l'&#233;cran.
+        </p>
+
+      </p> <p>Vous pouvez &#233;galement ouvrir l'outil de capture via le bouton 
+      <a href="../console/CbusConsoleFrame.shtml">Console Log</a>.
+      <br>Dans ce cas, le filtre et le surligneur d'&#233;v&#233;nements utilis&#233;s par 
+      le journal de la console seront partag&#233;s avec l'outil de capture.
+      </p>
+      
+       <h3>Aide JMRI</h3>
+    
+      </p> <p>Une fois que vous avez cr&#233;&#233; un capteur ou un aiguillage CBUS, 
+    vous pouvez utiliser le <a href=...
+      "../../../../../jmrit/beantable/SensorTable.shtml">Tableau des Capteurs
+      </a>, le <a href=
+      "../../../../../jmrit/beantable/TurnoutTable.shtml">Tableau des
+      Aiguillages</a> ou le <a href=
+      "../../../../jmrit/beantable/LightTable.shtml">Tableau des
+      Lumi&#232;res</a> pour ajuster les d&#233;tails.</p>
+
+      <p>La <a href="../console/CbusConsoleFrame.shtml">Console CBUS
+      </a> peut vous aider &#224; comprendre les &#233;v&#233;nements qui se produisent
+      sur votre r&#233;seau.</p>
+      
+      <p>Vous pouvez afficher cette page d'aide dans JMRI en s&#233;lectionnant 
+      Aide > Aide de la fen&#234;tre dans la barre sup&#233;rieure de la fen&#234;tre de 
+      capture d'&#233;v&#233;nements CBUS.</p>
+      
+      <p><a href="../../../../../../html/hardware/can/cbus/index.shtml">
+		  Page principale d'assistance CBUS de JMRI</a>.</p>
+
+        <h2></h2>
+        <p>CBUS&reg ; est une marque d&#233;pos&#233;e du Dr Michael Bolton</p>.
+        <p></p>
+      <p>Traduction 2021-03-19</p>
+      
+     <!--#include virtual="/Footer.shtml" --></p>
     </div>
   </div>
 </body>
