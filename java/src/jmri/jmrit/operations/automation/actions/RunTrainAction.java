@@ -65,7 +65,11 @@ public class RunTrainAction extends Action {
             if (InstanceManager.getDefault(TrainCustomManifest.class).doesCommonFileExist()) {
                 log.warn("Manifest CSV common file exists!");
             }
-            InstanceManager.getDefault(TrainCustomManifest.class).addCVSFile(train.createCSVManifestFile());
+            if (!InstanceManager.getDefault(TrainCustomManifest.class).addCsvFile(train.createCsvManifestFile())) {
+                finishAction(false);
+                return;
+            }
+            log.info("Queued train CSV file ({}) for custom processing", train.getName());
             boolean status = InstanceManager.getDefault(TrainCustomManifest.class).process();
             if (status) {
                 try {

@@ -1,6 +1,7 @@
 package jmri.jmrix;
 
 import java.util.List;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
@@ -71,6 +72,12 @@ public class SystemConnectionMemoManager extends Bean implements InstanceManager
         return null;
     }
 
+    /**
+     * For a given System UserName, get the Connection Memo.
+     * @param userName system UserName to search for.
+     * @return connection memo, else null if no memo located.
+     */
+    @CheckForNull
     public synchronized SystemConnectionMemo getSystemConnectionMemoForUserName(@Nonnull String userName) {
         for (SystemConnectionMemo memo: InstanceManager.getList(SystemConnectionMemo.class)) {
             if (memo.getUserName().equals(userName)) {

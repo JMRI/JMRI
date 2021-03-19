@@ -17,9 +17,9 @@ public class LayoutTrackViewTest {
 
     // LayoutTrackView is abstract, so there's
     // not much we can do here right now. But we provide a single
-    // LayoutInstance support to all the subtypes.  This is 
+    // LayoutInstance support to all the subtypes.  This is
     // needed because multiple LayoutEditor objects don't always play nice.
-    
+
     public LayoutEditor layoutEditor;
 
     @BeforeAll
@@ -42,6 +42,7 @@ public class LayoutTrackViewTest {
         layoutEditor = null;
 
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

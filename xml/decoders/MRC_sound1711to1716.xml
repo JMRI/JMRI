@@ -132,7 +132,7 @@
         <label xml:lang="it">Velocità bassissima</label>
         <tooltip>&lt;html&gt;Ultra slow speed enable for speed step1 and 2&lt;br&gt;Not documented for this decoder, but could be supported&lt;/html&gt;</tooltip>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" default="0">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="0">
         <decVal/>
         <label>Version ID</label>
         <label xml:lang="it">Versione Decoder: </label>

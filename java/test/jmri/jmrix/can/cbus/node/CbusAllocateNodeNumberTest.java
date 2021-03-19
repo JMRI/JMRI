@@ -151,11 +151,11 @@ public class CbusAllocateNodeNumberTest {
         rsna.setElement(2, 0x98); // 65432
         t.reply(rsna);
         
-        assertThat(nodeModel.getNodeByNodeNum(65432)).isNotNull();
-        
         // check that RTSTAT sent to command stations
         JUnitUtil.waitFor(()->{ return( tcis.outbound.size() >3); }, "TCIS count did not increase");
         assertThat(tcis.outbound.elementAt(3).toString()).isEqualTo("[5f8] 0C");
+        
+        assertThat(nodeModel.getNodeByNodeNum(65432)).isNotNull();
         
         t.dispose();
         

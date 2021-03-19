@@ -119,6 +119,7 @@ public class CtcManagerVetoTest {
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         jmri.util.JUnitUtil.tearDown();
     }
 //     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CtcManagerVetoTest.class);

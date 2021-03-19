@@ -83,22 +83,22 @@ public class LayoutEditorToolsTest {
         //create a new Layout Turnout
         layoutTurnout = new LayoutRHTurnout("Right Hand",
                 // new Point2D.Double(150.0, 100.0),
-                // 33.0, 1.1, 1.2, 
+                // 33.0, 1.1, 1.2,
                 layoutEditor);
         LayoutTurnoutView ltv = new LayoutTurnoutView(layoutTurnout,
                 new Point2D.Double(150.0, 100.0),
-                33.0, 1.1, 1.2, 
+                33.0, 1.1, 1.2,
                 layoutEditor);
         Assert.assertNotNull("RH turnout for testSetSignalsAtTurnoutWithDone", layoutTurnout);
         layoutEditor.addLayoutTrack(layoutTurnout, ltv);
 
-        positionablePoint1 = new PositionablePoint("A1", PositionablePoint.PointType.ANCHOR, layoutEditor); // new Point2D.Double(250.0, 100.0), 
-        PositionablePointView pp1v = new PositionablePointView(positionablePoint1, new Point2D.Double(250.0, 100.0), layoutEditor); 
+        positionablePoint1 = new PositionablePoint("A1", PositionablePoint.PointType.ANCHOR, layoutEditor); // new Point2D.Double(250.0, 100.0),
+        PositionablePointView pp1v = new PositionablePointView(positionablePoint1, new Point2D.Double(250.0, 100.0), layoutEditor);
         Assert.assertNotNull("positionablePoint1 for testSetSignalsAtTurnoutWithDone", positionablePoint1);
         layoutEditor.addLayoutTrack(positionablePoint1, pp1v);
 
-        positionablePoint2 = new PositionablePoint("A2", PositionablePoint.PointType.ANCHOR, layoutEditor); // new Point2D.Double(50.0, 100.0), 
-        PositionablePointView pp2v = new PositionablePointView(positionablePoint2, new Point2D.Double(250.0, 100.0), layoutEditor); 
+        positionablePoint2 = new PositionablePoint("A2", PositionablePoint.PointType.ANCHOR, layoutEditor); // new Point2D.Double(50.0, 100.0),
+        PositionablePointView pp2v = new PositionablePointView(positionablePoint2, new Point2D.Double(250.0, 100.0), layoutEditor);
         layoutEditor.addLayoutTrack(positionablePoint2, pp2v);
         Assert.assertNotNull("positionablePoint2 for testSetSignalsAtTurnoutWithDone", positionablePoint2);
 
@@ -446,7 +446,7 @@ public class LayoutEditorToolsTest {
             // Point2D point = new Point2D.Double(150.0, 100.0);
             LevelXing lx = new LevelXing("LevelCrossing", layoutEditor);
             // LevelXingView lxv = new LevelXingView(lx, point, layoutEditor);
-            
+
             lx.setLayoutBlockAC(layoutBlocks.get(0));
             lx.setLayoutBlockBD(layoutBlocks.get(1));
 
@@ -661,6 +661,7 @@ public class LayoutEditorToolsTest {
         signalHeads = null;
         sensors = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
