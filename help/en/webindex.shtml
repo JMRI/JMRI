@@ -756,7 +756,7 @@
 </li>
  
 <li>
-<a href="html/apps/DispatcherSystem/DispatcherSystem.shtml">Dispatcher System (Python Extension) </a>
+<a href="html/scripthelp/DispatcherSystem/DispatcherSystem.shtml">Dispatcher System (Python Extension) </a>
 <ul></ul>
 </li>
 
@@ -978,6 +978,12 @@
  
 <li>
 <a href="html/tools/scripting/Python.shtml">Jython (in Scripting) </a>
+<ul></ul>
+</li>
+
+ 
+<li>
+<a href="html/tools/scripting/JythonApps.shtml">Jython Apps for JMRI </a>
 <ul></ul>
 </li>
 

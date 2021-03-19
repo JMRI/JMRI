@@ -8,7 +8,7 @@ import java.nio.ByteBuffer;
 import org.junit.Test;
 
 public class RequestStatusPacketTest {
-  private byte[] testPacket = { };
+  private final byte[] testPacket = { };
 
   @Test
   public void getIdTest() {

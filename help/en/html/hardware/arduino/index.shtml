@@ -143,7 +143,7 @@
     
     <p>
     One of the simplest ways to have your arduino communicate with JMRI is to install software that
-    allows it to emulate a CMRI node. [See <a href="../cmri/index.shtml">the CMRI help page</a> for  
+    allows it to emulate a CMRI node. [See <a href="../cmri/CMRI.shtml">the CMRI help page</a> for  
     information about using CMRI nodes with JMRI.] On the arduino, install one of the arduino 
     C/MRI libraries and include it in your sketch (for example, the library by Michael Adams
     <a href="https://github.com/madleech/ArduinoCMRI" target="blank_"> available on Github</a> (
@@ -345,7 +345,7 @@
     Close this window and click "Done."  BE SURE TO HIT "Save" on the Preferences window.</li>
     <li>Open the <a href="../../tools/Sensors.shtml">sensor table </a>and create a CMRI sensor with system name 1001 
     (first CMRI bit on node 1)</li>
-    <li>Open the <a href="../../help/en/html/tools/Blocks.shtml">block table </a>and create a block.  Set the occupancy sensor
+    <li>Open the <a href="../../tools/Blocks.shtml">block table </a>and create a block.  Set the occupancy sensor
     to the sensor you just created.</li>
     <li>Go to a panel you have created and assign the block you just created to appropriate track section.</li>
     <li>Run trains and watch the action!</li> 

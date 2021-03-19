@@ -159,7 +159,7 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
     }
 
     JButton cancel;
-    JButton ok;
+    protected JButton ok; // access from Table Action to add as default button to frame
     JTextField sysName;
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));

@@ -229,8 +229,7 @@
           application</a>.</dd>
 
           <dd>
-            <h3><a href=
-            "../../package/jmri/jmrit/operations/Operations.shtml">Operations(Pro)</a></h3>
+            <h3><a href="../apps/OperationsPro/index.shtml">Operations(Pro)</a></h3>
           </dd>
 
           <dd>The Operations tool has evolved to an advanced
@@ -238,9 +237,7 @@
           Trains and produce computer generated Manifests and
           Switch Lists for your railroad from a roster of rolling
           stock, schedules and destinations. This set of tools has
-          evolved into a full <a href=
-          "../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro
-          application</a>.</dd>
+          evolved into a full <a href="../apps/OperationsPro/index.shtml">OperationsPro&trade; application</a>.</dd>
         </dl>
 
         <h2><a name="systemSpecificTools" id=
@@ -619,7 +616,8 @@
         power to control your layout anyway you'd like.
 
         <p>Run your own scripts or scripts shared by other JMRI
-        user from the Panels &gt; Run Script... menu.</p>
+        users from the <strong>Scripting</strong> {<em>Old: <strong>Panels</strong></em>}
+        <strong>&rArr; Run Script...</strong> menu.</p>
 
         <!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->

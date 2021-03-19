@@ -1,25 +1,29 @@
 package jmri.jmrix.ecos.networkdriver;
 
-import java.io.IOException;
 import jmri.jmrix.ecos.EcosPortController;
+import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 import jmri.jmrix.ecos.EcosTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implements NetworkPortAdapter for the ECOS system network connection.
+ * Implements NetworkPortAdapter for the ECoS system network connection.
  * <p>
  * This connects an ECOS command station via a telnet connection. Normally
  * controlled by the NetworkDriverFrame class.
  *
- * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008, 2021
  */
 public class NetworkDriverAdapter extends EcosPortController {
 
-    public NetworkDriverAdapter() {
-        super(new jmri.jmrix.ecos.EcosSystemConnectionMemo());
+    public NetworkDriverAdapter(EcosSystemConnectionMemo memo) {
+        super(memo);
         allowConnectionRecovery = true;
         manufacturerName = jmri.jmrix.ecos.EcosConnectionTypeList.ESU;
+    }
+
+    public NetworkDriverAdapter() {
+        this(new EcosSystemConnectionMemo());
     }
 
     /**

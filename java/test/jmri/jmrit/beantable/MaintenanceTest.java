@@ -63,7 +63,7 @@ public class MaintenanceTest {
 
         // hit sensors before turnouts with same user name
         result = Maintenance.getTypeAndNames("bar");
-        checkReturnString(result, "Sensor", "bar", "IS3", "1");  //num listeners is empirical   
+        checkReturnString(result, "Sensor", "bar", "IS3", "1");  //num listeners is empirical
     }
 
     @Test
@@ -155,6 +155,7 @@ public class MaintenanceTest {
     public void tearDown() {
         JUnitUtil.resetWindows(false, false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

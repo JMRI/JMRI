@@ -17,6 +17,9 @@ import jmri.Throttle;
 import jmri.ThrottleListener;
 import jmri.beans.PropertyChangeSupport;
 
+import javax.annotation.Nonnull;
+import javax.annotation.concurrent.GuardedBy;
+
 /**
  * An abstract implementation of DccThrottle. Based on Glen Oberhauser's
  * original LnThrottleManager implementation.
@@ -28,6 +31,7 @@ import jmri.beans.PropertyChangeSupport;
  */
 abstract public class AbstractThrottle extends PropertyChangeSupport implements DccThrottle {
 
+    @GuardedBy("this")
     protected float speedSetting;
     /**
      * Question: should we set a default speed step mode so it's never zero?
@@ -76,8 +80,8 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * Create a new AbstractThrottle with custom number of functions.
      * <p>
      * All function and momentary functions set to Off.
-     * @param memo System Connection.
-     * @param totalFunctions total number of functions available, including 0.
+     * @param memo System Connection this throttle is on
+     * @param totalFunctions total number of functions available, including 0
      */
     public AbstractThrottle(SystemConnectionMemo memo, int totalFunctions) {
         active = true;
@@ -87,18 +91,18 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     }
 
     /**
-     * System Connection.
+     * System Connection this throttle is on
      */
     protected SystemConnectionMemo adapterMemo;
 
     /**
      * speed - expressed as a value {@literal 0.0 -> 1.0.} Negative means
-     * emergency stop. This is an bound parameter.
+     * emergency stop. This is a bound parameter.
      *
      * @return speed
      */
     @Override
-    public float getSpeedSetting() {
+    public synchronized float getSpeedSetting() {
         return speedSetting;
     }
 
@@ -127,7 +131,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      *                              'stop'
      */
     @Override
-    public void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
+    public synchronized void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         if (Math.abs(this.speedSetting - speed) > 0.0001) {
             firePropertyChange(SPEEDSETTING, this.speedSetting, this.speedSetting = speed);
         }
@@ -135,7 +139,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     }
 
     /**
-     * setSpeedSettingAgain - set the speed and don't ever supress the sending
+     * setSpeedSettingAgain - set the speed and don't ever suppress the sending
      * of messages to the system
      *
      * @param speed the new speed
@@ -176,6 +180,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public boolean[] getFunctions() {
         return Arrays.copyOf(FUNCTION_BOOLEAN_ARRAY,FUNCTION_BOOLEAN_ARRAY.length);
     }
@@ -184,6 +189,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public boolean[] getFunctionsMomentary() {
         return Arrays.copyOf(FUNCTION_MOMENTARY_BOOLEAN_ARRAY,
             FUNCTION_MOMENTARY_BOOLEAN_ARRAY.length);
@@ -270,7 +276,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     @Override
     public void addPropertyChangeListener(PropertyChangeListener l) {
         if ( Arrays.asList(getPropertyChangeListeners()).contains(l) ){
-            log.warn("Preventing {} adding duplicate PCL",l);
+            log.warn("Preventing {} adding duplicate PCL", l);
             return;
         }
         super.addPropertyChangeListener(l);
@@ -364,13 +370,13 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     }
 
     /**
-     * Dispose when finished with this Throttle.
-     * Abstract Throttles normally call finishRecord(); here.
+     * Dispose when finished with this Throttle. May be used in tests for cleanup.
+     * Throttles normally call {@link #finishRecord()} here.
      */
-    abstract protected void throttleDispose();
+    protected abstract void throttleDispose();
 
     /**
-     * to handle quantized speed. Note this can change! Valued returned is
+     * Handle quantized speed. Note this can change! Value returned is
      * always positive.
      *
      * @return 1 divided by the number of speed steps this DCC throttle supports
@@ -656,7 +662,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      *
      * @param speed the current speed
      */
-    protected void record(float speed) {
+    protected synchronized void record(float speed) {
         if (re == null) {
             return;
         }
@@ -667,7 +673,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         }
     }
 
-    protected void startClock() {
+    protected synchronized void startClock() {
         if (start == 0) {
             start = System.currentTimeMillis();
         }
@@ -683,7 +689,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         start = 0;
     }
 
-    protected void finishRecord() {
+    protected synchronized void finishRecord() {
         if (re == null) {
             return;
         }
@@ -711,15 +717,16 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         re = null;
     }
 
+    @GuardedBy("this")
     BasicRosterEntry re = null;
 
     @Override
-    public void setRosterEntry(BasicRosterEntry re) {
+    public synchronized void setRosterEntry(BasicRosterEntry re) {
         this.re = re;
     }
 
     @Override
-    public BasicRosterEntry getRosterEntry() {
+    public synchronized BasicRosterEntry getRosterEntry() {
         return re;
     }
 
@@ -732,7 +739,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * @return an integer in the range 0-127
      */
     protected int intSpeed(float speed) {
-        return this.intSpeed(speed, 127);
+        return intSpeed(speed, 127);
     }
 
     /**
@@ -744,21 +751,32 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      *              errors
      * @return an integer in the range 0-steps
      */
-    protected int intSpeed(float speed, int steps) {
+    protected static int intSpeed(float speed, int steps) {
         // test that speed is < 0 for emergency stop since calculation of
         // value returns 0 for some values of -1 < rawSpeed < 0
         if (speed < 0) {
             return 1; // emergency stop
         }
-        // since Emergency Stop (estop) is speed 1, and a negative speed
-        // is used for estop, subtract 1 from steps to avoid the estop
-        // Use ceil() to prevent smaller positive values from being 0
-        int value = (int) Math.ceil((steps - 1) * speed);
+
+        // Stretch speed input to full output range
+        // Since Emergency Stop (estop) is speed 1, subtract 1 from steps
+        speed *= (steps - 1);
+        // convert to integer by rounding
+        int value = Math.round(speed);
+
+        // Only return stop if value is actually 0, jump to first speed
+        // step for small positive inputs.
+        // speeds (at this point) larger than 0.5f are already handled 
+        // by the rounding above.
+        if (speed > 0.0f && speed <= 0.5f) {
+            value = 1;
+        }
+
         if (value < 0) {
             // if we get here, something is wrong and needs to be reported.
             Exception ex = new Exception("Error calculating speed. Please send logs to the JMRI developers.");
             log.error(ex.getMessage(), ex);
-            return 1;
+            return 1;  // return estop anyway
         } else if (value >= steps) {
             return steps; // maximum possible speed
         } else if (value > 0) {

@@ -15,24 +15,7 @@ import java.text.DecimalFormat;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
-import javax.swing.AbstractCellEditor;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import jmri.Block;
@@ -208,7 +191,6 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     } else if (b.getCurvature() == Block.SEVERE) {
                         c.setSelectedItem(severeText);
                     }
-                    c.addActionListener(super::comboBoxAction);
                     return c;
                 } else if (col == LENGTHCOL) {
                     double len = 0.0;
@@ -229,7 +211,6 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     JComboBox<String> c = new JComboBox<>(speedList);
                     c.setEditable(true);
                     c.setSelectedItem(speed);
-                    c.addActionListener(super::comboBoxAction);
                     return c;
                 } else if (col == STATECOL) {
                     switch (b.getState()) {
@@ -250,7 +231,6 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                         name = sensor.getDisplayName();
                     }
                     c.setSelectedItem(name);
-                    c.addActionListener(super::comboBoxAction);
                     return c;
                 } else if (col == REPORTERCOL) {
                     Reporter reporter = b.getReporter();
@@ -260,7 +240,6 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                         name = reporter.getDisplayName();
                     }
                     rs.setSelectedItem(name);
-                    rs.addActionListener(super::comboBoxAction);
                     return rs;
                 } else if (col == CURRENTREPCOL) {
                     return Boolean.valueOf(b.isReportingCurrent());
@@ -760,7 +739,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
      * inchBoxChanged() and centimeterBoxChanged() methods
      */
     @Override
-    public void addToFrame(BeanTableFrame f) {
+    public void addToFrame(BeanTableFrame<Block> f) {
         //final BeanTableFrame finalF = f; // needed for anonymous ActionListener class
         f.addToBottomBox(inchBox, this.getClass().getName());
         inchBox.setToolTipText(Bundle.getMessage("InchBoxToolTip"));
@@ -789,7 +768,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
      * @param f the JFrame of this table
      */
     @Override
-    public void setMenuBar(BeanTableFrame f) {
+    public void setMenuBar(BeanTableFrame<Block> f) {
         final jmri.util.JmriJFrame finalF = f; // needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
         int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenus before 'Window' and 'Help'

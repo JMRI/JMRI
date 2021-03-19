@@ -4,6 +4,8 @@
 <dt><h3>PanelPro&trade;</h3></dt>
 <dd>
 <ul>
+    <li><a href="GettingStarted.shtml">Getting Started</a></li>
+    <li><a href="../LoadStoreWork.shtml">Loading and Storing</a></li>
     <li><a href="../../../package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor</a></li>
     <li><a href="../../../package/jmri/jmrit/display/ControlPanelEditor.shtml">Control Panel Editor</a></li>
     <li><a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a></li>

@@ -52,8 +52,9 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
-        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
+        List<ProgrammingMode> ret = new ArrayList<>();
         //ret.add(ProgrammingMode.PAGEMODE);
         ret.add(ProgrammingMode.DIRECTBITMODE);
         ret.add(ProgrammingMode.DIRECTBYTEMODE);
@@ -128,7 +129,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
      * {@inheritDoc}
      */
     @Override
-    synchronized public void writeCV(String CVname, int val, ProgListener p) throws jmri.ProgrammerException {
+    public synchronized void writeCV(String CVname, int val, ProgListener p) throws jmri.ProgrammerException {
         final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
             log.debug("writeCV {} listens {}", CV, p);
@@ -151,7 +152,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
             } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
                 DCCppMessage msg = DCCppMessage.makeWriteDirectCVMsg(CV, val);
                 controller().sendDCCppMessage(msg, this);
-            } else { // register mode by elimination 
+            //} else { // register mode by elimination
                 //DCCppMessage msg = DCCppMessage.getWriteRegisterMsg(registerFromCV(CV), val);
                 //controller().sendDCCppessage(msg, this);
             }
@@ -165,7 +166,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
      * {@inheritDoc}
      */
     @Override
-    synchronized public void confirmCV(String CV, int val, ProgListener p) throws jmri.ProgrammerException {
+    public synchronized void confirmCV(String CV, int val, ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
@@ -173,7 +174,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
      * {@inheritDoc}
      */
     @Override
-    synchronized public void readCV(String CVname, ProgListener p) throws jmri.ProgrammerException {
+    public synchronized void readCV(String CVname, ProgListener p) throws jmri.ProgrammerException {
         final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
             log.debug("readCV {} listens {}", CV, p);
@@ -200,7 +201,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
             } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
                 DCCppMessage msg = DCCppMessage.makeReadDirectCVMsg(CV);
                 controller().sendDCCppMessage(msg, this);
-            } else { // register mode by elimination    
+            //} else { // register mode by elimination
                 //DCCppMessage msg = DCCppMessage.getReadRegisterMsg(registerFromCV(CV));
                 //controller().sendDCCppMessage(msg, this);
             }
@@ -223,7 +224,6 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
             throw new jmri.ProgrammerException("programmer in use");
         } else {
             _usingProgrammer = p;
-            return;
         }
     }
 
@@ -231,7 +231,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
      * {@inheritDoc}
      */
     @Override
-    synchronized public void message(DCCppReply m) {
+    public synchronized void message(DCCppReply m) {
          if (progState == NOTPROGRAMMING) {
              return;
          }
@@ -258,7 +258,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
      * {@inheritDoc}
      */
     @Override
-    synchronized public void message(DCCppMessage l) {
+    public synchronized void message(DCCppMessage l) {
     }
 
     // Handle a timeout notification
@@ -271,7 +271,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
     /*
      * Indicate when the Programmer is in the middle of an operation.
      */
-    public boolean programmerBusy() {
+    public synchronized boolean programmerBusy() {
         return (progState != NOTPROGRAMMING);
     }
 
@@ -279,7 +279,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
      * {@inheritDoc}
      */
     @Override
-    synchronized protected void timeout() {
+    protected synchronized void timeout() {
         if (progState != NOTPROGRAMMING) {
             // we're programming, time to stop
             if (log.isDebugEnabled()) {
@@ -307,7 +307,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
         notifyProgListenerEnd(temp,value,status);
     }
 
-    DCCppTrafficController _controller = null;
+    DCCppTrafficController _controller;
 
     protected DCCppTrafficController controller() {
         return _controller;

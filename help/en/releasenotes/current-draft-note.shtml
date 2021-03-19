@@ -21,15 +21,8 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>
-                    Andrew Crosland added a second current meter instance for SPROG Generation 5 hardware.
-                </li>
-                <li>
-                    Corrected links to images on SPROG Generation 5 hardware help page.
-                </li>
-                <li>
-                    Changed trademark recognition to &reg; for register trademarks, rather than &trade;.
-                </li>
+                <li>Fixed Internal Sensor Manager set as default, not CBUS Sensor Manager, affecting 4.19.6 onwards.</li>
+                <li>Simulated Connections - Output Interval option added to Additional Connection Settings.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -79,8 +72,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-              <li>When connected to the LocoNet HexFile Simulator, simulated replies from selected devices are
-                sent to the monitor (select the "Simulate replies" checkbox on the HexFile pane).</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -120,7 +112,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a></h4>
             <ul>
-                <li></li>
+                <li>Simulated Connections - Output Interval option added to Additional Connection Settings.</li>
             </ul>
 
         <h4>RFID</h4>
@@ -170,7 +162,10 @@
 
     <h3>New / Updated decoder definitions</h3>
         <ul>
-          <li></li>
+          <li>All decoder.xsd XML validation schema from now on require an "item" attribute on each variable
+          element. It is needed to apply qualifier selections to translated definitions.<br>
+          All current decoder definitions in JMRI were updated where necessary (see below for specific ESU, LDH and
+          Zimo series).</li>
         </ul>
 
         <h4>Arnold</h4>
@@ -210,12 +205,26 @@
 
         <h4>Doehler &amp; Haas</h4>
             <ul>
-                <li></li>
+                <li>New - for all new D&amp;H definitions: decoder model (product ID) is now detected automatically thanks to the introduction of CV 261 in updated firmware.</li>
+                <li>DH05C (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>DH10C (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>DH12A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>DH16A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>DH18A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>DH21A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>DH22A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>PD05A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>PD12A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>FH05B (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>FH18A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>FH22A (fw 3.12.050 - including update path from older fw versions definitions)</li>
+                <li>SH05A (fw 1.14.050 - including update path from older fw versions definitions)</li>
+                <li>SH10A (fw 1.14.050 - including update path from older fw versions definitions)</li>
             </ul>
 
         <h4>ESU</h4>
             <ul>
-                <li></li>
+                <li>Missing "item" attributes were added to the v4fnOutCv and v5fnOutCv includes.</li>
             </ul>
 
         <h4>Hornby</h4>
@@ -233,9 +242,10 @@
                 <li></li>
             </ul>
 
-        <h4><a href="http://www.ldhtrenes.com.ar">LDH</a></h4>
+        <h4>LDH</h4>
             <ul>
-                <li></li>
+              <li>Missing "item" attributes were added to the v4fnOutCv and v5fnOutCv includes.<br>
+                Common CVs were moved to cv33-39mapping.xml and cv67-94speed.xml respectively.</li>
             </ul>
 
         <h4>Lenz</h4>
@@ -303,11 +313,6 @@
                 <li></li>
             </ul>
 
-        <h4>Tam Valley Depot</h4>
-            <ul>
-                <li>Updated the QuadLN_S template to support the 16 servo capability in the Version 3 software</li>
-            </ul>
-
         <h4>TCS</h4>
             <ul>
                 <li></li>
@@ -330,12 +335,7 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li>New definitions to program Power4, Power8 (boosters) and IntelliLight 28x0 modules.</li>
-                <li>For Uhlenbrock Track-Control modules a Direct Message type was added to the LNCV protocol.
-                  The Lncv Programming tool has a new checkbox 'Direct Mode', allowing to set LEDs etc.</li>
-                <li>Two new Track-Control definitions (art. 69220 Turnout and 69230 Signal Module)</li>
-                <li>When connected to the LocoNet HexFile Simulator, simulated replies from LNCV devices are
-                  sent to the monitor (select the "Simulate replies" checkbox on the HexFile pane).</li>
+                <li></li>
             </ul>
 
         <h4>Umelec</h4>
@@ -355,7 +355,9 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li>MX605 (Kato type plug N sound decoder for ICE 4)</li>
+                <li>Missing "item" attributes were added to the CVSwissMapping_v36.xml include and the Decoder
+                Version was copied into CV1-CV99.xml in order to allow customization for Swiss Mapping.</li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -368,6 +370,27 @@
         <ul>
             <li></li>
         </ul>
+
+    <h3>PanelPro</h3>
+      <a id="PanelPro" name="PanelPro"></a>
+      <ul>
+        <li>The main PanelPro menu has changed.
+          <ul>
+            <li>The Load, Store, and History menu items have moved from the <strong>Panels</strong>
+            menu to the <strong>File</strong> menu.</li>
+            <li>The script related menu items have been moved to a new <strong>Scripting</strong> menu.</li>
+            <li>A <strong>Delete Panel</strong> menu item has been added to the Panels menu.</li>
+            <li>A dialog will be displayed if a second load is invoked.  The message can be suppressed using the checkbox.</li>
+            <li>When a file is loaded, the file name will be display in the JMRI System Console (Help &rArr; System Console).
+            <li>When the Close button on a panel window is clicked, a dialog will be displayed to
+            indicate that the panel has been hidden.  The message includes instructions on making the
+            panel visible and how to delete the panel.  The message can be suppressed using the checkbox.</li>
+            <li>When a panel is added, deleted or renamed, a pending update flag is set.  If PanelPro is stopped before
+            doing the <strong>Store</strong> process, a dialog will be displayed.  Select <strong>Yes</strong>
+            to store the changes before the shutdown proceeds.</li>
+          </ul>
+        </li>
+      </ul>
 
     <h3>CTC Tool</h3>
         <a id="PE-CTC" name="PE-CTC"></a>
@@ -390,14 +413,13 @@
    <h3>Internationalization</h3>
         <a id="I18N" name="I18N"></a>
         <ul>
-            <li>Dutch translations added for the Where Used, Meters and Issue Reporting tools.</li>
+            <li></li>
         </ul>
 
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li>A problem storing and reading LE controlpoint values for users with a non-default Locale has been fixed
-            .</li>
+            <li>Fix <strong>Options &rArr; Track Options &rArr; Hide Track Construction Lines</strong>.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -414,10 +436,7 @@
     <h3>Meters and MeterFrames</h3>
         <a id="Meters" name="Meters"></a>
         <ul>
-          <li>The Settings menu was slightly reorganized with submenus for each value.</li>
-          <li>When no meters are available, both Meters menus and the Units Settings menu show a short explanation.</li>
-          <li>Meters will honor the JMRI Locale/regional setting for the decimal separator (. or ,))</li>
-          <li>Meters now use meter max and resolution to default integer and decimal digits</li>
+            <li></li>
         </ul>
 
     <h3>Operations</h3>
@@ -475,8 +494,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>Turnouts with 1 Sensor Feedback update to Inconsistent state when the Sensor being followed enters an Unknown or Inconsistent state.
-            <br>See <a href="https://www.jmri.org/help/en/package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout_Feedback">Turnout Feedback</a></li>
+            <li></li>
         </ul>
 
     <h3>Scripting</h3>
@@ -534,7 +552,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>Fix Jynstrument instantiation on Windows (cleaner URI to path method). <a href="https://groups.io/g/jmriusers/topic/the_jynstruments/78674589"> User message 78674589</a></li>
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -582,7 +600,9 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Reduced audio buffer consumption for Diesel sounds.</li>
+            <li>Minimum time for a sub-buffer increased from 100 to 150 milliseconds.</li>
+            <li>Fixed bug with last accel-limit values less than 100 in config.xml.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
@@ -590,4 +610,3 @@
         <ul>
             <li></li>
         </ul>
-

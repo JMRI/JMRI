@@ -49,18 +49,17 @@
             <li>Select a train, and</li>
             <li>Record the throttle commands.</li>
         </ol>
-      When a <b>Create Warrant</b> menu is selected, a window to 
+      <p>When a <b>Create Warrant</b> menu is selected, a window to
       define the warrant is displayed. At the top, you may enter 
       a System Name and a User Name. After the warrant is saved by
       pressing the <b>Save</b> button at the bottom of the window, 
       the System name cannot be changed.  The User Name may be changed
-      anytime the warrant is edited.<br>
+      anytime the warrant is edited.</p>
 
       <a href="images/WarrantCreate1.png"><img
       src="images/WarrantCreate1.png" width="897"
-      height="433" hspace="0" vspace="0"
+      height="433"
       alt="Create Warrant pane part 1 in JMRI 4.10"></a>
-      </p>
 
       <h2>Defining a Warrant Route</h2>
       Routes are created using the
@@ -188,7 +187,7 @@
           icons.<br>
           <a href="images/RouteList.png"><img
           src="images/RouteList.png" width="689"
-          height="249" hspace="0" vspace="0"></a></p>
+          height="249" alt="the Route list"></a></p>
 
           <p>You may inspect all the routes in this manner.
           Choosing a route and pressing the <b>Select</b> button
@@ -252,7 +251,7 @@
           you:<br>
           <a href="images/WarrantCreate2.png"><img
           src="images/WarrantCreate2.png" width="897"
-          height="433" hspace="0" vspace="0" alt="Create Warrant
+          height="433" alt="Create Warrant
           pane part 2 in in JMRI 4.10"></a>
           <br>
           The route is shown in a table. For each OBlock.
@@ -324,7 +323,7 @@
           the Throttle Commands Pane.<br>        
           <a href="images/WarrantCreate3.png"><img
           src="images/WarrantCreate3.png" width="897"
-          height="433" hspace="0" vspace="0"></a>
+          height="433" alt="the Throttle Commands Pane"></a>
           
           	<p>In normal operation, when the script is played back, 
           	the train will follow the commands as recorded.
@@ -391,22 +390,22 @@
            Warrant scripts can be tested and modified prior to saving them.
 
           <h3>Test Running</h3>
-          After a script is recorded, reset the train to the Origin
+          <p>After a script is recorded, reset the train to the Origin
           block and press the <b>AutoRun</b> button in the 
           <b>Test Run Train</b> box. This sends
           the throttle commands to the train specified in the
-          warrant.
+            warrant.</p>
 
           <p>The <b>Test Run Train</b> box has four radio buttons to
-          control the train and override the Throttle commands.
+            control the train and override the Throttle commands.</p>
 
 		    <ul>
-			<li><b>Halt</b>Stop the train.</li>
-			<li><b>Resume</b>Ramp the speed up to its previous speed.</li>
-			<li><b>Emergency Stop</b>Issue an Emergency Stop to the train.</li>
-			<li><b>Abort</b>Stop the train and null the warrant.</li>
+			<li><b>Halt</b> Stop the train.</li>
+			<li><b>Resume</b> Ramp the speed up to its previous speed.</li>
+			<li><b>Emergency Stop</b> Issue an Emergency Stop to the train.</li>
+			<li><b>Abort</b> Stop the train and null the warrant.</li>
 			</ul>         
-		  Name and save the warrant when you are satisfied by its
+		  <p>Name and save the warrant when you are satisfied by its
           performance by pressing the <b>Save</b>
           button. This adds the warrant to the <a href=
           "WarrantTable.shtml">Warrant Table</a> and closes the 
@@ -593,7 +592,7 @@
 
           <a href="images/WaitExample.png"><img
           src="images/WaitExample.png" width="875"
-          height="217" hspace="0" vspace="0"></a><br>
+          height="217" alt="Wait Sensor Example"></a><br>
 
           The script and train will stay stopped until the
           second "Wait Sensor" command triggered from an

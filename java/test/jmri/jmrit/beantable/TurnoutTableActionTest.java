@@ -8,6 +8,7 @@ import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.jmrit.beantable.turnout.TurnoutTableDataModel;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.jmrix.internal.InternalTurnoutManager;
 import jmri.swing.ManagerComboBox;
@@ -189,7 +190,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
 
         JTableOperator tbl = new JTableOperator(jfo, 0);
         // find the "Edit" button and press it.  This is in the table body.
-        tbl.clickOnCell(0, TurnoutTableAction.EDITCOL);
+        tbl.clickOnCell(0, TurnoutTableDataModel.EDITCOL);
         JFrame f2 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
         jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2), Bundle.getMessage("ButtonCancel"));
         JUnitUtil.dispose(f2);
@@ -201,7 +202,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
     public void testConfigureManagerComboBox() {
         TurnoutManager j = new InternalTurnoutManager(new InternalSystemConnectionMemo("J", "Juliet"));
         InstanceManager.setTurnoutManager(j);
-        ManagerComboBox<Turnout> box = new ManagerComboBox<Turnout>();
+        ManagerComboBox<Turnout> box = new ManagerComboBox<>();
         Assert.assertEquals("empty box", 0, box.getItemCount());
         a.configureManagerComboBox(box, j, TurnoutManager.class);
         Assert.assertEquals("full box", 2, box.getItemCount());

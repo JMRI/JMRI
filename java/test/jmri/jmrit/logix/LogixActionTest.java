@@ -171,7 +171,8 @@ public class LogixActionTest {
     @AfterEach
     public void tearDown() {
         InstanceManager.getDefault(WarrantManager.class).dispose();
-        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

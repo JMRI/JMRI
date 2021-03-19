@@ -107,7 +107,7 @@
         <label xml:lang="it">Volt Massimi (0-255):</label>
         <label xml:lang="de">Höchstgeschwindigkeit</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" item="Decoder Version" readOnly="yes">
         <decVal/>
         <label>Manufacturer Version No</label>
         <label xml:lang="it">Versione Decoder: </label>
@@ -2037,8 +2037,9 @@
       <variable label="Hardware Profile" CV="56.254.3" readOnly="yes" item="Hardware Profile">
         <splitVal highCV="56.254.2"/>
       </variable>
-      <variable label="Sound Set Number" CV="56.254.14" readOnly="yes" include="5000,5048,5049,5050">
+      <variable item="Sound Set Number" CV="56.254.14" readOnly="yes" include="5000,5048,5049,5050">
         <splitVal highCV="56.254.15"/>
+        <label>Sound Set Number</label>
       </variable>
     </variables>
     <xi:include href="http://jmri.org/xml/decoders/qsi/ResetStandard.xml"/>

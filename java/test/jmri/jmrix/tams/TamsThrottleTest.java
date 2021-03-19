@@ -12,6 +12,10 @@ import org.junit.jupiter.api.*;
  */
 public class TamsThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
+    private TamsTrafficController tc;
+    private TamsSystemConnectionMemo memo;
+    private TamsThrottleManager tm;
+
     @Test
     public void testCTor() {
         Assert.assertNotNull("exists",instance);
@@ -385,16 +389,24 @@ public class TamsThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        TamsTrafficController tc = new TamsInterfaceScaffold();
-        TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(tc);  
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new TamsThrottleManager(memo));
-        instance = new TamsThrottle(memo,new jmri.DccLocoAddress(1234,true));
+        tc = new TamsInterfaceScaffold();
+        memo = new TamsSystemConnectionMemo(tc);
+        tm = new TamsThrottleManager(memo);
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, tm);
+        instance = new TamsThrottle(memo, new jmri.DccLocoAddress(1234,true));
     }
 
     @AfterEach
     @Override
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        // no need to dispose of instance
+        if (tm != null) {
+            tm.dispose();
+        }
+        memo.dispose();
+        memo = null;
+        tc.terminateThreads();
+        tc = null;
         JUnitUtil.tearDown();
     }
 

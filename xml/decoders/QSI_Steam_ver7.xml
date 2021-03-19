@@ -333,7 +333,7 @@
         <label xml:lang="it">Volt Massimi (0-255):</label>
         <label xml:lang="de">Höchstgeschwindigkeit</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" item="Decoder Version" readOnly="yes">
         <decVal/>
         <label>Manufacturer Version No</label>
         <label xml:lang="it">Versione Decoder: </label>
@@ -2003,8 +2003,9 @@
       <variable label="Wheel Diameter High Byte" CV="56.24.1" default="0" item="CV56.24.1" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
         <decVal/>
       </variable>
-      <variable label="Wheel Diameter" CV="56.24.0" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
+      <variable item="Wheel Diameter" CV="56.24.0" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
         <splitVal highCV="56.24.1"/>
+        <label>Wheel Diameter</label>
       </variable>
       <variable label="Locomotive Scale Low Byte" CV="56.25.0" default="0" item="CV56.25.0" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
         <decVal/>
@@ -2012,11 +2013,13 @@
       <variable label="Locomotive Scale High Byte" CV="56.25.1" default="0" item="CV56.25.1" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
         <decVal/>
       </variable>
-      <variable label="Locomotive Scale" CV="56.25.0" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
+      <variable item="Locomotive Scale" CV="56.25.0" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
         <splitVal highCV="56.25.1"/>
+        <label>Locomotive Scale</label>
       </variable>
-      <variable label="Room Temperature" CV="56.32.0" default="25" item="CV56.32.0" include="3006,3010,3015,3017,3050">
+      <variable CV="56.32.0" default="25" item="CV56.32.0" include="3006,3010,3015,3017,3050">
         <decVal/>
+        <label>Room Temperature</label>
       </variable>
       <!-- CV 56.129 Engine ID Access (for ops mode) - TBD -->
       <!-- CV 56.254 About Quantum Decoder -->
@@ -2068,8 +2071,9 @@
       <variable label="Hardware Profile" CV="56.254.3" readOnly="yes" item="Hardware Profile">
         <splitVal highCV="56.254.2"/>
       </variable>
-      <variable label="Sound Set Number" CV="56.254.14" readOnly="yes" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
+      <variable item="Sound Set Number" CV="56.254.14" readOnly="yes" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
         <splitVal highCV="56.254.15"/>
+        <label>Sound Set Number</label>
       </variable>
     </variables>
     <xi:include href="http://jmri.org/xml/decoders/qsi/ResetStandard.xml"/>

@@ -21,10 +21,11 @@ import jmri.jmrix.ipocs.protocol.packets.Packet;
  * @since 4.21.2
  */
 public class IpocsClientHandler implements CompletionHandler<Integer, ByteBuffer> {
+
   private final static Logger log = LoggerFactory.getLogger(IpocsClientHandler.class);
   private final AsynchronousSocketChannel client;
   private String unitId;
-  private List<IpocsClientListener> clientListeners = new ArrayList<IpocsClientListener>();
+  private final List<IpocsClientListener> clientListeners = new ArrayList<IpocsClientListener>();
 
   public String getUnitId() {
       return unitId;
@@ -72,7 +73,7 @@ public class IpocsClientHandler implements CompletionHandler<Integer, ByteBuffer
             client.write(response.serialize());
             break;
           default:
-            for(IpocsClientListener listener : clientListeners) {
+            for (IpocsClientListener listener : clientListeners) {
               listener.onMessage(this, msg);
             }
             break;

@@ -93,20 +93,18 @@ public class RunSwitchListChangesAction extends Action {
                         finishAction(false);
                         return;
                     }
-                    InstanceManager.getDefault(TrainCustomSwitchList.class).addCVSFile(csvFile);
+                    location.setStatus(Location.PRINTED);
+                    location.setSwitchListState(Location.SW_PRINTED);
+                    InstanceManager.getDefault(TrainCustomSwitchList.class).addCsvFile(csvFile);
+                    log.info("Queued switch list CSV file location ({}) for custom processing", location.getName());
                 }
             }
             // Processes the CSV Manifest files using an external custom program.
             boolean status = InstanceManager.getDefault(TrainCustomSwitchList.class).process();
             if (status) {
                 try {
-                    status = InstanceManager.getDefault(TrainCustomSwitchList.class).waitForProcessToComplete(); // wait
-                                                                                                                 // up
-                                                                                                                 // to
-                                                                                                                 // 60
-                                                                                                                 // seconds
-                                                                                                                 // per
-                                                                                                                 // file
+                 // wait up to 60 seconds per file
+                    status = InstanceManager.getDefault(TrainCustomSwitchList.class).waitForProcessToComplete(); 
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     log.error("Thread interrupeted while waiting", e);

@@ -8,6 +8,9 @@ import java.util.regex.PatternSyntaxException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+
 /**
  * Represents a single command or response on the DCC++.
  * <p>
@@ -47,7 +50,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     /* According to the specification, DCC++ has a maximum timing
      interval of 500 milliseconds during normal communications */
     protected static final int DCCppProgrammingTimeout = 10000;  // TODO: Appropriate value for DCC++?
-    private static int DCCppMessageTimeout = 2000;  // TODO: Appropriate value for DCC++?
+    private static int DCCppMessageTimeout = 5000;  // TODO: Appropriate value for DCC++?
 
     //private ArrayList<Integer> valueList = new ArrayList<>();
     private StringBuilder myMessage;
@@ -661,6 +664,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
 
     private int getGroupCount() {
         Matcher m = match(toString(), myRegex, "gvs");
+        assert m != null;
         return m.groupCount();
     }
 
@@ -740,11 +744,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * @return boolean true/false
      */
     public boolean isValidMessageFormat() {
-        if (this.match(this.myRegex) != null) {
-            return (true);
-        } else {
-            return (false);
-        }
+        return this.match(this.myRegex) != null;
     }
 
     /**
@@ -765,15 +765,16 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * @param name Text name to use in debug messages.
      * @return Matcher or null if no match
      */
+    @CheckForNull
     private static Matcher match(String s, String pat, String name) {
         try {
             Pattern p = Pattern.compile(pat);
             Matcher m = p.matcher(s);
             if (!m.matches()) {
                 log.trace("No Match {} Command: '{}' Pattern: '{}'", name, s, pat);
-                return (null);
+                return null;
             }
-            return (m);
+            return m;
 
         } catch (PatternSyntaxException e) {
             log.error("Malformed DCC++ message syntax! s = {}", pat);
@@ -1382,7 +1383,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     public String getCallbackNumString() {
-        int idx = 2;
+        int idx;
         if (this.isProgWriteByteMessage()) {
             idx = 3;
         } else if (this.isProgWriteBitMessage()) {
@@ -1396,7 +1397,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     public int getCallbackNumInt() {
-        int idx = 2;
+        int idx;
         if (this.isProgWriteByteMessage()) {
             idx = 3;
         } else if (this.isProgWriteBitMessage()) {
@@ -1410,7 +1411,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     public String getCallbackSubString() {
-        int idx = 3;
+        int idx;
         if (this.isProgWriteByteMessage()) {
             idx = 4;
         } else if (this.isProgWriteBitMessage()) {
@@ -1424,7 +1425,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     public int getCallbackSubInt() {
-        int idx = 3;
+        int idx;
         if (this.isProgWriteByteMessage()) {
             idx = 4;
         } else if (this.isProgWriteBitMessage()) {
@@ -1438,7 +1439,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     public String getProgValueString() {
-        int idx = 2;
+        int idx;
         if (this.isProgWriteByteMessage()) {
             idx = 2;
         } else if (this.isProgWriteBitMessage()) {
@@ -1450,7 +1451,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     public int getProgValueInt() {
-        int idx = 2;
+        int idx;
         if (this.isProgWriteByteMessage()) {
             idx = 2;
         } else if (this.isProgWriteBitMessage()) {
@@ -1504,7 +1505,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     // TODO: Not sure this is useful in DCC++
     @Override
     public boolean replyExpected() {
-        boolean retv = false;
+        boolean retv;
         switch (this.getOpCodeChar()) {
             case DCCppConstants.THROTTLE_CMD:
             case DCCppConstants.TURNOUT_CMD:
@@ -1945,6 +1946,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      *                  Configuration Variable memory location (0-255).
      * @return message to Write CV in Ops Mode.
      */
+    @CheckForNull
     public static DCCppMessage makeWriteOpsModeCVMsg(int address, int cv, int val) {
         // Sanity check inputs
         if (address < 0 || address > DCCppConstants.MAX_LOCO_ADDRESS) {
@@ -2042,8 +2044,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * <p>
      * reads current being drawn on main operations track
      * <p>
-     * @return {@code <a CURRENT>} where CURRENT = 0-1024, based on
+     * @return (for DCC-EX), 1 or more of  {@code <c MeterName value C/V unit min max res warn>}
+     * where name and settings are used to define arbitrary meters on the DCC-EX side
+     * AND {@code <a CURRENT>} where CURRENT = 0-1024, based on 
      * exponentially-smoothed weighting scheme
+     * 
      */
     public static DCCppMessage makeReadTrackCurrentMsg() {
         return (new DCCppMessage(DCCppConstants.READ_TRACK_CURRENT, DCCppConstants.READ_TRACK_CURRENT_REGEX));
@@ -2144,7 +2149,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             m.myMessage.append(" -1");
         } else {
             int speedVal = java.lang.Math.round(speed * 126);
-            speedVal = ((speedVal > DCCppConstants.MAX_SPEED) ? DCCppConstants.MAX_SPEED : speedVal);
+            speedVal = Math.min(speedVal, DCCppConstants.MAX_SPEED);
             m.myMessage.append(" ").append(speedVal);
         }
         m.myMessage.append(" ").append(isForward ? "1" : "0");
@@ -2155,7 +2160,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         return (m);
     }
 
-    /**
+    /*
      * Function Group Messages (common serial format)
      * <p>
      * Format: {@code <f CAB BYTE1 [BYTE2]>}
@@ -2614,12 +2619,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     /*
      * Build an Emergency Off Message
      */
-    /**
+
+    /*
      * Test Code Functions... not for normal use
      */
+
     /**
      * Write DCC Packet to a specified Register on the Main.
-     * <br><br>
+     * <br>
      * DCC++ BaseStation code appends its own error-correction byte so we must
      * not provide one.
      *
@@ -2758,7 +2765,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      *              or standalone value for groups 4 and 5)
      * @return the base group
      */
-    private static final int getFuncBaseByte1(final int byte1) {
+    private static int getFuncBaseByte1(final int byte1) {
         if (byte1 == DCCppConstants.FUNCTION_GROUP4_BYTE1 || byte1 == DCCppConstants.FUNCTION_GROUP5_BYTE1) {
             return byte1;
         }
@@ -2797,7 +2804,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * their expected execution time.
      */
     @Override
-    public int compareTo(final Delayed o) {
+    public int compareTo(@Nonnull final Delayed o) {
         final long diff = this.expireTime - ((DCCppMessage) o).expireTime;
 
         if (diff < 0) {

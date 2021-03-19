@@ -65,7 +65,7 @@
         <decVal min="0" max="127"/>
         <label>Vmid</label>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" default="1">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="1">
         <decVal/>
         <label>Decoder Version</label>
       </variable>

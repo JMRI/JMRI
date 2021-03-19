@@ -36,7 +36,7 @@ public class TrainCsvManifestTest extends OperationsTestCase {
         Train train1 = InstanceManager.getDefault(TrainManager.class).getTrainById("1");
         Setup.setGenerateCsvManifestEnabled(true);
         Assert.assertTrue(train1.build());
-        File file = train1.createCSVManifestFile();
+        File file = train1.createCsvManifestFile();
         Assert.assertNotNull("exists", file);
         
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(file);

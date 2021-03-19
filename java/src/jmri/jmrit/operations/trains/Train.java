@@ -9,7 +9,6 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
@@ -3001,7 +3000,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     public boolean openFile() {
-        File file = createCSVManifestFile();
+        File file = createCsvManifestFile();
         if (file == null || !file.exists()) {
             log.warn("CSV manifest file missing for train {}", getName());
             return false;
@@ -3011,13 +3010,13 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     public boolean runFile() {
-        File file = createCSVManifestFile();
+        File file = createCsvManifestFile();
         if (file == null || !file.exists()) {
             log.warn("CSV manifest file missing for train {}", getName());
             return false;
         }
         // Set up to process the CSV file by the external Manifest program
-        InstanceManager.getDefault(TrainCustomManifest.class).addCVSFile(file);
+        InstanceManager.getDefault(TrainCustomManifest.class).addCsvFile(file);
         if (!InstanceManager.getDefault(TrainCustomManifest.class).process()) {
             if (!InstanceManager.getDefault(TrainCustomManifest.class).excelFileExists()) {
                 JOptionPane.showMessageDialog(null,
@@ -3031,7 +3030,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return true;
     }
 
-    public File createCSVManifestFile() {
+    public File createCsvManifestFile() {
         if (isModified()) {
             new TrainManifest(this);
             try {
@@ -3043,7 +3042,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
         File file = InstanceManager.getDefault(TrainManagerXml.class).getTrainCsvManifestFile(getName());
         if (!file.exists()) {
-            log.warn("CSV manifest file was not created for train {}", getName());
+            log.warn("CSV manifest file was not created for train ({})", getName());
             return null;
         }
         return file;
@@ -3342,15 +3341,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
         // if there's a panel specified, get it and place icon
         if (!Setup.getPanelName().isEmpty()) {
-            Editor editor = null;
-            Set<Editor> panelList = InstanceManager.getDefault(EditorManager.class).getAll();
-            for (Editor panelEditor : panelList) {
-                if (panelEditor.getTitle().equals(Setup.getPanelName()) ||
-                        panelEditor.getTargetFrame().getTitle().equals(Setup.getPanelName())) {
-                    editor = panelEditor;
-                    break;
-                }
-            }
+            Editor editor = InstanceManager.getDefault(EditorManager.class).getTargetFrame(Setup.getPanelName());
             if (editor != null) {
                 try {
                     _trainIcon = editor.addTrainIcon(getIconName());

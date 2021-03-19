@@ -33,6 +33,8 @@ public class WarrantFrameTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/MeetTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         Warrant w = _warrantMgr.getWarrant("WestBoundStart");
@@ -45,6 +47,8 @@ public class WarrantFrameTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/MeetTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         Warrant startW = _warrantMgr.getWarrant("WestBoundStart");
@@ -56,7 +60,7 @@ public class WarrantFrameTest {
         JFrameOperator editFrame = new JFrameOperator(warrantFrame);
         JemmyUtil.pressButton(editFrame, Bundle.getMessage("ButtonSave"));
 
-        Warrant  w= _warrantMgr.getWarrant("WestBound");
+        Warrant w = _warrantMgr.getWarrant("WestBound");
         assertThat(w).withFailMessage("Concatenated Warrant exits").isNotNull();
 
         warrantFrame.close();
@@ -79,9 +83,11 @@ public class WarrantFrameTest {
     public void tearDown() {
         _warrantMgr.dispose();
         _warrantMgr = null;
-        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(WarrantFrameTest.class);
+
 }

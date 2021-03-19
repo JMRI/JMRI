@@ -215,7 +215,9 @@
       <a href="images/LncvProgrammer/LncvProgrammerPane.png"><img
               src="images/LncvProgrammer/LncvProgrammerPane.png" align="right"
               width="293" height="187" alt="LNCV Programming Tool can't find a matching definition"></a>
-      <p>The <a href="">Lncv Programming tool</a> is located in the LocoNet menu.
+      <p>The <a href="../../../package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml">Lncv Programming
+        tool</a> is
+        located in the LocoNet menu.
         It allows to discover stationary LNCV devices and read and write individual LNCVs.<br>
         Enter the first 4 digits of the device as the Article Number before starting a Programming Session, or the
         modules will not respond. Once a session is running, use the responses collected in the LNCV Monitor table to

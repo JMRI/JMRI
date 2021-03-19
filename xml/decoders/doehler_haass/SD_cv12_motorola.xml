@@ -32,13 +32,13 @@
       <revremark>Creation. </revremark>
     </revision>
   </revhistory>
-	<variable label="Motorola" CV="12" mask="XXXXXXVV" tooltip="CV12 Bits 0-1" default="1" exclude="SD18A_1.00">
+	<variable item="Motorola" CV="12" mask="XXXXXXVV" tooltip="CV12 Bits 0-1" default="1" exclude="SD18A_1.00">
 		<enumVal>
 		  <enumChoice choice="Deactivated" value="0">
 			<choice>Deactivated</choice>
 			<choice xml:lang="it">Disattivato</choice>
 			<choice xml:lang="fr">Désactivé</choice>
-                        <choice xml:lang="de">Deaktiviert</choice>
+      <choice xml:lang="de">Deaktiviert</choice>
 			<choice xml:lang="ca">Desactivat</choice>
 		  </enumChoice>
 		  <enumChoice choice="Active (main address only)" value="1">
@@ -63,12 +63,14 @@
 			<choice xml:lang="ca">Actiu (2 amb dues adreces extres)</choice>
 		  </enumChoice>
 		</enumVal>
-    </variable>
-	<variable label="Reverse Motorola direction" CV="12" mask="XXXXXVXX" tooltip="CV12 Bit 2" default="0" exclude="SD18A_1.00">
+    <label>Motorola</label>
+  </variable>
+	<variable item="Reverse Motorola direction" CV="12" mask="XXXXXVXX" tooltip="CV12 Bit 2" default="0" exclude="SD18A_1.00">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		<label xml:lang="fr">Direction inversée en MM1</label>
+		<label>Reverse Motorola direction</label>
+    <label xml:lang="fr">Direction inversée en MM1</label>
 		<label xml:lang="it">Direzione invertita in MM1</label>
 		<label xml:lang="de">Fahrtrichtung in MM1</label>
 		<label xml:lang="ca">Sentit Invers en MM1</label>
-  	</variable>
+  </variable>
 </variables>
