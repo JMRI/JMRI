@@ -145,6 +145,10 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         }
         hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
         addButton.setName("createButton"); // for GUI test NOI18N
+
+        addFrame.setEscapeKeyClosesWindow(true);
+        addFrame.getRootPane().setDefaultButton(addButton);
+        
         // reset statusBarLabel text
         statusBarLabel.setText(Bundle.getMessage("HardwareAddStatusEnter"));
         statusBarLabel.setForeground(Color.gray);

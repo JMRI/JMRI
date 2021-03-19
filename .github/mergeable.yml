@@ -65,27 +65,25 @@ mergeable: # see https://github.com/mergeability/mergeable
         mode: 'add'
       - do: checks
         status: 'success'
-  - when: schedule.repository
+  - when: pull_request.*, pull_request_review.*
     name: 'Allow merge after one day'
     validate:
-      - do: stale
-        days: 1
-        type: pull_request
+      - do: age
+        created_at:
+          days: 1
+          message: 'PR needs to be at least 1 day old in order to merge'
     pass:
-      - do: comment  # No initial event, can't actually block merge, so for now we're adding a comment.
-        payload:
-          body: This is one day old, and can now be merged if CI and reviews allow.
       - do: checks
         status: 'success'
         payload:
           title: 'PR old enough'
-          summary: "PR over one day old, can be merged."
+          summary: 'PR over one day old, can be merged.'
     fail:
       - do: checks
-        status: 'fail'
+        status: 'failure'
         payload:
           title: 'PR too young'
-          summary: "Waiting for the PR to be one day old."
+          summary: 'Waiting for the PR to be one day old.'
   - when: pull_request.*, pull_request_review.*
     name: 'Approved after last commit, no changes requested'
     validate:
