@@ -277,12 +277,12 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
             }
         } else if (useCachePiSi()) {
             // indexed operation with set values is same as non-indexed operation
+            state = ProgState.PROGRAMMING;
             if (startVal == NO_DEFAULT_CV) {
                 prog.readCV(_cv, this);
             } else {
                 prog.readCV(_cv, this, _startVal);
             }
-            prog.readCV(_cv, this, _startVal);
         } else {
             lastValuePI = valuePI;  // after check in 'if' statement
             lastValueSI = valueSI;
