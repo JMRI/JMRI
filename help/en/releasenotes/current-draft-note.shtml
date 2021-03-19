@@ -131,7 +131,8 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li></li>
+                <li>Increased maximum command station slots to 64 and added advanced connection preference to select.</li>
+                <li>Added support for current CV value hint when reading (requires a future SPROG 4.5 firmware release).</li>
             </ul>
 
         <h4>TAMS</h4>
