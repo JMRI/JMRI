@@ -62,7 +62,8 @@ public class ThrottleOperator extends JFrameOperator {
     public void typeAddressValue(int address) {
         JInternalFrameOperator ifo = getAddressPanelOperator();
         JTextFieldOperator jtfo = new JTextFieldOperator(ifo); // only one text field in the address panel.
-        jtfo.requestFocus();
+        jtfo.requestFocus(); // try focus, but need a window manager to work
+        jtfo.clickForPopup(); // force with right click (left lick would moce carret)
         jtfo.typeText("" + address);
     }
     
