@@ -964,7 +964,7 @@ public class AutoActiveTrain implements ThrottleListener {
         }
         if ((_controllingSignalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER).equals(displayedAspect))
                 || !_controllingSignalMast.getLit() || _controllingSignalMast.getHeld()) {
-            if ( (_currentAllocatedSection.isInActiveBlockList(_conSignalProtectedBlock) ||
+            if (_currentAllocatedSection != null && (_currentAllocatedSection.isInActiveBlockList(_conSignalProtectedBlock) ||
                     ( _nextSection != null &&  _activeTrain.isInAllocatedList(_nextSection) && _nextSection.containsBlock(_conSignalProtectedBlock)))
                     && _conSignalProtectedBlock.getSensor().getState() == Block.OCCUPIED) {
                 // Train has just passed this signal - ignore this signal
