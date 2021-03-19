@@ -1,9 +1,11 @@
 package jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver;
 
 import jmri.jmrix.can.ConfigurationManager;
+import jmri.jmrix.can.ConfigurationManager.ProgModeSwitch;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
 import jmri.jmrix.can.adapters.gridconnect.canrs.MergTrafficController;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,8 +23,16 @@ public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
 
     public Sprog3PlusSerialDriverAdapter() {
         super("S", purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_IN + purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_OUT);
+        _progMode = ProgModeSwitch.SPROG3PLUS;
     }
 
+    public Sprog3PlusSerialDriverAdapter(ProgModeSwitch progMode) {
+        super("S", purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_IN + purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_OUT);
+        _progMode = progMode;
+    }
+
+    private ProgModeSwitch _progMode;
+    
     /**
      * Set up all of the other objects to operate with a SPROG Gen 5
      * connected to this port.
@@ -48,7 +58,7 @@ public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
 
         this.getSystemConnectionMemo().setProtocol(getOptionState(option1Name));
         this.getSystemConnectionMemo().setSubProtocol(ConfigurationManager.SubProtocol.NONE);
-        this.getSystemConnectionMemo().setProgModeSwitch(ConfigurationManager.ProgModeSwitch.SPROG3PLUS);
+        this.getSystemConnectionMemo().setProgModeSwitch(_progMode);
 
         // do central protocol-specific configuration    
         //jmri.jmrix.can.ConfigurationManager.configure(getOptionState(option1Name));
