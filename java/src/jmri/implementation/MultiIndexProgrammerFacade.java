@@ -257,7 +257,7 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
 
     @Override
     synchronized public void readCV(String CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-        readCV(_cv, this, NO_DEFAULT_CV);
+        readCV(CV, p, NO_DEFAULT_CV);
     }
 
     @Override
