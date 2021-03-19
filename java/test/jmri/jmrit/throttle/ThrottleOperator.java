@@ -113,40 +113,6 @@ public class ThrottleOperator extends JFrameOperator {
         return (new JButtonOperator(this, Bundle.getMessage("ButtonDispatch"))).isEnabled();
     }
 
-    public void answerStealQuestion(boolean steal) {
-        JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("StealRequestTitle"));
-        if (steal) {
-            (new JButtonOperator(jdo, Bundle.getMessage("ButtonYes"))).doClick();
-        } else {
-            (new JButtonOperator(jdo, Bundle.getMessage("ButtonNo"))).doClick();
-        }
-    }
-
-    public void answerShareQuestion(boolean share) {
-        JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("ShareRequestTitle"));
-        if (share) {
-            (new JButtonOperator(jdo, Bundle.getMessage("ButtonYes"))).doClick();
-        } else {
-            (new JButtonOperator(jdo, Bundle.getMessage("ButtonNo"))).doClick();
-        }
-    }
-
-    // Steal / Share / Cancel dialogue operators
-    public void answerStealShareQuestionSteal() {
-        JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("StealShareRequestTitle"));
-        new JButtonOperator(jdo, Bundle.getMessage("StealButton")).doClick();
-    }
-
-    public void answerStealShareQuestionShare() {
-        JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("StealShareRequestTitle"));
-        new JButtonOperator(jdo, Bundle.getMessage("ShareButton")).doClick();
-    }
-
-    public void answerStealShareQuestionCancel() {
-        JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("StealShareRequestTitle"));
-        new JButtonOperator(jdo, Bundle.getMessage("CancelButton")).doClick();
-    }
-
     // Function panel operations
     public JInternalFrameOperator getFunctionPanelOperator() {
         return new JInternalFrameOperator(this,
