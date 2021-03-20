@@ -141,7 +141,7 @@
 
         </p> <p>Les &#233;v&#233;nements ne sont pas actuellement maintenus entre les sessions.</p> <p>.
       
-        <p>Il n'est actuellement pas possible de charger les donn&#233;es des sessions pr&#233;c&#233;dentes dans le tableau &#224; partir d'un fichier.</p> <p>Les &#233;v&#233;nements ne sont pas conserv&#233;s entre les sessions.
+        <p>Il n'est actuellement pas possible de charger les donn&#233;es des sessions pr&#233;c&#233;dentes dans le tableau &#224; partir d'un fichier.</p> 
 
         </p> <p>Vous pouvez importer les noms d'&#233;v&#233;nements et les noms de n&#339;uds &#224; partir d'un fichier de configuration du MERG FCU.
         On y acc&#232;de &#224; partir du <a href="../nodeconfig/NodeConfigToolPane.shtml#fcuimport">Gestionnaire des n&#339;uds CBUS du MERG</a>,
@@ -195,7 +195,7 @@
          <p>Les donn&#233;es suppl&#233;mentaires ne sont pas enregistr&#233;es.
         <p>Les donn&#233;es suppl&#233;mentaires ne sont pas actuellement affich&#233;es dans le tableau, 
         bien qu'il soit probable qu'elles soient ajout&#233;es en tant que colonne &#224; un moment donn&#233;.</p> 
-        <p>Les donn&#233;es suppl&#233;mentaires ne sont pas actuellement affich&#233;es dans le tableau.</p> 
+         
        
       
     <h3>Aide JMRI</h3>
