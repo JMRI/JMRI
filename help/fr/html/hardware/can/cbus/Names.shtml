@@ -18,7 +18,8 @@
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
   <!-- /Style -->
-=</head>
+
+</head>
 
 <body>
   <!--#include virtual="/Header.shtml" -->
