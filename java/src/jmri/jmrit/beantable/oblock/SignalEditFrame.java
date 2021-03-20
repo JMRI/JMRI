@@ -234,6 +234,10 @@ public class SignalEditFrame extends JmriJFrame {
 
         //main.add(p);
         frame.getContentPane().add(p);
+        
+        frame.setEscapeKeyClosesWindow(true);
+        frame.getRootPane().setDefaultButton(ok);
+        
         //frame.add(scroll);
         frame.pack();
     }
