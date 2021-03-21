@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import javax.annotation.*;
 
@@ -403,12 +404,12 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         // set the value
         int oldMode = _activeFeedbackType;
         _activeFeedbackType = mode;
+        // unlock turnout if feedback is changed
+        setLocked(CABLOCKOUT, false);
         if (oldMode != _activeFeedbackType) {
             firePropertyChange("feedbackchange", oldMode,
                     _activeFeedbackType);
         }
-        // unlock turnout if feedback is changed
-        setLocked(CABLOCKOUT, false);
     }
 
     /** {@inheritDoc} */
@@ -452,13 +453,13 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         boolean oldInverted = _inverted;
         _inverted = inverted;
         if (oldInverted != _inverted) {
-            firePropertyChange("inverted", oldInverted, _inverted);
             int state = _knownState;
             if (state == THROWN) {
                 newKnownState(CLOSED);
             } else if (state == CLOSED) {
                 newKnownState(THROWN);
             }
+            firePropertyChange("inverted", oldInverted, _inverted);
         }
     }
 
@@ -649,7 +650,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      */
     @Override
     public void setDecoderName(final String decoderName) {
-        if (!(java.util.Objects.equals(_decoderName, decoderName))) {
+        if (!(Objects.equals(_decoderName, decoderName))) {
             String oldName = _decoderName;
             _decoderName = decoderName;
             firePropertyChange("decoderNameChange", oldName, decoderName);
@@ -790,7 +791,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
 
         _firstNamedSensor = s;
-        firePropertyChange("turnoutFeedbackFirstSensorChange", temp, s);
 
         // if need be, set listener
         temp = getFirstSensor();  // might have changed
@@ -799,6 +799,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
         // set initial state
         setInitialKnownStateFromFeedback();
+        firePropertyChange("turnoutFeedbackFirstSensorChange", temp, s);
     }
 
     /** {@inheritDoc} */
@@ -844,7 +845,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
 
         _secondNamedSensor = s;
-        firePropertyChange("turnoutFeedbackSecondSensorChange", temp, s);
 
         // if need be, set listener
         temp = getSecondSensor();  // might have changed
@@ -853,6 +853,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
         // set initial state
         setInitialKnownStateFromFeedback();
+        firePropertyChange("turnoutFeedbackSecondSensorChange", temp, s);
     }
 
     /** {@inheritDoc} */
