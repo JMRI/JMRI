@@ -25,7 +25,7 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h2>JMRI: C/MRI Node Configuration</h2>This is the
+      <h2>JMRI : Configuration du N&#339;ud C/MRI</h2>C'est la page
       cmri/serial/nodeconfig/NodeConfigFrame.shtml page 
       <!--#include virtual="/Footer" -->
     </div>
