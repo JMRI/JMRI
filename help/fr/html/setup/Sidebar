@@ -31,7 +31,7 @@
 
       <!--#include virtual="../../parts/SidebarTail.shtml" -->
 
-	</div> <!-- ferme #side -->
+	</div> <!--closes #side -->
 
 
 <!-- /Sidebar.shtml -->

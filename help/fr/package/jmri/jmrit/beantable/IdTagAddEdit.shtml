@@ -1,7 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- UpDated by Herv&#233; Blorec 2019-04-16-->
 
 <html lang="fr">
 <head>
@@ -10,14 +9,14 @@
 
   <title>JMRI: Adding/Editing ID Tags</title>
   <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  "text/html; charset=iso-8859-1">
   <meta content="Matthew Harris" name="Author">
   <meta name="keywords" content="JMRI help ID Tag Add Edit">
   <!--#include virtual="/Style" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -45,8 +44,8 @@
       
       <p> Retour &#224; l'aide du <a href="IdTagTable.shtml"> Tableau
        des &#201;tiquettes ID.</a>.</p>
-      
-      <!--#include virtual="/Footer" -->
+      <p> Traduction 2021-03-13</p>
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

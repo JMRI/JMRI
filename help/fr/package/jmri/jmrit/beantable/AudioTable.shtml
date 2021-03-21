@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- Translated by Herv&#233; Blorec  2013-10-10-->
+
 
 <html lang="fr">
 <head>
@@ -25,7 +25,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -44,7 +44,8 @@
       <p>Pour plus d'informations sur les objets audio, consultez
       la <a href="../../../../html/tools/Audio.shtml">page d'aide
       audio</a>.<br>
-      <!--#include virtual="/Footer" --></p>
+      <p>Traduction 2021-03-10</p>
+      <!--#include virtual="/Footer.shtml" --></p>
     </div>
   </div>
 </body>

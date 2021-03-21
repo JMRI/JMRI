@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- UpDated by Herv&#233; Blorec 2013-10-11-->
-
 <html lang="fr">
 <head>
   <meta name="generator" content=
@@ -10,12 +8,12 @@
 
   <title>JMRI: Adding/Editing LRoutes</title>
   <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  "text/html; charset=iso-8859-1">
   <meta content="Bob Jacobsen" name="Author">
   <meta name="keywords" content="JMRI help LRoute Add Edit">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  "text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -25,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -140,8 +138,11 @@
       le L-Itin&#233;raire est d&#233;clench&#233;. De  m&#234;me un fichier script peut &#234;tre
       ex&#233;cut&#233; lorsque le L-Itin&#233;raire est d&#233;clench&#233;. 
       <p> Retour &#224; la <a href="LRouteTable.shtml"> page d'aide du 
-      Tableau L-Itin&#233;raire </a>. </p> <! - # include virtual = "/ Footer" ->
-     </div> <! - ferme #mainContent ->
-   </div> <! - ferme #mBody ->
+      Tableau L-Itin&#233;raire </a>. 
+      </p> 
+      <p> traduction 2021-03-10</p>
+      <! - # include virtual = "/ Footer.shtml" ->
+     </div> <! - closes #mainContent ->
+   </div> <! - closes #mBody ->
 </body>
 </html>

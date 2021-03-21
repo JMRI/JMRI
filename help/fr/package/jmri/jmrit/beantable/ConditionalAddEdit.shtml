@@ -1,5 +1,4 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Herv&#233; Blorec 2019-04-01-->
 <HTML LANG="fr">
 <head>
   <meta name="generator" content=
@@ -7,7 +6,7 @@
 
   <title>JMRI: Adding/Editing Logix Conditionals</title>
   <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  "text/html; charset=iso-8859-1">
   <meta content="Bob Jacobsen" name="Author">
   <meta name="keywords" content=
   "JMRI help Logix Conditional Add Edit">
@@ -15,7 +14,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h1>Ajouter/Modifier Conditions Logix</h1>
@@ -722,12 +721,13 @@
               <li><strong>D&#233;clenchement d'Itin&#233;raire</strong>: d&#233;clenche 
               l'itin&#233;raire sp&#233;cifi&#233;.Sp&#233;cifiez l'itin&#233;raire en entrant 
               son nom.</Li>
+	      <p>Traduction 2021-03-10</p>
            </ul></li>
          </ul>
        </dd>
      </dl>
-      <! - # include virtual = "/ Footer" ->
-   </div> <! - ferme #mainContent ->
- </div> <! - ferme #mBody ->
+      <! - # include virtual = "/ Footer.shtml" ->
+   </div> <! -closes #mainContent ->
+ </div> <! - closes #mBody ->
 </ body>
 </ html>

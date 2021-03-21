@@ -1,7 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Herv&#233; Blorec  2019-04-04-->
-
 <html lang="fr">
 <head>
   <meta name="generator" content=
@@ -12,7 +10,7 @@
   <meta name="keywords" content="JMRI help LRoute Table">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  "text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -22,7 +20,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -94,7 +92,8 @@
         Pour plus d'informations, voir
         <a href="LRouteAddEdit.shtml">Ajouter/Editer
         L-Itin&#233;raires</a>.</dd>
-      </dl><!--#include virtual="/Footer" -->
+        <p>Traduction 2021-03-10</p>
+      </dl><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

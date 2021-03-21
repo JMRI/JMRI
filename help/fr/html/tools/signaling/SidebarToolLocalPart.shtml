@@ -1,7 +1,7 @@
 <!-- C'est la partie locale de la barre lat&#233;rale pour la signalisation -->
 
 <dt><h3><a href="index.shtml">Signalisation</a></h3><</dt>
-		<dd>Ajouter des signaux &#224; votre mise en page avec JMRI.
+		<dd>Ajouter des signaux &#224; votre r&#233;seau avec JMRI.
 		    <ul>
 		    <li><a href="SignalingSetup.shtml">D&#233;marrage rapide de la signalisation </a>.
 		    <li><a href="AspectSignaling.shtml">Aspect Signalisation</a>

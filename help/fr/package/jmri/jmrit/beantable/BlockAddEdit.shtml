@@ -1,56 +1,84 @@
+
 <! DOCTYPE HTML PUBLIC "- // W3C // DTD HTML 4.01 // FR"
 "http://www.w3.org/TR/html4/strict.dtd">
 
 <html lang = "fr">
-<head>
-  <meta name = "Generator" content =
-  "HTML Tidy pour Mac OS X (vers 31 octobre 2006 - Apple Inc. build 15.17), voir www.w3.org">
+  <head>
+    <meta name="generator" content=
+    "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  
+    <title>JMRI: Adding Blocks Help</title>
+    <meta http-equiv="Content-Type" content=
+    "text/html; charset=iso-8859-1">
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="JMRI help Block Table">
+    <!--#include virtual="/Style" -->
+  </head>
+  
+  <body>
+    <!--#include virtual="/Header" -->
+  
+    <div class="nomenu" id="mBody">
+      <div id="mainContent">
+ 
+ <h1>Ajouter des cantons</h1>
 
-  <title> JMRI: Aide sur l'ajout de cantons </title>
-  <meta http-equiv = "Content-Type" content =
-  "text/html; charset = utf-8">
-  <meta name = "author" content = "Bob Jacobsen">
-  <meta name = "keywords" content = "JMRI help Block Table">
-  <! - # include virtual = "/ Style.shtml" ->
-</head>
+      <p>Pour ajouter un nouveau canton, cliquez sur le bouton <strong>Ajouter...</strong>
+      sur le bord inf&#233;rieur gauche du tableau des cantons.
+      </p><img src="images/CantonAdd.png" width="592" height=
+      "162" alt="Block editing pane">
 
-<body>
-  <! - # include virtual = "/ Header.shtml" ->
-  <div class = "nomenu" id = "mBody">
-    <div id = "mainContent">
+      <p>Dans le volet qui s'ouvre, saisissez un nom syst&#232;me valide pour le
+      un nom syst&#232;me valide pour le b&#226;timent et, si vous le souhaitez, un nom utilisateur. Par exemple, 
+      un nom syst&#232;me valide pour un r&#233;seau LocoNet pourrait &#234;tre LB456.
+      Un autre exemple, un nom syst&#232;me de Canton interne valide pourrait &#234;tre .
+      IB123.<br>
+      <br>Le nom utilisateur est facultatif, &#224; moins que vous ne cochiez "G&#233;n&#233;rer automatiquement le nom syst&#232;me",
+      et si vous en saisissez un, il doit &#234;tre unique dans votre configuration JMRI
+      . Voir la page d'aide " <a href="../../../../html/doc/Technical/Names.shtml">Noms</a>"
+       pour plus d'informations.</p>
+      <p>Cliquez sur [Cr&#233;er] pour terminer cette &#233;tape. Cliquez sur [Annuler] pour fermer
+      le volet (ne vous inqui&#233;tez pas, les &#233;l&#233;ments d&#233;j&#224; cr&#233;&#233;s resteront).</p> <p>.
 
-      <h1> Ajout de cantons </h1>
+      </p> <p>Compl&#233;tez la d&#233;finition du nouveau canton en fermant le 
+      Volet Ajouter un nouveau canton et en cliquant sur le bouton <strong>Modifier</strong>
+      &#224; droite de l'entr&#233;e du canton nouvellement cr&#233;&#233; dans le volet
+      <a href="CantonTable.shtml">Tableau des cantons</a>.<br>Remplissez tous les
+      champs comme d&#233;crit sur la page d'aide <a href="CantonEdit.shtml">Attributs Canton
+      </a> .</p>
 
-      <p> Pour ajouter un nouveau canton, cliquez sur le bouton <strong> Ajouter ... </strong> en bas &#224; gauche du volet Tableau des cantons. </p> <img src = "images/BlockAdd.png" width = "592" hauteur =
-      "162">
+      <h2>Cr&#233;er un certain nombre de cantons</h2>
 
-      <p> Dans le volet qui s'ouvre, entrez un nom syst&#232;me valide pour le canton et, si vous le souhaitez, entrez un nom utilisateur. Par exemple, un nom syst&#232;me valide pour un r&#233;seau locoNet pourrait &#234;tre LB456.
-      Un autre exemple, un nom syst&#232;me de canton interne valide pourrait &#234;tre IB123. <br>
-      <p> Le nom utilisateur est facultatif, sauf si vous cochez "G&#233;n&#233;rer automatiquement le nom syst&#232;me", et si vous en entrez un, il doit &#234;tre unique dans votre configuration JMRI. Voir les Pages d'aide"<a href="../../../../html/doc/Technical/Names.shtml"> Noms </a>"
-       pour plus d'informations. </p>
+      <p>Il est &#233;galement possible de cr&#233;er un certain nombre de cantons en une seule
+      fois.<br>
+      Lorsqu'elle est prise en charge, la case &#224; cocher " Ajouter une plage s&#233;quentielle " sera
+      activ&#233;e.</p>
 
-      <p> Terminez la d&#233;finition du nouveau canton en fermant le volet Ajouter un nouveau canton et en cliquant sur le bouton <strong> Modifier </strong> &#224; droite de l'entr&#233;e du canton nouvellement cr&#233;&#233;e dans <a href="BlockTable.shtml"> Table de canton </a>. <br> Remplissez tous les champs comme d&#233;crit sur la page d'aide <a href="BlockEdit.shtml"> Attributs de canton </a>. </p>
+      </p> <p>En cochant la case "Ajouter une plage s&#233;quentielle", vous activerez
+      le champ "Nombre d'&#233;l&#233;ments". D&#233;finissez le nombre de cantons que
+      vous souhaitez ajouter. Cliquez sur [Cr&#233;er] pour cr&#233;er un certain nombre de cantons num&#233;rot&#233;s de mani&#232;re s&#233;quentielle.
+     <br>
+      Si un nom utilisateur a &#233;t&#233; saisi, un num&#233;ro sera ajout&#233; &#224; 
+      la fin de ce nom (en commen&#231;ant par le num&#233;ro 2) pour que chaque nom utilisateur de canton soit unique.
+      </p>
 
-      <h2> Cr&#233;ation d'un certain nombre de cantons </h2>
+      <h2>Ajouter des propri&#233;t&#233;s de canton</h2>
 
-      <p> Il est &#233;galement possible de cr&#233;er plusieurs cantons en une seule fois. <br>
-      Lorsqu'elle est prise en charge, la case &#224; cocher "Ajouter une plage s&#233;quentielle" sera activ&#233;e. </p>
+      </p> <p>Pour ajouter les d&#233;tails d'un nouveau canton, fermez le volet Ajouter un b&#226;timent
+      en cliquant sur Annuler ou sur le bouton Fermer/X et cliquez sur
+      <strong><a href="CantonEdit.shtml">Modifier</a></strong> &#224; &#224;
+      droite de la nouvelle entr&#233;e dans le tableau des cantons.</p>
 
-      <p> Cochez la case "Ajouter une plage s&#233;quentielle" pour activer le champ "Nombre d'&#233;l&#233;ments". D&#233;finissez le nombre de cantons que vous souhaitez ajouter. Cliquez sur [Cr&#233;er] pour cr&#233;er un certain nombre de cantons num&#233;rot&#233;s s&#233;quentiellement. <br>
-      Si un nom d'utilisateur a &#233;t&#233; entr&#233;, un num&#233;ro sera ajout&#233; &#224; la fin de ce nom (commençant par # 2) pour que chaque nom d'utilisateur de canton reste unique. </p>
-      
-        <h2> Ajout de propri&#233;t&#233;s de bloc </h2>
+      <p>Voir <a href=
+      "../../../../html/doc/Technical/Names.shtml">Noms</a> sous la rubrique
+      Aide g&#233;n&#233;rale pour plus d'informations sur la d&#233;nomination des objets JMRI.</p>
 
-      <p> Pour ajouter les d&#233;tails d'un nouveau bloc, fermez le volet Ajouter un bloc en cliquant sur Annuler ou sur le bouton Fermer/X et cliquez sur <strong> <a href="BlockEdit.shtml"> Modifier </a> </strong> &#224; droite de la nouvelle entr&#233;e dans la table des blocs. </p>
+      <p>Retour &#224; la page <a href="CantonTable.shtml">aide Tableaux de cantons
+      </a>.</p>
+<p>Traduction 2021-03-10</P>
+      <!--#include virtual="/Footer.shtml" --></p>
+    </div>
+  </div>
 
-      <p> Voir <a href =
-      "../../../../html/doc/Technical/Names.shtml">Noms </a> sous Aide g&#233;n&#233;rale pour plus d'informations sur la d&#233;nomination des objets JMRI. </p>
-
-      <p> Revenez &#224; la <a href="BlockTable.shtml"> page d'aide Table  Canton</a>. </p>
-      <! - # include virtual = "/ Footer.shtml" ->
-    </div> <! - closes #mainContent ->
-  </div> <! - closes #mBody ->
-</body>
-</html>
 </body>
 </html>

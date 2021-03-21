@@ -1,11 +1,14 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+ 
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
-<!--	Updated by Herv&#233; BLOREC on 2019-03-26 -->
+
 <head>
  <title>
       JMRI: Block Edit Help
  </title>
-    <meta http-equiv=Content-Type content="text/html; charset= us-ascii">
+    <meta http-equiv=Content-Type content="text/html; charset= iso-8859-1">
     <meta content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI help Block Table Edit">
 
@@ -13,7 +16,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -121,7 +124,7 @@ changement d'&#233;tat du capteur.</li>
 	<td><img src="images/BlocksEditSpeedPopup.png" width="249" height="191"></td>
 <td>Options Vitesse:
 <ul>
-<li>Utiliser Global Normal 
+<li>Utiliser Norme Globale 
 <li>Cab
 <li>Maximum
 <li>Normal
@@ -192,10 +195,12 @@ sur un Panneau:</p>
 <p><a href="../display/LayoutEditor.shtml">Plus d'information sur l'utilisation 
 des Cantons avec l'&#201;diteur de R&#233;seau</a></p>
 <p>Retour &#224; la page <a href="BlockTable.shtml">Aide Tableau Canton<a>.</p>
+<p>Traduction 2021-03-10</p>
 
-
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
    </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
 </body>
 </html>
+
+   
