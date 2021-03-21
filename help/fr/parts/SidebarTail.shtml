@@ -1,0 +1,21 @@
+<!-- SidebarTail.shtml -->
+    <!-- Derniers &#233;l&#233;ments de la barre lat&#233;rale typique -->
+      <h3 style="padding-left : 1em ;"><p class="noted" align="center">.
+      Aide JMRI:<br>
+       <a href="/help/fr/webtoc.shtml">Contenu</a>/
+       
+       <br><a href="/help/fr/glossary/index.shtml">Glossary</a>/
+       <a href="/help/fr/html/FAQ.shtml">FAQ</a>/
+     </p></h3>
+     <p style="padding-left : 1em ;">
+       <a href="/donations.shtml">
+       <img src="https://sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" ALIGN="LEFT" alt="Donate to JMRI" />
+       Faites un don au JMRI.org</a>
+     </p>
+
+    <!-- JS pour mettre en &#233;vidence les &#233;l&#233;ments dans la barre lat&#233;rale -->
+    <script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="/web/js/here.js"></script>
+    
+    
+    <!-- /SidebarTail.shtml -->
