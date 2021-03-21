@@ -1,0 +1,450 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy pour Mac OS X (vers 31 Octobre 2006 - Apple Inc. build 15.17), voir www.w3.org">
+  <meta name="keywords" content="JMRI help CBUS NODE Manager CONFIG TOOL configuration variable">
+  <title>JMRI : CBUS&reg ; Node Manager</title>
+  <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+     <h1>JMRI : Gestionnaire de N&#339;uds CBUS</h1>
+     
+      <ul class="snav">
+      <li><a href="#table">Tableau des N&#339;uds</a></li>
+      <li><a href="#nodeinfo">Information sur les N&#339;uds</a></li>
+      <li><a href="#variables">Variables du N&#339;uds</a></li>
+      <li><a href="#events">&#233;v&#233;nements du N&#339;ud</a></li>
+      <li><a href="#setup">Configuration du N&#339;ud</a></li>
+      <li><a href="#nodenumber">Nombre de N&#339;uds</a></li>
+      <li><a href="#fcuimport">Restauration depuis FCU</a></li>
+      </ul>
+     
+     
+     
+      <img src="../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-node-manager-752x541.png"
+      width="676" height="487" alt="Capture d'&#233;cran CBUS Node Manager"
+      align="right">
+      
+      <p>Le gestionnaire de N&#339;uds comprend une table des N&#339;uds, ainsi que des capacit&#233;s de configuration des N&#339;uds.</p> <p>.
+
+      <p>A part &#234;tre un outil de configuration, cette table est utilis&#233;e par JMRI pour localiser les centrales DC / DCC, 
+      en activant des fonctionnalit&#233;s pour les Centrales qui les prennent en charge.</p> <p>
+
+        <p>Vous pouvez ouvrir plusieurs fen&#234;tres de gestionnaire, celles-ci utiliseront toutes la m&#234;me base de donn&#233;es de N&#339;uds.</p>
+      
+      
+      
+    <h2><a name="table" id="table">Tableau des N&#339;uds</a></h2>
+    <div>
+    
+        <p>La moiti&#233; sup&#233;rieure de l'&#233;cran affiche un Tableau de N&#339;uds, tandis que la moiti&#233; inf&#233;rieure
+        affiche des d&#233;tails sur le N&#339;ud s&#233;lectionn&#233;.</p>
+        
+        <p>Les N&#339;uds seront ajout&#233;s au Tableau lorsqu'une op&#233;ration OPC d'administration de N&#339;ud
+        est d&#233;tect&#233;e pour le num&#233;ro de N&#339;ud.</p> <p>
+        
+        <p>Les N&#339;uds ( et les Centrales ) seront &#233;galement ajout&#233;s &#224; la suite d'une recherche de N&#339;ud
+        ou une recherche de Centrale.</p>
+        
+        <p>Il y a une ligne dans le Tableau pour chaque num&#233;ro de N&#339;ud.</p>
+        
+        <p>Le gestionnaire interrogera tout N&#339;ud ajout&#233; au Tableau pour conna&#238;tre ses propri&#233;t&#233;s.</p> <p>.
+        
+        </p> <p>Si elle est activ&#233;e, cette requ&#234;te d&#233;clenchera la r&#233;cup&#233;ration 
+        en arri&#201;re-plan de la configuration compl&#201;te du N&#339;ud.</p> 
+        
+        
+        </p> <p>Lorsqu'un N&#339;ud est s&#233;lectionn&#233; dans le Tableau, toute r&#233;cup&#233;ration 
+        en arri&#201;re-plan sera prioritairement dirig&#233;e vers ce N&#339;ud.</p> 
+        
+        </p> <p>Colonnes : </p>
+        <ul>
+        <li>Num&#233;ro de N&#339;ud</li>
+        <li>Type de N&#339;ud, par exemple CANPAN, tel que d&#233;clar&#233; par le N&#339;ud</li>.
+        <li>Nom de l'utilisateur - modifiable</li>
+        <li>Num&#233;ro de Centrale - Disponible uniquement si le N&#339;ud est une Centrale</li>.
+        <li>Identification du CAN - Voir l'onglet de configuration du N&#339;ud pour modifier</li>.
+        <li>&#233;v&#233;nements - Nombre d'&#233;v&#233;nements actuellement stock&#233;s sur le N&#339;ud</li>.
+        <li>Progression de la R&#233;cup&#233;ration - Pourcentage de la configuration totale du N&#339;ud t&#233;l&#233;charg&#233;e sur JMRI</li>.
+        <li>Total Bytes - Total des octets de donn&#233;es du N&#339;ud</li>.
+        <li>Mode Apprentissage - V&#233;rifi&#233; si le N&#339;ud est actuellement en mode apprentissage</li>.
+        </ul>
+        
+        </p> <p>La r&#233;cup&#233;ration pr&#233;alable permet une &#233;dition rapide du N&#339;ud 
+        et peut &#234;tre la base de toute int&#233;gration future de la sauvegarde du N&#339;ud.</p> 
+        
+        
+        </p> <p>Les octets de donn&#233;es du N&#339;ud sont calcul&#233;s comme la somme de :</p>
+        
+        <ul>
+        <li>Nombre de param&#201;tres de N&#339;ud</li>
+        <li>Nombre de Variables de N&#339;ud ( NVs )</li>
+        <li>Nombre d'&#233;v&#233;nements x 5 ( r&#233;cup&#233;ration de l'index initial des &#233;v&#233;nements )</li>.
+        <li>Nombre d'&#233;v&#233;nements x Nombre de variables d'&#233;v&#233;nement par &#233;v&#233;nement</li>.
+        </ul>
+        
+        <p>Vous pouvez cliquer dans la cellule Nom du N&#339;ud pour modifier le nom du N&#339;ud.</p>
+        
+        <p>Vous pouvez supprimer un N&#339;ud du Tableau via l'onglet Configuration du N&#339;ud.</p>
+        
+        
+        
+        <h4>Menu Fichier</h4>
+        <p>Importer les noms de N&#339;uds depuis le fichier FCU ( les noms de N&#339;uds ne sont pas actuellement maintenus entre les sessions )</p> 
+         <p>Restaurer un N&#339;ud &#224; partir d'un fichier FCU - voir <a href="#fcuimport">Restaurer &#224; partir d'un FCU</a></p>
+        
+        <h4>Menu des options</h4>
+        <img src="../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-node-manager-options-372x216.png"
+      width="372" height="216" alt="Options du gestionnaire de N&#339;uds CBUS"
+      align="right">
+        
+        
+        <ul>
+        <li>Recherche de N&#339;uds et de Centrales.
+            <p>Vous pouvez s&#233;lectionner Options > Rechercher des N&#339;uds et des Centrales.
+            par lequel le gestionnaire demandera &#224; chaque N&#339;ud 
+            sur le r&#233;seau CBUS de faire un rapport.
+            <br> &#224; Chaque N&#339;ud qui se signale est envoy&#233; un message pour le sortir de 
+            tout mode d'apprentissage d'&#233;v&#233;nement  existant.
+            <br>Un message identifiant les N&#339;uds en mode configuration, c'est-&#224;-dire demandant un num&#233;ro de N&#339;ud. 
+            sera &#233;galement envoy&#233; au r&#233;seau.</p> <p>.
+        </li>
+        <li>Envoyer une OPC de r&#233;initialisation du syst&#201;me</li>.
+        <li>R&#233;cup&#233;ration en arri&#201;re-plan
+            </p> <p>La recherche en arri&#201;re-plan tente d'utiliser les p&#233;riodes de faible trafic sur le r&#233;seau CBUS pour
+            rafra&#238;chir les d&#233;tails des N&#339;uds.
+
+
+            <br>Si l'option Rapide est s&#233;lectionn&#233;e, le syst&#201;me v&#233;rifiera toutes les 20 ms s'il y a du trafic sur le r&#233;seau CBUS.
+            <br>Si aucun trafic n'est observ&#233;, et qu'il n'y a pas de r&#233;cup&#233;ration de donn&#233;es en cours, une demande de donn&#233;es au N&#339;ud
+            sera effectu&#233;e.
+            <br>Si l'option slow est s&#233;lectionn&#233;e, cela est r&#233;duit &#224; toutes les 50ms.</p>
+        </li>
+        <li>D&#233;tecter les demandes de num&#233;ros de N&#339;uds</li>.
+        <li>Ajouter des Centrales au Tableau lorsqu'ils sont trouv&#233;s</li>.
+        <li>Ajouter des N&#339;uds au Tableau lorsqu'ils sont trouv&#233;s</li>.
+        <li>Recherche de Centrales au d&#233;marrage de JMRI</li>.
+        <li>Recherche de N&#339;uds au d&#233;marrage de JMRI</li>
+        </ul>
+        
+        <p>Les options sont enregistr&#233;es entre les sessions sur une base par profil.</p>
+        
+        
+    </div>
+
+    <h3><a name="nodeinfo" id="nodeinfo">Informations sur les N&#339;uds</a></h3>.
+    <div>
+    
+        <p>Informations suppl&#233;mentaires sur le N&#339;ud, y compris, si elles sont disponibles</p>.
+    
+        <ul>
+        <li>Fabricant</li>
+        <li>Texte sur le type de N&#339;ud</li>
+        <li>Version du firmware</li>
+        <li>Total Variables du N&#339;uds</li>
+        <li>Total des param&#201;tres</li>
+        <li>Variables par &#233;v&#233;nement</li>
+        <li>Maximum d'&#233;v&#233;nements de N&#339;ud</li>
+        <li>Type de Bus</li>
+        <li>Lien de Support du N&#339;uds</li>
+        </ul>
+    
+    </div>
+
+    <h3><a name="variables" id="variables">Variables du N&#339;ud</a></h3>.
+    <div>
+    
+    <p>C'est un outil g&#233;n&#233;rique pour la modification des variables de N&#339;uds et des &#233;v&#233;nements de N&#339;uds.</p>
+        
+        <p><strong>D'autres outils peuvent &#234;tre plus appropri&#233;s pour la configuration compl&#201;te des N&#339;uds.</strong></p>.
+        
+        
+        <p>JMRI n'enregistre pas les modifications de la configuration du N&#339;ud, tout cela est enregistr&#233; sur le N&#339;ud.</p> <p>.
+        
+         </p><p>Il est judicieux de faire des sauvegardes r&#233;guli&#201;res de vos configurations de N&#339;uds en utilisant 
+        un logiciel appropri&#233;.</p> <p>
+        
+        
+        </p> <p>Ne modifiez pas aveugl&#233;ment les Variables du N&#339;ud pour <i>voir ce qui se passe !</i> Utilisez en association avec la 
+        la documentation des modules individuels.</p> <p>
+        
+    
+    
+        <p>Ces derniers sont affich&#233;s sous la forme d'un Tableau.</p> 
+     
+         <p>Les colonnes du Tableau comprennent le num&#233;ro du NV, ainsi que la valeur du NV sous forme d&#233;cimale, hexagonale et binaire.</p> <p>
+        
+        <p>Cliquez sur modifier pour &#233;diter les Variables de N&#339;ud, l'&#233;cran d'&#233;dition s'ouvrira dans une nouvelle fen&#234;tre.</p>
+        
+        <h4>Modification des variables de N&#339;ud</h4>
+        
+        </p> <p>Les colonnes de gauche sont les valeurs actuelles, les colonnes de droite montrent les valeurs propos&#233;es.</p> 
+        
+        
+        </p> <p>Si les valeurs ont &#233;t&#233; modifi&#233;es, la ligne est surlign&#233;e en jaune.</p> <p>.
+
+        <p>Pour &#233;crire les nouvelles VN, le bouton de sauvegarde est activ&#233; lorsqu'une variable a &#233;t&#233; modifi&#233;e.</p> 
+        
+        <p>Cliquez sur ce bouton pour une confirmation avant l'&#233;criture, apr&#201;s quoi la fen&#234;tre se fermera.</p>
+        
+    </div>
+    
+    <h3><a name="events" id="events">&#201;v&#233;nements du N&#339;ud</a></h3><a>.
+    <div>
+    <img src="../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-generic-edit-ev-488x525.png"
+      width="488" height="525" alt="CBUS Node Event Generic Config" align="right">
+      
+      <p>Vous pouvez cr&#233;er de nouveaux &#233;v&#233;nements de N&#339;ud en faisant glisser un &#233;v&#233;nement du Tableau des &#233;v&#233;nements CBUS vers la fen&#234;tre du gestionnaire de N&#339;uds.</p>
+      
+      <p>Si l'&#233;v&#233;nement est nouveau pour le N&#339;ud, il s'ouvrira dans une nouvelle fen&#234;tre d'&#233;v&#233;nement.</p>
+      
+      <p>Si l'&#233;v&#233;nement est d&#233;j&#224; sur le N&#339;ud, il s'ouvrira dans une fen&#234;tre d'&#233;dition d'&#233;v&#233;nement .</p>
+      
+      
+      <p>Cliquez sur le bouton d'&#233;dition dans la liste des &#233;v&#233;nements, ou sur le bouton de nouvel &#233;v&#233;nement. 
+      pour faire appara&#238;tre la fen&#234;tre d'&#233;dition de l'&#233;v&#233;nement.</p> <p>
+      <p>La combinaison de l'&#233;v&#233;nement et du N&#339;ud est plac&#233;e en haut de la liste</p> <p>.
+      
+      <p>Les noms des N&#339;uds et des &#233;v&#233;nements sont recherch&#233;s dans le Tableau des &#233;v&#233;nements CBUS lorsque les spinners sont modifi&#233;s</p> <p>.
+      </p> <p>Les boutons d'action seront activ&#233;s ou d&#233;sactiv&#233;s en fonction de la fa&#231;on dont le num&#233;ro de l'&#233;v&#233;nement a chang&#233;.</p> <p>.
+      
+      </p> <p>Ne modifiez pas aveugl&#233;ment les variables d'&#233;v&#233;nement pour <i>voir ce qui se passe !</i> Utilisez en relation avec 
+        la documentation des N&#339;uds individuels.</p> <p>
+      
+      </p> <p>Toutes les valeurs existantes sont indiqu&#233;es &#224; gauche du Tableau, les valeurs propos&#233;es &#224; droite.</p> 
+
+      </p> <p>Les valeurs nulles ne sont pas affich&#233;es pour les colonnes binaires afin d'aider &#224; identifier les valeurs peupl&#233;es.</p> 
+      <p>Il est possible d'utiliser les tourniquets
+
+      </p> <p>Utiliser les roues ou saisir une valeur dans la cellule pour modifier la valeur.</p> 
+      
+      <p>Toutes les variables modifi&#233;es verront leurs lignes surlign&#233;es en jaune.</p> <p>.
+
+      </p> <p>Le nombre de variables par &#233;v&#233;nement d&#233;pendra des param&#201;tres d'&#233;v&#233;nement et du firmware sp&#233;cifiques au N&#339;ud.</p>
+      
+      <p>Cliquez sur modifier ou sur un nouvel &#233;v&#233;nement pour enregistrer celui-ci dans le N&#339;ud.</p>
+      
+      <p>Lorsque vous apprenez, </p>
+      
+      <p>Copier un &#233;v&#233;nement copiera &#233;galement les variables de l'&#233;v&#233;nement dans un nouvel &#233;v&#233;nement pr&#234;t &#224; &#234;tre modifi&#233;.</p>
+      
+      </p> <p>Lorsque vous supprimez un &#233;v&#233;nement du N&#339;ud, il vous sera demand&#233; de le confirmer.</p> 
+      
+      <p>La fen&#234;tre d'&#233;dition de l'&#233;v&#233;nement restera ouverte apr&#201;s les op&#233;rations d'apprentissage ou d'&#233;dition de l'&#233;v&#233;nement.</p> <p>.
+      
+      </p> <p>&#224; l'heure actuelle, seul l'onglet g&#233;n&#233;rique est disponible.  Des mod&#232;les pourront &#234;tre disponibles en temps voulu.</p> <p>.
+      
+    </div>
+    
+    <h3><a name="setup" id="setup">Configuration du N&#339;ud</a></h3>.
+
+
+    <div>
+        <img src="../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-node-setup-752x541.png"
+      width="676" height="487" alt="CBUS Node Setup" align="right">
+      
+      <p>L'onglet de configuration des N&#339;uds contient certaines fonctionnalit&#233;s de configuration des N&#339;uds moins utilis&#233;es.</p>
+      
+      <p>Le nom utilisateur JMRI du N&#339;ud est utilis&#233; pour faire r&#233;f&#233;rence au N&#339;ud dans la console CBUS et dans d'autres applications CBUS.</p>
+      
+      
+        </p> <p>L'auto-&#233;num&#233;ration CAN envoie une demande d'&#233;num&#233;ration au N&#339;ud,
+        qui devrait alors se trier lui-m&#234;me avec un bon identifiant CAN.</p> <p>
+      
+      </p> <p>Le CAN peut &#233;galement &#234;tre d&#233;fini manuellement en cliquant sur le bouton "force set".
+      <br>Un dialogue contextuel demandera le nouvel ID CAN, min 1, max 99.</p> <p>.
+      
+      <p>Bouton Effacer tous les &#233;v&#233;nements du N&#339;ud</p>
+      
+      </p> <p>Bouton Supprimer du tableau</p> <p>.
+      
+    </div>    
+    
+    
+    <h3><a name="nodenumber" id="nodenumber">Num&#233;ros de N&#339;ud</a></h3>.
+        <div>
+        
+        <p>Num&#233;ro de N&#339;ud : Chaque module individuel dans l'op&#233;ration FLiM a un num&#233;ro de N&#339;ud.</p> <p>.
+        
+        <p>Un num&#233;ro de N&#339;ud est demand&#233; en maintenant enfonc&#233; le bouton FLiM sur un N&#339;ud.</p>
+        
+        <p>JMRI peut d&#233;tecter les modules qui demandent un num&#233;ro de N&#339;ud.</p>
+        
+        </p> <p>Ceci est activ&#233; par d&#233;faut, bien qu'il puisse &#234;tre d&#233;sactiv&#233; dans le menu des options du gestionnaire de N&#339;uds.</p> 
+        
+        
+        <p>Lorsqu'on d&#233;tecte une demande de num&#233;ro de N&#339;ud, une fen&#234;tre popup d'allocation s'affiche.</p>
+        
+        <img src="../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-node-config-qnn_278x151.png"
+        width="278" height="151" alt="Merg CBUS Node Configuration Request Node Number">
+
+        <p>&#224; l'aide de la roulette num&#233;rique ou du clavier, saisissez le num&#233;ro de N&#339;ud num&#233;rique
+        que vous souhaitez pour le N&#339;ud.</p>   
+        
+        <p>Il est sugg&#233;r&#233; d'allouer des num&#233;ros de N&#339;ud sup&#233;rieurs &#224; 256, le nombre maximum non r&#233;serv&#233; &#233;tant de 65 533</p>.
+        
+        <p>Si un OpCode r&#233;serv&#233; est utilis&#233;, l'arri&#201;re-plan deviendra jaune avec des explications.</p> <p>.      
+        <p>Si un num&#233;ro de N&#339;ud existant en cours d'utilisation est s&#233;lectionn&#233;, l'arri&#201;re-plan deviendra rouge.</p>
+      
+      </div>
+      
+    <h3><a name="fcuimport" id="fcuimport">Fichier xml du MERG FCU - Restaurer un N&#339;ud / Importer un &#233;v&#233;nement CBUS et des noms de N&#339;uds</a></h3>.
+    <div>
+        <img src="../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus_node_restore_from_fcu_661x619.png"
+      width="661" height="619" alt="CBUS Node Setup" align="right">
+      
+      <ul>
+      <li>Restaurer les NV de N&#339;uds et les &#233;v&#233;nements</li>
+      <li>Importer les noms de N&#339;uds vers le gestionnaire de N&#339;uds principal</li>.
+      <li>Importer les noms d'&#233;v&#233;nements vers le <a href="../eventtable/EventTablePane.shtml">Tableau d'&#233;v&#233;nements CBUS de JMRI</a></li>.
+      </ul>
+      
+        <p>Ouvrir la fen&#234;tre de restauration via le menu Fichier du gestionnaire de N&#339;uds > Restaurer le N&#339;ud &#224; partir de FCU xml</p>.
+      
+        <p>S&#233;lectionnez un fichier FCU xml &#224; partir du bouton en haut de l'&#233;cran.</p>
+      
+        <p>Les N&#339;uds du fichier appara&#238;tront dans le tableau sup&#233;rieur.</p>
+        </p> <p>Il y a des onglets pour visualiser les informations sur le N&#339;ud s&#233;lectionn&#233;, 
+            les variables de N&#339;ud et les &#233;v&#233;nements de N&#339;ud au centre de la fen&#234;tre.</p> <p>
+
+
+        </p> <p>Si le tableau des &#233;v&#233;nements JMRI CBUS est en cours d'ex&#233;cution, le bouton d'importation des noms d'&#233;v&#233;nements sera activ&#233;.
+        <br>Un nom d'&#233;v&#233;nement sera ajout&#233; &#224; une entr&#233;e de tableau d'&#233;v&#233;nements existante si elle n'a pas de nom d'&#233;v&#233;nement.</p>
+              
+        <br>Les noms de N&#339;uds sont import&#233;s dans le Tableau principal des N&#339;uds, en mettant &#224; jour le nom du N&#339;ud s'il n'est pas d&#233;fini.
+        <br>Si un num&#233;ro de N&#339;ud n'est pas pr&#233;sent dans la Tableau, 
+        une nouvelle ligne sera cr&#233;&#233;e permettant au nom de N&#339;ud 
+        d'&#234;tre utilis&#233; au sein d'autres applications CBUS de la JMRI.</p>
+        
+        <p>Les options de restauration sont vers le bas de l'&#233;cran.</p>
+      
+        </p> <p>Les N&#339;uds du Tableau principal des N&#339;uds sont r&#233;pertori&#233;s vers le bas &#224; gauche de l'&#233;cran de restauration.</p> <p>.
+      
+        </p> <p>Les deux transferts de NV et d'&#233;v&#233;nements peuvent &#234;tre s&#233;lectionn&#233;s de mani&#201;re ind&#233;pendante.</p> 
+              
+         <p>Il y a &#233;galement une option pour effacer tous les &#233;v&#233;nements existants sur le N&#339;ud.</p> <p>
+        
+        </p> <p>Quand un N&#339;ud FCU correspondant et un N&#339;ud du Tableau de N&#339;uds ont tous deux &#233;t&#233; s&#233;lectionn&#233;s, 
+        le bouton Mettre &#224; jour le N&#339;ud devient actif.  </p>
+      
+        </p> <p>Le N&#339;ud donneur et le N&#339;ud cible n&#233;cessitent la m&#234;me quantit&#233; de NV ou de variables d'&#233;v&#233;nement.</p>
+      
+        </p> <p>Une fois que vous avez cliqu&#233;, il y a une popup de confirmation.
+        qui confirme les options qui sont d&#233;finies.</p> 
+        
+      <img src="../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-teach-from-fcu-file-confirm-278x215.png"
+      width="278" height="215" alt="CBUS Confirm write restore" >
+      
+        <p>Cliquez sur OK, l'ic&#244;ne occup&#233;e appara&#238;tra et le processus d'&#233;criture commencera.</p>
+        <p>Toutes les valeurs inchang&#233;es ne seront PAS &#233;crites sur le N&#339;ud.</p>
+        <p>Comme pour les autres op&#233;rations, le N&#339;ud en cours d'apprentissage sera mis &#224; jour en temps r&#233;el via le Tableau principal des N&#339;uds.</p>
+        
+        </p> <p>&#224; la fin de l'apprentissage, l'ic&#244;ne occup&#233;e dispara&#238;tra et une popup d'&#233;chec d'apprentissage 
+        s'affichera si un quelconque probl&#201;me est d&#233;tect&#233;.</p> <p>
+
+      
+      
+    </div>   
+      
+      
+      
+    <h3><a name="opc" id="opc">Codes d'Op&#233;rations envoy&#233;es</a></h3>
+    <div>
+      <ul>
+      <li>EVULN - Envoy&#233; lors de la suppression d'un &#233;v&#233;nement, &#233;galement envoy&#233; lors de la modification d'un &#233;v&#233;nement.</li>
+      <li>EVLRN - Envoy&#233; pour apprendre une variable d'&#233;v&#233;nement.</li>
+      <li>NERD - Envoy&#233; lors de la demande d'&#233;v&#233;nements de N&#339;uds.</li>
+      <li>NNLRN - Envoy&#233; pour demander au N&#339;ud d'entrer en mode apprentissage, avant la suppression d'un &#233;v&#233;nement ou l'apprentissage d'un &#233;v&#233;nement.</li>
+      <li>NVSET - Envoy&#233; lors de la modification des NV.</li>
+      <li>NVRD - Envoy&#233; lorsque la fen&#234;tre NV est s&#233;lectionn&#233;e dans la boucle d'obtention de variable de N&#339;ud.</li>
+      <li>QNN - Envoy&#233; lors du rafra&#238;chissement de la liste des N&#339;uds.</li>
+      <li>REVAL - Envoy&#233; lorsque la fen&#234;tre d'&#233;v&#233;nement de N&#339;ud est s&#233;lectionn&#233;e, pour demander chaque valeur d'&#233;v&#233;nement.</li>
+      <li>RQEVN - Envoy&#233; lorsque le N&#339;ud est s&#233;lectionn&#233; avant de construire la liste des &#233;v&#233;nements.</li>
+      <li>RQMN - Demande de nom de module - Envoy&#233; pour demander le nom du module en mode de configuration.</li>
+      <li>RQNP - Envoy&#233; lors du rafra&#238;chissement de la liste des N&#339;uds pour identifier tout N&#339;ud d&#233;j&#224; en mode configuration.
+                &#233;galement envoy&#233; en r&#233;ponse &#224; un N&#339;ud demandant un num&#233;ro de N&#339;ud.</li>
+      <li>RQNPN - Envoy&#233; lorsque le N&#339;ud est s&#233;lectionn&#233; pour recevoir le total des param&#201;tres du N&#339;ud, &#233;galement envoy&#233; pour obtenir chaque param&#201;tre du N&#339;ud.</li>
+      <li>SNN - Envoy&#233; pour allouer un num&#233;ro de N&#339;ud suite au choix de l'utilisateur.</li>
+      </ul>
+      
+      <h4>Codes d'op&#233;ration re&#231;us</h4>
+      
+      <ul>
+      <li>CANID - Detecte pour d&#233;finir le N&#339;ud sur un ID CAN sp&#233;cifique.</li>
+      <li>CMDERR - Surveillant constant avec des fonctionnalit&#233;s suppl&#233;mentaires.
+                <ul>
+                <li>Lorsqu'on attend la r&#233;ponse de l'&#233;v&#233;nement de d&#233;sapprentissage</li>.
+                <li>Lorsqu'on attend une r&#233;ponse &#224; l'&#233;v&#233;nement de param&#233;trage </li>. 
+                <li>En attente d'une r&#233;ponse &#224; l'&#233;v&#233;nement setting NV </li>
+                </ul>
+                </li>
+      <li>ENRSP - Surveillant en attente de la liste des &#233;v&#233;nements de N&#339;uds.</li>
+      <li>ENUM - Surveillant pour r&#233;initialiser automatiquement l'ID CAN.</li>
+      <li>EVLRN - Surveillant pour l'&#233;v&#233;nement d'apprentissage en mode apprentissage.</li>
+      <li>EVLRNI - Surveillant pour modifier l'&#233;v&#233;nement en mode apprentissage par index ( Le N&#339;ud doit avoir un index valide ).</li>
+      <li>EVULN - Surveillant pour supprimer l'&#233;v&#233;nement en mode apprentissage.</li>
+      <li>NEVAL - &#233;coute en attente d'une variable d'&#233;v&#233;nement.</li>
+      <li>NNNACK - Surveillant en attente d'une r&#233;ponse SNN.</li>
+      <li>NNCLR - Surveillant pour effacer tous les &#233;v&#233;nements de N&#339;uds</li>.
+      <li>NNLRN - Surveillant pour lorsque le N&#339;ud entre en mode apprentissage</li>.
+      <li>NNREL - Surveillant constant pour la lib&#233;ration du num&#233;ro de N&#339;ud.
+            <br>Le N&#339;ud sera supprim&#233; de la table du gestionnaire de N&#339;uds car on ne peut se fier &#224; aucune donn&#233;e ant&#233;rieure.</li>
+      <li>NNULN - Surveillant pour lorsque le N&#339;ud quitte le mode apprentissage</li>.
+      <li>NVANS - Surveillant lors de l'attente des NV du N&#339;ud.</li>
+      <li>NVSET - Surveillant pour le NV unique du N&#339;ud d&#233;fini.</li>
+      <li>NUMEV - Surveillant en attente du nombre d'&#233;v&#233;nements de N&#339;uds.</li>
+      <li>PARAMS - Surveillant pour le mode de configuration lors du rafra&#238;chissement de la liste des N&#339;uds, 
+                Surveillant lorsqu'un RQNP a &#233;t&#233; envoy&#233;.</li>
+      <li>PARAN - Surveillant lors de l'attente des param&#201;tres du N&#339;ud ( qui n'est pas en mode setup ).</li>
+      <li>PNN - Mise &#224; jour depuis le N&#339;ud - Peut cr&#233;er une nouvelle ligne de la table du gestionnaire de N&#339;uds.</li>
+      <li>RQNN - Surveillant constant pour les demandes de num&#233;ro de N&#339;ud.</li>
+      <li>STAT - Mise &#224; jour depuis le poste de commandement - Peut cr&#233;er une nouvelle ligne de table Node Manager.</li>
+      <li>WRACK - 
+                <ul>
+                <li>Liste de surveillance en attente de la r&#233;ponse &#224; l'&#233;v&#233;nement de d&#233;sapprentissage</li>.
+                <li>Liste de surveillance  en attente d'une r&#233;ponse &#224; l'&#233;v&#233;nement de param&#233;trage</li>.
+                <li>Liste en attente d'une r&#233;ponse &#224; l'&#233;v&#233;nement de param&#233;trage NV</li>.
+                </ul>
+                </li>
+      </ul>
+      
+      <p>Tous les N&#339;uds sont d&#233;sign&#233;s &#224; la fois par le fabricant et le type de N&#339;ud.</p>
+    
+    </div>
+    
+    <h4>Variation du guide du d&#233;veloppeur CBUS 6b</h4>
+    
+    <div>
+      
+      <p>Il ne peut pas &#234;tre garanti qu'un autre programme de la suite JMRI 
+      n'enverra aucun OPC op&#233;rationnel normal &#224; un module qui se trouve en mode apprentissage.</p>
+    </div>
+      
+    <h3>Aide JMRI</h3>
+      
+      <p>Vous pouvez afficher cette page d'aide au sein de JMRI en s&#233;lectionnant Aide > Aide de la fen&#234;tre
+      dans la barre sup&#233;rieure de la fen&#234;tre du gestionnaire des N&#339;uds CBUS.</p>
+      
+      </p> <p>Les m&#233;thodes d'apprentissage des N&#339;uds sont accessibles via un script Jython, et comprennent des commandes uniques
+      qui s'occupent de toutes les boucles.</p> <p>
+      
+      <p><a href="../../../../../../html/hardware/can/cbus/index.shtml">Page principale du support CBUS de JMRI</a>.</p>
+      
+        <h2></h2>
+        <p>CBUS&reg; est une marque d&#233;pos&#233;e du Dr Michael Bolton</p>.
+        <p></p>
+        <p> Traduction 2021-03-19</p>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
