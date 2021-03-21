@@ -1,0 +1,15 @@
+ <!-- SidebarInstall.shtml -->
+<!-- Partie de la barre lat&#233;rale pour lister les fichiers d'installation et de configuration -->
+
+<dt><h3 style="padding-left : 1em ;"><a href="/help/fr/html/setup">Configuration et installation de JMRI</a></h3></dt>.
+		<dd>Environnements JMRI...
+		    <ul>
+            <li><a href="/install/WindowsNew.shtml">Windows</a>
+            <li><a href="/install/MacOSX.shtml">Mac OS X</a>
+            <li><a href="/install/Linux.shtml">Linux (plusieurs versions)</a>
+            <li><a href="/install/Raspbian.shtml">Raspberry Pi OS sur Raspberry Pi</a>
+            <li><i><a href="/install/Debug.shtml">D&#233;boguer une installation</a></i>
+		    </ul>
+		</dd>
+        
+<!-- /SidebarInstall.shtml -->
