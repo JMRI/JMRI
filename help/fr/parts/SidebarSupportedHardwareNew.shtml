@@ -1,0 +1,8 @@
+<!-- SidebarSupportedHardware.shtml -->
+<!-- Il s'agit de la d&#233;finition commune de la barre lat&#233;rale pour les pages de mat&#233;riel prises en charge -->.
+<!-- Pour tester de nouveaux formats et contenus.  Si rien de nouveau, alors incluez simplement... -->
+
+<!--#include virtual="/help/fr/parts/SidebarHardware.shtml" -->
+
+<!-- /SidebarSupportedHardware.shtml -->
+
