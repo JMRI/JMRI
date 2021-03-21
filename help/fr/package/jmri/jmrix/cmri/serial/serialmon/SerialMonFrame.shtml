@@ -1,7 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- Translated  by Blorec Hervé le 2011-11-1-->
 
 <html lang="fr">
 <head>
@@ -29,16 +28,18 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Moniteur Trafic &Atilde;&permil;quipements C/MRI</h1>Ceci
+      <h1>Moniteur Trafic &#201;quipements C/MRI</h1>Ceci
       est la page d'aide
-      help/en/package/jmri/jmrix/CMRI/s&Atilde;&copy;rie/serialmon/SerialMonFrame
-      page d'aide
+      help/en/package/jmri/jmrix/CMRI/serie/serialmon/SerialMonFrame
+      
 
-      <p>Pour plus d'informations sur la diff&Atilde;&copy;rents
-      contr&Atilde;&acute;les et les options, s'il vous
-      pla&Atilde;&reg;t voir le <a href=
-      "../../../AbstractMonFrame.shtml">page Fen&Atilde;&ordf;tre
-      Moniteur de Communications</a> . 
+      <p>Pour plus d'informations sur la diff&#233;rents
+      contr&#244;les et les options, s'il vous
+      pla&#238;t voir le <a href=
+      "../../../AbstractMonFrame.shtml">page Fen&#234;tre 
+         Moniteur de Communications</a> . 
+
+         <p>Traduction 2021-03-19</p>
       <!--#include virtual="/Footer" --></p>
     </div>
   </div>
