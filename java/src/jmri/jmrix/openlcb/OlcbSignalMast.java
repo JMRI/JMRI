@@ -9,6 +9,8 @@ import jmri.SystemConnectionMemo;
 import org.openlcb.Connection;
 import org.openlcb.EventID;
 import org.openlcb.EventState;
+import org.openlcb.IdentifyEventsAddressedMessage;
+import org.openlcb.IdentifyEventsGlobalMessage;
 import org.openlcb.Message;
 import org.openlcb.MessageDecoder;
 import org.openlcb.NodeID;
@@ -391,12 +393,22 @@ public class OlcbSignalMast extends AbstractSignalMast {
          * {@inheritDoc}
          */
         @Override
-        public void handleIdentifyEvents(@Nonnull IdentifyEventsMessage msg, Connection sender){
+        public void handleIdentifyEventsAddressed(@Nonnull IdentifyEventsAddressedMessage msg,
+                                                  Connection sender){
             // ours?
             if (! node.equals(msg.getDestNodeID())) return;  // not to us
             sendAllIdentifiedMessages();
-        }            
-        
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void handleIdentifyEventsGlobal(@Nonnull IdentifyEventsGlobalMessage msg,
+                                               Connection sender){
+            sendAllIdentifiedMessages();
+        }
+
         /**
          * Used at start up to emit the required messages, and in response to a IdentifyEvents message
          */
