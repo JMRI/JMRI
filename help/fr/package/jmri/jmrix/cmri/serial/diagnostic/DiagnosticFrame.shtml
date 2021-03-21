@@ -26,16 +26,17 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h2>JMRI: Diagnostiques C/MRI</h2>Quand on vous demande votre
-      num&Atilde;&copy;ro de carte de sortie, cela signifie
+      num&#233;ro de carte de sortie, cela signifie
       l'adresse. Par exemple, si vous avez deux cartes
-      d'entr&Atilde;&copy;e 0 et 1, puis des cartes de sortie avec
-      les adresse 2, 3 et 4, vous pouvez sp&Atilde;&copy;cifier 2,
+      d'entr&#233;e 0 et 1, puis des cartes de sortie avec
+      les adresse 2, 3 et 4, vous pouvez sp&#233;cifier 2,
       3 et 4 ici. Ne pensez pas qu'il se
-      r&Atilde;&copy;f&Atilde;&uml;re &Atilde;  la "1er" carte de
+      r&#233;f&#232;re &#224;  la "1er" carte de
       sortie, etc
 
       <p>Ceci est la page d'aide
       help/en/package/jmri/jmrix/cmri.serial.diagnostic.DiagnosticFrame
+      <p>Traduction 2020-03-19</p>
       <!--#include virtual="/Footer" --></p>
     </div>
   </div>
