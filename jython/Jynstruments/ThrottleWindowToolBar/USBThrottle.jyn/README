@@ -1,0 +1,20 @@
+This folder contains a Jynstrument to be used in a JMRI throttle window.
+This Jynstrument allow to use any input device recognized by JInput to drive the throttle window where it was dropped.
+
+Just drop this folder in the throttle window toolbar, then right click on the icon to see all available input devices and select one.
+
+
+The code in USBThrottle.py will try to load a driver name :
+ - by device name first,
+ - then by device type,
+ - then load Default.py driver if none of the above in found.
+
+All device components names and related values will be printed on the JMRI output as input are triggered.
+
+
+To create a customized driver for your own device :
+ - retrieve its name from the JMRI ouput, you should see some line like :
+      Trying to import driver by name "YourDriverName.py" ...
+  - create a copy of Default.py named YourDriverName.py,
+  - then edit this file to match components names and values as per log output.
+

@@ -18,7 +18,8 @@ public class FunctionButtonPropertyEditorTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        FunctionButtonPropertyEditor dialog = new FunctionButtonPropertyEditor();
+        FunctionButton button = new FunctionButton();
+        FunctionButtonPropertyEditor dialog = new FunctionButtonPropertyEditor(button);
         Assert.assertNotNull("exists", dialog);
     }
 
