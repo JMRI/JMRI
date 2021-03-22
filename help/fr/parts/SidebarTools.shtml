@@ -1,0 +1,46 @@
+<!-- SidebarTools.shtml -->
+<!-- C'est la d&#233:finition commune de la barre lat&#233:rale pour les pages Outils -->
+
+<dt><h3><a href="/help/fr/html/outils/">Outils</a></h3></dt>.
+<dd>Des outils de JiMRI pour travailler avec votre R&#233:seau :
+<ul> <!-- Essayez d'organiser dans la cat&#233:gorie par fr&#233:quence d'utilisation ou par ordre alphab&#233:tique -->.
+    <li><i style="padding-left : 1em ;">Outils courants:</i></li>.
+    <ul>
+      <li><a href="/help/fr/html/tools/throttle/ThrottleMain.shtml">R&#233:gulateur</a>.
+      <li><a href="/help/fr/html/tools/Turnouts.shtml">Aiguillages</a>
+      <li><a href="/help/fr/html/tools/Lights.shtml">Lumi&#232:res</a>
+      <li><a href="/help/fr/html/tools/Sensors.shtml">Capteurs</a>
+      <li><a href="/help/fr/html/tools/signal/index.shtml">Feu</a>
+      <li><a href="/help/fr/html/tools/consisttool/ConsistTool.shtml">Couplage</a>
+      <li><a href="/help/fr/html/tools/Reporters.shtml">Rapports</a>
+      <li><a href="/help/fr/html/tools/Memories.shtml">Variables de m&#233:moire</a>
+    </ul>
+    <li><i style="padding-left : 1em ;">Blocs:</i></li>
+    <ul>
+      <!-- <li><a href="/help/fr/html/tools/blocktracking/index.shtml">Suivi de Canton</a> -->
+      <li><a href="/help/fr/html/tools/Blocks.shtml">Cantons</a>
+      <li><a href="/help/fr/html/tools/Sections.shtml">Sections</a>
+      <li><a href="/help/fr/html/tools/Transits.shtml">Transits</a>
+    </ul>
+    <li><i style="padding-left : 1em ;">Routage et contr&#244:le :</i></li>
+    <ul>
+      <li><a href="/help/fr/html/tools/Routes.shtml">Itin&#233:raires</a>
+      <li><a href="/help/fr/html/tools/LRoutes.shtml">LItin&#233:raires</a>
+      <li><a href="/help/fr/html/tools/EntryExit.shtml">Entr&#233:e / Sortie (NX)</a>
+      <li><a href="/help/fr/html/tools/Logix.shtml">Logix</a>
+    </ul>
+    <li><i style="padding-left : 1em ;">Autres:</i></li>
+    <ul>
+      <li><a href="/help/fr/html/tools/Audio.shtml">Audio</a>
+      <li><a href="/help/fr/html/tools/CTC.shtml">OutilsCTC</a>
+      <li><a href="/help/fr/html/tools/fastclock/index.shtml">Horloges rapides</a>
+      <li><a href="/help/fr/html/tools/IdTags.shtml">Balises ID</a>
+      <li><a href="/help/fr/html/tools/speedometer/index.shtml">Mesure de Vitesse</a>
+      <li><a href="/help/fr/html/tools/TimeTable.shtml">Horaire</a>
+      <li><a href="/help/fr/package/jmri/jmrit/whereused/WhereUsed.shtml">Où utilis&#233:</a>
+    </ul>
+
+    <li><i><a href="/help/fr/html/tools/index.shtml#systemSpecificTools">Outils sp&#233:cifiques au syst&#232:me...</a></i>.
+  </ul>
+</dd>
+<!-- /SidebarTools.shtml -->
