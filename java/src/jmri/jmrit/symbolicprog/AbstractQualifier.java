@@ -25,6 +25,9 @@ public abstract class AbstractQualifier implements Qualifier, java.beans.Propert
     }
 
     VariableValue watchedVal;
+    public VariableValue getWatchedVariable() {
+        return this.watchedVal;
+    }
 
     /**
      * Process property change from the qualifier Variable (one being watched).

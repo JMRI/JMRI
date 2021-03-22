@@ -1,5 +1,6 @@
 package jmri.jmrit.symbolicprog;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,6 +16,24 @@ public class QualifierCombiner implements Qualifier, java.beans.PropertyChangeLi
     public QualifierCombiner(List<Qualifier> qualifiers) {
         this.qualifiers = qualifiers;
 
+        // handle the change events here so
+        // add a listener for each VariableValue used by the component qualifiers
+        // and remove the listeners for the component qualifiers
+        ArrayList<VariableValue> lv = new ArrayList<VariableValue>();
+        for (Qualifier q : qualifiers) {
+            AbstractQualifier aq = (AbstractQualifier)q;
+            VariableValue v = aq.getWatchedVariable();
+            if (v != null) {
+                // only add one listener for any given VariableValue
+                if (!lv.contains(v)) {
+                    lv.add(v);
+                    v.addPropertyChangeListener(this);
+                }
+                // remove listener from component qualifier
+                v.removePropertyChangeListener(aq);
+            }
+        }
+
         setWatchedAvailable(currentDesiredState());
     }
 
@@ -22,8 +41,9 @@ public class QualifierCombiner implements Qualifier, java.beans.PropertyChangeLi
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        // this was a change, may want to change it back
-        setWatchedAvailable(currentDesiredState());  // relies on non-propagation of null changes
+        if (e.getPropertyName().equals("Value")) {
+            setWatchedAvailable(currentDesiredState());  // relies on non-propagation of null changes
+        }
     }
 
     @Override
