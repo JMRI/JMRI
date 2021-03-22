@@ -183,7 +183,7 @@ public class BlockBossLogicProviderXml extends jmri.configurexml.AbstractXmlAdap
             try {
                 bb = getBlockBossLogicFromElement(block);
                 if (bb == null)
-                    break;
+                    continue;
             } catch (Exception e) {
                 log.error("An error occurred trying to find the signal for the signal elements for {}", block.getAttributeValue(SIGNAL), e);
                 result = false;
