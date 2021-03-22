@@ -232,9 +232,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * <p>
      * This method is not intended for general use, e.g. for users to set the
      * KnownState, so it doesn't appear in the Turnout interface.
-     *
+     * <p>
      * On change, fires Property Change "KnownState".
-     * 
      * @param s New state value
      */
     public void newKnownState(int s) {
