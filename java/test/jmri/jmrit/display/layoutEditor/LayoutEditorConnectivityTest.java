@@ -309,6 +309,7 @@ public class LayoutEditorConnectivityTest {
     public void tearDown() throws Exception {
         cm = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

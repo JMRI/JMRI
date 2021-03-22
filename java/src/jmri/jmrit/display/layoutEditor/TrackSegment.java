@@ -262,12 +262,12 @@ public class TrackSegment extends LayoutTrack {
         type1 = type;
         connect1 = o;
     }
-    
+
     public void setConnect2(@CheckForNull LayoutTrack o, HitPointType type) {
         type2 = type;
         connect2 = o;
     }
-    
+
     /**
      * Set up a LayoutBlock for this Track Segment.
      *
@@ -528,56 +528,6 @@ public class TrackSegment extends LayoutTrack {
      */
     public boolean isActive() {
         return active;
-    }
-
-    public static final int SHOWCON = 0x01;
-    public static final int HIDECON = 0x02;     // flag set on a segment basis.
-    public static final int HIDECONALL = 0x04;  // Used by layout editor for hiding all
-
-    public int showConstructionLine = SHOWCON;
-
-    /**
-     * @return true if HIDECON is not set and HIDECONALL is not set
-     */
-    public boolean isShowConstructionLines() {
-        return (((showConstructionLine & HIDECON) != HIDECON)
-                && ((showConstructionLine & HIDECONALL) != HIDECONALL));
-    }
-
-    /**
-     * Method used by LayoutEditor.
-     * <p>
-     * If the argument is
-     * <ul>
-     * <li>HIDECONALL then set HIDECONALL
-     * <li>SHOWCON reset HIDECONALL is set, other wise set SHOWCON
-     * <li>HIDECON or otherwise set HIDECON
-     * </ul>
-     * Then always redraw the LayoutEditor panel and set it dirty.
-     *
-     * @param hide HIDECONALL, SHOWCON, HIDECON.
-     */
-    public void hideConstructionLines(int hide) {
-        if (hide == HIDECONALL) {
-            showConstructionLine |= HIDECONALL;
-        } else if (hide == SHOWCON) {
-            if ((showConstructionLine & HIDECONALL) == HIDECONALL) {
-                showConstructionLine &= ~HIDECONALL;
-            } else {
-                showConstructionLine = hide;
-            }
-        } else {
-            showConstructionLine = HIDECON;
-        }
-        models.redrawPanel();
-        models.setDirty();
-    }
-
-    /**
-     * @return true if SHOWCON is not set
-     */
-    public boolean hideConstructionLines() {
-        return ((showConstructionLine & SHOWCON) != SHOWCON);
     }
 
     /**

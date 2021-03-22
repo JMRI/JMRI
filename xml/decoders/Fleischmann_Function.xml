@@ -72,7 +72,7 @@
 				<label xml:lang="de">Verzögerungswert beim Bremsen</label>
 				<label xml:lang="nl">De vertragingswaarde bij het remmen.</label>
 			</variable>
-			<variable CV="7" readOnly="yes" default="10" item="Decoder Version" tooltip="The decoder version number (read only)">
+			<variable CV="7" item="Decoder Version" readOnly="yes" default="10" tooltip="The decoder version number (read only)">
 				<decVal/>
 				<label>Software Version Number</label>
 				<label xml:lang="it">Versione Decoder: </label>

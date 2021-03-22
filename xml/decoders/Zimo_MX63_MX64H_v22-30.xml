@@ -86,7 +86,7 @@
         <comment>Range 0-252</comment>
         <comment xml:lang="it">Valori 0-252</comment>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" item="Decoder Version" readOnly="yes">
         <decVal/>
         <label>Decoder Version   </label>
         <label xml:lang="it">Versione Decoder: </label>

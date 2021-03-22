@@ -60,7 +60,7 @@
         <label xml:lang="it">Volt Massimi (0-32):</label>
         <label xml:lang="de">Höchstgeschwindigkeit</label>
       </variable>
-      <variable CV="7" readOnly="yes" tooltip="is the Decoder ID,  Read Only" item="Decoder Version">
+      <variable CV="7" item="Decoder Version" readOnly="yes" tooltip="is the Decoder ID, Read Only">
         <decVal/>
         <label>Version ID</label>
         <label xml:lang="it">Versione Decoder: </label>

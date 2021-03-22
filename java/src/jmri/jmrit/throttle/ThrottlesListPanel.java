@@ -18,7 +18,7 @@ import org.jdom2.Element;
 
 public class ThrottlesListPanel extends JPanel {
 
-    private ThrottlesTableModel throttleFramesLM;
+    private final ThrottlesTableModel throttleFramesLM;
     private JTable throttleFrames;
 
     public ThrottlesListPanel() {
@@ -34,7 +34,7 @@ public class ThrottlesListPanel extends JPanel {
     private void initGUI() {
         throttleFrames = new JTable(throttleFramesLM);
         throttleFrames.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        throttleFrames.setRowHeight(ThrottlesTableCellRenderer.height);
+        throttleFrames.setRowHeight(ThrottlesTableCellRenderer.LINE_HEIGHT);
         throttleFrames.setTableHeader(null);
         throttleFrames.setDefaultRenderer(Object.class, new ThrottlesTableCellRenderer());
         throttleFrames.addMouseListener(new MouseListener() {
@@ -72,18 +72,15 @@ public class ThrottlesListPanel extends JPanel {
         jbNew.setToolTipText(Bundle.getMessage("ThrottleToolBarNewWindowToolTip"));
         jbNew.setVerticalTextPosition(JButton.BOTTOM);
         jbNew.setHorizontalTextPosition(JButton.CENTER);
-        jbNew.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
-                tf.toFront();
-            }
+        jbNew.addActionListener((ActionEvent e) -> {
+            ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
+            tf.toFront();
         });
         throttleToolBar.add(jbNew);
 
         throttleToolBar.addSeparator();
         throttleToolBar.add(new StopAllButton());
-        throttleToolBar.add(new LargePowerManagerButton());
+        throttleToolBar.add(new LargePowerManagerButton(false));
 
         add(throttleToolBar, BorderLayout.PAGE_START);
         add(scrollPane1, BorderLayout.CENTER);
@@ -100,7 +97,7 @@ public class ThrottlesListPanel extends JPanel {
 
     public Element getXml() {
         Element me = new Element("ThrottlesListPanel");
-        java.util.ArrayList<Element> children = new java.util.ArrayList<Element>(1);
+        java.util.ArrayList<Element> children = new java.util.ArrayList<>(1);
         children.add(WindowPreferences.getPreferences(this.getTopLevelAncestor()));
         me.setContent(children);
         return me;

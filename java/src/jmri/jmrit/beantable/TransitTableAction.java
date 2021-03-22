@@ -660,6 +660,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             update.setVisible(true);
             sysName.setVisible(false);
             sysNameFixed.setVisible(true);
+            addFrame.getRootPane().setDefaultButton(update);
             initializeEditInformation();
         } else {
             // setup for create window
@@ -672,6 +673,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             update.setVisible(false);
             sysName.setVisible(true);
             sysNameFixed.setVisible(false);
+            addFrame.getRootPane().setDefaultButton(create);
             if (duplicateMode) {
                 // setup with information from previous Transit
                 initializeEditInformation();
@@ -683,6 +685,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         }
         initializeSectionCombos();
         updateSeqNum();
+        addFrame.setEscapeKeyClosesWindow(true);
         addFrame.pack();
         addFrame.setVisible(true);
     }

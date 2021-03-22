@@ -26,14 +26,14 @@
     <div id="mainContent">
 
       <h1>JMRI: PanelPro Frequently Asked Questions</h1>
-      
+
       <p>
       This is the JMRI PanelPro "frequently asked
       questions" list. Items get listed here if they're asked a
-      lot, even if they're also available somewhere else. 
+      lot, even if they're also available somewhere else.
       <br>See also the <a href="../../FAQ.shtml">JMRI general FAQ.</a>
       </p>
-      
+
       <dl class="faq">
       <dt id="context" class="on">How does
           JMRI tie into the rest of my layout?</dt>
@@ -152,43 +152,27 @@
       in a file called "MainPanel.xml" (or something like that),
       and set the preferences to load that file. Then, all you have
       to do is save that file again whenever you change something.
-      One caution: Make sure that you still have the panel open
-      when you save the file! If you close it, then save the file,
-      it will of course write a version of the file that doesn't
-      show the panel. And save this file from the "Panels" menu,
-      using the "Store Panels..." item.<br><br>
+      <br><br>
 
       This works because panels are stored with all the
       configuration information at that same time (which guarantees
         they'll work when reloaded)
         <br><br>
-        
-      For more information on storing all your work in JMRI, <a href="../StoringYourWork.shtml">click here.</a>
+
+      For more information on storing all your work in JMRI, <a href="../LoadStoreWork.shtml">click here.</a>
         </dd>
 
-      <dt id="multifile">Can I store just the
-      configuration information?</dt>
-      <dd>You
-      can store just the "configuration" information in a file,
-      which you can save without worrying about whether your
-      panel(s) are open, etc. If you do this, you can also save
-      your panels to their own, separate files.<br><br>
-        To do this:
-
-      <ul>
-        <li>Go to one of the table tools (e.g. Route Table) and
-        pick "Store configuration..." from the "File" menu.</li>
-
-        <li>This will let you select a file name; make sure it is
-        _NOT_ the same as the panel file name. (e.g. use
-        "MyConfig.xml" instead of "MyPanel.xml")</li>
-
-        <li>Remember that name and location, then store.</li>
-      </ul>
-      This puts config info like Turnouts, Sensors etc, but
-      not panels, in the file. If you also want to save your
-      currently loaded panels, select "Store Panels and
-      Configuration..." instead.
+      <dt id="multifile">Can I store just the configuration information?</dt>
+      <dd>You can store just the "configuration" information in a file.
+      See <a href="../../apps/LoadStoreWork.shtml">
+      Loading and Storing Your Work</a>.  Look at the options for <strong>PanelPro &rArr; Tables</strong>.
+      <br><br>
+      The alternate store options can be accessed from the File menu for any
+      of the tables.  Make sure to use a different file name since the resulting file
+      will not have any panels.
+      <br><br>
+      Individual panels CANNOT be stored.  The normal store process includes all panels
+      and all tables.
       </dd>
 
       <dt id="showfile">How can I see my saved
@@ -221,7 +205,7 @@
         </ul>
 
         On subsequent JMRI invocations, all start-up actions are invoked,
-        including any "start-up" actions you have defined to "Load" a "Panel File".<br><br>
+        including any "start-up" actions you have defined to "Load" a "PanelPro data file".<br><br>
 
         If automatic reloading of the table entries is not desired, it is possible
         to manually read a panel file.  Under the JMRI "Panels" menu item, select

@@ -1,19 +1,19 @@
-package jmri.jmrit.throttle;
+package jmri.jmrit.beantable.beanedit;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+import org.junit.Assert;
 
 /**
- *
  * @author Paul Bender Copyright (C) 2017
+ * @author Steve Young Copyright (C) 2021
  */
-public class KeyListenerInstallerTest {
-
+public class LightEditActionTest {
+    
     @Test
     public void testCTor() {
-        KeyListenerInstaller t = new KeyListenerInstaller();
+        LightEditAction t = new LightEditAction();
         Assert.assertNotNull("exists",t);
     }
 
@@ -27,6 +27,6 @@ public class KeyListenerInstallerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(KeyListenerInstallerTest.class);
-
+    // private final static Logger log = LoggerFactory.getLogger(LightEditActionTest.class);
+    
 }

@@ -39,7 +39,7 @@
 	<comment xml:lang="it">valori 0-255, 0 in CV 2, 6, 5 produce curva accellerazione linea retta</comment>
 	<tooltip xml:lang="it">Progr tensione motore a velocità intermedia, valori 0(default)-255</tooltip>
   </variable>
-  <variable CV="7" readOnly="yes" item="Decoder Version" tooltip="=41-46 for all TCS with Back EMF models, Read Only">
+  <variable CV="7" item="Decoder Version" readOnly="yes" tooltip="=41-46 for all TCS with Back EMF models, Read Only">
 	<decVal/>
 	<label>Version ID</label>
 	<label xml:lang="it">ID Versione</label>

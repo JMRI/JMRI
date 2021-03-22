@@ -40,7 +40,6 @@ public class DefaultLogixTest extends NamedBeanTest {
         Assert.assertTrue("object not equals reverse", !ix2.equals(ix1));
 
         Assert.assertTrue("hash not equals", ix1.hashCode() != ix2.hashCode());
-
     }
 
     @BeforeEach
@@ -55,4 +54,5 @@ public class DefaultLogixTest extends NamedBeanTest {
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }
+
 }

@@ -20,7 +20,7 @@ public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
     @Test
     public void testGetCoordsForConnectionType() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         Assert.assertEquals("ltRH.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(150.0, 100.0),
                 ltRHv.getCoordsForConnectionType(HitPointType.NONE));
@@ -145,7 +145,7 @@ public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
     @Test
     public void testGetBounds() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
             // the commented out tests were from the older code,
             // which relied on execution order of the side-effects
             // from the testSetUpDefaultSize test.
@@ -199,19 +199,19 @@ public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
 
     private LayoutRHTurnout ltRH = null;
     private LayoutRHTurnoutView ltRHv = null;
-    
+
     private LayoutLHTurnout ltLH = null;
     private LayoutLHTurnoutView ltLHv = null;
-    
+
     private LayoutWye ltWY = null;
     private LayoutWyeView ltWYv = null;
-    
+
     private LayoutDoubleXOver ltDX = null;
     private LayoutDoubleXOverView ltDXv = null;
-    
+
     private LayoutRHXOver ltRX = null;
     private LayoutRHXOverView ltRXv = null;
-    
+
     private LayoutLHXOver ltLX = null;
     private LayoutLHXOverView ltLXv = null;
 
@@ -232,6 +232,7 @@ public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
     @AfterAll
     public static void afterClass() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
@@ -244,32 +245,32 @@ public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
             Point2D point = new Point2D.Double(150.0, 100.0);
             Point2D delta = new Point2D.Double(50.0, 75.0);
 
-            ltRH = new LayoutRHTurnout("Right Hand", layoutEditor); // point, 33.0, 1.1, 1.2, 
+            ltRH = new LayoutRHTurnout("Right Hand", layoutEditor); // point, 33.0, 1.1, 1.2,
             ltRHv = new LayoutRHTurnoutView(ltRH, point, 33.0, 1.1, 1.2, layoutEditor);
             layoutEditor.addLayoutTrack(ltRH, ltRHv);
 
             point = MathUtil.add(point, delta);
-            ltLH = new LayoutLHTurnout("Left Hand", layoutEditor); // point, 66.0, 1.3, 1.4, 
+            ltLH = new LayoutLHTurnout("Left Hand", layoutEditor); // point, 66.0, 1.3, 1.4,
             ltLHv = new LayoutLHTurnoutView(ltLH, point, 66.0, 1.3, 1.4, layoutEditor);
             layoutEditor.addLayoutTrack(ltLH, ltLHv);
 
             point = MathUtil.add(point, delta);
-            ltWY = new LayoutWye("Wye", layoutEditor); // point, 99.0, 1.5, 1.6, 
+            ltWY = new LayoutWye("Wye", layoutEditor); // point, 99.0, 1.5, 1.6,
             ltWYv = new LayoutWyeView(ltWY, point, 99.0, 1.5, 1.6, layoutEditor);
             layoutEditor.addLayoutTrack(ltWY, ltWYv);
 
             point = MathUtil.add(point, delta);
-            ltDX = new LayoutDoubleXOver("Double XOver", layoutEditor); // point, 132.0, 1.7, 1.8, 
+            ltDX = new LayoutDoubleXOver("Double XOver", layoutEditor); // point, 132.0, 1.7, 1.8,
             ltDXv = new LayoutDoubleXOverView(ltDX, point, 132.0, 1.7, 1.8, layoutEditor);
             layoutEditor.addLayoutTrack(ltDX, ltDXv);
 
             point = MathUtil.add(point, delta);
-            ltRX = new LayoutRHXOver("Right Hand XOver", layoutEditor); // point, 165.0, 1.9, 2.0, 
+            ltRX = new LayoutRHXOver("Right Hand XOver", layoutEditor); // point, 165.0, 1.9, 2.0,
             ltRXv = new LayoutRHXOverView(ltRX, point, 165.0, 1.9, 2.0, layoutEditor);
             layoutEditor.addLayoutTrack(ltRX, ltRXv);
 
             point = MathUtil.add(point, delta);
-            ltLX = new LayoutLHXOver("Left Hand XOver", layoutEditor); // point, 198.0, 2.1, 2.2, 
+            ltLX = new LayoutLHXOver("Left Hand XOver", layoutEditor); // point, 198.0, 2.1, 2.2,
             ltLXv = new LayoutLHXOverView(ltLX, point, 198.0, 2.1, 2.2, layoutEditor);
             layoutEditor.addLayoutTrack(ltLX, ltLXv);
         }

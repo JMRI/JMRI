@@ -31,6 +31,7 @@ public class SwitchboardEditorAction extends AbstractAction {
         }
         SwitchboardEditor frame = new SwitchboardEditor(name);
         InstanceManager.getDefault(EditorManager.class).add(frame);
+        InstanceManager.getDefault(EditorManager.class).setChanged(true);
         frame.setLocation(570, 20); // position Editor
 
         frame.setTitle();
