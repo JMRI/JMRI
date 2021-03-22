@@ -1,0 +1,17 @@
+<!-- SidebarApplications.shtml -->
+<!-- C'est une page de barre lat&#233;rale, faite à l'origine &#224; partir de help/fr/html/apps/Sidebar.shtml -->
+	<dt><h3><a href="/help/fr/html/apps/">Applications</a></h3></dt>.
+	<dd>Par la communauté de JMRI.org :
+		  <ul>
+	             <li><a href="/help/fr/html/apps/DecoderPro/index.shtml">DecoderPro&reg;</a></li>.
+	             <li><a href="/help/fr/html/apps/PanelPro/index.shtml">PanelPro&trade;</a></li>
+	             <li><a href="/help/fr/html/apps/DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
+	             <li><a href="/help/fr/html/apps/OperationsPro/index.shtml">OperationsPro&trade;</a></li>
+	             <li><a href="/help/fr/html/apps/SoundPro/SoundPro.shtml">SoundPro&trade;</a></li>
+	             <li><i><a href="/community/connections/CommunityConnectionsIndex.shtml">Applications avec connexions JMRI...</a></i></li>			
+	             <li><i><a href="/help/fr/html/tools/scripting/JythonApps.shtml">Applications JMRI en Jython...</a></i></li>	
+                 <li><a href="/help/fr/html/FAQ.shtml">FAQ</a></li>		     
+                 
+		  </ul>
+          </dd>
+<!-- /SidebarApplications.shtml 
