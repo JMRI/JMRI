@@ -450,7 +450,7 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
     public void hidDeviceAttached(HidServicesEvent event) {
         log.info("hidDeviceAttached({})", event);
         HidDevice tHidDevice = event.getHidDevice();
-        if (tHidDevice.getVendorId() == VENDOR_ID) && (tHidDevice.getProductId() == PRODUCT_ID && (!invokeOnMenuOnly) ) {
+        if ((tHidDevice.getVendorId() == VENDOR_ID) && (tHidDevice.getProductId() == PRODUCT_ID) && (!invokeOnMenuOnly) ) {
 //                && ((SERIAL_NUMBER == null) || (tHidDevice.getSerialNumber().equals(SERIAL_NUMBER))) {
             setupRailDriver();                             
         }
