@@ -1,0 +1,18 @@
+<!-- SidebarLayoutAutomation.shtml -->
+<!-- Ceci est la d&#233;finition commune de la barre lat&#233;rale pour les pages d'automatisation du R&#233;seau -->.
+      <dt><h3><a href="/help/fr/html/tools/automation/">Automatisation du R&#233;seau</a></h3></dt>.
+        <dd>Utiliser JMRI pour automatiser certaines parties de votre r&#233;seau et de vos op&#233;rations :
+          <ul> <!-- Essayez d'organiser la liste dans l'ordre le plus utilis&#233; ou alphab&#233;tique -->.
+            <li><a href="/help/fr/html/tools/signaling/index.shtml">Signalisation</a>
+            <li><a href="/help/fr/html/tools/WarrantsIntro.shtml">Bulletins d'Ordre</a>
+            <li><a href="/help/fr/package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a>
+            <li><a href="/help/fr/html/tools/Routes.shtml">Itin&#233;raires</a>
+            <li><a href="/help/fr/html/tools/LRoutes.shtml">LItin&#233;raires</a>
+            <li><a href="/help/fr/html/tools/EntryExit.shtml">Routage d'entr&#233;e/sortie</a>
+            <li><a href="/help/fr/html/tools/Logix.shtml">Logix</a>
+            <li><a href="/help/fr/html/tools/scripting/index.shtml">Scripting</a>
+            <li><a href="/help/fr/html/tools/automation/viaJava.shtml">Automatisation avec Java</a>
+            <li><a href="/help/fr/html/tools/CTC.shtml">OutilsCTC</a>
+          </ul>
+        </dd>
+<!-- /SidebarLayoutAutomation.shtml -->
