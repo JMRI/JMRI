@@ -20,7 +20,7 @@ import org.netbeans.jemmy.operators.*;
  */
 public class BlockBossFrameTest {
 
-    private BlockBossFrame frame = new BlockBossFrame();
+    private BlockBossFrame frame;
     private SignalHeadManager signalHeadManager;
 
     @Test
