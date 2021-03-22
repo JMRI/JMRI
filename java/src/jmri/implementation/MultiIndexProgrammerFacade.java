@@ -257,7 +257,7 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
 
     @Override
     synchronized public void readCV(String CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-        readCV(CV, p, NO_DEFAULT_CV);
+        readCV(CV, p, 0);
     }
 
     @Override
@@ -270,19 +270,11 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
             lastValueSI = -1;
 
             state = ProgState.PROGRAMMING;
-            if (startVal == NO_DEFAULT_CV) {
-                prog.readCV(_cv, this);
-            } else {
-                prog.readCV(_cv, this, _startVal);
-            }
+            prog.readCV(_cv, this, _startVal);
         } else if (useCachePiSi()) {
             // indexed operation with set values is same as non-indexed operation
             state = ProgState.PROGRAMMING;
-            if (startVal == NO_DEFAULT_CV) {
-                prog.readCV(_cv, this);
-            } else {
-                prog.readCV(_cv, this, _startVal);
-            }
+            prog.readCV(_cv, this, _startVal);
         } else {
             lastValuePI = valuePI;  // after check in 'if' statement
             lastValueSI = valueSI;
@@ -391,11 +383,7 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
                 if (valueSI == -1) {
                     try {
                         state = ProgState.PROGRAMMING;
-                        if (_startVal == NO_DEFAULT_CV) {
-                            prog.readCV(_cv, this);
-                        } else {
-                            prog.readCV(_cv, this, _startVal);
-                        }
+                        prog.readCV(_cv, this, _startVal);
                     } catch (jmri.ProgrammerException e) {
                         log.error("Exception doing final read", e);
                     }

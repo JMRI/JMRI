@@ -50,12 +50,6 @@ import javax.annotation.Nonnull;
 public interface Programmer {
 
     /**
-     * Use this constant for startVal to indicate no hint is available when calling
-     * readCV(String CV, ProgListener p, int startVal)
-     */
-    public static final int NO_DEFAULT_CV = -1;
-    
-    /**
      * Perform a CV write in the system-specific manner, and using the specified
      * programming mode.
      * <p>
@@ -125,7 +119,7 @@ public interface Programmer {
      *
      * @param CV the CV to read
      * @param p  the listener that will be notified of the read
-     * @param startVal  a hint of what the current value might be
+     * @param startVal  a hint of what the current value might be, or 0
      * @throws jmri.ProgrammerException if unable to communicate
      */
     public default void readCV(String CV, ProgListener p, int startVal) throws ProgrammerException {

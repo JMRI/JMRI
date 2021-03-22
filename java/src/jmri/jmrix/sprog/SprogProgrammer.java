@@ -67,7 +67,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         }
         useProgrammer(p);
         _val = val;
-        startProgramming(_val, CV, NO_DEFAULT_CV);
+        startProgramming(_val, CV, 0);
     }
 
     /** 
@@ -83,7 +83,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
      */
     @Override
     synchronized public void readCV(String CVname, jmri.ProgListener p) throws jmri.ProgrammerException {
-        readCVWithDefault(CVname, p, NO_DEFAULT_CV);
+        readCVWithDefault(CVname, p, 0);
     }
     
     /** 
@@ -99,13 +99,13 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
             } else {
                 // Fallback to not using a hint
                 log.debug("Hardware does not support hints");
-                readCVWithDefault(CVname, p, NO_DEFAULT_CV);
+                readCVWithDefault(CVname, p, 0);
             }
         } else {
             // The SPROG version is not known yet so request the version for later
             // and fall back to normal CV read this time
             log.debug("SPROG version is unknown");
-            readCVWithDefault(CVname, p, NO_DEFAULT_CV);
+            readCVWithDefault(CVname, p, 0);
             _memo.getSprogVersionQuery().requestVersion(this);
         }
     }
@@ -174,13 +174,14 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
      * @param mode Mode to be used
      * @param val value to be written
      * @param cvnum CV address to write to 
-     * @param startVal Hint of what the CV may contain
+     * @param startVal Hint of what the CV may contain, or 0
      * @return formatted message to do programming operation
      */
     protected SprogMessage progTaskStart(ProgrammingMode mode, int val, int cvnum, int startVal) {
         // val = -1 for read command; mode is direct, etc
         if (val < 0) {
-            if (startVal == NO_DEFAULT_CV) {
+            if (startVal == 0) {
+                // No hint value, or normal starting value
                 return SprogMessage.getReadCV(cvnum, mode);
             } else {
                 return SprogMessage.getReadCV(cvnum, mode, startVal);
