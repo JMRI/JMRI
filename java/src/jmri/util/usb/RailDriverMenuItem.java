@@ -422,7 +422,6 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
     /**
      * send message to hid device {p}
      * <p>
-     * @param hidDevice the hid device to send the message to
      * @param message   the message to send
      * @param reportID  the report ID
      */
