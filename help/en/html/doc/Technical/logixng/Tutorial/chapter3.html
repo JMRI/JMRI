@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>LogixNG Tutorial - Chapter 3</title>
+<script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="script.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<table width="800">
+<tr>
+<td>
+
+<h1>LogixNG Tutorial - Chapter 3</h1>
+
+This chapter lists some of the basic actions and expressions in LogixNG.
+
+
+<h1>Basic actions and expressions</h1>
+
+
+<h1>Actions</h1>
+
+
+
+<h2>Many</h2>
+
+
+
+<h2>IfThenElse</h2>
+
+
+
+
+<h2>Logix</h2>
+
+LogixNG has an action called Logix that emulates how JMRI Logix works. The action Logix has one expression and a number
+of boolean actions. A boolean action is an action that takes a boolean value (true/false) and then decides what to do.
+The action Logix was added mainly to support import of JMRI Logix to LogixNG.
+<p>
+
+
+
+<h1>Expressions</h1>
+
+In Logix, the user can select between three different ways to combine the variables in the Conditional. And, Or and
+Antecedent. In LogixNG, these three are expressions that can have other expressions as children.
+
+
+<h2>And</h2>
+
+And evaluates the child expressions and if all of them returns true, the And expression returns true as well.
+
+
+<h2>Or</h2>
+
+Or evaluates the child expressions and if at least one of them returns true, the And expression returns true as well.
+
+
+<h2>Antecedent</h2>
+
+The Antecedent expression is mainly included to make import from Logix to LogixNG simple. It works exactly as
+Antecedent in Logix. It has a number of child expressions and an antecedent that defines how the evaluation of the
+expressions should be done. Each child expression is referenced in the antecedent by R1, R2, R3, ..., there R1 is the
+first child expression, R2 is the second child expression, and so on. Note that this differ from other expressions in
+LogixNG, there other LogixNG expressions uses the socket name, but since the Antecedent expression is included to
+work as Antecedent works in Logix, the antecedent has been kept from Logix Antecedent as well.
+<p>
+Note: Antecedent is included for compability with Logix but it's recommended to use Formula instead. Formula is much
+more powerful, uses the socket names and also works with numbers and strings.
+
+
+<h2>Formula</h2>
+
+Formula is the next generation of Antecedent. It supports many operators, like ==, !=, <=, >=, <, >, +, -, *, / and %.
+It supports local variables, memories and functions. It supports all the types of expressions, digital, analog and
+string expressions.
+
+
+</td>
+</tr>
+</table>
+</body>
+</html>
