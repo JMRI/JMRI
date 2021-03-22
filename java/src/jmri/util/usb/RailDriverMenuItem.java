@@ -44,7 +44,7 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
     
 
     //TODO: Remove this if/when the RailDriver script is removed
-    private final boolean invokeOnMenuOnly = true;
+    //private final boolean invokeOnMenuOnly = true;
 
     private Thread thread = null;
     private ThrottleWindow throttleWindow = null;
@@ -107,7 +107,7 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
             //    log.info(hidDevice.toString());
             //}
             //
-            if (!invokeOnMenuOnly) {
+  /*          if (!invokeOnMenuOnly) {
                 // start the HID services
                 InstanceManager.getDefault(ShutDownManager.class).register(hidServices::stop);
                 log.debug("Starting HID services.");
@@ -122,7 +122,7 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
                     // HidApi.dropReportIdZero = true;
                     setupRailDriver();
                 }
-            }
+            }*/
         } catch (HidException ex) {
             log.error("HidException: {}", ex);
         }
@@ -449,11 +449,11 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
     @Override
     public void hidDeviceAttached(HidServicesEvent event) {
         log.info("hidDeviceAttached({})", event);
-        HidDevice tHidDevice = event.getHidDevice();
+/*        HidDevice tHidDevice = event.getHidDevice();
         if ((tHidDevice.getVendorId() == VENDOR_ID) && (tHidDevice.getProductId() == PRODUCT_ID) && (!invokeOnMenuOnly) ) {
 //                && ((SERIAL_NUMBER == null) || (tHidDevice.getSerialNumber().equals(SERIAL_NUMBER))) {
             setupRailDriver();                             
-        }
+        }*/
     }
 
     /*
