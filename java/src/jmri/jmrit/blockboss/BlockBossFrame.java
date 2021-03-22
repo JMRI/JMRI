@@ -871,8 +871,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
                 return;
             }
             cancel.setText(Bundle.getMessage("ButtonClose")); // when Apply has been clicked at least once, this is not Cancel
-        } catch (Exception e) {
-            log.error("An error occurred creating the Simple Signal Logic for {}", head.getDisplayName());
+        } catch (IllegalArgumentException e) {
             statusBar.setText(Bundle.getMessage("ApplyErrorDialog"));
             JOptionPane.showMessageDialog(this,
                     Bundle.getMessage("ApplyErrorDialog"),

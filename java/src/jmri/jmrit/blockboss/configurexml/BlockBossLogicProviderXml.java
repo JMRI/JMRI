@@ -253,8 +253,8 @@ public class BlockBossLogicProviderXml extends jmri.configurexml.AbstractXmlAdap
         try {
             blockBossLogicProvider.register(bb);
             bb.start();
-        } catch (NullPointerException e) {
-            log.error("An error occurred trying to start the signal logic {}", bb.getDrivenSignal());
+        } catch (IllegalArgumentException e) {
+            log.debug("An error occurred trying to start the signal logic {} :: message = {}", bb.getDrivenSignal(), e.getMessage());
             result = false;
         }
         return result;
