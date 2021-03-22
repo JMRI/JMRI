@@ -1,0 +1,4 @@
+<!-- SidebarTailNew.shtml -->
+<!-- Pour tester les nouveaux formats et contenus.  Si rien de nouveau, alors il suffit d'inclure... -->
+<!--#include virtual="/help/fr/parts/SidebarTail.shtml" -->
+<!-- /SidebarTailNew.shtml -->
