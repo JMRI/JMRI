@@ -639,8 +639,8 @@ public class BlockTest {
         Assert.assertEquals("1 property change",1, listen.getNumPropChanges());
         Assert.assertEquals("block speedB set",speedB, b.getBlockSpeed());
         Assert.assertEquals("prop ev name",Block.BLOCK_SPEED_CHANGE, listen.getPropertyName(0));
-        Assert.assertEquals("old value", speedA, (String)listen.getOldValue(0));
-        Assert.assertEquals("new value", speedB, (String)listen.getNewValue(0));
+        Assert.assertEquals("old value", speedA, listen.getOldValue(0));
+        Assert.assertEquals("new value", speedB, listen.getNewValue(0));
         
         b.setBlockSpeed(speedB);
         Assert.assertEquals("list size still 1",1, listen.getNumPropChanges());
@@ -649,8 +649,8 @@ public class BlockTest {
         Assert.assertEquals("+1 property change",2, listen.getNumPropChanges());
         Assert.assertEquals("block speedA set",speedA, b.getBlockSpeed());
         Assert.assertEquals("prop ev name",Block.BLOCK_SPEED_CHANGE, listen.getPropertyName(1));
-        Assert.assertEquals("old value", speedB, (String)listen.getOldValue(1));
-        Assert.assertEquals("new value", speedA, (String)listen.getNewValue(1));
+        Assert.assertEquals("old value", speedB, listen.getOldValue(1));
+        Assert.assertEquals("new value", speedA, listen.getNewValue(1));
         
     }
     
