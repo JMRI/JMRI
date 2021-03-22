@@ -37,7 +37,7 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
 
     private static final short VENDOR_ID = 0x05F3;
     private static final short PRODUCT_ID = 0x00D2;
-    public static final String SERIAL_NUMBER = null;
+    public static final String SERIAL_NUMBER = null; // For later use, if not null, uncomment line 455
 
     private HidServices hidServices = null;
     private HidDevice hidDevice = null;
@@ -452,11 +452,11 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
         HidDevice tHidDevice = event.getHidDevice();
         if (tHidDevice.getVendorId() == VENDOR_ID) {
             if (tHidDevice.getProductId() == PRODUCT_ID) {
-                if ((SERIAL_NUMBER == null) || (tHidDevice.getSerialNumber().equals(SERIAL_NUMBER))) {
+//                if ((SERIAL_NUMBER == null) || (tHidDevice.getSerialNumber().equals(SERIAL_NUMBER))) {
                     if (!invokeOnMenuOnly) {
                         setupRailDriver();
                     }
-                }
+//                }
             }
         }
     }
