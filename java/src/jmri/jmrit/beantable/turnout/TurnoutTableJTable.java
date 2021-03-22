@@ -15,8 +15,8 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.Turnout;
 
-
 import jmri.swing.NamedBeanComboBox;
+import jmri.util.swing.JComboBoxUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -134,6 +134,7 @@ public class TurnoutTableJTable extends JTable {
             Turnout t, Sensor s) {
         NamedBeanComboBox<Sensor> c = new NamedBeanComboBox<>(InstanceManager.getDefault(SensorManager.class), s, NamedBean.DisplayOptions.DISPLAYNAME);
         c.setAllowNull(true);
+        JComboBoxUtil.setupComboBoxMaxRows(c);
 
         BeanBoxRenderer renderer = new BeanBoxRenderer();
         renderer.setSelectedItem(s);
