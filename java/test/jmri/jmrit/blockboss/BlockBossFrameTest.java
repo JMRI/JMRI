@@ -93,8 +93,10 @@ public class BlockBossFrameTest {
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.dispose(frame);
-        frame = null;
+        if (!GraphicsEnvironment.isHeadless()) {
+            JUnitUtil.dispose(frame);
+            frame = null;
+        }
         JUnitUtil.clearBlockBossLogic();
         JUnitUtil.tearDown();
     }
