@@ -13,6 +13,7 @@ import jmri.jmrix.sprog.update.*;
  * programmer. This provides a service mode programmer.
  *
  * @author Bob Jacobsen Copyright (C) 2001
+ * @author Andrew Crosland Copyright (C) 2021
  */
 public class SprogProgrammer extends AbstractProgrammer implements SprogListener, SprogVersionListener {
 
@@ -115,7 +116,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
      * 
      * @param CVname    Index of CV to read
      * @param p         Programming listener
-     * @param startVal  CV default value, Use NO_DEFAULT_CV if no default available
+     * @param startVal  CV default value, Use 0 if no default available
      * @throws jmri.ProgrammerException if programming operation fails
      */
     synchronized public void readCVWithDefault(String CVname, jmri.ProgListener p, int startVal) throws jmri.ProgrammerException {
