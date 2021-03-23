@@ -4,8 +4,10 @@ import java.util.Set;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JFileChooser;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.jmrit.logixng.LogixNGPreferences;
 import jmri.JmriException;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorManager;
@@ -69,6 +71,13 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
                         // insure logix etc fire up
                         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
                         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+                        
+                        jmri.jmrit.logixng.LogixNG_Manager logixNG_Manager =
+                                InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
+                        logixNG_Manager.setupAllLogixNGs();
+                        if (InstanceManager.getDefault(LogixNGPreferences.class).getStartLogixNGOnStartup()) {
+                            logixNG_Manager.activateAllLogixNGs();
+                        }
                     }
                 }
             } catch (JmriException e) {

@@ -488,6 +488,7 @@ public interface Turnout extends DigitalIO {
     /**
      * Get a human readable representation of the locking decoder type for this turnout.
      *
+     * In AbstractTurnout this String defaults to PushbuttonPacket.unknown , ie "None"
      * @return the name of the decoder type; null indicates none defined
      */
     @CheckForNull

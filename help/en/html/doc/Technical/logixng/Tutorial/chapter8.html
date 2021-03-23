@@ -1,0 +1,97 @@
+<html>
+<head>
+<title>LogixNG Tutorial - Chapter 8</title>
+<script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="script.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<table width="800">
+<tr>
+<td>
+
+<h1>LogixNG Tutorial - Chapter 8</h1>
+
+<h2>Local variables</h2>
+
+JMRI has memories that can store data. And that's great. But there is a problem with memories. They are global, which
+means that anyone can change them. Lets assume you want to count something so you create a memory IMCOUNTER. You create
+a LogixNG that does the counting and everything works fine.
+<p>
+A year passes and you need to count something else. You create a new LogixNG that does the new counting and you need a
+memory, so you decide to use the memory IMCOUNTER. And your new LogixNG works fine. But then you suddenly realise that
+something else on the layout stops working. Why? What has happen? Well, the problem is that you use the same memory
+IMCOUNTER for two different things in two different places. And when that happens, you get into trouble.
+<p>
+LogixNG has a simple solution to this problem, local variables. A local variable is similar to a memory, but it only
+exists in a very limited context and nothing outside that context can interfer with the variable. This protects the
+local variable from being changed in an unpredictable way.
+<p>
+
+<h2>Defining local variables</h2>
+
+Local variables are created in the ConditionalNG editor. Open the editor of a ConditionalNG and right-click
+(command-click) on an action or expression and select "Local variables".
+
+<h2>Order of local variables</h2>
+
+The order of the local variables that are defined in an action or expression matters if you use one variable in the
+initialization of another. Lets say you define two variables "a" and "b", and that you define "a" to be initialized to
+the formula "34 * 4" and you define "b" to be initialized to "a * 3". This will work if "a" is defined before "b". You
+can define both variables in the same action or expression, but "a" needs to be before "b" since "b" uses "a" in its
+initialization.
+
+<h2>Local variables are local</h2>
+
+This may seem obvious, but when writing scripts that uses local variables, it's important to remember this. A script
+can access the symbol table if it has access to the ConditionalNG, but the symbol table is dependent on which action
+or expression that's currently running.
+
+<h2>Local variables are NOT thread safe</h2>
+
+Never use local variables on any other thread than the thread that the ConditionalNG runs on. You can run code on the
+conditionalNG thread by any of these calls:
+
+<pre>
+_conditionalNG.getCurrentThread().runOnLogixNG(() -> {
+    // Do something
+});
+</pre>
+
+<pre>
+int delay = 1000;   // 1 second
+_conditionalNG.getCurrentThread().runOnLogixNGDelayed(() -> {
+    // Do something
+}, delay);
+</pre>
+
+<pre>
+_conditionalNG.getCurrentThread().runOnLogixNGEventually(() -> {
+    // Do something
+});
+</pre>
+
+<h2>Initialization of local variables</h2>
+
+When an action or expression is executed that defines local variables, these local variables are created with an
+initial value. When you create the local variable, you define what the inital value should be. 'None' means that the
+value will be 'null'. Reference means that the value will be the value that the reference is pointing at. Formula
+means the result of the formula.
+
+<h2>Debugging of local variables</h2>
+
+What to do if the ConditionalNG doesn't do the expected? <a href="chapter14.html">Chapter 14 - The debugger</a>
+provides one tool, but another tool is the action <i>Log local variables</i>. Each time it's executed, it prints all
+the local variables and their values to the log.
+
+<p>
+
+&nbsp;
+
+</td>
+</tr>
+</table>
+</body>
+</html>

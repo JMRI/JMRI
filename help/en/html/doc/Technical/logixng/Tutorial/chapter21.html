@@ -1,0 +1,72 @@
+<html>
+<head>
+<title>LogixNG Tutorial - Chapter 21</title>
+<script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="script.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<table width="800">
+<tr>
+<td>
+
+<h1>LogixNG Tutorial - Chapter 21</h1>
+
+<h2>Adding a new action or expression</h2>
+
+
+See the package <i>jmri.jmrix.loconet.logixng</i> for the classes mentioned in this part.
+<p>
+How do we add a new action or expression type to LogixNG? Lets assume we want to have an expression that looks at the
+LocoNet slot manager and returns true if more that 75% of the slots are not free, false otherwise.
+<p>
+The first thing to notice is that is expression is LocoNet specific. Which means that it should be in a sub package to
+jmri.jmrix.loconet and that the expression should not be available if there is no LocoNet connection. This is easy to
+do. LogixNG uses <i>@ServiceProvider</i> to get a list of the available actions and expressions. For example, the class
+<i>jmri.jmrit.logixng.expressions.DigitalFactory</i> provides a list of digital expressions. We can add our own factory class
+for our LocoNet expression and we can make the method <i>getExpressionClasses()</i> conditional so that it only returns
+our class if there is a LocoNet connection active.
+<p>
+Second, it may be helpful for the user if the LocoNet actions/expressions have their own category. So lets create that.
+LogixNG has an "enum" Category, but since Java enums cannot be extended, the LogixNG Category class simulates an enum
+without being a true enum class. We add the LocoNet category to the Factory class and let a static initializer in the
+Factory class register the LocoNet category.
+<p>
+Now it's time to create the expression itself. For that, we need three classes. <i>ExpressionSlotUsage</i> that has the
+expression itself, <i>ExpressionSlotUsageXml</i> that stores the expression to the panel xml file and <i>ExpressionSlotUsageSwing</i>
+that has the swing editor for this expression.
+<p>
+For the expression itself, <i>ExpressionSlotUsage</i>, there is two important things to do. First, the expression needs to do
+something useful, in this case check the slots in the slot manager. The <i>interface jmri.jmrit.logixng.DigitalExpression</i>
+defines a digital expression and what it needs to do. It has a method <i>evaluate()</i> that returns a boolean. We need
+to implement this method and it's here that we check the slots in the slot manager.
+<p>
+The second important thing we need to do in <i>ExpressionSlotUsage</i> is to register and unregister any listeners. In this
+case, we want to listen for changed slots so we use the methods <i>registerListenersForThisClass()</i> and
+<i>unregisterListenersForThisClass()</i> to register/unregister the listeners. Please check that listeners are not
+registered twice. We do that by the varable <i>_listenersAreRegistered</i> to check if listeners has already been
+registered.
+<p>
+The swing editor <i>ExpressionSlotUsageSwing</i> implements the <i>SwingConfiguratorInterface</i> that is used by the
+ConditionalNG editor to create and edit actions and expressions. It does that by calling the method <i>getConfigPanel()</i>
+in the <i>SwingConfiguratorInterface</i> that creates a JPanel with the components that are needed to configure the
+action/expression. After the user has clicked "OK" to create a new expression or to save the changes, the method
+<i>validate()</i> is called. If it returns true, a new object is created by a call to <i>createNewObject()</i> or the changes are
+saved to the expresion by a call to <i>updateObject()</i>.
+<p>
+In the case of <i>ExpressionSlotUsageSwing</i>, we have a sentense like "The number of slots which 'has not' state 'COMMON or
+IDLE' is 'less than' '32', there the parts within '' are JComponents that let the user select different things. But
+this sentence needs to be translated to different languages and the order of words may be different in another language.
+The <i>SwingConfiguratorInterface</i> has a method <i>parseMessage()</i> that takes the message that we get from the bundle, together
+with the array of <i>JComponents</i>, and then returns a new list of JComponents there the message has been replaced by <i>JLabel</i>
+components and there the <i>JComponents</i> has been ordered according to the language.
+
+
+
+</td>
+</tr>
+</table>
+</body>
+</html>
