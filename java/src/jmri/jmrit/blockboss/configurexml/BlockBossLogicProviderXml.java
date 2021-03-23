@@ -168,7 +168,6 @@ public class BlockBossLogicProviderXml extends jmri.configurexml.AbstractXmlAdap
 
     @Override
     public boolean load(Element shared, Element perNode) {
-        boolean result = true;
         List<Element> l = shared.getChildren("signalelement");
 
         // try old format if there are no new entries
@@ -179,20 +178,13 @@ public class BlockBossLogicProviderXml extends jmri.configurexml.AbstractXmlAdap
 
         // process each item
         for (Element block : l) {
-            BlockBossLogic bb = null;
-            try {
-                bb = getBlockBossLogicFromElement(block);
-                if (bb == null)
-                    continue;
-            } catch (Exception e) {
-                log.error("An error occurred trying to find the signal for the signal elements for {}", block.getAttributeValue(SIGNAL), e);
-                result = false;
+            BlockBossLogic bb = getBlockBossLogicFromElement(block);
+            if (bb == null) {
+                continue;
             }
-            if (bb != null) {
-                result = loadBlockBossLogicDetailsFromElement(block, bb);
-            }
+            loadBlockBossLogicDetailsFromElement(block, bb);
         }
-        return result;
+        return true;
     }
 
     private boolean loadBlockBossLogicDetailsFromElement(Element block, BlockBossLogic bb) {
@@ -471,12 +463,19 @@ public class BlockBossLogicProviderXml extends jmri.configurexml.AbstractXmlAdap
             log.error("Ignoring a <signalelement> element with no signal attribute value");
             return null;
         }
+
         if (InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName) == null) {
             // this is an error
             log.error("SignalHead {} not defined, <signalelement> element referring to it is ignored", signalName);
             return null;
         }
-        blockBossLogic = BlockBossLogic.getStoppedObject(signalName);
+
+        try {
+            blockBossLogic = BlockBossLogic.getStoppedObject(signalName);
+        } catch (IllegalArgumentException e) {
+            // Potential exception in BLockBossProvider:provide via BlockBossLogic.
+            return null;
+        }
         return blockBossLogic;
     }
 
