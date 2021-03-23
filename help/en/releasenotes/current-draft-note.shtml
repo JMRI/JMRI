@@ -535,7 +535,8 @@
 
     	<h4>Simple Signal Logic</h4>
             <ul>
-                <li></li>
+                <li>The SSL tool has been updated to include the ability to
+                <strong>delete</strong> a SSL defintion.</li>
             </ul>
 
 	    <h4>USS CTC Logic</h4>
