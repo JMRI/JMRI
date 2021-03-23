@@ -70,10 +70,12 @@ public class XpaTurnout extends AbstractTurnout {
         log.debug("Send command to {} Pushbutton PT{}", (_pushButtonLockout ? "Lock" : "Unlock"), _number);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void setInverted(boolean inverted) {
         log.debug("Inverting Turnout State for turnout {}", getSystemName() );
-        _inverted = inverted;
         if (inverted) {
             _mThrown = Turnout.CLOSED;
             _mClosed = Turnout.THROWN;

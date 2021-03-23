@@ -2,8 +2,7 @@ package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
 
-import jmri.Light;
-import jmri.LightControl;
+import jmri.*;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;

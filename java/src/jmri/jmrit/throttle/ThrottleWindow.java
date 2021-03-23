@@ -1,14 +1,7 @@
 package jmri.jmrit.throttle;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.File;
 import java.net.URI;
 import java.util.HashMap;
@@ -32,7 +25,6 @@ import jmri.jmrit.jython.JynstrumentFactory;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.iharder.dnd.URIDrop;
-import jmri.util.iharder.dnd.URIDrop.Listener;
 
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -70,9 +62,7 @@ public class ThrottleWindow extends JmriJFrame {
 
     private final PowerManager powerMgr;
 
-    private final ThrottlePanelCyclingKeyListener throttlePanelsCyclingKeyListener;
-    private static final int NEXT_THROTTLE_KEY = KeyEvent.VK_RIGHT;
-    private static final int PREV_THROTTLE_KEY = KeyEvent.VK_LEFT;
+    private final ThrottleWindowInputsListener myInputsListener;
 
     private HashMap<String, ThrottleFrame> throttleFrames = new HashMap<>(5);
     private int cardCounterID = 0; // to generate unique names for each card
@@ -85,7 +75,7 @@ public class ThrottleWindow extends JmriJFrame {
      */
     public ThrottleWindow() {
         super();
-        throttlePanelsCyclingKeyListener = new ThrottlePanelCyclingKeyListener();
+        myInputsListener = new ThrottleWindowInputsListener(this);
         powerMgr = InstanceManager.getNullableDefault(PowerManager.class);
         if (powerMgr == null) {
             log.info("No power manager instance found, panel not active");
@@ -113,8 +103,9 @@ public class ThrottleWindow extends JmriJFrame {
         throttlesPanel.add(getCurrentThrottleFrame(), "default");
         throttleFrames.put("default", getCurrentThrottleFrame());
         add(throttlesPanel, BorderLayout.CENTER);
-        KeyListenerInstaller.installKeyListenerOnAllComponents(throttlePanelsCyclingKeyListener, getCurrentThrottleFrame());
-
+        
+        installInputsListenerOnAllComponents(throttlesPanel);
+        
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -131,6 +122,19 @@ public class ThrottleWindow extends JmriJFrame {
                     }
                 }
             }
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+                super.windowGainedFocus(e);
+                ThrottleWindow me = (ThrottleWindow) e.getSource();
+                me.getCurrentThrottleFrame().requestFocusInWindow();
+            }
+            @Override
+            public void windowActivated(WindowEvent e) {
+                super.windowActivated(e);
+                ThrottleWindow me = (ThrottleWindow) e.getSource();
+                me.getCurrentThrottleFrame().requestFocusInWindow();
+            }            
+            
         });
         updateGUI();
     }
@@ -168,6 +172,7 @@ public class ThrottleWindow extends JmriJFrame {
                 jbNextRunning.setEnabled(false);
             }
         }
+        throttlesPanel.requestFocusInWindow();
     }
 
     private void initializeToolbar() {
@@ -231,7 +236,7 @@ public class ThrottleWindow extends JmriJFrame {
         throttleToolBar.add(new StopAllButton());
 
         if (powerMgr != null) {
-            throttleToolBar.add(new LargePowerManagerButton());
+            throttleToolBar.add(new LargePowerManagerButton(false));
         }
 
         throttleToolBar.addSeparator();
@@ -495,7 +500,7 @@ public class ThrottleWindow extends JmriJFrame {
 
     public ThrottleFrame getCurrentThrottleFrame() {
         return currentThrottleFrame;
-    }
+    }    
 
     public void setCurrentThrottleFrame(ThrottleFrame tf) {
         if (getCurrentThrottleFrame() != null) {
@@ -593,7 +598,7 @@ public class ThrottleWindow extends JmriJFrame {
 
     public ThrottleFrame addThrottleFrame() {
         setCurrentThrottleFrame(new ThrottleFrame(this));
-        KeyListenerInstaller.installKeyListenerOnAllComponents(throttlePanelsCyclingKeyListener, getCurrentThrottleFrame());
+        installInputsListenerOnAllComponents(getCurrentThrottleFrame());
         addThrottleFrame(getCurrentThrottleFrame());
         return getCurrentThrottleFrame();
     }
@@ -722,30 +727,6 @@ public class ThrottleWindow extends JmriJFrame {
         updateGUI();
     }
 
-    /**
-     * A KeyAdapter that listens for the key that cycles through the
-     * ThrottlePanels.
-     */
-    class ThrottlePanelCyclingKeyListener extends KeyAdapter {
-
-        /**
-         * Description of the Method
-         *
-         * @param e Description of the Parameter
-         */
-        @Override
-        public void keyReleased(KeyEvent e) {
-            log.trace("TW {}", e);
-            if (e.isAltDown() && e.getKeyCode() == NEXT_THROTTLE_KEY) {
-                log.debug("next");
-                nextThrottleFrame();
-            } else if (e.isAltDown() && e.getKeyCode() == PREV_THROTTLE_KEY) {
-                log.debug("previous");
-                previousThrottleFrame();
-            }
-        }
-    }
-
     @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
@@ -755,6 +736,20 @@ public class ThrottleWindow extends JmriJFrame {
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
+    
+    private void installInputsListenerOnAllComponents(Container c) {
+        c.addKeyListener(myInputsListener);
+        c.addMouseWheelListener(myInputsListener);        
+        Component[] components = c.getComponents();
+        for (Component component : components) {
+            if (component instanceof Container) {
+                installInputsListenerOnAllComponents( (Container) component);
+            } else {
+                component.addKeyListener(myInputsListener);
+                component.addMouseWheelListener(myInputsListener);                
+            }
+        }
+    }    
 
     private final static Logger log = LoggerFactory.getLogger(ThrottleWindow.class);
 }
