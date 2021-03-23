@@ -1,7 +1,5 @@
 package jmri.jmrit.throttle;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JFrame;
@@ -19,15 +17,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ThrottleFrameManager implements InstanceManagerAutoDefault {
 
-    private final static int NEXT_THROTTLE_KEY  = KeyEvent.VK_RIGHT;
-    private final static int PREV_THROTTLE_KEY  = KeyEvent.VK_LEFT;
-
-    private final static int MOVE_TO_FUNCTIONS  = KeyEvent.VK_F;
-    private final static int MOVE_TO_CONTROL    = KeyEvent.VK_C;
-    private final static int MOVE_TO_ADDRESS    = KeyEvent.VK_A;
-
     private int activeFrame;
-    private final ThrottleCyclingKeyListener throttleCycler;
 
     private ArrayList<ThrottleWindow> throttleWindows; // synchronized access
 
@@ -39,7 +29,6 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
      * Constructor for the ThrottleFrameManager object.
      */
     public ThrottleFrameManager() {
-        throttleCycler = new ThrottleCyclingKeyListener();
         throttleWindows = new ArrayList<>(0);
         if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
             jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
@@ -55,7 +44,6 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
     public ThrottleWindow createThrottleWindow() {
         ThrottleWindow tw = new ThrottleWindow();
         tw.pack();
-        KeyListenerInstaller.installKeyListenerOnAllComponents(throttleCycler, tw);
         synchronized (this) {
             throttleWindows.add(tw);
             activeFrame = throttleWindows.indexOf(tw);
@@ -87,7 +75,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
                     log.debug(ex.toString());
                 }
                 if (throttleWindows.size() > 0) {
-                    requestFocusForNextFrame();
+                    requestFocusForNextThrottleWindow();
                 }
             }
         }
@@ -123,50 +111,21 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         return throttleWindows.size();
     }
 
-    private synchronized void requestFocusForNextFrame() {
+    public synchronized void requestFocusForNextThrottleWindow() {
         activeFrame = (activeFrame + 1) % throttleWindows.size();
-        ThrottleWindow tf = throttleWindows.get(activeFrame);
-        tf.requestFocus();
-        tf.toFront();
+        ThrottleWindow tw = throttleWindows.get(activeFrame);
+        tw.requestFocus();
+        tw.toFront();
     }
 
-    private synchronized void requestFocusForPreviousFrame() {
+    public synchronized void requestFocusForPreviousThrottleWindow() {
         activeFrame--;
         if (activeFrame < 0) {
             activeFrame = throttleWindows.size() - 1;
         }
-        ThrottleWindow tf = throttleWindows.get(activeFrame);
-        tf.requestFocus();
-        tf.toFront();
-    }
-
-
-    private synchronized void requestFocusAddress() {
-        throttleWindows.get(activeFrame).getCurrentThrottleFrame().getAddressPanel().requestFocus();
-        throttleWindows.get(activeFrame).getCurrentThrottleFrame().getAddressPanel().toFront();
-        try {
-            throttleWindows.get(activeFrame).getCurrentThrottleFrame().getAddressPanel().setSelected(true);
-        } catch (java.beans.PropertyVetoException ex) {
-            log.debug("address move vetoed");
-        }
-    }
-    private synchronized void requestFocusControls() {
-        throttleWindows.get(activeFrame).getCurrentThrottleFrame().getControlPanel().requestFocus();
-        throttleWindows.get(activeFrame).getCurrentThrottleFrame().getControlPanel().toFront();
-        try {
-            throttleWindows.get(activeFrame).getCurrentThrottleFrame().getControlPanel().setSelected(true);
-        } catch (java.beans.PropertyVetoException ex) {
-            log.debug("control move vetoed");
-        }
-    }
-    private synchronized void requestFocusFunctions() {
-        throttleWindows.get(activeFrame).getCurrentThrottleFrame().getFunctionPanel().requestFocus();
-        throttleWindows.get(activeFrame).getCurrentThrottleFrame().getFunctionPanel().toFront();
-        try {
-            throttleWindows.get(activeFrame).getCurrentThrottleFrame().getFunctionPanel().setSelected(true);
-        } catch (java.beans.PropertyVetoException ex) {
-            log.debug("function move vetoed");
-        }
+        ThrottleWindow tw = throttleWindows.get(activeFrame);
+        tw.requestFocus();
+        tw.toFront();
     }
 
     public synchronized ThrottleWindow getCurrentThrottleFrame() {
@@ -181,35 +140,6 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
 
     public ThrottlesPreferences getThrottlesPreferences() {
         return InstanceManager.getDefault(ThrottlesPreferences.class);
-    }
-
-    /**
-     * Description of the Class
-     *
-     * @author glen
-     */
-    class ThrottleCyclingKeyListener extends KeyAdapter {
-
-        /**
-         * Description of the Method
-         *
-         * @param e Description of the Parameter
-         */
-        @Override
-        public void keyReleased(KeyEvent e) {
-            log.trace("TFM {}", e);
-            if (e.isShiftDown() && e.getKeyCode() == NEXT_THROTTLE_KEY) {
-                requestFocusForNextFrame();
-            } else if (e.isShiftDown() && e.getKeyCode() == PREV_THROTTLE_KEY) {
-                requestFocusForPreviousFrame();
-            } else if (e.isShiftDown() && e.getKeyCode() == MOVE_TO_FUNCTIONS) {
-                requestFocusFunctions();
-            } else if (e.isShiftDown() && e.getKeyCode() == MOVE_TO_CONTROL) {
-                requestFocusControls();
-            } else if (e.isShiftDown() && e.getKeyCode() == MOVE_TO_ADDRESS) {
-                requestFocusAddress();
-            }
-        }
     }
 
     public ThrottlesListPanel getThrottlesListPanel() {

@@ -55,7 +55,7 @@
       <revremark>Revision in original 0NMRA.xml file</revremark>
     </revision>
   </revhistory>
-  <variable CV="7" readOnly="yes" item="Decoder Version">
+  <variable CV="7" item="Decoder Version" readOnly="yes">
     <decVal/>
     <label>Manufacturer Version No: </label>
     <label xml:lang="cs">Verze dekodéru: </label>

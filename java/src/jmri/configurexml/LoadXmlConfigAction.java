@@ -4,8 +4,10 @@ import java.util.Set;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JFileChooser;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.jmrit.logixng.LogixNGPreferences;
 import jmri.JmriException;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorManager;
@@ -48,10 +50,11 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
     protected boolean loadFile(JFileChooser fileChooser) {
         Set<Editor> editors = InstanceManager.getDefault(EditorManager.class).getAll();
         if (!editors.isEmpty()) {
-            InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                showInfoMessage(Bundle.getMessage("DuplicateLoadTitle"),  // NOI18N
-                    Bundle.getMessage("DuplicateLoadMessage"),  // NOI18N
-                    "Editor", "remindDuplicatePanel"); // NOI18N
+            InstanceManager.getDefault(jmri.UserPreferencesManager.class).showWarningMessage(
+                    Bundle.getMessage("DuplicateLoadTitle"), Bundle.getMessage("DuplicateLoadMessage"),  // NOI18N
+                    "jmri.jmrit.display.EditorManager",  "skipDupLoadDialog", false, true);  //NOI18N
+            InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceItemDetails(
+                    "jmri.jmrit.display.EditorManager", "skipDupLoadDialog", Bundle.getMessage("DuplicateLoadSkip"));  // NOI18N
         }
 
         boolean results = false;
@@ -68,6 +71,13 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
                         // insure logix etc fire up
                         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
                         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+                        
+                        jmri.jmrit.logixng.LogixNG_Manager logixNG_Manager =
+                                InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
+                        logixNG_Manager.setupAllLogixNGs();
+                        if (InstanceManager.getDefault(LogixNGPreferences.class).getStartLogixNGOnStartup()) {
+                            logixNG_Manager.activateAllLogixNGs();
+                        }
                     }
                 }
             } catch (JmriException e) {

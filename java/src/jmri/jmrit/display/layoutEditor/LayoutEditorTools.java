@@ -610,14 +610,14 @@ final public class LayoutEditorTools {
      * 5) Search through all LayoutTurnout (and subclass) objects, looking for a match. If
      *          is the other type (LayoutTurnout vs XOver or vice-versa), so an error,
      *          call a cancel routine and return false. Save the found item in the
-     *          'layoutTurnout' non-local variable 
-     * 
-     * 6) If the above succeed in finding a layoutTurnout, calculate an angle and 
+     *          'layoutTurnout' non-local variable
+     *
+     * 6) If the above succeed in finding a layoutTurnout, calculate an angle and
      *          store in the `placeSignalDirectionDEG` non-local variable
      *          and return true (success)
      * 7) Finally, show an error saying the turnout is not displayed on this panel and return false.
-     * 
-     * In summary, this makes some checks, and then (re)loads the 'layoutTurnout' and 
+     *
+     * In summary, this makes some checks, and then (re)loads the 'layoutTurnout' and
      * 'placeSignalDirectionDEG' non-local variables, returning true for success
      *
      * @return true if ok, false if not for various reasons
@@ -680,7 +680,7 @@ final public class LayoutEditorTools {
         if (layoutTurnout != null) {
             // convert to view to get angle on screen display
             LayoutTurnoutView ltv = layoutEditor.getLayoutTurnoutView(layoutTurnout);
-            
+
             Point2D coordsA = ltv.getCoordsA(), coords2;
             if (isCrossover) {
                 coords2 = ltv.getCoordsB();
@@ -726,7 +726,7 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
-        
+
         Point2D coordsA = layoutTurnoutView.getCoordsA();
         Point2D delta = new Point2D.Double(+shift, +shift);
 
@@ -858,13 +858,13 @@ final public class LayoutEditorTools {
                 return;
             }
             logic.setMode(BlockBossLogic.TRAILINGMAIN);
-            logic.setTurnout(turnout.getSystemName());
-            logic.setSensor1(occupancy.getSystemName());
+            logic.setTurnout(turnout.getDisplayName());
+            logic.setSensor1(occupancy.getDisplayName());
             if (nextHead != null) {
-                logic.setWatchedSignal1(nextHead.getSystemName(), false);
+                logic.setWatchedSignal1(nextHead.getDisplayName(), false);
             }
             if (auxSignal != null) {
-                logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+                logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
             }
             finalizeBlockBossLogic();
             return;
@@ -918,20 +918,20 @@ final public class LayoutEditorTools {
             return;
         }
         logic.setMode(BlockBossLogic.FACING);
-        logic.setTurnout(turnout.getSystemName());
-        logic.setWatchedSensor1(occupancy.getSystemName());
-        logic.setWatchedSensor2(occupancy2.getSystemName());
+        logic.setTurnout(turnout.getDisplayName());
+        logic.setWatchedSensor1(occupancy.getDisplayName());
+        logic.setWatchedSensor2(occupancy2.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (savedAuxSignal != null) {
-            logic.setWatchedSignal1Alt(savedAuxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(savedAuxSignal.getDisplayName());
         }
         if (nextHead2 != null) {
-            logic.setWatchedSignal2(nextHead2.getSystemName());
+            logic.setWatchedSignal2(nextHead2.getDisplayName());
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal2Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal2Alt(auxSignal.getDisplayName());
         }
         if (!layoutTurnout.isMainlineC()) {
             logic.setLimitSpeed2(true);
@@ -989,13 +989,13 @@ final public class LayoutEditorTools {
         }
 
         logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
-        logic.setTurnout(turnout.getSystemName());
-        logic.setSensor1(occupancy.getSystemName());
+        logic.setTurnout(turnout.getDisplayName());
+        logic.setSensor1(occupancy.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
         }
         if (!layoutTurnout.isMainlineC()) {
             logic.setLimitSpeed2(true);
@@ -1047,13 +1047,13 @@ final public class LayoutEditorTools {
             return;
         }
         logic.setMode(BlockBossLogic.TRAILINGMAIN);
-        logic.setTurnout(turnout.getSystemName());
-        logic.setSensor1(occupancy.getSystemName());
+        logic.setTurnout(turnout.getDisplayName());
+        logic.setSensor1(occupancy.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
         }
         finalizeBlockBossLogic();
     }   //setLogicContinuing
@@ -1102,13 +1102,13 @@ final public class LayoutEditorTools {
             return;
         }
         logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
-        logic.setTurnout(turnout.getSystemName());
-        logic.setSensor1(occupancy.getSystemName());
+        logic.setTurnout(turnout.getDisplayName());
+        logic.setSensor1(occupancy.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
         }
         if (!layoutTurnout.isMainlineC()) {
             logic.setLimitSpeed2(true);
@@ -1128,7 +1128,7 @@ final public class LayoutEditorTools {
      * <p>
      * If a layout turnout corresponding to the turnout is not found, an error
      * message is sent to the user and null is returned.
-     * 
+     *
      * @param turnout the base turnout.
      * @param requireDoubleXover true to force checking of turnout type.
      * @param str error message string.
@@ -1962,7 +1962,7 @@ final public class LayoutEditorTools {
         }
         return true;
     }
-    
+
     /*===========================*\
     |* setSignalsAtBlockBoundary *|
     \*===========================*/
@@ -2503,12 +2503,12 @@ final public class LayoutEditorTools {
             return;
         }
         logic.setMode(BlockBossLogic.SINGLEBLOCK);
-        logic.setSensor1(eastBlockOccupancy.getSystemName());
+        logic.setSensor1(eastBlockOccupancy.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
         }
         finalizeBlockBossLogic();
     }
@@ -2546,12 +2546,12 @@ final public class LayoutEditorTools {
             return;
         }
         logic.setMode(BlockBossLogic.SINGLEBLOCK);
-        logic.setSensor1(westBlockOccupancy.getSystemName());
+        logic.setSensor1(westBlockOccupancy.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
         }
         finalizeBlockBossLogic();
     }
@@ -3384,7 +3384,7 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
-        
+
         Point2D coordsA = layoutTurnoutView.getCoordsA();
         Point2D delta = new Point2D.Double(0.0, +shift);
 
@@ -3404,7 +3404,7 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
-        
+
         Point2D coordsA = layoutTurnoutView.getCoordsA();
         Point2D delta = new Point2D.Double(-2.0 * shift, +shift);
 
@@ -3424,7 +3424,7 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
-        
+
         Point2D coordsB = layoutTurnoutView.getCoordsB();
         Point2D delta = new Point2D.Double(-shift, -shift);
 
@@ -3444,7 +3444,7 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
-        
+
         Point2D coordsB = layoutTurnoutView.getCoordsB();
         Point2D delta = new Point2D.Double(+shift, -shift);
 
@@ -3464,7 +3464,7 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
-        
+
         Point2D coordsC = layoutTurnoutView.getCoordsC();
         Point2D delta = new Point2D.Double(0.0, -shift);
 
@@ -3484,7 +3484,7 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
-        
+
         Point2D coordsC = layoutTurnoutView.getCoordsC();
         Point2D delta = new Point2D.Double(+2.0 * shift, -shift);
 
@@ -3504,7 +3504,7 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
-        
+
         Point2D coordsD = layoutTurnoutView.getCoordsD();
         Point2D delta = new Point2D.Double(+shift, +shift);
 
@@ -3524,7 +3524,7 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
-        
+
         Point2D coordsD = layoutTurnoutView.getCoordsD();
         Point2D delta = new Point2D.Double(-shift, +shift);
 
@@ -3574,17 +3574,17 @@ final public class LayoutEditorTools {
                 return;
             }
             if (secondHead != null) {
-                if (!initializeBlockBossLogic(head.getSystemName())) {
+                if (!initializeBlockBossLogic(head.getDisplayName())) {
                     return;
                 }
                 logic.setMode(BlockBossLogic.TRAILINGMAIN);
-                logic.setTurnout(turnout.getSystemName());
-                logic.setSensor1(occupancy.getSystemName());
+                logic.setTurnout(turnout.getDisplayName());
+                logic.setSensor1(occupancy.getDisplayName());
                 if (nextHead != null) {
-                    logic.setWatchedSignal1(nextHead.getSystemName(), false);
+                    logic.setWatchedSignal1(nextHead.getDisplayName(), false);
                 }
                 if (auxSignal != null) {
-                    logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+                    logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
                 }
                 finalizeBlockBossLogic();
             }
@@ -3632,39 +3632,39 @@ final public class LayoutEditorTools {
             return;
         }
         if ((secondHead == null) && (track != null) && setup1) {
-            if (!initializeBlockBossLogic(head.getSystemName())) {
+            if (!initializeBlockBossLogic(head.getDisplayName())) {
                 return;
             }
             logic.setMode(BlockBossLogic.FACING);
-            logic.setTurnout(turnout.getSystemName());
-            logic.setWatchedSensor1(occupancy.getSystemName());
-            logic.setWatchedSensor2(occupancy2.getSystemName());
+            logic.setTurnout(turnout.getDisplayName());
+            logic.setWatchedSensor1(occupancy.getDisplayName());
+            logic.setWatchedSensor2(occupancy2.getDisplayName());
             if (nextHead != null) {
-                logic.setWatchedSignal1(nextHead.getSystemName(), false);
+                logic.setWatchedSignal1(nextHead.getDisplayName(), false);
             }
             if (savedAuxSignal != null) {
-                logic.setWatchedSignal1Alt(savedAuxSignal.getSystemName());
+                logic.setWatchedSignal1Alt(savedAuxSignal.getDisplayName());
             }
             if (nextHead2 != null) {
-                logic.setWatchedSignal2(nextHead2.getSystemName());
+                logic.setWatchedSignal2(nextHead2.getDisplayName());
             }
             if (auxSignal != null) {
-                logic.setWatchedSignal2Alt(auxSignal.getSystemName());
+                logic.setWatchedSignal2Alt(auxSignal.getDisplayName());
             }
             logic.setLimitSpeed2(true);
             finalizeBlockBossLogic();
         } else if ((secondHead != null) && setup2) {
-            if (!initializeBlockBossLogic(secondHead.getSystemName())) {
+            if (!initializeBlockBossLogic(secondHead.getDisplayName())) {
                 return;
             }
             logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
-            logic.setTurnout(turnout.getSystemName());
-            logic.setSensor1(occupancy2.getSystemName());
+            logic.setTurnout(turnout.getDisplayName());
+            logic.setSensor1(occupancy2.getDisplayName());
             if (nextHead2 != null) {
-                logic.setWatchedSignal1(nextHead2.getSystemName(), false);
+                logic.setWatchedSignal1(nextHead2.getDisplayName(), false);
             }
             if (auxSignal != null) {
-                logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+                logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
             }
             logic.setLimitSpeed2(true);
             finalizeBlockBossLogic();
@@ -3706,17 +3706,17 @@ final public class LayoutEditorTools {
                     JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        if (!initializeBlockBossLogic(head.getSystemName())) {
+        if (!initializeBlockBossLogic(head.getDisplayName())) {
             return;
         }
         logic.setMode(BlockBossLogic.TRAILINGMAIN);
-        logic.setTurnout(turnout.getSystemName());
-        logic.setSensor1(occupancy.getSystemName());
+        logic.setTurnout(turnout.getDisplayName());
+        logic.setSensor1(occupancy.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
         }
         finalizeBlockBossLogic();
     }   //setLogicXoverContinuing
@@ -4515,34 +4515,34 @@ final public class LayoutEditorTools {
                     Bundle.getMessage("WarningTitle"),
                     JOptionPane.WARNING_MESSAGE);
         }
-        if (!initializeBlockBossLogic(head.getSystemName())) {
+        if (!initializeBlockBossLogic(head.getDisplayName())) {
             return;
         }
         logic.setMode(BlockBossLogic.SINGLEBLOCK);
-        logic.setSensor1(occupancy.getSystemName());
+        logic.setSensor1(occupancy.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
         }
         if (crossOccupancy != null) {
-            logic.setSensor2(crossOccupancy.getSystemName());
+            logic.setSensor2(crossOccupancy.getDisplayName());
             if (track1Occupancy != null) {
-                logic.setSensor3(track1Occupancy.getSystemName());
+                logic.setSensor3(track1Occupancy.getDisplayName());
                 if (track2Occupancy != null) {
-                    logic.setSensor4(track2Occupancy.getSystemName());
+                    logic.setSensor4(track2Occupancy.getDisplayName());
                 }
             } else if (track2Occupancy != null) {
-                logic.setSensor3(track2Occupancy.getSystemName());
+                logic.setSensor3(track2Occupancy.getDisplayName());
             }
         } else if (track1Occupancy != null) {
-            logic.setSensor2(track1Occupancy.getSystemName());
+            logic.setSensor2(track1Occupancy.getDisplayName());
             if (track2Occupancy != null) {
-                logic.setSensor3(track2Occupancy.getSystemName());
+                logic.setSensor3(track2Occupancy.getDisplayName());
             }
         } else if (track2Occupancy != null) {
-            logic.setSensor2(track2Occupancy.getSystemName());
+            logic.setSensor2(track2Occupancy.getDisplayName());
         }
         finalizeBlockBossLogic();
     }
@@ -5877,20 +5877,20 @@ final public class LayoutEditorTools {
             }
             if (secondHead != null) {
                 //this head signals only the continuing track of the far turnout
-                if (!initializeBlockBossLogic(head.getSystemName())) {
+                if (!initializeBlockBossLogic(head.getDisplayName())) {
                     return;
                 }
                 logic.setMode(BlockBossLogic.TRAILINGMAIN);
-                logic.setTurnout(farTurnout.getTurnout().getSystemName());
-                logic.setSensor1(occupancy.getSystemName());
+                logic.setTurnout(farTurnout.getTurnout().getDisplayName());
+                logic.setSensor1(occupancy.getDisplayName());
                 if (occupancy != connectorOccupancy) {
-                    logic.setSensor2(connectorOccupancy.getSystemName());
+                    logic.setSensor2(connectorOccupancy.getDisplayName());
                 }
                 if (nextHead != null) {
-                    logic.setWatchedSignal1(nextHead.getSystemName(), false);
+                    logic.setWatchedSignal1(nextHead.getDisplayName(), false);
                 }
                 if (auxSignal != null) {
-                    logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+                    logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
                 }
                 String nearSensorName = setupNearLogix(nearTurnout, continuing, head);
                 addNearSensorToLogic(nearSensorName);
@@ -5939,45 +5939,45 @@ final public class LayoutEditorTools {
             }
         }
         if ((secondHead == null) && (track1 != null) && setup1) {
-            if (!initializeBlockBossLogic(head.getSystemName())) {
+            if (!initializeBlockBossLogic(head.getDisplayName())) {
                 return;
             }
             logic.setMode(BlockBossLogic.FACING);
-            logic.setTurnout(farTurnout.getTurnout().getSystemName());
-            logic.setWatchedSensor1(occupancy.getSystemName());
-            logic.setWatchedSensor2(occupancy2.getSystemName());
-            logic.setSensor2(connectorOccupancy.getSystemName());
+            logic.setTurnout(farTurnout.getTurnout().getDisplayName());
+            logic.setWatchedSensor1(occupancy.getDisplayName());
+            logic.setWatchedSensor2(occupancy2.getDisplayName());
+            logic.setSensor2(connectorOccupancy.getDisplayName());
             if (nextHead != null) {
-                logic.setWatchedSignal1(nextHead.getSystemName(), false);
+                logic.setWatchedSignal1(nextHead.getDisplayName(), false);
             }
             if (savedAuxSignal != null) {
-                logic.setWatchedSignal1Alt(savedAuxSignal.getSystemName());
+                logic.setWatchedSignal1Alt(savedAuxSignal.getDisplayName());
             }
             if (nextHead2 != null) {
-                logic.setWatchedSignal2(nextHead2.getSystemName());
+                logic.setWatchedSignal2(nextHead2.getDisplayName());
             }
             if (auxSignal != null) {
-                logic.setWatchedSignal2Alt(auxSignal.getSystemName());
+                logic.setWatchedSignal2Alt(auxSignal.getDisplayName());
             }
             String nearSensorName = setupNearLogix(nearTurnout, continuing, head);
             addNearSensorToLogic(nearSensorName);
             logic.setLimitSpeed2(true);
             finalizeBlockBossLogic();
         } else if ((secondHead != null) && setup2) {
-            if (!initializeBlockBossLogic(secondHead.getSystemName())) {
+            if (!initializeBlockBossLogic(secondHead.getDisplayName())) {
                 return;
             }
             logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
-            logic.setTurnout(farTurnout.getTurnout().getSystemName());
-            logic.setSensor1(occupancy2.getSystemName());
+            logic.setTurnout(farTurnout.getTurnout().getDisplayName());
+            logic.setSensor1(occupancy2.getDisplayName());
             if (occupancy2 != connectorOccupancy) {
-                logic.setSensor2(connectorOccupancy.getSystemName());
+                logic.setSensor2(connectorOccupancy.getDisplayName());
             }
             if (nextHead2 != null) {
-                logic.setWatchedSignal1(nextHead2.getSystemName(), false);
+                logic.setWatchedSignal1(nextHead2.getDisplayName(), false);
             }
             if (auxSignal != null) {
-                logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+                logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
             }
             String nearSensorName = setupNearLogix(nearTurnout, continuing, head);
             addNearSensorToLogic(nearSensorName);
@@ -5989,7 +5989,7 @@ final public class LayoutEditorTools {
     /*
      * Sets up a Logix to set a sensor active if a turnout is set against
      *  a track.  This routine creates an internal sensor for the purpose.
-     * Note: The sensor and logix are named IS or IX followed by TTT_X_HHH where
+     * Note: The sensor and logix are named pref + S or pref + X followed by TTT_X_HHH where
      *  TTT is the system name of the turnout, X is either C or T depending
      *  on "continuing", and HHH is the system name of the signal head.
      * Note: If there is any problem, a string of "" is returned, and a warning
@@ -6002,8 +6002,9 @@ final public class LayoutEditorTools {
         if (!continuing) {
             namer = turnoutName + "_C_" + head.getSystemName();
         }
-        String sensorName = "IS" + namer;
-        String logixName = "IX" + namer;
+        String pref = InstanceManager.getDefault(jmri.LogixManager.class).getSystemPrefix();
+        String sensorName = pref + "S" + namer;
+        String logixName = pref + "X" + namer;
         try {
             InstanceManager.sensorManagerInstance().provideSensor(sensorName);
         } catch (IllegalArgumentException ex) {
@@ -6011,18 +6012,15 @@ final public class LayoutEditorTools {
             return "";
 
         }
-        if (InstanceManager.getDefault(LogixManager.class
-        ).getBySystemName(logixName) == null) {
+        if (InstanceManager.getDefault(LogixManager.class).getBySystemName(logixName) == null) {
             //Logix does not exist, create it
-            Logix x = InstanceManager.getDefault(LogixManager.class
-            ).createNewLogix(logixName, "");
+            Logix x = InstanceManager.getDefault(LogixManager.class).createNewLogix(logixName, "");
             if (x == null) {
                 log.error("Trouble creating logix {} while setting up signal logic.", logixName);
                 return "";
             }
             String cName = x.getSystemName() + "C1";
-            Conditional c = InstanceManager.getDefault(ConditionalManager.class
-            ).
+            Conditional c = InstanceManager.getDefault(ConditionalManager.class).
                     createNewConditional(cName, "");
             if (c == null) {
                 log.error("Trouble creating conditional {} while setting up Logix.", cName);
@@ -6043,12 +6041,12 @@ final public class LayoutEditorTools {
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
                     Conditional.Action.SET_SENSOR, sensorName,
                     Sensor.INACTIVE, ""));
-            c.setAction(actionList); //string data
+            c.setAction(actionList); // string data
             x.addConditional(cName, -1);
             x.activateLogix();
         }
         return sensorName;
-    }   //setupNearLogix
+    }
 
     /*
      * Adds the sensor specified to the open BlockBossLogic, provided it is not already there and
@@ -7161,13 +7159,13 @@ final public class LayoutEditorTools {
                 return;
             }
             logic.setMode(BlockBossLogic.TRAILINGMAIN);
-            logic.setTurnout(turnoutB.getSystemName());
-            logic.setSensor1(occupancy.getSystemName());
+            logic.setTurnout(turnoutB.getDisplayName());
+            logic.setSensor1(occupancy.getDisplayName());
             if (nextHead != null) {
-                logic.setWatchedSignal1(nextHead.getSystemName(), false);
+                logic.setWatchedSignal1(nextHead.getDisplayName(), false);
             }
             if (auxSignal != null) {
-                logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+                logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
             }
             String nearSensorName = setupNearLogix(layoutTurnoutA, true, a13WayHead);
             addNearSensorToLogic(nearSensorName);
@@ -7226,13 +7224,13 @@ final public class LayoutEditorTools {
             return;
         }
         logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
-        logic.setTurnout(turnoutA.getSystemName());
-        logic.setSensor1(occupancy.getSystemName());
+        logic.setTurnout(turnoutA.getDisplayName());
+        logic.setSensor1(occupancy.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
         }
         if (!layoutTurnoutA.isMainlineC()) {
             logic.setLimitSpeed2(true);
@@ -7284,13 +7282,13 @@ final public class LayoutEditorTools {
             return;
         }
         logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
-        logic.setTurnout(turnoutB.getSystemName());
-        logic.setSensor1(occupancy.getSystemName());
+        logic.setTurnout(turnoutB.getDisplayName());
+        logic.setSensor1(occupancy.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
         }
         String nearSensorName = setupNearLogix(layoutTurnoutA, true, a33WayHead);
         addNearSensorToLogic(nearSensorName);
@@ -7344,13 +7342,13 @@ final public class LayoutEditorTools {
             return;
         }
         logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
-        logic.setTurnout(turnoutA.getSystemName());
-        logic.setSensor1(occupancy.getSystemName());
+        logic.setTurnout(turnoutA.getDisplayName());
+        logic.setSensor1(occupancy.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
         }
         if (!layoutTurnoutA.isMainlineC()) {
             logic.setLimitSpeed2(true);
@@ -7402,13 +7400,13 @@ final public class LayoutEditorTools {
             return;
         }
         logic.setMode(BlockBossLogic.TRAILINGMAIN);
-        logic.setTurnout(turnoutB.getSystemName());
-        logic.setSensor1(occupancy.getSystemName());
+        logic.setTurnout(turnoutB.getDisplayName());
+        logic.setSensor1(occupancy.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
         }
         String nearSensorName = setupNearLogix(layoutTurnoutA, true, c3WayHead);
         addNearSensorToLogic(nearSensorName);
@@ -7462,13 +7460,13 @@ final public class LayoutEditorTools {
             return;
         }
         logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
-        logic.setTurnout(turnoutB.getSystemName());
-        logic.setSensor1(occupancy.getSystemName());
+        logic.setTurnout(turnoutB.getDisplayName());
+        logic.setSensor1(occupancy.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
         }
         String nearSensorName = setupNearLogix(layoutTurnoutA, true, d3WayHead);
         addNearSensorToLogic(nearSensorName);
@@ -7681,11 +7679,11 @@ final public class LayoutEditorTools {
 
     /**
      * Returns the Sensor corresponding to an entry field in the specified
-     * dialog. 
+     * dialog.
      * <p>
      * This also takes care of UpperCase and trimming of leading and
-     * trailing blanks. 
-     * If entry is required, and no entry is present, an error message is sent. 
+     * trailing blanks.
+     * If entry is required, and no entry is present, an error message is sent.
      * An error message also results if a sensor head with the
      * entered name is not found in the SensorTable.
      * @param sensorName sensor name.
@@ -9375,7 +9373,7 @@ final public class LayoutEditorTools {
         SignalMast turnoutMastD = getSignalMastFromEntry(turnoutSignalMastD.getText(), false, setSignalsAtTurnoutFrame);
 
         LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
-        
+
         //place signals as requested
         if (turnoutSignalMastA.addToPanel() && (turnoutMast != null)) {
             if (isSignalMastOnPanel(turnoutMast)
@@ -9390,7 +9388,7 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(layoutTurnout.getSignalAMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(turnoutSignalMastA.getText());
-                placingBlock(l, turnoutSignalMastA.isRightSelected(), 
+                placingBlock(l, turnoutSignalMastA.isRightSelected(),
                                 0.0, layoutTurnout.getConnectA(), layoutTurnoutView.getCoordsA());
                 removeAssignment(turnoutMast);
                 layoutTurnout.setSignalAMast(turnoutSignalMastA.getText());
@@ -9432,7 +9430,7 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(layoutTurnout.getSignalBMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(turnoutSignalMastB.getText());
-                placingBlock(l, turnoutSignalMastB.isRightSelected(), 
+                placingBlock(l, turnoutSignalMastB.isRightSelected(),
                                 0.0, layoutTurnout.getConnectB(), layoutTurnoutView.getCoordsB());
                 removeAssignment(turnoutMastB);
                 layoutTurnout.setSignalBMast(turnoutSignalMastB.getText());
@@ -9475,7 +9473,7 @@ final public class LayoutEditorTools {
                     removeSignalMastFromPanel(layoutTurnout.getSignalCMast());
                     SignalMastIcon l = new SignalMastIcon(layoutEditor);
                     l.setSignalMast(turnoutSignalMastC.getText());
-                    placingBlock(l, turnoutSignalMastC.isRightSelected(), 
+                    placingBlock(l, turnoutSignalMastC.isRightSelected(),
                                     0.0, layoutTurnout.getConnectC(), layoutTurnoutView.getCoordsC());
                     removeAssignment(turnoutMastC);
                     layoutTurnout.setSignalCMast(turnoutSignalMastC.getText());
@@ -9523,7 +9521,7 @@ final public class LayoutEditorTools {
                     removeSignalMastFromPanel(layoutTurnout.getSignalDMast());
                     SignalMastIcon l = new SignalMastIcon(layoutEditor);
                     l.setSignalMast(turnoutSignalMastD.getText());
-                    placingBlock(l, turnoutSignalMastD.isRightSelected(), 
+                    placingBlock(l, turnoutSignalMastD.isRightSelected(),
                                     0.0, layoutTurnout.getConnectD(), layoutTurnoutView.getCoordsD());
                     removeAssignment(turnoutMastD);
                     layoutTurnout.setSignalDMast(turnoutSignalMastD.getText());
@@ -9777,7 +9775,7 @@ final public class LayoutEditorTools {
     /*============================*\
     |* setSignalMastsAtLayoutSlip *|
     \*============================*/
-    
+
     //operational variables for Set SignalMast at Slip tool
     private JmriJFrame setSignalMastsAtLayoutSlipFrame = null;
     private boolean setSignalMastsAtLayoutSlipOpenFlag = false;
@@ -10134,14 +10132,14 @@ final public class LayoutEditorTools {
         if (!getSlipMastInformation()) {
             return;
         }
-        
+
         SignalMast aMast = getSignalMastFromEntry(slipSignalMastA.getText(), false, setSignalMastsAtLayoutSlipFrame);
         SignalMast bMast = getSignalMastFromEntry(slipSignalMastB.getText(), false, setSignalMastsAtLayoutSlipFrame);
         SignalMast cMast = getSignalMastFromEntry(slipSignalMastC.getText(), false, setSignalMastsAtLayoutSlipFrame);
         SignalMast dMast = getSignalMastFromEntry(slipSignalMastD.getText(), false, setSignalMastsAtLayoutSlipFrame);
-        
+
         LayoutSlipView layoutSlipView = layoutEditor.getLayoutSlipView(layoutSlip);
-        
+
         //place or update signals as requested
         if ((aMast != null) && slipSignalMastA.addToPanel()) {
             if (isSignalMastOnPanel(aMast)
@@ -10156,7 +10154,7 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(layoutSlip.getSignalAMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(slipSignalMastA.getText());
-                placingBlock(l, slipSignalMastA.isRightSelected(), 
+                placingBlock(l, slipSignalMastA.isRightSelected(),
                                         0.0, layoutSlip.getConnectA(), layoutSlipView.getCoordsA());
                 removeAssignment(aMast);
                 layoutSlip.setSignalAMast(slipSignalMastA.getText());
@@ -10202,7 +10200,7 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(layoutSlip.getSignalBMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(slipSignalMastB.getText());
-                placingBlock(l, slipSignalMastB.isRightSelected(), 
+                placingBlock(l, slipSignalMastB.isRightSelected(),
                                             0.0, layoutSlip.getConnectB(), layoutSlipView.getCoordsB());
                 removeAssignment(bMast);
                 layoutSlip.setSignalBMast(slipSignalMastB.getText());
@@ -10248,7 +10246,7 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(layoutSlip.getSignalCMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(slipSignalMastC.getText());
-                placingBlock(l, slipSignalMastA.isRightSelected(), 
+                placingBlock(l, slipSignalMastA.isRightSelected(),
                                                 0.0, layoutSlip.getConnectC(), layoutSlipView.getCoordsC());
                 removeAssignment(cMast);
                 layoutSlip.setSignalCMast(slipSignalMastC.getText());
@@ -10294,7 +10292,7 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(layoutSlip.getSignalDMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(slipSignalMastD.getText());
-                placingBlock(l, slipSignalMastD.isRightSelected(), 
+                placingBlock(l, slipSignalMastD.isRightSelected(),
                                                 0.0, layoutSlip.getConnectD(), layoutSlipView.getCoordsD());
                 removeAssignment(dMast);
                 layoutSlip.setSignalDMast(slipSignalMastD.getText());
@@ -12169,7 +12167,7 @@ final public class LayoutEditorTools {
         }
 
         LayoutSlipView layoutSlipView = layoutEditor.getLayoutSlipView(layoutSlip);
-        
+
         //place/remove sensors as requested
         if (sensorA == null) {
             if (currSensorA != null && removeSensorFromPanel(currSensorA)) {
@@ -13511,23 +13509,23 @@ final public class LayoutEditorTools {
             }
             if (secondHead != null) {
                 //this head signals only the continuing track of the far turnout
-                if (!initializeBlockBossLogic(head.getSystemName())) {
+                if (!initializeBlockBossLogic(head.getDisplayName())) {
                     return;
                 }
                 logic.setMode(BlockBossLogic.TRAILINGMAIN);
                 if (farState == Turnout.THROWN) {
                     logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
                 }
-                logic.setTurnout(farTurnout.getSystemName());
-                logic.setSensor1(occupancy.getSystemName());
+                logic.setTurnout(farTurnout.getDisplayName());
+                logic.setSensor1(occupancy.getDisplayName());
                 if (occupancy != connectorOccupancy) {
-                    logic.setSensor2(connectorOccupancy.getSystemName());
+                    logic.setSensor2(connectorOccupancy.getDisplayName());
                 }
                 if (nextHead != null) {
-                    logic.setWatchedSignal1(nextHead.getSystemName(), false);
+                    logic.setWatchedSignal1(nextHead.getDisplayName(), false);
                 }
                 if (auxSignal != null) {
-                    logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+                    logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
                 }
                 String nearSensorName = setupNearLogixSlip(nearTurnout, nearState, head, farTurnout, farState, slip, number);
                 addNearSensorToSlipLogic(nearSensorName);
@@ -13576,34 +13574,34 @@ final public class LayoutEditorTools {
             }
         }
         if ((secondHead == null) && (track1 != null) && setup1) {
-            if (!initializeBlockBossLogic(head.getSystemName())) {
+            if (!initializeBlockBossLogic(head.getDisplayName())) {
                 return;
             }
             logic.setMode(BlockBossLogic.FACING);
-            logic.setTurnout(farTurnout.getSystemName());
+            logic.setTurnout(farTurnout.getDisplayName());
             if (occupancy != null) {
-                logic.setWatchedSensor1(occupancy.getSystemName());
+                logic.setWatchedSensor1(occupancy.getDisplayName());
             }
-            logic.setWatchedSensor2(occupancy2.getSystemName());
-            logic.setSensor2(connectorOccupancy.getSystemName());
+            logic.setWatchedSensor2(occupancy2.getDisplayName());
+            logic.setSensor2(connectorOccupancy.getDisplayName());
             if (nextHead != null) {
-                logic.setWatchedSignal1(nextHead.getSystemName(), false);
+                logic.setWatchedSignal1(nextHead.getDisplayName(), false);
             }
             if (savedAuxSignal != null) {
-                logic.setWatchedSignal1Alt(savedAuxSignal.getSystemName());
+                logic.setWatchedSignal1Alt(savedAuxSignal.getDisplayName());
             }
             if (nextHead2 != null) {
-                logic.setWatchedSignal2(nextHead2.getSystemName());
+                logic.setWatchedSignal2(nextHead2.getDisplayName());
             }
             if (auxSignal != null) {
-                logic.setWatchedSignal2Alt(auxSignal.getSystemName());
+                logic.setWatchedSignal2Alt(auxSignal.getDisplayName());
             }
             String nearSensorName = setupNearLogixSlip(nearTurnout, nearState, head, farTurnout, farState, slip, number + 1);
             addNearSensorToSlipLogic(nearSensorName);
             logic.setLimitSpeed2(true);
             finalizeBlockBossLogic();
         } else if ((secondHead != null) && setup2) {
-            if (!initializeBlockBossLogic(secondHead.getSystemName())) {
+            if (!initializeBlockBossLogic(secondHead.getDisplayName())) {
                 return;
             }
             nearState = layoutSlip.getTurnoutState(nearTurnout, divergeState);
@@ -13616,16 +13614,16 @@ final public class LayoutEditorTools {
             } else {
                 logic.setLimitSpeed2(true);
             }
-            logic.setTurnout(farTurnout.getSystemName());
-            logic.setSensor1(occupancy2.getSystemName());
+            logic.setTurnout(farTurnout.getDisplayName());
+            logic.setSensor1(occupancy2.getDisplayName());
             if (occupancy2 != connectorOccupancy) {
-                logic.setSensor2(connectorOccupancy.getSystemName());
+                logic.setSensor2(connectorOccupancy.getDisplayName());
             }
             if (nextHead2 != null) {
-                logic.setWatchedSignal1(nextHead2.getSystemName(), false);
+                logic.setWatchedSignal1(nextHead2.getDisplayName(), false);
             }
             if (auxSignal != null) {
-                logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+                logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
             }
             String nearSensorName = setupNearLogixSlip(nearTurnout, nearState, secondHead, farTurnout, farState, slip, number + 1);
             addNearSensorToSlipLogic(nearSensorName);
@@ -13639,8 +13637,9 @@ final public class LayoutEditorTools {
         String farTurnoutName = farTurn.getDisplayName();
 
         String logixPrefix = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNamePrefix();
+        String pref = InstanceManager.getDefault(jmri.LogixManager.class).getSystemPrefix();
         String logixName = logixPrefix + ":IX_LAYOUTSLIP:" + slip.getId();
-        String sensorName = "IS:" + logixName + "C" + number;
+        String sensorName = pref + "S:" + logixName + "C" + number;
         try {
             InstanceManager.sensorManagerInstance().provideSensor(sensorName);
         } catch (IllegalArgumentException ex) {

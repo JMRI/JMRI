@@ -130,7 +130,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             }
             // not actually used due to the configDeleteColumn, setColumnToHoldButton, configureButton
             if (col == EDITCOL) {
-                return new JTextField(Bundle.getMessage("ButtonEdit")).getPreferredSize().width;
+                return new JTextField(Bundle.getMessage("ButtonEdit")).getPreferredSize().width+4;
             }
             // not actually used due to the configValueColumn, setColumnToHoldButton, configureButton
             if (col == ENABLECOL) {
@@ -193,7 +193,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
          * Deactivate the Logix and remove its conditionals.
          */
         @Override
-        void doDelete(Logix logix) {
+        protected void doDelete(Logix logix) {
             if (logix != null) {
                 logix.deActivateLogix();
                 // delete the Logix and all its Conditionals
@@ -840,6 +840,9 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         _systemName.setEnabled(true);
         _userName.setEnabled(true);
         _addFrame.setTitle(rbx.getString("LRouteAddTitle"));
+        
+        _addFrame.setEscapeKeyClosesWindow(true);
+        _addFrame.getRootPane().setDefaultButton(createButton);
     }
 
     /**

@@ -19,7 +19,7 @@
     </family>
     <programming direct="yes" paged="no" register="no" ops="no"/>
     <variables>
-      <variable CV="112" readOnly="yes" item="Decoder Version" default="3">
+      <variable CV="112" item="Decoder Version" readOnly="yes" default="3">
         <decVal/>
         <label>Decoder Version:</label>
       </variable>

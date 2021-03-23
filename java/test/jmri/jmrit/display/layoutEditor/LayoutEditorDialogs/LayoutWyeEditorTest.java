@@ -63,7 +63,7 @@ public class LayoutWyeEditorTest extends LayoutTurnoutEditorTest {
 
     @AfterEach
     public void tearDown() {
-    
+
         if (layoutWye != null) {
             layoutWye.remove();
         }
@@ -78,8 +78,9 @@ public class LayoutWyeEditorTest extends LayoutTurnoutEditorTest {
 
         JUnitUtil.resetWindows(false, false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         super.tearDown();
     }
-    
+
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutWyeEditorTest.class);
 }

@@ -1,0 +1,169 @@
+package jmri.jmrit.logixng.actions;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyVetoException;
+import java.beans.VetoableChangeListener;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+
+import jmri.Memory;
+import jmri.MemoryManager;
+import jmri.InstanceManager;
+import jmri.NamedBeanHandle;
+import jmri.NamedBeanHandleManager;
+import jmri.jmrit.logixng.*;
+
+/**
+ * Sets a Memory.
+ * 
+ * @author Daniel Bergqvist Copyright 2018
+ */
+public class StringActionMemory extends AbstractStringAction
+        implements VetoableChangeListener {
+
+    private NamedBeanHandle<Memory> _memoryHandle;
+    
+    public StringActionMemory(String sys, String user) {
+        super(sys, user);
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
+        StringActionManager manager = InstanceManager.getDefault(StringActionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        StringActionMemory copy = new StringActionMemory(sysName, userName);
+        copy.setComment(getComment());
+        if (_memoryHandle != null) copy.setMemory(_memoryHandle);
+        return manager.registerAction(copy);
+    }
+    
+    public void setMemory(@Nonnull String memoryName) {
+        assertListenersAreNotRegistered(log, "setMemory");
+        Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName);
+        if (memory != null) {
+            setMemory(memory);
+        } else {
+            removeMemory();
+            log.error("memory \"{}\" is not found", memoryName);
+        }
+    }
+    
+    public void setMemory(@Nonnull NamedBeanHandle<Memory> handle) {
+        assertListenersAreNotRegistered(log, "setMemory");
+        _memoryHandle = handle;
+        InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
+    }
+    
+    public void setMemory(@Nonnull Memory memory) {
+        assertListenersAreNotRegistered(log, "setMemory");
+        setMemory(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                .getNamedBeanHandle(memory.getDisplayName(), memory));
+    }
+    
+    public void removeMemory() {
+        assertListenersAreNotRegistered(log, "setMemory");
+        if (_memoryHandle != null) {
+            InstanceManager.memoryManagerInstance().removeVetoableChangeListener(this);
+            _memoryHandle = null;
+        }
+    }
+    
+    public NamedBeanHandle<Memory> getMemory() {
+        return _memoryHandle;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void setValue(String value) {
+        if (_memoryHandle != null) {
+            _memoryHandle.getBean().setValue(value);
+        }
+    }
+
+    @Override
+    public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
+        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
+            if (evt.getOldValue() instanceof Memory) {
+                if (evt.getOldValue().equals(getMemory().getBean())) {
+                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new PropertyVetoException(Bundle.getMessage("StringMemory_MemoryInUseMemoryExpressionVeto", getDisplayName()), e); // NOI18N
+                }
+            }
+        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
+            if (evt.getOldValue() instanceof Memory) {
+                if (evt.getOldValue().equals(getMemory().getBean())) {
+                    removeMemory();
+                }
+            }
+        }
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
+        throw new UnsupportedOperationException("Not supported.");
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int getChildCount() {
+        return 0;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Category getCategory() {
+        return Category.ITEM;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isExternal() {
+        return true;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "StringActionMemory_Short");
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getLongDescription(Locale locale) {
+        if (_memoryHandle != null) {
+            return Bundle.getMessage(locale, "StringActionMemory_Long", _memoryHandle.getBean().getDisplayName());
+        } else {
+            return Bundle.getMessage(locale, "StringActionMemory_Long", "none");
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setup() {
+        // Do nothing
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void registerListenersForThisClass() {
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void unregisterListenersForThisClass() {
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void disposeMe() {
+    }
+    
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringActionMemory.class);
+
+}

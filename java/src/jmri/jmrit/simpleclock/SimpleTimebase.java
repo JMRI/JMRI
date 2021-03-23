@@ -5,11 +5,9 @@ import java.beans.PropertyChangeListener;
 import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
-import jmri.ClockControl;
-import jmri.Memory;
-import jmri.Sensor;
-import jmri.Timebase;
-import jmri.TimebaseRateException;
+
+import jmri.*;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,14 +34,17 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     public static final double MINIMUM_RATE = 0.1;
     public static final double MAXIMUM_RATE = 100;
 
-    public SimpleTimebase() {
+    protected final SystemConnectionMemo memo;
+
+    public SimpleTimebase(InternalSystemConnectionMemo memo) {
         super("SIMPLECLOCK");
+        this.memo = memo;
         // initialize time-containing memory
         try {
-            clockMemory = jmri.InstanceManager.memoryManagerInstance().provideMemory("IMCURRENTTIME");
+            clockMemory = jmri.InstanceManager.memoryManagerInstance().provideMemory(memo.getSystemPrefix()+"MCURRENTTIME");
             clockMemory.setValue("--");
         } catch (IllegalArgumentException ex) {
-            log.warn("Unable to create IMCURRENTTIME time memory variable");
+            log.warn("Unable to create CURRENTTIME time memory variable");
         }
         
         init();
@@ -57,20 +58,20 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         pauseTime = null;
         // initialize start/stop sensor for time running
         try {
-            clockSensor = jmri.InstanceManager.sensorManagerInstance().provideSensor("ISCLOCKRUNNING");
+            clockSensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(memo.getSystemPrefix()+"SCLOCKRUNNING");
             clockSensor.setKnownState(Sensor.ACTIVE);
             clockSensor.addPropertyChangeListener(this::clockSensorChanged);
         } catch (jmri.JmriException e) {
-            log.warn("Exception setting ISCLOCKRUNNING sensor ACTIVE: {}", e);
+            log.warn("Exception setting CLOCKRUNNING sensor ACTIVE: {}", e);
         }
         // initialize rate factor-containing memory
         if (jmri.InstanceManager.getNullableDefault(jmri.MemoryManager.class) != null) {
             // only try to create memory if memories are supported
             try {
-                factorMemory = jmri.InstanceManager.memoryManagerInstance().provideMemory("IMRATEFACTOR");
+                factorMemory = jmri.InstanceManager.memoryManagerInstance().provideMemory(memo.getSystemPrefix()+"MRATEFACTOR");
                 factorMemory.setValue(userGetRate());
             } catch (IllegalArgumentException ex) {
-                log.warn("Unable to create IMRATEFACTOR time memory variable");
+                log.warn("Unable to create RATEFACTOR time memory variable");
             }
         }
     

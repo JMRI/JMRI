@@ -51,6 +51,7 @@
 
       <p>
       YAAT is designed to eliminate the programming by using text files that contain English like phrases.  For example:
+      </p>
 
       <pre>
       sensor = sensors.getSensor('S-Sensor')
@@ -90,7 +91,8 @@
       <dl>
         <dt>logLevel</dt>
         <dd>YAAT sends logging information to either the JMRI system console or the
-        script monitor located at <strong>Panels &rArr; Script Output</strong>.
+        script monitor located at <strong>Scripting </strong>{<em>Old: <strong>Panels</strong></em>}
+        <strong>&rArr; Script Output</strong>.
         Zero is no logging, 4 provides the maximum detail.</dd>
 
         <dt>statusSensor</dt>

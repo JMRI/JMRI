@@ -90,7 +90,7 @@
         <tooltip xml:lang="de">Geschwindigkeit bei höchster Fahrstufe. Wert muss größer sein als Vmin, CV 2.</tooltip>
         <tooltip xml:lang="fr">Vitesse au plus grand pas de vitesse. Doit être plus grand que V démarr., CV 2.</tooltip>
     </variable>
-    <variable CV="7" readOnly="yes" item="Decoder Version">
+    <variable CV="7" item="Decoder Version" readOnly="yes">
         <decVal/>
         <label>Decoder Version</label>
         <label xml:lang="cs">Verze dekodéru: </label>
