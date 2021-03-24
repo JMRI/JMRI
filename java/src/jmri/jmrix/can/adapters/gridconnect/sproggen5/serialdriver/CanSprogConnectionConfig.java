@@ -4,10 +4,13 @@ package jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver;
  * Definition of objects to handle configuring a layout connection via a SPROG 
  * Generation 5 SerialDriverAdapter object.
  *
+ * Deprecated in 4.23 - not going ahead with this hardware
+ * 
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Andrew Crosland 2008
  * @author Andrew Crosland 2019
  */
+@Deprecated
 public class CanSprogConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
 
     /**
