@@ -619,5 +619,5 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Sound files that are larger than 100,000 bytes and therefore is streamed can now be looped.</li>
         </ul>
