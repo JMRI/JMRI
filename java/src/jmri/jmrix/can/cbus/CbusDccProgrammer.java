@@ -23,6 +23,14 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
         addTc(tc);
     }
 
+    private jmri.jmrix.can.CanSystemConnectionMemo _memo;
+    
+    public CbusDccProgrammer(jmri.jmrix.can.CanSystemConnectionMemo m) {
+        this.tc = m.getTrafficController();
+        _memo = m;
+        addTc(tc);
+    }
+
     jmri.jmrix.can.TrafficController tc;
 
     /**
@@ -88,6 +96,14 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
      */
     @Override
     synchronized public void readCV(String CVname, jmri.ProgListener p) throws jmri.ProgrammerException {
+        readCV(CVname, p, 0);
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    synchronized public void readCV(String CVname, jmri.ProgListener p, int startVal) throws jmri.ProgrammerException {
         final int CV = Integer.parseInt(CVname);
         log.debug("readCV {} listens {}",CV, p);
         useProgrammer(p);
@@ -98,7 +114,11 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
         try {
             startLongTimer();
             // read was in progress - send read command
-            tc.sendCanMessage(CbusMessage.getReadCV(_cv, getMode(), tc.getCanid()), this);
+            if (_memo.supportsCVHints()) {
+                tc.sendCanMessage(CbusMessage.getVerifyCV(_cv, getMode(), startVal, tc.getCanid()), this);
+            } else {
+                tc.sendCanMessage(CbusMessage.getReadCV(_cv, getMode(), tc.getCanid()), this);
+            }
         } catch (Exception e) {
             // program op failed, go straight to end
             log.error("Read operation failed, {} ", e);

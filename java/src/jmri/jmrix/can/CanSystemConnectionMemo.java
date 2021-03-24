@@ -53,6 +53,7 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     protected String _protocol = ConfigurationManager.MERGCBUS;
     protected SubProtocol _subProtocol = SubProtocol.CBUS;
     protected ProgModeSwitch _progModeSwitch = ProgModeSwitch.NONE;
+    protected boolean _supportsCVHints = false;
     
     jmri.jmrix.swing.ComponentFactory cf = null;
 
@@ -161,6 +162,11 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
         }
     }
 
+    /**
+     * Get the stare of the programming mode switch
+     * 
+     * @return the supported modes
+     */
     public ProgModeSwitch getProgModeSwitch() {
         return _progModeSwitch;
     }
@@ -169,6 +175,19 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
         if (null != pms) {
             _progModeSwitch = pms;
         }
+    }
+    
+    /**
+     * Get the CV hint support flag
+     * 
+     * @return true if CV hints are supported
+     */
+    public boolean supportsCVHints() {
+        return _supportsCVHints;
+    }
+    
+    public void setSupportsCVHints(boolean b) {
+        _supportsCVHints = b;
     }
     
     /**
