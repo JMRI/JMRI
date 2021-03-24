@@ -448,9 +448,10 @@ public class Sound {
             line.start();
             // read and play chunks of the audio
             try {
+                if (stream.markSupported()) stream.mark(Integer.MAX_VALUE);
+                
                 int i=0;
                 while (!streamingStop && ((i++ < count) || (count == Clip.LOOP_CONTINUOUSLY))) {
-                    if (stream.markSupported()) stream.mark(Integer.MAX_VALUE);
                     int offset;
                     while ((numRead = stream.read(buffer, 0, buffer.length)) >= 0) {
                         offset = 0;
