@@ -535,7 +535,8 @@
 
     	<h4>Simple Signal Logic</h4>
             <ul>
-                <li></li>
+                <li>The SSL tool has been updated to include the ability to
+                <strong>delete</strong> a SSL defintion.</li>
             </ul>
 
 	    <h4>USS CTC Logic</h4>
@@ -551,8 +552,18 @@
 
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
-        <ul>
-            <li></li>
+        <ul>            
+            <li>Function Panel now displays all functions buttons at once, with a scrollbar if required</li>
+            <li>There are as many function buttons as defined by the used throttle</li>
+            <li>Keyboard shortcuts now available on whole throttle window</li>
+            <li>Mousewheel speed control now available on whole throttle window</li>
+            <li>One mousewheel scroll unit will increment or decrement throttle speed by one speed setting increment (depends on the throttle speed step setting)</li>
+            <li>Use Ctrl key to apply a multiply factor on speed increment/decrement (x5)</li>
+            <li>Function and Control panels property panes reworked</li>
+            <li>Ticks on graphical speed slider</li>
+            <li>Pressing Enter in AddressPanel when entering an address will actually request it</li>
+            <li>Jythons scripts with direct access to the JMRI UI are now deprecated (AAR105.py, RailDriver.py, USBThrottle.py, xboxThrottle.py). Use USBThrottleAsJynstrument.py script instead, or direct Jynstrument in <a href="https://github.com/JMRI/JMRI/tree/master/jython/Jynstruments/ThrottleWindowToolBar/USBThrottle.jyn">jython/Jynstruments/ThrottleWindowToolBar/USBThrottle.jyn</a> , specific drivers are proposed for AAR105 and Raildriver, they may have to be adjusted.</li>
+            <li>The RailDriver menu entry was removed, the related Java code is totally deprecated and difficult for end users to customize, use above <a href="https://github.com/JMRI/JMRI/tree/master/jython/Jynstruments/ThrottleWindowToolBar/USBThrottle.jyn">USBThrottle.jyn</a>  Jyntrument, check the readme and customize at will.</li>
         </ul>
 
     <h3>Timetable</h3>

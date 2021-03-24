@@ -1,0 +1,164 @@
+<html>
+<head>
+<title>LogixNG Tutorial - Chapter 7</title>
+<script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="script.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<table width="800">
+<tr>
+<td>
+
+<h1>LogixNG Tutorial - Chapter 7</h1>
+
+This example is a bit complex and needs some introduction on how it works. But it gives a good introduction to the
+action Sequence which is very useful with LogixNG. This example uses a web page that's included in JMRI. Start
+<b>PanelPro</b> and open a web browser and visit the page
+<a href="http://localhost:12080/web/logixng_examples/logixng_sequence.html">http://localhost:12080/web/logixng_examples/logixng_sequence.html</a>.
+This link assumes that PanelPro uses the port 12080 for its web server.
+
+<p>
+
+<hr>
+
+<img src="images/chapter7_layout.png"><br>
+
+<hr>
+
+<h2>Sequence - controlling a crane and a loco</h2>
+
+<p>
+
+A layout for exhibitions has a coal storage with a coal crane, there the crane loads coal on a wagon which then
+transports the coal to a harbour and drops the coal into a ship.
+
+<p>
+
+<img src="images/chapter7_crane.png"><br>
+The above image shows the crane in four different positions. The left crane has an empty bucket and the arm
+that holds the bucket is in its up position. This demo uses an arrow on the crane's cabin to show if the crane is
+up or down. When the arm is up, the arrow points to the bucket. When the arm is down, the arrow points away from the
+bucket. The middle left crane has also an empty bucket but the arm that holds the bucket is in its down position. The
+middle right crane has a filled bucket and its arm in the up position. The right crane has the bucket open, while the
+other three cranes have the bucket closed.
+<p>
+
+<img src="images/chapter7_train.png"><br>
+
+The above image shows the steam engine and a coal car. On this image, the car is loaded with coal. Right to the train
+is the turnout that lets the train go either to the harbour or to the coal yard.
+<p>
+Outside of this image, north of the track is the harbour with the ship that gets loaded with coal. And next to the crane
+is the coal yard there the crane picks up coal to put in the car.
+<p>
+The red circles between the rails are sensors that goes active when the engine or the car is above it.
+<p>
+
+<hr>
+
+<h3>Running the layout</h3>
+
+At first, we try to run the layout manually to see how it works. And to do that, we need to define some sensors and
+memories in JMRI. There is some support for AnalogIOs in JMRI, items on the layout that uses numbers instead of on/off
+states, but it's limited today to meters. Therefore, this demo uses memories to send and receive analog values to and
+from the layout. But the goal is to use AnalogIO devices instead.
+
+<p>
+
+We have a turnout on the layout:
+<ul>
+<li>IT_7_1 - The turnout</li>
+</ul>
+
+We need three sensors to detect where the train are on the layout:
+<ul>
+<li>IS_7_1 - Sensor at the turnout</li>
+<li>IS_7_2 - Sensor at the ship</li>
+<li>IS_7_3 - Sensor at the crane</li>
+</ul>
+
+And we need six memories to control the three axis of the crane. The memories with odd numbers are used for JMRI to
+tell the crane where to go. The memories with even numbers are used by the crane to tell JMRI where the current
+position of the axis.
+<ul>
+<li>IM_7_1 - Crane angle left - right, commanded position</li>
+<li>IM_7_2 - Crane angle left - right, actual position</li>
+<li>IM_7_3 - Crane bucket up - down, commanded position</li>
+<li>IM_7_4 - Crane bucket up - down, actual position</li>
+<li>IM_7_5 - Crane bucket closed - open, commanded position</li>
+<li>IM_7_6 - Crane bucket closed - open, actual position</li>
+</ul>
+
+We also need to control the loco. We do it by opening a new throttle in JMRI and select loco address 21.
+<ul>
+<li>Throttle with address 21 - Controls the steam engine</li>
+</ul>
+
+We need a sensor to communicate between the crane and the train, and a sensor for the timer that unloads the car:
+<ul>
+<li>IS_7_21 - Crane has unloaded coal to car</li>
+<li>IS_7_22 - Car has unloaded coal to ship</li>
+</ul>
+
+We also has three sensors to control the LogixNG that runs this layout. We will use these three sensors later.
+<ul>
+<li>IS_7_11 - Start sequence</li>
+<li>IS_7_12 - Stop sequence</li>
+<li>IS_7_13 - Reset sequence</li>
+</ul>
+
+
+<h3>Some rules when running this layout</h3>
+
+The crane will not rotate left-right unless the bucket is in its top position. So if the crane doesn't rotate, make
+sure that the bucket is lifted to its upmost position.
+<p>
+The bucket will not be loaded unless the bucket is opened, moved down to the bottom position and then closed.
+<p>
+The car will not be loaded unless the bucket of the crane is filled and then opened above the car.
+
+
+
+
+
+<h2>Now, lets automate this layout using LogixNG.</h2>
+
+To run this layout, we need to be able to do one step at a time. Do thing A, wait for condition B, do thing C, wait
+for condition D, and so on. For this purpose, we can use the action Sequence. It has three predefined expressions:
+Start, Stop and Reset, and then a set of actions and expressions that follows these three expressions.
+<p>
+Sequence executes the first action and then waits for the first expression to return true. Once that happens, Sequence
+executes the second action and then waits for the second expression to return true. Once that happens, Sequence
+executes the third action, and so on.
+<p>
+Sequence may auto start or be started by the Start expression, depending on how the user has configured Sequence. And
+when the last expression has returned true, Sequence may start over and run the sequence again, if the user has
+configured Sequence to do so.
+<p>
+For this layout, we use two Sequence. The first runs the train and the second runs the crane. Note that we can have
+both in the same ConditionalNG.
+
+
+<h3>ToDo - add text about how to setup the Sequence</h3>
+
+For now, please look at the example in the profile. It has a working ConditionalNG for this.
+
+
+<h3>Using the random function</h3>
+
+One problem remains. When we run the automation, the crane will always dig coal from the same spot. It will result in
+that the coal on that spot runs out, while there is plenty of coal close to that spot. To fix this, we want the crane
+to pick a random spot within an interval and dig at that random spot. To do this, we use the expression Formula and the
+function random(). The function random() can take zero arguments and then returns a floating point number between 0 and
+1, and it can take two arguments and then returns a floating point number between the first argument and the second
+argument. We will use the later and give random() two arguments, there the first argument is the minimum value and the
+second argument is the maximum value.
+
+</td>
+</tr>
+</table>
+</body>
+</html>

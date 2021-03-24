@@ -3,6 +3,7 @@ package jmri.managers;
 import javax.annotation.Nonnull;
 import jmri.Manager;
 
+import jmri.DigitalIO;
 import jmri.Sensor;
 import jmri.SensorManager;
 
