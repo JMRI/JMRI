@@ -99,7 +99,8 @@ public class LearnWarrantTest {
         Sensor lastSensor = recordtimes(route, frame._speedUtil.getThrottle());
 
         // After stopping train, wait a bit before pressing stop
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        Thread.sleep(100);      // waitEmpty(100) causes a lot of failures on Travis GUI
+//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         pressButton(jfo, Bundle.getMessage("Stop"));
         JUnitUtil.waitFor(() -> (block0.getState() & OBlock.ALLOCATED) == 0, "Warrant deallocated");
         // warrant has been recorded using engine 99
