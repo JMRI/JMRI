@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2004, 2013
  * @author Howard G. Penny Copyright (C) 2005
+ * @author Andrew Crosland (C) 2021
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
@@ -353,7 +354,8 @@ public class CvValue extends AbstractValue implements ProgListener {
             _reading = true;
             _confirm = false;
             try {
-                mProgrammer.readCV(_num, this);
+                //mProgrammer.readCV(_num, this);
+                mProgrammer.readCV(_num, this, this.getValue());
             } catch (Exception e) {
                 if (status != null) {
                     status.setText(

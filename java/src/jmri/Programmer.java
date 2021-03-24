@@ -29,6 +29,8 @@ import javax.annotation.Nonnull;
  * <p>
  * Starting in JMRI 3.5.5, the CV addresses are Strings for generality. The
  * methods that use ints for CV addresses will later be deprecated.
+ * <p>
+ * Added possibility to supply CV value hint to the system
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -43,6 +45,7 @@ import javax.annotation.Nonnull;
  * @see jmri.GlobalProgrammerManager
  * @see jmri.AddressedProgrammerManager
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2013
+ * @author Andrew Crosland (C) 2021
  */
 public interface Programmer {
 
@@ -90,6 +93,38 @@ public interface Programmer {
      * @throws jmri.ProgrammerException if unable to communicate
      */
     void readCV(String CV, ProgListener p) throws ProgrammerException;
+
+    /**
+     * Perform a CV read in the system-specific manner, and using the specified
+     * programming mode, possibly using a hint of the current value to speed up
+     * programming.
+     * <p>
+     * Handles a general address space through a String address. Each programmer
+     * defines the acceptable formats.
+     * <p>
+     * On systems that support it, the startVal is a hint as to what the current
+     * value of the CV might be (e.g. the value from the roster). This could be
+     * verified immediately in direct byte mode to speed up the read process.
+     * <p>
+     * Note that this returns before the write is complete; you have to provide
+     * a ProgListener to hear about completion. For simplicity, expect the return to be on the 
+     * <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">GUI thread</a>.
+     * <p>
+     * Defaults to the normal read method if not overridden in a specific implementation.
+     * <p>
+     * Exceptions will only be
+     * thrown at the start, not during the actual programming sequence. A
+     * typical exception would be due to an invalid mode (though that should be
+     * prevented earlier)
+     *
+     * @param CV the CV to read
+     * @param p  the listener that will be notified of the read
+     * @param startVal  a hint of what the current value might be, or 0
+     * @throws jmri.ProgrammerException if unable to communicate
+     */
+    public default void readCV(String CV, ProgListener p, int startVal) throws ProgrammerException {
+        readCV(CV, p);
+    }
 
     /**
      * Confirm the value of a CV using the specified programming mode. On some
