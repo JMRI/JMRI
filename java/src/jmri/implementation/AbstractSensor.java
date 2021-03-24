@@ -3,9 +3,8 @@ package jmri.implementation;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
-import jmri.Reporter;
-import jmri.Sensor;
-import jmri.Turnout;
+import jmri.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

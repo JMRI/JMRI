@@ -1,0 +1,120 @@
+<html>
+<head>
+<title>LogixNG Tutorial - Chapter 12</title>
+<script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="script.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<table width="800">
+<tr>
+<td>
+
+<h1>LogixNG Tutorial - Chapter 12</h1>
+
+<h2>Scripts</h2>
+
+LogixNG has two different ways to run scripts, simple scripts and advanced scripts. Simple scripts are easiest to use.
+Advanced scripts have the advantage of giving you full access to the features of LogixNG, including let the script
+action have child sockets.
+
+
+
+<h3>Simple scripts</h3>
+
+
+
+<h3>Advanced scripts</h3>
+
+
+
+<p>
+<table border="1" cellspacing="0" cellpadding="2">
+<tr><td>
+<pre>
+import java
+import java.beans
+import jmri
+import jmri.jmrit.logixng
+
+class MyAction(jmri.jmrit.logixng.actions.AbstractScriptDigitalAction, jmri.jmrit.logixng.FemaleSocketListener):
+
+    l = lights.provideLight("IL1")
+    s = sensors.provideSensor("IS2")
+
+    def registerScriptListeners(self):
+        self.s.addPropertyChangeListener("KnownState", self)
+
+    def unregisterScriptListeners(self):
+        self.s.removePropertyChangeListener("KnownState", self)
+
+    def getChild(self, index):
+        if index == 0:
+            return self.childAnalogAction
+        elif index == 1:
+            return self.childAnalogExpression
+        elif index == 2:
+            return self.childDigitalAction
+        elif index == 3:
+            return self.childDigitalBooleanAction
+        elif index == 4:
+            return self.childDigitalExpression
+        elif index == 5:
+            return self.childStringAction
+        elif index == 6:
+            return self.childStringExpression
+        else:
+            raise java.lang.IllegalArgumentException("index is bad")
+
+    def getChildCount(self):
+        return 7
+
+    def connected(self, femaleSocket):
+        self.firePropertyChange(jmri.jmrit.logixng.Base.PROPERTY_SOCKET_CONNECTED, None, femaleSocket)
+
+    def disconnected(self, femaleSocket):
+        self.firePropertyChange(jmri.jmrit.logixng.Base.PROPERTY_SOCKET_DISCONNECTED, None, femaleSocket)
+
+    def execute(self):
+        if self.l is None:
+            raise java.lang.NullPointerException()
+        self.l.commandedState = ON
+
+    def setup(self):
+        // Do something
+
+    def vetoableChange(self,evt):
+        if ("CanDelete" == evt.getPropertyName()):
+            if (isinstance(evt.getOldValue(),jmri.Light)):
+                if (evt.getOldValue() is self.l):
+                    raise java.beans.PropertyVetoException(self.getDisplayName(), evt)
+        if ("DoDelete" == evt.getPropertyName()):
+            if (isinstance(evt.getOldValue(),jmri.Light)):
+                if (evt.getOldValue() is self.l):
+                    self.l = None
+
+myClass = MyAction(params._parentAction)
+myClass.childAnalogAction = analogActions.createFemaleSocket(myClass, myClass, "AA")
+myClass.childAnalogExpression = analogExpressions.createFemaleSocket(myClass, myClass, "AE")
+myClass.childDigitalAction = digitalActions.createFemaleSocket(myClass, myClass, "DA")
+myClass.childDigitalBooleanAction = digitalBooleanActions.createFemaleSocket(myClass, myClass, "DBA")
+myClass.childDigitalExpression = digitalExpressions.createFemaleSocket(myClass, myClass, "DE")
+myClass.childStringAction = stringActions.createFemaleSocket(myClass, myClass, "SA")
+myClass.childStringExpression = stringExpressions.createFemaleSocket(myClass, myClass, "SE")
+lights.addVetoableChangeListener(myClass)
+params._scriptClass.set(myClass);
+</pre>
+</td></tr>
+</table>
+
+
+
+
+
+</td>
+</tr>
+</table>
+</body>
+</html>

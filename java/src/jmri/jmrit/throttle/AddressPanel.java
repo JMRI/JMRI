@@ -395,7 +395,12 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
             consistAddress = null;
             changeOfAddress();
         });
-
+        
+        addrSelector.getTextField().addActionListener(e -> {
+            consistAddress = null;
+            changeOfAddress();
+        });
+        
         rosterBox = new RosterEntrySelectorPanel();
         getRosterEntrySelector().setNonSelectedItem(Bundle.getMessage("NoLocoSelected"));
         getRosterEntrySelector().setToolTipText(Bundle.getMessage("SelectLocoFromRosterTT"));

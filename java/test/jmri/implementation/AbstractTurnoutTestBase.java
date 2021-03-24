@@ -4,11 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.beans.PropertyChangeListener;
 
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Sensor;
+import jmri.*;
 import jmri.util.JUnitUtil;
-import jmri.Turnout;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
@@ -52,12 +50,18 @@ public abstract class AbstractTurnoutTestBase {
 
     static protected boolean listenerResult = false;
     static protected int listenStatus = Turnout.UNKNOWN;
+    static protected java.util.List<String> propChangeNames;
 
     public static class Listen implements PropertyChangeListener {
 
+        public Listen(){
+            propChangeNames = new java.util.ArrayList<>();
+        }
+        
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             listenerResult = true;
+            propChangeNames.add(e.getPropertyName());
             if (e.getPropertyName().equals("KnownState")) {
                 listenStatus = (Integer) e.getNewValue();
             }
@@ -181,10 +185,18 @@ public abstract class AbstractTurnoutTestBase {
     @Test
     public void testGetAndSetInverted() {
         if (t.canInvert()) {
-            //Assume.assumeTrue(t.canInvert());  // skip test if can't invert.
+            t.addPropertyChangeListener(new Listen());
             Assert.assertFalse("Default Inverted State", t.getInverted());
             t.setInverted(true);
             Assert.assertTrue("set Inverted", t.getInverted());
+            Assert.assertTrue("Inverted propertychange",propChangeNames.contains("inverted"));
+            
+            t.addPropertyChangeListener(new Listen()); // reset PCLs
+            
+            t.setInverted(false);
+            Assert.assertFalse("Unset Inverted", t.getInverted());
+            Assert.assertTrue("Inverted propertychange",propChangeNames.contains("inverted"));
+            
         }
     }
 
@@ -219,15 +231,78 @@ public abstract class AbstractTurnoutTestBase {
     }
 
     @Test
+    public void testSetGetReportLocked() throws InterruptedException {
+        Assert.assertTrue("Turnout starts reporting locked attempted access",t.getReportLocked());
+        t.addPropertyChangeListener(new Listen()); // reset PCLs
+        t.setReportLocked(true);
+        Assert.assertFalse("SetGetReportLocked nochange",
+            propChangeNames.contains("reportlocked"));
+        
+        t.setReportLocked(false);
+        Assert.assertFalse("SetGetReportLocked sets false",t.getReportLocked());
+        Assert.assertTrue("SetGetReportLocked propertychange",
+            propChangeNames.contains("reportlocked"));
+        
+        t.addPropertyChangeListener(new Listen()); // reset PCLs
+        t.setReportLocked(true);
+        Assert.assertTrue("SetGetReportLocked sets true",t.getReportLocked());
+        Assert.assertTrue("SetGetReportLocked propertychange",
+            propChangeNames.contains("reportlocked"));
+        
+    }
+    
+    @Test
+    public void testSetFeedbackModePCL() throws InterruptedException {
+        t.setFeedbackMode(Turnout.UNKNOWN);
+        Assert.assertEquals("No feedback set at start",Turnout.UNKNOWN,t.getFeedbackMode());
+        
+        t.addPropertyChangeListener(new Listen());
+        t.setFeedbackMode(Turnout.UNKNOWN);
+        Assert.assertFalse("setFeedbackMode propertychange",
+            propChangeNames.contains("feedbackchange"));
+        
+        t.setFeedbackMode(Turnout.ONESENSOR);
+        Assert.assertTrue("setFeedbackMode propertychange",
+            propChangeNames.contains("feedbackchange"));
+    }
+    
+    @Test
+    public void testSetDecoderNamePCL() throws InterruptedException {
+        
+        // Assert.assertEquals("No decoder set at start",null,t.getDecoderName());
+        // In AbstractTurnout this String defaults to PushbuttonPacket.unknown , ie "None"
+        // which is different to the javadoc in Turnout which indicates should return null for unset.
+        
+        // so we set it manually here so starting this particular test from a known state.
+        t.setDecoderName(null);
+        Assert.assertEquals("No decoder set at start",null,t.getDecoderName());
+        
+        t.addPropertyChangeListener(new Listen());
+        t.setDecoderName(null);
+        Assert.assertFalse("setDecoderName no change",
+            propChangeNames.contains("decoderNameChange"));
+        
+        t.setDecoderName("Test Name");
+        Assert.assertTrue("SetDecoderName propertychange",
+            propChangeNames.contains("decoderNameChange"));
+    }
+    
+    @Test
     public void testProvideFirstFeedbackSensor() throws jmri.JmriException {
+        t.addPropertyChangeListener(new Listen());
         t.provideFirstFeedbackSensor("IS1");
         Assert.assertNotNull("first feedback sensor", t.getFirstSensor());
+        Assert.assertTrue("1st feedback sensor propertychange",
+            propChangeNames.contains("turnoutFeedbackFirstSensorChange"));
     }
 
     @Test
     public void testProvideSecondFeedbackSensor() throws jmri.JmriException {
+        t.addPropertyChangeListener(new Listen());
         t.provideSecondFeedbackSensor("IS2");
         Assert.assertNotNull("first feedback sensor", t.getSecondSensor());
+        Assert.assertTrue("2nd feedback sensor propertychange",
+            propChangeNames.contains("turnoutFeedbackSecondSensorChange"));
     }
 
     @Test

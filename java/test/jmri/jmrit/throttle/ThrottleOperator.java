@@ -62,9 +62,18 @@ public class ThrottleOperator extends JFrameOperator {
     public void typeAddressValue(int address) {
         JInternalFrameOperator ifo = getAddressPanelOperator();
         JTextFieldOperator jtfo = new JTextFieldOperator(ifo); // only one text field in the address panel.
+        jtfo.requestFocus(); // try focus, but need a window manager to work
+        jtfo.clickForPopup(); // force with right click (left lick would moce carret), fortunatly there is no right click handler in this component
         jtfo.typeText("" + address);
     }
-
+    
+    // is the address field enabled
+    public boolean addressFieldEnabled() {
+        JInternalFrameOperator ifo = getAddressPanelOperator();
+        JTextFieldOperator jtfo = new JTextFieldOperator(ifo); // only one text field in the address panel.
+        return jtfo.isEnabled();
+    }
+    
     // get the address value.
     public DccLocoAddress getAddressValue() {
         AddressPanel ap = getAddressPanel();
@@ -113,40 +122,6 @@ public class ThrottleOperator extends JFrameOperator {
         return (new JButtonOperator(this, Bundle.getMessage("ButtonDispatch"))).isEnabled();
     }
 
-    public void answerStealQuestion(boolean steal) {
-        JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("StealRequestTitle"));
-        if (steal) {
-            (new JButtonOperator(jdo, Bundle.getMessage("ButtonYes"))).doClick();
-        } else {
-            (new JButtonOperator(jdo, Bundle.getMessage("ButtonNo"))).doClick();
-        }
-    }
-
-    public void answerShareQuestion(boolean share) {
-        JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("ShareRequestTitle"));
-        if (share) {
-            (new JButtonOperator(jdo, Bundle.getMessage("ButtonYes"))).doClick();
-        } else {
-            (new JButtonOperator(jdo, Bundle.getMessage("ButtonNo"))).doClick();
-        }
-    }
-
-    // Steal / Share / Cancel dialogue operators
-    public void answerStealShareQuestionSteal() {
-        JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("StealShareRequestTitle"));
-        new JButtonOperator(jdo, Bundle.getMessage("StealButton")).doClick();
-    }
-
-    public void answerStealShareQuestionShare() {
-        JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("StealShareRequestTitle"));
-        new JButtonOperator(jdo, Bundle.getMessage("ShareButton")).doClick();
-    }
-
-    public void answerStealShareQuestionCancel() {
-        JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("StealShareRequestTitle"));
-        new JButtonOperator(jdo, Bundle.getMessage("CancelButton")).doClick();
-    }
-
     // Function panel operations
     public JInternalFrameOperator getFunctionPanelOperator() {
         return new JInternalFrameOperator(this,
@@ -155,54 +130,6 @@ public class ThrottleOperator extends JFrameOperator {
 
     public void pushFunctionButton(String Function) {
         new JButtonOperator(getFunctionPanelOperator(), Function).push();
-    }
-
-    public void pushAlt1Button() {
-        JToggleButton alt1Button = (JToggleButton) findSubComponent(
-                new ComponentChooser() {
-            @Override
-            public boolean checkComponent(Component c) {
-                if (c instanceof JToggleButton) {
-                    if (((JToggleButton) c).getText().equals("*")) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            }
-
-            @Override
-            public String getDescription() {
-                return "Find Function Button";
-            }
-        });
-        JemmyUtil.enterClickAndLeave(alt1Button);
-    }
-
-    public void pushAlt2Button() {
-        JToggleButton alt1Button = (JToggleButton) findSubComponent(
-                new ComponentChooser() {
-            @Override
-            public boolean checkComponent(Component c) {
-                if (c instanceof JToggleButton) {
-                    if (((JToggleButton) c).getText().equals("#")) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            }
-
-            @Override
-            public String getDescription() {
-                return "Find Function Button";
-            }
-        });
-        JemmyUtil.enterClickAndLeave(alt1Button);
     }
 
     public FunctionButton getFunctionButton(int function) {
@@ -241,8 +168,8 @@ public class ThrottleOperator extends JFrameOperator {
         openFunctionPopupMenu(function);
         JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("ButtonEditFunction"));
         (new JCheckBoxOperator(jdo, Bundle.getMessage("CheckBoxLockable"))).doClick();
-        (new JButtonOperator(jdo, Bundle.getMessage("ButtonOK"))).doClick();
-
+        (new JButtonOperator(jdo, Bundle.getMessage("ButtonApply"))).doClick();
+        (new JButtonOperator(jdo, Bundle.getMessage("ButtonClose"))).doClick();
     }
 
     // Control (Speed and Direction) panel operations
@@ -307,7 +234,8 @@ public class ThrottleOperator extends JFrameOperator {
         openControlPanelPopupMenu();
         JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("TitleEditSpeedControlPanel"));
         (new JRadioButtonOperator(jdo, Bundle.getMessage("ButtonDisplaySpeedSteps"))).doClick();
-        (new JButtonOperator(jdo, Bundle.getMessage("ButtonOK"))).doClick();
+        (new JButtonOperator(jdo, Bundle.getMessage("ButtonApply"))).doClick();
+        (new JButtonOperator(jdo, Bundle.getMessage("ButtonClose"))).doClick();
 
     }
 
