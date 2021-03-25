@@ -115,14 +115,6 @@ public class ProxyReporterManager extends AbstractProvidingProxyManager<Reporter
         return getNextValidAddress(curAddress, prefix, ignoreInitialExisting, typeLetter());
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getEntryToolTip() {
-        return "Enter a number from 1 to 9999"; // Basic number format help
-    }
-
     @Override
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {

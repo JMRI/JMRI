@@ -42,8 +42,8 @@ public interface SensorManager extends ProvidingManager<Sensor> {
     @Nonnull
     public Sensor provideSensor(@Nonnull String name) throws IllegalArgumentException;
 
-    @Override
     /** {@inheritDoc} */
+    @Override
     default public Sensor provide(@Nonnull String name) throws IllegalArgumentException { return provideSensor(name); }
 
     /**
