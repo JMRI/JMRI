@@ -97,9 +97,6 @@ public class ThrottleWindow extends JmriJFrame {
                 && (InstanceManager.getDefault(ThrottlesPreferences.class).isUsingToolBar())) {
             initializeToolbar();
         }
-        /*        if ( (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle() )
-         && ( InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isResizingWindow()))
-         setResizable(false);*/
         initializeMenu();
 
         setCurrentThrottleFrame(new ThrottleFrame(this));
@@ -278,9 +275,9 @@ public class ThrottleWindow extends JmriJFrame {
             return;
         isEditMode = mode;
         if (!throttleFrames.isEmpty()) {
-            for (ThrottleFrame throttleFrame : throttleFrames.values()) {
+            throttleFrames.values().forEach((throttleFrame) -> {
                 throttleFrame.setEditMode(isEditMode);
-            }
+            });
         }
         updateGUI();
     }
@@ -476,9 +473,9 @@ public class ThrottleWindow extends JmriJFrame {
     @Override
     public void dispose() {
         if ((throttleFrames != null) && (!throttleFrames.isEmpty())) {
-            for (ThrottleFrame throttleFrame : throttleFrames.values()) {
+            throttleFrames.values().forEach((throttleFrame) -> {
                 throttleFrame.dispose();
-            }
+            });
         }
         throttleFrames = null;
         throttlesPanel.removeAll();
@@ -720,12 +717,12 @@ public class ThrottleWindow extends JmriJFrame {
 
         List<Element> jinsts = e.getChildren("Jynstrument");
         if ((jinsts != null) && (jinsts.size() > 0)) {
-            for (Element jinst : jinsts) {
+            jinsts.forEach((jinst) -> {
                 Jynstrument jyn = ynstrument(FileUtil.getExternalFilename(jinst.getAttributeValue("JynstrumentFolder")));
                 if (jyn != null) {
                     jyn.setXml(jinst);
                 }
-            }
+            });
         }
 
         updateGUI();
@@ -744,8 +741,7 @@ public class ThrottleWindow extends JmriJFrame {
     private void installInputsListenerOnAllComponents(Container c) {
         c.addKeyListener(myInputsListener);
         c.addMouseWheelListener(myInputsListener);        
-        Component[] components = c.getComponents();
-        for (Component component : components) {
+        for (Component component : c.getComponents()) {
             if (component instanceof Container) {
                 installInputsListenerOnAllComponents( (Container) component);
             } else {
