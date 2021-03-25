@@ -324,8 +324,8 @@ public class ThrottlesPreferencesControlsSettingsPane extends JPanel {
             }
         }
         try {
-            float sm = Float.parseFloat(tfSpeedMultiplier.getText());
-            if (tpwkc.getMoreSpeedMultiplier() != sm ) {
+            float sm = Float.parseFloat(tfSpeedMultiplier.getText());            
+            if (Float.compare(sm,  tpwkc.getMoreSpeedMultiplier())!=0) {
                 tpwkc.setMoreSpeedMultiplier(sm);
             }
         }
@@ -375,7 +375,7 @@ public class ThrottlesPreferencesControlsSettingsPane extends JPanel {
         }
         try {
             float sm = Float.parseFloat(tfSpeedMultiplier.getText());
-            ret = (sm == origSpeedMultiplier) || ret;
+            ret = (Float.compare(sm,  origSpeedMultiplier)!=0) || ret; 
         }
         catch (NumberFormatException e) {
             log.error("Speed multiplier must be a numerical float value.");
