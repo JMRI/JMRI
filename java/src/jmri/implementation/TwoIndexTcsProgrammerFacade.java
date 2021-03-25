@@ -33,6 +33,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.implementation.ProgrammerFacadeSelector
  *
  * @author Bob Jacobsen Copyright (C) 2013, 2016
+ * @author Andrew Crosland Copyright (C) 2021
  */
 public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
@@ -62,6 +63,8 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
     int valueMSB;  //  value to write to MSB or -1
     int valueLSB;  //  value to write to LSB or -1
     int _startVal; // Current CV value hint
+    int _startMSB;
+    int _startLSB;
 
     private void parseCV(String cv) throws IllegalArgumentException {
         valuePI = -1;
@@ -110,6 +113,8 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
         useProgrammer(p);
         parseCV(CV);
         _startVal = startVal;
+        _startMSB = startVal/256;
+        _startLSB = startVal%256;
         upperByte = 0;
         if (valuePI == -1) {
             state = ProgState.PROGRAMMING;
@@ -221,7 +226,7 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
             case DOREADFIRST:
                 try {
                     state = ProgState.FINISHREAD;
-                    prog.readCV(valMSB, this, _startVal);
+                    prog.readCV(valMSB, this, _startMSB);
                 } catch (jmri.ProgrammerException e) {
                     log.error("Exception doing read first", e);
                 }
@@ -234,7 +239,7 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
                         prog.readCV(indexSI, this, _startVal);
                     } else {
                         upperByte = value;
-                        prog.readCV(valLSB, this, _startVal);
+                        prog.readCV(valLSB, this, _startLSB);
                     }
                 } catch (jmri.ProgrammerException e) {
                     log.error("Exception doing final read", e);
