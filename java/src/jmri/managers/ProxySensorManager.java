@@ -106,14 +106,6 @@ public class ProxySensorManager extends AbstractProvidingProxyManager<Sensor>
         return getNextValidAddress(curAddress, prefix, ignoreInitialExisting, typeLetter());
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getEntryToolTip() {
-        return "Enter a number from 1 to 9999"; // Basic number format help
-    }
-
     @Override
     public long getDefaultSensorDebounceGoingActive() {
         return ((SensorManager) getDefaultManager()).getDefaultSensorDebounceGoingActive();

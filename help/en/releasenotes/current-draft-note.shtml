@@ -23,6 +23,7 @@
             <ul>
                 <li>Fixed Internal Sensor Manager set as default, not CBUS Sensor Manager, affecting 4.19.6 onwards.</li>
                 <li>Simulated Connections - Output Interval option added to Additional Connection Settings.</li>
+		
             </ul>
 
         <h4>C/MRI</h4>
@@ -561,10 +562,11 @@
             <li>One mousewheel scroll unit will increment or decrement throttle speed by one speed setting increment (depends on the throttle speed step setting)</li>
             <li>Use Ctrl key to apply a multiply factor on speed increment/decrement (x5)</li>
             <li>Function and Control panels property panes reworked</li>
+            <li>Function button with images can be resized from control panel</li>
+            <li>Function button customizations correctly serialized</li>
             <li>Ticks on graphical speed slider</li>
             <li>Pressing Enter in AddressPanel when entering an address will actually request it</li>
             <li>Jythons scripts with direct access to the JMRI UI are now deprecated (AAR105.py, RailDriver.py, USBThrottle.py, xboxThrottle.py). Use USBThrottleAsJynstrument.py script instead, or direct Jynstrument in <a href="https://github.com/JMRI/JMRI/tree/master/jython/Jynstruments/ThrottleWindowToolBar/USBThrottle.jyn">jython/Jynstruments/ThrottleWindowToolBar/USBThrottle.jyn</a> , specific drivers are proposed for AAR105 and Raildriver, they may have to be adjusted.</li>
-            <li>The RailDriver menu entry was removed, the related Java code is totally deprecated and difficult for end users to customize, use above <a href="https://github.com/JMRI/JMRI/tree/master/jython/Jynstruments/ThrottleWindowToolBar/USBThrottle.jyn">USBThrottle.jyn</a>  Jyntrument, check the readme and customize at will.</li>
         </ul>
 
     <h3>Timetable</h3>
