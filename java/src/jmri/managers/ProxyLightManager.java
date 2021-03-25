@@ -159,14 +159,6 @@ public class ProxyLightManager extends AbstractProvidingProxyManager<Light>
         return getNextValidAddress(curAddress, prefix, ignoreInitialExisting, typeLetter());
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getEntryToolTip() {
-        return Bundle.getMessage("EnterNumber1to9999ToolTip");
-    }
-
     @Override
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {
