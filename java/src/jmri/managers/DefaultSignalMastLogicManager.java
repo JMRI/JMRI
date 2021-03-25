@@ -245,51 +245,17 @@ public class DefaultSignalMastLogicManager
         @Override
         public void propertyChange(PropertyChangeEvent e) {
             if (e.getPropertyName().equals("topology")) {
-                // boolean newValue = new
-                // Boolean.parseBoolean(String.valueOf(e.getNewValue()));
+                //boolean newValue = new Boolean.parseBoolean(String.valueOf(e.getNewValue()));
                 boolean newValue = (Boolean) e.getNewValue();
                 if (newValue) {
-                    List<SignalMast> destMasts = new ArrayList<>();
                     for (SignalMastLogic signalMastLogic : _beans) {
                         signalMastLogic.setupLayoutEditorDetails();
-                        for (SignalMast sm : signalMastLogic.getDestinationList()) {
-                            if (!destMasts.contains(sm)) {
-                                destMasts.add(sm);
-                            }
-                        }
-                    }
-                    for (SignalMastLogic signalMastLogic : _beans) {
-                        SignalMast sourceSignalMast = signalMastLogic.getSourceMast();
-                        if (!destMasts.contains(sourceSignalMast) &&
-                                signalMastLogic.getFacingBlock() != null &&
-                                signalMastLogic.getDestinationList().size() > 0) {
-                            log.debug("Generate Stub Section for [{}]", sourceSignalMast);
-                            Block blockToUse = signalMastLogic.getFacingBlock().getBlock();
-                            Section secToCreate = InstanceManager.getDefault(jmri.SectionManager.class)
-                                    .getByUserName(blockToUse.getUserName() + ":" + blockToUse.getUserName());
-                            if (secToCreate == null) {
-                                secToCreate = InstanceManager.getDefault(jmri.SectionManager.class)
-                                        .createNewSection(blockToUse.getUserName() + ":" + blockToUse.getUserName());
-                            } else {
-                                secToCreate.removeAllBlocksFromSection();
-                            }
-                            secToCreate.addBlock(blockToUse);
-                            Block protectingblk = signalMastLogic
-                                    .getProtectingBlock(signalMastLogic.getDestinationList().get(0)).getBlock();
-                            String dir = jmri.Path.decodeDirection(
-                                    signalMastLogic.getProtectingBlock(signalMastLogic.getDestinationList().get(0))
-                                            .getNeighbourDirection(signalMastLogic.getFacingBlock()));
-                            jmri.EntryPoint ep = new jmri.EntryPoint(signalMastLogic.getFacingBlock().getBlock(),
-                                    protectingblk, dir);
-                            ep.setTypeForward();
-                            secToCreate.addToForwardList(ep);
-                        }
                     }
                     if (runWhenStablised) {
                         try {
                             automaticallyDiscoverSignallingPairs();
                         } catch (JmriException je) {
-                            // Considered normal if routing not enabled
+                            //Considered normal if routing not enabled
                         }
                     }
                 }
