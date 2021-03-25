@@ -75,6 +75,10 @@ public class ThrottleWindow extends JmriJFrame {
      */
     public ThrottleWindow() {
         super();
+        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
+            log.debug("Creating new ThrottlesPreference Instance");
+            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
+        }
         myInputsListener = new ThrottleWindowInputsListener(this);
         powerMgr = InstanceManager.getNullableDefault(PowerManager.class);
         if (powerMgr == null) {
@@ -89,8 +93,8 @@ public class ThrottleWindow extends JmriJFrame {
         throttlesLayout = new CardLayout();
         throttlesPanel = new JPanel(throttlesLayout);
         throttlesPanel.setDoubleBuffered(true);
-        if ((InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle())
-                && (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingToolBar())) {
+        if ((InstanceManager.getDefault(ThrottlesPreferences.class).isUsingExThrottle())
+                && (InstanceManager.getDefault(ThrottlesPreferences.class).isUsingToolBar())) {
             initializeToolbar();
         }
         /*        if ( (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle() )
@@ -446,8 +450,8 @@ public class ThrottleWindow extends JmriJFrame {
 
             this.getJMenuBar().add(powerMenu);
 
-            if ((!InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle())
-                    || (!InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingToolBar())) {
+            if ((!InstanceManager.getDefault(ThrottlesPreferences.class).isUsingExThrottle())
+                    || (!InstanceManager.getDefault(ThrottlesPreferences.class).isUsingToolBar())) {
                 this.getJMenuBar().add(new SmallPowerManagerButton());
             }
         }
@@ -637,7 +641,7 @@ public class ThrottleWindow extends JmriJFrame {
         if (!throttleFrames.isEmpty()) {
             ThrottleFrame cf = this.getCurrentThrottleFrame();
             for (ThrottleFrame tf : throttleFrames.values()) {
-                if ((InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()) && (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isSavingThrottleOnLayoutSave())) {
+                if ((InstanceManager.getDefault(ThrottlesPreferences.class).isUsingExThrottle()) && (InstanceManager.getDefault(ThrottlesPreferences.class).isSavingThrottleOnLayoutSave())) {
                     tf.toFront();
                     tf.saveThrottle();
                 }

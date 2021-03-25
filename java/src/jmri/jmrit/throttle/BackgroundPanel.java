@@ -1,24 +1,36 @@
 package jmri.jmrit.throttle;
 
 import java.awt.Color;
+
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.swing.ResizableImagePanel;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class BackgroundPanel extends ResizableImagePanel implements AddressListener {
+
+    AddressPanel addressPanel = null;
 
     public BackgroundPanel() {
         super();
+        initGUI();
+    }
+    
+    private void initGUI() {
+        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
+            log.debug("Creating new ThrottlesPreference Instance");
+            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
+        }
         setBackground(Color.GRAY);
         setRespectAspectRatio(true);
-        if (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isResizingWindow()) {
+        if (InstanceManager.getDefault(ThrottlesPreferences.class).isResizingWindow()) {
             setResizingContainer(true);
         }
     }
-
-    AddressPanel addressPanel = null;
 
     public void setAddressPanel(AddressPanel addressPanel) {
         this.addressPanel = addressPanel;
@@ -65,4 +77,6 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
     @Override
     public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
     }
+
+    private final static Logger log = LoggerFactory.getLogger(BackgroundPanel.class);    
 }

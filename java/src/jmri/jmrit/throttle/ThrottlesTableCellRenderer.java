@@ -65,7 +65,7 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
         retPanel.add(locoID, BorderLayout.CENTER);
 
         if (tf.getAddressPanel().getThrottle() != null) {
-            final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences();
+            final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
             JPanel ctrlPanel = new JPanel();
             ctrlPanel.setLayout(new BorderLayout());
             Throttle thr = tf.getAddressPanel().getThrottle();

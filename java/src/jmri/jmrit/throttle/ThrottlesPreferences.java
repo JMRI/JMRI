@@ -28,6 +28,7 @@ public class ThrottlesPreferences {
     private boolean _saveThrottleOnLayoutSave = true;
     private boolean _isSilentSteal = false;
     private boolean _isSilentShare = false;
+    private ThrottlesPreferencesWindowKeyboardControls _tpwkc = new ThrottlesPreferencesWindowKeyboardControls();
     protected boolean dirty = false;
 
     private Dimension _winDim = new Dimension(800, 600);
@@ -51,11 +52,11 @@ public class ThrottlesPreferences {
             root = null;
         }
         if (root != null) {
-            load(root.getChild("throttlesPreferences"));
+            setXml(root.getChild("throttlesPreferences"));
         }
     }
 
-    public void load(org.jdom2.Element e) {
+    public void setXml(org.jdom2.Element e) {
         if (e == null) {
             return;
         }
@@ -106,6 +107,9 @@ public class ThrottlesPreferences {
         if ((a = e.getAttribute("isHidingSpeedStepSelector")) != null) {
             setHideSpeedStepSelector(a.getValue().compareTo("true") == 0);
         }
+        if (e.getChild("throttlesControls") != null) {
+            this._tpwkc.setXml(e.getChild("throttlesControls"));
+        }
         this.dirty = false;
     }
 
@@ -123,7 +127,7 @@ public class ThrottlesPreferences {
     static class ThrottlesPrefsXml extends XmlFile {
     }
 
-    private org.jdom2.Element store() {
+    public Element getXml() {
         org.jdom2.Element e = new org.jdom2.Element("throttlesPreferences");
         e.setAttribute("isUsingExThrottle", "" + isUsingExThrottle());
         e.setAttribute("isUsingToolBar", "" + isUsingToolBar());
@@ -141,6 +145,9 @@ public class ThrottlesPreferences {
         e.setAttribute("isSilentShare", "" + isSilentShare());
         e.setAttribute("isUsingLargeSpeedSlider", "" + isUsingLargeSpeedSlider());
         e.setAttribute("isHidingSpeedStepSelector", "" + isHidingSpeedStepSelector());
+        java.util.ArrayList<Element> children = new java.util.ArrayList<>(1);
+        children.add(this._tpwkc.getXml());
+        e.setContent(children);
         return e;
     }
 
@@ -160,6 +167,7 @@ public class ThrottlesPreferences {
         setSilentShare(tp.isSilentShare());
         setUseLargeSpeedSlider(tp.isUsingLargeSpeedSlider());
         setHideSpeedStepSelector(tp.isHidingSpeedStepSelector());
+        setThrottlesKeyboardControls(tp.getThrottlesKeyboardControls());
         
         if (listeners != null) {
             for (int i = 0; i < listeners.size(); i++) {
@@ -168,23 +176,6 @@ public class ThrottlesPreferences {
                 l.propertyChange(e);
             }
         }
-    }
-
-    public boolean compareTo(ThrottlesPreferences tp) {
-        return (getWindowDimension() != tp.getWindowDimension()
-                || isUsingExThrottle() != tp.isUsingExThrottle()
-                || isUsingToolBar() != tp.isUsingToolBar()
-                || isUsingFunctionIcon() != tp.isUsingFunctionIcon()
-                || isResizingWindow() != tp.isResizingWindow()
-                || isSavingThrottleOnLayoutSave() != tp.isSavingThrottleOnLayoutSave()
-                || isUsingRosterImage() != tp.isUsingRosterImage()
-                || isEnablingRosterSearch() != tp.isEnablingRosterSearch()
-                || isAutoLoading() != tp.isAutoLoading()
-                || isHidingUndefinedFuncButt() != tp.isHidingUndefinedFuncButt()
-                || isSilentSteal() != tp.isSilentSteal()
-                || isSilentShare() != tp.isSilentShare()
-                || isUsingLargeSpeedSlider() != tp.isUsingLargeSpeedSlider()
-                || isHidingSpeedStepSelector() != tp.isHidingSpeedStepSelector());
     }
 
     public void save() {
@@ -222,7 +213,7 @@ public class ThrottlesPreferences {
              m.put("href", jmri.jmrit.XmlFile.xsltLocation+"throttles-preferences.xsl");
              ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
              doc.addContent(0,p);*/
-            root.setContent(store());
+            root.setContent(getXml());
             xf.writeXML(file, doc);
         } catch (java.io.IOException ex) {
             log.warn("Exception in storing throttles preferences xml: {}", ex);
@@ -371,6 +362,22 @@ public class ThrottlesPreferences {
     public boolean isHidingSpeedStepSelector() {
         return _hideSpeedStepSelector;
     }
+    
+    
+    /**
+     * @return the throttles keyboard controls preferences
+     */
+    public ThrottlesPreferencesWindowKeyboardControls getThrottlesKeyboardControls() {
+        return _tpwkc;
+    }
+    
+    /**
+     * Set the throttles keyboard controls preferences
+     * @param tpwkc the new keyboard preferences
+     */
+    public void setThrottlesKeyboardControls(ThrottlesPreferencesWindowKeyboardControls tpwkc) {
+        _tpwkc = tpwkc;
+    }
          
     /**
      * Add an AddressListener. 
@@ -381,7 +388,7 @@ public class ThrottlesPreferences {
      */
     public void addPropertyChangeListener(PropertyChangeListener l) {
         if (listeners == null) {
-            listeners = new ArrayList<PropertyChangeListener>(2);
+            listeners = new ArrayList<>(2);
         }
         if (!listeners.contains(l)) {
             listeners.add(l);

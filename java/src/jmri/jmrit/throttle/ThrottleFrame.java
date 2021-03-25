@@ -91,6 +91,10 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 
     public ThrottleFrame(ThrottleWindow tw) {
         super();
+        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
+            log.debug("Creating new ThrottlesPreference Instance");
+            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
+        }
         throttleWindow = tw;
         initGUI();
         InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel().addThrottleFrame(this);
@@ -265,8 +269,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
      * </ul>
      */
     private void initGUI() {
-        final ThrottlesPreferences preferences =
-            InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences();
+        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
         frameListener = new FrameListener();
 
         controlPanel = new ControlPanel();
@@ -928,8 +931,8 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 
     @Override
     public void notifyAddressThrottleFound(DccThrottle throttle) {
-        if ((InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle())
-                && (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isAutoLoading())
+        if ((InstanceManager.getDefault(ThrottlesPreferences.class).isUsingExThrottle())
+                && (InstanceManager.getDefault(ThrottlesPreferences.class).isAutoLoading())
                 && (addressPanel != null) && (addressPanel.getRosterEntry() != null)
                 && ((getLastUsedSaveFile() == null) || (getLastUsedSaveFile().compareTo(getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml") != 0))) {
             loadThrottle(getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml");
