@@ -61,6 +61,7 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
     int valueSI;   //  value to write to SI or -1
     int valueMSB;  //  value to write to MSB or -1
     int valueLSB;  //  value to write to LSB or -1
+    int _startVal; // Current CV value hint
 
     private void parseCV(String cv) throws IllegalArgumentException {
         valuePI = -1;
@@ -101,12 +102,18 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
 
     @Override
     synchronized public void readCV(String CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+       readCV(CV, p, 0);
+    }
+
+    @Override
+    synchronized public void readCV(String CV, jmri.ProgListener p, int startVal) throws jmri.ProgrammerException {
         useProgrammer(p);
         parseCV(CV);
+        _startVal = startVal;
         upperByte = 0;
         if (valuePI == -1) {
             state = ProgState.PROGRAMMING;
-            prog.readCV(_cv, this);
+            prog.readCV(_cv, this, startVal);
         } else {
             // write index first; 2nd operation depends on type
             if (valueSI == -1) {
@@ -214,7 +221,7 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
             case DOREADFIRST:
                 try {
                     state = ProgState.FINISHREAD;
-                    prog.readCV(valMSB, this);
+                    prog.readCV(valMSB, this, _startVal);
                 } catch (jmri.ProgrammerException e) {
                     log.error("Exception doing read first", e);
                 }
@@ -224,10 +231,10 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
                     state = ProgState.PROGRAMMING;
                     if (valuePI != -1 && valueSI == -1) {
                         upperByte = 0;
-                        prog.readCV(indexSI, this);
+                        prog.readCV(indexSI, this, _startVal);
                     } else {
                         upperByte = value;
-                        prog.readCV(valLSB, this);
+                        prog.readCV(valLSB, this, _startVal);
                     }
                 } catch (jmri.ProgrammerException e) {
                     log.error("Exception doing final read", e);
