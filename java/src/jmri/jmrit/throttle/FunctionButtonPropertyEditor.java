@@ -27,6 +27,7 @@ public final class FunctionButtonPropertyEditor extends JDialog {
     private JCheckBox visibleCheckBox;
     private EditableResizableImagePanel _imageFilePath;
     private EditableResizableImagePanel _imagePressedFilePath;
+    private JTextField imageSize;
     final static int BUT_IMG_SIZE = 45;
 
     /**
@@ -48,7 +49,7 @@ public final class FunctionButtonPropertyEditor extends JDialog {
         JPanel mainPanel = new JPanel();
         this.setContentPane(mainPanel);
         mainPanel.setLayout(new BorderLayout());
-
+        
         JPanel propertyPanel = new JPanel();
         propertyPanel.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
@@ -75,7 +76,7 @@ public final class FunctionButtonPropertyEditor extends JDialog {
 
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
-        constraints.gridy = 1;
+        constraints.gridy ++;
         textField = new JTextField();
         textField.setColumns(10);
         propertyPanel.add(new JLabel(Bundle.getMessage("LabelText")), constraints);
@@ -86,7 +87,7 @@ public final class FunctionButtonPropertyEditor extends JDialog {
 
         constraints.anchor = GridBagConstraints.WEST;
         constraints.gridx = 0;
-        constraints.gridy = 2;
+        constraints.gridy ++;
         fontField = new JTextField();
         fontField.setColumns(10);
         propertyPanel.add(new JLabel(Bundle.getMessage("LabelFontSize")), constraints);
@@ -94,27 +95,38 @@ public final class FunctionButtonPropertyEditor extends JDialog {
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.gridx = 1;
         propertyPanel.add(fontField, constraints);
+        
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.gridx = 0;
+        constraints.gridy ++;
+        imageSize = new JTextField();
+        imageSize.setColumns(10);
+        propertyPanel.add(new JLabel(Bundle.getMessage("LabelFunctionImageSize")), constraints);
+
+        constraints.anchor = GridBagConstraints.CENTER;
+        constraints.gridx = 1;
+        propertyPanel.add(imageSize, constraints);
 
         lockableCheckBox = new JCheckBox(Bundle.getMessage("CheckBoxLockable"));
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.gridx = 0;
-        constraints.gridy = 3;
+        constraints.gridy ++;
         propertyPanel.add(lockableCheckBox, constraints);
 
         visibleCheckBox = new JCheckBox(Bundle.getMessage("CheckBoxVisible"));
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.gridx = 0;
-        constraints.gridy = 4;
+        constraints.gridy ++;
         propertyPanel.add(visibleCheckBox, constraints);
 
-        constraints.gridy = 5;
+        constraints.gridy ++;
         constraints.gridx = 0;
         propertyPanel.add(new JLabel(Bundle.getMessage("OffIcon")), constraints);
 
         constraints.gridx = 1;
         propertyPanel.add(new JLabel(Bundle.getMessage("OnIcon")), constraints);
 
-        constraints.gridy = 6;
+        constraints.gridy ++;
         constraints.gridx = 0;
         _imageFilePath = new EditableResizableImagePanel("", BUT_IMG_SIZE, BUT_IMG_SIZE);
         _imageFilePath.setDropFolder(FileUtil.getUserResourcePath());
@@ -170,6 +182,7 @@ public final class FunctionButtonPropertyEditor extends JDialog {
             idField.setToolTipText(Bundle.getMessage("MaxFunction",mThrottle.getFunctions().length -1));
         }
         fontField.setText(String.valueOf(button.getFont().getSize()));
+        imageSize.setText(String.valueOf(button.getButtonImageSize()));
         visibleCheckBox.setSelected(button.getDisplay());
         _imageFilePath.setImagePath(button.getIconPath());
         _imagePressedFilePath.setImagePath(button.getSelectedIconPath());
@@ -188,6 +201,7 @@ public final class FunctionButtonPropertyEditor extends JDialog {
             button.setFont(new Font(name,
                     button.getFont().getStyle(),
                     Integer.parseInt(fontField.getText())));
+            button.setButtonImageSize( Integer.parseInt(imageSize.getText()) );
             button.setVisible(visibleCheckBox.isSelected());
             button.setDisplay(visibleCheckBox.isSelected());
             button.setIconPath(_imageFilePath.getImagePath());
@@ -239,6 +253,17 @@ public final class FunctionButtonPropertyEditor extends JDialog {
             errors.append(String.valueOf(++errorNumber)).append(". ");
             errors.append( Bundle.getMessage("ErrorFontSize"));
         }
+
+        /* image size > 0 */
+        try {
+            int size = Integer.parseInt(imageSize.getText());
+            if (size < 1) {
+                throw new NumberFormatException("");
+            }
+        } catch (NumberFormatException ex) {
+            errors.append(String.valueOf(++errorNumber)).append(". ");
+            errors.append( Bundle.getMessage("ErrorImageSize"));
+        }        
 
         if (errorNumber > 0) {
             JOptionPane.showMessageDialog(this, errors,
