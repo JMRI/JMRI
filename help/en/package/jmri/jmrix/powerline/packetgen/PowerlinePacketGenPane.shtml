@@ -8,7 +8,7 @@
 
   <title>JMRI: Send Powerline Device message</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Send grapevine message packet">
+  <meta name="keywords" content="JMRI help Send Powerline message packet">
   <!-- Style -->
   <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -26,7 +26,7 @@
       <h1>Send Powerline Device Message</h1>
 
       <p>This is the
-      help/jmri/jmrix/powerline/packetgen/SerialPacketGenFrame help
+      help/jmri/jmrix/powerline/packetgen/SerialPacketGenPane help
       page</p>
 
       <!--#include virtual="/Footer.shtml" -->

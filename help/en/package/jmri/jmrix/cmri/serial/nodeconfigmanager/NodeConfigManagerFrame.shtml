@@ -26,7 +26,7 @@
     <div id="mainContent">
 
       <h2>JMRI: C/MRI Node Configuration Manager</h2>
-      This is the cmri/serial/nodeconfig/NodeConfigFrame.shtml page.
+      This is the cmri/serial/nodeconfigmanager/NodeConfigManagerFrame.shtml page.
       Help is on the way.
       <!--#include virtual="/Footer.shtml" -->
     </div>

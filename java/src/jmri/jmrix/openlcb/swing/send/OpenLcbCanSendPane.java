@@ -276,8 +276,8 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.openlcb.swing.send.OpenLcbCanSendPane";
-    } // NOI18N
+        return "package.jmri.jmrix.openlcb.swing.send.OpenLcbCanSendFrame";  // NOI18N
+    }
 
     @Override
     public String getTitle() {
