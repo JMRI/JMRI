@@ -500,22 +500,25 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         contentPanes = new HashMap<>();
         for (Component cmp : cmps) {
             if ((cmp instanceof JInternalFrame) && (cmp.isVisible())) {
-                JInternalFrame jif = (JInternalFrame) cmp;
-                Dimension cpSize = jif.getContentPane().getSize();
-                Point cpLoc = jif.getContentPane().getLocationOnScreen();
-                TranslucentJPanel pane = new TranslucentJPanel();
-                pane.setLayout(new BorderLayout());
-                contentPanes.put(pane, jif);
-                pane.add(jif.getContentPane(), BorderLayout.CENTER);
-                setTransparent(pane, true);
-                jif.setContentPane(new JPanel());
-                jif.setVisible(false);
-                Point loc = new Point(cpLoc.x - this.getLocationOnScreen().x, cpLoc.y - this.getLocationOnScreen().y);
-                add(pane, PANEL_LAYER_PANEL);
-                pane.setLocation(loc);
-                pane.setSize(cpSize);
+                translude((JInternalFrame)cmp);
             }
         }
+    }
+    
+    private void translude(JInternalFrame jif) {
+        Dimension cpSize = jif.getContentPane().getSize();
+        Point cpLoc = jif.getContentPane().getLocationOnScreen();
+        TranslucentJPanel pane = new TranslucentJPanel();
+        pane.setLayout(new BorderLayout());
+        contentPanes.put(pane, jif);
+        pane.add(jif.getContentPane(), BorderLayout.CENTER);
+        setTransparent(pane, true);
+        jif.setContentPane(new JPanel());
+        jif.setVisible(false);
+        Point loc = new Point(cpLoc.x - this.getLocationOnScreen().x, cpLoc.y - this.getLocationOnScreen().y);
+        add(pane, PANEL_LAYER_PANEL);
+        pane.setLocation(loc);
+        pane.setSize(cpSize);
     }
 
     private void editRendering() {

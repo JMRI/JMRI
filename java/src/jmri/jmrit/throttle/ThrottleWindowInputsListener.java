@@ -1,8 +1,7 @@
 package jmri.jmrit.throttle;
 
 import java.awt.event.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.beans.*;
 
 import javax.swing.JInternalFrame;
 
@@ -174,12 +173,22 @@ public class ThrottleWindowInputsListener implements KeyListener, MouseWheelList
         if (jif == null) {
             return;
         }
+        if (!jif.isVisible()) {
+            jif.setVisible(true);
+        }        
+        if (jif.isIcon()) {
+            try {
+                jif.setIcon(false);
+            } catch (PropertyVetoException ex) {
+                log.debug("JInternalFrame uniconify, vetoed");
+            }
+        }
         jif.requestFocus();
         jif.toFront();
         try {
             jif.setSelected(true);
         } catch (java.beans.PropertyVetoException ex) {
-            log.debug("JInternalFrame selection vetoed");
+            log.debug("JInternalFrame selection, vetoed");
         }
     }
     
