@@ -46,7 +46,7 @@ public class ThrottlesPreferencesControlsSettingsPane extends JPanel {
         
     public ThrottlesPreferencesControlsSettingsPane(ThrottlesPreferences tp) {
         try {
-            _tpwkc = (ThrottlesPreferencesWindowKeyboardControls) tp.getThrottlesKeyboardControls().clone();
+            _tpwkc = tp.getThrottlesKeyboardControls().clone();
         } catch (CloneNotSupportedException ex) {
             log.debug("Couldn't clone ThrottlesPreferencesWindowKeyboardControls");
         }
@@ -337,7 +337,7 @@ public class ThrottlesPreferencesControlsSettingsPane extends JPanel {
     
     void resetComponents(ThrottlesPreferences tp) {
         try {
-            _tpwkc = (ThrottlesPreferencesWindowKeyboardControls) tp.getThrottlesKeyboardControls().clone();
+            _tpwkc = tp.getThrottlesKeyboardControls().clone();
         } catch (CloneNotSupportedException ex) {
             log.debug("Couldn't clone ThrottlesPreferencesWindowKeyboardControls");
         }
