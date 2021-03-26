@@ -423,8 +423,15 @@ public class BlockTest {
         
         Block b = new Block("BlockSystemName");
         Assert.assertEquals("Block starts state undetected", Block.UNDETECTED, b.getState());
+        Assert.assertEquals("Block starts no sensor", null, b.getSensor());
         Listen listen = new Listen();
         b.addPropertyChangeListener(listen);
+        
+        b.setSensor(null);
+        Assert.assertEquals("no prop change null to null",0, listen.getNumPropChanges());
+        
+        b.setSensor("");
+        Assert.assertEquals("no prop change null to empty",0, listen.getNumPropChanges());
         
         b.setSensor("ISunknownState");
         Assert.assertEquals("list size +2, state change, occ sense change",2, listen.getNumPropChanges());
