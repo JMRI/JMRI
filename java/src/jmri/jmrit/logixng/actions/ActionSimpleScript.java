@@ -261,10 +261,10 @@ public class ActionSimpleScript extends AbstractDigitalAction {
         String script = getTheScript();
         
         JmriScriptEngineManager scriptEngineManager = jmri.script.JmriScriptEngineManager.getDefault();
-
+        
         Bindings bindings = new SimpleBindings();
         ScriptParams params = new ScriptParams(this);
-
+        
         // this should agree with help/en/html/tools/scripting/Start.shtml - this link is wrong and should point to LogixNG documentation
         bindings.put("analogActions", InstanceManager.getNullableDefault(AnalogActionManager.class));
         bindings.put("analogExpressions", InstanceManager.getNullableDefault(AnalogExpressionManager.class));
@@ -273,29 +273,32 @@ public class ActionSimpleScript extends AbstractDigitalAction {
         bindings.put("digitalExpressions", InstanceManager.getNullableDefault(DigitalExpressionManager.class));
         bindings.put("stringActions", InstanceManager.getNullableDefault(StringActionManager.class));
         bindings.put("stringExpressions", InstanceManager.getNullableDefault(StringExpressionManager.class));
-
+        
         bindings.put("params", params);    // Give the script access to the local variable 'params'
-
+        
         ThreadingUtil.runOnLayout(() -> {
             switch (operation) {
                 case RunScript:
-                    try (InputStreamReader reader = new InputStreamReader(new FileInputStream(script), StandardCharsets.UTF_8)) {
+                    try (InputStreamReader reader = new InputStreamReader(
+                            new FileInputStream(jmri.util.FileUtil.getExternalFilename(script)),
+                            StandardCharsets.UTF_8)) {
                         scriptEngineManager.getEngineByName(JmriScriptEngineManager.PYTHON)
                                 .eval(reader, bindings);
                     } catch (IOException | ScriptException e) {
                         log.warn("cannot execute script", e);
                     }
                     break;
-
+                    
                 case JythonCommand:
                     try {
+                        String theScript = String.format("import jmri%n") + script;
                         scriptEngineManager.getEngineByName(JmriScriptEngineManager.PYTHON)
-                                .eval(script, bindings);
+                                .eval(theScript, bindings);
                     } catch (ScriptException e) {
                         log.warn("cannot execute script", e);
                     }
                     break;
-
+                    
                 default:
                     throw new IllegalArgumentException("invalid _stateAddressing state: " + _scriptAddressing.name());
             }
