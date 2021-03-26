@@ -175,6 +175,7 @@ public class ImportConditional {
     
     private void buildExpression(DigitalExpressionBean expression, List<ConditionalVariable> conditionalVariables)
             throws SocketAlreadyConnectedException, JmriException {
+        
         for (int i=0; i < conditionalVariables.size(); i++) {
             jmri.ConditionalVariable cv = conditionalVariables.get(i);
             NamedBean nb = cv.getBean();
@@ -230,6 +231,17 @@ public class ImportConditional {
             }
             
             if (newExpression != null) {
+                if (cv.isNegated()) {
+                    Not notExpression = new Not(InstanceManager.getDefault(DigitalExpressionManager.class)
+                            .getAutoSystemName(), null);
+
+                    if (!_dryRun) {
+                        MaleSocket newExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(newExpression);
+                        notExpression.getChild(0).connect(newExpressionSocket);
+                    }
+                    newExpression = notExpression;
+                }
+                
                 if (!_dryRun) {
                     MaleSocket newExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(newExpression);
                     expression.getChild(i).connect(newExpressionSocket);
