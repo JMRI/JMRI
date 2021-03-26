@@ -214,14 +214,19 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      */
     public boolean setSensor(String pName) {
         Sensor oldSensor = getSensor();
-        if (pName == null || pName.isEmpty()) {
-            setNamedSensor(null);
-            firePropertyChange(OCC_SENSOR_CHANGE, oldSensor, null);
-            return false;
+        if ((pName == null || pName.isEmpty())) {
+                if (oldSensor!=null) {
+                    setNamedSensor(null);
+                    firePropertyChange(OCC_SENSOR_CHANGE, oldSensor, null);
+                }
+                return false;
         }
         if (InstanceManager.getNullableDefault(SensorManager.class) != null) {
             try {
                 Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
+                if (sensor.equals(oldSensor)) {
+                    return false;
+                }
                 setNamedSensor(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
                 firePropertyChange(OCC_SENSOR_CHANGE, oldSensor, sensor);
                 return true;
