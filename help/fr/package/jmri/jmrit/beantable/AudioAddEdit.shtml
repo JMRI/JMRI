@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Herv&#233; Blorec  2013-10-10 -->
+<!-- UpDated by Herv&#233; Blorec  2013-10-10 -->
 
 <html lang="fr">
 <head>
@@ -7,18 +7,19 @@
       JMRI: Adding/Editing Audio objects
  </title>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-    <meta name="author" content="Matt Harris">
+    <meta content="Matt Harris" name="Author">
     <meta name="keywords" content="JMRI help Audio Add Edit">
 
-<!--#include virtual="/Style.shtml" -->
+<!--#include virtual="/Style" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
 <div id="mainContent">
 
-<h1>Ajout/Modification des Objets Audio</h1>
+<H1>Ajout/Modification des Objets Audio</H1>
 
 Pour cr&#233;er un objet audio, cliquez sur le bouton
 "Ajouter ..." 
@@ -45,12 +46,12 @@ diff&#233;rents types.
 <p>
 Le nom utilisateur est facultatif, mais si on leur en donne un, il doit &#234;tre unique.
 
-<p>Retour &#224; la page d'<a href="AudioTable.shtml">Aide Tableau Audio</a>.</p>
+<p>Retour &#224; la page d'<a href="AudioTable.shtml">Aide Tableau Audio<a>.</p>
 <p>
 Pour plus d'informations sur les objets audio, consultez la
 <a href="../../../../html/tools/Audio.shtml"> page d'aide audio</a>.
-
-<!--#include virtual="/Footer.shtml" -->
+<p>Traduction 2021-03-26</p>
+<!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>
