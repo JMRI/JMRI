@@ -1,6 +1,9 @@
 package jmri.jmrit.throttle;
 
+import java.awt.GraphicsEnvironment;
+
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.jupiter.api.*;
 
 /**
@@ -11,7 +14,8 @@ import org.junit.jupiter.api.*;
 public class ThrottlesPreferencesWindowTest {
     @Test
     public void testCtor() {
-        ThrottlesPreferencesWindow w = new ThrottlesPreferencesWindow("ThrottlesPreferencesWindoTest");
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ThrottlesPreferencesWindow w = new ThrottlesPreferencesWindow("ThrottlesPreferencesWindowTest");
         Assert.assertNotNull("exists", w);
     }
 
