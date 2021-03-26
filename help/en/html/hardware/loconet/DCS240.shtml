@@ -3,15 +3,14 @@
 
 <html lang="en">
 <head>
-
+    
   <title>JMRI Hardware Support - Connecting to a Digitrax DCS240</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="author" content="B. Milhaupt">
   <meta name="keywords" content=
   "Digitrax DCS Command Station DCS240 java model railroad JMRI install windows">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -55,6 +54,7 @@
                 </ul></li>
             </ul></li>
             <li><a href="#Dcs240Drivers">DCS240 Drivers</a></li>
+            <li><a href="#Notes">Notes</a></li>
             <li><a href="#SeeAlso">See Also</a></li>
         </ul>
       </div>
@@ -117,9 +117,9 @@
         <tr><td>Control or monitor the LocoNet Fast Clock</td></tr>
         <tr><td>Update firmware on some LocoNet devices</td></tr>
         <tr><td>etc.</td></tr>
-        <tr><td rowspan="7" align="center">LocoNet Interface, Decoder Programming</td>
+        <tr><td rowspan="7" align="center">Via LocoNet interface<br>(<em>not</em> via DCS240 integrated USB connector!)</td>
             <td rowspan="7" align="center">Computer Connection to something other than the DCS240 USB connector</td>
-            <td rowspan="7" align="center">Something other than "DCS240 USB Interface"</td>
+            <td rowspan="7" align="center">Something other than "DCS240 USB Interface"<br>(perhaps PR3, PR4, LocoBuffer-USB or similar device.)</td>
             <td rowspan="7" align="center">"<em>DCS240 (Advanced Command Station)</em>"</td>
             <td rowspan="7" align="center"><a href="#Dcs240ViaAdapter">Configuration help</a></td>
             <td>Program decoder CVs on the dedicated programming track</td></tr>
@@ -187,8 +187,9 @@
       speed without the motor moving the decoder, so you can hear
       how the locomotive sound reacts to varying speeds.</p>
 
-      <p>In this mode of operations, JMRI will not have access to LocoNet-based
-      devices.</p>
+      <p><em>Note</em>: In this mode of operations, JMRI <strong>will not</strong> have access to LocoNet-based
+          devices, and <strong>will not</strong> be able to control anything on or connected to the 
+      normal DCC track signal.</p>
 
       <h4><a name="Dcs240SetupStandAlone" id="Dcs240SetupStandAlone">Setup for
       the DCS240 acting as a standalone programmer</a></h4>
@@ -357,11 +358,19 @@
         alt="Typical connections for DCS240 when connected to computer via a LocoNet Interface Adapter"
         width="300"></p>
       <p>JMRI may connect to the LocoNet via a LocoNet interface other than the
-      DCS24 USB connector.  When connected in this fashion, <a
+      DCS240 USB connector.  When connected in this fashion, <a
       href="Digitrax.shtml#ConnectingAdapter">these general instructions</a>, or,
       where available, the
       JMRI documentation associated with the LocoNet interface which is being
       used.</p>
+      <p>As an example, the following image shows a JMRI connection configuration
+          when using a LocoBuffer-USB to connect JMRI to LocoNet without using the
+          DCS240's integrated USB feature.</p>
+      <p>
+          <img src="./images/DCS240ViaExtLocoNetInterfaceConnProfile.png" 
+               alt="Connecting JMRI to the DCS240 via a LocoBuffer-USB instead of 
+               the DCS240 integrated USB connector" width="500" >
+      </p>
 
       <h2><a name="Dcs240Drivers" id="Dcs240Drivers">DCS240 Drivers</a></h2>
 
@@ -369,16 +378,40 @@
       any Microsoft Windows Operating System.  See the Digitrax
       <a href="http://www.digitrax.com/downloads/">"Downloads"</a> page for drivers.
       At the time this help page was written, Digitrax provides Windows drivers
-      for the PR3 device.  Those drivers are suitable for use with the DCS240 USB
-      interface.
-      Make sure to follow any instructions, particularly any instructions
+      for the PR3/PR4 device.  Those drivers are suitable for use with the DCS240 USB
+      interface.  Make sure to follow any instructions, particularly any instructions
       about the order of installing the drivers and plugging in the
       device.
 
       <p>You don't need to install a separate driver when using
-      current versions of Mac OS X or Linux.</p>
+      current versions of Mac OS X or Linux.  When connecting to LocoNet via some 
+      connection other than the DCS240 integrated USB connector, JMRI does not 
+      require PR3/PR4 drivers to be insalled, but you must install any drivers necessary
+      for the hardware interface you actually use.</p>
 
-      <h1>See Also</h1>
+      <h1><a id="Notes" name="Notes">Notes</a></h1>
+      <ul>
+          <li>Note that some users find that the DCS240 USB interface feature
+              can occasionally "lock-up".  When this happens, it may be necessary 
+              to perform the following steps to restore proper JMRI operation:
+              <ol>
+                  <li>Quit JMRI and "shut down" your computer.</li>
+                  <li>Disconnect the USB cable from the DCS240.</li>
+                  <li>Disconnect power from the DCS240.</li>
+                  <li>Wait 30 seconds.</li>
+                  <li>Re-apply power to the DCS240.</li>
+                  <li>Re-connect the USB cable in the DCS240 jack.</li>
+                  <li>"Start-up" your computer.</li>
+                  <li>Start JMRI.<li>
+              </ol>
+              <p>JMRI developers are aware that the DCS240 USB interface can sometimes
+                  "lock-up", but have not yet found either the cause of the problem 
+                  or its solution.  One workaround is to use a computer-to-LocoNet
+                  interface other than the DCS240's integrated USB connector.
+          </li>
+      </ul>
+
+      <h1><a id="SeeAlso" name="SeeAlso">See Also</a></h1>
       <ul>
           <li><a href="Digitrax.shtml">JMRI's general Digitrax support page</a></li>
           <li>The JMRI <a href="../../apps/DecoderPro/Roster.shtml">Rosters</a> page.</li>
@@ -394,7 +427,11 @@
                                   "http://www.digitrax.com/tsd/product/DCS240/">DCS240 Support</a> page.</li>
               <li>Drivers for Windows-based machines may be found at the Digitrax
                   <a href="http://www.digitrax.com/downloads/">Downloads</a> page.
-                  Note: Use the Digitrax PR3 drivers when connecting via the DCS240 USB interface.</li>
+                  Note: Use the appropriate Digitrax PR3/PR4 drivers when connecting 
+                  a Microsoft Windows machine via the DCS240 USB interface. When 
+                  connecting to LocoNet using something other than the DCS240 
+                  integrated USB interface, JMRI does not require these drivers to
+                  be loaded.</li>
           </ul>
       </ul>
 
