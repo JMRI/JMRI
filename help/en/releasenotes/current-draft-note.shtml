@@ -558,11 +558,12 @@
             <li>Function Panel now displays all functions buttons at once, with a scrollbar if required</li>
             <li>There are as many function buttons as defined by the used throttle</li>
             <li>Keyboard shortcuts now available on whole throttle window</li>
+            <li>Keyboard shortcuts can be customized in JMRI throttle preferences screen (second pane, warning, no consistency check is made)</li>            
             <li>Mousewheel speed control now available on whole throttle window</li>
             <li>One mousewheel scroll unit will increment or decrement throttle speed by one speed setting increment (depends on the throttle speed step setting)</li>
-            <li>Use Ctrl key to apply a multiply factor on speed increment/decrement (x5)</li>
+            <li>Use Ctrl key to apply a multiply factor on speed increment/decrement (customizable in JMRI throttle preferences screen)</li>
             <li>Function and Control panels property panes reworked</li>
-            <li>Function button with images can be resized from control panel</li>
+            <li>Function button with images can be resized in button property panel</li>
             <li>Function button customizations correctly serialized</li>
             <li>Ticks on graphical speed slider</li>
             <li>Pressing Enter in AddressPanel when entering an address will actually request it</li>

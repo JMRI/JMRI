@@ -1,7 +1,7 @@
 package jmri.jmrit.throttle;
 
 import java.awt.event.*;
-import java.util.stream.IntStream;
+import java.beans.*;
 
 import javax.swing.JInternalFrame;
 
@@ -16,52 +16,59 @@ import org.slf4j.LoggerFactory;
  *
  * @author Lionel Jeanson
  */
-public class ThrottleWindowInputsListener implements KeyListener, MouseWheelListener {
+public class ThrottleWindowInputsListener implements KeyListener, MouseWheelListener, PropertyChangeListener {
 
     private final ThrottleWindow tw;
+    private ThrottlesPreferencesWindowKeyboardControls tpwkc;
     
     ThrottleWindowInputsListener(ThrottleWindow tw) {
         this.tw = tw;
+        resetTpwkc();
+    }
+    
+    private void resetTpwkc() {
+        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
+            log.debug("Creating new ThrottlesPreference Instance");
+            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
+        }
+        tpwkc = InstanceManager.getDefault(ThrottlesPreferences.class).getThrottlesKeyboardControls();        
     }
     
     @Override
     public void keyTyped(KeyEvent e) {
     }
 
+          
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.isAltDown() || e.isMetaDown() || e.isShiftDown()) {
-            return;
-        }
-        
+        log.debug("Key pressed: "+e.getKeyCode()+" / modifier: "+e.getModifiers()+" / ext. key code: "+e.getExtendedKeyCode()+" / location: "+e.getKeyLocation());               
         // Throttle commands
         DccThrottle throttle = tw.getCurrentThrottleFrame().getAddressPanel().getThrottle();
         if (throttle != null) {
             // speed
-            if ( IntStream.of(ThrottleWindowKeyboardControls.ACCELERATE_KEYS).anyMatch(x->x==e.getKeyCode()) ) {
-                if (e.isControlDown()) {
-                    incrementSpeed(throttle, throttle.getSpeedIncrement()*ThrottleWindowKeyboardControls.MORE_SPEED_MULTIPLIER);
-                } else {
-                    incrementSpeed(throttle, throttle.getSpeedIncrement());
-                }
-            } else if (IntStream.of(ThrottleWindowKeyboardControls.DECELERATE_KEYS).anyMatch(x->x==e.getKeyCode()) ) {
-                if (e.isControlDown()) {
-                    incrementSpeed(throttle, -throttle.getSpeedIncrement()*ThrottleWindowKeyboardControls.MORE_SPEED_MULTIPLIER);
-                } else {                
-                    incrementSpeed(throttle, -throttle.getSpeedIncrement());
-                }
-            } else if (IntStream.of(ThrottleWindowKeyboardControls.ACCELERATEMORE_KEYS).anyMatch(x->x==e.getKeyCode()) ) {
-                incrementSpeed(throttle, throttle.getSpeedIncrement()*ThrottleWindowKeyboardControls.MORE_SPEED_MULTIPLIER);
-            } else if (IntStream.of(ThrottleWindowKeyboardControls.DECELERATEMORE_KEYS).anyMatch(x->x==e.getKeyCode()) ) {
-                incrementSpeed(throttle, -throttle.getSpeedIncrement()*ThrottleWindowKeyboardControls.MORE_SPEED_MULTIPLIER);
+            if ( match(e, tpwkc.getAccelerateKeys())) {
+                incrementSpeed(throttle, throttle.getSpeedIncrement());
+                return;
+            } 
+            if (match(e, tpwkc.getDecelerateKeys())) {           
+                incrementSpeed(throttle, -throttle.getSpeedIncrement());    
+                return;            
+            } 
+            if (match(e, tpwkc.getAccelerateMoreKeys())) {
+                incrementSpeed(throttle, throttle.getSpeedIncrement()*tpwkc.getMoreSpeedMultiplier());
+                return;
+            } 
+            if (match(e, tpwkc.getDecelerateMoreKeys())) {
+                incrementSpeed(throttle, -throttle.getSpeedIncrement()*tpwkc.getMoreSpeedMultiplier());
+                return;
             }
             // momentary function buttons
-            for (int i=0;i<ThrottleWindowKeyboardControls.FUNCTIONS_KEY.length;i++) {
-                if ( ThrottleWindowKeyboardControls.FUNCTIONS_KEY[i] == e.getKeyCode()) {
+            for (int i=0;i<tpwkc.getNbFunctionsKeys();i++) {
+                if (match(e,tpwkc.getFunctionsKeys(i))) {
                     if (throttle.getFunctionMomentary(i) || ( !tw.getCurrentThrottleFrame().getFunctionPanel().getFunctionButtons()[i].getIsLockable())) {
-                        throttle.setFunction(i, true );
+                        throttle.setFunction(i, true );                        
                     }
-                    break;
+                    return;
                 }
             }
         }
@@ -69,72 +76,119 @@ public class ThrottleWindowInputsListener implements KeyListener, MouseWheelList
 
     @Override
     public void keyReleased(KeyEvent e) {
+        log.debug("Key pressed: "+e.getKeyCode()+" / modifier: "+e.getModifiers()+" / ext. key code: "+e.getExtendedKeyCode()+" / location: "+e.getKeyLocation());
         // Throttle commands
         DccThrottle throttle = tw.getCurrentThrottleFrame().getAddressPanel().getThrottle();
         if (throttle != null) {
             // speed
-            if (IntStream.of(ThrottleWindowKeyboardControls.FORWARD_KEY).anyMatch(x->x==e.getKeyCode()) ) {
+            if (match(e, tpwkc.getForwardKeys())) {
                 throttle.setIsForward(true);
-            } else if (IntStream.of(ThrottleWindowKeyboardControls.REVERSE_KEYS).anyMatch(x->x==e.getKeyCode()) ) {
+                return;
+            } 
+            if (match(e, tpwkc.getReverseKeys())) {
                 throttle.setIsForward(false);
-            } else if (IntStream.of(ThrottleWindowKeyboardControls.IDLE_KEYS).anyMatch(x->x==e.getKeyCode()) ) {
+                return;
+            } 
+            if  (match(e, tpwkc.getIdleKeys())) {
                 throttle.setSpeedSetting(0);
-            } else if (IntStream.of(ThrottleWindowKeyboardControls.STOP_KEYS).anyMatch(x->x==e.getKeyCode()) ) {
+                return;
+            } 
+            if (match(e, tpwkc.getStopKeys())) {
                 throttle.setSpeedSetting(-1);
+                return;
+            } 
+            if (match(e, tpwkc.getSwitchDirectionKeys())) {
+                throttle.setIsForward(!throttle.getIsForward());
+                return;
             }
             // functions
-            for (int i=0;i<ThrottleWindowKeyboardControls.FUNCTIONS_KEY.length;i++) {
-                if ( ThrottleWindowKeyboardControls.FUNCTIONS_KEY[i] == e.getKeyCode()) {
+            for (int i=0;i<tpwkc.getNbFunctionsKeys();i++) {
+                if (match(e,tpwkc.getFunctionsKeys(i))) {
                     throttle.setFunction(i, ! throttle.getFunction(i));
-                    break;
+                    return;
                 }
             }            
         }
         
         // Throttle inner window cycling and focus
-        if ( IntStream.of(ThrottleWindowKeyboardControls.NEXT_THROTTLE_INTW_KEYS).anyMatch(x->x==e.getKeyCode()) ) {
+        if (match(e, tpwkc.getNextThrottleInternalWindowKeys())) {
             tw.getCurrentThrottleFrame().activateNextJInternalFrame();
+            return;
         }
-        if ( IntStream.of(ThrottleWindowKeyboardControls.PREV_THROTTLE_INTW_KEYS).anyMatch(x->x==e.getKeyCode()) ) {
-            tw.getCurrentThrottleFrame().activateNextJInternalFrame();
+        if (match(e, tpwkc.getPrevThrottleInternalWindowKeys())) {
+            tw.getCurrentThrottleFrame().activatePreviousJInternalFrame();
+            return;
         }
-        if ( IntStream.of(ThrottleWindowKeyboardControls.MOVE_TO_CONTROL_KEYS).anyMatch(x->x==e.getKeyCode()) ) {
+        if (match(e, tpwkc.getMoveToControlPanelKeys())) {
             toFront(tw.getCurrentThrottleFrame().getControlPanel());
+            return;
         }
-        if ( IntStream.of(ThrottleWindowKeyboardControls.MOVE_TO_FUNCTIONS_KEYS).anyMatch(x->x==e.getKeyCode()) ) {
-            toFront(tw.getCurrentThrottleFrame().getFunctionPanel());            
+        if (match(e, tpwkc.getMoveToFunctionPanelKeys())) {
+            toFront(tw.getCurrentThrottleFrame().getFunctionPanel());    
+            return;        
         }
-        if ( IntStream.of(ThrottleWindowKeyboardControls.MOVE_TO_ADDRESS_KEYS).anyMatch(x->x==e.getKeyCode()) ) {
+        if (match(e, tpwkc.getMoveToAddressPanelKeys())) {
             toFront(tw.getCurrentThrottleFrame().getAddressPanel());
+            return;
         }        
         
         // Throttle frames control
-        if ( IntStream.of(ThrottleWindowKeyboardControls.NEXT_THROTTLE_FRAME_KEYS).anyMatch(x->x==e.getKeyCode()) ) {
+        if (match(e, tpwkc.getNextThrottleFrameKeys())) {
             tw.nextThrottleFrame();
+            return;
         }
-        if ( IntStream.of(ThrottleWindowKeyboardControls.PREV_THROTTLE_FRAME_KEYS).anyMatch(x->x==e.getKeyCode()) ) {
+        if (match(e, tpwkc.getPrevThrottleFrameKeys())) {
             tw.previousThrottleFrame();
+            return;
         }
-
+        if (match(e, tpwkc.getNextRunThrottleFrameKeys())) {
+            tw.nextRunningThrottleFrame();
+            return;
+        }
+        if (match(e, tpwkc.getPrevRunThrottleFrameKeys())) {
+            tw.previousRunningThrottleFrame();
+            return;
+        }
+        
         // Throttle windows control
-        if ( IntStream.of(ThrottleWindowKeyboardControls.NEXT_THROTTLE_WINDOW_KEYS).anyMatch(x->x==e.getKeyCode()) ) {
+        if (match(e, tpwkc.getNextThrottleWindowKeys())) {
             InstanceManager.getDefault(ThrottleFrameManager.class).requestFocusForNextThrottleWindow();
+            return;
         }
-        if ( IntStream.of(ThrottleWindowKeyboardControls.PREV_THROTTLE_WINDOW_KEYS).anyMatch(x->x==e.getKeyCode()) ) {
-            InstanceManager.getDefault(ThrottleFrameManager.class).requestFocusForNextThrottleWindow();
+        if (match(e, tpwkc.getPrevThrottleWindowKeys())) {
+            InstanceManager.getDefault(ThrottleFrameManager.class).requestFocusForPreviousThrottleWindow();
         }                
+    }
+    
+    private boolean match(KeyEvent e, int[][] keys) {
+        for (int[] key : keys) {
+            if ((e.getModifiers() == key[0]) && (e.getExtendedKeyCode() == key[1])) {
+                return true;
+            }
+        }
+        return false;
     }
         
     private void toFront(JInternalFrame jif) {
         if (jif == null) {
             return;
         }
+        if (!jif.isVisible()) {
+            jif.setVisible(true);
+        }        
+        if (jif.isIcon()) {
+            try {
+                jif.setIcon(false);
+            } catch (PropertyVetoException ex) {
+                log.debug("JInternalFrame uniconify, vetoed");
+            }
+        }
         jif.requestFocus();
         jif.toFront();
         try {
             jif.setSelected(true);
         } catch (java.beans.PropertyVetoException ex) {
-            log.debug("JInternalFrame selection vetoed");
+            log.debug("JInternalFrame selection, vetoed");
         }
     }
     
@@ -180,20 +234,30 @@ public class ThrottleWindowInputsListener implements KeyListener, MouseWheelList
         // Throttle commands
         DccThrottle throttle = tw.getCurrentThrottleFrame().getAddressPanel().getThrottle();
         if (throttle != null) {
-            float multiplier = 0;
+            float multiplier;
             if (e.getWheelRotation() > 0) {
                 multiplier = -1f;
                 if ( e.isControlDown() ) {
-                    multiplier = - ThrottleWindowKeyboardControls.MORE_SPEED_MULTIPLIER;
+                    multiplier = - tpwkc.getMoreSpeedMultiplier();
                 }
             } else {
                 multiplier = 1f;
                 if ( e.isControlDown() ) {
-                    multiplier = ThrottleWindowKeyboardControls.MORE_SPEED_MULTIPLIER;
+                    multiplier = tpwkc.getMoreSpeedMultiplier();
                 }
             }
             incrementSpeed(throttle, throttle.getSpeedIncrement() * multiplier);
         }        
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if ((evt == null) || (evt.getPropertyName() == null)) {
+            return;
+        }
+        if (evt.getPropertyName().compareTo("ThrottlePreferences") == 0) {
+           resetTpwkc();
+        }               
     }
 
     private final static Logger log = LoggerFactory.getLogger(ThrottleWindowInputsListener.class);    

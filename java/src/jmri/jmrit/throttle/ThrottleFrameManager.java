@@ -3,7 +3,6 @@ package jmri.jmrit.throttle;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JFrame;
-import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
@@ -21,7 +20,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
 
     private ArrayList<ThrottleWindow> throttleWindows; // synchronized access
 
-    private JmriJFrame throttlePreferencesFrame;
+    private ThrottlesPreferencesWindow throttlePreferencesFrame;
     private JmriJFrame throttlesListFrame;
     private ThrottlesListPanel throttlesListPanel;
 
@@ -138,21 +137,8 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         return throttleWindows.get(activeFrame);
     }
 
-    public ThrottlesPreferences getThrottlesPreferences() {
-        return InstanceManager.getDefault(ThrottlesPreferences.class);
-    }
-
     public ThrottlesListPanel getThrottlesListPanel() {
         return throttlesListPanel;
-    }
-
-    private void buildThrottlePreferencesFrame() {
-        throttlePreferencesFrame = new JmriJFrame(Bundle.getMessage("ThrottlePreferencesFrameTitle"));
-        ThrottlesPreferencesPane tpP = new ThrottlesPreferencesPane();
-        throttlePreferencesFrame.add(tpP);
-        tpP.setContainer(throttlePreferencesFrame);
-        throttlePreferencesFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        throttlePreferencesFrame.pack();
     }
 
     private void buildThrottleListFrame() {
@@ -171,8 +157,13 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
 
     public void showThrottlesPreferences() {
         if (throttlePreferencesFrame == null) {
-            buildThrottlePreferencesFrame();
-        }
+            throttlePreferencesFrame = new ThrottlesPreferencesWindow(Bundle.getMessage("ThrottlePreferencesFrameTitle"));
+            throttlePreferencesFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            throttlePreferencesFrame.pack();
+        } else {
+            throttlePreferencesFrame.resetComponents();
+            throttlePreferencesFrame.revalidate();
+        }                
         throttlePreferencesFrame.setVisible(true);
         throttlePreferencesFrame.requestFocus();
     }
