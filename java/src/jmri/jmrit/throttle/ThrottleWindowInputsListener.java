@@ -156,7 +156,7 @@ public class ThrottleWindowInputsListener implements KeyListener, MouseWheelList
             return;
         }
         if (match(e, tpwkc.getPrevThrottleWindowKeys())) {
-            InstanceManager.getDefault(ThrottleFrameManager.class).requestFocusForNextThrottleWindow();
+            InstanceManager.getDefault(ThrottleFrameManager.class).requestFocusForPrevThrottleWindow();
         }                
     }
     
