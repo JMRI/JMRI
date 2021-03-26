@@ -798,12 +798,15 @@ public class ImportConditional {
                         delayedAction.setDelay((int) (time * 1000));
                         delayedAction.setUnit(TimerUnit.MilliSeconds);
                     } catch (NumberFormatException e2) {
-                        // If here, assume that sNumber has the name of a memory
+                        // If here, assume that sNumber has the name of a memory.
+                        // Logix supports this memory to have a floating point value
+                        // but LogixNG requires this memory to have an integer value.
                         if (sNumber.charAt(0) == '@') {
                             sNumber = sNumber.substring(1);
                         }
                         delayedAction.setDelayAddressing(NamedBeanAddressing.Reference);
                         delayedAction.setDelayReference("{" + sNumber + "}");
+                        delayedAction.setUnit(TimerUnit.Seconds);
                     }
                 }
                 
@@ -886,12 +889,15 @@ public class ImportConditional {
                         delayedAction.setDelay((int) (time * 1000));
                         delayedAction.setUnit(TimerUnit.MilliSeconds);
                     } catch (NumberFormatException e2) {
-                        // If here, assume that sNumber has the name of a memory
+                        // If here, assume that sNumber has the name of a memory.
+                        // Logix supports this memory to have a floating point value
+                        // but LogixNG requires this memory to have an integer value.
                         if (sNumber.charAt(0) == '@') {
                             sNumber = sNumber.substring(1);
                         }
                         delayedAction.setDelayAddressing(NamedBeanAddressing.Reference);
                         delayedAction.setDelayReference("{" + sNumber + "}");
+                        delayedAction.setUnit(TimerUnit.Seconds);
                     }
                 }
                 
