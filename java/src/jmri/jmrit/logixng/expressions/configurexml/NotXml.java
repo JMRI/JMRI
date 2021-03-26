@@ -8,10 +8,10 @@ import jmri.jmrit.logixng.expressions.Not;
 import org.jdom2.Element;
 
 /**
- * Handle XML configuration for ActionLightXml objects.
+ * Handle XML configuration for Not objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
- * @author Daniel Bergqvist Copyright (C) 2019
+ * @author Daniel Bergqvist Copyright (C) 2021
  */
 public class NotXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 

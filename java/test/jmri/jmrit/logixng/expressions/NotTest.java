@@ -19,7 +19,7 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 /**
  * Test Not
  * 
- * @author Daniel Bergqvist 2018
+ * @author Daniel Bergqvist 2021
  */
 public class NotTest extends AbstractDigitalExpressionTestBase {
 
