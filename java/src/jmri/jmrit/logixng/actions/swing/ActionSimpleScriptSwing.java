@@ -1,16 +1,19 @@
 package jmri.jmrit.logixng.actions.swing;
 
+import java.awt.event.ActionEvent;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionSimpleScript;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.util.FileUtil;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
@@ -39,6 +42,7 @@ public class ActionSimpleScriptSwing extends AbstractDigitalActionSwing {
     private JPanel _panelScriptTypeLocalVariable;
     private JPanel _panelScriptTypeFormula;
     
+    private JFileChooser scriptFileChooser;
     private JTextField _scriptTextField;
     private JTextField _scriptReferenceTextField;
     private JTextField _scriptLocalVariableTextField;
@@ -98,7 +102,7 @@ public class ActionSimpleScriptSwing extends AbstractDigitalActionSwing {
         // Set up the tabbed pane for selecting the appearance
         _tabbedPaneScriptType = new JTabbedPane();
         _panelScriptTypeDirect = new javax.swing.JPanel();
-        _panelScriptTypeDirect.setLayout(new BoxLayout(_panelScriptTypeDirect, BoxLayout.Y_AXIS));
+//        _panelScriptTypeDirect.setLayout(new BoxLayout(_panelScriptTypeDirect, BoxLayout.Y_AXIS));
         _panelScriptTypeReference = new javax.swing.JPanel();
         _panelScriptTypeReference.setLayout(new BoxLayout(_panelScriptTypeReference, BoxLayout.Y_AXIS));
         _panelScriptTypeLocalVariable = new javax.swing.JPanel();
@@ -111,9 +115,32 @@ public class ActionSimpleScriptSwing extends AbstractDigitalActionSwing {
         _tabbedPaneScriptType.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelScriptTypeLocalVariable);
         _tabbedPaneScriptType.addTab(NamedBeanAddressing.Formula.toString(), _panelScriptTypeFormula);
         
-        _scriptTextField = new JTextField();
-        _panelScriptTypeDirect.add(new JLabel(Bundle.getMessage("SimpleScript_Script")));
-        _panelScriptTypeDirect.add(_scriptTextField);
+        JButton _actionSelectFileButton = new JButton("..."); // "File" replaced by ...
+        _actionSelectFileButton.setMaximumSize(_actionSelectFileButton.getPreferredSize());
+        _actionSelectFileButton.setToolTipText(Bundle.getMessage("FileButtonHint"));  // NOI18N
+        _actionSelectFileButton.addActionListener((ActionEvent e) -> {
+            scriptFileChooser = new JFileChooser(FileUtil.getScriptsPath());
+            scriptFileChooser.setFileFilter(new FileNameExtensionFilter("Python script files", "py")); // NOI18N
+            scriptFileChooser.rescanCurrentDirectory();
+            int retVal = scriptFileChooser.showOpenDialog(null);
+            // handle selection or cancel
+            if (retVal == JFileChooser.APPROVE_OPTION) {
+                // set selected file location
+                try {
+                    _scriptTextField.setText(FileUtil.getPortableFilename(scriptFileChooser.getSelectedFile().getCanonicalPath()));
+                } catch (java.io.IOException ex) {
+                    log.error("exception setting file location: {}", ex);  // NOI18N
+                    _scriptTextField.setText("");
+                }
+            }
+        });
+        _panelScriptTypeDirect.add(_actionSelectFileButton);
+        JPanel _scriptTextPanel = new JPanel();
+        _scriptTextPanel.setLayout(new BoxLayout(_scriptTextPanel, BoxLayout.Y_AXIS));
+        _scriptTextField = new JTextField(30);
+        _scriptTextPanel.add(new JLabel(Bundle.getMessage("SimpleScript_Script")));
+        _scriptTextPanel.add(_scriptTextField);
+        _panelScriptTypeDirect.add(_scriptTextPanel);
         
         _scriptReferenceTextField = new JTextField();
         _scriptReferenceTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
@@ -276,6 +303,6 @@ public class ActionSimpleScriptSwing extends AbstractDigitalActionSwing {
     }
     
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SimpleScriptSwing.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSimpleScriptSwing.class);
     
 }

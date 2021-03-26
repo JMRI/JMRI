@@ -137,7 +137,7 @@ public class CbusLightManager extends AbstractLightManager {
      */
     @Override
     public String getEntryToolTip() {
-        return Bundle.getMessage("AddOutputEntryToolTip");
+        return Bundle.getMessage("AddCbusLightEntryToolTip");
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusLightManager.class);
