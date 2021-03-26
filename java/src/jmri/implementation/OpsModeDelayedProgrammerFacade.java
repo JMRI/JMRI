@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.implementation.ProgrammerFacadeSelector
  *
  * @author Bob Jacobsen Copyright (C) 2014
+ * @author Andrew Crosland Copyright (C) 2021
  */
 // @ToDo("transform to annotations requires e.g. http://alchemy.grimoire.ca/m2/sites/ca.grimoire/todo-annotations/")
 // @ToDo("read handling needs to be aligned with other ops mode programmers")
@@ -67,9 +68,14 @@ public class OpsModeDelayedProgrammerFacade extends AbstractProgrammerFacade imp
 
     @Override
     public synchronized void readCV(String cv, jmri.ProgListener p) throws jmri.ProgrammerException {
+        readCV(cv, p, 0);
+    }
+
+    @Override
+    public synchronized void readCV(String cv, jmri.ProgListener p, int startVal) throws jmri.ProgrammerException {
         useProgrammer(p);
         state = ProgState.READCOMMANDSENT;
-        prog.readCV(cv, this);
+        prog.readCV(cv, this, startVal);
     }
 
     @Override

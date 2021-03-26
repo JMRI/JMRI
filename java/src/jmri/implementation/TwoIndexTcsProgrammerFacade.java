@@ -113,8 +113,8 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
         useProgrammer(p);
         parseCV(CV);
         _startVal = startVal;
-        _startMSB = startVal/256;
-        _startLSB = startVal%256;
+        _startMSB = startVal / 256;
+        _startLSB = startVal % 256;
         upperByte = 0;
         if (valuePI == -1) {
             state = ProgState.PROGRAMMING;
