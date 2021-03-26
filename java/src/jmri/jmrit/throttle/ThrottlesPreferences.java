@@ -12,6 +12,12 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * A class to store JMRI throttles preferences
+ * 
+ * @author Lionel Jeanson - 2009-2021
+ * 
+ */
 public class ThrottlesPreferences {
 
     private boolean _useExThrottle = true;
@@ -52,11 +58,11 @@ public class ThrottlesPreferences {
             root = null;
         }
         if (root != null) {
-            setXml(root.getChild("throttlesPreferences"));
+            load(root.getChild("throttlesPreferences"));
         }
     }
 
-    public void setXml(org.jdom2.Element e) {
+    public void load(org.jdom2.Element e) {
         if (e == null) {
             return;
         }
@@ -108,7 +114,7 @@ public class ThrottlesPreferences {
             setHideSpeedStepSelector(a.getValue().compareTo("true") == 0);
         }
         if (e.getChild("throttlesControls") != null) {
-            this._tpwkc.setXml(e.getChild("throttlesControls"));
+            this._tpwkc.load(e.getChild("throttlesControls"));
         }
         this.dirty = false;
     }
@@ -127,7 +133,7 @@ public class ThrottlesPreferences {
     static class ThrottlesPrefsXml extends XmlFile {
     }
 
-    public Element getXml() {
+    public Element store() {
         org.jdom2.Element e = new org.jdom2.Element("throttlesPreferences");
         e.setAttribute("isUsingExThrottle", "" + isUsingExThrottle());
         e.setAttribute("isUsingToolBar", "" + isUsingToolBar());
@@ -146,7 +152,7 @@ public class ThrottlesPreferences {
         e.setAttribute("isUsingLargeSpeedSlider", "" + isUsingLargeSpeedSlider());
         e.setAttribute("isHidingSpeedStepSelector", "" + isHidingSpeedStepSelector());
         java.util.ArrayList<Element> children = new java.util.ArrayList<>(1);
-        children.add(this._tpwkc.getXml());
+        children.add(this._tpwkc.store());
         e.setContent(children);
         return e;
     }
@@ -213,7 +219,7 @@ public class ThrottlesPreferences {
              m.put("href", jmri.jmrit.XmlFile.xsltLocation+"throttles-preferences.xsl");
              ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
              doc.addContent(0,p);*/
-            root.setContent(getXml());
+            root.setContent(store());
             xf.writeXML(file, doc);
         } catch (java.io.IOException ex) {
             log.warn("Exception in storing throttles preferences xml: {}", ex);

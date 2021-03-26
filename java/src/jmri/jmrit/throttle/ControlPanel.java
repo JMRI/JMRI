@@ -24,6 +24,7 @@ import org.jdom2.Element;
  * @author glen Copyright (C) 2002
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
+ * @author Lionel Jeanson 2009-2021
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, AddressListener {
     private DccThrottle throttle;

@@ -9,8 +9,10 @@ import javax.swing.*;
 import jmri.InstanceManager;
 
 /**
- *
- * @author Lionel Jeanson - 2021
+ * A preferences panel to display and edit JMRI throttle preferences
+ * 
+ * @author Lionel Jeanson - 2009 - 2021
+ * 
  */
 public class ThrottlesPreferencesUISettingsPane extends JPanel {
 

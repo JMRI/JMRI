@@ -7,8 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
+ * A class to store JMRI throttles keyboard shortcuts
+ * 
  * @author Lionel Jeanson - 2021
+ * 
  */
 public class ThrottlesPreferencesWindowKeyboardControls implements Cloneable {
     
@@ -505,7 +507,7 @@ public class ThrottlesPreferencesWindowKeyboardControls implements Cloneable {
         return e;
     }
     
-    Element getXml() {
+    Element store() {
         java.util.ArrayList<Element> children = new java.util.ArrayList<>(10);
         children.add( getControlXml("nextThrottleWindowKeys", nextThrottleWindowKeys));
         children.add( getControlXml("prevThrottleWindowKeys", prevThrottleWindowKeys));
@@ -548,7 +550,7 @@ public class ThrottlesPreferencesWindowKeyboardControls implements Cloneable {
         return ret;
     }
 
-    public void setXml(org.jdom2.Element e) {
+    public void load(org.jdom2.Element e) {
         if ((e == null) || (e.getChildren().isEmpty())) {
             return;
         }

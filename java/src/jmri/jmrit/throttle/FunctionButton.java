@@ -33,6 +33,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Glen Oberhauser
  * @author Bob Jacobsen Copyright 2008
+ * @author Lionel Jeanson 2021
  */
 public class FunctionButton extends JToggleButton {
 

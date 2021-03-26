@@ -14,8 +14,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
- * @author lionel
+ * A preferences panel to display and edit JMRI throttle keyboard shortcuts
+ * 
+ * @author Lionel Jeanson - 2009-2021
+ * 
  */
 @ServiceProvider(service = PreferencesPanel.class)
 public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeListener, PreferencesPanel {

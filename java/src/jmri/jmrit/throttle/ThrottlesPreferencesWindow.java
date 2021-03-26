@@ -9,8 +9,10 @@ import javax.swing.*;
 import jmri.util.JmriJFrame;
 
 /**
- *
- * @author lionel
+ * A frame to display and edit Throttles preferences
+ * 
+ * @author Lionel Jeanson - 2021
+ * 
  */
 public final class ThrottlesPreferencesWindow extends JmriJFrame {
     

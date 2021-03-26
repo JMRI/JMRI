@@ -12,8 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
- * @author lionel
+ * A preferences panel to display and edit JMRI throttle keyboard shortcuts
+ * 
+ * @author Lionel Jeanson - 2021
+ * 
  */
 public class ThrottlesPreferencesControlsSettingsPane extends JPanel {
     
@@ -325,7 +327,7 @@ public class ThrottlesPreferencesControlsSettingsPane extends JPanel {
         }
         try {
             float sm = Float.parseFloat(tfSpeedMultiplier.getText());            
-            if (Float.compare(sm,  tpwkc.getMoreSpeedMultiplier())!=0) {
+            if (Math.abs(sm - tpwkc.getMoreSpeedMultiplier()) > 0.0001) {
                 tpwkc.setMoreSpeedMultiplier(sm);
             }
         }
@@ -374,8 +376,8 @@ public class ThrottlesPreferencesControlsSettingsPane extends JPanel {
             }
         }
         try {
-            float sm = Float.parseFloat(tfSpeedMultiplier.getText());
-            ret = (Float.compare(sm,  origSpeedMultiplier)!=0) || ret; 
+            float sm = Float.parseFloat(tfSpeedMultiplier.getText());            
+            ret = (Math.abs(sm - origSpeedMultiplier) > 0.0001) || ret; 
         }
         catch (NumberFormatException e) {
             log.error("Speed multiplier must be a numerical float value.");

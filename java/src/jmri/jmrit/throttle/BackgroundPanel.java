@@ -11,6 +11,13 @@ import jmri.util.swing.ResizableImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * A panel to be used as background for JMRI throttle frames 
+ * 
+ * @author Lionel Jeanson - 2009-
+ * 
+ */
+
 public class BackgroundPanel extends ResizableImagePanel implements AddressListener {
 
     AddressPanel addressPanel = null;
