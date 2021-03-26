@@ -116,7 +116,7 @@ public class ThrottleWindowInputsListener implements KeyListener, MouseWheelList
             return;
         }
         if (match(e, tpwkc.getPrevThrottleInternalWindowKeys())) {
-            tw.getCurrentThrottleFrame().activateNextJInternalFrame();
+            tw.getCurrentThrottleFrame().activatePreviousJInternalFrame();
             return;
         }
         if (match(e, tpwkc.getMoveToControlPanelKeys())) {
@@ -156,7 +156,7 @@ public class ThrottleWindowInputsListener implements KeyListener, MouseWheelList
             return;
         }
         if (match(e, tpwkc.getPrevThrottleWindowKeys())) {
-            InstanceManager.getDefault(ThrottleFrameManager.class).requestFocusForPrevThrottleWindow();
+            InstanceManager.getDefault(ThrottleFrameManager.class).requestFocusForPreviousThrottleWindow();
         }                
     }
     
