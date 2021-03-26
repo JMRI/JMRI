@@ -89,6 +89,14 @@ public class StatusPanel extends jmri.jmrix.tams.swing.TamsPanel implements Tams
     public void message(TamsMessage m) {
         // messages are ignored
     }
+    
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String getTitle() {
+        return Bundle.getMessage("MenuItemInfo");
+    }
 
     /**
      * Nested class to create one of these using old-style defaults

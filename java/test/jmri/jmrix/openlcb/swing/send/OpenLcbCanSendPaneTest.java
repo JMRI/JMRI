@@ -58,7 +58,7 @@ public class OpenLcbCanSendPaneTest extends jmri.util.swing.JmriPanelTest {
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
         memo.configureManagers();
         panel = new OpenLcbCanSendPane();
-        helpTarget="package.jmri.jmrix.openlcb.swing.send.OpenLcbCanSendPane";
+        helpTarget="package.jmri.jmrix.openlcb.swing.send.OpenLcbCanSendFrame";
         title="Send CAN Frames and OpenLCB Messages";
     }
 
