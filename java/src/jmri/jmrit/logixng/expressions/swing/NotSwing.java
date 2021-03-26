@@ -14,6 +14,8 @@ import jmri.jmrit.logixng.expressions.Not;
 
 /**
  * Configures an Not object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright (C) 2021
  */
 public class NotSwing extends AbstractDigitalExpressionSwing {
 

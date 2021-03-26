@@ -15,14 +15,12 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 
 /**
- * An Expression that keeps its status even if its child expression doesn't.
+ * An Expression that negates the result of its child expression.
  * 
- * This expression stays False until both the 'hold' expression and the 'trigger'
- * expression becomes True. It stays true until the 'hold' expression goes to
- * False. The 'trigger' expression can for example be a push button that stays
- * True for a short time.
+ * This expression returns False if the child returns True. It returns True
+ * if the child returns False. It returns False if no child is connected.
  * 
- * @author Daniel Bergqvist Copyright 2018
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class Not extends AbstractDigitalExpression implements FemaleSocketListener {
 
