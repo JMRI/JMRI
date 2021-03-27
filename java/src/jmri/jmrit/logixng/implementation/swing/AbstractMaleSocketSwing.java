@@ -24,7 +24,12 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
     private final JLabel catchAbortExecutionLabel = new JLabel(Bundle.getMessage("MaleSocket_CatchAbortExecutionCheckBox"));
     private JComboBox<ErrorHandlingType> errorHandlingComboBox;
     private JCheckBox catchAbortExecutionCheckBox;
+    private JPanel subPanel;
     
+    
+    protected JPanel getSubPanel(@CheckForNull Base object) {
+        return null;
+    }
     
     /** {@inheritDoc} */
     @Override
@@ -89,6 +94,15 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
 //        catchAbortExecutionCheckBox.setAlignmentX(0);
         catchAbortExecutionLabel.setLabelFor(catchAbortExecutionCheckBox);
         panel.add(catchAbortExecutionCheckBox, c);
+        
+        subPanel = getSubPanel(object);
+        if (subPanel != null) {
+            JPanel thisPanel = panel;
+            panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+            panel.add(thisPanel);
+            panel.add(subPanel);
+        }
     }
     
     /** {@inheritDoc} */
@@ -106,7 +120,7 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
     
     /** {@inheritDoc} */
     @Override
-    public final void updateObject(@Nonnull Base object) {
+    public void updateObject(@Nonnull Base object) {
         if (! (object instanceof AbstractMaleSocket)) {
             throw new IllegalArgumentException("object is not an AbstractMaleSocket: " + object.getClass().getName());
         }

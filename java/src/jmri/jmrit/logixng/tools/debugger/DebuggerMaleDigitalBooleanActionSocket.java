@@ -39,53 +39,53 @@ public class DebuggerMaleDigitalBooleanActionSocket extends AbstractDebuggerMale
         _nextHasChangedToTrue = hasChangedToTrue;
         _nextHasChangedToFalse = hasChangedToFalse;
         before();
-        ((MaleDigitalBooleanActionSocket) _maleSocket).execute(hasChangedToTrue, hasChangedToFalse);
+        ((MaleDigitalBooleanActionSocket)getObject()).execute(hasChangedToTrue, hasChangedToFalse);
         after();
     }
 
     @Override
     public void setState(int s) throws JmriException {
-        ((MaleDigitalBooleanActionSocket) _maleSocket).setState(s);
+        ((MaleDigitalBooleanActionSocket)getObject()).setState(s);
     }
 
     @Override
     public int getState() {
-        return ((MaleDigitalBooleanActionSocket) _maleSocket).getState();
+        return ((MaleDigitalBooleanActionSocket)getObject()).getState();
     }
 
     @Override
     public String describeState(int state) {
-        return ((MaleDigitalBooleanActionSocket) _maleSocket).describeState(state);
+        return ((MaleDigitalBooleanActionSocket)getObject()).describeState(state);
     }
 
     @Override
     public void setProperty(String key, Object value) {
-        ((MaleDigitalBooleanActionSocket) _maleSocket).setProperty(key, value);
+        ((MaleDigitalBooleanActionSocket)getObject()).setProperty(key, value);
     }
 
     @Override
     public Object getProperty(String key) {
-        return ((MaleDigitalBooleanActionSocket) _maleSocket).getProperty(key);
+        return ((MaleDigitalBooleanActionSocket)getObject()).getProperty(key);
     }
 
     @Override
     public void removeProperty(String key) {
-        ((MaleDigitalBooleanActionSocket) _maleSocket).removeProperty(key);
+        ((MaleDigitalBooleanActionSocket)getObject()).removeProperty(key);
     }
 
     @Override
     public Set<String> getPropertyKeys() {
-        return ((MaleDigitalBooleanActionSocket) _maleSocket).getPropertyKeys();
+        return ((MaleDigitalBooleanActionSocket)getObject()).getPropertyKeys();
     }
 
     @Override
     public String getBeanType() {
-        return ((MaleDigitalBooleanActionSocket) _maleSocket).getBeanType();
+        return ((MaleDigitalBooleanActionSocket)getObject()).getBeanType();
     }
 
     @Override
     public int compareSystemNameSuffix(String suffix1, String suffix2, NamedBean n2) {
-        return ((MaleDigitalBooleanActionSocket) _maleSocket).compareSystemNameSuffix(suffix1, suffix2, n2);
+        return ((MaleDigitalBooleanActionSocket)getObject()).compareSystemNameSuffix(suffix1, suffix2, n2);
     }
     
 }

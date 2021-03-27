@@ -574,7 +574,10 @@ public class TreeEditor extends TreeViewer {
                             _editActionExpressionDialog = null;
                             _treePane._tree.updateUI();
                             
-                            if (femaleSocket.isActive()) femaleSocket.registerListeners();
+//                            if (femaleSocket.isActive()) femaleSocket.registerListeners();
+                            if (_treePane._femaleRootSocket.isActive()) {
+                                _treePane._femaleRootSocket.registerListeners();
+                            }
                         });
                     } else {
                         StringBuilder errorMsg = new StringBuilder();
