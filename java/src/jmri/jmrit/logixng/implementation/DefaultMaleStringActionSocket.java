@@ -17,44 +17,13 @@ import javax.annotation.Nonnull;
  */
 public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements MaleStringActionSocket {
 
-    private final StringActionBean _action;
+//    private final StringActionBean ((StringActionBean)getObject());
     private DebugConfig _debugConfig = null;
     private boolean _enabled = true;
     
     
     public DefaultMaleStringActionSocket(@Nonnull BaseManager<? extends NamedBean> manager, @Nonnull StringActionBean stringAction) {
-        super(manager);
-        _action = stringAction;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public final Base getRoot() {
-        return _action.getRoot();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Lock getLock() {
-        return _action.getLock();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void setLock(Lock lock) {
-        _action.setLock(lock);
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Category getCategory() {
-        return _action.getCategory();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return _action.isExternal();
+        super(manager, stringAction);
     }
     
     /** {@inheritDoc} */
@@ -78,7 +47,7 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
         
         try {
             conditionalNG.getSymbolTable().createSymbols(_localVariables);
-            _action.setValue(value);
+            ((StringActionBean)getObject()).setValue(value);
         } catch (JmriException e) {
             handleError(this, Bundle.getMessage("ExceptionSetValue", e.getLocalizedMessage()), e, log);
         } catch (RuntimeException e) {
@@ -90,119 +59,13 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
     }
 
     @Override
-    public String getShortDescription(Locale locale) {
-        return _action.getShortDescription(locale);
-    }
-
-    @Override
-    public String getLongDescription(Locale locale) {
-        return _action.getLongDescription(locale);
-    }
-
-    @Override
-    public FemaleSocket getChild(int index)
-            throws IllegalArgumentException, UnsupportedOperationException {
-        return _action.getChild(index);
-    }
-
-    @Override
-    public int getChildCount() {
-        return _action.getChildCount();
-    }
-
-    @Override
-    public String getUserName() {
-        return _action.getUserName();
-    }
-
-    @Override
-    public void setUserName(String s) throws BadUserNameException {
-        _action.setUserName(s);
-    }
-
-    @Override
-    public String getSystemName() {
-        return _action.getSystemName();
-    }
-
-    @Override
     public String getDisplayName() {
-        return _action.getDisplayName();
-    }
-
-    @Override
-    public void addPropertyChangeListener(PropertyChangeListener l, String name, String listenerRef) {
-        _action.addPropertyChangeListener(l, name, listenerRef);
-    }
-
-    @Override
-    public void addPropertyChangeListener(String propertyName, PropertyChangeListener l, String name, String listenerRef) {
-        _action.addPropertyChangeListener(propertyName, l, name, listenerRef);
-    }
-
-    @Override
-    public void addPropertyChangeListener(PropertyChangeListener l) {
-        _action.addPropertyChangeListener(l);
-    }
-
-    @Override
-    public void addPropertyChangeListener(String propertyName, PropertyChangeListener l) {
-        _action.addPropertyChangeListener(propertyName, l);
-    }
-
-    @Override
-    public void removePropertyChangeListener(PropertyChangeListener l) {
-        _action.removePropertyChangeListener(l);
-    }
-
-    @Override
-    public void removePropertyChangeListener(String propertyName, PropertyChangeListener l) {
-        _action.removePropertyChangeListener(propertyName, l);
-    }
-
-    @Override
-    public void updateListenerRef(PropertyChangeListener l, String newName) {
-        _action.updateListenerRef(l, newName);
-    }
-
-    @Override
-    public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
-        _action.vetoableChange(evt);
-    }
-
-    @Override
-    public String getListenerRef(PropertyChangeListener l) {
-        return _action.getListenerRef(l);
-    }
-
-    @Override
-    public ArrayList<String> getListenerRefs() {
-        return _action.getListenerRefs();
-    }
-
-    @Override
-    public int getNumPropertyChangeListeners() {
-        return _action.getNumPropertyChangeListeners();
-    }
-
-    @Override
-    public synchronized PropertyChangeListener[] getPropertyChangeListeners() {
-        return _action.getPropertyChangeListeners();
-    }
-
-    @Override
-    public synchronized PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
-        return _action.getPropertyChangeListeners(propertyName);
-    }
-
-    @Override
-    public PropertyChangeListener[] getPropertyChangeListenersByReference(String name) {
-        return _action.getPropertyChangeListenersByReference(name);
+        return ((StringActionBean)getObject()).getDisplayName();
     }
 
     @Override
     public void disposeMe() {
-        _action.dispose();
+        ((StringActionBean)getObject()).dispose();
     }
 
     /**
@@ -210,7 +73,7 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
      */
     @Override
     public void registerListenersForThisClass() {
-        _action.registerListeners();
+        ((StringActionBean)getObject()).registerListeners();
     }
     
     /**
@@ -218,62 +81,62 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
      */
     @Override
     public void unregisterListenersForThisClass() {
-        _action.unregisterListeners();
+        ((StringActionBean)getObject()).unregisterListeners();
     }
     
     @Override
     public void setState(int s) throws JmriException {
-        _action.setState(s);
+        ((StringActionBean)getObject()).setState(s);
     }
 
     @Override
     public int getState() {
-        return _action.getState();
+        return ((StringActionBean)getObject()).getState();
     }
 
     @Override
     public String describeState(int state) {
-        return _action.describeState(state);
+        return ((StringActionBean)getObject()).describeState(state);
     }
 
     @Override
     public String getComment() {
-        return _action.getComment();
+        return ((StringActionBean)getObject()).getComment();
     }
 
     @Override
     public void setComment(String comment) {
-        _action.setComment(comment);
+        ((StringActionBean)getObject()).setComment(comment);
     }
 
     @Override
     public void setProperty(String key, Object value) {
-        _action.setProperty(key, value);
+        ((StringActionBean)getObject()).setProperty(key, value);
     }
 
     @Override
     public Object getProperty(String key) {
-        return _action.getProperty(key);
+        return ((StringActionBean)getObject()).getProperty(key);
     }
 
     @Override
     public void removeProperty(String key) {
-        _action.removeProperty(key);
+        ((StringActionBean)getObject()).removeProperty(key);
     }
 
     @Override
     public Set<String> getPropertyKeys() {
-        return _action.getPropertyKeys();
+        return ((StringActionBean)getObject()).getPropertyKeys();
     }
 
     @Override
     public String getBeanType() {
-        return _action.getBeanType();
+        return ((StringActionBean)getObject()).getBeanType();
     }
 
     @Override
     public int compareSystemNameSuffix(String suffix1, String suffix2, NamedBean n2) {
-        return _action.compareSystemNameSuffix(suffix1, suffix2, n2);
+        return ((StringActionBean)getObject()).compareSystemNameSuffix(suffix1, suffix2, n2);
     }
 
     /** {@inheritDoc} */
@@ -294,12 +157,6 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
         return new StringActionDebugConfig();
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public Base getObject() {
-        return _action;
-    }
-    
     /** {@inheritDoc} */
     @Override
     public void setEnabled(boolean enable) {

@@ -231,12 +231,17 @@ public class ImportConditional {
             }
             
             if (newExpression != null) {
+                
+                boolean doTriggerActions = cv.doTriggerActions();
+                
                 if (cv.isNegated()) {
                     Not notExpression = new Not(InstanceManager.getDefault(DigitalExpressionManager.class)
                             .getAutoSystemName(), null);
 
                     if (!_dryRun) {
                         MaleSocket newExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(newExpression);
+                        newExpressionSocket.setListen(doTriggerActions);
+                        doTriggerActions = true;    // We don't want the Not expression to disable listen.
                         notExpression.getChild(0).connect(newExpressionSocket);
                     }
                     newExpression = notExpression;
@@ -244,6 +249,7 @@ public class ImportConditional {
                 
                 if (!_dryRun) {
                     MaleSocket newExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(newExpression);
+                    newExpressionSocket.setListen(doTriggerActions);
                     expression.getChild(i).connect(newExpressionSocket);
                 }
             } else {

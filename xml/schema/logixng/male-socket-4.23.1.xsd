@@ -91,6 +91,14 @@
 
               <xs:attribute name="catchAbortExecution" type="yesNoType" />
 
+
+              <!-- Sub classes to AbstractMaleSocket may add things here - Start -->
+
+			  <xs:attribute name="DefaultMaleDigitalExpressionSocketListen" type="yesNoType" />
+
+              <!-- Sub classes to AbstractMaleSocket may add things here - End -->
+
+
               <xs:attribute name="enabled" type="yesNoType" />
               <xs:attribute name="class" type="classType" use="required"/>
             </xs:complexType>

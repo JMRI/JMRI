@@ -22,7 +22,7 @@ public class DebuggerMaleDigitalExpressionSocket extends AbstractDebuggerMaleSoc
     /** {@inheritDoc} */
     @Override
     public void notifyChangedResult(boolean oldResult, boolean newResult) {
-        ((MaleDigitalExpressionSocket) _maleSocket).notifyChangedResult(oldResult, newResult);
+        ((MaleDigitalExpressionSocket)getObject()).notifyChangedResult(oldResult, newResult);
     }
 
     /** {@inheritDoc} */
@@ -40,69 +40,69 @@ public class DebuggerMaleDigitalExpressionSocket extends AbstractDebuggerMaleSoc
     @Override
     public boolean evaluate() throws JmriException {
         before();
-        _lastResult = ((MaleDigitalExpressionSocket) _maleSocket).evaluate();
+        _lastResult = ((MaleDigitalExpressionSocket)getObject()).evaluate();
         after();
         return _lastResult;
     }
 
     @Override
     public boolean getLastResult() {
-        return ((MaleDigitalExpressionSocket) _maleSocket).getLastResult();
+        return ((MaleDigitalExpressionSocket)getObject()).getLastResult();
     }
 
     @Override
     public void setState(int s) throws JmriException {
-        ((MaleDigitalExpressionSocket) _maleSocket).setState(s);
+        ((MaleDigitalExpressionSocket)getObject()).setState(s);
     }
 
     @Override
     public int getState() {
-        return ((MaleDigitalExpressionSocket) _maleSocket).getState();
+        return ((MaleDigitalExpressionSocket)getObject()).getState();
     }
 
     @Override
     public String describeState(int state) {
-        return ((MaleDigitalExpressionSocket) _maleSocket).describeState(state);
+        return ((MaleDigitalExpressionSocket)getObject()).describeState(state);
     }
 
     @Override
     public void setProperty(String key, Object value) {
-        ((MaleDigitalExpressionSocket) _maleSocket).setProperty(key, value);
+        ((MaleDigitalExpressionSocket)getObject()).setProperty(key, value);
     }
 
     @Override
     public Object getProperty(String key) {
-        return ((MaleDigitalExpressionSocket) _maleSocket).getProperty(key);
+        return ((MaleDigitalExpressionSocket)getObject()).getProperty(key);
     }
 
     @Override
     public void removeProperty(String key) {
-        ((MaleDigitalExpressionSocket) _maleSocket).removeProperty(key);
+        ((MaleDigitalExpressionSocket)getObject()).removeProperty(key);
     }
 
     @Override
     public Set<String> getPropertyKeys() {
-        return ((MaleDigitalExpressionSocket) _maleSocket).getPropertyKeys();
+        return ((MaleDigitalExpressionSocket)getObject()).getPropertyKeys();
     }
 
     @Override
     public String getBeanType() {
-        return ((MaleDigitalExpressionSocket) _maleSocket).getBeanType();
+        return ((MaleDigitalExpressionSocket)getObject()).getBeanType();
     }
 
     @Override
     public int compareSystemNameSuffix(String suffix1, String suffix2, NamedBean n2) {
-        return ((MaleDigitalExpressionSocket) _maleSocket).compareSystemNameSuffix(suffix1, suffix2, n2);
+        return ((MaleDigitalExpressionSocket)getObject()).compareSystemNameSuffix(suffix1, suffix2, n2);
     }
 
     @Override
     public void setTriggerOnChange(boolean triggerOnChange) {
-        ((MaleDigitalExpressionSocket) _maleSocket).setTriggerOnChange(triggerOnChange);
+        ((MaleDigitalExpressionSocket)getObject()).setTriggerOnChange(triggerOnChange);
     }
 
     @Override
     public boolean getTriggerOnChange() {
-        return ((MaleDigitalExpressionSocket) _maleSocket).getTriggerOnChange();
+        return ((MaleDigitalExpressionSocket)getObject()).getTriggerOnChange();
     }
     
 }

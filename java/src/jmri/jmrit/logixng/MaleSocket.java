@@ -61,6 +61,10 @@ public interface MaleSocket extends Debugable {
     @Override
     public boolean isEnabled();
     
+    public boolean getListen();
+    
+    public void setListen(boolean listen);
+    
     public void addLocalVariable(
             String name,
             InitialValueType initialValueType,
