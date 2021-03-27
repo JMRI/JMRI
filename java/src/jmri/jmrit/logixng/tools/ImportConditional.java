@@ -789,19 +789,27 @@ public class ImportConditional {
                 
                 String sNumber = ca.getActionString();
                 try {
-                    float time = Float.parseFloat(sNumber);
-                    delayedAction.setDelay((int) (time * 1000));
+                    int time = Integer.parseInt(sNumber);
+                    delayedAction.setDelay(time);
+                    delayedAction.setUnit(TimerUnit.Seconds);
                 } catch (NumberFormatException e) {
-                    // If here, assume that sNumber has the name of a memory
-                    if (sNumber.charAt(0) == '@') {
-                        sNumber = sNumber.substring(1);
+                    try {
+                        float time = Float.parseFloat(sNumber);
+                        delayedAction.setDelay((int) (time * 1000));
+                        delayedAction.setUnit(TimerUnit.MilliSeconds);
+                    } catch (NumberFormatException e2) {
+                        // If here, assume that sNumber has the name of a memory.
+                        // Logix supports this memory to have a floating point value
+                        // but LogixNG requires this memory to have an integer value.
+                        if (sNumber.charAt(0) == '@') {
+                            sNumber = sNumber.substring(1);
+                        }
+                        delayedAction.setDelayAddressing(NamedBeanAddressing.Reference);
+                        delayedAction.setDelayReference("{" + sNumber + "}");
+                        delayedAction.setUnit(TimerUnit.Seconds);
                     }
-                    delayedAction.setDelayAddressing(NamedBeanAddressing.Reference);
-                    delayedAction.setDelayReference("{" + sNumber + "}");
                 }
                 
-                delayedAction.setDelay(0);
-                delayedAction.setUnit(TimerUnit.MilliSeconds);
                 delayedAction.setResetIfAlreadyStarted(ca.getType() == Conditional.Action.RESET_DELAYED_SENSOR);
                 if (!_dryRun) {
                     MaleSocket subActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
@@ -872,19 +880,27 @@ public class ImportConditional {
                 
                 String sNumber = ca.getActionString();
                 try {
-                    float time = Float.parseFloat(sNumber);
-                    delayedAction.setDelay((int) (time * 1000));
+                    int time = Integer.parseInt(sNumber);
+                    delayedAction.setDelay(time);
+                    delayedAction.setUnit(TimerUnit.Seconds);
                 } catch (NumberFormatException e) {
-                    // If here, assume that sNumber has the name of a memory
-                    if (sNumber.charAt(0) == '@') {
-                        sNumber = sNumber.substring(1);
+                    try {
+                        float time = Float.parseFloat(sNumber);
+                        delayedAction.setDelay((int) (time * 1000));
+                        delayedAction.setUnit(TimerUnit.MilliSeconds);
+                    } catch (NumberFormatException e2) {
+                        // If here, assume that sNumber has the name of a memory.
+                        // Logix supports this memory to have a floating point value
+                        // but LogixNG requires this memory to have an integer value.
+                        if (sNumber.charAt(0) == '@') {
+                            sNumber = sNumber.substring(1);
+                        }
+                        delayedAction.setDelayAddressing(NamedBeanAddressing.Reference);
+                        delayedAction.setDelayReference("{" + sNumber + "}");
+                        delayedAction.setUnit(TimerUnit.Seconds);
                     }
-                    delayedAction.setDelayAddressing(NamedBeanAddressing.Reference);
-                    delayedAction.setDelayReference("{" + sNumber + "}");
                 }
                 
-                delayedAction.setDelay(0);
-                delayedAction.setUnit(TimerUnit.MilliSeconds);
                 delayedAction.setResetIfAlreadyStarted(ca.getType() == Conditional.Action.RESET_DELAYED_TURNOUT);
                 if (!_dryRun) {
                     MaleSocket subActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
