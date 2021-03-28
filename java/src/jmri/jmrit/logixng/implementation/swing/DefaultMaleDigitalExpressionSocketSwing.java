@@ -24,6 +24,7 @@ public class DefaultMaleDigitalExpressionSocketSwing extends AbstractMaleSocketS
         
         _panel = new JPanel();
         _listenCheckBox = new JCheckBox();
+        _listenCheckBox.setSelected(true);  // Listen should be true if not changed by the user
         
         DefaultMaleDigitalExpressionSocket maleSocket = (DefaultMaleDigitalExpressionSocket)object;
         if (maleSocket != null) {
