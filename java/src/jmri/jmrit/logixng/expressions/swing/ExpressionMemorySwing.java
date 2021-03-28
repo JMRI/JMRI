@@ -22,6 +22,7 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
 
     private BeanSelectCreatePanel<Memory> _memoryBeanPanel;
     private JComboBox<MemoryOperation> _memoryOperationComboBox;
+    private JCheckBox _caseInsensitiveCheckBox;
     
     private JTabbedPane _tabbedPane;
     
@@ -59,13 +60,20 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         
         _memoryBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(MemoryManager.class), null);
         
+        JPanel operationAndCasePanel = new JPanel();
+        operationAndCasePanel.setLayout(new BoxLayout(operationAndCasePanel, BoxLayout.Y_AXIS));
+        
         _memoryOperationComboBox = new JComboBox<>();
         for (MemoryOperation e : MemoryOperation.values()) {
             _memoryOperationComboBox.addItem(e);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_memoryOperationComboBox);
+        operationAndCasePanel.add(_memoryOperationComboBox);
         
         _memoryOperationComboBox.addActionListener((e) -> { enableDisableCompareTo(); });
+        
+        _caseInsensitiveCheckBox = new JCheckBox(Bundle.getMessage("ExpressionMemory_CaseInsensitive"));
+        operationAndCasePanel.add(_caseInsensitiveCheckBox);
         
         _tabbedPane = new JTabbedPane();
         
@@ -111,6 +119,7 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
                 default: throw new IllegalArgumentException("invalid _addressing state: " + expression.getCompareTo().name());
             }
             _memoryOperationComboBox.setSelectedItem(expression.getMemoryOperation());
+            _caseInsensitiveCheckBox.setSelected(expression.getCaseInsensitive());
             _compareToConstantTextField.setText(expression.getConstantValue());
             _compareToLocalVariableTextField.setText(expression.getLocalVariable());
             _compareToRegExTextField.setText(expression.getRegEx());
@@ -118,7 +127,7 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         
         JComponent[] components = new JComponent[]{
             _memoryBeanPanel,
-            _memoryOperationComboBox,
+            operationAndCasePanel,
             _tabbedPane
         };
         
@@ -165,6 +174,7 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
             log.error("Cannot get NamedBeanHandle for memory", ex);
         }
         expression.setMemoryOperation(_memoryOperationComboBox.getItemAt(_memoryOperationComboBox.getSelectedIndex()));
+        expression.setCaseInsensitive(_caseInsensitiveCheckBox.isSelected());
         
         
         try {

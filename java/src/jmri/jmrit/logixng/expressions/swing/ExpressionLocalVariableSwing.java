@@ -22,6 +22,7 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
 
     private JTextField _localVariableTextField;
     private JComboBox<VariableOperation> _variableOperationComboBox;
+    private JCheckBox _caseInsensitiveCheckBox;
     
     private JTabbedPane _tabbedPane;
     
@@ -59,13 +60,20 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
         
         _localVariableTextField = new JTextField(30);
         
+        JPanel operationAndCasePanel = new JPanel();
+        operationAndCasePanel.setLayout(new BoxLayout(operationAndCasePanel, BoxLayout.Y_AXIS));
+        
         _variableOperationComboBox = new JComboBox<>();
         for (VariableOperation e : VariableOperation.values()) {
             _variableOperationComboBox.addItem(e);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_variableOperationComboBox);
+        operationAndCasePanel.add(_variableOperationComboBox);
         
         _variableOperationComboBox.addActionListener((e) -> { enableDisableCompareTo(); });
+        
+        _caseInsensitiveCheckBox = new JCheckBox(Bundle.getMessage("ExpressionLocalVariable_CaseInsensitive"));
+        operationAndCasePanel.add(_caseInsensitiveCheckBox);
         
         _tabbedPane = new JTabbedPane();
         
@@ -111,6 +119,7 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
                 default: throw new IllegalArgumentException("invalid _addressing state: " + expression.getCompareTo().name());
             }
             _variableOperationComboBox.setSelectedItem(expression.getVariableOperation());
+            _caseInsensitiveCheckBox.setSelected(expression.getCaseInsensitive());
             _compareToConstantTextField.setText(expression.getConstantValue());
             _compareToLocalVariableTextField.setText(expression.getOtherLocalVariable());
             _compareToRegExTextField.setText(expression.getRegEx());
@@ -118,7 +127,7 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
         
         JComponent[] components = new JComponent[]{
             _localVariableTextField,
-            _variableOperationComboBox,
+            operationAndCasePanel,
             _tabbedPane
         };
         
@@ -154,6 +163,7 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
         
         expression.setLocalVariable(_localVariableTextField.getText());
         expression.setVariableOperation(_variableOperationComboBox.getItemAt(_variableOperationComboBox.getSelectedIndex()));
+        expression.setCaseInsensitive(_caseInsensitiveCheckBox.isSelected());
         
         
         try {
