@@ -73,7 +73,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
     public void persist(@Nonnull JTable table, boolean resetState) throws IllegalArgumentException, NullPointerException {
         Objects.requireNonNull(table.getName(), "Table name must be nonnull");
         if (this.listeners.containsKey(table.getName()) && !this.listeners.get(table.getName()).getTable().equals(table)) {
-            throw new IllegalArgumentException("Table name must be unique");
+            throw new IllegalArgumentException("Table name "+table.getName()+" must be unique");
         }
         if (resetState) {
             this.resetState(table);
@@ -493,7 +493,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
      * @param model the column model to get columns from
      * @return an enumeration of the columns
      */
-    private Enumeration<TableColumn> getColumns(TableColumnModel model) {
+    private Enumeration<TableColumn> getColumns(@Nonnull TableColumnModel model) {
         if (model instanceof XTableColumnModel) {
             return ((XTableColumnModel) model).getColumns(false);
         }
@@ -508,7 +508,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
      * @param model the column model to get the count from
      * @return the number of columns in the model
      */
-    private int getColumnCount(TableColumnModel model) {
+    private int getColumnCount(@Nonnull TableColumnModel model) {
         if (model instanceof XTableColumnModel) {
             return ((XTableColumnModel) model).getColumnCount(false);
         }
@@ -520,10 +520,10 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
      */
     public final static class TableColumnPreferences {
 
-        int order;
-        int preferredWidth;
-        SortOrder sort;
-        boolean hidden;
+        private final int order;
+        private final int preferredWidth;
+        private final SortOrder sort;
+        private final boolean hidden;
 
         public TableColumnPreferences(int order, int preferredWidth, SortOrder sort, boolean hidden) {
             this.order = order;
@@ -642,7 +642,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
             log.trace("Got columnSelectionChanged for {} ({} -> {})", this.table.getName(), e.getFirstIndex(), e.getLastIndex());
         }
 
-        TimerTask delay;
+        private TimerTask delay;
         
         protected void cancelDelay() {
             if (this.delay != null) {
