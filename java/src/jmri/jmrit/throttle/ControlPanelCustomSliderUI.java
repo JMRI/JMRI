@@ -14,6 +14,13 @@ import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import javax.swing.plaf.basic.BasicSliderUI;
 
+/**
+ * A custom slider UI to be used for throttle control panel speed slider
+ * Very graphical display to be used on a large screen
+ * 
+ * @author Lionel Jeanson - 2018
+ * 
+ */
 
 public class ControlPanelCustomSliderUI extends BasicSliderUI {
     

@@ -223,7 +223,6 @@
    <tocitem text="New Train " target="package.jmri.jmrit.dispatcher.NewTrain"/>
 
   </tocitem>
-
   <tocitem text="OperationsPro " target="html.apps.OperationsPro.index">
    <tocitem text="OperationsPro Information " target="package.jmri.jmrit.operations.Operations"/>
 
@@ -321,6 +320,8 @@
   <tocitem text="Memory Variable Table " target="package.jmri.jmrit.beantable.MemoryTable"/>
 
   <tocitem text="Reporter Table " target="package.jmri.jmrit.beantable.ReporterTable"/>
+
+  <tocitem text="RailCom Table " target="package.jmri.jmrit.beantable.RailComTable"/>
 
  </tocitem>
  <tocitem text="Tools " target="html.tools.index">
@@ -524,6 +525,8 @@
    <tocitem text="Simple Signal Logic " target="package.jmri.jmrit.blockboss.BlockBossFrame"/>
 
   </tocitem>
+  <tocitem text="Cab Signaling " target="package.jmri.jmrit.cabsignals.CabSignalPane"/>
+
   <tocitem text="Speedometer " target="html.tools.speedometer.index"/>
 
   <tocitem text="Throttles " target="html.tools.throttle.ThrottleMain">
@@ -749,9 +752,11 @@
 
    <tocitem text="Configure Nodes " target="package.jmri.jmrix.openlcb.swing.networktree.NetworkTreePane"/>
 
+   <tocitem text="Send OpenLCB Frame " target="package.jmri.jmrix.openlcb.swing.send.OpenLcbCanSendFrame"/>
+
   </tocitem>
   <tocitem text="Powerline " target="html.hardware.powerline.index">
-   <tocitem text="Send Packet " target="package.jmri.jmrix.powerline.packetgen.PowerlinePacketGenFrame"/>
+   <tocitem text="Send Packet " target="package.jmri.jmrix.powerline.packetgen.PowerlinePacketGenPane"/>
 
    <tocitem text="Traffic Monitor " target="package.jmri.jmrix.powerline.serialmon.SerialMonFrame"/>
 
