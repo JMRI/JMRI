@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.tools;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnull;
 
@@ -179,6 +180,7 @@ public class ImportConditional {
         for (int i=0; i < conditionalVariables.size(); i++) {
             jmri.ConditionalVariable cv = conditionalVariables.get(i);
             NamedBean nb = cv.getBean();
+            AtomicBoolean isNegated = new AtomicBoolean(cv.isNegated());
             DigitalExpressionBean newExpression;
             switch (cv.getType().getItemType()) {
                 case SENSOR:
@@ -199,11 +201,11 @@ public class ImportConditional {
                     break;
                 case SIGNALHEAD:
                     SignalHead s = (SignalHead)nb;
-                    newExpression = getSignalHeadExpression(cv, s);
+                    newExpression = getSignalHeadExpression(cv, s, isNegated);
                     break;
                 case SIGNALMAST:
                     SignalMast sm = (SignalMast)nb;
-                    newExpression = getSignalMastExpression(cv, sm);
+                    newExpression = getSignalMastExpression(cv, sm, isNegated);
                     break;
                 case ENTRYEXIT:
                     DestinationPoints dp = (DestinationPoints)nb;
@@ -234,7 +236,7 @@ public class ImportConditional {
                 
                 boolean doTriggerActions = cv.doTriggerActions();
                 
-                if (cv.isNegated()) {
+                if (isNegated.get()) {  // Some expressions have already handled Not
                     Not notExpression = new Not(InstanceManager.getDefault(DigitalExpressionManager.class)
                             .getAutoSystemName(), null);
 
@@ -539,7 +541,10 @@ public class ImportConditional {
     }
     
     
-    private DigitalExpressionBean getSignalHeadExpression(@Nonnull ConditionalVariable cv, SignalHead s) throws JmriException {
+    private DigitalExpressionBean getSignalHeadExpression(
+            @Nonnull ConditionalVariable cv, SignalHead s, AtomicBoolean isNegated)
+            throws JmriException {
+        
         ExpressionSignalHead expression =
                 new ExpressionSignalHead(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
@@ -547,7 +552,7 @@ public class ImportConditional {
         expression.setSignalHead(s);
         
         ExpressionSignalHead.QueryType appearence =
-                cv.isNegated() ? ExpressionSignalHead.QueryType.NotAppearance
+                isNegated.get() ? ExpressionSignalHead.QueryType.NotAppearance
                 : ExpressionSignalHead.QueryType.Appearance;
         
         switch (cv.getType()) {
@@ -588,10 +593,10 @@ public class ImportConditional {
                 expression.setAppearance(SignalHead.FLASHLUNAR);
                 break;
             case SIGNAL_HEAD_LIT:
-                expression.setQueryType(cv.isNegated() ? ExpressionSignalHead.QueryType.NotLit : ExpressionSignalHead.QueryType.Lit);
+                expression.setQueryType(isNegated.get() ? ExpressionSignalHead.QueryType.NotLit : ExpressionSignalHead.QueryType.Lit);
                 break;
             case SIGNAL_HEAD_HELD:
-                expression.setQueryType(cv.isNegated() ? ExpressionSignalHead.QueryType.NotHeld : ExpressionSignalHead.QueryType.Held);
+                expression.setQueryType(isNegated.get() ? ExpressionSignalHead.QueryType.NotHeld : ExpressionSignalHead.QueryType.Held);
                 break;
             default:
                 throw new InvalidConditionalVariableException(
@@ -600,11 +605,16 @@ public class ImportConditional {
         
         expression.setTriggerOnChange(cv.doTriggerActions());
         
+        isNegated.set(false);   // We have already handled this
+        
         return expression;
     }
     
     
-    private DigitalExpressionBean getSignalMastExpression(@Nonnull ConditionalVariable cv, SignalMast sm) throws JmriException {
+    private DigitalExpressionBean getSignalMastExpression(
+            @Nonnull ConditionalVariable cv, SignalMast sm, AtomicBoolean isNegated)
+            throws JmriException {
+        
         ExpressionSignalMast expression =
                 new ExpressionSignalMast(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
@@ -612,7 +622,7 @@ public class ImportConditional {
         expression.setSignalMast(sm);
         
         ExpressionSignalMast.QueryType aspect =
-                cv.isNegated() ? ExpressionSignalMast.QueryType.NotAspect
+                isNegated.get() ? ExpressionSignalMast.QueryType.NotAspect
                 : ExpressionSignalMast.QueryType.Aspect;
         
         switch (cv.getType()) {
@@ -621,10 +631,10 @@ public class ImportConditional {
                 expression.setAspect(cv.getDataString());
                 break;
             case SIGNAL_MAST_LIT:
-                expression.setQueryType(cv.isNegated() ? ExpressionSignalMast.QueryType.NotLit : ExpressionSignalMast.QueryType.Lit);
+                expression.setQueryType(isNegated.get() ? ExpressionSignalMast.QueryType.NotLit : ExpressionSignalMast.QueryType.Lit);
                 break;
             case SIGNAL_MAST_HELD:
-                expression.setQueryType(cv.isNegated() ? ExpressionSignalMast.QueryType.NotHeld : ExpressionSignalMast.QueryType.Held);
+                expression.setQueryType(isNegated.get() ? ExpressionSignalMast.QueryType.NotHeld : ExpressionSignalMast.QueryType.Held);
                 break;
             default:
                 throw new InvalidConditionalVariableException(
@@ -632,6 +642,8 @@ public class ImportConditional {
         }
         
         expression.setTriggerOnChange(cv.doTriggerActions());
+        
+        isNegated.set(false);   // We have already handled this
         
         return expression;
     }
