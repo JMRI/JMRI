@@ -140,7 +140,13 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Test
     public void testReadCvSequence() throws JmriException {
         // infrastructure objects
-        DCCppInterfaceScaffold t = new DCCppInterfaceScaffold(new DCCppCommandStation());
+        DCCppCommandStation cs = new DCCppCommandStation();
+        //set the version
+        cs.setVersion("3.0.0");
+        DCCppReply r = DCCppReply.parseDCCppReply(
+                "iDCC-EX V-3.0.0 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36");
+        Assert.assertNotNull(r);
+        DCCppInterfaceScaffold t = new DCCppInterfaceScaffold(cs);
         jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
 
         DCCppProgrammer p = new DCCppProgrammer(t) {
@@ -149,6 +155,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
                 super.restartTimer(RESTART_TIME);
             }
         };
+        Assert.assertTrue(cs.getVersion().equals("3.0.0"));
 
         // and do the read
         p.readCV("29", l);
