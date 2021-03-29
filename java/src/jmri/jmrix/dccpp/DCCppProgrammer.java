@@ -56,7 +56,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<>();
         //ret.add(ProgrammingMode.PAGEMODE);
-        ret.add(ProgrammingMode.DIRECTBITMODE);
+//        ret.add(ProgrammingMode.DIRECTBITMODE);
         ret.add(ProgrammingMode.DIRECTBYTEMODE);
         //ret.add(ProgrammingMode.REGISTERMODE);
         return ret;
@@ -77,8 +77,8 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
         if (!getCanRead()) {
             return false; // check basic implementation first
         }
-        if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
-     return Integer.parseInt(addr) <= DCCppConstants.MAX_DIRECT_CV;
+        if (getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
+            return Integer.parseInt(addr) <= DCCppConstants.MAX_DIRECT_CV;
         } else {
             return Integer.parseInt(addr) <= 256;
         }
@@ -100,8 +100,8 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
         if (!getCanWrite()) {
             return false; // check basic implementation first
         }
-        if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
-     return Integer.parseInt(addr) <= DCCppConstants.MAX_DIRECT_CV;
+        if (getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
+            return Integer.parseInt(addr) <= DCCppConstants.MAX_DIRECT_CV;
         } else {
             return Integer.parseInt(addr) <= 256;
         }
@@ -141,25 +141,14 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
         _val = val;
         _cv = 0xffff & CV;
 
-        //try {
-            // start the error timer
-            restartTimer(DCCppProgrammerTimeout);
+        // start the error timer
+        restartTimer(DCCppProgrammerTimeout);
 
-            // format and send message to go to program mode
-            if (getMode().equals(ProgrammingMode.PAGEMODE)) {
-                //DCCppMessage msg = DCCppMessage.getWritePagedCVMsg(CV, val);
-                //controller().sendDCCppMessage(msg, this);
-            } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
-                DCCppMessage msg = DCCppMessage.makeWriteDirectCVMsg(CV, val);
-                controller().sendDCCppMessage(msg, this);
-            //} else { // register mode by elimination
-                //DCCppMessage msg = DCCppMessage.getWriteRegisterMsg(registerFromCV(CV), val);
-                //controller().sendDCCppessage(msg, this);
-            }
-     //} catch (jmri.ProgrammerException e) {
-            //progState = NOTPROGRAMMING;
-            //throw e;
-     //}
+        // format and send message to go to program mode
+        if (getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
+            DCCppMessage msg = DCCppMessage.makeWriteDirectCVMsg(CV, val);
+            controller().sendDCCppMessage(msg, this);
+        }
     }
 
     /** 
@@ -199,7 +188,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
         // start the error timer
         restartTimer(DCCppProgrammerTimeout);
 
-        if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
+        if (getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
             if (controller().getCommandStation().isReadStartValSupported()) { //use the 'V' command with a startVal
                 DCCppMessage msg = DCCppMessage.makeVerifyCVMsg(CV, startVal);
                 controller().sendDCCppMessage(msg, this);                
