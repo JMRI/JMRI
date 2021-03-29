@@ -10,7 +10,7 @@
   <meta name="keywords" content=
   "Digitrax DCS Command Station DCS52 java model railroad JMRI install windows">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content= "text/html; charset=us-ascii">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -27,39 +27,57 @@
     <div id="mainContent">
 
         <h1>Hardware Support: Digitrax DCS52</h1>
+      <img src="images/DCS52.png" alt="Image of the DCS52" width="200" align='right'>
+
       <div class="toc">
         <ul>
-          <li><a href="#ConnectingDCS52">Connecting JMRI to a Digitrax DCS52</a>
+          <li><a href="#GeneralInfo">General information: Connecting to a Digitrax DCS52</a>
 
             <ul>
                 <li><a href="#ChooseAMethod">Choosing the configuration method</a>
                 <ul>
                     <li><a href="#Dcs52Standalone">DCS52 USB interface as a
-                    stand-alone decoder programmer</a>
-                        <ul>
-                        <li><a href="#Dcs52SetupStandAlone">Setup for
-                        the DCS52 acting as a standalone programmer</a></li>
-                        <li><a href="#Dcs52StandaloneHints">DCS52 USB Interface
-                        in Standalone Programming Mode Usage Hints</a></li>
-                        </ul></li>
+                    stand-alone decoder programmer</a></li>
                     <li><a href="#Dcs52GeneralCmdStn">DCS52 USB interface as a
-                    LocoNet Interface</a>
-                        <ul>
-                        <li><a href="#Dcs52SetupUsbInterface">Setup for the DCS52
-                        acting as a LocoNet interface</a></li>
-
-                        </ul>
-                    </li>
+                    LocoNet Interface</a></li>
                     <li><a href="#Dcs52ViaAdapter">DCS52 connected via
                     some other LocoNet Interface</a></li>
                 </ul></li>
             </ul></li>
-            <li><a href="#Dcs52Drivers">DCS52 Drivers</a></li>
+            <li><a href="#InstallConfig">Installation and JMRI Configuration Instructions</a>
+          <ul>
+          <li><a href="#OperatingSystemSpecific">Operating-System-Specific Information</a>
+              (if necessary).
+              <ul>
+                  <li><a href="#WindowsInstall">Micorsoft Windows</a></li>
+                  <li><a href="#OSXInstall">Mac OSX</a></li>
+                  <li><a href="#LinuxInstall">Linux</a></li>
+              </ul>
+          </li>
+          <li><a href="#IdentifyPort">Identify the name used to communicate with the DCS52 by the operating system</a>
+              <ul>
+                  <li><a href="#WindowsSerialPortName">Identify the name used under Microsoft Windows</a></li>
+                  <li><a href="#MacOsxSerialPortName" >Identify the name used under Mac OSX</a></li>
+                  <li><a href="#LinuxSerialPortName">Identifying and configuring the serial port for Linux operating systems</a></li>
+              </ul>
+
+          <li><a href="#ConfigureJMRI">Configure JMRI for the connection method and usage mode you have
+                  chosen</a>
+              <ul>
+            <li><a href="#Dcs52SetupStandAlone">Setup for the DCS52 acting as a standalone programmer</a></li>
+            <li><a href="#Dcs52SetupUsbInterface">Setup for the DCS52 acting as a LocoNet interface</a></li>
+            <li><a href="#SetupDcs52ViaAdapter">Setup for connected via some other LocoNet Interface</a></li>
+
+              </ul>
+          </li>
+
+          </ul>
+            </li>
             <li><a href="#SeeAlso">See Also</a></li>
         </ul>
       </div>
-      <h1><a id="ConnectingDCS52" name="ConnectingDCS52">
-      Hardware Support: Connecting to a Digitrax DCS52</a></h1>
+      <h1><a id="GeneralInfo" name="GeneralInfo">
+      General information: Connecting to a Digitrax DCS52</a></h1>
 
       <p>JMRI may be connected to the Digitrax DCS52 in any
       of a wide variety of ways.  Since the DCS52 has a built-in USB interface,
@@ -120,11 +138,9 @@
         <tr><td>Control or monitor the LocoNet Fast Clock</td></tr>
         <tr><td>Update firmware on some LocoNet devices</td></tr>
         <tr><td>etc.</td></tr>
-        <tr><td rowspan="7" align="center">Via LocoNet interface<br>
-                (<em>not</em> via DCS52 integrated USB connector!)</td>
-            <td rowspan="7" align="center">Computer Connection to something other than the DCS52 USB connector</td>
-            <td rowspan="7" align="center">Something other than "DCS52 USB Interface"<br>
-                (perhaps PR3, PR4, LocoBuffer-USB or similar device.)</td>
+        <tr><td rowspan="7" align="center">Via an external LocoNet interface device</td>
+            <td rowspan="7" align="center">LocoNet Interface, Decoder Programming</td>
+            <td rowspan="7" align="center">Something other than "DCS52 USB Interface"</td>
             <td rowspan="7" align="center">"<em>DCS52 (Zephyr Express Command Station)</em>"</td>
             <td rowspan="7" align="center"><a href="#Dcs52ViaAdapter">Configuration help</a></td>
             <td>Program decoder CVs on the dedicated programming track</td></tr>
@@ -166,6 +182,7 @@
       perform decoder programming via the dedicated programming track, but JMRI
       throttles will <em>not</em> be able to run decoders which are on the dedicated
       programming track.</p></li>
+
       <li>If you think that both modes may be useful to you, you should consider
       setting up <em>two</em> configuration profiles.  Then, when you start
       JMRI, you may select the configuration profile which suits the way you want
@@ -193,11 +210,224 @@
       speed without the motor moving the decoder, so you can hear
       how the locomotive sound reacts to varying speeds.</p>
 
-      <p>In this mode of operations, JMRI will not have access to LocoNet-based
-      devices.</p>
+      <p>In this mode of operations, JMRI will <em>not</em> have access to LocoNet-based
+      devices, and will not have access to anything operated by the normal DCC track
+      signal.</p>
 
-      <h4><a name="Dcs52SetupStandAlone" id="Dcs52SetupStandAlone">Setup for the
-              DCS52 acting as a standalone programmer</a></h4>
+      <h3><a name="Dcs52GeneralCmdStn" id="Dcs52GeneralCmdStn">DCS52 USB interface
+              as a LocoNet Interface</a></h3>
+      <p><img src="images/DCS52LocoNetInterfaceConnections.png"
+              alt="Typical connections for DCS52 acting as a LocoNet interface"
+              width="300"></p>
+
+      <p>When acting as an interface, the DCS52 USB connection allows JMRI to
+      interact with devices connected to LocoNet. This includes
+      programming decoders on a programming track attached to a
+      LocoNet command station. Where the LocoNet command station
+      supports "programming on the main", JMRI is able to make use
+      of that feature.</p>
+
+      <h3><a name="Dcs52ViaAdapter" id="Dcs52ViaAdapter">DCS52 connected via some
+      other LocoNet Interface</a></h3>
+      <p><img src="images/DCS52LocoNetInterfaceViaAdapter.png"
+        alt="Typical connections for DCS52 when connected to computer via a LocoNet Interface Adapter"
+        width="300"></p>
+
+
+      <p>JMRI may connect to the LocoNet via a LocoNet interface other than the
+      DCS52 USB connector.  When connected in this fashion, <a
+      href="Digitrax.shtml#ConnectingAdapter">these general instructions</a>, or,
+      where available, the JMRI documentation associated with the LocoNet
+      interface which is being used.</p>
+
+    <h1><a id="InstallConfig" name="InstallConfig">Installation and JMRI Configuration Instructions</a></h1>
+      <p>To set up the DCS52 for use with JMRI, the following steps apply:</p>
+      <ol>
+          <li><a href="#OperatingSystemSpecific">Operating-System-Specific Information</a>
+              (if necessary).</li>
+          <li><a href="#IdentifyPort">Identify the name used to communicate</a>
+              with the DCS52 by the operating system.</li>
+          <li><a href="#ConfigureJMRI">Configure JMRI for the connection method and usage mode you have
+                  chosen</a></li>
+      </ol>
+      <p>These steps are described below.
+    <h2><a name="OperatingSystemSpecific" id="OperatingSystemSpecific">
+            Operating-System-Specific Information</a></h2>
+
+    <p>For computer connection to the DCS52 via the DCS52 integrated USB connector
+        and its integrated "PR4" functionality, the installation instructions and
+        requirements change depending on which Operating System is in-use on the
+        host computer.  This section addresses installation and requirements for
+        the three major personal computer operating systems supported at this time
+        by JMRI: Microsoft <a href="#WindowsInstall">Microsoft Windows</a>,
+        Mac <a href="#OSXInstall">OSX</a>, and <a href="#LinuxInstall">Linux</a>.
+        Please see the appropriate section for the operating system which JMRI
+        will run "under".</p>
+
+    <h3><a name="WindowsInstall" id="WindowsInstall">Microsoft Windows</a></h3>
+    <p>Communication with integrated USB port of the DCS52 command station
+    is made possible for computers running any of the Windows
+    operating system versions via the Digitrax "PR3/PR4" drivers.  If you have
+    previously installed these drivers on your computer, you likely will not need
+    to re-install them.</p>
+
+    <p>The appropriate driver software, along with installation instruction documents, may
+    be found at the Digitrax <a href="http://www.digitrax.com/downloads/">
+    "Downloads"</a> page.  Search for "PR3/PR4 Installation Instructions".  The
+    installation instructions vary depending on which Windows Operating System version will
+    be used on the machine which will run JMRI. Be sure to follow the specific
+    instructions which are appropriate for that Windows Operating System version!</p>
+
+    <p>While those instructions reference the PR3 (or perhaps reference the PR3 or PR3 Xtra),
+    they apply equally to the DCS52 when connecting via the DCS52's integrated USB connector.
+    Be aware that some differences between PR3 and DCS52 features exist, such as
+    the way the PR3 indicates a basic USB connection to the host computer via a
+    green LED, while the DCS52 indicates a basic USB connection by displaying "USB"
+    in the top row of its display.  There may be other differences - but this JMRI
+    developer does not see it as his responsibility to identify and explain those
+    shortcomings of existing Digitrax documentation.</p>
+
+    <p>Note that the Digitrax <a href="http://www.digitrax.com/downloads/">
+    "Downloads"</a> page includes a "PR3 Firmware" version for 64-bit operating
+    systems. This firmware file <strong>does not</strong> apply to the DCS52,
+    regardless of the architecture (32-bit or 64-bit) of your conputer's operating
+    system.  That firmware applies <em>only</em> to the PR3 device, not the DCS52
+    device.</p>
+
+    <h3><a name="OSXInstall" id="OSXInstall">Mac OSX</a></h3>
+
+    <p>Computers running recent Mac OS X generally do not need installation of
+    any DCS52-related "driver" software, as most Mac OSX installations include
+    pre-installed support of the DCS52's USB hardware as part of the operating
+    system installation.</p>
+
+    <p>Digitrax provides a document which can help the "location" information that
+    is used when configuring the JMRI connection's "serial port".  This document
+    may be downloaded from the Digitrax <a href="http://www.digitrax.com/downloads/">
+    "Downloads"</a> page.  At the time of this writing, the document is found
+    in the "PR3/PR4 Installation Instructions" section and is called "PR3 / PR4 Mac
+    OSX Instructions".</p>
+
+    <p>While those instructions reference the PR3, they apply equally to the
+    DCS52 when connecting via the DCS52's integrated USB connector.
+    Be aware that some differences between PR3 and DCS52 features exist, such as
+    the way the PR3 indicates a basic USB connection to the host computer via a
+    green LED, while the DCS52 indicates a basic USB connection by displaying "USB"
+    in the top row of its display.  There may be other differences - but this JMRI
+    developer does not see it as his responsibility to identify and explain those
+    shortcomings of existing Digitrax documentation.</p>
+
+    <p>Note that the Digitrax <a href="http://www.digitrax.com/downloads/">
+    "Downloads"</a> page includes a "PR3 Firmware" version for 64-bit operating
+    systems. This firmware file <strong>does not</strong> apply to the DCS52,
+    regardless of the architecture (32-bit or 64-bit) of your conputer's operating
+    system.  That firmware applies <em>only</em> to the PR3 device, not the DCS52
+    device.</p>
+
+    <h3><a name="LinuxInstall" id="LinuxInstall">Linux</a></h3>
+
+    <p>When running a Linux-based operating system, it is usually necessary to
+    configure the operating system to give "user-level" access to the serial port
+    which are used to communicate with the command station.  The associated steps
+    will be covered as part of "identifying the serial port name", below.</p>
+
+    <p>Computers running recent Linux distributions generally include appropriate
+    "driver" support, and thus do not require installation of any driver
+    software for use of the DCS52's integrated USB functionality with JMRI.</p>
+
+    <p>Note that the Digitrax <a href="http://www.digitrax.com/downloads/">
+    "Downloads"</a> page includes a "PR3 Firmware" version for 64-bit operating
+    systems. This firmware file <strong>does not</strong> apply to the DCS52,
+    regardless of the architecture (32-bit or 64-bit) of your conputer's operating
+    system.  That firmware applies <em>only</em> to the PR3 device, not the DCS52
+    device.</p>
+
+    <h2><a id="IdentifyPort" name="IdentifyPort">Identify the name used to communicate</a>
+        with the DCS52 by the operating system</h2>
+    <h3><a id="WindowsSerialPortName" name="WindowsSerialPortName">Identify the name used under Microsoft Windows</a></h3>
+    <p>Under Microsoft Windows operating systems, the DCS52 USB connection will be
+        given a name of the form "<code><strong>COM<em>x</em></strong></code>", where
+        "<code><strong><em>x</em></strong></code>" is a number chosen by the operating
+        system.  Determining the specific number is easiest by using the Windows
+        program "Device Manager".</p>
+    <p>Open Windows Device Manager.  With recent Windows versions, it is simplest
+        to open the "Settings" window, then search for "Device Manager".  Launch
+        the application which is found.  For older Windows versions, one can
+        "right-click" on "My Computer", select "Properties", select the
+        "Hardware" tab, and then open "Device Manager" from the resulting options.</p>
+    <p>Once Device Manager is open, look for the section called "<code><strong>Ports (COM & LPT)</strong></code>".
+    This section includes an entry for the DCS52 if an appropriate driver is
+    installed and a DCS52 is connected to the computer's USB system.  By connecting
+    and disconnecting the USB cable to the DCS52, and watching the "<code><strong>Ports (COM & LPT)</strong></code>"
+    section of the Device Manager display, one can determine which entry corresponds
+    to the DCS52, and by reading that entry, its "COM" port number.</p>
+    <p>The image below
+    shows a portion of the Windows 10 Device Manager display, showing the DCS52
+    entry with the identifier of "COM9".  In this case "COM9" is the identifying
+    name which will be needed when configuring the JMRI connection serial port name.</p>
+    <img src="./images/WindowsDeviceMgrPortsCOM9.png" width="300" alt="Windows Device Manager display showing DCS52 as COM9">
+    <p>Note that because of the way JMRI makes use of the Windows COM port connection
+    to the DCS52's integrated USB connection, any changes made to the "Port Settings"
+    via Device Manager <strong>have no effect</strong> on JMRI's communications
+    with the DCS52.</p>
+
+    <h3><a id="MacOsxSerialPortName" name="MacOsxSerialPortName">Identify the name used under Mac OSX</a></h3>
+    <p>See <a href="https://www.jmri.org/install/MacOSX.shtml#usb">the "USB Serial Issues"</a>
+            section of the Mac OSX installation page at www.jmri.org (an internate
+            connection is required).  Keep track of the specific name used by OSX
+            to communicate with the DCS52, as that name will be used when
+            configuring the JMRI connection's "serial port".  The name will
+            generally begin with "<code><strong>cu.</strong></code>".</p>
+    <h3><a id="LinuxSerialPortName" name="LinuxSerialPortName">Identifying and
+            configuring the serial port for Linux operating systems</a></h3>
+    <p>Linux operating systems will communicate with the DCS52 (via its integrated
+    USB connection) via a device name that appears something like "<code>
+    /dev/ttyUSB0</code> or some comparable name.  Exactly what that name
+    is depends on the particular Linux variant being used, and perhaps the
+    other USB devices connected.</p>
+
+    <p>The first step in the instructions found under the "Using the Serial Ports" section of <a
+    href="https://www.jmri.org/install/Ubuntu.shtml">this page about
+    installing for Ubuntu Linux</a> can generally be used on any Linux flavor to
+    find the name of a USB-based connection such as the one used when connecting
+    to the DCS52's integrated USB port.  Once you identify the name using the
+    procedure defined there, keep track of that specific name, as that name will
+    be used when configuring the JMRI connection's "serial port".</p>
+    <p>It may also be necessary to do one or more of the following actions to enable
+        JMRI to make use of the serial port:</p>
+    <ul>
+        <li>Issue the second command shown in that section of the Ubuntu Linux page, to
+            ensure that the Linux user account has permission to use the serial port.
+            It may be necessary to perform this step once for each user name which
+            will use JMRI.</li>
+        <li>If JMRI does not list the device name you found (above) when you attempt
+            to configure the JMRI connection's "Serial Port", it may be necessary to
+            configure an environment variable to contain the serial port name
+            before executing JMRI.  The process is described <a
+                href="https://www/jmri.org/install/FAQLinux.shtml#usb">here</a>.</li>
+    </ul>
+
+    <h2><a id="ConfigureJMRI" name="ConfigureJMRI">Configure JMRI for the
+            connection method and usage mode you have chosen</a></h2>
+    <p>This part of the process is specific to the way in which you intend to use
+        your DCS52, as chosen in the "<a href="#ChooseAMethod">Choosing the
+            configuration method"</a> section, above.</p>
+    <p>For configuration of the DCS52, via its integrated USB connector, for use
+        as a "Standalone Programmer" (<em>without</em> the ability to control the
+        normal DCC track signal or any LocoNet accessories),
+        follow the instructions <a href="#Dcs52SetupStandAlone">here</a>.</p>
+
+    <p>For configuration of the DCS52, via its integrated USB connector, for use
+        as a general interface to the DCS52, with JMRI access to LocoNet devices
+        and ability to control locos and DCC-track-connected devices, follow the
+        instructions <a href="#Dcs52SetupUsbInterface">here</a>.</p>
+
+    <p>When connecting JMRI to the DCS52 via a LocoNet adaptor other than the
+        DCS52's integrated USB connector, see <a
+      href="Digitrax.shtml#ConnectingAdapter">these general instructions</a>.</p>
+
+    <h3><a name="Dcs52SetupStandAlone" id="Dcs52SetupStandAlone">Setup for the
+              DCS52 acting as a standalone programmer</a></h3>
 
       <p>To use the DCS52 programming track, connect the DCS52 to its
       power supply and connect a dedicated piece of track which you'll
@@ -209,13 +439,19 @@
       decoder programming track mode:</p>
 
       <ul>
-        <li>Start the program.</li>
+        <li>Start the JMRI program - either JMRI's DecoderPro or JMRI's PanelPro,
+        to suit your usage needs.  If you wish only to use JMRI for programming
+        decoders, DecoderPro is the better choice.  If you wish to do anything
+        else with JMRI, start PanelPro.  Note that you may use both of these JMRI
+        programs, but it will be necessary to configure them <em>separately</em>,
+        because each program uses its own "configuration profile".</li>
 
-        <li>Open the Preferences window from the Edit menu and
-        configure the connection by:
+        <li>Open the JMRI Preferences window from the Edit menu and
+        configure the connection:
 
           <ul>
-              <li>For the "<strong>System Connection</strong>" setting, select "DCS52 USB Interface"</li>
+              <li>For the "<strong>System Connection</strong>" setting, select
+                  "<code><strong>DCS52 USB Interface</strong></code>"</li>
 
             <li>Under "<strong>Serial Port</strong>", select the serial port that's connected to the
             DCS52</li>
@@ -225,17 +461,11 @@
             LocoNet. Typically, this will be "<code><strong>DCS52
             USB Interface as standalone programmer</strong></code>".</li>
 
-            <li>In the advanced settings, the speed will be fixed
-            at 57,600 baud.</li>
-
-            <li>In the advanced settings, the "Flow Control" option
-            defaults to "Use Hardware Flow Control", which is the
-            preferred setting for the DCS52. You should try that
-            first, as it is the most reliable mode. Only if you
-            can't reliably program decoders using that choice, and
-            only after checking that you're using the right port,
-            should you select "None" for this preference and try
-            again.</li>
+            <li>The settings found under the "Advanced Configuration Settings"
+            are usually a good starting point for most JMRI users.<br>
+            Some users may encounter problems in using JMRI and may need to
+            re-configure some of those settings.  Further information may be found
+            <a href="Digitrax.shtml#TurnoutCmdHandling">here</a>.</li>
           </ul>
         </li>
 
@@ -294,24 +524,10 @@
 
       <li>It is possible run trains via the DCS52 controls and/or LocoNet-based
           throttles  when JMRI is programming a decoder on the DCS52 programming track.</li>
-
       </ul>
 
-      <h3><a name="Dcs52GeneralCmdStn" id="Dcs52GeneralCmdStn">DCS52 USB interface
-              as a LocoNet Interface</a></h3>
-      <p><img src="images/DCS52LocoNetInterfaceConnections.png"
-              alt="Typical connections for DCS52 acting as a LocoNet interface"
-              width="300"></p>
-
-      <p>When acting as an interface, the DCS52 USB connection allows JMRI to
-      interact with devices connected to LocoNet. This includes
-      programming decoders on a programming track attached to a
-      LocoNet command station. Where the LocoNet command station
-      supports "programming on the main", JMRI is able to make use
-      of that feature.</p>
-
-      <h4><a name="Dcs52SetupUsbInterface" id="Dcs52SetupUsbInterface">Setup for
-      the DCS52 acting as a LocoNet interface</a></h4>
+      <h3><a name="Dcs52SetupUsbInterface" id="Dcs52SetupUsbInterface">Setup for
+      the DCS52 acting as a LocoNet interface</a></h3>
       <p>To use the DCS52 USB connection as a LocoNet interface, connect a LocoNet cable to
       a LocoNet connector on the DCS52. Connect an appropriate power
       supply to the DCS52, per the Digitrax instructions for the DCS52.  The
@@ -324,13 +540,19 @@
       station:</p>
 
       <ul>
-        <li>Start the program.</li>
+        <li>Start the JMRI program - either JMRI's DecoderPro or JMRI's PanelPro,
+        to suit your usage needs.  If you wish only to use JMRI for programming
+        decoders, DecoderPro is the better choice.  If you wish to do anything
+        else with JMRI, start PanelPro.  Note that you may use both of these JMRI
+        programs, but it will be necessary to configure them <em>separately</em>,
+        because each program uses its own "configuration profile".</li>
 
-        <li>Open the Preferences window from the Edit menu and
-        configure the connection by:
+        <li>Open the JMRI Preferences window from the Edit menu and
+        configure the connection:
 
           <ul>
-              <li>For the "<strong>System Connection</strong>" setting, select "DCS52 USB Interface"</li>
+              <li>For the "<strong>System Connection</strong>" setting, select
+                  "<code><strong>DCS52 USB Interface</strong></code>"</li>
 
             <li>Under "<strong>Serial Port</strong>", select the serial port that's connected to the
             DCS52</li>
@@ -364,38 +586,20 @@
 
       <img src="images/DCS52LocoNetInterfaceConnProfile.png" alt="Sample configuration profile with DCS52 USB interface as a LocoNet interface" width="500">
 
-      <h3><a name="Dcs52ViaAdapter" id="Dcs52ViaAdapter">DCS52 connected via some
+
+
+      <h3><a name="SetupDcs52ViaAdapter" id="SetupViaAdapter">Setup for connected via some
       other LocoNet Interface</a></h3>
-      <p><img src="images/DCS52LocoNetInterfaceViaAdapter.png"
-        alt="Typical connections for DCS52 when connected to computer via a LocoNet Interface Adapter"
-        width="300"></p>
+
+      <p>Instructions for connecting JMRI to your DCS52 command station using some
+      LocoNet interface other than the DCS52's integrated USB connector, follow <a
+      href="Digitrax.shtml#ConnectingAdapter">these general instructions</a>.</p>
 
 
-      <p>JMRI may connect to the LocoNet via a LocoNet interface other than the
-      DCS52 USB connector.  When connected in this fashion, <a
-      href="Digitrax.shtml#ConnectingAdapter">these general instructions</a>, or,
-      where available, the
-      JMRI documentation associated with the LocoNet interface which is being
-      used.</p>
 
-      <h1><a name="Dcs52Drivers" id="Dcs52Drivers">DCS52 Drivers</a></h1>
 
-      The DCS52 USB interface needs to have a driver installed when used with any Microsoft
-      Windows Operating System.  See the Digitrax
-      <a href="http://www.digitrax.com/downloads/">"Downloads"</a> page for drivers.
-      At the time this help page was written, Digitrax provides Windows drivers
-      for the PR3/PR4 device.  Those drivers are suitable for use with the DCS52 USB
-      interface.  Make sure to follow any instructions, particularly any instructions
-      about the order of installing the drivers and plugging in the
-      device.
 
-      <p>You don't need to install a separate driver when using
-      current versions of MacOS or Linux.  When connecting to LocoNet via some 
-      connection other than the DCS52 integrated USB connector, you do not need
-      to load drivers for the DCS52, but you must install any drivers necessary
-      for the hardware interface you actually use.</p>
-
-      <h1><a name="SeeAlso" id="SeeAlso">See Also</a></h1>
+    <h1><a name="SeeAlso" id="SeeAlso">See Also</a></h1>
       <ul>
           <li><a href="Digitrax.shtml">JMRI's general Digitrax support page</a></li>
           <li>The JMRI <a href="../../apps/DecoderPro/Roster.shtml">Rosters</a> page.</li>
@@ -411,10 +615,7 @@
                                   "http://www.digitrax.com/tsd/product/DCS52/">DCS52 Support</a> page.</li>
               <li>Drivers for Windows-based machines may be found at the Digitrax
                   <a href="http://www.digitrax.com/downloads/">Downloads</a> page.
-                  Note: Use the Digitrax PR3 drivers with the DCS52 USB interface.
-                  When connecting to LocoNet using something other than the DCS52 
-                  integrated USB interface, JMRI does not require these drivers to
-                  be loaded.</li>
+                  Note: Use the Digitrax PR3 drivers with the DCS52 USB interface.</li>
           </ul>
       </ul>
 
