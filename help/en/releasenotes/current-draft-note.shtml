@@ -403,7 +403,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Use full length of section when stopping by speed profile.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
