@@ -40,17 +40,17 @@ public class AcelaLightManager extends AbstractLightManager {
      * @return null if the system name is not in a valid format
      */
     @Override
-    protected Light createNewLight(@Nonnull String systemName, String userName) {
+    @Nonnull
+    protected Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Light lgt = null;
         // check if the output bit is available
-        int nAddress = -1;
-        nAddress = AcelaAddress.getNodeAddressFromSystemName(systemName, getMemo());
+        int nAddress = AcelaAddress.getNodeAddressFromSystemName(systemName, getMemo());
         if (nAddress == -1) {
-            return (null);
+            throw new IllegalArgumentException("Invalid Node Address from System Name: " + systemName);
         }
         int bitNum = AcelaAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == -1) {
-            return (null);
+            throw new IllegalArgumentException("Invalid Bit from System Name: " + systemName);
         }
 
         // Validate the systemName

@@ -45,8 +45,9 @@ public class CbusLightManager extends AbstractLightManager {
      *
      * @return never null
      */
+    @Nonnull
     @Override
-    protected Light createNewLight(@Nonnull String systemName, String userName) {
+    protected Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         String addr;
         // first, check validity
         try {            
