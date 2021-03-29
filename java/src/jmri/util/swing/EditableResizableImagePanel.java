@@ -85,19 +85,34 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
      *
      * @param menuEntry the menu entry string
      * @param path the path to browse to
+     * @return the added menu item
      */
-     public void addMenuItemBrowseFolder(String menuEntry, String path) {
-        if (myMouseAdapter != null) {
-            JMenuItem  mi = new JMenuItem(menuEntry);
-            mi.addActionListener((ActionEvent e) -> {
-                try {
-                    Desktop.getDesktop().open(new File(path));
-                } catch (IOException ex) {
-                    log.error("Browse to action "+ex.getMessage());
-                }
-            });
-            myMouseAdapter.addMenuItem(mi);
+     public JMenuItem addMenuItemBrowseFolder(String menuEntry, String path) {
+        if (myMouseAdapter == null) {
+            return null;
         }
+        JMenuItem  mi = new JMenuItem(menuEntry);
+        mi.addActionListener((ActionEvent e) -> {
+            try {
+                Desktop.getDesktop().open(new File(path));
+            } catch (IOException ex) {
+                log.error("Browse to action "+ex.getMessage());
+            }
+        });
+        myMouseAdapter.addMenuItem(mi);
+        return mi;
+    }
+     
+    /**
+     * Remove a given menu item from the contextual menu
+     *
+     * @param mi the JMenuItem to remove
+     */
+     public void removeMenuItemBrowseFolder(JMenuItem mi) {
+        if (myMouseAdapter == null) {
+            return ;
+        }
+        myMouseAdapter.removeMenuItem(mi);
     }
 
     //
