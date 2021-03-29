@@ -1213,7 +1213,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         });
 
         JPanel settingsPanel = getSettingsPanel();
-        if (settingsPanel != null) bottomPanel.add(settingsPanel, BorderLayout.CENTER);
+        bottomPanel.add(settingsPanel, BorderLayout.CENTER);
 
         JButton saveBrowse = new JButton(Bundle.getMessage("BrowserSaveButton"));   // NOI18N
         saveBrowse.setToolTipText(Bundle.getMessage("BrowserSaveButtonHint"));      // NOI18N
