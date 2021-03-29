@@ -130,6 +130,28 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
         }
     }
 
+    @Override
+    synchronized public void confirmCV(String CV, int startVal, jmri.ProgListener p) throws jmri.ProgrammerException {
+        useProgrammer(p);
+        parseCV(CV);
+        _startVal = startVal;
+        _startMSB = startVal/256;
+        _startLSB = startVal%256;
+        upperByte = 0;
+        if (valuePI == -1) {
+            state = ProgState.PROGRAMMING;
+            prog.confirmCV(_cv, startVal, this);
+        } else {
+            // write index first; 2nd operation depends on type
+            if (valueSI == -1) {
+                state = ProgState.DOMSBFORREAD;
+            } else {
+                state = ProgState.DOSIFORREAD;
+            }
+            prog.writeCV(indexPI, valuePI + readOffset, this);
+        }
+    }
+    
     private jmri.ProgListener _usingProgrammer = null;
 
     // internal method to remember who's using the programmer
