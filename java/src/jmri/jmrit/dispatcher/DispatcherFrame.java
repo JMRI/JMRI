@@ -1604,6 +1604,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 queueAllocate(ar);
             } else {
                 // manual
+                allocationRequests.add(ar);
             }
         }
         activeTrainsTableModel.fireTableDataChanged();
