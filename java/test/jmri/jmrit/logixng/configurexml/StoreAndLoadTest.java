@@ -2273,6 +2273,17 @@ public class StoreAndLoadTest {
         and.getChild(indexExpr++).connect(maleSocket);
         
         
+        Not not = new Not(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(not);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+        
+        not = new Not(digitalExpressionManager.getAutoSystemName(), null);
+        not.setComment("A comment");
+        maleSocket = digitalExpressionManager.registerExpression(not);
+        and.getChild(indexExpr++).connect(maleSocket);
+        
+        
         Or or = new Or(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(or);
         maleSocket.setEnabled(false);

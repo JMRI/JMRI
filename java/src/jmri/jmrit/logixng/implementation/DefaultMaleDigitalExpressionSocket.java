@@ -1,10 +1,5 @@
 package jmri.jmrit.logixng.implementation;
 
-import jmri.jmrit.logixng.Category;
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
 import java.util.*;
 
 import javax.annotation.Nonnull;
@@ -18,68 +13,37 @@ import jmri.jmrit.logixng.*;
  */
 public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket implements MaleDigitalExpressionSocket {
 
-    private final DigitalExpressionBean _expression;
     private boolean lastEvaluationResult = false;
     private DebugConfig _debugConfig = null;
     private boolean _enabled = true;
 
 
     public DefaultMaleDigitalExpressionSocket(@Nonnull BaseManager<? extends NamedBean> manager, @Nonnull DigitalExpressionBean expression) {
-        super(manager);
-        _expression = expression;
+        super(manager, expression);
     }
 
     /** {@inheritDoc} */
     @Override
     public void notifyChangedResult(boolean oldResult, boolean newResult) {
-        _expression.notifyChangedResult(oldResult, newResult);
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public final Base getRoot() {
-        return _expression.getRoot();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Lock getLock() {
-        return _expression.getLock();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void setLock(Lock lock) {
-        _expression.setLock(lock);
+        ((DigitalExpressionBean)getObject()).notifyChangedResult(oldResult, newResult);
     }
     
     /** {@inheritDoc} */
     @Override
     public boolean getTriggerOnChange() {
-        return _expression.getTriggerOnChange();
+        return ((DigitalExpressionBean)getObject()).getTriggerOnChange();
     }
     
     /** {@inheritDoc} */
     @Override
     public void setTriggerOnChange(boolean triggerOnChange) {
-        _expression.setTriggerOnChange(triggerOnChange);
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Category getCategory() {
-        return _expression.getCategory();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return _expression.isExternal();
+        ((DigitalExpressionBean)getObject()).setTriggerOnChange(triggerOnChange);
     }
     
     private void checkChangedLastResult(boolean savedLastResult) {
         if (savedLastResult != lastEvaluationResult) {
-            _expression.notifyChangedResult(savedLastResult, lastEvaluationResult);
+            ((DigitalExpressionBean)getObject())
+                    .notifyChangedResult(savedLastResult, lastEvaluationResult);
         }
     }
     
@@ -106,7 +70,7 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
         
         try {
             conditionalNG.getSymbolTable().createSymbols(_localVariables);
-            lastEvaluationResult = _expression.evaluate();
+            lastEvaluationResult = ((DigitalExpressionBean)getObject()).evaluate();
         } catch (JmriException e) {
             handleError(this, Bundle.getMessage("ExceptionEvaluateExpression", e.getLocalizedMessage()), e, log);
             lastEvaluationResult = false;
@@ -129,188 +93,47 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
 
     @Override
     public int getState() {
-        return _expression.getState();
+        return ((DigitalExpressionBean)getObject()).getState();
     }
 
-    @Override
-    public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
-        return _expression.getChild(index);
-    }
-
-    @Override
-    public int getChildCount() {
-        return _expression.getChildCount();
-    }
-
-    @Override
-    public String getShortDescription(Locale locale) {
-        return _expression.getShortDescription(locale);
-    }
-
-    @Override
-    public String getLongDescription(Locale locale) {
-        return _expression.getLongDescription(locale);
-    }
-
-    @Override
-    public String getUserName() {
-        return _expression.getUserName();
-    }
-
-    @Override
-    public void setUserName(String s) throws BadUserNameException {
-        _expression.setUserName(s);
-    }
-
-    @Override
-    public String getSystemName() {
-        return _expression.getSystemName();
-    }
-
-    @Override
-    public String getDisplayName() {
-        return _expression.getDisplayName();
-    }
-
-    @Override
-    public void addPropertyChangeListener(PropertyChangeListener l, String name, String listenerRef) {
-        _expression.addPropertyChangeListener(l, name, listenerRef);
-    }
-
-    @Override
-    public void addPropertyChangeListener(String propertyName, PropertyChangeListener l, String name, String listenerRef) {
-        _expression.addPropertyChangeListener(propertyName, l, name, listenerRef);
-    }
-
-    @Override
-    public void addPropertyChangeListener(PropertyChangeListener l) {
-        _expression.addPropertyChangeListener(l);
-    }
-
-    @Override
-    public void addPropertyChangeListener(String propertyName, PropertyChangeListener l) {
-        _expression.addPropertyChangeListener(propertyName, l);
-    }
-
-    @Override
-    public void removePropertyChangeListener(PropertyChangeListener l) {
-        _expression.removePropertyChangeListener(l);
-    }
-
-    @Override
-    public void removePropertyChangeListener(String propertyName, PropertyChangeListener l) {
-        _expression.removePropertyChangeListener(propertyName, l);
-    }
-
-    @Override
-    public void updateListenerRef(PropertyChangeListener l, String newName) {
-        _expression.updateListenerRef(l, newName);
-    }
-
-    @Override
-    public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
-        _expression.vetoableChange(evt);
-    }
-
-    @Override
-    public String getListenerRef(PropertyChangeListener l) {
-        return _expression.getListenerRef(l);
-    }
-
-    @Override
-    public ArrayList<String> getListenerRefs() {
-        return _expression.getListenerRefs();
-    }
-
-    @Override
-    public int getNumPropertyChangeListeners() {
-        return _expression.getNumPropertyChangeListeners();
-    }
-
-    @Override
-    public synchronized PropertyChangeListener[] getPropertyChangeListeners() {
-        return _expression.getPropertyChangeListeners();
-    }
-
-    @Override
-    public synchronized PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
-        return _expression.getPropertyChangeListeners(propertyName);
-    }
-
-    @Override
-    public PropertyChangeListener[] getPropertyChangeListenersByReference(String name) {
-        return _expression.getPropertyChangeListenersByReference(name);
-    }
-
-    @Override
-    public void disposeMe() {
-        _expression.dispose();
-    }
-
-    /**
-     * Register listeners if this object needs that.
-     */
-    @Override
-    public void registerListenersForThisClass() {
-        _expression.registerListeners();
-    }
-    
-    /**
-     * Register listeners if this object needs that.
-     */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _expression.unregisterListeners();
-    }
-    
     @Override
     public void setState(int s) throws JmriException {
-        _expression.setState(s);
+        ((DigitalExpressionBean)getObject()).setState(s);
     }
 
     @Override
     public String describeState(int state) {
-        return _expression.describeState(state);
-    }
-
-    @Override
-    public String getComment() {
-        return _expression.getComment();
-    }
-
-    @Override
-    public void setComment(String comment) {
-        _expression.setComment(comment);
+        return ((DigitalExpressionBean)getObject()).describeState(state);
     }
 
     @Override
     public void setProperty(String key, Object value) {
-        _expression.setProperty(key, value);
+        ((DigitalExpressionBean)getObject()).setProperty(key, value);
     }
 
     @Override
     public Object getProperty(String key) {
-        return _expression.getProperty(key);
+        return ((DigitalExpressionBean)getObject()).getProperty(key);
     }
 
     @Override
     public void removeProperty(String key) {
-        _expression.removeProperty(key);
+        ((DigitalExpressionBean)getObject()).removeProperty(key);
     }
 
     @Override
     public Set<String> getPropertyKeys() {
-        return _expression.getPropertyKeys();
+        return ((DigitalExpressionBean)getObject()).getPropertyKeys();
     }
 
     @Override
     public String getBeanType() {
-        return _expression.getBeanType();
+        return ((DigitalExpressionBean)getObject()).getBeanType();
     }
 
     @Override
     public int compareSystemNameSuffix(String suffix1, String suffix2, NamedBean n2) {
-        return _expression.compareSystemNameSuffix(suffix1, suffix2, n2);
+        return ((DigitalExpressionBean)getObject()).compareSystemNameSuffix(suffix1, suffix2, n2);
     }
 
     /** {@inheritDoc} */
@@ -333,12 +156,6 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
 
     /** {@inheritDoc} */
     @Override
-    public Base getObject() {
-        return _expression;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public void setEnabled(boolean enable) {
         _enabled = enable;
         if (isActive()) {
@@ -358,6 +175,32 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
     @Override
     public boolean isEnabled() {
         return _enabled;
+    }
+
+    @Override
+    public void disposeMe() {
+        ((DigitalExpressionBean)getObject()).dispose();
+    }
+
+    /**
+     * Register listeners if this object needs that.
+     */
+    @Override
+    public void registerListenersForThisClass() {
+        ((DigitalExpressionBean)getObject()).registerListeners();
+    }
+    
+    /**
+     * Register listeners if this object needs that.
+     */
+    @Override
+    public void unregisterListenersForThisClass() {
+        ((DigitalExpressionBean)getObject()).unregisterListeners();
+    }
+    
+    @Override
+    public String getDisplayName() {
+        return ((DigitalExpressionBean)getObject()).getDisplayName();
     }
 
 
