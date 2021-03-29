@@ -3,8 +3,7 @@ package jmri.jmrix.can.cbus.swing.modeswitcher;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 
-import javax.swing.ButtonGroup;
-import javax.swing.JRadioButton;
+import javax.swing.*;
 
 import jmri.jmrix.can.*;
 
@@ -15,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * Mode Switcher to switch modes between programmer and command station for simple
  * hardware with a single track output.
  *
- * @author Andrew Crosland Copyright (C) 2020
+ * @author Andrew Crosland Copyright (C) 2020, 2021
  */
 public class SprogCbusSimpleModeSwitcherFrame extends SprogCbusModeSwitcherFrame {
     
@@ -53,20 +52,24 @@ public class SprogCbusSimpleModeSwitcherFrame extends SprogCbusModeSwitcherFrame
             
             // Get current preferences
             // It is expected that the saved preferences will usually match the hardware.
-            mode = PROG_MODE;
             if (pm.isGlobalProgrammerAvailable() && preferences.isGlobalProgrammerAvailable()) {
-                // Programmer mode
+                // Programmer (service) mode
                 progModeButton.setSelected(true);
                 cmdModeButton.setSelected(false);
+                mode = PROG_MODE;
+                _memo.setMultipleThrottles(false);
             } else if (pm.isAddressedModePossible() && preferences.isAddressedModePossible()) {
-                // Command Station mode
+                // Command Station (ops, addressed) mode
                 progModeButton.setSelected(false);
                 cmdModeButton.setSelected(true);
                 mode = CMD_MODE;
+                _memo.setMultipleThrottles(true);
             } else {
-                // Default to service mode if inconsistent preference
+                // Default to programmer (service) mode if inconsistent preference
                 progModeButton.setSelected(true);
                 cmdModeButton.setSelected(false);
+                mode = PROG_MODE;
+                _memo.setMultipleThrottles(false);
             }
             // Reset hardware mode and preferences in case there was any inconsistency
             setHardwareMode(mode);
@@ -79,12 +82,15 @@ public class SprogCbusSimpleModeSwitcherFrame extends SprogCbusModeSwitcherFrame
                     log.info("Setting Global Programmer Available");
                     pm.setGlobalProgrammerAvailable(true);
                     pm.setAddressedModePossible(false);
+                    _memo.setMultipleThrottles(false);
+                    showServiceModeWarningDialogue();
                     mode = PROG_MODE;
                 } else if (cmdModeButton.isSelected() && mode != CMD_MODE) {
                     // Switch to command station mode
                     log.info("Setting Global Programmer Unavailable");
                     pm.setGlobalProgrammerAvailable(false);
                     pm.setAddressedModePossible(true);
+                    _memo.setMultipleThrottles(true);
                     mode = CMD_MODE;
                 }
                 setHardwareMode(mode);
@@ -108,6 +114,36 @@ public class SprogCbusSimpleModeSwitcherFrame extends SprogCbusModeSwitcherFrame
         setVisible(true);
     }
 
+    private boolean _hideProgWarning = false;
+
+    protected void showServiceModeWarningDialogue(){
+        if ((!java.awt.GraphicsEnvironment.isHeadless()) && (!_hideProgWarning)){
+            jmri.util.ThreadingUtil.runOnGUI(() -> {
+                javax.swing.JCheckBox checkbox = new javax.swing.JCheckBox(Bundle.getMessage("HideFurtherWarnings"));
+                Object[] params = {Bundle.getMessage("ProgModeWarning"), checkbox};
+                javax.swing.JOptionPane pane = new javax.swing.JOptionPane(params);
+                pane.setMessageType(javax.swing.JOptionPane.WARNING_MESSAGE);
+                JDialog dialog = pane.createDialog(null, Bundle.getMessage("switchToProgMode"));
+                dialog.setModal(false);
+                dialog.setVisible(true);
+                dialog.requestFocus();
+                dialog.toFront();
+                java.awt.event.ActionListener progPopUpCheckBox = (java.awt.event.ActionEvent evt) -> hideProgWarning(checkbox.isSelected());
+                checkbox.addActionListener(progPopUpCheckBox);
+            });
+        }
+    }
+
+    /**
+     * Receive notification from a throttle dialogue
+     * to display steal dialogues for rest of the JMRI instance session.
+     * False by default to show notifications
+     *
+     * @param hide set True to hide notifications, else False.
+     */
+    public void hideProgWarning(boolean hide){
+        _hideProgWarning = hide;
+    }
 
     /**
      * Define help menu for this window.

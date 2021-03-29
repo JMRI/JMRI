@@ -17,21 +17,16 @@ import org.slf4j.LoggerFactory;
  *
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2009
- * @author Andrew Crosland 2019
+ * @author Andrew Crosland Copyright (C) 2019, 2021
  */
 public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
 
     public Sprog3PlusSerialDriverAdapter() {
         super("S", purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_IN + purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_OUT);
-        _progMode = ProgModeSwitch.SPROG3PLUS;
+        _progMode = ConfigurationManager.ProgModeSwitch.SPROG3PLUS;
     }
 
-    public Sprog3PlusSerialDriverAdapter(ProgModeSwitch progMode) {
-        super("S", purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_IN + purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_OUT);
-        _progMode = progMode;
-    }
-
-    private ProgModeSwitch _progMode;
+    protected ProgModeSwitch _progMode;
     
     /**
      * Set up all of the other objects to operate with a SPROG Gen 5

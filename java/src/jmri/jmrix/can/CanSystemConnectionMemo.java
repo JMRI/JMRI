@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
  * passed on to the relevant ConfigurationManager to handle.
  *
  * @author Kevin Dickerson Copyright (C) 2012
+ * @author Andrew Crosland Copyright (C) 2021
  */
 public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
     // This user name will be overwritten by the adapter and saved to the connection config.
@@ -54,6 +55,7 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     protected SubProtocol _subProtocol = SubProtocol.CBUS;
     protected ProgModeSwitch _progModeSwitch = ProgModeSwitch.NONE;
     protected boolean _supportsCVHints = false;
+    private boolean _multipleThrottles = true;
     
     jmri.jmrix.swing.ComponentFactory cf = null;
 
@@ -163,7 +165,8 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     }
 
     /**
-     * Get the stare of the programming mode switch
+     * Get the stare of the programming mode switch which indicates what combination
+     * o service and/or ops mode programming is supported by the connection.
      * 
      * @return the supported modes
      */
@@ -175,6 +178,20 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
         if (null != pms) {
             _progModeSwitch = pms;
         }
+    }
+    
+    /**
+     * Some connections support only a single throttle, e.g., a service mode programmer
+     * that allows for test running of a single loco.
+     * 
+     * @return true if mutltiple throttles are available
+     */
+    public boolean hasMultipleThrottles() {
+        return _multipleThrottles;
+    }
+    
+    public void setMultipleThrottles(boolean b) {
+        _multipleThrottles = b;
     }
     
     /**

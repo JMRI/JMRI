@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Andrew Crosland Copyright (C) 2009
  * @author Steve Young Copyright (C) 2019
+ * @author Andrew Crosland Copyright (C) 2021
  */
 public class CbusThrottleManager extends AbstractThrottleManager implements CanListener {
 
@@ -36,11 +37,13 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
     protected int THROTTLE_TIMEOUT = 5000;
     private JDialog canErrorDialog;
     private JDialog invalidErrorDialog;
+    private boolean _singleThrottleInUse = false; // For single throttle support
 
     private final HashMap<Integer, CbusThrottle> softThrottles = new HashMap<>(CbusConstants.CBUS_MAX_SLOTS);
 
     public CbusThrottleManager(CanSystemConnectionMemo memo) {
         super(memo);
+        this.memo = memo;
         tc = memo.getTrafficController();
         addTc(tc);
     }
@@ -55,6 +58,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
     }
 
     private final TrafficController tc;
+    private final CanSystemConnectionMemo memo;
 
     /**
      * CBUS allows Throttle sharing, both internally within JMRI and externally by command stations
@@ -85,55 +89,61 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
             log.error("{} is not a DccLocoAddress",address);
             return;
         }
-        _dccAddr = (DccLocoAddress) address;
-        _intAddr = _dccAddr.getNumber();
+        
+        if (memo.hasMultipleThrottles() || !_singleThrottleInUse) {
+            _dccAddr = (DccLocoAddress) address;
+            _intAddr = _dccAddr.getNumber();
 
-        // The CBUS protocol requires that we request a session from the command
-        // station. Throttle object will be notified by Command Station
-        log.debug("Requesting {} session for loco {}",decision,_dccAddr);
-        if (_dccAddr.isLongAddress()) {
-            _intAddr = _intAddr | 0xC000;
+            // The CBUS protocol requires that we request a session from the command
+            // station. Throttle object will be notified by Command Station
+            log.debug("Requesting {} session for loco {}",decision,_dccAddr);
+            if (_dccAddr.isLongAddress()) {
+                _intAddr = _intAddr | 0xC000;
+            }
+            CanMessage msg;
+
+            switch (decision) {
+                case STEAL_OR_SHARE:
+                    // 1st line request
+                    // Request a session for this throttle normally
+                    _handleExpectedSecondLevelRequest = false;
+                    msg = new CanMessage(3, tc.getCanid());
+                    msg.setOpCode(CbusConstants.CBUS_RLOC);
+                    msg.setElement(1, _intAddr / 256);
+                    msg.setElement(2, _intAddr & 0xff);
+                    break;
+                case STEAL:
+                    // 2nd line request
+                    // Request a Steal session
+                    _handleExpectedSecondLevelRequest = true;
+                    msg = new CanMessage(4, tc.getCanid());
+                    msg.setOpCode(CbusConstants.CBUS_GLOC);
+                    msg.setElement(1, _intAddr / 256);
+                    msg.setElement(2, _intAddr & 0xff);
+                    msg.setElement(3, 0x01); // bit 0 flag set
+                    break;
+                case SHARE:
+                    // 2nd line request
+                    // Request a Share session
+                    _handleExpectedSecondLevelRequest = true;
+                    msg = new CanMessage(4, tc.getCanid());
+                    msg.setOpCode(CbusConstants.CBUS_GLOC);
+                    msg.setElement(1, _intAddr / 256);
+                    msg.setElement(2, _intAddr & 0xff);
+                    msg.setElement(3, 0x02); // bit 1 flag set
+                    break;
+                default:
+                    log.error("decision type {} unknown to CbusThrottleManager",decision);
+                    return;
+            }
+
+            // send the request to layout
+            _handleExpected = true;
+            tc.sendCanMessage(msg, this);
+        } else {
+            failedThrottleRequest(address, "Only one Throttle can be in use at anyone time with this connection.");
+            log.warn("Single CBUS Throttle already in use");
         }
-        CanMessage msg;
-        
-        switch (decision) {
-            case STEAL_OR_SHARE:
-                // 1st line request
-                // Request a session for this throttle normally
-                _handleExpectedSecondLevelRequest = false;
-                msg = new CanMessage(3, tc.getCanid());
-                msg.setOpCode(CbusConstants.CBUS_RLOC);
-                msg.setElement(1, _intAddr / 256);
-                msg.setElement(2, _intAddr & 0xff);
-                break;
-            case STEAL:
-                // 2nd line request
-                // Request a Steal session
-                _handleExpectedSecondLevelRequest = true;
-                msg = new CanMessage(4, tc.getCanid());
-                msg.setOpCode(CbusConstants.CBUS_GLOC);
-                msg.setElement(1, _intAddr / 256);
-                msg.setElement(2, _intAddr & 0xff);
-                msg.setElement(3, 0x01); // bit 0 flag set
-                break;
-            case SHARE:
-                // 2nd line request
-                // Request a Share session
-                _handleExpectedSecondLevelRequest = true;
-                msg = new CanMessage(4, tc.getCanid());
-                msg.setOpCode(CbusConstants.CBUS_GLOC);
-                msg.setElement(1, _intAddr / 256);
-                msg.setElement(2, _intAddr & 0xff);
-                msg.setElement(3, 0x02); // bit 1 flag set
-                break;
-            default:
-                log.error("decision type {} unknown to CbusThrottleManager",decision);
-                return;
-        }
-        
-        // send the request to layout
-        _handleExpected = true;
-        tc.sendCanMessage(msg, this);
     }
 
     /**
@@ -179,6 +189,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                         softThrottles.remove(throttle.getHandle());
                     }
                 }
+                _singleThrottleInUse = false;
                 break;
             case CbusConstants.CBUS_DSPD:
                 // only if emergency stop
@@ -236,6 +247,9 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                     // We're expecting an engine report and it matches our address
                     stopThrottleRequestTimer();
                     handle = m.getElement(1);
+                    if (!memo.hasMultipleThrottles()) {
+                        _singleThrottleInUse = true;
+                    }
                     
                     // check if the PLOC has come from a throttle session cancel notification
                     for (Map.Entry<Integer, CbusThrottle> entry : softThrottles.entrySet()) {
@@ -721,10 +735,20 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                 lnt.throttleDispose();
                 // forceDisposeThrottle( (DccLocoAddress) lnt.getLocoAddress() );
                 log.debug("called throttleDispose");
+                _singleThrottleInUse = false;
                 return true;
             }
         }
         return false;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void forceDisposeThrottle(LocoAddress la) {
+        super.forceDisposeThrottle(la);
+        _singleThrottleInUse = false;
     }
     
     /**
