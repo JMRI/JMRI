@@ -259,12 +259,12 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
                         throw new IllegalArgumentException("_memoryOperation has unknown value: "+_variableOperation.name());
                 }
             } catch (NumberFormatException nfe) {
-                return false;   // n1 is a number, n2 is not
+                return _variableOperation == VariableOperation.NotEqual;   // n1 is a number, n2 is not
             }
         } catch (NumberFormatException nfe) {
             try {
                 Integer.parseInt(value2);
-                return false;     // n1 is not a number, n2 is
+                return _variableOperation == VariableOperation.NotEqual;     // n1 is not a number, n2 is
             } catch (NumberFormatException ex) { // OK neither a number
             }
         }

@@ -29,12 +29,6 @@ public class DefaultAnalogExpressionManagerXml extends AbstractManagerXml {
     public DefaultAnalogExpressionManagerXml() {
     }
 
-    private AnalogExpressionBean getExpression(AnalogExpressionBean expression) throws IllegalAccessException, IllegalArgumentException, NoSuchFieldException {
-        Field f = expression.getClass().getDeclaredField("_expression");
-        f.setAccessible(true);
-        return (AnalogExpressionBean) f.get(expression);
-    }
-    
     /**
      * Default implementation for storing the contents of a LogixManager
      *
@@ -58,15 +52,15 @@ public class DefaultAnalogExpressionManagerXml extends AbstractManagerXml {
                         elements.add(storeMaleSocket(a));
                         a = (MaleAnalogExpressionSocket) a.getObject();
                     }
-                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(getExpression(a));
+                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(a.getObject());
                     if (e != null) {
                         for (Element ee : elements) e.addContent(ee);
 //                        e.addContent(storeMaleSocket(expression));
                         expressions.addContent(e);
                     } else {
-                        throw new RuntimeException("Cannot load xml configurator for " + getExpression(a).getClass().getName());
+                        throw new RuntimeException("Cannot load xml configurator for " + a.getObject().getClass().getName());
                     }
-                } catch (RuntimeException | IllegalAccessException | NoSuchFieldException e) {
+                } catch (RuntimeException e) {
                     log.error("Error storing action: {}", e, e);
                 }
             }

@@ -1,9 +1,6 @@
 package jmri.jmrit.logixng.implementation;
 
-import java.beans.*;
 import java.util.*;
-
-import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
@@ -200,7 +197,7 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
     private class MaleRootSocket extends AbstractMaleSocket {
 
         public MaleRootSocket(BaseManager<? extends NamedBean> manager) {
-            super(manager);
+            super(manager, _clipboardItems);
         }
         
         @Override
@@ -234,11 +231,6 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
         }
 
         @Override
-        public Base getObject() {
-            return _clipboardItems;
-        }
-
-        @Override
         public void setDebugConfig(DebugConfig config) {
             throw new UnsupportedOperationException("Not supported");
         }
@@ -254,21 +246,6 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
         }
 
         @Override
-        public String getSystemName() {
-            return _clipboardItems.getSystemName();
-        }
-
-        @Override
-        public String getUserName() {
-            return _clipboardItems.getUserName();
-        }
-
-        @Override
-        public void setUserName(String s) throws NamedBean.BadUserNameException {
-            throw new UnsupportedOperationException("Not supported");
-        }
-
-        @Override
         public String getComment() {
             return _clipboardItems.getComment();
         }
@@ -278,131 +255,6 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
             throw new UnsupportedOperationException("Not supported");
         }
 
-        @Override
-        public String getShortDescription(Locale locale) {
-            return _clipboardItems.getShortDescription(locale);
-        }
-
-        @Override
-        public String getLongDescription(Locale locale) {
-            return _clipboardItems.getLongDescription(locale);
-        }
-/*
-        @Override
-        public ConditionalNG getConditionalNG() {
-            return null;
-        }
-
-        @Override
-        public LogixNG getLogixNG() {
-            return null;
-        }
-*/
-        @Override
-        public Base getRoot() {
-            return this;
-        }
-
-        @Override
-        public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
-            return _clipboardItems.getChild(index);
-        }
-
-        @Override
-        public int getChildCount() {
-            return _clipboardItems.getChildCount();
-        }
-
-        @Override
-        public Category getCategory() {
-            return _clipboardItems.getCategory();
-        }
-
-        @Override
-        public boolean isExternal() {
-            return _clipboardItems.isExternal();
-        }
-
-        @Override
-        public Lock getLock() {
-            return _clipboardItems.getLock();
-        }
-
-        @Override
-        public void setLock(Lock lock) {
-            throw new UnsupportedOperationException("Not supported");
-        }
-
-        @Override
-        public void addPropertyChangeListener(PropertyChangeListener listener, String name, String listenerRef) {
-            _clipboardItems.addPropertyChangeListener(listener, name, listenerRef);
-        }
-
-        @Override
-        public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener, String name, String listenerRef) {
-            _clipboardItems.addPropertyChangeListener(propertyName, listener, name, listenerRef);
-        }
-
-        @Override
-        public void updateListenerRef(PropertyChangeListener l, String newName) {
-            _clipboardItems.updateListenerRef(l, newName);
-        }
-
-        @Override
-        public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
-            _clipboardItems.vetoableChange(evt);
-        }
-
-        @Override
-        public String getListenerRef(PropertyChangeListener l) {
-            return _clipboardItems.getListenerRef(l);
-        }
-
-        @Override
-        public ArrayList<String> getListenerRefs() {
-            return _clipboardItems.getListenerRefs();
-        }
-
-        @Override
-        public int getNumPropertyChangeListeners() {
-            return _clipboardItems.getNumPropertyChangeListeners();
-        }
-
-        @Override
-        public PropertyChangeListener[] getPropertyChangeListenersByReference(String name) {
-            return _clipboardItems.getPropertyChangeListenersByReference(name);
-        }
-
-        @Override
-        public void addPropertyChangeListener(PropertyChangeListener listener) {
-            _clipboardItems.addPropertyChangeListener(listener);
-        }
-
-        @Override
-        public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-            _clipboardItems.addPropertyChangeListener(propertyName, listener);
-        }
-
-        @Override
-        public PropertyChangeListener[] getPropertyChangeListeners() {
-            return _clipboardItems.getPropertyChangeListeners();
-        }
-
-        @Override
-        public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
-            return _clipboardItems.getPropertyChangeListeners(propertyName);
-        }
-
-        @Override
-        public void removePropertyChangeListener(PropertyChangeListener listener) {
-            _clipboardItems.removePropertyChangeListener(listener);
-        }
-
-        @Override
-        public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-            _clipboardItems.removePropertyChangeListener(propertyName, listener);
-        }
-        
     }
     
 }

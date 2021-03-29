@@ -29,12 +29,6 @@ public class DefaultAnalogActionManagerXml extends AbstractManagerXml {
     public DefaultAnalogActionManagerXml() {
     }
 
-    private AnalogActionBean getAction(AnalogActionBean action) throws IllegalAccessException, IllegalArgumentException, NoSuchFieldException {
-        Field f = action.getClass().getDeclaredField("_action");
-        f.setAccessible(true);
-        return (AnalogActionBean) f.get(action);
-    }
-    
     /**
      * Default implementation for storing the contents of a AnalogActionManager
      *
@@ -58,15 +52,15 @@ public class DefaultAnalogActionManagerXml extends AbstractManagerXml {
                         elements.add(storeMaleSocket(a));
                         a = (MaleAnalogActionSocket) a.getObject();
                     }
-                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(getAction(a));
+                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(a.getObject());
                     if (e != null) {
                         for (Element ee : elements) e.addContent(ee);
 //                        e.addContent(storeMaleSocket(a));
                         actions.addContent(e);
                     } else {
-                        throw new RuntimeException("Cannot load xml configurator for " + getAction(a).getClass().getName());
+                        throw new RuntimeException("Cannot load xml configurator for " + a.getObject().getClass().getName());
                     }
-                } catch (RuntimeException | IllegalAccessException | NoSuchFieldException e) {
+                } catch (RuntimeException e) {
                     log.error("Error storing action: {}", e, e);
                 }
             }
