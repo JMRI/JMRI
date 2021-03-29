@@ -84,6 +84,7 @@ public class SprogCbusSimpleModeSwitcherFrame extends SprogCbusModeSwitcherFrame
                     pm.setAddressedModePossible(false);
                     _memo.setMultipleThrottles(false);
                     showServiceModeWarningDialogue();
+                    closeProgrammerWarningDialogue();
                     mode = PROG_MODE;
                 } else if (cmdModeButton.isSelected() && mode != CMD_MODE) {
                     // Switch to command station mode
@@ -91,6 +92,7 @@ public class SprogCbusSimpleModeSwitcherFrame extends SprogCbusModeSwitcherFrame
                     pm.setGlobalProgrammerAvailable(false);
                     pm.setAddressedModePossible(true);
                     _memo.setMultipleThrottles(true);
+                    closeProgrammerWarningDialogue();
                     mode = CMD_MODE;
                 }
                 setHardwareMode(mode);
@@ -116,14 +118,14 @@ public class SprogCbusSimpleModeSwitcherFrame extends SprogCbusModeSwitcherFrame
 
     private boolean _hideProgWarning = false;
 
-    protected void showServiceModeWarningDialogue(){
+    protected void closeProgrammerWarningDialogue(){
         if ((!java.awt.GraphicsEnvironment.isHeadless()) && (!_hideProgWarning)){
             jmri.util.ThreadingUtil.runOnGUI(() -> {
                 javax.swing.JCheckBox checkbox = new javax.swing.JCheckBox(Bundle.getMessage("HideFurtherWarnings"));
-                Object[] params = {Bundle.getMessage("ProgModeWarning"), checkbox};
+                Object[] params = {Bundle.getMessage("ProgWarning"), checkbox};
                 javax.swing.JOptionPane pane = new javax.swing.JOptionPane(params);
                 pane.setMessageType(javax.swing.JOptionPane.WARNING_MESSAGE);
-                JDialog dialog = pane.createDialog(null, Bundle.getMessage("switchToProgMode"));
+                JDialog dialog = pane.createDialog(null, Bundle.getMessage("switchMode"));
                 dialog.setModal(false);
                 dialog.setVisible(true);
                 dialog.requestFocus();
@@ -135,14 +137,45 @@ public class SprogCbusSimpleModeSwitcherFrame extends SprogCbusModeSwitcherFrame
     }
 
     /**
-     * Receive notification from a throttle dialogue
-     * to display steal dialogues for rest of the JMRI instance session.
+     * Receive notification from a mode switcher dialogue to close programmer when
+     * switching modes. This so buttons correctly reflect available operations.
      * False by default to show notifications
      *
      * @param hide set True to hide notifications, else False.
      */
     public void hideProgWarning(boolean hide){
         _hideProgWarning = hide;
+    }
+
+    private boolean _hideProgModeWarning = false;
+
+    protected void showServiceModeWarningDialogue(){
+        if ((!java.awt.GraphicsEnvironment.isHeadless()) && (!_hideProgModeWarning)){
+            jmri.util.ThreadingUtil.runOnGUI(() -> {
+                javax.swing.JCheckBox checkbox = new javax.swing.JCheckBox(Bundle.getMessage("HideFurtherWarnings"));
+                Object[] params = {Bundle.getMessage("ProgModeWarning"), checkbox};
+                javax.swing.JOptionPane pane = new javax.swing.JOptionPane(params);
+                pane.setMessageType(javax.swing.JOptionPane.WARNING_MESSAGE);
+                JDialog dialog = pane.createDialog(null, Bundle.getMessage("switchToProgMode"));
+                dialog.setModal(false);
+                dialog.setVisible(true);
+                dialog.requestFocus();
+                dialog.toFront();
+                java.awt.event.ActionListener progPopUpCheckBox = (java.awt.event.ActionEvent evt) -> hideProgModeWarning(checkbox.isSelected());
+                checkbox.addActionListener(progPopUpCheckBox);
+            });
+        }
+    }
+
+    /**
+     * Receive notification from a mode switcher dialogue to display warning
+     * message about service mode programminf.
+     * False by default to show notifications
+     *
+     * @param hide set True to hide notifications, else False.
+     */
+    public void hideProgModeWarning(boolean hide){
+        _hideProgModeWarning = hide;
     }
 
     /**
