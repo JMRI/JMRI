@@ -117,7 +117,7 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
 
     //
     // For contextual menu
-    private class MyMouseAdapter implements MouseListener {
+    private static class MyMouseAdapter implements MouseListener {
 
         private JPopupMenu popUpMenu;
         private final JMenuItem removeMenuItem;
@@ -205,6 +205,7 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
             if (src.getParent().compareTo(dest.getParent()) != 0) {
                 // else case would be droping from dropFolder, so no copy
                 BufferedInputStream in = null;
+                BufferedInputStream out = null;
                 FileOutputStream fileOutputStream = null;
                 try {
                     // prepare source reader
@@ -222,7 +223,7 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
                     // maybe we don't need to copy?
                     boolean shouldCopy = true;
                     if ( dest.exists() && (srcIsFile) && (dest.length() == src.length()) ) {
-                        BufferedInputStream out =  new BufferedInputStream( dest.toURI().toURL().openStream() );
+                        out = new BufferedInputStream( dest.toURI().toURL().openStream() );
                         byte dataBufferIn[] = new byte[4096];
                         byte dataBufferOut[] = new byte[4096];
                         int bytesReadIn;
@@ -263,7 +264,7 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
                     try {
                         if (fileOutputStream != null) {
                             fileOutputStream.close();
-                        }
+                        }                     
                     } catch (IOException ex) {
                         log.error("URIsDropped: error while closing copy destination file : ", ex.getMessage());
                     }
@@ -274,6 +275,13 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
                     } catch (IOException ex) {
                         log.error("URIsDropped: error while closing copy source file : ", ex.getMessage());
                     }
+                    try {                    
+                        if (out != null) {
+                            out.close();
+                        }
+                    } catch (IOException ex) {
+                        log.error("URIsDropped: error while closing duplicate check file : ", ex.getMessage());
+                    }                                            
                 }
             }        
         }
