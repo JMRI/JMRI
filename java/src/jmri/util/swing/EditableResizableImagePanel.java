@@ -172,7 +172,7 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
             }
         }
     }
-
+    
     public void setDropFolder(String s) {
         dropFolder = s;
     }

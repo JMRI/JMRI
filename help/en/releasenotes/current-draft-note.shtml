@@ -472,7 +472,7 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>Throttles : Keyboard shortcuts can be customized in JMRI throttle preferences screen (second pane, warning, no consistency check is made)</li>
         </ul>
 
     <h3>Resources</h3>
@@ -484,7 +484,8 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>Media/Function tab : Added an entry in function buttons icons contextual menu that will open a system file manager located into the JMRI functions icons library (allows easy drag'n drop)</li>
+            <li>Media/Function tab : If an existing icon or image file (same name, same size) is aded an icon, it will no longer be duplicated, existing instance will be used</li>
         </ul>
 
     <h3>Routes</h3>
@@ -557,6 +558,8 @@
         <ul>            
             <li>Function Panel now displays all functions buttons at once, with a scrollbar if required</li>
             <li>There are as many function buttons as defined by the used throttle</li>
+            <li>Added an entry in function buttons icons contextual menu that will open a system file manager located into the JMRI functions icons library (allows easy drag'n drop</li>
+            <li>If an existing icon file (same name, same size) is aded an icon, it will no longer be duplicated, existing instance will be used</li>
             <li>Keyboard shortcuts now available on whole throttle window</li>
             <li>Keyboard shortcuts can be customized in JMRI throttle preferences screen (second pane, warning, no consistency check is made)</li>            
             <li>Mousewheel speed control now available on whole throttle window</li>
