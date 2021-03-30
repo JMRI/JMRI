@@ -1,7 +1,10 @@
 package jmri.jmrit.beantable.turnout;
 
 import java.awt.Component;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+
+import java.util.EventObject;
 import java.util.Hashtable;
 
 import javax.annotation.Nonnull;
@@ -52,6 +55,21 @@ public class TurnoutTableJTable extends JTable {
         int realRowIndex = convertRowIndexToModel(rowIndex);
         int realColumnIndex = convertColumnIndexToModel(colIndex);
         return model.getCellToolTip(this, realRowIndex, realColumnIndex);
+    }
+    
+    /**
+     * Disable windows key being pressed as a go for editing a cell,
+     * causes unexpected behaviour, i.e. button presses.
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean editCellAt(int row, int column, EventObject e) {
+        if (e instanceof KeyEvent) {
+            if ( ((KeyEvent) e).getKeyCode() == KeyEvent.VK_WINDOWS ) {
+                return false;
+            }
+        }
+        return super.editCellAt(row, column, e);
     }
 
     @Override

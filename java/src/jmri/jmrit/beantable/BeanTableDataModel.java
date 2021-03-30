@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.EventObject;
 import java.util.List;
 import java.util.Objects;
 
@@ -693,6 +694,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         Objects.requireNonNull(model, "the table model must be nonnull");
         JTable table = new JTable(model) {
 
+            // TODO: Create base BeanTableJTable.java,
+            // extend TurnoutTableJTable from it as next 2 classes duplicate.
+            
             @Override
             public String getToolTipText(MouseEvent e) {
                 java.awt.Point p = e.getPoint();
@@ -701,6 +705,21 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 int realRowIndex = convertRowIndexToModel(rowIndex);
                 int realColumnIndex = convertColumnIndexToModel(colIndex);
                 return getCellToolTip(this, realRowIndex, realColumnIndex);
+            }
+            
+            /**
+             * Disable windows key being pressed as a go for editing a cell,
+             * causes unexpected behaviour, i.e. button presses.
+             * {@inheritDoc}
+             */
+            @Override
+            public boolean editCellAt(int row, int column, EventObject e) {
+                if (e instanceof KeyEvent) {
+                    if ( ((KeyEvent) e).getKeyCode() == KeyEvent.VK_WINDOWS ) {
+                        return false;
+                    }
+                }
+                return super.editCellAt(row, column, e);
             }
         };
         return this.configureJTable(name, table, sorter);
