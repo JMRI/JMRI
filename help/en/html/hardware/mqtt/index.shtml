@@ -337,9 +337,11 @@
 
     <a href="http://test.mosquitto.org" target="_blank">
     <img src="https://mosquitto.org/stickers/mosquitto-mono.png" alt="Mosquitto logo" height="80" width="80" align="right"></a>
+    <p>
     If you don't already run an MQTT broker and want to test with this connection type, you can use a publicly-available (non-JMRI) test server.
     Enter "test.mosquitto.org" as the Host Name on the Preferences Connections page to connect to the host provided by mosquitto.org (for more 
     information, type <a href="https://test.mosquitto.org" target="_blank">test.mosquitto.org</a> into a browser.
+    </p>
 
     <p>
     You can also install the <a href="https://mosquitto.org/download/" target="_blank">mosquitto tools</a> on your own machine.  You can then publish and subscribe to
@@ -358,11 +360,25 @@
 
     These commands can be run on the same machine as JMRI, or on a separate machine.
     
+    <p>
     You can also install a copy of the mosquitto broker by typing:
 <pre>
     mosquitto -v   
 </pre>    
-   and enter "localhost" as your Host Name to JMRI.
+   and enter "localhost" as the Host Name on the JMRI Connection for MQTT.  If you are using version 2.0 of mosquitto or later, you will need to provide a
+   "configuration file": 
+<pre>
+    mosquitto -c "[location of your config file]/mosquitto.conf"
+</pre>
+
+    Include at least the following lines in mosquitto.conf:
+<pre>
+    log_type all                 #Equivalent to setting -v (verbose mode)
+    listener 1883                #To ensure listening on the appropriate port
+    allow_anonymous true         #Allows JMRI to subscribe without an ID or password
+</pre>    
+    See the <a href="https://mosquitto.org/man/mosquitto-conf-5.html" target="_blank">mosquitto documentation</a> for more information.   
+
    
    <p>
    There are also MQTT tools available for 
