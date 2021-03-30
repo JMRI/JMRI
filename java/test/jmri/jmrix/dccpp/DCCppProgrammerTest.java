@@ -33,7 +33,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Override
     @Test
     public void testDefaultViaBestMode() {
-        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBITMODE,
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBYTEMODE,
                 ((DCCppProgrammer) programmer).getBestMode());
     }
 
@@ -326,8 +326,8 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         p.setMode(ProgrammingMode.DIRECTBYTEMODE);
         Assert.assertTrue("DCC++ Base Station Can Write CV3 in direct byte mode", p.getCanWrite("3"));
 
-        p.setMode(ProgrammingMode.DIRECTBITMODE);
-        Assert.assertTrue("DCC++ Base Station Can Write CV3 in direct bit mode", p.getCanWrite("3"));
+//        p.setMode(ProgrammingMode.DIRECTBITMODE);
+//        Assert.assertFalse("DCC++ Base Station Can Not Write CV3 in direct bit mode", p.getCanWrite("3"));
 
         //p.setMode(ProgrammingMode.REGISTERMODE);
         //Assert.assertFalse("DCC++ Base Station Can not Write CV300 in register mode", p.getCanWrite("300"));
@@ -336,14 +336,14 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         p.setMode(ProgrammingMode.DIRECTBYTEMODE);
         Assert.assertTrue("DCC++ Base Station Can Write CV300 in direct byte mode", p.getCanWrite("300"));
 
-        p.setMode(ProgrammingMode.DIRECTBITMODE);
-        Assert.assertTrue("DCC++ Base Station Can Write CV300 in direct bit mode", p.getCanWrite("300"));
+//        p.setMode(ProgrammingMode.DIRECTBITMODE);
+//        Assert.assertFalse("DCC++ Base Station Can Not Write CV300 in direct bit mode", p.getCanWrite("300"));
 
         p.setMode(ProgrammingMode.DIRECTBYTEMODE);
         Assert.assertFalse("DCC++ Base Station Can Not Write CV3000 in direct byte mode", p.getCanWrite("3000"));
 
-        p.setMode(ProgrammingMode.DIRECTBITMODE);
-        Assert.assertFalse("DCC++ Base Station Can Not  Write CV3000 in direct bit mode", p.getCanWrite("3000"));
+//        p.setMode(ProgrammingMode.DIRECTBITMODE);
+//        Assert.assertFalse("DCC++ Base Station Can Not  Write CV3000 in direct bit mode", p.getCanWrite("3000"));
 
     }
 
@@ -360,8 +360,8 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         p.setMode(ProgrammingMode.DIRECTBYTEMODE);
         Assert.assertTrue("DCC++ Base Station Can Read CV3 in direct byte mode", p.getCanRead("3"));
 
-        p.setMode(ProgrammingMode.DIRECTBITMODE);
-        Assert.assertTrue("DCC++ Base Station Can Read CV3 in direct bit mode", p.getCanRead("3"));
+//        p.setMode(ProgrammingMode.DIRECTBITMODE);
+//        Assert.assertFalse("DCC++ Base Station Can Not Read CV3 in direct bit mode", p.getCanRead("3"));
 
         //p.setMode(ProgrammingMode.REGISTERMODE);
         //Assert.assertFalse("DCC++ Base Station Can not Read CV300 in register mode", p.getCanRead("300"));
@@ -370,14 +370,14 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         p.setMode(ProgrammingMode.DIRECTBYTEMODE);
         Assert.assertTrue("DCC++ Base Station Can Read CV300 in direct byte mode", p.getCanRead("300"));
 
-        p.setMode(ProgrammingMode.DIRECTBITMODE);
-        Assert.assertTrue("DCC++ Base Station Can Read CV300 in direct bit mode", p.getCanRead("300"));
+//        p.setMode(ProgrammingMode.DIRECTBITMODE);
+//        Assert.assertFalse("DCC++ Base Station Can Not Read CV300 in direct bit mode", p.getCanRead("300"));
 
         p.setMode(ProgrammingMode.DIRECTBYTEMODE);
         Assert.assertFalse("DCC++ Base Station Can not Read CV3000 in direct byte mode", p.getCanRead("3000"));
 
-        p.setMode(ProgrammingMode.DIRECTBITMODE);
-        Assert.assertFalse("DCC++ Base Station Can not Read CV3000 in direct bit mode", p.getCanRead("3000"));
+//        p.setMode(ProgrammingMode.DIRECTBITMODE);
+//        Assert.assertFalse("DCC++ Base Station Can not Read CV3000 in direct bit mode", p.getCanRead("3000"));
 
     }
 
