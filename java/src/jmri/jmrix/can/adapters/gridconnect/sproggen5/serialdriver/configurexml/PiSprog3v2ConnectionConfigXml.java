@@ -3,8 +3,7 @@ package jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.configurexml;
 import org.jdom2.Element;
 
 import jmri.jmrix.PortAdapter;
-import jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.CanSprogConnectionConfig;
-import jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.CanisbSerialDriverAdapter;
+import jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.*;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 
 /**
@@ -17,32 +16,28 @@ import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
  *
- * Deprecated in 4.23 - not going ahead with this hardware
- * 
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @author Andrew Crosland 2008
- * @author Andrew Crosland 2019
+ * @author Andrew Crosland Copyright (C) 2008, 2019, 2021
  */
-@Deprecated
-public class CanSprogConnectionConfigXml extends AbstractSerialConnectionConfigXml {
+public class PiSprog3v2ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
-    public CanSprogConnectionConfigXml() {
+    public PiSprog3v2ConnectionConfigXml() {
         super();
     }
 
     @Override
     protected void getInstance() {
-        adapter = new CanisbSerialDriverAdapter();
+        adapter = new PiSprog3v2SerialDriverAdapter();
     }
 
     @Override
     protected void getInstance(Object object) {
-        adapter = ((CanSprogConnectionConfig) object).getAdapter();
+        adapter = ((PiSprog3v2ConnectionConfig) object).getAdapter();
     }
 
     @Override
     protected void register() {
-        this.register(new CanSprogConnectionConfig(adapter));
+        this.register(new PiSprog3v2ConnectionConfig(adapter));
     }
 
     @Override

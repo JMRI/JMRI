@@ -6,18 +6,15 @@ import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
- * Tests for CanSprogConnectionConfig class.
+ * Tests for PiSprog3ConnectionConfig class.
  *
- * Deprecated in 4.23 - not going ahead with this hardware
- * 
  * @author Andrew Crosland (C) 2020
  **/
-@Deprecated
-public class CanSprogConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionConfigTestBase {
+public class PiSprog3v2ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionConfigTestBase {
 
     @Test
     public void testCTor() {
-        CanSprogConnectionConfig c = new CanSprogConnectionConfig();
+        PiSprog3v2ConnectionConfig c = new PiSprog3v2ConnectionConfig();
         Assert.assertNotNull("exists",c);
     }
     
@@ -27,7 +24,7 @@ public class CanSprogConnectionConfigTest extends jmri.jmrix.AbstractSerialConne
         JUnitUtil.setUp();
 
         JUnitUtil.initDefaultUserMessagePreferences();
-        cc = new CanSprogConnectionConfig();
+        cc = new PiSprog3v2ConnectionConfig();
    }
 
    @AfterEach
