@@ -20,7 +20,6 @@ import org.openlcb.IdentifyConsumersMessage;
 import org.openlcb.ConsumerIdentifiedMessage;
 import org.openlcb.IdentifyProducersMessage;
 import org.openlcb.ProducerIdentifiedMessage;
-import org.openlcb.IdentifyEventsMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
