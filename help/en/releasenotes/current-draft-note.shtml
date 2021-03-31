@@ -514,7 +514,14 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Added script "SensorFromBxpa1AutoRev.py".  This script monitors 
+                LocoNet for messages pertaining to BXPA1 autoreverse events and
+                updates a JMRI sensor to reflect the state.  When monitoring a
+                specific BXPA1 (by BoardID), one JMRI sensor is used.  When 
+                monitoring all BXPA1 devices, a separate JMRI sensor is defined
+                for each reporting BXPA1 device.  Further details on script 
+                configuration and some known limitations may be found in the 
+                comments included within the script's code.</li>
         </ul>
 
     <h3>Signals</h3>
