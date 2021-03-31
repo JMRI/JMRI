@@ -62,6 +62,32 @@
 # ---------------------
 #
 # Note the following limitations:
+# - So far as the script author knows, there is _no_ way to query the autoreversing
+#     state of a BXPA1 device.  As such, until a BXPA1 device changes its 
+#     auto-reversing state, there is _no_ way to tell what the device's current
+#     state is.
+#
+# - This script creates, if necessary, the Internal Sensor used to "follow" the
+#     BXPA1 device's autoreversing state.  Before a BXPA1 reports its autoreversing
+#     state, JMRI will _not_ have a corresponding Sensor object, unless you have
+#     opened a JMRI "panel" XML file which was saved when the corresponding sensor
+#     was known to JMRI.
+#
+# - If you open a saved JMRI Panel XML file and that file had one or more JMRI 
+#     Sensor objects created by this script, such If you "save" a panel XML 
+#     file, JMRI will create the associate Sensors but will leave those sensors
+#     in the "unknown" state.  Once a BXPA1 sends an "Autoreversing" event 
+#     LocoNet message, the associated sensor will be updated to "Inactive" or 
+#     "Active", as appropriate.
+#
+# - This script provides little if any "error-checking" of the configuration
+#     variables.  Specifying an "out-of-range" connection index will result in 
+#     an exception reported in the JMRI Console log as well as failure of the 
+#     script to perform.  Specifying a BoardID value of 0 will not result in 
+#     capture of _any_ BXPA1 autoreversing data.
+#     Various other configuration boo-boos may result in exceptions in the log 
+#     and/or failure of this script to perform. 
+#
 # - Because of an apparent BXPA1 firmware issue seen in at least some BXPA1 devices,
 #     BXPA1 devices with some BoardID values report their status as if they had 
 #     different BoardID values.  To avoid this problem, avoid using BoardID 
@@ -94,24 +120,6 @@
 # - It is possible that a BXPA1 firmware revision that resolves the above BoardId 
 #     issue _could_ require re-work of the message parsing found in the LocoNet 
 #     Listener implementation.
-#
-# - So far as the author knows, there is _no_ way to query the autoreversing
-#     state of a BXPA1 device.  As such, until a BXPA1 device changes its 
-#     auto-reversing state, there is _no_ way to tell what the device's current
-#     state is.
-#
-# - This script creates, if necessary, the Internal Sensor used to "follow" the
-#     BXPA1 device's autoreversing state.  Before a BXPA1 reports its autoreversing
-#     state, JMRI will _not_ have a corresponding Sensor object, unless you have
-#     opened a JMRI "panel" XML file which was saved when the corresponding sensor
-#     was known to JMRI.
-#
-# - If you open a saved JMRI Panel XML file and that file had one or more JMRI 
-#     Sensor objects created by this script, such If you "save" a panel XML 
-#     file, JMRI will create the associate Sensors but will leave those sensors
-#     in the "unknown" state.  Once a BXPA1 sends an "Autoreversing" event 
-#     LocoNet message, the associated sensor will be updated to "Inactive" or 
-#     "Active", as appropriate.
 #
 #
 # Script version 1.0 created 30Mar2021 by Bob M.
