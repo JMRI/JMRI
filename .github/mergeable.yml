@@ -70,7 +70,7 @@ mergeable: # see https://github.com/mergeability/mergeable
     validate:
       - do: changeset
         must_include:
-          regex: '^help/'
+          regex: '^help/en/((?!releasenotes).)*$'  # Require at least one help page not in releasenotes
     pass:
       - do: comment
         payload:
