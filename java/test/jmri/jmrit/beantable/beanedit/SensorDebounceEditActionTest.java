@@ -51,12 +51,15 @@ public class SensorDebounceEditActionTest {
         SensorDebounceEditAction t = new SensorDebounceEditAction();
 
         Assert.assertEquals("package.jmri.jmrit.beantable.SensorAddEdit", t.helpTarget());
-        Assert.assertEquals("Sensor", t.getBeanType());
         
         t.initPanels();
         
         Sensor is1 = InstanceManager.sensorManagerInstance().newSensor("IS1", "user1");
         Assert.assertEquals(is1, t.getByUserName("user1"));
+        
+        // to ensure t.bean.getBeanType() equals removed method t.getBeanType()
+        t.setBean(is1);
+        Assert.assertEquals("Sensor", t.bean.getBeanType());
         
     }
     
