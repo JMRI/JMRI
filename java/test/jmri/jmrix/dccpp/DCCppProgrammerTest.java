@@ -136,17 +136,10 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         Assert.assertEquals("Register mode received value", 12, l.getRcvdValue());
          */
     }
-
     @Test
     public void testReadCvSequence() throws JmriException {
         // infrastructure objects
-        DCCppCommandStation cs = new DCCppCommandStation();
-        //set the version
-        cs.setVersion("3.0.0");
-        DCCppReply r = DCCppReply.parseDCCppReply(
-                "iDCC-EX V-3.0.0 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36");
-        Assert.assertNotNull(r);
-        DCCppInterfaceScaffold t = new DCCppInterfaceScaffold(cs);
+        DCCppInterfaceScaffold t = new DCCppInterfaceScaffold(new DCCppCommandStation());
         jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
 
         DCCppProgrammer p = new DCCppProgrammer(t) {
@@ -155,7 +148,6 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
                 super.restartTimer(RESTART_TIME);
             }
         };
-        Assert.assertTrue(cs.getVersion().equals("3.0.0"));
 
         // and do the read
         p.readCV("29", l);
@@ -165,6 +157,47 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
         // send reply
         DCCppReply mr1 = DCCppReply.parseDCCppReply("r 0|82|29 12");
+        t.sendTestMessage(mr1);
+
+        // At this point, the standard DCC++ programmer
+        // should send a result to the programmer listeners, and
+        // wait for either the next read/write request or for the
+        // traffic controller to exit from service mode.  We just
+        // need to wait a few seconds and see that the listener we
+        // registered earlier received the values we expected.
+        jmri.util.JUnitUtil.releaseThread(this);
+
+        //failure in this test occurs with the next line.
+        Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
+
+        Assert.assertEquals("Register mode received value", 12, l.getRcvdValue());
+    }
+
+
+    @Test
+    public void testReadCvWithStartValSequence() throws JmriException {
+        // infrastructure objects
+        DCCppCommandStation cs = new DCCppCommandStation();
+        cs.setVersion("3.0.0"); //set the version to support startVal
+        Assert.assertTrue(cs.getVersion().equals("3.0.0"));
+        DCCppInterfaceScaffold t = new DCCppInterfaceScaffold(cs);
+        jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
+
+        DCCppProgrammer p = new DCCppProgrammer(t) {
+            @Override
+            protected synchronized void restartTimer(int delay) {
+                super.restartTimer(RESTART_TIME);
+            }
+        };
+
+        // and do the read, with 12 as startVal
+        p.readCV("29", l, 12);
+        // check "prog mode" message sent
+        Assert.assertEquals("mode message sent", 1, t.outbound.size());
+        Assert.assertEquals("read message contents", "V 29 12", t.outbound.elementAt(0).toString());
+
+        // send reply
+        DCCppReply mr1 = DCCppReply.parseDCCppReply("v 29 12");
         t.sendTestMessage(mr1);
 
         // At this point, the standard DCC++ programmer
