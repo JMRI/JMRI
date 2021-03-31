@@ -37,23 +37,24 @@ public class SerialLightManager extends AbstractLightManager {
      * Create a new Light based on the system name.
      * Assumes calling method has checked that a Light with this system name
      * does not already exist.
-     *
-     * @return null if the system name is not in a valid format or if the
+     * {@inheritDoc}
+     * @throws IllegalArgumentException if the system name is not in a valid format or if the
      * system name does not correspond to a configured OakTree digital output bit
      */
     @Override
-    public Light createNewLight(@Nonnull String systemName, String userName) {
-        Light lgt = null;
+    @Nonnull
+    protected Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         // Validate the systemName
         if (SerialAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix()) == NameValidity.VALID) {
-            lgt = new SerialLight(systemName, userName, getMemo());
+            Light lgt = new SerialLight(systemName, userName, getMemo());
             if (!SerialAddress.validSystemNameConfig(systemName, 'L', getMemo())) {
                 log.warn("Light system Name does not refer to configured hardware: {}", systemName);
             }
+            return lgt;
         } else {
             log.error("Invalid Light system Name format: {}", systemName);
+            throw new IllegalArgumentException("Invalid Light system Name format: " + systemName);
         }
-        return lgt;
     }
 
     /**

@@ -68,7 +68,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName)  throws IllegalArgumentException {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName)  throws IllegalArgumentException {
         if (systemName.contains(":")) {
             // check for CAN format.
             int bitNum = Z21CanBusAddress.getBitFromSystemName(systemName, getSystemPrefix());

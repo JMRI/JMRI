@@ -1,12 +1,6 @@
 package jmri.jmrit.throttle;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import jmri.Throttle;
@@ -132,6 +126,7 @@ public final class FunctionButtonPropertyEditor extends JDialog {
         _imageFilePath.setDropFolder(FileUtil.getUserResourcePath());
         _imageFilePath.setBackground(new Color(0, 0, 0, 0));
         _imageFilePath.setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
+        _imageFilePath.addMenuItemBrowseFolder(Bundle.getMessage("OpenSystemFileBrowserOnJMRIfnButtonsRessources"), FileUtil.getExternalFilename("resources/icons/functionicons/transparent_background"));
         propertyPanel.add(_imageFilePath, constraints);
 
         constraints.gridx = 1;
@@ -139,6 +134,7 @@ public final class FunctionButtonPropertyEditor extends JDialog {
         _imagePressedFilePath.setDropFolder(FileUtil.getUserResourcePath());
         _imagePressedFilePath.setBackground(new Color(0, 0, 0, 0));
         _imagePressedFilePath.setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
+        _imagePressedFilePath.addMenuItemBrowseFolder(Bundle.getMessage("OpenSystemFileBrowserOnJMRIfnButtonsRessources"), FileUtil.getExternalFilename("resources/icons/functionicons/transparent_background"));
         propertyPanel.add(_imagePressedFilePath, constraints);
 
         JPanel buttonPanel = new JPanel();

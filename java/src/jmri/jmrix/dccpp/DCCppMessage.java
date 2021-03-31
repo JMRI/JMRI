@@ -411,14 +411,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             case DCCppConstants.WRITE_DCC_PACKET_PROG:
                 myRegex = DCCppConstants.WRITE_DCC_PACKET_PROG_REGEX;
                 break;
-//            case DCCppConstants.GET_FREE_MEMORY:
-//                myRegex = DCCppConstants.GET_FREE_MEMORY_REGEX;
-//                break;
             case DCCppConstants.LIST_REGISTER_CONTENTS:
                 myRegex = DCCppConstants.LIST_REGISTER_CONTENTS_REGEX;
                 break;
-            case DCCppConstants.ENTER_DIAG_MODE_CMD:
-                myRegex = DCCppConstants.ENTER_DIAG_MODE_REGEX;
+            case DCCppConstants.DIAG_CMD:
+                myRegex = DCCppConstants.DIAG_CMD_REGEX;                
                 break;
             default:
                 myRegex = "";
@@ -596,10 +593,6 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 text += "Register: " + getRegisterString();
                 text += ", Packet:" + getPacketString();
                 break;
-//            case DCCppConstants.GET_FREE_MEMORY:
-//                text = "Get Free Memory Cmd: ";
-//                text += toString();
-//                break;
             case DCCppConstants.LIST_REGISTER_CONTENTS:
                 text = "List Register Contents Cmd: ";
                 text += toString();
@@ -614,6 +607,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 break;
             case DCCppConstants.QUERY_SENSOR_STATES_CMD:
                 text = "Query Sensor States Cmd: '" + toString() + "'";
+                break;               
+            case DCCppConstants.DIAG_CMD:
+                text = "Diag Cmd: '" + toString() + "'";
+                break;               
+            case DCCppConstants.ESTOP_ALL_CMD:
+                text = "eStop All Locos Cmd: '" + toString() + "'";
                 break;               
             default:
                 text = "Unknown Message: '" + toString() + "'";
@@ -2160,6 +2159,18 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         m.myMessage.append(" ").append(address);
         m.myMessage.append(" -1 1");
         m.myRegex = DCCppConstants.THROTTLE_CMD_REGEX;
+
+        m._nDataChars = m.toString().length();
+        return (m);
+    }
+
+    /**
+     * Generate an emergency stop for all locos in reminder table.
+     * @return message to send e stop for all locos
+     */
+    public static DCCppMessage makeEmergencyStopAllMsg() {
+        DCCppMessage m = new DCCppMessage(DCCppConstants.ESTOP_ALL_CMD);
+        m.myRegex = DCCppConstants.ESTOP_ALL_REGEX;
 
         m._nDataChars = m.toString().length();
         return (m);

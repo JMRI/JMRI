@@ -32,7 +32,7 @@ public class RaspberryPiSensorManager extends jmri.managers.AbstractSensorManage
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         return new RaspberryPiSensor(systemName, userName);
     }
 

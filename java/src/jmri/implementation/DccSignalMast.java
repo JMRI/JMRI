@@ -152,6 +152,10 @@ public class DccSignalMast extends AbstractSignalMast {
 
     @Override
     public void setAspect(@Nonnull String aspect) {
+        // if already set do not send again.
+        if ( getAspect() != null && getAspect().equals(aspect) ) {
+            return;
+        }
         if (appearanceToOutput.containsKey(aspect) && appearanceToOutput.get(aspect) != -1) {
             c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, appearanceToOutput.get(aspect)), packetSendCount);
         } else {

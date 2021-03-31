@@ -68,13 +68,14 @@ public final class DCCppConstants {
     public static final char READ_MAXNUMSLOTS       = '#'; // Read max number of slots supported by CS
     public static final char WRITE_TO_EEPROM_CMD    = 'E'; // Store settings to eeprom  -- NEW V1.1
     public static final char CLEAR_EEPROM_CMD       = 'e'; // Clear EEPROM settings     -- NEW V1.1
-    public static final char QUERY_SENSOR_STATES_CMD = 'Q'; // Show all sensors -- NEW V1.2?
+    public static final char QUERY_SENSOR_STATES_CMD= 'Q'; // Show all sensors -- NEW V1.2?
+    public static final char ESTOP_ALL_CMD          = '!'; // Stops all locos on the track but leaves power on.
 
     // Special Commands not for normal use.  Diagnostic and Test Use Only
     public static final char WRITE_DCC_PACKET_MAIN  = 'M';
     public static final char WRITE_DCC_PACKET_PROG  = 'P';
     public static final char LIST_REGISTER_CONTENTS = 'L';
-    public static final char ENTER_DIAG_MODE_CMD    = 'D'; // Enter Diagnostics mode -- NEW V1.2?
+    public static final char DIAG_CMD               = 'D'; // Send various diagnostics commands
  
     // Message Replies
     public static final char THROTTLE_REPLY   = 'T'; // <T reg speed dir>
@@ -132,8 +133,9 @@ public final class DCCppConstants {
     public static final String WRITE_DCC_PACKET_MAIN_REGEX = "M\\s+(\\d+)((\\s+[0-9a-fA-F]{1,2}){2,5})\\s*"; // M REG pktbyte1 pktbyte2 pktbyte3 ?pktbyte4 ?pktbyte5
     public static final String WRITE_DCC_PACKET_PROG_REGEX = "P\\s+(\\d+)((\\s+[0-9a-fA-F]{1,2}){2,5})\\s*"; // P REG pktbyte1 pktbyte2 pktbyte3 ?pktbyte4 ?pktbyte5
     public static final String LIST_REGISTER_CONTENTS_REGEX = "\\s*L\\s*";
-    public static final String ENTER_DIAG_MODE_REGEX = "\\s*D\\s*";
     public static final String READ_MAXNUMSLOTS_REGEX = "\\s*#\\s*";
+    public static final String DIAG_CMD_REGEX         = "\\s*D\\s.*"; //D alone or followed by various commands
+    public static final String ESTOP_ALL_REGEX        = "\\s*!"; 
 
     // Reply Regexes
     public static final String THROTTLE_REPLY_REGEX =      "\\s*T\\s*(\\d+)\\s+([-]*\\d+)\\s+([1,0]).*";

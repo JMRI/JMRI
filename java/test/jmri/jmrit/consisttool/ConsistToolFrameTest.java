@@ -163,7 +163,7 @@ public class ConsistToolFrameTest {
         to.getQueueTool().waitEmpty();  // pause for frame to close
         
         cs.requestClose();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+        cs.getQueueTool().waitEmpty();  // pause for frame to close
     }
 
     @Test

@@ -540,6 +540,14 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
+    public void testEStopAllMsg() {
+        msg = DCCppMessage.makeEmergencyStopAllMsg();
+        log.debug("eStop All message = '{}'", msg);
+        Assert.assertEquals("length", 1, msg.getNumDataElements());
+        Assert.assertEquals("0th byte", '!', msg.getElement(0) & 0xFF);
+    }
+
+    @Test
     public void testMonitorStringAddressedEmergencyStopMsg() {
         msg = DCCppMessage.makeAddressedEmergencyStop(5, 24);
         Assert.assertEquals("Monitor string", "Throttle Cmd: Register: 5, Address: 24, Speed: -1, Direction: Forward", msg.toMonitorString());

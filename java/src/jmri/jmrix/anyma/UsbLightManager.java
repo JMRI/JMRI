@@ -43,16 +43,14 @@ public class UsbLightManager extends AbstractLightManager {
      * <p>
      * Assumes calling method has checked that a Light with this system name
      * does not already exist.
-     *
-     * @param systemName the system name to use for this light
-     * @param userName   the user name to use for this light
-     * @return null if the system name is not in a valid format or if the system
+     * {@inheritDoc}
+     * @throws IllegalArgumentException if the system name is not in a valid format or if the system
      *         name does not correspond to a valid channel
      */
     @Override
-    public Light createNewLight(@Nonnull String systemName, String userName) {
+    @Nonnull
+    public Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         log.debug("*    UsbLightManager.createNewLight() called");
-        Light result = null;    // assume failure
 
         int nAddress = getMemo().getNodeAddressFromSystemName(systemName);
         if (nAddress != -1) {
@@ -61,18 +59,21 @@ public class UsbLightManager extends AbstractLightManager {
                 // Validate the systemName
                 if (getMemo().validSystemNameFormat(systemName, 'L') == Manager.NameValidity.VALID) {
                     if (getMemo().validSystemNameConfig(systemName, 'L')) {
-                        result = new AnymaDMX_UsbLight(systemName, userName, getMemo());
+                        return new AnymaDMX_UsbLight(systemName, userName, getMemo());
                     } else {
                         log.warn("Light System Name does not refer to configured hardware: {}", systemName);
+                        throw new IllegalArgumentException("Light System Name " + systemName + " does not refer to configured hardware");
                     }
                 } else {
                     log.error("Invalid Light System Name format: {}", systemName);
+                    throw new IllegalArgumentException("Invalid Light System Name format: " + systemName);
                 }
             } else {
                 log.error("Invalid channel number from System Name: {}", systemName);
+                throw new IllegalArgumentException("Invalid channel number from System Name: " + systemName);
             }
         }
-        return result;
+        throw new IllegalArgumentException("Invalid Node Address from System Name: " + systemName);
     }
 
     /**
