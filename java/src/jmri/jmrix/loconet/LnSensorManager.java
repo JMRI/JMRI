@@ -91,7 +91,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     /** {@inheritDoc} */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         return new LnSensor(systemName, userName, tc, getSystemPrefix());
     }
 

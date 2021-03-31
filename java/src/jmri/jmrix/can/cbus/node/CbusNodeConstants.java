@@ -438,10 +438,10 @@ public class CbusNodeConstants {
     private static Map<Integer, String> createType44Map() {
         Map<Integer, String> result = new HashMap<>();
         result.put(1, "Pi-SPROG 3"); // NOI18N
-        result.put(2, "SPROG 3 Plus"); // NOI18N
+        result.put(2, "SPROG 3 Plus/PI-SPROG 3 Plus/Pi-SPROG 3 v2"); // NOI18N
         result.put(3, "CAN SPROG"); // NOI18N
         result.put(4, "System Booster"); // NOI18N
-        result.put(5, "Pi-SPROPG 3 Plus"); // NOI18N
+        result.put(5, "Error"); // NOI18N
         result.put(6, "CAN ISB"); // NOI18N
         return Collections.unmodifiableMap(result);
     }
@@ -592,11 +592,11 @@ public class CbusNodeConstants {
      */
     private static Map<Integer, String> createExtra44Map() {
         Map<Integer, String> result = new HashMap<>();
-        result.put(1, "no CAN bus, (firmware derived from CANCMD).");
-        result.put(2, "integrated CANISB (firmware derived from CANCMD).");
-        result.put(3, "integrated CANISB (firmware derived from CANCMD).");
+        result.put(1, "Programmer/Command Station.");
+        result.put(2, "Programmer/Command Station.");
+        result.put(3, "Programmer/Command Station.");
         result.put(4, "System booster");
-        result.put(5, "integrated CANISB (firmware derived from CANCMD).");
+        result.put(5, "Unsupported module type.");
         result.put(6, "Isolated CANUSB and CBUS node.");
         return Collections.unmodifiableMap(result);
     }   

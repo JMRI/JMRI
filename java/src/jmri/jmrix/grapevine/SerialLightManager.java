@@ -38,26 +38,27 @@ public class SerialLightManager extends AbstractLightManager {
      * <p>
      * Assumes calling method has checked that a Light with this
      * system name does not already exist.
-     *
-     * @return null if the system name is not in a valid format or if
+     * {@inheritDoc}
+     * @throws IllegalArgumentException if system name is not in valid format or
      * the system name does not correspond to a configured Grapevine
      * digital output bit
      */
     @Override
-    public Light createNewLight(@Nonnull String systemName, @Nonnull String userName) {
+    @Nonnull
+    protected Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         String prefix = getSystemPrefix();
-        Light lgt = null;
         // Validate the systemName
         if (SerialAddress.validSystemNameFormat(systemName, 'L', prefix) == NameValidity.VALID) {
-            lgt = new SerialLight(systemName, userName, getMemo());
+            Light lgt = new SerialLight(systemName, userName, getMemo());
             if (!SerialAddress.validSystemNameConfig(systemName, 'L', getMemo().getTrafficController())) {
                 log.warn("Light system Name does not refer to configured hardware: {}", systemName);
             }
+            log.debug("new light {} for prefix {}", systemName, prefix);
+            return lgt;
         } else {
             log.warn("Invalid Light system Name format: {}", systemName);
+            throw new IllegalArgumentException("Invalid Light system Name format: " + systemName);
         }
-        log.debug("new light {} for prefix {}", systemName, prefix);
-        return lgt;
     }
 
     /**
@@ -90,7 +91,7 @@ public class SerialLightManager extends AbstractLightManager {
 
     /**
      * Public method to convert system name to its alternate format.
-     *
+     * {@inheritDoc}
      * @return a normalized system name if system name is valid and has a valid
      * alternate representation, else return ""
      */

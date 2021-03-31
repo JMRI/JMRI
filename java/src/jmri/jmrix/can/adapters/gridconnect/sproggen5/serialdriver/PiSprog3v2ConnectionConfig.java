@@ -4,14 +4,10 @@ package jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver;
  * Definition of objects to handle configuring a layout connection via a SPROG 
  * Generation 5 SerialDriverAdapter object.
  *
- * Deprecated in 4.23 - not going ahead with this hardware
- * 
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @author Andrew Crosland 2008
- * @author Andrew Crosland 2019
+ * @author Andrew Crosland Copyright (C) 2008, 2019, 2021
  */
-@Deprecated
-public class CanSprogConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
+public class PiSprog3v2ConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
 
     /**
      * Create a connection configuration with a preexisting adapter. This is
@@ -20,7 +16,7 @@ public class CanSprogConnectionConfig extends jmri.jmrix.can.adapters.Connection
      *
      * @param p the adapter to create a connection configuration for
      */
-    public CanSprogConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
+    public PiSprog3v2ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
     }
 
@@ -29,13 +25,13 @@ public class CanSprogConnectionConfig extends jmri.jmrix.can.adapters.Connection
      * Ctor for a connection configuration with no preexisting adapter.
      * {@link #setInstance()} will fill the adapter member.
      */
-    public CanSprogConnectionConfig() {
+    public PiSprog3v2ConnectionConfig() {
         super();
     }
 
     @Override
     public String name() {
-        return Bundle.getMessage("CanSprogTitle");
+        return Bundle.getMessage("PiSprog3v2Title");
     }
 
     public boolean isOptList2Advanced() {
@@ -48,7 +44,7 @@ public class CanSprogConnectionConfig extends jmri.jmrix.can.adapters.Connection
     @Override
     protected void setInstance() {
         if (adapter == null) {
-            adapter = new CanSprogSerialDriverAdapter();
+            adapter = new PiSprog3v2SerialDriverAdapter();
         }
     }
 
