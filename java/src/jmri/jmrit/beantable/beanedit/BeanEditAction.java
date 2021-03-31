@@ -281,10 +281,10 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
         for (BeanItemPanel bi : bei) {
             bi.resetField();
         }
+        persistSelectedTab(); // use persistence unless specified by overriding class
         if (selectedTab != null) {
             detailsTab.setSelectedComponent(selectedTab);
         }
-        persistSelectedTab(); // use persistence after 1st load
         f.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
