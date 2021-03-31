@@ -111,9 +111,20 @@
                 <li></li>
             </ul>
 
-        <h4><a href="http://openlcb.org">OpenLCB</a></h4>
+        <h4><a href="http://openlcb.org">OpenLCB / LCC</a></h4>
             <ul>
                 <li>Simulated Connections - Output Interval option added to Additional Connection Settings.</li>
+		<li>Configuration editor functional and visual updates:
+		<ul>
+			<li>If a configuration window is closed with unsaved changes, a warning dialog will appear.</li>
+			<li>Updated fonts and geometric arrangement to make the dialog easier to oversee.</li>
+			<li>The dialog will open with all segments closed to reduce clutter and ease navigation.</li>
+			<li>Fixed bug in resizing the window.</li>
+			<li>Accessibility updates: the segment headers are now part of tab order and can collapse/expand on enter or space key.</li>
+			
+		</ul>
+		</li>
+		<li>JMRI will now respond to the Global Identify Events message as the standard requires.</li>
             </ul>
 
         <h4>RFID</h4>
