@@ -179,7 +179,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
         boolean ret = false;
         try {
             //command stations starting with 3 can handle reads with startVals
-            ret = (jmri.Version.compareCanonicalVersions(version, "3.0.0") > 0);
+            ret = (jmri.Version.compareCanonicalVersions(version, "3.0.0") >= 0);
         } catch (IllegalArgumentException ignore) {
         }
         return ret;  
