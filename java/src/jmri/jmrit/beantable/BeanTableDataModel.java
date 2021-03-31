@@ -708,14 +708,16 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             }
             
             /**
-             * Disable windows key being pressed as a go for editing a cell,
-             * causes unexpected behaviour, i.e. button presses.
+             * Disable Windows Key or Mac Meta Keys being pressed acting
+             * as a trigger for editing the focused cell.
+             * Causes unexpected behaviour, i.e. button presses.
              * {@inheritDoc}
              */
             @Override
             public boolean editCellAt(int row, int column, EventObject e) {
                 if (e instanceof KeyEvent) {
-                    if ( ((KeyEvent) e).getKeyCode() == KeyEvent.VK_WINDOWS ) {
+                    if ( ((KeyEvent) e).getKeyCode() == KeyEvent.VK_WINDOWS
+                        || ( (KeyEvent) e).getKeyCode() == KeyEvent.VK_META ) {
                         return false;
                     }
                 }
