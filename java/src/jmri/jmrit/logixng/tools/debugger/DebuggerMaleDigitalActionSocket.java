@@ -32,53 +32,53 @@ public class DebuggerMaleDigitalActionSocket extends AbstractDebuggerMaleSocket 
     @Override
     public void execute() throws JmriException {
         before();
-        ((MaleDigitalActionSocket) _maleSocket).execute();
+        ((MaleDigitalActionSocket)getObject()).execute();
         after();
     }
 
     @Override
     public void setState(int s) throws JmriException {
-        ((MaleDigitalActionSocket) _maleSocket).setState(s);
+        ((MaleDigitalActionSocket)getObject()).setState(s);
     }
 
     @Override
     public int getState() {
-        return ((MaleDigitalActionSocket) _maleSocket).getState();
+        return ((MaleDigitalActionSocket)getObject()).getState();
     }
 
     @Override
     public String describeState(int state) {
-        return ((MaleDigitalActionSocket) _maleSocket).describeState(state);
+        return ((MaleDigitalActionSocket)getObject()).describeState(state);
     }
 
     @Override
     public void setProperty(String key, Object value) {
-        ((MaleDigitalActionSocket) _maleSocket).setProperty(key, value);
+        ((MaleDigitalActionSocket)getObject()).setProperty(key, value);
     }
 
     @Override
     public Object getProperty(String key) {
-        return ((MaleDigitalActionSocket) _maleSocket).getProperty(key);
+        return ((MaleDigitalActionSocket)getObject()).getProperty(key);
     }
 
     @Override
     public void removeProperty(String key) {
-        ((MaleDigitalActionSocket) _maleSocket).removeProperty(key);
+        ((MaleDigitalActionSocket)getObject()).removeProperty(key);
     }
 
     @Override
     public Set<String> getPropertyKeys() {
-        return ((MaleDigitalActionSocket) _maleSocket).getPropertyKeys();
+        return ((MaleDigitalActionSocket)getObject()).getPropertyKeys();
     }
 
     @Override
     public String getBeanType() {
-        return ((MaleDigitalActionSocket) _maleSocket).getBeanType();
+        return ((MaleDigitalActionSocket)getObject()).getBeanType();
     }
 
     @Override
     public int compareSystemNameSuffix(String suffix1, String suffix2, NamedBean n2) {
-        return ((MaleDigitalActionSocket) _maleSocket).compareSystemNameSuffix(suffix1, suffix2, n2);
+        return ((MaleDigitalActionSocket)getObject()).compareSystemNameSuffix(suffix1, suffix2, n2);
     }
     
 }

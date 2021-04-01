@@ -47,7 +47,7 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Execute A after 0 milli seconds. Ignore on repeat ::: Log error%n" +
+                "Execute A after 0 milliseconds. Ignore on repeat ::: Log error%n" +
                 "   ! A%n" +
                 "      Socket not connected%n");
     }
@@ -58,7 +58,7 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Execute A after 0 milli seconds. Ignore on repeat ::: Log error%n" +
+                "         Execute A after 0 milliseconds. Ignore on repeat ::: Log error%n" +
                 "            ! A%n" +
                 "               Socket not connected%n");
     }
@@ -105,7 +105,7 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
         ExecuteDelayed a1 = new ExecuteDelayed("IQDA321", null);
         Assert.assertEquals("strings are equal", "Execute delayed", a1.getShortDescription());
         ExecuteDelayed a2 = new ExecuteDelayed("IQDA321", null);
-        Assert.assertEquals("strings are equal", "Execute A after 0 milli seconds. Ignore on repeat", a2.getLongDescription());
+        Assert.assertEquals("strings are equal", "Execute A after 0 milliseconds. Ignore on repeat", a2.getLongDescription());
         a2.setDelay(26);
         a2.setUnit(TimerUnit.Minutes);
         a2.setResetIfAlreadyStarted(true);

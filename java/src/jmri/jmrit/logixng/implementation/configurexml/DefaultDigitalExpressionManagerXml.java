@@ -32,12 +32,6 @@ public class DefaultDigitalExpressionManagerXml extends AbstractManagerXml {
     public DefaultDigitalExpressionManagerXml() {
     }
 
-    private DigitalExpressionBean getExpression(DigitalExpressionBean expression) throws IllegalAccessException, IllegalArgumentException, NoSuchFieldException {
-        Field f = expression.getClass().getDeclaredField("_expression");
-        f.setAccessible(true);
-        return (DigitalExpressionBean) f.get(expression);
-    }
-    
     /**
      * Default implementation for storing the contents of a LogixManager
      *
@@ -62,15 +56,15 @@ public class DefaultDigitalExpressionManagerXml extends AbstractManagerXml {
                         elements.add(storeMaleSocket(a));
                         a = (MaleDigitalExpressionSocket) a.getObject();
                     }
-                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(getExpression(a));
+                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(a.getObject());
                     if (e != null) {
                         for (Element ee : elements) e.addContent(ee);
 //                        e.addContent(storeMaleSocket(a));
                         expressions.addContent(e);
                     } else {
-                        throw new RuntimeException("Cannot load xml configurator for " + getExpression(a).getClass().getName());
+                        throw new RuntimeException("Cannot load xml configurator for " + a.getObject().getClass().getName());
                     }
-                } catch (RuntimeException | IllegalAccessException | NoSuchFieldException e) {
+                } catch (RuntimeException e) {
                     log.error("Error storing action: {}", e, e);
                 }
             }

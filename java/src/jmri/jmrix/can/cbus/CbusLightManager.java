@@ -45,8 +45,9 @@ public class CbusLightManager extends AbstractLightManager {
      *
      * @return never null
      */
+    @Nonnull
     @Override
-    protected Light createNewLight(@Nonnull String systemName, String userName) {
+    protected Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         String addr;
         // first, check validity
         try {            
@@ -137,7 +138,7 @@ public class CbusLightManager extends AbstractLightManager {
      */
     @Override
     public String getEntryToolTip() {
-        return Bundle.getMessage("AddOutputEntryToolTip");
+        return Bundle.getMessage("AddCbusLightEntryToolTip");
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusLightManager.class);

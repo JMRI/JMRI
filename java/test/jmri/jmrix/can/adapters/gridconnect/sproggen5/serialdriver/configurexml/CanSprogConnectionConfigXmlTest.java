@@ -11,8 +11,11 @@ import org.junit.jupiter.api.*;
  *
  * Test for the CanSprogConnectionConfigXml class
  *
+ * Deprecated in 4.23 - not going ahead with this hardware
+ * 
  * @author   Andrew Crosland  Copyright (C) 2020
  */
+@Deprecated
 public class CanSprogConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
 
     @Test

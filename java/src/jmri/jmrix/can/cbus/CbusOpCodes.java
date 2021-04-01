@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * Methods to decode CBUS opcodes
  *
  * https://github.com/MERG-DEV/CBUSlib
- * @author Andrew Crosland Copyright (C) 2009
+ * @author Andrew Crosland Copyright (C) 2009, 2021
  * @author Steve Young (C) 2018
  */
 public class CbusOpCodes {
@@ -329,7 +329,7 @@ public class CbusOpCodes {
      * <p>
      * TOF, TON, ESTOP, RTOF, RTON, RESTP, KLOC, QLOC, DKEEP,
      * RLOC, QCON, ALOC, STMOD, PCON, KCON, DSPD, DFLG, DFNON, DFNOF, SSTAT,
-     * DFUN, GLOC, ERR, RDCC3, WCVO, WCVB, QCVS, PCVS, RDCC4, WCVS,
+     * DFUN, GLOC, ERR, RDCC3, WCVO, WCVB, QCVS, PCVS, RDCC4, WCVS, VCVS,
      * RDCC5, WCVOA, RDCC6, PLOC, STAT, RSTAT
      * 
      * @param opc CBUS op code

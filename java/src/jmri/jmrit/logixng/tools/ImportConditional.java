@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.tools;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnull;
 
@@ -175,9 +176,11 @@ public class ImportConditional {
     
     private void buildExpression(DigitalExpressionBean expression, List<ConditionalVariable> conditionalVariables)
             throws SocketAlreadyConnectedException, JmriException {
+        
         for (int i=0; i < conditionalVariables.size(); i++) {
             jmri.ConditionalVariable cv = conditionalVariables.get(i);
             NamedBean nb = cv.getBean();
+            AtomicBoolean isNegated = new AtomicBoolean(cv.isNegated());
             DigitalExpressionBean newExpression;
             switch (cv.getType().getItemType()) {
                 case SENSOR:
@@ -198,11 +201,11 @@ public class ImportConditional {
                     break;
                 case SIGNALHEAD:
                     SignalHead s = (SignalHead)nb;
-                    newExpression = getSignalHeadExpression(cv, s);
+                    newExpression = getSignalHeadExpression(cv, s, isNegated);
                     break;
                 case SIGNALMAST:
                     SignalMast sm = (SignalMast)nb;
-                    newExpression = getSignalMastExpression(cv, sm);
+                    newExpression = getSignalMastExpression(cv, sm, isNegated);
                     break;
                 case ENTRYEXIT:
                     DestinationPoints dp = (DestinationPoints)nb;
@@ -230,8 +233,25 @@ public class ImportConditional {
             }
             
             if (newExpression != null) {
+                
+                boolean doTriggerActions = cv.doTriggerActions();
+                
+                if (isNegated.get()) {  // Some expressions have already handled Not
+                    Not notExpression = new Not(InstanceManager.getDefault(DigitalExpressionManager.class)
+                            .getAutoSystemName(), null);
+
+                    if (!_dryRun) {
+                        MaleSocket newExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(newExpression);
+                        newExpressionSocket.setListen(doTriggerActions);
+                        doTriggerActions = true;    // We don't want the Not expression to disable listen.
+                        notExpression.getChild(0).connect(newExpressionSocket);
+                    }
+                    newExpression = notExpression;
+                }
+                
                 if (!_dryRun) {
                     MaleSocket newExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(newExpression);
+                    newExpressionSocket.setListen(doTriggerActions);
                     expression.getChild(i).connect(newExpressionSocket);
                 }
             } else {
@@ -521,7 +541,10 @@ public class ImportConditional {
     }
     
     
-    private DigitalExpressionBean getSignalHeadExpression(@Nonnull ConditionalVariable cv, SignalHead s) throws JmriException {
+    private DigitalExpressionBean getSignalHeadExpression(
+            @Nonnull ConditionalVariable cv, SignalHead s, AtomicBoolean isNegated)
+            throws JmriException {
+        
         ExpressionSignalHead expression =
                 new ExpressionSignalHead(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
@@ -529,7 +552,7 @@ public class ImportConditional {
         expression.setSignalHead(s);
         
         ExpressionSignalHead.QueryType appearence =
-                cv.isNegated() ? ExpressionSignalHead.QueryType.NotAppearance
+                isNegated.get() ? ExpressionSignalHead.QueryType.NotAppearance
                 : ExpressionSignalHead.QueryType.Appearance;
         
         switch (cv.getType()) {
@@ -570,10 +593,10 @@ public class ImportConditional {
                 expression.setAppearance(SignalHead.FLASHLUNAR);
                 break;
             case SIGNAL_HEAD_LIT:
-                expression.setQueryType(cv.isNegated() ? ExpressionSignalHead.QueryType.NotLit : ExpressionSignalHead.QueryType.Lit);
+                expression.setQueryType(isNegated.get() ? ExpressionSignalHead.QueryType.NotLit : ExpressionSignalHead.QueryType.Lit);
                 break;
             case SIGNAL_HEAD_HELD:
-                expression.setQueryType(cv.isNegated() ? ExpressionSignalHead.QueryType.NotHeld : ExpressionSignalHead.QueryType.Held);
+                expression.setQueryType(isNegated.get() ? ExpressionSignalHead.QueryType.NotHeld : ExpressionSignalHead.QueryType.Held);
                 break;
             default:
                 throw new InvalidConditionalVariableException(
@@ -582,11 +605,16 @@ public class ImportConditional {
         
         expression.setTriggerOnChange(cv.doTriggerActions());
         
+        isNegated.set(false);   // We have already handled this
+        
         return expression;
     }
     
     
-    private DigitalExpressionBean getSignalMastExpression(@Nonnull ConditionalVariable cv, SignalMast sm) throws JmriException {
+    private DigitalExpressionBean getSignalMastExpression(
+            @Nonnull ConditionalVariable cv, SignalMast sm, AtomicBoolean isNegated)
+            throws JmriException {
+        
         ExpressionSignalMast expression =
                 new ExpressionSignalMast(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
@@ -594,7 +622,7 @@ public class ImportConditional {
         expression.setSignalMast(sm);
         
         ExpressionSignalMast.QueryType aspect =
-                cv.isNegated() ? ExpressionSignalMast.QueryType.NotAspect
+                isNegated.get() ? ExpressionSignalMast.QueryType.NotAspect
                 : ExpressionSignalMast.QueryType.Aspect;
         
         switch (cv.getType()) {
@@ -603,10 +631,10 @@ public class ImportConditional {
                 expression.setAspect(cv.getDataString());
                 break;
             case SIGNAL_MAST_LIT:
-                expression.setQueryType(cv.isNegated() ? ExpressionSignalMast.QueryType.NotLit : ExpressionSignalMast.QueryType.Lit);
+                expression.setQueryType(isNegated.get() ? ExpressionSignalMast.QueryType.NotLit : ExpressionSignalMast.QueryType.Lit);
                 break;
             case SIGNAL_MAST_HELD:
-                expression.setQueryType(cv.isNegated() ? ExpressionSignalMast.QueryType.NotHeld : ExpressionSignalMast.QueryType.Held);
+                expression.setQueryType(isNegated.get() ? ExpressionSignalMast.QueryType.NotHeld : ExpressionSignalMast.QueryType.Held);
                 break;
             default:
                 throw new InvalidConditionalVariableException(
@@ -614,6 +642,8 @@ public class ImportConditional {
         }
         
         expression.setTriggerOnChange(cv.doTriggerActions());
+        
+        isNegated.set(false);   // We have already handled this
         
         return expression;
     }
@@ -789,19 +819,27 @@ public class ImportConditional {
                 
                 String sNumber = ca.getActionString();
                 try {
-                    float time = Float.parseFloat(sNumber);
-                    delayedAction.setDelay((int) (time * 1000));
+                    int time = Integer.parseInt(sNumber);
+                    delayedAction.setDelay(time);
+                    delayedAction.setUnit(TimerUnit.Seconds);
                 } catch (NumberFormatException e) {
-                    // If here, assume that sNumber has the name of a memory
-                    if (sNumber.charAt(0) == '@') {
-                        sNumber = sNumber.substring(1);
+                    try {
+                        float time = Float.parseFloat(sNumber);
+                        delayedAction.setDelay((int) (time * 1000));
+                        delayedAction.setUnit(TimerUnit.MilliSeconds);
+                    } catch (NumberFormatException e2) {
+                        // If here, assume that sNumber has the name of a memory.
+                        // Logix supports this memory to have a floating point value
+                        // but LogixNG requires this memory to have an integer value.
+                        if (sNumber.charAt(0) == '@') {
+                            sNumber = sNumber.substring(1);
+                        }
+                        delayedAction.setDelayAddressing(NamedBeanAddressing.Reference);
+                        delayedAction.setDelayReference("{" + sNumber + "}");
+                        delayedAction.setUnit(TimerUnit.Seconds);
                     }
-                    delayedAction.setDelayAddressing(NamedBeanAddressing.Reference);
-                    delayedAction.setDelayReference("{" + sNumber + "}");
                 }
                 
-                delayedAction.setDelay(0);
-                delayedAction.setUnit(TimerUnit.MilliSeconds);
                 delayedAction.setResetIfAlreadyStarted(ca.getType() == Conditional.Action.RESET_DELAYED_SENSOR);
                 if (!_dryRun) {
                     MaleSocket subActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
@@ -872,19 +910,27 @@ public class ImportConditional {
                 
                 String sNumber = ca.getActionString();
                 try {
-                    float time = Float.parseFloat(sNumber);
-                    delayedAction.setDelay((int) (time * 1000));
+                    int time = Integer.parseInt(sNumber);
+                    delayedAction.setDelay(time);
+                    delayedAction.setUnit(TimerUnit.Seconds);
                 } catch (NumberFormatException e) {
-                    // If here, assume that sNumber has the name of a memory
-                    if (sNumber.charAt(0) == '@') {
-                        sNumber = sNumber.substring(1);
+                    try {
+                        float time = Float.parseFloat(sNumber);
+                        delayedAction.setDelay((int) (time * 1000));
+                        delayedAction.setUnit(TimerUnit.MilliSeconds);
+                    } catch (NumberFormatException e2) {
+                        // If here, assume that sNumber has the name of a memory.
+                        // Logix supports this memory to have a floating point value
+                        // but LogixNG requires this memory to have an integer value.
+                        if (sNumber.charAt(0) == '@') {
+                            sNumber = sNumber.substring(1);
+                        }
+                        delayedAction.setDelayAddressing(NamedBeanAddressing.Reference);
+                        delayedAction.setDelayReference("{" + sNumber + "}");
+                        delayedAction.setUnit(TimerUnit.Seconds);
                     }
-                    delayedAction.setDelayAddressing(NamedBeanAddressing.Reference);
-                    delayedAction.setDelayReference("{" + sNumber + "}");
                 }
                 
-                delayedAction.setDelay(0);
-                delayedAction.setUnit(TimerUnit.MilliSeconds);
                 delayedAction.setResetIfAlreadyStarted(ca.getType() == Conditional.Action.RESET_DELAYED_TURNOUT);
                 if (!_dryRun) {
                     MaleSocket subActionSocket = InstanceManager.getDefault(DigitalActionManager.class)

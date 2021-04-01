@@ -39,6 +39,7 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.UserPreferencesManager;
+import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
@@ -65,16 +66,21 @@ import jmri.util.JmriJFrame;
  * @author Matthew Harris copyright (c) 2009 (LogixTableAction)
  * @author Dave Sand copyright (c) 2017 (LogixTableAction)
  * @author Daniel Bergqvist copyright (c) 2019 (AbstractLogixNGTableEditor)
- * 
+ *
  * @param <E> the type of NamedBean supported by this model
  */
 public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends AbstractTableAction<E> {
 
-    
+
     private static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.logixng.LogixNGBundle");
-    
+
+    // Browser Options
+    static final String PRINT_ERROR_HANDLING_OPTION = "jmri.jmrit.logixng.ErrorHandling";
+    static final String PRINT_NOT_CONNECTED_OPTION = "jmri.jmrit.logixng.NotConnectedSockets";
+    static final String PRINT_LOCAL_VARIABLES_OPTION = "jmri.jmrit.logixng.LocalVariables";
+
     JTextArea _textContent;
-    
+
     /**
      * Create a AbstractLogixNGTableAction instance.
      *
@@ -87,28 +93,24 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     }
 
     protected abstract AbstractLogixNGEditor<E> getEditor(BeanTableFrame<E> f, BeanTableDataModel<E> m, String sName);
-    
+
     @Nonnull
     @Override
     protected abstract Manager<E> getManager();
-    
+
     protected abstract void enableAll(boolean enable);
-    
+
     protected abstract void setEnabled(E bean, boolean enable);
-    
+
     protected abstract boolean isEnabled(E bean);
-    
+
     protected abstract E createBean(String userName);
-    
+
     protected abstract E createBean(String systemName, String userName);
-    
+
     protected abstract void deleteBean(E bean);
-    
+
     protected abstract String getBeanText(E bean);
-    
-    protected JPanel getSettingsPanel() {
-        return null;
-    }
 
     // ------------ Methods for LogixNG Table Window ------------
 
@@ -540,6 +542,8 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     protected E _curNamedBean = null;
     int conditionalRowNumber = 0;
 
+    protected final Base.PrintTreeSettings _printTreeSettings = new Base.PrintTreeSettings();
+
     // Add E Variables
     JmriJFrame addLogixNGFrame = null;
     JTextField _systemName = new JTextField(20);
@@ -669,7 +673,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             @Override
             public void run() {
                 log.error("Copy LogixNG is not implemented yet");
-                
+
                 // This may or may not work. It's not tested yet.
                 // Disable for now.
                 if (1==0) {
@@ -704,7 +708,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
      * @param e the event heard
      */
     void copyLogixNGPressed(ActionEvent e) {
-/*        
+/*
         String uName = _addUserName.getText().trim();
         if (uName.length() == 0) {
             uName = null;
@@ -940,18 +944,18 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         // Create a new bean edit view, add the listener.
         if (_editMode == EditMode.TREEEDIT) {
             _editor = getEditor(f, m, sName);
-            
+
             if (_editor == null) return;    // Editor not implemented yet for LogixNG Tables
-            
+
             _inEditMode = true;
-            
+
             _editor.addEditorEventListener((data) -> {
                 String lgxName = sName;
                 data.forEach((key, value) -> {
                     if (key.equals("Finish")) {                  // NOI18N
                         _editor = null;
                         _inEditMode = false;
-                        
+
 //                        _curLogixNG.setEnabled(true);
 //                        _curLogixNG.getConditionalNG(0).setEnabled(true);
 //                        log.warn("zxc Enable LogixNG: {}", _curLogixNG.getSystemName());
@@ -1007,7 +1011,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         if (!checkFlags(sName)) {
             return;
         }
-        
+
         final E x = getManager().getBySystemName(sName);
         final jmri.UserPreferencesManager p;
         p = jmri.InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
@@ -1143,7 +1147,17 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     void browserPressed(String sName) {
         // bean was found, create the window
         _curNamedBean = getManager().getBySystemName(sName);
+        getPrintTreeSettings();
         makeBrowserWindow();
+    }
+
+    void getPrintTreeSettings() {
+        // Set options
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+            _printTreeSettings._printErrorHandling = prefMgr.getSimplePreferenceState(PRINT_ERROR_HANDLING_OPTION);
+            _printTreeSettings._printNotConnectedSockets = prefMgr.getSimplePreferenceState(PRINT_NOT_CONNECTED_OPTION);
+            _printTreeSettings._printLocalVariables = prefMgr.getSimplePreferenceState(PRINT_LOCAL_VARIABLES_OPTION);
+        });
     }
 
     /**
@@ -1154,21 +1168,21 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             _textContent.setText(getBeanText(_curNamedBean));
         }
     }
-    
+
     /**
      * Create and initialize the conditionalNGs browser window.
      */
     void makeBrowserWindow() {
         JmriJFrame condBrowserFrame = new JmriJFrame(Bundle.getMessage("BrowserTitle"), false, true);   // NOI18N
         condBrowserFrame.addHelpMenu("package.jmri.jmrit.beantable.LogixAddEdit", true);            // NOI18N
-        
+
         condBrowserFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
                 _textContent = null;
             }
         });
-        
+
         Container contentPane = condBrowserFrame.getContentPane();
         contentPane.setLayout(new BorderLayout());
 
@@ -1197,10 +1211,10 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                     Bundle.getMessage("BrowserHelpTitle"),  // NOI18N
                     JOptionPane.INFORMATION_MESSAGE);
         });
-        
+
         JPanel settingsPanel = getSettingsPanel();
-        if (settingsPanel != null) bottomPanel.add(settingsPanel, BorderLayout.CENTER);
-        
+        bottomPanel.add(settingsPanel, BorderLayout.CENTER);
+
         JButton saveBrowse = new JButton(Bundle.getMessage("BrowserSaveButton"));   // NOI18N
         saveBrowse.setToolTipText(Bundle.getMessage("BrowserSaveButtonHint"));      // NOI18N
         bottomPanel.add(saveBrowse, BorderLayout.EAST);
@@ -1266,6 +1280,51 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         } catch (IOException e) {
             log.error("Unable to write browser content to '{}', exception: '{}'", file, e);  // NOI18N
         }
+    }
+
+    protected JPanel getSettingsPanel() {
+        JPanel checkBoxPanel = new JPanel();
+
+        JCheckBox printErrorHandling = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintErrorHandling"));
+        printErrorHandling.setSelected(_printTreeSettings._printErrorHandling);
+        printErrorHandling.addChangeListener((event) -> {
+            if (_printTreeSettings._printErrorHandling != printErrorHandling.isSelected()) {
+                _printTreeSettings._printErrorHandling = printErrorHandling.isSelected();
+                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+                    prefMgr.setSimplePreferenceState(PRINT_ERROR_HANDLING_OPTION, printErrorHandling.isSelected());
+                });
+                updateBrowserText();
+            }
+        });
+        checkBoxPanel.add(printErrorHandling);
+
+        JCheckBox printNotConnectedSockets = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintNotConnectedSocket"));
+        printNotConnectedSockets.setSelected(_printTreeSettings._printNotConnectedSockets);
+        printNotConnectedSockets.addChangeListener((event) -> {
+            if (_printTreeSettings._printNotConnectedSockets != printNotConnectedSockets.isSelected()) {
+                _printTreeSettings._printNotConnectedSockets = printNotConnectedSockets.isSelected();
+                updateBrowserText();
+                InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class).ifPresent((prefMgr) -> {
+                    prefMgr.setSimplePreferenceState(PRINT_NOT_CONNECTED_OPTION, printNotConnectedSockets.isSelected());
+                });
+            }
+        });
+        checkBoxPanel.add(printNotConnectedSockets);
+
+        JCheckBox printLocalVariables = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintLocalVariables"));
+        printLocalVariables.setSelected(_printTreeSettings._printLocalVariables);
+        printLocalVariables.addChangeListener((event) -> {
+            if (_printTreeSettings._printLocalVariables != printLocalVariables.isSelected()) {
+                _printTreeSettings._printLocalVariables = printLocalVariables.isSelected();
+                updateBrowserText();
+                InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class).ifPresent((prefMgr) -> {
+                    prefMgr.setSimplePreferenceState(PRINT_LOCAL_VARIABLES_OPTION, printLocalVariables.isSelected());
+                });
+            }
+        });
+        checkBoxPanel.add(printLocalVariables);
+
+        return checkBoxPanel;
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractLogixNGTableAction.class);

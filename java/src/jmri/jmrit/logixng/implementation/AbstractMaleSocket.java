@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.implementation;
 
+import java.beans.*;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,14 +24,177 @@ import org.slf4j.Logger;
  */
 public abstract class AbstractMaleSocket implements MaleSocket {
 
+    private final Base _object;
     protected final List<VariableData> _localVariables = new ArrayList<>();
     private final BaseManager<? extends NamedBean> _manager;
     private Base _parent;
     private ErrorHandlingType _errorHandlingType = ErrorHandlingType.LogError;
     private boolean _catchAbortExecution;
+    private boolean _listen = true;     // By default, actions and expressions listen
     
-    public AbstractMaleSocket(BaseManager<? extends NamedBean> manager) {
+    public AbstractMaleSocket(BaseManager<? extends NamedBean> manager, Base object) {
         _manager = manager;
+        _object = object;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public final Base getObject() {
+        return _object;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public final Base getRoot() {
+        return _object.getRoot();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public final Lock getLock() {
+        return _object.getLock();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public final void setLock(Lock lock) {
+        _object.setLock(lock);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public final Category getCategory() {
+        return _object.getCategory();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final boolean isExternal() {
+        return _object.isExternal();
+    }
+    
+    @Override
+    public final FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
+        return _object.getChild(index);
+    }
+
+    @Override
+    public final int getChildCount() {
+        return _object.getChildCount();
+    }
+
+    @Override
+    public final String getShortDescription(Locale locale) {
+        return _object.getShortDescription(locale);
+    }
+
+    @Override
+    public final String getLongDescription(Locale locale) {
+        return _object.getLongDescription(locale);
+    }
+
+    @Override
+    public final String getUserName() {
+        return _object.getUserName();
+    }
+
+    @Override
+    public final void setUserName(String s) throws NamedBean.BadUserNameException {
+        _object.setUserName(s);
+    }
+
+    @Override
+    public final String getSystemName() {
+        return _object.getSystemName();
+    }
+
+    @Override
+    public final void addPropertyChangeListener(PropertyChangeListener l, String name, String listenerRef) {
+        _object.addPropertyChangeListener(l, name, listenerRef);
+    }
+
+    @Override
+    public final void addPropertyChangeListener(String propertyName, PropertyChangeListener l, String name, String listenerRef) {
+        _object.addPropertyChangeListener(propertyName, l, name, listenerRef);
+    }
+
+    @Override
+    public final void addPropertyChangeListener(PropertyChangeListener l) {
+        _object.addPropertyChangeListener(l);
+    }
+
+    @Override
+    public final void addPropertyChangeListener(String propertyName, PropertyChangeListener l) {
+        _object.addPropertyChangeListener(propertyName, l);
+    }
+
+    @Override
+    public final void removePropertyChangeListener(PropertyChangeListener l) {
+        _object.removePropertyChangeListener(l);
+    }
+
+    @Override
+    public final void removePropertyChangeListener(String propertyName, PropertyChangeListener l) {
+        _object.removePropertyChangeListener(propertyName, l);
+    }
+
+    @Override
+    public final void updateListenerRef(PropertyChangeListener l, String newName) {
+        _object.updateListenerRef(l, newName);
+    }
+
+    @Override
+    public final void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
+        _object.vetoableChange(evt);
+    }
+
+    @Override
+    public final String getListenerRef(PropertyChangeListener l) {
+        return _object.getListenerRef(l);
+    }
+
+    @Override
+    public final ArrayList<String> getListenerRefs() {
+        return _object.getListenerRefs();
+    }
+
+    @Override
+    public final int getNumPropertyChangeListeners() {
+        return _object.getNumPropertyChangeListeners();
+    }
+
+    @Override
+    public final synchronized PropertyChangeListener[] getPropertyChangeListeners() {
+        return _object.getPropertyChangeListeners();
+    }
+
+    @Override
+    public final synchronized PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return _object.getPropertyChangeListeners(propertyName);
+    }
+
+    @Override
+    public final PropertyChangeListener[] getPropertyChangeListenersByReference(String name) {
+        return _object.getPropertyChangeListenersByReference(name);
+    }
+
+    @Override
+    public String getComment() {
+        return _object.getComment();
+    }
+
+    @Override
+    public void setComment(String comment) {
+        _object.setComment(comment);
+    }
+
+    public boolean getListen() {
+        return _listen;
+    }
+    
+    public void setListen(boolean listen)
+    {
+        _listen = listen;
     }
     
     public boolean getCatchAbortExecution() {
@@ -138,18 +302,28 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     /** {@inheritDoc} */
     @Override
     public final void registerListeners() {
-        registerListenersForThisClass();
-        for (int i=0; i < getChildCount(); i++) {
-            getChild(i).registerListeners();
+        if (getObject() instanceof MaleSocket) {
+            getObject().registerListeners();
+        } else {
+            if (_listen) {
+                registerListenersForThisClass();
+                for (int i=0; i < getChildCount(); i++) {
+                    getChild(i).registerListeners();
+                }
+            }
         }
     }
     
     /** {@inheritDoc} */
     @Override
     public final void unregisterListeners() {
-        unregisterListenersForThisClass();
-        for (int i=0; i < getChildCount(); i++) {
-            getChild(i).unregisterListeners();
+        if (getObject() instanceof MaleSocket) {
+            getObject().unregisterListeners();
+        } else {
+            unregisterListenersForThisClass();
+            for (int i=0; i < getChildCount(); i++) {
+                getChild(i).unregisterListeners();
+            }
         }
     }
     

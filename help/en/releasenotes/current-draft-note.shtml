@@ -23,7 +23,7 @@
             <ul>
                 <li>Fixed Internal Sensor Manager set as default, not CBUS Sensor Manager, affecting 4.19.6 onwards.</li>
                 <li>Simulated Connections - Output Interval option added to Additional Connection Settings.</li>
-                <li>DCC Programmer - Added support for hardware that supports CV read hints</li
+                <li>DCC Programmer - Added support for hardware that supports CV read hints</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -113,7 +113,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a></h4>
             <ul>
-                <li>Simulated Connections - Output Interval option added to Additional Connection Settings.</li>
+                <li></li>
             </ul>
 
         <h4>RFID</h4>
@@ -133,8 +133,7 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li>Increased maximum command station slots to 64 and added advanced connection preference to select.</li>
-                <li>Added support for current CV value hint when reading (requires a future SPROG 4.5 firmware release).</li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -164,10 +163,7 @@
 
     <h3>New / Updated decoder definitions</h3>
         <ul>
-          <li>All decoder.xsd XML validation schema from now on require an "item" attribute on each variable
-          element. It is needed to apply qualifier selections to translated definitions.<br>
-          All current decoder definitions in JMRI were updated where necessary (see below for specific ESU, LDH and
-          Zimo series).</li>
+          <li></li>
         </ul>
 
         <h4>Arnold</h4>
@@ -207,26 +203,12 @@
 
         <h4>Doehler &amp; Haas</h4>
             <ul>
-                <li>New - for all new D&amp;H definitions: decoder model (product ID) is now detected automatically thanks to the introduction of CV 261 in updated firmware.</li>
-                <li>DH05C (fw 3.12.050 - including update path from older fw versions definitions)</li>
-                <li>DH10C (fw 3.12.050 - including update path from older fw versions definitions)</li>
-                <li>DH12A (fw 3.12.050 - including update path from older fw versions definitions)</li>
-                <li>DH16A (fw 3.12.050 - including update path from older fw versions definitions)</li>
-                <li>DH18A (fw 3.12.050 - including update path from older fw versions definitions)</li>
-                <li>DH21A (fw 3.12.050 - including update path from older fw versions definitions)</li>
-                <li>DH22A (fw 3.12.050 - including update path from older fw versions definitions)</li>
-                <li>PD05A (fw 3.12.050 - including update path from older fw versions definitions)</li>
-                <li>PD12A (fw 3.12.050 - including update path from older fw versions definitions)</li>
-                <li>FH05B (fw 3.12.050 - including update path from older fw versions definitions)</li>
-                <li>FH18A (fw 3.12.050 - including update path from older fw versions definitions)</li>
-                <li>FH22A (fw 3.12.050 - including update path from older fw versions definitions)</li>
-                <li>SH05A (fw 1.14.050 - including update path from older fw versions definitions)</li>
-                <li>SH10A (fw 1.14.050 - including update path from older fw versions definitions)</li>
+                <li></li>
             </ul>
 
         <h4>ESU</h4>
             <ul>
-                <li>Missing "item" attributes were added to the v4fnOutCv and v5fnOutCv includes.</li>
+                <li></li>
             </ul>
 
         <h4>Hornby</h4>
@@ -244,10 +226,9 @@
                 <li></li>
             </ul>
 
-        <h4>LDH</h4>
+        <h4><a href="http://www.ldhtrenes.com.ar">LDH</a></h4>
             <ul>
-              <li>Missing "item" attributes were added to the v4fnOutCv and v5fnOutCv includes.<br>
-                Common CVs were moved to cv33-39mapping.xml and cv67-94speed.xml respectively.</li>
+                <li></li>
             </ul>
 
         <h4>Lenz</h4>
@@ -357,9 +338,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>MX605 (Kato type plug N sound decoder for ICE 4)</li>
-                <li>Missing "item" attributes were added to the CVSwissMapping_v36.xml include and the Decoder
-                Version was copied into CV1-CV99.xml in order to allow customization for Swiss Mapping.</li>
+                <li></li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -372,27 +351,6 @@
         <ul>
             <li></li>
         </ul>
-
-    <h3>PanelPro</h3>
-      <a id="PanelPro" name="PanelPro"></a>
-      <ul>
-        <li>The main PanelPro menu has changed.
-          <ul>
-            <li>The Load, Store, and History menu items have moved from the <strong>Panels</strong>
-            menu to the <strong>File</strong> menu.</li>
-            <li>The script related menu items have been moved to a new <strong>Scripting</strong> menu.</li>
-            <li>A <strong>Delete Panel</strong> menu item has been added to the Panels menu.</li>
-            <li>A dialog will be displayed if a second load is invoked.  The message can be suppressed using the checkbox.</li>
-            <li>When a file is loaded, the file name will be display in the JMRI System Console (Help &rArr; System Console).
-            <li>When the Close button on a panel window is clicked, a dialog will be displayed to
-            indicate that the panel has been hidden.  The message includes instructions on making the
-            panel visible and how to delete the panel.  The message can be suppressed using the checkbox.</li>
-            <li>When a panel is added, deleted or renamed, a pending update flag is set.  If PanelPro is stopped before
-            doing the <strong>Store</strong> process, a dialog will be displayed.  Select <strong>Yes</strong>
-            to store the changes before the shutdown proceeds.</li>
-          </ul>
-        </li>
-      </ul>
 
     <h3>CTC Tool</h3>
         <a id="PE-CTC" name="PE-CTC"></a>
@@ -421,7 +379,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Fix <strong>Options &rArr; Track Options &rArr; Hide Track Construction Lines</strong>.</li>
+	        <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -532,13 +490,12 @@
 
 	    <h4>Cab Signals</h4>
             <ul>
-                <li>Better set row height in table.</li>
+                <li></li>
             </ul>
 
     	<h4>Simple Signal Logic</h4>
             <ul>
-                <li>The SSL tool has been updated to include the ability to
-                <strong>delete</strong> a SSL defintion.</li>
+                <li></li>
             </ul>
 
 	    <h4>USS CTC Logic</h4>
@@ -554,19 +511,8 @@
 
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
-        <ul>            
-            <li>Function Panel now displays all functions buttons at once, with a scrollbar if required</li>
-            <li>There are as many function buttons as defined by the used throttle</li>
-            <li>Keyboard shortcuts now available on whole throttle window</li>
-            <li>Mousewheel speed control now available on whole throttle window</li>
-            <li>One mousewheel scroll unit will increment or decrement throttle speed by one speed setting increment (depends on the throttle speed step setting)</li>
-            <li>Use Ctrl key to apply a multiply factor on speed increment/decrement (x5)</li>
-            <li>Function and Control panels property panes reworked</li>
-            <li>Function button with images can be resized from control panel</li>
-            <li>Function button customizations correctly serialized</li>
-            <li>Ticks on graphical speed slider</li>
-            <li>Pressing Enter in AddressPanel when entering an address will actually request it</li>
-            <li>Jythons scripts with direct access to the JMRI UI are now deprecated (AAR105.py, RailDriver.py, USBThrottle.py, xboxThrottle.py). Use USBThrottleAsJynstrument.py script instead, or direct Jynstrument in <a href="https://github.com/JMRI/JMRI/tree/master/jython/Jynstruments/ThrottleWindowToolBar/USBThrottle.jyn">jython/Jynstruments/ThrottleWindowToolBar/USBThrottle.jyn</a> , specific drivers are proposed for AAR105 and Raildriver, they may have to be adjusted.</li>
+        <ul>
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -614,9 +560,7 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>Reduced audio buffer consumption for Diesel sounds.</li>
-            <li>Minimum time for a sub-buffer increased from 100 to 150 milliseconds.</li>
-            <li>Fixed bug with last accel-limit values less than 100 in config.xml.</li>
+            <li></li>
         </ul>
 
     <h3>Miscellaneous</h3>
@@ -624,3 +568,4 @@
         <ul>
             <li></li>
         </ul>
+
