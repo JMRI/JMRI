@@ -370,7 +370,6 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
 
         // Add some entry pattern checking, before assembling sName and handing it to the ReporterManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameReporter"));
-        String errorMessage;
         String uName = userNameTextField.getText();
         for (int x = 0; x < numberOfReporters; x++) {
             try {

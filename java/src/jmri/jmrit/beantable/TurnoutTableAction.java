@@ -476,9 +476,6 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
         // Add some entry pattern checking, before assembling sName and handing it to the TurnoutManager
         StringBuilder statusMessage = new StringBuilder(Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameTurnout")));
-
-        String errorMessage;
-
         String lastSuccessfulAddress;
 
         int iType = 0;
@@ -517,8 +514,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                                 Bundle.getMessage("ButtonYesPlus")}, Bundle.getMessage("ButtonNo")); // default choice = No
                     if (selectedValue == 1) {
                         // Show error message in statusBarLabel
-                        errorMessage = Bundle.getMessage("WarningOverlappingAddress", sName);
-                        statusBarLabel.setText(errorMessage);
+                        statusBarLabel.setText(Bundle.getMessage("WarningOverlappingAddress", sName));
                         statusBarLabel.setForeground(Color.gray);
                         return;   // return without creating if "No" response
                     }
@@ -547,8 +543,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             if (iNum == 0) {
                 // User specified more bits, but bits are not available - return without creating
                 // Display message in statusBarLabel
-                errorMessage = Bundle.getMessage("WarningBitsNotSupported", lastSuccessfulAddress);
-                statusBarLabel.setText(errorMessage);
+                statusBarLabel.setText(Bundle.getMessage("WarningBitsNotSupported", lastSuccessfulAddress));
                 statusBarLabel.setForeground(Color.red);
                 return;
             } else {
