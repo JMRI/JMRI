@@ -198,7 +198,6 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
 
         // Add some entry pattern checking, before assembling sName and handing it to the SensorManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameSensor"));
-        String errorMessage;
         for (int x = 0; x < numberOfSensors; x++) {
             log.debug("b4 next valid addr for prefix {} conn choice mgr {}",sensorPrefix,connectionChoice);
             try {
