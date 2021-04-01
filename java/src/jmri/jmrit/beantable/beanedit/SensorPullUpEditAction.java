@@ -22,16 +22,11 @@ public class SensorPullUpEditAction extends BeanEditAction<Sensor> {
     } // NOI18N
 
     @Override
-    public String getBeanType() {
-        return Bundle.getMessage("BeanNameSensor");
-    }
-
-    @Override
     public Sensor getByUserName(String name) {
         return InstanceManager.sensorManagerInstance().getByUserName(name);
     }
 
-    JComboBox<Sensor.PullResistance> sensorPullUpComboBox = new JComboBox<Sensor.PullResistance>(Sensor.PullResistance.values());
+    JComboBox<Sensor.PullResistance> sensorPullUpComboBox = new JComboBox<>(Sensor.PullResistance.values());
 
     @Override
     protected void initPanels() {

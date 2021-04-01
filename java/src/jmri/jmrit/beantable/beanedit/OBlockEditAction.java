@@ -56,11 +56,6 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
     }
 
     @Override
-    public String getBeanType() {
-        return Bundle.getMessage("BeanNameOBlock");
-    }
-
-    @Override
     public OBlock getByUserName(String name) {
         return InstanceManager.getDefault(OBlockManager.class).getByUserName(name);
     }
