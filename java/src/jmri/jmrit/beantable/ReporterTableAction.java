@@ -391,11 +391,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 r = reporterManager.provideReporter(rName);
             } catch (IllegalArgumentException ex) {
                 // user input no good
-                handleCreateException(rName); // displays message dialog to the user
-                // add to statusBarLabel as well
-                errorMessage = Bundle.getMessage("WarningInvalidEntry");
-                statusBarLabel.setText(errorMessage);
-                statusBarLabel.setForeground(Color.red);
+                handleCreateException(ex, rName); // displays message dialog to the user
                 return; // without creating
             }
 
@@ -462,9 +458,11 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         hardwareAddressValidator.verify(hardwareAddressTextField);
     }
 
-    void handleCreateException(String sysName) {
+    void handleCreateException(Exception ex, String sysName) {
+        statusBarLabel.setText(ex.getLocalizedMessage());
+        statusBarLabel.setForeground(Color.red);
         JOptionPane.showMessageDialog(addFrame,
-                Bundle.getMessage("ErrorReporterAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
+                Bundle.getMessage("ErrorReporterAddFailed", sysName) + "\n" + ex.getLocalizedMessage(),
                 Bundle.getMessage("ErrorTitle"),
                 JOptionPane.ERROR_MESSAGE);
     }

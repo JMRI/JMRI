@@ -560,10 +560,6 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                 } catch (IllegalArgumentException ex) {
                     // user input no good
                     handleCreateException(ex, sName); // displays message dialog to the user
-                    // add to statusBarLabel as well
-                    errorMessage = Bundle.getMessage("WarningInvalidEntry");
-                    statusBarLabel.setText(errorMessage);
-                    statusBarLabel.setForeground(Color.red);
                     return; // without creating
                 }
                 if ((uName != null) && !uName.isEmpty()) {
@@ -650,18 +646,18 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
     void handleCreateException(Exception ex, String sysName) {
         if (ex.getMessage() != null) {
+            statusBarLabel.setText(ex.getLocalizedMessage());
             JOptionPane.showMessageDialog(addFrame,
-                    ex.getMessage(),
+                    ex.getLocalizedMessage(),
                     Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
         } else {
+            statusBarLabel.setText(Bundle.getMessage("WarningInvalidRange"));
             JOptionPane.showMessageDialog(addFrame,
                     Bundle.getMessage("ErrorTurnoutAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                     Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
         }
-        // provide feedback to uName
-        statusBarLabel.setText(Bundle.getMessage("WarningInvalidRange"));
         statusBarLabel.setForeground(Color.red);
     }
 

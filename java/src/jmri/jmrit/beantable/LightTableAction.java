@@ -548,8 +548,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
     }
 
     void handleCreateException(Exception ex, String sysName) {
+        status1.setText(ex.getLocalizedMessage());
         JOptionPane.showMessageDialog(addFrame,
-                Bundle.getMessage("ErrorLightAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
+                Bundle.getMessage("ErrorLightAddFailed", sysName) + "\n" + ex.getLocalizedMessage(),
                 Bundle.getMessage("ErrorTitle"),
                 JOptionPane.ERROR_MESSAGE);
     }
