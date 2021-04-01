@@ -258,9 +258,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
             if (m != null) {
                 r = generateReply(m);
                 writeReply(r);
-                if (log.isDebugEnabled() && r != null) {
-                    log.debug("Simulator Thread sent Reply: \"{}\"", r);
-                }
+                log.debug("Simulator Thread sent Reply: \"{}\"", r);
             }
         }
     }
