@@ -460,10 +460,10 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
     void handleCreateException(Exception ex, String sysName) {
         statusBarLabel.setText(ex.getLocalizedMessage());
         statusBarLabel.setForeground(Color.red);
-        JOptionPane.showMessageDialog(addFrame,
-                Bundle.getMessage("ErrorReporterAddFailed", sysName) + "\n" + ex.getLocalizedMessage(),
-                Bundle.getMessage("ErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);
+        String err = Bundle.getMessage("ErrorBeanCreateFailed",
+            InstanceManager.getDefault(ReporterManager.class).getBeanTypeHandled(),sysName);
+        JOptionPane.showMessageDialog(addFrame, err + "\n" + ex.getLocalizedMessage(),
+                err, JOptionPane.ERROR_MESSAGE);
     }
 
     /**

@@ -288,10 +288,10 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
 
     void handleCreateException(Exception ex, String hwAddress) {
         statusBarLabel.setText(ex.getLocalizedMessage());
-        JOptionPane.showMessageDialog(addFrame,
-                Bundle.getMessage("ErrorSensorAddFailed", hwAddress) + "\n" + ex.getLocalizedMessage(),
-                Bundle.getMessage("ErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);
+        String err = Bundle.getMessage("ErrorBeanCreateFailed",
+            InstanceManager.getDefault(SensorManager.class).getBeanTypeHandled(),hwAddress);
+        JOptionPane.showMessageDialog(addFrame, err + "\n" + ex.getLocalizedMessage(),
+                err, JOptionPane.ERROR_MESSAGE);
     }
 
     protected void setDefaultDebounce(JFrame _who) {

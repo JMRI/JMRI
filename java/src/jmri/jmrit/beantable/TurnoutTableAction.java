@@ -640,17 +640,19 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
     }
 
     void handleCreateException(Exception ex, String sysName) {
+        String err = Bundle.getMessage("ErrorBeanCreateFailed",
+            InstanceManager.getDefault(TurnoutManager.class).getBeanTypeHandled(),sysName);
         if (ex.getMessage() != null) {
             statusBarLabel.setText(ex.getLocalizedMessage());
             JOptionPane.showMessageDialog(addFrame,
                     ex.getLocalizedMessage(),
-                    Bundle.getMessage("ErrorTitle"),
+                    err,
                     JOptionPane.ERROR_MESSAGE);
         } else {
             statusBarLabel.setText(Bundle.getMessage("WarningInvalidRange"));
             JOptionPane.showMessageDialog(addFrame,
-                    Bundle.getMessage("ErrorTurnoutAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
-                    Bundle.getMessage("ErrorTitle"),
+                    err + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
+                    err,
                     JOptionPane.ERROR_MESSAGE);
         }
         statusBarLabel.setForeground(Color.red);
