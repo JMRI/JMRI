@@ -111,7 +111,7 @@ final public class TransitCreationTool {
                                     }
                                     //if a block section, prefer that section
                                     if (sec.getBlockList().size() == count) {
-                                        if (sec.getSectionType() == sec.USERDEFINED){
+                                        if (sec.getSectionType() == Section.USERDEFINED){
                                             secFound = sec;
                                             secFoundForward = sec;
                                         }
