@@ -167,8 +167,15 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 0: print 'Simulate_instance' + activeTrainName + activeTrain.getTrainName() + activeTrain.getActiveTrainName()
 
     def setup(self):
-        self.start_position = 0
-        self.end_position = 0
+        i = 0
+        for block in self.block_list:
+            #print "block", block.getUserName()
+            if block.getState() == ACTIVE:
+                index = i 
+                #print "Success occupied block is", "index",index
+            i+=1
+        self.start_position = index
+        self.end_position = index
         return True
 
     def handle(self):
@@ -232,6 +239,7 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
         else:
             if self.activeTrain.getStatus() == self.activeTrain.RUNNING:
                 self.end_position +=1
+                                                
                 block_list[self.end_position].getSensor().setState(ACTIVE)
                 if self.logLevel > 0: print "Success", "Set block ", self.end_position
                 ret = "Success"
@@ -249,5 +257,3 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
             return "status = running"
         else:
             return "status = not running"
-                        
-

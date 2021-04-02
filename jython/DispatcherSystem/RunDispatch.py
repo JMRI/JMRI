@@ -48,8 +48,8 @@ import sys
 my_path_to_jars = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/jars/jgrapht.jar')
 sys.path.append(my_path_to_jars) # add the jar to your path
 from org.jgrapht.alg import DijkstraShortestPath
-from org.jgrapht.graph import DefaultEdge
-from org.jgrapht.graph import DirectedMultigraph
+from org.jgrapht.graph import DefaultWeightedEdge
+from org.jgrapht.graph import DirectedWeightedMultigraph
 
 #############################################################################################
 #

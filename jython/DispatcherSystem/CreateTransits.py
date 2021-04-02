@@ -1140,7 +1140,3 @@ class DisplayProgress:
     def killLabel(self):
         self.frame1.setVisible(False)
         self.frame1 = None
-
-
-
-

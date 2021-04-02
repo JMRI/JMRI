@@ -14,13 +14,14 @@ sys.path.append(my_path_to_jars) # add the jar to your path
 #http://www.java2s.com/Code/Jar/j/Downloadjgraphtjar.htm
 
 from org.jgrapht.graph import DefaultEdge
-from org.jgrapht.graph import DirectedMultigraph
+from org.jgrapht.graph import DefaultWeightedEdge
+from org.jgrapht.graph import DirectedWeightedMultigraph
 
 class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
 
-    g = DirectedMultigraph(DefaultEdge)
-    g_stopping = DirectedMultigraph(DefaultEdge)
-    g_express = DirectedMultigraph(DefaultEdge)
+    g = DirectedWeightedMultigraph(DefaultWeightedEdge)
+    g_stopping = DirectedWeightedMultigraph(DefaultWeightedEdge)
+    g_express = DirectedWeightedMultigraph(DefaultWeightedEdge)
     
     station_block_list = []
     station_blk_list = []
@@ -124,20 +125,26 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                         if self.logLevel > 0: print "got here 3"
                         if path != []:
                             if self.logLevel > 0: print "got here 4a"
-                            #add an edge for all paths to form the espress train graph
+                            #add an edge for all paths to form the express train graph
                             path_name = [str(x.getUserName()) for x in path]
+                            path_weight = [x.getBlock().getLengthMm() for x in path]
+                            pweight = sum(path_weight) + 1  # add 1 so paths of equal length will have a maller weiht if the train stops less
                             edge = le()     # le = LabelledEdge() set up outside CreateGraph.py
                             if self.logLevel > 0: print edge.to_string()
                             if self.logLevel > 0: print "adding edge ", station_block_name, destination
                             if self.logLevel > 0: print edge.to_string()
                             if self.logLevel > 0: print "got here 4a2"
                             self.g_express.addEdge(station_block_name,destination, edge)
+                            self.g_express.setEdgeWeight(edge, pweight)
                             if self.logLevel > 0: print "got here 4a"
                             if self.logLevel > 0: print edge.to_string()
                             edge.setItem(index = index)
                             edge.setItem(path = path)
                             edge.setItem(path_name = path_name)
                             edge.setItem(neighbor_name = neighbor_name)
+                            #edge.setItem(path_weight = path_weight)
+                            
+                            print "path weight", path_weight, "pweight",pweight
                             LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
                             penultimateLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[-2])
                             penultimate_block_name = penultimateLayoutBlock.getUserName()
@@ -161,6 +168,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                                 if self.logLevel > 0: print "adding to stopping graph"
                                 edge = le()     # l = LabelledEdge() set up outside class
                                 self.g_stopping.addEdge(station_block_name,destination,edge)
+                                self.g_stopping.setEdgeWeight(edge, pweight)
                                 path_name = [str(x.getUserName()) for x in path]
                                 edge.setItem(index = index)
                                 edge.setItem(path = path)
@@ -223,7 +231,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
  # * Custom edge class labeled with relationship type.
  # */
 # @example:edgeclass:begin
-class LabelledEdge(DefaultEdge):
+class LabelledEdge(DefaultWeightedEdge):
 
     #label = ""
     logLevel = 0
