@@ -97,7 +97,7 @@ public class ControlPanelTest {
     @Test
     public void testExtendedThrottle() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().setUsingFunctionIcon(false);
+        InstanceManager.getDefault(ThrottlesPreferences.class).setUsingFunctionIcon(false);
         setupControlPanel();
 
         checkFrameOverlap(panel.getContentPane());
@@ -116,7 +116,7 @@ public class ControlPanelTest {
     public void testIconThrottle() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InstanceManager.throttleManagerInstance().supportedSpeedModes();
-        InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().setUsingFunctionIcon(true);
+        InstanceManager.getDefault(ThrottlesPreferences.class).setUsingFunctionIcon(true);
         setupControlPanel();
 
         checkFrameOverlap(panel.getContentPane());
@@ -135,7 +135,7 @@ public class ControlPanelTest {
     @EnumSource(SpeedStepMode.class)
     public void testSpeedStepModes(SpeedStepMode mode) {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().setUsingFunctionIcon(true);
+        InstanceManager.getDefault(ThrottlesPreferences.class).setUsingFunctionIcon(true);
         setupControlPanel();
         throttle = null;
         InstanceManager.throttleManagerInstance().requestThrottle(3,
@@ -169,7 +169,10 @@ public class ControlPanelTest {
         JUnitUtil.resetProfileManager();
         JUnitUtil.initDebugThrottleManager();
         if (!GraphicsEnvironment.isHeadless()) {
-            InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().setUseExThrottle(true);
+            if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {         
+                jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
+            }        
+            InstanceManager.getDefault(ThrottlesPreferences.class).setUseExThrottle(true);
         }
     }
 

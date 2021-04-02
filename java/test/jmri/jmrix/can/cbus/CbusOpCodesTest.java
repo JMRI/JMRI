@@ -282,6 +282,7 @@ public class CbusOpCodesTest {
         result.put(CbusConstants.CBUS_EXTC3, "EXTC3"); // NOI18N
         result.put(CbusConstants.CBUS_RDCC4, "RDCC4"); // NOI18N
         result.put(CbusConstants.CBUS_WCVS, "WCVS"); // NOI18N
+        result.put(CbusConstants.CBUS_VCVS, "VCVS"); // NOI18N
         result.put(CbusConstants.CBUS_CABDAT, "CABDAT"); // NOI18N
         result.put(CbusConstants.CBUS_ACON1, "ACON1"); // NOI18N
         result.put(CbusConstants.CBUS_ACOF1, "ACOF1"); // NOI18N
@@ -534,6 +535,7 @@ public class CbusOpCodesTest {
         
         result.add(CbusConstants.CBUS_RDCC4);
         result.add(CbusConstants.CBUS_WCVS);
+        result.add(CbusConstants.CBUS_VCVS);
         
         result.add(CbusConstants.CBUS_RDCC5);
         result.add(CbusConstants.CBUS_WCVOA);

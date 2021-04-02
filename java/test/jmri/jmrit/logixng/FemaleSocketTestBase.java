@@ -756,6 +756,16 @@ public abstract class FemaleSocketTestBase {
         public Base deepCopyChildren(Base base, Map<String, String> map, Map<String, String> map1) throws JmriException {
             throw new UnsupportedOperationException("Not supported");
         }
+
+        @Override
+        public boolean getListen() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void setListen(boolean listen) {
+            throw new UnsupportedOperationException("Not supported");
+        }
         
     }
     

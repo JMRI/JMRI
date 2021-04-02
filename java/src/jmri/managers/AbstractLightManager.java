@@ -1,11 +1,15 @@
 package jmri.managers;
 
+import java.util.Objects;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+
 import jmri.Light;
 import jmri.LightManager;
 import jmri.Manager;
 import jmri.SystemConnectionMemo;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,25 +71,30 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     }
 
     /**
+     * Lookup Light by UserName, then provide by SystemName.
      * {@inheritDoc}
      */
     @Override
     @Nonnull
-    public Light newLight(@Nonnull String systemName, @CheckForNull String userName) {
-        log.debug("newLight: {};{}",
-                ((systemName == null) ? "null" : systemName),
-                ((userName == null) ? "null" : userName));
+    public Light newLight(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException {
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + ((userName == null) ? "null" : userName));  // NOI18N
+        log.debug("newLight: {};{}", systemName, userName);
+        
         systemName = validateSystemNameFormat(systemName);
         // return existing if there is one
         Light l;
-        if ((userName != null) && ((l = getByUserName(userName)) != null)) {
-            if (getBySystemName(systemName) != l) {
-                log.error("inconsistent user '{}' and system name '{}' results; user name related to {}",
+        if (userName != null) {
+            l = getByUserName(userName);
+            if (l != null) {
+                if (getBySystemName(systemName) != l) {
+                    log.error("inconsistent user '{}' and system name '{}' results; user name related to {}",
                         userName, systemName, l.getSystemName());
+                }
+                return l;
             }
-            return l;
         }
-        if ((l = getBySystemName(systemName)) != null) {
+        l = getBySystemName(systemName);
+        if (l != null) {
             if ((l.getUserName() == null) && (userName != null)) {
                 l.setUserName(userName);
             } else if (userName != null) {
@@ -96,11 +105,6 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
         }
         // doesn't exist, make a new one
         l = createNewLight(systemName, userName);
-
-        // if that failed, blame it on the input arguments
-        if (l == null) {
-            throw new IllegalArgumentException("cannot create new light " + systemName);
-        }
         // save in the maps
         register(l);
 
@@ -115,8 +119,8 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      * @param userName   the user name to use for this light
      * @return the new light or null if unsuccessful
      */
-    @CheckForNull
-    abstract protected Light createNewLight(@Nonnull String systemName, String userName);
+    @Nonnull
+    abstract protected Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException;
 
     /**
      * {@inheritDoc}

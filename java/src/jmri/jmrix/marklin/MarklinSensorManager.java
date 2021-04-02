@@ -49,7 +49,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         MarklinSensor s = new MarklinSensor(systemName, userName);
         if (systemName.contains(":")) {
             int board = 0;
@@ -60,7 +60,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
             try {
                 board = Integer.parseInt(curAddress.substring(0, seperator));
                 if (!_tmarklin.containsKey(board)) {
-                    _tmarklin.put(board, new Hashtable<Integer, MarklinSensor>());
+                    _tmarklin.put(board, new Hashtable<>());
                     MarklinMessage m = MarklinMessage.sensorPollMessage(board);
                     tc.sendMarklinMessage(m, this);
                 }

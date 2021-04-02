@@ -63,7 +63,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         int addr;
         try {
             addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));

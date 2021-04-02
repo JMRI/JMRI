@@ -33,6 +33,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Glen Oberhauser
  * @author Bob Jacobsen Copyright 2008
+ * @author Lionel Jeanson 2021
  */
 public class FunctionButton extends JToggleButton {
 
@@ -49,12 +50,14 @@ public class FunctionButton extends JToggleButton {
     private String selectedIconPath;
     private ToggleOrPressButtonModel _model;
     private Throttle _throttle;
+    private int img_size = DEFAULT_IMG_SIZE;
 
     private final static int BUT_HGHT = 24;    
     private final static int BUT_MAX_WDTH = 256;
-    private final static int BUT_MIN_WDTH = 100;    
-    private final static int BUT_IMG_SIZE = 48;
-    final static int DEFAULT_FONT_SIZE = 12;
+    private final static int BUT_MIN_WDTH = 100;
+    
+    public final static int DEFAULT_FONT_SIZE = 12;
+    public final static int DEFAULT_IMG_SIZE = 48;
 
     /**
      * Get Button Height.
@@ -71,7 +74,23 @@ public class FunctionButton extends JToggleButton {
     public static int getButtonWidth() {
         return BUT_MIN_WDTH;
     }
+    
+    /**
+     * Get the Image Button Width.
+     * @return width.
+     */
+    public int getButtonImageSize() {
+        return img_size;
+    }
 
+    /**
+     * Set the Image Button Hieght and Width.
+     * @param is the image size (sqaure image size = width = height)
+     */
+    public void setButtonImageSize(int is) {
+        img_size = is;
+    }
+    
     /**
      * Construct the FunctionButton.
      */
@@ -245,13 +264,14 @@ public class FunctionButton extends JToggleButton {
     public void updateLnF() {
         setBorderPainted(!isImageOK());
         setContentAreaFilled(!isImageOK());
-        setText( isImageOK() ? null : getButtonLabel() );
         if (isImageOK()) { // adjust button for image
-            setMinimumSize(new Dimension(FunctionButton.BUT_IMG_SIZE, FunctionButton.BUT_IMG_SIZE));
-            setMaximumSize(new Dimension(FunctionButton.BUT_IMG_SIZE, FunctionButton.BUT_IMG_SIZE));
-            setPreferredSize(new Dimension(FunctionButton.BUT_IMG_SIZE, FunctionButton.BUT_IMG_SIZE));
+            setText(null);
+            setMinimumSize(new Dimension(img_size, img_size));
+            setMaximumSize(new Dimension(img_size, img_size));
+            setPreferredSize(new Dimension(img_size, img_size));
         }
         else { // adjust button for text
+            setText(getButtonLabel());
             setMinimumSize(new Dimension(FunctionButton.BUT_MIN_WDTH, FunctionButton.BUT_HGHT));
             setMaximumSize(new Dimension(FunctionButton.BUT_MAX_WDTH, FunctionButton.BUT_HGHT));
             if (getButtonLabel() != null) {
@@ -363,13 +383,13 @@ public class FunctionButton extends JToggleButton {
         }
         
         private void checkTrigger( MouseEvent e) {
-            if (e.isPopupTrigger()) {
+            if (e.isPopupTrigger() && e.getComponent().isEnabled() ) {
                 initPopupMenu();
                 popupMenu.show(e.getComponent(), e.getX(), e.getY());
             }
         }
     }
-    
+        
     private void initPopupMenu() {
         if (popupMenu == null) {
             JMenuItem propertiesItem = new JMenuItem(Bundle.getMessage("MenuItemProperties"));
@@ -403,6 +423,7 @@ public class FunctionButton extends JToggleButton {
         me.setAttribute("isLockable", String.valueOf(this.getIsLockable()));
         me.setAttribute("isVisible", String.valueOf(this.getDisplay()));
         me.setAttribute("fontSize", String.valueOf(this.getFont().getSize()));
+        me.setAttribute("buttonImageSize", String.valueOf(this.getButtonImageSize()));
         if (this.getIconPath().startsWith(FileUtil.getUserResourcePath())) {
             me.setAttribute("iconPath", this.getIconPath().substring(FileUtil.getUserResourcePath().length()));
         } else {
@@ -444,6 +465,7 @@ public class FunctionButton extends JToggleButton {
             boolean isVisible = e.getAttribute("isVisible").getBooleanValue();
             this.setDisplay(isVisible);
             this.setFont(new Font("Monospaced", Font.PLAIN, e.getAttribute("fontSize").getIntValue()));
+            this.setButtonImageSize( (e.getAttribute("buttonImageSize")!=null)?e.getAttribute("buttonImageSize").getIntValue():DEFAULT_IMG_SIZE);
             if ((e.getAttribute("iconPath") != null) && (e.getAttribute("iconPath").getValue().length() > 0)) {
                 if (checkFile(FileUtil.getUserResourcePath() + e.getAttribute("iconPath").getValue())) {
                     this.setIconPath(FileUtil.getUserResourcePath() + e.getAttribute("iconPath").getValue());
@@ -475,7 +497,7 @@ public class FunctionButton extends JToggleButton {
         ResizableImagePanel fnImage = new ResizableImagePanel();
         fnImage.setBackground(new Color(0, 0, 0, 0));
         fnImage.setRespectAspectRatio(true);
-        fnImage.setSize(new Dimension(FunctionButton.BUT_IMG_SIZE, FunctionButton.BUT_IMG_SIZE));
+        fnImage.setSize(new Dimension(img_size,img_size));
         fnImage.setImagePath(fnImg);
         if (fnImage.getScaledImage() != null) {
             setIcon(new ImageIcon(fnImage.getScaledImage()));
@@ -509,7 +531,7 @@ public class FunctionButton extends JToggleButton {
         ResizableImagePanel fnSelectedImage = new ResizableImagePanel();
         fnSelectedImage.setBackground(new Color(0, 0, 0, 0));
         fnSelectedImage.setRespectAspectRatio(true);
-        fnSelectedImage.setSize(new Dimension(FunctionButton.BUT_IMG_SIZE, FunctionButton.BUT_IMG_SIZE));
+        fnSelectedImage.setSize(new Dimension(img_size, img_size));
         fnSelectedImage.setImagePath(fnImg);
         if (fnSelectedImage.getScaledImage() != null) {
             ImageIcon icon = new ImageIcon(fnSelectedImage.getScaledImage());

@@ -37,6 +37,10 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      * Constructor
      */
     public FunctionPanel() {
+        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
+            log.debug("Creating new ThrottlesPreference Instance");
+            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
+        }
         initGUI();
     }
 
@@ -127,21 +131,28 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                 if (functionButton.getFont().getSize() != FunctionButton.DEFAULT_FONT_SIZE) {
                     rosterEntry.putAttribute(fontSizeKey, ""+functionButton.getFont().getSize());
                 }
+                String imgButtonSizeKey = "function"+functionNumber+"_ThrottleImageButtonSize";
+                if (rosterEntry.getAttribute(imgButtonSizeKey) != null && functionButton.getButtonImageSize() == FunctionButton.DEFAULT_IMG_SIZE) {
+                    rosterEntry.deleteAttribute(imgButtonSizeKey);
+                }                
+                if (functionButton.getButtonImageSize() != FunctionButton.DEFAULT_IMG_SIZE) {
+                    rosterEntry.putAttribute(imgButtonSizeKey, ""+functionButton.getButtonImageSize());
+                }
+                if (rosterEntry.getFunctionLabel(functionNumber) != null ) {
+                    if( lockable != rosterEntry.getFunctionLockable(functionNumber)) {
+                        rosterEntry.setFunctionLockable(functionNumber, lockable);
+                    }
+                    if ( (!imagePath.isEmpty() && rosterEntry.getFunctionImage(functionNumber) == null )
+                            || (rosterEntry.getFunctionImage(functionNumber) != null && imagePath.compareTo(rosterEntry.getFunctionImage(functionNumber)) != 0)) {
+                        rosterEntry.setFunctionImage(functionNumber, imagePath);
+                    }
+                    if ( (!imageSelectedPath.isEmpty() && rosterEntry.getFunctionSelectedImage(functionNumber) == null )
+                            || (rosterEntry.getFunctionSelectedImage(functionNumber) != null && imageSelectedPath.compareTo(rosterEntry.getFunctionSelectedImage(functionNumber)) != 0)) {
+                        rosterEntry.setFunctionSelectedImage(functionNumber, imageSelectedPath);
+                    }
+                }
                 functionButton.setDirty(false);                
-            }
-            if (rosterEntry.getFunctionLabel(functionNumber) != null ) {
-                if( lockable != rosterEntry.getFunctionLockable(functionNumber)) {
-                    rosterEntry.setFunctionLockable(functionNumber, lockable);
-                }
-                if ( (!imagePath.isEmpty() && rosterEntry.getFunctionImage(functionNumber) == null )
-                        || (rosterEntry.getFunctionImage(functionNumber) != null && imagePath.compareTo(rosterEntry.getFunctionImage(functionNumber)) != 0)) {
-                    rosterEntry.setFunctionImage(functionNumber, imagePath);
-                }
-                if ( (!imageSelectedPath.isEmpty() && rosterEntry.getFunctionSelectedImage(functionNumber) == null )
-                        || (rosterEntry.getFunctionSelectedImage(functionNumber) != null && imageSelectedPath.compareTo(rosterEntry.getFunctionSelectedImage(functionNumber)) != 0)) {
-                    rosterEntry.setFunctionSelectedImage(functionNumber, imageSelectedPath);
-                }
-            }
+            }                
         }
         Roster.getDefault().writeRoster();
     }
@@ -190,7 +201,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      * loaded from a roster entry, update buttons accordingly
      */
     public void resetFnButtons() {
-        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences();
+        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
         rebuildFnButons();
         // Buttons names, ids,
         for (int i = 0; i < functionButtons.length; i++) {                      
@@ -201,23 +212,9 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                 Bundle.getMessage(Throttle.getFunctionString(i))
                 : Throttle.getFunctionString(i) );
             functionButtons[i].setDisplay(true);
-            if ((i < 3) && preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
-                switch (i) {
-                    case 0:
-                        functionButtons[i].setIconPath("resources/icons/throttles/Light.png");
-                        functionButtons[i].setSelectedIconPath("resources/icons/throttles/LightOn.png");
-                        break;
-                    case 1:
-                        functionButtons[i].setIconPath("resources/icons/throttles/Bell.png");
-                        functionButtons[i].setSelectedIconPath("resources/icons/throttles/BellOn.png");
-                        break;
-                    case 2:
-                        functionButtons[i].setIconPath("resources/icons/throttles/Horn.png");
-                        functionButtons[i].setSelectedIconPath("resources/icons/throttles/HornOn.png");
-                        break;
-                    default:
-                        break;
-                }
+            if ((i == 0) && preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
+                functionButtons[i].setIconPath("resources/icons/functionicons/transparent_background/lights_off.png");
+                functionButtons[i].setSelectedIconPath("resources/icons/functionicons/transparent_background/lights_on.png");                
             } else {
                 functionButtons[i].setIconPath(null);
                 functionButtons[i].setSelectedIconPath(null);
@@ -235,7 +232,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 
     // Update buttons value from slot + load buttons definition from roster if any
     private void setFnButtons() {
-        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences();
+        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
         if (mThrottle != null) {
             if (addressPanel == null) {
                 return;
@@ -251,6 +248,16 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                 functionButtons[i].setState(mThrottle.getFunction(i)); // reset button state
                 functionButtons[i].setIsLockable(!mThrottle.getFunctionMomentary(i));
                 if (rosterEntry != null) { // from here, update button text with roster data
+                    boolean needUpdate = false;
+                    String imgButtonSize = rosterEntry.getAttribute("function"+i+"_ThrottleImageButtonSize");
+                    if (imgButtonSize != null) {
+                        try {
+                            functionButtons[i].setButtonImageSize(Integer.parseInt(imgButtonSize));
+                            needUpdate = true;                            
+                        } catch (NumberFormatException e) {
+                            log.debug("setFnButtons(): can't parse button image size attribute ");
+                        }
+                    }                    
                     String text = rosterEntry.getFunctionLabel(i);
                     if (text != null) {
                         functionButtons[i].setDisplay(true);
@@ -263,7 +270,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                             functionButtons[i].setSelectedIconPath(null);
                         }
                         functionButtons[i].setIsLockable(rosterEntry.getFunctionLockable(i));
-                        functionButtons[i].updateLnF();
+                        needUpdate = true;
                     } else if (preferences.isUsingExThrottle()
                             && preferences.isHidingUndefinedFuncButt()) {
                         functionButtons[i].setDisplay(false);
@@ -273,10 +280,13 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                     if (fontSize != null) {
                         try {
                             functionButtons[i].setFont(new Font("Monospaced", Font.PLAIN, Integer.parseInt(fontSize)));
-                            functionButtons[i].updateLnF();
+                            needUpdate = true;                            
                         } catch (NumberFormatException e) {
                             log.debug("setFnButtons(): can't parse font size attribute ");
                         }
+                    }                   
+                    if (needUpdate) {
+                        functionButtons[i].updateLnF();
                     }
                 }                
             }

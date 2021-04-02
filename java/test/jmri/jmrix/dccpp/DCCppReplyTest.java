@@ -282,6 +282,12 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         r = DCCppReply.parseDCCppReply("# 50");
         Assert.assertTrue(r.isMaxNumSlotsReply());
 
+        //DIAG message
+        r = DCCppReply.parseDCCppReply("* this is a test diagnostic message 12345 *");
+        Assert.assertTrue(r.isDiagReply());
+        r = DCCppReply.parseDCCppReply("* this is not, missing trailing asterisk ");
+        Assert.assertFalse(r.isDiagReply());
+
         //Sensor replies
         r = DCCppReply.parseDCCppReply("Q 22 33 0");
         Assert.assertTrue(r.isSensorReply());
@@ -325,6 +331,7 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         l = DCCppReply.parseDCCppReply("a 41");
         Assert.assertEquals("Current Monitor string", "Current: 41 / 1024", l.toMonitorString());
     }
+    
     @Test
     public void testMonitorStringMeterReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("c PROGVolts 18.2 V Percent 9.0 24.0 0.1 19");
@@ -342,9 +349,15 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void testMonitorStringThrottleSpeedReply() {
-        DCCppReply l = DCCppReply.parseDCCppReply("T 123 59 1");
-        Assert.assertEquals("Monitor string", "Throttle Reply: Register: 123, Speed: 59, Direction: Forward", l.toMonitorString());
+    public void testMonitorStringDiagReply() {
+        DCCppReply l = DCCppReply.parseDCCppReply("* This is a test *");
+        Assert.assertEquals("Monitor string", "DIAG: This is a test", l.toMonitorString());
+    }
+
+    @Test
+    public void testMaxNumSlotsReply() {
+        DCCppReply l = DCCppReply.parseDCCppReply("# 47");
+        Assert.assertEquals("Monitor string", "Number of slots reply: 47", l.toMonitorString());
     }
 
     @Test

@@ -1,370 +1,624 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Blorec Herv&#233; 2017-02-12-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Fen&ecirc;tre Pr&eacute;f&eacute;rences</title>
+  <title>JiMRI: Preferences Pane</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help preferences">
+  <meta name="keywords" content="JiMRI help preferences">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>JiMRI : Volet Pr&#233;f&#233;rences</h1>Le volet Pr&#233;f&#233;rences est l'endroit o&#249;
+      vous configurez le fonctionnement de base de votre application JiMRI.
 
-<h1>JMRI: Fen&#234;tre Pr&#233;f&#233;rences</h1>
-<p>La fen&#234;tre de pr&#233;f&#233;rences vous
-  configure le fonctionnement de base de votre application JMRI.</p>
-<p>
-L'&#233;cran est divis&#233; en deux sections, sur le c&#244;t&#233; gauche est une liste des groupes de Pr&#233;f&#233;rence qui peut &#234;tre configur&#233;s.
-Cliquer sur chaque pr&#233;f&#233;rence va ensuite remplir le c&#244;t&#233; droit, avec les diff&#233;rentes options
-  qui peuvent &#234;tre configur&#233;es.</p>
+      <p>L'&#233;cran est divis&#233; en deux sections : sur le c&#244;t&#233; gauche
+      se trouve une liste des groupes de pr&#233;f&#233;rences qui peuvent &#234;tre d&#233;finis.
+      En cliquant sur chaque &#233;l&#233;ment, la partie de droite se remplit des diff&#233;rentes options qui peuvent &#234;tre configur&#233;es
+      pour cet onglet.
+      <a href=
+      "../../html/setup/images/PrefsConnections_fr.png"><img src=
+      "../../html/setup/images/PrefsConnections_fr.png" height=
+      "195" width="425" align="right"></a></p> <p>.
 
-<p>
-<a href="#Connection">Connexions</a><br>
-<a href="#Defaults">D&#233;fauts</a><br>
-<a href="#FileLocations">Emplacements Fichiers</a><br>
-<a href="#Startup">D&#233;marrage</a><br>
-<a href="#Display">Affichage</a><br>
-<a href="#Messages">Messages</a><br>
-<a href="#Roster">Inventaire</a><br>
-<a href="#Throttle">R&#233;gulateur</a><br>
-<a href="images/JMRIPrefsChanges.png">
-<img src="images/JMRIPrefsChanges.png" height="112" width="250" align="right" alt="Save? dialog"></a>
-<a href="#WiThrottle">R&#233;gulateurWi</a><br>
-<a href="#Profiles">Profils de Configuration</a><br>
-<a href="#RailroadName">Nom du R&#233;seau</a><br>
-<a href="#JSONServer">Serveur JSON</a><br>
-<a href="#WebServer">Serveur Web</a><br>
-<a href="#SRCPServer">Serveur SRCP</a><br>
-<a href="#SimpleServer">Simple Serveur</a><br>
-<a href="#Warrants">Bulletins</a><br>
-<p>Sans aucun doute la commande la plus importante se trouve au bas de cette section:
-Le bouton <strong>"Enregistrer"</strong>!
-<p><img src="images/PrefsRestart.png" height="112" width="390" align="right">
-Soyez s&#251;r de cliquer sur "Enregistrer" lorsque vous quittez cette fen&#234;tre. Vos modifications des pr&#233;f&#233;rences ne prennent pas effet avant que le programme soit arr&#234;t&#233; et red&#233;marr&#233;, de sorte que le
-programme vous invite &#224; le faire apr&#232;s avoir sauv&#233; les pr&#233;f&#233;rences.</p>
+      <p><a href="#Connexion">Connexions</a><br>.
+      <a href="#Defaults">Par D&#233;fauts</a><br>
+      <a href="#FileLocations">Emplacements de fichiers</a><br>
+      <a href="#Startup">D&#233;marrer</a><br>
+      <a href="#Display">Affichage</a><br>
+      <a href="#Messages">Messages</a><br>
+      <a href="#Roster">Inventaire</a><br>
+      <a href="#Throttle">R&#233;gulateur</a><br>
+      <a href="images/JiMRIPrefsChanges.png"><img src=
+      "images/JiMRIPrefsChanges.png" height="112" width="250" align=
+      "right" alt="Save ? dialog"></a> <a href=
+      "#WiThrottle">WiThrottle</a><br>
+      <a href="#Profiles">Configurer les profils</a><br>
+      <a href="#RailroadName">Nom du chemin de fer</a><br>
+      <a href="#JSONServer">Serveur JSON</a><br>
+      <a href="#WebServer">Serveur Web</a><br>
+      <a href="#SRCP%20Server">Serveur SCRP</a><br>
+      <a href="#Simple%20Server">Serveur Simple</a><br>
+      <a href="#Warrants"></a>Bulletins d'Ordre</a><br></p>.
 
-<a name="Connection"></a>
-<h2>Connexions</h2>
+      <p>Peut-&#234;tre que la commande la plus importante se trouve au bas de
+      cette section : Le bouton <strong>Sauvegarde</strong> !</p>
 
-Vous pouvez s&#233;lectionner l'une des diverses connexions JMRI ici.
-<p><a href="../../html/setup/images/PrefsConnections_fr.png"><img src=
-"../../html/setup/images/PrefsConnexions_fr.png" height="227" width="431"
-align="right" alt="JMRI v2.14 Connection Prefs tab"></a>
-Chaque connexion a son propre onglet unique, pour commencer, choisissez d'abord le fabricant de votre syst&#232;me DCC, 
-suivi par le type de connexion que vous utilisez. Il vous sera alors pr&#233;sent&#233; avec une s&#233;rie de 
-param&#232;tres les plus souvent requis qui doivent &#234;tre fix&#233;s. Si vous devez modifier certains des param&#232;tres 
-les plus avanc&#233;s, puis connexion, puis cochez la case "Connexion Param&#232;tres suppl&#233;mentaires"  et cela va vous 
-fournir de plus amples d&#233;tails.
-<p>
-Pour ajouter une connexion suppl&#233;mentaire cliquez sur l'onglet avec un "+", ce sera alors  un onglet connexion raffraichi. 
-Pour supprimer une connexion, dans la liste d&#233;roulante des fabricants du syst&#232;me, s&#233;lectionnez <strong>(aucun s&#233;lectionn&#233;s</strong> et ceci va enlever la configuration de cette connexion.
-<p>
-Pour plus d'informations sur comment configurer cela pour votre mat&#233;riel, consultez les  <a href="../../html/hardware/index.shtml"> pages mat&#233;riels </a>.
-<p>
-Rappelez-vous de presser<strong> Enregistrer!</strong>
+      <p><img src="images/PrefsRestart.png" height="168" width=.
+      "586" align="right">N'oubliez pas de cliquer sur "Sauvegarder" lorsque vous quittez
+      cette fen&#234;tre. Les modifications apport&#233;es aux Pr&#233;f&#233;rences ne prendront effet
+      que lorsque le programme est arr&#234;t&#233; et red&#233;marr&#233;.
+      Le programme vous invitera &#224; le faire apr&#232;s avoir enregistr&#233; les
+      Pr&#233;f&#233;rences.</p><a name="Connexion" id="Connexion"></a>
 
-<a href="images/JMRI_PrefsDefaults.png">
-<img src="images/JMRI_PrefsDefaults.png" height="222" width="419" align="right" alt="JMRI v2.14 Defaults Prefs tab"></a>
+      <h2>Connexions</h2>Vous pouvez s&#233;lectionner n'importe laquelle des diverses connexions de R&#233;seau JiMRI.
+      
 
-<a name="Defaults"></a>
-<h2>Par D&#233;fauts</h2>
-Si vous utilisez plusieurs connexions du m&#234;me type, par exemple une
-Connexion LocoNet et une Connexion MERG, ce volet vous permet de s&#233;lectionner celui qui est connect&#233;
-par exemple au programmateur de CV et &#224;  la centrale que vous souhaitez utiliser Une seconde Connexion du m&#234;me type aura le num&#233;ro (2) ajout&#233; dans son nom et dans son menu syst&#224;me-sp&#233;cifique
+      <p><a href="images/Ops_SetConnection214.png"><img src=.
+      "images/Ops_SetConnection214.png" height="222" width="423"
+      align="right" alt="JiMRI v2.14 Connection Prefs tab"></a> Chaque connexion a son propre onglet.
+      Pour commencer, il faut d'abord
+      s&#233;lectionnez d'abord le fabricant de votre syst&#232;me DCC, puis le type de connexion que vous utilisez.
+      Vous verrez alors appara&#238;tre
+      une s&#233;rie de param&#232;tres les plus courants 
+      qui doivent &#234;tre d&#233;finis. Si vous avez besoin de modifier certains des param&#232;tres les plus avanc&#233;s, alors cochez la case "Param&#232;tres suppl&#233;mentaires".
+      et cela vous fournira
+      plus de d&#233;tails.</p>
 
-<a name="FileLocations"></a>
-<h2>Emplacements des Fichiers</h2>
-Ils vous permettent de d&#233;finir l'emplacement par d&#233;faut o&#249; les scripts et les fichiers utilisateurs sont charg&#233;s et enregistr&#233;s.
-<p>
-Notez que lorsque vous changez le "Emplacements des fichiers utilisateur" cela va aussi changer l'emplacement par d&#233;faut o&#249; sont stock&#233;s les &#233;l&#233;ments suivants.
-<dl> <dd> Panels <br>
-Rosters <br>
-Operations <br>
-Throttle<br>
-Resources<br>
-Dispatcher options<br>
-Rps
- </dd>
-</dl>
+      <p>Pour ajouter une connexion de r&#233;seau suppl&#233;mentaire, dans le volet Connexions,
+      cliquez sur l'onglet avec un "+", cela vous pr&#233;sentera alors
+      avec un nouvel onglet de connexion. Pour supprimer une Connexion, dans la
+      liste d&#233;roulante Fabricant de syst&#232;me, s&#233;lectionnez <strong>(non
+      s&#233;lectionn&#233;)</strong> pour effacer vos choix actuels et en saisir de nouveaux, 
+      ou cliquez sur le petit "x" dans le nom de l'onglet pour
+      supprimer la connexion.</p>
 
-<p> Il y a une <a href="../../html/setup/Dropbox.shtml">une page d'Aide s&#233;par&#233;e</a> 
-sur le partage des fichiers entre ordinateurs avec l'utilisation de Dropbox.
+      <p>Pour plus d'informations sur la fa&#231;on de configurer ceci pour votre
+      mat&#233;riel particulier, consultez la page <a href=
+      "../../html/hardware/index.shtml">Pages d'aide sur le mat&#233;riel informatique
+      </a>.</p>
 
-<a name="Startup"></a>
-<h2>D&#233;marrage</h2>
-<p><em> D&#233;marrage</em>permet aux fichiers et aux fen&#234;tres d'&#234;tre ouverts, aux scripts
-	d'&#234;tre ex&#233;cut&#233;s, et &#224; des boutons suppl&#233;mentaires d'&#234;tre plac&#233;s sur la fen&#234;tre principale 
-	quand l'application d&#233;marre.</p>
-<p>cliquez le bouton <strong>Add &#x25BE;</strong> et s&#233;lectionnez le type d'action au d&#233;marrage 
-	&#224; ajouter. Cette nouvelle action sera ajouter en dernier.</p>
-<p>L'ordre des actions au d&#233;marrage est important. Dans la plupart des cas, les scripts devraient &#234;tre les derniers 
-&#233;l&#233;ments dans l'ordre de d&#233;marrage.L'ordre de d&#233;marrage peut &#234;tre modifi&#233; en s&#233;lectionnant un 
-&#233;l&#233;ment de d&#233;marrage et en le d&#233;pla&#221;ant vers le <em>haut</em> ou le <em>bas</em> de la liste</p>	
-<p>Il y a cinq types d'actions au d&#233;marrage:</p>
+      <p>N'oubliez pas d'appuyer sur <strong>Sauvegarder</strong>!</p>
 
-  <dl>
-        <dt>Faire une action</dt>
+      <a name="D&#233;fauts" id="D&#233;fauts"></a>
+      <h2 style="float:clear">D&#233;fauts</h2>
+      <a href="images/JiMRI_PrefsDefaults.png">
+          <img src="images/JiMRI_PrefsDefaults.png" height="222" width="419"
+               align="right" alt="JiMRI v2.14 Defaults Prefs tab">
+      </a>
+      </p> <p>Si vous utilisez plusieurs connexions, par exemple une connexion LocoNet et une
+          connexion MERG, le volet Defauts vous permet de s&#233;lectionner quelle connexion
+          vous souhaitez utiliser dans un but particulier.</p> <p>Il s'agit de la connexion interne.
+      </p> <p>La connexion interne est la connexion par d&#233;faut, cependant, puisque cela
+          est presque toujours ind&#233;sirable, les applications JiMRI vous informeront si la
+          Connexion interne est la connexion par d&#233;faut pour chaque but. Pour faire taire cette
+          notification, modifiez les propri&#233;t&#233;s du profil, en d&#233;finissant la propri&#233;t&#233;
+          <code>jmri-managers.allInternalDefaults</code> &#224; <em>true</em>.</p>
+
+
+      <a name="FileLocations" id="FileLocations"></a>
+      <h2>LEmplacements de fichiers</h2>Ces derni&#232;rs vous permettent de d&#233;finir l'emplacement par d&#233;faut
+      o&#249; les scripts et les fichiers utilisateur sont charg&#233;s et
+      sauvegard&#233;s.
+
+      <p>Notez que lorsque vous modifiez l'"emplacement des fichiers utilisateur", cela
+      modifiera &#233;galement l'emplacement par d&#233;faut o&#249; les &#233;l&#233;ments suivants
+      sont stock&#233;s :</p>
+
+      <dl>
+        <dd>Panel<br>
+        Roster<br>
+        Op&#233;rations<br>
+        Throttle<br>
+        Ressources<br>
+        Dispatcher Options<br>
+        Rps</dd>
+      </dl>
+
+      <p>Il y a un <a href=]
+
+
+        "../../html/setup/Dropbox.shtml">page d'aide s&#233;par&#233;e</a> avec des
+        informations sur le partage de fichiers entre ordinateurs &#224; l'aide de Dropbox.
+        <a name="D&#233;marrage" id="D&#233;marrage"></a></p>.
+  
+        <h2>D&#233;marrage</h2>
+  
+        <p><em>D&#233;marrage</em> Les pr&#233;f&#233;rences permettent aux fen&#234;tres et aux fichiers 
+        d'&#234;tre ouverts, d'ex&#233;cuter des scripts et de placer des boutons suppl&#233;mentaires
+         sur la fen&#234;tre principale au d&#233;marrage de l'application.</p>
+  
+        </p> <p>Cliquez sur le bouton <strong>Ajouter &#9662;</strong> et s&#233;lectionnez
+        le type d'action de d&#233;marrage &#224; ajouter. La nouvelle action sera
+        ajout&#233;e en dernier.</p>
+  
+        <p>L'ordre des actions de d&#233;marrage est important. Dans la plupart des cas, les scripts
+        doivent &#234;tre les derniers &#233;l&#233;ments de l'ordre de d&#233;marrage. L'ordre de d&#233;marrage
+        peut &#234;tre modifi&#233; en s&#233;lectionnant un &#233;l&#233;ment de d&#233;marrage et en le d&#233;pla&#231;ant
+        vers le <em>haut</em> ou <em>bas</em> dans la liste.</p>
+  
+        <p>Il existe cinq types d'actions de d&#233;marrage :</p>
+  
+        <dl>
+          <dt>Ex&#233;cuter une action</dt>
+  
+          <dd>Faire en sorte que le programme ex&#233;cute automatiquement les diverses
+          s&#233;lections de menu au d&#233;marrage. Par exemple, vous pouvez faire en sorte que le
+          tableau d'aiguillage s'ouvre automatiquement, ou ouvrir automatiquement une
+          fen&#234;tre de programmation sur la voie principale.</dd>
+  
+          <dt>Ajouter un bouton &#224; la fen&#234;tre principale</dt>.
+  
+          </dt>Ajouter des boutons suppl&#233;mentaires &#224; la fen&#234;tre principale de JiMRI qui sont.
+          connect&#233;s &#224; des actions sp&#233;cifiques dans les menus pour un acc&#232;s 
+          acc&#232;s facile et rapide &#224; cette action.</dd>
+  
+          <dt>Ouvrir un fichier</dt>
+  
+          </dt>Chargez automatiquement les fichiers du panneau au d&#233;marrage du 
+          du programme. Vous pouvez charger autant de fichiers de panneau que vous le souhaitez ; chacun d'eux
+          sera compl&#232;tement charg&#233; avant que le suivant ne soit lanc&#233;.</dd>
+  
+          <dt>Ex&#233;cuter le script</dt>
+  
+          </dt>Lancer automatiquement un script au d&#233;marrage du programme.
+          Vous pouvez ex&#233;cuter autant de scripts que vous le souhaitez ; chacun sera ex&#233;cut&#233;
+          jusqu'&#224; son terme avant que le suivant ne soit lanc&#233;. Notez que tous les
+          fichiers dont d&#233;pend le script doivent &#234;tre ouverts avant l'ex&#233;cution du script.</dd>
+  
+          <dt>D&#233;finir un itin&#233;raire</dt>
+  
+          </dt>D&#233;finir un itin&#233;raire lorsque le programme d&#233;marre. Vous pouvez d&#233;finir 
+          autant de routes que vous le souhaitez ; chacune sera d&#233;finie dans l'ordre. Notez
+          que tous les fichiers dont d&#233;pend l'itin&#233;raire doivent &#234;tre ouverts
+          avant de d&#233;finir l'itin&#233;raire.</dd>
+        </dl><a name="Display" id="Display"></a>
+  
+        <h2>Affichage</h2>
+  
+        <dl>
+          <dt>GUI</dt>
+  
+          <dd>
+            Une rang&#233;e de cases d'option vous permet de s&#233;lectionner l'apparence du programme. 
+            Les choix disponibles d&#233;pendent du type d'ordinateur que 
+            vous avez, et tous les choix suivants ne sont pas n&#233;cessairement
+            disponibles :
+  
+            <ul>
+              <li>M&#233;tal - le style Java par d&#233;faut, utilisable sur tous les
+              ordinateurs</li>
+  
+              <li>CDE/Motif - Une forme Linux/Unix qui fonctionne bien avec les
+              gestionnaires d'&#233;cran X Windows. Il est &#233;galement disponible sur
+              (presque) tous les types d'ordinateurs.</li>
+  
+              <li>Windows - disponible uniquement sur les syst&#232;mes Microsoft Windows, 
+                cela fait en sorte que le programme ressemble autant que
+              possible &#224; une application Windows ordinaire.</li>
+  
+              <li>Mac OS X - disponible uniquement sur les syst&#232;mes MacOS, ceci fait ressembler le
+              programme ressemble &#224; une application Macintosh.</li>
+            </ul>
+  
+            <br>
+  
+            En outre, cet onglet vous permet de d&#233;finir :
+            <ul>
+            <li>La taille de la police de l'interface graphique.</li>
+            <li>Si vous voulez utiliser des graphiques pour montrer l'&#233;tat des aiguillages,
+            lumi&#232;res, capteurs et blocs dans la colonne d'&#233;tat de leurs tableaux.
+            <span class="since">depuis 4.7.4</span></li>.
+            <li>Combien de temps les infobulles (lorsqu'elles sont disponibles) doivent &#234;tre affich&#233;es.</li>
+            </ul>
+          </dd>
+  
+          <dt>Locale</dt>
+  
+          <dd><a href="../../Acknowledgements.shtml">De nombreuses personnes</a>
+          ont contribu&#233; &#224; des "internationalisations" de JiMRI. Ce site
+          convertit (une grande partie) du texte &#224; l'&#233;cran dans une langue
+          autre que l'anglais. Si vous s&#233;lectionnez votre pays ou r&#233;gion
+          et la langue ici, puis enregistrez et red&#233;marrez les pr&#233;f&#233;rences,
+          JiMRI utilisera une internationalisation pour ce pays et cette langue
+           si elle est disponible. Les &#233;l&#233;ments qui n'ont pas &#233;t&#233;
+          traduits continueront d'appara&#238;tre en anglais, vous ne manquerez donc
+          vous ne manquerez rien. Pour plus d'informations sur la fa&#231;on de configurer ce syst&#232;me,
+          et en particulier sur la fa&#231;on de contribuer &#224; de nouvelles et meilleures
+          traductions, veuillez consulter notre <a href=
+          "../../html/doc/Technical/I8N.shtml">page d'internationalisation
+          </a>.</dd>
+  
+          <dt>Console</dt>
+  
+          </dt>Ceci vous permet de personnaliser l'aspect de la console du syst&#232;me JiMRI.
+           Il est possible de choisir parmi 
+          des couleurs pr&#233;d&#233;finies et de choisir la taille et le style de la police. 
+          Vous pouvez &#233;galement choisir d'enregistrer la taille et l'emplacement de la fen&#234;tre de la console syst&#232;me qu'elle
+          apparaisse toujours au m&#234;me endroit et &#224; la m&#234;me taille.</dd>
+  
+  
+      </dl><a href="images/PrefsMsgPane421.png"><img src=
+      "images/PrefsMsgPane421.png" height="214" width="375" align=
+      "right" alt="JiMRI v4.2 Roster Prefs tab"></a> <a name=
+      "Messages" id="Messages"></a>
+
+      <h2>Messages</h2>Ceci vous permet de modifier la mani&#232;re dont les
+      messages d'information et d'avertissement sont affich&#233;s dans JiMRI.<br>
+      Il vous permettra &#233;galement de configurer les r&#233;ponses par d&#233;faut et la
+      la question qui s'affiche. <a name="Roster" id=
+      "Roster"></a>
+
+      <h2>Inventaire</h2>
+
+      <a href="images/PrefsRoster47.png"><img src=
+      "images/PrefsRoster47.png" height="184" width="416" align=
+      "right" alt="JiMRI v4.7 Roster Prefs tab"></a>
+
+      <dl>
+        <a id="programmeur" name="programmeur"></a>
+        <dt>Programmeur</dt>
+
         <dd>
-		Avoir le programme qui ex&#233;cute 
-		automatiquement diverses s&#233;lections de menus. Par exemple
-		vous pouvez ouvrir automatiquement la Table Aiguillage, ou 
-		ouvrir automatiquement une fen&#234;tre pour la programmation en voie principale( POM) 
-		</dd>
-		<dt>Ajouter un bouton sur la fen&#234;tre principale</dt>
-		<dd>
-		Ajouter des boutons suppl&#233;mentaires &#224; la fen&#234;tre principale 
-		JMRI qui sont connect&#233;s &#224; des actions sp&#233;cifiques dans les menus pour acc&#233;der facilement et rapidement &#224; cette action
-		</dd>
-		<dt>Ouvrir Fichier</dt>
-		<dd>
-		Charge automatiquement le panneau des fichiers quand le programme 
-		d&#233;marra. Vous pouvez charger
-		autant de panneau fichiers que vous voulez; chacun d'eux sera enti&#232;rement charg&#233; avant le d&#233;marrage du suivant.
-		</dd>
+          Le programmateur de DecoderPro vous permet de s&#233;lectionner la quantit&#233;
+          du contenu du d&#233;codeur &#224; afficher  en utilisant 
+          des "Programmateurs" configurables. Vous pouvez choisir l'interface de base ou
+          interface compl&#232;te lorsque <a href=
+          "../../html/apps/DecoderPro/Roster.shtml">Choix de votre
+          d&#233;codeur de locomotive</a>, mais cela fournit un endroit pratique
+          &#224; d&#233;finir par d&#233;faut afin que vous n'ayez pas &#224; le s&#233;lectionner
+          chaque fois que vous ouvrez un d&#233;codeur.
 
-		<dt>Ex&#233;cuter script</dt>
-		<dd>Ex&#233;cute automatiquement un script quand le programme d&#233;marre. Vous pouvez ex&#233;cuter 
-		autant de scripts que vous voulez; chacun d'eux sera enti&#232;rement ex&#233;cut&#233; avant que le suivant 
-		ne d&#233;marre. Notez que tous les fichiers dont d&#233;pend le script doivent &#234;tre ouverts 
-		avant d'ex&#233;cuter le script. 
-		</dd>
-		<dt>D&#233;finir Itin&#233;raire</dt>
-		<dd>D&#233;finir un itin&#233;raire quand le programme d&#233;marre. Vous pouvez configurer autant d'itin&#233;raires 
-		que vous voulez; chacun sear configur&#233; dans l'ordre. Notez que Tous les fichiers dont d&#233;pend l'itin&#233;raire 
-		doivent &#234;tre ouverts avant de d&#233;finir l'itin&#233;raire.
-		</dd>
-	</dl>
-		
-<a name="Display"></a>
-<h2>Affichage</h2>
+          <p>Cette section comporte &#233;galement des cases &#224; cocher pour les options :</p>
+          <ul>
+          <li>"Afficher les onglets vides du programmateur" : Ceci vous permet de d&#233;cider
+              si le programmateur DecoderPro affichera des volets (onglets) vides.
+              volets (onglets) vides. Certaines personnes aiment les voir, 
+              m&#234;me s'ils sont vides ; d'autres pr&#233;f&#232;rent ne pas les voir,
+              afin qu'ils n'aient pas &#224; essayer de les ouvrir et de les regarder. Nous vous proposons
+              cette pr&#233;f&#233;rence pour que vous puissiez choisir.
 
-<dl>
-<dt>Interface Graphique Utilisateur (GUI)</dt>
-<dd>Ces bo&#238;tes radio vous permettent de s&#233;lectionner la fa&#231;on
-dont le programme va &#234;tre afficher.
-Les choix disponibles d&#233;pendent du type d'ordinateur que vous avez, et 
-tous les &#233;l&#233;ments suivants peuvent &#234;tre disponibles:
-  <ul>
-  <li> M&#233;tal - le style par d&#233;faut de Java, utilisable sur tous les ordinateurs  <li>/ Theme/CDE - Une forme Linux/Unix qui fonctionne bien avec les gestionnaires &#233;cran x Windows. Il est &#233;galement disponible sur (presque) tous les types d'ordinateurs.
-  <li> Windows - uniquement disponible sur les syst&#232;mes Microsoft Windows, ce qui rend l'apparence du programme, autant que possible comme une application normale de Windows.
-  <li> Mac OS X - disponible uniquement sur MacOS, ce qui rend l'apparence du programme comme une application
-  Macintosh</li>
-  </ul>
-</dd>
-  <dt>Langue</dt>
-  <dd><a href="../../Acknowledgements.shtml">Beaucoup de gens </a> ont contribu&#233; &#224; l'<em>
-  Internationalisation</em>
-de JMRI. Ceux-ci ont convertit (beaucoup) de texte &#224; l'&#233;cran dans une langue
- autres que l'anglais. Si vous s&#233;lectionnez votre pays ou votre r&#233;gion et votre langue ici,
-puis enregistrez et red&#233;marrez les pr&#233;f&#233;rences, JMRI va utiliser une internationalisation
-pour ce pays et la langue si elle est disponible. Les &#233;l&#233;ments qui n'ont pas &#233;t&#233; traduits
-continueront &#224; para&#238;tre en anglais, de sorte que vous ne manquerez rien. pour
-plus d'informations sur la fa&#231;on de le mettre en place, et en particulier la fa&#231;on de contribuer
-&#224; des traductions nouvelles et les am&#233;lior&#233;es, s'il vous pla&#238;t voir notre
-    <a href="../../html/doc/Technical/I8N.shtml">Page d'internationalisation</a>.</dd>
-  <dt>Console</dt>
- <dd>Ceci vous permet de personnaliser l'apparence de la console Syst&#232;me JMRI.
- Il est possible de s&#233;lectionner des couleurs pr&#233;difines et de choisir 
- la taille et le style de la police<br>
- Ainsi, vous pouvez choisir de sauvegarder ensemble la taille et l'emplacement de la fen&#234;tre Console 
- Syst&#232;me de fa&#231;on &#224;  ce qu'elle apparaisse toujours au m&#234;me endroits et
- avec la m&#234;me taille.</dd>
- </dl>
+          <li>"Afficher les num&#233;ros de CV dans les info-bulles" : Si vous permettez au curseur de la 
+            souris de "survoler" une valeur dans DecoderPro, une infobulle
+            s'affiche avec plus d'informations. Cocher cette case
+                inclut le num&#233;ro de CV dans cette info-bulle.  Certaines 
+                personnes veulent conna&#238;tre le num&#233;ro de CV, d'autres veulent que DecoderPro
+                g&#232;re les CV de mani&#232;re totalement invisible,
+                donc nous fournissons une option pour vous laisser choisir.
 
-  <a href="images/PrefsMessages.png"><img src=
-  "images/PrefsMessages.png" height="194" width="479" align=
-  "right" alt="JMRI v4.17 Messages Prefs tab"></a>
+          <li>"Permettre la mise en cache lors de l'&#233;criture des CV d'index pour les op&#233;rations de lecture ou d'&#233;criture": 
+            Certains d&#233;codeurs exigent que des valeurs sp&#233;cifiques
+                soient &#233;crites dans des CV "d'index" avant que certains autres emplacements puissent &#234;tre
+                &#234;tre lus ou &#233;crits. Les d&#233;codeurs QSI et ESU utilisent largement cette m&#233;thode.
+                Lorsque l'on fait beaucoup de lectures ou d'&#233;critures, par exemple un d&#233;codeur entier, les CVs d'indexation peuvent &#234;tre endommag&#233;es, 
+                les CV d'index peuvent finir par &#234;tre &#233;crits avec la m&#234;me
+                valeur plusieurs fois de suite.  Lorsqu'elle est s&#233;lectionn&#233;e, cette
+                option permet &#224; DecoderPro de sauter (gagner du temps) les &#233;critures
+                de la m&#234;me valeur d'index qui sont autrement redondantes.
+                N'utilisez pas cette option (ou utilisez-la seulement en combinaison avec l'op&#233;ration suivante) si vous avez des probl&#232;mes de fiabilit&#233;.
+                si vous avez des probl&#232;mes de fiabilit&#233;
+                d'&#233;criture des d&#233;codeurs, car le bon fonctionnement de cette option d&#233;pend de la fiabilit&#233; des &#233;critures.
+                <p>
+                Plus de d&#233;tails :  Une seule mauvaise &#233;criture avec cette option d&#233;sactiv&#233;e met &#224; la poubelle
+                un CV ; l'&#233;criture d'un mauvais index avec cette option d&#233;sactiv&#233;e d&#233;truit le CV qui &#233;tait cens&#233; &#234;tre &#233;crit et le mauvais adress&#233;
+                &#234;tre &#233;crit et le mauvais adress&#233; par la mauvaise &#233;criture, mais l'&#233;criture de la CV suivante dans la s&#233;quence 
+                est OK gr&#226;ce &#224; l'&#233;criture suivante redondante de l'index.; l'&#233;criture d'un index mauvais
+                avec cette option laisse cette valeur d'index mal &#233;crite en place, et &#233;crit donc une s&#233;quence
+                de mauvaises valeurs de CV. Conclusion :  Si vous travaillez avec un d&#233;codeur compliqu&#233;
+                avec beaucoup de CV, vous avez besoin d'une connexion de programmation fiable, voir l'option suivante.
 
-<a name="Messages" id="Messages"></a>
-<h2>Messages</h2>
-Cela vous permet de changer la fa&#231;on dont les messages d'information et d'alerte sont affich&#233;s dans JMRI. <br>
-Il vous permettra &#233;galement de configurer une des r&#233;ponses par d&#233;faut et la question affich&#233;e.
-
-<a name="Roster"></a>
-<h2>Inventaire</h2>
-<a href="images/PrefsRoster47.png"><img src=
-"images/PrefsRoster47.png" height="184" width="416" alt="JMRI v4.7 Roster Prefs tab"></a>
-
-<dl>
-  <dt>Programmateur</dt>
-<dd> Le programmateur DecoderPro vous permet de choisir (beaucoup ou peu) quelle 
-part du contenu d'un d&#233;codeur sera affich&#233;e en utilisant un "programmateur" configurable. vous
-pouvez s&#233;lectionner l'Interface Basique ou Compl&#232;te quand vous
-<a href="../../html/apps/DecoderPro/Roster.shtml">s&#233;lectionnez votre d&#233;codeur de locomotive </a>,
-mais ceci offre un endroit pratique pour d&#233;finir un par d&#233;faut ainsi vous n'avez pas
-&#224; le s&#233;lectionner &#224; chaque fois que vous ouvrez un d&#233;codeur.
-<p>
-cette section a aussi une case qui vous permet de d&#233;cider si le programmateur
-DecoderPro affichera des panneaux (onglets) vides.
-Certaines personnes aiment les voir, m&#234;me s'ils sont vides;
-Certaines personnes pr&#233;f&#233;reraient ne pas les voir,
-afin qu'ils ne continuent pas &#224; essayer de les regarder.
-Nous fournissons cette pr&#233;f&#233;rence que vous pourrez choisir.</p>
-
-  <dt>Inventaire</dt>
-  <dd>
-Normalement, l'inventaire est stock&#233;e dans un emplacement standard 
-dans le cadre du  
-<a href="../../html/apps/DecoderPro/Files.shtml" > r&#233;pertoire pr&#233;f&#233;rences</a>.
-Cette option vous permet de le d&#233;placer ailleurs
-<p>
-Pour le configurer, cliquer le bouton "D&#233;finir " et suivres les directives.
-<p>
-Le bouton "R&#233;initialiser" restaure l'emplacement par d&#233;faut. Notez que
-cela change juste o&#249; le programme regarde. Si vous avez stock&#233; l'information
-de l'inventairela ailleurs et que vous voulez la voir revenir &#224; l'emplacement par d&#233;faut, vous devez 
-d&#233;placer le fichier vous-m&#234;me.
-<p>
-Vous pouvez &#233;galement entrer une valeur par d&#233;faut pour le champ "propri&#233;taire" dans les entr&#233;es inventiare 
-DecoderPro.ici. Ceci remplit la valeur pour les nouvelles entr&#233;es, ce qui
-peut vous faire &#233;conomiser un peu de frappe. Elle n'a aucun effet sur les
-entr&#233;es existantes, m&#234;me si elles ont chang&#233;es.</p></dd>
-</dl>
-
-<h2>R&#233;gulateur</h2><a name="Throttle"></a>
-
-Ce volet des PR&#233;f&#233;rences vous permet de choisir si les fonctions &#233;tendues du R&#233;gulateur
-sont disponibles, et celles qui peuvent &#234;tre utilis&#233;es
-
-<a name="WiThrottle"></a><h2>R&#233;gulateur WI</h2>
-
-<dl>
-  <dt>eStop</dt>
-
-<dd>S'il est s&#233;lectionn&#233;,
-&#233;coute l'envoi d'un paquet qui doit &#234;tre envoy&#233; &#224; partir du p&#233;riph&#233;rique mobile connect&#233;.
-Si le serveur R&#233;gulateurWI ne re&#231;oit aucune communication dans le le temps
-choisi le r&#233;gulateur JMRI affect&#233; ralentira son train.
-<p>
-Le temps choisi est approximatif, la r&#233;ponse peut &#234;tre quelques secondes
-  en plus ou en moins.</p>
-
-  <dt> R&#233;seau</dt>
-
-<dd> Change le num&#233;ro du port &#224; utiliser. Assurez-vous que votre pare-feu autorise l'utilisation de ce port.<br>
-Changer seulement le Num&#233;ro du Port ap&#232;s avoir arr&#233;t&#233; le Serveur R&#233;gulateurWI s'il y avait
-  un possibilit&#233; que les &#233;quipements mobiles &#233;taient encore connect&#233;s.</dd>
-
-  <dt> Commandes autoris&#233;es</dt>
-
-<dd> Cochez ces cases pour permettre &#224; des fonctionnalit&#233;s sp&#233;cifiques d'&#234;tre command&#233;es par des &#233;quipements mobiles.
-Cela vous permettra de limiter ce que les utilisateurs ont la possibilit&#233; de commander.
-<ul>
-    <li>Puissance Traction  - Choisissez si les appareils mobiles connect&#233;s via
-         cette interface WiFi permet de contr&#244;ler l'alimentation traction
-    <li> Aiguillages  - s&#233;lectionner si les &#233;quipements mobiles peuvent commander les aiguillages.
-    <li>Itin&#233;raires - s&#233;lectionner si les &#233;quipements mobiles peuvent commander les itin&#233;raires.
-    <li>Couplages - Si s&#233;lectionn&#233;, les &#233;quipements mobiles peuvent r&#233;aliser et casser des "Couplages Avanc&#233;s".
-		<ul>
-			<li>Format NMRA - Ces couplages peuvent mieux se comporter pour la construction et la commande avec des
-            p&#233;riph&#233;riques WiFi.</li>
-			<li>Sp&#233;cifique &#224; DCC - Ces couplages peuvent mieux se comporter quand ils sont construit avec un &#233;quipement WiFi, 
-          mais command&#233; par un r&#233;gulateur du fabricant de votre syst&#232;me DC</li>
-        </ul></li>
-</ul>	
-</dd>
-</dl>
-Le bouton "Sauvegarder" met les param&#232;tres actuels en vigueur. Pour qu'un <a href="../jmri/jmrit/withrottle/UserInterface.shtml">r&#233;gulateur</a> connect&#233; utilise les
-nouveaux param&#232;tres, vous devez red&#233;marrer JMRI ( et ensuite R&#233;gulateurWI ) comme indiqu&#233; dans le dialogue. 
-
-<a name="Profiles"></a>
-<h2>Config Profils</h2>
-Les Profils de Configuration JMRI rendent ais&#233; le d&#233;marrage de 
-vos applications JMRI pour qu'elles trvaillent avec diff&#233;rentes configurations. Chaque profil
-sp&#233;cifie un jeu de Pr&#233;f&#233;rences. Vous pouvez alors s&#233;lectionner lequel utiliser.
-<p>
-Pour avoir plus d'information, voir la page
-d'aide <a href="../../html/setup/profiles.shtml">Profils de Configuration.</a> 
-
-<a name="RailroadName"></a>
-<h2>Nom du R&#233;seau</h2>
-<p>L'onglet Nom du R&#233;seau vous permet de sp&#233;cifier le nom de votre r&#233;seau
-mod&#232;le ( module ), quand il est utilis&#233; par plusieurs de protocoles de serveur.</p>
-
-<a name="JSONServer"></a>
-<h2>Serveur JSON </h2>
-<p>
-Le  <a href="../../html/web/JsonServlet.shtml">Serveur JSON</a> JMRI est utilis&#233; par les applications sur les autres ordinateurs, 
-incluant les tablettes et les smartphone, pour see connecter &#224; JMRI pour agir sur votre r&#233;seau</p>
-<p>Sur ce volet vous pouvez sp&#233;cifier le port pour la connexion ( habituellement laiss&#233; par d&#233;faut ) 
-et La fr&#233;quence &#224; laquelle le serveur v&#233;rifie si la connexion a &#233;chou&#233; via un 
-message.</p>
-
-<a name="WebServer"></a>
-<h2>Serveur Web</h2>
-Le Serveur Web JMRI vous permet
-de vous connecter &#224; JMRI depuis un serveur web sur votre ordinateur, tablette et smartphone 
-et de travailler avec votre r&#233;seau.
-<p>Cet onglet vous permet de commander ce que le serveur web fournit.
-
-Pour de plus amples information, voir la page
-<a href="../../html/web/index.shtml#Configure">panneau Pr&#233;f&#233;rences Serveur Web</a></p>
-
-<a name="SRCPServer"></a>
-<h2>Serveur SRCP</h2>
-<p>Le <a href="../../html/hardware/SRCP/index.shtml">Serveur SRCP</a> JMRI est une fa&#231;on standard de connexion de programmes utilisateur "client" &#224; un serveur.</p>
-<p>Sur ce volet vous pouvez sp&#233;cifier le port pour la connexion ( habituellement laiss&#233; par d&#233;faut ).
-</p>
-
-<a name="SimpleServer"></a>
-<h2>Serveur Simple</h2>
-<p>Le Serveur Simple JMRI est une partie de <a href="../../html/hardware/jmriclient/index.shtml">JMRIClient</a>, une m&#233;thode de connexion &#224; distance d'un programme JMRI &#224; un autre.</p>
-<p> Dans ce volet, vous pouvez sp&#233;cifier le port de connexion ( habituellement laiss&#233; par d&#233;faut ).
-</p>
-
-<a name="Warrants"></a>
-<h2>Bulletins</h2>
-<p> Ce volet configur les param&#232;tres utilis&#233;s dans le calcul des itin&#233;raires sous <a href="../../package/jmri/jmrit/logix/Warrant.shtml">Bulletins</a> et pour la
-commande des &#233;v&#233;nements que le trains sous bulletins peut rencontrer.</p>
-
-<h3>Carte de Vitesse</h3>
-<p>Quand un train en automatique rencontre un Signal qui appelle &#224; un changement de vitesse, 
-ou que la progression est stopp&#233;e par une occupation en avant, la crate de vitesse est utilis&#233;e 
-pour faire les changement de vitesse necessaire. D'autre param&#232;tres commandent la rampe de changement de vitesse.
-<p>
-La Carte de Vitesse Cartographie les noms de vitesse trouv&#233;s dans la d&#233;finition des aspects d'un syst&#232;me de signal pour une valeur. 
-Il est important que tous les noms de vitesse utilis&#233;s dans votre syst&#232;me de signalisation soient list&#233;s dans le tableau Carte de Vitesse. 
-La valeur assoco&#233;ev&#224; un nom de vites comme enregistr&#233; ou configur&#233; par lese peut re interpr&#233;t&#233;e de 4 fa&#231;ons: Comme un pourcentage 
-du r&#233;glage actuel du r&#233;gulateur ou r&#233;gl&#233; par un NX Bulletin ( "PourcentNormal"), ou comme un pourcentage
-du r&#233;glage &#224; fond du r&#233;gulateur ( "PercentFullThrottle" ). La derni&#232;re des deux fa&#231;ons interpr&#232;te la valeurcome
-une e&#233;chelle de vitesse de traction; Miles par Heure ou Kilom&#232;tres par heure; Utilisez les boutons
-radios pour s&#233;lectionner comment le code doit interpr&#233;ter la Carte de Vitesse.
-<p>
-La carte D'apparence des Feux est uilis&#233;e quand les feux de signalisations sont utilis&#233;s comme signaux. Elle cartographie l'apparence pour un nom de vitesse
-qui en &#224; son tour est cartographi&#233; par le tableau Carte de Vitesse.
-<p>
-Il est important que la bonne &#233;chelle soit choisie et que la valeur de "R&#233;glage R&#233;gulateur/Facteur de Vitesse" soit raisonnable pour 
-les adresses des machines qui circulent sous bulletins.	Le facteur ajuste le r&#233;glage du r&#233;gulateurpour une &#233;chelle de vitesse de traction.
-Le r&#233;glage Facteur R&#233;gulateur est ici un r&#233;glage global, mais les facteurs 
-pour des adresses individuelles de machine peuvent &#234;tre d&#233;termin&#233;s avec NXBulletins.
-<p>
-Le "Nombre Maximum de Cantons dans un Itin&#233;raire" est la profondeur &#224; laquelle JMRI cherchera un itin&#233;raire
-      quand il d&#233;finit
-un bulletin. C'est une valeur globale qui peut &#234;tre annul&#233;e lors de la cr&#233;ation d'un bulletin.
-<p>
-Les autres &#233;l&#233;ments sur le panneau sont utilis&#233;s lorsque JMRI effectue un changement de vitesse &#224; un signal ou
-une occupation devant. Le changement de vitesse est fait avec une s&#233;ries de d'incr&#233;ment des r&#233;glages
-du r&#233;gulateur.
-"Ramp Step Time" est la dur&#233;e de chaque cran et "Ramp Throttle Increment" est le montant du changement
-du r&#233;glage du r&#233;gulateur 
-<p>
-Pour plus d'information sur les Pr&#233;f&#233;rences bulletins voir	
-<a href="../jmri/jmrit/logix/Warrant.shtml#SpeedMap">A propos des Bulletins</a> et suivre ses liens.</p>
-
-            <!--#include virtual="/Footer.shtml" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+          <li>"Lorsque cela est possible, confirmez les &#233;critures de CV en les faisant suivre d'une lecture" :
+               Lorsque cette option est s&#233;lectionn&#233;e, DecoderPro lira chaque CV apr&#232;s l'avoir &#233;crit.
+               Si la valeur ne correspond pas, il marque l'&#233;criture comme ayant &#233;chou&#233;.
+               <p>Si vous avez des probl&#232;mes intermittents d'&#233;criture sur un d&#233;codeur, ceci
+               peut am&#233;liorer la fiabilit&#233;. Si DecoderPro n'est jamais capable d'&#233;crire correctement,
+               cela n'aidera pas ; cela n'aide que si le probl&#232;me est occasionnel,
+               et r&#233;essayer le fera plus souvent qu'autrement.
+               <p>Certains syst&#232;mes DCC v&#233;rifieront la pr&#233;sence d'une "impulsion de reconnaissance d'&#233;criture"
+               du d&#233;codeur avant de d&#233;clarer que l'&#233;criture a r&#233;ussi.
+               Ceux-ci sont presque aussi fiables que cela, et beaucoup plus rapides.
+               Donc, si vous utilisez l'un de ces syst&#232;mes DCC, cela peut ne pas &#234;tre
+    n&#233;cessaire.
+               D'un autre c&#244;t&#233;, si vous utilisez un syst&#232;me DCC qui
+               "&#233;crit en aveugle", sans contr&#244;le, cela peut &#234;tre tr&#232;s utile.
+               Pour savoir si vous avez l'un de ces syst&#232;mes, essayez d'&#233;crire des CV avec la locomotive hors de la voie.
+               .  Si DecoderPro pense que l'&#233;criture
+               r&#233;ussit, alors le syst&#232;me DCC &#233;crit en aveugle, sans v&#233;rification.
+               <p>Cela ne sert &#224; rien (mais ne fait pas de mal) si vous ne pouvez pas relire
+                le d&#233;codeur. La plupart des syst&#232;mes DCC ne peuvent pas lire pendant la programmation en mode op&#233;rationnel, par exemple.
+                Certaines Centrale (Digitrax DB150)
+                ne peuvent pas lire le d&#233;codeur. Dans ces cas, cette option
+                demande simplement &#224; la Centrale d'&#233;crire sans lire en retour.
+           </ul>
+           Ces options sont stock&#233;es avec les pr&#233;f&#233;rences pour une utilisation future.  Une nouvelle fen&#234;tre Inventaire de DecoderPro 
+           reprendra les nouvelles valeurs des options, sans avoir &#224; fermer et red&#233;marrer le programme.
+         </dd>
+ 
+         <dt>Inventaire</dt>
+ 
+         </dt>
+           Normalement, l'Inventaire est stock&#233; dans un emplacement standard comme une
+           partie de la page <a href=
+           "../../html/apps/DecoderPro/Files.shtml">r&#233;pertoire des Pr&#233;f&#233;rences
+           </a>. Cette option vous permet de le d&#233;placer quelque part
+           ailleurs.
+ 
+           <p>Pour le configurer, cliquez sur le bouton " D&#233;finir... " et suivez les
+           les instructions.</p>
+ 
+           </p> <p>Le bouton "R&#233;initialiser" le r&#233;tablit &#224; l'emplacement par d&#233;faut.
+            Notez que cela ne fait que changer l'endroit o&#249; le programme
+           regarde. Si vous avez stock&#233; les informations de la liste ailleurs et
+           voulez les retrouver &#224; l'emplacement par d&#233;faut, vous devez d&#233;placer
+           les fichiers vous-m&#234;me.</p>
+ 
+           <p>Vous pouvez &#233;galement entrer une valeur par d&#233;faut pour le champ "Propri&#233;taire"
+           dans les entr&#233;es de l'Inventaire DecoderPro ici. Cela remplit
+           la valeur pour les nouvelles entr&#233;es, ce qui peut vous &#233;viter un peu de
+           saisie. Cela n'a aucun effet sur les entr&#233;es existantes, m&#234;me
+           si elles sont modifi&#233;es.</p>
+         </dd>
+       </dl><a name="Throttle" id="Throttle"></a>
+ 
+       <h2>R&#233;gulateur</h2>Cet onglet du volet des pr&#233;f&#233;rences vous permet de choisir
+       si les fonctionnalit&#233;s &#233;tendues de R&#233;gulateur sont disponibles, et
+       lesquelles peuvent &#234;tre utilis&#233;es. <a name="WiThrottle" id=
+       "WiThrottle"></a>
+ 
+       <h2>WiThrottle</h2>
+ 
+       <dl>
+         <dt>eStop</dt>
+ 
+         <dd>
+           Si s&#233;lectionn&#233;, surveille si un paquet &#224; envoyer depuis l'
+           appareil mobile connect&#233;. Si le serveur WiThrottle ne
+           ne re&#231;oit aucune communication dans le temps choisi, le
+           R&#233;gulateur JiMRI concern&#233; mettra son train &#224; l'arr&#234;t.
+ 
+           </p> <p>Le temps choisi est approximatif ; la r&#233;ponse peut se faire quelques
+           quelques secondes plus t&#244;t ou plus tard.</p>
+         </dd>
+ 
+         <dt>R&#233;seau</dt>
+ 
+         </dt>Changez le num&#233;ro du port &#224; utiliser. Assurez-vous que votre logiciel de pare-feu
+         permette l'utilisation de ce port.<br>
+         Ne modifiez le num&#233;ro de port qu'apr&#232;s avoir arr&#234;t&#233; le serveur WiThrottle,
+         s'il y a une chance que des appareils mobiles soient encore
+         connect&#233;s.</dd>
+ 
+         <dt>Conmmandes autoris&#233;es</dt>
+ 
+         </dt>
+           Cochez ces cases pour autoriser des fonctions sp&#233;cifiques &#224; &#234;tre
+           command&#233;es par des appareils mobiles. Cela vous permettra de limiter
+           ce que les utilisateurs ont la possibilit&#233; de contr&#244;ler.
+ 
+           <ul>
+             <li>Alimentation Voie - S&#233;lectionnez si les appareils mobiles
+             connect&#233;s via cette interface WiFi peuvent commander l'alimentation
+              de la voie.</li>
+ 
+             <li>Aiguillages - S&#233;lectionnez si les appareils mobiles peuvent
+             conmmander les aiguillages.</li>
+ 
+             <li>RItin&#233;raires - S&#233;lectionnez si les appareils mobiles peuvent commander les
+             itin&#233;raires.</li>
+ 
+             <li>Couplage - Si cette option est s&#233;lectionn&#233;e, les appareils mobiles peuvent construire des...
+             &amp;"Couplages Avanc&#233;es".
+ 
+               <ul>
+                 <li>Format NMRA - Ces couplages peuvent &#234;tre plus performants
+                 pour la construction et la commande avec des appareils WiFi.</li>
+ 
+                 <li>Sp&#233;cifique &#224; la marque DCC - Ces couplages devraient .
+                 &#234;tre plus performants lorsqu'ils sont construits avec un appareil WiFi, mais
+                 contr&#244;l&#233; par une manette de commande du fabricant DCC
+                 de votre syst&#232;me.</li>
+               </ul>
+             </li>
+           </ul>
+         </dd>
+       </dl>Le bouton "Sauvegarder", en bas &#224; gauche, mmet en vigueur les r&#233;glages modifi&#233;s. 
+       Pour un <a href=> 
+       "../jmri/jmrit/withrottle/UserInterface.shtml">R&#233;gulateur connect&#233;</a>
+       pour utiliser les nouveaux param&#232;tres, vous devrez red&#233;marrer JiMRI (puis WiThrottle).
+       puis red&#233;marrer WiThrottle) comme indiqu&#233; dans la bo&#238;te de dialogue.
+       <a name="Profils" id="Profils"></a>
+ 
+       <h2>Profils de configuration</h2>Les profils de configuration JiMRI facilitent 
+       le param&#233;trage de vos applications JiMRI pour fonctionner avec diff&#233;rentes
+       configurations. Chaque profil sp&#233;cifie un ensemble de pr&#233;f&#233;rences. Vous
+       pouvez ensuite s&#233;lectionner celui que vous souhaitez utiliser.
+ 
+       <p>Pour plus d'informations, consultez la page d'aide <a href=>.
+       "../../html/setup/profiles.shtml">Profils de configuration</a>
+       . <a name="RailroadName" id="RailroadName"></a></p>.
+ 
+       <h2>Nom du Chemin de Fer</h2>
+ 
+       <p>L'onglet Nom du Chemin de Fer vous permet de sp&#233;cifier le nom de votre
+       r&#233;seau de chemin de fer (module), car il est utilis&#233; par plusieurs protocoles de serveurs
+       .</p><a name="JSONServer" id="JSONServer"></a>
+ 
+       <h2>Serveur JSON</h2>
+ 
+       <p>JiMRI <a href="../../html/web/JsonServlet.shtml">serveur JSON
+       </a> est utilis&#233; par les applications sur d'autres ordinateurs,
+       y compris les tablettes et les t&#233;l&#233;phones, pour se connecter &#224; JiMRI afin de faire fonctionner
+       votre chemin de fer.</p>
+ 
+       <p>Sur ce volet, vous pouvez sp&#233;cifier le port de la connexion.
+        (g&#233;n&#233;ralement laiss&#233; &#224; la valeur par d&#233;faut) et la fr&#233;quence &#224; laquelle le serveur v&#233;rifie
+        si la connexion a &#233;chou&#233; via un message Heartbeat
+        </p><a name="WebServer" id="WebServer"></a>
+  
+        <h2>Serveur Web</h2>Le serveur Web de JiMRI vous permet de vous connecter &#224; 
+        JiMRI depuis un navigateur web sur votre ordinateur, tablette ou t&#233;l&#233;phone et de
+        travailler avec votre chemin de fer.
+  
+        <p>Cet onglet vous permet de contr&#244;ler ce que le serveur Web fournit.
+        Pour plus d'informations, consultez la page <a href=.
+        "../../html/web/index.shtml#Configure">Pr&#233;f&#233;rences du serveur web.</a> . <a name="Serveur SRCP"></a></p>
+  
+        <h2>Serveur SRCP</h2>
+  
+        <p>La page JiMRI <a href=.
+        "../../html/hardware/SRCP/index.shtml">serveur SRCP</a> est un moyen standard de connecter un utilisateur "client" &#224; un serveur
+        .</p>
+  
+        <p>Sur ce volet, vous pouvez sp&#233;cifier le port pour la connexion.
+        (g&#233;n&#233;ralement laiss&#233; par d&#233;faut).</p><a name="Simple Server"></a>
+  
+        <h2>Serveur simple</h2>
+  
+        </p> <p>Le serveur simple de JiMRI fait partie de <a href=>.
+        "../../html/hardware/jmriclient/index.shtml">JiMRIClient</a>,
+        une m&#233;thode pour connecter &#224; distance un programme JiMRI &#224; un autre.</p>
+  
+        <p>Sur ce volet, vous pouvez sp&#233;cifier le port pour la connexion.
+        (g&#233;n&#233;ralement laiss&#233; par d&#233;faut).</p><a name="Warrants" id=
+        "Warrants"></a>
+  
+        <h2>Bulletins d'Ordre</h2>Cet onglet d&#233;finit les param&#232;tres utilis&#233;s dans le calcul 
+        des itin&#233;raires et des changements de vitesse pour les <a href=.
+        "../../package/jmri/jmrit/logix/Warrant.shtml">Bulletins d'Ordres</a>
+        et pour contr&#244;ler les &#233;v&#233;nements que les trains mandat&#233;s peuvent
+        rencontrer.
+  
+        <h3>Tableaux de noms de vitesse</h3>
+        Lorsqu'un train en circulation automatique rencontre un aspect de signal
+         qui demande un changement de vitesse, le tableau des vitesse 
+        fournit les informations sur ce que doit &#234;tre le changement de vitesse
+        . D'autres param&#232;tres commandent la fa&#231;on dont le
+        changement de vitesse est effectu&#233;.
+  
+        <h2>Tableau des noms de vitesse des aspects</h2>
+        Le tableau de nom de vitesse d'aspect fait correspondre les noms de vitesse d'aspects trouv&#233;s dans les 
+        d&#233;finition d'un syst&#232;me de signalisation &#224; une valeur. Il est important
+        que tous les noms de vitesse utilis&#233;s dans votre syst&#232;me de signalisation soient r&#233;pertori&#233;s
+        dans le tableau de correspondance des vitesses.  Les rang&#233;es peuvent &#234;tre ajout&#233;es ou supprim&#233;es pour se conformer
+        aux aspects du syst&#232;me de signalisation.
+        
+        <p>La valeur associ&#233;e &#224; un nom de vitesse
+        La valeur associ&#233;e &#224; un nom de vitesse peut &#234;tre interpr&#233;t&#233;e de quatre mani&#232;res diff&#233;rentes. 
+        quatre boutons radio pour vous permettre de choisir la signification
+        de la valeur.</p>
+        <ul>
+          <li><b>Pourcent Normal</b> - la valeur est un
+        pourcentage du r&#233;glage actuel de l'acc&#233;l&#233;rateur tel qu'il est enregistr&#233; ou d&#233;fini
+        par un NXWarrant.  C'est un pourcentage de la vitesse "normale".</li>
+          <li><b>Pourcentage du R&#233;gulateur</b> - la valeur est un pourcentage du
+          r&#233;glage du R&#233;gulateur &#224; fond.</li>
+          <li><b>Miles par heure</b> - la valeur est une vitesse absolue en &#233;chelle de
+          vitesse de l'&#233;chelle en miles par heure.</li>
+          <li><b>Kilom&#232;tres par heure</b> - la valeur est une vitesse absolue &#224; l'&#233;chelle en kilom&#232;tres par heure.
+         .</li>
+        </ul>
+        Le choix de l'interpr&#233;tation est une question de ce que vous voulez
+        qu'il se passe lorsqu'un train soumit &#224; un bulletin d'ordre atteint un signal ou un aspect de Canton.
+        Peourcent Normal fera toujours en sorte que le train change de vitesse et...
+        Peourcent R&#233;gulateur le fera tr&#232;s probablement aussi.  Les deux derniers choix
+        sont les plus typiques, mais si le train est d&#233;j&#224; dans la limite de vitesse demand&#233;e, aucun changement de vitesse n'est n&#233;cessaire.
+        l
+  
+        <h2>Tableau des noms d'apparence du feu</h2>
+        Le <b>Tableau d'apparence des Feux</b> est utilis&#233; lorsque des t&#234;tes de signaux
+        sont utilis&#233;es comme signaux. Il fait correspondre les noms d'apparence des t&#234;tes de signal 
+        aux noms de vitesse d'aspect qui, &#224; leur tour, sont mis en correspondance par la table Aspect
+        Speed Name &#224; des valeurs qui interpr&#232;tent les limites de vitesse.
+  
+        <h3>&#201;chelle de r&#233;seau et profondeur de recherche</h3>
+        Il est important de choisir la bonne <b>&#201;chelle du R&#233;seau</b>. 
+        car elle est n&#233;cessaire pour convertir les r&#233;glages du R&#233;gulateur 
+        et les vitesses de la voie vers et depuis les vitesses &#224; l'&#233;chelle.
+        </p> <p>Le <b>Nombre maximal de Cantons dans l'itin&#233;raire</b> est la profondeur &#224; laquelle.
+        JiMRI recherchera un itin&#233;raire lors de la d&#233;finition d'un bulletin d'ordre. Il s'agit
+        d'une valeur globale qui peut &#234;tre surcharg&#233;e lors de la cr&#233;ation d'un
+        bulletin d'ordre.</p>
+  
+        <h3>Modifications de la vitesse de rampe</h3>
+        La fluidit&#233; pour le ralentissement et
+        l'acc&#233;l&#233;ration se font par paliers avec deux param&#232;tres de " rampe ".
+        ; l'incr&#233;ment du R&#233;gulateur par &#233;tape et le temps
+          d'intervalle de temps de chaque &#233;tape.  
+          Ces deux param&#232;tres sont associ&#233;s pour cr&#233;er un mod&#232;le de "marche d'escalier" pour le changement de vitesse.  
+          En g&#233;n&#233;ral, ils sont associ&#233;s de mani&#232;re &#224; ce qu'un petit incr&#233;ment de l'acc&#233;l&#233;rateur
+          dans un intervalle de temps court et une augmentation importante
+          dans un intervalle de temps plus long. Lors de leur r&#233;glage, l'intervalle de temps doit &#234;tre
+          suffisamment long pour que l'augmentation de vitesse soit compl&#232;te, compte tenu de la 
+          dynamiqueque vous avez programm&#233;e dans vos d&#233;codeurs.
+        <ul>
+        <li><b>Augmentation de l'acc&#233;l&#233;ration par palier </b> Cette valeur est
+            un rapport de l'acc&#233;l&#233;ration maximale. Sept ou huit pas de vitesse 
+            d'un R&#233;gulateur de 128 pas est un incr&#233;ment appropri&#233; pour une
+            locomotive ayant un &#233;lan modeste. Une valeur de 0,008 &#224; 0,04 est recommand&#233;e.
+             (0,0079 correspondrait &#224; 1 pas d'un R&#233;gulateur de 128 pas)</li>.
+    
+            <li><b>Temps du cran de rampe</b> Selon la mani&#232;re dont vous avez
+            configur&#233; la dynamique sur vos
+            locomotives, ajustez cette valeur pour que le changement de vitesse soit 
+            termin&#233; dans ce laps de temps. Typiquement
+            correspondant &#224; ce qui pr&#233;c&#232;de, 
+            300 &#224; 1000 millisecondes seraient appropri&#233;es.</li>
+          </ul>
+           Vous devriez exp&#233;rimenter en observant comment les NXWarrants commencent et se terminent.
+           ou en envoyant des commandes "Stop" et "Reprendre" &#224; un bulletin d'ordre enregistr&#233;.
+           .
+           
+          <h3>Facteur du R&#233;gulateur</h3>
+          La valeur du <b>Facteur de r&#233;glage de vitesse</b> 
+          ainsi que l'<b>&#201;chelle de r&#233;seau</b>
+          permet d'ajuster un r&#233;glage du R&#233;gulateur pour qu'il corresponde &#224; une vitesse de la voie du r&#233;seau. 
+          Le facteur d'acc&#233;l&#233;rateur d&#233;fini ici est un d&#233;faut global,.
+           
+          <p>Pour plus d'informations sur les param&#232;tres de vitesse dde bulletin d'ordre, voir .
+          <a href="../jmri/jmrit/logix/speedChanges.shtml">Modification des
+          Vitesse de Bulletins d'Ordre</a> et suivez ses liens.</p>
+          
+          <h2>Fusion des profils de vitesse</h2>
+          Dans la version 4.9.2, Bulletin d'Ordre calcule une vitesse de voie lorsqu'il traverse 
+          un chemin dont la longueur et le r&#233;glage du R&#233;gulateur sont connus.  Ces 
+          mesures sont effectu&#233;es pour chaque adresse qui est enregistr&#233;e sous un
+          bulletin d'ordre et sont conserv&#233;es pour toute la session de r&#233;seau.  Lorsque
+          JiMRI est quitt&#233;, &#224; l'arr&#234;t. Ces profils de vitesse de session peuvent
+          &#234;tre fusionn&#233;s avec les profils de vitesse de l'Inventaire.  Les choix suivants
+          sont disponibles &#224; l'arr&#234;t.
+          <ul>
+            <li><b>Ne pas Fusionner</b> - Ne pas solliciter et 
+            rejeter les profils de session et
+            laisser les profils de vitesse de la liste inchang&#233;s. </li>
+            <li><b>Fusionner par Invite</b> - A l'arr&#234;t, une bo&#238;te de dialogue est pr&#233;sent&#233;e
+            o&#249; vous pouvez choisir quels profils de vitesse doivent &#234;tre fusionn&#233;s et
+            ceux qui sont rejet&#233;s.  Le dialogue vous permet de visualiser les profils
+            pour chaque adresse.  Sont affich&#233;s : le <b>Profil de vitesse du serveur</b> actuel, le <b>profil de vitesse potentiel</b>.
+            Profil de vitesse du serveur</b>, le <b>Profil de vitesse fusionn&#233;</b> potentiel et le <b>Profil de vitesse de la session</b>.
+            <b>Profil de vitesse de session</b>. (par d&#233;faut)</li>
+            <li><b>Fusionner tout</b> - Ne pas demander et toujours fusionner tous les <b>profils de vitesse de session</b>.
+            profils de vitesse de session dans les profils de vitesse de la liste. </li>
+      </ul>
+<p>Traduction 2021-03-26</p>
+      <p><!--#include virtual="/Footer" --></p>
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
-</html>	
+</html>
+

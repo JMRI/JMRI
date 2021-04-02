@@ -17,63 +17,32 @@ import jmri.jmrit.logixng.*;
  */
 public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implements MaleAnalogExpressionSocket {
 
-    private final AnalogExpressionBean _expression;
+//    private final AnalogExpressionBean ((AnalogExpressionBean)getObject());
     private DebugConfig _debugConfig = null;
     private boolean _enabled = true;
 
 
     public DefaultMaleAnalogExpressionSocket(@Nonnull BaseManager<? extends NamedBean> manager, @Nonnull AnalogExpressionBean expression) {
-        super(manager);
-        _expression = expression;
+        super(manager, expression);
     }
 
     /** {@inheritDoc} */
     @Override
-    public final Base getRoot() {
-        return _expression.getRoot();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Lock getLock() {
-        return _expression.getLock();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void setLock(Lock lock) {
-        _expression.setLock(lock);
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public boolean getTriggerOnChange() {
-        return _expression.getTriggerOnChange();
+        return ((AnalogExpressionBean)getObject()).getTriggerOnChange();
     }
     
     /** {@inheritDoc} */
     @Override
     public void setTriggerOnChange(boolean triggerOnChange) {
-        _expression.setTriggerOnChange(triggerOnChange);
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Category getCategory() {
-        return _expression.getCategory();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return _expression.isExternal();
+        ((AnalogExpressionBean)getObject()).setTriggerOnChange(triggerOnChange);
     }
     
     /**
      * Get the value of the AnalogExpressionBean.
      */
     private double internalEvaluate() throws JmriException {
-        double result = _expression.evaluate();
+        double result = ((AnalogExpressionBean)getObject()).evaluate();
         
         if (Double.isNaN(result)) {
             throw new IllegalArgumentException("The result is NaN");
@@ -121,122 +90,17 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
     
     @Override
     public int getState() {
-        return _expression.getState();
-    }
-
-    @Override
-    public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
-        return _expression.getChild(index);
-    }
-
-    @Override
-    public int getChildCount() {
-        return _expression.getChildCount();
-    }
-
-    @Override
-    public String getShortDescription(Locale locale) {
-        return _expression.getShortDescription(locale);
-    }
-
-    @Override
-    public String getLongDescription(Locale locale) {
-        return _expression.getLongDescription(locale);
-    }
-
-    @Override
-    public String getUserName() {
-        return _expression.getUserName();
-    }
-
-    @Override
-    public void setUserName(String s) throws BadUserNameException {
-        _expression.setUserName(s);
-    }
-
-    @Override
-    public String getSystemName() {
-        return _expression.getSystemName();
+        return ((AnalogExpressionBean)getObject()).getState();
     }
 
     @Override
     public String getDisplayName() {
-        return _expression.getDisplayName();
-    }
-
-    @Override
-    public void addPropertyChangeListener(PropertyChangeListener l, String name, String listenerRef) {
-        _expression.addPropertyChangeListener(l, name, listenerRef);
-    }
-
-    @Override
-    public void addPropertyChangeListener(String propertyName, PropertyChangeListener l, String name, String listenerRef) {
-        _expression.addPropertyChangeListener(propertyName, l, name, listenerRef);
-    }
-
-    @Override
-    public void addPropertyChangeListener(PropertyChangeListener l) {
-        _expression.addPropertyChangeListener(l);
-    }
-
-    @Override
-    public void addPropertyChangeListener(String propertyName, PropertyChangeListener l) {
-        _expression.addPropertyChangeListener(propertyName, l);
-    }
-
-    @Override
-    public void removePropertyChangeListener(PropertyChangeListener l) {
-        _expression.removePropertyChangeListener(l);
-    }
-
-    @Override
-    public void removePropertyChangeListener(String propertyName, PropertyChangeListener l) {
-        _expression.removePropertyChangeListener(propertyName, l);
-    }
-
-    @Override
-    public void updateListenerRef(PropertyChangeListener l, String newName) {
-        _expression.updateListenerRef(l, newName);
-    }
-
-    @Override
-    public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
-        _expression.vetoableChange(evt);
-    }
-
-    @Override
-    public String getListenerRef(PropertyChangeListener l) {
-        return _expression.getListenerRef(l);
-    }
-
-    @Override
-    public ArrayList<String> getListenerRefs() {
-        return _expression.getListenerRefs();
-    }
-
-    @Override
-    public int getNumPropertyChangeListeners() {
-        return _expression.getNumPropertyChangeListeners();
-    }
-
-    @Override
-    public synchronized PropertyChangeListener[] getPropertyChangeListeners() {
-        return _expression.getPropertyChangeListeners();
-    }
-
-    @Override
-    public synchronized PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
-        return _expression.getPropertyChangeListeners(propertyName);
-    }
-
-    @Override
-    public PropertyChangeListener[] getPropertyChangeListenersByReference(String name) {
-        return _expression.getPropertyChangeListenersByReference(name);
+        return ((AnalogExpressionBean)getObject()).getDisplayName();
     }
 
     @Override
     public void disposeMe() {
-        _expression.dispose();
+        ((AnalogExpressionBean)getObject()).dispose();
     }
 
     /**
@@ -244,7 +108,7 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
      */
     @Override
     public void registerListenersForThisClass() {
-        _expression.registerListeners();
+        ((AnalogExpressionBean)getObject()).registerListeners();
     }
     
     /**
@@ -252,12 +116,12 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
      */
     @Override
     public void unregisterListenersForThisClass() {
-        _expression.unregisterListeners();
+        ((AnalogExpressionBean)getObject()).unregisterListeners();
     }
     
     @Override
     public void setState(int s) throws JmriException {
-        _expression.setState(s);
+        ((AnalogExpressionBean)getObject()).setState(s);
     }
 
     @Override
@@ -267,42 +131,42 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
 
     @Override
     public String getComment() {
-        return _expression.getComment();
+        return ((AnalogExpressionBean)getObject()).getComment();
     }
 
     @Override
     public void setComment(String comment) {
-        _expression.setComment(comment);
+        ((AnalogExpressionBean)getObject()).setComment(comment);
     }
 
     @Override
     public void setProperty(String key, Object value) {
-        _expression.setProperty(key, value);
+        ((AnalogExpressionBean)getObject()).setProperty(key, value);
     }
 
     @Override
     public Object getProperty(String key) {
-        return _expression.getProperty(key);
+        return ((AnalogExpressionBean)getObject()).getProperty(key);
     }
 
     @Override
     public void removeProperty(String key) {
-        _expression.removeProperty(key);
+        ((AnalogExpressionBean)getObject()).removeProperty(key);
     }
 
     @Override
     public Set<String> getPropertyKeys() {
-        return _expression.getPropertyKeys();
+        return ((AnalogExpressionBean)getObject()).getPropertyKeys();
     }
 
     @Override
     public String getBeanType() {
-        return _expression.getBeanType();
+        return ((AnalogExpressionBean)getObject()).getBeanType();
     }
 
     @Override
     public int compareSystemNameSuffix(String suffix1, String suffix2, NamedBean n2) {
-        return _expression.compareSystemNameSuffix(suffix1, suffix2, n2);
+        return ((AnalogExpressionBean)getObject()).compareSystemNameSuffix(suffix1, suffix2, n2);
     }
 
     /** {@inheritDoc} */
@@ -323,12 +187,6 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
         return new AnalogExpressionDebugConfig();
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public Base getObject() {
-        return _expression;
-    }
-    
     /** {@inheritDoc} */
     @Override
     public void setEnabled(boolean enable) {

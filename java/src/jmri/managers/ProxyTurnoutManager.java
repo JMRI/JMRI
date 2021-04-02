@@ -225,14 +225,6 @@ public class ProxyTurnoutManager extends AbstractProvidingProxyManager<Turnout> 
         return ((TurnoutManager) getDefaultManager()).getDefaultClosedSpeed();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getEntryToolTip() {
-        return "Enter a number from 1 to 9999"; // Basic number format help
-    }
-
     /** {@inheritDoc}
      * @return outputInterval from default TurnoutManager
      */

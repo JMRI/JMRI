@@ -33,11 +33,6 @@ public class LightEditAction extends BeanEditAction<Light> {
     }
 
     @Override
-    public String getBeanType() {
-        return Bundle.getMessage("BeanNameLight");
-    }
-
-    @Override
     public String helpTarget() {
         return "package.jmri.jmrit.beantable.LightAddEdit";
     } // NOI18N

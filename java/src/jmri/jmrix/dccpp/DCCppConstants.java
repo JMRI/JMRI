@@ -60,6 +60,7 @@ public final class DCCppConstants {
     public static final char PROG_WRITE_CV_BYTE     = 'W'; // Write CV byte on program track
     public static final char PROG_WRITE_CV_BIT      = 'B'; // Set/Clear a single CV bit on ops track
     public static final char PROG_READ_CV           = 'R'; // Read CV byte on program track
+    public static final char PROG_VERIFY_CV         = 'V'; // Verify CV byte on program track
     public static final char TRACK_POWER_ON         = '1'; // Track power ON
     public static final char TRACK_POWER_OFF        = '0'; // Track power OFF
     public static final char READ_TRACK_CURRENT     = 'c'; // Request current and voltage readings
@@ -67,25 +68,26 @@ public final class DCCppConstants {
     public static final char READ_MAXNUMSLOTS       = '#'; // Read max number of slots supported by CS
     public static final char WRITE_TO_EEPROM_CMD    = 'E'; // Store settings to eeprom  -- NEW V1.1
     public static final char CLEAR_EEPROM_CMD       = 'e'; // Clear EEPROM settings     -- NEW V1.1
-    public static final char QUERY_SENSOR_STATES_CMD = 'Q'; // Show all sensors -- NEW V1.2?
+    public static final char QUERY_SENSOR_STATES_CMD= 'Q'; // Show all sensors -- NEW V1.2?
+    public static final char ESTOP_ALL_CMD          = '!'; // Stops all locos on the track but leaves power on.
 
     // Special Commands not for normal use.  Diagnostic and Test Use Only
     public static final char WRITE_DCC_PACKET_MAIN  = 'M';
     public static final char WRITE_DCC_PACKET_PROG  = 'P';
     public static final char LIST_REGISTER_CONTENTS = 'L';
-    public static final char ENTER_DIAG_MODE_CMD    = 'D'; // Enter Diagnostics mode -- NEW V1.2?
+    public static final char DIAG_CMD               = 'D'; // Send various diagnostics commands
  
     // Message Replies
     public static final char THROTTLE_REPLY   = 'T'; // <T reg speed dir>
     public static final char TURNOUT_REPLY    = 'H'; // <H id throw> or <X>
     public static final char PROGRAM_REPLY    = 'r';
+    public static final char VERIFY_REPLY     = 'v';
     public static final char STATUS_REPLY    = 'i';
     public static final char MAXNUMSLOTS_REPLY = '#';
     public static final char POWER_REPLY      = 'p';
     public static final char CURRENT_REPLY    = 'a';
     public static final char METER_REPLY      = 'c';
-    public static final char MEMORY_REPLY     = 'f';
-//    public static final char LISTPACKET_REPLY = 'M';
+//    public static final char MEMORY_REPLY     = 'f';
     public static final char SENSOR_REPLY     = 'Q';
     public static final char SENSOR_REPLY_H   = 'q';
     public static final char SENSOR_REPLY_L   = 'Q';
@@ -94,6 +96,7 @@ public final class DCCppConstants {
     public static final char MADC_FAIL_REPLY  = 'X';
     public static final char MADC_SUCCESS_REPLY = 'O';
     public static final char COMM_TYPE_REPLY = 'N';
+    public static final char DIAG_REPLY      = '*'; //
 
     // Message / Reply Regexes
     public static final String THROTTLE_CMD_REGEX = "t\\s*(\\d+)\\s+(\\d+)\\s+([-]*\\d+)\\s+([1,0])\\s*"; // <t REG CAB SPEED DIR>
@@ -122,6 +125,7 @@ public final class DCCppConstants {
     public static final String PROG_WRITE_BYTE_REGEX = "W\\s*(\\d+)\\s(\\d+)\\s(\\d+)\\s(\\d+)";
     public static final String PROG_WRITE_BIT_REGEX = "B\\s*(\\d+)\\s([0-7])\\s([1,0])\\s(\\d+)\\s(\\d+)";
     public static final String PROG_READ_REGEX = "R\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)";
+    public static final String PROG_VERIFY_REGEX = "V\\s*(\\d+)\\s+(\\d+)\\s*";
     public static final String TRACK_POWER_REGEX = "\\s*[0,1]\\s*"; // <1> or <0>
     public static final String READ_TRACK_CURRENT_REGEX = "\\s*c\\s*"; // <c>
     public static final String READ_CS_STATUS_REGEX = "\\s*s\\s*";// <s>
@@ -129,16 +133,19 @@ public final class DCCppConstants {
     public static final String WRITE_DCC_PACKET_MAIN_REGEX = "M\\s+(\\d+)((\\s+[0-9a-fA-F]{1,2}){2,5})\\s*"; // M REG pktbyte1 pktbyte2 pktbyte3 ?pktbyte4 ?pktbyte5
     public static final String WRITE_DCC_PACKET_PROG_REGEX = "P\\s+(\\d+)((\\s+[0-9a-fA-F]{1,2}){2,5})\\s*"; // P REG pktbyte1 pktbyte2 pktbyte3 ?pktbyte4 ?pktbyte5
     public static final String LIST_REGISTER_CONTENTS_REGEX = "\\s*L\\s*";
-    public static final String ENTER_DIAG_MODE_REGEX = "\\s*D\\s*";
     public static final String READ_MAXNUMSLOTS_REGEX = "\\s*#\\s*";
+    public static final String DIAG_CMD_REGEX         = "\\s*D\\s.*"; //D alone or followed by various commands
+    public static final String ESTOP_ALL_REGEX        = "\\s*!"; 
 
     // Reply Regexes
     public static final String THROTTLE_REPLY_REGEX =      "\\s*T\\s*(\\d+)\\s+([-]*\\d+)\\s+([1,0]).*";
     public static final String TURNOUT_REPLY_REGEX =       "\\s*H\\s*(\\d+)\\s+([1,0])\\s*";
     public static final String TURNOUT_DEF_REPLY_REGEX =   "\\s*H\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+([0|1]).*";
     public static final String PROGRAM_REPLY_REGEX =       "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+([-]*\\d+)\\s*";
+    public static final String PROGRAM_VERIFY_REGEX =      "\\s*v\\s*(\\d+)\\s*([-]*\\d+)\\s*";
     public static final String PROGRAM_BIT_REPLY_REGEX =   "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*";
     public static final String MAXNUMSLOTS_REPLY_REGEX =   "\\s*#\\s*(\\d+).*";
+    public static final String DIAG_REPLY_REGEX        =   "^\\*\\s*(.*)\\s+\\*$";
     public static final String CURRENT_REPLY_REGEX =       "\\s*a\\s*(\\d+).*";
     public static final String CURRENT_REPLY_NAMED_REGEX = "\\s*a\\s*(\\w*?[a-zA-Z])\\s*(\\d+).*";
     public static final String METER_REPLY_REGEX = " *c *(.+) +([\\d\\.]+) +([A-Z]) +(\\w+) +([\\d\\.]+) +([\\d\\.]+) +([\\d\\.]+) +([\\d\\.]+).*";

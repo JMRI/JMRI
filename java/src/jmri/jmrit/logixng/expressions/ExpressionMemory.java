@@ -288,12 +288,12 @@ public class ExpressionMemory extends AbstractDigitalExpression
                         throw new IllegalArgumentException("_memoryOperation has unknown value: "+_memoryOperation.name());
                 }
             } catch (NumberFormatException nfe) {
-                return false;   // n1 is a number, n2 is not
+                return _memoryOperation == MemoryOperation.NotEqual;   // n1 is a number, n2 is not
             }
         } catch (NumberFormatException nfe) {
             try {
                 Integer.parseInt(value2);
-                return false;     // n1 is not a number, n2 is
+                return _memoryOperation == MemoryOperation.NotEqual;     // n1 is not a number, n2 is
             } catch (NumberFormatException ex) { // OK neither a number
             }
         }

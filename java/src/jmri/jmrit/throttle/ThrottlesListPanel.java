@@ -3,18 +3,27 @@ package jmri.jmrit.throttle;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
+
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
+
 import org.jdom2.Element;
+
+/**
+ * A panel to display a list of active JMRI throttles
+ * 
+ * @author Lionel Jeanson - 2009-2021
+ * 
+ */
 
 public class ThrottlesListPanel extends JPanel {
 

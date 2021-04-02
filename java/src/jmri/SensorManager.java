@@ -42,8 +42,8 @@ public interface SensorManager extends ProvidingManager<Sensor> {
     @Nonnull
     public Sensor provideSensor(@Nonnull String name) throws IllegalArgumentException;
 
-    @Override
     /** {@inheritDoc} */
+    @Override
     default public Sensor provide(@Nonnull String name) throws IllegalArgumentException { return provideSensor(name); }
 
     /**
@@ -63,7 +63,9 @@ public interface SensorManager extends ProvidingManager<Sensor> {
     public void dispose();
 
     /**
-     * Return a Sensor with the specified system and user names. 
+     * Return a Sensor with the specified user or system name.
+     * Return Sensor by UserName else provide by SystemName.
+     * <p>
      * Note that
      * two calls with the same arguments will get the same instance; there is
      * only one Sensor object representing a given physical turnout and

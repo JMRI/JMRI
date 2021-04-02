@@ -68,7 +68,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         TamsTrafficController tc = getMemo().getTrafficController();
         TamsSensor s = new TamsSensor(systemName, userName);
         log.debug("Creating new TamsSensor: {}", systemName);
