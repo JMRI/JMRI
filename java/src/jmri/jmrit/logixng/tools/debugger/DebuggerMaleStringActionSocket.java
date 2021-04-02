@@ -37,53 +37,53 @@ public class DebuggerMaleStringActionSocket extends AbstractDebuggerMaleSocket i
     public void setValue(@Nonnull String value) throws JmriException {
         _nextValue = value;
         before();
-        ((MaleStringActionSocket) _maleSocket).setValue(_nextValue);
+        ((MaleStringActionSocket)getObject()).setValue(_nextValue);
         after();
     }
 
     @Override
     public void setState(int s) throws JmriException {
-        ((MaleStringActionSocket) _maleSocket).setState(s);
+        ((MaleStringActionSocket)getObject()).setState(s);
     }
 
     @Override
     public int getState() {
-        return ((MaleStringActionSocket) _maleSocket).getState();
+        return ((MaleStringActionSocket)getObject()).getState();
     }
 
     @Override
     public String describeState(int state) {
-        return ((MaleStringActionSocket) _maleSocket).describeState(state);
+        return ((MaleStringActionSocket)getObject()).describeState(state);
     }
 
     @Override
     public void setProperty(String key, Object value) {
-        ((MaleStringActionSocket) _maleSocket).setProperty(key, value);
+        ((MaleStringActionSocket)getObject()).setProperty(key, value);
     }
 
     @Override
     public Object getProperty(String key) {
-        return ((MaleStringActionSocket) _maleSocket).getProperty(key);
+        return ((MaleStringActionSocket)getObject()).getProperty(key);
     }
 
     @Override
     public void removeProperty(String key) {
-        ((MaleStringActionSocket) _maleSocket).removeProperty(key);
+        ((MaleStringActionSocket)getObject()).removeProperty(key);
     }
 
     @Override
     public Set<String> getPropertyKeys() {
-        return ((MaleStringActionSocket) _maleSocket).getPropertyKeys();
+        return ((MaleStringActionSocket)getObject()).getPropertyKeys();
     }
 
     @Override
     public String getBeanType() {
-        return ((MaleStringActionSocket) _maleSocket).getBeanType();
+        return ((MaleStringActionSocket)getObject()).getBeanType();
     }
 
     @Override
     public int compareSystemNameSuffix(String suffix1, String suffix2, NamedBean n2) {
-        return ((MaleStringActionSocket) _maleSocket).compareSystemNameSuffix(suffix1, suffix2, n2);
+        return ((MaleStringActionSocket)getObject()).compareSystemNameSuffix(suffix1, suffix2, n2);
     }
     
 }

@@ -47,18 +47,19 @@ abstract public class SerialLightManager extends AbstractLightManager {
      * that a Light with this system name does not already exist
      */
     @Override
-    public Light createNewLight(@Nonnull String systemName, String userName) {
-        Light lgt = null;
+    @Nonnull
+    protected Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         // Validate the systemName
         if (tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, 'L') == NameValidity.VALID) {
-            lgt = createNewSpecificLight(systemName, userName);
+            Light lgt = createNewSpecificLight(systemName, userName);
             if (!tc.getAdapterMemo().getSerialAddress().validSystemNameConfig(systemName, 'L')) {
                 log.warn("Light system Name does not refer to configured hardware: {}", systemName);
             }
+            return lgt;
         } else {
             log.error("Invalid Light system Name format: {}", systemName);
+            throw new IllegalArgumentException("Invalid Light system Name format: " + systemName);
         }
-        return lgt;
     }
 
     /**

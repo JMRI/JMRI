@@ -54,6 +54,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.implementation.ProgrammerFacadeSelector
  *
  * @author Bob Jacobsen Copyright (C) 2013
+ * @author Andrew Crosland Copyright (C) 2021
  */
  
 /*
@@ -111,6 +112,7 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
     String _cv; // remember the cv number being read/written
     int valuePI;  //  value to write to PI in current operation or -1
     int valueSI;  //  value to write to SI in current operation or -1
+    int _startVal;  // Current CV value hint
 
     // remember last operation for skipDupIndexWrite
     int lastValuePI = -1;  // value written in last operation
@@ -255,18 +257,24 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
 
     @Override
     synchronized public void readCV(String CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+        readCV(CV, p, 0);
+    }
+
+    @Override
+    synchronized public void readCV(String CV, jmri.ProgListener p, int startVal) throws jmri.ProgrammerException {
         useProgrammer(p);
         parseCV(CV);
+        _startVal = startVal;
         if (valuePI == -1) {
             lastValuePI = -1;  // next indexed operation needs to write PI, SI
             lastValueSI = -1;
 
             state = ProgState.PROGRAMMING;
-            prog.readCV(_cv, this);
+            prog.readCV(_cv, this, _startVal);
         } else if (useCachePiSi()) {
             // indexed operation with set values is same as non-indexed operation
             state = ProgState.PROGRAMMING;
-            prog.readCV(_cv, this);
+            prog.readCV(_cv, this, _startVal);
         } else {
             lastValuePI = valuePI;  // after check in 'if' statement
             lastValueSI = valueSI;
@@ -375,7 +383,7 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
                 if (valueSI == -1) {
                     try {
                         state = ProgState.PROGRAMMING;
-                        prog.readCV(_cv, this);
+                        prog.readCV(_cv, this, _startVal);
                     } catch (jmri.ProgrammerException e) {
                         log.error("Exception doing final read", e);
                     }

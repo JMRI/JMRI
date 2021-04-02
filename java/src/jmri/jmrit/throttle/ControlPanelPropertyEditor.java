@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -14,6 +15,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A very specific dialog for editing the properties of a ControlPanel object.
@@ -38,6 +42,10 @@ public class ControlPanelPropertyEditor extends JDialog {
      * @param panel control panel.
      */
     public ControlPanelPropertyEditor(ControlPanel panel) {
+        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
+            log.debug("Creating new ThrottlesPreference Instance");
+            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
+        }
         control = panel;
         initGUI();
         resetProperties();        
@@ -191,9 +199,7 @@ public class ControlPanelPropertyEditor extends JDialog {
         speedStepBoxVisibleBox.setSelected(control.getHideSpeedStep() );
         functionSwitchSlider.setText(control.getSwitchSliderFunction());
     }
-
-    
-    
+        
     /**
      * Verify the data on the dialog. If invalid, notify user of errors. This
      * only needs to do something if we add something other than speed control
@@ -202,4 +208,6 @@ public class ControlPanelPropertyEditor extends JDialog {
     private boolean isDataValid() {
         return true;
     }
+
+    private final static Logger log = LoggerFactory.getLogger(ControlPanelPropertyEditor.class);    
 }

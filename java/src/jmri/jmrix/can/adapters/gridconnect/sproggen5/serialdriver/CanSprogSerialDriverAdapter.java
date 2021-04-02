@@ -13,10 +13,13 @@ import org.slf4j.LoggerFactory;
  * This connects a SPROG Generation 5 via a serial com port (real or virtual).
  * Normally controlled by the SerialDriverFrame class.
  *
+ * Deprecated in 4.23 - not going ahead with this hardware
+ * 
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2009
  * @author Andrew Crosland 2019
  */
+@Deprecated
 public class CanSprogSerialDriverAdapter extends GcSerialDriverAdapter {
 
     public CanSprogSerialDriverAdapter() {

@@ -5,6 +5,7 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.EventObject;
 import java.util.List;
 import java.util.Objects;
 
@@ -692,6 +694,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         Objects.requireNonNull(model, "the table model must be nonnull");
         JTable table = new JTable(model) {
 
+            // TODO: Create base BeanTableJTable.java,
+            // extend TurnoutTableJTable from it as next 2 classes duplicate.
+            
             @Override
             public String getToolTipText(MouseEvent e) {
                 java.awt.Point p = e.getPoint();
@@ -700,6 +705,23 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 int realRowIndex = convertRowIndexToModel(rowIndex);
                 int realColumnIndex = convertColumnIndexToModel(colIndex);
                 return getCellToolTip(this, realRowIndex, realColumnIndex);
+            }
+            
+            /**
+             * Disable Windows Key or Mac Meta Keys being pressed acting
+             * as a trigger for editing the focused cell.
+             * Causes unexpected behaviour, i.e. button presses.
+             * {@inheritDoc}
+             */
+            @Override
+            public boolean editCellAt(int row, int column, EventObject e) {
+                if (e instanceof KeyEvent) {
+                    if ( ((KeyEvent) e).getKeyCode() == KeyEvent.VK_WINDOWS
+                        || ( (KeyEvent) e).getKeyCode() == KeyEvent.VK_META ) {
+                        return false;
+                    }
+                }
+                return super.editCellAt(row, column, e);
             }
         };
         return this.configureJTable(name, table, sorter);
@@ -1266,6 +1288,14 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 container.setAlignmentY(Component.CENTER_ALIGNMENT);
                 dialog.getContentPane().add(container);
                 dialog.pack();
+                
+                dialog.getRootPane().setDefaultButton(noButton);
+                noButton.requestFocusInWindow(); // set default keyboard focus, after pack() before setVisible(true)
+                dialog.getRootPane().registerKeyboardAction(e -> { // escape to exit
+                        dialog.setVisible(false);
+                        dialog.dispose(); }, 
+                    KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
+
                 dialog.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width) / 2 - dialog.getWidth() / 2, (Toolkit.getDefaultToolkit().getScreenSize().height) / 2 - dialog.getHeight() / 2);
                 dialog.setModal(true);
                 dialog.setVisible(true);

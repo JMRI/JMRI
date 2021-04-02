@@ -78,9 +78,7 @@ import jmri.jmrit.logixng.ModuleManager;
 public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jmrit.logixng.Module> {
 
     JComboBox<FemaleSocketManager.SocketType> _femaleSocketType = new JComboBox<>();
-    
-    private final Base.PrintTreeSettings _printTreeSettings = new Base.PrintTreeSettings();
-    
+
     /**
      * Create a LogixNGTableAction instance.
      *
@@ -90,7 +88,7 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
     public LogixNGModuleTableAction(String s) {
         super(s);
     }
-    
+
     /**
      * Create a LogixNGTableAction instance with default title.
      */
@@ -105,34 +103,34 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
         editor.initComponents();
         return editor;
     }
-    
+
     @Override
     protected Manager<Module> getManager() {
         return InstanceManager.getDefault(ModuleManager.class);
     }
-    
+
     @Override
     protected void enableAll(boolean enable) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     protected void setEnabled(Module bean, boolean enable) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     protected boolean isEnabled(Module bean) {
         return true;
     }
-    
+
     @Override
     protected Module createBean(String userName) {
         Module module = InstanceManager.getDefault(ModuleManager.class)
                 .createModule(userName, _femaleSocketType.getItemAt(_femaleSocketType.getSelectedIndex()));
         return module;
     }
-    
+
     @Override
     protected Module createBean(String systemName, String userName) {
         Module module = InstanceManager.getDefault(ModuleManager.class)
@@ -140,7 +138,7 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
                         _femaleSocketType.getItemAt(_femaleSocketType.getSelectedIndex()));
         return module;
     }
-    
+
     @Override
     protected void deleteBean(Module bean) {
         InstanceManager.getDefault(ModuleManager.class).deleteModule(bean);
@@ -152,44 +150,7 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
         _curNamedBean.printTree(_printTreeSettings, new PrintWriter(writer), "    ");
         return writer.toString();
     }
-    
-    @Override
-    protected JPanel getSettingsPanel() {
-        JPanel checkBoxPanel = new JPanel();
-        
-        JCheckBox printErrorHandling = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintErrorHandling"));
-        printErrorHandling.setSelected(_printTreeSettings._printErrorHandling);
-        printErrorHandling.addChangeListener((event) -> {
-            if (_printTreeSettings._printErrorHandling != printErrorHandling.isSelected()) {
-                _printTreeSettings._printErrorHandling = printErrorHandling.isSelected();
-                updateBrowserText();
-            }
-        });
-        checkBoxPanel.add(printErrorHandling);
-        
-        JCheckBox printNotConnectedSockets = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintNotConnectedSocket"));
-        printNotConnectedSockets.setSelected(_printTreeSettings._printNotConnectedSockets);
-        printNotConnectedSockets.addChangeListener((event) -> {
-            if (_printTreeSettings._printNotConnectedSockets != printNotConnectedSockets.isSelected()) {
-                _printTreeSettings._printNotConnectedSockets = printNotConnectedSockets.isSelected();
-                updateBrowserText();
-            }
-        });
-        checkBoxPanel.add(printNotConnectedSockets);
-        
-        JCheckBox printLocalVariables = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintLocalVariables"));
-        printLocalVariables.setSelected(_printTreeSettings._printLocalVariables);
-        printLocalVariables.addChangeListener((event) -> {
-            if (_printTreeSettings._printLocalVariables != printLocalVariables.isSelected()) {
-                _printTreeSettings._printLocalVariables = printLocalVariables.isSelected();
-                updateBrowserText();
-            }
-        });
-        checkBoxPanel.add(printLocalVariables);
-        
-        return checkBoxPanel;
-    }
-    
+
     /**
      * Create or copy bean frame.
      *
@@ -206,18 +167,18 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
         addLogixNGFrame.setLocation(50, 30);
         Container contentPane = addLogixNGFrame.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        
+
         List<FemaleSocketManager.SocketType> list
                 = new ArrayList<>(InstanceManager.getDefault(FemaleSocketManager.class).getSocketTypes().values());
         Collections.sort(list, (FemaleSocketManager.SocketType o1, FemaleSocketManager.SocketType o2) -> o1.getDescr().compareTo(o2.getDescr()));
-        
+
         for (FemaleSocketManager.SocketType socketType : list) {
             _femaleSocketType.addItem(socketType);
             if ("DefaultFemaleDigitalActionSocket".equals(socketType.getName())) {
                 _femaleSocketType.setSelectedItem(socketType);
             }
         }
-        
+
         JPanel p;
         p = new JPanel();
         p.setLayout(new FlowLayout());

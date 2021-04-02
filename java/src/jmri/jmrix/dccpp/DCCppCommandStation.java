@@ -171,6 +171,20 @@ public class DCCppCommandStation implements jmri.CommandStation {
         return ret;  
     }
 
+    /**
+     * Can this command station handle the Read with a starting value ('V'erify)
+     * @return true if yes or false if no
+     */
+    public boolean isReadStartValSupported() {
+        boolean ret = false;
+        try {
+            //command stations starting with 3 can handle reads with startVals
+            ret = (jmri.Version.compareCanonicalVersions(version, "3.0.0") >= 0);
+        } catch (IllegalArgumentException ignore) {
+        }
+        return ret;  
+    }
+
     // A few utility functions
     /**
      * Get the Lower byte of a locomotive address from the decimal locomotive

@@ -1,8 +1,5 @@
 package jmri.jmrit.logixng.implementation;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
 import java.util.*;
 
 import javax.annotation.Nonnull;
@@ -18,44 +15,13 @@ import jmri.jmrit.logixng.*;
 public class DefaultMaleDigitalBooleanActionSocket
         extends AbstractMaleSocket implements MaleDigitalBooleanActionSocket {
 
-    private final DigitalBooleanActionBean _action;
+//    private final DigitalBooleanActionBean ((DigitalBooleanActionBean)getObject());
     private DebugConfig _debugConfig = null;
     private boolean _enabled = true;
     
     
     public DefaultMaleDigitalBooleanActionSocket(@Nonnull BaseManager<? extends NamedBean> manager, @Nonnull DigitalBooleanActionBean action) {
-        super(manager);
-        _action = action;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public final Base getRoot() {
-        return _action.getRoot();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Lock getLock() {
-        return _action.getLock();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void setLock(Lock lock) {
-        _action.setLock(lock);
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Category getCategory() {
-        return _action.getCategory();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return _action.isExternal();
+        super(manager, action);
     }
     
     /** {@inheritDoc} */
@@ -76,7 +42,7 @@ public class DefaultMaleDigitalBooleanActionSocket
         
         try {
             conditionalNG.getSymbolTable().createSymbols(_localVariables);
-            _action.execute(hasChangedToTrue, hasChangedToFalse);
+            ((DigitalBooleanActionBean)getObject()).execute(hasChangedToTrue, hasChangedToFalse);
         } catch (JmriException e) {
             handleError(this, Bundle.getMessage("ExceptionExecuteBooleanAction", e.getLocalizedMessage()), e, log);
         } catch (RuntimeException e) {
@@ -88,119 +54,13 @@ public class DefaultMaleDigitalBooleanActionSocket
     }
 
     @Override
-    public String getShortDescription(Locale locale) {
-        return _action.getShortDescription(locale);
-    }
-
-    @Override
-    public String getLongDescription(Locale locale) {
-        return _action.getLongDescription(locale);
-    }
-
-    @Override
-    public FemaleSocket getChild(int index)
-            throws IllegalArgumentException, UnsupportedOperationException {
-        return _action.getChild(index);
-    }
-
-    @Override
-    public int getChildCount() {
-        return _action.getChildCount();
-    }
-
-    @Override
-    public String getUserName() {
-        return _action.getUserName();
-    }
-
-    @Override
-    public void setUserName(String s) throws BadUserNameException {
-        _action.setUserName(s);
-    }
-
-    @Override
-    public String getSystemName() {
-        return _action.getSystemName();
-    }
-
-    @Override
     public String getDisplayName() {
-        return _action.getDisplayName();
-    }
-
-    @Override
-    public void addPropertyChangeListener(PropertyChangeListener l, String name, String listenerRef) {
-        _action.addPropertyChangeListener(l, name, listenerRef);
-    }
-
-    @Override
-    public void addPropertyChangeListener(String propertyName, PropertyChangeListener l, String name, String listenerRef) {
-        _action.addPropertyChangeListener(propertyName, l, name, listenerRef);
-    }
-
-    @Override
-    public void addPropertyChangeListener(PropertyChangeListener l) {
-        _action.addPropertyChangeListener(l);
-    }
-
-    @Override
-    public void addPropertyChangeListener(String propertyName, PropertyChangeListener l) {
-        _action.addPropertyChangeListener(propertyName, l);
-    }
-
-    @Override
-    public void removePropertyChangeListener(PropertyChangeListener l) {
-        _action.removePropertyChangeListener(l);
-    }
-
-    @Override
-    public void removePropertyChangeListener(String propertyName, PropertyChangeListener l) {
-        _action.removePropertyChangeListener(propertyName, l);
-    }
-
-    @Override
-    public void updateListenerRef(PropertyChangeListener l, String newName) {
-        _action.updateListenerRef(l, newName);
-    }
-
-    @Override
-    public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
-        _action.vetoableChange(evt);
-    }
-
-    @Override
-    public String getListenerRef(PropertyChangeListener l) {
-        return _action.getListenerRef(l);
-    }
-
-    @Override
-    public ArrayList<String> getListenerRefs() {
-        return _action.getListenerRefs();
-    }
-
-    @Override
-    public int getNumPropertyChangeListeners() {
-        return _action.getNumPropertyChangeListeners();
-    }
-
-    @Override
-    public synchronized PropertyChangeListener[] getPropertyChangeListeners() {
-        return _action.getPropertyChangeListeners();
-    }
-
-    @Override
-    public synchronized PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
-        return _action.getPropertyChangeListeners(propertyName);
-    }
-
-    @Override
-    public PropertyChangeListener[] getPropertyChangeListenersByReference(String name) {
-        return _action.getPropertyChangeListenersByReference(name);
+        return ((DigitalBooleanActionBean)getObject()).getDisplayName();
     }
 
     @Override
     public void disposeMe() {
-        _action.dispose();
+        ((DigitalBooleanActionBean)getObject()).dispose();
     }
 
     /**
@@ -208,7 +68,7 @@ public class DefaultMaleDigitalBooleanActionSocket
      */
     @Override
     public void registerListenersForThisClass() {
-        _action.registerListeners();
+        ((DigitalBooleanActionBean)getObject()).registerListeners();
     }
     
     /**
@@ -216,62 +76,62 @@ public class DefaultMaleDigitalBooleanActionSocket
      */
     @Override
     public void unregisterListenersForThisClass() {
-        _action.unregisterListeners();
+        ((DigitalBooleanActionBean)getObject()).unregisterListeners();
     }
     
     @Override
     public void setState(int s) throws JmriException {
-        _action.setState(s);
+        ((DigitalBooleanActionBean)getObject()).setState(s);
     }
 
     @Override
     public int getState() {
-        return _action.getState();
+        return ((DigitalBooleanActionBean)getObject()).getState();
     }
 
     @Override
     public String describeState(int state) {
-        return _action.describeState(state);
+        return ((DigitalBooleanActionBean)getObject()).describeState(state);
     }
 
     @Override
     public String getComment() {
-        return _action.getComment();
+        return ((DigitalBooleanActionBean)getObject()).getComment();
     }
 
     @Override
     public void setComment(String comment) {
-        _action.setComment(comment);
+        ((DigitalBooleanActionBean)getObject()).setComment(comment);
     }
 
     @Override
     public void setProperty(String key, Object value) {
-        _action.setProperty(key, value);
+        ((DigitalBooleanActionBean)getObject()).setProperty(key, value);
     }
 
     @Override
     public Object getProperty(String key) {
-        return _action.getProperty(key);
+        return ((DigitalBooleanActionBean)getObject()).getProperty(key);
     }
 
     @Override
     public void removeProperty(String key) {
-        _action.removeProperty(key);
+        ((DigitalBooleanActionBean)getObject()).removeProperty(key);
     }
 
     @Override
     public Set<String> getPropertyKeys() {
-        return _action.getPropertyKeys();
+        return ((DigitalBooleanActionBean)getObject()).getPropertyKeys();
     }
 
     @Override
     public String getBeanType() {
-        return _action.getBeanType();
+        return ((DigitalBooleanActionBean)getObject()).getBeanType();
     }
 
     @Override
     public int compareSystemNameSuffix(String suffix1, String suffix2, NamedBean n2) {
-        return _action.compareSystemNameSuffix(suffix1, suffix2, n2);
+        return ((DigitalBooleanActionBean)getObject()).compareSystemNameSuffix(suffix1, suffix2, n2);
     }
 
     /** {@inheritDoc} */
@@ -292,12 +152,6 @@ public class DefaultMaleDigitalBooleanActionSocket
         return new DigitalBooleanActionDebugConfig();
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public Base getObject() {
-        return _action;
-    }
-    
     /** {@inheritDoc} */
     @Override
     public void setEnabled(boolean enable) {

@@ -456,6 +456,41 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 }
                 break;
 
+            case DCCppConstants.PROG_VERIFY_CV:
+                log.debug("PROG_VERIFY_CV detected");
+                s = msg.toString();
+                try {
+                    p = Pattern.compile(DCCppConstants.PROG_VERIFY_REGEX);
+                    m = p.matcher(s);
+                    if (!m.matches()) {
+                        log.error("Malformed PROG_VERIFY_CV Command: {}", s);
+                        return (null);
+                    }
+                    // TODO: Work Magic Here to retrieve stored value.
+                    // Make sure that CV exists
+                    int cv = Integer.parseInt(m.group(1));
+                    int cvVal = 0; // Default to 0 if they're reading out of bounds.
+                    if (cv < CVs.length) {
+                        cvVal = CVs[cv];
+                    }
+                    // CMD: <V CV STARTVAL>
+                    // Response: <v CV Value>
+                    r = "v " + cv + " " + cvVal;
+
+                    reply = DCCppReply.parseDCCppReply(r);
+                    log.debug("Reply generated = {}", reply.toString());
+                } catch (PatternSyntaxException e) {
+                    log.error("Malformed pattern syntax!");
+                    return (null);
+                } catch (IllegalStateException e) {
+                    log.error("Group called before match operation executed string= {}", s);
+                    return (null);
+                } catch (IndexOutOfBoundsException e) {
+                    log.error("Index out of bounds string= {}", s);
+                    return (null);
+                }
+                break;
+
             case DCCppConstants.TRACK_POWER_ON:
                 log.debug("TRACK_POWER_ON detected");
                 trackPowerState = true;
@@ -466,6 +501,11 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 log.debug("TRACK_POWER_OFF detected");
                 trackPowerState = false;
                 reply = DCCppReply.parseDCCppReply("p 0");
+                break;
+
+            case DCCppConstants.READ_MAXNUMSLOTS:
+                log.debug("READ_MAXNUMSLOTS detected");
+                reply = DCCppReply.parseDCCppReply("# 12");
                 break;
 
             case DCCppConstants.READ_TRACK_CURRENT:
