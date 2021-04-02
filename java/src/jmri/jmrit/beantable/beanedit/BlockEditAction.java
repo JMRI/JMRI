@@ -1,7 +1,6 @@
 package jmri.jmrit.beantable.beanedit;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -37,11 +36,6 @@ public class BlockEditAction extends BeanEditAction<Block> {
         sensor();
         reporterDetails();
         physicalDetails();
-    }
-
-    @Override
-    public String getBeanType() {
-        return Bundle.getMessage("BeanNameBlock");
     }
 
     @Override
