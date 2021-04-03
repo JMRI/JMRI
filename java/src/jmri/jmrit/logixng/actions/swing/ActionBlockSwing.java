@@ -16,7 +16,6 @@ import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionBlock;
-import jmri.jmrit.logixng.actions.ActionBlock.BlockOperation;
 import jmri.jmrit.logixng.actions.ActionBlock.DirectOperation;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
@@ -26,6 +25,7 @@ import jmri.util.swing.JComboBoxUtil;
 /**
  * Configures an Block object with a Swing JPanel.
  *
+ * @author Daniel Bergqvist Copyright 2021
  * @author Dave Sand Copyright 2021
  */
 public class ActionBlockSwing extends AbstractDigitalActionSwing {
@@ -50,12 +50,11 @@ public class ActionBlockSwing extends AbstractDigitalActionSwing {
     private JTextField _blockLockLocalVariableTextField;
     private JTextField _blockLockFormulaTextField;
 
+    private JPanel _panelStateCombo;
     private JPanel _panelBlockConstant;
-    private JPanel _panelCopyFromMemory;
-    private JPanel _panelCopyToMemory;
+    private JPanel _panelCopyMemory;
     private JTextField _blockConstantTextField;
-    private BeanSelectCreatePanel<Memory> _blockFromMemoryBeanPanel;
-    private BeanSelectCreatePanel<Memory> _blockToMemoryBeanPanel;
+    private BeanSelectCreatePanel<Memory> _blockMemoryBeanPanel;
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
@@ -89,46 +88,49 @@ public class ActionBlockSwing extends AbstractDigitalActionSwing {
         _blockFormulaTextField.setColumns(30);
         _panelBlockFormula.add(_blockFormulaTextField);
 
-
         _tabbedPaneOperation = new JTabbedPane();
         _panelOperationDirect = new javax.swing.JPanel();
-
-        _panelBlockConstant = new JPanel();
-        _panelCopyFromMemory = new JPanel();
-        _panelCopyToMemory = new JPanel();
-
-
         _panelOperationReference = new javax.swing.JPanel();
         _panelOperationLocalVariable = new javax.swing.JPanel();
         _panelOperationFormula = new javax.swing.JPanel();
 
         _tabbedPaneOperation.addTab(NamedBeanAddressing.Direct.toString(), _panelOperationDirect);
-
-        _tabbedPaneOperation.addTab(BlockOperation.SetToConstant.toString(), _panelBlockConstant);
-        _tabbedPaneOperation.addTab(BlockOperation.CopyFromMemory.toString(), _panelCopyFromMemory);
-        _tabbedPaneOperation.addTab(BlockOperation.CopyToMemory.toString(), _panelCopyToMemory);
-
         _tabbedPaneOperation.addTab(NamedBeanAddressing.Reference.toString(), _panelOperationReference);
         _tabbedPaneOperation.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelOperationLocalVariable);
         _tabbedPaneOperation.addTab(NamedBeanAddressing.Formula.toString(), _panelOperationFormula);
+
+        JPanel directContainer = new JPanel();
+        directContainer.setLayout(new BoxLayout(directContainer, BoxLayout.Y_AXIS));
+
+        _panelStateCombo = new JPanel();
+        _panelBlockConstant = new JPanel();
+        _panelCopyMemory = new JPanel();
+
+        _panelBlockConstant.setVisible(false);
+        _panelCopyMemory.setVisible(false);
+
+        directContainer.add(_panelStateCombo);
+        directContainer.add(_panelBlockConstant);
+        directContainer.add(_panelCopyMemory);
+
+        _panelOperationDirect.add(directContainer);
 
         _stateComboBox = new JComboBox<>();
         for (DirectOperation e : DirectOperation.values()) {
             _stateComboBox.addItem(e);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
-
-        _panelOperationDirect.add(_stateComboBox);
+        _stateComboBox.addActionListener((java.awt.event.ActionEvent e) -> {
+            setPanelDetailVisibility();
+        });
+        _panelStateCombo.add(_stateComboBox);
 
         _blockConstantTextField = new JTextField();
-        _blockConstantTextField.setColumns(30);
+        _blockConstantTextField.setColumns(25);
         _panelBlockConstant.add(_blockConstantTextField);
 
-        _blockFromMemoryBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(MemoryManager.class), null);
-        _panelCopyFromMemory.add(_blockFromMemoryBeanPanel);
-
-        _blockToMemoryBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(MemoryManager.class), null);
-        _panelCopyToMemory.add(_blockToMemoryBeanPanel);
+        _blockMemoryBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(MemoryManager.class), null);
+        _panelCopyMemory.add(_blockMemoryBeanPanel);
 
         _blockLockReferenceTextField = new JTextField();
         _blockLockReferenceTextField.setColumns(30);
@@ -166,22 +168,14 @@ public class ActionBlockSwing extends AbstractDigitalActionSwing {
                 default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
             }
             _stateComboBox.setSelectedItem(action.getOperationDirect());
+            setPanelDetailVisibility();
             _blockLockReferenceTextField.setText(action.getOperationReference());
             _blockLockLocalVariableTextField.setText(action.getOperationLocalVariable());
             _blockLockFormulaTextField.setText(action.getLockFormula());
 
-            if (action.getBlockOperation() != null) {
-                switch (action.getBlockOperation()) {
-                    case SetToConstant: _tabbedPaneOperation.setSelectedComponent(_panelBlockConstant); break;
-                    case CopyFromMemory: _tabbedPaneOperation.setSelectedComponent(_panelCopyFromMemory); break;
-                    case CopyToMemory: _tabbedPaneOperation.setSelectedComponent(_panelCopyToMemory); break;
-                    default: throw new IllegalArgumentException("invalid block operation: " + action.getBlockOperation());
-                }
-            }
             _blockConstantTextField.setText(action.getBlockConstant());
             if (action.getBlockMemory() != null) {
-                _blockFromMemoryBeanPanel.setDefaultNamedBean(action.getBlockMemory().getBean());
-                _blockToMemoryBeanPanel.setDefaultNamedBean(action.getBlockMemory().getBean());
+                _blockMemoryBeanPanel.setDefaultNamedBean(action.getBlockMemory().getBean());
             }
         }
 
@@ -193,6 +187,17 @@ public class ActionBlockSwing extends AbstractDigitalActionSwing {
                 Bundle.getMessage("ActionBlock_Components"), components);
 
         for (JComponent c : componentList) panel.add(c);
+    }
+
+    private void setPanelDetailVisibility() {
+        _panelBlockConstant.setVisible(false);
+        _panelCopyMemory.setVisible(false);
+        if (_stateComboBox.getSelectedItem() == DirectOperation.SetToConstant) {
+            _panelBlockConstant.setVisible(true);
+        } else if (_stateComboBox.getSelectedItem() == DirectOperation.CopyFromMemory
+                || _stateComboBox.getSelectedItem() == DirectOperation.CopyToMemory) {
+            _panelCopyMemory.setVisible(true);
+        }
     }
 
     /** {@inheritDoc} */
@@ -289,52 +294,36 @@ public class ActionBlockSwing extends AbstractDigitalActionSwing {
             if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationDirect) {
                 action.setOperationAddressing(NamedBeanAddressing.Direct);
                 action.setOperationDirect(_stateComboBox.getItemAt(_stateComboBox.getSelectedIndex()));
-                action.setBlockOperation(null);     // Ignore custom tabs
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelBlockConstant) {
-                action.setBlockOperation(ActionBlock.BlockOperation.SetToConstant);
-                action.setBlockConstant(_blockConstantTextField.getText());
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelCopyFromMemory) {
-                action.setBlockOperation(ActionBlock.BlockOperation.CopyFromMemory);
-                try {
-                    if (!_blockFromMemoryBeanPanel.isEmpty()) {
-                        Memory memory = _blockFromMemoryBeanPanel.getNamedBean();
-                        if (memory != null) {
-                            NamedBeanHandle<Memory> handle
-                                    = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                            .getNamedBeanHandle(memory.getDisplayName(), memory);
-                            action.setBlockMemory(handle);
+
+                // Handle optional data fields
+                if (action.getOperationDirect() == DirectOperation.SetToConstant) {
+                    action.setBlockConstant(_blockConstantTextField.getText());
+                } else if (action.getOperationDirect() == DirectOperation.CopyFromMemory
+                        || action.getOperationDirect() == DirectOperation.CopyToMemory) {
+                    try {
+                        if (!_blockMemoryBeanPanel.isEmpty()) {
+                            Memory memory = _blockMemoryBeanPanel.getNamedBean();
+                            if (memory != null) {
+                                NamedBeanHandle<Memory> handle
+                                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                                .getNamedBeanHandle(memory.getDisplayName(), memory);
+                                action.setBlockMemory(handle);
+                            }
                         }
+                    } catch (JmriException ex) {
+                        log.error("Cannot get NamedBeanHandle for memory", ex);
                     }
-                } catch (JmriException ex) {
-                    log.error("Cannot get NamedBeanHandle for memory", ex);
                 }
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelCopyToMemory) {
-                action.setBlockOperation(ActionBlock.BlockOperation.CopyToMemory);
-                try {
-                    if (!_blockToMemoryBeanPanel.isEmpty()) {
-                        Memory memory = _blockToMemoryBeanPanel.getNamedBean();
-                        if (memory != null) {
-                            NamedBeanHandle<Memory> handle
-                                    = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                            .getNamedBeanHandle(memory.getDisplayName(), memory);
-                            action.setBlockMemory(handle);
-                        }
-                    }
-                } catch (JmriException ex) {
-                    log.error("Cannot get NamedBeanHandle for memory", ex);
-                }
+
             } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationReference) {
                 action.setOperationAddressing(NamedBeanAddressing.Reference);
                 action.setOperationReference(_blockLockReferenceTextField.getText());
-                action.setBlockOperation(null);
             } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationLocalVariable) {
                 action.setOperationAddressing(NamedBeanAddressing.LocalVariable);
                 action.setOperationLocalVariable(_blockLockLocalVariableTextField.getText());
-                action.setBlockOperation(null);
             } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationFormula) {
                 action.setOperationAddressing(NamedBeanAddressing.Formula);
                 action.setOperationFormula(_blockLockFormulaTextField.getText());
-                action.setBlockOperation(null);
             } else {
                 throw new IllegalArgumentException("_tabbedPaneBlock has unknown selection");
             }

@@ -15,6 +15,7 @@ import org.jdom2.Element;
  * Handle XML configuration for Block objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
+ * @author Daniel Bergqvist Copyright 2021
  * @author Dave Sand Copyright (C) 2021
  */
 public class ActionBlockXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
@@ -54,13 +55,10 @@ public class ActionBlockXml extends jmri.managers.configurexml.AbstractNamedBean
         element.addContent(new Element("operationLocalVariable").addContent(p.getOperationLocalVariable()));
         element.addContent(new Element("operationFormula").addContent(p.getLockFormula()));
 
-        if (p.getBlockOperation() != null) {
-            element.addContent(new Element("blockOperation").addContent(p.getBlockOperation().name()));
-            element.addContent(new Element("blockConstant").addContent(p.getBlockConstant()));
-            NamedBeanHandle<Memory> blockMemory = p.getBlockMemory();
-            if (blockMemory != null) {
-                element.addContent(new Element("blockMemory").addContent(blockMemory.getName()));
-            }
+        element.addContent(new Element("blockConstant").addContent(p.getBlockConstant()));
+        NamedBeanHandle<Memory> blockMemory = p.getBlockMemory();
+        if (blockMemory != null) {
+            element.addContent(new Element("blockMemory").addContent(blockMemory.getName()));
         }
 
         return element;
@@ -115,11 +113,6 @@ public class ActionBlockXml extends jmri.managers.configurexml.AbstractNamedBean
 
             elem = shared.getChild("operationFormula");
             if (elem != null) h.setOperationFormula(elem.getTextTrim());
-
-            elem = shared.getChild("blockOperation");
-            if (elem != null) {
-                h.setBlockOperation(ActionBlock.BlockOperation.valueOf(elem.getTextTrim()));
-            }
 
             elem = shared.getChild("blockConstant");
             if (elem != null) h.setBlockConstant(elem.getTextTrim());

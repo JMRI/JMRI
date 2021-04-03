@@ -58,6 +58,9 @@
                     <xs:enumeration value="SetAltColorOn"/>
                     <xs:enumeration value="SetAltColorOff"/>
                     <xs:enumeration value="SetNullValue"/>
+                    <xs:enumeration value="SetToConstant"/>
+                    <xs:enumeration value="CopyFromMemory"/>
+                    <xs:enumeration value="CopyToMemory"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
@@ -65,17 +68,6 @@
               <xs:element name="operationReference" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="operationLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="operationFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
-
-              <!-- Additional tabs for the oprations section -->
-              <xs:element name="blockOperation" minOccurs="0" maxOccurs="1">
-                <xs:simpleType>
-                  <xs:restriction base="xs:token">
-                    <xs:enumeration value="SetToConstant"/>
-                    <xs:enumeration value="CopyFromMemory"/>
-                    <xs:enumeration value="CopyToMemory"/>
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
 
               <xs:element name="blockConstant" type="xs:string" minOccurs="0" maxOccurs="1"/>
               <xs:element name="blockMemory" type="beanNameType" minOccurs="0" maxOccurs="1"/>

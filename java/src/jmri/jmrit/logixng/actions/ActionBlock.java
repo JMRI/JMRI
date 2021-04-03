@@ -45,7 +45,6 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
     private String _operationFormula = "";
     private ExpressionNode _operationExpressionNode;
 
-    private BlockOperation _operationBlock = null;
     private String _blockConstant = "";
     private NamedBeanHandle<Memory> _blockMemoryHandle;
 
@@ -72,7 +71,6 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
         copy.setOperationReference(_operationReference);
         copy.setOperationLocalVariable(_operationLocalVariable);
         copy.setOperationFormula(_operationFormula);
-        copy.setBlockOperation(_operationBlock);
         copy.setBlockConstant(_blockConstant);
         if (_blockMemoryHandle != null) copy.setBlockMemory(_blockMemoryHandle);
         return manager.registerAction(copy);
@@ -218,14 +216,6 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
     }
 
     // ---------------- support additional tabs --------------
-
-    public void setBlockOperation(BlockOperation state) {
-        _operationBlock = state;
-    }
-
-    public BlockOperation getBlockOperation() {
-        return _operationBlock;
-    }
 
     public void setBlockConstant(@Nonnull String constant) {
         _blockConstant = constant;
@@ -377,13 +367,14 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
         String name = (_operationAddressing != NamedBeanAddressing.Direct)
                 ? getNewLock() : null;
 
+        DirectOperation oper;
+        if ((_operationAddressing == NamedBeanAddressing.Direct)) {
+            oper = _operationDirect;
+        } else {
+            oper = DirectOperation.valueOf(name);
+        }
+
         if (_operationDirect != DirectOperation.None) {
-            DirectOperation oper;
-            if ((_operationAddressing == NamedBeanAddressing.Direct)) {
-                oper = _operationDirect;
-            } else {
-                oper = DirectOperation.valueOf(name);
-            }
 
             // Variables used in lambda must be effectively final
             DirectOperation theOper = oper;
@@ -426,16 +417,6 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
                     case SetNullValue:
                         block.setValue(null);
                         break;
-                    default:
-                        throw new IllegalArgumentException("invalid oper state: " + theOper.name());
-                }
-            });
-        }
-
-        if (_operationBlock != null) {
-            BlockOperation blockOper = _operationBlock;
-            ThreadingUtil.runOnLayout(() -> {
-                switch (blockOper) {
                     case SetToConstant:
                         block.setValue(_blockConstant);
                         break;
@@ -451,7 +432,7 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
                         }
                         break;
                     default:
-                        throw new IllegalArgumentException("invalid block oper state: " + blockOper.name());
+                        throw new IllegalArgumentException("invalid oper state: " + theOper.name());
                 }
             });
         }
@@ -506,7 +487,15 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
 
         switch (_operationAddressing) {
             case Direct:
-                state = Bundle.getMessage(locale, "AddressByDirect", _operationDirect._text);
+                if (_operationDirect == DirectOperation.SetToConstant) {
+                    state = Bundle.getMessage(locale, "ActionBlock_Long_Value", namedBean, _blockConstant);
+                } else if (_operationDirect == DirectOperation.CopyFromMemory) {
+                    state = Bundle.getMessage(locale, "ActionBlock_Long_FromMemory", namedBean, _blockMemoryHandle.getName());
+                } else if (_operationDirect == DirectOperation.CopyToMemory) {
+                    state = Bundle.getMessage(locale, "ActionBlock_Long_ToMemory", _blockMemoryHandle.getName(), namedBean);
+                } else {
+                    state = Bundle.getMessage(locale, "AddressByDirect", _operationDirect._text);
+                }
                 break;
 
             case Reference:
@@ -523,21 +512,6 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
 
             default:
                 throw new IllegalArgumentException("invalid _stateAddressing state: " + _operationAddressing.name());
-        }
-
-        if (_operationBlock != null) {
-            switch (_operationBlock) {
-                case SetToConstant:
-                    return Bundle.getMessage(locale, "ActionBlock_Long_Value", namedBean, _blockConstant);
-                case CopyFromMemory:
-                    if (_blockMemoryHandle == null) break;
-                    return Bundle.getMessage(locale, "ActionBlock_Long_FromMemory", namedBean, _blockMemoryHandle.getName());
-                case CopyToMemory:
-                    if (_blockMemoryHandle == null) break;
-                    return Bundle.getMessage(locale, "ActionBlock_Long_ToMemory", _blockMemoryHandle.getName(), namedBean);
-                default:
-                    throw new IllegalArgumentException("_operationBlock has invalid value: " + _operationBlock.name());
-            }
         }
 
         return Bundle.getMessage(locale, "ActionBlock_Long", namedBean, state);
@@ -564,31 +538,16 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
     public void disposeMe() {
     }
 
-    public enum BlockOperation {
-        SetToConstant(Bundle.getMessage("ActionBlock_SetConstant")),
-        CopyFromMemory(Bundle.getMessage("ActionBlock_CopyFromMemory")),
-        CopyToMemory(Bundle.getMessage("ActionBlock_CopyToMemory"));
-
-        private final String _text;
-
-        private BlockOperation(String text) {
-            this._text = text;
-        }
-
-        @Override
-        public String toString() {
-            return _text;
-        }
-
-    }
-
     public enum DirectOperation {
         None(""),
         SetOccupied(Bundle.getMessage("ActionBlock_SetOccupied")),
         SetNotOccupied(Bundle.getMessage("ActionBlock_SetNotOccupied")),
         SetAltColorOn(Bundle.getMessage("ActionBlock_SetAltColorOn")),
         SetAltColorOff(Bundle.getMessage("ActionBlock_SetAltColorOff")),
-        SetNullValue(Bundle.getMessage("ActionBlock_SetNullValue"));
+        SetNullValue(Bundle.getMessage("ActionBlock_SetNullValue")),
+        SetToConstant(Bundle.getMessage("ActionBlock_SetConstant")),
+        CopyFromMemory(Bundle.getMessage("ActionBlock_CopyFromMemory")),
+        CopyToMemory(Bundle.getMessage("ActionBlock_CopyToMemory"));
 
         private final String _text;
 
