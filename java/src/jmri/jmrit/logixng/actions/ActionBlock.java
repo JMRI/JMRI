@@ -27,6 +27,7 @@ import jmri.util.TypeConversionUtil;
  * the simple actions.  The additional tabs provide additional input.
  *
  * @author Daniel Bergqvist Copyright 2021
+ * @author Dave Sand Copyright 2021
  */
 public class ActionBlock extends AbstractDigitalAction implements VetoableChangeListener {
 
@@ -445,7 +446,7 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
                         break;
                     case CopyToMemory:
                         if (_blockMemoryHandle != null) {
-                            Memory memory = (Memory) _blockMemoryHandle.getBean();
+                            Memory memory = _blockMemoryHandle.getBean();
                             memory.setValue(block.getValue());
                         }
                         break;
