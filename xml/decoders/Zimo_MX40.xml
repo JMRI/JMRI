@@ -182,7 +182,7 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAddressOnly.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/AccelDecel_255.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
       <variable item="Vstart" CV="2">
         <decVal/>
         <label>Vstart</label>
