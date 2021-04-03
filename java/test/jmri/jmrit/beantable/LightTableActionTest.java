@@ -751,7 +751,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
     public void testAddFailureCreate() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
-        InstanceManager.setDefault(LightManager.class, new createNewLightAlwaysException());
+        InstanceManager.setDefault(LightManager.class, new CreateNewLightAlwaysException());
         
         a = new LightTableAction();
         Assume.assumeTrue(a.includeAddButton());
@@ -778,9 +778,9 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         JUnitUtil.dispose(f);
     }
     
-    private class createNewLightAlwaysException extends InternalLightManager {
+    private class CreateNewLightAlwaysException extends InternalLightManager {
 
-        public createNewLightAlwaysException() {
+        public CreateNewLightAlwaysException() {
             super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         }
 

@@ -171,7 +171,7 @@ public class SensorTableActionTest extends AbstractTableActionBase<Sensor> {
     public void testAddFailureCreate() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
-        InstanceManager.setDefault(SensorManager.class, new createNewSensorAlwaysException());
+        InstanceManager.setDefault(SensorManager.class, new CreateNewSensorAlwaysException());
         
         a = new SensorTableAction();
         Assume.assumeTrue(a.includeAddButton());
@@ -198,9 +198,9 @@ public class SensorTableActionTest extends AbstractTableActionBase<Sensor> {
         JUnitUtil.dispose(f);
     }
     
-    private class createNewSensorAlwaysException extends InternalSensorManager {
+    private class CreateNewSensorAlwaysException extends InternalSensorManager {
 
-        public createNewSensorAlwaysException() {
+        public CreateNewSensorAlwaysException() {
             super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         }
 

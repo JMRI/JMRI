@@ -174,7 +174,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
     public void testAddFailureCreate() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
-        InstanceManager.setDefault(TurnoutManager.class, new createNewTurnoutAlwaysException());
+        InstanceManager.setDefault(TurnoutManager.class, new CreateNewTurnoutAlwaysException());
         
         a = new TurnoutTableAction();
         Assume.assumeTrue(a.includeAddButton());
@@ -201,9 +201,9 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
         JUnitUtil.dispose(f);
     }
     
-    private class createNewTurnoutAlwaysException extends InternalTurnoutManager {
+    private class CreateNewTurnoutAlwaysException extends InternalTurnoutManager {
 
-        public createNewTurnoutAlwaysException() {
+        public CreateNewTurnoutAlwaysException() {
             super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         }
 

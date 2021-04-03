@@ -83,7 +83,7 @@ public class ReporterTableActionTest extends AbstractTableActionBase<Reporter> {
     public void testAddFailureCreate() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
-        InstanceManager.setDefault(ReporterManager.class, new createNewReporterAlwaysException());
+        InstanceManager.setDefault(ReporterManager.class, new CreateNewReporterAlwaysException());
         
         a = new ReporterTableAction();
         Assume.assumeTrue(a.includeAddButton());
@@ -110,9 +110,9 @@ public class ReporterTableActionTest extends AbstractTableActionBase<Reporter> {
         JUnitUtil.dispose(f);
     }
     
-    private class createNewReporterAlwaysException extends InternalReporterManager {
+    private class CreateNewReporterAlwaysException extends InternalReporterManager {
 
-        public createNewReporterAlwaysException() {
+        public CreateNewReporterAlwaysException() {
             super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         }
 
