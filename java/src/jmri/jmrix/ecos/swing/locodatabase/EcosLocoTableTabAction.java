@@ -26,13 +26,11 @@ public class EcosLocoTableTabAction extends AbstractTableTabAction<NamedBean> { 
         dataTabs = new JTabbedPane();
         dataPanel.setLayout(new BorderLayout());
         java.util.List<EcosSystemConnectionMemo> list = jmri.InstanceManager.getList(EcosSystemConnectionMemo.class);
-        if (list != null) {
-            for (EcosSystemConnectionMemo eMemo : list) {
-                //We only want to add connections that have an active loco address manager
-                if (eMemo.getLocoAddressManager() != null) {
-                    TabbedTableItem<NamedBean> itemModel = new TabbedTableItem<>(eMemo.getUserName(), true, eMemo.getLocoAddressManager(), getNewTableAction(eMemo.getUserName(), eMemo));
-                    tabbedTableArray.add(itemModel);
-                }
+        for (EcosSystemConnectionMemo eMemo : list) {
+            //We only want to add connections that have an active loco address manager
+            if (eMemo.getLocoAddressManager() != null) {
+                TabbedTableItem<NamedBean> itemModel = new TabbedTableItem<>(eMemo.getUserName(), true, eMemo.getLocoAddressManager(), getNewTableAction(eMemo.getUserName(), eMemo));
+                tabbedTableArray.add(itemModel);
             }
         }
         if (tabbedTableArray.size() == 1) {

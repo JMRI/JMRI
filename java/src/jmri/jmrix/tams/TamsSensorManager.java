@@ -290,7 +290,11 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
                     sb.append(sensorprefix);
                     //Little work around to pad single digit address out.
                     padPortNumber(j, sb);
-                    ms = (TamsSensor) provideSensor(sb.toString());
+                    try {
+                        ms = (TamsSensor) provideSensor(sb.toString());
+                    } catch (Exception e){
+                        log.warn("Could not provide Sensor {}: {}",sb.toString(),e.getLocalizedMessage());
+                    }
                 }
                 if (ms != null) {
                     log.debug("ms = exists and is not null");
