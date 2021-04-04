@@ -422,6 +422,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      *
      * @return the paths or an empty list
      */
+    @Nonnull
     public List<Path> getPaths() {
         return new ArrayList<>(paths);
     }

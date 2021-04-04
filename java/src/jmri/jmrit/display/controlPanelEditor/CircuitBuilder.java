@@ -961,7 +961,7 @@ public class CircuitBuilder {
 
             List<jmri.Path> paths = block.getPaths();
             float blkLen = block.getLengthMm();
-            if (paths == null || paths.isEmpty()) {
+            if (paths.isEmpty()) {
                 _noPaths.add(block);
                 if (blkLen < .001f) {
                     _zeroBlock.add(block);

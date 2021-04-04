@@ -548,10 +548,11 @@ public class LightTableAction extends AbstractTableAction<Light> {
     }
 
     void handleCreateException(Exception ex, String sysName) {
-        JOptionPane.showMessageDialog(addFrame,
-                Bundle.getMessage("ErrorLightAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
-                Bundle.getMessage("ErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);
+        status1.setText(ex.getLocalizedMessage());
+        String err = Bundle.getMessage("ErrorBeanCreateFailed",
+            InstanceManager.getDefault(LightManager.class).getBeanTypeHandled(),sysName);
+        JOptionPane.showMessageDialog(addFrame, err + "\n" + ex.getLocalizedMessage(),
+                err, JOptionPane.ERROR_MESSAGE);
     }
 
     /**
