@@ -66,6 +66,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright 2001, 2002, 2003
  * @author B. Milhaupt Copyright 2015, 2016, 2018
  * @author Randall Wood Copyright 2016
+ * @author Michael Richardson
  */
 public class LocoNetMessageInterpret {
 
@@ -538,6 +539,25 @@ public class LocoNetMessageInterpret {
              */
             case LnConstants.OPC_MULTI_SENSE: {
                 result = interpretOpcMultiSense(l, reporterPrefix);
+                if (result.length() > 0) {
+                    return result;
+                }
+                break;
+            }
+
+            /*
+             * ********************************************************************************************
+             * OPC_MULTI_SENSE_LONG 0xE0 messages about transponding.
+             *
+             * This op code is not documented by Digitrax. The use of this message was observed when using a
+             * Digikeijs 5088RC.  With a capable decoder, this message contains additional Railcom information
+             * (direction, speed, QoS) compared to the standard OPC_MULTI_SENSE message.
+             *
+             * Reverse engineering performed by Michael Richardson.
+             * ********************************************************************************************
+             */
+            case LnConstants.OPC_MULTI_SENSE_LONG: {
+                result = interpretOpcMultiSenseLong(l, reporterPrefix);
                 if (result.length() > 0) {
                     return result;
                 }
@@ -2321,6 +2341,60 @@ public class LocoNetMessageInterpret {
                     locoAddr, transpActivity, reporterSystemName,
                     reporterUserName, bxp88Number, bxp88Zone, bxpa1Number);
         }
+    }
+
+    private static String interpretOpcMultiSenseLong(LocoNetMessage l, String reporterPrefix) {
+        if (l.getElement(1) == 0x09){  // Only process 0xE0 0x09 messages
+            int type = l.getElement(2) & LnConstants.OPC_MULTI_SENSE_MSG;
+            switch (type) {
+                case LnConstants.OPC_MULTI_SENSE_PRESENT:
+                case LnConstants.OPC_MULTI_SENSE_ABSENT:
+                    String result = interpretOpcMultiSenseTranspPresenceLong(l, reporterPrefix);
+                    if (result.length() > 0) {
+                        return result;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        return "";
+    }
+
+    private static String interpretOpcMultiSenseTranspPresenceLong(LocoNetMessage l, String reporterPrefix) {
+        // Transponding Event
+        // get system and user names
+        String reporterSystemName;
+        String reporterUserName;
+
+        int type = l.getElement(2) & LnConstants.OPC_MULTI_SENSE_MSG;
+
+        reporterSystemName = reporterPrefix
+                + ((l.getElement(2) & 0x1F) * 128 + l.getElement(3) + 1);
+
+        Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getReporter(reporterSystemName);
+        reporterUserName = "";
+        if (reporter != null) {
+            String uname = reporter.getUserName();
+            if ((uname != null) && (!uname.isEmpty())) {
+                reporterUserName = uname;
+            }
+        }
+
+        int section = 1 + (l.getElement(3) / 16) + (l.getElement(2) & 0x1F) * 8;
+
+        String locoAddr = convertToMixed(l.getElement(5), l.getElement(4));
+        String transpActivity = (type == LnConstants.OPC_MULTI_SENSE_PRESENT)
+                ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_PRESENT")
+                : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_ABSENT");
+
+        String direction = (l.getElement(6 & 0x40) == 0)
+                ? Bundle.getMessage("LN_MSG_DIRECTION_FWD")
+                : Bundle.getMessage("LN_MSG_DIRECTION_REV");
+
+        return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_TRANSP_REPORT",
+                locoAddr, transpActivity, reporterSystemName,
+                reporterUserName, section, direction);
     }
 
     private static String interpretOpcWrSlDataOpcSlRdData(LocoNetMessage l) {
