@@ -29,7 +29,7 @@
       <revnumber>1</revnumber>
       <date>2020-12-23</date>
       <authorinitials>KM</authorinitials>
-      <revremark>Initial version as separate file</revremark>
+      <revremark>Initial version as separate file adapted from functionmap7outputs.xml</revremark>
     </revision>
     <!-- Valid only for certain Piko decoders with up to 4 additional outputs A1 to A4,
 	     such as 76560 (non exhaustive list),

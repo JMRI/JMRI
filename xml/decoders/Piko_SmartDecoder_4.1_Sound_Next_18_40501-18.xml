@@ -78,7 +78,7 @@
                 <label xml:lang="de">DCC Datenformat</label>
                 <label xml:lang="nl">DCC modus</label>
             </variable>     
-            <variable item="Mfx Operation" CV="12" default="1" mask="XXXXVXXX" include="PIKO41RH2400,PIKO41BR82,PIKO56400">
+            <variable item="Mfx Operation" CV="12" default="1" mask="XXXXVXXX">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>Mfx Mode</label>
                 <label xml:lang="de">Mfx Datenformat</label>
@@ -1581,12 +1581,13 @@
 <!--            </group>-->
 
         </variables>
-        <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset4.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset4.xml"/> 
     </decoder>
     <!-- special panes -->
     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneRailcom.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/Piko/PanePiko2.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/Piko/PaneId2Advanced.xml"/><!-- IntelliDrive2, overrides some CVs set above -->
+    <xi:include href="http://jmri.org/xml/decoders/Piko/PaneId2Advanced.xml"/>
+    <!-- IntelliDrive2, overrides some CVs set above -->
     <!--<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/fmapPane7outputs.xml"/>-->
     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneExtendedFmap.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/SoundPaneId2.xml"/>

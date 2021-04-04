@@ -174,7 +174,7 @@
         <label xml:lang="de">Funktionsausgang Rückwärts Aus - A4</label>
         <label xml:lang="nl">Functieuitgang Achteruit Uit - A4</label>
     </variable>
-    <variable item="Function 5 check 1" CV="109" default="0" mask="XXVXXXXX" minOut="7">
+    <variable item="Function 5 check 1" CV="109" default="0" mask="XXVXXXXX" minOut="7" exclude="PIKO40501">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Blink generator - A5</label>
         <label xml:lang="de">Blinkgenerator - A5</label>
@@ -198,7 +198,7 @@
         <label xml:lang="de">Funktionsausgang Rückwärts Aus - A5</label>
         <label xml:lang="nl">Functieuitgang Achteruit Uit - A5</label>
     </variable>
-    <variable item="Function 6 check 1" CV="109" default="0" mask="XVXXXXXX" minOut="8">
+    <variable item="Function 6 check 1" CV="109" default="0" mask="XVXXXXXX" minOut="8" exclude="PIKO40501">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Blink generator - A6</label>
         <label xml:lang="de">Blinkgenerator - A6</label>
@@ -222,7 +222,7 @@
         <label xml:lang="de">Funktionsausgang Rückwärts Aus - A6</label>
         <label xml:lang="nl">Functieuitgang Achteruit Uit - A6</label>
     </variable>
-    <variable item="Function 7 check 1" CV="109" default="0" mask="VXXXXXXX" minOut="9">
+    <variable item="Function 7 check 1" CV="109" default="0" mask="VXXXXXXX" minOut="9" exclude="PIKO40501">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Blink generator - A7</label>
         <label xml:lang="de">Blinkgenerator - A7</label>
