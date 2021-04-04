@@ -77,6 +77,7 @@ public class NullAudioFactory extends AbstractAudioFactory {
             }
             // Cast to NullAudioSource and cleanup
             ((NullAudioSource) source).cleanup();
+            source.dispose();
         }
 
         // Now, retrieve list of AudioBuffer objects and remove the buffers
@@ -87,6 +88,7 @@ public class NullAudioFactory extends AbstractAudioFactory {
             }
             // Cast to NullAudioBuffer and cleanup
             ((NullAudioBuffer) buffer).cleanup();
+            buffer.dispose();
         }
 
         // Lastly, retrieve list of AudioListener objects and remove listener.
@@ -97,6 +99,7 @@ public class NullAudioFactory extends AbstractAudioFactory {
             }
             // Cast to NullAudioListener and cleanup
             ((NullAudioListener) listener).cleanup();
+            listener.dispose();
         }
 
         // Finally, shutdown NullAudio and close the output device

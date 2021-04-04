@@ -111,6 +111,7 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
             }
             // Cast to JavaSoundAudioSource and cleanup
             ((JavaSoundAudioSource) source).cleanup();
+            source.dispose();
         }
 
         // Now, retrieve list of AudioBuffer objects and remove the buffers
@@ -121,6 +122,7 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
             }
             // Cast to JavaSoundAudioBuffer and cleanup
             ((JavaSoundAudioBuffer) buffer).cleanup();
+            buffer.dispose();
         }
 
         // Lastly, retrieve list of AudioListener objects and remove listener.
@@ -131,6 +133,7 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
             }
             // Cast to JavaSoundAudioListener and cleanup
             ((JavaSoundAudioListener) listener).cleanup();
+            listener.dispose();
         }
 
         // Finally, shutdown JavaSound and close the output device

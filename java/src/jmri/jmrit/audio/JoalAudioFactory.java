@@ -356,6 +356,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
             }
             // Cast to JoalAudioSource and cleanup
             ((JoalAudioSource) source).cleanup();
+            source.dispose();
         }
 
         // Now, retrieve list of AudioBuffer objects and remove the buffers
@@ -366,6 +367,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
             }
             // Cast to JoalAudioBuffer and cleanup
             ((JoalAudioBuffer) buffer).cleanup();
+            buffer.dispose();
         }
 
         // Lastly, retrieve list of AudioListener objects and remove listener.
@@ -376,6 +378,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
             }
             // Cast to JoalAudioListener and cleanup
             ((JoalAudioListener) listener).cleanup();
+            listener.dispose();
         }
 
         // Finally, shutdown OpenAL and close the output device
