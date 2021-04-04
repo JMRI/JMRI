@@ -2345,56 +2345,41 @@ public class LocoNetMessageInterpret {
 
     private static String interpretOpcMultiSenseLong(LocoNetMessage l, String reporterPrefix) {
         if (l.getElement(1) == 0x09){  // Only process 0xE0 0x09 messages
+            // Transponding Event
+            // get system and user names
+            String reporterSystemName;
+            String reporterUserName;
+
             int type = l.getElement(2) & LnConstants.OPC_MULTI_SENSE_MSG;
-            switch (type) {
-                case LnConstants.OPC_MULTI_SENSE_PRESENT:
-                case LnConstants.OPC_MULTI_SENSE_ABSENT:
-                    String result = interpretOpcMultiSenseTranspPresenceLong(l, reporterPrefix);
-                    if (result.length() > 0) {
-                        return result;
-                    }
-                    break;
-                default:
-                    break;
+
+            reporterSystemName = reporterPrefix
+                    + ((l.getElement(2) & 0x1F) * 128 + l.getElement(3) + 1);
+
+            Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getReporter(reporterSystemName);
+            reporterUserName = "";
+            if (reporter != null) {
+                String uname = reporter.getUserName();
+                if ((uname != null) && (!uname.isEmpty())) {
+                    reporterUserName = uname;
+                }
             }
+
+            int section = 1 + (l.getElement(3) / 16) + (l.getElement(2) & 0x1F) * 8;
+
+            String locoAddr = convertToMixed(l.getElement(5), l.getElement(4));
+            String transpActivity = (type == LnConstants.OPC_MULTI_SENSE_PRESENT)
+                    ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_PRESENT")
+                    : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_ABSENT");
+
+            String direction = ((l.getElement(6) & 0x40) == 0)
+                    ? Bundle.getMessage("LN_MSG_DIRECTION_EAST")
+                    : Bundle.getMessage("LN_MSG_DIRECTION_WEST");
+
+            return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_TRANSP_REPORT",
+                    locoAddr, direction, transpActivity,
+                    reporterSystemName, reporterUserName);
         }
         return "";
-    }
-
-    private static String interpretOpcMultiSenseTranspPresenceLong(LocoNetMessage l, String reporterPrefix) {
-        // Transponding Event
-        // get system and user names
-        String reporterSystemName;
-        String reporterUserName;
-
-        int type = l.getElement(2) & LnConstants.OPC_MULTI_SENSE_MSG;
-
-        reporterSystemName = reporterPrefix
-                + ((l.getElement(2) & 0x1F) * 128 + l.getElement(3) + 1);
-
-        Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getReporter(reporterSystemName);
-        reporterUserName = "";
-        if (reporter != null) {
-            String uname = reporter.getUserName();
-            if ((uname != null) && (!uname.isEmpty())) {
-                reporterUserName = uname;
-            }
-        }
-
-        int section = 1 + (l.getElement(3) / 16) + (l.getElement(2) & 0x1F) * 8;
-
-        String locoAddr = convertToMixed(l.getElement(5), l.getElement(4));
-        String transpActivity = (type == LnConstants.OPC_MULTI_SENSE_PRESENT)
-                ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_PRESENT")
-                : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_ABSENT");
-
-        String direction = (l.getElement(6 & 0x40) == 0)
-                ? Bundle.getMessage("LN_MSG_DIRECTION_FWD")
-                : Bundle.getMessage("LN_MSG_DIRECTION_REV");
-
-        return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_TRANSP_REPORT",
-                locoAddr, transpActivity, reporterSystemName,
-                reporterUserName, section, direction);
     }
 
     private static String interpretOpcWrSlDataOpcSlRdData(LocoNetMessage l) {
