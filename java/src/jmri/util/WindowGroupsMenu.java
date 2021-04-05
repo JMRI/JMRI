@@ -100,53 +100,6 @@ public class WindowGroupsMenu extends JMenu implements javax.swing.event.MenuLis
             }
             add(newItem);
         }
-        
-/*
-        add(new AbstractAction(Bundle.getMessage("MenuItemMinimize")) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // the next line works on Java 2, but not 1.1.8
-                if (parentFrame != null) {
-                    parentFrame.setState(Frame.ICONIFIED);
-                }
-            }
-        });
-        add(new JSeparator());
-
-        int framesNumber = framesList.size();
-        for (int i = 0; i < framesNumber; i++) {
-            JmriJFrame iFrame = framesList.get(i);
-            windowName = iFrame.getTitle();
-            if (windowName.equals("")) {
-                windowName = "Untitled";
-            }
-            JCheckBoxMenuItem newItem = new JCheckBoxMenuItem(new AbstractAction(windowName) {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    JMenuItem selectedItem = (JMenuItem) e.getSource();
-                    // Since different windows can have the same name, look for the position of the selected menu item
-                    int itemCount = getItemCount();
-                    // Skip possible other items at the top of the menu (for example, "Minimize")
-                    int firstItem = itemCount - framesList.size();
-                    for (int i = firstItem; i < itemCount; i++) {
-                        if (selectedItem == getItem(i)) {
-                            i -= firstItem;
-                            // Retrieve the corresponding window
-                            if (i < framesList.size()) { // "i" should always be < framesList.size(), but it's better to make sure
-                                framesList.get(i).setVisible(true);
-                                framesList.get(i).setExtendedState(Frame.NORMAL);
-                                return;
-                            }
-                        }
-                    }
-                }
-            });
-            if (iFrame == parentFrame) {
-                newItem.setState(true);
-            }
-            add(newItem);
-        }
-*/
     }
 
     @Override
