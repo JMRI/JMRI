@@ -12,14 +12,16 @@ import jmri.managers.AbstractPowerManager;
  * PowerManager implementation for controlling CBUS layout power.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @author Andrew CRosland Copyright (C) 2009
+ * @author Andrew Crosland Copyright (C) 2009, 2021
  */
 public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMemo> implements CanListener {
 
     private TrafficController tc;
+    private CanSystemConnectionMemo _memo;
 
     public CbusPowerManager(CanSystemConnectionMemo memo) {
         super(memo);
+        _memo = memo;
         // connect to the TrafficManager
         tc = memo.getTrafficController();
         addTc(tc);
@@ -83,7 +85,11 @@ public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMe
         } else if (CbusMessage.isTrackOn(m)) {
             power = ON;
         } else if (CbusMessage.isArst(m)) {
-            power = ON;
+            // Some CBUS command stations (e.g. CANCMD) will turn on the track
+            // power before sending ARST, so we log it here
+            if (_memo.powerOnArst()) {
+                power = ON;
+            }
         }
         firePowerPropertyChange(old, power);
     }
