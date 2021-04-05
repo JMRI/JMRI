@@ -172,7 +172,7 @@ git push github
 - Create the _next_ release note. Best way to do this is to copy the current release note now, before you prune out all the headers and other info where changes weren't made. (We need to work through automation of version number values below) (If you're creating a production version, its release note is made from a merge of the features of all the test releases; also create the *.*.1 note for the next test release)
 
 ```    
-        cd (local web copy)
+        cd ../website
         cd releasenotes
         git checkout master
         git pull 
@@ -492,30 +492,15 @@ If there are any changes in other files, do both of:
 
 - Create the [next GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.23.4". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
 ```
-This is the next release in the 4.22 cycle. It's intended to be created from the `HEAD` of the `master` branch.
+This is the next release in the 4.24 cycle. It's intended to be created from the `HEAD` of the `master` branch.
 ```
+Add the 4.23.4 milestone to the issue.
 
 - Confirm that the tag for the current release (v4.23.3 for release 4.23.3) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-4.23.3) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).  (N.B. We are experimenting with having the `release*` branches protected, in which case you may have to go to Setting; Branches; then edit the release* branch name to releaseX* to disable the protection before removing the branch.  If you do that, remember to replace the protection!)
 
 - Go to the GitHub PR and Issues [labels list](https://github.com/JMRI/JMRI/labels) and remove any "afterNextTestRelease" (and "afterNextProductionRelease" if appropriate) labels from pending items
 
 - If this is a production release, update the "Downloads" badge in the JMRI/JMRI README.md file in the JMRI and website repositories and commit back.
-
-====================================================================================
-## Branches for preparation of Production Releases
-
-Lastly, if this release is one of the special series at the end of a development cycle that leads to a test release, create the next release branch now.  Those test releases are made cumulatively from each other, rather than each from master. We start the process now so that people can open pull requests for it, and discuss whether changes should be included.
-
-(Maybe we should change their nomenclature to get this across?  E.g. instead of 4.5.5, 4.5.6, 4.5.7, 4.6 where the last two look like regular "from master" test releases, call them 4.5.6, 4.5.6.1, 4.5.6.2, 4.6 - this will make the operations clearer, but Version.java doesn't currently support it)
-
-   - Create the next pre-production branch (*pre-production case only*):
-
-```
-git checkout (release-n.n.n)
-git pull
-git checkout -b (release-n.n.n+1)
-git push github
-```
 
 ====================================================================================
 ## Associated Documentation
@@ -543,6 +528,8 @@ git push github
 
 - Check the [web page](https://www.jmri.org) just in case you didn't push properly, etc
 
+- Wait a day or so to ensure propagation.
+
 ====================================================================================
 ## Announcement and Post-release Steps
 
@@ -554,7 +541,7 @@ git push github
     
 Test version 4.23.3 of JMRI/DecoderPro is available for download.
 
-This is the next in a series of test releases that will culminate in a production release, hopefully in early 2021. It’s really helpful when people download, install and use these test versions so we can find and fix any inadvertent new problems early.
+This is the next in a series of test releases that will culminate in a production release, hopefully in early Summer 2021. It’s really helpful when people download, install and use these test versions so we can find and fix any inadvertent new problems early.
 
 - Alt: There have been a lot of updates in this version, so it should be considered experimental.
 - Alt: We're getting close to the end of the development series, so we'd appreciate feedback on whether or not this release works for your layout.
@@ -608,11 +595,33 @@ JMRI 4.23.3 has been released. Files are available in the GitHub release section
 
 
 
+
+
 ====================================================================================
+====================================================================================
+
+
+
 
 # Additional Information
 
 The rest of the document provides information about specific cases.
+
+====================================================================================
+## Branches for preparation of Production Releases
+
+If this release is one of the special series at the end of a development cycle that leads to a test release, create the next release branch right after you update the GitHub status items.  Those test releases are made cumulatively from each other, rather than each from master. We start the process now so that people can open pull requests for it, and discuss whether changes should be included.
+
+(Maybe we should change their nomenclature to get this across?  E.g. instead of 4.5.5, 4.5.6, 4.5.7, 4.6 where the last two look like regular "from master" test releases, call them 4.5.6, 4.5.6.1, 4.5.6.2, 4.6 - this will make the operations clearer, but Version.java doesn't currently support it)
+
+   - Create the next pre-production branch (*pre-production case only*):
+
+```
+git checkout (release-n.n.n)
+git pull
+git checkout -b (release-n.n.n+1)
+git push github
+```
 
 ====================================================================================
 ## Local-build Alternative
