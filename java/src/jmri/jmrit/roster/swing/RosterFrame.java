@@ -27,10 +27,12 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import javax.annotation.CheckForNull;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
+
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
@@ -50,6 +52,7 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
+import jmri.jmrit.roster.swing.Bundle;
 import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
@@ -65,14 +68,13 @@ import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.swing.JTablePersistenceManager;
 import jmri.swing.RowSorterUtil;
-import jmri.util.FileUtil;
-import jmri.util.HelpUtil;
-import jmri.util.WindowMenu;
+import jmri.util.*;
 import jmri.util.datatransfer.RosterEntrySelection;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.ResizableImagePanel;
 import jmri.util.swing.WindowInterface;
 import jmri.util.swing.multipane.TwoPaneTBWindow;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1405,6 +1407,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     protected void systemsMenu() {
         ActiveSystemsMenu.addItems(getMenu());
         getMenu().add(new WindowMenu(this));
+        getMenu().add(new WindowGroupsMenu(this));
     }
 
     void updateDetails() {

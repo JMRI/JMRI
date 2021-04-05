@@ -486,6 +486,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         }
         // add Window menu
         bar.add(new WindowMenu(this));
+        bar.add(new WindowGroupsMenu(this));
         // add Help menu
         jmri.util.HelpUtil.helpMenu(bar, ref, direct);
         setJMenuBar(bar);

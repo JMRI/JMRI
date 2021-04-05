@@ -32,6 +32,7 @@ import jmri.util.HelpUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.SystemType;
 import jmri.util.WindowMenu;
+import jmri.util.WindowGroupsMenu;
 import jmri.util.swing.WindowInterface;
 import jmri.web.server.WebServerAction;
 
@@ -75,6 +76,7 @@ public class AppsMainMenu {
         systemsMenu(menuBar, wi);
         debugMenu(menuBar, wi, pane);
         menuBar.add(new WindowMenu(wi));
+        menuBar.add(new WindowGroupsMenu(wi));
         helpMenu(menuBar, wi, pane, windowHelpID);
     }
 
