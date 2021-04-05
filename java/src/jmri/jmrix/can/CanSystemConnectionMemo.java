@@ -209,8 +209,9 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     }
     
     /**
+     * Get the behaviour on ARST opcode
      * 
-     * @return 
+     * @return true if track power is on after ARST
      */
     public boolean powerOnArst() {
         return _powerOnArst;
