@@ -19,7 +19,8 @@ import jmri.util.swing.WindowInterface;
 /**
  * Creates a menu showing all open windows and allows to bring one in front
  *
- * @author Giorgio Terdina Copyright 2008
+ * @author Giorgio Terdina   Copyright 2008
+ * @author Daniel Bergqvist  Copyright 2021
  */
 public class WindowGroupsMenu extends JMenu implements javax.swing.event.MenuListener {
 
