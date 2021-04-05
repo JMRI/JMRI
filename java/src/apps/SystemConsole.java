@@ -367,9 +367,11 @@ public final class SystemConsole extends JTextArea {
         }
 
         // Now append to the JTextArea
-        // As append method is thread safe, we don't need to run this on
-        // the Swing dispatch thread
-        console.append(text);
+        SwingUtilities.invokeLater(() -> {
+            synchronized (SystemConsole.this) {
+                console.append(text);            }
+        });
+        
     }
 
     /**
