@@ -8,6 +8,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.Vector;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
 import javax.swing.table.AbstractTableModel;
 
 import jmri.*;
@@ -232,7 +234,7 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
             return;
         }
         if (f == null) {
-            f = new JmriJFrame(Bundle.getMessage("EditBean", getBeanType(), bean.getDisplayName()), false, false);
+            f = new JmriJFrame(Bundle.getMessage("EditBean", bean.getBeanType(), bean.getDisplayName()), false, false);
             f.addHelpMenu(helpTarget(), true);
             applyBut = new JButton(Bundle.getMessage("ButtonApply")); // create before initPanels()
             java.awt.Container containerPanel = f.getContentPane();
@@ -279,6 +281,7 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
         for (BeanItemPanel bi : bei) {
             bi.resetField();
         }
+        persistSelectedTab(); // use persistence unless specified by overriding class
         if (selectedTab != null) {
             detailsTab.setSelectedComponent(selectedTab);
         }
@@ -290,6 +293,25 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
         });
         f.pack();
         f.setVisible(true);
+    }
+
+    /**
+     * Selects previously selected Tab Index for override class name.
+     * Adds listener when Tab changed update UI preference.
+     */
+    private void persistSelectedTab(){
+        String TAB_SELECT_STRING = "selectedTabIndex"; // NOI18N
+        Object obj = InstanceManager.getDefault(UserPreferencesManager.class)
+            .getProperty(getClass().getName(), TAB_SELECT_STRING);
+        int previoustab = (obj!=null ? (Integer) obj : 0);
+        // make sure that valid index selected in case a tab is removed in future.
+        detailsTab.setSelectedIndex(Math.max(Math.min(detailsTab.getTabCount()-1, previoustab),0));
+        // add listener
+        detailsTab.getModel().addChangeListener((ChangeEvent evt) -> {
+            InstanceManager.getDefault(UserPreferencesManager.class)
+                .setProperty(getClass().getName(), TAB_SELECT_STRING, detailsTab.getSelectedIndex());
+        });
+    
     }
 
     protected void applyButtonAction(ActionEvent e) {
@@ -384,7 +406,7 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
     }
 
     public void save() {
-        String feedback = Bundle.getMessage("ItemUpdateFeedback", getBeanType())
+        String feedback = Bundle.getMessage("ItemUpdateFeedback", bean.getBeanType())
                 + " " + bean.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         // provide feedback to user, can be overwritten by save action error handler
         statusBar.setText(feedback);
@@ -406,12 +428,6 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
     }
 
     NamedBeanHandleManager nbMan = InstanceManager.getDefault(NamedBeanHandleManager.class);
-
-    /**
-     * Get Human Readable form of Bean Type.
-     * @return localised single Bean type String.
-     */
-    abstract protected String getBeanType();
 
     abstract protected B getByUserName(String name);
 
@@ -437,7 +453,7 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
                 String msg;
                 msg = java.text.MessageFormat.format(Bundle.getMessage("WarningUserName"),
                         new Object[]{("" + value)});
-                JOptionPane.showMessageDialog(null, msg,
+                JOptionPane.showMessageDialog(f, msg,
                         Bundle.getMessage("WarningTitle"),
                         JOptionPane.ERROR_MESSAGE);
                 return;
@@ -451,8 +467,8 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
                     return;
                 }
                 String msg = Bundle.getMessage("UpdateToUserName",
-                        new Object[]{getBeanType(), value, nBean.getSystemName()});
-                int optionPane = JOptionPane.showConfirmDialog(null,
+                        new Object[]{nBean.getBeanType(), value, nBean.getSystemName()});
+                int optionPane = JOptionPane.showConfirmDialog(f,
                         msg, Bundle.getMessage("UpdateToUserNameTitle"),
                         JOptionPane.YES_NO_OPTION);
                 if (optionPane == JOptionPane.YES_OPTION) {
@@ -480,8 +496,8 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
     public void removeName() {
         if (!allowBlockNameChange("Remove", "")) return;  // NOI18N
         String msg = java.text.MessageFormat.format(Bundle.getMessage("UpdateToSystemName"),
-                new Object[]{getBeanType()});
-        int optionPane = JOptionPane.showConfirmDialog(null,
+                new Object[]{bean.getBeanType()});
+        int optionPane = JOptionPane.showConfirmDialog(f,
                 msg, Bundle.getMessage("UpdateToSystemNameTitle"),
                 JOptionPane.YES_NO_OPTION);
         if (optionPane == JOptionPane.YES_OPTION) {
@@ -510,7 +526,7 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
         // Remove is not allowed if there is a layout block
         if (changeType.equals("Remove")) {
             log.warn("Cannot remove user name for block {}", oldName);  // NOI18N
-                JOptionPane.showMessageDialog(null,
+                JOptionPane.showMessageDialog(f,
                         Bundle.getMessage("BlockRemoveUserNameWarning", oldName),  // NOI18N
                         Bundle.getMessage("WarningTitle"),  // NOI18N
                         JOptionPane.WARNING_MESSAGE);
@@ -518,7 +534,7 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
         }
 
         // Confirmation dialog
-        int optionPane = JOptionPane.showConfirmDialog(null,
+        int optionPane = JOptionPane.showConfirmDialog(f,
                 Bundle.getMessage("BlockChangeUserName", oldName, newName),  // NOI18N
                 Bundle.getMessage("QuestionTitle"),  // NOI18N
                 JOptionPane.YES_NO_OPTION);

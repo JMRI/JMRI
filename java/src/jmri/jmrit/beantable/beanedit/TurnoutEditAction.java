@@ -46,11 +46,6 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
     }
 
     @Override
-    public String getBeanType() {
-        return Bundle.getMessage("BeanNameTurnout");
-    }
-
-    @Override
     public Turnout getByUserName(String name) {
         return InstanceManager.turnoutManagerInstance().getByUserName(name);
     }
