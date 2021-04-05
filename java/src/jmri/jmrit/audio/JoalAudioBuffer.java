@@ -377,6 +377,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         if (log.isDebugEnabled()) {
             log.debug("Cleanup JoalAudioBuffer ({})", this.getSystemName());
         }
+        this.dispose();
     }
 
     private static final Logger log = LoggerFactory.getLogger(JoalAudioBuffer.class);
