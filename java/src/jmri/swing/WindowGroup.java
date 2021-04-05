@@ -12,7 +12,7 @@ import jmri.util.JmriJFrame;
 public class WindowGroup {
     
     private String _name;
-    private Map<String, WindowData> _windowData = new HashMap<>();
+    private final Map<String, WindowData> _windowData = new HashMap<>();
     
     
     public WindowGroup(String name) {

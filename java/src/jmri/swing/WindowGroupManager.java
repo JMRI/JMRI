@@ -12,8 +12,8 @@ import jmri.JmriException;
  */
 public class WindowGroupManager implements InstanceManagerAutoDefault {
     
-    private List<WindowGroup> _windowGroups = new ArrayList();
-    private Map<String, WindowGroup> _windowGroupsMap = new HashMap();
+    private final List<WindowGroup> _windowGroups = new ArrayList<>();
+    private final Map<String, WindowGroup> _windowGroupsMap = new HashMap<>();
     private WindowGroup _selectedWindowGroup = null;
     
     /**
