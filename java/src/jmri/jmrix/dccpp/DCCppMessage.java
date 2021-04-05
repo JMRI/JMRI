@@ -2230,7 +2230,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         return (new DCCppMessage(DCCppConstants.READ_MAXNUMSLOTS, DCCppConstants.READ_MAXNUMSLOTS_REGEX));
     }
     /**
-     * Generate a function message using the V2 <F...> syntax supported by DCC-EX
+     * Generate a function message using the V2 'F' syntax supported by DCC-EX
      * <p>
      * @param cab cab address to send function to
      * @param func function number to set
@@ -2258,7 +2258,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     /**
-     * Generate a function message using the V2 <F...> syntax supported by DCC-EX
+     * Generate a "Forget Cab" message '-'
      * <p>
      * @param cab cab address to send function to (or 0 for all)
      * @return forget message to be sent
