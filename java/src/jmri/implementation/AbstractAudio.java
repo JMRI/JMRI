@@ -51,12 +51,16 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
     /**
      * Abstract method that concrete classes will implement to perform necessary
      * cleanup routines.
+     * <p>
+     * This method does not call dispose() of this instance.
+     * The caller needs to call dispose() after the call to cleanup().
      */
     abstract protected void cleanup();
 
     @Override
     public void dispose() {
         InstanceManager.getDefault(jmri.AudioManager.class).deregister(this);
+        cleanup();
         super.dispose();
     }
 

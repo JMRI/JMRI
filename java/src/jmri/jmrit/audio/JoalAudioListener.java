@@ -184,7 +184,6 @@ public class JoalAudioListener extends AbstractAudioListener {
         if (log.isDebugEnabled()) {
             log.debug("Cleanup JoalAudioListener ({})", this.getSystemName());
         }
-        this.dispose();
     }
 
     private static final Logger log = LoggerFactory.getLogger(JoalAudioListener.class);

@@ -100,7 +100,6 @@ public class NullAudioBuffer extends AbstractAudioBuffer {
         if (log.isDebugEnabled()) {
             log.debug("Cleanup NullAudioBuffer ({})", this.getSystemName());
         }
-        this.dispose();
     }
 
     private static final Logger log = LoggerFactory.getLogger(NullAudioBuffer.class);

@@ -125,7 +125,6 @@ public class NullAudioSource extends AbstractAudioSource {
     @Override
     protected void cleanup() {
         log.debug("Cleanup NullAudioSource ({})", this.getSystemName());
-        this.dispose();
     }
 
     @Override
