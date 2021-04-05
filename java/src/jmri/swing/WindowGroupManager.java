@@ -18,7 +18,6 @@ public class WindowGroupManager implements InstanceManagerAutoDefault {
     
     /**
      * Creates a new window group and selects it.
-     * The current windows is stored in the new window group.
      * 
      * @param name the name of the new group
      * @return the new window group
