@@ -529,7 +529,7 @@ public class JoalAudioSource extends AbstractAudioSource {
     }
 
     @Override
-    public void cleanup() {
+    protected void cleanup() {
         log.debug("Cleanup JoalAudioSource ({})", this.getSystemName());
         int[] source_type = new int[1];
         al.alGetSourcei(_source[0], AL.AL_SOURCE_TYPE, source_type, 0);

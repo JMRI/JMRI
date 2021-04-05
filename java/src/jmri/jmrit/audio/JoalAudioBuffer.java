@@ -370,14 +370,13 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
     }
 
     @Override
-    public void cleanup() {
+    protected void cleanup() {
         if (initialised) {
             al.alDeleteBuffers(1, dataStorageBuffer, 0);
         }
         if (log.isDebugEnabled()) {
             log.debug("Cleanup JoalAudioBuffer ({})", this.getSystemName());
         }
-        this.dispose();
     }
 
     private static final Logger log = LoggerFactory.getLogger(JoalAudioBuffer.class);
