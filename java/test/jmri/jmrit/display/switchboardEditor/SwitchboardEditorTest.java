@@ -55,9 +55,9 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     public void checkSetEditable() {
         e.setAllEditable(true);
         JMenuBarOperator jmbo = new JMenuBarOperator(jfo);
-        Assertions.assertEquals(4, jmbo.getMenuCount(), "Editable Menu Count: 4");
+        Assertions.assertEquals(5, jmbo.getMenuCount(), "Editable Menu Count: 5");
         e.setAllEditable(false);
-        Assertions.assertEquals(3, jmbo.getMenuCount(), "Non-editable Menu Count: 3");
+        Assertions.assertEquals(4, jmbo.getMenuCount(), "Non-editable Menu Count: 4");
         e.setAllEditable(true); // reset to be able to get to the menuBar to delete e
     }
 
