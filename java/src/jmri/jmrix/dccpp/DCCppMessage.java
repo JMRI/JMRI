@@ -174,6 +174,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 return (new DCCppMessage(DCCppConstants.CLEAR_EEPROM_CMD, DCCppConstants.CLEAR_EEPROM_REGEX));
             case DCCppConstants.FUNCTION_CMD:
                 break;
+            case DCCppConstants.FUNCTION_V2_CMD:
+                return (new DCCppMessage(DCCppConstants.FUNCTION_V2_CMD, DCCppConstants.FUNCTION_V2_CMD_REGEX));
             case DCCppConstants.LIST_REGISTER_CONTENTS:
                 return (new DCCppMessage(DCCppConstants.LIST_REGISTER_CONTENTS, DCCppConstants.LIST_REGISTER_CONTENTS_REGEX));
             case DCCppConstants.OPS_WRITE_CV_BIT:
@@ -325,6 +327,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             case DCCppConstants.FUNCTION_CMD:
                 myRegex = DCCppConstants.FUNCTION_CMD_REGEX;
                 break;
+            case DCCppConstants.FUNCTION_V2_CMD:
+                myRegex = DCCppConstants.FUNCTION_V2_CMD_REGEX;
+                break;
             case DCCppConstants.ACCESSORY_CMD:
                 myRegex = DCCppConstants.ACCESSORY_CMD_REGEX;
                 break;
@@ -469,6 +474,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 text += "Address: " + getFuncAddressString();
                 text += ", Byte 1: " + getFuncByte1String();
                 text += ", Byte 2: " + getFuncByte2String();
+                text += ", (No Reply Expected)";
+                break;
+            case DCCppConstants.FUNCTION_V2_CMD:
+                text = "Function Cmd: ";
+                text += "CAB: " + getFuncV2CabString();
+                text += ", FUNC: " + getFuncV2FuncString();
+                text += ", State: " + getFuncV2StateString();
                 text += ", (No Reply Expected)";
                 break;
             case DCCppConstants.ACCESSORY_CMD:
@@ -812,6 +824,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
 
     public boolean isFunctionMessage() {
         return (this.getOpCodeChar() == DCCppConstants.FUNCTION_CMD);
+    }
+
+    public boolean isFunctionV2Message() {
+        return (this.getOpCodeChar() == DCCppConstants.FUNCTION_V2_CMD);
     }
 
     public boolean isTurnoutMessage() {
@@ -1235,6 +1251,34 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             return (0);
         }
     }
+
+    public String getFuncV2CabString() {
+        if (this.isFunctionV2Message()) {
+            return (getValueString(1));
+        } else {
+            log.error("Function Parser called on non-Function V2 message type {}", this.getOpCodeChar());
+            return ("0");
+        }
+    }
+
+    public String getFuncV2FuncString() {
+        if (this.isFunctionV2Message()) {
+            return (getValueString(2));
+        } else {
+            log.error("Function Parser called on non-Function V2 message type {}", this.getOpCodeChar());
+            return ("0");
+        }
+    }
+
+    public String getFuncV2StateString() {
+        if (this.isFunctionV2Message()) {
+            return (getValueString(3));
+        } else {
+            log.error("Function Parser called on non-Function V2 message type {}", this.getOpCodeChar());
+            return ("0");
+        }
+    }
+
 
     //------------------------------------------------------
     // Helper methods for Turnout Commands

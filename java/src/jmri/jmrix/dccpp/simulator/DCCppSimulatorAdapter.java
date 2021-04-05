@@ -519,6 +519,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 break;
 
             case DCCppConstants.FUNCTION_CMD:
+            case DCCppConstants.FUNCTION_V2_CMD:
             case DCCppConstants.ACCESSORY_CMD:
             case DCCppConstants.OPS_WRITE_CV_BYTE:
             case DCCppConstants.OPS_WRITE_CV_BIT:
