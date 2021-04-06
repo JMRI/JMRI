@@ -17,11 +17,9 @@ import jmri.managers.AbstractPowerManager;
 public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMemo> implements CanListener {
 
     private TrafficController tc;
-    private CanSystemConnectionMemo _memo;
 
     public CbusPowerManager(CanSystemConnectionMemo memo) {
         super(memo);
-        _memo = memo;
         // connect to the TrafficManager
         tc = memo.getTrafficController();
         addTc(tc);
@@ -87,7 +85,7 @@ public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMe
         } else if (CbusMessage.isArst(m)) {
             // Some CBUS command stations (e.g. CANCMD) will turn on the track
             // power before sending ARST, so we log it here
-            if (_memo.powerOnArst()) {
+            if (memo.powerOnArst()) {
                 power = ON;
             }
         }
