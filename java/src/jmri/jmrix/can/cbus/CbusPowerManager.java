@@ -84,7 +84,9 @@ public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMe
             power = ON;
         } else if (CbusMessage.isArst(m)) {
             // Some CBUS command stations (e.g. CANCMD) will turn on the track
-            // power before sending ARST, so we log it here
+            // power at start up, before sending ARST (System reset). Others,
+            // e.g., SPROG CBUS hardware can selectively turn on the track power
+            // so we selectively check for ARST here, based on connection settings.
             if (memo.powerOnArst()) {
                 power = ON;
             }
