@@ -26,6 +26,7 @@ public final class DCCppConstants {
     public static final int MAX_MESSAGE_SIZE = 30;
     public static final int MAX_REPLY_SIZE = 256;
     public static final int MAX_MAIN_REGISTERS = 12;
+    public static final int MAX_FUNCTION_NUMBER = 68; //
     public static final int REGISTER_UNALLOCATED = -1;
     public static final int NO_REGISTER_FREE = -1; // TODO: Should this be a unique value?
     
@@ -51,6 +52,8 @@ public final class DCCppConstants {
     // DCC++ Command OpCodes
     public static final char THROTTLE_CMD           = 't'; // Throttle command <t reg cab speed dir>
     public static final char FUNCTION_CMD           = 'f'; // F0-F28 <f cab byte1 [byte2]>
+    public static final char FUNCTION_V2_CMD        = 'F'; // F0-F68 <F CAB FUNC 1|0>
+    public static final char FORGET_CAB_CMD         = '-'; // Forgets one or all locos. <- [CAB]>
     public static final char ACCESSORY_CMD          = 'a'; // Stationary accessory decoder <a addr subaddr activate>
     public static final char TURNOUT_CMD            = 'T'; // Turnout command <T id throw> -- NEW versions V1.1
     public static final char SENSOR_CMD             = 'S'; // Sensor command -- NEW V1.1
@@ -87,7 +90,6 @@ public final class DCCppConstants {
     public static final char POWER_REPLY      = 'p';
     public static final char CURRENT_REPLY    = 'a';
     public static final char METER_REPLY      = 'c';
-//    public static final char MEMORY_REPLY     = 'f';
     public static final char SENSOR_REPLY     = 'Q';
     public static final char SENSOR_REPLY_H   = 'q';
     public static final char SENSOR_REPLY_L   = 'Q';
@@ -101,6 +103,8 @@ public final class DCCppConstants {
     // Message / Reply Regexes
     public static final String THROTTLE_CMD_REGEX = "t\\s*(\\d+)\\s+(\\d+)\\s+([-]*\\d+)\\s+([1,0])\\s*"; // <t REG CAB SPEED DIR>
     public static final String FUNCTION_CMD_REGEX = "f\\s(\\d+)\\s(\\d+)\\s*(\\d+)?"; // <f ADDR BYTE1 (BYTE2)>
+    public static final String FUNCTION_V2_CMD_REGEX="F\\s*([0-9]{1,4})\\s*([0-9]){1,2}\\s*([1,0])\\s*"; // <F CAB FUNC STATE>
+    public static final String FORGET_CAB_CMD_REGEX ="-\\s*([0-9]{0,4})\\s*"; // <- [CAB]>
     public static final String ACCESSORY_CMD_REGEX = "a\\s(\\d+)\\s(\\d+)\\s([1,0])"; // <a ADDR SUBADDR ACTIVATE>
     public static final String TURNOUT_CMD_REGEX = "T\\s(\\d+)\\s([1,0])"; // <T ID THROW>
     public static final String TURNOUT_ADD_REGEX = "T\\s(\\d+)\\s(\\d+)\\s(\\d+)"; // <T ID ADDR SUBADDR>
@@ -109,7 +113,6 @@ public final class DCCppConstants {
     public static final String SENSOR_ADD_REGEX = "S\\s(\\d+)\\s(\\d+)\\s([1,0])";
     public static final String SENSOR_DELETE_REGEX = "S\\s(\\d+)";
     public static final String SENSOR_LIST_REGEX = "S";
-    //public static final String OUTPUT_CMD_REGEX = "\\s*Z\\s*(\\d+)\\s+(\\d+)\\s*"; // <Z ID STATE>
     public static final String OUTPUT_CMD_REGEX = "Z\\s(\\d+)\\s([1,0])"; // <Z ID STATE>
     public static final String OUTPUT_ADD_REGEX = "\\s*Z\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*"; // <Z ID PIN IFLAG>
     public static final String OUTPUT_DELETE_REGEX = "\\s*Z\\s*(\\d+)\\s*"; // <Z ID>
