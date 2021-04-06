@@ -31,7 +31,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>DCCppOverTCP server now forwards all messages, even those with unknown or invalid syntax</li>
             </ul>
 
         <h4>DCC4pc</h4>
