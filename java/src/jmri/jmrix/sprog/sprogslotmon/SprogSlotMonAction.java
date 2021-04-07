@@ -1,7 +1,10 @@
 package jmri.jmrix.sprog.sprogslotmon;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
+
+import jmri.InstanceManager;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
@@ -21,6 +24,11 @@ public class SprogSlotMonAction extends AbstractAction {
 
     public SprogSlotMonAction(SprogSystemConnectionMemo memo) {
         this(Bundle.getMessage("SprogSlotMonitorTitle"), memo);
+    }
+
+    public SprogSlotMonAction() {
+        super(Bundle.getMessage("SprogSlotMonitorTitle"));
+        _memo = InstanceManager.getNullableDefault(SprogSystemConnectionMemo.class);
     }
 
     @Override
