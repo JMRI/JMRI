@@ -7,6 +7,9 @@ import javax.swing.AbstractAction;
 import jmri.InstanceManager;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Swing action to create and register a SprogSlotMonFrame object.
  *
@@ -34,13 +37,20 @@ public class SprogSlotMonAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if(_memo.getCommandStation() == null) {
-           // create SlotManager if it doesn't exist
-           _memo.configureCommandStation(_memo.getNumSlots());
+        if (_memo != null) {
+            if (_memo.getCommandStation() == null) {
+                // create SlotManager if it doesn't exist
+                _memo.configureCommandStation(_memo.getNumSlots());
+            }
+            
+            SprogSlotMonFrame f = new SprogSlotMonFrame(_memo);
+            f.setVisible(true);
+        } else {
+            log.warn("Trying to start SPROG Slot monitor for incompatible connection type");
         }
-
-        SprogSlotMonFrame f = new SprogSlotMonFrame(_memo);
-        f.setVisible(true);
     }
+
+    // initialize logging
+    private final static Logger log = LoggerFactory.getLogger(SprogSlotMonAction.class);
 
 }
