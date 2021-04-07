@@ -9,9 +9,11 @@ import javax.swing.*;
 
 import jmri.Block;
 import jmri.InstanceManager;
+import jmri.Manager;
 import jmri.NamedBean;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.beantable.block.BlockTableDataModel;
+import jmri.BlockManager;
 import jmri.util.JmriJFrame;
 
 import org.slf4j.Logger;
@@ -53,6 +55,12 @@ public class BlockTableAction extends AbstractTableAction<Block> {
     @Override
     protected void createModel() {
         m = new BlockTableDataModel(getManager());
+    }
+    
+    @Nonnull
+    @Override
+    protected Manager<Block> getManager() {
+        return InstanceManager.getDefault(BlockManager.class);
     }
 
     @Override
