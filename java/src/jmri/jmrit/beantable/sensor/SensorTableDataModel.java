@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
@@ -54,6 +55,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
      */
     public SensorTableDataModel() {
         super();
+        _graphicState = InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
     }
 
     /**
@@ -63,8 +65,8 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
      * @param manager Bean Manager.
      */
     public SensorTableDataModel(Manager<Sensor> manager) {
-        super(manager);
-        updateNameList();
+        super();
+        setManager(manager); // updates name list
         // load graphic state column display preference
         _graphicState = InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
     }
@@ -197,7 +199,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 return Boolean.class;
             case ACTIVEDELAY:
             case INACTIVEDELAY:
-                return String.class;
+                return Long.class; // if long.class (lowercase) is returned here, cell is NOT editable.
             case PULLUPCOL:
                 return JComboBox.class;
             case EDITCOL:
@@ -332,33 +334,37 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
         }
         switch (col) {
             case INVERTCOL:
-                s.setInverted(((Boolean) value));
+                s.setInverted(((boolean) value));
                 break;
             case USEGLOBALDELAY:
-                s.setUseDefaultTimerSettings(((Boolean) value));
+                s.setUseDefaultTimerSettings(((boolean) value));
                 break;
             case ACTIVEDELAY:
                 try {
-                    Long activeDeBounce = Long.parseLong((String) value);
+                    long activeDeBounce = (long) value;
                     if (activeDeBounce < 0 || activeDeBounce > Sensor.MAX_DEBOUNCE) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceActOutOfRange") + "\n\"" + (String) value + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceActOutOfRange")
+                            + "\n\"" + Sensor.MAX_DEBOUNCE + "\"", Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     } else {
-                        s.setSensorDebounceGoingActiveTimer(Long.parseLong((String) value));
+                        s.setSensorDebounceGoingActiveTimer(activeDeBounce);
                     }
                 } catch (NumberFormatException exActiveDeBounce) {
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceActError") + "\n\"" + Long.toString(Sensor.MAX_DEBOUNCE) + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceActError")
+                        + "\n\"" + value  + "\"" + exActiveDeBounce.getLocalizedMessage(), Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case INACTIVEDELAY:
                 try {
-                    Long inactiveDeBounce = Long.parseLong((String) value);
+                    long inactiveDeBounce = (long) value;
                     if (inactiveDeBounce < 0 || inactiveDeBounce > Sensor.MAX_DEBOUNCE) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceInActOutOfRange") + "\n\"" + Long.toString(Sensor.MAX_DEBOUNCE) + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceInActOutOfRange") 
+                            + "\n\"" + Sensor.MAX_DEBOUNCE + "\"", Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     } else {
-                        s.setSensorDebounceGoingInActiveTimer(Long.parseLong((String) value));
+                        s.setSensorDebounceGoingInActiveTimer(inactiveDeBounce);
                     }
                 } catch (NumberFormatException exActiveDeBounce) {
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceInActError") + "\n\"" + (String) value + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceInActError")
+                        + "\n\"" + value + "\"" + exActiveDeBounce.getLocalizedMessage(), Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case EDITCOL:
@@ -403,12 +409,15 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
      * {@inheritDoc}
      */
     @Override
-    protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-        if ((e.getPropertyName().contains("inverted")) || (e.getPropertyName().contains("GlobalTimer"))
-                || (e.getPropertyName().contains("ActiveTimer")) || (e.getPropertyName().contains("InActiveTimer"))) {
-            return true;
-        } else {
-            return super.matchPropertyName(e);
+    protected boolean matchPropertyName(PropertyChangeEvent e) {
+        switch (e.getPropertyName()) {
+            case "inverted":
+            case "GlobalTimer":
+            case "ActiveTimer":
+            case "InActiveTimer":
+                return true;
+            default:
+                return super.matchPropertyName(e);
         }
     }
 

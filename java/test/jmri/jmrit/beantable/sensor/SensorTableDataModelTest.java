@@ -1,5 +1,8 @@
 package jmri.jmrit.beantable.sensor;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
 
@@ -41,6 +44,18 @@ public class SensorTableDataModelTest extends jmri.jmrit.beantable.AbstractBeanT
             t.getColumnName(SensorTableDataModel.FORGETCOL));
         assertEquals("Column12 - QUERYCOL",Bundle.getMessage("StateQueryHeader"),
             t.getColumnName(SensorTableDataModel.QUERYCOL));
+    }
+    
+    @Test
+    public void testGetColumnClasses() {
+        assertEquals("INVERTCOL ",Boolean.class,t.getColumnClass(SensorTableDataModel.INVERTCOL) );
+        assertEquals("EDITCOL ",JButton.class,t.getColumnClass(SensorTableDataModel.EDITCOL) );
+        assertEquals("USEGLOBALDELAY ",Boolean.class,t.getColumnClass(SensorTableDataModel.USEGLOBALDELAY) );
+        assertEquals("ACTIVEDELAY Long not long",Long.class,t.getColumnClass(SensorTableDataModel.ACTIVEDELAY) );
+        assertEquals("INACTIVEDELAY Long not long",Long.class,t.getColumnClass(SensorTableDataModel.INACTIVEDELAY) );
+        assertEquals("PULLUPCOL ",JComboBox.class,t.getColumnClass(SensorTableDataModel.PULLUPCOL) );
+        assertEquals("FORGETCOL ",JButton.class,t.getColumnClass(SensorTableDataModel.FORGETCOL) );
+        assertEquals("QUERYCOL ",JButton.class,t.getColumnClass(SensorTableDataModel.QUERYCOL) );
     }
 
     @BeforeEach
