@@ -60,33 +60,18 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
     /**
      * Create a new Bean Table Data Model.
-     * The default Manager for the bean type will be a Proxy Manager.
+     * The default Manager for the bean type may well be a Proxy Manager.
      */
     public BeanTableDataModel() {
         super();
-        initModel(null);
-    }
-    
-    /**
-     * Create a new Bean Table Data Model.
-     * The Manager for the bean type will be the one provided.
-     * @param beanManager the Bean Manager for the Table Model, 
-     *                  null will default to a Proxy Manager.
-     */
-    public BeanTableDataModel(Manager<T> beanManager) {
-        super();
-        initModel(beanManager);
+        initModel();
     }
     
     /**
      * Internal routine to avoid over ride method call in constructor.
-     * @param beanManager Bean Manager, can be null.
      */
-    private void initModel(Manager<T> beanManager){
+    private void initModel(){
         nbMan = InstanceManager.getDefault(NamedBeanHandleManager.class);
-        if (beanManager!=null){
-            setManager(beanManager);
-        }
         // log.error("get mgr is: {}",this.getManager());
         getManager().addPropertyChangeListener(this);
         updateNameList();

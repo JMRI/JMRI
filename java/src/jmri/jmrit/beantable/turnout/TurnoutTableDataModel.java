@@ -76,7 +76,8 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
     }
     
     public TurnoutTableDataModel(Manager<Turnout> mgr){
-        super(mgr);
+        super();
+        setManager(mgr);
         initTable();
     }
     
