@@ -171,7 +171,9 @@ public class Section extends AbstractNamedBean {
 
     /**
      * Set the state of the Section.
-     * FREE, FORWARD, or REVERSE. UNKNOWN state not accepted here.
+     * FREE, FORWARD or REVERSE.
+     * <br>
+     * UNKNOWN state not accepted here.
      * @param state the state to set
      */
     @Override
