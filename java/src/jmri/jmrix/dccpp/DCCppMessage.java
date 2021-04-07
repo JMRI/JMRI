@@ -174,6 +174,27 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 return (new DCCppMessage(DCCppConstants.CLEAR_EEPROM_CMD, DCCppConstants.CLEAR_EEPROM_REGEX));
             case DCCppConstants.FUNCTION_CMD:
                 break;
+            case DCCppConstants.FUNCTION_V2_CMD:
+                if ((m = match(s, DCCppConstants.FUNCTION_V2_CMD_REGEX, "ctor")) != null) {
+                    int cab = Integer.parseInt(m.group(1));
+                    int func = Integer.parseInt(m.group(2));
+                    int state = Integer.parseInt(m.group(3));
+                    return (DCCppMessage.makeFunctionV2Message(cab, func, state));
+                } else {
+                    return (null);
+                }
+            case DCCppConstants.FORGET_CAB_CMD:
+                if ((m = match(s, DCCppConstants.FORGET_CAB_CMD_REGEX, "ctor")) != null) {
+                    int cab;
+                    if (m.group(1).equals("")) { //no cab entered, forget all
+                        cab = 0;
+                    } else {
+                        cab = Integer.parseInt(m.group(1));
+                    }
+                    return (DCCppMessage.makeForgetCabMessage(cab));
+                } else {
+                    return (null);
+                }
             case DCCppConstants.LIST_REGISTER_CONTENTS:
                 return (new DCCppMessage(DCCppConstants.LIST_REGISTER_CONTENTS, DCCppConstants.LIST_REGISTER_CONTENTS_REGEX));
             case DCCppConstants.OPS_WRITE_CV_BIT:
@@ -325,6 +346,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             case DCCppConstants.FUNCTION_CMD:
                 myRegex = DCCppConstants.FUNCTION_CMD_REGEX;
                 break;
+            case DCCppConstants.FUNCTION_V2_CMD:
+                myRegex = DCCppConstants.FUNCTION_V2_CMD_REGEX;
+                break;
+            case DCCppConstants.FORGET_CAB_CMD:
+                myRegex = DCCppConstants.FORGET_CAB_CMD_REGEX;
+                break;
             case DCCppConstants.ACCESSORY_CMD:
                 myRegex = DCCppConstants.ACCESSORY_CMD_REGEX;
                 break;
@@ -470,6 +497,26 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 text += ", Byte 1: " + getFuncByte1String();
                 text += ", Byte 2: " + getFuncByte2String();
                 text += ", (No Reply Expected)";
+                break;
+            case DCCppConstants.FUNCTION_V2_CMD:
+                text = "Function Cmd: ";
+                if (isFunctionV2Message()) {
+                    text += "CAB: " + getFuncV2CabString();
+                    text += ", FUNC: " + getFuncV2FuncString();
+                    text += ", State: " + getFuncV2StateString();
+                    text += ", (No Reply Expected)";
+                } else {
+                    text += "Invalid syntax: '" + toString() + "'";                                        
+                }
+                break;
+            case DCCppConstants.FORGET_CAB_CMD:
+                text = "Forget Cab: ";
+                if (isForgetCabMessage()) {
+                    text += "CAB: " + (getForgetCabString().equals("")?"[ALL]":getForgetCabString());
+                    text += ", (No Reply Expected)";
+                } else {
+                    text += "Invalid syntax: '" + toString() + "'";                    
+                }
                 break;
             case DCCppConstants.ACCESSORY_CMD:
                 text = "Accessory Decoder Cmd: ";
@@ -812,6 +859,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
 
     public boolean isFunctionMessage() {
         return (this.getOpCodeChar() == DCCppConstants.FUNCTION_CMD);
+    }
+
+    public boolean isFunctionV2Message() {
+        return (this.match(DCCppConstants.FUNCTION_V2_CMD_REGEX) != null);
+    }
+
+    public boolean isForgetCabMessage() {
+        return (this.match(DCCppConstants.FORGET_CAB_CMD_REGEX) != null);
     }
 
     public boolean isTurnoutMessage() {
@@ -1233,6 +1288,42 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         } else {
             log.error("Function Parser called on non-Function message type {}", this.getOpCodeChar());
             return (0);
+        }
+    }
+
+    public String getFuncV2CabString() {
+        if (this.isFunctionV2Message()) {
+            return (getValueString(1));
+        } else {
+            log.error("Function Parser called on non-Function V2 message type {}", this.getOpCodeChar());
+            return ("0");
+        }
+    }
+
+    public String getFuncV2FuncString() {
+        if (this.isFunctionV2Message()) {
+            return (getValueString(2));
+        } else {
+            log.error("Function Parser called on non-Function V2 message type {}", this.getOpCodeChar());
+            return ("0");
+        }
+    }
+
+    public String getFuncV2StateString() {
+        if (this.isFunctionV2Message()) {
+            return (getValueString(3));
+        } else {
+            log.error("Function Parser called on non-Function V2 message type {}", this.getOpCodeChar());
+            return ("0");
+        }
+    }
+
+    public String getForgetCabString() {
+        if (this.isForgetCabMessage()) {
+            return (getValueString(1));
+        } else {
+            log.error("Function Parser called on non-Forget Cab message type {}", this.getOpCodeChar());
+            return ("0");
         }
     }
 
@@ -2137,6 +2228,53 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      */
     public static DCCppMessage makeCSMaxNumSlotsMsg() {
         return (new DCCppMessage(DCCppConstants.READ_MAXNUMSLOTS, DCCppConstants.READ_MAXNUMSLOTS_REGEX));
+    }
+    /**
+     * Generate a function message using the V2 'F' syntax supported by DCC-EX
+     * <p>
+     * @param cab cab address to send function to
+     * @param func function number to set
+     * @param state new state of function 0/1
+     * @return function V2 message
+     */
+    public static DCCppMessage makeFunctionV2Message(int cab, int func, int state) {
+        // Sanity check inputs
+        if (cab < 0 || cab > DCCppConstants.MAX_LOCO_ADDRESS) {
+            return (null);
+        }
+        if (func < 0 || func > DCCppConstants.MAX_FUNCTION_NUMBER) {
+            return (null);
+        }
+        if (state < 0 || state > 1) {
+            return (null);
+        }
+        DCCppMessage m = new DCCppMessage(DCCppConstants.FUNCTION_V2_CMD);
+        m.myMessage.append(" ").append(cab);
+        m.myMessage.append(" ").append(func);
+        m.myMessage.append(" ").append(state);
+        m.myRegex = DCCppConstants.FUNCTION_V2_CMD_REGEX;
+        m._nDataChars = m.toString().length();
+        return (m);
+    }
+
+    /**
+     * Generate a "Forget Cab" message '-'
+     * <p>
+     * @param cab cab address to send function to (or 0 for all)
+     * @return forget message to be sent
+     */
+    public static DCCppMessage makeForgetCabMessage(int cab) {
+        // Sanity check inputs
+        if (cab < 0 || cab > DCCppConstants.MAX_LOCO_ADDRESS) {
+            return (null);
+        }
+        DCCppMessage m = new DCCppMessage(DCCppConstants.FORGET_CAB_CMD);
+        if (cab > 0) {
+            m.myMessage.append(" ").append(cab);
+        }
+        m.myRegex = DCCppConstants.FORGET_CAB_CMD_REGEX;
+        m._nDataChars = m.toString().length();
+        return (m);
     }
 
     /**

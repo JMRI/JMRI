@@ -54,8 +54,9 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     protected String _protocol = ConfigurationManager.MERGCBUS;
     protected SubProtocol _subProtocol = SubProtocol.CBUS;
     protected ProgModeSwitch _progModeSwitch = ProgModeSwitch.NONE;
-    protected boolean _supportsCVHints = false;
-    private boolean _multipleThrottles = true;
+    protected boolean _supportsCVHints = false; // Support for CV read hint values
+    private boolean _multipleThrottles = true;  // Support for multiple throttles 
+    private boolean _powerOnArst = true;        // Turn power on if ARST opcode received
     
     jmri.jmrix.swing.ComponentFactory cf = null;
 
@@ -205,6 +206,19 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     
     public void setSupportsCVHints(boolean b) {
         _supportsCVHints = b;
+    }
+    
+    /**
+     * Get the behaviour on ARST opcode
+     * 
+     * @return true if track power is on after ARST
+     */
+    public boolean powerOnArst() {
+        return _powerOnArst;
+    }
+    
+    public void setPowerOnArst(boolean b) {
+        _powerOnArst = b;
     }
     
     /**
