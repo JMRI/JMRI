@@ -96,11 +96,6 @@ public class Section extends AbstractNamedBean {
     private static final NamedBean.DisplayOptions USERSYS = NamedBean.DisplayOptions.USERNAME_SYSTEMNAME;
     
     /**
-     * public static final int UNKNOWN extends from NamedBean.UNKNOWN
-     * The value of {@link #getState()} if section state is unknown.
-     */
-    
-    /**
      * The value of {@link #getState()} if section is available for allocation.
      */
     public static final int FREE = 0x02;
@@ -176,7 +171,7 @@ public class Section extends AbstractNamedBean {
 
     /**
      * Set the state of the Section.
-     *
+     * FREE, FORWARD, or REVERSE. UNKNOWN state not accepted here.
      * @param state the state to set
      */
     @Override
