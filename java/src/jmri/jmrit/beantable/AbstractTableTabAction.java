@@ -247,6 +247,13 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
             if (model instanceof XTableColumnModel) {
                 Enumeration<TableColumn> e = ((XTableColumnModel) model).getColumns(false);
                 int numCols = ((XTableColumnModel) model).getColumnCount(false);
+                // XTableColumnModel has been spotted to return a fleeting incorrect
+                // column count, possibly when manager is changed at startup
+                // so we do a sanity check to make sure the models are in synch.
+                if (numCols != dataModel.getColumnCount()){
+                    log.debug("Xtable cols: {} Model cols: {}",numCols,dataModel.getColumnCount());
+                    return;
+                }
                 boolean[] colsVisible = new boolean[numCols];
                 while (e.hasMoreElements()) {
                     TableColumn column = e.nextElement();
