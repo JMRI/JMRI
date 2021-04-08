@@ -52,8 +52,8 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
      * Abstract method that concrete classes will implement to perform necessary
      * cleanup routines.
      * <p>
-     * This method does not call dispose() of this instance.
-     * The caller needs to call dispose() after the call to cleanup().
+     * This method is now included in dispose(). The caller can
+     * call dispose() to cleanup and deregister an audio object.
      */
     abstract protected void cleanup();
 
