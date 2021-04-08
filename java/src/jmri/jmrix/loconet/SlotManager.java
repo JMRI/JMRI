@@ -1230,7 +1230,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     public void doConfirm(int CV, int val, ProgListener p,
             int pcmd) throws jmri.ProgrammerException {
 
-        log.debug("confirmCV: {}", CV); // NOI18N
+        log.debug("confirmCV: {}, val: {}", CV, val); // NOI18N
 
         stopEndOfProgrammingTimer();  // still programming, so no longer waiting for power off
 
@@ -1244,7 +1244,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
         // format and send message
         startShortTimer();
-        tc.sendLocoNetMessage(progTaskStart(pcmd, -1, CV, false));
+        tc.sendLocoNetMessage(progTaskStart(pcmd, val, CV, false));
     }
 
     int hopsa; // high address for CV read/write
@@ -1252,16 +1252,22 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     CsOpSwAccess csOpSwAccessor;
 
+    @Override
+    public void readCV(String cvNum, jmri.ProgListener p) throws jmri.ProgrammerException {
+        readCV(cvNum, p, 0);
+    }
+    
     /**
      * Read a CV via the OpsMode programmer.
      *
      * @param cvNum a String containing the CV number
      * @param p programmer
+     * @param startVal initial "guess" for value of CV, can improve speed if used
      * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
     @Override
-    public void readCV(String cvNum, jmri.ProgListener p) throws jmri.ProgrammerException {
-        log.debug("readCV(string): cvNum={} mode={}", cvNum, getMode());
+    public void readCV(String cvNum, jmri.ProgListener p, int startVal) throws jmri.ProgrammerException {
+        log.debug("readCV(string): cvNum={}, startVal={}, mode={}", cvNum, startVal, getMode());
         if (getMode().equals(csOpSwProgrammingMode)) {
             log.debug("cvOpSw mode!");
             //handle Command Station OpSw programming here
@@ -1304,7 +1310,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 throw new jmri.ProgrammerException("mode not supported"); // NOI18N
             }
 
-            doRead(CV, p, pcmd);
+            doRead(CV, p, pcmd, startVal);
 
         }
     }
@@ -1323,7 +1329,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         lopsa = addr & 0x7f;
         hopsa = (addr / 128) & 0x7f;
         mServiceMode = false;
-        doRead(CV, p, 0x2F);  // although LPE implies 0x2C, 0x2F is observed
+        doRead(CV, p, 0x2F, 0);  // although LPE implies 0x2C, 0x2F is observed
     }
 
     /**
@@ -1332,11 +1338,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @param CV the CV number
      * @param p programmer
      * @param progByte programming command
+     * @param startVal initial "guess" for value of CV, can improve speed if used
      * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
-    void doRead(int CV, jmri.ProgListener p, int progByte) throws jmri.ProgrammerException {
+    void doRead(int CV, jmri.ProgListener p, int progByte, int startVal) throws jmri.ProgrammerException {
 
-        log.debug("readCV: {}", CV); // NOI18N
+        log.debug("readCV: {} with startVal: {}", CV, startVal); // NOI18N
 
         stopEndOfProgrammingTimer();  // still programming, so no longer waiting for power off
 
@@ -1348,7 +1355,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
         // format and send message
         startShortTimer();
-        tc.sendLocoNetMessage(progTaskStart(progByte, 0, CV, false));
+//        tc.sendLocoNetMessage(progTaskStart(progByte, 0, CV, false));
+        tc.sendLocoNetMessage(progTaskStart(progByte, startVal, CV, false));
     }
 
     private jmri.ProgListener _usingProgrammer = null;
