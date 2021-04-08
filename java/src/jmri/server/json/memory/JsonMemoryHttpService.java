@@ -39,7 +39,7 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
 
     @Override
     public ObjectNode doGet(Memory memory, String name, String type, JsonRequest request) throws JsonException {
-        ObjectNode root = this.getNamedBean(memory, name, type, request);
+        ObjectNode root = this.getNamedBean(memory, name, getType(), request);
         ObjectNode data = root.with(DATA);
         if (memory != null) {
             Object val = memory.getValue();

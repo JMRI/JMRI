@@ -998,7 +998,7 @@
                                 } else if (!o.type) {
                                     log.error("ERROR: missing type property in " + o);
                                 } else if (!h) {
-                                    jmri.log("Ignoring JSON type ", o.type);
+                                    jmri.log("Ignoring JSON type '" + o.type + "'");
                                 }
                             })
                         } else {
@@ -1008,7 +1008,7 @@
                             } else if (!m.type) {
                                 log.error("ERROR: missing type property in " + m);
                             } else if (!h) {
-                                jmri.log("Ignoring JSON type ", m.type);
+                                    jmri.log("Ignoring JSON type '" + m.type + "'");
                             }
                         }
                     }

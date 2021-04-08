@@ -46,7 +46,7 @@ public class JsonOblockHttpService extends JsonNamedBeanHttpService<OBlock> {
 
     @Override
     public ObjectNode doGet(OBlock oblock, String name, String type, JsonRequest request) throws JsonException {
-        ObjectNode root = this.getNamedBean(oblock, name, type, request);
+        ObjectNode root = this.getNamedBean(oblock, name, getType(), request);
         ObjectNode data = root.with(JSON.DATA);
         log.debug("oblock.getState() = {}", oblock.getState());
         switch (oblock.getState()) {

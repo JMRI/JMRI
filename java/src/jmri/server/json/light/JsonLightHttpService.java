@@ -36,7 +36,7 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService<Light> {
 
     @Override
     public ObjectNode doGet(Light light, String name, String type, JsonRequest request) throws JsonException {
-        ObjectNode root = this.getNamedBean(light, name, type, request);
+        ObjectNode root = this.getNamedBean(light, name, getType(), request);
         ObjectNode data = root.with(DATA);
         if (light != null) {
             switch (light.getState()) {

@@ -31,7 +31,7 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService<Route> {
 
     @Override
     public ObjectNode doGet(Route route, String name, String type, JsonRequest request) throws JsonException {
-        ObjectNode root = this.getNamedBean(route, name, type, request); // throws JsonException if route == null
+        ObjectNode root = this.getNamedBean(route, name, getType(), request); // throws JsonException if route == null
         ObjectNode data = root.with(JSON.DATA);
         if (route != null) {
             switch (route.getState()) {
