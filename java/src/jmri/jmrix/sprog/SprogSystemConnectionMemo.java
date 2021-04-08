@@ -267,8 +267,7 @@ public class SprogSystemConnectionMemo extends DefaultSystemConnectionMemo imple
 
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
-        //No actions that can be loaded at startup
-        return null;
+        return ResourceBundle.getBundle("jmri.jmrix.sprog.SprogActionListBundle");
     }
 
     @Override
