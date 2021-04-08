@@ -119,7 +119,6 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
         _panelBlockConstant = new JPanel();
         _panelMatchMemory = new JPanel();
 
-
         _panelBlockConstant.setVisible(false);
         _panelMatchMemory.setVisible(false);
 
@@ -129,6 +128,7 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
             _stateComboBox.addItem(e);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
+
         _stateComboBox.addActionListener((java.awt.event.ActionEvent e) -> {
             setPanelDetailVisibility();
         });
@@ -211,13 +211,10 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
     private void setPanelDetailVisibility() {
         _panelBlockConstant.setVisible(false);
         _panelMatchMemory.setVisible(false);
-        _is_IsNot_ComboBox.setVisible(true);
         if (_stateComboBox.getSelectedItem() == BlockState.ValueMatches) {
             _panelBlockConstant.setVisible(true);
-            _is_IsNot_ComboBox.setVisible(false);
         } else if (_stateComboBox.getSelectedItem() == BlockState.MemoryMatches) {
             _panelMatchMemory.setVisible(true);
-            _is_IsNot_ComboBox.setVisible(false);
         }
     }
 
@@ -301,7 +298,7 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
         if (! (object instanceof ExpressionBlock)) {
             throw new IllegalArgumentException("object must be an ExpressionBlock but is a: "+object.getClass().getName());
         }
-        ExpressionBlock expression = (ExpressionBlock)object;
+        ExpressionBlock expression = (ExpressionBlock) object;
             if (!blockBeanPanel.isEmpty() && (_tabbedPaneBlock.getSelectedComponent() == _panelBlockDirect)) {
                 Block block = blockBeanPanel.getNamedBean();
                 if (block != null) {
@@ -374,21 +371,8 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
         if (blockBeanPanel == null) {
             return null;
         }
-//         blockBeanPanel.setReference(reference); // pass block application description to be put into block Comment
-//         try {
-            return blockBeanPanel.getNamedBean();
-//         } catch (jmri.JmriException ex) {
-//             log.warn("skipping creation of block not found for " + reference);
-//             return null;
-//         }
+        return blockBeanPanel.getNamedBean();
     }
-
-//    private void noBlockMessage(String s1, String s2) {
-//        log.warn("Could not provide block " + s2);
-//        String msg = Bundle.getMessage("WarningNoBlock", new Object[]{s1, s2});
-//        JOptionPane.showMessageDialog(editFrame, msg,
-//                Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-//    }
 
     /** {@inheritDoc} */
     @Override
@@ -403,7 +387,5 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
         }
     }
 
-
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionBlockSwing.class);
-
 }

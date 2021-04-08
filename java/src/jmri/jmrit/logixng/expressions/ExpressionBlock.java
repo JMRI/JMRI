@@ -16,8 +16,16 @@ import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
 import jmri.util.TypeConversionUtil;
 
 /**
- * This expression sets the state of a Block.
- *
+ * This expression evaluates the state of a Block.
+ * The supported characteristics are:
+ * <ul>
+ *   <li>Is [not] Occupied (based on occupancy sensor state)</li>
+ *   <li>Is [not] Unoccupied (based on occupancy sensor state)</li>
+ *   <li>Is [not] Other (UNKNOWN, INCONSISTENT, UNDETECTED)</li>
+ *   <li>Is [not] Allocated (based on the LayoutBlock useAlternateColor)</li>
+ *   <li>Value [not] equals string</li>
+ *   <li>Value [not] equals a memory value object.</li>
+ * </ul>
  * @author Daniel Bergqvist Copyright 2021
  * @author Dave Sand Copyright 2021
  */
@@ -40,6 +48,10 @@ public class ExpressionBlock extends AbstractDigitalExpression
 
     private String _blockConstant = "";
     private NamedBeanHandle<Memory> _blockMemoryHandle;
+
+    private int _eventState = 0;
+    private Object _eventValue = null;
+    private boolean _eventAllocated = false;
 
     public ExpressionBlock(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -272,7 +284,7 @@ public class ExpressionBlock extends AbstractDigitalExpression
 
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
+        if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
             if (evt.getOldValue() instanceof Block) {
                 if (evt.getOldValue().equals(getBlock().getBean())) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
@@ -329,7 +341,7 @@ public class ExpressionBlock extends AbstractDigitalExpression
     @Override
     public boolean evaluate() throws JmriException {
         Block block;
-log.info("evaluate block");
+
         switch (_addressing) {
             case Direct:
                 block = _blockHandle != null ? _blockHandle.getBean() : null;
@@ -375,26 +387,43 @@ log.info("evaluate block");
             checkBlockState = BlockState.valueOf(getNewState());
         }
 
-        log.info("BLock evaluate: state = {}", checkBlockState);
-
+        int currentState = _eventState;
         switch (checkBlockState) {
-            case Occupied:
-                log.info("Occupied check: state = {}", block.getState());
-                if (block.getState() == Block.OCCUPIED) {
-                    return true;
+            case Other:
+                if (currentState != Block.OCCUPIED && currentState != Block.UNOCCUPIED) {
+                    currentState = BlockState.Other.getID();
+                } else {
+                    currentState = 0;
                 }
                 break;
+
+            case Allocated:
+                currentState = _eventAllocated ? BlockState.Allocated.getID() : 0;
+                break;
+
+            case ValueMatches:
+                currentState = _blockConstant.equals(_eventValue) ? BlockState.ValueMatches.getID() : 0;
+                break;
+
+            case MemoryMatches:
+                currentState = 0;
+                if (_blockMemoryHandle != null) {
+                    Object memoryObject = _blockMemoryHandle.getBean().getValue();
+                    if (memoryObject != null && memoryObject.equals(_eventValue)) {
+                        currentState = BlockState.MemoryMatches.getID();
+                    }
+                }
+                break;
+
             default:
-                log.info("Not found");
                 break;
         }
-//         BlockState currentBlockState = BlockState.get(block.getState());
-//         if (_is_IsNot == Is_IsNot_Enum.Is) {
-//             return currentBlockState == checkBlockState;
-//         } else {
-//             return currentBlockState != checkBlockState;
-//         }
-        return false;
+
+        if (_is_IsNot == Is_IsNot_Enum.Is) {
+            return currentState == checkBlockState.getID();
+        } else {
+            return currentState != checkBlockState.getID();
+        }
     }
 
     @Override
@@ -446,13 +475,20 @@ log.info("evaluate block");
 
         switch (_stateAddressing) {
             case Direct:
-//                 state = Bundle.getMessage(locale, "AddressByDirect", );
 
                 if (_blockState == BlockState.ValueMatches) {
-                    return Bundle.getMessage(locale, "Block_Long_Value", _blockHandle.getName(), Bundle.getMessage("Block_Equal"), _blockConstant);
+                    String equalsString = _is_IsNot == Is_IsNot_Enum.Is ? Bundle.getMessage("Block_Equal") : Bundle.getMessage("Block_NotEqual");
+                    return Bundle.getMessage(locale, "Block_Long_Value", _blockHandle.getName(), equalsString, _blockConstant);
+
                 } else if (_blockState == BlockState.MemoryMatches) {
-                    String fromName = _blockMemoryHandle == null ? "" : _blockMemoryHandle.getName();
-                    return Bundle.getMessage(locale, "Block_Long_Memory", namedBean, Bundle.getMessage("Block_Equal"), fromName);
+                    String memoryName = _blockMemoryHandle == null ? "" : _blockMemoryHandle.getName();
+                    String equalsMemory = _is_IsNot == Is_IsNot_Enum.Is ? Bundle.getMessage("Block_Equal") : Bundle.getMessage("Block_NotEqual");
+                    return Bundle.getMessage(locale, "Block_Long_Memory", namedBean, equalsMemory, memoryName);
+
+                } else if (_blockState == BlockState.Other) {
+                    state = Bundle.getMessage(locale, "AddressByDirect", _blockState._text);
+                    return Bundle.getMessage(locale, "Block_Long", namedBean, "", state);
+
                 } else {
                     state = Bundle.getMessage(locale, "AddressByDirect", _blockState._text);
                 }
@@ -489,7 +525,7 @@ log.info("evaluate block");
     @Override
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered && (_blockHandle != null)) {
-            _blockHandle.getBean().addPropertyChangeListener("active", this);
+            _blockHandle.getBean().addPropertyChangeListener(this);
             _listenersAreRegistered = true;
         }
     }
@@ -498,7 +534,7 @@ log.info("evaluate block");
     @Override
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
-            _blockHandle.getBean().removePropertyChangeListener("active", this);
+            _blockHandle.getBean().removePropertyChangeListener(this);
             _listenersAreRegistered = false;
         }
     }
@@ -506,6 +542,19 @@ log.info("evaluate block");
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        switch (evt.getPropertyName()) {
+            case "state":
+                _eventState = (int) evt.getNewValue();
+                break;
+            case "value":
+                _eventValue = evt.getNewValue();
+                break;
+            case "allocated":
+                _eventAllocated = (boolean) evt.getNewValue();
+                break;
+            default:
+                return;
+        }
         if (getTriggerOnChange()) {
             getConditionalNG().execute();
         }
@@ -517,50 +566,29 @@ log.info("evaluate block");
     }
 
     public enum BlockState {
-        Occupied(Bundle.getMessage("Block_StateOccupied")),
-        NotOccupied(Bundle.getMessage("Block_StateNotOccupied")),
-        Other(Bundle.getMessage("Block_StateOther")),
-        AltColorOn(Bundle.getMessage("Block_AltColorOn")),
-        AltColorOff(Bundle.getMessage("Block_AltColorOff")),
-        ValueMatches(Bundle.getMessage("Block_ValueMatches")),
-        MemoryMatches(Bundle.getMessage("Block_MemoryMatches"));
+        Occupied(2, Bundle.getMessage("Block_StateOccupied")),
+        NotOccupied(4, Bundle.getMessage("Block_StateNotOccupied")),
+        Other(-1, Bundle.getMessage("Block_StateOther")),
+        Allocated(-2, Bundle.getMessage("Block_Allocated")),
+        ValueMatches(-3, Bundle.getMessage("Block_ValueMatches")),
+        MemoryMatches(-4, Bundle.getMessage("Block_MemoryMatches"));
 
-
-//         Inactive(0x04, Bundle.getMessage("BlockStateInactive")),
-//         Active(0x02, Bundle.getMessage("BlockStateActive")),
-//         Other(-1, Bundle.getMessage("BlockOtherStatus"));
-
-//         private final int _id;
+        private final int _id;
         private final String _text;
 
-//         private BlockState(int id, String text) {
-        private BlockState(String text) {
-//             this._id = id;
+        private BlockState(int id, String text) {
+            this._id = id;
             this._text = text;
         }
 
-//         static public BlockState get(int id) {
-//             switch (id) {
-//                 case 0x04:
-//                     return Inactive;
-//
-//                 case 0x02:
-//                     return Active;
-//
-//                 default:
-//                     return Other;
-//             }
-//         }
-
-//         public int getID() {
-//             return _id;
-//         }
+        public int getID() {
+            return _id;
+        }
 
         @Override
         public String toString() {
             return _text;
         }
-
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionBlock.class);

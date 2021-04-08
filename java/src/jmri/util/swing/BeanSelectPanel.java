@@ -38,7 +38,7 @@ public class BeanSelectPanel<E extends NamedBean> extends JPanel {
      * @param manager    The bean manager
      * @param selection  The bean that is selected, null for no selection.
      * @param display    The bean display option, null for default DISPLAYNAME.
-     * @param maxrows    Should max rows be enabled; if false the JComboBox default of 8 will be used.
+     * @param maxRows    Should max rows be enabled; if false the JComboBox default of 8 will be used.
      */
     public BeanSelectPanel(@Nonnull Manager<E> manager, E selection, DisplayOptions display, boolean maxRows) {
         _selection = selection;
@@ -93,5 +93,5 @@ public class BeanSelectPanel<E extends NamedBean> extends JPanel {
     }
 
     //initialize logging
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BeanSelectPanel.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BeanSelectPanel.class);
 }

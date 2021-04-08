@@ -22,9 +22,6 @@ import jmri.util.TypeConversionUtil;
 
 /**
  * This action triggers a block.
- * <p>
- * This action has the Operation enum and a tabs enum.  The Direct tab contains
- * the simple actions.  The additional tabs provide additional input.
  *
  * @author Daniel Bergqvist Copyright 2021
  * @author Dave Sand Copyright 2021

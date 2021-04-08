@@ -56,8 +56,7 @@
                     <xs:enumeration value="Occupied"/>
                     <xs:enumeration value="NotOccupied"/>
                     <xs:enumeration value="Other"/>
-                    <xs:enumeration value="AltColorOn"/>
-                    <xs:enumeration value="AltColorOff"/>
+                    <xs:enumeration value="Allocated"/>
                     <xs:enumeration value="ValueMatches"/>
                     <xs:enumeration value="MemoryMatches"/>
                   </xs:restriction>
