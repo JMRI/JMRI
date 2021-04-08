@@ -15,6 +15,9 @@ import org.slf4j.LoggerFactory;
 /**
  *
  * @author Lionel Jeanson
+ * 
+ * This class implements all keyboard and mouse wheel action on a throttle frame
+ * 
  */
 public class ThrottleWindowInputsListener implements KeyListener, MouseWheelListener, PropertyChangeListener {
 
@@ -221,7 +224,7 @@ public class ThrottleWindowInputsListener implements KeyListener, MouseWheelList
         } else {
             speed = throttle.getSpeedSetting() + increment;
         }
-        if (speed < 0) {
+        if ( (speed < 0) || (speed < throttle.getSpeedIncrement()) ) { // force 0 bellow minimum speed
             speed = 0;
         } else if (speed > 1) {
             speed = 1;
