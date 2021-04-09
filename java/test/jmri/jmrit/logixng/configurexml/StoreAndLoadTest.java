@@ -180,36 +180,89 @@ public class StoreAndLoadTest {
 
         int indexAction = 0;
 
-// ActionBlock
-//         ActionBlock actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
-//         MaleSocket maleSocket = digitalActionManager.registerAction(actionBlock);
-//         maleSocket.setEnabled(false);
-//         actionManySocket.getChild(indexAction++).connect(maleSocket);
-//
-//         actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
-//         maleSocket = digitalActionManager.registerAction(actionBlock);
-//         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.Default);
-//         actionManySocket.getChild(indexAction++).connect(maleSocket);
-//
-//         actionBlock = new ActionLight(digitalActionManager.getAutoSystemName(), null);
-//         actionBlock.setComment("A comment");
-//         actionBlock.setBlock(block1);
-//         actionBlock.setBeanState(ActionLight.LightState.Off);
-//         actionBlock.setAddressing(NamedBeanAddressing.Direct);
-//         actionBlock.setFormula("\"IT\"+index");
-//         actionBlock.setLocalVariable("index");
-//         actionBlock.setReference("{IM1}");
-//         actionBlock.setStateAddressing(NamedBeanAddressing.LocalVariable);
-//         actionBlock.setStateFormula("\"IT\"+index2");
-//         actionBlock.setStateLocalVariable("index2");
-//         actionBlock.setStateReference("{IM2}");
-//         maleSocket = digitalActionManager.registerAction(actionBlock);
-//         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.AbortExecution);
-//         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
-// ActionLight
+        ActionBlock actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
+        MaleSocket maleSocket = digitalActionManager.registerAction(actionBlock);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionBlock);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.Default);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
+        actionBlock.setComment("A comment");
+        actionBlock.setBlock(block1);
+        actionBlock.setOperationDirect(ActionBlock.DirectOperation.SetOccupied);
+        actionBlock.setAddressing(NamedBeanAddressing.Direct);
+        actionBlock.setFormula("\"IT\"+index");
+        actionBlock.setLocalVariable("index");
+        actionBlock.setReference("{IM1}");
+        actionBlock.setOperationAddressing(NamedBeanAddressing.LocalVariable);
+        actionBlock.setOperationFormula("\"IT\"+index2");
+        actionBlock.setOperationLocalVariable("index2");
+        actionBlock.setOperationReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(actionBlock);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.AbortExecution);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
+        actionBlock.setComment("A comment");
+        actionBlock.setBlock(block1);
+        actionBlock.setOperationDirect(ActionBlock.DirectOperation.SetOccupied);
+        actionBlock.setAddressing(NamedBeanAddressing.LocalVariable);
+        actionBlock.setFormula("\"IT\"+index");
+        actionBlock.setLocalVariable("index");
+        actionBlock.setReference("{IM1}");
+        actionBlock.setOperationAddressing(NamedBeanAddressing.Formula);
+        actionBlock.setOperationFormula("\"IT\"+index2");
+        actionBlock.setOperationLocalVariable("index2");
+        actionBlock.setOperationReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(actionBlock);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogError);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
+        actionBlock.setComment("A comment");
+        actionBlock.setBlock(block1);
+        actionBlock.setOperationDirect(ActionBlock.DirectOperation.SetOccupied);
+        actionBlock.setAddressing(NamedBeanAddressing.Formula);
+        actionBlock.setFormula("\"IT\"+index");
+        actionBlock.setLocalVariable("index");
+        actionBlock.setReference("{IM1}");
+        actionBlock.setOperationAddressing(NamedBeanAddressing.Reference);
+        actionBlock.setOperationFormula("\"IT\"+index2");
+        actionBlock.setOperationLocalVariable("index2");
+        actionBlock.setOperationReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(actionBlock);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.LogErrorOnce);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
+        actionBlock.setComment("A comment");
+        actionBlock.setBlock(block1);
+        actionBlock.setOperationDirect(ActionBlock.DirectOperation.SetOccupied);
+        actionBlock.setAddressing(NamedBeanAddressing.Reference);
+        actionBlock.setFormula("\"IT\"+index");
+        actionBlock.setLocalVariable("index");
+        actionBlock.setReference("{IM1}");
+        actionBlock.setOperationAddressing(NamedBeanAddressing.Direct);
+        actionBlock.setOperationFormula("\"IT\"+index2");
+        actionBlock.setOperationLocalVariable("index2");
+        actionBlock.setOperationReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(actionBlock);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ShowDialogBox);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionBlock);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         ActionLight actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
-        MaleSocket maleSocket = digitalActionManager.registerAction(actionLight);
+        maleSocket = digitalActionManager.registerAction(actionLight);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -288,7 +341,7 @@ public class StoreAndLoadTest {
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
-// ActionListenOnBeans
+
         ActionListenOnBeans actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         maleSocket.setEnabled(false);
@@ -1439,6 +1492,71 @@ public class StoreAndLoadTest {
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
         and.getChild(indexExpr++).connect(maleSocket);
 
+
+        ExpressionBlock expressionBlock = new ExpressionBlock(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(expressionBlock);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionBlock = new ExpressionBlock(digitalExpressionManager.getAutoSystemName(), null);
+        expressionBlock.setComment("A comment");
+        expressionBlock.setBeanState(ExpressionBlock.BlockState.Occupied);
+        expressionBlock.setAddressing(NamedBeanAddressing.Direct);
+        expressionBlock.setFormula("\"IT\"+index");
+        expressionBlock.setLocalVariable("index");
+        expressionBlock.setReference("{IM1}");
+        expressionBlock.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        expressionBlock.setStateAddressing(NamedBeanAddressing.LocalVariable);
+        expressionBlock.setStateFormula("\"IT\"+index2");
+        expressionBlock.setStateLocalVariable("index2");
+        expressionBlock.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionBlock);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionBlock = new ExpressionBlock(digitalExpressionManager.getAutoSystemName(), null);
+        expressionBlock.setComment("A comment");
+        expressionBlock.setBeanState(ExpressionBlock.BlockState.Occupied);
+        expressionBlock.setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionBlock.setFormula("\"IT\"+index");
+        expressionBlock.setLocalVariable("index");
+        expressionBlock.setReference("{IM1}");
+        expressionBlock.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionBlock.setStateAddressing(NamedBeanAddressing.Formula);
+        expressionBlock.setStateFormula("\"IT\"+index2");
+        expressionBlock.setStateLocalVariable("index2");
+        expressionBlock.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionBlock);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionBlock = new ExpressionBlock(digitalExpressionManager.getAutoSystemName(), null);
+        expressionBlock.setComment("A comment");
+        expressionBlock.setBeanState(ExpressionBlock.BlockState.Occupied);
+        expressionBlock.setAddressing(NamedBeanAddressing.Formula);
+        expressionBlock.setFormula("\"IT\"+index");
+        expressionBlock.setLocalVariable("index");
+        expressionBlock.setReference("{IM1}");
+        expressionBlock.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        expressionBlock.setStateAddressing(NamedBeanAddressing.Reference);
+        expressionBlock.setStateFormula("\"IT\"+index2");
+        expressionBlock.setStateLocalVariable("index2");
+        expressionBlock.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionBlock);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionBlock = new ExpressionBlock(digitalExpressionManager.getAutoSystemName(), null);
+        expressionBlock.setComment("A comment");
+        expressionBlock.setBeanState(ExpressionBlock.BlockState.Occupied);
+        expressionBlock.setAddressing(NamedBeanAddressing.Reference);
+        expressionBlock.setFormula("\"IT\"+index");
+        expressionBlock.setLocalVariable("index");
+        expressionBlock.setReference("{IM1}");
+        expressionBlock.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionBlock.setStateAddressing(NamedBeanAddressing.Direct);
+        expressionBlock.setStateFormula("\"IT\"+index2");
+        expressionBlock.setStateLocalVariable("index2");
+        expressionBlock.setStateReference("{IM2}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionBlock);
+        and.getChild(indexExpr++).connect(maleSocket);
 
         ExpressionClock expressionClock = new ExpressionClock(digitalExpressionManager.getAutoSystemName(), null);
         expressionClock.setType(ExpressionClock.Type.SystemClock);
