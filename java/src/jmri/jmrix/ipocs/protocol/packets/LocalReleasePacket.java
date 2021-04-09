@@ -13,7 +13,7 @@ import jmri.jmrix.ipocs.protocol.enums.RqReleaseCommand;
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class LocalReleasePacket extends Packet {
   public final static byte IDENT = 9;
-  private RqReleaseCommand command;
+  private RqReleaseCommand command = null;
 
   @Override
   public byte getId() {

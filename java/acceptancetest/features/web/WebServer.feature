@@ -1,5 +1,5 @@
 @webtest
-Feature: JMRI Web Server 
+Feature: JMRI Web Server
 
 Scenario Outline: Basic Http requests
    Given I am using <browser>

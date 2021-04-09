@@ -507,7 +507,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         getDefault().allowLocalSpurMoves = enabled;
     }
 
-    public static boolean isTrainIntoStagingCheckEnabled() {
+    public static boolean isStagingTrainCheckEnabled() {
         return getDefault().trainIntoStagingCheck;
     }
 
@@ -518,7 +518,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
      * @param enabled when true, the terminal staging track must service the
      *            same car types, loads, etc. as the train
      */
-    public static void setTrainIntoStagingCheckEnabled(boolean enabled) {
+    public static void setStagingTrainCheckEnabled(boolean enabled) {
         getDefault().trainIntoStagingCheck = enabled;
     }
 
@@ -535,29 +535,29 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
      * Also available on a per train basis.
      * @return true if cars are allowed to depart and return to same staging location
      */
-    public static boolean isAllowReturnToStagingEnabled() {
+    public static boolean isStagingAllowReturnEnabled() {
         return getDefault().allowCarsReturnStaging;
     }
 
-    public static void setAllowReturnToStagingEnabled(boolean enabled) {
+    public static void setStagingAllowReturnEnabled(boolean enabled) {
         boolean old = getDefault().allowCarsReturnStaging;
         getDefault().allowCarsReturnStaging = enabled;
         setDirtyAndFirePropertyChange(ALLOW_CARS_TO_RETURN_PROPERTY_CHANGE, old, enabled);
     }
 
-    public static boolean isPromptFromStagingEnabled() {
+    public static boolean isStagingPromptFromEnabled() {
         return getDefault().promptFromStaging;
     }
 
-    public static void setPromptFromStagingEnabled(boolean enabled) {
+    public static void setStagingPromptFromEnabled(boolean enabled) {
         getDefault().promptFromStaging = enabled;
     }
 
-    public static boolean isPromptToStagingEnabled() {
+    public static boolean isStagingPromptToEnabled() {
         return getDefault().promptToStaging;
     }
 
-    public static void setPromptToStagingEnabled(boolean enabled) {
+    public static void setStagingPromptToEnabled(boolean enabled) {
         getDefault().promptToStaging = enabled;
     }
     
@@ -803,11 +803,11 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         return getDefault().switchListSameManifest;
     }
 
-    public static void setTrackSummaryEnabled(boolean b) {
+    public static void setPrintTrackSummaryEnabled(boolean b) {
         getDefault().trackSummary = b;
     }
 
-    public static boolean isTrackSummaryEnabled() {
+    public static boolean isPrintTrackSummaryEnabled() {
         return getDefault().trackSummary;
     }
 
@@ -861,11 +861,11 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         return getDefault().switchListPageFormat;
     }
 
-    public static void setTruncateManifestEnabled(boolean b) {
+    public static void setPrintTruncateManifestEnabled(boolean b) {
         getDefault().manifestTruncated = b;
     }
 
-    public static boolean isTruncateManifestEnabled() {
+    public static boolean isPrintTruncateManifestEnabled() {
         return getDefault().manifestTruncated;
     }
 
@@ -1882,7 +1882,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         values.setAttribute(Xml.PAGE_FORMAT, format);
 
         values.setAttribute(Xml.PRINT_ROUTE_LOCATION, isSwitchListRouteLocationCommentEnabled() ? Xml.TRUE : Xml.FALSE);
-        values.setAttribute(Xml.TRACK_SUMMARY, isTrackSummaryEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.TRACK_SUMMARY, isPrintTrackSummaryEnabled() ? Xml.TRUE : Xml.FALSE);
 
         e.addContent(values = new Element(Xml.SWITCH_LIST_PICKUP_CAR_FORMAT));
         storeXmlMessageFormat(values, getSwitchListPickupCarPrefix(), getPickupSwitchListMessageFormat());
@@ -1928,7 +1928,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         values.setAttribute(Xml.PRINT_VALID, isPrintValidEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.SORT_BY_TRACK, isSortByTrackNameEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_HEADERS, isPrintHeadersEnabled() ? Xml.TRUE : Xml.FALSE);
-        values.setAttribute(Xml.TRUNCATE, isTruncateManifestEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.TRUNCATE, isPrintTruncateManifestEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.USE_DEPARTURE_TIME, isUseDepartureTimeEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.USE_EDITOR, isManifestEditorEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_CABOOSE_LOAD, isPrintCabooseLoadEnabled() ? Xml.TRUE : Xml.FALSE);
@@ -1965,11 +1965,11 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         values.setAttribute(Xml.ALLOW_LOCAL_SPUR, isLocalSpurMovesEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.ALLOW_LOCAL_YARD, isLocalYardMovesEnabled() ? Xml.TRUE : Xml.FALSE);
 
-        values.setAttribute(Xml.STAGING_RESTRICTION_ENABLED, isTrainIntoStagingCheckEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.STAGING_RESTRICTION_ENABLED, isStagingTrainCheckEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.STAGING_TRACK_AVAIL, isStagingTrackImmediatelyAvail() ? Xml.TRUE : Xml.FALSE);
-        values.setAttribute(Xml.ALLOW_RETURN_STAGING, isAllowReturnToStagingEnabled() ? Xml.TRUE : Xml.FALSE);
-        values.setAttribute(Xml.PROMPT_STAGING_ENABLED, isPromptFromStagingEnabled() ? Xml.TRUE : Xml.FALSE);
-        values.setAttribute(Xml.PROMPT_TO_STAGING_ENABLED, isPromptToStagingEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.ALLOW_RETURN_STAGING, isStagingAllowReturnEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.PROMPT_STAGING_ENABLED, isStagingPromptFromEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.PROMPT_TO_STAGING_ENABLED, isStagingPromptToEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.STAGING_TRY_NORMAL, isStagingTryNormalBuildEnabled() ? Xml.TRUE : Xml.FALSE);
 
         values.setAttribute(Xml.GENERATE_CSV_MANIFEST, isGenerateCsvManifestEnabled() ? Xml.TRUE : Xml.FALSE);
@@ -2335,7 +2335,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
             if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.TRACK_SUMMARY)) != null) {
                 String b = a.getValue();
                 log.debug("track summary: {}", b);
-                setTrackSummaryEnabled(b.equals(Xml.TRUE));
+                setPrintTrackSummaryEnabled(b.equals(Xml.TRUE));
             }
         }
         if (operations.getChild(Xml.SWITCH_LIST_PICKUP_CAR_FORMAT) != null) {
@@ -2520,7 +2520,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.TRUNCATE)) != null) {
                 String enable = a.getValue();
                 log.debug("manifest truncate: {}", enable);
-                setTruncateManifestEnabled(enable.equals(Xml.TRUE));
+                setPrintTruncateManifestEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.USE_DEPARTURE_TIME)) != null) {
                 String enable = a.getValue();
@@ -2625,7 +2625,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.STAGING_RESTRICTION_ENABLED)) != null) {
                 String enable = a.getValue();
                 log.debug("stagingRestrictionEnabled: {}", enable);
-                setTrainIntoStagingCheckEnabled(enable.equals(Xml.TRUE));
+                setStagingTrainCheckEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.STAGING_TRACK_AVAIL)) != null) {
                 String enable = a.getValue();
@@ -2640,12 +2640,12 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.PROMPT_STAGING_ENABLED)) != null) {
                 String enable = a.getValue();
                 log.debug("promptStagingEnabled: {}", enable);
-                setPromptFromStagingEnabled(enable.equals(Xml.TRUE));
+                setStagingPromptFromEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.PROMPT_TO_STAGING_ENABLED)) != null) {
                 String enable = a.getValue();
                 log.debug("promptToStagingEnabled: {}", enable);
-                setPromptToStagingEnabled(enable.equals(Xml.TRUE));
+                setStagingPromptToEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.STAGING_TRY_NORMAL)) != null) {
                 String enable = a.getValue();

@@ -42,12 +42,14 @@
       These elements are created by entering data into the
       <b><a href="OBlockTable.shtml">Occupancy Block Tables</a></b>
       or by using the graphical interface of the
-      <b>Circuit Builder</b>, part of Control Panel Editor. Initially
-      however, these tools are not visible in the Panel Editor
-      as they require some preparations, described next.</p>
+      <b><a href=
+      "../display/CircuitBuilder.shtml">Circuit Builder</a></b>,
+      part of Control Panel Editor. Initially however, these tools
+      are not visible in the Panel Editor as they require some
+      preparations, described next.</p>
 
       <h2>Get Started with Warrants</h2>
-	  Definitions of OBlocks, Portals and OPaths may be found
+	    Definitions of OBlocks, Portals and OPaths may be found
       <a href="OBlockTable.shtml">here</a>.
       <ul>
         <li>First, it is important that the <b>scale</b> of your layout
@@ -61,9 +63,9 @@
         for information about configuration of Warrant parameters.</li>
 
         <li>Next, open the Occupancy Block Tables by choosing
-        the <b>Tools-&gt;Tables-&gt;Occupancy Blocks</b> menu item
+        the <b>Tools &rArr; Tables &rArr; Occupancy Blocks</b> menu item
         from the main PanelPro menu bar, or the <b>Add
-        Items-&gt;Occupancy Blocks</b> menu item
+        Items &rArr; Occupancy Blocks</b> menu item
         from within Control Panel Editor.</li>
 
         <li>Create your OBlocks, Portals and OPaths using these
@@ -128,16 +130,17 @@
         "CreateEditWarrant.shtml">Creating and Editing
         Warrants</a>.</li>
 
-        <li><b>Create New Warrant</b> - After providing system and
-        user names this opens a blank Warrant Editing Window to
-        create a new Warrant.<br>
-        The operations of this frame are
-        discussed in <a href="CreateEditWarrant.shtml">Creating and
-        Editing Warrants</a>.</li>
+        <li><b>Create New Warrant</b> - Opens the window used for
+        creating and editing warrants. This window has several display
+        modes. In this case, it is opened in the mode to create a
+        route for a new warrant.
+        The <a href="CreateEditWarrant.shtml">Creating and Editing Warrants</a>
+        help page has information about creating a warrant.</li>
 
-        <li><b>Train Trackers</b> - Opens window where the
-        identity of trains can be displayed as they are moved by
-        operators from one occupancy block to another.</li>
+        <li><b>Train Trackers</b> - Opens the Tracker Table window.
+        The <a href="Tracker.shtml">Train Trackers</a> help page
+        discusses how the movements of a train can be displayed 
+        as they move from one occupancy block to another.</li>
 
         <li><b>Create NX Warrant</b> - Opens a window to create a
         temporary eNtry/eXit (NX) Warrant. This is discussed
@@ -146,6 +149,13 @@
         <li><b>Open Session Log</b> - <span class="since">since
         3.7.3</span> Opens a window to name a file that records
         the Warrant and train tracking status messages.</li>
+
+        <li><b>Open Circuit builder</b> - Opens a window for
+        the circuit Builder to present its options for 
+        interactively editing and creating OBlocks, Portals, 
+        Paths. Also configures Signals and Indicator Track 
+        icons. <a href="../display/CircuitBuilder.shtml">
+        Circuit Builder</a> has details.</li>
       </ul>
 
 	  <h3>Warrants without Occupancy Detection</h3>
@@ -194,7 +204,7 @@
         are recorded from a throttle you use to drive a train over
         preselected route. The Warrant then replicates all the
         commands when played back. To create a Recorded Script
-        Warrant, select the <b>Warrants-&gt;Tables-&gt;Create New Warrant</b>
+        Warrant, select the <b>Warrants &rArr; Tables &rArr; Create New Warrant</b>
         menu item and select 'Prototypical' or 'Add Speeds' as Warrant
         type.</li>
 
@@ -203,16 +213,16 @@
         chosen by you "on the fly". A dialog allows you to choose
         start and destination distances and to set the maximum 
         Throttle settings. To create an NX Warrant,
-        select the <b>Warrants-&gt;Tables-&gt;Create NX Warrant</b>
+        select the <b>Warrants &rArr; Tables &rArr; Create NX Warrant</b>
         menu item. More on <a href="NXWarrant.shtml">NX Warrants</a></li>
 
-        <li>A <b>Fast Reacting</b> Warrant. This type does not follow
+        <li>A <b>Fast Reacting Warrant</b>. This type does not follow
         the usual Warrant rules, but reacts to signals
         when entering their approach block with an immediate speed
         change. The throttle settings are a fixed proportion of the
         Aspect Speed Names in Warrant Preferences. This type of warrant
         is better suited to smaller layouts. To create this type
-        of Warrant, select the <b>Warrants-&gt;Tables-&gt;Create New Warrant</b>
+        of Warrant, select the <b>Warrants &rArr; Tables &rArr; Create New Warrant</b>
         menu item and select 'Fast Reacting' as Warrant type.
         More on <a href="SCWarrant.shtml">Fast Reacting Warrants</a></li>
       </ul>
@@ -349,10 +359,11 @@
 
       <h2>Tracking Trains</h2>Any train running on the layout can
       be tracked. The layout must be represented with Indicator
-      Track Icons to track trains. The fourth Warrants menu item
-      opens the <b>Tracker Table</b>. Pressing the <b>New
-      Tracker</b> button in this window opens a dialog to enter a
-      train name and the OBlock it occupies. Pressing the done
+      Track Icons to track trains. Train Trackers, the fourth
+      item in the Warrants menu, opens the <b>Tracker Table</b>.
+      Pressing the <b>New Tracker...</b> button in this window
+      opens a dialog to enter a
+      train name and the OBlock it occupies. Pressing the [Create]
       button creates a row in the Tracking Table. The row shows the
       train name and the block it currently occupies and the length
       of time it has occupied the block. As the train moves from

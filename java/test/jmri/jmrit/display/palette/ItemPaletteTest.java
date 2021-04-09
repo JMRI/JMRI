@@ -5,7 +5,6 @@ import java.awt.GraphicsEnvironment;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,15 +13,16 @@ import org.junit.jupiter.api.*;
  */
 public class ItemPaletteTest {
 
-    // allows creation in lamba expressions
+    // allows creation in lambda expressions
     private ItemPalette ip = null;
 
     @Test
     public void testShow() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor editor = new ControlPanelEditor("EdItemPalette");
         jmri.util.ThreadingUtil.runOnGUI(() -> {
-            ip = ItemPalette.getDefault("Test ItemPalette",editor);
+            ip = ItemPalette.getDefault("Test ItemPalette", editor);
+            assert ip != null;
             ip.pack();
             ip.setVisible(true);
         });
@@ -40,6 +40,7 @@ public class ItemPaletteTest {
     public void tearDown() {
         ip = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

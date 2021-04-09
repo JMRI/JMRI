@@ -4,6 +4,8 @@ import jmri.Light;
 import jmri.SystemConnectionMemo;
 import jmri.managers.AbstractLightManager;
 
+import javax.annotation.Nonnull;
+
 /**
  *
  * @author Fredrik Elestedt Copyright (C) 2020
@@ -20,12 +22,13 @@ public class IpocsLightManager extends AbstractLightManager {
   }
 
   @Override
-  public boolean validSystemNameConfig(String systemName) {
+  public boolean validSystemNameConfig(@Nonnull String systemName) {
     return false;
   }
 
   @Override
-  protected Light createNewLight(String systemName, String userName) {
+  @Nonnull
+  protected Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException {
     return new IpocsLight(getPortController(), systemName, userName);
   }
   

@@ -10,7 +10,7 @@ import org.junit.Test;
 import jmri.jmrix.ipocs.protocol.enums.RqOutputState;
 
 public class OutputStatusPacketTest {
-  private byte[] testPacket = { RqOutputState.On.value };
+  private final byte[] testPacket = { RqOutputState.On.value };
 
   @Test
   public void getIdTest() {

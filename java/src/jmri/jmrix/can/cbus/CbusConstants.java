@@ -5,7 +5,7 @@ package jmri.jmrix.can.cbus;
  *
  * Constants to represent CBUS protocol
  *
- * @author Andrew Crosland Copyright (C) 2008
+ * @author Andrew Crosland Copyright (C) 2008, 2021
  */
 public final class CbusConstants {
 
@@ -122,6 +122,7 @@ public final class CbusConstants {
     // OPcodes with 5 data
     public static final int CBUS_RDCC4 = 0xA0;
     public static final int CBUS_WCVS = 0xA2;
+    public static final int CBUS_VCVS = 0xA4;
 
     public static final int CBUS_ACON1 = 0xB0;
     public static final int CBUS_ACOF1 = 0xB1;

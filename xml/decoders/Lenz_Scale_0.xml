@@ -13,7 +13,9 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <version author="W.D.Kok" version="1.00" lastUpdated="20200423            "/>
+  <version author="W.D.Kok" version="2.00" lastUpdated="20210128            "/>
   <!-- Version 1.00 - Initial version                                       -->
+  <!-- Version 2.00 - Added V20 and KLV 12                                  -->
   <decoder>
     <family name="Lenz Scale 0 Locomotive" mfg="Lenz" highVersionID="62" lowVersionID="0">
       <model model="BR38" lowVersionID="31" highVersionID="31" formFactor="0" productID="31"/>
@@ -23,6 +25,7 @@
       <model model="BR94" lowVersionID="28" highVersionID="28" formFactor="0" productID="28"/>
       <model model="V36" lowVersionID="61" highVersionID="61" formFactor="0" productID="61"/>
       <model model="V100" lowVersionID="3" highVersionID="3" formFactor="0" productID="03"/>
+      <model model="V20" lowVersionID="17" highVersionID="17" formFactor="0" productID="17"/>
       <model model="V60 ver 1" lowVersionID="9" highVersionID="9" formFactor="0" productID="09"/>
       <model model="V60 ver 2" lowVersionID="32" highVersionID="32" formFactor="0" productID="32"/>
       <model model="V160" lowVersionID="5" highVersionID="5" formFactor="0" productID="05"/>
@@ -33,12 +36,14 @@
       <model model="BR360" lowVersionID="9" highVersionID="9" formFactor="0" productID="09"/>
       <model model="VT98" lowVersionID="10" highVersionID="10" formFactor="0" productID="10"/>
       <model model="Köf II" lowVersionID="2" highVersionID="2" formFactor="0" productID="02"/>
+      <model model="KLV 12" lowVersionID="27" highVersionID="27" formFactor="0" productID="27"/>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable CV="2" item="Vstart" default="0" comment="Range 0-255">
-        <defaultItem default="2" include="31,24,28,32,10"/>
+        <defaultItem default="3" include="27"/>
+        <defaultItem default="2" include="31,24,28,17,32,10"/>
         <defaultItem default="1" include="22"/>
         <decVal/>
         <label>Start Volts</label>
@@ -51,7 +56,7 @@
         <comment>Range 0-255</comment>
       </variable>
       <variable CV="3" item="Accel" default="6" comment="Range 0-255">
-        <defaultItem default="20" include="31,24,28,32"/>
+        <defaultItem default="20" include="31,24,28,32,27"/>
         <defaultItem default="25" include="22"/>
         <defaultItem default="12" include="10"/>
         <decVal/>
@@ -64,6 +69,7 @@
         <comment>Range 0-255</comment>
       </variable>
       <variable CV="4" item="Decel" default="5" comment="Range 0-255">
+        <defaultItem default="10" include="27"/>
         <defaultItem default="12" include="31,24,28,32"/>
         <defaultItem default="20" include="22"/>
         <decVal/>
@@ -77,7 +83,7 @@
       </variable>
       <variable CV="5" item="Vhigh" default="255" comment="Range 0-255">
         <defaultItem default="250" include="22"/>
-        <defaultItem default="254" include="05,09,03,18,10,02"/>
+        <defaultItem default="254" include="05,09,03,17,18,10,02.27"/>
         <decVal/>
         <label>Max Volts</label>
         <label xml:lang="ca">Voltatge màxim</label>
@@ -99,7 +105,7 @@
         <label xml:lang="nl">Gemiddelde snelheid</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" item="Decoder Version" readOnly="yes">
         <defaultItem default="31" include="31"/>
         <defaultItem default="22" include="22"/>
         <defaultItem default="5" include="05"/>
@@ -109,9 +115,11 @@
         <defaultItem default="9" include="09"/>
         <defaultItem default="32" include="32"/>
         <defaultItem default="3" include="03"/>
+        <defaultItem default="17" include="17"/>
         <defaultItem default="18" include="18"/>
         <defaultItem default="10" include="10"/>
         <defaultItem default="2" include="02"/>
+        <defaultItem default="27" include="27"/>
         <decVal/>
         <label>Manufacturer Version No: </label>
         <label xml:lang="cs">Verze dekodéru: </label>
@@ -150,7 +158,7 @@
         <label xml:lang="it">Canale.2 per Dati.</label>
         <label xml:lang="nl">Kanaal 2 voor Daten.</label>
       </variable>
-      <variable CV="28" mask="XXXXXVXX" item="RailCom Command" default="0" include="50,61">
+      <variable CV="28" mask="XXXXXVXX" item="RailCom Command" default="0" include="50,61,27">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Ch. 1 for Command Ack.</label>
         <label xml:lang="ca">Canal 1 per Ordres ACK.</label>
@@ -159,7 +167,7 @@
         <label xml:lang="it">Canale.1 per Comando Ack.</label>
         <label xml:lang="nl">Kanaal 1 voor beveel erkenning.</label>
       </variable>
-      <variable CV="28" mask="XXXXXVXX" item="RailCom Command" default="1" include="03">
+      <variable CV="28" mask="XXXXXVXX" item="RailCom Command" default="1" include="03,17">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Ch. 1 for Command Ack.</label>
         <label xml:lang="ca">Canal 1 per Ordres ACK.</label>
@@ -215,7 +223,7 @@
         <tooltip xml:lang="it">&lt;html&gt;'4' bit.&lt;br&gt; Permette alla loco di andare in DC, per default è On&lt;br&gt;</tooltip>
         <tooltip xml:lang="nl">&lt;html&gt;Alleen digitaal volgens NMRA: de locomotief rijdt alleen digitaal.&lt;br&gt; Analogemodus geactiveerd: de locomotief rijdt zowel digitaal als analoog.&lt;br&gt;&lt;/html&gt;</tooltip>
       </variable>
-      <variable CV="29" readOnly="yes" mask="XXXXXVXX" item="Analog (DC) Operation" default="1" include="09,18,10,02">
+      <variable CV="29" readOnly="yes" mask="XXXXXVXX" item="Analog (DC) Operation" default="1" include="09,18,10,02,17,27">
         <enumVal>
           <enumChoice choice="NMRA Digital only">
             <choice>NMRA Digital only</choice>
@@ -270,7 +278,6 @@
         <tooltip xml:lang="nl">&lt;html&gt;Het nummer in deze CV geeft aan met welke functie het cabine licht geschakeld worden.&lt;br&gt;Bereik 0-28, Standaard = 6, &lt;/html&gt;</tooltip>
         <comment>Range 0-28</comment>
       </variable>
-      
       <variable CV="36" item="Chassis Light" default="9" include="22">
         <decVal max="28"/>
         <label>Chassis Light</label>
@@ -281,7 +288,6 @@
         <tooltip xml:lang="nl">&lt;html&gt;Het nummer in deze CV geeft aan met welke functie het Chassis licht geschakeld worden.&lt;br&gt;Bereik 0-28, Standaard = 6, &lt;/html&gt;</tooltip>
         <comment>Range 0-28</comment>
       </variable>
-      
       <variable CV="37" item="Shunting light" default="5" comment="Range 0-28">
         <decVal max="28"/>
         <label>Shunting light</label>
@@ -302,7 +308,7 @@
         <tooltip xml:lang="nl">&lt;html&gt;Het nummer in deze CV geeft aan met welke functie het cabine licht tender geschakeld worden.&lt;br&gt;Bereik 0-28, Standaard = 6, &lt;/html&gt;</tooltip>
         <comment>Range 0-28</comment>
       </variable>
-      <variable CV="39" item="Shunting" default="5" comment="Range 0-28">
+      <variable CV="39" item="Shunting" default="5" comment="Range 0-28" exclude="27">
         <decVal max="28"/>
         <label>Shunting</label>
         <label xml:lang="de">Rangiergang</label>
@@ -322,7 +328,7 @@
         <tooltip xml:lang="nl">&lt;html&gt;Het nummer in deze CV geeft aan met welke functie die Ontkoppeller geschakeld wordt.&lt;br&gt;Bereik 0-28, Standaard = 2, &lt;/html&gt;</tooltip>
         <comment>Range 0-28</comment>
       </variable>
-      <variable CV="40" item="Uncoupling 1" default="2" comment="Range 0-28" include="05,61,09,03,18,10,02">
+      <variable CV="40" item="Uncoupling 1" default="2" comment="Range 0-28" include="05,61,09,03,18,10,02,17">
         <decVal max="28"/>
         <label>uncoupling front</label>
         <label xml:lang="de">Entkuppeln vorne</label>
@@ -332,7 +338,7 @@
         <tooltip xml:lang="nl">&lt;html&gt;Het nummer in deze CV geeft aan met welke functie die Ontkoppeller geschakeld wordt.&lt;br&gt;Bereik 0-28, Standaard = 2, &lt;/html&gt;</tooltip>
         <comment>Range 0-28</comment>
       </variable>
-      <variable CV="41" item="Uncoupling 2" default="2" comment="Range 0-28" include="05,61,09,03,18,10,02">
+      <variable CV="41" item="Uncoupling 2" default="2" comment="Range 0-28" include="05,61,09,03,18,10,02,17">
         <decVal max="28"/>
         <label>uncoupling rear</label>
         <label xml:lang="de">Entkuppeln hinten</label>
@@ -412,17 +418,17 @@
         <label xml:lang="nl">Ontkoppelingsafstand</label>
         <tooltip>&lt;html&gt;Distanz that is laid back when uncoupling,&lt;br&gt;The required value is calculated according to the formula&lt;br&gt;CV49 = X * 32 , where X is the desired path in mm.&lt;br&gt;Range 0-255, &lt;/html&gt;</tooltip>
 				<tooltip xml:lang="de">&lt;html&gt;Weg, der beim Entkuppeln zurück gelegt wird,&lt;br&gt;Die Berechnung des benötigten Wertes erfolgt nach der Formel&lt;br&gt;CV49 = X * 32 , wobei X der gewünschte Weg in mm ist.&lt;br&gt;Bereich 0-255, &lt;/html&gt;</tooltip>
-				<tooltip xml:lang="nl">&lt;html&gt;De weg die bij het ontkoppelen teruggelegd wordt,&lt;br&gt;De vereiste waarde wordt berekend volgens de formule&lt;br&gt;CV49 = X * 32 , waarbij X het gewenste weg in mm is.&lt;br&gt;Bereik 0-255, &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;De weg die bij het ontkoppelen teruggelegd wordt,&lt;br&gt;De vereiste waarde wordt berekend volgens de formule&lt;br&gt;CV49 = X * 32 , waarbij X de gewenste weg in mm is.&lt;br&gt;Bereik 0-255, &lt;/html&gt;</tooltip>
         <comment>Range 0-255</comment>
       </variable>
-      <variable CV="49" item="Uncoupling 3" comment="Range 0-255" default="28" include="09">
+      <variable CV="49" item="Uncoupling 3" comment="Range 0-255" default="28" include="09,17">
         <decVal/>
         <label>Uncoupling Distains</label>
         <label xml:lang="de">Entkopplung Distanz</label>
         <label xml:lang="nl">Ontkoppelingsafstand</label>
         <tooltip>&lt;html&gt;Distanz that is laid back when uncoupling,&lt;br&gt;The required value is calculated according to the formula&lt;br&gt;CV49 = X * 15 , where X is the desired path in mm.&lt;br&gt;Range 0-255, &lt;/html&gt;</tooltip>
 				<tooltip xml:lang="de">&lt;html&gt;Weg, der beim Entkuppeln zurück gelegt wird,&lt;br&gt;Die Berechnung des benötigten Wertes erfolgt nach der Formel&lt;br&gt;CV49 = X * 15 , wobei X der gewünschte Weg in mm ist.&lt;br&gt;Bereich 0-255, &lt;/html&gt;</tooltip>
-				<tooltip xml:lang="nl">&lt;html&gt;De weg die bij het ontkoppelen teruggelegd wordt,&lt;br&gt;De vereiste waarde wordt berekend volgens de formule&lt;br&gt;CV49 = X * 15 , waarbij X het gewenste weg in mm is.&lt;br&gt;Bereik 0-255, &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;De weg die bij het ontkoppelen teruggelegd wordt,&lt;br&gt;De vereiste waarde wordt berekend volgens de formule&lt;br&gt;CV49 = X * 15 , waarbij X de gewenste weg in mm is.&lt;br&gt;Bereik 0-255, &lt;/html&gt;</tooltip>
         <comment>Range 0-255</comment>
       </variable>
       <variable CV="49" item="Uncoupling 3" comment="Range 0-255" default="16" include="10">
@@ -432,7 +438,7 @@
         <label xml:lang="nl">Ontkoppelingsafstand</label>
         <tooltip>&lt;html&gt;Distanz that is laid back when uncoupling,&lt;br&gt;The required value is calculated according to the formula&lt;br&gt;CV49 = X * 8.4 , where X is the desired path in mm.&lt;br&gt;Range 0-255, &lt;/html&gt;</tooltip>
 				<tooltip xml:lang="de">&lt;html&gt;Weg, der beim Entkuppeln zurück gelegt wird,&lt;br&gt;Die Berechnung des benötigten Wertes erfolgt nach der Formel&lt;br&gt;CV49 = X * 8,4 , wobei X der gewünschte Weg in mm ist.&lt;br&gt;Bereich 0-255, &lt;/html&gt;</tooltip>
-				<tooltip xml:lang="nl">&lt;html&gt;De weg die bij het ontkoppelen teruggelegd wordt,&lt;br&gt;De vereiste waarde wordt berekend volgens de formule&lt;br&gt;CV49 = X * 8,4 , waarbij X het gewenste weg in mm is.&lt;br&gt;Bereik 0-255, &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;De weg die bij het ontkoppelen teruggelegd wordt,&lt;br&gt;De vereiste waarde wordt berekend volgens de formule&lt;br&gt;CV49 = X * 8,4 , waarbij X de gewenste weg in mm is.&lt;br&gt;Bereik 0-255, &lt;/html&gt;</tooltip>
         <comment>Range 0-255</comment>
       </variable>
       <variable CV="51" mask="XXXXXXXV" item="Constant Braking" default="0" exclude="22">
@@ -523,7 +529,7 @@
         <label xml:lang="it">Tempo di Stop Push-Pull</label>
         <label xml:lang="nl">Duur van de stop bij de pendeldienst in seconden</label>
       </variable>
-      <variable CV="55" item="Global lighting option 1" default="127" include="31,22,05,24,28,02">
+      <variable CV="55" item="Global lighting option 1" default="127" include="31,22,05,24,28,02,">
         <defaultItem default="100" include="31"/>
         <defaultItem default="128" include="22"/>
         <defaultItem default="50" include="05"/>
@@ -537,7 +543,7 @@
         <tooltip xml:lang="nl">Helderheid van de koplampen (hoger = helderder).</tooltip>
         <comment>Range 0-255</comment>
       </variable>
-      <variable CV="55" item="Global lighting option 1" default="127" include="09,32,03,18,10">
+      <variable CV="55" item="Global lighting option 1" default="127" include="09,32,03,18,10,17,27">
         <defaultItem default="50" include="09"/>
         <defaultItem default="96" include="32"/>
         <defaultItem default="128" include="03"/>
@@ -551,7 +557,7 @@
         <tooltip xml:lang="nl">Helderheid van de koplampen (hoger = helderder).</tooltip>
         <comment>Range 0-255</comment>
       </variable>
-      <variable CV="56" item="Global lighting option 2" default="127" include="09,32,03,18,10">
+      <variable CV="56" item="Global lighting option 2" default="127" include="09,32,03,18,10,17">
         <defaultItem default="50" include="09"/>
         <defaultItem default="32" include="32"/>
         <defaultItem default="128" include="03"/>
@@ -692,7 +698,8 @@
         <comment>Range 0-255</comment>
       </variable>
       <variable CV="127" item="SUSI transport" default="0" comment="Range 0-255">
-        <defaultItem default="255" include="31,24,28"/>
+        <defaultItem default="255" include="31,24,27,28"/>
+        <defaultItem default="150" include="17"/>
         <decVal min="0" max="255"/>
         <label>CV transport device for SUSI</label>
         <label xml:lang="ca">Dispositiu de transferència SUSI</label>

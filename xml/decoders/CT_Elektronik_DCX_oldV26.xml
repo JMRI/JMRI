@@ -77,7 +77,7 @@
         <label xml:lang="de">Vmittel (0-255)</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable CV="7" readOnly="yes" item="Decoder Version" default="26">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="26">
         <decVal/>
         <label>Decoder Version: </label>
 		    <label xml:lang="it">Versione Decoder: </label>

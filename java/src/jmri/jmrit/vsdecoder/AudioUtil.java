@@ -9,8 +9,6 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import jmri.Audio;
-import jmri.AudioException;
 import jmri.jmrit.audio.AudioFactory;
 import jmri.jmrit.audio.AudioBuffer;
 import org.slf4j.Logger;
@@ -29,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <p>
  *
  * @author Mark Underwood copyright (c) 2009, 2013
  */
@@ -40,7 +37,7 @@ public class AudioUtil {
     // be pushed up to AbstractAudioBuffer.  Or better yet, moved OVER to AbstractAudioFactory.
 
     /**
-     * Split the WAV data from an InputStream into a series of AudioByteBuffers
+     * Split the WAV data from an InputStream into a series of ByteBuffers
      * of size (approximately) between max_time and min_time, split on zero
      * crossings.
      *
@@ -50,9 +47,6 @@ public class AudioUtil {
      * length, else the remaining data (less than min_time length) will be
      * discarded. Buffers will be cut on zero-crossing boundaries.
      *
-     * This method is meant to be used in tandem with getAudioBufferList(), at
-     * least for now.
-     *
      * @param stream   : Input Stream, assumed to be WAV-format data
      * @param max_time : maximum (target) length of each split Buffer, in
      *                 milliseconds
@@ -60,11 +54,11 @@ public class AudioUtil {
      *                 Any buffer that would be smaller than this will be
      *                 discarded.
      *
-     * @return (List<AudioByteBuffer>) List of AudioByteBuffers containing the
+     * @return (List<ByteBuffer>) List of ByteBuffers containing the
      *         (split-up) data from stream
      */
-    static private List<AudioByteBuffer> splitInputStream(InputStream stream, int max_time, int min_time) {
-        List<AudioByteBuffer> rlist = new ArrayList<>();
+    private static List<ByteBuffer> splitInputStream(InputStream stream, int max_time, int min_time) {
+        List<ByteBuffer> rlist = new ArrayList<>();
         int[] format = new int[1];
         ByteBuffer[] data = new ByteBuffer[1];
         int[] size = new int[1];
@@ -88,19 +82,19 @@ public class AudioUtil {
 
         while (data[0].remaining() > 0) {
             log.debug("while loop. Source: {}", data[0]);
-            AudioByteBuffer ab = new AudioByteBuffer(getSubBuffer(data[0], max_time, min_time, format[0], freq[0]), format[0], freq[0]);
+            ByteBuffer ab = getSubBuffer(data[0], max_time, min_time, format[0], freq[0]);
             // getSubBuffer returning null isn't necessarily an error.  It could mean there weren't enough bytes left, so we truncated.
-            // In this case, we wil have already gotten (via get()) the remaining bytes from data[0], so we should exit the while loop
+            // In this case, we will have already gotten (via get()) the remaining bytes from data[0], so we should exit the while loop
             // normally.
-            if (ab.data != null) {
-                ab.data.rewind();
+            if (ab != null) {
+                ab.rewind();
                 rlist.add(ab);
             }
         }
         return rlist;
     }
 
-    static public ByteBuffer getWavData(InputStream stream) {
+    public static ByteBuffer getWavData(InputStream stream) {
         int[] format = new int[1];
         int[] size = new int[1];
         ByteBuffer[] data = new ByteBuffer[1];
@@ -118,7 +112,7 @@ public class AudioUtil {
         return data[0];
     }
 
-    static public int[] getWavFormats(InputStream stream) {
+    public static int[] getWavFormats(InputStream stream) {
         int[] format = new int[1];
         int[] size = new int[1];
         ByteBuffer[] data = new ByteBuffer[1];
@@ -155,57 +149,8 @@ public class AudioUtil {
         }
     }
 
-    /**
-     * Take a list of AudioByteBuffers and provide a 1:1 corresponding List of
-     * AudioBuffers
-     *
-     * @param prefix : prefix to use when generating AudioBuffer system names.
-     * @param blist  : list of AudioByteBuffers to convert.
-     *
-     * @return List of AudioBuffers
-     */
-    static private List<AudioBuffer> getAudioBufferList(String prefix, List<AudioByteBuffer> blist) {
-        // Sanity check the prefix, since if it's wrong we'll get a casting error below.
-        if (prefix.charAt(2) != Audio.BUFFER) {
-            log.warn("Not a Buffer request! {}", prefix);
-            return null;
-        }
-
-        List<AudioBuffer> rlist = new ArrayList<>();
-
-        int i = 0; // Index used for the sub-buffer system names
-        for (AudioByteBuffer b : blist) {
-            try {
-                AudioBuffer buf = (AudioBuffer) jmri.InstanceManager.getDefault(jmri.AudioManager.class).provideAudio(prefix + "_sbuf" + i);
-                i++;
-                buf.loadBuffer(b.data, b.format, b.frequency);
-                if (log.isDebugEnabled()) {
-                    log.debug("Loaded buffer: {}", buf.getSystemName());
-                    log.debug(" from file: {}", buf.getURL());
-                    log.debug(" format: {}, {} Hz", parseFormat(b.format), b.frequency);
-                    log.debug(" length: {}", b.data.limit());
-                }
-                rlist.add(buf);
-            } catch (AudioException | IllegalArgumentException e) {
-                log.warn("Error on provideAudio", e);
-                if (log.isDebugEnabled()) {
-                    jmri.InstanceManager.getDefault(jmri.AudioManager.class).getNamedBeanSet(Audio.BUFFER).stream().forEach((s) -> {
-                        log.debug("\tBuffer: {}", s);
-                    });
-                }
-                return null;
-            }
-        }
-        return rlist;
-    }
-
-    public static List<AudioBuffer> getAudioBufferList(String prefix, InputStream stream, int max_time, int min_time) {
-        List<AudioBuffer> rlist = null;
-        List<AudioByteBuffer> blist = splitInputStream(stream, max_time, min_time);
-        if (blist != null) {
-            rlist = getAudioBufferList(prefix, blist);
-        }
-        return rlist;
+    public static List<ByteBuffer> getByteBufferList(InputStream stream, int max_time, int min_time) {
+        return splitInputStream(stream, max_time, min_time);
     }
 
     // This is here only because the AbstractAudioBuffer.getFrameSize() doesn't look
@@ -390,20 +335,4 @@ public class AudioUtil {
 
     private static final Logger log = LoggerFactory.getLogger(AudioUtil.class);
 
-    /**
-     * Private class used to associate audio information (frequency, format,
-     * etc.) with a ByteBuffer.
-     */
-    private static class AudioByteBuffer {
-
-        public ByteBuffer data;
-        public int format;
-        public int frequency;
-
-        public AudioByteBuffer(ByteBuffer d, int fmt, int freq) {
-            data = d;
-            format = fmt;
-            frequency = freq;
-        }
-    }
 }

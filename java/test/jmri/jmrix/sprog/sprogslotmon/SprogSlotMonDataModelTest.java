@@ -23,7 +23,7 @@ public class SprogSlotMonDataModelTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
-        int numSlots = SprogSlotMonDataModel.getSlotCount();
+        int numSlots = m.getNumSlots();
         SprogSlotMonDataModel action = new SprogSlotMonDataModel(numSlots, 8, m);
         Assert.assertNotNull("exists", action);
     }

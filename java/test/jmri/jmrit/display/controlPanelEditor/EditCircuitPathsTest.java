@@ -31,7 +31,7 @@ public class EditCircuitPathsTest {
     public void testBasicOps() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-        
+
         ControlPanelEditor frame = new ControlPanelEditor("EditCircuitPathsTest");
         frame.makeCircuitMenu(true);
         CircuitBuilder cb = frame.getCircuitBuilder();
@@ -61,7 +61,9 @@ public class EditCircuitPathsTest {
 
     @AfterEach
     public void tearDown() {
+        blkMgr.dispose();
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

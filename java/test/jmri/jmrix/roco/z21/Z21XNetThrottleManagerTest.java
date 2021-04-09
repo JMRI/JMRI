@@ -15,20 +15,22 @@ import org.junit.jupiter.api.*;
  */
 public class Z21XNetThrottleManagerTest extends XNetThrottleManagerTest {
 
+    private XNetInterfaceScaffold tc;
+
     @Override
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new RocoZ21CommandStation());
+        tc = new XNetInterfaceScaffold(new RocoZ21CommandStation());
         tm = new Z21XNetThrottleManager(new XNetSystemConnectionMemo(tc));
     }
 
     @AfterEach
     @Override
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        tc.terminateThreads();
+        tc = null;
         JUnitUtil.tearDown();
-
     }
 
 }

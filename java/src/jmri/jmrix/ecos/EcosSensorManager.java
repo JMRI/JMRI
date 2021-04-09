@@ -53,7 +53,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         //int ports = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         return new EcosSensor(systemName, userName);
     }

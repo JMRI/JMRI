@@ -275,10 +275,12 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public synchronized void setInverted(boolean inverted) {
         log.debug("Inverting Turnout State for turnout {}T{}", _prefix, mNumber);
-        _inverted = inverted;
         if (inverted) {
             _mThrown = jmri.Turnout.CLOSED;
             _mClosed = jmri.Turnout.THROWN;
@@ -296,7 +298,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     /**
      * Package protected class which allows the Manger to send
-     * a feedback message at initilization without changing the state of the
+     * a feedback message at initialization without changing the state of the
      * turnout with respect to whether or not a feedback request was sent. This
      * is used only when the turnout is created by on layout feedback.
      * @param l Message to initialize

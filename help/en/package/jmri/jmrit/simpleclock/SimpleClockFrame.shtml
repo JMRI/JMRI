@@ -32,16 +32,16 @@
       <p>JMRI provides a fast
       clock that can get its time from an internal fast clock or a
       selected hardware fast clock if one exists on your layout.</p>
-      
+
       <p>This window ( Tools > Clocks > Set up Fast Clock )
       provides for setting options for this fast clock system.</p>
-      
-      
+
+
       <p>Information you set up here is saved when you save your
       panels and configuration and allows you to set start
       up options that take effect when you load your panels and
       configuration.</p>
-      
+
       <p>JMRI also has clock displays that can run in
       stand-alone dialogs or on a PanelPro panel.</p>
       <a href="images/Fast_Clock_Setup_432x573.png"><img
@@ -50,7 +50,7 @@
 
     <h2>Pausing and Running the Fast Clock</h2>
       <p>Your fast clock may be set paused or running by using the : </p>
-      
+
       <ul>
       <li><b>Pause Clock / Run Clock</b> button at the top of this setup window.</li>
       <li><b>Pause / Run</b> button at the bottom or side of a clock window.</li>
@@ -58,7 +58,7 @@
       </ul>
       <p>When the fast clock is resumed after having been paused,
       the fast clock time continues where it left off.</p>
-      <p>The current fast time is displayed at the top of the screen, the tooltip of 
+      <p>The current fast time is displayed at the top of the screen, the tooltip of
       which displays the full date, time and timezone.</p>
 
 
@@ -73,19 +73,19 @@
       means that the fast clock will run 4 times faster than the
       wall clock, or will move an hour when the wall clock only
       moves 15 minutes.</p>
-      
+
       <p>Enter your fast clock rate after <b>Fast
       Clock Rate:</b>, then click the <b>Set</b> button to the
       right of it.</p>
       <p>It's important that
       all clocks run with the same rate, even if they are
       synchronized.</p>
-      
-      <p>If any of the entered values are not right, an error message 
+
+      <p>If any of the entered values are not right, an error message
       is displayed, and the time / rate is not changed.
       </p>
 
-      
+
 
 
 
@@ -94,7 +94,7 @@
       <p>Look in the <b>Time Source</b> selection box to see what
       might be available for your system. If you don't have a
       hardware fast clock, skip to the next section.</p>
-      
+
       <p>Usually you
       will want to select <b>Internal Computer Clock</b> even if a
       hardware fast clock is available. Usually also you will want
@@ -106,7 +106,7 @@
       this option.</p>
 
       <p>For some hardware fast clocks another check box,
-      <b>Correct hardware clock</b>, will be shown. 
+      <b>Correct hardware clock</b>, will be shown.
       <br>If you tried
       using your DCC command station to create a fast clock, you
       may have noticed that it didn't keep particularly good time.
@@ -115,10 +115,10 @@
       it keeps better time.</p>
 
       <p>Some hardware fast clocks support changing a
-      12-hour/24-hour display option from the computer. 
+      12-hour/24-hour display option from the computer.
       <br>For those
       that do, a check box labeled <b>Use 12-hour clock
-      display</b>, will be shown. 
+      display</b>, will be shown.
       <br>If you check this option, your
       hardware clock will set up for a 12-hour clock display.
       <br>If
@@ -129,7 +129,7 @@
       source, and do not check either the <b>Synchronize...</b> or
       <b>Correct...</b> options, only the internal clock will be
       used, and no commands will be sent to your hardware clock.</p>
-      
+
       <p>At
       the end of this documentation there is more information on
       specific hardware fast clocks, which includes recommendations on
@@ -149,9 +149,9 @@
       <p>The options set in this section take effect when you load
       your panel file (or configuration file if you don't have any
       panels).</p>
-      
+
       <p>The clock can be started up paused or running, depending on the selection.
-      
+
       <p>You can request that your fast clock start at a
       specified time, by checking <b>Set Fast Clock Time to</b> and
       entering the time after it.
@@ -169,8 +169,8 @@
       <p><b>Important Note: To preserve the settings and options
       entered in this dialog, you must save your configuration.</b>
       <br>Fast clock settings are stored as part of your configuration
-      in the same file as your panels (if you have any). 
-      
+      in the same file as your panels (if you have any).
+
       <br>The safest
       and easiest way to ensure that all your configuration items
       and panels are saved is to save using <b>Store Configuration
@@ -183,13 +183,12 @@
       while working on the Fast Clock Setup. A prompt will give
       you the option to save either form when you close the
       Fast Clock Setup by clicking Apply.</p>
-      
-      <p>If you want to automatically load your panel
-      file when your application starts, add it to <b>Load panel
-      file at startup:</b> in the <b>Advanced Preferences</b>
-      section of your <b>Preferences...</b> window.</p>
 
-      
+      <p>The clock settings are stored with table content and panels.
+      See <a href="../../../../html/apps/LoadStoreWork.shtml">Loading and Storing Your Work</a> for details.
+      </p>
+
+
     <h2><a name="isclockrunning" id="isclockrunning">Clock-related Sensor and Memory</a></h2>
       <p>When a clock is
       running, JMRI creates an internal sensor and a memory
@@ -202,20 +201,20 @@
       automatically follows the state of the fast
       clock-<b>Active</b> if the fast clock is running, and
       <b>Inactive</b> if the fast clock is paused. </p>
-      
+
       <p>You could add a <b>Sensor Icon</b> on your PanelPro panel
       (Panel Editor or Layout Editor). Changing the
       state of this sensor will run and pause your fast clock.</p>
-      
+
       <p>Regardless of which method you use to run and pause your
       fast clock, button labels and the
       <b><i>ISCLOCKRUNNING</i></b> sensor's state follow along.</p>
-      
+
       <hr>
-      
+
       <p>The IMCURRENTTIME memory contains the current fast-clock
       time, and can be easily accessed from Logix and scripts.</p>
-      
+
       <p>The
       format of the time / date string is controlled by the
       jmri.jmrit.simpleclock.SimpleClockBundle TimeStorageFormat
@@ -225,22 +224,22 @@
       for this is available <a href=
       "https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html">
       here</a>.</p>
-      
-      
+
+
     <h2>Further Clock Support</h2>
-      
+
       <a href="../../../../html/tools/fastclock/index.shtml">JMRI Fast Clocks</a>
-      
-      
+
+
        <p>There are separate pages for:</p>
       <ul>
       <li><a href="../../../../html/tools/fastclock/LocoNetClock.shtml">LocoNet clocks</a></li>
-      <li><a href="../../../../html/hardware/can/cbus/CbusFastClock.shtml">CBUS&trade; clocks</a></li>
+      <li><a href="../../../../html/hardware/can/cbus/CbusFastClock.shtml">CBUS&reg; clocks</a></li>
       <li><a href="../../../../package/jmri/jmrix/nce/clockmon/ClockMonFrame.shtml">NCE clocks</a></li>
       </ul>
-      
+
         <h2></h2>
-        <p>CBUS&trade; is a registered trade mark of Dr Michael Bolton</p>
+        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
         <p></p>
 
 

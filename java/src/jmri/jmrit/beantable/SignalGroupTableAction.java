@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -265,7 +266,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
              * it.
              */
             @Override
-            void doDelete(SignalGroup bean) {
+            protected void doDelete(SignalGroup bean) {
                 //((SignalGroup)bean).deActivateSignalGroup();
                 super.doDelete(bean);
             }
@@ -286,12 +287,12 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             }
 
             @Override
-            public SignalGroup getBySystemName(String name) {
+            public SignalGroup getBySystemName(@Nonnull String name) {
                 return InstanceManager.getDefault(SignalGroupManager.class).getBySystemName(name);
             }
 
             @Override
-            public SignalGroup getByUserName(String name) {
+            public SignalGroup getByUserName(@Nonnull String name) {
                 return InstanceManager.getDefault(SignalGroupManager.class).getByUserName(name);
             }
 
@@ -467,6 +468,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             mainSignalComboBox.setAllowNull(true); // causes NPE when user selects that 1st line, so do not respond to result null
             addFrame = new JmriJFrame(Bundle.getMessage("AddSignalGroup"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalGroupAddEdit", true);
+            addFrame.setEscapeKeyClosesWindow(true);
             addFrame.setLocation(100, 30);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             Container contentPane = addFrame.getContentPane();
@@ -1100,6 +1102,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         fixedSystemName.setVisible(true);
         _systemName.setVisible(false);
         addFrame.setTitle(Bundle.getMessage("EditSignalGroup"));
+        addFrame.setEscapeKeyClosesWindow(true);
         inEditMode = true; // to block opening another edit session
     }
 

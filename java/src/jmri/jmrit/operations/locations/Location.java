@@ -51,7 +51,6 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     protected int _numberEngines = 0; // number of engines
     protected int _pickupRS = 0;
     protected int _dropRS = 0;
-    protected int _locationOps = NORMAL; // type of operations at this location
     protected int _trainDir = EAST + WEST + NORTH + SOUTH; // train direction served by this location
     protected int _length = 0; // length of all tracks at this location
     protected int _usedLength = 0; // length of track filled by cars and engines
@@ -78,8 +77,8 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     protected int _idPoolNumber = 0;
     protected Hashtable<String, Pool> _poolHashTable = new Hashtable<>();
 
-    public static final int NORMAL = 1; // types of track allowed at this location
-    public static final int STAGING = 2; // staging only
+    public static final String NORMAL = "1"; // types of track allowed at this location
+    public static final String STAGING = "2"; // staging only
 
     public static final int EAST = 1; // train direction serviced by this location
     public static final int WEST = 2;
@@ -161,7 +160,6 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public void copyLocation(Location newLocation) {
         newLocation.setComment(getComment());
         newLocation.setDefaultPrinterName(getDefaultPrinterName());
-        newLocation.setLocationOps(getLocationOps());
         newLocation.setSwitchListComment(getSwitchListComment());
         newLocation.setSwitchListEnabled(isSwitchListEnabled());
         newLocation.setTrainDirections(getTrainDirections());
@@ -243,34 +241,12 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     /**
-     * Set the operations mode for this location
-     *
-     * @param ops NORMAL STAGING
-     */
-    public void setLocationOps(int ops) {
-        int old = _locationOps;
-        _locationOps = ops;
-        if (old != ops) {
-            setDirtyAndFirePropertyChange("locationOps", Integer.toString(old), Integer.toString(ops)); // NOI18N
-        }
-    }
-
-    /**
-     * Gets the operations mode for this location
-     *
-     * @return NORMAL STAGING
-     */
-    public int getLocationOps() {
-        return _locationOps;
-    }
-
-    /**
      * Used to determine if location is setup for staging
      *
      * @return true if location is setup as staging
      */
     public boolean isStaging() {
-        return getLocationOps() == STAGING;
+        return hasTrackType(Track.STAGING);
     }
 
     /**
@@ -313,6 +289,17 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
             }
         }
         return false;
+    }
+    
+    /**
+     * Change all tracks at this location to type
+     * @param type Track.INTERCHANGE Track.YARD Track.SPUR Track.Staging
+     */
+    public void changeTrackType(String type) {
+        List<Track> tracks = getTracksByNameList(null);
+        for (Track track : tracks) {
+            track.setTrackType(type);
+        }
     }
 
     public int getNumberOfTracks() {
@@ -679,11 +666,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     public String[] getTypeNames() {
-        String[] types = new String[_listTypes.size()];
-        for (int i = 0; i < _listTypes.size(); i++) {
-            types[i] = _listTypes.get(i);
-        }
-        return types;
+        return _listTypes.toArray(new String[0]);
     }
 
     private void setTypeNames(String[] types) {
@@ -1353,13 +1336,6 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         if ((a = e.getAttribute(Xml.NAME)) != null) {
             _name = a.getValue();
         }
-        if ((a = e.getAttribute(Xml.OPS)) != null) {
-            try {
-                _locationOps = Integer.parseInt(a.getValue());
-            } catch (NumberFormatException nfe) {
-                log.error("Location ops isn't a vaild number for location {}", getName());
-            }
-        }
         if ((a = e.getAttribute(Xml.DIR)) != null) {
             try {
                 _trainDir = Integer.parseInt(a.getValue());
@@ -1491,7 +1467,8 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         Element e = new Element(Xml.LOCATION);
         e.setAttribute(Xml.ID, getId());
         e.setAttribute(Xml.NAME, getName());
-        e.setAttribute(Xml.OPS, Integer.toString(getLocationOps()));
+        // backwards compatibility starting 2/6/2021, remove after 2023
+        e.setAttribute(Xml.OPS, isStaging() ? STAGING : NORMAL);
         e.setAttribute(Xml.DIR, Integer.toString(getTrainDirections()));
         e.setAttribute(Xml.SWITCH_LIST, isSwitchListEnabled() ? Xml.TRUE : Xml.FALSE);
         if (!Setup.isSwitchListRealTime()) {

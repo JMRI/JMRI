@@ -28,14 +28,15 @@
 
       <h1>Creating and Editing Warrants</h1>
 
-      <p>A Warrant contains the
+      A Warrant contains the
       information needed to run a train. This includes the DCC
-      address of the locomotive(s), the route train will take, the
-      settings of the turnouts to traverse the route and the
-      throttle commands to use at various points along the route -
-      e.g. speed, when to show lights, sound horns, bells or other
+      address of the locomotive or consist, the turnout settings
+      of the paths through the blocks of the route and the
+      throttle commands to use at various points along the route.
+      Among these are speed changes, when to show lights, 
+      sound horns, bells or other
       sound effects. For an overview discussion of Warrants, see
-      <a href="Warrant.shtml">Warrants</a>.</p>
+      <a href="Warrant.shtml">Warrants</a>.
 
       <div style="margin-left: 2em">
         <b>NOTE:</b> Warrants can only be created if the PanelPro
@@ -48,19 +49,24 @@
             <li>Select a train, and</li>
             <li>Record the throttle commands.</li>
         </ol>
-      <p>On the Create/Edit pane are two tabs:
-      <b>Define Route</b> and <b>Record/Playback Script</b>.</p>
+      <p>When a <b>Create Warrant</b> menu is selected, a window to
+      define the warrant is displayed. At the top, you may enter 
+      a System Name and a User Name. After the warrant is saved by
+      pressing the <b>Save</b> button at the bottom of the window, 
+      the System name cannot be changed.  The User Name may be changed
+      anytime the warrant is edited.</p>
 
       <a href="images/WarrantCreate1.png"><img
-      src="images/WarrantCreate1.png" width="639"
-      height="270" alt="Create Warrant pane part 1 in JMRI 4.10"></a>
+      src="images/WarrantCreate1.png" width="897"
+      height="433"
+      alt="Create Warrant pane part 1 in JMRI 4.10"></a>
 
       <h2>Defining a Warrant Route</h2>
-      <p>Routes are created using the
-      <b>Define Route</b> tab in the Edit Warrant pane.</p>
+      Routes are created using the
+      <b>Define Route</b> tab in the Edit Warrant pane.
 
       <h3>Origin, Destination, Via and Avoid Blocks</h3>
-      <p>The <b>Origin Block</b> is where a train given this route
+      The <b>Origin Block</b> is where a train given this route
       will start
       and the starting path within the origin block is the track it
       is on - e.g. a path named "Departure Track #3" in block named
@@ -69,22 +75,25 @@
       block determines the direction of the train on the route. A
       computer algorithm will find portals, paths and blocks needed
       to take the train to the Destination Block and path - e.g.
-        "Arrival Track #1" in the destination block.</p>
+        "Arrival Track #1" in the destination block.
 
-      <p>A Warrant route is created by selecting the block and
+      <p>After selecting the block and
       path where the train will begin its trip and the portal by
-      which it should leave. Then you select the block, path and
-      entry portal where the train should end its trip. Press the
-      <b>Calculate Route</b> button and the computer will
+      which it should leave and similarly the block, path and
+      entry portal where the train should end its trip, pressing
+      the <b>Calculate Route</b> button will
       determine all the intermediate paths needed to make the
       trip.</p>
 
       <div style="margin-left: 2em">
         <b>Note:</b> The right hand portion of the
-        Create/Edit Warrant pane is a table listing all the
+        Create Warrant window is a table listing all the
         OBlocks you have defined. Either the System Name or the
         User Name of a Block can be dragged and dropped into the
         Location Block fields on the left hand side of the pane.
+        Alternatively, you can mouse click on an Indicator Track
+        icon of the block in the layout diagram and it will be 
+        selected for the location.
       </div>
 
       <ul>
@@ -174,8 +183,11 @@
           display the route for you to examine in a Train Route Table.
           Each block, its path and portals used to traverse the route
           is displayed. Also you can view the route on the PanelPro layout
-          diagram if the track icons consist of <i>Indicator Track,</i>
-          icons.</p>
+          diagram if the track icons are <i>Indicator Track,</i>
+          icons.<br>
+          <a href="images/RouteList.png"><img
+          src="images/RouteList.png" width="689"
+          height="249" alt="the Route list"></a></p>
 
           <p>You may inspect all the routes in this manner.
           Choosing a route and pressing the <b>Select</b> button
@@ -234,60 +246,48 @@
       </ul>
 
       <h2>Creating the Throttle Command Script</h2>
-          <p>When you are satisfied with the route, the
-          <b>Record/Playback Script</b> tab will be selected for
+          When you are satisfied with the route and have selected it,
+          the <b>Record/Playback Script</b> tab will be displayed for
           you:<br>
           <a href="images/WarrantCreate2.png"><img
-          src="images/WarrantCreate2.png" width="704"
-          height="270" hspace="0" vspace="0" alt="Create Warrant
+          src="images/WarrantCreate2.png" width="897"
+          height="433" alt="Create Warrant
           pane part 2 in in JMRI 4.10"></a>
+          <br>
+          The route is shown in a table. For each OBlock.
+          the entry portal, path and exit portal are displayed.
 
-          At the very top are
-          two radio buttons which allow you to select either the
-          <b>Route Table</b> or the <b>Throttle Command Table</b>.
-          The Route Table shows the track circuits (OBlock, Portals
-          and Paths) the warrant defines. The Throttle Command
-          Table shows the throttle commands that will be used 
-          when driving the train over the warrant's route.
-          Additional items on this tab allow you pick the engine to
-          power your train and to test and modify the recorded
-          script. Presently the <b>Throttle Commands</b> table is
-          empty. The bottom half displays six
+          <p>The bottom half displays six
           outlined areas; <b>Choose Engine Consist</b>,
-          <b>Setect Type</b>, <b>Settings</b>,
-          <b>Learn mode</b>, <b>Run Parameters,</b> and <b>Test 
-          Run Train,</b>. The first thing to do
-          is to choose an engine consist.</p>
+          <b>Select Type</b>, <b>Settings</b>,
+          <b>Learn mode</b>, <b>Run Parameters,</b> and  
+          <b>Test Run Train</b>. More about the use of these areas
+          will be discussed below.<br>
+          The first thing to do
+          is to choose an engine to power your train.
 
           <h3>Choosing a Train</h3>
-          <p>The <b>Train Name</b> field is
+          The <b>Train Name</b> field is
           used to provide a name that can be displayed by an
           indicator track icon as the train travels along the
           warrant route. If you have defined an JMRI engine roster,
           the train names are displayed in the <b>Engine Roster</b>
           drop down ComboBox. Selecting a name from this list will
-          fill in the <b>Train Name</b>, and <b>Address</b> text
-          fields and assigns them to the warrant.</p>
+          fill in the <b>Address</b> text field
+          and assigns the engine to power the warrant.
 
-          <p>A DCC address typed into the<b>Address</b> text field
+          <p>Alternatively a DCC address can be typed into the 
+          <b>Address</b> text field and it
           will be used whether or not it is found in the JMRI
-          Engine Roster.</p>
+          Engine Roster. Chose or enter the
+          address of the train positioned on the "Origin"
+          block of the route.</p>
           
-          <p>The <b>View Speed Profile</b> button displays a table
-          of the track speeds corresponding to the throttle settings
-          for the addressed locomotive or consist. The speed
-          units can be changed to scale speed.</p>
-          <div style="margin-left: 2em">
-            <b>Noye:</b> A value of "0.000" <b>does not</b> mean
-            zero speed. It means there is no track speed for that
-            throttle setting.
-          </div>
-
           <h2>Learn Mode</h2>Throttle commands are created by
           recording the commands you send to a train while
           operating it manually from a throttle in <b>Learn
-          Mode</b>. The <b>Prototypical</b> button should be
-          chosen.
+          Mode</b>. The <b>Prototypical</b> button must be
+          chosen from the <b>Warrant Types</b> box.
 
           <h3>Learn Mode Throttle</h3>If a train has been assigned,
           that is, has a valid DCC address in the warrant, then a
@@ -295,39 +295,35 @@
           button. A screen throttle will be displayed. This
           throttle will operate the acquired train and all the
           throttle commands will be recorded until the <b>Stop</b>
-          button is pressed.
-
-          <div style="margin-left: 2em">
-            <b>Note:</b> It can be inconvenient to use the computer
+          button is pressed. It can be inconvenient to use the computer
             screen Learn Mode throttle. Under LocoNet a handheld
             throttle may "steal" the screen throttle address and
             its commands will be recorded. For all other systems a
-            walkaround WiFi throttle can be used to record
+            walkaround WiFi throttle can be used to "steal" and record
             commands. Whatever throttle is used, start and stop the
-            recording with the screen buttons.
-          </div>
-          <p>Pressing the <b>Stop</b> button will end the
-          recording.</p>
+            recording with the buttons in the <b>Learn Mode</b>
+            box.
+            
+            <p>Be sure that the train is located on the path
+            of the Origin block of the route and note the direction
+            of you intend the train to take. If needed, the first
+            command you make on the learn throttle should be the
+            engine direction toward the exit portal of the Origin block. 
 
-          <div style="margin-left: 2em">
-            <b>Note:</b> The train must <b><i>not</i></b> be moving
-            when the recording is stopped. <i>When play back of the
-            warrant ends, the train might continue to run without a
-            warrant to control it!</i> After recording a script, check 
-            the ending throttle commands to see that the speed is set
-            to 0.0           
-          </div>
-          
-          <p>The learn script should be done with a completely
+          </p><p>The learn script should be done with a completely
           clear route - All turnouts should be set for the
           route, all blocks unoccupied (except the origin), all signals
           should be set for clear running and no changes made during
-          the recording period. When the train is run by playing
-          back the script, any changes to signal aspects will be
-          taken into account and the train's speed and scheduled
-          times will be altered accordingly. The recorded 
+          the recording period. The recorded 
           speeds and elapsed times should be for unrestricted
-          "Normal" speeds.</p>
+          "Normal" speeds.
+          
+          Once the <b>Start</b> button is pressed and
+          recording has begun, the Route Pane is replaced by 
+          the Throttle Commands Pane.<br>        
+          <a href="images/WarrantCreate3.png"><img
+          src="images/WarrantCreate3.png" width="897"
+          height="433" alt="the Throttle Commands Pane"></a>
           
           	<p>In normal operation, when the script is played back, 
           	the train will follow the commands as recorded.
@@ -343,93 +339,25 @@
 			the block permitting the speed increase.
            <a href="SpeedChanges.shtml">Warrant Speed Changes</a> has details
            about how warrants modify recorded speeds.</p>
-
-			<h3>Run Parameters</h3>
-            <p>This area has check boxes to modify how the train will operate
-            when running the Warrant.</p>
-			<ul>
-                <li><b>Clearance to Share Route</b> - Normally a track warrant
-                assigns exclusive rights to only one train.  This option allows
-                several trains to share rights to a route, such as train sections
-                following one another. Multiple "shared warrants" are still
-                subject to ramping speed changes due to signals or rogue
-                occupancy.</li>
-                <li><b>Don't Ramp Speed Changes</b> - Suppress the
-                ramping calculations. Instead, the Warrant makes immediate speed
-                change upon entering the approach block to the block requiring
-                a speed change. <span class="since">since 4.5.7</span></li>
-                <li><b>Use Elapsed Time Only</b> - Do not use
-                block detection. <i>Using this option allows Warrants to
-                be run on layouts without block detection.</i></li>
-			</ul> 
-			Using the "Don't Ramp" or "Elapsed Time" options are the 
-			only cases where block path lengths and engine speed factors
-            are <i>not</i> necessary.
-			
-          <h2>Run Mode</h2>
-          <p>After a script is recorded, pressing the
-          <b>AutoRun</b> button in the <b>Test Run Train</b> box will
-          send the throttle commands to the train specified in the
-          warrant.</p>
-
-          <div style="margin-left: 2em">
-            <b>NOTE:</b>Be sure that the train is located on the
-            Path of the Origin block of the route and the direction
-            of the engine is compatible with the first direction
-            specified in the throttle commands.
-          </div>
-          <p>The <b>Status</b> field will display each block
-          entered by the train as it traverses the route.
-
-          <p>The <b>Test Run Train</b> box has four radio buttons to
-          control the train and override the Throttle commands.
-
-		    <ul>
-			<li><b>Halt</b>Stop the train.</li>
-			<li><b>Resume</b>Ramp the speed up to its previous speed.</li>
-			<li><b>E-Stop</b>Issue an Emergency Stop to the train.</li>
-			<li><b>Abort</b>Stop the train and null the warrant.</li>
-			</ul>          
-		  <h2>Saving the Warrant</h2>When you are satisfied with
-          the performance of the warrant, press the <b>Save</b>
-          button to add the warrant to the <a href=
-          "WarrantTable.shtml">Warrant Table</a>.
-
-          <h2>Throttle Command Table</h2>The Throttle Command Table
-          has the following columns:
-
-          <ul>
-            <li><b>ET (msec)</b>: - The elapsed time in
-            milliseconds to wait before issuing the throttle
-            command.</li>
-
-            <li><b>Command</b>: - The throttle command that was
-            recorded (direction, speed, or button press or
-            release).</li>
-
-            <li><b>Value</b>: - The value of the command.</li>
-            
-            <li><b>Block or Sensor Name</b>: - The block the train occupied when
-            the throttle command was recorded.</li>
-
-            <li><b>Speed (mm/sec)</b> - The track speed of the
-            recording train at the corresponding throttle setting.
-          </ul>
-          The recorded throttle commands execute according to
-          the elapsed time between commands. The entry into each 
-          block is recorded with a "NoOp"
-          marker. These markers are used to synchronize the elapsed
-          time of the automatic running of the train when it enters
-          a block. This reset is done so events recorded in the block
-          occur according to the elapsed time in the block.
-
-          <h3>Synchronizing Commands to Block boundaries.</h3>
-          In spite of attempting to maintain the recorded track
-          speed, changing the consist of a train or
-          perhaps even a temperature change between recording and
-          playback, may result in the train not performing a
-          throttle command at exactly the same place on the on the 
-          route where the "Learn Mode" train recorded them.
+           
+          <p>
+            <b>Note:</b> The train should <b><i>not</i></b> be moving
+            when the recording is stopped. <i>When play back of the
+            warrant ends, the train might continue to run without a
+            warrant to control it!</i> After recording a script, check 
+            the ending throttle commands to see that the speed is set
+            to 0.0           
+          </p>
+          
+          <p>When the route has been traversed and all throttle commands
+          are done, recording is  completed by pressing 
+          the <b>Stop</b> button. After this, the throttle
+          commands can be edited and additional run parameters set.</p>
+ 
+          <h3>What the Warrant Does on Playback.</h3>
+          The script records the elapsed times traversing each 
+          occupancy block and knows when to expect the train to
+          enter each block.
 
           <p> The
           throttle commands of the next block will be delayed until
@@ -441,21 +369,135 @@
           remaining commands of the preceding block are executed in
           fractions of a second to catch up.</p>
 
+          <p>The warrant sends commands to the addressed engine in the
+          order they were recorded with the same number of elapsed
+          milliseconds between them. In spite of an exact repeat of
+          the recorded throttle settings, the track speed and
+          position of the train may not be at the same place as
+          they were when it was recorded. 
+          Changing the consist of the train or
+          even a temperature change between recording and
+          playback, may result in the train not performing a
+          throttle command at exactly the same place on the on the 
+          route where it was recorded.</p>
+
           <p>If a more precise way is needed to have a script event
           occur at a particular location, see the section
-          <b>Internal Synchronization From External Events</b>
+          <b>Triggering External Events From Scripts</b>
           below.</p>
+
+      <h2>Editing and Running the Warrant Script</h2>
+           Warrant scripts can be tested and modified prior to saving them.
+
+          <h3>Test Running</h3>
+          <p>After a script is recorded, reset the train to the Origin
+          block and press the <b>AutoRun</b> button in the 
+          <b>Test Run Train</b> box. This sends
+          the throttle commands to the train specified in the
+            warrant.</p>
+
+          <p>The <b>Test Run Train</b> box has four radio buttons to
+            control the train and override the Throttle commands.</p>
+
+		    <ul>
+			<li><b>Halt</b> Stop the train.</li>
+			<li><b>Resume</b> Ramp the speed up to its previous speed.</li>
+			<li><b>Emergency Stop</b> Issue an Emergency Stop to the train.</li>
+			<li><b>Abort</b> Stop the train and null the warrant.</li>
+			</ul>         
+		  <p>Name and save the warrant when you are satisfied by its
+          performance by pressing the <b>Save</b>
+          button. This adds the warrant to the <a href=
+          "WarrantTable.shtml">Warrant Table</a> and closes the 
+          Create/Edit Warrant window.</p>
+
+			<h3>Run Parameters</h3>
+            This area has check boxes to modify how the train will operate
+            when running the Warrant for a particular instance.
+			<ul>
+                <li><b>Clearance to Share Route</b> - Normally a track warrant
+                assigns exclusive rights to only one train.  This option allows
+                several trains to share rights to a route, such as train sections
+                following one another. Multiple "shared warrants" are still
+                subject to ramping speed changes due to signals or rogue
+                occupancy.</li>
+                <li><b>Add Tracker after run completes</b> - Upon completion of
+                the warrant script, the movement of the train by a manual
+                operator can be tracked.</li>
+                <li><b>Don't Ramp Speed Changes</b> - Suppress the
+                ramping calculations. Instead, the Warrant makes immediate speed
+                change upon entering the approach block to the block requiring
+                a speed change. <span class="since">since 4.5.7</span></li>
+                <li><b>Use Elapsed Time Only</b> - Do not use
+                block detection. <i>Using this option allows Warrants to
+                be run on layouts without block detection.</i></li>
+			</ul> 
+			Using the "Don't Ramp" or "Elapsed Time" options are the 
+			only cases where block path lengths and engine speed factors
+            are <i>not</i> necessary.
+
+		  <h3>Changing Engine Consist</h3>
+		  The warrant can be edited to use a different engine. A different
+		  engine may have different speed characteristics. If the engine
+		  has a Speed Profile, it can be viewed.
+		  
+          <p>The <b>View Speed Profile</b> button displays a table
+          of the track speeds corresponding to the throttle settings
+          for the addressed locomotive or consist. The speed
+          units can be changed to scale speed.</p>
+          <div style="margin-left: 2em">
+            <b>Note:</b> A value of "0.000" <b>does not</b> mean
+            zero speed. It means there is no track speed for that
+            throttle setting.
+          </div>
+
+          <h2>Editing the Throttle Command Table</h2>
+          The Throttle Command Table
+          has the following columns:
+          <ul>
+            <li><b>ET (msec)</b>: - The elapsed time in
+            milliseconds to wait before issuing the throttle
+            command.</li>
+
+            <li><b>Command</b>: - The throttle command that was
+            recorded (direction, speed, or button press or
+            release). The command can be edited by choosing an
+            item from the drop down combo box.</li>
+
+            <li><b>Value</b>: - The value of the command. Chose a
+            value from the drop down combo box. the choices are
+            dependent on the command being edited.</li>
+            
+            <li><b>Block or Sensor Name</b>: - The block the train occupied when
+            the throttle command was recorded. If the command being edited 
+            is <b>Set Sensor</b> or <b>Wait Sensor</b> then the name
+            of the sensor should be entered. If the command 
+            is <b>Run Warrant</b> then the name
+            of the warrant should be entered</li>
+
+            <li><b>Track or Scale Speed</b> - The track speed of the
+            warranted train calculated from the throttle setting
+            and the Speed Profile of engine consist.</li>
+          </ul>
+          The recorded throttle commands execute according to
+          the elapsed time between commands. The entry into each 
+          block is recorded with a "NoOp"
+          marker. These markers are used to synchronize the elapsed
+          time of the automatic running of the train when it enters
+          a block. This reset is done so events recorded in the block
+          occur according to the elapsed time in the block.
 
           <h3>Editing Recorded Throttle Commands</h3>
           Most of the columns in
           the Throttle Command Table can be edited. Perhaps you
           want to touch up the timing for the horn blasts or modify
-          the speeds. Just enter the data you want. The values in
-          the Throttle Command Table are changed by typing new
-          entries into cells of the table.
+          the speeds. Just enter the data you want. Other values in
+          the Throttle Command Table are changed by selecting an
+          item from the cell's drop down combo box.
 
           <p>Rows may be inserted or deleted from the table using
-          the buttons to the right of the table. Note that an
+          the <b>Insert</b> and <b>Delete</b> buttons to the right
+          of the table. Note that an
           inserted row has 0 elapsed time from the previous command
           so you may want to adjust this by taking time away from
           either the previous row or the following row and entering
@@ -484,10 +526,18 @@
           scripted throttle setting is not modified by the track speed.
           (i.e. the above is a 4.9.2 feature only)
           
+          <p>On the right of the Throttle Command table is a button
+          labeled <b>Track Speed</b> or <b>Scale speed</b>. Pressing
+          the button will display the last column of the Throttle
+          Command table (estimated layout speed of throttle setting)
+          in terms of one of four kinds of
+          units - millimeters per second, inches per second track
+          speed or miles per hour, kilometers per Hour scale speed.</p>
+          
           <p>The DCC address used in the recording is the "standard 
           power" of the warrant. To base the track speeds on a different
           address or roster entry, select that entry and press the 
-          <b>Add Speeds</b> button.  Warrants recorded before Release
+          <b>track/scale speed</b> button.  Warrants recorded before Release
           4.9.2 can be upgraded this way.</p>
           <div style="margin-left: 2em">
             <b>NOTE:</b>Recording track speeds in warrants makes 
@@ -498,114 +548,67 @@
             will allow it to be loaded by earlier versions.
           </div>
            
-          <h3>Triggering External Events From Scripts</h3>External
-          animation or other events may be triggered by entering a
-          "<i>Set Sensor</i>" command. To do this, insert a row
-          with the words <b>Set Sensor</b> in the
-          <b><i>Command</i></b> column and a valid sensor name in
-          the <b><i>Block</i></b> column. The <b><i>Value</i></b>
-          column should have the action you want the sensor to take
-          at its execution time. That is enter the words <b>active</b> or
-          <b>inactive</b>. Also enter the elapsed time when to
+          <h2>Triggering External Events From Scripts</h2>External
+          animation or other events may be triggered by the
+          "<b>Set Sensor</b>" command. To do this insert a row,
+          then select <b>Set Sensor</b> from the list of items
+          under the
+          <b><i>Command</i></b> column. Next select the action
+           (<b>active</b> or <b>inactive</b>) you 
+          want from the <b>Value</b> column. Lastly, enter a sensor name in
+          the <b>Block or Sensor</b> column. 
+          Also enter or adjust the elapsed time when to
           trigger the setting of the sensor. On playback when this
           command is executed the state of the sensor will be set.
 
-          <h3>Internal Synchronization From External Events</h3>
-          <p>Additional synchronization can be done within
+          <h3>Script Synchronization With External Events</h3>
+          Additional synchronization can be done within
           a block. For example stopping a train at a water tower or
           over an uncoupling device or for any reason where using
           the elapsed time of a command is not precise enough. To
-          do this, insert a row with the words <b>Wait Sensor</b>
-          in the <b><i>Command</i></b> column and a valid sensor
-          name in the <b><i>Block</i></b> column. The
-          <b><i>Value</i></b> column should have the action words
-          <b>active</b> or <b>inactive</b>. On playback when this
+          do this, there is a <b>Wait Sensor</b> command. Insert a
+          row and follow the same procedure as was done with set Sensor.
+          On playback when this
           command is executed the script is suspended and the current
           movement of the train is sustained until the sensor
           changes to the specified state. When that happens the
           script continues to execute according to the recorded
-          times. In this case the "Wait Sensor" might be an optical
-          sensor positioned to detect specific point. Bracket the
-          "Wait Sensor" command with speed commands, the one before
-          with a very slow speed and the one after with speed 0 (or
-          -1). The script will then have the train creep at the
-          slow speed until the sensor makes the detection. Then the
-          script continues and the speed 0 command stops the train.
-          </p>
+          times. 
+          
+          <p>For example the "Wait Sensor" might be an optical
+          sensor named "sStopTrain" positioned to detect specific point.
+          The "Wait Sensor" command is bracketed
+          with speed commands, the one before
+          with a very slow speed and the one after with speed 0.
+          Sensor "sStopTrain" is set inactive and then the script
+          is set to wait until it goes active. 
+          The script will then have the train creep at the current
+          slow speed of 11.4 mm/sec until the sensor detects the
+          trains desired position. Then the
+          script continues to set speed to 0, which stops the train.
+          Following that, the scrip must wait for 
+          another sensor named "sStartTrain" to go active before it
+          can continue.<br>
 
-          <p>The script and train will stay stopped until a
-          second "Wait Sensor" command triggers the script to
-          continue.</p>
+          <a href="images/WaitExample.png"><img
+          src="images/WaitExample.png" width="875"
+          height="217" alt="Wait Sensor Example"></a><br>
 
-          <p><b>Note:</b> Care must be taken when using this command.  To 
-          be clear, the following is a sample script segment.</p>
-          <table border="1">
-            <tr>
-              <th>#</th>
-              <th>ET(msec)</th>
-              <th>Command</th>
-              <th>Value</th>
-              <th>Block or Sensor Name</th>
-            </tr>
-            <tr>
-              <td>10</td>
-              <td>1000</td>
-              <td>speed</td>
-              <td>0.1111</td>
-              <td>OB_WEST_YARD</td>
-            </tr>
-            <tr>
-              <td>11</td>
-              <td>1000</td>
-              <td>speed</td>
-              <td>0.05</td>
-              <td>OB_WEST_YARD</td>
-            </tr>
-            <tr>
-              <td>12</td>
-              <td>0</td>
-              <td>Wait Sensor</td>
-              <td>Active</td>
-              <td>IS_STOP_TRAIN</td>
-            </tr>
-            <tr>
-              <td>13</td>
-              <td>0</td>
-              <td>speed</td>
-              <td>0.0</td>
-              <td>OB_WEST_YARD</td>
-            </tr>
-            <tr>
-              <td>14</td>
-              <td>10</td>
-              <td>Wait Sensor</td>
-              <td>Inactive</td>
-              <td>IS_STOP_TRAIN</td>
-            </tr>
-            <tr>
-              <td>15</td>
-              <td>0</td>
-              <td>speed</td>
-              <td>0.1111</td>
-              <td>OB_WEST_YARD</td>
-            </tr>
-          </table>
-          <p>The train continues the speed of Command #11 until the 
-          sensor at command #12 <b>changes</b> to active. If 
-          already active, the train continues to move. Command #13
-          stops the train and it remains stopped until the sensor
-          at command #14 <b>changes</b> to inactive.</p>
+          The script and train will stay stopped until the
+          second "Wait Sensor" command triggered from an
+          external event allows the script to continue.</p>
 
-          <h3>Automatic Sequencing of Scripts</h3>
+          <h3>Automatic Sequencing of Warrants</h3>
           <span class="since">since 3.11.1</span>
           <p>It is possible to
           start another script from a script. To do this, insert a
-          row with the words <b>Run Warrant</b> in the
-          <b><i>Command</i></b> column and name of a warrant in the
-          <b><i>Block</i></b> column. This command launches the
+          row and select the <b>Run Warrant</b> in the
+          <b><i>Command</i></b> column. Enter the name of a warrant in the
+          <b><i>Block or Sensor</i></b> column. This command launches the
           second warrant. Note that a train with the address
-          specified in the second warrant must be placed in the
-          starting block of the second warrant.</p>
+          specified in the second warrant <b>must be present</b> in the
+          starting block of the second warrant. Otherwise, the
+          second train will start running in uncontrolled places.</p>
 
           <p>This feature can be used to loop a train repeatedly by
           using the same warrant name. If a script terminates with
@@ -620,88 +623,9 @@
           B" and each Warrant specifies the same train ID and the
           same number of repeats.</p>
 
-          <h3>Script Commands</h3>
-
-          <table border="1">
-            <tr>
-              <th>Command</th>
-              <th>Value</th>
-              <th>Block or Sensor Name</th>
-            </tr>
-
-            <tr>
-              <td>Forward</td>
-
-              <td>true/false</td>
-
-              <td>block name</td>
-
-              <td><i>direction</i></td>
-            </tr>
-
-            <tr>
-              <td>Fn</td>
-
-              <td>true/false</td>
-
-              <td>block name</td>
-
-              <td><i>any function key</i></td>
-            </tr>
-
-            <tr>
-              <td>F0</td>
-
-              <td>true/false</td>
-
-              <td>block name</td>
-
-              <td><i>e.g. head light</i></td>
-            </tr>
-
-            <tr>
-              <td>Speed</td>
-
-              <td>decimal</td>
-
-              <td>block name</td>
-
-              <td><i>throttle setting</i></td>
-            </tr>
-
-            <tr>
-              <td>Set Sensor</td>
-
-              <td>active/inactive</td>
-
-              <td>Sensor name</td>
-
-              <td><i>sets a sensor</i></td>
-            </tr>
-
-            <tr>
-              <td>Wait Sensor</td>
-
-              <td>active/inactive</td>
-
-              <td>Sensor name</td>
-
-              <td><i>halts commands for a sensor</i></td>
-            </tr>
-
-            <tr>
-              <td>Run Warrant</td>
-
-              <td>integer</td>
-
-              <td>Warrant name</td>
-
-              <td><i>chains to another warrant</i></td>
-            </tr>
-          </table>
 
           <h2>Running Trains on Dark Blocks</h2>
-          <p>The Learn mode and
+          The Learn mode and
           Run Mode functions can be used on blocks that do not have
           detection sensors. However, without detection, other than
           the initial setting of turnouts, the warrant cannot reset
@@ -709,7 +633,7 @@
           <em>en route</em>. This means there is no protection from
           rogue trains fouling the route or from turnouts being
           changed while the train is <em>en route</em>. Therefore,
-          run trains with caution over Dark Blocks.</p>
+          run trains with caution over Dark Blocks.
 
           <p>Note that entry into a Dark Block is detected
           differently than an Occupancy Block. Obviously, entry
@@ -721,8 +645,10 @@
           of the train entered the dark, not the head.</p>
 
           <h2>Save etc.</h2>
-          <p>At the bottom of the Create Warrant pane three
-          buttons let you:</p>
+          At the bottom of the Create Warrant pane the <b>Status</b>
+          field displays messages when doing test runs from the 
+          <b>AutoRun</b> button. Below that are three
+          buttons that let you:
 
           <ul>
             <li><b>Save</b>: - Saves the warrant so it can be shown
@@ -734,10 +660,6 @@
 
             <li><b>Cancel</b>: - Cancels any editing that may have
             been done.</li>
-
-            <!-- Not visible in 4.10 <li><b>Delete</b>: - Deletes
-            the Warrant when the panel is saved to the Configuration
-            file.</li> -->
           </ul>
 
         <p>Back to <a href="Warrant.shtml">Warrants Help</a>.</p>

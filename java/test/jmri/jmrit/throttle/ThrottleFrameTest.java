@@ -87,7 +87,7 @@ public class ThrottleFrameTest {
             FunctionButton f = to.getFunctionButton(i);
             Assert.assertTrue("Function F" + i + " continuous", f.getIsLockable());
             to.toggleFunctionMomentary(i);
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+            new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame to close
             Assert.assertFalse("Function F" + i + " momentary", f.getIsLockable());
         }
 
@@ -108,44 +108,9 @@ public class ThrottleFrameTest {
             FunctionButton f = to.getFunctionButton(i);
             Assert.assertFalse("Function F" + i + " off", f.isSelected());
             JemmyUtil.enterClickAndLeave(f);
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+            new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame to close
             Assert.assertTrue("Function F" + i + " on", f.isSelected());
         }
-
-        to.pushReleaseButton();
-    }
-
-    @Test
-    public void testToggleOnOffStatusAltFunctions() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
-        to.setAddressValue(new DccLocoAddress(42, false));
-
-        to.pushAlt1Button();
-
-        // only check functions 20 through 25, since all the buttons
-        // are the same class.
-        for (int i = 20; i <= 25; i++) {
-            FunctionButton f = to.getFunctionButton(i);
-            Assert.assertFalse("Function F" + i + " off", f.isSelected());
-            JemmyUtil.enterClickAndLeave(f);
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
-            Assert.assertTrue("Function F" + i + " on", f.isSelected());
-            // Full Message along lines of Can't send F13-F20 since no command station defined
-            JUnitAppender.assertErrorMessageStartsWith("Can't send F");
-        }
-        to.pushReleaseButton();
-    }
-
-    @Test
-    public void testToggleAlt2() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
-        to.setAddressValue(new DccLocoAddress(42, false));
-
-        // the alt2 ("#") button doesn't currently do anything, but
-        // we can toggle it to make sure it doesn't throw an exception.
-        to.pushAlt1Button();
 
         to.pushReleaseButton();
     }
@@ -201,6 +166,7 @@ public class ThrottleFrameTest {
         to.pushReleaseButton();
     }
 
+    @Ignore("This test fails often on Windows CI")
     @Test
     public void testSliderMaximumSpeed() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());

@@ -323,6 +323,32 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
+    public void testMakesAndMonitors() {
+        msg = DCCppMessage.parseDCCppMessage("F 123 22 1");
+        Assert.assertEquals("Monitor string", "Function Cmd: CAB: 123, FUNC: 2, State: 1, (No Reply Expected)", msg.toMonitorString());
+        msg = DCCppMessage.makeFunctionV2Message(123, 44, 1);
+        Assert.assertEquals("Monitor string", "Function Cmd: CAB: 123, FUNC: 4, State: 1, (No Reply Expected)", msg.toMonitorString());
+        msg = DCCppMessage.makeForgetCabMessage(1234);
+        Assert.assertEquals("Monitor string", "Forget Cab: CAB: 1234, (No Reply Expected)", msg.toMonitorString());
+        msg = DCCppMessage.parseDCCppMessage("- 1234");
+        Assert.assertEquals("Monitor string", "Forget Cab: CAB: 1234, (No Reply Expected)", msg.toMonitorString());
+        msg = DCCppMessage.parseDCCppMessage("-");
+        Assert.assertEquals("Monitor string", "Forget Cab: CAB: [ALL], (No Reply Expected)", msg.toMonitorString());
+        msg = DCCppMessage.parseDCCppMessage("- 12345");
+        Assert.assertNull("null on invalid address", msg);
+        msg = DCCppMessage.parseDCCppMessage("- xyz");
+        Assert.assertNull("null on invalid address", msg);
+        msg = DCCppMessage.makeForgetCabMessage(12345);
+        Assert.assertNull("null on invalid address", msg);
+        msg = DCCppMessage.parseDCCppMessage("F 123 222 1");
+        Assert.assertNull("null on invalid fn", msg);
+        msg = DCCppMessage.parseDCCppMessage("F 123 22 3");
+        Assert.assertNull("null on invalid fn state", msg);
+        msg = DCCppMessage.parseDCCppMessage("F 123 22 OFF");
+        Assert.assertNull("null on invalid fn state", msg);
+    }
+
+    @Test
     public void testGetTurnoutCommandMsgThrown() {
         msg = DCCppMessage.makeTurnoutCommandMsg(23, true);
         log.debug("turnout message = '{}'", msg);
@@ -537,6 +563,14 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("8th byte", '1', msg.getElement(8) & 0xFF);
         Assert.assertEquals("9th byte", ' ', msg.getElement(9) & 0xFF);
         Assert.assertEquals("10th byte", '1', msg.getElement(10) & 0xFF);
+    }
+
+    @Test
+    public void testEStopAllMsg() {
+        msg = DCCppMessage.makeEmergencyStopAllMsg();
+        log.debug("eStop All message = '{}'", msg);
+        Assert.assertEquals("length", 1, msg.getNumDataElements());
+        Assert.assertEquals("0th byte", '!', msg.getElement(0) & 0xFF);
     }
 
     @Test

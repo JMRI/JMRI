@@ -84,12 +84,12 @@ public class RailComTableAction extends AbstractTableAction<IdTag> {
             }
 
             @Override
-            public RailCom getBySystemName(String name) {
+            public RailCom getBySystemName(@Nonnull String name) {
                 return (RailCom) tagManager.getBySystemName(name);
             }
 
             @Override
-            public RailCom getByUserName(String name) {
+            public RailCom getByUserName(@Nonnull String name) {
                 return (RailCom) tagManager.getByUserName(name);
             }
 

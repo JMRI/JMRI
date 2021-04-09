@@ -159,6 +159,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
         }
         sourceFrame.updateBufferList();
         sourceFrame.resetFrame();
+        sourceFrame.setEscapeKeyClosesWindow(true);
         sourceFrame.pack();
         sourceFrame.setVisible(true);
     }
@@ -168,6 +169,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
             bufferFrame = new AudioBufferFrame(Bundle.getMessage("TitleAddAudioBuffer"), buffers);
         }
         bufferFrame.resetFrame();
+        bufferFrame.setEscapeKeyClosesWindow(true);
         bufferFrame.pack();
         bufferFrame.setVisible(true);
     }
@@ -284,12 +286,12 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
         }
 
         @Override
-        public Audio getBySystemName(String name) {
+        public Audio getBySystemName(@Nonnull String name) {
             return InstanceManager.getDefault(jmri.AudioManager.class).getBySystemName(name);
         }
 
         @Override
-        public Audio getByUserName(String name) {
+        public Audio getByUserName(@Nonnull String name) {
             return InstanceManager.getDefault(jmri.AudioManager.class).getByUserName(name);
         }
 

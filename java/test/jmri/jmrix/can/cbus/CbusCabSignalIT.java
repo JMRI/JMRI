@@ -38,7 +38,7 @@ public class CbusCabSignalIT extends jmri.implementation.DefaultCabSignalIT {
         memo = new CanSystemConnectionMemo();
         tc = new TrafficControllerScaffold();
         memo.setTrafficController(tc);
-        
+
         cs = new CbusCabSignal(memo,new DccLocoAddress(1234,true));
     }
 
@@ -52,6 +52,7 @@ public class CbusCabSignalIT extends jmri.implementation.DefaultCabSignalIT {
         cs.dispose();
         cs = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
 
     }

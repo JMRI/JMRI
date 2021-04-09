@@ -96,7 +96,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
              * {@inheritDoc}
              */
             @Override
-            public Reporter getBySystemName(String name) {
+            public Reporter getBySystemName(@Nonnull String name) {
                 return reporterManager.getBySystemName(name);
             }
 
@@ -104,7 +104,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
              * {@inheritDoc}
              */
             @Override
-            public Reporter getByUserName(String name) {
+            public Reporter getByUserName(@Nonnull String name) {
                 return reporterManager.getByUserName(name);
             }
 
@@ -303,7 +303,13 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             prefixBox.setName("prefixBox"); // NOI18N
             addButton = new JButton(Bundle.getMessage("ButtonCreate"));
             addButton.addActionListener(createListener);
-            hardwareAddressValidator = new SystemNameValidator(hardwareAddressTextField, prefixBox.getSelectedItem(), true);
+            
+            if (hardwareAddressValidator==null){
+                hardwareAddressValidator = new SystemNameValidator(hardwareAddressTextField, java.util.Objects.requireNonNull(prefixBox.getSelectedItem()), true);
+            } else {
+                hardwareAddressValidator.setManager(prefixBox.getSelectedItem());
+            }
+
             // create panel
             addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, hardwareAddressValidator, userNameTextField, prefixBox,
                     numberToAddSpinner, rangeCheckBox, addButton, cancelListener, rangeListener, statusBarLabel));
@@ -316,7 +322,8 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         // reset statusBarLabel text
         statusBarLabel.setText(Bundle.getMessage("HardwareAddStatusEnter"));
         statusBarLabel.setForeground(Color.gray);
-
+        addFrame.setEscapeKeyClosesWindow(true);
+        addFrame.getRootPane().setDefaultButton(addButton);
         addFrame.pack();
         addFrame.setVisible(true);
     }
@@ -363,7 +370,6 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
 
         // Add some entry pattern checking, before assembling sName and handing it to the ReporterManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameReporter"));
-        String errorMessage;
         String uName = userNameTextField.getText();
         for (int x = 0; x < numberOfReporters; x++) {
             try {
@@ -384,11 +390,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 r = reporterManager.provideReporter(rName);
             } catch (IllegalArgumentException ex) {
                 // user input no good
-                handleCreateException(rName); // displays message dialog to the user
-                // add to statusBarLabel as well
-                errorMessage = Bundle.getMessage("WarningInvalidEntry");
-                statusBarLabel.setText(errorMessage);
-                statusBarLabel.setForeground(Color.red);
+                handleCreateException(ex, rName); // displays message dialog to the user
                 return; // without creating
             }
 
@@ -455,11 +457,13 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         hardwareAddressValidator.verify(hardwareAddressTextField);
     }
 
-    void handleCreateException(String sysName) {
-        JOptionPane.showMessageDialog(addFrame,
-                Bundle.getMessage("ErrorReporterAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
-                Bundle.getMessage("ErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);
+    void handleCreateException(Exception ex, String sysName) {
+        statusBarLabel.setText(ex.getLocalizedMessage());
+        statusBarLabel.setForeground(Color.red);
+        String err = Bundle.getMessage("ErrorBeanCreateFailed",
+            InstanceManager.getDefault(ReporterManager.class).getBeanTypeHandled(),sysName);
+        JOptionPane.showMessageDialog(addFrame, err + "\n" + ex.getLocalizedMessage(),
+                err, JOptionPane.ERROR_MESSAGE);
     }
 
     /**

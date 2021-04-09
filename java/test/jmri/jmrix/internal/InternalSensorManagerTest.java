@@ -299,6 +299,11 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     @Override
     public void testMakeSystemNameWithPrefixNotASystemName() {}
     
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testIncorrectGetNextValidAddress() {}
+    
     @SuppressWarnings("deprecation")
     @Test
     public void testDeprecatedGetNextValidAddress() throws JmriException {

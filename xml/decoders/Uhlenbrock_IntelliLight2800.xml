@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- Copyright (C) JMRI 2021 All rights reserved   -->
+<!-- LOCONETLNCVMODE requires 3 elements to address an LNCV module on LocoNet:
+1. Article Number (aka type/class ID) = decoder model productID (integer)
+2. Module Address (optional, see below)
+3. CV number
+For processing by JMRI LnOpsProgrammer, elements 1. and 3. are combined in the CV number e.g., "1.3".
+Uhlenbrock publishes the Article number for each (new) device.
+The Uhlenbrock IntelliLight has an Article number 2800, which was registered with Uhlenbrock.
+Older LNCV devices may not have their own address, or even no article. They can be programmed using
+Broadcast mode, but you have to be sure only one such device is powered, as they all would respond to
+programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
+
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
+    <version author="Egbert Broerse" version="1.0" lastUpdated="20210206"/>
+    <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
+    <!-- compare to IntelliLight2820, the LED replacement. Because of the way LNCV includes the art.nr. in the CV it could not be included in this file -->
+    <decoder>
+        <family name="IntelliLight" mfg="Uhlenbrock Elektronik" type="stationary">
+            <model model="Controller" productID="2800" formFactor="Stationary" comment="Lighting Controller">
+              <versionCV />
+              <size length="600" width="105" height="66" units="mm" />
+            </model>
+        </family>
+
+        <programming direct="no" paged="no" register="no" ops="no">
+          <mode>LOCONETLNCVMODE</mode>
+        </programming>
+
+        <variables>
+            <variable CV="2800.0" item="Long Address" mask="VVVVVVVVVVVVVV" default="1" comment="Module address" >
+              <decVal min="0" max="65534"/>
+              <label xml:lang="it">Indirizzo Modulo: </label>
+              <label xml:lang="fr">Adresse Module: </label>
+              <label xml:lang="de">Moduladresse: </label>
+              <label xml:lang="nl">Module-adres: </label>
+              <label>Module Address: </label>
+              <tooltip>Enter as decimal value (1-65534)</tooltip>
+            </variable>
+            <variable CV="2800.2047" item="Decoder Version" readOnly="yes">
+              <decVal/>
+              <label xml:lang="it">Versione: </label>
+              <label xml:lang="fr">Version: </label>
+              <label xml:lang="de">Software-Version: </label>
+              <label xml:lang="nl">Firmware-versie: </label>
+              <label>Firmware Version: </label>
+            </variable>
+
+            <variable CV="2800.1" item="Sun Address" mask="VVVVVVVVVVVV" default="193">
+              <decVal min="1" max="2000"/>
+              <label xml:lang="de">Adresse Sonne auf/unter: </label>
+              <label xml:lang="nl">Adres zon op/onder: </label>
+              <label>Sunrise/Sunset Address: </label>
+              <tooltip>Solenoid address for sunrise (green) and sunset (red)</tooltip>
+              <tooltip xml:lang="de">Magnetartikeladresse für Sonnenaufgang (grün) und Sonnenuntergang (rot)</tooltip>
+              <tooltip xml:lang="nl">Magnetisch artikeladres voor zonsopkomt (groen)/-ondergang (rood)</tooltip>
+            </variable>
+            <variable CV="2800.2" item="Random 1-2 Address" mask="VVVVVVVVVVVV" default="194">
+              <decVal min="1" max="2000"/>
+              <label xml:lang="de">Adresse Ereignis 1+2: </label>
+              <label xml:lang="nl">Adres Effecten 1+2: </label>
+              <label>Random Effects 1+2 Address: </label>
+              <tooltip>Solenoid address for Random effect 1 (red=Clouded) and 2 (green=Rain)</tooltip>
+              <tooltip xml:lang="de">Magnetartikeladresse für Zufallsereignis 1 (rot=Bewölkung) und 2 (grün=Regen)</tooltip>
+              <tooltip xml:lang="nl">Magnetisch artikeladres voor willekeurig effect 1 (rood) en 2 (groen)</tooltip>
+            </variable>
+            <variable CV="2800.3" item="Random 3-4 Address" mask="VVVVVVVVVVVV" default="195">
+              <decVal min="1" max="2000"/>
+              <label xml:lang="de">Adresse Ereignis 3+4: </label>
+              <label xml:lang="nl">Adres Effecten 3+4: </label>
+              <label>Random Effects 3+4 Address: </label>
+              <tooltip>Solenoid address for Random effect 3 (red=Short thunder) and 4 (green=long thunder)</tooltip>
+              <tooltip xml:lang="de">Magnetartikeladresse für Zufallsereignis 3 (rot=Kurzes Gewitter) und 4 (grün=Langes Gewitter)</tooltip>
+              <tooltip xml:lang="nl">Magnetisch artikeladres voor willekeurig effecten 3 (rood) en 4 (groen)</tooltip>
+            </variable>
+            <variable CV="2800.4" item="Random 5-6 Address" mask="VVVVVVVVVVVV" default="196">
+              <decVal min="1" max="2000"/>
+              <label xml:lang="de">Adresse Ereignis 5+6: </label>
+              <label xml:lang="nl">Adres Effecten 5+6: </label>
+              <label>Random Effects 5+6 Address: </label>
+              <tooltip>Solenoid address for Random effect 5 (red) and 6 (green)</tooltip>
+              <tooltip xml:lang="de">Magnetartikeladresse für Zufallsereignis 5 (rot) und 6 (grün)</tooltip>
+              <tooltip xml:lang="nl">Magnetisch artikeladres voor willekeurig effecten 5 (rood) en 6 (groen)</tooltip>
+            </variable>
+            <variable CV="2800.5" item="Random 7-8 Address" mask="VVVVVVVVVVVV" default="197">
+              <decVal min="1" max="2000"/>
+              <label xml:lang="de">Adresse Ereignis 7+8: </label>
+              <label xml:lang="nl">Adres Effecten 7+8: </label>
+              <label>Random Effects 7+8 Address: </label>
+              <tooltip>Solenoid address for Random effect 7 (red) and 8 (green)</tooltip>
+              <tooltip xml:lang="de">Magnetartikeladresse für Zufallsereignis 7 (rot) und 8 (grün)</tooltip>
+              <tooltip xml:lang="nl">Magnetisch artikeladres voor willekeurig effecten 7 (rood) en 8 (groen)</tooltip>
+            </variable>
+            <variable CV="2800.6" item="Service Mode Address" mask="VVVVVVVVVVVV" default="198">
+              <decVal min="1" max="2000"/>
+              <label xml:lang="de">Adresse Servicemode: </label>
+              <label xml:lang="nl">Adres Onderhoud: </label>
+              <label>Service Mode Address: </label>
+              <tooltip>Solenoid address for Service Mode Off (red) and On (green=White light, max. intensity)</tooltip>
+              <tooltip xml:lang="de">Magnetartikeladresse für Servicemodus Aus (rot) und Ein (grün=Beleuchtung weiss und LED Strahler maximal eingeschaltet und interne Uhr angehalten)</tooltip>
+              <tooltip xml:lang="nl">Magnetisch artikeladres voor Onderhoud Uit (rood) en Aan (groen=Wit licht, volle sterkte)</tooltip>
+            </variable>
+
+            <variable CV="2800.7" item="Time Reduction" default="5">
+              <decVal min="5" max="100"/>
+              <label xml:lang="de">Modellzeit: </label>
+              <label xml:lang="nl">Modeltijd: </label>
+              <label>Model Time Factor: </label>
+              <tooltip>Reduction of the model time relative to the standard time (set as 1:(100/value), set to 100 for 1:1)</tooltip>
+              <tooltip xml:lang="de">Untersetzung der Modellzeit gegenüber der Normalzeit (Eingabe als 1:(100/Wert), Wert 100 für 1:1)</tooltip>
+              <tooltip xml:lang="nl">Verhouding modeltijd t.o.v. echte klok (stel in als 1:(100/waarde), waarde 100 = 1:1)</tooltip>
+            </variable>
+            <variable CV="2800.8" item="Event Reduction" default="5">
+              <decVal min="5" max="100"/>
+              <label xml:lang="de">Effektendauer: </label>
+              <label xml:lang="nl">Effectenduur: </label>
+              <label>Event Time Duration: </label>
+              <tooltip>Reduction of the events relative to the standard time (set as 1:(100/value), set to 100 for 1:1)</tooltip>
+              <tooltip xml:lang="de">Untersetzung der Ereignisabläufe gegenüber der Normalzeit (Eingabe als 1:(100/Wert), Wert 100 für 1:1)</tooltip>
+              <tooltip xml:lang="nl">Duur effecten t.o.v. echte klok (stel in als 1:(100/waarde), waarde 100 = 1:1)</tooltip>
+            </variable>
+            <variable CV="2800.9" mask="VVVVVVVVVVVV" item="System Start Time" default="700">
+              <decVal min="0" max="2400"/>
+              <label xml:lang="de">Uhrzeit beim Start: </label>
+              <label xml:lang="nl">Begintijdstip: </label>
+              <label>System Start Time: </label>
+              <tooltip>Time of day when starting the system. An LNCV value of 1330 corresponds to the time 13:30 (1:30 PM); Valid: 0-2400</tooltip>
+              <tooltip xml:lang="de">Uhrzeit beim Starten des Systems. Ein Wert von 1330 steht für 13:30 Uhr (0-2400)</tooltip>
+              <tooltip xml:lang="nl">Tijdstip op de dag dat systeem start. Een waarde van 1330 betekent een tijd van 13:30 u (0-2400)</tooltip>
+            </variable>
+        </variables>
+    </decoder>
+
+    <pane>
+        <name>LNCV Configuration</name>
+        <name xml:lang="de">LNCV Konfiguration</name>
+        <name xml:lang="nl">LNCV instellingen</name>
+        <row>
+            <column>
+              <label>
+                <text>Before writing, open a Programming</text>
+                <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
+                <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
+              </label>
+              <label>
+                <text>session using the LocoNet LNCV Tool.</text>
+                <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
+                <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
+              </label>
+              <label>
+                <text> </text>
+              </label>
+
+              <label>
+                <text>Time Settings</text>
+                <text xml:lang="nl">Tijdinstellingen</text>
+                <text xml:lang="de">Zeiteinstellungen</text>
+                <text xml:lang="fr">Configuration Temporelle</text>
+              </label>
+              <separator/>
+              <row>
+                <display item="Time Reduction"/>
+                <display item="Time Reduction" label="" format="hslider"/>
+              </row>
+              <row>
+                <display item="Event Reduction"/>
+                <display item="Event Reduction" label="" format="hslider"/>
+              </row>
+              <row>
+                <display item="System Start Time"/>
+                <display item="System Start Time" label="" format="hslider"/>
+              </row>
+            </column>
+
+            <column>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Sun Address"/>
+              <separator/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Random 1-2 Address"/>
+              <display item="Random 3-4 Address"/>
+              <display item="Random 5-6 Address"/>
+              <display item="Random 7-8 Address"/>
+              <separator/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Service Mode Address"/>
+
+            </column>
+
+        </row>
+    </pane>
+
+</decoder-config>

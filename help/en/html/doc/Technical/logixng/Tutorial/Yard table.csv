@@ -1,0 +1,17 @@
+				
+	North yard	West yard	East yard	South yard
+				
+	We have a couple of turnouts			
+Left turnout	IT_10_1	IT_10_3	IT_10_5	IT_10_7
+Middle turnout				IT_10_9
+Right turnout 	IT_10_2	IT_10_4	IT_10_6	IT_10_8
+				
+	And we have a couple of signal masts			
+Left mast	Mast_10_1	Mast_10_3	Mast_10_5	Mast_10_7
+Middle mast				Mast_10_9
+Right mast	Mast_10_2	Mast_10_4	Mast_10_6	Mast_10_8
+				
+	And also some sensors			
+Sensor track 1	IS_10_1	IS_10_3	IS_10_5	IS_10_7
+Sensor track 2	IS_10_2	IS_10_4	IS_10_6	IS_10_8
+Sensor track 3				IS_10_9

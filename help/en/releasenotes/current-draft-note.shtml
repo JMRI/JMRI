@@ -29,9 +29,9 @@
                 <li></li>
             </ul>
 
-        <h4>DCC-EX</h4>
+        <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>messaging enhancements and cleanup, retry some failed messages</li>
+                <li>DCCppOverTCP server now forwards all messages, even those with unknown or invalid syntax</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -488,7 +488,7 @@
 
 	    <h4>Cab Signals</h4>
             <ul>
-                <li>Better set row height in table.</li>
+                <li></li>
             </ul>
 
     	<h4>Simple Signal Logic</h4>
@@ -564,13 +564,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>YetAnotherAutoTrain.py (YAAT) has been updated to version 2.2.  This version
-            includes support for compiling train definitions for faster startup.  It also includes
-            the ability to create extensions to the command language.  A Help document has been
-            added to the JMRI Help pages.</li>
-            <li>The Comments columns in Tools &rArr; Tables have support for multi-line comments.
-            The <strong>Edit Comment</strong> option has been added to the right click pop-up
-            menu that is normally used to move user names.  A tooltip will be displayed with
-            the comment content.</li>
+            <li></li>
         </ul>
 

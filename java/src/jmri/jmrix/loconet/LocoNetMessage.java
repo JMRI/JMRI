@@ -3,6 +3,7 @@ package jmri.jmrix.loconet;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.annotation.Nonnull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrix.AbstractMessage;
@@ -56,7 +57,6 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * <p>
      * Because a LocoNet message requires at least a size, if
      * not actual contents, this constructor always logs an error.
-     *
      */
     public LocoNetMessage() {
         _nDataChars = 0;

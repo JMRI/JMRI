@@ -53,6 +53,7 @@ public class ProgrammerScaffold implements Programmer {
         return lastSeenMode;
     }
 
+    @Nonnull
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         return Arrays.asList(
@@ -92,6 +93,7 @@ public class ProgrammerScaffold implements Programmer {
     public void removePropertyChangeListener(PropertyChangeListener p) {
     }
 
+    @Nonnull
     @Override
     public String decodeErrorCode(int i) {
         return null;

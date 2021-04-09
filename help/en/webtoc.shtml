@@ -85,7 +85,7 @@
 
   
 <li>
-<a href="html/setup/Errors.shtml">Error Codes </a>
+<a href="html/apps/Errors.shtml">Error Codes </a>
 <ul></ul>
 </li>
 
@@ -691,20 +691,14 @@
 </li>
   
 <li>
-<a href="html/apps/DispatcherSystem/DispatcherSystem.shtml">Dispatcher System (Python Extension) </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="html/apps/ManifestCreator/index.shtml">Manifest Creator </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml">OperationsPro </a>
+<a href="html/apps/OperationsPro/index.shtml">OperationsPro </a>
 <ul>
+   
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml">OperationsPro Information </a>
+<ul></ul>
+</li>
+
    
 <li>
 <a href="package/jmri/jmrit/operations/Operations.shtml#Settings">Settings </a>
@@ -840,9 +834,35 @@
   
 <li>
 <a href="html/apps/index.shtml#addapp">Additional Applications with connections to JMRI </a>
+<ul>
+   
+<li>
+<a href="html/apps/ManifestCreator/index.shtml">Manifest Creator </a>
 <ul></ul>
 </li>
 
+  
+</ul>
+</li>
+  
+<li>
+<a href="html/tools/scripting/JythonApps.shtml">Jython Apps for JMRI </a>
+<ul>
+   
+<li>
+<a href="html/scripthelp/yaat/YAAT.shtml">YAAT - YetAnotherAutoTrain </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/scripthelp/DispatcherSystem/DispatcherSystem.shtml">Dispatcher System (Python Extension) </a>
+<ul></ul>
+</li>
+
+  
+</ul>
+</li>
  
 </ul>
 </li>
@@ -966,6 +986,12 @@
   
 <li>
 <a href="package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter Table </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/beantable/RailComTable.shtml">RailCom Table </a>
 <ul></ul>
 </li>
 
@@ -1428,6 +1454,12 @@
 
    
 <li>
+<a href="html/tools/scripting/JythonApps.shtml">Jython Apps for JMRI </a>
+<ul></ul>
+</li>
+
+   
+<li>
 <a href="html/tools/scripting/AppleScript.shtml">Open Scripting Arch (Apple) </a>
 <ul></ul>
 </li>
@@ -1590,6 +1622,12 @@
   
 </ul>
 </li>
+  
+<li>
+<a href="package/jmri/jmrit/cabsignals/CabSignalPane.shtml">Cab Signaling </a>
+<ul></ul>
+</li>
+
   
 <li>
 <a href="html/tools/speedometer/index.shtml">Speedometer </a>
@@ -1911,6 +1949,12 @@
    
 <li>
 <a href="package/jmri/jmrix/loconet/downloader/LoaderFrame.shtml">Firmware Downloader Tool </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml">LNCV Programmer </a>
 <ul></ul>
 </li>
 
@@ -2263,6 +2307,12 @@
 <ul></ul>
 </li>
 
+   
+<li>
+<a href="package/jmri/jmrix/openlcb/swing/send/OpenLcbCanSendFrame.shtml">Send OpenLCB Frame </a>
+<ul></ul>
+</li>
+
   
 </ul>
 </li>
@@ -2272,7 +2322,7 @@
 <ul>
    
 <li>
-<a href="package/jmri/jmrix/powerline/packetgen/PowerlinePacketGenFrame.shtml">Send Packet </a>
+<a href="package/jmri/jmrix/powerline/packetgen/PowerlinePacketGenPane.shtml">Send Packet </a>
 <ul></ul>
 </li>
 

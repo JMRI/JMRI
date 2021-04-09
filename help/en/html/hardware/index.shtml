@@ -140,12 +140,12 @@
                <i style="padding-left: 1em;"><a href="#networks">Networks and Protocols:</a></i>
                 <ul>
                   <li><a href="can/index.shtml">CAN Bus Networks</a>                
-                  <li><a href="can/cbus/index.shtml">CBUS&trade;</a>                
+                  <li><a href="can/cbus/index.shtml">CBUS&reg;</a>                
                   <li><a href="cmri/CMRI.shtml">C/MRI</a>
                   <li><a href="XBee/index.shtml">Digi XBee</a>
                   <li><a href="ipocsmr/index.shtml">IPOCS</a></li>
                   <li><a href="loconet/Digitrax.shtml">LocoNet</a>
-                  <li><a href="can/cbus/index.shtml">CBUS&trade;</a>
+                  <li><a href="can/cbus/index.shtml">CBUS</a>
                   <li><a href="modbus/index.shtml">Modbus</a>
                   <li><a href="mqtt/index.shtml">MQTT</a>
                   <li><a href="rps/index.shtml">NAC Services RPS</a>
@@ -311,7 +311,6 @@
               </p>
               <p>&nbsp;</p>
             </dd>
-          </dd>
 
           <dt class="im"><a href="http://www.lenz.com/" target="_blank">
           <img src="images/ico-lenz.gif" width="44" height="34" alt="Lenz"></a></dt>
@@ -341,9 +340,10 @@
             <p>&nbsp;</p>
           </dd>
               
-          <dt class="im"><a href="http://www.sprog-dcc.co.uk/" target="_blank">
+          <dt class="im"><a href="http://www.sprog-dcc.co.uk/">
           <img src="images/SprogDCCLarge.jpg" width="157" height="40" alt="SPROG DCC Logo"></a></dt>
-          <dt><a href="sprog/SPROG.shtml">SPROG DCC/<a href="sproggen5/index.shtml">SPROG DCC Generation 5</a></dt>
+          <dt><a href="sprog/SPROG.shtml">SPROG DCC</a>/
+            <a href="sproggen5/index.shtml">SPROG DCC Generation 5</a></dt>
           <dd>
             <p class="dl">General information on <a href=
             "sprog/SPROG.shtml">connecting JMRI to a SPROG programmer/command station</a></p>
@@ -584,7 +584,7 @@
 
          <dt class="im"><a href="https://www.sprog-dcc.co.uk/" target="_blank">
           <img src="images/SprogDCCLarge.jpg" width="157" height="40" alt="SPROG DCC Logo"></a></dt>
-          <dt><a href="sprog/SPROG.shtml">SPROG DCC/<a href="sproggen5/index.shtml">SPROG DCC Generation 5</a></dt>
+          <dt><a href="sprog/SPROG.shtml">SPROG DCC</a>/<a href="sproggen5/index.shtml">SPROG DCC Generation 5</a></dt>
           <dd>
             <p class="dl">Configure: <a href=
             "sprog/SPROG.shtml">SPROG</a> as either a stand-alone DCC programmer or DCC command station</p>
@@ -728,7 +728,6 @@
               </p>
               <p>&nbsp;</p>
             </dd>
-          </dd>
 
          <dt class="im"><a href="http://www.digitrax.com/" target="_blank">
           <img src="images/Digitrax-logo.jpg" width="60" height="28" alt="Digitrax"></a></dt>
@@ -803,16 +802,15 @@
           <dd>
             <p class="dl">Configure: <a href=
             "modbus/index.shtml">Modbus networks</a></p>
-            <p>&nbsp;</p>
+            <p></p>
           </dd>
 
-          <dt class="im"><img src="http://mqtt.org/new/wp-content/uploads/2012/02/mqtt-inside.png" 
-          alt="MQTT logo" height="60" width="60"></dt>
+          <dt class="im"><img src="mqtt/images/mqtt-logo.png" alt="MQTT logo" class="floatRight"
+          height="39" width="110"></dt>
           <dt><a href="mqtt/index.shtml">MQTT</a></dt>
           <dd>
             <p class="dl">Configure: <a href=
             "mqtt/index.shtml">MQTT networks</a></p>
-            <p>&nbsp;</p>
             <p>&nbsp;</p>
           </dd>
 
@@ -903,7 +901,7 @@
 
          <dt class="im"><a href="https://www.sprog-dcc.co.uk/" target="_blank">
           <img src="images/SprogDCCLarge.jpg" width="157" height="40" alt="SPROG DCC Logo"></a></dt>
-          <dt><a href="sprog/SPROG.shtml">SPROG DCC/<a href="sproggen5/index.shtml">SPROG DCC Generation 5</a></dt>
+          <dt><a href="sprog/SPROG.shtml">SPROG DCC</a>/<a href="sproggen5/index.shtml">SPROG DCC Generation 5</a></dt>
           <dd>
             <p class="dl">Configure: <a href="sprog/SPROG.shtml">SPROG</a> as either a stand-alone
             DCC programmer or DCC command station</p>
@@ -972,8 +970,8 @@
           </dd>
 
           <dt class="im"><a href="https://www.maplesystems.com" target="_blank">
-          <img src="https://www.maplesystems.com/images/maple-logo-white.jpg"
-          width="67" height="60" alt="Maple Logo"></a></dt>
+          <img src="images/maplesystemslogo_s.png"
+          width="90" height="19" alt="Maple Logo"></a></dt>
           <dt><a href="maple/index.shtml">Maple Systems</a></dt>
           <dd>
             <p>Maple Systems touch panel</p>
@@ -1123,7 +1121,7 @@
    <p><a href="#TopOfPage">[Go to top of page]</a></p>     
 
         <h2></h2>
-        <p>CBUS&trade; is a registered trade mark of Dr Michael Bolton</p>
+        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
         <p></p>
 
 <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->

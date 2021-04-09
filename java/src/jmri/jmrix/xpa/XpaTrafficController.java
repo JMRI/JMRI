@@ -184,7 +184,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
             log.warn("connectPort: connect called while connected");
         }
         controller = p;
-        // Send the initilization string to the port
+        // Send the initialization string to the port
         this.sendXpaMessage(XpaMessage.getDefaultInitMsg(), null);
     }
 

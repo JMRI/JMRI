@@ -1,5 +1,6 @@
 package jmri.jmrix.rfid.merg.concentrator;
 
+import jmri.Sensor;
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
@@ -25,6 +26,24 @@ public class ConcentratorSensorManagerTest extends jmri.managers.AbstractSensorM
     @Test
     public void testCtor() {
         Assert.assertNotNull(l);
+    }
+    
+    @Test
+    public void testAlphaSystemName() {
+        Sensor t = l.provide("RSA");
+        Assert.assertNotNull(t);
+    }
+    
+    // test not applicable as minimal validation
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {
+    } 
+    
+    // test not applicable as minimal validation
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {
     }
 
     @BeforeEach
@@ -53,8 +72,8 @@ public class ConcentratorSensorManagerTest extends jmri.managers.AbstractSensorM
 
     @AfterEach
     public void tearDown() {
+        tc.terminateThreads();
         tc = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

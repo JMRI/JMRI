@@ -17,6 +17,7 @@ import org.junit.jupiter.api.io.TempDir;
  *
  * @author Paul Bender Copyright (C) 2017
  * @author Steve Young Copyright (c) 2019
+ * @author Andrew Crosland Copyright (C) 2021
  */
 public class CbusConfigurationManagerTest {
 
@@ -97,7 +98,7 @@ public class CbusConfigurationManagerTest {
     @Test
     public void testgetClasses() {
         
-        CbusDccProgrammerManager prm = new CbusDccProgrammerManager( new CbusDccProgrammer(tcis), memo);
+        CbusDccProgrammerManager prm = new CbusDccProgrammerManager( new CbusDccProgrammer(memo), memo);
         t.setProgrammerManager(prm);
         Assert.assertTrue("programme manager",prm == t.get(jmri.GlobalProgrammerManager.class) );
         

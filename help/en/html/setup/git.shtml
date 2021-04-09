@@ -165,12 +165,13 @@
         <li>Preferences &#8209;&gt; Locations &#8209;&gt; User
         Files Location and set it to the JMRI folder you created in
         Dropbox.</li>
+      </ul>
         
         <h2>Sneaker Net</h2>
         
-        First, copy the <u>entire</u> directory from one of your 
+        <p>First, copy the <u>entire</u> directory from one of your
         computers to the USB stick.  This will be a master that you're moving
-        around.  (You can also directly `git clone` onto the USB stick.)
+        around. (You can also directly 'git clone' onto the USB stick.)</p>
         
         <p>
         Then, from your computer's JMRI preferences Git directory, 
@@ -187,7 +188,7 @@
 </pre>
         
         
-      </ul><!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -36,7 +36,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         String addr = systemName.substring(getSystemNamePrefix().length());
         // first, check validity
         String newAddress;
@@ -125,17 +125,24 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
     }
 
     /**
-     * {@inheritDoc} Send a query message to each sensor using the active
-     * address eg. for a CBUS address "-7;+5", the query will go to event 7.
+     * Update All Sensors by Requesting Event Status.
+     * Sends a query message to each sensor using the active Sensor address.
+     * e.g. for a CBUS address "-7;+5", the query will go to event 7.
+     * Delay between sends is determined by the Connection Output Interval Setting.
+     * {@inheritDoc}
      */
     @Override
     public void updateAll() {
         log.info("Requesting status for all sensors");
-        getNamedBeanSet().forEach((nb) -> {
+        int i = 0;
+        for (Sensor nb : getNamedBeanSet()) {
             if (nb instanceof CbusSensor) {
-                nb.requestUpdateFromLayout();
+                jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> {
+                    nb.requestUpdateFromLayout();
+                }, (i * getMemo().getOutputInterval()) );
+                i++;
             }
-        });
+        }
     }
     
     @Override

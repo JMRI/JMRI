@@ -72,8 +72,8 @@ public class DCCppPacketizer extends DCCppTrafficController {
     // DCCppTrafficController class?
     @Override
     protected int addHeaderToOutput(byte[] msg, jmri.jmrix.AbstractMRMessage m) {
-        if (log.isDebugEnabled()) {
-            log.debug("Appending '<' to start of outgoing message. msg length = {}", msg.length);
+        if (log.isTraceEnabled()) {
+            log.trace("Appending '<' to start of outgoing message. msg length = {}", msg.length);
         }
         msg[0] = (byte) '<';
         return 1;
@@ -95,13 +95,17 @@ public class DCCppPacketizer extends DCCppTrafficController {
     // DCCppTrafficController class?
     @Override
     protected void addTrailerToOutput(byte[] msg, int offset, jmri.jmrix.AbstractMRMessage m) {
-        log.debug("aTTO offset = {} message = {} msg length = {}", offset, m, msg.length);
+        if (log.isTraceEnabled()) {
+            log.trace("aTTO offset = {} message = {} msg length = {}", offset, m, msg.length);
+        }
         if (m.getNumDataElements() == 0) {
             return;
         }
         //msg[offset - 1] = (byte) m.getElement(m.getNumDataElements() - 1);
         msg[offset] = '>';
-        log.debug("finished string = {}", new String(msg, StandardCharsets.UTF_8));
+        if (log.isTraceEnabled()) {
+            log.trace("finished string = {}", new String(msg, StandardCharsets.UTF_8));
+        }
     }
 
     /**
@@ -114,7 +118,7 @@ public class DCCppPacketizer extends DCCppTrafficController {
             ((DCCppPortController) p).setOutputBufferEmpty(false);
             return true;
         } else {
-            log.debug("DCC++ port not ready to receive");
+            log.warn("DCC++ port not ready to send");
             return false;
         }
     }
@@ -130,15 +134,12 @@ public class DCCppPacketizer extends DCCppTrafficController {
      * @param istream character source.
      * @throws java.io.IOException when presented by the input source.
      */
-    //TODO: Can this method be folded back up into the parent
-    // DCCppTrafficController class?
+    // TODO: Can this method be folded back up into the parent DCCppTrafficController class?
     @Override
     protected void loadChars(jmri.jmrix.AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
         int i;
-        StringBuilder m = new StringBuilder("");
-        if (log.isDebugEnabled()) {
-            log.debug("loading characters from port");
-        }
+        StringBuilder m = new StringBuilder();
+        log.trace("loading characters from port");
 
         if (!(msg instanceof DCCppReply)) {
             log.error("SerialDCCppPacketizer.loadChars called on non-DCCppReply msg!");
@@ -160,9 +161,9 @@ public class DCCppPacketizer extends DCCppTrafficController {
                 ((DCCppReply) msg).parseReply(m.toString());
                 break;
             } else {
-                m.append(Character.toString((char) char1));
+                m.append((char) char1);
                 //char1 = readByteProtected(istream);
-                log.trace("msg char[{}]: {} ({})", i, char1, Character.toString((char) char1));
+                log.trace("msg char[{}]: {} ({})", i, char1, (char) char1);
                 //msg.setElement(i, char1 & 0xFF);
             }
         }

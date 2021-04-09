@@ -8,19 +8,22 @@ import org.junit.jupiter.api.*;
 
 /**
  * CanSprogConnectionConfigXmlTest.java
- * 
+ *
  * Test for the CanSprogConnectionConfigXml class
  *
+ * Deprecated in 4.23 - not going ahead with this hardware
+ * 
  * @author   Andrew Crosland  Copyright (C) 2020
  */
+@Deprecated
 public class CanSprogConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
-    
+
     @Test
     public void testCTor() {
         CanSprogConnectionConfigXml c = new CanSprogConnectionConfigXml();
         Assert.assertNotNull("exists",c);
     }
-    
+
     @BeforeEach
     @Override
     public void setUp() {
@@ -33,6 +36,7 @@ public class CanSprogConnectionConfigXmlTest extends jmri.jmrix.configurexml.Abs
     @Override
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         xmlAdapter = null;
         cc = null;
         JUnitUtil.tearDown();

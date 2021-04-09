@@ -22,4 +22,5 @@ public enum RqPointsCommand {
     }
     return null;
   }
+
 }

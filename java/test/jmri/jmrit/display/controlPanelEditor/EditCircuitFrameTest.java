@@ -27,12 +27,12 @@ public class EditCircuitFrameTest {
         OBlock ob1 = blkMgr.createNewOBlock("OB1", "a");
         EditCircuitFrame cFrame = new EditCircuitFrame("Edit Circuit Frame", cb, ob1);
         Assert.assertNotNull("exists", cFrame);
-        
+
         JUnitUtil.dispose(cFrame);
         JUnitUtil.dispose(fr);
     }
 
-    
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -44,7 +44,9 @@ public class EditCircuitFrameTest {
 
     @AfterEach
     public void tearDown() {
+        blkMgr.dispose();
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -37,7 +37,9 @@ public class NceThrottle extends AbstractThrottle {
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
-        this.speedSetting = 0;
+        synchronized (this) {
+            this.speedSetting = 0;
+        }
         // Functions default to false
         this.address = address;
         this.isForward = true;
@@ -62,7 +64,9 @@ public class NceThrottle extends AbstractThrottle {
     protected void sendFunctionGroup1() {
         // The NCE USB doesn't support the NMRA packet format
         // Always need speed command before function group command to reset consist pointer
-        setSpeedSetting(this.speedSetting);
+        synchronized (this) {
+            setSpeedSetting(this.speedSetting);
+        }
         if (sendA2command) {
             int locoAddr = address.getNumber();
             if (address.isLongAddress()) {
@@ -99,7 +103,9 @@ public class NceThrottle extends AbstractThrottle {
     protected void sendFunctionGroup2() {
         // The NCE USB doesn't support the NMRA packet format
         // Always need speed command before function group command to reset consist pointer
-        setSpeedSetting(this.speedSetting);
+        synchronized (this) {
+            setSpeedSetting(this.speedSetting);
+        }
         if (sendA2command) {
             int locoAddr = address.getNumber();
             if (address.isLongAddress()) {
@@ -135,7 +141,9 @@ public class NceThrottle extends AbstractThrottle {
     protected void sendFunctionGroup3() {
         // The NCE USB doesn't support the NMRA packet format
         // Always need speed command before function group command to reset consist pointer
-        setSpeedSetting(this.speedSetting);
+        synchronized (this) {
+            setSpeedSetting(this.speedSetting);
+        }
         if (sendA2command) {
             int locoAddr = address.getNumber();
             if (address.isLongAddress()) {
@@ -172,7 +180,9 @@ public class NceThrottle extends AbstractThrottle {
     protected void sendFunctionGroup4() {
         // The NCE USB doesn't support the NMRA packet format
         // Always need speed command before function group command to reset consist pointer
-        setSpeedSetting(this.speedSetting);
+        synchronized (this) {
+            setSpeedSetting(this.speedSetting);
+        }
         if (sendA2command) {
             int locoAddr = address.getNumber();
             if (address.isLongAddress()) {
@@ -212,7 +222,9 @@ public class NceThrottle extends AbstractThrottle {
     protected void sendFunctionGroup5() {
         // The NCE USB doesn't support the NMRA packet format
         // Always need speed command before function group command to reset consist pointer
-        setSpeedSetting(this.speedSetting);
+        synchronized (this) {
+            setSpeedSetting(this.speedSetting);
+        }
         if (sendA2command) {
             int locoAddr = address.getNumber();
             if (address.isLongAddress()) {
@@ -253,11 +265,12 @@ public class NceThrottle extends AbstractThrottle {
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
     public void setSpeedSetting(float speed) {
-        float oldSpeed = this.speedSetting;
-        this.speedSetting = speed;
-        if (log.isDebugEnabled()) {
-            log.debug("setSpeedSetting= {}", speed);
+        float oldSpeed;
+        synchronized (this) {
+            oldSpeed = this.speedSetting;
+            this.speedSetting = speed;
         }
+        log.debug("setSpeedSetting= {}", speed);
 
         // The NCE USB doesn't support the NMRA packet format
         if (sendA2command) {
@@ -348,7 +361,9 @@ public class NceThrottle extends AbstractThrottle {
             tc.sendNceMessage(m, null);
 
         }
-        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
+        synchronized (this) {
+            firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
+        }
         record(speed);
     }
 
@@ -356,13 +371,15 @@ public class NceThrottle extends AbstractThrottle {
     public void setIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
-        setSpeedSetting(speedSetting);  // send the command
+        synchronized (this) {
+            setSpeedSetting(speedSetting);  // send the command
+        }
         log.debug("setIsForward= {}", forward);
         firePropertyChange(ISFORWARD, old, isForward);
     }
 
     @Override
-    protected void throttleDispose() {
+    public void throttleDispose() {
         finishRecord();
     }
 

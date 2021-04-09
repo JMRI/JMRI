@@ -14,6 +14,8 @@ import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.concurrent.GuardedBy;
+
 /**
  * Implementation of the DCCppOverTcp LbServer Server Protocol.
  *
@@ -25,7 +27,8 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
     Socket clientSocket;
     BufferedReader inStream;
     OutputStream outStream;
-    LinkedList<DCCppReply> replyQueue = new LinkedList<>(); // Init before Rx and Tx
+    @GuardedBy ("replyQueue")
+    final LinkedList<DCCppReply> replyQueue = new LinkedList<>(); // Init before Rx and Tx
 
     Thread txThread;
     String inString;
@@ -103,8 +106,8 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
                     DCCppMessage msg = new DCCppMessage(inString.substring(inString.indexOf('<') + 1,
                             inString.lastIndexOf('>')));
                     if (!msg.isValidMessageFormat()) {
-                        log.warn("Invalid Message Format {}", msg);
-                        continue;
+                        log.warn("Unknown Message Format '{}', forwarding anyway", msg);
+//                        continue;
                     }
 
                     memo.getDCCppTrafficController().sendDCCppMessage(msg, null);
@@ -123,8 +126,9 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
         txThread = null;
         inStream = null;
         outStream = null;
-        replyQueue.clear();
-        replyQueue = null;
+        synchronized (replyQueue) {
+            replyQueue.clear();
+        }
 
         try {
             clientSocket.close();
@@ -208,16 +212,16 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
 
     @Override
     public void message(DCCppMessage msg) {
-        // no need to handle outgonig messages
+        // no need to handle outgoing messages
     }
 
     @Override
     public void message(DCCppReply msg) {
         synchronized (replyQueue) {
             replyQueue.add(msg);
-            replyQueue.notify();
-            log.debug("Message added to queue: {}", msg);
+            replyQueue.notifyAll();
         }
+        log.debug("Message added to queue: {}", msg);
     }
 
     @Override

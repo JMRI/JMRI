@@ -6,10 +6,8 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -42,6 +40,10 @@ import jmri.implementation.TripleOutputSignalHead;
 import jmri.implementation.TripleTurnoutSignalHead;
 import jmri.jmrix.acela.AcelaAddress;
 import jmri.jmrix.acela.AcelaNode;
+import jmri.jmrix.acela.AcelaSignalHead;
+import jmri.jmrix.acela.AcelaSystemConnectionMemo;
+import jmri.jmrix.grapevine.SerialSignalHead;
+import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.BeanSelectCreatePanel;
@@ -159,14 +161,12 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 String name = sysNameList.get(row);
                 SignalHead s = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(name);
                 if (s == null) {
-                    return Boolean.valueOf(false); // if due to race condition, the device is going away
+                    return Boolean.FALSE; // if due to race condition, the device is going away
                 }
                 if (col == LITCOL) {
-                    boolean val = s.getLit();
-                    return Boolean.valueOf(val);
+                    return s.getLit();
                 } else if (col == HELDCOL) {
-                    boolean val = s.getHeld();
-                    return Boolean.valueOf(val);
+                    return s.getHeld();
                 } else if (col == EDITCOL) {
                     return Bundle.getMessage("ButtonEdit");
                 } else if (col == VALUECOL) {
@@ -196,7 +196,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                     return;  // device is going away anyway
                 }
                 if (col == VALUECOL) {
-                    if ((String) value != null) {
+                    if (value != null) {
                         //row = table.convertRowIndexToModel(row); // find the right row in model instead of table (not needed here)
                         log.debug("SignalHead setValueAt (rowConverted={}; value={})", row, value);
                         // convert from String (selected item) to int
@@ -226,10 +226,10 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                         fireTableRowsUpdated(row, row);
                     }
                 } else if (col == LITCOL) {
-                    boolean b = ((Boolean) value).booleanValue();
+                    boolean b = (Boolean) value;
                     s.setLit(b);
                 } else if (col == HELDCOL) {
-                    boolean b = ((Boolean) value).booleanValue();
+                    boolean b = (Boolean) value;
                     s.setHeld(b);
                 } else if (col == EDITCOL) {
                     // button clicked - edit
@@ -264,12 +264,12 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             }
 
             @Override
-            public SignalHead getBySystemName(String name) {
+            public SignalHead getBySystemName(@Nonnull String name) {
                 return InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(name);
             }
 
             @Override
-            public SignalHead getByUserName(String name) {
+            public SignalHead getByUserName(@Nonnull String name) {
                 return InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(name);
             }
 
@@ -301,7 +301,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
 
             @Override
             public boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-                if (e.getPropertyName().indexOf("Lit") >= 0 || e.getPropertyName().indexOf("Held") >= 0 || e.getPropertyName().indexOf("ValidStatesChanged") >= 0) {
+                if (e.getPropertyName().contains("Lit") || e.getPropertyName().contains("Held") || e.getPropertyName().contains("ValidStatesChanged")) {
                     return true;
                 } else {
                     return super.matchPropertyName(e);
@@ -323,7 +323,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             // Might be useful to show only a Dark option in the comboBox if head is Held
             // At present, does not work/change when head Lit/Held checkboxes are (de)activated
             public void propertyChange(java.beans.PropertyChangeEvent e) {
-                if (e.getPropertyName().indexOf("Lit") < 0 || e.getPropertyName().indexOf("Held") >= 0 || e.getPropertyName().indexOf("ValidStatesChanged") >= 0) {
+                if (!e.getPropertyName().contains("Lit") || e.getPropertyName().contains("Held") || e.getPropertyName().contains("ValidStatesChanged")) {
                     if (e.getSource() instanceof NamedBean) {
                         String name = ((NamedBean) e.getSource()).getSystemName();
                         if (log.isDebugEnabled()) {
@@ -414,7 +414,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 }
                 return editCombo;
             }
-            Hashtable<Object, JComboBox<String>> editorMap = new Hashtable<>();
+            final Hashtable<Object, JComboBox<String>> editorMap = new Hashtable<>();
 
             /**
              * Get a list of all the valid appearances that have not been
@@ -426,11 +426,8 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             public Vector<String> getValidAppearances(SignalHead head) {
                 // convert String[] validStateNames to Vector
                 String[] app = head.getValidStateNames();
-                Vector<String> v = new Vector<String>();
-                for (int i = 0; i < app.length; i++) {
-                    String appearance = app[i];
-                    v.add(appearance);
-                }
+                Vector<String> v = new Vector<>();
+                Collections.addAll(v, app);
                 return v;
             }
 
@@ -446,14 +443,13 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 Vector<String> comboappearances = boxMap.get(this.getValueAt(row, SYSNAMECOL));
                 if (comboappearances == null) {
                     // create a new one with right appearance
-                    Vector<String> v = getValidAppearances((SignalHead) this.getValueAt(row, SYSNAMECOL));
-                    comboappearances = v;
+                    comboappearances = getValidAppearances((SignalHead) this.getValueAt(row, SYSNAMECOL));
                     boxMap.put(this.getValueAt(row, SYSNAMECOL), comboappearances);
                 }
                 return comboappearances;
             }
 
-            Hashtable<Object, Vector<String>> boxMap = new Hashtable<Object, Vector<String>>();
+            final Hashtable<Object, Vector<String>> boxMap = new Hashtable<>();
 
             // end of methods to display VALUECOL ComboBox
         };
@@ -477,7 +473,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         SignalHead.GREEN
     };
 
-    private String[] signalStates = new String[]{
+    private final String[] signalStates = new String[]{
         Bundle.getMessage("SignalHeadStateDark"),
         Bundle.getMessage("SignalHeadStateRed"),
         Bundle.getMessage("SignalHeadStateLunar"),
@@ -485,23 +481,23 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         Bundle.getMessage("SignalHeadStateGreen")
     };
 
-    private String stateThrown = InstanceManager.turnoutManagerInstance().getThrownText();
-    private String stateClosed = InstanceManager.turnoutManagerInstance().getClosedText();
-    private String[] turnoutStates = new String[]{stateClosed, stateThrown};
-    private int[] turnoutStateValues = new int[]{Turnout.CLOSED, Turnout.THROWN};
+    private final String stateThrown = InstanceManager.turnoutManagerInstance().getThrownText();
+    private final String stateClosed = InstanceManager.turnoutManagerInstance().getClosedText();
+    private final String[] turnoutStates = new String[]{stateClosed, stateThrown};
+    private final int[] turnoutStateValues = new int[]{Turnout.CLOSED, Turnout.THROWN};
 
-    private String signalheadDouble = Bundle.getMessage("StringSignalheadDouble");
-    private String signalheadTriple = Bundle.getMessage("StringSignalheadTriple");
-    private String signalheadRGB = Bundle.getMessage("StringSignalheadRGB");
-    private String signalheadBiPolar = Bundle.getMessage("StringSignalheadBiPolar");
-    private String signalheadWigwag = Bundle.getMessage("StringSignalheadWigwag");
-    private String[] signalheadTypes = new String[]{signalheadDouble, signalheadTriple, signalheadRGB,
+    private final String signalheadDouble = Bundle.getMessage("StringSignalheadDouble");
+    private final String signalheadTriple = Bundle.getMessage("StringSignalheadTriple");
+    private final String signalheadRGB = Bundle.getMessage("StringSignalheadRGB");
+    private final String signalheadBiPolar = Bundle.getMessage("StringSignalheadBiPolar");
+    private final String signalheadWigwag = Bundle.getMessage("StringSignalheadWigwag");
+    private final String[] signalheadTypes = new String[]{signalheadDouble, signalheadTriple, signalheadRGB,
         signalheadBiPolar, signalheadWigwag};
-    private int[] signalheadTypeValues = new int[]{AcelaNode.DOUBLE, AcelaNode.TRIPLE,
+    private final int[] signalheadTypeValues = new int[]{AcelaNode.DOUBLE, AcelaNode.TRIPLE,
         AcelaNode.BPOLAR, AcelaNode.WIGWAG};
 
-    private String[] ukSignalAspects = new String[]{"2", "3", "4"}; // NOI18N
-    private String[] ukSignalType = new String[]{Bundle.getMessage("HomeSignal"), Bundle.getMessage("DistantSignal")};
+    private final String[] ukSignalAspects = new String[]{"2", "3", "4"}; // NOI18N
+    private final String[] ukSignalType = new String[]{Bundle.getMessage("HomeSignal"), Bundle.getMessage("DistantSignal")};
 
     private JmriJFrame addFrame = null;
     private JComboBox<String> typeBox;
@@ -509,10 +505,10 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
     // we share input fields across boxes so that
     // entries in one don't disappear when the user switches
     // to a different type
-    private Border blackline = BorderFactory.createLineBorder(Color.black);
-    private JTextField systemNameTextField = new JTextField(5);
-    private JTextField userNameTextField = new JTextField(10);
-    private JTextField ato1TextField = new JTextField(5);
+    private final Border blackline = BorderFactory.createLineBorder(Color.black);
+    private final JTextField systemNameTextField = new JTextField(5);
+    private final JTextField userNameTextField = new JTextField(10);
+    private final JTextField ato1TextField = new JTextField(5);
     private BeanSelectCreatePanel<Turnout> to1;
     private BeanSelectCreatePanel<Turnout> to2;
     private BeanSelectCreatePanel<Turnout> to3;
@@ -521,10 +517,10 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
     private BeanSelectCreatePanel<Turnout> to6;
     private BeanSelectCreatePanel<Turnout> to7;
 
-    private FlowLayout defaultFlow = new FlowLayout(FlowLayout.CENTER, 5, 0);
+    private final FlowLayout defaultFlow = new FlowLayout(FlowLayout.CENTER, 5, 0);
 
-    private JLabel systemNameLabel = new JLabel("");
-    private JLabel userNameLabel = new JLabel("");
+    private final JLabel systemNameLabel = new JLabel("");
+    private final JLabel userNameLabel = new JLabel("");
 
     private JPanel v1Panel = new JPanel();
     private JPanel v2Panel = new JPanel();
@@ -534,51 +530,51 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
     private JPanel v6Panel = new JPanel();
     private JPanel v7Panel = new JPanel();
 
-    private JLabel vtLabel = new JLabel("");
-    private TitledBorder v1Border = BorderFactory.createTitledBorder(blackline);
-    private TitledBorder v2Border = BorderFactory.createTitledBorder(blackline);
-    private TitledBorder v3Border = BorderFactory.createTitledBorder(blackline);
-    private TitledBorder v4Border = BorderFactory.createTitledBorder(blackline);
-    private TitledBorder v5Border = BorderFactory.createTitledBorder(blackline);
-    private TitledBorder v6Border = BorderFactory.createTitledBorder(blackline);
-    private TitledBorder v7Border = BorderFactory.createTitledBorder(blackline);
-    private JComboBox<String> s1Box = new JComboBox<String>(turnoutStates);
-    private JComboBox<String> s2Box = new JComboBox<String>(turnoutStates);
-    private JComboBox<String> s2aBox = new JComboBox<String>(signalStates);
-    private JComboBox<String> s3Box = new JComboBox<String>(turnoutStates);
-    private JComboBox<String> s3aBox = new JComboBox<String>(signalStates);
-    private JComboBox<String> s4Box = new JComboBox<String>(turnoutStates);
-    private JComboBox<String> s5Box = new JComboBox<String>(turnoutStates);
-    private JComboBox<String> s6Box = new JComboBox<String>(turnoutStates);
-    private JComboBox<String> s7Box = new JComboBox<String>(turnoutStates);
-    private JComboBox<String> stBox = new JComboBox<String>(signalheadTypes); // Acela signal types
-    private JComboBox<String> mstBox = new JComboBox<String>(ukSignalType);
-    private JComboBox<String> msaBox = new JComboBox<String>(ukSignalAspects);
+    private final JLabel vtLabel = new JLabel("");
+    private final TitledBorder v1Border = BorderFactory.createTitledBorder(blackline);
+    private final TitledBorder v2Border = BorderFactory.createTitledBorder(blackline);
+    private final TitledBorder v3Border = BorderFactory.createTitledBorder(blackline);
+    private final TitledBorder v4Border = BorderFactory.createTitledBorder(blackline);
+    private final TitledBorder v5Border = BorderFactory.createTitledBorder(blackline);
+    private final TitledBorder v6Border = BorderFactory.createTitledBorder(blackline);
+    private final TitledBorder v7Border = BorderFactory.createTitledBorder(blackline);
+    private final JComboBox<String> s1Box = new JComboBox<>(turnoutStates);
+    private final JComboBox<String> s2Box = new JComboBox<>(turnoutStates);
+    private final JComboBox<String> s2aBox = new JComboBox<>(signalStates);
+    private final JComboBox<String> s3Box = new JComboBox<>(turnoutStates);
+    private final JComboBox<String> s3aBox = new JComboBox<>(signalStates);
+    private final JComboBox<String> s4Box = new JComboBox<>(turnoutStates);
+    private final JComboBox<String> s5Box = new JComboBox<>(turnoutStates);
+    private final JComboBox<String> s6Box = new JComboBox<>(turnoutStates);
+    private final JComboBox<String> s7Box = new JComboBox<>(turnoutStates);
+    private final JComboBox<String> stBox = new JComboBox<>(signalheadTypes); // Acela signal types
+    private final JComboBox<String> mstBox = new JComboBox<>(ukSignalType);
+    private final JComboBox<String> msaBox = new JComboBox<>(ukSignalAspects);
 
-    private String acelaAspect = Bundle.getMessage("StringAcelaaspect");
-    private String se8c4Aspect = Bundle.getMessage("StringSE8c4aspect");
-    private String quadOutput = Bundle.getMessage("StringQuadOutput");
-    private String tripleOutput = Bundle.getMessage("StringTripleOutput");
-    private String tripleTurnout = Bundle.getMessage("StringTripleTurnout");
-    private String doubleTurnout = Bundle.getMessage("StringDoubleTurnout");
-    private String virtualHead = Bundle.getMessage("StringVirtual");
-    private String grapevine = Bundle.getMessage("StringGrapevine");
-    private String acela = Bundle.getMessage("StringAcelaaspect");
-    private String lsDec = Bundle.getMessage("StringLsDec");
-    private String dccSignalDecoder = Bundle.getMessage("StringDccSigDec");
-    private String mergSignalDriver = Bundle.getMessage("StringMerg");
-    private String singleTurnout = Bundle.getMessage("StringSingle");
+    private final String acelaAspect = Bundle.getMessage("StringAcelaaspect");
+    private final String se8c4Aspect = Bundle.getMessage("StringSE8c4aspect");
+    private final String quadOutput = Bundle.getMessage("StringQuadOutput");
+    private final String tripleOutput = Bundle.getMessage("StringTripleOutput");
+    private final String tripleTurnout = Bundle.getMessage("StringTripleTurnout");
+    private final String doubleTurnout = Bundle.getMessage("StringDoubleTurnout");
+    private final String virtualHead = Bundle.getMessage("StringVirtual");
+    private final String grapevine = Bundle.getMessage("StringGrapevine");
+    private final String acela = Bundle.getMessage("StringAcelaaspect");
+    private final String lsDec = Bundle.getMessage("StringLsDec");
+    private final String dccSignalDecoder = Bundle.getMessage("StringDccSigDec");
+    private final String mergSignalDriver = Bundle.getMessage("StringMerg");
+    private final String singleTurnout = Bundle.getMessage("StringSingle");
 
-    private JComboBox<String> prefixBox = new JComboBox<String>();
-    private JLabel prefixBoxLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("DCCSystem")));
+    private final JComboBox<String> prefixBox = new JComboBox<>();
+    private final JLabel prefixBoxLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("DCCSystem")));
 
-    private JLabel stateLabel1 = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")));
-    private JLabel stateLabel2 = new JLabel(stateLabel1.getText()); // faster than Bundle?
-    private JLabel stateLabel3 = new JLabel(stateLabel1.getText());
-    private JLabel stateLabel4 = new JLabel(stateLabel1.getText());
-    private JLabel stateLabel5 = new JLabel(stateLabel1.getText());
-    private JLabel stateLabel6 = new JLabel(stateLabel1.getText());
-    private JLabel stateLabel7 = new JLabel(stateLabel1.getText());
+    private final JLabel stateLabel1 = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("TurnoutState")));
+    private final JLabel stateLabel2 = new JLabel(stateLabel1.getText()); // faster than Bundle?
+    private final JLabel stateLabel3 = new JLabel(stateLabel1.getText());
+    private final JLabel stateLabel4 = new JLabel(stateLabel1.getText());
+    private final JLabel stateLabel5 = new JLabel(stateLabel1.getText());
+    private final JLabel stateLabel6 = new JLabel(stateLabel1.getText());
+    private final JLabel stateLabel7 = new JLabel(stateLabel1.getText());
 
     private int turnoutStateFromBox(JComboBox<String> box) {
         String mode = (String) box.getSelectedItem();
@@ -741,37 +737,29 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             }
             dccSignalPanel();
 
-            to1 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
-            to2 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
-            to3 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
-            to4 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
-            to5 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
-            to6 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
-            to7 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
+            to1 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+            to2 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+            to3 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+            to4 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+            to5 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+            to6 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+            to7 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddSignalHead"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalAddEdit", true);
             addFrame.getContentPane().setLayout(new BorderLayout());
 
             JPanel panelHeader = new JPanel();
             panelHeader.setLayout(new BoxLayout(panelHeader, BoxLayout.Y_AXIS));
-            panelHeader.add(typeBox = new JComboBox<String>(new String[]{
-                acelaAspect, dccSignalDecoder, doubleTurnout, lsDec, mergSignalDriver, quadOutput,
-                singleTurnout, se8c4Aspect, tripleTurnout, tripleOutput, virtualHead
-            }));
+            panelHeader.add(typeBox = new JComboBox<>(new String[]{acelaAspect, dccSignalDecoder, doubleTurnout, lsDec, mergSignalDriver, quadOutput, singleTurnout, se8c4Aspect, tripleTurnout, tripleOutput, virtualHead}));
             // If no DCC Command station is found, remove the DCC Signal Decoder option.
             if (prefixBox.getItemCount() == 0) {
                 typeBox.removeItem(dccSignalDecoder);
             }
-            List<jmri.jmrix.grapevine.GrapevineSystemConnectionMemo> memos = InstanceManager.getList(jmri.jmrix.grapevine.GrapevineSystemConnectionMemo.class);
+            List<GrapevineSystemConnectionMemo> memos = InstanceManager.getList(GrapevineSystemConnectionMemo.class);
             if (!memos.isEmpty()) {
                 typeBox.addItem(grapevine);
             }
-            typeBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    typeChanged();
-                }
-            });
+            typeBox.addActionListener(e1 -> typeChanged());
 
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
@@ -891,22 +879,12 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             // Cancel button
             JButton cancelNew = new JButton(Bundle.getMessage("ButtonCancel"));
             panelBottom.add(cancelNew);
-            cancelNew.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    cancelNewPressed(e);
-                }
-            });
+            cancelNew.addActionListener(this::cancelNewPressed);
             //OK button
             JButton ok;
             panelBottom.add(ok = new JButton(Bundle.getMessage("ButtonCreate")));
-            ok.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    okPressed(e);
-                }
-            });
-
+            ok.addActionListener(this::okPressed);
+            addFrame.getRootPane().setDefaultButton(ok);
             addFrame.getContentPane().add(panelBottom, BorderLayout.PAGE_END);
         } else {
             // clear older entries
@@ -914,6 +892,8 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             userNameTextField.setText("");
         }
         typeBox.setSelectedIndex(2);  // force GUI status consistent. Default set to Double Head type
+        
+        addFrame.setEscapeKeyClosesWindow(true);
         addFrame.pack();
         addFrame.setVisible(true);
     }
@@ -1148,12 +1128,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             to3.setVisible(true);
             v4Border.setTitle(Bundle.getMessage("InputNum", " 2 "));
             v5Border.setTitle(Bundle.getMessage("InputNum", " 3 "));
-            msaBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    ukAspectChange(false);
-                }
-            });
+            msaBox.addActionListener(e -> ukAspectChange(false));
 
         } else {
             log.error("Unexpected type in typeChanged: {}", typeBox.getSelectedItem());
@@ -1166,9 +1141,9 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
     private boolean checkBeforeCreating(String sysName) {
         if (dccSignalDecoder.equals(typeBox.getSelectedItem())) {
             try {
-                Integer.parseInt(sysName.substring(sysName.indexOf("$") + 1, sysName.length()));
+                Integer.parseInt(sysName.substring(sysName.indexOf("$") + 1));
             } catch (NumberFormatException ex) {
-                String msg = Bundle.getMessage("ShouldBeNumber", new Object[]{"Hardware Address"});
+                String msg = Bundle.getMessage("ShouldBeNumber", "Hardware Address");
                 JOptionPane.showMessageDialog(addFrame, msg,
                         Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -1183,13 +1158,13 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 if (sysName.length() < i+2) {
                     ok = false;
                 } else {
-                    if (!sysName.substring(i, i+1).equals("H")) ok = false;
+                    if (sysName.charAt(i) != 'H') ok = false;
                 }
             } catch (NamedBean.BadSystemNameException e) {
                 ok = false;
             }
             if (!ok) {
-                String msg = Bundle.getMessage("InvalidSignalSystemName", new Object[]{sysName});
+                String msg = Bundle.getMessage("InvalidSignalSystemName", sysName);
                 JOptionPane.showMessageDialog(addFrame, msg,
                         Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -1203,7 +1178,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             SignalHead nB = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(sysName);
             if (nB != null) {
                 log.error("System name is not unique {} It already exists as a User name", sysName);
-                String msg = Bundle.getMessage("WarningSystemNameAsUser", new Object[]{("" + sysName)});
+                String msg = Bundle.getMessage("WarningSystemNameAsUser", ("" + sysName));
                 JOptionPane.showMessageDialog(editFrame, msg,
                         Bundle.getMessage("WarningTitle"),
                         JOptionPane.ERROR_MESSAGE);
@@ -1213,7 +1188,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         }
         // inform the user if signal head already exists, and return false so creation can be bypassed
         log.warn("Attempt to create signal with duplicate system name {}", sysName);
-        String msg = Bundle.getMessage("DuplicateSignalSystemName", new Object[]{sysName});
+        String msg = Bundle.getMessage("DuplicateSignalSystemName", sysName);
         JOptionPane.showMessageDialog(addFrame, msg,
                 Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
         return false;
@@ -1226,6 +1201,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         for (int i = 0; i < s.length(); i++) {
             if (allowed.indexOf(s.charAt(i)) == -1) {
                 result = false;
+                break;
             }
         }
         return result;
@@ -1275,17 +1251,20 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 //int aspecttype;
 
                 if (inputsysname.length() == 0) {
-                    JOptionPane.showMessageDialog(addFrame, Bundle.getMessage("acelaWarning"));
-                    log.warn("must supply a signalhead number (i.e. AH23)");
+                    JOptionPane.showMessageDialog(addFrame, Bundle.getMessage("signalHeadEntryWarning"));
+                    log.warn("must supply a signalhead number (i.e. AH23) using your prefix");
                     return;
                 }
+                String acelaPrefix = InstanceManager.getDefault(AcelaSystemConnectionMemo.class).getSystemPrefix();
                 if (inputsysname.length() > 2) {
-                    if (inputsysname.substring(0, 2).equals("AH")) { // TODO add real check for A123H
-                        headnumber = Integer.parseInt(inputsysname.substring(2, inputsysname.length()));
+                    int offset = jmri.Manager.getSystemPrefixLength(inputsysname);
+                    if (inputsysname.startsWith(acelaPrefix)) {
+                        headnumber = Integer.parseInt(inputsysname.substring(offset));
                     } else if (checkIntegerOnly(inputsysname)) {
                         headnumber = Integer.parseInt(inputsysname);
                     } else {
-                        String msg = Bundle.getMessage("acelaSkippingCreation", new Object[]{ato1TextField.getText()});
+                        log.warn("skipping creation of signal head, '{}' does not start with AxH", inputsysname);
+                        String msg = Bundle.getMessage("acelaSkippingCreation", ato1TextField.getText());
                         JOptionPane.showMessageDialog(addFrame, msg,
                                 Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
                         return;
@@ -1293,13 +1272,13 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 } else {
                     headnumber = Integer.parseInt(inputsysname);
                 }
-                if (checkBeforeCreating("AH" + headnumber)) {
+                if (checkBeforeCreating(acelaPrefix + "H" + headnumber)) {
                     //if (jmri.jmrix.acela.status()) { // check for an active Acela connection status
                     try {
                         if (inputusername.length() == 0) {
-                            s = new jmri.jmrix.acela.AcelaSignalHead("AH" + headnumber, InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
+                            s = new AcelaSignalHead(acelaPrefix + "H" + headnumber, InstanceManager.getDefault(AcelaSystemConnectionMemo.class));
                         } else {
-                            s = new jmri.jmrix.acela.AcelaSignalHead("AH" + headnumber, inputusername, InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
+                            s = new AcelaSignalHead(acelaPrefix + "H" + headnumber, inputusername, InstanceManager.getDefault(AcelaSystemConnectionMemo.class));
                         }
                         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
                     } catch (java.lang.NullPointerException ex) {
@@ -1311,7 +1290,8 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
 
                 int st = signalheadTypeFromBox(stBox);
                 // This bit returns null I think, will need to check though
-                AcelaNode sh = AcelaAddress.getNodeFromSystemName("AH" + headnumber, InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
+                AcelaNode sh = AcelaAddress.getNodeFromSystemName(acelaPrefix + "H" + headnumber, InstanceManager.getDefault(AcelaSystemConnectionMemo.class));
+                assert sh != null;
                 switch (st) {
                     case 1:
                         sh.setOutputSignalHeadType(headnumber, AcelaNode.DOUBLE);
@@ -1332,23 +1312,24 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 }
 
             } else if (grapevine.equals(typeBox.getSelectedItem())) {
-                // the turnout field must hold a GH system name (G = multichar prefix)
+                // the turnout field must hold a GxH system name (Gx = multichar prefix)
                 if (systemNameTextField.getText().length() == 0) {
-                    // TODO Add user dialog
-                    log.warn("must supply a signalhead number (i.e. GH23)");
+                    JOptionPane.showMessageDialog(addFrame, Bundle.getMessage("signalHeadEntryWarning"));
+                    log.warn("must supply a signalhead number (i.e. GH23) using your prefix");
                     return;
                 }
                 String inputsysname = systemNameTextField.getText();
                 int offset = jmri.Manager.getSystemPrefixLength(inputsysname);
-                if (!inputsysname.substring(0, 1).equals("G") || !inputsysname.substring(offset, offset + 1).equals("H")) { // TODO add real check for G123H
+                String grapevinePrefix = InstanceManager.getDefault(GrapevineSystemConnectionMemo.class).getSystemPrefix();
+                if (!inputsysname.startsWith(grapevinePrefix) || inputsysname.charAt(offset) != 'H') {
                     log.warn("skipping creation of signal head, '{}' does not start with GxH", inputsysname);
-                    String msg = Bundle.getMessage("GrapevineSkippingCreation", new Object[]{inputsysname});
+                    String msg = Bundle.getMessage("GrapevineSkippingCreation", inputsysname);
                     JOptionPane.showMessageDialog(addFrame, msg,
                             Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if (checkBeforeCreating(inputsysname)) {
-                    s = new jmri.jmrix.grapevine.SerialSignalHead(inputsysname, userNameTextField.getText(), InstanceManager.getDefault(jmri.jmrix.grapevine.GrapevineSystemConnectionMemo.class));
+                    s = new SerialSignalHead(inputsysname, userNameTextField.getText(), InstanceManager.getDefault(GrapevineSystemConnectionMemo.class));
                     InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
                 }
             } else if (quadOutput.equals(typeBox.getSelectedItem())) {
@@ -1461,7 +1442,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             } else if (singleTurnout.equals(typeBox.getSelectedItem())) {
                 if (checkBeforeCreating(systemNameTextField.getText())) {
                     Turnout t1 = getTurnoutFromPanel(to1,
-                            "SignalHead:" + systemNameTextField.getText() + ":" + (String) s2aBox.getSelectedItem() + ":" + (String) s3aBox.getSelectedItem());
+                            "SignalHead:" + systemNameTextField.getText() + ":" + s2aBox.getSelectedItem() + ":" + s3aBox.getSelectedItem());
 
                     int on = signalStateFromBox(s2aBox);
                     int off = signalStateFromBox(s3aBox);
@@ -1546,7 +1527,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
 
         } catch (NumberFormatException ex) {
             handleCreateException(ex, systemNameTextField.getText());
-            return; // without creating
+            // return; // without creating
         }
     }
 
@@ -1694,9 +1675,9 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
     private void handleMergSignalDriverOkPressed() {
         SignalHead s;
         // Adding Merg Signal Driver.
-        Turnout t3 = null;
-        Turnout t2 = null;
-        Turnout t1 = null;
+        Turnout t3;
+        Turnout t2;
+        Turnout t1;
         NamedBeanHandle<Turnout> nbt1 = null;
         NamedBeanHandle<Turnout> nbt2 = null;
         NamedBeanHandle<Turnout> nbt3 = null;
@@ -1740,11 +1721,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                     break;
             }
             boolean home;
-            if (ukSignalTypeFromBox(mstBox).equals("Distant")) {
-                home = false;
-            } else {
-                home = true;
-            }
+            home = !ukSignalTypeFromBox(mstBox).equals("Distant");
 
             s = new jmri.implementation.MergSD2SignalHead(systemNameTextField.getText(), ukSignalAspectsFromBox(msaBox), nbt1, nbt2, nbt3, false, home);
             s.setUserName(userNameTextField.getText());
@@ -1757,14 +1734,14 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
     private boolean editingHead = false;
     private String editSysName = "";
     private JmriJFrame editFrame = null;
-    private JLabel signalType = new JLabel("XXXX");
+    private final JLabel signalType = new JLabel("XXXX");
     private SignalHead curS = null;
     private String className = "";
 
-    private JTextField eSystemName = new JTextField(5);
-    private JTextField eUserName = new JTextField(10);
+    private final JTextField eSystemName = new JTextField(5);
+    private final JTextField eUserName = new JTextField(10);
 
-    private JTextField etot = new JTextField(5);
+    private final JTextField etot = new JTextField(5);
 
     private BeanSelectCreatePanel<Turnout> eto1;
     private BeanSelectCreatePanel<Turnout> eto2;
@@ -1782,33 +1759,33 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
     private JPanel ev6Panel = new JPanel();
     private JPanel ev7Panel = new JPanel();
 
-    private TitledBorder ev1Border = BorderFactory.createTitledBorder(blackline);
-    private TitledBorder ev2Border = BorderFactory.createTitledBorder(blackline);
-    private TitledBorder ev3Border = BorderFactory.createTitledBorder(blackline);
-    private TitledBorder ev4Border = BorderFactory.createTitledBorder(blackline);
-    private TitledBorder ev5Border = BorderFactory.createTitledBorder(blackline);
-    private TitledBorder ev6Border = BorderFactory.createTitledBorder(blackline);
-    private TitledBorder ev7Border = BorderFactory.createTitledBorder(blackline);
+    private final TitledBorder ev1Border = BorderFactory.createTitledBorder(blackline);
+    private final TitledBorder ev2Border = BorderFactory.createTitledBorder(blackline);
+    private final TitledBorder ev3Border = BorderFactory.createTitledBorder(blackline);
+    private final TitledBorder ev4Border = BorderFactory.createTitledBorder(blackline);
+    private final TitledBorder ev5Border = BorderFactory.createTitledBorder(blackline);
+    private final TitledBorder ev6Border = BorderFactory.createTitledBorder(blackline);
+    private final TitledBorder ev7Border = BorderFactory.createTitledBorder(blackline);
 
     private Turnout et1 = null;
 
-    private JLabel eSystemNameLabel = new JLabel("");
-    private JLabel eUserNameLabel = new JLabel("");
-    private JLabel eSysNameLabel = new JLabel("");
+    private final JLabel eSystemNameLabel = new JLabel("");
+    private final JLabel eUserNameLabel = new JLabel("");
+    private final JLabel eSysNameLabel = new JLabel("");
 
-    private JLabel evtLabel = new JLabel("");
-    private JComboBox<String> es1Box = new JComboBox<String>(turnoutStates);
-    private JComboBox<String> es2Box = new JComboBox<String>(turnoutStates);
-    private JComboBox<String> es2aBox = new JComboBox<String>(signalStates);
-    private JComboBox<String> es3Box = new JComboBox<String>(turnoutStates);
-    private JComboBox<String> es3aBox = new JComboBox<String>(signalStates);
-    private JComboBox<String> es4Box = new JComboBox<String>(turnoutStates);
-    private JComboBox<String> es5Box = new JComboBox<String>(turnoutStates);
-    private JComboBox<String> es6Box = new JComboBox<String>(turnoutStates);
-    private JComboBox<String> es7Box = new JComboBox<String>(turnoutStates);
-    private JComboBox<String> estBox = new JComboBox<String>(signalheadTypes);
-    private JComboBox<String> emstBox = new JComboBox<String>(ukSignalType);
-    private JComboBox<String> emsaBox = new JComboBox<String>(ukSignalAspects);
+    private final JLabel evtLabel = new JLabel("");
+    private final JComboBox<String> es1Box = new JComboBox<>(turnoutStates);
+    private final JComboBox<String> es2Box = new JComboBox<>(turnoutStates);
+    private final JComboBox<String> es2aBox = new JComboBox<>(signalStates);
+    private final JComboBox<String> es3Box = new JComboBox<>(turnoutStates);
+    private final JComboBox<String> es3aBox = new JComboBox<>(signalStates);
+    private final JComboBox<String> es4Box = new JComboBox<>(turnoutStates);
+    private final JComboBox<String> es5Box = new JComboBox<>(turnoutStates);
+    private final JComboBox<String> es6Box = new JComboBox<>(turnoutStates);
+    private final JComboBox<String> es7Box = new JComboBox<>(turnoutStates);
+    private final JComboBox<String> estBox = new JComboBox<>(signalheadTypes);
+    private final JComboBox<String> emstBox = new JComboBox<>(ukSignalType);
+    private final JComboBox<String> emsaBox = new JComboBox<>(ukSignalAspects);
 
     private void editSignal(int row) {
         // Logix was found, initialize for edit
@@ -1817,19 +1794,14 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
 
         // create the Edit Logix Window
         // Use separate Runnable so window is created on top
-        Runnable t = new Runnable() {
-            @Override
-            public void run() {
-                makeEditSignalWindow();
-            }
-        };
+        Runnable t = this::makeEditSignalWindow;
         if (log.isDebugEnabled()) {
             log.debug("editPressed started for {}", eSName);
         }
         javax.swing.SwingUtilities.invokeLater(t);
     }
 
-    private jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
+    private final jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
     private SignalHead _curSignal = null;
 
     private void makeEditSignalWindow() {
@@ -1840,7 +1812,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 editFrame.setVisible(true);
             } else {
                 log.error("Attempt to edit two signal heads at the same time-{}-and-{}-", editSysName, eSName);
-                String msg = Bundle.getMessage("WarningEdit", new Object[]{editSysName, eSName});
+                String msg = Bundle.getMessage("WarningEdit", editSysName, eSName);
                 JOptionPane.showMessageDialog(editFrame, msg,
                         Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
                 editFrame.setVisible(true);
@@ -1974,20 +1946,10 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
 
             JButton cancel;
             p.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            cancel.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    cancelPressed(e);
-                }
-            });
+            cancel.addActionListener(this::cancelPressed);
             JButton update;
             p.add(update = new JButton(Bundle.getMessage("ButtonUpdate")));
-            update.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    updatePressed(e);
-                }
-            });
+            update.addActionListener(this::updatePressed);
             panelBottom.add(p);
             editFrame.getContentPane().add(panelBottom, BorderLayout.PAGE_END);
             editFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -2036,253 +1998,264 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         emsaBox.setVisible(false);
         // determine class name of signal head and initialize edit panel for this class of signal
         className = curS.getClass().getName();
-        if (className.equals("jmri.implementation.QuadOutputSignalHead")) {
-            signalType.setText(quadOutput);
-            eSystemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
-            eSysNameLabel.setText(curS.getSystemName());
-            eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
-            eUserName.setText(curS.getUserName());
-            ev1Border.setTitle(Bundle.getMessage("LabelGreenTurnoutNumber"));
-            ev1Panel.setVisible(true);
-            eto1.setVisible(true);
-            et1 = ((TripleTurnoutSignalHead) curS).getGreen().getBean();
-            eto1.setDefaultNamedBean(et1);
-            ev2Border.setTitle(Bundle.getMessage("LabelYellowTurnoutNumber"));
-            ev2Panel.setVisible(true);
-            eto2.setVisible(true);
-            eto2.setDefaultNamedBean(((TripleTurnoutSignalHead) curS).getYellow().getBean());
-            ev3Border.setTitle(Bundle.getMessage("LabelRedTurnoutNumber"));
-            ev3Panel.setVisible(true);
-            eto3.setVisible(true);
-            eto3.setDefaultNamedBean(((TripleTurnoutSignalHead) curS).getRed().getBean());
-            ev4Border.setTitle(Bundle.getMessage("LabelLunarTurnoutNumber"));
-            ev4Panel.setVisible(true);
-            eto4.setVisible(true);
-            eto4.setDefaultNamedBean(((QuadOutputSignalHead) curS).getLunar().getBean());
-        } else if (className.equals("jmri.implementation.TripleTurnoutSignalHead")) {
-            signalType.setText(tripleTurnout);
-            eSystemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
-            eSysNameLabel.setText(curS.getSystemName());
-            eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
-            eUserName.setText(curS.getUserName());
-            ev1Border.setTitle(Bundle.getMessage("LabelGreenTurnoutNumber"));
-            ev1Panel.setVisible(true);
-            eto1.setVisible(true);
-            eto1.setDefaultNamedBean(((TripleTurnoutSignalHead) curS).getGreen().getBean());
-            ev2Border.setTitle(Bundle.getMessage("LabelYellowTurnoutNumber"));
-            ev2Panel.setVisible(true);
-            eto2.setVisible(true);
-            eto2.setDefaultNamedBean(((TripleTurnoutSignalHead) curS).getYellow().getBean());
-            ev3Border.setTitle(Bundle.getMessage("LabelRedTurnoutNumber"));
-            ev3Panel.setVisible(true);
-            eto3.setVisible(true);
-            eto3.setDefaultNamedBean(((TripleTurnoutSignalHead) curS).getRed().getBean());
-        } else if (className.equals("jmri.implementation.TripleOutputSignalHead")) {
-            signalType.setText(tripleOutput);
-            eSystemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
-            eSysNameLabel.setText(curS.getSystemName());
-            eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
-            eUserName.setText(curS.getUserName());
-            ev1Border.setTitle(Bundle.getMessage("LabelGreenTurnoutNumber"));
-            ev1Panel.setVisible(true);
-            eto1.setVisible(true);
-            eto1.setDefaultNamedBean(((TripleOutputSignalHead) curS).getGreen().getBean());
-            ev2Border.setTitle(Bundle.getMessage("LabelBlueTurnoutNumber"));
-            ev2Panel.setVisible(true);
-            eto2.setVisible(true);
-            eto2.setDefaultNamedBean(((TripleOutputSignalHead) curS).getBlue().getBean());
-            ev3Border.setTitle(Bundle.getMessage("LabelRedTurnoutNumber"));
-            ev3Panel.setVisible(true);
-            eto3.setVisible(true);
-            eto3.setDefaultNamedBean(((TripleOutputSignalHead) curS).getRed().getBean());
-        } else if (className.equals("jmri.implementation.DoubleTurnoutSignalHead")) {
-            signalType.setText(doubleTurnout);
-            eSystemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
-            eSysNameLabel.setText(curS.getSystemName());
-            eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
-            eUserName.setText(curS.getUserName());
-            ev1Border.setTitle(Bundle.getMessage("LabelGreenTurnoutNumber"));
-            ev1Panel.setVisible(true);
-            eto1.setVisible(true);
-            eto1.setDefaultNamedBean(((DoubleTurnoutSignalHead) curS).getGreen().getBean());
-            ev2Border.setTitle(Bundle.getMessage("LabelRedTurnoutNumber"));
-            ev2Panel.setVisible(true);
-            eto2.setVisible(true);
-            eto2.setDefaultNamedBean(((DoubleTurnoutSignalHead) curS).getRed().getBean());
-        } else if (className.equals("jmri.implementation.SingleTurnoutSignalHead")) {
-            signalType.setText(singleTurnout);
-            eSystemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
-            eSysNameLabel.setText(curS.getSystemName());
-            eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
-            eUserName.setText(curS.getUserName());
-            ev1Border.setTitle(Bundle.getMessage("LabelTurnoutNumber"));
-            ev1Panel.setVisible(true);
-            eto1.setVisible(true);
-            eto1.setDefaultNamedBean(((SingleTurnoutSignalHead) curS).getOutput().getBean());
-            ev2Border.setTitle(Bundle.getMessage("LabelTurnoutClosedAppearance"));
-            ev2Panel.setVisible(true);
-            es2aBox.setVisible(true);
-            setSignalStateInBox(es2aBox, ((SingleTurnoutSignalHead) curS).getOnAppearance());
-            ev3Border.setTitle(Bundle.getMessage("LabelTurnoutThrownAppearance"));
-            ev3Panel.setVisible(true);
-            es3aBox.setVisible(true);
-            setSignalStateInBox(es3aBox, ((SingleTurnoutSignalHead) curS).getOffAppearance());
-        } else if (className.equals("jmri.implementation.VirtualSignalHead")) {
-            signalType.setText(virtualHead);
-            eSystemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
-            eSysNameLabel.setText(curS.getSystemName());
-            eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
-            eUserName.setText(curS.getUserName());
-        } else if (className.equals("jmri.implementation.LsDecSignalHead")) { // LDT LS-DEC
-            signalType.setText(lsDec);
-            eSystemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
-            eSysNameLabel.setText(curS.getSystemName());
-            eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
-            eUserName.setText(curS.getUserName());
-            ev1Border.setTitle(Bundle.getMessage("LabelGreenTurnoutNumber"));
-            ev1Panel.setVisible(true);
-            eto1.setVisible(true);
-            eto1.setDefaultNamedBean(((jmri.implementation.LsDecSignalHead) curS).getGreen().getBean());
-            es1Box.setVisible(true);
-            setTurnoutStateInBox(es1Box, ((jmri.implementation.LsDecSignalHead) curS).getGreenState(), turnoutStateValues);
-            ev2Border.setTitle(Bundle.getMessage("LabelYellowTurnoutNumber"));
-            ev2Panel.setVisible(true);
-            eto2.setVisible(true);
-            eto2.setDefaultNamedBean(((jmri.implementation.LsDecSignalHead) curS).getYellow().getBean());
-            es2Box.setVisible(true);
-            setTurnoutStateInBox(es2Box, ((jmri.implementation.LsDecSignalHead) curS).getYellowState(), turnoutStateValues);
-            ev3Border.setTitle(Bundle.getMessage("LabelRedTurnoutNumber"));
-            ev3Panel.setVisible(true);
-            eto3.setVisible(true);
-            eto3.setDefaultNamedBean(((jmri.implementation.LsDecSignalHead) curS).getRed().getBean());
-            es3Box.setVisible(true);
-            setTurnoutStateInBox(es3Box, ((jmri.implementation.LsDecSignalHead) curS).getRedState(), turnoutStateValues);
-            ev4Border.setTitle(Bundle.getMessage("LabelFlashGreenTurnoutNumber"));
-            ev4Panel.setVisible(true);
-            eto4.setVisible(true);
-            eto4.setDefaultNamedBean(((jmri.implementation.LsDecSignalHead) curS).getFlashGreen().getBean());
-            es4Box.setVisible(true);
-            setTurnoutStateInBox(es4Box, ((jmri.implementation.LsDecSignalHead) curS).getFlashGreenState(), turnoutStateValues);
-            ev5Border.setTitle(Bundle.getMessage("LabelFlashYellowTurnoutNumber"));
-            ev5Panel.setVisible(true);
-            eto5.setVisible(true);
-            eto5.setDefaultNamedBean(((jmri.implementation.LsDecSignalHead) curS).getFlashYellow().getBean());
-            es5Box.setVisible(true);
-            setTurnoutStateInBox(es5Box, ((jmri.implementation.LsDecSignalHead) curS).getFlashYellowState(), turnoutStateValues);
-            ev6Border.setTitle(Bundle.getMessage("LabelFlashRedTurnoutNumber"));
-            ev6Panel.setVisible(true);
-            eto6.setVisible(true);
-            eto6.setDefaultNamedBean(((jmri.implementation.LsDecSignalHead) curS).getFlashRed().getBean());
-            es6Box.setVisible(true);
-            setTurnoutStateInBox(es6Box, ((jmri.implementation.LsDecSignalHead) curS).getFlashRedState(), turnoutStateValues);
-            ev7Border.setTitle(Bundle.getMessage("LabelDarkTurnoutNumber"));
-            ev7Panel.setVisible(true);
-            eto7.setVisible(true);
-            eto7.setDefaultNamedBean(((jmri.implementation.LsDecSignalHead) curS).getDark().getBean());
-            es7Box.setVisible(true);
-            setTurnoutStateInBox(es7Box, ((jmri.implementation.LsDecSignalHead) curS).getDarkState(), turnoutStateValues);
-        } else if (className.equals("jmri.implementation.SE8cSignalHead")) {
-            handleSE8cEditSignal();
-        } else if (className.equals("jmri.jmrix.grapevine.SerialSignalHead")) {
-            signalType.setText(grapevine);
-            eSystemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
-            eSysNameLabel.setText(curS.getSystemName());
-            eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
-            eUserName.setText(curS.getUserName());
+        switch (className) {
+            case "jmri.implementation.QuadOutputSignalHead":
+                signalType.setText(quadOutput);
+                eSystemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
+                eSysNameLabel.setText(curS.getSystemName());
+                eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
+                eUserName.setText(curS.getUserName());
+                ev1Border.setTitle(Bundle.getMessage("LabelGreenTurnoutNumber"));
+                ev1Panel.setVisible(true);
+                eto1.setVisible(true);
+                et1 = ((TripleTurnoutSignalHead) curS).getGreen().getBean();
+                eto1.setDefaultNamedBean(et1);
+                ev2Border.setTitle(Bundle.getMessage("LabelYellowTurnoutNumber"));
+                ev2Panel.setVisible(true);
+                eto2.setVisible(true);
+                eto2.setDefaultNamedBean(((TripleTurnoutSignalHead) curS).getYellow().getBean());
+                ev3Border.setTitle(Bundle.getMessage("LabelRedTurnoutNumber"));
+                ev3Panel.setVisible(true);
+                eto3.setVisible(true);
+                eto3.setDefaultNamedBean(((TripleTurnoutSignalHead) curS).getRed().getBean());
+                ev4Border.setTitle(Bundle.getMessage("LabelLunarTurnoutNumber"));
+                ev4Panel.setVisible(true);
+                eto4.setVisible(true);
+                eto4.setDefaultNamedBean(((QuadOutputSignalHead) curS).getLunar().getBean());
+                break;
+            case "jmri.implementation.TripleTurnoutSignalHead":
+                signalType.setText(tripleTurnout);
+                eSystemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
+                eSysNameLabel.setText(curS.getSystemName());
+                eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
+                eUserName.setText(curS.getUserName());
+                ev1Border.setTitle(Bundle.getMessage("LabelGreenTurnoutNumber"));
+                ev1Panel.setVisible(true);
+                eto1.setVisible(true);
+                eto1.setDefaultNamedBean(((TripleTurnoutSignalHead) curS).getGreen().getBean());
+                ev2Border.setTitle(Bundle.getMessage("LabelYellowTurnoutNumber"));
+                ev2Panel.setVisible(true);
+                eto2.setVisible(true);
+                eto2.setDefaultNamedBean(((TripleTurnoutSignalHead) curS).getYellow().getBean());
+                ev3Border.setTitle(Bundle.getMessage("LabelRedTurnoutNumber"));
+                ev3Panel.setVisible(true);
+                eto3.setVisible(true);
+                eto3.setDefaultNamedBean(((TripleTurnoutSignalHead) curS).getRed().getBean());
+                break;
+            case "jmri.implementation.TripleOutputSignalHead":
+                signalType.setText(tripleOutput);
+                eSystemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
+                eSysNameLabel.setText(curS.getSystemName());
+                eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
+                eUserName.setText(curS.getUserName());
+                ev1Border.setTitle(Bundle.getMessage("LabelGreenTurnoutNumber"));
+                ev1Panel.setVisible(true);
+                eto1.setVisible(true);
+                eto1.setDefaultNamedBean(((TripleOutputSignalHead) curS).getGreen().getBean());
+                ev2Border.setTitle(Bundle.getMessage("LabelBlueTurnoutNumber"));
+                ev2Panel.setVisible(true);
+                eto2.setVisible(true);
+                eto2.setDefaultNamedBean(((TripleOutputSignalHead) curS).getBlue().getBean());
+                ev3Border.setTitle(Bundle.getMessage("LabelRedTurnoutNumber"));
+                ev3Panel.setVisible(true);
+                eto3.setVisible(true);
+                eto3.setDefaultNamedBean(((TripleOutputSignalHead) curS).getRed().getBean());
+                break;
+            case "jmri.implementation.DoubleTurnoutSignalHead":
+                signalType.setText(doubleTurnout);
+                eSystemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
+                eSysNameLabel.setText(curS.getSystemName());
+                eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
+                eUserName.setText(curS.getUserName());
+                ev1Border.setTitle(Bundle.getMessage("LabelGreenTurnoutNumber"));
+                ev1Panel.setVisible(true);
+                eto1.setVisible(true);
+                eto1.setDefaultNamedBean(((DoubleTurnoutSignalHead) curS).getGreen().getBean());
+                ev2Border.setTitle(Bundle.getMessage("LabelRedTurnoutNumber"));
+                ev2Panel.setVisible(true);
+                eto2.setVisible(true);
+                eto2.setDefaultNamedBean(((DoubleTurnoutSignalHead) curS).getRed().getBean());
+                break;
+            case "jmri.implementation.SingleTurnoutSignalHead":
+                signalType.setText(singleTurnout);
+                eSystemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
+                eSysNameLabel.setText(curS.getSystemName());
+                eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
+                eUserName.setText(curS.getUserName());
+                ev1Border.setTitle(Bundle.getMessage("LabelTurnoutNumber"));
+                ev1Panel.setVisible(true);
+                eto1.setVisible(true);
+                eto1.setDefaultNamedBean(((SingleTurnoutSignalHead) curS).getOutput().getBean());
+                ev2Border.setTitle(Bundle.getMessage("LabelTurnoutClosedAppearance"));
+                ev2Panel.setVisible(true);
+                es2aBox.setVisible(true);
+                setSignalStateInBox(es2aBox, ((SingleTurnoutSignalHead) curS).getOnAppearance());
+                ev3Border.setTitle(Bundle.getMessage("LabelTurnoutThrownAppearance"));
+                ev3Panel.setVisible(true);
+                es3aBox.setVisible(true);
+                setSignalStateInBox(es3aBox, ((SingleTurnoutSignalHead) curS).getOffAppearance());
+                break;
+            case "jmri.implementation.VirtualSignalHead":
+                signalType.setText(virtualHead);
+                eSystemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
+                eSysNameLabel.setText(curS.getSystemName());
+                eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
+                eUserName.setText(curS.getUserName());
+                break;
+            case "jmri.implementation.LsDecSignalHead":  // LDT LS-DEC
+                signalType.setText(lsDec);
+                eSystemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
+                eSysNameLabel.setText(curS.getSystemName());
+                eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
+                eUserName.setText(curS.getUserName());
+                ev1Border.setTitle(Bundle.getMessage("LabelGreenTurnoutNumber"));
+                ev1Panel.setVisible(true);
+                eto1.setVisible(true);
+                eto1.setDefaultNamedBean(((jmri.implementation.LsDecSignalHead) curS).getGreen().getBean());
+                es1Box.setVisible(true);
+                setTurnoutStateInBox(es1Box, ((jmri.implementation.LsDecSignalHead) curS).getGreenState(), turnoutStateValues);
+                ev2Border.setTitle(Bundle.getMessage("LabelYellowTurnoutNumber"));
+                ev2Panel.setVisible(true);
+                eto2.setVisible(true);
+                eto2.setDefaultNamedBean(((jmri.implementation.LsDecSignalHead) curS).getYellow().getBean());
+                es2Box.setVisible(true);
+                setTurnoutStateInBox(es2Box, ((jmri.implementation.LsDecSignalHead) curS).getYellowState(), turnoutStateValues);
+                ev3Border.setTitle(Bundle.getMessage("LabelRedTurnoutNumber"));
+                ev3Panel.setVisible(true);
+                eto3.setVisible(true);
+                eto3.setDefaultNamedBean(((jmri.implementation.LsDecSignalHead) curS).getRed().getBean());
+                es3Box.setVisible(true);
+                setTurnoutStateInBox(es3Box, ((jmri.implementation.LsDecSignalHead) curS).getRedState(), turnoutStateValues);
+                ev4Border.setTitle(Bundle.getMessage("LabelFlashGreenTurnoutNumber"));
+                ev4Panel.setVisible(true);
+                eto4.setVisible(true);
+                eto4.setDefaultNamedBean(((jmri.implementation.LsDecSignalHead) curS).getFlashGreen().getBean());
+                es4Box.setVisible(true);
+                setTurnoutStateInBox(es4Box, ((jmri.implementation.LsDecSignalHead) curS).getFlashGreenState(), turnoutStateValues);
+                ev5Border.setTitle(Bundle.getMessage("LabelFlashYellowTurnoutNumber"));
+                ev5Panel.setVisible(true);
+                eto5.setVisible(true);
+                eto5.setDefaultNamedBean(((jmri.implementation.LsDecSignalHead) curS).getFlashYellow().getBean());
+                es5Box.setVisible(true);
+                setTurnoutStateInBox(es5Box, ((jmri.implementation.LsDecSignalHead) curS).getFlashYellowState(), turnoutStateValues);
+                ev6Border.setTitle(Bundle.getMessage("LabelFlashRedTurnoutNumber"));
+                ev6Panel.setVisible(true);
+                eto6.setVisible(true);
+                eto6.setDefaultNamedBean(((jmri.implementation.LsDecSignalHead) curS).getFlashRed().getBean());
+                es6Box.setVisible(true);
+                setTurnoutStateInBox(es6Box, ((jmri.implementation.LsDecSignalHead) curS).getFlashRedState(), turnoutStateValues);
+                ev7Border.setTitle(Bundle.getMessage("LabelDarkTurnoutNumber"));
+                ev7Panel.setVisible(true);
+                eto7.setVisible(true);
+                eto7.setDefaultNamedBean(((jmri.implementation.LsDecSignalHead) curS).getDark().getBean());
+                es7Box.setVisible(true);
+                setTurnoutStateInBox(es7Box, ((jmri.implementation.LsDecSignalHead) curS).getDarkState(), turnoutStateValues);
+                break;
+            case "jmri.implementation.SE8cSignalHead":
+                handleSE8cEditSignal();
+                break;
+            case "jmri.jmrix.grapevine.SerialSignalHead":
+                signalType.setText(grapevine);
+                eSystemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
+                eSysNameLabel.setText(curS.getSystemName());
+                eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
+                eUserName.setText(curS.getUserName());
             /*ev1Border.setTitle(Bundle.getMessage("LabelUserName"));
              ev1Panel.setVisible(true);
              eto1.setVisible(true);
              eto1.setText(curS.getUserName());*/
-        } else if (className.equals("jmri.jmrix.acela.AcelaSignalHead")) {
-            signalType.setText(acela);
-            eSystemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
-            eSysNameLabel.setText(curS.getSystemName());
-            eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
-            eUserName.setText(curS.getUserName());
+                break;
+            case "jmri.jmrix.acela.AcelaSignalHead":
+                signalType.setText(acela);
+                eSystemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
+                eSysNameLabel.setText(curS.getSystemName());
+                eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
+                eUserName.setText(curS.getUserName());
             /*ev1Border.setTitle(Bundle.getMessage("LabelUserName"));
              ev1Panel.setVisible(true);
              eto1.setVisible(true);
              eto1.setText(curS.getUserName());*/
-            evtLabel.setText(Bundle.getMessage("LabelAspectType") + ":");
-            etot.setVisible(false);
-            AcelaNode tNode = AcelaAddress.getNodeFromSystemName(curS.getSystemName(), jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
-            if (tNode == null) {
-                // node does not exist, ignore call
-                log.error("Can't find new Acela Signal with name '{}", curS.getSystemName());
-                return;
-            }
-            int headnumber = Integer.parseInt(curS.getSystemName().substring(2, curS.getSystemName().length()));
-
-            estBox.setVisible(true);
-            setSignalheadTypeInBox(estBox, tNode.getOutputSignalHeadType(headnumber), signalheadTypeValues);
-        } else if (className.equals("jmri.implementation.DccSignalHead")) {
-            signalType.setText(dccSignalDecoder);
-            eSystemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
-            eSysNameLabel.setText(curS.getSystemName());
-            eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
-            eUserName.setText(curS.getUserName());
-            for (int i = 0; i < DccSignalHead.getDefaultValidStates().length; i++) {
-                JSpinner tmp = dccAspectEdt[i];
-                tmp.setValue(((DccSignalHead) curS).getOutputForAppearance(curS.getValidStates()[i]));
-                //  tmp.setValue((Integer) DccSignalHead.getDefaultNumberForApperance(DccSignalHead.getDefaultValidStates()[i]))
-            }
-            dccOffSetAddressEdt.setVisible(true);
-            dccOffSetAddressEdt.setSelected(((DccSignalHead) curS).useAddressOffSet());
-            dccPacketSendCount.setVisible(true);
-            dccPacketSendCountSpinner.setVisible(true);
-            dccPacketSendCountSpinner.setValue(((DccSignalHead) curS).getDccSignalHeadPacketSendCount());
-
-            ev2Border.setTitle(Bundle.getMessage("LabelAspectNumbering"));
-            ev2Panel.setVisible(true);
-            dccSignalPanelEdt.setVisible(true);
-        } else if (className.equals("jmri.implementation.MergSD2SignalHead")) {
-            //Edit signal stuff to go here!
-            signalType.setText(mergSignalDriver);
-            eSystemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
-            eSysNameLabel.setText(curS.getSystemName());
-            eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
-            eUserName.setText(curS.getUserName());
-            ev1Border.setTitle(Bundle.getMessage("NumberOfAppearances")); // same as line 1054
-            ev1Panel.setVisible(true);
-            setUkSignalAspectsFromBox(emsaBox, ((jmri.implementation.MergSD2SignalHead) curS).getAspects());
-            eto1.setVisible(false);
-            emsaBox.setVisible(true);
-//            emsaBox.setToolTipText(Bundle.getMessage("SignalHeadMergTooltip"));
-            ev2Border.setTitle(Bundle.getMessage("UseAs")); // same as line 1090
-            ev2Panel.setVisible(true);
-            eto2.setVisible(false);
-            emstBox.setVisible(true);
-            if (((jmri.implementation.MergSD2SignalHead) curS).getHome()) {
-                setUkSignalType(emstBox, Bundle.getMessage("HomeSignal")); // "Home"
-            } else {
-                setUkSignalType(emstBox, Bundle.getMessage("DistantSignal")); //"Distant"
-            }
-            //setUKSignalTypeFromBox(emstBox, ((jmri.implementation.MergSD2SignalHead)curS).getAspects());
-            ev3Border.setTitle(Bundle.getMessage("InputNum", " 1 "));
-            ev3Panel.setVisible(true);
-            eto3.setVisible(true);
-            eto3.setDefaultNamedBean(((jmri.implementation.MergSD2SignalHead) curS).getInput1().getBean());
-            ev4Border.setTitle(Bundle.getMessage("InputNum", " 2 "));
-            ev4Panel.setVisible(true);
-            eto4.setVisible(true);
-            if (((jmri.implementation.MergSD2SignalHead) curS).getInput2() != null) {
-                eto4.setDefaultNamedBean(((jmri.implementation.MergSD2SignalHead) curS).getInput2().getBean());
-            }
-            ev5Border.setTitle(Bundle.getMessage("InputNum", " 3 "));
-            ev5Panel.setVisible(true);
-            eto5.setVisible(true);
-            if (((jmri.implementation.MergSD2SignalHead) curS).getInput3() != null) {
-                eto5.setDefaultNamedBean(((jmri.implementation.MergSD2SignalHead) curS).getInput3().getBean());
-            }
-            emsaBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    ukAspectChange(true);
+                evtLabel.setText(Bundle.getMessage("LabelAspectType") + ":");
+                etot.setVisible(false);
+                AcelaNode tNode = AcelaAddress.getNodeFromSystemName(curS.getSystemName(), InstanceManager.getDefault(AcelaSystemConnectionMemo.class));
+                if (tNode == null) {
+                    // node does not exist, ignore call
+                    log.error("Can't find new Acela Signal with name '{}", curS.getSystemName());
+                    return;
                 }
-            });
-            ukAspectChange(true);
-        } else {
-            log.error("Cannot edit SignalHead of unrecognized type: {}", className);
+                int headnumber = Integer.parseInt(curS.getSystemName().substring(2));
+
+                estBox.setVisible(true);
+                setSignalheadTypeInBox(estBox, tNode.getOutputSignalHeadType(headnumber), signalheadTypeValues);
+                break;
+            case "jmri.implementation.DccSignalHead":
+                signalType.setText(dccSignalDecoder);
+                eSystemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
+                eSysNameLabel.setText(curS.getSystemName());
+                eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
+                eUserName.setText(curS.getUserName());
+                for (int i = 0; i < DccSignalHead.getDefaultValidStates().length; i++) {
+                    JSpinner tmp = dccAspectEdt[i];
+                    tmp.setValue(((DccSignalHead) curS).getOutputForAppearance(curS.getValidStates()[i]));
+                    //  tmp.setValue((Integer) DccSignalHead.getDefaultNumberForApperance(DccSignalHead.getDefaultValidStates()[i]))
+                }
+                dccOffSetAddressEdt.setVisible(true);
+                dccOffSetAddressEdt.setSelected(((DccSignalHead) curS).useAddressOffSet());
+                dccPacketSendCount.setVisible(true);
+                dccPacketSendCountSpinner.setVisible(true);
+                dccPacketSendCountSpinner.setValue(((DccSignalHead) curS).getDccSignalHeadPacketSendCount());
+
+                ev2Border.setTitle(Bundle.getMessage("LabelAspectNumbering"));
+                ev2Panel.setVisible(true);
+                dccSignalPanelEdt.setVisible(true);
+                break;
+            case "jmri.implementation.MergSD2SignalHead":
+                //Edit signal stuff to go here!
+                signalType.setText(mergSignalDriver);
+                eSystemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
+                eSysNameLabel.setText(curS.getSystemName());
+                eUserNameLabel.setText(Bundle.getMessage("LabelUserName"));
+                eUserName.setText(curS.getUserName());
+                ev1Border.setTitle(Bundle.getMessage("NumberOfAppearances")); // same as line 1054
+
+                ev1Panel.setVisible(true);
+                setUkSignalAspectsFromBox(emsaBox, ((jmri.implementation.MergSD2SignalHead) curS).getAspects());
+                eto1.setVisible(false);
+                emsaBox.setVisible(true);
+                //            emsaBox.setToolTipText(Bundle.getMessage("SignalHeadMergTooltip"));
+                ev2Border.setTitle(Bundle.getMessage("UseAs")); // same as line 1090
+
+                ev2Panel.setVisible(true);
+                eto2.setVisible(false);
+                emstBox.setVisible(true);
+                if (((jmri.implementation.MergSD2SignalHead) curS).getHome()) {
+                    setUkSignalType(emstBox, Bundle.getMessage("HomeSignal")); // "Home"
+                } else {
+                    setUkSignalType(emstBox, Bundle.getMessage("DistantSignal")); //"Distant"
+                }
+                //setUKSignalTypeFromBox(emstBox, ((jmri.implementation.MergSD2SignalHead)curS).getAspects());
+                ev3Border.setTitle(Bundle.getMessage("InputNum", " 1 "));
+                ev3Panel.setVisible(true);
+                eto3.setVisible(true);
+                eto3.setDefaultNamedBean(((jmri.implementation.MergSD2SignalHead) curS).getInput1().getBean());
+                ev4Border.setTitle(Bundle.getMessage("InputNum", " 2 "));
+                ev4Panel.setVisible(true);
+                eto4.setVisible(true);
+                if (((jmri.implementation.MergSD2SignalHead) curS).getInput2() != null) {
+                    eto4.setDefaultNamedBean(((jmri.implementation.MergSD2SignalHead) curS).getInput2().getBean());
+                }
+                ev5Border.setTitle(Bundle.getMessage("InputNum", " 3 "));
+                ev5Panel.setVisible(true);
+                eto5.setVisible(true);
+                if (((jmri.implementation.MergSD2SignalHead) curS).getInput3() != null) {
+                    eto5.setDefaultNamedBean(((jmri.implementation.MergSD2SignalHead) curS).getInput3().getBean());
+                }
+                emsaBox.addActionListener(e -> ukAspectChange(true));
+                ukAspectChange(true);
+                break;
+            default:
+                log.error("Cannot edit SignalHead of unrecognized type: {}", className);
+                break;
         }
         // finish up
         editFrame.pack();
@@ -2315,303 +2288,249 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             }
         }
         // update according to class of signal head
-        if (className.equals("jmri.implementation.QuadOutputSignalHead")) {
-            Turnout t1 = updateTurnoutFromPanel(eto1,
-                    "SignalHead:" + eSysNameLabel.getText() + ":Green",
-                    ((QuadOutputSignalHead) curS).getGreen().getBean(),
-                    ev1Border.getTitle());
+        switch (className) {
+            case "jmri.implementation.QuadOutputSignalHead": {
+                Turnout t1 = updateTurnoutFromPanel(eto1, "SignalHead:" + eSysNameLabel.getText() + ":Green", ((QuadOutputSignalHead) curS).getGreen().getBean(), ev1Border.getTitle());
 
-            if (t1 == null) {
-                return;
-            } else {
-                ((QuadOutputSignalHead) curS).setGreen(nbhm.getNamedBeanHandle(eto1.getDisplayName(), t1));
-            }
-
-            Turnout t2 = updateTurnoutFromPanel(eto2,
-                    "SignalHead:" + eSysNameLabel.getText() + ":Yellow",
-                    ((QuadOutputSignalHead) curS).getYellow().getBean(),
-                    ev2Border.getTitle());
-            if (t2 == null) {
-                return;
-            } else {
-                ((QuadOutputSignalHead) curS).setYellow(nbhm.getNamedBeanHandle(eto2.getDisplayName(), t2));
-            }
-
-            Turnout t3 = updateTurnoutFromPanel(eto3,
-                    "SignalHead:" + eSysNameLabel.getText() + ":Red",
-                    ((QuadOutputSignalHead) curS).getRed().getBean(),
-                    ev3Border.getTitle());
-            if (t3 == null) {
-                return;
-            } else {
-                ((QuadOutputSignalHead) curS).setRed(nbhm.getNamedBeanHandle(eto3.getDisplayName(), t3));
-            }
-
-            Turnout t4 = updateTurnoutFromPanel(eto4,
-                    "SignalHead:" + eSysNameLabel.getText() + ":Lunar",
-                    ((QuadOutputSignalHead) curS).getLunar().getBean(),
-                    ev4Border.getTitle());
-            if (t4 == null) {
-                return;
-            } else {
-                ((QuadOutputSignalHead) curS).setLunar(nbhm.getNamedBeanHandle(eto4.getDisplayName(), t4));
-            }
-        } else if (className.equals("jmri.implementation.TripleTurnoutSignalHead")) {
-            Turnout t1 = updateTurnoutFromPanel(eto1,
-                    "SignalHead:" + eSysNameLabel.getText() + ":Green",
-                    ((TripleTurnoutSignalHead) curS).getGreen().getBean(),
-                    ev1Border.getTitle());
-
-            if (t1 == null) {
-                return;
-            } else {
-                ((TripleTurnoutSignalHead) curS).setGreen(nbhm.getNamedBeanHandle(eto1.getDisplayName(), t1));
-            }
-
-            Turnout t2 = updateTurnoutFromPanel(eto2,
-                    "SignalHead:" + eSysNameLabel.getText() + ":Yellow",
-                    ((TripleTurnoutSignalHead) curS).getYellow().getBean(),
-                    ev2Border.getTitle());
-            if (t2 == null) {
-                return;
-            } else {
-                ((TripleTurnoutSignalHead) curS).setYellow(nbhm.getNamedBeanHandle(eto2.getDisplayName(), t2));
-            }
-
-            Turnout t3 = updateTurnoutFromPanel(eto3,
-                    "SignalHead:" + eSysNameLabel.getText() + ":Red",
-                    ((TripleTurnoutSignalHead) curS).getRed().getBean(),
-                    ev3Border.getTitle());
-            if (t3 == null) {
-                return;
-            } else {
-                ((TripleTurnoutSignalHead) curS).setRed(nbhm.getNamedBeanHandle(eto3.getDisplayName(), t3));
-            }
-        } else if (className.equals("jmri.implementation.TripleOutputSignalHead")) {
-            Turnout t1 = updateTurnoutFromPanel(eto1,
-                    "SignalHead:" + eSysNameLabel.getText() + ":Green",
-                    ((TripleOutputSignalHead) curS).getGreen().getBean(),
-                    ev1Border.getTitle());
-
-            if (t1 == null) {
-                return;
-            } else {
-                ((TripleOutputSignalHead) curS).setGreen(nbhm.getNamedBeanHandle(eto1.getDisplayName(), t1));
-            }
-
-            Turnout t2 = updateTurnoutFromPanel(eto2,
-                    "SignalHead:" + eSysNameLabel.getText() + ":Blue",
-                    ((TripleOutputSignalHead) curS).getBlue().getBean(),
-                    ev2Border.getTitle());
-            if (t2 == null) {
-                return;
-            } else {
-                ((TripleOutputSignalHead) curS).setBlue(nbhm.getNamedBeanHandle(eto2.getDisplayName(), t2));
-            }
-
-            Turnout t3 = updateTurnoutFromPanel(eto3,
-                    "SignalHead:" + eSysNameLabel.getText() + ":Red",
-                    ((TripleOutputSignalHead) curS).getRed().getBean(),
-                    ev3Border.getTitle());
-            if (t3 == null) {
-                return;
-            } else {
-                ((TripleOutputSignalHead) curS).setRed(nbhm.getNamedBeanHandle(eto3.getDisplayName(), t3));
-            }
-        } else if (className.equals("jmri.implementation.DoubleTurnoutSignalHead")) {
-            Turnout t1 = updateTurnoutFromPanel(eto1,
-                    "SignalHead:" + eSysNameLabel.getText() + ":Green",
-                    ((DoubleTurnoutSignalHead) curS).getGreen().getBean(),
-                    ev1Border.getTitle());
-            Turnout t2 = updateTurnoutFromPanel(eto2,
-                    "SignalHead:" + eSysNameLabel.getText() + ":Red",
-                    ((DoubleTurnoutSignalHead) curS).getRed().getBean(),
-                    ev2Border.getTitle());
-            if (t1 == null) {
-                return;
-            } else {
-                ((DoubleTurnoutSignalHead) curS).setGreen(nbhm.getNamedBeanHandle(eto1.getDisplayName(), t1));
-            }
-            if (t2 == null) {
-                return;
-            } else {
-                ((DoubleTurnoutSignalHead) curS).setRed(nbhm.getNamedBeanHandle(eto2.getDisplayName(), t2));
-            }
-        } else if (className.equals("jmri.implementation.SingleTurnoutSignalHead")) {
-            Turnout t1 = updateTurnoutFromPanel(eto1,
-                    "SignalHead:" + eSysNameLabel.getText() + ":" + (String) es2aBox.getSelectedItem() + ":" + (String) es3aBox.getSelectedItem(),
-                    ((SingleTurnoutSignalHead) curS).getOutput().getBean(),
-                    ev1Border.getTitle());
-            if (t1 == null) {
-                noTurnoutMessage(ev1Border.getTitle(), eto1.getDisplayName());
-                return;
-            }
-            ((SingleTurnoutSignalHead) curS).setOutput(nbhm.getNamedBeanHandle(eto1.getDisplayName(), t1));
-            ((SingleTurnoutSignalHead) curS).setOnAppearance(signalStateFromBox(es2aBox));
-            ((SingleTurnoutSignalHead) curS).setOffAppearance(signalStateFromBox(es3aBox));
-        } else if (className.equals("jmri.implementation.LsDecSignalHead")) {
-            Turnout t1 = updateTurnoutFromPanel(eto1,
-                    "SignalHead:" + eSysNameLabel.getText() + ":Green",
-                    ((jmri.implementation.LsDecSignalHead) curS).getGreen().getBean(),
-                    ev1Border.getTitle());
-            if (t1 == null) {
-                return;
-            } else {
-                ((jmri.implementation.LsDecSignalHead) curS).setGreen(nbhm.getNamedBeanHandle(eto1.getDisplayName(), t1));
-                ((jmri.implementation.LsDecSignalHead) curS).setGreenState(turnoutStateFromBox(es1Box));
-            }
-
-            Turnout t2 = updateTurnoutFromPanel(eto2,
-                    "SignalHead:" + eSysNameLabel.getText() + ":Yellow",
-                    ((jmri.implementation.LsDecSignalHead) curS).getYellow().getBean(),
-                    ev2Border.getTitle());
-            if (t2 == null) {
-                return;
-            } else {
-                ((jmri.implementation.LsDecSignalHead) curS).setYellow(nbhm.getNamedBeanHandle(eto2.getDisplayName(), t2));
-                ((jmri.implementation.LsDecSignalHead) curS).setYellowState(turnoutStateFromBox(es2Box));
-            }
-
-            Turnout t3 = updateTurnoutFromPanel(eto3,
-                    "SignalHead:" + eSysNameLabel.getText() + ":Red",
-                    ((jmri.implementation.LsDecSignalHead) curS).getRed().getBean(),
-                    ev3Border.getTitle());
-            if (t3 == null) {
-                return;
-            } else {
-                ((jmri.implementation.LsDecSignalHead) curS).setRed(nbhm.getNamedBeanHandle(eto3.getDisplayName(), t3));
-                ((jmri.implementation.LsDecSignalHead) curS).setRedState(turnoutStateFromBox(es3Box));
-            }
-
-            Turnout t4 = updateTurnoutFromPanel(eto4,
-                    "SignalHead:" + eSysNameLabel.getText() + ":FlashGreen",
-                    ((jmri.implementation.LsDecSignalHead) curS).getFlashGreen().getBean(),
-                    ev4Border.getTitle());
-            if (t4 == null) {
-                return;
-            } else {
-                ((jmri.implementation.LsDecSignalHead) curS).setFlashGreen(nbhm.getNamedBeanHandle(eto4.getDisplayName(), t4));
-                ((jmri.implementation.LsDecSignalHead) curS).setFlashGreenState(turnoutStateFromBox(es4Box));
-            }
-
-            Turnout t5 = updateTurnoutFromPanel(eto5,
-                    "SignalHead:" + eSysNameLabel.getText() + ":FlashYellow",
-                    ((jmri.implementation.LsDecSignalHead) curS).getFlashYellow().getBean(),
-                    ev5Border.getTitle());
-            if (t5 == null) {
-                return;
-            } else {
-                ((jmri.implementation.LsDecSignalHead) curS).setFlashYellow(nbhm.getNamedBeanHandle(eto5.getDisplayName(), t5));
-                ((jmri.implementation.LsDecSignalHead) curS).setFlashYellowState(turnoutStateFromBox(es5Box));
-            }
-
-            Turnout t6 = updateTurnoutFromPanel(eto6,
-                    "SignalHead:" + eSysNameLabel.getText() + ":FlashRed",
-                    ((jmri.implementation.LsDecSignalHead) curS).getFlashRed().getBean(),
-                    ev6Border.getTitle());
-            if (t6 == null) {
-                return;
-            } else {
-                ((jmri.implementation.LsDecSignalHead) curS).setFlashRed(nbhm.getNamedBeanHandle(eto6.getDisplayName(), t6));
-                ((jmri.implementation.LsDecSignalHead) curS).setFlashRedState(turnoutStateFromBox(es6Box));
-            }
-
-            Turnout t7 = updateTurnoutFromPanel(eto7,
-                    "SignalHead:" + eSysNameLabel.getText() + ":Dark",
-                    ((jmri.implementation.LsDecSignalHead) curS).getDark().getBean(),
-                    ev7Border.getTitle());
-            if (t7 == null) {
-                return;
-            } else {
-                ((jmri.implementation.LsDecSignalHead) curS).setDark(nbhm.getNamedBeanHandle(eto7.getDisplayName(), t7));
-                ((jmri.implementation.LsDecSignalHead) curS).setDarkState(turnoutStateFromBox(es7Box));
-            }
-        } else if (className.equals("jmri.implementation.SE8cSignalHead")) {
-            handleSE8cUpdatePressed();
-        } else if (className.equals("jmri.jmrix.grapevine.SerialSignalHead")) {
-            /*String nam = eUserName.getText();
-             // check if user name changed
-             if (!((curS.getUserName()!=null) && (curS.getUserName().equals(nam)))) {
-             if(checkUserName(nam))
-             curS.setUserName(nam);
-             }*/
-        } else if (className.equals("jmri.jmrix.acela.AcelaSignalHead")) {
-            /*String nam = eUserName.getText();
-             // check if user name changed
-             if (!((curS.getUserName()!=null) && (curS.getUserName().equals(nam)))) {
-             if(checkUserName(nam))
-             curS.setUserName(nam);
-
-             }*/
-            AcelaNode tNode = AcelaAddress.getNodeFromSystemName(curS.getSystemName(), jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
-            if (tNode == null) {
-                // node does not exist, ignore call
-                log.error("Can't find new Acela Signal with name '{}'", curS.getSystemName());
-                return;
-            }
-            int headnumber = Integer.parseInt(curS.getSystemName().substring(2, curS.getSystemName().length()));
-            tNode.setOutputSignalHeadTypeString(headnumber, estBox.getSelectedItem().toString());
-//          setSignalheadTypeInBox(estBox, tNode.getOutputSignalHeadType(headnumber), signalheadTypeValues);
-//          ((jmri.AcelaSignalHead)curS).setDarkState(signalheadTypeFromBox(estBox));
-        } else if (className.equals("jmri.implementation.MergSD2SignalHead")) {
-            switch (ukSignalAspectsFromBox(emsaBox)) {
-                case 4:
-                    Turnout t3 = updateTurnoutFromPanel(eto5,
-                            (Bundle.getMessage("OutputComment", Bundle.getMessage("BeanNameSignalHead"), eSysNameLabel.getText(), Bundle.getMessage("InputNum", "3"))),
-                            ((jmri.implementation.MergSD2SignalHead) curS).getInput3().getBean(),
-                            ev5Border.getTitle());
-                    if (t3 == null) {
-                        return;
-                    } else {
-                        ((jmri.implementation.MergSD2SignalHead) curS).setInput3(nbhm.getNamedBeanHandle(eto5.getDisplayName(), t3));
-                    }
-                // fall through
-                case 3:
-                    Turnout t2 = updateTurnoutFromPanel(eto4,
-                            (Bundle.getMessage("OutputComment", Bundle.getMessage("BeanNameSignalHead"), eSysNameLabel.getText(), Bundle.getMessage("InputNum", "2"))),
-                            ((jmri.implementation.MergSD2SignalHead) curS).getInput2().getBean(),
-                            ev4Border.getTitle());
-                    if (t2 == null) {
-                        return;
-                    } else {
-                        ((jmri.implementation.MergSD2SignalHead) curS).setInput2(nbhm.getNamedBeanHandle(eto4.getDisplayName(), t2));
-                    }
-                // fall through
-                case 2:
-                    Turnout t1 = updateTurnoutFromPanel(eto3,
-                            (Bundle.getMessage("OutputComment", Bundle.getMessage("BeanNameSignalHead"), eSysNameLabel.getText(), Bundle.getMessage("InputNum", "1"))),
-                            ((jmri.implementation.MergSD2SignalHead) curS).getInput1().getBean(),
-                            ev3Border.getTitle());
-                    if (t1 == null) {
-                        return;
-                    } else {
-                        ((jmri.implementation.MergSD2SignalHead) curS).setInput1(nbhm.getNamedBeanHandle(eto3.getDisplayName(), t1));
-                    }
-                    ((jmri.implementation.MergSD2SignalHead) curS).setAspects(ukSignalAspectsFromBox(emsaBox));
-                    if (ukSignalTypeFromBox(emstBox).equals("Distant")) {
-                        ((jmri.implementation.MergSD2SignalHead) curS).setHome(false);
-                    } else {
-                        ((jmri.implementation.MergSD2SignalHead) curS).setHome(true);
-                    }
-                    break;
-                default:
-                    break;
-            }
-            //Need to add the code here for update!
-        } else if (className.equals("jmri.implementation.DccSignalHead")) {
-            for (int i = 0; i < dccAspectEdt.length; i++) {
-                int number = (Integer) dccAspectEdt[i].getValue();
-                try {
-                    ((DccSignalHead) curS).setOutputForAppearance(((DccSignalHead) curS).getValidStates()[i], number);
-                } catch (Exception ex) {
-                    //in theory JSpinner should already have caught a number conversion error.
-                    log.error(ex.toString());
+                if (t1 == null) {
+                    return;
+                } else {
+                    ((QuadOutputSignalHead) curS).setGreen(nbhm.getNamedBeanHandle(eto1.getDisplayName(), t1));
                 }
+
+                Turnout t2 = updateTurnoutFromPanel(eto2, "SignalHead:" + eSysNameLabel.getText() + ":Yellow", ((QuadOutputSignalHead) curS).getYellow().getBean(), ev2Border.getTitle());
+                if (t2 == null) {
+                    return;
+                } else {
+                    ((QuadOutputSignalHead) curS).setYellow(nbhm.getNamedBeanHandle(eto2.getDisplayName(), t2));
+                }
+
+                Turnout t3 = updateTurnoutFromPanel(eto3, "SignalHead:" + eSysNameLabel.getText() + ":Red", ((QuadOutputSignalHead) curS).getRed().getBean(), ev3Border.getTitle());
+                if (t3 == null) {
+                    return;
+                } else {
+                    ((QuadOutputSignalHead) curS).setRed(nbhm.getNamedBeanHandle(eto3.getDisplayName(), t3));
+                }
+
+                Turnout t4 = updateTurnoutFromPanel(eto4, "SignalHead:" + eSysNameLabel.getText() + ":Lunar", ((QuadOutputSignalHead) curS).getLunar().getBean(), ev4Border.getTitle());
+                if (t4 == null) {
+                    return;
+                } else {
+                    ((QuadOutputSignalHead) curS).setLunar(nbhm.getNamedBeanHandle(eto4.getDisplayName(), t4));
+                }
+                break;
             }
-            ((DccSignalHead) curS).useAddressOffSet(dccOffSetAddressEdt.isSelected());
-            ((DccSignalHead) curS).setDccSignalHeadPacketSendCount(((int) dccPacketSendCountSpinner.getValue()));
-        } else {
-            log.error("Internal error - cannot update signal of type {}", className);
+            case "jmri.implementation.TripleTurnoutSignalHead": {
+                Turnout t1 = updateTurnoutFromPanel(eto1, "SignalHead:" + eSysNameLabel.getText() + ":Green", ((TripleTurnoutSignalHead) curS).getGreen().getBean(), ev1Border.getTitle());
+
+                if (t1 == null) {
+                    return;
+                } else {
+                    ((TripleTurnoutSignalHead) curS).setGreen(nbhm.getNamedBeanHandle(eto1.getDisplayName(), t1));
+                }
+
+                Turnout t2 = updateTurnoutFromPanel(eto2, "SignalHead:" + eSysNameLabel.getText() + ":Yellow", ((TripleTurnoutSignalHead) curS).getYellow().getBean(), ev2Border.getTitle());
+                if (t2 == null) {
+                    return;
+                } else {
+                    ((TripleTurnoutSignalHead) curS).setYellow(nbhm.getNamedBeanHandle(eto2.getDisplayName(), t2));
+                }
+
+                Turnout t3 = updateTurnoutFromPanel(eto3, "SignalHead:" + eSysNameLabel.getText() + ":Red", ((TripleTurnoutSignalHead) curS).getRed().getBean(), ev3Border.getTitle());
+                if (t3 == null) {
+                    return;
+                } else {
+                    ((TripleTurnoutSignalHead) curS).setRed(nbhm.getNamedBeanHandle(eto3.getDisplayName(), t3));
+                }
+                break;
+            }
+            case "jmri.implementation.TripleOutputSignalHead": {
+                Turnout t1 = updateTurnoutFromPanel(eto1, "SignalHead:" + eSysNameLabel.getText() + ":Green", ((TripleOutputSignalHead) curS).getGreen().getBean(), ev1Border.getTitle());
+
+                if (t1 == null) {
+                    return;
+                } else {
+                    ((TripleOutputSignalHead) curS).setGreen(nbhm.getNamedBeanHandle(eto1.getDisplayName(), t1));
+                }
+
+                Turnout t2 = updateTurnoutFromPanel(eto2, "SignalHead:" + eSysNameLabel.getText() + ":Blue", ((TripleOutputSignalHead) curS).getBlue().getBean(), ev2Border.getTitle());
+                if (t2 == null) {
+                    return;
+                } else {
+                    ((TripleOutputSignalHead) curS).setBlue(nbhm.getNamedBeanHandle(eto2.getDisplayName(), t2));
+                }
+
+                Turnout t3 = updateTurnoutFromPanel(eto3, "SignalHead:" + eSysNameLabel.getText() + ":Red", ((TripleOutputSignalHead) curS).getRed().getBean(), ev3Border.getTitle());
+                if (t3 == null) {
+                    return;
+                } else {
+                    ((TripleOutputSignalHead) curS).setRed(nbhm.getNamedBeanHandle(eto3.getDisplayName(), t3));
+                }
+                break;
+            }
+            case "jmri.implementation.DoubleTurnoutSignalHead": {
+                Turnout t1 = updateTurnoutFromPanel(eto1, "SignalHead:" + eSysNameLabel.getText() + ":Green", ((DoubleTurnoutSignalHead) curS).getGreen().getBean(), ev1Border.getTitle());
+                Turnout t2 = updateTurnoutFromPanel(eto2, "SignalHead:" + eSysNameLabel.getText() + ":Red", ((DoubleTurnoutSignalHead) curS).getRed().getBean(), ev2Border.getTitle());
+                if (t1 == null) {
+                    return;
+                } else {
+                    ((DoubleTurnoutSignalHead) curS).setGreen(nbhm.getNamedBeanHandle(eto1.getDisplayName(), t1));
+                }
+                if (t2 == null) {
+                    return;
+                } else {
+                    ((DoubleTurnoutSignalHead) curS).setRed(nbhm.getNamedBeanHandle(eto2.getDisplayName(), t2));
+                }
+                break;
+            }
+            case "jmri.implementation.SingleTurnoutSignalHead": {
+                Turnout t1 = updateTurnoutFromPanel(eto1, "SignalHead:" + eSysNameLabel.getText() + ":" + es2aBox.getSelectedItem() + ":" + es3aBox.getSelectedItem(), ((SingleTurnoutSignalHead) curS).getOutput().getBean(), ev1Border.getTitle());
+                if (t1 == null) {
+                    noTurnoutMessage(ev1Border.getTitle(), eto1.getDisplayName());
+                    return;
+                }
+                ((SingleTurnoutSignalHead) curS).setOutput(nbhm.getNamedBeanHandle(eto1.getDisplayName(), t1));
+                ((SingleTurnoutSignalHead) curS).setOnAppearance(signalStateFromBox(es2aBox));
+                ((SingleTurnoutSignalHead) curS).setOffAppearance(signalStateFromBox(es3aBox));
+                break;
+            }
+            case "jmri.implementation.LsDecSignalHead": {
+                Turnout t1 = updateTurnoutFromPanel(eto1, "SignalHead:" + eSysNameLabel.getText() + ":Green", ((jmri.implementation.LsDecSignalHead) curS).getGreen().getBean(), ev1Border.getTitle());
+                if (t1 == null) {
+                    return;
+                } else {
+                    ((jmri.implementation.LsDecSignalHead) curS).setGreen(nbhm.getNamedBeanHandle(eto1.getDisplayName(), t1));
+                    ((jmri.implementation.LsDecSignalHead) curS).setGreenState(turnoutStateFromBox(es1Box));
+                }
+
+                Turnout t2 = updateTurnoutFromPanel(eto2, "SignalHead:" + eSysNameLabel.getText() + ":Yellow", ((jmri.implementation.LsDecSignalHead) curS).getYellow().getBean(), ev2Border.getTitle());
+                if (t2 == null) {
+                    return;
+                } else {
+                    ((jmri.implementation.LsDecSignalHead) curS).setYellow(nbhm.getNamedBeanHandle(eto2.getDisplayName(), t2));
+                    ((jmri.implementation.LsDecSignalHead) curS).setYellowState(turnoutStateFromBox(es2Box));
+                }
+
+                Turnout t3 = updateTurnoutFromPanel(eto3, "SignalHead:" + eSysNameLabel.getText() + ":Red", ((jmri.implementation.LsDecSignalHead) curS).getRed().getBean(), ev3Border.getTitle());
+                if (t3 == null) {
+                    return;
+                } else {
+                    ((jmri.implementation.LsDecSignalHead) curS).setRed(nbhm.getNamedBeanHandle(eto3.getDisplayName(), t3));
+                    ((jmri.implementation.LsDecSignalHead) curS).setRedState(turnoutStateFromBox(es3Box));
+                }
+
+                Turnout t4 = updateTurnoutFromPanel(eto4, "SignalHead:" + eSysNameLabel.getText() + ":FlashGreen", ((jmri.implementation.LsDecSignalHead) curS).getFlashGreen().getBean(), ev4Border.getTitle());
+                if (t4 == null) {
+                    return;
+                } else {
+                    ((jmri.implementation.LsDecSignalHead) curS).setFlashGreen(nbhm.getNamedBeanHandle(eto4.getDisplayName(), t4));
+                    ((jmri.implementation.LsDecSignalHead) curS).setFlashGreenState(turnoutStateFromBox(es4Box));
+                }
+
+                Turnout t5 = updateTurnoutFromPanel(eto5, "SignalHead:" + eSysNameLabel.getText() + ":FlashYellow", ((jmri.implementation.LsDecSignalHead) curS).getFlashYellow().getBean(), ev5Border.getTitle());
+                if (t5 == null) {
+                    return;
+                } else {
+                    ((jmri.implementation.LsDecSignalHead) curS).setFlashYellow(nbhm.getNamedBeanHandle(eto5.getDisplayName(), t5));
+                    ((jmri.implementation.LsDecSignalHead) curS).setFlashYellowState(turnoutStateFromBox(es5Box));
+                }
+
+                Turnout t6 = updateTurnoutFromPanel(eto6, "SignalHead:" + eSysNameLabel.getText() + ":FlashRed", ((jmri.implementation.LsDecSignalHead) curS).getFlashRed().getBean(), ev6Border.getTitle());
+                if (t6 == null) {
+                    return;
+                } else {
+                    ((jmri.implementation.LsDecSignalHead) curS).setFlashRed(nbhm.getNamedBeanHandle(eto6.getDisplayName(), t6));
+                    ((jmri.implementation.LsDecSignalHead) curS).setFlashRedState(turnoutStateFromBox(es6Box));
+                }
+
+                Turnout t7 = updateTurnoutFromPanel(eto7, "SignalHead:" + eSysNameLabel.getText() + ":Dark", ((jmri.implementation.LsDecSignalHead) curS).getDark().getBean(), ev7Border.getTitle());
+                if (t7 == null) {
+                    return;
+                } else {
+                    ((jmri.implementation.LsDecSignalHead) curS).setDark(nbhm.getNamedBeanHandle(eto7.getDisplayName(), t7));
+                    ((jmri.implementation.LsDecSignalHead) curS).setDarkState(turnoutStateFromBox(es7Box));
+                }
+                break;
+            }
+            case "jmri.implementation.SE8cSignalHead":
+                handleSE8cUpdatePressed();
+                break;
+            case "jmri.jmrix.grapevine.SerialSignalHead":
+            /*String nam = eUserName.getText();
+             // check if user name changed
+             if (!((curS.getUserName()!=null) && (curS.getUserName().equals(nam)))) {
+             if(checkUserName(nam))
+             curS.setUserName(nam);
+             }*/
+                break;
+            case "jmri.jmrix.acela.AcelaSignalHead":
+            /*String nam = eUserName.getText();
+             // check if user name changed
+             if (!((curS.getUserName()!=null) && (curS.getUserName().equals(nam)))) {
+             if(checkUserName(nam))
+             curS.setUserName(nam);
+
+             }*/
+                AcelaNode tNode = AcelaAddress.getNodeFromSystemName(curS.getSystemName(), InstanceManager.getDefault(AcelaSystemConnectionMemo.class));
+                if (tNode == null) {
+                    // node does not exist, ignore call
+                    log.error("Can't find new Acela Signal with name '{}'", curS.getSystemName());
+                    return;
+                }
+                int headnumber = Integer.parseInt(curS.getSystemName().substring(2));
+                tNode.setOutputSignalHeadTypeString(headnumber, Objects.requireNonNull(estBox.getSelectedItem()).toString());
+                //          setSignalheadTypeInBox(estBox, tNode.getOutputSignalHeadType(headnumber), signalheadTypeValues);
+                //          ((jmri.AcelaSignalHead)curS).setDarkState(signalheadTypeFromBox(estBox));
+                break;
+            case "jmri.implementation.MergSD2SignalHead":
+                switch (ukSignalAspectsFromBox(emsaBox)) {
+                    case 4:
+                        Turnout t3 = updateTurnoutFromPanel(eto5, (Bundle.getMessage("OutputComment", Bundle.getMessage("BeanNameSignalHead"), eSysNameLabel.getText(), Bundle.getMessage("InputNum", "3"))), ((jmri.implementation.MergSD2SignalHead) curS).getInput3().getBean(), ev5Border.getTitle());
+                        if (t3 == null) {
+                            return;
+                        } else {
+                            ((jmri.implementation.MergSD2SignalHead) curS).setInput3(nbhm.getNamedBeanHandle(eto5.getDisplayName(), t3));
+                        }
+                        // fall through
+                    case 3:
+                        Turnout t2 = updateTurnoutFromPanel(eto4, (Bundle.getMessage("OutputComment", Bundle.getMessage("BeanNameSignalHead"), eSysNameLabel.getText(), Bundle.getMessage("InputNum", "2"))), ((jmri.implementation.MergSD2SignalHead) curS).getInput2().getBean(), ev4Border.getTitle());
+                        if (t2 == null) {
+                            return;
+                        } else {
+                            ((jmri.implementation.MergSD2SignalHead) curS).setInput2(nbhm.getNamedBeanHandle(eto4.getDisplayName(), t2));
+                        }
+                        // fall through
+                    case 2:
+                        Turnout t1 = updateTurnoutFromPanel(eto3, (Bundle.getMessage("OutputComment", Bundle.getMessage("BeanNameSignalHead"), eSysNameLabel.getText(), Bundle.getMessage("InputNum", "1"))), ((jmri.implementation.MergSD2SignalHead) curS).getInput1().getBean(), ev3Border.getTitle());
+                        if (t1 == null) {
+                            return;
+                        } else {
+                            ((jmri.implementation.MergSD2SignalHead) curS).setInput1(nbhm.getNamedBeanHandle(eto3.getDisplayName(), t1));
+                        }
+                        ((jmri.implementation.MergSD2SignalHead) curS).setAspects(ukSignalAspectsFromBox(emsaBox));
+                        ((jmri.implementation.MergSD2SignalHead) curS).setHome(!ukSignalTypeFromBox(emstBox).equals("Distant"));
+                        break;
+                    default:
+                        break;
+                }
+                //Need to add the code here for update!
+                break;
+            case "jmri.implementation.DccSignalHead":
+                for (int i = 0; i < dccAspectEdt.length; i++) {
+                    int number = (Integer) dccAspectEdt[i].getValue();
+                    try {
+                        ((DccSignalHead) curS).setOutputForAppearance(curS.getValidStates()[i], number);
+                    } catch (Exception ex) {
+                        //in theory JSpinner should already have caught a number conversion error.
+                        log.error(ex.toString());
+                    }
+                }
+                ((DccSignalHead) curS).useAddressOffSet(dccOffSetAddressEdt.isSelected());
+                ((DccSignalHead) curS).setDccSignalHeadPacketSendCount(((int) dccPacketSendCountSpinner.getValue()));
+                break;
+            default:
+                log.error("Internal error - cannot update signal of type {}", className);
+                break;
         }
         // successful
         editFrame.setVisible(false);
@@ -2624,7 +2543,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             NamedBean nB = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(nam);
             if (nB != null) {
                 log.error("User name is not unique {}", nam);
-                String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + nam)});
+                String msg = Bundle.getMessage("WarningUserName", ("" + nam));
                 JOptionPane.showMessageDialog(editFrame, msg,
                         Bundle.getMessage("WarningTitle"),
                         JOptionPane.ERROR_MESSAGE);
@@ -2634,7 +2553,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             nB = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(nam);
             if (nB != null) {
                 log.error("User name is not unique {} It already exists as a System name", nam);
-                String msg = Bundle.getMessage("WarningUserNameAsSystem", new Object[]{("" + nam)});
+                String msg = Bundle.getMessage("WarningUserNameAsSystem", ("" + nam));
                 JOptionPane.showMessageDialog(editFrame, msg,
                         Bundle.getMessage("WarningTitle"),
                         JOptionPane.ERROR_MESSAGE);
@@ -2831,9 +2750,9 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
     }
 
     private JSpinner[] dccAspect;
-    private JCheckBox dccOffSetAddress = new JCheckBox(Bundle.getMessage("DccAccessoryAddressOffSet"));
-    private JLabel dccPacketSendCount = new JLabel(Bundle.getMessage("DCCMastPacketSendCount"));
-    private JSpinner dccPacketSendCountSpinner = new JSpinner();
+    private final JCheckBox dccOffSetAddress = new JCheckBox(Bundle.getMessage("DccAccessoryAddressOffSet"));
+    private final JLabel dccPacketSendCount = new JLabel(Bundle.getMessage("DCCMastPacketSendCount"));
+    private final JSpinner dccPacketSendCountSpinner = new JSpinner();
     private JPanel dccSignalPanel = new JPanel();
 
     public void dccSignalPanel() {
@@ -2857,7 +2776,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
     }
 
     private JSpinner[] dccAspectEdt;
-    private JCheckBox dccOffSetAddressEdt = new JCheckBox(Bundle.getMessage("DccAccessoryAddressOffSet"));
+    private final JCheckBox dccOffSetAddressEdt = new JCheckBox(Bundle.getMessage("DccAccessoryAddressOffSet"));
     private JPanel dccSignalPanelEdt = new JPanel();
 
     public void dccSignalPanelEdt() {

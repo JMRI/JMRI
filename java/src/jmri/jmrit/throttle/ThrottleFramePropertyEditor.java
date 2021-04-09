@@ -33,8 +33,6 @@ public class ThrottleFramePropertyEditor extends JDialog {
 
     private JList<String> titleType;
 
-    private JCheckBox borderOff;
-
     private String[] titleTextTypes = {"address", "text", "textAddress", "addressText", "rosterID"};
     private String[] titleTextTypeNames = {
         Bundle.getMessage("SelectTitleTypeADDRESS"),
@@ -109,16 +107,6 @@ public class ThrottleFramePropertyEditor extends JDialog {
         constraints.gridx++;
         propertyPanel.add(titleType, constraints);
 
-        // add a checkbox for borders off, but only if that's actually possible.
-        // this code uses details of internal UI code
-        if (((javax.swing.plaf.basic.BasicInternalFrameUI) frame.getCurrentThrottleFrame().getControlPanel().getUI()).getNorthPane() != null) {
-            borderOff = new JCheckBox(Bundle.getMessage("FrameBorderOffTitle"), false);
-            constraints.gridy++;
-            constraints.gridx = 0;
-            propertyPanel.add(new JLabel(Bundle.getMessage("FrameDecorationsTitle")), constraints);
-            constraints.gridx++;
-            propertyPanel.add(borderOff, constraints);
-        }
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 2, 4, 4));
@@ -155,15 +143,6 @@ public class ThrottleFramePropertyEditor extends JDialog {
         pack();
         titleField.setText(frame.getTitleText());
         titleField.selectAll();
-
-        if (((javax.swing.plaf.basic.BasicInternalFrameUI) frame.getCurrentThrottleFrame().getControlPanel().getUI()).getNorthPane() != null) {
-            Dimension bSize = ((javax.swing.plaf.basic.BasicInternalFrameUI) frame.getCurrentThrottleFrame().getControlPanel().getUI()).getNorthPane().getPreferredSize();
-            if (bSize.height == 0) {
-                borderOff.setSelected(true);
-            } else {
-                borderOff.setSelected(false);
-            }
-        }
     }
 
     /**
@@ -183,35 +162,9 @@ public class ThrottleFramePropertyEditor extends JDialog {
      */
     private void saveProperties() {
         if (isDataValid()) {
-            int bSize = Integer.parseInt(Bundle.getMessage("FrameSize"));
-            JInternalFrame myFrame;
             frame.setTitleText(titleField.getText());
             frame.setTitleTextType(titleTextTypes[titleType.getSelectedIndex()]);
             frame.getCurrentThrottleFrame().setFrameTitle();
-
-            if (((javax.swing.plaf.basic.BasicInternalFrameUI) frame.getCurrentThrottleFrame().getControlPanel().getUI()).getNorthPane() != null) {
-                if (borderOff.isSelected()) {
-                    bSize = 0;
-                }
-                myFrame = frame.getCurrentThrottleFrame().getControlPanel();
-                ((javax.swing.plaf.basic.BasicInternalFrameUI) myFrame.getUI()).getNorthPane().setPreferredSize(new Dimension(0, bSize));
-                if (myFrame.isVisible()) {
-                    myFrame.setVisible(false);
-                    myFrame.setVisible(true);
-                }
-                myFrame = frame.getCurrentThrottleFrame().getFunctionPanel();
-                ((javax.swing.plaf.basic.BasicInternalFrameUI) myFrame.getUI()).getNorthPane().setPreferredSize(new Dimension(0, bSize));
-                if (myFrame.isVisible()) {
-                    myFrame.setVisible(false);
-                    myFrame.setVisible(true);
-                }
-                myFrame = frame.getCurrentThrottleFrame().getAddressPanel();
-                ((javax.swing.plaf.basic.BasicInternalFrameUI) myFrame.getUI()).getNorthPane().setPreferredSize(new Dimension(0, bSize));
-                if (myFrame.isVisible()) {
-                    myFrame.setVisible(false);
-                    myFrame.setVisible(true);
-                }
-            }
             finishEdit();
         }
     }

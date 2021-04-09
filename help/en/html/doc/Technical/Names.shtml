@@ -208,7 +208,7 @@
 
         <li><strong>M</strong> Model railroad layout control buses, including
         <a href="../../hardware/openlcb/index.shtml">OpenLCB</a>
-        and <a href="../../hardware/can/cbus/index.shtml">CBUS&trade;</a>
+        and <a href="../../hardware/can/cbus/index.shtml">CBUS&reg;</a>
         <br><a href="../../hardware/mrc/index.shtml">Model Rectifier Corp (MRC)</a>
         <br><a href="../../hardware/marklin/index.shtml">Marklin CS2</a>
         </li>
@@ -327,6 +327,9 @@
         can. For example, the system specific part might be B for
         main layout power, e.g. LPB or S42 for subdistrict channel
         2 on card 4, e.g. LPS42.</li>
+
+        <li><strong>Q</strong> LogixNG - Logix Next Generation - a set of logic equations used
+		to control the layout. LogixNG system names start with IQ.</li>
 
         <li><strong>R</strong> Reporters - a general purpose mechanism for reporting
         complicated information from the layout, e.g. locomotive
@@ -1085,7 +1088,7 @@ SENSOR GROUP:my group:LS2
         and jmri.jmrix.cmri.serial.SerialTurnoutTest.
       
         <h2></h2>
-        <p>CBUS&trade; is a registered trade mark of Dr Michael Bolton</p>
+        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
         <p></p>
 
       <!--#include virtual="/Footer.shtml" -->

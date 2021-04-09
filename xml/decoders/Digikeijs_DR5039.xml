@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- Copyright (C) JMRI 2020 All rights reserved   -->
+<!-- LOCONETLNCVMODE requires 3 elements to address an LNCV module on LocoNet:
+1. Article Number (aka type/class ID) = decoder model productID (integer)
+2. Module Address (optional, see below)
+3. CV number
+For processing by JMRI LnOpsProgrammer, elements 1. and 3. are combined in the CV number e.g., "1.3".
+Uhlenbrock and Digikeijs/Digirails publish the Article number for each (new) device.
+The DigiBoost DR5033 has an Article number 5039, which was registered with Uhlenbrock.
+Older LNCV devices may not have their own address, or even no article. They can be programmed using
+Broadcast mode, but you have to be sure only one such device is powered, as they all would respond to
+programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
+
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
+    <version author="Egbert Broerse" version="1.0" lastUpdated="20201231"/>
+    <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
+
+    <decoder>
+        <family name="LN-CDE Adapter" mfg="Digikeijs" type="stationary">
+            <model model="DR5039" productID="5039" formFactor="Stationary" comment="LocoNet B to CDE (Booster) Adapter">
+              <versionCV />
+              <size length="102" width="86" height="20" units="mm" />
+            </model>
+        </family>
+
+        <programming direct="no" paged="no" register="no" ops="no">
+          <mode>LOCONETLNCVMODE</mode>
+        </programming>
+
+        <variables>
+            <variable CV="5039.0" item="Long Address" mask="VVVVVVVVVVVVVV" default="1" comment="Board address" >
+              <decVal min="0" max="9999"/>
+              <label xml:lang="it">Indirizzo Primario: </label>
+              <label xml:lang="fr">Adresse décodeur: </label>
+              <label xml:lang="de">Decoderadresse: </label>
+              <label xml:lang="nl">Decoderadres: </label>
+              <label>Decoder Address: </label>
+              <tooltip>Enter as decimal value (1-9999)</tooltip>
+            </variable>
+            <variable CV="5039.1" item="Decoder Version" readOnly="yes">
+              <decVal/>
+              <label xml:lang="it">Versione: </label>
+              <label xml:lang="fr">Version: </label>
+              <label xml:lang="de">Version: </label>
+              <label xml:lang="nl">Firmware-versie: </label>
+              <label>Firmware Version: </label>
+            </variable>
+
+            <variable CV="5039.3" item="Configuration" default="92">
+              <decVal/>
+              <label xml:lang="de">Gesamtwert LNCV3: </label>
+              <label xml:lang="nl">Gecombineerde waarde LNCV3: </label>
+              <label>Combined LNCV3 Value: </label>
+              <tooltip>Intended for verification only, set options above.</tooltip>
+            </variable>
+            <variable CV="5039.3" mask="XXXXXVXX" item="Send GPON" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Versendet GPON/GPOFF Bericht</label>
+              <label xml:lang="fr">Envoie des rapports GPON/ GPOFF</label>
+              <label xml:lang="nl">Stuur GPON/GPOFF bericht</label>
+              <label>Send GPON/GPOFF Message</label>
+              <tooltip>Send 'GPON/GPOFF' L.NET report when a short circuit is detected. Automatic short circuit restart is active.</tooltip>
+              <tooltip xml:lang="de">Booster versendet 'GPON/GPOFF' L.NET Berichte. Die Kontrolleinheit steuert, wann der Booster sich wieder einschaltet.</tooltip>
+              <tooltip xml:lang="fr">Le booster envoie des rapports L.NET 'GPON/ GPOFF'. L’unité centrale vérifie lorsque le booster se rallume.</tooltip>
+              <tooltip xml:lang="nl">Booster stuurt 'GPON/GPOFF' L.NET rapport naar Centrale. De centrale bepaalt wanneer het circuit weer wordt ingeschakeld.</tooltip>
+            </variable>
+            <variable CV="5039.3" mask="XXXVXXXX" item="Send Short" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Versendet Kurzschluss-bericht</label>
+              <label xml:lang="fr">Envoie un rapport á court-circuit</label>
+              <label xml:lang="nl">Stuur LN bericht bij kortsluiting</label>
+              <label>Send Short Detected LN-message</label>
+              <tooltip>Booster sends a special L.NET report if there is a short circuit, enabling the control unit to display which booster has a short circuit.</tooltip>
+              <tooltip xml:lang="de">Booster versendet bei Kurzschluss einen besonderen L.NET Bericht damit die Kontrolleinheit anzeigen kann welcher Booster einen Kurzschluss hatte.</tooltip>
+              <tooltip xml:lang="fr">Le booster envoie un rapport L.NET spécial s’il y a un court-circuit, ce qui permet à l’unité centrale de montrer quel booster a un court-circuit.</tooltip>
+            </variable>
+
+        </variables>
+    </decoder>
+
+    <pane>
+        <name>LNCV Configuration</name>
+        <name xml:lang="de">LNCV Konfiguration</name>
+        <name xml:lang="nl">LNCV Confuguratie</name>
+        <row>
+          <column>
+              <label>
+                <text>Before writing, open a Programming</text>
+                <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
+                <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
+              </label>
+              <label>
+                <text>session using the LocoNet LNCV Tool.</text>
+                <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
+                <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
+              </label>
+              <label>
+                <text> </text>
+              </label>
+
+              <label>
+                <text>LNCV3 Configuration</text>
+                <text xml:lang="nl">Instelling LNCV3</text>
+                <text xml:lang="de">LNCV3 Konfiguration</text>
+                <text xml:lang="fr">Configuration LNCV3</text>
+              </label>
+              <separator/>
+                <display item="Send GPON" format="checkbox"/>
+                <display item="Send Short" format="checkbox"/>
+                <display item="Configuration"/>
+            </column>
+        </row>
+    </pane>
+
+</decoder-config>

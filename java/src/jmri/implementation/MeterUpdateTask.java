@@ -15,16 +15,26 @@ public abstract class MeterUpdateTask {
     Map<Meter, Boolean> meters = new HashMap<>();
     boolean _enabled = false;
     private UpdateTask _intervalTask = null;
-    private final int _sleepInterval;
+    private int _initialInterval; //in ms
+    private int _sleepInterval;   //in ms
     
+    /* default values for both sleepIntervals */
     public MeterUpdateTask() {
-       _sleepInterval = 10000;
+        _sleepInterval = 10000;
+        _initialInterval = 10000;
     }
     
+    /* if only one interval passed, set both to same */
     public MeterUpdateTask(int interval) {
-       _sleepInterval = interval;
-    }
-    
+        _initialInterval = interval;
+        _sleepInterval = interval;
+     }
+     
+    public MeterUpdateTask(int initialInterval, int sleepInterval) {
+        _initialInterval = initialInterval;
+        _sleepInterval = sleepInterval;
+     }
+     
     public void addMeter(Meter m) {
         meters.put(m, false);
     }
@@ -33,9 +43,11 @@ public abstract class MeterUpdateTask {
         meters.remove(m);
     }
     
-    protected void enable() {
+    public void enable() {
         if(_intervalTask != null) {
             _intervalTask.enable();
+        } else {
+            log.debug("_intervalTask is null, enable() ignored");
         }
     }
     
@@ -84,13 +96,14 @@ public abstract class MeterUpdateTask {
            _intervalTask = null;
         }
         if(_sleepInterval < 0){
+           log.debug("_sleepInterval {} less than zero, initTimer() ignored");           
            return; // don't start or restart the timer.
         }
         _intervalTask = new UpdateTask();
         // At some point this will be dynamic intervals...
-        log.debug("Starting Meter Timer");
+        log.debug("Starting Meter Timer for {}ms, {}ms", _initialInterval, _sleepInterval);
         jmri.util.TimerUtil.scheduleAtFixedRate(_intervalTask,
-                _sleepInterval, _sleepInterval);
+                _initialInterval, _sleepInterval);
     }
     
     public abstract void requestUpdateFromLayout();
@@ -129,8 +142,10 @@ public abstract class MeterUpdateTask {
         @Override
         public void run() {
             if (_isEnabled) {
-                log.debug("Timer Pop");
+                log.debug("UpdateTask requesting update from layout");
                 requestUpdateFromLayout();
+            } else { 
+                log.debug("UpdateTask not enabled, run() ignored");
             }
         }
     }

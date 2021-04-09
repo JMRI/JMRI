@@ -40,7 +40,7 @@ public class DecoderIndexFileTest {
         // check results
         Assert.assertEquals("Digitrax ID from name ", "129", di.mfgIdFromName("Digitrax"));
         Assert.assertEquals("NMRA ID from name ", "999", di.mfgIdFromName("NMRA"));
-        Assert.assertEquals("Digitrax name from id ", "Digitrax", di.mfgNameFromId("129"));
+        Assert.assertEquals("Digitrax name from id ", "Digitrax", di.mfgNameFromID("129"));
     }
 
     @Test

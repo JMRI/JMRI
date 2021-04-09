@@ -46,27 +46,69 @@ mergeable: # see https://github.com/mergeability/mergeable
             Thanks for the PR. Please consider adding a release note in the help/en/releasenotes/current-draft-note.shtml file.
       - do: checks
         status: 'success'
-  - when: schedule.repository
+  - when: pull_request.opened
+    name: 'Add label if any .properties file modified'
+    validate:
+      - do: changeset
+        must_exclude:
+          regex: '\.properties$'
+    pass:
+      - do: checks
+        status: 'success'
+    fail:
+      - do: comment
+        payload:
+          body: > 
+            Thanks for the PR. It includes changes to properties files, so the 'Needs L10N' label has been added"
+      - do: labels
+        labels: [ 'Needs L10N' ]
+        mode: 'add'
+      - do: checks
+        status: 'success'
+  - when: pull_request.opened
+    name: 'Add label for documentation changes'
+    validate:
+      - do: changeset
+        must_include:
+          regex: '^help/en/((?!releasenotes).)*$'  # Require at least one help page not in releasenotes
+    pass:
+      - do: comment
+        payload:
+          body: > 
+            This PR includes files in the help hierarchy so the 'Documentation' label has been added.  Other labels may also be applied."
+      - do: labels
+        labels: [ 'Documentation' ]
+        mode: 'add'
+      - do: checks
+        status: 'success'        
+    fail:
+      - do: checks
+        status: 'success'
+  - when: pull_request.*, pull_request_review.*
     name: 'Allow merge after one day'
     validate:
-      - do: stale
-        days: 1
-        type: pull_request
+      - do: age
+        created_at:
+          days: 1
+          message: 'PR needs to be at least 1 day old in order to merge'
     pass:
-      - do: comment  # No initial event, can't actually block merge, so for now we're adding a comment.
-        payload:
-          body: This is one day old, and can now be merged if CI and reviews allow.
       - do: checks
         status: 'success'
         payload:
           title: 'PR old enough'
-          summary: "PR over one day old, can be merged."
+          summary: 'PR over one day old, can be merged.'
+      - do: labels
+        labels: [ 'New PR' ]
+        mode: 'delete'
     fail:
       - do: checks
-        status: 'fail'
+        status: 'failure'
         payload:
           title: 'PR too young'
-          summary: "Waiting for the PR to be one day old."
+          summary: 'Waiting for the PR to be one day old.'
+      - do: labels
+        labels: [ 'New PR' ]
+        mode: 'add'
   - when: pull_request.*, pull_request_review.*
     name: 'Approved after last commit, no changes requested'
     validate:
@@ -80,4 +122,3 @@ mergeable: # see https://github.com/mergeability/mergeable
         #limit:
         #  teams: ['org/team_slug'] # when the option is present, only the approvals from the team members will count
         #  owners: true # Optional boolean. When true, the file .github/CODEOWNER is read and only owners approval will count
-

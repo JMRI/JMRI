@@ -127,6 +127,8 @@ public class PortalEditFrame extends JmriJFrame {
 
         main.add(p);
         frame.getContentPane().add(main);
+        frame.setEscapeKeyClosesWindow(true);
+        frame.getRootPane().setDefaultButton(ok);
     }
 
     /**

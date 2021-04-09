@@ -169,7 +169,7 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
         Assert.assertNotNull("hwAddressTextField", hwAddressField);
 
         // set to "1"
-        new JTextFieldOperator(hwAddressField).enterText("1");
+        new JTextFieldOperator(hwAddressField).typeText("1");
 
         //and press create
         JemmyUtil.pressButton(jf, Bundle.getMessage("ButtonCreate"));

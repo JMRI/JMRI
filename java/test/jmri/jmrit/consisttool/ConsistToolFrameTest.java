@@ -42,7 +42,7 @@ public class ConsistToolFrameTest {
     public void testCtorWithCSpossible() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // overwrite the default consist manager set in setUp for this test
-        // so that we can check initilization with CSConsists possible.
+        // so that we can check initialization with CSConsists possible.
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager() {
             @Override
             public boolean isCommandStationConsistPossible() {
@@ -155,12 +155,15 @@ public class ConsistToolFrameTest {
         Assert.assertEquals("Throttle has right consist address",
                 new DccLocoAddress(1, false),
                 to.getConsistAddressValue());
+        
         to.pushReleaseButton();
+        to.getQueueTool().waitEmpty();  // pause for Throttle to release
+        
         to.requestClose();
-
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+        to.getQueueTool().waitEmpty();  // pause for frame to close
+        
         cs.requestClose();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+        cs.getQueueTool().waitEmpty();  // pause for frame to close
     }
 
     @Test

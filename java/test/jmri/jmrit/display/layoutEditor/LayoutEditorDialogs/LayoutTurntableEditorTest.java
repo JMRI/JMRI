@@ -27,8 +27,8 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
 
         new LayoutTurntableEditor(null);
     }
- 
- 
+
+
      @Test
     public void testEditTurntableDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -122,7 +122,7 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
         JUnitUtil.waitFor(() -> {
             return !(badRayAngleModalDialogOperatorThread.isAlive());
         }, "badRayAngle finished");
-        
+
         // Put a good value back in
         jtxt = new JTextFieldOperator(jFrameOperator, 3);
         jtxt.clickMouse();
@@ -130,7 +130,7 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
-        
+
         jmri.util.JUnitAppender.assertErrorMessage("provideLayoutBlock: no name given and not assigning auto block names");
     }
 
@@ -160,8 +160,7 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
-        
-        jmri.util.JUnitAppender.assertErrorMessage("provideLayoutBlock: no name given and not assigning auto block names");
+
     }
 
     @Test
@@ -212,8 +211,7 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel")).doClick();
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
-        
-        jmri.util.JUnitAppender.assertErrorMessage("provideLayoutBlock: no name given and not assigning auto block names");
+
     }
 
     private LayoutEditor layoutEditor = null;
@@ -259,8 +257,9 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
 
         JUnitUtil.resetWindows(false, false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         super.tearDown();
     }
-   
+
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurntableEditorTest.class);
 }

@@ -127,7 +127,7 @@ public class OptionsMenu extends JMenu {
     JCheckBox trustKnownTurnoutsCheckBox = new JCheckBox(Bundle.getMessage("trustKnownTurnouts"));
     JComboBox<String> stoppingSpeedBox = new JComboBox<>();
 
-    String[] signalTypes = {Bundle.getMessage("SignalType1"), Bundle.getMessage("SignalType2")};
+    String[] signalTypes = {Bundle.getMessage("SignalType1"), Bundle.getMessage("SignalType2"), Bundle.getMessage("SignalType3")};
 
     private void optionWindowRequested(ActionEvent e) {
         if (optionsFrame == null) {

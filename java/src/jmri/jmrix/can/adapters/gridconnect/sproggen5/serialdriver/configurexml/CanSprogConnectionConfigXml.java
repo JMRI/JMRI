@@ -17,10 +17,13 @@ import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
  *
+ * Deprecated in 4.23 - not going ahead with this hardware
+ * 
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Andrew Crosland 2008
  * @author Andrew Crosland 2019
  */
+@Deprecated
 public class CanSprogConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public CanSprogConnectionConfigXml() {

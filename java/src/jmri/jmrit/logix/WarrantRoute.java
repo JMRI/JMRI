@@ -39,6 +39,7 @@ import javax.swing.tree.TreeNode;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.Path;
+import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -69,6 +70,31 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
     enum Location {
         ORIGIN, DEST, VIA, AVOID
     }
+    enum Display {
+        MPH("mph"), KPH("kph"), MMPS("mmps"), INPS("inps"), IN("in"), CM("cm");
+        String _bundleKey;
+        Display(String bundleName) {
+            _bundleKey = bundleName;
+        }
+        @Override
+        public String toString() {
+            return Bundle.getMessage(_bundleKey);
+        }
+    }
+    static class DisplayButton extends JButton {
+        Display pref;
+        DisplayButton(Display p) {
+            super();
+            setDisplayPref(p);
+        }
+        void setDisplayPref(Display p) {
+            pref = p;
+            setText(p.toString());
+        }
+        Display getDisplyPref() {
+            return pref;
+        }
+    }
     protected RouteLocation _origin = new RouteLocation(Location.ORIGIN);
     protected RouteLocation _destination = new RouteLocation(Location.DEST);
     protected RouteLocation _via = new RouteLocation(Location.VIA);
@@ -76,6 +102,9 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
     protected RouteLocation _focusedField;
 
     protected SpeedUtil _speedUtil;
+    protected Display _displayPref; // speed units preference
+    protected Display _units;       // distance units preference
+    protected float _scale = 87.1f;
 
     static int STRUT_SIZE = 10;
     private int _depth = 20;
@@ -108,6 +137,23 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         _searchDepth.setText(Integer.toString(_depth));
         _routeModel = new RouteTableModel();
         _speedUtil = new SpeedUtil();
+
+        int interpretation = SignalSpeedMap.SPEED_KMPH;
+        WarrantPreferences wp = WarrantPreferences.getDefault();
+        if (wp != null) {
+            interpretation = WarrantPreferences.getDefault().getInterpretation();
+            _scale = wp.getLayoutScale();
+        }
+        if (interpretation == SignalSpeedMap.SPEED_MPH) {
+            _displayPref = Display.MPH;
+            _units = Display.IN;
+        } else if (interpretation == SignalSpeedMap.SPEED_KMPH) {
+            _displayPref = Display.KPH;
+            _units = Display.CM;
+        } else {
+            _displayPref = Display.INPS;
+            _units = Display.IN;
+        }
         setupRoster();
     }
 
@@ -268,6 +314,9 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         closeProfileTable();
 
         String id = _speedUtil.getRosterId();
+        if (id == null || id.isEmpty()) {
+            return;
+        }
         if (Roster.getDefault().getEntryForId(id) == null) {
             DccLocoAddress dccAddr = _speedUtil.getDccAddress();
             String rosterId = JOptionPane.showInputDialog(this,
@@ -277,7 +326,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
             if (log.isDebugEnabled()) {
                 log.debug("Create roster entry {}", rosterId);
             }
-            if (rosterId != null) {
+            if (rosterId != null && !rosterId.isEmpty()) {
                 RosterEntry rosterEntry = new RosterEntry();
                 Roster.getDefault().addEntry(rosterEntry);
                 rosterEntry.setId(rosterId);
@@ -294,8 +343,12 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
             }
         }
 
-        JPanel viewPanel = makeViewPanel(_speedUtil.getRosterId());
+        JPanel viewPanel = makeViewPanel(id);
         if (viewPanel == null) {
+            if (id.charAt(0) != '$' || id.charAt(id.length()-1) != '$') {
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("NoSpeedProfile", id),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            } 
             return;
         }
         _spTable = new JmriJFrame(false, true);
@@ -425,6 +478,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
                 suAddr = _speedUtil.getAddress();
                 _dccNumBox.setText(suAddr);  // add protocol string
                 suId = _speedUtil.getRosterId();
+                maxThrottleEventAction();
                 if (suId != null && !(suId.charAt(0) == '$' && suId.charAt(suId.length()-1) =='$')) {
                     _rosterBox.setSelectedItem(suId);
                 } else {
@@ -432,7 +486,6 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
                     return null;
                 }
             }
-            maxThrottleEventAction();
         }
 
         String id = (String)_rosterBox.getSelectedItem();
@@ -1444,30 +1497,28 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
      *
      * @param vertical Label orientation true = above, false = left
      * @param comp     Component to put into JPanel
-     * @param label    Bundle keyword for label message
+     * @param text    Bundle keyword for label message
      * @param tooltip  Bundle keyword for tooltip message
      * @return Panel containing Component
      */
-    static protected JPanel makeTextBoxPanel(boolean vertical, JComponent comp, String label, String tooltip) {
+    static protected JPanel makeTextBoxPanel(boolean vertical, JComponent comp, String text, String tooltip) {
         JPanel panel = new JPanel();
-        JLabel l = new JLabel(Bundle.getMessage(label));
+        JLabel label = new JLabel(Bundle.getMessage(text));
         if (vertical) {
             panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-            l.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+            label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
             comp.setAlignmentX(JComponent.CENTER_ALIGNMENT);
             panel.add(Box.createVerticalStrut(STRUT_SIZE));
         } else {
             panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
-            l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+            label.setAlignmentX(JComponent.LEFT_ALIGNMENT);
             comp.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
             panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         }
-        panel.add(l);
+        panel.add(label);
         if (!vertical) {
             panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         }
-        comp.setMaximumSize(new Dimension(300, comp.getPreferredSize().height));
-        comp.setMinimumSize(new Dimension(30, comp.getPreferredSize().height));
         panel.add(comp);
         if (vertical) {
             panel.add(Box.createVerticalStrut(STRUT_SIZE));
@@ -1481,7 +1532,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
             String tipText = Bundle.getMessage(tooltip);
             panel.setToolTipText(tipText);
             comp.setToolTipText(tipText);
-            l.setToolTipText(tipText);
+            label.setToolTipText(tipText);
         }
         panel.setMaximumSize(new Dimension(350, comp.getPreferredSize().height));
         panel.setMinimumSize(new Dimension(80, comp.getPreferredSize().height));
@@ -1489,25 +1540,25 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
     }
 
     /**
+     * Make a horizontal panel for the input of data
      * Puts label message to the Left, 2nd component (button) to the right
      *
-     * @param comp     Component to put into JPanel
+     * @param comp     Component for input of data 
      * @param button   2nd Component for panel, usually a button
      * @param label    Bundle keyword for label message
      * @param tooltip  Bundle keyword for tooltip message
-     * @return Panel containing Component
+     * @return Panel containing Components
      */
-    static protected JPanel makeTextAndButtonPanel(JComponent comp, JComponent button, String label, String tooltip) {
+    static protected JPanel makeTextAndButtonPanel(JComponent comp, JComponent button, JLabel label, String tooltip) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
-        JLabel l = new JLabel(Bundle.getMessage(label));
-        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
-        comp.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
+        label.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
-        panel.add(l);
+        panel.add(label);
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         panel.add(Box.createHorizontalGlue());
 
+        comp.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
         panel.add(comp);
         if (comp instanceof JTextField || comp instanceof JComboBox) {
             comp.setBackground(Color.white);
@@ -1520,12 +1571,12 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         if (tooltip != null) {
             String tipText = Bundle.getMessage(tooltip);
             panel.setToolTipText(tipText);
-            button.setToolTipText(tipText);
             comp.setToolTipText(tipText);
-            l.setToolTipText(tipText);
+            button.setToolTipText(tipText);
+            label.setToolTipText(tipText);
         }
         panel.setMaximumSize(new Dimension(350, comp.getPreferredSize().height));
-        panel.setMinimumSize(new Dimension(80, comp.getPreferredSize().height));
+        panel.setMinimumSize(new Dimension(50, comp.getPreferredSize().height));
         return panel;        
     }
     /**

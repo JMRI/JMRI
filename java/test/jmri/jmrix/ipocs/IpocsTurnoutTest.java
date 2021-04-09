@@ -20,13 +20,16 @@ public class IpocsTurnoutTest extends AbstractTurnoutTestBase {
   IpocsPortController portController;
 
   @BeforeEach
-  public void subSetup() {
+  public void setUp() {
     JUnitUtil.initDefaultUserMessagePreferences();
     MockitoAnnotations.openMocks(this);
     // when(portController..send())
-    t = new IpocsTurnout(portController, "MT2", "Vx2");
+    t = new IpocsTurnout(portController, "PT2", "Vx2");
     // t.client
+    super.setUp();
   }
+
+  // no special actions during teardown?
 
   @Override
   public int numListeners() {
@@ -83,7 +86,6 @@ public class IpocsTurnoutTest extends AbstractTurnoutTestBase {
     t = new IpocsTurnout(portController, "MT2", "Vx2");
 
     ((IpocsTurnout) t).forwardCommandChangeToLayout(IpocsTurnout.UNKNOWN);
-    // JUnitAppender.assertErrorMessage("Unknown turnout order state");
   }
 
   @Test
@@ -111,4 +113,5 @@ public class IpocsTurnoutTest extends AbstractTurnoutTestBase {
     final IpocsClientHandler client = mock(IpocsClientHandler.class);
     ((IpocsTurnout)t).clientDisconnected(client);
   }
+
 }
