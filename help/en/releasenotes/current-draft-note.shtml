@@ -353,7 +353,9 @@
     <h3>CTC Tool</h3>
         <a id="PE-CTC" name="PE-CTC"></a>
         <ul>
-            <li></li>
+            <li>The CTC Editor windows location and size settings have been moved to the
+            standard JMRI location within the current profile.  The AwtWindowProperies.txt
+            file in the ctc directory at the user files location is no longer used.</li>
         </ul>
 
    <h3>Dispatcher</h3>
