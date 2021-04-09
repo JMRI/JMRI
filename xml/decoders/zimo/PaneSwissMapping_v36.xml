@@ -16,6 +16,7 @@
 <!-- version 1.2 - Ronald Kuhn - add german translation -->
 <!-- version 1.3 - New file for V36+ decoders with groups 14 to 17 Alain Carasso 28 August 2017  -->
 <!-- version 1.4 - Nigel Cliffe. Added dimming group selection and dimming levels  14 Feb 2021 -->
+<!-- version 1.5 - Nigel Cliffe. Small bugfix to v1.4,  Corrected layout for decoders which lack swiss mapping groups 14-17 -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Swiss Mapping V36+</name>
   <name xml:lang="it">Mappatura Svizzera</name>
@@ -42,7 +43,6 @@
           <text xml:lang="de">M-Taste schaltet das 'normale' Funktionsmapping aus.</text>
         </label>
 
-
         <label>
           <text>        If the M+F options is selected, the group is only active when both the M-Key and F-Key are "on"</text>
           <text xml:lang="cs">        Pokud je volba M-klávesa + F-klávesa vybraná, tak určený výstup je obsluhován oběma M-klávesou a F-klávesou.</text>
@@ -63,8 +63,8 @@
             </qualifier>        
              <label>
               <text>        When a M-Key is selected, "M-Key Outputs" sets the Outputs controlled by the M-Key to "off", "on forwards", etc.  if this group is active.</text>
-			  </label>
-			  <label>
+      </label>
+      <label>
                <text>        With the HiBeam option, the F-key overrides prior dimming settings (CV60, or other settings) for the selected outputs and allows use of Speed Dependant Headlights</text>
                <text xml:lang="cs">        S volbou dálkové světlo, F-klávesa vypne stmívání (CV60) pro určený výstup a umožňí použití světla závislá na rychlosti.</text>
                <text xml:lang="de">        Mit der Fernlichtfunktion schaltet die F-Taste die Dimmung (CV60) für den entsprechenden Ausgang ab und erlaubt so die geschwindigkeitsabhängige Fernlichtfunktion.</text>
@@ -89,83 +89,84 @@
 
     <column>   <!-- col 1 F keys -->
       <row>
-      <column>  <!-- F-keys -->
-        <label>
-          <text> Function Key </text>
-        </label>
-        <label>
-          <text>                      F-Key</text>
-          <text xml:lang="it">                      Tasto F</text>
-          <text xml:lang="cs">                      F klávesa</text>
-          <text xml:lang="de">                      F-Taste</text>
-        </label>
-        <display item="Swiss Mapping Group 1 F-key">
-          <label>Group  1   </label>
-          <label xml:lang="it">Gruppo  1  </label>
-          <label xml:lang="cs">Skupina  1  </label>
-          <label xml:lang="de">Gruppe  1 </label>
-          <label xml:lang="nl">Groep  1  </label>
-        </display>
-      </column>
-    <column>  <!-- spacer column -->
-        <row>
-          <label>
-            <text>        </text> <!-- col1 to col2 space -->
-          </label>
-        </row>
-    </column>
-    <column>   <!-- col 2 M-key elements -->
-        <row>  <!-- sub-title of column -->
-        <label>
-          <text> Modified Key </text>
-        </label>
-        </row>
-        <row>
-          <label>
-            <text>  M-Key       M-Key Outputs                               </text>
-            <text xml:lang="it">    Tasto M</text>
-            <text xml:lang="cs">    M klávesa</text>
-            <text xml:lang="de">    M-Taste</text>
-          </label>
-        </row>
-        <row>  <!-- first row of M-keys -->
-          <display item="Swiss Mapping Group 1 M-key v33" label="">
-            <label> </label>
-          </display>
-            
+        <column>  <!-- F-keys -->
+            <label>
+              <text> Function Key </text>
+            </label>
+            <label>
+              <text>                      F-Key</text>
+              <text xml:lang="it">                      Tasto F</text>
+              <text xml:lang="cs">                      F klávesa</text>
+              <text xml:lang="de">                      F-Taste</text>
+            </label>
+            <display item="Swiss Mapping Group 1 F-key">
+              <label>Group  1   </label>
+              <label xml:lang="it">Gruppo  1  </label>
+              <label xml:lang="cs">Skupina  1  </label>
+              <label xml:lang="de">Gruppe  1 </label>
+              <label xml:lang="nl">Groep  1  </label>
+            </display>
+        </column>
+      
+        <column>  <!-- spacer column -->
+            <row>
+              <label>
+                <text>        </text> <!-- col1 to col2 space -->
+              </label>
+            </row>
+        </column>
+        <column>   <!-- col 2 M-key elements -->
+            <row>  <!-- sub-title of column -->
+            <label>
+              <text> Modified Key </text>
+            </label>
+            </row>
+            <row>
+              <label>
+                <text>  M-Key       M-Key Outputs                               </text>
+                <text xml:lang="it">    Tasto M</text>
+                <text xml:lang="cs">    M klávesa</text>
+                <text xml:lang="de">    M-Taste</text>
+              </label>
+            </row>
+            <row>  <!-- first row of M-keys -->
+              <display item="Swiss Mapping Group 1 M-key v33" label="">
+                <label> </label>
+              </display>
+                
 
-            <!-- Hibeam checkbox + qualifier above-->
-            <group>
-              <qualifier>
-                <variableref>Swiss Mapping Group 1 M-key Hibeam</variableref>
-                <relation>ne</relation>
-                <value>255</value>
-              </qualifier>
-              <row>
-                <display item="Swiss Mapping Group 1 M-key" label=" "/>
-                <display item="Swiss Mapping Group 1 M-key NotOff" label=" "/>
-                <display item="Swiss Mapping Group 1 M-key M+F" label=" M+F" format="checkbox"/> 
-              </row>
-            </group>
-            <group>
-              <qualifier>
-                <variableref>Swiss Mapping Group 1 M-key Hibeam</variableref>
-                <relation>eq</relation>
-                <value>255</value>
-              </qualifier>
-              <row>
-                  <label>
-                    <text> (M-Key options not applicable)    </text>
-                    <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
-                  </label>
-              </row>
-            </group>
-            <!--checkboxes for bit 7 -->
-            <display item="Swiss Mapping Group 1 M-key Hibeam" label=" HiBeam" format="checkbox"/>
+                <!-- Hibeam checkbox + qualifier above-->
+                <group>
+                  <qualifier>
+                    <variableref>Swiss Mapping Group 1 M-key Hibeam</variableref>
+                    <relation>ne</relation>
+                    <value>255</value>
+                  </qualifier>
+                  <row>
+                    <display item="Swiss Mapping Group 1 M-key" label=" "/>
+                    <display item="Swiss Mapping Group 1 M-key NotOff" label=" "/>
+                    <display item="Swiss Mapping Group 1 M-key M+F" label=" M+F" format="checkbox"/> 
+                  </row>
+                </group>
+                <group>
+                  <qualifier>
+                    <variableref>Swiss Mapping Group 1 M-key Hibeam</variableref>
+                    <relation>eq</relation>
+                    <value>255</value>
+                  </qualifier>
+                  <row>
+                      <label>
+                        <text> (M-Key options not applicable)    </text>
+                        <text xml:lang="nl"> (Opties M-toets niet van toepassing)    </text>
+                      </label>
+                  </row>
+                </group>
+                <!--checkboxes for bit 7 -->
+                <display item="Swiss Mapping Group 1 M-key Hibeam" label=" HiBeam" format="checkbox"/>
 
-        </row>
-      </column>
-	</row>  
+             </row>
+         </column>
+      </row>  
       <row>
         <column>
          <display item="Swiss Mapping Group 2 F-key">
@@ -749,6 +750,8 @@
          </row>
         </column>
       </row>
+
+    <group exclude="130,177,195,197,199,201,211,218,240">    <!-- hide stuff for decoders lacking these CVs, needed because of conditionals displaying text -->
       <row>
         <display item="Swiss Mapping Group 14 F-key">
           <label>Group  14  </label>
@@ -930,7 +933,7 @@
          </row>
         </column>
       </row>
-
+    </group>
     <!--    end of column 1 (F+M) -->
   </column>
 
@@ -1343,7 +1346,9 @@
         </display>
       </column>
 	  </row>
-      <row>
+    <group exclude="130,177,195,197,199,201,211,218,240">    <!-- hide stuff for decoders lacking these CVs, needed because of conditionals displaying text -->
+
+    <row>
       <column>
         <display item="Swiss Mapping Group 14 A1 Fw" label="">
           <label></label>
@@ -1359,6 +1364,7 @@
           <label>  </label>
         </display>
       </column>
+
       <column>
         <display item="Swiss Mapping Group 14 A2 Rw" label="">
           <label>  </label>
@@ -1432,7 +1438,7 @@
         </display>
       </column>
 	  </row>
-	  
+	</group>  
   </column>
 
   <column>  <!-- spacer column 3 to column 4 -->
@@ -1802,7 +1808,7 @@
           <label></label>
         </display>
       </column>
-	  </row>
+    </row>
       <row>
       <column>
         <display item="Swiss Mapping Group 12 A1 Fw DG" label="">
@@ -1833,7 +1839,7 @@
           <label></label>
         </display>
       </column>
-	  </row>
+    </row>
       <row>
       <column>
         <display item="Swiss Mapping Group 13 A1 Fw DG" label="">
@@ -1864,7 +1870,9 @@
           <label></label>
         </display>
       </column>
-	  </row>
+    </row>
+    <group exclude="130,177,195,197,199,201,211,218,240">    <!-- hide stuff for decoders lacking these CVs, needed because of conditionals displaying text -->
+
       <row>
       <column>
         <display item="Swiss Mapping Group 14 A1 Fw DG" label="">
@@ -1890,6 +1898,7 @@
       <label>
         <text>  </text>
       </label>
+
       <column>
         <display item="Swiss Mapping Group 14 A2 Rw DG" label="">
           <label></label>
@@ -1990,7 +1999,7 @@
         </display>
       </column>
 	  </row>
-	  
+	</group>  
   </column>
 
 
@@ -2059,11 +2068,11 @@
         </display>
      </column>
      <column>
-		<display item="Swiss Dimming 1 brightness">
-		  <label>  Brightness </label>
-		</display>
-	 </column>
-	</row>
+    <display item="Swiss Dimming 1 brightness">
+      <label>  Brightness </label>
+    </display>
+    </column>
+  </row>
     <row>
         <qualifier>
           <variableref>Decoder Version</variableref>
@@ -2080,9 +2089,9 @@
         </display>
      </column>
      <column>
-		<display item="Swiss Dimming 2 brightness">
-		  <label>  Brightness </label>
-		</display>
+    <display item="Swiss Dimming 2 brightness">
+      <label>  Brightness </label>
+    </display>
      </column>
      </row>
     <row>
@@ -2101,9 +2110,9 @@
         </display>
      </column>
      <column>
-		<display item="Swiss Dimming 3 brightness">
-		  <label>  Brightness </label>
-		</display>
+    <display item="Swiss Dimming 3 brightness">
+    <label>  Brightness </label>
+    </display>
      </column>
      </row>
     <row>
@@ -2122,9 +2131,9 @@
         </display>
      </column>
      <column>
-		<display item="Swiss Dimming 4 brightness">
-		  <label>  Brightness </label>
-		</display>
+    <display item="Swiss Dimming 4 brightness">
+      <label>  Brightness </label>
+    </display>
      </column>
      </row>
     <row>
@@ -2143,9 +2152,9 @@
         </display>
      </column>
      <column>
-		<display item="Swiss Dimming 5 brightness">
-		  <label>  Brightness </label>
-		</display>
+    <display item="Swiss Dimming 5 brightness">
+      <label>  Brightness </label>
+    </display>
    </column>
   </row>
       <row>
