@@ -250,7 +250,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
      * @param v The SprogVersion being handled
      */
     @Override
-    synchronized public void notifyVersion(SprogVersion v) {
+    synchronized public void notifyVersion(SprogVersion v) throws jmri.ProgrammerException {
         // Save it for subsequent operations
         _sv = v;
         // Save it for others
@@ -261,12 +261,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
             log.debug("Hardware does not support hints");
            _startVal = 0;
         }
-        try {
-            readCVWithDefault(_cv, _progListener, _startVal);
-        }
-        catch (jmri.ProgrammerException e) {
-            throw new IllegalArgumentException("Unthrown Programmer Exception " + e.getMessage());
-        }
+        readCVWithDefault(_cv, _progListener, _startVal);
     }
 
     /** 

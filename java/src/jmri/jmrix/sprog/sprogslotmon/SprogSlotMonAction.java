@@ -35,12 +35,12 @@ public class SprogSlotMonAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
 
         if(_memo.getCommandStation() == null) {
-                // create SlotManager if it doesn't exist
-                _memo.configureCommandStation(_memo.getNumSlots());
-            }
-            
-            SprogSlotMonFrame f = new SprogSlotMonFrame(_memo);
-            f.setVisible(true);
+            // create SlotManager if it doesn't exist
+            _memo.configureCommandStation(_memo.getNumSlots());
         }
+            
+        SprogSlotMonFrame f = new SprogSlotMonFrame(_memo);
+        f.setVisible(true);
+    }
 
 }
