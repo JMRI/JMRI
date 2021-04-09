@@ -1,32 +1,36 @@
-package jmri.jmrit.logixng.actions;
+package jmri.jmrit.logixng.expressions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
+import java.beans.*;
 import java.util.*;
 
 import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.Block;
-import jmri.Sensor;
-import jmri.jmrit.display.layoutEditor.LayoutBlock;
-import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
+import jmri.BlockManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
-import jmri.util.ThreadingUtil;
 import jmri.util.TypeConversionUtil;
 
 /**
- * This action triggers a block.
- *
+ * This expression evaluates the state of a Block.
+ * The supported characteristics are:
+ * <ul>
+ *   <li>Is [not] Occupied (based on occupancy sensor state)</li>
+ *   <li>Is [not] Unoccupied (based on occupancy sensor state)</li>
+ *   <li>Is [not] Other (UNKNOWN, INCONSISTENT, UNDETECTED)</li>
+ *   <li>Is [not] Allocated (based on the LayoutBlock useAlternateColor)</li>
+ *   <li>Value [not] equals string</li>
+ *   <li>Value [not] equals a memory value object.</li>
+ * </ul>
  * @author Daniel Bergqvist Copyright 2021
  * @author Dave Sand Copyright 2021
  */
-public class ActionBlock extends AbstractDigitalAction implements VetoableChangeListener {
+public class ExpressionBlock extends AbstractDigitalExpression
+        implements PropertyChangeListener, VetoableChangeListener {
 
     private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
     private NamedBeanHandle<Block> _blockHandle;
@@ -34,59 +38,65 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
     private String _localVariable = "";
     private String _formula = "";
     private ExpressionNode _expressionNode;
-
-    private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
-    private DirectOperation _operationDirect = DirectOperation.None;
-    private String _operationReference = "";
-    private String _operationLocalVariable = "";
-    private String _operationFormula = "";
-    private ExpressionNode _operationExpressionNode;
+    private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
+    private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
+    private BlockState _blockState = BlockState.Occupied;
+    private String _stateReference = "";
+    private String _stateLocalVariable = "";
+    private String _stateFormula = "";
+    private ExpressionNode _stateExpressionNode;
 
     private String _blockConstant = "";
     private NamedBeanHandle<Memory> _blockMemoryHandle;
 
-    public ActionBlock(String sys, String user)
+    private int _eventState = 0;
+    private Object _eventValue = null;
+    private boolean _eventAllocated = false;
+
+    public ExpressionBlock(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
 
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws ParserException {
-        DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
+        DigitalExpressionManager manager = InstanceManager.getDefault(DigitalExpressionManager.class);
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
-        ActionBlock copy = new ActionBlock(sysName, userName);
+        ExpressionBlock copy = new ExpressionBlock(sysName, userName);
         copy.setComment(getComment());
         copy.setAddressing(_addressing);
         if (_blockHandle != null) copy.setBlock(_blockHandle);
         copy.setReference(_reference);
         copy.setLocalVariable(_localVariable);
         copy.setFormula(_formula);
-        copy.setOperationAddressing(_operationAddressing);
-        copy.setOperationDirect(_operationDirect);
-        copy.setOperationReference(_operationReference);
-        copy.setOperationLocalVariable(_operationLocalVariable);
-        copy.setOperationFormula(_operationFormula);
+        copy.set_Is_IsNot(_is_IsNot);
+        copy.setStateAddressing(_stateAddressing);
+        copy.setBeanState(_blockState);
+        copy.setStateReference(_stateReference);
+        copy.setStateLocalVariable(_stateLocalVariable);
+        copy.setStateFormula(_stateFormula);
         copy.setBlockConstant(_blockConstant);
         if (_blockMemoryHandle != null) copy.setBlockMemory(_blockMemoryHandle);
-        return manager.registerAction(copy);
+        return manager.registerExpression(copy);
     }
 
     public void setBlock(@Nonnull String blockName) {
         assertListenersAreNotRegistered(log, "setBlock");
-        Block block = InstanceManager.getDefault(jmri.BlockManager.class).getNamedBean(blockName);
+        Block block =
+                InstanceManager.getDefault(BlockManager.class).getNamedBean(blockName);
         if (block != null) {
-            ActionBlock.this.setBlock(block);
+            ExpressionBlock.this.setBlock(block);
         } else {
             removeBlock();
-            log.error("Block \"{}\" is not found", blockName);
+            log.warn("block \"{}\" is not found", blockName);
         }
     }
 
     public void setBlock(@Nonnull Block block) {
         assertListenersAreNotRegistered(log, "setBlock");
-        ActionBlock.this.setBlock(InstanceManager.getDefault(NamedBeanHandleManager.class)
+        ExpressionBlock.this.setBlock(InstanceManager.getDefault(NamedBeanHandleManager.class)
                 .getNamedBeanHandle(block.getDisplayName(), block));
     }
 
@@ -156,59 +166,67 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
         }
     }
 
-    public void setOperationAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _operationAddressing = addressing;
-        parseLockFormula();
+    public void set_Is_IsNot(Is_IsNot_Enum is_IsNot) {
+        _is_IsNot = is_IsNot;
     }
 
-    public NamedBeanAddressing getOperationAddressing() {
-        return _operationAddressing;
+    public Is_IsNot_Enum get_Is_IsNot() {
+        return _is_IsNot;
     }
 
-    public void setOperationDirect(DirectOperation state) {
-        _operationDirect = state;
+    public void setStateAddressing(NamedBeanAddressing addressing) throws ParserException {
+        _stateAddressing = addressing;
+        parseStateFormula();
     }
 
-    public DirectOperation getOperationDirect() {
-        return _operationDirect;
+    public NamedBeanAddressing getStateAddressing() {
+        return _stateAddressing;
     }
 
-    public void setOperationReference(@Nonnull String reference) {
+    public void setBeanState(BlockState state) {
+        _blockState = state;
+    }
+
+    public BlockState getBeanState() {
+        return _blockState;
+    }
+
+    public void setStateReference(@Nonnull String reference) {
         if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
             throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
         }
-        _operationReference = reference;
+        _stateReference = reference;
     }
 
-    public String getOperationReference() {
-        return _operationReference;
+    public String getStateReference() {
+        return _stateReference;
     }
 
-    public void setOperationLocalVariable(@Nonnull String localVariable) {
-        _operationLocalVariable = localVariable;
+    public void setStateLocalVariable(@Nonnull String localVariable) {
+        _stateLocalVariable = localVariable;
     }
 
-    public String getOperationLocalVariable() {
-        return _operationLocalVariable;
+    public String getStateLocalVariable() {
+        return _stateLocalVariable;
     }
 
-    public void setOperationFormula(@Nonnull String formula) throws ParserException {
-        _operationFormula = formula;
-        parseLockFormula();
+    public void setStateFormula(@Nonnull String formula) throws ParserException {
+        _stateFormula = formula;
+        parseStateFormula();
     }
 
-    public String getLockFormula() {
-        return _operationFormula;
+    public String getStateFormula() {
+        return _stateFormula;
     }
 
-    private void parseLockFormula() throws ParserException {
-        if (_operationAddressing == NamedBeanAddressing.Formula) {
+    private void parseStateFormula() throws ParserException {
+        if (_stateAddressing == NamedBeanAddressing.Formula) {
             Map<String, Variable> variables = new HashMap<>();
 
             RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _operationExpressionNode = parser.parseExpression(_operationFormula);
+            _stateExpressionNode = parser.parseExpression(_stateFormula);
         } else {
-            _operationExpressionNode = null;
+            _stateExpressionNode = null;
         }
     }
 
@@ -266,17 +284,17 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
 
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
+        if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
             if (evt.getOldValue() instanceof Block) {
                 if (evt.getOldValue().equals(getBlock().getBean())) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("ActionBlock_BlockInUseVeto", getDisplayName()), e); // NOI18N
+                    throw new PropertyVetoException(Bundle.getMessage("Block_BlockInUseVeto", getDisplayName()), e); // NOI18N
                 }
             }
             if (evt.getOldValue() instanceof Memory) {
                 if (evt.getOldValue().equals(getBlockMemory().getBean())) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("ActionBlock_MemoryInUseVeto", getDisplayName()), e); // NOI18N
+                    throw new PropertyVetoException(Bundle.getMessage("Block_MemoryInUseVeto", getDisplayName()), e); // NOI18N
                 }
             }
         }
@@ -294,33 +312,34 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
         return true;
     }
 
-    private String getNewLock() throws JmriException {
+    private String getNewState() throws JmriException {
 
-        switch (_operationAddressing) {
+        switch (_stateAddressing) {
             case Reference:
                 return ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _operationReference);
+                        getConditionalNG().getSymbolTable(), _stateReference);
 
             case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+                SymbolTable symbolTable =
+                        getConditionalNG().getSymbolTable();
                 return TypeConversionUtil
-                        .convertToString(symbolTable.getValue(_operationLocalVariable), false);
+                        .convertToString(symbolTable.getValue(_stateLocalVariable), false);
 
             case Formula:
-                return _operationExpressionNode != null
+                return _stateExpressionNode != null
                         ? TypeConversionUtil.convertToString(
-                                _operationExpressionNode.calculate(
+                                _stateExpressionNode.calculate(
                                         getConditionalNG().getSymbolTable()), false)
                         : null;
 
             default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _operationAddressing.name());
+                throw new IllegalArgumentException("invalid _addressing state: " + _stateAddressing.name());
         }
     }
 
     /** {@inheritDoc} */
     @Override
-    public void execute() throws JmriException {
+    public boolean evaluate() throws JmriException {
         Block block;
 
         switch (_addressing) {
@@ -331,12 +350,13 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
             case Reference:
                 String ref = ReferenceUtil.getReference(
                         getConditionalNG().getSymbolTable(), _reference);
-                block = InstanceManager.getDefault(jmri.BlockManager.class)
+                block = InstanceManager.getDefault(BlockManager.class)
                         .getNamedBean(ref);
                 break;
 
             case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+                SymbolTable symbolTable =
+                        getConditionalNG().getSymbolTable();
                 block = InstanceManager.getDefault(BlockManager.class)
                         .getNamedBean(TypeConversionUtil
                                 .convertToString(symbolTable.getValue(_localVariable), false));
@@ -356,80 +376,53 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
         }
 
         if (block == null) {
-            return;
+            return false;
         }
 
-        String name = (_operationAddressing != NamedBeanAddressing.Direct)
-                ? getNewLock() : null;
+        BlockState checkBlockState;
 
-        DirectOperation oper;
-        if ((_operationAddressing == NamedBeanAddressing.Direct)) {
-            oper = _operationDirect;
+        if ((_stateAddressing == NamedBeanAddressing.Direct)) {
+            checkBlockState = _blockState;
         } else {
-            oper = DirectOperation.valueOf(name);
+            checkBlockState = BlockState.valueOf(getNewState());
         }
 
-        if (_operationDirect != DirectOperation.None) {
-
-            // Variables used in lambda must be effectively final
-            DirectOperation theOper = oper;
-
-            ThreadingUtil.runOnLayout(() -> {
-                Sensor sensor;
-                LayoutBlock lblk;
-
-                switch (theOper) {
-                    case None:
-                        break;
-                    case SetOccupied:
-                        sensor = block.getSensor();
-                        if (sensor != null) {
-                            try {
-                                sensor.setKnownState(Sensor.ACTIVE);
-                            } catch (JmriException ex) {
-                                log.debug("Exception setting sensor active");
-                            }
-                        }
-                        break;
-                    case SetNotOccupied:
-                        sensor = block.getSensor();
-                        if (sensor != null) {
-                            try {
-                                sensor.setKnownState(Sensor.INACTIVE);
-                            } catch (JmriException ex) {
-                                log.debug("Exception setting sensor inactive");
-                            }
-                        }
-                        break;
-                    case SetAltColorOn:
-                        lblk = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(block);
-                        if (lblk != null) lblk.setUseExtraColor(true);
-                        break;
-                    case SetAltColorOff:
-                        lblk = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(block);
-                        if (lblk != null) lblk.setUseExtraColor(false);
-                        break;
-                    case SetNullValue:
-                        block.setValue(null);
-                        break;
-                    case SetToConstant:
-                        block.setValue(_blockConstant);
-                        break;
-                    case CopyFromMemory:
-                        if (_blockMemoryHandle != null) {
-                            block.setValue(_blockMemoryHandle.getBean().getValue());
-                        }
-                        break;
-                    case CopyToMemory:
-                        if (_blockMemoryHandle != null) {
-                            Memory memory = _blockMemoryHandle.getBean();
-                            memory.setValue(block.getValue());
-                        }
-                        break;
-                    default:
-                        throw new IllegalArgumentException("invalid oper state: " + theOper.name());
+        int currentState = _eventState;
+        switch (checkBlockState) {
+            case Other:
+                if (currentState != Block.OCCUPIED && currentState != Block.UNOCCUPIED) {
+                    currentState = BlockState.Other.getID();
+                } else {
+                    currentState = 0;
                 }
-            });
+                break;
+
+            case Allocated:
+                currentState = _eventAllocated ? BlockState.Allocated.getID() : 0;
+                break;
+
+            case ValueMatches:
+                currentState = _blockConstant.equals(_eventValue) ? BlockState.ValueMatches.getID() : 0;
+                break;
+
+            case MemoryMatches:
+                currentState = 0;
+                if (_blockMemoryHandle != null) {
+                    Object memoryObject = _blockMemoryHandle.getBean().getValue();
+                    if (memoryObject != null && memoryObject.equals(_eventValue)) {
+                        currentState = BlockState.MemoryMatches.getID();
+                    }
+                }
+                break;
+
+            default:
+                break;
+        }
+
+        if (_is_IsNot == Is_IsNot_Enum.Is) {
+            return currentState == checkBlockState.getID();
+        } else {
+            return currentState != checkBlockState.getID();
         }
     }
 
@@ -445,13 +438,13 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "ActionBlock_Short");
+        return Bundle.getMessage(locale, "Block_Short");
     }
 
     @Override
     public String getLongDescription(Locale locale) {
         String namedBean;
-        String state = "";
+        String state;
 
         switch (_addressing) {
             case Direct:
@@ -480,38 +473,46 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
 
-        switch (_operationAddressing) {
+        switch (_stateAddressing) {
             case Direct:
-                if (_operationDirect == DirectOperation.SetToConstant) {
-                    state = Bundle.getMessage(locale, "ActionBlock_Long_Value", namedBean, _blockConstant);
-                } else if (_operationDirect == DirectOperation.CopyFromMemory) {
-                    String fromName = _blockMemoryHandle == null ? "" : _blockMemoryHandle.getName();
-                    state = Bundle.getMessage(locale, "ActionBlock_Long_FromMemory", namedBean, fromName);
-                } else if (_operationDirect == DirectOperation.CopyToMemory) {
-                    String toName = _blockMemoryHandle == null ? "" : _blockMemoryHandle.getName();
-                    state = Bundle.getMessage(locale, "ActionBlock_Long_ToMemory", toName, namedBean);
+
+                if (_blockState == BlockState.ValueMatches) {
+                    String equalsString = _is_IsNot == Is_IsNot_Enum.Is ? Bundle.getMessage("Block_Equal") : Bundle.getMessage("Block_NotEqual");
+                    return Bundle.getMessage(locale, "Block_Long_Value", _blockHandle.getName(), equalsString, _blockConstant);
+
+                } else if (_blockState == BlockState.MemoryMatches) {
+                    String memoryName = _blockMemoryHandle == null ? "" : _blockMemoryHandle.getName();
+                    String equalsMemory = _is_IsNot == Is_IsNot_Enum.Is ? Bundle.getMessage("Block_Equal") : Bundle.getMessage("Block_NotEqual");
+                    return Bundle.getMessage(locale, "Block_Long_Memory", namedBean, equalsMemory, memoryName);
+
+                } else if (_blockState == BlockState.Other) {
+                    state = Bundle.getMessage(locale, "AddressByDirect", _blockState._text);
+                    return Bundle.getMessage(locale, "Block_Long", namedBean, "", state);
+
                 } else {
-                    state = Bundle.getMessage(locale, "AddressByDirect", _operationDirect._text);
+                    state = Bundle.getMessage(locale, "AddressByDirect", _blockState._text);
                 }
-                break;
+
+               break;
 
             case Reference:
-                state = Bundle.getMessage(locale, "AddressByReference", _operationReference);
+                state = Bundle.getMessage(locale, "AddressByReference", _stateReference);
                 break;
 
             case LocalVariable:
-                state = Bundle.getMessage(locale, "AddressByLocalVariable", _operationLocalVariable);
+                state = Bundle.getMessage(locale, "AddressByLocalVariable", _stateLocalVariable);
                 break;
 
             case Formula:
-                state = Bundle.getMessage(locale, "AddressByFormula", _operationFormula);
+                state = Bundle.getMessage(locale, "AddressByFormula", _stateFormula);
                 break;
 
             default:
-                throw new IllegalArgumentException("invalid _stateAddressing state: " + _operationAddressing.name());
+                throw new IllegalArgumentException("invalid _stateAddressing state: " + _stateAddressing.name());
         }
 
-        return Bundle.getMessage(locale, "ActionBlock_Long", namedBean, state);
+
+        return Bundle.getMessage(locale, "Block_Long", namedBean, _is_IsNot.toString(), state);
     }
 
     /** {@inheritDoc} */
@@ -523,11 +524,40 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
+        if (!_listenersAreRegistered && (_blockHandle != null)) {
+            _blockHandle.getBean().addPropertyChangeListener(this);
+            _listenersAreRegistered = true;
+        }
     }
 
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
+        if (_listenersAreRegistered) {
+            _blockHandle.getBean().removePropertyChangeListener(this);
+            _listenersAreRegistered = false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        switch (evt.getPropertyName()) {
+            case "state":
+                _eventState = (int) evt.getNewValue();
+                break;
+            case "value":
+                _eventValue = evt.getNewValue();
+                break;
+            case "allocated":
+                _eventAllocated = (boolean) evt.getNewValue();
+                break;
+            default:
+                return;
+        }
+        if (getTriggerOnChange()) {
+            getConditionalNG().execute();
+        }
     }
 
     /** {@inheritDoc} */
@@ -535,30 +565,32 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
     public void disposeMe() {
     }
 
-    public enum DirectOperation {
-        None(""),
-        SetOccupied(Bundle.getMessage("ActionBlock_SetOccupied")),
-        SetNotOccupied(Bundle.getMessage("ActionBlock_SetNotOccupied")),
-        SetAltColorOn(Bundle.getMessage("ActionBlock_SetAltColorOn")),
-        SetAltColorOff(Bundle.getMessage("ActionBlock_SetAltColorOff")),
-        SetNullValue(Bundle.getMessage("ActionBlock_SetNullValue")),
-        SetToConstant(Bundle.getMessage("ActionBlock_SetConstant")),
-        CopyFromMemory(Bundle.getMessage("ActionBlock_CopyFromMemory")),
-        CopyToMemory(Bundle.getMessage("ActionBlock_CopyToMemory"));
+    public enum BlockState {
+        Occupied(2, Bundle.getMessage("Block_StateOccupied")),
+        NotOccupied(4, Bundle.getMessage("Block_StateNotOccupied")),
+        Other(-1, Bundle.getMessage("Block_StateOther")),
+        Allocated(-2, Bundle.getMessage("Block_Allocated")),
+        ValueMatches(-3, Bundle.getMessage("Block_ValueMatches")),
+        MemoryMatches(-4, Bundle.getMessage("Block_MemoryMatches"));
 
+        private final int _id;
         private final String _text;
 
-        private DirectOperation(String text) {
+        private BlockState(int id, String text) {
+            this._id = id;
             this._text = text;
+        }
+
+        public int getID() {
+            return _id;
         }
 
         @Override
         public String toString() {
             return _text;
         }
-
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionBlock.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionBlock.class);
 
 }

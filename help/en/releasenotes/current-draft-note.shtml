@@ -391,6 +391,12 @@
           <li></li>
         </ul>
 
+    <h3>LogixNG</h3>
+        <a id="Logix" name="LogixNG"></a>
+        <ul>
+          <li>Add Actions and Expressions for Blocks.</li>
+        </ul>
+
     <h3>Meters and MeterFrames</h3>
         <a id="Meters" name="Meters"></a>
         <ul>
