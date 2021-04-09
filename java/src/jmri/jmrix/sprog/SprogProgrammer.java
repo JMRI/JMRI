@@ -257,17 +257,15 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         _memo.setSprogVersion(v);
         log.debug("Found: {}", v.toString());
 
-        if (_sv != null) {
-            if (!_sv.supportsCVHints()) {
-                log.debug("Hardware does not support hints");
-               _startVal = 0;
-            }
-            try {
-                readCVWithDefault(_cv, _progListener, _startVal);
-            }
-            catch (jmri.ProgrammerException e) {
-                throw new IllegalArgumentException("Unthrown Programmer Exception " + e.getMessage());
-            }
+        if (!_sv.supportsCVHints()) {
+            log.debug("Hardware does not support hints");
+           _startVal = 0;
+        }
+        try {
+            readCVWithDefault(_cv, _progListener, _startVal);
+        }
+        catch (jmri.ProgrammerException e) {
+            throw new IllegalArgumentException("Unthrown Programmer Exception " + e.getMessage());
         }
     }
 
