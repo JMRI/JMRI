@@ -42,7 +42,7 @@ public class BeanSelectPanel<E extends NamedBean> extends JPanel {
      */
     public BeanSelectPanel(@Nonnull Manager<E> manager, E selection, DisplayOptions display, boolean maxRows) {
         _selection = selection;
-        _display = display != null ? DisplayOptions.DISPLAYNAME : display;
+        _display = display == null ? DisplayOptions.DISPLAYNAME : display;
 
         _beanComboBox = new NamedBeanComboBox<>(manager, selection, _display);
         _beanComboBox.setAllowNull(true);
