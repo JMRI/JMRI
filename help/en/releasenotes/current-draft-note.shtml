@@ -131,7 +131,7 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li></li>
+                <li>Added startup action to open SPROG Slot Monitor</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -389,6 +389,12 @@
         <a id="Logix" name="Logix"></a>
         <ul>
           <li></li>
+        </ul>
+
+    <h3>LogixNG</h3>
+        <a id="Logix" name="LogixNG"></a>
+        <ul>
+          <li>Add Actions and Expressions for Blocks.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
