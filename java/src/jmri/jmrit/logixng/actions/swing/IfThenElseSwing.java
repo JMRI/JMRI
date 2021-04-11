@@ -13,11 +13,12 @@ import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.jmrit.logixng.actions.IfThenElse.Type;
-import jmri.jmrit.logixng.util.TimerUnit;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class IfThenElseSwing extends AbstractDigitalActionSwing {
 

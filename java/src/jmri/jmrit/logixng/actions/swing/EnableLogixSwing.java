@@ -17,7 +17,7 @@ import jmri.jmrit.logixng.actions.EnableLogix;
 import jmri.jmrit.logixng.actions.EnableLogix.Operation;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
@@ -28,7 +28,7 @@ import jmri.util.swing.JComboBoxUtil;
 public class EnableLogixSwing extends AbstractDigitalActionSwing {
 
     private JTabbedPane _tabbedPaneLogix;
-    private BeanSelectCreatePanel<Logix> logixBeanPanel;
+    private BeanSelectPanel<Logix> logixBeanPanel;
     private JPanel _panelLogixDirect;
     private JPanel _panelLogixReference;
     private JPanel _panelLogixLocalVariable;
@@ -65,7 +65,7 @@ public class EnableLogixSwing extends AbstractDigitalActionSwing {
         _tabbedPaneLogix.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelLogixLocalVariable);
         _tabbedPaneLogix.addTab(NamedBeanAddressing.Formula.toString(), _panelLogixFormula);
         
-        logixBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(LogixManager.class), null);
+        logixBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(LogixManager.class), null);
         _panelLogixDirect.add(logixBeanPanel);
         
         _logixReferenceTextField = new JTextField();
@@ -209,18 +209,14 @@ public class EnableLogixSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an EnableLogix but is a: "+object.getClass().getName());
         }
         EnableLogix action = (EnableLogix)object;
-        try {
-            if (!logixBeanPanel.isEmpty() && (_tabbedPaneLogix.getSelectedComponent() == _panelLogixDirect)) {
-                Logix logix = logixBeanPanel.getNamedBean();
-                if (logix != null) {
-                    NamedBeanHandle<Logix> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(logix.getDisplayName(), logix);
-                    action.setLogix(handle);
-                }
+        if (!logixBeanPanel.isEmpty() && (_tabbedPaneLogix.getSelectedComponent() == _panelLogixDirect)) {
+            Logix logix = logixBeanPanel.getNamedBean();
+            if (logix != null) {
+                NamedBeanHandle<Logix> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(logix.getDisplayName(), logix);
+                action.setLogix(handle);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for logix", ex);
         }
         try {
             if (_tabbedPaneLogix.getSelectedComponent() == _panelLogixDirect) {

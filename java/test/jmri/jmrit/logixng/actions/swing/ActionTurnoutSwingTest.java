@@ -5,6 +5,7 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JPanel;
 
 import jmri.InstanceManager;
+import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionTurnout;
@@ -48,7 +49,7 @@ public class ActionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBase {
     public void testDialogUseExistingTurnout() throws SocketAlreadyConnectedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
+        Turnout t1 = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         InstanceManager.getDefault(TurnoutManager.class).provide("IT2");
 
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG("IQC1", null);
@@ -59,7 +60,7 @@ public class ActionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBase {
         
         JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ! ", 0);
         
-        new JComboBoxOperator(jdo, 0).setSelectedIndex(1);
+        new JComboBoxOperator(jdo, 0).setSelectedItem(t1);
         new JComboBoxOperator(jdo, 1).setSelectedItem(ActionTurnout.TurnoutState.Closed);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
@@ -68,34 +69,6 @@ public class ActionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBase {
         
         Assert.assertEquals("IT1", action.getTurnout().getBean().getSystemName());
         Assert.assertEquals(ActionTurnout.TurnoutState.Closed, action.getBeanState());
-    }
-    
-    @Test
-    public void testDialogCreateNewTurnout() throws SocketAlreadyConnectedException, InterruptedException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
-        InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
-        InstanceManager.getDefault(TurnoutManager.class).provide("IT2");
-
-        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG("IQC1", null);
-        
-        ActionTurnout action = new ActionTurnout("IQDA1", null);
-        MaleSocket maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
-        conditionalNG.getChild(0).connect(maleSocket);
-        
-        JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ! ", 0);
-        
-        new JRadioButtonOperator(jdo, 1).clickMouse();
-        new JTextFieldOperator(jdo, 3).enterText("IT99");
-        
-        new JComboBoxOperator(jdo, 1).setSelectedItem(ActionTurnout.TurnoutState.Thrown);
-        Thread.sleep(5000);
-        new JButtonOperator(jdo, "OK").push();  // NOI18N
-        
-        JUnitUtil.waitFor(() -> {return action.getTurnout() != null;});
-        
-        Assert.assertEquals("IT99", action.getTurnout().getBean().getSystemName());
-        Assert.assertEquals(ActionTurnout.TurnoutState.Thrown, action.getBeanState());
     }
     
     // The minimal setup for log4J

@@ -16,6 +16,8 @@ import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class ActionTimerSwing extends AbstractDigitalActionSwing {
 

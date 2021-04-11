@@ -14,11 +14,13 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.AbstractDigitalExpression;
 import jmri.jmrit.logixng.expressions.LastResultOfDigitalExpression;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
-import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an LastResultOfDigitalExpression object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class LastResultOfDigitalExpressionSwing extends AbstractDigitalExpressionSwing {
 

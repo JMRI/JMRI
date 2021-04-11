@@ -14,6 +14,8 @@ import jmri.jmrit.logixng.expressions.ExpressionReference;
 
 /**
  * Configures an ExpressionReference object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class ExpressionReferenceSwing extends AbstractDigitalExpressionSwing {
 

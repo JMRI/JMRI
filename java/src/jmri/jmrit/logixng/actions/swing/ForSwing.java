@@ -14,6 +14,8 @@ import jmri.jmrit.logixng.actions.For;
 
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class ForSwing extends AbstractDigitalActionSwing {
 

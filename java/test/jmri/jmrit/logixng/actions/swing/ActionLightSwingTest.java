@@ -5,6 +5,7 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JPanel;
 
 import jmri.InstanceManager;
+import jmri.Light;
 import jmri.LightManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionLight;
@@ -47,7 +48,7 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
     public void testDialogUseExistingLight() throws SocketAlreadyConnectedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        InstanceManager.getDefault(LightManager.class).provide("IL1");
+        Light l1 = InstanceManager.getDefault(LightManager.class).provide("IL1");
         InstanceManager.getDefault(LightManager.class).provide("IL2");
 
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG("IQC1", null);
@@ -58,7 +59,7 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
         
         JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ! ", 0);
         
-        new JComboBoxOperator(jdo, 0).setSelectedIndex(1);
+        new JComboBoxOperator(jdo, 0).setSelectedItem(l1);
         new JComboBoxOperator(jdo, 1).setSelectedItem(ActionLight.LightState.Off);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
@@ -69,32 +70,6 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
         Assert.assertEquals(ActionLight.LightState.Off, action.getBeanState());
     }
 
-    @Test
-    public void testDialogCreateNewLight() throws SocketAlreadyConnectedException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
-        InstanceManager.getDefault(LightManager.class).provide("IL1");
-        InstanceManager.getDefault(LightManager.class).provide("IL2");
-
-        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG("IQC1", null);
-        
-        ActionLight action = new ActionLight("IQDA1", null);
-        MaleSocket maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
-        conditionalNG.getChild(0).connect(maleSocket);
-        
-        JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ! ", 0);
-        
-        new JRadioButtonOperator(jdo, 1).clickMouse();
-        new JTextFieldOperator(jdo, 3).enterText("IL99");
-        new JComboBoxOperator(jdo, 1).setSelectedItem(ActionLight.LightState.On);
-        new JButtonOperator(jdo, "OK").push();  // NOI18N
-        
-        JUnitUtil.waitFor(() -> {return action.getLight() != null;});
-        
-        Assert.assertEquals("IL99", action.getLight().getBean().getSystemName());
-        Assert.assertEquals(ActionLight.LightState.On, action.getBeanState());
-    }
-    
     // The minimal setup for log4J
     @Before
     public void setUp() {

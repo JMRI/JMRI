@@ -18,18 +18,20 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionSignalMast;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ActionSignalMast object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
 
     public static final int NUM_COLUMNS_TEXT_FIELDS = 20;
     
     private JTabbedPane _tabbedPaneSignalMast;
-    private BeanSelectCreatePanel<SignalMast> _signalMastBeanPanel;
+    private BeanSelectPanel<SignalMast> _signalMastBeanPanel;
     private JPanel _panelSignalMastDirect;
     private JPanel _panelSignalMastReference;
     private JPanel _panelSignalMastLocalVariable;
@@ -60,7 +62,7 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
     private JTextField _signalMastAspectLocalVariableTextField;
     private JTextField _signalMastAspectFormulaTextField;
     
-    private BeanSelectCreatePanel<SignalMast> _exampleSignalMastBeanPanel;
+    private BeanSelectPanel<SignalMast> _exampleSignalMastBeanPanel;
     
     
     @Override
@@ -73,7 +75,7 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
         JPanel examplePanel = new JPanel();
         JPanel innerExamplePanel = new JPanel();
         innerExamplePanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        _exampleSignalMastBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(SignalMastManager.class), null);
+        _exampleSignalMastBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(SignalMastManager.class), null);
         innerExamplePanel.add(_exampleSignalMastBeanPanel);
         
         JPanel actionPanel = new JPanel();
@@ -95,7 +97,7 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
             enableDisableExampleSignalMastBeanPanel();
         });
         
-        _signalMastBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(SignalMastManager.class), null);
+        _signalMastBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(SignalMastManager.class), null);
         _panelSignalMastDirect.add(_signalMastBeanPanel);
         
         _signalMastReferenceTextField = new JTextField();
@@ -372,39 +374,31 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an ActionSignalMast but is a: "+object.getClass().getName());
         }
         ActionSignalMast action = (ActionSignalMast)object;
-        try {
-            if (!_signalMastBeanPanel.isEmpty() && (_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastDirect)) {
-                SignalMast signalMast = _signalMastBeanPanel.getNamedBean();
-                if (signalMast != null) {
-                    NamedBeanHandle<SignalMast> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(signalMast.getDisplayName(), signalMast);
-                    action.setSignalMast(handle);
-                }
-            } else {
-                action.removeSignalMast();
+        if (!_signalMastBeanPanel.isEmpty() && (_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastDirect)) {
+            SignalMast signalMast = _signalMastBeanPanel.getNamedBean();
+            if (signalMast != null) {
+                NamedBeanHandle<SignalMast> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(signalMast.getDisplayName(), signalMast);
+                action.setSignalMast(handle);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for signalMast", ex);
+        } else {
+            action.removeSignalMast();
         }
         
-        try {
-            if (!_exampleSignalMastBeanPanel.isEmpty()
-                    && (_tabbedPaneSignalMast.getSelectedComponent() != _panelSignalMastDirect)
-                    && (_tabbedPaneAspectType.getSelectedComponent() == _panelAspectTypeDirect)) {
-                
-                SignalMast signalMast = _exampleSignalMastBeanPanel.getNamedBean();
-                if (signalMast != null) {
-                    NamedBeanHandle<SignalMast> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(signalMast.getDisplayName(), signalMast);
-                    action.setExampleSignalMast(handle);
-                }
-            } else {
-                action.removeExampleSignalMast();
+        if (!_exampleSignalMastBeanPanel.isEmpty()
+                && (_tabbedPaneSignalMast.getSelectedComponent() != _panelSignalMastDirect)
+                && (_tabbedPaneAspectType.getSelectedComponent() == _panelAspectTypeDirect)) {
+
+            SignalMast signalMast = _exampleSignalMastBeanPanel.getNamedBean();
+            if (signalMast != null) {
+                NamedBeanHandle<SignalMast> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(signalMast.getDisplayName(), signalMast);
+                action.setExampleSignalMast(handle);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for signalMast", ex);
+        } else {
+            action.removeExampleSignalMast();
         }
         
         try {

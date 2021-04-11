@@ -13,6 +13,8 @@ import jmri.jmrit.logixng.util.parser.*;
 
 /**
  * Configures an Formula object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class StringFormulaSwing extends AbstractStringExpressionSwing {
 

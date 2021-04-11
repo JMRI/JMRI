@@ -17,7 +17,7 @@ import jmri.jmrit.logixng.actions.TriggerRoute;
 import jmri.jmrit.logixng.actions.TriggerRoute.Operation;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
@@ -28,7 +28,7 @@ import jmri.util.swing.JComboBoxUtil;
 public class TriggerRouteSwing extends AbstractDigitalActionSwing {
 
     private JTabbedPane _tabbedPaneRoute;
-    private BeanSelectCreatePanel<Route> routeBeanPanel;
+    private BeanSelectPanel<Route> routeBeanPanel;
     private JPanel _panelRouteDirect;
     private JPanel _panelRouteReference;
     private JPanel _panelRouteLocalVariable;
@@ -65,7 +65,7 @@ public class TriggerRouteSwing extends AbstractDigitalActionSwing {
         _tabbedPaneRoute.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelRouteLocalVariable);
         _tabbedPaneRoute.addTab(NamedBeanAddressing.Formula.toString(), _panelRouteFormula);
         
-        routeBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(RouteManager.class), null);
+        routeBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(RouteManager.class), null);
         _panelRouteDirect.add(routeBeanPanel);
         
         _routeReferenceTextField = new JTextField();
@@ -209,18 +209,14 @@ public class TriggerRouteSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an TriggerRoute but is a: "+object.getClass().getName());
         }
         TriggerRoute action = (TriggerRoute)object;
-        try {
-            if (!routeBeanPanel.isEmpty() && (_tabbedPaneRoute.getSelectedComponent() == _panelRouteDirect)) {
-                Route route = routeBeanPanel.getNamedBean();
-                if (route != null) {
-                    NamedBeanHandle<Route> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(route.getDisplayName(), route);
-                    action.setRoute(handle);
-                }
+        if (!routeBeanPanel.isEmpty() && (_tabbedPaneRoute.getSelectedComponent() == _panelRouteDirect)) {
+            Route route = routeBeanPanel.getNamedBean();
+            if (route != null) {
+                NamedBeanHandle<Route> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(route.getDisplayName(), route);
+                action.setRoute(handle);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for route", ex);
         }
         try {
             if (_tabbedPaneRoute.getSelectedComponent() == _panelRouteDirect) {

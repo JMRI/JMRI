@@ -14,6 +14,8 @@ import jmri.jmrit.logixng.expressions.Hold;
 
 /**
  * Configures an ExpressionTurnout object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class HoldSwing extends AbstractDigitalExpressionSwing {
 

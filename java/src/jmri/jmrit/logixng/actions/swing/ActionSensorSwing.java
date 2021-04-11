@@ -17,16 +17,18 @@ import jmri.jmrit.logixng.actions.ActionSensor;
 import jmri.jmrit.logixng.actions.ActionSensor.SensorState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ActionSensor object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class ActionSensorSwing extends AbstractDigitalActionSwing {
 
     private JTabbedPane _tabbedPaneSensor;
-    private BeanSelectCreatePanel<Sensor> sensorBeanPanel;
+    private BeanSelectPanel<Sensor> sensorBeanPanel;
     private JPanel _panelSensorDirect;
     private JPanel _panelSensorReference;
     private JPanel _panelSensorLocalVariable;
@@ -63,7 +65,7 @@ public class ActionSensorSwing extends AbstractDigitalActionSwing {
         _tabbedPaneSensor.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelSensorLocalVariable);
         _tabbedPaneSensor.addTab(NamedBeanAddressing.Formula.toString(), _panelSensorFormula);
         
-        sensorBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(SensorManager.class), null);
+        sensorBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(SensorManager.class), null);
         _panelSensorDirect.add(sensorBeanPanel);
         
         _sensorReferenceTextField = new JTextField();
@@ -213,18 +215,14 @@ public class ActionSensorSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an ActionSensor but is a: "+object.getClass().getName());
         }
         ActionSensor action = (ActionSensor)object;
-        try {
-            if (!sensorBeanPanel.isEmpty() && (_tabbedPaneSensor.getSelectedComponent() == _panelSensorDirect)) {
-                Sensor sensor = sensorBeanPanel.getNamedBean();
-                if (sensor != null) {
-                    NamedBeanHandle<Sensor> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(sensor.getDisplayName(), sensor);
-                    action.setSensor(handle);
-                }
+        if (!sensorBeanPanel.isEmpty() && (_tabbedPaneSensor.getSelectedComponent() == _panelSensorDirect)) {
+            Sensor sensor = sensorBeanPanel.getNamedBean();
+            if (sensor != null) {
+                NamedBeanHandle<Sensor> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(sensor.getDisplayName(), sensor);
+                action.setSensor(handle);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for sensor", ex);
         }
         try {
             if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorDirect) {
