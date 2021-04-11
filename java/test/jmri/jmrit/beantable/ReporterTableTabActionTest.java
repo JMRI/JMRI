@@ -77,9 +77,8 @@ public class ReporterTableTabActionTest extends AbstractTableTabActionBase {
             s = proxy.getDisplayOrderManagerList().get(1).getMemo().getUserName();
             Assert.assertEquals("Reporter Manager 1, India","India", s);
         } catch (ClassCastException e){
-            Assert.fail("catch Instance SensorManager Not a proxy Reporter Manager");
+            Assert.fail("catch Instance Reporter Manager Not a proxy Reporter Manager");
         }
-        
         
         
         InstanceManager.getDefault(ReporterManager.class).provideReporter("IR1");
