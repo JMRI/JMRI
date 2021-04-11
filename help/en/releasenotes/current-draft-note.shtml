@@ -21,7 +21,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>CANPiWi v1 Firmware - No need for Node Manager to request Number of Events.</li>
             </ul>
 
         <h4>C/MRI</h4>
