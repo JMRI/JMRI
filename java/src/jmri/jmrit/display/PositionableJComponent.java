@@ -17,6 +17,8 @@ public class PositionableJComponent extends JComponent implements Positionable {
 
     protected Editor _editor = null;
 
+    private String _id;            // user's Id or null if no Id
+
     private ToolTip _tooltip;
     private boolean _showTooltip = true;
     private boolean _editable = true;
@@ -52,6 +54,18 @@ public class PositionableJComponent extends JComponent implements Positionable {
         pos.setEditable(isEditable());
         pos.updateSize();
         return pos;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setId(String id) {
+        this._id = id;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getId() {
+        return _id;
     }
 
     @Override

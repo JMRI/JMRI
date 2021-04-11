@@ -39,6 +39,18 @@ import javax.swing.border.Border;
  */
 public interface Positionable extends Cloneable {
 
+    /**
+     * Sets the Id of this Positionable
+     * @param id the id or null if no id
+     */
+    void setId(String id);
+
+    /**
+     * Gets the Id of this Positionable
+     * @return id the id or null if no id
+     */
+    String getId();
+
     void setPositionable(boolean enabled);
 
     boolean isPositionable();

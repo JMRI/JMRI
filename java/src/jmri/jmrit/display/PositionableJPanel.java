@@ -32,6 +32,8 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
 
     protected Editor _editor = null;
 
+    private String _id;            // user's Id or null if no Id
+
     private ToolTip _tooltip;
     protected boolean _showTooltip = true;
     protected boolean _editable = true;
@@ -71,6 +73,18 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
         }
         pos.updateSize();
         return pos;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setId(String id) {
+        this._id = id;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getId() {
+        return _id;
     }
 
     @Override

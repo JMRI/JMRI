@@ -600,6 +600,7 @@ public class PanelEditor extends Editor implements ItemListener {
                 }
                 setDisplayLevelMenu(p, popup);
                 setHiddenMenu(p, popup);
+                setEditIdMenu(p, popup);
                 popup.addSeparator();
             }
 

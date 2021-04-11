@@ -44,6 +44,8 @@ public class PositionableLabel extends JLabel implements Positionable {
 
     protected Editor _editor;
 
+    private String _id;            // user's Id or null if no Id
+
     protected boolean _icon = false;
     protected boolean _text = false;
     protected boolean _control = false;
@@ -85,6 +87,18 @@ public class PositionableLabel extends JLabel implements Positionable {
         _namedIcon = s;
         log.debug("PositionableLabel ctor (icon) {}", s != null ? s.getName() : null);
         setPopupUtility(new PositionablePopupUtil(this, this));
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setId(String id) {
+        this._id = id;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getId() {
+        return _id;
     }
 
     public final boolean isIcon() {
