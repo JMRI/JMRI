@@ -65,7 +65,7 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
     
     public BlockTableDataModel(Manager<Block> mgr){
         super();
-        setManager(mgr); // for consistency, no local method as 
+        setManager(mgr); // for consistency with other BeanTableModels, default BlockManager always used.
         
         defaultBlockSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + InstanceManager.getDefault(BlockManager.class).getDefaultSpeed()); // first entry in drop down list
         speedList.add(defaultBlockSpeedText);
