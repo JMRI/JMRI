@@ -212,6 +212,6 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionLocalVariableSwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionLocalVariableSwing.class);
     
 }

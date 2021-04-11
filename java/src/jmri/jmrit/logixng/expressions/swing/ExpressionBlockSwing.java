@@ -9,7 +9,6 @@ import javax.swing.*;
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.NamedBeanHandle;

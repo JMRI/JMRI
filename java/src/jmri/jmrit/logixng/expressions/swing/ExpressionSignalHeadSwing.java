@@ -9,7 +9,6 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.SignalHead;
@@ -486,6 +485,6 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
         
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSignalHeadSwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSignalHeadSwing.class);
     
 }

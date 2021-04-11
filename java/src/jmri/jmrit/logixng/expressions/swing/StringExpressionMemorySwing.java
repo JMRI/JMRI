@@ -4,12 +4,10 @@ import java.util.List;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Memory;
@@ -111,6 +109,6 @@ public class StringExpressionMemorySwing extends AbstractStringExpressionSwing {
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringExpressionMemorySwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringExpressionMemorySwing.class);
     
 }

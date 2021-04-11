@@ -7,14 +7,9 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.expressions.AbstractDigitalExpression;
 import jmri.jmrit.logixng.expressions.LastResultOfDigitalExpression;
-import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
-import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
