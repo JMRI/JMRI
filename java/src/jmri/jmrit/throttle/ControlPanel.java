@@ -455,7 +455,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {            
             resizeButtons();
             constraints.fill = GridBagConstraints.CENTER;                           
-            constraints.insets =  new Insets(0, 0, 0, 0);;
+            constraints.insets =  new Insets(0, 0, 0, 0);
             constraints.gridheight = 20;
             constraints.gridwidth = 20;
             constraints.gridy = 0;
