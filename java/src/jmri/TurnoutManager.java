@@ -104,7 +104,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
 
     /**
      * Return a Turnout with the specified system and user names.
-     * Provide by UserName then System Name.
+     * Lookup by UserName then provide by System Name.
      * <p>
      * Note that
      * two calls with the same arguments will get the same instance; there is

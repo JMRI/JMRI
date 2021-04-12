@@ -92,7 +92,7 @@ abstract public class AbstractProvidingProxyManager<E extends NamedBean> extends
      * @return requested NamedBean object (never null)
      */
     @Nonnull
-    public E newNamedBean(String systemName, String userName) throws IllegalArgumentException {
+    public E newNamedBean(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         // make sure internal present
         initInternal();
 
@@ -117,7 +117,7 @@ abstract public class AbstractProvidingProxyManager<E extends NamedBean> extends
      * @return a bean
      */
     @Nonnull
-    abstract protected E makeBean(Manager<E> manager, String systemName, String userName) throws IllegalArgumentException;
+    abstract protected E makeBean(Manager<E> manager,@Nonnull String systemName, String userName) throws IllegalArgumentException;
 
     // initialize logging
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractProvidingProxyManager.class);
