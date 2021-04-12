@@ -20,12 +20,17 @@ public class ZTC611XNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager
     }
 
     // XNet-specific methods
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         // check if the output bit is available
         int bitNum = XNetAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == -1) {
-            return (null);
+            throw new IllegalArgumentException("Cannot get Bit from System Name " + systemName);
         }
         Turnout t = new ZTC611XNetTurnout(getSystemPrefix(), bitNum, tc);
         t.setUserName(userName);

@@ -30,14 +30,18 @@ public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager 
         return (MarklinSystemConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         int addr;
         try {
             addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
-        } catch (java.lang.NumberFormatException e) {
-            log.error("failed to convert systemName {} to a turnout address", systemName);
-            return null;
+        } catch (NumberFormatException e) {
+            log.error("Failed to convert systemName {} to a turnout address", systemName);
+            throw new IllegalArgumentException("failed to convert systemName '"+systemName+"' to a Turnout address");
         }
         Turnout t = new MarklinTurnout(addr, getSystemPrefix(), tc);
         t.setUserName(userName);

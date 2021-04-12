@@ -34,8 +34,9 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         // first, check validity
         String newAddress;

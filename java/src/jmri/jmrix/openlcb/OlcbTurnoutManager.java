@@ -76,9 +76,11 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
      * an existing method has been invoked.
      *
      * @return never null
+     * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         OlcbTurnout t = new OlcbTurnout(getSystemPrefix(), addr, memo.get(OlcbInterface.class));
         t.setUserName(userName);

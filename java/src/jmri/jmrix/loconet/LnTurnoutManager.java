@@ -93,8 +93,9 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         String prefix = getSystemPrefix();
         int addr;
         try {

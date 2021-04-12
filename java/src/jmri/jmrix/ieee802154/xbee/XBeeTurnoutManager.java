@@ -39,9 +39,13 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
-        XBeeNode curNode = null;
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+        XBeeNode curNode;
         String name = addressFromSystemName(systemName);
         if ((curNode = (XBeeNode) tc.getNodeFromName(name)) == null) {
             if ((curNode = (XBeeNode) tc.getNodeFromAddress(name)) == null) {
@@ -50,9 +54,8 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
                 } catch (java.lang.NumberFormatException nfe) {
                     // if there was a number format exception, we couldn't
                     // find the node.
-                    curNode = null;
                     log.debug("failed to create turnout {}", systemName);
-                    return null;
+                    throw new IllegalArgumentException("Cannot find Node, check Turnout System Name " + systemName);
                 }
             }
         }
@@ -68,7 +71,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
             return (XBeeTurnout) curNode.getPinBean(pin);
         } else {
             log.debug("failed to create turnout {}", systemName);
-            return null;
+            throw new IllegalArgumentException("Cannot create Turnout " + systemName + ", check pins.");
         }
     }
 

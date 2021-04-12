@@ -35,15 +35,19 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
         return (TmccSystemConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         // validate the system name
         String sName = validateSystemNameFormat(systemName);
         // does this turnout already exist?
         Turnout t = getBySystemName(sName);
         if (t != null) {
             log.debug("Turnout already exists");
-            return null;
+            return t;
         }
         // create the turnout
         log.debug("new SerialTurnout with addr = {}", systemName.substring(getSystemPrefix().length() + 1));

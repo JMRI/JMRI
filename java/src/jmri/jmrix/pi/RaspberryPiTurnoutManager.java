@@ -27,8 +27,12 @@ public class RaspberryPiTurnoutManager extends jmri.managers.AbstractTurnoutMana
         return (RaspberryPiSystemConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Turnout t = new RaspberryPiTurnout(systemName, userName);
         return t;
     }

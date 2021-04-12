@@ -52,16 +52,16 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
-        Turnout t = null;
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         // check if the output bit is available
         int bitNum = getBitFromSystemName(systemName);
         if (bitNum < 0) {
-            return null;
+            throw new IllegalArgumentException("Cannot get Bit from System Name " + systemName);
         }
         // make the new Turnout object
-        t = new DCCppTurnout(getSystemPrefix(), bitNum, tc);
+        Turnout t = new DCCppTurnout(getSystemPrefix(), bitNum, tc);
         t.setUserName(userName);
         return t;
     }

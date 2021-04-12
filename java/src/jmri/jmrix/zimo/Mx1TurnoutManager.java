@@ -26,9 +26,18 @@ public class Mx1TurnoutManager extends jmri.managers.AbstractTurnoutManager {
         return (Mx1SystemConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
-        int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+        int addr;
+        try {
+            addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+        } catch (java.lang.NumberFormatException e) {
+            throw new IllegalArgumentException("Failed to convert systemName '"+systemName+"' to a Turnout address");
+        }
         Turnout t = new Mx1Turnout(addr, getMemo().getMx1TrafficController(), getSystemPrefix());
         t.setUserName(userName);
         return t;

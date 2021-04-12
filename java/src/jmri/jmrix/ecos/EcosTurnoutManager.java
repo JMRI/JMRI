@@ -66,12 +66,16 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         return (EcosSystemConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         int addr;
         try {
             addr = Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
-        } catch (java.lang.NumberFormatException e) {
+        } catch (NumberFormatException e) {
             throw new IllegalArgumentException("failed to convert systemName '"+systemName+"' to an Ecos turnout address");
         }
         Turnout t = new EcosTurnout(addr, getSystemPrefix(), tc, this);
