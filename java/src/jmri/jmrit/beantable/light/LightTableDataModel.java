@@ -44,7 +44,8 @@ public class LightTableDataModel extends BeanTableDataModel<Light> {
     }
 
     public LightTableDataModel(Manager<Light> mgr){
-        super(mgr);
+        super();
+        setManager(mgr);
         initTable();
     }
     

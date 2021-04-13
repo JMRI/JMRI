@@ -460,7 +460,8 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>Fixed Duplication of Sensors in Sensor Table views. Bug introduced in 4.23.3</li>
+            <li>Fixed Sensor Table sort issues with Delay to Active, Delay to InActive columns.</li>
         </ul>
 
     <h3>Scripting</h3>
