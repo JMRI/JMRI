@@ -548,6 +548,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             button.setIcon(icon);
             button.setSelectedIcon(selectedIcon);
             button.setToolTipText(Bundle.getMessage(message));
+            button.setFocusable(false);
         } else {
             button.setText(Bundle.getMessage(message));
         }
@@ -754,8 +755,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         ButtonGroup directionButtons = new ButtonGroup();
         directionButtons.add(forwardButton);
         directionButtons.add(reverseButton);
-        forwardButton.setFocusable(false);
-        reverseButton.setFocusable(false);
 
         forwardButton.addActionListener((ActionEvent e) -> {
             if (throttle != null) {
