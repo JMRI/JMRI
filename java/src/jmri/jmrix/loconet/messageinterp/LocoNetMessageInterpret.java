@@ -2364,8 +2364,6 @@ public class LocoNetMessageInterpret {
                 }
             }
 
-            int section = 1 + (l.getElement(3) / 16) + (l.getElement(2) & 0x1F) * 8;
-
             String locoAddr = convertToMixed(l.getElement(5), l.getElement(4));
             String transpActivity = (type == LnConstants.OPC_MULTI_SENSE_ABSENT)
                     ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_ABSENT")
