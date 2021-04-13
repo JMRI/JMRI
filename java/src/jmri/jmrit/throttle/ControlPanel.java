@@ -493,10 +493,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
     private void resizeButtons() {        
         int w = buttonPanel.getWidth();
-        int h = buttonPanel.getHeight();
-        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
-        if (!(preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider())
-                || (buttonPanel.getWidth() == 0 || buttonPanel.getHeight() == 0)) {
+        int h = buttonPanel.getHeight();        
+        if (buttonPanel.getWidth() == 0 || buttonPanel.getHeight() == 0) {
             w = DEFAULT_BUTTON_SIZE * 5;
             h = DEFAULT_BUTTON_SIZE * 2;
         }
@@ -563,15 +561,20 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         mainPanel = new JPanel(new BorderLayout());        
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        
+        JPanel speedPanel = new JPanel();
+        speedPanel.setLayout(new BorderLayout());
+        speedPanel.setOpaque(false);
+        mainPanel.add(speedPanel, BorderLayout.CENTER);
 
         topButtonPanel = new JPanel();
         topButtonPanel.setLayout(new GridBagLayout());
-        mainPanel.add(topButtonPanel, BorderLayout.NORTH);
-
+        speedPanel.add(topButtonPanel, BorderLayout.NORTH);        
+        
         speedControlPanel = new JPanel();
         speedControlPanel.setLayout(new BoxLayout(speedControlPanel, BoxLayout.X_AXIS));
         speedControlPanel.setOpaque(false);
-        mainPanel.add(speedControlPanel, BorderLayout.CENTER);
+        speedPanel.add(speedControlPanel, BorderLayout.CENTER);
         sliderPanel = new JPanel();
         sliderPanel.setOpaque(false);
         
@@ -847,7 +850,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 speedSliderContinuous.setOrientation(JSlider.HORIZONTAL);
             }
             if ( preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider() ) {
-                buttonPanel.setSize(mainPanel.getHeight()*5/2, speedControlPanel.getHeight());
+                buttonPanel.setSize(mainPanel.getHeight()*5/2, mainPanel.getHeight());
                 resizeButtons();
             }
             mainPanel.remove(buttonPanel);
@@ -858,7 +861,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 speedSliderContinuous.setOrientation(JSlider.VERTICAL);
             }
             if ( preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider() ) {
-                buttonPanel.setSize(speedControlPanel.getWidth(), mainPanel.getWidth()*2/5);
+                buttonPanel.setSize(mainPanel.getWidth(), mainPanel.getWidth()*2/5);
                 resizeButtons();
             }
             mainPanel.remove(buttonPanel);
@@ -1074,7 +1077,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         internalAdjust = false;
         Element window = e.getChild("window");
         WindowPreferences.setPreferences(this, window);
-        resizeButtons();
     }
 
     @Override
