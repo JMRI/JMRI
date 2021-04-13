@@ -9,7 +9,6 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.SignalMast;
@@ -18,18 +17,20 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionSignalMast;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionSignalMast object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
 
     public static final int NUM_COLUMNS_TEXT_FIELDS = 20;
     
     private JTabbedPane _tabbedPaneSignalMast;
-    private BeanSelectCreatePanel<SignalMast> _signalMastBeanPanel;
+    private BeanSelectPanel<SignalMast> _signalMastBeanPanel;
     private JPanel _panelSignalMastDirect;
     private JPanel _panelSignalMastReference;
     private JPanel _panelSignalMastLocalVariable;
@@ -60,7 +61,7 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
     private JTextField _signalMastAspectLocalVariableTextField;
     private JTextField _signalMastAspectFormulaTextField;
     
-    private BeanSelectCreatePanel<SignalMast> _exampleSignalMastBeanPanel;
+    private BeanSelectPanel<SignalMast> _exampleSignalMastBeanPanel;
     
     
     @Override
@@ -73,7 +74,7 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
         JPanel examplePanel = new JPanel();
         JPanel innerExamplePanel = new JPanel();
         innerExamplePanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        _exampleSignalMastBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(SignalMastManager.class), null);
+        _exampleSignalMastBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(SignalMastManager.class), null);
         innerExamplePanel.add(_exampleSignalMastBeanPanel);
         
         JPanel expressionPanel = new JPanel();
@@ -95,7 +96,7 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
             enableDisableExampleSignalMastBeanPanel();
         });
         
-        _signalMastBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(SignalMastManager.class), null);
+        _signalMastBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(SignalMastManager.class), null);
         _panelSignalMastDirect.add(_signalMastBeanPanel);
         
         _signalMastReferenceTextField = new JTextField();
@@ -374,39 +375,31 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
             throw new IllegalArgumentException("object must be an ExpressionSignalMast but is a: "+object.getClass().getName());
         }
         ExpressionSignalMast expression = (ExpressionSignalMast)object;
-        try {
-            if (!_signalMastBeanPanel.isEmpty() && (_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastDirect)) {
-                SignalMast signalMast = _signalMastBeanPanel.getNamedBean();
-                if (signalMast != null) {
-                    NamedBeanHandle<SignalMast> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(signalMast.getDisplayName(), signalMast);
-                    expression.setSignalMast(handle);
-                }
-            } else {
-                expression.removeSignalMast();
+        if (!_signalMastBeanPanel.isEmpty() && (_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastDirect)) {
+            SignalMast signalMast = _signalMastBeanPanel.getNamedBean();
+            if (signalMast != null) {
+                NamedBeanHandle<SignalMast> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(signalMast.getDisplayName(), signalMast);
+                expression.setSignalMast(handle);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for signalMast", ex);
+        } else {
+            expression.removeSignalMast();
         }
         
-        try {
-            if (!_exampleSignalMastBeanPanel.isEmpty()
-                    && (_tabbedPaneSignalMast.getSelectedComponent() != _panelSignalMastDirect)
-                    && (_tabbedPaneAspectType.getSelectedComponent() == _panelAspectTypeDirect)) {
-                
-                SignalMast signalMast = _exampleSignalMastBeanPanel.getNamedBean();
-                if (signalMast != null) {
-                    NamedBeanHandle<SignalMast> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(signalMast.getDisplayName(), signalMast);
-                    expression.setExampleSignalMast(handle);
-                }
-            } else {
-                expression.removeExampleSignalMast();
+        if (!_exampleSignalMastBeanPanel.isEmpty()
+                && (_tabbedPaneSignalMast.getSelectedComponent() != _panelSignalMastDirect)
+                && (_tabbedPaneAspectType.getSelectedComponent() == _panelAspectTypeDirect)) {
+
+            SignalMast signalMast = _exampleSignalMastBeanPanel.getNamedBean();
+            if (signalMast != null) {
+                NamedBeanHandle<SignalMast> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(signalMast.getDisplayName(), signalMast);
+                expression.setExampleSignalMast(handle);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for signalMast", ex);
+        } else {
+            expression.removeExampleSignalMast();
         }
         
         try {
@@ -476,6 +469,6 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSignalMastSwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSignalMastSwing.class);
     
 }

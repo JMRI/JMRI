@@ -12,17 +12,19 @@ import jmri.jmrit.logixng.actions.ActionLocalVariable;
 import jmri.jmrit.logixng.actions.ActionLocalVariable.VariableOperation;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.BeanSelectPanel;
 
 /**
  * Configures an ActionLocalVariable object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
 
     private JTextField _localVariableTextField;
     
     private JTabbedPane _tabbedPaneVariableOperation;
-    private BeanSelectCreatePanel<Memory> _copyMemoryBeanPanel;
+    private BeanSelectPanel<Memory> _copyMemoryBeanPanel;
     private JPanel _setToNull;
     private JPanel _setToConstant;
     private JPanel _copyMemory;
@@ -60,7 +62,7 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
         _setToConstantTextField = new JTextField(30);
         _setToConstant.add(_setToConstantTextField);
         
-        _copyMemoryBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(MemoryManager.class), null);
+        _copyMemoryBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
         _copyMemory.add(_copyMemoryBeanPanel);
         
         _copyLocalVariableTextField = new JTextField(30);
@@ -126,19 +128,15 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
         action.setLocalVariable(_localVariableTextField.getText());
         
         
-        try {
-            if (!_copyMemoryBeanPanel.isEmpty()
-                    && (_tabbedPaneVariableOperation.getSelectedComponent() == _copyMemory)) {
-                Memory otherMemory = _copyMemoryBeanPanel.getNamedBean();
-                if (otherMemory != null) {
-                    NamedBeanHandle<Memory> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(otherMemory.getDisplayName(), otherMemory);
-                    action.setMemory(handle);
-                }
+        if (!_copyMemoryBeanPanel.isEmpty()
+                && (_tabbedPaneVariableOperation.getSelectedComponent() == _copyMemory)) {
+            Memory otherMemory = _copyMemoryBeanPanel.getNamedBean();
+            if (otherMemory != null) {
+                NamedBeanHandle<Memory> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(otherMemory.getDisplayName(), otherMemory);
+                action.setMemory(handle);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for memory", ex);     // No I18N
         }
         
         try {
@@ -173,6 +171,6 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
     public void dispose() {
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLocalVariableSwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLocalVariableSwing.class);
     
 }
