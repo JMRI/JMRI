@@ -66,7 +66,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright 2001, 2002, 2003
  * @author B. Milhaupt Copyright 2015, 2016, 2018
  * @author Randall Wood Copyright 2016
- * @author Michael Richardson
+ * @author Michael Richardson Copyright (C) 2021
  */
 public class LocoNetMessageInterpret {
 
@@ -2367,9 +2367,9 @@ public class LocoNetMessageInterpret {
             int section = 1 + (l.getElement(3) / 16) + (l.getElement(2) & 0x1F) * 8;
 
             String locoAddr = convertToMixed(l.getElement(5), l.getElement(4));
-            String transpActivity = (type == LnConstants.OPC_MULTI_SENSE_PRESENT)
-                    ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_PRESENT")
-                    : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_ABSENT");
+            String transpActivity = (type == LnConstants.OPC_MULTI_SENSE_ABSENT)
+                    ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_ABSENT")
+                    : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_PRESENT");
 
             String direction = ((l.getElement(6) & 0x40) == 0)
                     ? Bundle.getMessage("LN_MSG_DIRECTION_EAST")
@@ -2378,8 +2378,9 @@ public class LocoNetMessageInterpret {
             return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_TRANSP_REPORT",
                     locoAddr, direction, transpActivity,
                     reporterSystemName, reporterUserName);
+        } else {
+            return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_UNKNOWN_MESSAGE");
         }
-        return "";
     }
 
     private static String interpretOpcWrSlDataOpcSlRdData(LocoNetMessage l) {

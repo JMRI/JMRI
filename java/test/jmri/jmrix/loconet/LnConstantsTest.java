@@ -8,7 +8,7 @@ import org.junit.jupiter.api.*;
 /**
  *
  * @author Paul Bender Copyright (C) 2017
- * @author Michael Richardson
+ * @author Michael Richardson Copyright (C) 2021
  */
 public class LnConstantsTest {
 

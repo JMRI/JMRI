@@ -89,7 +89,7 @@ package jmri.jmrix.loconet;
  * @author John Kabat
  * @author Alain Le Marchand
  * @author B. Milhaupt Copyright (C) 2018
- * @author Michael Richardson
+ * @author Michael Richardson Copyright (C) 2021
  */
 public final class LnConstants {
 
