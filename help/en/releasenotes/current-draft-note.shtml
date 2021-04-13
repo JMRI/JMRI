@@ -71,7 +71,10 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Initial support for LocoNet Multi Sense Long OpCode.  This Long OpCode is used by
+                  <a href="https://www.digikeijs.com/en/dr5088rc-digidetect.html">Digikeijs DR5088RC feedback module with occupancy detection</a> to transmit
+                  RailCom information over LocoNet.
+                </li>
             </ul>
 
         <h4>Maple</h4>
