@@ -978,7 +978,7 @@ public class AutoActiveTrain implements ThrottleListener {
             float speed = -1.0f;
             if (aspectSpeedStr != null) {
                 try {
-                    speed = Float.valueOf(aspectSpeedStr);
+                    speed = Float.parseFloat(aspectSpeedStr);
                 } catch (NumberFormatException nx) {
                     try {
                         speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(aspectSpeedStr);
@@ -1137,7 +1137,7 @@ public class AutoActiveTrain implements ThrottleListener {
         float blockSpeed = -1.0f;
         if (!blockSpeedName.isEmpty()) {
             try {
-                blockSpeed = Float.valueOf(blockSpeedName);
+                blockSpeed = Float.parseFloat(blockSpeedName);
             } catch (NumberFormatException nx) {
                 try {
                     blockSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(blockSpeedName);
