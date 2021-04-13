@@ -56,8 +56,7 @@ public abstract class QualifierAdder {
 
         // Add the AND logic - listen for change and ensure result correct
         if (lq.size() > 1) {
-            QualifierCombiner qc = new QualifierCombiner(lq);
-            addListener(qc);
+            new QualifierCombiner(lq);
         }
     }
 
