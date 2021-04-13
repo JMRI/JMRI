@@ -452,7 +452,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     private void layoutButtonPanel() {
         final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
         GridBagConstraints constraints = makeDefaultGridBagConstraints();
-        if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {            
+        if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
             resizeButtons();
             constraints.fill = GridBagConstraints.CENTER;                           
             constraints.insets =  new Insets(0, 0, 0, 0);
@@ -490,24 +490,26 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             buttonPanel.add(stopButton, constraints);
         }
     }
-        
-     private void resizeButtons() {
-         int w = buttonPanel.getWidth() ;
-         int h = buttonPanel.getHeight() ;
-         if ( buttonPanel.getWidth() == 0 || buttonPanel.getHeight() == 0) {
-             w = DEFAULT_BUTTON_SIZE * 5 ;
-             h = DEFAULT_BUTTON_SIZE * 2 ;
-         }
-         forwardButton.setIcon( scaleTo( forwardButtonIcon, Math.floorDiv(w*2,5), h ));
-         forwardButton.setSelectedIcon( scaleTo( forwardSelectedButtonIcon, Math.floorDiv(w*2,5), h ));
-         reverseButton.setIcon( scaleTo( reverseButtonIcon, Math.floorDiv(w*2,5), h ));
-         reverseButton.setSelectedIcon( scaleTo( reverseSelectedButtonIcon, Math.floorDiv(w*2,5), h ));
-         idleButton.setIcon( scaleTo( idleButtonIcon, Math.floorDiv(w,5), Math.floorDiv(h,2) ));
-         idleButton.setSelectedIcon(scaleTo( idleSelectedButtonIcon, Math.floorDiv(w,5), Math.floorDiv(h,2) ));
-         idleButton.setRolloverIcon( scaleTo( idleSelectedButtonIcon, Math.floorDiv(w,5), Math.floorDiv(h,2) ));
-         stopButton.setIcon( scaleTo( stopButtonIcon, Math.floorDiv(w,5), h/2 ));
-         stopButton.setRolloverIcon( scaleTo( stopSelectedButtonIcon, Math.floorDiv(w,5), Math.floorDiv(h,2) ));
-         stopButton.setSelectedIcon( scaleTo( stopSelectedButtonIcon, Math.floorDiv(w,5), Math.floorDiv(h,2) ));
+
+    private void resizeButtons() {        
+        int w = buttonPanel.getWidth();
+        int h = buttonPanel.getHeight();
+        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
+        if (!(preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider())
+                || (buttonPanel.getWidth() == 0 || buttonPanel.getHeight() == 0)) {
+            w = DEFAULT_BUTTON_SIZE * 5;
+            h = DEFAULT_BUTTON_SIZE * 2;
+        }
+        forwardButton.setIcon(scaleTo(forwardButtonIcon, Math.floorDiv(w * 2, 5), h));
+        forwardButton.setSelectedIcon(scaleTo(forwardSelectedButtonIcon, Math.floorDiv(w * 2, 5), h));
+        reverseButton.setIcon(scaleTo(reverseButtonIcon, Math.floorDiv(w * 2, 5), h));
+        reverseButton.setSelectedIcon(scaleTo(reverseSelectedButtonIcon, Math.floorDiv(w * 2, 5), h));
+        idleButton.setIcon(scaleTo(idleButtonIcon, Math.floorDiv(w, 5), Math.floorDiv(h, 2)));
+        idleButton.setSelectedIcon(scaleTo(idleSelectedButtonIcon, Math.floorDiv(w, 5), Math.floorDiv(h, 2)));
+        idleButton.setRolloverIcon(scaleTo(idleSelectedButtonIcon, Math.floorDiv(w, 5), Math.floorDiv(h, 2)));
+        stopButton.setIcon(scaleTo(stopButtonIcon, Math.floorDiv(w, 5), h / 2));
+        stopButton.setRolloverIcon(scaleTo(stopSelectedButtonIcon, Math.floorDiv(w, 5), Math.floorDiv(h, 2)));
+        stopButton.setSelectedIcon(scaleTo(stopSelectedButtonIcon, Math.floorDiv(w, 5), Math.floorDiv(h, 2)));
     }
      
     private ImageIcon scaleTo(ImageIcon imic, int w, int h ) {
@@ -1072,6 +1074,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         internalAdjust = false;
         Element window = e.getChild("window");
         WindowPreferences.setPreferences(this, window);
+        resizeButtons();
     }
 
     @Override
