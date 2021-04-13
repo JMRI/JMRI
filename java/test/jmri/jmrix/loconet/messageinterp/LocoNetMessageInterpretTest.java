@@ -15,6 +15,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 /**
  *
  * @author B. Milhaupt Copyright (C) 2018
+ * @author Michael Richardson Copyright (C) 2021
  */
 public class LocoNetMessageInterpretTest {
 
@@ -388,7 +389,52 @@ public class LocoNetMessageInterpretTest {
                         "BXP88 Board ID 17 section 1 or "+
                         "the BXPA1 Board ID 129 section).\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
+    }
 
+    @Test
+    public void testMultiSenseLong() {
+        LocoNetMessage l;
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
+        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
+        LnReporterManager lnrm = new LnReporterManager(lnis.getSystemConnectionMemo());
+
+        jmri.InstanceManager.setReporterManager(lnrm);
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x20, 0x25, 0x7D, 0x0A, 0x40, 0x00, 0x24});
+        Assert.assertEquals("MSL short address 10 West Present",
+                "Transponder address 10 (short) (or long address 16010) facing West present at LR38 ().\n",
+                        LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x2F, 0x7F, 0x00, 0x0A, 0x40, 0x00, 0x0C});
+        Assert.assertEquals("MSL max LR number",
+                "Transponder address 10 (short) facing West present at LR2048 ().\n",
+                        LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        ((LnReporter) lnrm.provideReporter("LR9")).setUserName("DepotBlock");
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x20, 0x08, 0x1D, 0x5B, 0x00, 0x00, 0x78});
+        Assert.assertEquals("MSL long address 3803 west present with Friendly Name",
+                "Transponder address 3803 facing East present at LR9 (DepotBlock).\n",
+                        LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x20, 0x1D, 0x4F, 0x7F, 0x40, 0x00, 0x5B});
+        Assert.assertEquals("MSL max DCC address",
+                "Transponder address 10239 facing West present at LR30 ().\n",
+                        LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x11, 0x20, 0x0D, 0x1D, 0x5B, 0x40, 0x00, 0x3D});
+        Assert.assertEquals("MSL unhandled length as not 0x09",
+                "Unable to parse LocoNet OPC_MULTI_SENSE_LONG message.\n",
+                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x4F, 0x7F, 0x00, 0x0A, 0x40, 0x00, 0x0C});
+        Assert.assertEquals("MSL with RailCom App:Dyn",
+                "Transponder address 10 (short) facing West present at LR2048 ().\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE0, 0x09, 0x6F, 0x7F, 0x00, 0x0A, 0x40, 0x00, 0x0C});
+        Assert.assertEquals("MSL with RailCom Reserved",
+                "Transponder address 10 (short) facing West present at LR2048 ().\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
     }
 
     @Test
