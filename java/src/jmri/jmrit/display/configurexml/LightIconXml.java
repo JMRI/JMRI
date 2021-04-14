@@ -110,7 +110,12 @@ public class LightIconXml extends PositionableLabelXml {
             }
         }
 
-        p.putItem(l);
+        try {
+            p.putItem(l);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.LIGHTS, element);
     }
