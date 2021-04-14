@@ -89,7 +89,6 @@ final public class TransitCreationTool {
                         seqNo++;
                     } else {
                         if (smlm.getSignalMastLogic((SignalMast) list.get(i - 1)).getFacingBlock() != null) {
-                            Section secFoundForward = null;
                             // find shortest section with facing block at bottom
                             // of list
                             Block blockToFind =
@@ -109,19 +108,13 @@ final public class TransitCreationTool {
                                         count = sec.getBlockList().size();
                                         secFound = sec;
                                     }
-                                    //if a block section, prefer that section
-                                    if (sec.getBlockList().size() == count) {
-                                        if (sec.getSectionType() == sec.USERDEFINED){
-                                            secFound = sec;
-                                            secFoundForward = sec;
-                                        }
-                                    }
+
                                 }
                             }
                             //get the sections of signalmastlogics which have the first signal mast as their destination
-                            //each section will be the same so we only need the first one
+                            //each section will be the same so weonly need the first one
 
-                            
+                            Section secFoundForward = null;
                             SignalMast sm = (SignalMast) list.get(i - 1);
                             List<SignalMastLogic> smlList =  smlm.getLogicsByDestination(sm);
                             for( SignalMastLogic sml : smlList){
