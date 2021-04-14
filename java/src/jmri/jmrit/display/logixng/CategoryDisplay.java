@@ -3,14 +3,14 @@ package jmri.jmrit.display.logixng;
 import jmri.jmrit.logixng.Category;
 
 /**
- * Defines the category LocoNet
+ * Defines the category Display
  * 
- * @author Daniel Bergqvist Copyright 2020
+ * @author Daniel Bergqvist Copyright 2021
  */
 public final class CategoryDisplay extends Category {
     
     /**
-     * A item on the layout, for example turnout, sensor and signal mast.
+     * An item related to panels.
      */
     public static final CategoryDisplay DISPLAY = new CategoryDisplay();
     

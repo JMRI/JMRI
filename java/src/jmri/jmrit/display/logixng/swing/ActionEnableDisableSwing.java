@@ -136,8 +136,6 @@ public class ActionEnableDisableSwing extends AbstractDigitalActionSwing {
             }
             if (action.getPositionableName() != null) {
                 _positionableComboBox.setSelectedItem(action.getPositionableName());
-            } else {
-                _positionableComboBox.setSelectedItem("");
             }
             _positionableReferenceTextField.setText(action.getReference());
             _positionableLocalVariableTextField.setText(action.getLocalVariable());
@@ -168,7 +166,7 @@ public class ActionEnableDisableSwing extends AbstractDigitalActionSwing {
     }
     
     private void updatePositionables(ActionEvent e) {
-        _positionableComboBox.removeAll();
+        _positionableComboBox.removeAllItems();
         if (_editorComboBox.getSelectedIndex() == -1) return;
         
         EditorItem item = _editorComboBox.getItemAt(_editorComboBox.getSelectedIndex());
