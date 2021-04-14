@@ -566,7 +566,9 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Audio buffers and sources now are removed when a VSDecoder is deleted.</li>
+            <li>Deprecated methods in VSDecoderManager: getVSDecoder(String profile_name, String path),
+            getNumberOfDecoders. And in VSDecoder: setDefault, isDefault.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
