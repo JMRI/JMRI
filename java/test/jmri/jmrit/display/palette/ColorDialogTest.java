@@ -2,9 +2,9 @@ package jmri.jmrit.display.palette;
 
 import java.awt.Color;
 
-import jmri.jmrit.display.EditorFrameOperator;
-import jmri.jmrit.display.PositionableLabel;
+import jmri.jmrit.display.*;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import jmri.jmrit.display.palette.Bundle;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -112,7 +112,7 @@ public class ColorDialogTest {
         assertThat(_pos.getPopupUtility().getForeground()).withFailMessage("font color is red").isEqualTo(Color.BLUE);
     }
 
-    void startEditor() {
+    void startEditor() throws Positionable.DuplicateIdException {
         _cpe = new ControlPanelEditor("Fred");
         _pos = new PositionableLabel("Some Text", _cpe);
         _cpe.putItem(_pos);
@@ -166,7 +166,7 @@ public class ColorDialogTest {
     }
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws Positionable.DuplicateIdException {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.resetProfileManager();

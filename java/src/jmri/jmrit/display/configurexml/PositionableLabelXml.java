@@ -1,16 +1,20 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.util.gui.GuiLafPreferencesManager;
+
 import java.awt.Color;
 import java.awt.Font;
+
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.ToolTip;
+
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
@@ -152,6 +156,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
      */
     public void storeCommonAttributes(Positionable p, Element element) {
 
+        if (p.getId() != null) element.setAttribute("id", p.getId());
         element.setAttribute("x", "" + p.getX());
         element.setAttribute("y", "" + p.getY());
         element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
@@ -199,9 +204,11 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
      *
      * @param element Top level Element to unpack.
      * @param o       Editor as an Object
+     * @throws JmriConfigureXmlException when a error prevents creating the objects as as
+     *                   required by the input XML
      */
     @Override
-    public void load(Element element, Object o) {
+    public void load(Element element, Object o) throws JmriConfigureXmlException {
         // create the objects
         PositionableLabel l = null;
 
@@ -274,7 +281,12 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             editor.loadFailed();
             return;
         }
-        editor.putItem(l);
+        try {
+            editor.putItem(l);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.LABELS, element);
     }
@@ -423,7 +435,16 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         }
     }
 
-    public void loadCommonAttributes(Positionable l, int defaultLevel, Element element) {
+    public void loadCommonAttributes(Positionable l, int defaultLevel, Element element)
+            throws JmriConfigureXmlException {
+        
+        if (element.getAttribute("id") != null) {
+            try {
+                l.setId(element.getAttribute("id").getValue());
+            } catch (Positionable.DuplicateIdException e) {
+                throw new JmriConfigureXmlException("Positionable id is not unique", e);
+            }
+        }
         try {
             l.setControlling(!element.getAttribute("forcecontroloff").getBooleanValue());
         } catch (DataConversionException e1) {

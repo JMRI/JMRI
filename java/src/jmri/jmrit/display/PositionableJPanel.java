@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.Objects;
 
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
@@ -77,7 +78,9 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
 
     /** {@inheritDoc} */
     @Override
-    public void setId(String id) {
+    public void setId(String id) throws Positionable.DuplicateIdException {
+        if (Objects.equals(this._id, id)) return;
+        _editor.positionalIdChange(this, id);
         this._id = id;
     }
 

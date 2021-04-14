@@ -106,8 +106,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     private boolean _loadFailed = false;
 
-    protected ArrayList<Positionable> _contents = new ArrayList<>();
-    protected Map<String, Positionable> _idContents = new HashMap<>();
+    private ArrayList<Positionable> _contents = new ArrayList<>();
+    private Map<String, Positionable> _idContents = new HashMap<>();
     protected JLayeredPane _targetPanel;
     private JFrame _targetFrame;
     private JScrollPane _panelScrollPane;
@@ -311,11 +311,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     public List<Positionable> getContents() {
-        return _contents;
+        return Collections.unmodifiableList(_contents);
     }
 
     public Map<String, Positionable> getIdContents() {
-        return _idContents;
+        return Collections.unmodifiableMap(_idContents);
     }
 
     public void setDefaultToolTip(ToolTip dtt) {
@@ -1002,6 +1002,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             ed.init(getName());
 
             ed._contents = new ArrayList<>(_contents);
+            ed._idContents = new HashMap<>(_idContents);
 
             for (Positionable p : _contents) {
                 p.setEditor(ed);
@@ -1331,15 +1332,25 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         popup.add(CoordinateEdit.getIdEditAction(p, "EditId", this));
     }
 
-    public boolean idHasChanged(Positionable p, String oldId, String newId) {
-        if (Objects.equals(newId, oldId)) return true;
+    /**
+     * Check if it's possible to change the id of the Positionable to the
+     * desired string.
+     * @param p the Positionable
+     * @param newId the desired new id
+     * @throws jmri.jmrit.display.Positionable.DuplicateIdException if another
+     *         Positionable in the editor already has this id
+     */
+    public void positionalIdChange(Positionable p, String newId)
+            throws Positionable.DuplicateIdException {
 
-        if ((newId != null) && (_idContents.containsKey(newId))) return false;
+        if (Objects.equals(newId, p.getId())) return;
 
-        if (oldId != null) _idContents.remove(oldId);
+        if ((newId != null) && (_idContents.containsKey(newId))) {
+            throw new Positionable.DuplicateIdException();
+        }
+
+        if (p.getId() != null) _idContents.remove(p.getId());
         if (newId != null) _idContents.put(newId, p);
-
-        return true;
     }
 
     /**
@@ -1526,6 +1537,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             Positionable il = _contents.get(i);
             if (il instanceof LocoIcon) {
                 il.remove();
+                if (il.getId() != null) _idContents.remove(il.getId());
             }
         }
     }
@@ -1545,7 +1557,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         l.setSize(icon.getIconWidth(), icon.getIconHeight());
         l.setDisplayLevel(BKG);
         l.setLocation(getNextBackgroundLeft(), 0);
-        putItem(l);
+        try {
+            putItem(l);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
         return l;
     }
 
@@ -1554,7 +1571,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(LABELS);
         setNextLocation(l);
-        putItem(l);
+        try {
+            putItem(l);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
         return l;
     }
 
@@ -1602,10 +1624,15 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         l.setHorizontalTextPosition(SwingConstants.CENTER);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setEditable(isEditable());    // match popup mode to editor mode
-        putItem(l);
+        try {
+            putItem(l);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
     }
 
-    public void putItem(Positionable l) {
+    public void putItem(Positionable l) throws Positionable.DuplicateIdException {
         l.invalidate();
         l.setPositionable(true);
         l.setVisible(true);
@@ -1615,6 +1642,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         addToTarget(l);
         if (!_contents.add(l)) {
             log.error("Unable to add {} to _contents", l.getNameString());
+        }
+        if (l.getId() != null) {
+            if (_idContents.containsKey(l.getId())) {
+                throw new Positionable.DuplicateIdException();
+            }
+            _idContents.put(l.getId(), l);
         }
         if (log.isDebugEnabled()) {
             log.debug("putItem {} to _contents. level= {}", l.getNameString(), l.getDisplayLevel());
@@ -2021,7 +2054,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
         result.setDisplayLevel(SENSORS);
         setNextLocation(result);
-        putItem(result);
+        try {
+            putItem(result);
+        } catch (Positionable.DuplicateIdException ex) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", ex);
+        }
         return result;
     }
 
@@ -2049,7 +2087,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
         result.setDisplayLevel(TURNOUTS);
         setNextLocation(result);
-        putItem(result);
+        try {
+            putItem(result);
+        } catch (Positionable.DuplicateIdException ex) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", ex);
+        }
         return result;
     }
 
@@ -2100,7 +2143,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         result.setTurnout(editor.getTurnout("east").getName(), SlipTurnoutIcon.EAST);
         result.setDisplayLevel(TURNOUTS);
         setNextLocation(result);
-        putItem(result);
+        try {
+            putItem(result);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
         return result;
     }
 
@@ -2121,7 +2169,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
         result.setDisplayLevel(SIGNALS);
         setNextLocation(result);
-        putItem(result);
+        try {
+            putItem(result);
+        } catch (Positionable.DuplicateIdException ex) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", ex);
+        }
         return result;
     }
 
@@ -2136,7 +2189,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         result.setSignalMast(editor.getTableSelection().getDisplayName());
         result.setDisplayLevel(SIGNALS);
         setNextLocation(result);
-        putItem(result);
+        try {
+            putItem(result);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
         return result;
     }
 
@@ -2148,7 +2206,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         result.setSize(result.getPreferredSize().width, result.getPreferredSize().height);
         result.setDisplayLevel(MEMORIES);
         setNextLocation(result);
-        putItem(result);
+        try {
+            putItem(result);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
         return result;
     }
 
@@ -2159,7 +2222,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         result.setSize(result.getPreferredSize().width, result.getPreferredSize().height);
         result.setDisplayLevel(MEMORIES);
         setNextLocation(result);
-        putItem(result);
+        try {
+            putItem(result);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
         return result;
     }
 
@@ -2170,7 +2238,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         result.setSize(result.getPreferredSize().width, result.getPreferredSize().height);
         result.setDisplayLevel(MEMORIES);
         setNextLocation(result);
-        putItem(result);
+        try {
+            putItem(result);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
         return result;
     }
 
@@ -2182,7 +2255,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         result.setSize(result.getPreferredSize().width, result.getPreferredSize().height);
         result.setDisplayLevel(MEMORIES);
         setNextLocation(result);
-        putItem(result);
+        try {
+            putItem(result);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
         return result;
     }
 
@@ -2201,7 +2279,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         result.setLight((Light) editor.getTableSelection());
         result.setDisplayLevel(LIGHTS);
         setNextLocation(result);
-        putItem(result);
+        try {
+            putItem(result);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
         return result;
     }
 
@@ -2212,7 +2295,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         result.setSize(result.getPreferredSize().width, result.getPreferredSize().height);
         result.setDisplayLevel(REPORTERS);
         setNextLocation(result);
-        putItem(result);
+        try {
+            putItem(result);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
         return result;
     }
 
@@ -2243,7 +2331,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 //        l.setPopupUtility(null);        // no text
         result.setDisplayLevel(ICONS);
         setNextLocation(result);
-        putItem(result);
+        try {
+            putItem(result);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
         result.updateSize();
         return result;
     }
@@ -2264,7 +2357,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         result.setUpDown(editor.getUpDown());
         result.setDisplayLevel(SENSORS);
         setNextLocation(result);
-        putItem(result);
+        try {
+            putItem(result);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
         return result;
     }
 
@@ -2274,7 +2372,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         result.update();
         result.setDisplayLevel(CLOCK);
         setNextLocation(result);
-        putItem(result);
+        try {
+            putItem(result);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
         return result;
     }
 
@@ -2283,7 +2386,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         result.setSize(result.getPreferredSize().width, result.getPreferredSize().height);
         result.setDisplayLevel(SENSORS);
         setNextLocation(result);
-        putItem(result);
+        try {
+            putItem(result);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
         return result;
     }
 
@@ -2468,6 +2576,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         //todo check that parent == _targetPanel
         //Container parent = this.getParent();
         // force redisplay
+        if (l.getId() != null) _idContents.remove(l.getId());
         return _contents.remove(l);
     }
 
@@ -2507,6 +2616,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         InstanceManager.getDefault(EditorManager.class).remove(this);
         setVisible(false);
         _contents.clear();
+        _idContents.clear();
         removeAll();
         super.dispose();
     }

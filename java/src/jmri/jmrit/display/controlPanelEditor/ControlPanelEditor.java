@@ -505,7 +505,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
         menuItem = new JMenuItem(Bundle.getMessage("SelectAll"));
         menuItem.addActionListener((ActionEvent event) -> {
-            _selectionGroup = _contents;
+            _selectionGroup = new ArrayList<>(getContents());
             _targetPanel.repaint();
         });
         setMenuAcceleratorKey(menuItem, KeyEvent.VK_A);
@@ -577,7 +577,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         try {
             Class<?> cl = Class.forName(name);
             _selectionGroup = new ArrayList<>();
-            for (Positionable pos : _contents) {
+            for (Positionable pos : getContents()) {
                 if (cl.isInstance(pos)) {
                     _selectionGroup.add(pos);
                 }
@@ -615,7 +615,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
     private void selectLevel(int i) {
         _selectionGroup = new ArrayList<>();
-        for (Positionable pos : _contents) {
+        for (Positionable pos : getContents()) {
             if (pos.getDisplayLevel() == i) {
                 _selectionGroup.add(pos);
             }
@@ -657,7 +657,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                             pos.setLocation(pos.getLocation().x + _anchorX - minX, pos.getLocation().y + _anchorY - minY);
                             // now set display level in the pane.
                             pos.setDisplayLevel(pos.getDisplayLevel());
-                            putItem(pos);
+                            try {
+                                pos.setId(null);
+                                putItem(pos);
+                            } catch (Positionable.DuplicateIdException e) {
+                                // This should never happen
+                                log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+                            }
                             pos.updateSize();
                             pos.setVisible(true);
                             _selectionGroup.add(pos);
@@ -1473,7 +1479,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                         ((PositionableIcon) pos).displayState(bean.getState());
                     }
                 }
-                putItem(pos);
+                try {
+                    pos.setId(null);
+                    putItem(pos);
+                } catch (Positionable.DuplicateIdException e) {
+                    // This should never happen
+                    log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+                }
                 log.debug("Add {}", pos.getNameString());
             }
             if (_selectionGroup.get(0) instanceof LocoIcon) {
@@ -1795,7 +1807,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 // now set display level in the pane.
                 item.setDisplayLevel(item.getDisplayLevel());
                 item.setEditor(this);
-                putItem(item);
+                try {
+                    putItem(item);
+                } catch (Positionable.DuplicateIdException e) {
+                    // This should never happen
+                    log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+                }
                 item.updateSize();
                 _circuitBuilder.doMouseReleased(item, true);
                 evt.dropComplete(true);
@@ -1814,7 +1831,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 }
                 ni.setLocation((int) Math.round(pt.x/getPaintScale()), (int) Math.round(pt.y/getPaintScale()));
                 ni.setEditor(this);
-                putItem(ni);
+                try {
+                    putItem(ni);
+                } catch (Positionable.DuplicateIdException e) {
+                    // This should never happen
+                    log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+                }
                 ni.updateSize();
                 evt.dropComplete(true);
                 return;
@@ -1825,7 +1847,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 l.setDisplayLevel(LABELS);
                 l.setLocation((int) Math.round(pt.x/getPaintScale()), (int) Math.round(pt.y/getPaintScale()));
                 l.setEditor(this);
-                putItem(l);
+                try {
+                    putItem(l);
+                } catch (Positionable.DuplicateIdException e) {
+                    // This should never happen
+                    log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+                }
                 evt.dropComplete(true);
             } else if (tr.isDataFlavorSupported(_positionableListDataFlavor)) {
                 List<Positionable> dragGroup
@@ -1833,7 +1860,18 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 for (Positionable pos : dragGroup) {
                     pos.setEditor(this);
                     pos.setLocation((int) Math.round(pt.x/getPaintScale()), (int) Math.round(pt.y/getPaintScale()));
-                    putItem(pos);
+                    try {
+                        putItem(pos);
+                    } catch (Positionable.DuplicateIdException ignore) {
+                        try {
+                            // Duplicate id so clear the id
+                            pos.setId(null);
+                            putItem(pos);
+                        } catch (Positionable.DuplicateIdException e) {
+                            // This should never happen
+                            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+                        }
+                    }
                     pos.updateSize();
                     log.debug("DnD Add {}", pos.getNameString());
                 }

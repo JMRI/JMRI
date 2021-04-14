@@ -1,7 +1,10 @@
 package jmri.jmrit.display.controlPanelEditor.shape.configurexml;
 
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.controlPanelEditor.shape.PositionableCircle;
+
 import org.jdom2.Element;
 
 /**
@@ -45,7 +48,7 @@ public class PositionableCircleXml extends PositionableShapeXml {
      * @param o       Editor as an Object
      */
     @Override
-    public void load(Element element, Object o) {
+    public void load(Element element, Object o) throws JmriConfigureXmlException {
         // create the objects
         Editor ed = (Editor) o;
         PositionableCircle ps = new PositionableCircle(ed);
@@ -55,7 +58,11 @@ public class PositionableCircleXml extends PositionableShapeXml {
 
         // get object class and determine editor being used
         Editor editor = (Editor) o;
-        editor.putItem(ps);
+        try {
+            ed.putItem(ps);
+        } catch (Positionable.DuplicateIdException e) {
+            throw new JmriConfigureXmlException("Positionable id is not unique", e);
+        }
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(ps, Editor.MARKERS, element);
     }

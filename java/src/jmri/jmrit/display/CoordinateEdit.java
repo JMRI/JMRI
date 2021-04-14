@@ -619,26 +619,31 @@ public class CoordinateEdit extends JmriJFrame {
             String t = xTextField.getText();
             boolean hasText = (t != null && t.length() > 0);
             if (hasText) {
-                if (editor.idHasChanged(pl, oldStr, t)) {
+                try {
                     pp.setId(t);
                     pp.updateSize();
                     dispose();
-                } else {
+                } catch (Positionable.DuplicateIdException ignore) {
                     JOptionPane.showMessageDialog(editor,
                             Bundle.getMessage("ErrorIdNotUnique"),
                             Bundle.getMessage("ErrorDialog"),
                             JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                pp.setId(null);
-                pp.updateSize();
-                dispose();
+                try {
+                    pp.setId(null);
+                    pp.updateSize();
+                    dispose();
+                } catch (Positionable.DuplicateIdException ex) {
+                    // This should never happen
+                    log.error("Positionable.setId(null) has thrown DuplicateIdException", ex);
+                }
             }
         });
         okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(e -> {
             PositionableLabel pp = (PositionableLabel) pl;
-            pp.setId(oldStr);
+//            pp.setId(oldStr);
             pp.updateSize();
             dispose();
         });

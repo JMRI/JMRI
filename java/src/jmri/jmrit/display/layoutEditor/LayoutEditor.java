@@ -2559,7 +2559,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * Rotate the entire layout by 90 degrees clockwise.
      */
     public void rotateLayout90() {
-        List<Positionable> positionables = new ArrayList<>(_contents);
+        List<Positionable> positionables = new ArrayList<>(getContents());
         positionables.addAll(backgroundImage);
         positionables.addAll(blockContentsLabelList);
         positionables.addAll(labelImage);
@@ -2626,7 +2626,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      */
     public void alignLayoutToGrid() {
         // align to grid
-        List<Positionable> positionables = new ArrayList<>(_contents);
+        List<Positionable> positionables = new ArrayList<>(getContents());
         positionables.addAll(backgroundImage);
         positionables.addAll(blockContentsLabelList);
         positionables.addAll(labelImage);
@@ -6395,13 +6395,23 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         leToolBarPanel.sensorComboBox.setSelectedItem(l.getSensor());
         setNextLocation(l);
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
     }
 
     public void putSensor(@Nonnull SensorIcon l) {
         l.updateSize();
         l.setDisplayLevel(Editor.SENSORS);
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
     }
 
     /**
@@ -6454,7 +6464,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     public void putSignal(@Nonnull SignalHeadIcon l) {
         l.updateSize();
         l.setDisplayLevel(Editor.SIGNALS);
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
     }
 
     @CheckForNull
@@ -6531,7 +6546,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     public void putSignalMast(@Nonnull SignalMastIcon l) {
         l.updateSize();
         l.setDisplayLevel(Editor.SIGNALS);
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
     }
 
     SignalMast getSignalMast(@Nonnull String name) {
@@ -6575,7 +6595,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     @Override
-    public void putItem(@Nonnull Positionable l) {
+    public void putItem(@Nonnull Positionable l) throws Positionable.DuplicateIdException {
         super.putItem(l);
 
         if (l instanceof SensorIcon) {
@@ -6639,7 +6659,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         l.setDisplayLevel(Editor.LABELS);
         l.setForeground(defaultTextColor);
         unionToPanelBounds(l.getBounds());
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
     }
 
     void addBlockContents() {
@@ -6668,7 +6693,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(Editor.LABELS);
         l.setForeground(defaultTextColor);
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
     }
 
     /**
@@ -6685,7 +6715,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(Editor.LABELS);
         unionToPanelBounds(l.getBounds());
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
     }
 
     /**
@@ -6697,7 +6732,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         l.setDisplayLevel(Editor.ICONS);
         unionToPanelBounds(l.getBounds());
         l.updateSize();
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
     }
 
     /**
@@ -6843,7 +6883,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     // Invoked when window has new multi-sensor ready
     public void addMultiSensor(@Nonnull MultiSensorIcon l) {
         l.setLocation(multiLocX, multiLocY);
-        putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
         leToolBarPanel.multiSensorFrame.dispose();
         leToolBarPanel.multiSensorFrame = null;
     }

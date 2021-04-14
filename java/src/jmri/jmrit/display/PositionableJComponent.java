@@ -1,10 +1,13 @@
 package jmri.jmrit.display;
 
 import java.awt.event.MouseEvent;
+import java.util.Objects;
+
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,7 +61,9 @@ public class PositionableJComponent extends JComponent implements Positionable {
 
     /** {@inheritDoc} */
     @Override
-    public void setId(String id) {
+    public void setId(String id) throws Positionable.DuplicateIdException {
+        if (Objects.equals(this._id, id)) return;
+        _editor.positionalIdChange(this, id);
         this._id = id;
     }
 
