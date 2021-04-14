@@ -37,23 +37,20 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      * <p>
      * Assumes calling method has checked that a Turnout with this
      * system name does not already exist.
-     *
-     * @param systemName turnout system name
-     * @param userName turnout user name
-     * @return null if the system name is not in a valid format
+     * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Turnout trn = null;
         // check if the output bit is available
-        int nAddress = -1;
-        nAddress = AcelaAddress.getNodeAddressFromSystemName(systemName, getMemo());
+        int nAddress = AcelaAddress.getNodeAddressFromSystemName(systemName, getMemo());
         if (nAddress == -1) {
-            return (null);
+            throw new IllegalArgumentException("Cannot get Node Address from System Name " + systemName);
         }
         int bitNum = AcelaAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == -1) {
-            return (null);
+            throw new IllegalArgumentException("Cannot get Bit Number from System Name " + systemName);
         }
 
         // Validate the systemName

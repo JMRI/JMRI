@@ -7,7 +7,6 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Turnout;
@@ -17,16 +16,18 @@ import jmri.jmrit.logixng.expressions.ExpressionTurnout;
 import jmri.jmrit.logixng.expressions.ExpressionTurnout.TurnoutState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionTurnout object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class ExpressionTurnoutSwing extends AbstractDigitalExpressionSwing {
 
     private JTabbedPane _tabbedPaneTurnout;
-    private BeanSelectCreatePanel<Turnout> turnoutBeanPanel;
+    private BeanSelectPanel<Turnout> turnoutBeanPanel;
     private JPanel _panelTurnoutDirect;
     private JPanel _panelTurnoutReference;
     private JPanel _panelTurnoutLocalVariable;
@@ -65,7 +66,7 @@ public class ExpressionTurnoutSwing extends AbstractDigitalExpressionSwing {
         _tabbedPaneTurnout.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelTurnoutLocalVariable);
         _tabbedPaneTurnout.addTab(NamedBeanAddressing.Formula.toString(), _panelTurnoutFormula);
         
-        turnoutBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(TurnoutManager.class), null);
+        turnoutBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(TurnoutManager.class), null);
         _panelTurnoutDirect.add(turnoutBeanPanel);
         
         _turnoutReferenceTextField = new JTextField();
@@ -219,18 +220,14 @@ public class ExpressionTurnoutSwing extends AbstractDigitalExpressionSwing {
             throw new IllegalArgumentException("object must be an ExpressionTurnout but is a: "+object.getClass().getName());
         }
         ExpressionTurnout expression = (ExpressionTurnout)object;
-        try {
-            if (!turnoutBeanPanel.isEmpty() && (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutDirect)) {
-                Turnout turnout = turnoutBeanPanel.getNamedBean();
-                if (turnout != null) {
-                    NamedBeanHandle<Turnout> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(turnout.getDisplayName(), turnout);
-                    expression.setTurnout(handle);
-                }
+        if (!turnoutBeanPanel.isEmpty() && (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutDirect)) {
+            Turnout turnout = turnoutBeanPanel.getNamedBean();
+            if (turnout != null) {
+                NamedBeanHandle<Turnout> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(turnout.getDisplayName(), turnout);
+                expression.setTurnout(handle);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for turnout", ex);
         }
         try {
             if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutDirect) {
@@ -270,33 +267,6 @@ public class ExpressionTurnoutSwing extends AbstractDigitalExpressionSwing {
         }
     }
     
-    
-    /**
-     * Create Turnout object for the expression
-     *
-     * @param reference Turnout application description
-     * @return The new output as Turnout object
-     */
-    protected Turnout getTurnoutFromPanel(String reference) {
-        if (turnoutBeanPanel == null) {
-            return null;
-        }
-        turnoutBeanPanel.setReference(reference); // pass turnout application description to be put into turnout Comment
-        try {
-            return turnoutBeanPanel.getNamedBean();
-        } catch (jmri.JmriException ex) {
-            log.warn("skipping creation of turnout not found for " + reference);
-            return null;
-        }
-    }
-    
-//    private void noTurnoutMessage(String s1, String s2) {
-//        log.warn("Could not provide turnout " + s2);
-//        String msg = Bundle.getMessage("WarningNoTurnout", new Object[]{s1, s2});
-//        JOptionPane.showMessageDialog(editFrame, msg,
-//                Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-//    }
-    
     /** {@inheritDoc} */
     @Override
     public String toString() {
@@ -311,6 +281,6 @@ public class ExpressionTurnoutSwing extends AbstractDigitalExpressionSwing {
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionTurnoutSwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionTurnoutSwing.class);
     
 }

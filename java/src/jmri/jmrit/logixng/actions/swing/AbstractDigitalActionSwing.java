@@ -7,10 +7,11 @@ import javax.swing.JPanel;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.swing.AbstractSwingConfigurator;
-import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 
 /**
  * Abstract class for SwingConfiguratorInterface
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public abstract class AbstractDigitalActionSwing extends AbstractSwingConfigurator {
 

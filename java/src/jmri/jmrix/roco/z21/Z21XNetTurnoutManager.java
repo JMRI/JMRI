@@ -23,9 +23,19 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager {
     }
 
     // XNet-specific methods
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
-        int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+        int addr;
+        try {
+            addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Failed to convert systemName '"+systemName+"' to a numeric Turnout address");
+        }
         Turnout t = new Z21XNetTurnout(getSystemPrefix(), addr, tc);
         t.setUserName(userName);
         return t;

@@ -23,6 +23,12 @@
           <surname>Le Marchand</surname>
       </personname>
     </author>
+    <author>
+      <personname>
+          <firstname>Konrad</firstname>
+          <surname>Malkowski</surname>
+      </personname>
+    </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
@@ -30,6 +36,12 @@
       <date>2018-10-14</date>
       <authorinitials>ALM</authorinitials>
       <revremark>first release as include</revremark>
+    </revision>
+    <revision>
+      <revnumber>2</revnumber>
+      <date>2020-12-23</date>
+      <authorinitials>KM</authorinitials>
+      <revremark>Add support for PIKO40501</revremark>
     </revision>
   </revhistory>
     <variable item="Coupling option 1" CV="124" default="0" exclude="73105,PIKO41RH2400">
@@ -59,7 +71,7 @@
         <tooltip xml:lang="de">für elektrische Kupplungen</tooltip>
         <tooltip xml:lang="nl">voor electrische koppelingen</tooltip>
     </variable>
-    <variable item="Coupling option 2" CV="125" default="10" include="73105,74120,PIKO41RH2400">
+    <variable item="Coupling option 2" CV="125" default="10" include="73105,74120,PIKO41RH2400,PIKO40501">
         <decVal/>
         <label>On time - coupling</label>
         <label xml:lang="de">Einschaltzeit - Kupplung</label>
@@ -77,7 +89,7 @@
         <tooltip xml:lang="de">für elektrische Kupplungen</tooltip>
         <tooltip xml:lang="nl">voor electrische koppelingen</tooltip>
     </variable>
-    <variable item="Coupling option 3" CV="126" default="20" include="73105,74120,PIKO41RH2400">
+    <variable item="Coupling option 3" CV="126" default="20" include="73105,74120,PIKO41RH2400,PIKO40501">
         <decVal/>
         <label>Hold time - coupling</label>
         <label xml:lang="de">Haltezeit - Kupplung</label>
@@ -95,7 +107,7 @@
         <tooltip xml:lang="de">Wert * 50ms</tooltip>
         <tooltip xml:lang="nl">Waarde * 50ms</tooltip>
     </variable>
-    <variable item="Coupling option 4" CV="127" default="10" include="73105,74120,PIKO41RH2400">
+    <variable item="Coupling option 4" CV="127" default="10" include="73105,74120,PIKO41RH2400,PIKO40501">
         <decVal/>
         <label>Pause time - coupling</label>
         <label xml:lang="de">Pausenzeit - Kupplung</label>

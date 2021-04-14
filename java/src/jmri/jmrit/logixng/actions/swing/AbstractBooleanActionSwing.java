@@ -10,6 +10,8 @@ import jmri.jmrit.logixng.swing.AbstractSwingConfigurator;
 
 /**
  * Abstract class for SwingConfiguratorInterface
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public abstract class AbstractBooleanActionSwing extends AbstractSwingConfigurator {
 

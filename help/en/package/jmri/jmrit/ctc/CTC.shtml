@@ -1117,7 +1117,7 @@
 
       <p>The following changes to the version 1 files are listed below.</p>
       <ul>
-        <li><strong>AwtWindowProperties.txt</strong>: No change.</li>
+        <li><strong>AwtWindowProperties.txt</strong>: Obsolete, replaced by the standard JMRI window settings within the current profile.</li>
         <li><strong>CTCSystem.xml</strong>: Obsolete.  If <strong>File &rArr; Import</strong> was used, it has been
         renamed to <strong>V1_Save_CTCSystem.xml</strong>.</li>
         <li><strong>ProgramProperties.xml</strong>: Obsolete.  If <strong>File &rArr; Import</strong> was used, it has been

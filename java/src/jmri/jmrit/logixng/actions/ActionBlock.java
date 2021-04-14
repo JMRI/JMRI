@@ -22,9 +22,6 @@ import jmri.util.TypeConversionUtil;
 
 /**
  * This action triggers a block.
- * <p>
- * This action has the Operation enum and a tabs enum.  The Direct tab contains
- * the simple actions.  The additional tabs provide additional input.
  *
  * @author Daniel Bergqvist Copyright 2021
  * @author Dave Sand Copyright 2021
@@ -215,8 +212,6 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
         }
     }
 
-    // ---------------- support additional tabs --------------
-
     public void setBlockConstant(@Nonnull String constant) {
         _blockConstant = constant;
     }
@@ -254,7 +249,7 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
     }
 
     public void removeBlockMemory() {
-        assertListenersAreNotRegistered(log, "removeOtherMemory");
+        assertListenersAreNotRegistered(log, "removeBlockMemory");
         if (_blockMemoryHandle != null) {
             _blockMemoryHandle = null;
             addRemoveVetoListener();
@@ -490,9 +485,11 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
                 if (_operationDirect == DirectOperation.SetToConstant) {
                     state = Bundle.getMessage(locale, "ActionBlock_Long_Value", namedBean, _blockConstant);
                 } else if (_operationDirect == DirectOperation.CopyFromMemory) {
-                    state = Bundle.getMessage(locale, "ActionBlock_Long_FromMemory", namedBean, _blockMemoryHandle.getName());
+                    String fromName = _blockMemoryHandle == null ? "" : _blockMemoryHandle.getName();
+                    state = Bundle.getMessage(locale, "ActionBlock_Long_FromMemory", namedBean, fromName);
                 } else if (_operationDirect == DirectOperation.CopyToMemory) {
-                    state = Bundle.getMessage(locale, "ActionBlock_Long_ToMemory", _blockMemoryHandle.getName(), namedBean);
+                    String toName = _blockMemoryHandle == null ? "" : _blockMemoryHandle.getName();
+                    state = Bundle.getMessage(locale, "ActionBlock_Long_ToMemory", toName, namedBean);
                 } else {
                     state = Bundle.getMessage(locale, "AddressByDirect", _operationDirect._text);
                 }
