@@ -18,14 +18,16 @@ import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.StringActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.StringActionMemory;
-import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.BeanSelectPanel;
 
 /**
  * Configures an ActionMemory object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class StringActionMemorySwing extends AbstractStringActionSwing {
 
-    private BeanSelectCreatePanel<Memory> memoryBeanPanel;
+    private BeanSelectPanel<Memory> memoryBeanPanel;
 //    private JComboBox<MemoryOperation> stateComboBox;
     
     
@@ -34,7 +36,7 @@ public class StringActionMemorySwing extends AbstractStringActionSwing {
 //        StringActionMemory action = (StringActionMemory)object;
         
         panel = new JPanel();
-        memoryBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(MemoryManager.class), null);
+        memoryBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
 /*        
         stateComboBox = new JComboBox<>();
         for (MemoryOperation e : MemoryOperation.values()) {
@@ -67,19 +69,14 @@ public class StringActionMemorySwing extends AbstractStringActionSwing {
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
         StringActionMemory action = new StringActionMemory(systemName, userName);
-        try {
-            if (!memoryBeanPanel.isEmpty()) {
-                Memory memory = memoryBeanPanel.getNamedBean();
-                if (memory != null) {
-                    NamedBeanHandle<Memory> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(memory.getDisplayName(), memory);
-                    action.setMemory(handle);
-                }
+        if (!memoryBeanPanel.isEmpty()) {
+            Memory memory = memoryBeanPanel.getNamedBean();
+            if (memory != null) {
+                NamedBeanHandle<Memory> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(memory.getDisplayName(), memory);
+                action.setMemory(handle);
             }
-//            action.setMemoryOperation((MemoryOperation)stateComboBox.getSelectedItem());
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for memory", ex);
         }
         return InstanceManager.getDefault(StringActionManager.class).registerAction(action);
     }
@@ -91,46 +88,14 @@ public class StringActionMemorySwing extends AbstractStringActionSwing {
             throw new IllegalArgumentException("object must be an ActionMemory but is a: "+object.getClass().getName());
         }
         StringActionMemory action = (StringActionMemory)object;
-        try {
-            Memory memory = memoryBeanPanel.getNamedBean();
-            if (memory != null) {
-                NamedBeanHandle<Memory> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(memory.getDisplayName(), memory);
-                action.setMemory(handle);
-            }
-//            action.setMemoryOperation((MemoryOperation)stateComboBox.getSelectedItem());
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for memory", ex);
+        Memory memory = memoryBeanPanel.getNamedBean();
+        if (memory != null) {
+            NamedBeanHandle<Memory> handle
+                    = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                            .getNamedBeanHandle(memory.getDisplayName(), memory);
+            action.setMemory(handle);
         }
     }
-    
-    
-    /**
-     * Create Memory object for the action
-     *
-     * @param reference Memory application description
-     * @return The new output as Memory object
-     */
-    protected Memory getMemoryFromPanel(String reference) {
-        if (memoryBeanPanel == null) {
-            return null;
-        }
-        memoryBeanPanel.setReference(reference); // pass memory application description to be put into memory Comment
-        try {
-            return memoryBeanPanel.getNamedBean();
-        } catch (jmri.JmriException ex) {
-            log.warn("skipping creation of memory not found for " + reference);
-            return null;
-        }
-    }
-    
-//    private void noMemoryMessage(String s1, String s2) {
-//        log.warn("Could not provide memory " + s2);
-//        String msg = Bundle.getMessage("WarningNoMemory", new Object[]{s1, s2});
-//        JOptionPane.showMessageDialog(editFrame, msg,
-//                Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-//    }
     
     /** {@inheritDoc} */
     @Override
@@ -146,6 +111,6 @@ public class StringActionMemorySwing extends AbstractStringActionSwing {
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringActionMemorySwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringActionMemorySwing.class);
     
 }

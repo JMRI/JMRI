@@ -9,7 +9,6 @@ import javax.swing.*;
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.NamedBeanHandle;
@@ -24,6 +23,9 @@ import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionBlock object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist  Copyright 2021
+ * @author Dave Sand         Copyright 2021
  */
 public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
 

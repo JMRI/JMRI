@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2020</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Konrad</firstname>
+        <surname>Malkowski</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2020-12-22</date>
+      <revremark>Initial version as piko include</revremark>
+    </revision>
+  <!-- Piko Decoder Configuration CV 130 - 134 smoke generator -->
+  <!-- CV130 drop down, A1-A2 -->
+  </revhistory>
+    <variable item="Smoke generator option 1" CV="130" mask="XXXXXXVV" default="0">
+        <enumVal>
+            <enumChoice choice="None" value="0">
+                <choice>None</choice>
+                <choice xml:lang="de">Kein</choice>
+            </enumChoice>
+            <enumChoice choice="A1" value="2">
+                <choice>A1</choice>
+                <choice xml:lang="de">A1</choice>
+            </enumChoice>
+            <enumChoice choice="A2" value="1">
+                <choice>A2</choice>
+                <choice xml:lang="de">A2</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Smoke generator operation</label>
+        <label xml:lang="de">Rauchgeneratorbetrieb</label>
+        <label xml:lang="nl">Aansl. rookgenerator</label>
+    </variable>
+    
+    <variable item="Smoke generator option 3" CV="130" mask="VVVVXXXX" default="0" >
+        <decVal max="15"/>
+        <label>Smoke gen. duration</label>
+        <label xml:lang="de">Rauchzeit (T2)</label>
+        <label xml:lang="nl">Rookduur (T2)</label>
+        <tooltip>Value * 0.2s + Start delay (T1)</tooltip>
+        <tooltip xml:lang="de">Wert * 0.2s + Anfahrwartezeit (T1)</tooltip>
+        <tooltip xml:lang="nl">Waarde * 0.2s + Wegrijvertraging (T1)</tooltip>
+    </variable>
+    <variable item="Smoke generator option 4" CV="131" default="5" ><!--IntelliDrive2-->
+        <decVal/>
+        <label>Smoke gen. control PWM - Load</label>
+        <label xml:lang="de">Rauchgen. PWM - Lastschwelle</label>
+    </variable>
+    <variable item="Smoke generator option 5" CV="132" default="16">
+        <decVal max="63"/>
+        <label>Smoke gen. control PWM - Normal</label>
+        <label xml:lang="de">Rauchgen. PWM - Normalbetrieb</label>
+        <label xml:lang="nl">Rookgen. PWM - Normaalbedrijf</label>
+    </variable>
+    <variable item="Smoke generator option 6" CV="133" default="2">
+        <decVal max="63"/>
+        <label>Smoke gen. control PWM - Idle</label>
+        <label xml:lang="de">Rauchgen. PWM - Leerlauf</label>
+        <label xml:lang="nl">Rookgen. PWM - Vrijloop</label>
+    </variable>
+    
+    <variable item="Smoke generator option 7" CV="134" default="30">
+        <decVal/>
+        <label>Smoke generator - Start delay (T1)</label>
+        <label xml:lang="de">Rauchgen. - Anfahrwartezeit (T1)</label>
+        <label xml:lang="nl">Rookgen. - Startvertraging (T1)</label>
+        <tooltip>Value * 0.1s</tooltip>
+        <tooltip xml:lang="de">Wert * 0.1s</tooltip>
+        <tooltip xml:lang="nl">Waarde * 0.1s</tooltip>
+    </variable>
+</variables>

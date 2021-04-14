@@ -539,7 +539,6 @@ public class JoalAudioSource extends AbstractAudioSource {
             this._source = null;
             log.debug("...done cleanup");
         }
-        this.dispose();
     }
 
     @Override

@@ -23,10 +23,10 @@ import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
- * Configures an Block object with a Swing JPanel.
+ * Configures an ActionBlock object with a Swing JPanel.
  *
- * @author Daniel Bergqvist Copyright 2021
- * @author Dave Sand Copyright 2021
+ * @author Daniel Bergqvist  Copyright 2021
+ * @author Dave Sand         Copyright 2021
  */
 public class ActionBlockSwing extends AbstractDigitalActionSwing {
 
