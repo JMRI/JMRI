@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import jmri.jmrit.display.*;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
-import jmri.jmrit.display.palette.Bundle;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
