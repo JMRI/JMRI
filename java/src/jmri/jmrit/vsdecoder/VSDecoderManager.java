@@ -568,7 +568,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     /**
      * Delete a VSDecoder
      * 
-     * @address The DCC address of the VSDecoder
+     * @param address The DCC address of the VSDecoder
      */
     public void deleteDecoder(String address) {
         log.debug("delete Decoder called, VSDedoder DCC address: {}", address);
