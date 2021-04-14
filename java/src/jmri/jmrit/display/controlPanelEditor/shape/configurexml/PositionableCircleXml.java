@@ -46,6 +46,8 @@ public class PositionableCircleXml extends PositionableShapeXml {
      *
      * @param element Top level Element to unpack.
      * @param o       Editor as an Object
+     * @throws JmriConfigureXmlException when a error prevents creating the objects as as
+     *                   required by the input XML
      */
     @Override
     public void load(Element element, Object o) throws JmriConfigureXmlException {
@@ -57,7 +59,6 @@ public class PositionableCircleXml extends PositionableShapeXml {
         ps.setWidth(getInt(elem, "radius"));    // actually diameter - too late to change name
 
         // get object class and determine editor being used
-        Editor editor = (Editor) o;
         try {
             ed.putItem(ps);
         } catch (Positionable.DuplicateIdException e) {

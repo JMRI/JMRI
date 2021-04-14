@@ -27,7 +27,6 @@ import jmri.util.swing.JComboBoxUtil;
 public class ActionEnableDisableSwing extends AbstractDigitalActionSwing {
 
     private String _selectedEditor;
-    private String _selectedPositionable;
     
     private JComboBox<EditorItem> _editorComboBox;
     private JTabbedPane _tabbedPanePositionable;
@@ -58,9 +57,8 @@ public class ActionEnableDisableSwing extends AbstractDigitalActionSwing {
         panel = new JPanel();
         
         _selectedEditor = action != null ? action.getEditorName() : null;
-        _selectedPositionable = action != null ? action.getPositionableName() : null;
         
-        _editorComboBox = new JComboBox();
+        _editorComboBox = new JComboBox<>();
         for (Editor editor : jmri.InstanceManager.getDefault(EditorManager.class).getAll()) {
             EditorItem item = new EditorItem(editor);
             _editorComboBox.addItem(item);
@@ -306,6 +304,6 @@ public class ActionEnableDisableSwing extends AbstractDigitalActionSwing {
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionEnableDisableSwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionEnableDisableSwing.class);
     
 }
