@@ -1,7 +1,7 @@
 package jmri.jmrit.display.logixng.swing;
 
 import java.awt.event.ActionEvent;
-import java.util.List;
+import java.util.*;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
@@ -170,10 +170,15 @@ public class ActionEnableDisableSwing extends AbstractDigitalActionSwing {
         if (_editorComboBox.getSelectedIndex() == -1) return;
         
         EditorItem item = _editorComboBox.getItemAt(_editorComboBox.getSelectedIndex());
+        List<String> list = new ArrayList<>();
         for (Positionable positionable : item._editor.getContents()) {
             if (positionable.getId() != null) {
-                _positionableComboBox.addItem(positionable.getId());
+                list.add(positionable.getId());
             }
+        }
+        Collections.sort(list);
+        for (String s : list) {
+            _positionableComboBox.addItem(s);
         }
     }
     
