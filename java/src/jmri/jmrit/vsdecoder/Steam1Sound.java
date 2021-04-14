@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2017-2020
+ * @author Klaus Killinger Copyright (C) 2017-2021
  */
 class Steam1Sound extends EngineSound {
 
@@ -939,6 +939,7 @@ class Steam1Sound extends EngineSound {
                     sleep(_parent.sleep_interval);
                     updateWait();
                 }
+                _sound.stop();
             } catch (InterruptedException ie) {
                 log.error("execption", ie);
             }
@@ -1110,8 +1111,8 @@ class Steam1Sound extends EngineSound {
         private int calcChuffInterval(int revpm) {
             //  chuff interval will be calculated based on revolutions per minute (revpm)
             //  note: interval time includes the sound duration!
-            //  chuffInterval = time in msec per revolution of the driver wheel: 
-            //      60,000 msec / revpm / number of cylinders / 2 (because cylinders are double-acting)
+            //  chuffInterval = time in ms per revolution of the driver wheel: 
+            //      60,000 ms / revpm / number of cylinders / 2 (because cylinders are double-acting)
             return (int) Math.round(60000.0 / revpm / _num_cylinders / 2.0);
         }
 
@@ -1122,7 +1123,7 @@ class Steam1Sound extends EngineSound {
                 sbl = (1000 * data.limit()/notch1.getBufferFrameSize()) / notch1.getBufferFreq(); // calculate the length of the clip in milliseconds
             }
             log.debug("sbl: {}", sbl);
-            // Time in msec from chuff start up to begin of the next chuff, limited to a minimum
+            // Time in ms from chuff start up to begin of the next chuff, limited to a minimum
             int interval = Math.max(calcChuffInterval(getRpm()), _parent.sleep_interval);
             int bbufcount = notch1.getBufferFrameSize() * ((interval) * notch1.getBufferFreq() / 1000);
             ByteBuffer bbuf = ByteBuffer.allocateDirect(bbufcount); // Target

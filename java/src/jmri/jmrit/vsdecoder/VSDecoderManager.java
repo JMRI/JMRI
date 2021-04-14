@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import jmri.Audio;
 import jmri.Block;
 import jmri.IdTag;
 import jmri.LocoAddress;
@@ -49,7 +52,7 @@ import org.slf4j.LoggerFactory;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2018-2020
+ * @author Klaus Killinger Copyright (C) 2018-2021
  */
 public class VSDecoderManager implements PropertyChangeListener {
 
@@ -57,17 +60,17 @@ public class VSDecoderManager implements PropertyChangeListener {
     private static final String vsd_property_change_name = "VSDecoder Manager"; // NOI18N
 
     // Array-pointer for blockParameter
-    private static final int radius = 0;
-    private static final int slope = 1;
-    private static final int rotate_xpos_i = 2;
-    private static final int rotate_ypos_i = 3;
-    private static final int length = 4;
+    private static final int RADIUS = 0;
+    private static final int SLOPE = 1;
+    private static final int ROTATE_XPOS_I = 2;
+    private static final int ROTATE_YPOS_I = 3;
+    private static final int LENGTH = 4;
 
     // Array-pointer for locoInBlock
-    private static final int address = 0;
-    private static final int block = 1;
-    private static final int distance_to_go = 2;
-    private static final int direction = 3;
+    private static final int ADDRESS = 0;
+    private static final int BLOCK = 1;
+    private static final int DISTANCE_TO_GO = 2;
+    private static final int DIRECTION = 3;
 
     protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
@@ -98,8 +101,7 @@ public class VSDecoderManager implements PropertyChangeListener {
 
     private VSDecoder default_decoder = null;  // shortcut pointer to the default decoder (do we need this?)
 
-    private static int vsdecoderID = 0;
-    //private static int listenerID = 0; // for future use
+    private int vsdecoderID = 0;
     private int locorow = -1; // Will be increased before first use
 
     private float speed_ms = 0.0f; // Speed in meters per second
@@ -200,6 +202,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                                     log.info(" VSD path: {}", entry.getAttribute("VSDecoder_Path"));
                                     config.setProfileName(entry.getAttribute("VSDecoder_Profile"));
                                     log.debug(" entry VSD profile: {}", entry.getAttribute("VSDecoder_Profile"));
+                                    config.setVolume(Float.parseFloat(entry.getAttribute("VSDecoder_Volume")));
                                     VSDecoder newDecoder = VSDecoderManager.instance().getVSDecoder(config);
                                     if (newDecoder != null) {
                                         log.info("VSD {}, profile \"{}\" ready.", config.getLocoAddress(), config.getProfileName());
@@ -244,23 +247,6 @@ public class VSDecoderManager implements PropertyChangeListener {
     }
 
     @Deprecated
-    public VSDecoder getVSDecoder(String profile_name) {
-        VSDecoder vsd;
-        String path;
-        if (profiletable.containsKey(profile_name)) {
-            path = profiletable.get(profile_name);
-            log.debug("Profile {} is in table.  Path: {}", profile_name, path);
-            vsd = new VSDecoder(getNextVSDecoderID(), profile_name, path);
-            decodertable.put(vsd.getId(), vsd);  // poss. broken for duplicate profile names
-            decoderAddressMap.put(vsd.getAddress().toString(), vsd);
-            return vsd;
-        } else {
-            // Don't have enough info to try to load from file.
-            log.error("Requested profile not loaded: {}", profile_name);
-            return null;
-        }
-    }
-
     public VSDecoder getVSDecoder(String profile_name, String path) {
         VSDecoder vsd = new VSDecoder(getNextVSDecoderID(), profile_name, path);
         decodertable.put(vsd.getId(), vsd); // poss. broken for duplicate profile names
@@ -293,7 +279,11 @@ public class VSDecoderManager implements PropertyChangeListener {
             decodertable.put(vsd.getId(), vsd);
             decoderAddressMap.put(vsd.getAddress().toString(), vsd);
             decoderInBlock.put(vsd.getAddress().getNumber(), vsd);
-            locoInBlock[getNextlocorow()][address] = vsd.getAddress().getNumber();
+            locoInBlock[getNextlocorow()][ADDRESS] = vsd.getAddress().getNumber();
+
+            // set volume for this decoder
+            vsd.setDecoderVolume(vsd.getDecoderVolume());
+
             if (geofile_ok) {
                 if (vsd.topspeed == 0) {
                     log.info("Top-speed not defined. No advanced location following possible.");
@@ -332,10 +322,12 @@ public class VSDecoderManager implements PropertyChangeListener {
         return rv;
     }
 
+    @Deprecated
     public void setDefaultVSDecoder(VSDecoder d) {
         default_decoder = d;
     }
 
+    @Deprecated
     public VSDecoder getDefaultVSDecoder() {
         return default_decoder;
     }
@@ -540,32 +532,26 @@ public class VSDecoderManager implements PropertyChangeListener {
         Iterator<String> it = vk.iterator();
         while (it.hasNext()) {
             VSDecoder v = decodertable.get(it.next());
+
+            if (v.getEngineSound().isEngineStarted()) {
+                log.warn("Shutting down a running Engine ...");
+                v.getEngineSound().setEngineStarted(false);
+                snooze(1500);
+            }
+
             v.shutdown();
+
+            snooze(300); // wait for AbstractAudioSource$AudioSourceMoveThread
+            cleanupId(v.getId()); // cleanup sources and buffers of this vsdecoder
+
             if (timertable.size() > 0) {
                 stopSoundPositionTimer(v);
             }
         }
-        // Empty the timertable
+        // Empty tables, maps, arrays
         timertable.clear();
-
-        // Empty the DecoderTable
         decodertable.clear();
-        /*
-         vk = decodertable.keySet();
-         it = vk.iterator();
-         while(it.hasNext()) {
-         decodertable.remove(it.next());
-         }
-         */
-        // Empty the AddressMap
         decoderAddressMap.clear();
-        /*
-         vk = decoderAddressMap.keySet();
-         it = vk.iterator();
-         while(it.hasNext()) {
-         decoderAddressMap.remove(it.next());
-         }
-         */
         decoderInBlock.clear();
         // Zeros to whole array
         for (int i = 0; i < locoInBlock.length; i++) {
@@ -574,8 +560,69 @@ public class VSDecoderManager implements PropertyChangeListener {
             }
         }
         locorow = -1;
-        //vsdecoderID = 0;
+        vsdecoderID = 0;
+        profiletable.clear();
         log.debug("shutdown decoders done");
+    }
+
+    /**
+     * Delete a VSDecoder
+     * 
+     * @address The DCC address of the VSDecoder
+     */
+    public void deleteDecoder(String address) {
+        log.debug("delete Decoder called, VSDedoder DCC address: {}", address);
+        if (this.getVSDecoderByAddress(address) == null) {
+            log.warn("VSDecoder not found");
+        } else {
+            removeVSDecoder(address);
+        }
+    }
+
+    private void removeVSDecoder(String sa) {
+        VSDecoder d = this.getVSDecoderByAddress(sa);
+        stopSoundPositionTimer(d);
+        d.shutdown();
+        d.disable();
+
+        decodertable.remove(d.getId()); // shutdownDecoders durchlaeuft decodertable! Hier ist das aber korrekt
+        decoderAddressMap.remove(sa);
+        decoderInBlock.remove(d.getAddress().getNumber());
+        locoInBlockRemove(d.getAddress().getNumber());
+        timertable.remove(d.getId()); // Remove timer
+        locorow--; // prepare array index for eventually adding a new decoder
+
+        d.sound_list.clear();
+        d.event_list.clear();
+
+        snooze(300); // wait for AbstractAudioSource$AudioSourceMoveThread
+        cleanupId(d.getId()); // cleanup sources and buffers of this vsdecoder
+    }
+
+    private void cleanupId(String id) {
+        jmri.AudioManager am = jmri.InstanceManager.getDefault(jmri.AudioManager.class);
+
+        SortedSet<Audio> sources = new TreeSet<>(am.getNamedBeanSet(Audio.SOURCE));
+        for (Audio source: sources) {
+            if (source.getSystemName().contains(id)) {
+                source.dispose();
+            }
+        }
+
+        SortedSet<Audio> buffers = new TreeSet<>(am.getNamedBeanSet(Audio.BUFFER));
+        for (Audio buffer : buffers) {
+            if (buffer.getSystemName().contains(id)) {
+                buffer.dispose();
+            }
+        }
+    }
+
+    // copied from jmri.jmrit.audio.AbstractAudioThread.java
+    protected static void snooze(long ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException ex) {
+        }
     }
 
     @Override
@@ -597,17 +644,7 @@ public class VSDecoderManager implements PropertyChangeListener {
             if (evt.getPropertyName().equals(VSDManagerFrame.REMOVE_DECODER)) {
                 // Shut down the requested decoder and remove it from the manager's hash maps. 
                 // Unless there are "illegal" handles, this should put the decoder on the garbage heap.  I think.
-                String sa = (String) evt.getOldValue();
-                VSDecoder d = this.getVSDecoderByAddress(sa);
-                log.debug("Removing Decoder {} ... {}", sa, d.getAddress());
-                stopSoundPositionTimer(d);
-                d.shutdown();
-                decodertable.remove(d.getId());
-                decoderAddressMap.remove(sa);
-                decoderInBlock.remove(d.getAddress().getNumber());
-                locoInBlockRemove(d.getAddress().getNumber());
-                timertable.remove(d.getId()); // Remove timer
-                locorow--; // prepare array index for eventually adding a new decoder
+                removeVSDecoder((String) evt.getOldValue());
             } else if (evt.getPropertyName().equals(VSDManagerFrame.CLOSE_WINDOW)) {
                 // Note this assumes there is only one VSDManagerFrame open at a time.
                 shutdownDecoders();
@@ -792,7 +829,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                                 int old_rp_index = -1; // set to "undefined"
                                 int ix = getArrayIndex(xa.getNumber()); 
                                 if (ix < locoInBlock.length) {
-                                    old_rp = locoInBlock[ix][block];
+                                    old_rp = locoInBlock[ix][BLOCK];
                                     if (old_rp == 0) old_rp = -1; // set to "undefined"
                                     old_rp_index = reporterlists.get(d.setup_index).indexOf(old_rp); // -1 if not found (undefined)
                                 } else {
@@ -809,10 +846,10 @@ public class VSDecoderManager implements PropertyChangeListener {
                                             || (circlelist.get(d.setup_index) && d.dirfn == -1 && old_rp_index == 0 && new_rp_index == lastrepix) // Loco is running reverse and circling
                                             || (circlelist.get(d.setup_index) && d.dirfn ==  1 && old_rp_index == lastrepix && new_rp_index == 0)) { // Loco is running forward and circling
                                         // Validation check: OK
-                                        locoInBlock[ix][block] = new_rp; // Set new block number (int)
-                                        log.debug(" distance rest (old) to go in block {}: {} cm", old_rp, locoInBlock[ix][distance_to_go]);
-                                        locoInBlock[ix][distance_to_go] = Math.round(blockParameter[d.setup_index][new_rp_index][length] * 100.0f); // block distance init: block length in cm
-                                        log.debug(" distance rest (new) to go in block {}: {} cm", new_rp, locoInBlock[ix][distance_to_go]);
+                                        locoInBlock[ix][BLOCK] = new_rp; // Set new block number (int)
+                                        log.debug(" distance rest (old) to go in block {}: {} cm", old_rp, locoInBlock[ix][DISTANCE_TO_GO]);
+                                        locoInBlock[ix][DISTANCE_TO_GO] = Math.round(blockParameter[d.setup_index][new_rp_index][LENGTH] * 100.0f); // block distance init: block length in cm
+                                        log.debug(" distance rest (new) to go in block {}: {} cm", new_rp, locoInBlock[ix][DISTANCE_TO_GO]);
                                         // get the new sound position point (depends on the loco traveling direction)
                                         if (d.dirfn == 1) {
                                             posToSet = blockPositionlists.get(d.setup_index).get(new_rp_index); // Start position
@@ -877,13 +914,14 @@ public class VSDecoderManager implements PropertyChangeListener {
 
     public int getArrayIndex(int numb) {
         for (int i = 0; i < locoInBlock.length; i++) {
-            if (locoInBlock[i][address] == numb) {
+            if (locoInBlock[i][ADDRESS] == numb) {
                 return i;   
             }
         }
         return locoInBlock.length;
     }
 
+    @Deprecated
     public int getNumberOfDecoders() {
         return locorow + 1;
     }
@@ -893,7 +931,7 @@ public class VSDecoderManager implements PropertyChangeListener {
         //  find index first
         remove_index = 0;
         for (int i = 0; i < locoInBlock.length; i++) {
-            if (locoInBlock[i][address] == numb) { 
+            if (locoInBlock[i][ADDRESS] == numb) { 
                 remove_index = i;
             }
         }
@@ -983,7 +1021,7 @@ public class VSDecoderManager implements PropertyChangeListener {
             int dadr_index = getArrayIndex(dadr); // check, if the decoder is in "Block status for locos" - remove this check?
             if (dadr_index < locoInBlock.length) {
                 // decoder is valid
-                int dadr_block = locoInBlock[dadr_index][block]; // get block number for current decoder/loco
+                int dadr_block = locoInBlock[dadr_index][BLOCK]; // get block number for current decoder/loco
                 if (reporterlists.get(d.setup_index).contains(dadr_block)) {
                     int dadr_block_index = reporterlists.get(d.setup_index).indexOf(dadr_block);
                     newPosition = new PhysicalLocation(0.0f, 0.0f, 0.0f, d.savedSound.getTunnel());
@@ -991,33 +1029,33 @@ public class VSDecoderManager implements PropertyChangeListener {
                     // JMRI speed is 0-1; currentspeed is speed after speedCurve(); multiply with topspeed (MPH); convert MPH to meter/second; regard layout scale
                     speed_ms = d.currentspeed * (d.dirfn == 1 ? d.topspeed : d.topspeed_rev) * 0.44704f / layout_scale;
                     distance = speed_ms * check_time / 1000; // distance in Meter
-                    if (locoInBlock[dadr_index][direction] == 0) { // On start
-                        locoInBlock[dadr_index][direction] = d.dirfn;
+                    if (locoInBlock[dadr_index][DIRECTION] == 0) { // On start
+                        locoInBlock[dadr_index][DIRECTION] = d.dirfn;
                     }
-                    distance_rest_old = locoInBlock[dadr_index][distance_to_go] / 100.0f; // Distance to go in meter
-                    if (locoInBlock[dadr_index][direction] == d.dirfn) { // Last traveling direction
+                    distance_rest_old = locoInBlock[dadr_index][DISTANCE_TO_GO] / 100.0f; // Distance to go in meter
+                    if (locoInBlock[dadr_index][DIRECTION] == d.dirfn) { // Last traveling direction
                         distance_rest = distance_rest_old;
                     } else {
-                        distance_rest = blockParameter[d.setup_index][dadr_block_index][length] - distance_rest_old;
-                        locoInBlock[dadr_index][direction] = d.dirfn;
+                        distance_rest = blockParameter[d.setup_index][dadr_block_index][LENGTH] - distance_rest_old;
+                        locoInBlock[dadr_index][DIRECTION] = d.dirfn;
                     }
                     distance_rest_new = distance_rest - distance; // Distance to go in Meter
                     log.debug(" distance_rest_old: {}, distance_rest: {}, distance_rest_new: {} (all in Meter)", distance_rest_old, distance_rest, distance_rest_new); 
                     // Calculate and set sound position only, if loco would be still inside the block
                     if (distance_rest_new > 0.0f) {
-                        // Which geometric element? Radius = 0 means "line"
-                        if (blockParameter[d.setup_index][dadr_block_index][radius] == 0.0f) {
+                        // Which geometric element? RADIUS = 0 means "line"
+                        if (blockParameter[d.setup_index][dadr_block_index][RADIUS] == 0.0f) {
                             // Line
                             xPosi = distance * (-d.dirfn) * (float) Math.sqrt(1.0f / (1.0f +
-                                blockParameter[d.setup_index][dadr_block_index][slope] * blockParameter[d.setup_index][dadr_block_index][slope]));
+                                blockParameter[d.setup_index][dadr_block_index][SLOPE] * blockParameter[d.setup_index][dadr_block_index][SLOPE]));
                             newPosition.x = d.lastPos.x - xPosi;
-                            newPosition.y = d.lastPos.y - xPosi * blockParameter[d.setup_index][dadr_block_index][slope];
+                            newPosition.y = d.lastPos.y - xPosi * blockParameter[d.setup_index][dadr_block_index][SLOPE];
                             newPosition.z = 0.0f;
                         } else {
                             // Curve
-                            float anglePos = distance / blockParameter[d.setup_index][dadr_block_index][radius] * (-d.dirfn); // distance / radius * (-loco direction)
-                            float rotate_xpos = blockParameter[d.setup_index][dadr_block_index][rotate_xpos_i];
-                            float rotate_ypos = blockParameter[d.setup_index][dadr_block_index][rotate_ypos_i]; // rotation center point y
+                            float anglePos = distance / blockParameter[d.setup_index][dadr_block_index][RADIUS] * (-d.dirfn); // distance / RADIUS * (-loco direction)
+                            float rotate_xpos = blockParameter[d.setup_index][dadr_block_index][ROTATE_XPOS_I];
+                            float rotate_ypos = blockParameter[d.setup_index][dadr_block_index][ROTATE_YPOS_I]; // rotation center point y
                             newPosition.x =  rotate_xpos + (float) Math.cos(anglePos) * (d.lastPos.x - rotate_xpos) - (float) Math.sin(anglePos) * (d.lastPos.y - rotate_ypos);
                             newPosition.y =  rotate_ypos + (float) Math.sin(anglePos) * (d.lastPos.x - rotate_xpos) + (float) Math.cos(anglePos) * (d.lastPos.y - rotate_ypos);
                             newPosition.z = 0.0f;
@@ -1025,9 +1063,9 @@ public class VSDecoderManager implements PropertyChangeListener {
                         log.debug("position to set: {}", newPosition);
                         d.setPosition(newPosition); // Sound set position
                         log.debug(" distance rest to go in block: {} of {} cm", Math.round(distance_rest_new * 100.0f),
-                        Math.round(blockParameter[d.setup_index][dadr_block_index][length] * 100.0f));
-                        locoInBlock[dadr_index][distance_to_go] = Math.round(distance_rest_new * 100.0f); // Save distance rest in cm
-                        log.debug(" saved distance rest: {}", locoInBlock[dadr_index][distance_to_go]);
+                        Math.round(blockParameter[d.setup_index][dadr_block_index][LENGTH] * 100.0f));
+                        locoInBlock[dadr_index][DISTANCE_TO_GO] = Math.round(distance_rest_new * 100.0f); // Save distance rest in cm
+                        log.debug(" saved distance rest: {}", locoInBlock[dadr_index][DISTANCE_TO_GO]);
                     } else {
                         log.debug(" new position not set due to less distance");
                     }
