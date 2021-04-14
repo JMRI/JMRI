@@ -41,6 +41,9 @@ public abstract class FemaleSocketTestBase {
     private SortedSet<String> getClassNames(List<Class<? extends Base>> classes) {
         SortedSet<String> set = new TreeSet<>();
         
+        // If the category doesn't exist in one of the sets, 'classes' is null.
+        if (classes == null) return set;
+        
         for (Class<? extends Base> clazz : classes) {
             set.add(clazz.getName());
         }
@@ -48,19 +51,22 @@ public abstract class FemaleSocketTestBase {
         return set;
     }
     
-    private boolean isSetsEqual(SortedSet<String> set1, SortedSet<String> set2) {
-        if (set1.size() != set2.size()) {
-            return false;
-        }
+    private boolean isSetsEqual(Category category, SortedSet<String> set1, SortedSet<String> set2) {
         for (String s1 : set1) {
             if (!set2.contains(s1)) {
+                System.out.format("set1 contains %s in category %s which is missing in set2%n", s1, category.name());
                 return false;
             }
         }
         for (String s2 : set2) {
             if (!set1.contains(s2)) {
+                System.out.format("set2 contains %s in category %s which is missing in set1%n", s2, category.name());
                 return false;
             }
+        }
+        if (set1.size() != set2.size()) {
+            System.out.format("set1 and set2 has different sizes: %d, %d%n", set1.size(), set2.size());
+            return false;
         }
         return true;
     }
@@ -97,6 +103,7 @@ public abstract class FemaleSocketTestBase {
         for (Category category : Category.values()) {
             
             if (!isSetsEqual(
+                    category,
                     getClassNames(expectedMap.get(category)),
                     getClassNames(actualMap.get(category)))) {
                 

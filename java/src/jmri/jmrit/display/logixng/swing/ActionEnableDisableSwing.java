@@ -237,7 +237,9 @@ public class ActionEnableDisableSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an ActionEnableDisable but is a: "+object.getClass().getName());
         }
         ActionEnableDisable action = (ActionEnableDisable)object;
-        action.setEditor(_editorComboBox.getItemAt(_editorComboBox.getSelectedIndex())._editor.getName());
+        if (_editorComboBox.getSelectedIndex() != -1) {
+            action.setEditor(_editorComboBox.getItemAt(_editorComboBox.getSelectedIndex())._editor.getName());
+        }
         if (_tabbedPanePositionable.getSelectedComponent() == _panelPositionableDirect) {
             action.setPositionable(_positionableComboBox.getItemAt(_positionableComboBox.getSelectedIndex()));
         }
