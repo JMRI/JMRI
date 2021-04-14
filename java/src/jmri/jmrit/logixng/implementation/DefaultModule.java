@@ -353,6 +353,7 @@ public class DefaultModule extends AbstractBase
         return report;
     }
 
+    @Override
     public void getUsageTree(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("** {} :: {}", level, this.getClass().getName());
         level++;
