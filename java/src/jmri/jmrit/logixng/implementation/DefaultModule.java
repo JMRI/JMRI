@@ -346,6 +346,7 @@ public class DefaultModule extends AbstractBase
     }
 
     /** {@inheritDoc} */
+    @Override
     public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
         List<NamedBeanUsageReport> report = new ArrayList<>();
         if (bean != null) {
