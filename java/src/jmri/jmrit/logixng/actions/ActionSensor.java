@@ -462,11 +462,12 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
 
     }
 
+    /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("getUsageReport :: ActionSensor: bean = {}, cdl = {}, report = {}", bean, cdl, report);
         if (getSensor() != null && bean.equals(getSensor().getBean())) {
-            report.add(new NamedBeanUsageReport("ConditionalNGAction", cdl, getLongDescription()));
+            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
         }
     }
 

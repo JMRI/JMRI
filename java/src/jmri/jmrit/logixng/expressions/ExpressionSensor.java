@@ -471,11 +471,12 @@ public class ExpressionSensor extends AbstractDigitalExpression
 
     }
 
+    /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("getUsageReport :: ExpressionBlock: bean = {}, report = {}", cdl, report);
         if (getSensor() != null && bean.equals(getSensor().getBean())) {
-            report.add(new NamedBeanUsageReport("ConditionalNGExpression", cdl, getLongDescription()));
+            report.add(new NamedBeanUsageReport("LogixNGExpression", cdl, getLongDescription()));
         }
     }
 

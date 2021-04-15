@@ -433,6 +433,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void getUsageTree(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         if (!(getObject() instanceof AbstractMaleSocket)) {
@@ -450,6 +451,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
     }

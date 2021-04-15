@@ -432,6 +432,7 @@ public class DefaultLogixNG extends AbstractNamedBean
 
     }
 
+    /** {@inheritDoc} */
     @Override
     public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
         List<NamedBeanUsageReport> report = new ArrayList<>();
@@ -441,6 +442,7 @@ public class DefaultLogixNG extends AbstractNamedBean
         return report;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void getUsageTree(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("** {} :: {}", level, this.getClass().getName());
@@ -451,6 +453,7 @@ public class DefaultLogixNG extends AbstractNamedBean
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
     }

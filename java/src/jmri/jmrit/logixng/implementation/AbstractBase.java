@@ -159,6 +159,7 @@ public abstract class AbstractBase
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void getUsageTree(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("## {} :: {}", level, this.getLongDescription());
@@ -168,6 +169,7 @@ public abstract class AbstractBase
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
     }

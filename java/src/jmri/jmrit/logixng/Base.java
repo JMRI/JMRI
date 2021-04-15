@@ -498,6 +498,9 @@ public interface Base extends PropertyChangeProvider {
 
     /**
      * Add a new NamedBeanUsageReport to the report list if there are any matches in this action or expresssion.
+     * <p>
+     * See {@link jmri.jmrit.whereused.WhereUsedCollectors#checkLogixNGConditionals(NamedBean)}
+     * for the NamedBeanUsageReport usage keys.
      *
      * @param level  The current recursion level for debugging.
      * @param bean   The named bean that is the object of the search.

@@ -559,14 +559,15 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
 
     }
 
+    /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("getUsageReport :: ActionBlock: bean = {}, report = {}", cdl, report);
         if (getBlock() != null && bean.equals(getBlock().getBean())) {
-            report.add(new NamedBeanUsageReport("ConditionalNGAction", cdl, getLongDescription()));
+            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
         }
         if (getBlockMemory() != null && bean.equals(getBlockMemory().getBean())) {
-            report.add(new NamedBeanUsageReport("ConditionalNGAction", cdl, getLongDescription()));
+            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
         }
     }
 

@@ -345,6 +345,7 @@ public class DefaultModule extends AbstractBase
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /** {@inheritDoc} */
     public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
         List<NamedBeanUsageReport> report = new ArrayList<>();
         if (bean != null) {
@@ -353,6 +354,7 @@ public class DefaultModule extends AbstractBase
         return report;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void getUsageTree(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("** {} :: {}", level, this.getClass().getName());

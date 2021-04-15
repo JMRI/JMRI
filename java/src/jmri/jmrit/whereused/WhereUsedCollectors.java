@@ -358,9 +358,8 @@ public class WhereUsedCollectors {
      * Create the LogixNG/ConditionalNG usage string.
      * Usage keys:
      * <ul>
-     * <li>ConditionalNGAction</li>
-     * <li>ConditionalNGExpression</li>
-     * <li>ConditionalNGVariableData (future?)</li>
+     * <li>LogixNGAction</li>
+     * <li>LogixNGExpression</li>
      * </ul>
      * @param bean The requesting bean:  Many.
      * @return usage string
@@ -368,19 +367,19 @@ public class WhereUsedCollectors {
     static String checkLogixNGConditionals(NamedBean bean) {
         StringBuilder sb = new StringBuilder();
         InstanceManager.getDefault(LogixNG_Manager.class).getNamedBeanSet().forEach((logixng) -> logixng.getUsageReport(bean).forEach((report) -> {
-            if (report.usageKey.startsWith("ConditionalNGExpression") || report.usageKey.startsWith("ConditionalNGAction")) {  // NOI18N
+            if (report.usageKey.startsWith("LogixNG")) {  // NOI18N
                 String name = logixng.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
                 String cdlName = report.usageBean != null ? report.usageBean.getDisplayName() : "";
-                sb.append(Bundle.getMessage("ReferenceLineConditional", name, cdlName, Bundle.getMessage(report.usageKey), report.usageData));  // NOI18N
+                sb.append(Bundle.getMessage("ReferenceLineLogixNG", name, cdlName, Bundle.getMessage(report.usageKey), report.usageData));  // NOI18N
             }
         }));
         InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet().forEach((module) -> module.getUsageReport(bean).forEach((report) -> {
-            if (report.usageKey.startsWith("ConditionalNGExpression") || report.usageKey.startsWith("ConditionalNGAction")) {  // NOI18N
+            if (report.usageKey.startsWith("LogixNG")) {  // NOI18N
                 String name = module.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
                 sb.append(Bundle.getMessage("ReferenceLineModule", name, Bundle.getMessage(report.usageKey), report.usageData));  // NOI18N
             }
         }));
-        return addHeader(sb, "ReferenceNGConditionals");  // NOI18N
+        return addHeader(sb, "ReferenceLogixNG");  // NOI18N
     }
 
     /**
