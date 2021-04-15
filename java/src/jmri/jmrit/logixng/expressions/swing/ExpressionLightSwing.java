@@ -12,16 +12,18 @@ import jmri.jmrit.logixng.expressions.ExpressionLight;
 import jmri.jmrit.logixng.expressions.ExpressionLight.LightState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionLight object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class ExpressionLightSwing extends AbstractDigitalExpressionSwing {
 
     private JTabbedPane _tabbedPaneLight;
-    private BeanSelectCreatePanel<Light> _lightBeanPanel;
+    private BeanSelectPanel<Light> _lightBeanPanel;
     private JPanel _panelLightDirect;
     private JPanel _panelLightReference;
     private JPanel _panelLightLocalVariable;
@@ -60,7 +62,7 @@ public class ExpressionLightSwing extends AbstractDigitalExpressionSwing {
         _tabbedPaneLight.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelLightLocalVariable);
         _tabbedPaneLight.addTab(NamedBeanAddressing.Formula.toString(), _panelLightFormula);
         
-        _lightBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(LightManager.class), null);
+        _lightBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(LightManager.class), null);
         _panelLightDirect.add(_lightBeanPanel);
         
         _lightReferenceTextField = new JTextField();
@@ -214,18 +216,14 @@ public class ExpressionLightSwing extends AbstractDigitalExpressionSwing {
             throw new IllegalArgumentException("object must be an ExpressionLight but is a: "+object.getClass().getName());
         }
         ExpressionLight expression = (ExpressionLight)object;
-        try {
-            if (!_lightBeanPanel.isEmpty() && (_tabbedPaneLight.getSelectedComponent() == _panelLightDirect)) {
-                Light light = _lightBeanPanel.getNamedBean();
-                if (light != null) {
-                    NamedBeanHandle<Light> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(light.getDisplayName(), light);
-                    expression.setLight(handle);
-                }
+        if (!_lightBeanPanel.isEmpty() && (_tabbedPaneLight.getSelectedComponent() == _panelLightDirect)) {
+            Light light = _lightBeanPanel.getNamedBean();
+            if (light != null) {
+                NamedBeanHandle<Light> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(light.getDisplayName(), light);
+                expression.setLight(handle);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for light", ex);
         }
         try {
             if (_tabbedPaneLight.getSelectedComponent() == _panelLightDirect) {
@@ -279,6 +277,6 @@ public class ExpressionLightSwing extends AbstractDigitalExpressionSwing {
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionLightSwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionLightSwing.class);
     
 }

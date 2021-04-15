@@ -14,6 +14,8 @@ import jmri.jmrit.logixng.expressions.And;
 
 /**
  * Configures an ExpressionTurnout object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class AndSwing extends AbstractDigitalExpressionSwing {
 

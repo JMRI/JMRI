@@ -30,7 +30,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     @Override
     public String name() {
         if (SystemType.isMacOSX()
-                || (SystemType.isWindows() && Double.valueOf(System.getProperty("os.version")) >= 6)) {
+                || (SystemType.isWindows() && Double.parseDouble(System.getProperty("os.version")) >= 6)) {
             return Bundle.getMessage("DirectSerialNameNot");
         }
 

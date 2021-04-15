@@ -1,9 +1,22 @@
 package jmri.jmrit.beantable;
 
+import java.awt.GraphicsEnvironment;
+
+import javax.swing.JFrame;
+
+import jmri.InstanceManager;
+import jmri.Sensor;
+import jmri.SensorManager;
+import jmri.jmrix.internal.InternalSensorManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.managers.AbstractProxyManager;
+import jmri.managers.ProxySensorManager;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.netbeans.jemmy.operators.*;
 
 /**
  *
@@ -30,6 +43,95 @@ public class SensorTableTabActionTest extends AbstractTableTabActionBase {
     @Test
     public void testIncludeAddButton() {
         Assert.assertTrue("Default include add button", a.includeAddButton());
+    }
+    
+    @Test
+    public void testMultiSystemTabs(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        JUnitUtil.resetInstanceManager();
+        // Not returning null v4.23.4ish
+        // Assert.assertNull("No Manager at start",InstanceManager.getNullableDefault(SensorManager.class));
+    
+    
+        ProxySensorManager l = new ProxySensorManager(); // has 2 systems: IS, JS
+        l.addManager(new InternalSensorManager(new InternalSystemConnectionMemo("J", "Juliet")));
+        l.addManager(new InternalSensorManager(new InternalSystemConnectionMemo("I", "India")));
+        InstanceManager.setSensorManager(l);
+        
+        // Test that Proxy Sensor Manager has Juliet, India, and nothing else.
+        SensorManager plm = InstanceManager.getDefault(SensorManager.class);
+        if (!(plm instanceof AbstractProxyManager)) {
+            Assert.fail("Instance SensorManager Not a proxy Sensor Manager");
+        }
+        
+        try {
+            @SuppressWarnings("unchecked")
+            AbstractProxyManager<Sensor> proxy = (AbstractProxyManager<Sensor>) plm;
+            int numLm = proxy.getDisplayOrderManagerList().size();
+            Assert.assertEquals("2 Sensor Managers, Juliet, India",2, numLm);
+            
+            String s = proxy.getDisplayOrderManagerList().get(0).getMemo().getUserName();
+            Assert.assertEquals("Sensor Manager 0 , Juliet","Juliet", s);
+            
+            s = proxy.getDisplayOrderManagerList().get(1).getMemo().getUserName();
+            Assert.assertEquals("Sensor Manager 1, India","India", s);
+        } catch (ClassCastException e){
+            Assert.fail("catch Instance SensorManager Not a proxy Sensor Manager");
+        }
+        
+        
+        InstanceManager.getDefault(SensorManager.class).provideSensor("IS1");
+        InstanceManager.getDefault(SensorManager.class).provideSensor("IS2");
+        InstanceManager.getDefault(SensorManager.class).provideSensor("IS3");
+        InstanceManager.getDefault(SensorManager.class).provideSensor("IS4");
+        InstanceManager.getDefault(SensorManager.class).provideSensor("IS5");
+        
+        InstanceManager.getDefault(SensorManager.class).provideSensor("JS8");
+        InstanceManager.getDefault(SensorManager.class).provideSensor("JS9");
+        
+        TabbedSensorTableFrame sf = new TabbedSensorTableFrame();
+        sf.initTables();
+        sf.initComponents();
+        sf.pack();
+        sf.setVisible(true);
+        
+        JFrame f = JFrameOperator.waitJFrame(sf.getTitle(), true, true);
+        JFrameOperator jfo = new JFrameOperator(f);
+        JTabbedPaneOperator tabOperator = new JTabbedPaneOperator(jfo);
+        Assert.assertEquals("3 manager tabs",3, tabOperator.getTabCount());
+        
+        tabOperator.selectPage("All");
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        JTableOperator controltbl = new JTableOperator(jfo, 0);
+        Assert.assertEquals("All tab 7 Sensors",7, controltbl.getRowCount());
+        
+        tabOperator.selectPage("Juliet");
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        controltbl = new JTableOperator(jfo, 0);
+        Assert.assertEquals("Juliet tab 2 Sensors",2, controltbl.getRowCount());
+        
+        tabOperator.selectPage("India");
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        controltbl = new JTableOperator(jfo, 0);
+        Assert.assertEquals("India tab 5 Sensors",5, controltbl.getRowCount());
+        
+        // jmri.util.swing.JemmyUtil.pressButton(jfo, "Not a Button, pause test");
+        jfo.requestClose();
+    
+    }
+    
+    private static class TabbedSensorTableFrame extends ListedTableFrame<Sensor> {
+        
+        public TabbedSensorTableFrame(){
+            super();
+            tabbedTableItemListArrayArray.clear(); // reset static BeanTable list
+        }
+        
+        @Override
+        public void initTables() {
+            addTable("jmri.jmrit.beantable.SensorTableTabAction", Bundle.getMessage("MenuItemSensorTable"), false);
+        }
     }
 
     @BeforeEach

@@ -322,7 +322,6 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         if (log.isDebugEnabled()) {
             log.debug("Cleanup JavaSoundAudioSource ({})", this.getSystemName());
         }
-        this.dispose();
     }
 
     /**

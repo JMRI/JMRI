@@ -7,7 +7,6 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.jmrit.logix.OBlock;
@@ -16,16 +15,18 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionOBlock;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionOBlock object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class ExpressionOBlockSwing extends AbstractDigitalExpressionSwing {
 
     private JTabbedPane _tabbedPaneOBlock;
-    private BeanSelectCreatePanel<OBlock> oblockBeanPanel;
+    private BeanSelectPanel<OBlock> oblockBeanPanel;
     private JPanel _panelOBlockDirect;
     private JPanel _panelOBlockReference;
     private JPanel _panelOBlockLocalVariable;
@@ -64,7 +65,7 @@ public class ExpressionOBlockSwing extends AbstractDigitalExpressionSwing {
         _tabbedPaneOBlock.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelOBlockLocalVariable);
         _tabbedPaneOBlock.addTab(NamedBeanAddressing.Formula.toString(), _panelOBlockFormula);
         
-        oblockBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(OBlockManager.class), null);
+        oblockBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(OBlockManager.class), null);
         _panelOBlockDirect.add(oblockBeanPanel);
         
         _oblockReferenceTextField = new JTextField();
@@ -224,18 +225,14 @@ public class ExpressionOBlockSwing extends AbstractDigitalExpressionSwing {
             throw new IllegalArgumentException("object must be an ExpressionOBlock but is a: "+object.getClass().getName());
         }
         ExpressionOBlock expression = (ExpressionOBlock)object;
-        try {
-            if (!oblockBeanPanel.isEmpty() && (_tabbedPaneOBlock.getSelectedComponent() == _panelOBlockDirect)) {
-                OBlock oblock = oblockBeanPanel.getNamedBean();
-                if (oblock != null) {
-                    NamedBeanHandle<OBlock> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(oblock.getDisplayName(), oblock);
-                    expression.setOBlock(handle);
-                }
+        if (!oblockBeanPanel.isEmpty() && (_tabbedPaneOBlock.getSelectedComponent() == _panelOBlockDirect)) {
+            OBlock oblock = oblockBeanPanel.getNamedBean();
+            if (oblock != null) {
+                NamedBeanHandle<OBlock> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(oblock.getDisplayName(), oblock);
+                expression.setOBlock(handle);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for oblock", ex);
         }
         try {
             if (_tabbedPaneOBlock.getSelectedComponent() == _panelOBlockDirect) {
@@ -289,6 +286,6 @@ public class ExpressionOBlockSwing extends AbstractDigitalExpressionSwing {
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionOBlockSwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionOBlockSwing.class);
     
 }

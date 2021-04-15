@@ -2,6 +2,7 @@ package jmri.jmrit.whereused;
 
 import javax.swing.JTextArea;
 import jmri.NamedBean;
+import jmri.NamedBean.DisplayOptions;
 
 /**
  * Find Route references.
@@ -19,10 +20,11 @@ public class RouteWhereUsed {
     static public JTextArea getWhereUsed(NamedBean route) {
         JTextArea textArea = new JTextArea();
         String label = Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameRoute"));  // NOI18N
-        textArea.append(Bundle.getMessage("ReferenceTitle", label, route.getDisplayName()));  // NOI18N
+        textArea.append(Bundle.getMessage("ReferenceTitle", label, route.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));  // NOI18N
         textArea.append(Bundle.getMessage("ListenerCount", route.getNumPropertyChangeListeners()));  // NOI18N
 
         textArea.append(WhereUsedCollectors.checkLogixConditionals(route));
+        textArea.append(WhereUsedCollectors.checkLogixNGConditionals(route));
         return textArea;
     }
 }

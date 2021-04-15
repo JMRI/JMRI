@@ -22,13 +22,17 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
     }
 
     // XNet-specific methods
-
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         // check if the output bit is available
         int bitNum = XNetAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == -1) {
-            return (null);
+            throw new IllegalArgumentException("Cannot get Bit from System Name " + systemName);
         }
         // create the new Turnout object
         Turnout t = new EliteXNetTurnout(getSystemPrefix(), bitNum, tc);

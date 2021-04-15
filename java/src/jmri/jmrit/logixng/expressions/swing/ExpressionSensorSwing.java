@@ -7,7 +7,6 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
@@ -17,16 +16,18 @@ import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.expressions.ExpressionSensor.SensorState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionSensor object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
 
     private JTabbedPane _tabbedPaneSensor;
-    private BeanSelectCreatePanel<Sensor> sensorBeanPanel;
+    private BeanSelectPanel<Sensor> sensorBeanPanel;
     private JPanel _panelSensorDirect;
     private JPanel _panelSensorReference;
     private JPanel _panelSensorLocalVariable;
@@ -65,7 +66,7 @@ public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
         _tabbedPaneSensor.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelSensorLocalVariable);
         _tabbedPaneSensor.addTab(NamedBeanAddressing.Formula.toString(), _panelSensorFormula);
         
-        sensorBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(SensorManager.class), null);
+        sensorBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(SensorManager.class), null);
         _panelSensorDirect.add(sensorBeanPanel);
         
         _sensorReferenceTextField = new JTextField();
@@ -225,18 +226,14 @@ public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
             throw new IllegalArgumentException("object must be an ExpressionSensor but is a: "+object.getClass().getName());
         }
         ExpressionSensor expression = (ExpressionSensor)object;
-        try {
-            if (!sensorBeanPanel.isEmpty() && (_tabbedPaneSensor.getSelectedComponent() == _panelSensorDirect)) {
-                Sensor sensor = sensorBeanPanel.getNamedBean();
-                if (sensor != null) {
-                    NamedBeanHandle<Sensor> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(sensor.getDisplayName(), sensor);
-                    expression.setSensor(handle);
-                }
+        if (!sensorBeanPanel.isEmpty() && (_tabbedPaneSensor.getSelectedComponent() == _panelSensorDirect)) {
+            Sensor sensor = sensorBeanPanel.getNamedBean();
+            if (sensor != null) {
+                NamedBeanHandle<Sensor> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(sensor.getDisplayName(), sensor);
+                expression.setSensor(handle);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for sensor", ex);
         }
         try {
             if (_tabbedPaneSensor.getSelectedComponent() == _panelSensorDirect) {
@@ -276,33 +273,6 @@ public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
         }
     }
     
-    
-    /**
-     * Create Sensor object for the expression
-     *
-     * @param reference Sensor application description
-     * @return The new output as Sensor object
-     */
-    protected Sensor getSensorFromPanel(String reference) {
-        if (sensorBeanPanel == null) {
-            return null;
-        }
-        sensorBeanPanel.setReference(reference); // pass sensor application description to be put into sensor Comment
-        try {
-            return sensorBeanPanel.getNamedBean();
-        } catch (jmri.JmriException ex) {
-            log.warn("skipping creation of sensor not found for " + reference);
-            return null;
-        }
-    }
-    
-//    private void noSensorMessage(String s1, String s2) {
-//        log.warn("Could not provide sensor " + s2);
-//        String msg = Bundle.getMessage("WarningNoSensor", new Object[]{s1, s2});
-//        JOptionPane.showMessageDialog(editFrame, msg,
-//                Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-//    }
-    
     /** {@inheritDoc} */
     @Override
     public String toString() {
@@ -317,6 +287,6 @@ public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSensorSwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSensorSwing.class);
     
 }
