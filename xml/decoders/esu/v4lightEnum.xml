@@ -135,7 +135,7 @@
         <choice>External controlled smoke unit</choice>
         <choice xml:lang="de">externer Rauchgenerator</choice>
     </enumChoice>
-    <enumChoiceGroup include="LokSound XL V4.0,ESU LokSound 5,ESU LokPilot 5">
+    <enumChoiceGroup include="LokSound L V4.0,LokSound XL V4.0,ESU LokSound 5,ESU LokPilot 5">
         <enumChoice choice="Servo" value="27">
             <choice xml:lang="it">Servo</choice>
             <choice xml:lang="ca">Servo</choice>
@@ -156,7 +156,7 @@
     <enumChoice choice="Panto control" value="30">
         <choice>Panto control</choice>
     </enumChoice>
-    <enumChoiceGroup include="LokSound XL V4.0">
+    <enumChoiceGroup include="LokSound L V4.0,LokSound XL V4.0">
         <enumChoice choice="Servo coupler" value="31">
             <choice>Servo coupler</choice>
         </enumChoice>

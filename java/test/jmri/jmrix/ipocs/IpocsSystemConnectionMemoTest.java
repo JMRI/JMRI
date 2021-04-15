@@ -23,6 +23,8 @@ public class IpocsSystemConnectionMemoTest {
       imMock.when(() -> jmri.InstanceManager.getDefault(SystemConnectionMemoManager.class)).thenReturn(scmm);
       IpocsSystemConnectionMemo memo = new IpocsSystemConnectionMemo();
       assertNotNull(memo);
+
+      memo.dispose();
     }
   }
 
@@ -38,6 +40,8 @@ public class IpocsSystemConnectionMemoTest {
       IpocsSystemConnectionMemo memo = new IpocsSystemConnectionMemo();
       assertNotNull(memo);
       memo.configureManagers();
+
+      memo.dispose();
     }
   }
 
@@ -54,6 +58,8 @@ public class IpocsSystemConnectionMemoTest {
       memo.setDisabled(true);
       assertNotNull(memo);
       memo.configureManagers();
+
+      memo.dispose();
     }
   }
 
@@ -67,6 +73,8 @@ public class IpocsSystemConnectionMemoTest {
       IpocsSystemConnectionMemo memo = new IpocsSystemConnectionMemo();
       assertNotNull(memo);
       assertNull(memo.getActionModelResourceBundle());
+
+      memo.dispose();
     }
   }
 
@@ -82,6 +90,9 @@ public class IpocsSystemConnectionMemoTest {
       assertNull(memo.getPortController());
       memo.setPortController(mock(IpocsPortController.class));
       assertNotNull(memo.getPortController());
+
+      memo.dispose();
     }
   }
+
 }

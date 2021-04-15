@@ -52,7 +52,7 @@
     <xs:complexType name="EditorIconTextType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing an icon reference with extended "text" information
+          Define the XML structure for storing an icon reference with extended "text" information
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.SlipTurnoutIconXml#storeIcon
@@ -1872,7 +1872,7 @@
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
-            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+          <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
         </xs:element>
         <xs:element name="occupancyblock" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="occupancysensor" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
@@ -1911,7 +1911,7 @@
     <xs:complexType name="EditorSlipTurnoutTconType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing an SlipTurnoutTcon
+          Define the XML structure for storing an SlipTurnoutTcon
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.SlipTurnoutIconXml
@@ -1977,7 +1977,7 @@
     <xs:complexType name="EditorIndicatorTurnoutIconType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing an IndicatorTurnoutIcon
+          Define the XML structure for storing an IndicatorTurnoutIcon
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml

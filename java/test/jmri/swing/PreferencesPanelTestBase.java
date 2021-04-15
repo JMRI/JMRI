@@ -9,7 +9,7 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.assertj.core.api.Java6Assertions.catchThrowable;
 
 /**
- *  Base Tests for implementations of the PreferenesPanel interface.
+ *  Base Tests for implementations of the PreferencesPanel interface.
  *
  * @author Paul Bender Colyright (C) 2020
  */

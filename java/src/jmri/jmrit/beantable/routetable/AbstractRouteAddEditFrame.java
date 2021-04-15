@@ -31,7 +31,7 @@ import java.util.List;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  * @author Egbert Broerse Copyright (C) 2016
- * @author Paul Bender Colyright (C) 2020
+ * @author Paul Bender Copyright (C) 2020
  */
 public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
 
@@ -54,7 +54,7 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     private static final int[] sensorInputModeValues = new int[]{Route.ONACTIVE, Route.ONINACTIVE, Route.ONCHANGE,
             Route.VETOACTIVE, Route.VETOINACTIVE};
 
-    // safe methods to set tho above 4 static field values
+    // safe methods to set the above 4 static field values
     private static final int[] turnoutInputModeValues = new int[]{Route.ONCLOSED, Route.ONTHROWN, Route.ONCHANGE,
             Route.VETOCLOSED, Route.VETOTHROWN};
 

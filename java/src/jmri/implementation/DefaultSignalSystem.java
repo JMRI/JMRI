@@ -147,7 +147,7 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
                 if (speed != null) {
                     float aspectSpeed = 0.0f;
                     try {
-                        aspectSpeed = Float.valueOf(speed);
+                        aspectSpeed = Float.parseFloat(speed);
                     } catch (NumberFormatException nx) {
                         try {
                             aspectSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);

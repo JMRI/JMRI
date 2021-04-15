@@ -1,19 +1,13 @@
 package jmri.jmrit.roster;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 import java.io.IOException;
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
+
+import javax.swing.*;
+
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.swing.EditableResizableImagePanel;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +41,10 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     public FunctionLabelPane(RosterEntry r) {
         super();
         re = r;
-
+        initGUI();
+    }
+    
+    private void initGUI() {
         maxfunction = re.getMAXFNNUM();
         GridBagLayout gbLayout = new GridBagLayout();
         GridBagConstraints cL = new GridBagConstraints();
@@ -105,38 +102,40 @@ public class FunctionLabelPane extends javax.swing.JPanel {
 
             // add the label
             labels[i] = new JTextField(20);
-            if (r.getFunctionLabel(i) != null) {
-                labels[i].setText(r.getFunctionLabel(i));
+            if (re.getFunctionLabel(i) != null) {
+                labels[i].setText(re.getFunctionLabel(i));
             }
             add(labels[i], cL);
             cL.gridx++;
 
             // add the checkbox
             lockable[i] = new JCheckBox();
-            lockable[i].setSelected(r.getFunctionLockable(i));
+            lockable[i].setSelected(re.getFunctionLockable(i));
             add(lockable[i], cL);
             cL.gridx++;
 
             // add the function buttons
-            _imageFilePath[i] = new EditableResizableImagePanel(r.getFunctionImage(i), 20, 20);
+            _imageFilePath[i] = new EditableResizableImagePanel(re.getFunctionImage(i), 20, 20);
             _imageFilePath[i].setDropFolder(Roster.getDefault().getRosterFilesLocation());
             _imageFilePath[i].setBackground(new Color(0, 0, 0, 0));
             _imageFilePath[i].setToolTipText(Bundle.getMessage("FunctionButtonRosterImageToolTip"));
             _imageFilePath[i].setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
+            _imageFilePath[i].addMenuItemBrowseFolder(Bundle.getMessage("MediaRosterOpenSystemFileBrowserOnJMRIfnButtonsRessources"), jmri.util.FileUtil.getExternalFilename("resources/icons/functionicons/transparent_background"));
             add(_imageFilePath[i], cL);
             cL.gridx++;
 
-            _imagePressedFilePath[i] = new EditableResizableImagePanel(r.getFunctionSelectedImage(i), 20, 20);
+            _imagePressedFilePath[i] = new EditableResizableImagePanel(re.getFunctionSelectedImage(i), 20, 20);
             _imagePressedFilePath[i].setDropFolder(Roster.getDefault().getRosterFilesLocation());
             _imagePressedFilePath[i].setBackground(new Color(0, 0, 0, 0));
             _imagePressedFilePath[i].setToolTipText(Bundle.getMessage("FunctionButtonPressedRosterImageToolTip"));
             _imagePressedFilePath[i].setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
+            _imagePressedFilePath[i].addMenuItemBrowseFolder(Bundle.getMessage("MediaRosterOpenSystemFileBrowserOnJMRIfnButtonsRessources"), jmri.util.FileUtil.getExternalFilename("resources/icons/functionicons/transparent_background"));
             add(_imagePressedFilePath[i], cL);
             cL.gridx++;
 
             shunterMode[i] = new JRadioButton();
             shunterModeGroup.add(shunterMode[i]);
-            if (("F" + i).compareTo(r.getShuntingFunction()) == 0) {
+            if (("F" + i).compareTo(re.getShuntingFunction()) == 0) {
                 shunterMode[i].setSelected(true);
             }
             add(shunterMode[i], cL);

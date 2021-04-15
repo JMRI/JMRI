@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -78,6 +79,7 @@ public class ImportCars extends ImportRollingStock {
     private static final int CAR_COMMENT = 15;
     // private static final int CAR_MISCELLANEOUS = 16;
     private static final int CAR_EXTENSIONS = 17;
+    private static final int CAR_RFID_TAG = 32;
 
     // we use a thread so the status frame will work!
     @Override
@@ -406,11 +408,13 @@ public class ImportCars extends ImportRollingStock {
                     }
                     // is the a move count?
                     if (comma && inputLine.length > base + CAR_MOVES) {
-                        try {
-                            carMoves = Integer.parseInt(inputLine[CAR_MOVES]);
-                            log.debug("Car ({} {}) has move count ({})", carRoad, carNumber, carMoves);
-                        } catch (NumberFormatException e) {
-                            log.error("Car ({} {}) has move count ({}) not a number", carRoad, carNumber, carMoves);
+                        if (!inputLine[CAR_MOVES].trim().isEmpty()) {
+                            try {
+                                carMoves = Integer.parseInt(inputLine[CAR_MOVES]);
+                                log.debug("Car ({} {}) has move count ({})", carRoad, carNumber, carMoves);
+                            } catch (NumberFormatException e) {
+                                log.error("Car ({} {}) has move count ({}) not a number", carRoad, carNumber, carMoves);
+                            }
                         }
                     }
                     // is there a car value?
@@ -481,7 +485,7 @@ public class ImportCars extends ImportRollingStock {
                         track = location.getTrackByName(carTrackName, null);
                         if (track == null) {
                             if (autoCreateTracks) {
-                                if (location.getLocationOps() == Location.NORMAL) {
+                                if (!location.isStaging()) {
                                     log.debug("Create 1000 foot yard track ({})", carTrackName);
                                     track = location.addTrack(carTrackName, Track.YARD);
                                 } else {
@@ -501,7 +505,7 @@ public class ImportCars extends ImportRollingStock {
                                         new Object[]{carTrackName, carLocationName}),
                                         Bundle.getMessage("carTrack"), JOptionPane.YES_NO_OPTION);
                                 if (results == JOptionPane.YES_OPTION) {
-                                    if (location.getLocationOps() == Location.NORMAL) {
+                                    if (!location.isStaging()) {
                                         log.debug("Create 1000 foot yard track ({})", carTrackName);
                                         track = location.addTrack(carTrackName, Track.YARD);
                                     } else {
@@ -570,7 +574,14 @@ public class ImportCars extends ImportRollingStock {
                             }
                         }
                     }
-
+                    if (comma && inputLine.length > base + CAR_RFID_TAG) {
+                        String newTag = inputLine[CAR_RFID_TAG];
+                        if (!newTag.trim().isEmpty()) {
+                            InstanceManager.getDefault(IdTagManager.class).provideIdTag(newTag);
+                            log.debug("New ID tag added - {}", newTag);
+                            car.setRfid(newTag);
+                        }
+                    }
                     // add new roads
                     if (!InstanceManager.getDefault(CarRoads.class).containsName(carRoad)) {
                         if (autoCreateRoads) {

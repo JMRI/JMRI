@@ -349,7 +349,7 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
         boolean b = enabled && _automation != null && _automation.getSize() > 0;
         stepActionButton.setEnabled(b && !_automation.isActionRunning());
         runActionButton.setEnabled(b && !_automation.isRunning());
-        stopActionButton.setEnabled(b && _automation.isActionRunning());
+        stopActionButton.setEnabled(b);
         resumeActionButton.setEnabled(b && !_automation.isRunning());
     }
 

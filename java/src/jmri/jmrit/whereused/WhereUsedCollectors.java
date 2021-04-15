@@ -8,10 +8,13 @@ import java.util.Enumeration;
 
 import jmri.*;
 import jmri.jmrit.blockboss.BlockBossLogic;
+import jmri.jmrit.ctc.CtcManager;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
+import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.logixng.ModuleManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 /**
  * Find references.  Each collector method calls a corresponding getUsageReport(NamedBean)
@@ -32,10 +35,11 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
  * <li>checkWarrants</li>
  * <li>checkEntryExit</li>
  * <li>checkLogixConditionals</li>
+ * <li>checkLogixNGConditionals</li>
  * <li>checkSections</li>
  * <li>checkTransits</li>
  * <li>checkPanels</li>
- * <li>checkCTC - TODO</li>
+ * <li>checkCTC</li>
  * </ul>
  *
  * @author Dave Sand Copyright (C) 2020
@@ -351,6 +355,34 @@ public class WhereUsedCollectors {
     }
 
     /**
+     * Create the LogixNG/ConditionalNG usage string.
+     * Usage keys:
+     * <ul>
+     * <li>LogixNGAction</li>
+     * <li>LogixNGExpression</li>
+     * </ul>
+     * @param bean The requesting bean:  Many.
+     * @return usage string
+     */
+    static String checkLogixNGConditionals(NamedBean bean) {
+        StringBuilder sb = new StringBuilder();
+        InstanceManager.getDefault(LogixNG_Manager.class).getNamedBeanSet().forEach((logixng) -> logixng.getUsageReport(bean).forEach((report) -> {
+            if (report.usageKey.startsWith("LogixNG")) {  // NOI18N
+                String name = logixng.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
+                String cdlName = report.usageBean != null ? report.usageBean.getDisplayName() : "";
+                sb.append(Bundle.getMessage("ReferenceLineLogixNG", name, cdlName, Bundle.getMessage(report.usageKey), report.usageData));  // NOI18N
+            }
+        }));
+        InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet().forEach((module) -> module.getUsageReport(bean).forEach((report) -> {
+            if (report.usageKey.startsWith("LogixNG")) {  // NOI18N
+                String name = module.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
+                sb.append(Bundle.getMessage("ReferenceLineModule", name, Bundle.getMessage(report.usageKey), report.usageData));  // NOI18N
+            }
+        }));
+        return addHeader(sb, "ReferenceLogixNG");  // NOI18N
+    }
+
+    /**
      * Create the Section usage string.
      * Usage keys:
      * <ul>
@@ -429,7 +461,7 @@ public class WhereUsedCollectors {
      */
     static String checkPanels(NamedBean bean) {
         StringBuilder sb = new StringBuilder();
-        InstanceManager.getDefault(EditorManager.class).getAll().forEach(panel -> 
+        InstanceManager.getDefault(EditorManager.class).getAll().forEach(panel ->
             panel.getUsageReport(bean).forEach(report -> {
                 if (panel instanceof SwitchboardEditor) {
                     sb.append(Bundle.getMessage("ReferenceLineName", report.usageData));  // NOI18N
@@ -442,14 +474,35 @@ public class WhereUsedCollectors {
 
     /**
      * Create the CTC usage string.
-     * Usage keys:  None yet.
+     * The CTC manager is found using the ConfigureManager instead of the InstanceManager.
+     * The CTC manager uses InstanceManagerAutoDefault which can result in unnecessary
+     * XML content when CTC is not being used.
+     * Usage keys:
+     * <ul>
+     * <li>CtcWhereUsedOther</li>
+     * <li>CtcWhereUsedCBHD</li>
+     * </ul>
      * @param bean The requesting bean:  Block, Sensor, Signal Head, Signal Mast, Turnout.
      * @return usage string
      */
     static String checkCTC(NamedBean bean) {
-        log.debug("CTC process pending: bean = {}", bean);  // NOI18N
-        return "";
+        StringBuilder sb = new StringBuilder();
+
+        // Get the CTC manager via the ConfigureManager to avoid auto default.
+        InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent(cm -> {
+            cm.getInstanceList(CtcManager.class).forEach(m -> {
+                mgr = (CtcManager) m;
+            });
+        });
+
+        if (mgr != null) {
+            mgr.getUsageReport(bean).forEach((report) -> {
+                sb.append(Bundle.getMessage("ReferenceLineName", report.usageData));  // NOI18N
+            });
+        }
+        return addHeader(sb, "ReferenceCTC");  // NOI18N
     }
+    static CtcManager mgr = null;
 
     /**
      * Add the specified section to the beginning of the string builder if there is data.
@@ -465,5 +518,5 @@ public class WhereUsedCollectors {
         return sb.toString();
     }
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WhereUsedCollectors.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WhereUsedCollectors.class);
 }

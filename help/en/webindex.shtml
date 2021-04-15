@@ -204,11 +204,11 @@
 
  
 <li>
-<a href="html/hardware/can/cbus/index.shtml">CBUS (MERG) </a>
+<a href="html/hardware/can/cbus/index.shtml">CBUS </a>
 <ul>
   
 <li>
-<a href="html/hardware/can/cbus/Details.shtml">Connection Details </a>
+<a href="">Connection Details </a>
 <ul></ul>
 </li>
 
@@ -232,6 +232,12 @@
 
   
 <li>
+<a href="package/jmri/jmrix/can/cbus/swing/bootloader/CbusBootloaderPane.shtml">Firmware update </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="html/hardware/can/cbus/Names.shtml">Naming Events </a>
 <ul></ul>
 </li>
@@ -245,6 +251,18 @@
   
 <li>
 <a href="package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Send Frame / Event Tool </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml">Simulator </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/hardware/can/cbus/CbusMeters.shtml">Voltage / Current Meter </a>
 <ul></ul>
 </li>
 
@@ -732,7 +750,7 @@
 </li>
  
 <li>
-<a href="html/apps/DispatcherSystem/DispatcherSystem.shtml">Dispatcher System (Python Extension) </a>
+<a href="html/scripthelp/DispatcherSystem/DispatcherSystem.shtml">Dispatcher System (Python Extension) </a>
 <ul></ul>
 </li>
 
@@ -959,6 +977,12 @@
 
  
 <li>
+<a href="html/tools/scripting/JythonApps.shtml">Jython Apps for JMRI </a>
+<ul></ul>
+</li>
+
+ 
+<li>
 <a href="package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor (Panels) </a>
 <ul></ul>
 </li>
@@ -1019,6 +1043,12 @@
 </li>
 
  
+<li>
+<a href="package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml">LNCV Programmer </a>
+<ul></ul>
+</li>
+
+ 
 <li>LocoNet <ul>
   
 <li>
@@ -1059,6 +1089,12 @@
   
 <li>
 <a href="package/jmri/jmrix/loconet/downloader/LoaderFrame.shtml">Firmware Downloader </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml">LNCV Programmer </a>
 <ul></ul>
 </li>
 
@@ -1268,7 +1304,7 @@
 </li>
  
 <li>
-<a href="html/hardware/can/cbus/index.shtml">MERG (CBUS) - Hardware, Connection, Tools </a>
+<a href="html/hardware/merg/index.shtml">MERG - Hardware, Connection, Tools </a>
 <ul></ul>
 </li>
 
@@ -1347,6 +1383,12 @@
 
  
 <li>
+<a href="package/jmri/jmrit/beantable/OBlockTable.shtml">OBlock (using tabbed interface) </a>
+<ul></ul>
+</li>
+
+ 
+<li>
 <a href="package/jmri/jmrit/logix/OBlockEdit.shtml">OPath (Occupancy Path, Warrants) </a>
 <ul></ul>
 </li>
@@ -1378,8 +1420,14 @@
 </li>
  
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml">OperationsPro </a>
+<a href="html/apps/OperationsPro/index.shtml">OperationsPro </a>
 <ul>
+  
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml">Comprehensive Info </a>
+<ul></ul>
+</li>
+
   
 <li>
 <a href="package/jmri/jmrit/operations/Operations.shtml#BuildingTrains">Building Trains </a>
@@ -1766,7 +1814,7 @@
 </li>
  
 <li>
-<a href="package/jmri/jmrit/logix/SCWarrant.html">SC Warrant (Signal Controlled) </a>
+<a href="package/jmri/jmrit/logix/SCWarrant.shtml">SC Warrant (Signal Controlled) </a>
 <ul></ul>
 </li>
 
@@ -2034,13 +2082,25 @@
 
   
 <li>
-<a href="package/jmri/jmrix/sprog/update/SprogIIUpdateFrame.shtml">Update SPROG II </a>
+<a href="package/jmri/jmrix/sprog/packetgen/SprogPacketGenFrame.shtml">Send Packet </a>
 <ul></ul>
 </li>
 
   
 <li>
-<a href="package/jmri/jmrix/sprog/update/Sprogv4UpdateFrame.shtml">Update SPROG V3/V4 </a>
+<a href="package/jmri/jmrix/sprog/sprogslotmon/SprogSlotMonFrame.shtml">Slot Monitor </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrix/sprog/update/SprogVersionFrame.shtml">SPROG Version </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrix/sprog/update/SprogIIUpdateFrame.shtml">Update SPROG II </a>
 <ul></ul>
 </li>
 
@@ -2049,10 +2109,35 @@
 </li>
  
 <li>
-<a href="html/hardware/SRCP/index.shtml">SRCP </a>
+<a href="html/hardware/sproggen5/index.shtml">SPROG Generation 5 </a>
+<ul>
+  
+<li>
+<a href="html/hardware/sproggen5/hardware.shtml">Hardware Support </a>
 <ul></ul>
 </li>
 
+  
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/modeswitcher/SprogCbusSimpleModeSwitcherFrame.shtml">Pi SPROG 3 Mode Switcher </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/modeswitcher/SprogCbusSprog3PlusModeSwitcherFrame.shtml">Pi-Sprog/SPROG 3 Plus Mode Switcher </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/hardware/can/cbus/index.shtml">See also: CBUS </a>
+<ul></ul>
+</li>
+
+ 
+</ul>
+</li>
  
 <li>
 <a href="html/apps/DecoderPro/index.shtml#decoderlisting">Supported Decoders </a>
@@ -2440,6 +2525,12 @@
  
 <li>
 <a href="html/apps/index.shtml#addapp">XTrackCAD/Reader </a>
+<ul></ul>
+</li>
+
+ 
+<li>
+<a href="html/scripthelp/yaat/YAAT.shtml">YAAT - YetAnotherAutoTrain.py </a>
 <ul></ul>
 </li>
 

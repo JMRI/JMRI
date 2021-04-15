@@ -59,7 +59,7 @@ public class TextItemPanel extends ItemPanel {
     private final ImagePanel _samplePanel;
     
     private PositionablePopupUtil _util;
-    private HashMap<String, PositionableLabel> _samples;
+    private final HashMap<String, PositionableLabel> _samples;
 
     private String _selectedState;
     private boolean _isPositionableLabel;
@@ -207,25 +207,21 @@ public class TextItemPanel extends ItemPanel {
             boolean addtextField;
             if (pos instanceof PositionableLabel) {
                 sample.setText(((PositionableLabel)pos).getUnRotatedText());
-                if (pos instanceof jmri.jmrit.display.MemoryIcon) {
-                    addtextField = false;
-                } else {
-                    addtextField = true;
-                }
+                addtextField = !(pos instanceof jmri.jmrit.display.MemoryIcon);
             } else {
                 // To display PositionableJPanel types as PositionableLabels, set fixed sizes.
                 util.setFixedWidth(pos.getWidth() - 2*_util.getBorderSize());
                 util.setFixedHeight(pos.getHeight() - 2*_util.getBorderSize());
                 if (pos instanceof jmri.jmrit.display.MemoryInputIcon) {
-                    JTextField field = (JTextField)((jmri.jmrit.display.MemoryInputIcon)pos).getTextComponent();
+                    JTextField field = (JTextField) pos.getTextComponent();
                     sample.setText(field.getText());
                     addtextField = false;
                 } else if (pos instanceof jmri.jmrit.display.MemoryComboIcon) {
                     JComboBox<String> box = ((jmri.jmrit.display.MemoryComboIcon)pos).getTextComponent();
-                    sample.setText(box.getSelectedItem().toString());
+                    sample.setText(box.getSelectedItem() != null ? box.getSelectedItem().toString() : "");
                     addtextField = false;
                 } else if (pos instanceof jmri.jmrit.display.MemorySpinnerIcon) {
-                    JTextField field = (JTextField)((jmri.jmrit.display.MemorySpinnerIcon)pos).getTextComponent();
+                    JTextField field = (JTextField) pos.getTextComponent();
                     sample.setText(field.getText());
                     addtextField = false;
                 } else {
@@ -428,9 +424,7 @@ public class TextItemPanel extends ItemPanel {
     private void makeColorChooser() {
         Color panelBackground = _frame.getEditor().getTargetPanel().getBackground(); // start using Panel background color
         _chooser = JmriColorChooser.extendColorChooser(new JColorChooser(panelBackground));
-        _chooser.getSelectionModel().addChangeListener(c -> {
-            chooserColorChange();
-        });
+        _chooser.getSelectionModel().addChangeListener(c -> chooserColorChange());
         _chooser.setPreviewPanel(new JPanel());
         JmriColorChooser.suppressAddRecentColor(true);
     }

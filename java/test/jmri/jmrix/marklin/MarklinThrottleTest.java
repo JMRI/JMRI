@@ -381,6 +381,7 @@ public class MarklinThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSendFunctionGroup5() {
     }
 
+    private MarklinSystemConnectionMemo memo;
 
     @BeforeEach
     @Override
@@ -391,19 +392,22 @@ public class MarklinThrottleTest extends jmri.jmrix.AbstractThrottleTest {
            public void sendMarklinMessage(MarklinMessage m, MarklinListener reply) {
            }
         };
-        MarklinSystemConnectionMemo c = new MarklinSystemConnectionMemo(tc);
-        c.store(new MarklinThrottleManager(c), ThrottleManager.class);
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,c.get(ThrottleManager.class));
+        memo = new MarklinSystemConnectionMemo(tc);
+        memo.store(new MarklinThrottleManager(memo), ThrottleManager.class);
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, memo.get(ThrottleManager.class));
 
-        instance = new MarklinThrottle(c,new jmri.DccLocoAddress(42,false));
+        instance = new MarklinThrottle(memo, new jmri.DccLocoAddress(42,false));
     }
 
     @AfterEach
     @Override
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        // no need to dispose of instance
+        memo.getThrottleManager().dispose();
+        memo.getTrafficController().terminateThreads();
+        memo.dispose();
+        memo = null;
         JUnitUtil.tearDown();
-
     }
 
     // private final static Logger log = LoggerFactory.getLogger(MarklinThrottleTest.class);

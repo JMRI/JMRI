@@ -24,11 +24,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
- * Tests for the NXFrame class, and it's interactions with Warrants.
+ * Tests for the NXFrame class, and its interactions with Warrants.
  *
  * @author Pete Cressman 2015
  *
- * todo - test error conditions
+ * TODO - test error conditions
  */
 @Timeout(30)
 public class NXFrameTest {
@@ -76,12 +76,14 @@ public class NXFrameTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
 
-        NXFrame nxFrame = WarrantTableAction.getDefault().makeNXFrame();
+        NXFrame nxFrame = new NXFrame();
         nxFrame.setVisible(true);
 
         JFrameOperator nfo = new JFrameOperator(nxFrame);
@@ -117,12 +119,12 @@ public class NXFrameTest {
         nxFrame.setMaxSpeed(2);
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonRunNX"));
         JemmyUtil.confirmJOptionPane(nfo, Bundle.getMessage("WarningTitle"), Bundle.getMessage("badSpeed", "2"), "OK");
-        
+
         nxFrame.setMaxSpeed(0.6f);
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonRunNX"));
         JemmyUtil.confirmJOptionPane(nfo, Bundle.getMessage("WarningTitle"), Bundle.getMessage("BadDccAddress", ""), "OK");
 
-        nxFrame._speedUtil.setDccAddress("666");
+        nxFrame._speedUtil.setAddress("666");
         nxFrame.setTrainInfo("Nick");
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonRunNX"));
 
@@ -144,13 +146,15 @@ public class NXFrameTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
         OBlock block = _OBlockMgr.getBySystemName("OB0");
 
-        NXFrame nxFrame = WarrantTableAction.getDefault().makeNXFrame();
+        NXFrame nxFrame = new NXFrame();
         nxFrame.setVisible(true);
 
         JFrameOperator nfo = new JFrameOperator(nxFrame);
@@ -181,10 +185,10 @@ public class NXFrameTest {
         JemmyUtil.pressButton(jdo, Bundle.getMessage("ButtonReview"));
         JemmyUtil.pressButton(jdo, Bundle.getMessage("ButtonSelect"));
 
-        nxFrame._speedUtil.setRampThrottleIncrement(0.05f);     
+        nxFrame._speedUtil.setRampThrottleIncrement(0.05f);
         nxFrame._speedUtil.setRampTimeIncrement(100);
         nxFrame.setMaxSpeed(0.6f);
-        nxFrame._speedUtil.setDccAddress("666");
+        nxFrame._speedUtil.setAddress("666");
         nxFrame.setTrainInfo("Nick");
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonRunNX"));
 
@@ -193,11 +197,11 @@ public class NXFrameTest {
 
         WarrantTableModel model = tableFrame.getModel();
         assertThat(model).withFailMessage("tableFrame model").isNotNull();
-        
+
         JUnitUtil.waitFor(() -> {
             return model.getRowCount() > 1;
         }, "NXWarrant loaded into table");
-        
+
         Warrant warrant = tableFrame.getModel().getWarrantAt(model.getRowCount()-1);
 
         assertThat(warrant).withFailMessage("warrant").isNotNull();
@@ -260,6 +264,8 @@ public class NXFrameTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
@@ -275,7 +281,7 @@ public class NXFrameTest {
 
         Warrant warrant = tableFrame.getModel().getWarrantAt(0);
         assertThat(warrant).withFailMessage("warrant").isNotNull();
-       
+
         tableFrame.runTrain(warrant, Warrant.MODE_RUN);
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
@@ -294,7 +300,7 @@ public class NXFrameTest {
         // we may want to use jemmy to close the panel as well.
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("NXWarrantTest");
         panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
-    }    
+    }
 
     @Test
     @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
@@ -303,6 +309,8 @@ public class NXFrameTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
@@ -318,7 +326,7 @@ public class NXFrameTest {
 
         Warrant warrant = tableFrame.getModel().getWarrantAt(1);
         assertThat(warrant).withFailMessage("warrant").isNotNull();
-       
+
         tableFrame.runTrain(warrant, Warrant.MODE_RUN);
 
         SpeedUtil sp = warrant.getSpeedUtil();
@@ -451,7 +459,8 @@ public class NXFrameTest {
 
     @AfterEach
     public void tearDown() throws Exception {
-        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         InstanceManager.getDefault(WarrantManager.class).dispose();
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();

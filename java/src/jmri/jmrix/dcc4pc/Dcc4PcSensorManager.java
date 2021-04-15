@@ -62,15 +62,16 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Sensor s = new Dcc4PcSensor(systemName, userName);
         s.setUserName(userName);
         extractBoardID(systemName);
         return s;
     }
 
-    /*
+    /**
      * This extracts the board id out from the system name.
+     * @param systemName including system prefix and type letter.
      */
     void extractBoardID(String systemName) {
         if (systemName.contains(":")) {
@@ -107,25 +108,21 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             try {
                 board = Integer.parseInt(curAddress.substring(0, seperator));
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert {} into the cab and channel format of nn:xx", curAddress);
-                throw new JmriException("Hardware Address passed should be a number");
+                throw new JmriException("Unable to convert "+curAddress+" into the cab and channel format of nn:xx");
             }
 
             try {
                 channel = Integer.parseInt(curAddress.substring(seperator + 1));
                 if ((channel > 16) || (channel < 1)) {
-                    log.error("Channel number is out of range");
-                    throw new JmriException("Channel number should be in the range of 1 to 16");
+                    throw new JmriException("In Address "+curAddress+" Channel number should be in the range of 1 to 16");
                 }
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert {} into the cab and channel format of nn:xx", curAddress);
-                throw new JmriException("Hardware Address passed should be a number");
+                throw new JmriException("Unable to convert "+curAddress+" into the cab and channel format of nn:xx");
             }
             iName = curAddress;
             addBoard(board);
         } else {
-            log.error("Unable to convert {} Hardware Address to a number", curAddress);
-            throw new JmriException("Unable to convert " + curAddress + " Hardware Address to a number");
+            throw new JmriException("Unable to convert "+curAddress+" into the cab and channel format of nn:xx");
         }
         return prefix + typeLetter() + iName;
     }
@@ -134,23 +131,13 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     private int channel;
 
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
 
-        String tmpSName = "";
-
-        try {
-            tmpSName = createSystemName(curAddress, prefix);
-        } catch (JmriException ex) {
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage(Bundle.getMessage("ErrorTitle"),
-                            Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
-            return null;
-        }
-
+        String tmpSName = createSystemName(curAddress, prefix);
         //Check to determine if the systemName is in use, return null if it is,
         //otherwise return the next valid address.
         Sensor s = getBySystemName(tmpSName);
-        if (s != null) {
+        if (s != null || ignoreInitialExisting) {
             for (int x = 1; x < 10; x++) {
                 if (channel < 16) {
                     channel++;
@@ -163,7 +150,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                     return board + ":" + channel;
                 }
             }
-            return null;
+            throw new JmriException(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,board + ":" + channel));
         } else {
             return curAddress;
         }

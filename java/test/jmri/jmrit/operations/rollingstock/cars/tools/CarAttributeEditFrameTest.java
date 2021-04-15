@@ -31,20 +31,20 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         CarAttributeEditFrame f = new CarAttributeEditFrame();
         f.initComponents(CarAttributeEditFrame.COLOR);
         f.toggleShowQuanity();
+        // confirm that the default number of colors is correct
+        Assert.assertEquals(12, f.comboBox.getItemCount());
         f.addTextBox.setText("Pink");
         JemmyUtil.enterClickAndLeave(f.addButton);
-        // new color should appear at start of list
-        Assert.assertEquals("new color", "Pink", f.comboBox.getItemAt(0));
+        Assert.assertEquals("new color", "Pink", f.comboBox.getItemAt(6));
 
         // test replace
-        f.comboBox.setSelectedItem("Pink");
         f.addTextBox.setText("Pinker");
         // push replace button
         JemmyUtil.enterClickAndLeave(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
         // did the replace work?
-        Assert.assertEquals("replaced Pink with Pinker", "Pinker", f.comboBox.getItemAt(0));
+        Assert.assertEquals("replaced Pink with Pinker", "Pinker", f.comboBox.getItemAt(6));
 
         JemmyUtil.enterClickAndLeave(f.deleteButton);
         // black is the first default color
@@ -137,18 +137,16 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         // now add a new length in inches
         f.addTextBox.setText("10" + "\"");
         JemmyUtil.enterClickAndLeave(f.addButton);
-        // new length should appear at start of list
-        Assert.assertEquals("new length name", "72", f.comboBox.getItemAt(0));
+        Assert.assertEquals("new length name", "72", f.comboBox.getItemAt(12));
 
         // test replace
-        f.comboBox.setSelectedItem("72");
         f.addTextBox.setText("73");
         // push replace button
         JemmyUtil.enterClickAndLeave(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
         // did the replace work?
-        Assert.assertEquals("replaced 72 with 73", "73", f.comboBox.getItemAt(0));
+        Assert.assertEquals("replaced 72 with 73", "73", f.comboBox.getItemAt(12));
 
         JemmyUtil.enterClickAndLeave(f.deleteButton);
         Assert.assertEquals("1st number after delete", "32", f.comboBox.getItemAt(0));
@@ -199,6 +197,9 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         // now add a bogus length
         f.addTextBox.setText("A");
         JemmyUtil.enterClickAndLeave(f.addButton);
+        
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle
+                .getMessage("canNotAdd"), new Object[]{Bundle.getMessage("Length")}), Bundle.getMessage("ButtonOK"));
 
         jmri.util.JUnitAppender.assertErrorMessage("length (A) is not an integer");
         Assert.assertEquals("1st number before bogus add", "32", f.comboBox.getItemAt(0));
@@ -211,6 +212,9 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         // now add a negative length
         f.addTextBox.setText("-1");
         JemmyUtil.enterClickAndLeave(f.addButton);
+        
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle
+                .getMessage("canNotAdd"), new Object[]{Bundle.getMessage("Length")}), Bundle.getMessage("ButtonOK"));
 
         jmri.util.JUnitAppender.assertErrorMessage("length (-1) has to be a positive number");
         Assert.assertEquals("1st number before bogus add", "32", f.comboBox.getItemAt(0));
@@ -383,17 +387,16 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         f.addTextBox.setText("ABC-TEST");
         JemmyUtil.enterClickAndLeave(f.addButton);
         // new road should appear at start of list
-        Assert.assertEquals("new road name", "ABC-TEST", f.comboBox.getItemAt(0));
+        Assert.assertEquals("new road name", "ABC-TEST", f.comboBox.getItemAt(1));
 
         // test replace
-        f.comboBox.setSelectedItem("ABC-TEST");
         f.addTextBox.setText("ABCDEF-TEST");
         // push replace button
         JemmyUtil.enterClickAndLeave(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
         // did the replace work?
-        Assert.assertEquals("replaced ABC-TEST", "ABCDEF-TEST", f.comboBox.getItemAt(0));
+        Assert.assertEquals("replaced ABC-TEST", "ABCDEF-TEST", f.comboBox.getItemAt(1));
 
         JemmyUtil.enterClickAndLeave(f.deleteButton);
         Assert.assertEquals("1st road after delete", "AA", f.comboBox.getItemAt(0));
@@ -427,26 +430,26 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         CarAttributeEditFrame f = new CarAttributeEditFrame();
         f.initComponents(CarAttributeEditFrame.OWNER);
         f.toggleShowQuanity();
+        // check default owner names
+        Assert.assertEquals("expected owner names", 2, f.comboBox.getItemCount());
         f.addTextBox.setText("John");
         JemmyUtil.enterClickAndLeave(f.addButton);
-        // new color should appear at start of list
-        Assert.assertEquals("new owner", "John", f.comboBox.getItemAt(0));
+        Assert.assertEquals("new owner", "John", f.comboBox.getItemAt(2));
 
         // test replace
-        f.comboBox.setSelectedItem("John");
         f.addTextBox.setText("Bob");
         // push replace button
         JemmyUtil.enterClickAndLeave(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
         // did the replace work?
-        Assert.assertEquals("replaced John with Bob", "Bob", f.comboBox.getItemAt(0));
+        Assert.assertEquals("replaced John with Bob", "Bob", f.comboBox.getItemAt(1));
 
         JemmyUtil.enterClickAndLeave(f.deleteButton);
-        Assert.assertEquals("old owner", "DAB", f.comboBox.getItemAt(0));
+        Assert.assertEquals("default owner 1", "AT", f.comboBox.getItemAt(0));
+        Assert.assertEquals("default owner 2", "DAB", f.comboBox.getItemAt(1));
 
         JUnitUtil.dispose(f);
-
     }
 
     @Test

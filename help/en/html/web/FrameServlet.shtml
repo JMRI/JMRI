@@ -9,12 +9,9 @@
 
   <title>JMRI: Frame Servlet</title>
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
   <!-- /Style -->
@@ -26,9 +23,9 @@
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
-      <h1>JMRI: Frame Servlet</h1>The JMRI Frame Servlet provides
-      web access to JMRI windows. Its base url is "/frame/", which
-      by itself will return a page listing available frames.
+      <h1>JMRI: Frame Servlet</h1>
+      <p>The JMRI Frame Servlet provides web access to JMRI windows.
+      Its base url is "/frame/", which by itself will return a page listing available frames.
 
       <p>It uses the facilities of the
       <code>jmri.util.JmriJFrame</code> class to locate windows and
@@ -94,6 +91,7 @@
       "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/web/servlet/frameimage/JmriJFrameServlet.properties">
       properties file</a> can be used to configure the HTML that's
       returned when a frame is requested.</p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

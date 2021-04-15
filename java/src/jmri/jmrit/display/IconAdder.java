@@ -81,7 +81,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         _userDefaults = false;
         _iconMap = new HashMap<>(10);
         _iconOrderList = new ArrayList<>();
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        IconAdder.this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
     public IconAdder(boolean allowDeletes) {
@@ -92,7 +92,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     public IconAdder(String type) {
         this();
         _type = type;
-        initDefaultIcons();
+        IconAdder.this.initDefaultIcons();
     }
 
     public void reset() {
@@ -282,7 +282,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     }
 
     protected void doIconPanel() {
-        JPanel panel = null;
+        JPanel panel;
         for (int i = _iconOrderList.size() - 1; i >= 0; i--) {
             log.debug("adding icon #{}", i);
             panel = new JPanel();
@@ -305,7 +305,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             button.setAlignmentX(Component.CENTER_ALIGNMENT);
             p.add(button);
             panel.add(p);
-            // TODO align button centered in GridLayout EBR
+            // TODO align button centered in GridLayout
             _iconPanel.add(panel);
         }
         this.add(_iconPanel, 0);
@@ -521,7 +521,27 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _sysNameText = new JTextField();
             _sysNameText.setPreferredSize(
                     new Dimension(150, _sysNameText.getPreferredSize().height + 2));
-            _addTableButton = new JButton(Bundle.getMessage("addToTable"));
+            
+            String tooltip = _pickListModel.getManager().getEntryToolTip();
+            if (tooltip!=null) {
+                StringBuilder sb = new StringBuilder();
+                sb.append("<br>");
+                sb.append(_pickListModel.getManager().getMemo().getUserName());
+                sb.append(" ");
+                sb.append(_pickListModel.getManager().getBeanTypeHandled(true));
+                sb.append(":<br>");
+                sb.append(_pickListModel.getManager().getEntryToolTip());
+                tooltip = sb.toString();
+            }
+            
+            _sysNameText.setToolTipText(Bundle.getMessage("newBeanBySysNameTip",
+                _pickListModel.getManager().getBeanTypeHandled(false),
+                _pickListModel.getManager().getMemo().getUserName(),
+                InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class)
+                    .getSystemPrefix()+_pickListModel.getManager().typeLetter(),
+                (tooltip==null ? "" : tooltip)
+                ));
+            _addTableButton = new JButton(Bundle.getMessage("addToTable",_pickListModel.getManager().getBeanTypeHandled()));
             _addTableButton.addActionListener((ActionEvent a) -> addToTable());
             _addTableButton.setEnabled(false);
             _addTableButton.setToolTipText(Bundle.getMessage("ToolTipWillActivate"));
@@ -599,11 +619,18 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     void addToTable() {
         String name = _sysNameText.getText();
         if (name != null && name.length() > 0) {
-            NamedBean bean = _pickListModel.addBean(name);
-            if (bean != null) {
-                int setRow = _pickListModel.getIndexOf(bean);
-                _table.setRowSelectionInterval(setRow, setRow);
-                _pickTablePane.getVerticalScrollBar().setValue(setRow * ROW_HEIGHT);
+            try {
+                NamedBean bean = _pickListModel.addBean(name);
+                if (bean != null) {
+                    int setRow = _pickListModel.getIndexOf(bean);
+                    _table.setRowSelectionInterval(setRow, setRow);
+                    _pickTablePane.getVerticalScrollBar().setValue(setRow * ROW_HEIGHT);
+                }
+            } catch (IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(this.getParent(),
+                     ex.getLocalizedMessage(),
+                    Bundle.getMessage("WarningTitle"),  // NOI18N
+                    JOptionPane.WARNING_MESSAGE);
             }
         }
         _sysNameText.setText("");

@@ -50,6 +50,7 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         NamedBeanHandle<OBlock> b = p.getNamedOccBlock();
         if (b != null) {
             element.addContent(storeNamedBean("occupancyblock", b));
+            // additional oblock information for web server is extracted by ControlPanelServlet at runtime, not stored
         }
         NamedBeanHandle<Sensor> s = p.getNamedOccSensor();
         if (b == null && s != null) { // only write sensor if no OBlock
@@ -151,7 +152,7 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         name = element.getChild("occupancyblock");
         if (name != null) {
             l.setOccBlock(name.getText());
-        } else {        // only write sensor if no OBlock, don't write double sensing
+        } else {        // we only wrote sensor if no OBlock, so assume sensor is empty
             name = element.getChild("occupancysensor");
             if (name != null) {
                 l.setOccSensor(name.getText());

@@ -1,16 +1,13 @@
 package jmri.util;
 
+import java.awt.*;
+import java.awt.geom.*;
 import static java.lang.Float.NEGATIVE_INFINITY;
 import static java.lang.Float.POSITIVE_INFINITY;
 import static java.lang.Math.PI;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
@@ -41,6 +38,19 @@ public final class MathUtil {
     @CheckReturnValue
     public static Point2D infinityPoint2D() {
         return new Point2D.Double(POSITIVE_INFINITY, POSITIVE_INFINITY);
+    }
+
+    /**
+     * @param a the first number
+     * @param b the second number
+     * @return the greatest common divisor of a and b
+     */
+    public static int gcd(int a, int b) {
+        int result = b;
+        if (a != 0) {
+            result = gcd(b % a, a);
+        }
+        return result;
     }
 
     /**
@@ -1399,5 +1409,109 @@ public final class MathUtil {
 
         return (a * p3X + b * p3Y + c) / Math.sqrt(a * a + b * b);
     }
+
+    /*==========*\
+    |* polygons *|
+    \*==========*/
+
+    /**
+     * return average point in points
+     *
+     * @param points to average
+     * @return the average point
+     */
+    public static Point2D midPoint(List<Point2D> points) {
+        Point2D result = zeroPoint2D();
+        for (Point2D point : points) {
+            result = add(result, point);
+        }
+        result = divide(result, points.size());
+        return result;
+    }
+
+    /**
+     * @param pointT the point
+     * @param points the polygon
+     * @return true if pointT is in the polygon made up of the points
+     */
+    public static boolean isPointInPolygon(Point2D pointT, List<Point2D> points) {
+        boolean result = false;
+
+        Double pointT_x = pointT.getX(), pointT_y = pointT.getY();
+
+        int n = points.size();
+        for (int i = 0, j = n - 1; i < n; j = i++) {
+            Point2D pointI = points.get(i), pointJ = points.get(j);
+            Double pointI_x = pointI.getX(), pointI_y = pointI.getY();
+            Double pointJ_x = pointJ.getX(), pointJ_y = pointJ.getY();
+
+            if ((pointI_y > pointT_y) != (pointJ_y > pointT_y)
+                    && (pointT_x < (pointJ_x - pointI_x) * (pointT_y - pointI_y) / (pointJ_y - pointI_y) + pointI_x)) {
+                result = !result;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * compute convex hull (outline of polygon)
+     *
+     * @param points of the polygon
+     * @return points of the convex hull
+     */
+    public static List<Point2D> convexHull(List<Point2D> points) {
+        if (points.isEmpty()) {
+            return points;
+        }
+
+        points.sort((p1, p2) -> (int) Math.signum(p1.getX() - p2.getX()));
+
+        List<Point2D> results = new ArrayList<>();
+
+        // lower hull
+        for (Point2D pt : points) {
+            while (results.size() > 1) {
+                int n = results.size();
+                if (isCounterClockWise(results.get(n - 2), results.get(n - 1), pt)) {
+                    break;
+                } else {
+                    results.remove(n - 1);
+                }
+            }
+            results.add(pt);
+        }
+
+        // upper hull
+        int t = results.size(); //terminate while loop when results are this size
+        for (int i = points.size() - 1; i >= 0; i--) {
+            Point2D pt = points.get(i);
+
+            while (results.size() > t) {
+                int n = results.size();
+                if (isCounterClockWise(results.get(n - 2), results.get(n - 1), pt)) {
+                    break;
+                } else {
+                    results.remove(n - 1);
+                }
+            }
+            results.add(pt);
+        }
+
+        results.remove(results.size() - 1);
+        return results;
+    }
+
+    /**
+     * isCounterClockWise
+     *
+     * @param a the first point
+     * @param b the second point
+     * @param c the third point
+     * @return true if the three points make a counter-clockwise turn
+     */
+    public static boolean isCounterClockWise(Point2D a, Point2D b, Point2D c) {
+        return ((b.getX() - a.getX()) * (c.getY() - a.getY())) > ((b.getY() - a.getY()) * (c.getX() - a.getX()));
+    }
+
     // private transient final static Logger log = LoggerFactory.getLogger(MathUtil.class);
 }

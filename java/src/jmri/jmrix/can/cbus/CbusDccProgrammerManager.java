@@ -3,7 +3,10 @@ package jmri.jmrix.can.cbus;
 import jmri.AddressedProgrammer;
 import jmri.Programmer;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.ConfigurationManager;
+import jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSprog3PlusModeSwitcherFrame;
 import jmri.managers.DefaultProgrammerManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,13 +30,59 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
         super(serviceModeProgrammer, memo);
         tc = memo.getTrafficController();
         prefs = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
-        mySetAddressedModePossible(prefs.isAddressedModePossible());
-        mySetGlobalProgrammerAvailable(prefs.isGlobalProgrammerAvailable());
-        log.info("Preferences for programmers: global {} addressed {}", prefs.isGlobalProgrammerAvailable(), prefs.isAddressedModePossible());
+        log.info("Preferences for programmers start as: global {} addressed {}", prefs.isGlobalProgrammerAvailable(), prefs.isAddressedModePossible());
+        validateProgrammingModes(memo);
+        log.info("Preferences for programmers now: global {} addressed {}", prefs.isGlobalProgrammerAvailable(), prefs.isAddressedModePossible());
+        log.info("ProgModeSwitch is {}", memo.getProgModeSwitch());
     }
 
     jmri.jmrix.can.TrafficController tc;
 
+    /**
+     * Check that the programming mode preferences, which may be default values for a new connection
+     * or if they have never been set, are consistent with the programmer modes for
+     * the connected hardware
+     * 
+     * @param memo CAN system connection emo
+     */
+    protected final void validateProgrammingModes(CanSystemConnectionMemo memo) {
+        boolean igpa = prefs.isGlobalProgrammerAvailable();
+        boolean iamp = prefs.isAddressedModePossible();
+        int ptm = prefs.getProgTrackMode();
+        ConfigurationManager.ProgModeSwitch pms = memo.getProgModeSwitch();
+        switch (pms) {
+            default:
+            case NONE:
+                // Force both programmers available, e.g. for CANCMD that has no mode switching
+                igpa = true;
+                iamp = true;
+                break;
+                
+            case EITHER:
+                if ((igpa && iamp) || (!igpa && !iamp)) {
+                    // Default to global (service) mode if inconsistent prefs
+                    igpa = true;
+                    iamp = false;
+                } // else prefs are OK
+                break;
+                
+            case SPROG3PLUS:
+                if (ptm == SprogCbusSprog3PlusModeSwitcherFrame.PROG_AR_MODE) {
+                    // No global (service) mode if using auto-reverse
+                    igpa = false;
+                    iamp = true;
+                } else {
+                    // Both modes are available global (service) mode
+                    igpa = true;
+                    iamp = true;
+                }
+                break;
+        }
+        prefs.setProgrammersAvailable(igpa, iamp);
+        mySetGlobalProgrammerAvailable(igpa);
+        mySetAddressedModePossible(iamp);
+    }
+    
     /**
      * CBUS DCC Programmer has hardware support for ops mode
      *

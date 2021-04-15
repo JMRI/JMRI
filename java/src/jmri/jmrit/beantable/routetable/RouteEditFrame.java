@@ -19,18 +19,18 @@ import java.awt.event.ActionEvent;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  * @author Egbert Broerse Copyright (C) 2016
- * @author Paul Bender Colyright (C) 2020
+ * @author Paul Bender Copyright (C) 2020
  */
 public class RouteEditFrame extends AbstractRouteAddEditFrame {
 
     private final String systemName;
 
     public RouteEditFrame(String systemName) {
-        this(Bundle.getMessage("TitleEditRoute"),systemName);
+        this(Bundle.getMessage("TitleEditRoute"), systemName);
     }
 
     public RouteEditFrame(String name, String systemName) {
-        this(name,false,true,systemName);
+        this(name,false,true, systemName);
     }
 
     public RouteEditFrame(String name, boolean saveSize, boolean savePosition, String systemName) {
@@ -184,7 +184,7 @@ public class RouteEditFrame extends AbstractRouteAddEditFrame {
     }
 
     /**
-     * Respond to the export button
+     * Respond to the export button.
      *
      * @param e the action event
      */

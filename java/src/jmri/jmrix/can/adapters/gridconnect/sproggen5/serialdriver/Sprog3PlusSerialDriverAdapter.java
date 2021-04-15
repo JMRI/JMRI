@@ -1,9 +1,11 @@
 package jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver;
 
 import jmri.jmrix.can.ConfigurationManager;
+import jmri.jmrix.can.ConfigurationManager.ProgModeSwitch;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
 import jmri.jmrix.can.adapters.gridconnect.canrs.MergTrafficController;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,14 +17,17 @@ import org.slf4j.LoggerFactory;
  *
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2009
- * @author Andrew Crosland 2019
+ * @author Andrew Crosland Copyright (C) 2019, 2021
  */
 public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
 
     public Sprog3PlusSerialDriverAdapter() {
-        super("S");
+        super("S", purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_IN + purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_OUT);
+        _progMode = ConfigurationManager.ProgModeSwitch.SPROG3PLUS;
     }
 
+    protected ProgModeSwitch _progMode;
+    
     /**
      * Set up all of the other objects to operate with a SPROG Gen 5
      * connected to this port.
@@ -47,12 +52,14 @@ public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
         tc.connectPort(this);
 
         this.getSystemConnectionMemo().setProtocol(getOptionState(option1Name));
-
+        this.getSystemConnectionMemo().setSubProtocol(ConfigurationManager.SubProtocol.NONE);
+        this.getSystemConnectionMemo().setProgModeSwitch(_progMode);
+        this.getSystemConnectionMemo().setSupportsCVHints(true);
+        this.getSystemConnectionMemo().setPowerOnArst(false);
+        
         // do central protocol-specific configuration    
         //jmri.jmrix.can.ConfigurationManager.configure(getOptionState(option1Name));
         this.getSystemConnectionMemo().configureManagers();
-        
-        this.getSystemConnectionMemo().setSubProtocol(ConfigurationManager.SubProtocol.NONE);
     }
 
     /**
@@ -60,7 +67,7 @@ public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
      */
     @Override
     public String[] validBaudRates() {
-        return new String[]{Bundle.getMessage("Baud115200")};
+        return new String[]{Bundle.getMessage("Baud460800")};
     }
 
     /**
@@ -68,7 +75,7 @@ public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
      */
     @Override
     public int[] validBaudNumbers() {
-        return new int[]{115200};
+        return new int[]{460800};
     }
 
     @Override

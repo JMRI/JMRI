@@ -29,8 +29,8 @@
 
       <h1>Translate Selection</h1>
 
-      <p>The Translate Selection dialog provides for translating a
-      user-selected part of a panel created using Layout Editor.
+      <p>The Translate Selection dialog provides for translating in 2D
+      a user-selected part of a panel created using Layout Editor.
       Before selecting <b>Translate Selection...</b> in the Options
       menu, an area of the panel must be "selected". To select an
       area, press and hold down the mouse at the upper left of the

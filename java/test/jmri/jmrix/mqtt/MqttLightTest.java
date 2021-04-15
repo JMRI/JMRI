@@ -50,12 +50,19 @@ public class MqttLightTest extends AbstractLightTestBase {
        
         t.setCommandedState(Light.ON);
         
-        Assert.assertEquals("topic", "track/light/2", saveTopic);
+        JUnitUtil.waitFor( ()->{
+            return "track/light/2".equals(saveTopic);
+        }, "topic check");
         Assert.assertEquals("topic", "ON", new String(savePayload));
         
+        saveTopic = null;
+        savePayload = null;
+
         t.setCommandedState(Light.OFF);
         
-        Assert.assertEquals("topic", "track/light/2", saveTopic);
+        JUnitUtil.waitFor( ()->{
+            return "track/light/2".equals(saveTopic);
+        }, "topic check");
         Assert.assertEquals("topic", "OFF", new String(savePayload));
         
     }
@@ -72,6 +79,9 @@ public class MqttLightTest extends AbstractLightTestBase {
     
     @Override
     public void checkOnMsgSent() {
+        JUnitUtil.waitFor( ()->{
+            return "track/light/2".equals(saveTopic);
+        }, "topic check");
         Assert.assertEquals("topic", "track/light/2", saveTopic);
         Assert.assertEquals("topic", "ON", new String(savePayload));
     }

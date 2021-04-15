@@ -34,7 +34,7 @@ public class MemoryIconCoordinateEditTest {
            frame.init("foo",i,false);
         } catch( Exception e) {
             Assert.fail("Exception " + e + " Thrown during init call ");
-        } 
+        }
     }
 
     @BeforeEach
@@ -45,6 +45,7 @@ public class MemoryIconCoordinateEditTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

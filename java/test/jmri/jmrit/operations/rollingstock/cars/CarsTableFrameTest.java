@@ -4,8 +4,9 @@ import java.awt.GraphicsEnvironment;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -79,6 +80,7 @@ public class CarsTableFrameTest extends OperationsTestCase {
         Assert.assertEquals("c1 destination", Track.OKAY, c1.setDestination(boxford, boxfordJacobson));
         c1.setFinalDestination(westford);
         c1.setReturnWhenEmptyDestination(boxford);
+        c1.setReturnWhenLoadedDestination(boxford);
 
         Car c2 = cManager.getByRoadAndNumber("UP", "22");
         Assert.assertNotNull(c2);
@@ -91,6 +93,8 @@ public class CarsTableFrameTest extends OperationsTestCase {
         Assert.assertEquals("c3 destination", Track.OKAY, c3.setDestination(boxford, boxfordYard));
         c3.setFinalDestination(westford);
         c3.setReturnWhenEmptyDestination(westford);
+        c3.setReturnWhenLoadedDestination(boxford);
+        c3.setReturnWhenLoadedDestTrack(boxfordHood);
 
         Car c4 = cManager.getByRoadAndNumber("SP", "2");
         Assert.assertNotNull(c4);
@@ -100,6 +104,8 @@ public class CarsTableFrameTest extends OperationsTestCase {
         c4.setFinalDestination(boxford);
         c4.setReturnWhenEmptyDestination(boxford);
         c4.setReturnWhenEmptyDestTrack(boxfordHood);
+        c4.setReturnWhenLoadedDestination(westford);
+        c4.setReturnWhenLoadedDestTrack(westfordSpur);
 
         Car c5 = cManager.getByRoadAndNumber("NH", "5");
 
@@ -224,6 +230,14 @@ public class CarsTableFrameTest extends OperationsTestCase {
         Assert.assertEquals("3rd car in sort by FD list", c4, cars.get(2));
         Assert.assertEquals("4th car in sort by FD list", c3, cars.get(3));
         Assert.assertEquals("5th car in sort by FD list", c5, cars.get(4));
+        
+        JemmyUtil.enterClickAndLeave(ctf.sortByRwl);
+        cars = ctf.carsTableModel.getSelectedCarList();
+        Assert.assertEquals("1st car in sort by FD list", c2, cars.get(0));
+        Assert.assertEquals("2nd car in sort by FD list", c5, cars.get(1));
+        Assert.assertEquals("3rd car in sort by FD list", c1, cars.get(2));
+        Assert.assertEquals("4th car in sort by FD list", c3, cars.get(3));
+        Assert.assertEquals("5th car in sort by FD list", c4, cars.get(4));
         
         JemmyUtil.enterClickAndLeave(ctf.sortByFinalDestination);
         cars = ctf.carsTableModel.getSelectedCarList();

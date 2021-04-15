@@ -1,8 +1,11 @@
 package jmri.jmrix.can.cbus.swing.modeswitcher;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.ConfigurationManager;
 
 /**
  * Create a ModeSwitcherPane.
@@ -13,7 +16,7 @@ public class SprogCbusModeSwitcherAction extends AbstractAction {
 
     public SprogCbusModeSwitcherAction(CanSystemConnectionMemo memo) {
         this(Bundle.getMessage("MenuItemSPROGModeSwitcher"), memo);
-        _memo = memo;
+    //    _memo = memo;
     }
 
     public SprogCbusModeSwitcherAction(String s, CanSystemConnectionMemo memo) {
@@ -23,10 +26,16 @@ public class SprogCbusModeSwitcherAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        SprogCbusModeSwitcherFrame f = new SprogCbusModeSwitcherFrame(_memo);
+        SprogCbusModeSwitcherFrame f;
+        
+        if (_memo.getProgModeSwitch().equals(ConfigurationManager.ProgModeSwitch.EITHER)) {
+            f = new SprogCbusSimpleModeSwitcherFrame(_memo);
+        } else if (_memo.getProgModeSwitch().equals(ConfigurationManager.ProgModeSwitch.SPROG3PLUS)) {
+            f = new SprogCbusSprog3PlusModeSwitcherFrame(_memo);
+        } else {
+            return;
+        }
         f.initComponents();
         f.setVisible(true);
     }
-
 }

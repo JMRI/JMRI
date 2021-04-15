@@ -5,6 +5,8 @@ import java.util.Map;
 import jmri.configurexml.ClassMigration;
 import org.openide.util.lookup.ServiceProvider;
 
+import javax.annotation.Nonnull;
+
 /**
  * Class migration for persistence classes for the Switchboard Editor.
  *
@@ -14,6 +16,7 @@ import org.openide.util.lookup.ServiceProvider;
 public class SwitchboardEditorClassMigration implements ClassMigration {
 
     @Override
+    @Nonnull
     public Map<String, String> getMigrations() {
         Map<String, String> map = new HashMap<>();
         map.put("jmri.jmrit.display.switchboardEditor.configurexml.SwitchboardEditor$BeanSwitchXml", "jmri.jmrit.display.switchboardEditor.configurexml.BeanSwitchXml");

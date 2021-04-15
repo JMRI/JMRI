@@ -1,0 +1,991 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2006 - 2019 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Jos Wils, wilsjos@orcon.net.nz" version="1.00" lastUpdated="20111103"/>
+  <version author="W.D.Kok" version="2.00" lastUpdated="20191221"/>
+  <version author="Egbert Broerse" version="3.00" lastUpdated="20201015"/>
+  <!-- Version 1.00 - Initial version -->
+  <!-- Version 2.00 - Input decoder 73800 -->
+  <!-- Version 3.00 - Added 76900 v7/Piko 56126 version -->
+  <decoder>
+    <family name="Multi-Protocol Function Decoder" mfg="Uhlenbrock Elektronik">
+      <model model="73800" productID="73800" numOuts="4" formFactor="N" connector="Wires" maxTotalCurrent="0.6A">
+        <output name="1" label=". A1 ." connection="solder" maxcurrent="400 mA"/>
+        <output name="2" label=". A2 ." connection="solder" maxcurrent="400 mA"/>
+        <output name="3" label=". A3 ." connection="solder" maxcurrent="400 mA"/>
+        <output name="4" label=". A4 ." connection="solder" maxcurrent="400 mA"/>
+        <size length="11" width="8" height="2.4" units="mm"/>
+      </model>
+      <model model="73900" productID="73900" numOuts="4" formFactor="N" connector="Wires" maxTotalCurrent="0.6A">
+        <output name="1" label=". A1 ." connection="solder" maxcurrent="600 mA"/>
+        <output name="2" label=". A2 ." connection="solder" maxcurrent="600 mA"/>
+        <output name="3" label=". A3 ." connection="solder" maxcurrent="600 mA"/>
+        <output name="4" label=". A4 ." connection="solder" maxcurrent="600 mA"/>
+        <size length="10.8" width="7.5" height="2.4" units="mm"/>
+      </model>
+      <model model="76900" productID="76900 v1" numOuts="4" formFactor="N" connector="Wires" maxTotalCurrent="1.2A">
+        <output name="1" label=". A1 ." connection="solder" maxcurrent="1000 mA"/>
+        <output name="2" label=". A2 ." connection="solder" maxcurrent="1000 mA"/>
+        <output name="3" label=". A3 ." connection="solder" maxcurrent="1000 mA"/>
+        <output name="4" label=". A4 ." connection="solder" maxcurrent="1000 mA"/>
+        <size length="10.8" width="8" height="2.4" units="mm"/>
+      </model>
+      <model model="76900V7" productID="76900 v7" numOuts="8" numFns="15" formFactor="HO" connector="Wires" maxTotalCurrent="1.0A">
+        <output name="1" label=". A1 ." connection="solder" maxcurrent="650 mA"/>
+        <output name="2" label=". A2 ." connection="solder" maxcurrent="650 mA"/>
+        <output name="3" label=". A3 ." connection="solder" maxcurrent="650 mA"/>
+        <output name="4" label=". A4 ." connection="solder" maxcurrent="650 mA"/>
+        <output name="5" label=". A5 ." connection="solder" maxcurrent="50 mA"/>
+        <output name="6" label=". A6 ." connection="solder" maxcurrent="50 mA"/>
+        <output name="7" label=". A7 ." connection="solder" maxcurrent="50 mA"/>
+        <output name="8" label=". A8 ." connection="solder" maxcurrent="50 mA"/>
+      </model>
+      <model model="PIKO56126" productID="Piko 56126" numOuts="8" numFns="15" formFactor="HO" connector="Wires" comment="Piko Multi-protocol function decoder">
+        <output name="1" label=". A1 ." connection="solder" maxcurrent="650 mA"/>
+        <output name="2" label=". A2 ." connection="solder" maxcurrent="650 mA"/>
+        <output name="3" label=". A3 ." connection="solder" maxcurrent="650 mA"/>
+        <output name="4" label=". A4 ." connection="solder" maxcurrent="650 mA"/>
+        <output name="5" label=". A5 ." connection="solder" maxcurrent="50 mA"/>
+        <output name="6" label=". A6 ." connection="solder" maxcurrent="50 mA"/>
+        <output name="7" label=". A7 ." connection="solder" maxcurrent="50 mA"/>
+        <output name="8" label=". A8 ." connection="solder" maxcurrent="50 mA"/>
+        <size length="22" width="12.5" height="2.5" units="mm"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+
+    <variables>
+      <!-- CV 1/17/29 bit5 include -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="1">
+        <decVal/>
+        <label>Manufacturer Version No: </label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+        <label xml:lang="nl">Decoderversie: </label>
+      </variable>
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="85">
+        <decVal/>
+        <label>Manufacturer ID: </label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+        <label xml:lang="nl">Fabrikant ID: </label>
+      </variable>
+      <!-- Analog Functions named F0-F15 -->
+      <variable item="Analog Mode Function Status - F0" CV="13" default="1" mask="XXXXXXXV" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Output F0</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F1" CV="13" default="0" mask="XXXXXXVX" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Output F1</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F2" CV="13" default="0" mask="XXXXXVXX" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Output F2</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F3" CV="13" default="0" mask="XXXXVXXX" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Output F3</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F4" CV="13" default="0" mask="XXXVXXXX" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Output F4</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F5" CV="13" default="0" mask="XXVXXXXX" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Output F5</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F6" CV="13" default="0" mask="XVXXXXXX" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Output F6</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F7" CV="13" default="0" mask="VXXXXXXX" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Output F7</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F8" CV="14" default="0" mask="XXXXXXXV" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Output F8</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F9" CV="14" default="0" mask="XXXXXXVX" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Output F9</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F10" CV="14" default="0" mask="XXXXXVXX" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Output F10</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F11" CV="14" default="0" mask="XXXXVXXX" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Output F11</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F12" CV="14" default="0" mask="XXXVXXXX" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Output F12</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F13" CV="14" default="0" mask="XXVXXXXX" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Output F13</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F14" CV="14" default="0" mask="XVXXXXXX" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Output F14</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F15" CV="14" default="0" mask="VXXXXXXX" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Output F15</label>
+      </variable>
+      <!-- Analog Functions named A1-A4 -->
+      <variable item="Analog Mode Function Status - F1" CV="13" default="1" mask="XXXXXXXV" include="73800,73900,76900">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Output A1</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F2" CV="13" default="1" mask="XXXXXXVX" include="73800,73900,76900">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Output A2</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F3" CV="13" default="0" mask="XXXXXVXX" include="73800,73900,76900">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Output A3</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F4" CV="13" default="0" mask="XXXXVXXX" include="73800,73900,76900">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Output A4</label>
+      </variable>
+      <!-- CV 17-18 and CV29 bit 5 see CV1 include -->
+      <!-- CV=19 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <!-- CV=29 bit 1 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <!-- CV=29 bit 2 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <!-- CV=29 bit 5 included in CV1 include-->
+      <!-- Output Mapping CV35 - 42 -->
+      <!-- When Function high = 128 then Function low has the DCC range of F0 - F127 -->
+      <variable item="Output A1 Mapping" CV="35" default="1" mask="VXXXXXXX" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Map to F0-F28</label>
+        <tooltip>Turn off to use Binary State control</tooltip>
+        <tooltip xml:lang="nl">Schakel uit om BSC te gebruiken</tooltip>
+      </variable>
+      <variable item="A1 BSC" CV="36" default="0">
+        <splitVal highCV="35" min="0" max="32767" upperMask="XVVVVVVV"/>
+        <label> BSC:</label>
+        <tooltip>With Binary State Control (BSC) function numbers 0-32767 can be used</tooltip>
+        <tooltip xml:lang="nl">Met Binary State Control (BSC) kun je functienummers 0-32767 gebruiken</tooltip>
+      </variable>
+      <variable item="A1 F Key" CV="36" default="0">
+        <splitVal highCV="35" min="0" max="32767" upperMask="XVVVVVVV"/>
+        <label> F Key:</label>
+        <label xml:lang="de">A1 Funktionstaste:</label>
+        <label xml:lang="nl">A1 Functietoets:</label>
+        <tooltip>Fill in a number to map A1 to F0-F255</tooltip>
+      </variable>
+      <variable item="Output A2 Mapping" CV="37" default="1" mask="VXXXXXXX" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Map to F0-F28</label>
+        <tooltip>Turn off to use Binary State control</tooltip>
+        <tooltip xml:lang="nl">Schakel uit om BSC te gebruiken</tooltip>
+      </variable>
+      <variable item="A2 BSC" CV="38" default="0">
+        <splitVal highCV="37" min="0" max="32767" upperMask="XVVVVVVV"/>
+        <label> BSC:</label>
+        <tooltip>With Binary State Control (BSC) function numbers 0-32767 can be used</tooltip>
+        <tooltip xml:lang="nl">Met Binary State Control (BSC) kun je functienummers 0-32767 gebruiken</tooltip>
+      </variable>
+      <variable item="A2 F Key" CV="38" default="0">
+        <splitVal highCV="37" min="0" max="32767" upperMask="XVVVVVVV"/>
+        <label> F Key:</label>
+        <label xml:lang="de">A2 Funktionstaste:</label>
+        <label xml:lang="nl">A2 Functietoets:</label>
+        <tooltip>Fill in a number to map A2 to F0-F255</tooltip>
+      </variable>
+      <variable item="Output A3 Mapping" CV="39" default="1" mask="VXXXXXXX" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Map to F0-F28</label>
+        <tooltip>Turn off to use Binary State control</tooltip>
+        <tooltip xml:lang="nl">Schakel uit om BSC te gebruiken</tooltip>
+      </variable>
+      <variable item="A3 BSC" CV="40" default="0">
+        <splitVal highCV="39" min="0" max="32767" upperMask="XVVVVVVV"/>
+        <label> BSC:</label>
+        <tooltip>With Binary State Control (BSC) function numbers 0-32767 can be used</tooltip>
+        <tooltip xml:lang="nl">Met Binary State Control (BSC) kun je functienummers 0-32767 gebruiken</tooltip>
+      </variable>
+      <variable item="A3 F Key" CV="40" default="1">
+        <splitVal highCV="39" min="0" max="32767" upperMask="XVVVVVVV"/>
+        <label> F Key:</label>
+        <label xml:lang="de">A3 Funktionstaste:</label>
+        <label xml:lang="nl">A3 Functietoets:</label>
+        <tooltip>Fill in a number to map A3 to F0-F255</tooltip>
+      </variable>
+      <variable item="Output A4 Mapping" CV="41" default="1" mask="VXXXXXXX" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Map F0-F28</label>
+        <tooltip>Turn off to use Binary State control</tooltip>
+        <tooltip xml:lang="nl">Schakel uit om BSC te gebruiken</tooltip>
+      </variable>
+      <variable item="A4 BSC" CV="42" default="0">
+        <splitVal highCV="41" min="0" max="32767" upperMask="XVVVVVVV"/>
+        <label> BSC:</label>
+        <tooltip>With Binary State Control (BSC) function numbers 0-32767 can be used</tooltip>
+        <tooltip xml:lang="nl">Met Binary State Control (BSC) kun je functienummers 0-32767 gebruiken</tooltip>
+      </variable>
+      <variable item="A4 F Key" CV="42" default="2">
+        <splitVal highCV="41" min="0" max="32767" upperMask="XVVVVVVV"/>
+        <label> F Key:</label>
+        <label xml:lang="de">A4 Funktionstaste:</label>
+        <label xml:lang="nl">A4 Functietoets:</label>
+        <tooltip>Fill in a number to map A4 to F0-F255</tooltip>
+      </variable>
+      <!-- CV49 Uhlenbrock decoder configuration - common bits -->
+      <variable CV="49" mask="XXXXXXXV" item="Analog (DC) Mode" default="1" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>DC Analog Mode</label>
+        <label xml:lang="de">Analog Modus DC</label>
+        <label xml:lang="fr">Mode Analogique DC</label>
+        <label xml:lang="ca">Mode analògic CC</label>
+      </variable>
+      <variable CV="49" mask="XXXXXXVX" item="Analog (AC) Mode" default="1" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>AC Analog Mode</label>
+        <label xml:lang="de">Analog Modus AC</label>
+        <label xml:lang="fr">Mode Analogique AC</label>
+        <label xml:lang="ca">Mode analògic AC</label>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv49dataformat.xml"/>
+      <variable CV="49" default="0" mask="XVXXXXXX" item="Directional Headlights">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
+        <label>Lights output swap</label>
+        <label xml:lang="de">Lichtanschlüsse tauschen</label>
+        <label xml:lang="it">Scambia uscite Luci</label>
+        <label xml:lang="nl">Lichtaansluitingen</label>
+      </variable>
+
+      <variable item="Dimming outputs A1 and A2" CV="50" default="32" include="73800,73900,76900">
+        <decVal min="0" max="63"/>
+        <label>Dimming outputs A1 and A2</label>
+      </variable>
+      <variable item="Dimming outputs A3 and A4" CV="51" default="32" include="73800,73900,76900">
+        <decVal min="0" max="63"/>
+        <label>Dimming outputs A3 and A4</label>
+      </variable>
+
+      <variable item="Output A1 Direction forward" CV="52" default="0" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Output A1 Direction forward</label>
+      </variable>
+      <variable item="Output A2 Direction forward" CV="52" default="1" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Output A2 Direction forward</label>
+      </variable>
+      <variable item="Output A3 Direction forward" CV="52" default="0" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Output A3 Direction forward</label>
+      </variable>
+      <variable item="Output A4 Direction forward" CV="52" default="0" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Output A4 Direction forward</label>
+      </variable>
+      <variable item="Output A1 Direction reverse" CV="53" default="1" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Output A1 Direction reverse</label>
+      </variable>
+      <variable item="Output A2 Direction reverse" CV="53" default="0" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Output A2 Direction reverse</label>
+      </variable>
+      <variable item="Output A3 Direction reverse" CV="53" default="0" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Output A3 Direction reverse</label>
+      </variable>
+      <variable item="Output A4 Direction reverse" CV="53" default="0" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Output A4 Direction reverse</label>
+      </variable>
+      <variable item="Output A1 Delayed" CV="54" default="0" mask="XXXXXXXV" tooltip="Off = constant on mode" exclude="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Pulse Mode</label>
+      </variable>
+      <variable item="Output A2 Delayed" CV="54" default="0" mask="XXXXXXVX" tooltip="Off = constant on mode" exclude="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Pulse Mode</label>
+      </variable>
+      <variable item="Output A3 Delayed" CV="54" default="0" mask="XXXXXVXX" tooltip="Off = constant on mode" exclude="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Pulse Mode</label>
+      </variable>
+      <variable item="Output A4 Delayed" CV="54" default="0" mask="XXXXVXXX" tooltip="Off = constant on mode" exclude="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Pulse Mode</label>
+      </variable>
+      <variable item="Output A1 Delayed" CV="54" default="0" mask="XXXXXXXV" tooltip="Off = constant on mode" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Delayed</label>
+      </variable>
+      <variable item="Output A2 Delayed" CV="54" default="0" mask="XXXXXXVX" tooltip="Off = constant on mode" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Delayed</label>
+      </variable>
+      <variable item="Output A3 Delayed" CV="54" default="0" mask="XXXXXVXX" tooltip="Off = constant on mode" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Delayed</label>
+      </variable>
+      <variable item="Output A4 Delayed" CV="54" default="0" mask="XXXXVXXX" tooltip="Off = constant on mode" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Delayed</label>
+      </variable>
+      <variable item="Delay Time" CV="55" default="2" tooltip="Multiples of 0.5 sec" include="73800,73900">
+        <decVal/>
+        <label>Pulse duration</label>
+      </variable>
+      <variable item="Delay Time" CV="55" default="2" tooltip="Multiples of 0.5 sec" include="76900">
+        <decVal/>
+        <label>Delay Time</label>
+      </variable>
+      <variable item="Delay Time" CV="55" default="4" tooltip="Multiples of 0.5 sec" include="76900V7,PIKO56126">
+        <decVal/>
+        <label>Delay Time</label>
+      </variable>
+      <variable item="Output A1 Blinking" CV="56" default="0" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Blinking</label>
+      </variable>
+      <variable item="Output A2 Blinking" CV="56" default="0" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Blinking</label>
+      </variable>
+      <variable item="Output A3 Blinking" CV="56" default="0" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Blinking</label>
+      </variable>
+      <variable item="Output A4 Blinking" CV="56" default="0" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>OBlinking</label>
+      </variable>
+      <variable item="Blinking On Time" CV="57" default="10" tooltip="Steps of 100msec, 10 = 1Hz" include="73800,73900,76900">
+        <decVal/>
+        <label>Blinking Time</label>
+      </variable>
+      <variable item="Blinking On Time" CV="57" default="10" tooltip="Steps of 50msec, 20 = 1Hz" include="76900V7,PIKO56126">
+        <decVal/>
+        <label>Blinking On Duration:</label>
+      </variable>
+      <variable item="Blinking Off Time" CV="58" default="10" tooltip="Steps of 50msec, 20 = 1Hz" include="76900V7,PIKO56126">
+        <decVal/>
+        <label>Blinking Off Duration:</label>
+      </variable>
+
+      <variable item="Output A1 Dimming" CV="60" default="64" include="76900V7,PIKO56126">
+        <decVal min="0" max="64"/>
+        <label>Dimming:</label>
+      </variable>
+      <variable item="Output A2 Dimming" CV="61" default="64" include="76900V7,PIKO56126">
+        <decVal min="0" max="64"/>
+        <label>Dimming:</label>
+      </variable>
+      <variable item="Output A3 Dimming" CV="62" default="64" include="76900V7,PIKO56126">
+        <decVal min="0" max="64"/>
+        <label>Dimming:</label>
+      </variable>
+      <variable item="Output A4 Dimming" CV="63" default="64" include="76900V7,PIKO56126">
+        <decVal min="0" max="64"/>
+        <label>Dimming:</label>
+      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv65.66registers.xml"/>
+
+      <!-- Mapping CV107-122 -->
+      <!-- When Function high = 128 then Function low has the DCC range of F0 - F127 -->
+      <variable item="Alt Dim A1 Mapping" CV="107" default="1" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Map to F0-F28</label>
+        <tooltip>Turn off to use Binary State control</tooltip>
+        <tooltip xml:lang="nl">Schakel uit om BSC te gebruiken</tooltip>
+      </variable>
+      <variable item="Alt Dim A1 BSC" CV="108" default="0" tooltip="F-low=F0-F255 when F-high=128">
+        <splitVal highCV="107" min="0" max="32767" upperMask="XVVVVVVV"/>
+        <label> Alt BSC:</label>
+        <tooltip>With Binary State Control (BSC) function numbers 0-32767 can be used</tooltip>
+        <tooltip xml:lang="nl">Met Binary State Control (BSC) kun je functienummers 0-32767 gebruiken</tooltip>
+      </variable>
+      <variable item="Alt Dim A1 F Key" CV="108" default="0">
+        <splitVal highCV="107" min="0" max="32767" upperMask="XVVVVVVV"/>
+        <label> F Key:</label>
+        <label xml:lang="de">A1 Funktionstaste:</label>
+        <label xml:lang="nl">A1 Functietoets:</label>
+      </variable>
+      <variable item="Alt Dim A2 Mapping" CV="109" default="1" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Map to F0-F28</label>
+        <tooltip>Turn off to use Binary State control</tooltip>
+        <tooltip xml:lang="nl">Schakel uit om BSC te gebruiken</tooltip>
+      </variable>
+      <variable item="Alt Dim A2 BSC" CV="110" default="0" tooltip="F-low=F0-F255 when F-high=128">
+        <splitVal highCV="109" min="0" max="32767" upperMask="XVVVVVVV"/>
+        <label> Alt BSC:</label>
+        <tooltip>With Binary State Control (BSC) function numbers 0-32767 can be used</tooltip>
+        <tooltip xml:lang="nl">Met Binary State Control (BSC) kun je functienummers 0-32767 gebruiken</tooltip>
+      </variable>
+      <variable item="Alt Dim A2 F Key" CV="110" default="0">
+        <splitVal highCV="109" min="0" max="32767" upperMask="XVVVVVVV"/>
+        <label> F Key:</label>
+        <label xml:lang="de">A2 Funktionstaste:</label>
+        <label xml:lang="nl">A2 Functietoets:</label>
+      </variable>
+      <variable item="Alt Dim A3 Mapping" CV="111" default="1" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Map to F0-F28</label>
+        <tooltip>Turn off to use Binary State control</tooltip>
+        <tooltip xml:lang="nl">Schakel uit om BSC te gebruiken</tooltip>
+      </variable>
+      <variable item="Alt Dim A3 BSC" CV="112" default="0" tooltip="F-low=F0-F255 when F-high=128">
+        <splitVal highCV="111" min="0" max="32767" upperMask="XVVVVVVV"/>
+        <label> Alt BSC:</label>
+        <tooltip>With Binary State Control (BSC) function numbers 0-32767 can be used</tooltip>
+        <tooltip xml:lang="nl">Met Binary State Control (BSC) kun je functienummers 0-32767 gebruiken</tooltip>
+      </variable>
+      <variable item="Alt Dim A3 F Key" CV="112" default="0">
+        <splitVal highCV="111" min="0" max="32767" upperMask="XVVVVVVV"/>
+        <label> F Key:</label>
+        <label xml:lang="de">A3 Funktionstaste:</label>
+        <label xml:lang="nl">A3 Functietoets:</label>
+      </variable>
+      <variable item="Alt Dim A4 Mapping" CV="113" default="1" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Map to F0-F28</label>
+        <tooltip>Turn off to use Binary State control</tooltip>
+        <tooltip xml:lang="nl">Schakel uit om BSC te gebruiken</tooltip>
+      </variable>
+      <variable item="Alt Dim A4 BSC" CV="114" default="0" tooltip="F-low=F0-F255 when F-high=128">
+        <splitVal highCV="113" min="0" max="32767" upperMask="XVVVVVVV"/>
+        <label> Alt BSC:</label>
+        <tooltip>With Binary State Control (BSC) function numbers 0-32767 can be used</tooltip>
+        <tooltip xml:lang="nl">Met Binary State Control (BSC) kun je functienummers 0-32767 gebruiken</tooltip>
+      </variable>
+      <variable item="Alt Dim A4 F Key" CV="114" default="0">
+        <splitVal highCV="113" min="0" max="32767" upperMask="XVVVVVVV"/>
+        <label> F Key:</label>
+        <label xml:lang="de">A4 Funktionstaste:</label>
+        <label xml:lang="nl">A4 Functietoets:</label>
+      </variable>
+
+      <variable item="Output PWM A1" CV="115" default="32">
+        <decVal min="0" max="64"/>
+        <label>2nd Dimming:</label>
+        <label xml:lang="de">2. Dimmung - </label>
+        <label xml:lang="nl">2e Dimmen - </label>
+        <tooltip>Brightness the light should shine "after dimming"</tooltip>
+      </variable>
+      <variable item="Output PWM A2" CV="116" default="32">
+        <decVal min="0" max="64"/>
+        <label>2nd Dimming:</label>
+        <label xml:lang="de">2. Dimmung - </label>
+        <label xml:lang="nl">2e Dimmen - </label>
+        <tooltip>Brightness the light should shine "after dimming"</tooltip>
+      </variable>
+      <variable item="Output PWM A3" CV="117" default="32">
+        <decVal min="0" max="64"/>
+        <label>2nd Dimming:</label>
+        <label xml:lang="de">2. Dimmung - </label>
+        <label xml:lang="nl">2e Dimmen - </label>
+        <tooltip>Brightness the light should shine "after dimming"</tooltip>
+      </variable>
+      <variable item="Output PWM A4" CV="118" default="32">
+        <decVal min="0" max="64"/>
+        <label>2nd Dimming:</label>
+        <label xml:lang="de">2. Dimmung - </label>
+        <label xml:lang="nl">2e Dimmen - </label>
+        <tooltip>Brightness the light should shine "after dimming"</tooltip>
+      </variable>
+
+      <!-- CV 119-122 -->
+      <variable item="A5 F Key" CV="119" default="255">
+        <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoiceOff255.xml"/>
+        <label>Key to activate A5:</label>
+        <label xml:lang="de">A5 Funktionstaste:</label>
+        <label xml:lang="nl">A5 Functietoets:</label>
+      </variable>
+      <variable item="A6 F Key" CV="120" default="255">
+        <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoiceOff255.xml"/>
+        <label>Key to activate A6:</label>
+        <label xml:lang="de">A6 Funktionstaste:</label>
+        <label xml:lang="nl">A6 Functietoets:</label>
+      </variable>
+      <variable item="A7 F Key" CV="121" default="255">
+        <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoiceOff255.xml"/>
+        <label>Key to activate A7:</label>
+        <label xml:lang="de">A7 Funktionstaste:</label>
+        <label xml:lang="nl">A7 Functietoets:</label>
+      </variable>
+      <variable item="A8 F Key" CV="122" default="255">
+        <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoiceOff255.xml"/>
+        <label>Key to activate A8:</label>
+        <label xml:lang="de">A8 Funktionstaste:</label>
+        <label xml:lang="nl">A8 Functietoets:</label>
+      </variable>
+
+      <variable item="Light Fade A1" CV="123" mask="XXXXXXXV" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Fade in/out</label>
+      </variable>
+      <variable item="Light Fade A2" CV="123" mask="XXXXXXVX" minOut="2" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Fade in/out</label>
+      </variable>
+      <variable item="Light Fade A3" CV="123" mask="XXXXXVXX" minOut="3" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Fade in/out</label>
+      </variable>
+      <variable item="Light Fade A4" CV="123" mask="XXXXVXXX" minOut="4" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Fade in/out</label>
+      </variable>
+      <variable item="Light Fade Time" CV="124" default="0" include="76900V7,PIKO56126">
+        <decVal/>
+        <label>Fade In/Out Duration:</label>
+        <label xml:lang="de">Ein-/Ausblendzeit:</label>
+        <label xml:lang="nl">In-/Uitfaden - Duur:</label>
+        <tooltip>Fade Effect Duration - Value * 5 millisec</tooltip>
+        <tooltip xml:lang="de">Dauer des Blendes - Wert * 5 mSek</tooltip>
+        <tooltip xml:lang="nl">Duur van het verloop - waarde * 5 ms</tooltip>
+      </variable>
+      <variable item="Light Neon A1" CV="125" mask="XXXXXXVX" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Neon Light</label>
+        <label xml:lang="de">Neonlicht</label>
+        <label xml:lang="nl">Neonlicht</label>
+      </variable>
+      <variable item="Light Neon A2" CV="125" mask="XXXXXVXX" minOut="2" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Neon Light</label>
+        <label xml:lang="de">Neonlicht</label>
+        <label xml:lang="nl">Neonlicht</label>
+      </variable>
+      <variable item="Light Neon A3" CV="125" mask="XXXXVXXX" minOut="3" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Neon Light</label>
+        <label xml:lang="de">Neonlicht</label>
+        <label xml:lang="nl">Neonlicht</label>
+      </variable>
+      <variable item="Light Neon A4" CV="125" mask="XXXVXXXX" minOut="4" include="76900V7,PIKO56126">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Neon Light</label>
+        <label xml:lang="de">Neonlicht</label>
+        <label xml:lang="nl">Neonlicht</label>
+      </variable>
+      <variable item="Light Neon Time" CV="126" default="20">
+        <decVal/>
+        <label>Neon - Flash Time</label>
+        <label xml:lang="de">Neonlicht - Blitzzeit</label>
+        <label xml:lang="nl">Neon - Knippertijd</label>
+        <tooltip>Start Flash Duration - Value * 5 millisec</tooltip>
+        <tooltip xml:lang="de">Dauer des Blitzen - Wert * 5 mSek</tooltip>
+        <tooltip xml:lang="nl">Duur van het knipperen - waarde * 5 ms</tooltip>
+      </variable>
+      <variable item="Light Neon Flashes" CV="127" default="20">
+        <decVal/>
+        <label>Max. no. of Flashes</label>
+        <label xml:lang="de">Max. Blitsanzahl</label>
+        <label xml:lang="nl">Max. aantal flitsen</label>
+        <tooltip>Maximum number of flashes on startup</tooltip>
+        <tooltip xml:lang="de">maximale Blitzanzahl</tooltip>
+        <tooltip xml:lang="nl">Maximum aantal keer knipperen na inschakelen</tooltip>
+      </variable>
+
+    </variables>
+    <!-- CV=59 resets , not variables -->
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset.xml"/>
+  </decoder>
+  <pane>
+      <name>Outputs</name>
+      <name xml:lang="de">Ausgänge</name>
+      <name xml:lang="nl">Uitgangen</name>
+    <row>
+      <column>
+        <label>
+          <text>&lt;html&gt;&lt;strong&gt;Settings for all outputs:&lt;/strong&gt;&lt;br/&gt;&lt;br/&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Algemene instellingen:&lt;/strong&gt;&lt;br/&gt;&lt;br/&gt;&lt;/html&gt;</text>
+        </label>
+        <row>
+          <display item="Delay Time"/>
+          <display item="Delay Time" format="hslider" label=""/>
+        </row>
+        <row>
+          <display item="Blinking On Time"/>
+          <display item="Blinking On Time" format="hslider" label=""/>
+        </row>
+        <group include="76900V7,PIKO56126">
+          <row>
+            <display item="Blinking Off Time"/>
+            <display item="Blinking Off Time" format="hslider" label=""/>
+          </row>
+          <row>
+            <display item="Light Neon Time"/>
+            <display item="Light Neon Time" format="hslider" label=""/>
+          </row>
+          <row>
+            <display item="Light Neon Flashes"/>
+            <display item="Light Neon Flashes" format="hslider" label=""/>
+          </row>
+          <row>
+            <display item="Light Fade Time"/>
+            <display item="Light Fade Time" format="hslider" label=""/>
+          </row>
+          <label>
+            <text> </text>
+          </label>
+          <column>
+            <label>
+              <text>&lt;html&gt;&lt;strong&gt;Mapping A5-A8&lt;/strong&gt;&lt;br/&gt;&lt;br/&gt;&lt;/html&gt;</text>
+            </label>
+            <display item="A5 F Key"/>
+            <display item="A6 F Key"/>
+            <display item="A7 F Key"/>
+            <display item="A8 F Key"/>
+          </column>
+        </group>
+      </column>
+
+      <separator/>
+
+      <column>
+        <label>
+          <text>&lt;html&gt;&lt;strong&gt;Output A1&lt;/strong&gt;&lt;br/&gt;&lt;br/&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgang A1&lt;/strong&gt;&lt;br/&gt;&lt;br/&gt;&lt;/html&gt;</text>
+        </label>
+        <display item="Output A1 Direction forward"/>
+        <display item="Output A1 Direction reverse"/>
+        <display item="Output A1 Delayed" format="checkbox"/>
+        <display item="Output A1 Blinking" format="checkbox"/>
+        <display item="Light Neon A1" format="checkbox"/>
+        <display item="Light Fade A1" format="checkbox"/>
+        <row>
+          <label>
+            <text>A1 Mapping - </text>
+          </label>
+          <display item="Output A1 Mapping" format="checkbox"/>
+          <group include="76900V7,PIKO56126">
+            <row>
+              <qualifier>
+                <variableref>Output A1 Mapping</variableref>
+                <relation>eq</relation>
+                <value>0</value>
+              </qualifier>
+              <display item="A1 BSC"/>
+            </row>
+          </group>
+          <group>
+            <row>
+              <qualifier>
+                <variableref>Output A1 Mapping</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <display item="A1 F Key"/>
+            </row>
+          </group>
+        </row>
+        <row>
+          <display item="Output A1 Dimming"/>
+          <display item="Output A1 Dimming" format="hslider" label=""/>
+        </row>
+        <group include="76900V7,PIKO56126">
+          <row>
+            <display item="Output PWM A1"/>
+            <display item="Output PWM A1" format="hslider" label=""/>
+          </row>
+          <row>
+            <label>
+              <text>2nd Dimming - </text>
+              <text xml:lang="de">2. Dimmung - </text>
+              <text xml:lang="nl">2e Dimmen - </text>
+            </label>
+            <display item="Alt Dim A1 Mapping" format="checkbox"/>
+            <group>
+              <row>
+                <qualifier>
+                  <variableref>Alt Dim A1 Mapping</variableref>
+                  <relation>eq</relation>
+                  <value>0</value>
+                </qualifier>
+                <display item="Alt Dim A1 BSC"/>
+              </row>
+            </group>
+            <group>
+              <row>
+                <qualifier>
+                  <variableref>Alt Dim A1 Mapping</variableref>
+                  <relation>eq</relation>
+                  <value>1</value>
+                </qualifier>
+                <display item="Alt Dim A1 F Key"/>
+              </row>
+            </group>
+          </row>
+        </group>
+
+        <separator/>
+
+        <label>
+          <text>&lt;html&gt;&lt;strong&gt;Output A2&lt;/strong&gt;&lt;br/&gt;&lt;br/&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgang A2&lt;/strong&gt;&lt;br/&gt;&lt;br/&gt;&lt;/html&gt;</text>
+        </label>
+        <display item="Output A2 Direction forward"/>
+        <display item="Output A2 Direction reverse"/>
+        <display item="Output A2 Delayed" format="checkbox"/>
+        <display item="Output A2 Blinking" format="checkbox"/>
+        <display item="Light Neon A2" format="checkbox"/>
+        <display item="Light Fade A2" format="checkbox"/>
+        <row>
+          <label>
+            <text>A2 Mapping - </text>
+          </label>
+          <display item="Output A2 Mapping" format="checkbox"/>
+          <group include="76900V7,PIKO56126">
+            <row>
+              <qualifier>
+                <variableref>Output A2 Mapping</variableref>
+                <relation>eq</relation>
+                <value>0</value>
+              </qualifier>
+              <display item="A2 BSC"/>
+            </row>
+          </group>
+          <group>
+            <row>
+              <qualifier>
+                <variableref>Output A2 Mapping</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <display item="A2 F Key"/>
+            </row>
+          </group>
+        </row>
+        <row>
+          <display item="Output A2 Dimming"/>
+          <display item="Output A2 Dimming" format="hslider" label=""/>
+        </row>
+        <group exclude="76900V7,PIKO56126">
+          <separator/>
+          <row>
+            <display item="Dimming outputs A1 and A2"/>
+            <display item="Dimming outputs A1 and A2" format="hslider" label=""/>
+          </row>
+        </group>
+        <group include="76900V7,PIKO56126">
+          <row>
+            <display item="Output PWM A2"/>
+            <display item="Output PWM A2" format="hslider" label=""/>
+          </row>
+          <row>
+            <label>
+              <text>2nd Dimming - </text>
+              <text xml:lang="de">2. Dimmung - </text>
+              <text xml:lang="nl">2e Dimmen - </text>
+            </label>
+            <display item="Alt Dim A2 Mapping" format="checkbox"/>
+            <group>
+              <row>
+                <qualifier>
+                  <variableref>Alt Dim A2 Mapping</variableref>
+                  <relation>eq</relation>
+                  <value>0</value>
+                </qualifier>
+                <display item="Alt Dim A2 BSC"/>
+              </row>
+            </group>
+            <group>
+              <row>
+                <qualifier>
+                  <variableref>Alt Dim A2 Mapping</variableref>
+                  <relation>eq</relation>
+                  <value>1</value>
+                </qualifier>
+                <display item="Alt Dim A2 F Key"/>
+              </row>
+            </group>
+          </row>
+        </group>
+      </column>
+
+      <separator/>
+
+      <column>
+        <label>
+          <text>&lt;html&gt;&lt;strong&gt;Output A3&lt;/strong&gt;&lt;br/&gt;&lt;br/&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgang A3&lt;/strong&gt;&lt;br/&gt;&lt;br/&gt;&lt;/html&gt;</text>
+        </label>
+        <display item="Output A3 Direction forward"/>
+        <display item="Output A3 Direction reverse"/>
+        <display item="Output A3 Delayed" format="checkbox"/>
+        <display item="Output A3 Blinking" format="checkbox"/>
+        <display item="Light Neon A3" format="checkbox"/>
+        <display item="Light Fade A3" format="checkbox"/>
+        <row>
+          <label>
+            <text>A3 Mapping - </text>
+          </label>
+          <display item="Output A3 Mapping" format="checkbox"/>
+          <group include="76900V7,PIKO56126">
+            <row>
+              <qualifier>
+                <variableref>Output A3 Mapping</variableref>
+                <relation>eq</relation>
+                <value>0</value>
+              </qualifier>
+              <display item="A3 BSC"/>
+            </row>
+          </group>
+          <group>
+            <row>
+              <qualifier>
+                <variableref>Output A3 Mapping</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <display item="A3 F Key"/>
+            </row>
+          </group>
+        </row>
+        <row>
+          <display item="Output A3 Dimming"/>
+          <display item="Output A3 Dimming" format="hslider" label=""/>
+        </row>
+        <group include="76900V7,PIKO56126">
+          <row>
+            <display item="Output PWM A3"/>
+            <display item="Output PWM A3" format="hslider" label=""/>
+          </row>
+          <row>
+            <label>
+              <text>2nd Dimming - </text>
+              <text xml:lang="de">2. Dimmung - </text>
+              <text xml:lang="nl">2e Dimmen - </text>
+            </label>
+            <display item="Alt Dim A3 Mapping" format="checkbox"/>
+            <group>
+              <row>
+                <qualifier>
+                  <variableref>Alt Dim A3 Mapping</variableref>
+                  <relation>eq</relation>
+                  <value>0</value>
+                </qualifier>
+                <display item="Alt Dim A3 BSC"/>
+              </row>
+            </group>
+            <group>
+              <row>
+                <qualifier>
+                  <variableref>Alt Dim A3 Mapping</variableref>
+                  <relation>eq</relation>
+                  <value>1</value>
+                </qualifier>
+                <display item="Alt Dim A3 F Key"/>
+              </row>
+            </group>
+          </row>
+        </group>
+
+        <separator/>
+
+        <label>
+          <text>&lt;html&gt;&lt;strong&gt;Output A4&lt;/strong&gt;&lt;br/&gt;&lt;br/&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgang A4&lt;/strong&gt;&lt;br/&gt;&lt;br/&gt;&lt;/html&gt;</text>
+        </label>
+        <display item="Output A4 Direction forward"/>
+        <display item="Output A4 Direction reverse"/>
+        <display item="Output A4 Delayed" format="checkbox"/>
+        <display item="Output A4 Blinking" format="checkbox"/>
+        <display item="Light Neon A4" format="checkbox"/>
+        <display item="Light Fade A4" format="checkbox"/>
+        <row>
+          <label>
+            <text>A4 Mapping - </text>
+          </label>
+          <display item="Output A4 Mapping" format="checkbox"/>
+          <group include="76900V7,PIKO56126">
+            <row>
+              <qualifier>
+                <variableref>Output A4 Mapping</variableref>
+                <relation>eq</relation>
+                <value>0</value>
+              </qualifier>
+              <display item="A4 BSC"/>
+            </row>
+          </group>
+          <group>
+            <row>
+              <qualifier>
+                <variableref>Output A4 Mapping</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <display item="A4 F Key"/>
+            </row>
+          </group>
+        </row>
+        <row>
+          <display item="Output A4 Dimming"/>
+          <display item="Output A4 Dimming" format="hslider" label=""/>
+        </row>
+        <group exclude="76900V7,PIKO56126">
+          <separator/>
+          <row>
+            <display item="Dimming outputs A3 and A4"/>
+            <display item="Dimming outputs A3 and A4" format="hslider" label=""/>
+          </row>
+        </group>
+        <group include="76900V7,PIKO56126">
+          <row>
+            <display item="Output PWM A4"/>
+            <display item="Output PWM A4" format="hslider" label=""/>
+          </row>
+          <row>
+            <label>
+              <text>2nd Dimming - </text>
+              <text xml:lang="de">2. Dimmung - </text>
+              <text xml:lang="nl">2e Dimmen - </text>
+            </label>
+            <display item="Alt Dim A4 Mapping" format="checkbox"/>
+            <group>
+              <row>
+                <qualifier>
+                  <variableref>Alt Dim A4 Mapping</variableref>
+                  <relation>eq</relation>
+                  <value>0</value>
+                </qualifier>
+                <display item="Alt Dim A4 BSC"/>
+              </row>
+            </group>
+            <group>
+              <row>
+                <qualifier>
+                  <variableref>Alt Dim A4 Mapping</variableref>
+                  <relation>eq</relation>
+                  <value>1</value>
+                </qualifier>
+                <display item="Alt Dim A4 F Key"/>
+              </row>
+            </group>
+          </row>
+        </group>
+      </column>
+    </row>
+  </pane>
+</decoder-config>

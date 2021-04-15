@@ -876,9 +876,7 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
         // nothing to program, end politely
-        if (log.isDebugEnabled()) {
-            log.debug("nextRead found nothing to do");
-        }
+        log.debug("nextRead found nothing to do");
         readChangesButton.setSelected(false);
         readAllButton.setSelected(false);  // reset both, as that's final state we want
         setBusy(false);
@@ -890,10 +888,10 @@ public class PaneProgPane extends javax.swing.JPanel
      * If there are any more compare operations to be done on this pane, do the
      * next one.
      * <p>
-     * Each invocation of this method compare one CV; completion of that request
+     * Each invocation of this method compares one CV; completion of that request
      * will cause it to happen again, reading the next one, until there's
      * nothing left to read.
-     * <p>
+     *
      * @return true is a compare has been started, false if the pane is
      *         complete.
      */
@@ -990,7 +988,7 @@ public class PaneProgPane extends javax.swing.JPanel
             writeAllButton.setSelected(true);
             writeAllButton.setEnabled(true);
         }
-        if (container.isBusy() == false) {
+        if (!container.isBusy()) {
             container.enableButtons(false);
         }
         setToWrite(justChanges, true);
@@ -1901,7 +1899,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 case "double": {
                     double attribValue;
                     try {
-                        attribValue = Double.valueOf(attribRawValue);
+                        attribValue = Double.parseDouble(attribRawValue);
                         constraint.set(globs.gridConstraints, attribValue);
                     } catch (IllegalAccessException ey) {
                         log.error("Unable to set constraint \"{}. IllegalAccessException error thrown.", attribName);
@@ -2622,7 +2620,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 // Java 1.5 has a known bug, #6328248, that prevents printing of progress
                 //  bars using old style printing classes.  It results in blank bars on Windows,
                 //  but hangs Macs. The version check is a workaround.
-                float v = Float.valueOf(java.lang.System.getProperty("java.version").substring(0, 3));
+                float v = Float.parseFloat(System.getProperty("java.version").substring(0, 3));
                 if (originalName.equals("Speed Table") && v < 1.5) {
                     // set the height of the speed table graph in lines
                     int speedFrameLineHeight = 11;

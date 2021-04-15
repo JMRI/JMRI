@@ -11,7 +11,6 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.automation.actions.Action;
@@ -191,7 +190,6 @@ public class Automation extends PropertyChangeSupport implements java.beans.Prop
     private void cancelActions() {
         for (AutomationItem item : getItemsBySequenceList()) {
             item.getAction().cancelAction();
-            item.getAction().removePropertyChangeListener(this);
         }
     }
 
@@ -575,8 +573,6 @@ public class Automation extends PropertyChangeSupport implements java.beans.Prop
         return e;
     }
 
-    @SuppressFBWarnings(value = {"UW_UNCOND_WAIT", "WA_NOT_IN_LOOP"},
-            justification = "Need to pause for user action")
     private void checkForActionPropertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals(Action.ACTION_COMPLETE_CHANGED_PROPERTY)
                 || evt.getPropertyName().equals(Action.ACTION_HALT_CHANGED_PROPERTY)) {
@@ -623,16 +619,6 @@ public class Automation extends PropertyChangeSupport implements java.beans.Prop
                 // if old = false, branch if failure
                 if (evt.getOldValue() == null || (boolean) evt.getOldValue() == isLastActionSuccessful()) {
                     _gotoAutomationItem = (AutomationItem) evt.getNewValue();
-                    // pause thread in case goto is a tight loop
-                    // this gives the user a chance to "Stop" the automation
-                    synchronized (this) {
-                        try {
-                            wait(250);
-                        } catch (InterruptedException e) {
-                            // TODO Auto-generated catch block
-                            log.error("Thread interrupeted while waiting", e);
-                        }
-                    }
                 }
             }
         }

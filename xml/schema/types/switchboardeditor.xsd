@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
-
+<!-- This schema is part of JMRI. Copyright 2020, 2021                     -->
 <!-- Need annotations                                                 -->
 <!-- Attributes need to get types right esp. for enumerated           -->
-<!-- Attributes need REQUIRED/IMPLIED  & defaults                    -->
+<!-- Attributes need REQUIRED/IMPLIED  & defaults                     -->
 <!-- need definitions for icon types; see also panel editor           -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:docbook="http://docbook.org/ns/docbook" xmlns:jmri="http://jmri.org/xml/schema/JMRIschema" xsi:schemaLocation="
                 http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
@@ -20,17 +20,18 @@
       </xs:annotation>
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
 
-        <xs:element name="icons" type="EditorIconsType" minOccurs="0" maxOccurs="unbounded"></xs:element>
-        <xs:element name="turnouticon" type="EditorTurnoutIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
-        <xs:element name="sensoricon" type="EditorSensorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
-        <xs:element name="layoutturnout" type="EditorLayoutTurnoutType" minOccurs="0" maxOccurs="unbounded"></xs:element>
-        <xs:element name="layoutSlip" type="EditorLayoutSlipType" minOccurs="0" maxOccurs="unbounded"></xs:element>
-        <xs:element name="indicatorturnouticon" type="EditorIndicatorTurnoutIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
-        <xs:element name="LightIcon" type="EditorLightIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="icons" type="EditorIconsType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="turnouticon" type="EditorTurnoutIconType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="sensoricon" type="EditorSensorIconType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="layoutturnout" type="EditorLayoutTurnoutType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="layoutSlip" type="EditorLayoutSlipType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="indicatorturnouticon" type="EditorIndicatorTurnoutIconType" minOccurs="0"
+                    maxOccurs="unbounded"/>
+        <xs:element name="LightIcon" type="EditorLightIconType" minOccurs="0" maxOccurs="unbounded"/>
 
       </xs:sequence>
-      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
-      <xs:attribute name="name" type="xs:string"></xs:attribute>
+      <xs:attribute name="class" type="classType" use="required"/>
+      <xs:attribute name="name" type="xs:string"/>
       <xs:attribute name="x" type="xs:integer">
         <xs:annotation><xs:documentation>Optional as of JMRI 4.15.6</xs:documentation></xs:annotation>
       </xs:attribute>
@@ -43,29 +44,46 @@
       <xs:attribute name="width" type="xs:integer">
         <xs:annotation><xs:documentation>Optional as of JMRI 4.15.6</xs:documentation></xs:annotation>
       </xs:attribute>
-      <xs:attribute name="editable" type="yesNoType" default="yes"></xs:attribute>
-      <!--<xs:attribute name="positionable" type="yesNoType" default="yes"></xs:attribute>-->
-      <xs:attribute name="controlling" type="yesNoType" default="yes"></xs:attribute>
-      <xs:attribute name="hide" type="yesNoType" default="no"></xs:attribute>
-      <xs:attribute name="showcoordinates" type="yesNoType" default="no"></xs:attribute>
-      <xs:attribute name="showtooltips" type="yesNoType" default="yes"></xs:attribute>
-      <xs:attribute name="panelmenu" type="yesNoType" default="yes"></xs:attribute>
-      <xs:attribute name="scrollable" type="scrollableType"></xs:attribute>
-      <xs:attribute name="hideunconnected" type="yesNoType" default="no"></xs:attribute>
-      <xs:attribute name="autoitemrange" type="yesNoType" default="yes"></xs:attribute>
-      <xs:attribute name="rangemin" type="xs:int" default="1"></xs:attribute>
-      <xs:attribute name="rangemax" type="xs:int" default="32"></xs:attribute>
-      <xs:attribute name="type" type="xs:string"></xs:attribute>
-      <xs:attribute name="connection" type="xs:string"></xs:attribute>
-      <xs:attribute name="shape" type="xs:string"></xs:attribute>
-      <xs:attribute name="columns" type="xs:int"></xs:attribute>
+      <xs:attribute name="editable" type="yesNoType" default="yes"/>
+      <xs:attribute name="controlling" type="yesNoType" default="yes"/>
+      <xs:attribute name="hide" type="yesNoType" default="no"/>
+      <xs:attribute name="showcoordinates" type="yesNoType" default="no"/>
+      <xs:attribute name="showtooltips" type="yesNoType" default="yes"/>
+      <xs:attribute name="panelmenu" type="yesNoType" default="yes"/>
+      <xs:attribute name="scrollable" type="scrollableType"/>
+      <xs:attribute name="hideunconnected" type="yesNoType" default="no"/>
+      <xs:attribute name="autoitemrange" type="yesNoType" default="yes"/>
+      <xs:attribute name="rangemin" type="xs:int" default="1"/>
+      <xs:attribute name="rangemax" type="xs:int" default="32"/>
+      <xs:attribute name="type" type="xs:string"/>
+      <xs:attribute name="connection" type="xs:string"/>
+      <xs:attribute name="shape" type="shapeType"/>
+      <xs:attribute name="columns" type="xs:int"/> <!-- deprecated 4.21.2, replaced by rows -->
+      <xs:attribute name="rows" type="xs:int"/>
+      <xs:attribute name="total" type="xs:int"/>
+      <xs:attribute name="showusername" type="yesNoType" default="no"/>
       <xs:attribute name="defaulttextcolor" type="screenColorType"/>
-      <xs:attribute name="redBackground" type="xs:int"></xs:attribute>
-      <xs:attribute name="greenBackground" type="xs:int"></xs:attribute>
-      <xs:attribute name="blueBackground" type="xs:int"></xs:attribute>
-      <xs:attribute name="state" type="xs:int"></xs:attribute>
-      <!--<xs:attribute name="shapeSelect" type="yesNoType" default="no"></xs:attribute>-->
+      <xs:attribute name="activecolor" type="screenColorType"/>
+      <xs:attribute name="inactivecolor" type="screenColorType"/>
+      <xs:attribute name="iconscale" type="xs:int" default="100"/>
+      <xs:attribute name="redBackground" type="xs:int"/>
+      <xs:attribute name="greenBackground" type="xs:int"/>
+      <xs:attribute name="blueBackground" type="xs:int"/>
 
     </xs:complexType>
+
+    <xs:simpleType name="shapeType">
+      <xs:annotation>
+        <xs:documentation>
+          Switchboard switch shape
+        </xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="icon"/>
+        <xs:enumeration value="symbol"/>
+        <xs:enumeration value="drawing"/>
+        <xs:enumeration value="button"/>
+      </xs:restriction>
+    </xs:simpleType>
 
 </xs:schema>

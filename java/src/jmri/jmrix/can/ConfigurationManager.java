@@ -26,6 +26,16 @@ abstract public class ConfigurationManager {
         CBUS
     }
     
+    /**
+     * Enumerate support for switching programming modes in connected hardware
+     */
+    public enum ProgModeSwitch {
+        NONE,       // No support for switching programming modes, or no programmer,
+                    // or unknown CBUS attached command station/programmer
+        EITHER,     // Service mode or ops mode, but not both at the same time
+        SPROG3PLUS  // Specific hardware choice
+    }
+    
     private static String[] options = new String[]{SPROGCBUS, MERGCBUS, OPENLCB, RAWCAN, TEST};
 
     /**

@@ -12,6 +12,9 @@
     <sensor inverted="false">
       <systemName>IS1</systemName>
     </sensor>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
   </sensors>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
     <operations automate="false">
@@ -23,9 +26,18 @@
       <systemName>IT1</systemName>
     </turnout>
   </turnouts>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="4:00 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun May 31 14:33:01 PDT 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Layer Name Test" x="20" y="22" height="226" width="204" editable="no" positionable="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="no" scrollable="both">
     <positionablelabel x="35" y="100" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <icon url="program:resources/icons/whiteSquare100.png" degrees="0" scale="1.0">
@@ -107,14 +119,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Tue May 26 14:27:14 PDT 2020</date>
+      <date>Sun May 31 14:33:01 PDT 2020</date>
       <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/load/PanelEditorTest1.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Tue May 26 14:27:14 PDT 2020</date>
+      <date>Sun May 31 14:33:02 PDT 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.19.7ish+jake+20200526T2126Z+R86df4f27ba on Tue May 26 14:27:14 PDT 2020-->
+  <!--Written by JMRI version 4.19.7ish+jake+20200531T2120Z+Rac1cc34b01 on Sun May 31 14:33:02 PDT 2020-->
 </layout-config>

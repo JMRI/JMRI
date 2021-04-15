@@ -29,6 +29,6 @@ public class PerformActionModel extends AbstractActionModel {
 
     @Override
     protected void performAction(Action action) throws JmriException {
-        action.actionPerformed(new ActionEvent("prefs", 0, ""));
+        action.actionPerformed(new ActionEvent("prefs", ActionEvent.ACTION_PERFORMED, ""));
     }
 }

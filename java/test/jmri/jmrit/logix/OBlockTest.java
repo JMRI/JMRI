@@ -249,6 +249,79 @@ public class OBlockTest {
         assertThat(b.getUserName()).withFailMessage("UserName not kept").isEqualTo("99user");
     }
     
+    @Test
+    public void testGetLocalStatusName() {
+        Assert.assertEquals(OBlock.getLocalStatusName("unoccupied"), Bundle.getMessage("unoccupied"));
+        Assert.assertEquals(OBlock.getLocalStatusName("occupied"), Bundle.getMessage("occupied"));
+        Assert.assertEquals(OBlock.getLocalStatusName("allocated"), Bundle.getMessage("allocated"));
+        Assert.assertEquals(OBlock.getLocalStatusName("running"), Bundle.getMessage("running"));
+        Assert.assertEquals(OBlock.getLocalStatusName("outOfService"), Bundle.getMessage("outOfService"));
+        Assert.assertEquals(OBlock.getLocalStatusName("dark"), Bundle.getMessage("dark"));
+        Assert.assertEquals(OBlock.getLocalStatusName("powerError"), Bundle.getMessage("powerError"));
+    }
+    
+    @Test
+    public void testGetSystemStatusName() {
+        Assert.assertEquals("unoccupied", OBlock.getSystemStatusName(Bundle.getMessage("unoccupied")));
+        Assert.assertEquals("occupied", OBlock.getSystemStatusName(Bundle.getMessage("occupied")));
+        Assert.assertEquals("allocated", OBlock.getSystemStatusName(Bundle.getMessage("allocated")));
+        Assert.assertEquals("running", OBlock.getSystemStatusName(Bundle.getMessage("running")));
+        Assert.assertEquals("outOfService", OBlock.getSystemStatusName(Bundle.getMessage("outOfService")));
+        Assert.assertEquals("dark", OBlock.getSystemStatusName(Bundle.getMessage("dark")));
+        Assert.assertEquals("powerError", OBlock.getSystemStatusName(Bundle.getMessage("powerError")));
+    }
+    
+    @Test
+    public void testStatusIs() {
+        OBlock oblock = new OBlock("OB99");
+        
+        oblock.setState(OBlock.UNOCCUPIED);
+        Assert.assertTrue(oblock.statusIs("unoccupied"));
+        oblock.setState(OBlock.OCCUPIED);
+        Assert.assertTrue(oblock.statusIs("occupied"));
+        oblock.setState(OBlock.ALLOCATED);
+        Assert.assertTrue(oblock.statusIs("allocated"));
+        oblock.setState(OBlock.RUNNING);
+        Assert.assertTrue(oblock.statusIs("running"));
+        oblock.setState(OBlock.OUT_OF_SERVICE);
+        Assert.assertTrue(oblock.statusIs("outOfService"));
+        oblock.setState(OBlock.UNDETECTED);
+        Assert.assertTrue(oblock.statusIs("dark"));
+        oblock.setState(OBlock.TRACK_ERROR);
+        Assert.assertTrue(oblock.statusIs("powerError"));
+    }
+    
+    @Test
+    public void testOBlockStatusEnum() {
+        Assert.assertEquals(OBlock.UNOCCUPIED, OBlock.OBlockStatus.Unoccupied.getStatus());
+        Assert.assertEquals("unoccupied", OBlock.OBlockStatus.Unoccupied.getName());
+        Assert.assertEquals(Bundle.getMessage("unoccupied"), OBlock.OBlockStatus.Unoccupied.getDescr());
+        
+        Assert.assertEquals(OBlock.OCCUPIED, OBlock.OBlockStatus.Occupied.getStatus());
+        Assert.assertEquals("occupied", OBlock.OBlockStatus.Occupied.getName());
+        Assert.assertEquals(Bundle.getMessage("occupied"), OBlock.OBlockStatus.Occupied.getDescr());
+        
+        Assert.assertEquals(OBlock.ALLOCATED, OBlock.OBlockStatus.Allocated.getStatus());
+        Assert.assertEquals("allocated", OBlock.OBlockStatus.Allocated.getName());
+        Assert.assertEquals(Bundle.getMessage("allocated"), OBlock.OBlockStatus.Allocated.getDescr());
+        
+        Assert.assertEquals(OBlock.RUNNING, OBlock.OBlockStatus.Running.getStatus());
+        Assert.assertEquals("running", OBlock.OBlockStatus.Running.getName());
+        Assert.assertEquals(Bundle.getMessage("running"), OBlock.OBlockStatus.Running.getDescr());
+        
+        Assert.assertEquals(OBlock.OUT_OF_SERVICE, OBlock.OBlockStatus.OutOfService.getStatus());
+        Assert.assertEquals("outOfService", OBlock.OBlockStatus.OutOfService.getName());
+        Assert.assertEquals(Bundle.getMessage("outOfService"), OBlock.OBlockStatus.OutOfService.getDescr());
+        
+        Assert.assertEquals(OBlock.UNDETECTED, OBlock.OBlockStatus.Dark.getStatus());
+        Assert.assertEquals("dark", OBlock.OBlockStatus.Dark.getName());
+        Assert.assertEquals(Bundle.getMessage("dark"), OBlock.OBlockStatus.Dark.getDescr());
+        
+        Assert.assertEquals(OBlock.TRACK_ERROR, OBlock.OBlockStatus.TrackError.getStatus());
+        Assert.assertEquals("powerError", OBlock.OBlockStatus.TrackError.getName());
+        Assert.assertEquals(Bundle.getMessage("powerError"), OBlock.OBlockStatus.TrackError.getDescr());
+    }
+    
     // from here down is testing infrastructure
     @BeforeEach
     public void setUp() {

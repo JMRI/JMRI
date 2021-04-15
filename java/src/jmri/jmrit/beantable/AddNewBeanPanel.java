@@ -16,13 +16,26 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
 /**
- * JPanel to create a new JMRI device (used to add Memory, Block).
+ * JPanel to create a new JMRI device (used to add Memory, Block, OBlock (UI _tabbed)).
  *
  * @author Bob Jacobsen Copyright (C) 2009
  * @author Pete Cressman Copyright (C) 2010
  */
 public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
 
+    /**
+     * Create the panel.
+     *
+     * @param sys text field for the system name or start address
+     * @param userName text field for the optional user name
+     * @param endRange selector for range to create multiple NamedBeans
+     * @param addRange check box to allow creation of multiple NamedBeans
+     * @param autoSystem checkbox to have (simple) system name created automatically
+     * @param addButtonLabel text to display on button triggering creation of NamedBean
+     * @param okListener to attach to Create button
+     * @param cancelListener listener to attach to the cancel button
+     * @param statusBar area where status messages can be presented
+     */
     public AddNewBeanPanel(JTextField sys, JTextField userName, JSpinner endRange, JCheckBox addRange, JCheckBox autoSystem,
             String addButtonLabel, ActionListener okListener, ActionListener cancelListener, JLabel statusBar) {
         sysName = sys;
@@ -41,7 +54,7 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
         c.gridx = 0;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.EAST;
-        c.gridx = 0;
+        //c.gridx = 0;
         c.gridy = 1;
         p.add(sysNameLabel, c);
         sysNameLabel.setLabelFor(sys);
@@ -128,11 +141,7 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
             sysName.setEnabled(false);
             sysNameLabel.setEnabled(false);
         } else {
-            if (sysName.getText().length() > 0) {
-                ok.setEnabled(true);
-            } else {
-                ok.setEnabled(false);
-            }
+            ok.setEnabled(sysName.getText().length() > 0);
             sysNameLabel.setEnabled(true);
             sysName.setEnabled(true);
             sysNameLabel.setEnabled(true);
@@ -150,7 +159,7 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
     }
 
     JButton cancel;
-    JButton ok;
+    protected JButton ok; // access from Table Action to add as default button to frame
     JTextField sysName;
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));

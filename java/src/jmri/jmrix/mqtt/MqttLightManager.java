@@ -40,7 +40,8 @@ public class MqttLightManager extends jmri.managers.AbstractLightManager {
     }
 
     @Override
-    public Light createNewLight(@Nonnull String systemName, String userName) {
+    @Nonnull
+    protected Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         String suffix = systemName.substring(getSystemNamePrefix().length());
 
         String sendTopic = java.text.MessageFormat.format(
@@ -57,6 +58,12 @@ public class MqttLightManager extends jmri.managers.AbstractLightManager {
 
     @Override
     public boolean validSystemNameConfig(String systemName) {
+        return true;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 

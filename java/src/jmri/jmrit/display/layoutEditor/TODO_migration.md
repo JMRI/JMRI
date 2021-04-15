@@ -1,61 +1,219 @@
 This is a fast-evolving list of items for the restructuring of the display.layoutEditor package. 
 It's in no particular order, items are removed as done, so please don't consider it documentation.
 
+----
+## Development Tags
+ - LE-MVC-2 M-V split in place, passing tests
+ -          Reducing duplicate code and redirects; passing tests, Javadoc warnings present
+ - LE-MVC-3 More reduction of duplication and redirects; tests clean
+ - LE-MVC-4 Introduce LayoutModels interface; tests, Javadoc, warnings clean
+ 
+ Next:
+ - LE-MVC-5 [X] Load/Store via *ViewXml; [ ] get LayoutTrack clean of geometry (i.e. no *View referrals in model classes)
 
+## Development Branches
+ - LE-move-content-MVC-2-draws - pause point, (appears to) draw test layouts properly (tagged as LE-MVC-2 M-V)
+ - LE-move-content-MVC-working-on-3 (tagged as LE-MVC-3)
+ - LE-move-content-MVC-working-on-4 (tagged as LE-MVC-4)
+ - LE-move-content-MVC-working-on-5 - merged to Oct 26, 2020 master
+ 
+ - LE-MVC-head - built from latest dev branch above for [Jenkins build](https://builds.jmri.org/jenkins/job/testreleases/job/layouteditor/)
 ----
 
 ## MVC work
- -  *View  present and running, now start to move code for those methods
-        rename methods left behind to ensure not accessed
- - once moved to View, break down to subclasses to removing dynamic typing
 
-Usages from LayoutTrackView:
+ - [X] Make up and check a test panel for all 8 track directions (NORTH, NORTH_EAST, etc)
+ - [ ] Make up and check an extensive Turnout test panel - rotate, scale, translate plus rays
+ - [ ] Make up and check an extensive Slip test panel - rotate, scale, translate plus rays 
+
+- [X] Turntable Ray display
+  - [ ] Turntable ray location for information split between topo and View classes; add decorator in view.
+
+- [ ] Spotbugs - do getTurnout, getLayoutBlock, getLayoutBlockB, etc _effectively_ never return null due to usage? In certain cases?
+  - [ ]if so, consider documenting that and protecting with asserts
+            (assert before a _later_ use doesn't protect against NP warnings)
+
+- [X] mainline in geometry classes (inc base clases, *Xml)
+- [X] hidden in View
+- [X] flip in View
+- [ ] center in View
+  - [ ] Move geometric direction and distance to (plugin in) LayoutModels 
+            result = Path.computeDirection(getCoordsCenter(), p1);  // has a reference to center we need to understand
+  
+- [ ] Decorations only in View
+    - [ ] PositionablePoint.setTypeEndBumper(), .setTypeEdgeConnector(), .setTypeEdgeConnector() seem to need to be in both model and view
+        - [ ] View should _invoke_ Model for relevent parts
+        - [ ] document use pattern for both Model and View methods
+        - [ ] make sure being consistently called
+    - [ ] arrowstyle only in View
+        =========>  arrows include connectivity, will need additional work
+        - [ ]  see commented out areas in PositionablePoint; need to be handled in View? Via view accessor?
+    - [X] bridge only in View
+    - [X] tunnel only in View
+    - [ ] bumpers only in View
+
+- [X] create popup et al (inc member vars) in view
+- [ ] Turnout state in connectivity
+- [ ] Block and connectivity checks to, well, connectivity
+
+- [ ] The `*View` classes load a reference to a new `*Editor` in ctor; this needs to be shared or deferred as very big
+         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutDoubleSlipEditor(layoutEditor);
+- [ ] LayoutEditor.setTurnoutName(@Nonnull), .setSecondTurnout(@Nonnull): Very inconsistent use with "" or null, need to clean up 100%
+    - [ ] who uses it through View? Should it be through view?
+
+Go through and confirm individually:
+
+ - [X] Remove view variables from Model classes 
+        
+ - [ ] Remove swing/AWT code from Model classes
+        LayoutSlip - TurnoutState internal class uses JComboBox, is present in both LayoutSlip and LayoutSlipView
+
+ - [ ] LayoutTurnout & LayoutTurnoutView setTrackSegmentBlock(..) is a bad split implementation, needs to be redone into parts
+
+ - [ ] Remove topology variables from View (decide which are references via forwarding, and which require getTrack-style access; be consistent, document decisions!)
+        LayoutTrack LayoutTurntable LevelXing  
+        PositionablePoint
+            reCheckBlockBoundary, removeSML et al
+        TrackSegment 
+        LayoutTurnout - Ray class (see below)
+        LayoutWye 
+        LayoutXOver
+
+ - [ ] There should be no duplicate code between model and view; only one place or the other (referring V -> M OK in some cases)
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
+        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
+        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
+        
+ - [ ] LayoutTrack holds LayoutModels ref, not LayoutEditor
+            models.provideLayoutBlock(name) should be in LayoutModels (Blocks are eventually a model type, not a view type)
+            LayoutEditor.getAffectedBlock should be methods in the LayoutTrack tree
+            LayouEditor.getFinder().uniqueName("EB", 1)   should be directly in LayoutModels
+            
+ - [ ] Load & Store: TrackSegmentViewXml et al storing as  class="TrackSegmentView" to ease file comparison & for compatibility; change back after figuring out compatibility
+ - load with specific view
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
+        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
+        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
+ - [ ] store from specific view
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
+        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
+        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
+
+ - [x] Check all ctors handling arguments, storage properly (paired objects for now)
+
+ - [X] Editor creates them the right way (addLayoutTurnout, addLayoutSlip, etc in LE)
+
+ - [ ] Complete head comments
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
+        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
+        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
+
+ - [ ] Make a final pass to get rid of commented methods (i.e. from migration)
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
+        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
+        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
+
+ 
+Does getLayoutConnectivity() in LayoutTurnout, LayoutSlip do what the original code did?
+    Need some real test cases.
+ 
+## once moved to View, break down to subclasses to removing dynamic typing
+
+ - move typed code down from:
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+        LayoutTurnout
+        LayoutSlip
+        LayoutXOver
+        
+ - lots of messages in place for bad routine; some throw IllegalArgumentException, force out by compilation checks
+ 
+---
+
+Tests slow because LayoutEditor ctor creates Catalog, doing a lot of I/O; migrate tests to LayoutModels
+```
+	at com.sun.imageio.spi.InputStreamImageInputStreamSpi.createInputStreamInstance(InputStreamImageInputStreamSpi.java:69)
+	at javax.imageio.ImageIO.createImageInputStream(ImageIO.java:357)
+	at jmri.jmrit.catalog.NamedIcon.<init>(NamedIcon.java:98)
+	at jmri.jmrit.display.layoutEditor.MultiIconEditor.setIcon(MultiIconEditor.java:42)
+	at jmri.jmrit.display.layoutEditor.LayoutEditorToolBarPanel.setupComponents(LayoutEditorToolBarPanel.java:455)
+```
+
+- [ ] SignallingGuiTools is invoked from LayoutTurnout and subclasses
+
+---
+
+Started to switch to LayoutModels from LayoutEditor
+ - [ ] Change the LayoutTrack ctor and member value, then flush out needed routines to add
+    - [ ] getLayoutConnectivity should defer to LayoutModels for direction, not just getCoord
+    - [ ] getCoord as a bare behavior should not be in LayoutModels
+    - [ ] LayoutModels shouldn't provide Views (may need another interface for those?)
+ - [ ] Change the tests to no longer use LayoutEditor, hence being faster (and no longer check headless)
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
+        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
+        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
+---
+
+ [ ]No dispose() in Model classes; should there be remove() in View classes?
+
+Concerned over e.g.  `getConnect2() == myTrk` as code transitions LayoutTrack -> LayoutTrackView. 
+ = [ ] Change to .equals()
+ - [ ] Provide an equals that will take either for now. i.e. View.equals(Trk) compares the internal track, as does Trk.equals(View)
+ 
+ Also need a solution and tests for `getConnect().callViewMethod()`; do these
+ need to move up? How?
+ 
+---
+
+Added 'LayoutEditorAuxTools getLEAuxTools()' (which has state) to LayoutModels - what's up with that state? Really global?
+
+Direct access to LayoutEditorFindItems(LayoutModels) by constructing one where needed. The LayoutModels arg is for access to tracks et al; create via InstanceManager? Put in calls?
+
+This (from TrackSegment) shows that LayoutConnectivity has a "direction" from the screen coordinates; is that a real thing? How used?
 
 ```
-protected abstract void draw1(Graphics2D g2, boolean isMain, boolean isBlock);
-
-    java/src/jmri/jmrit/display/layoutEditor/LayoutTurnout.java:3442
-    java/src/jmri/jmrit/display/layoutEditor/LayoutTurntable.java:1136
-    java/src/jmri/jmrit/display/layoutEditor/TrackSegment.java:2295
-    java/src/jmri/jmrit/display/layoutEditor/PositionablePoint.java:1760
-    java/src/jmri/jmrit/display/layoutEditor/LevelXing.java:1508
-    java/src/jmri/jmrit/display/layoutEditor/LayoutSlip.java:1093
-
-    java/src/jmri/jmrit/display/layoutEditor/LayoutEditorChecks.java:379
-
-abstract protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement)
-
-    java/src/jmri/jmrit/display/layoutEditor/LayoutTurnout.java:3781
-    java/src/jmri/jmrit/display/layoutEditor/LayoutTurntable.java:1187
-    java/src/jmri/jmrit/display/layoutEditor/TrackSegment.java:2328
-    java/src/jmri/jmrit/display/layoutEditor/PositionablePoint.java:1768
-    java/src/jmri/jmrit/display/layoutEditor/LevelXing.java:1527
-    java/src/jmri/jmrit/display/layoutEditor/LayoutSlip.java:1267
-    (others inherited)    
-    
-abstract protected void drawEditControls(Graphics2D g2);
-
-    java/src/jmri/jmrit/display/layoutEditor/LayoutTurnout.java:4511
-    java/src/jmri/jmrit/display/layoutEditor/LayoutTurntable.java:1266
-    java/src/jmri/jmrit/display/layoutEditor/TrackSegment.java:2385
-    java/src/jmri/jmrit/display/layoutEditor/PositionablePoint.java:1789
-    java/src/jmri/jmrit/display/layoutEditor/LevelXing.java:1632
-
-   
-abstract protected void drawDecorations(Graphics2D g2);
-    java/src/jmri/jmrit/display/layoutEditor/LayoutTurnout.java:3436
-    java/src/jmri/jmrit/display/layoutEditor/LayoutTurntable.java:1130
-    java/src/jmri/jmrit/display/layoutEditor/TrackSegment.java:2431
-    java/src/jmri/jmrit/display/layoutEditor/PositionablePoint.java:1754
-    java/src/jmri/jmrit/display/layoutEditor/LevelXing.java:1500
-
-    java/src/jmri/jmrit/display/layoutEditor/LayoutEditorChecks.java:379
+    lc = new LayoutConnectivity(lb1, lb2);
+    lc.setConnections(this, lt, type1, null);
+    lc.setDirection(Path.computeDirection(
+            layoutEditor.getCoords(getConnect2(), type2),
+            layoutEditor.getCoords(getConnect1(), type1)));
 ```
 
 ---
 
+It's not "geometry" or "geometrical" it's connectivity or topology
+There are _two_ geometries:  Layout and Screen. There can't be any clean correspondence. 
+as people lay out their layout on separate models.  (Another demo of the shortage of single-meaning words)
+
+---
+   
+Move list management entirely out of LayoutManager to a LayoutModels interface as a first step toward
+a separate central repository (also accessible via InstanceManager)
+- [X] Interface and scaffold present
+- [ ] Added to LayoutTrack and all children (rename layoutEditor member)
+- [ ] Added to LayoutTrack tests (instead of LayoutEditor layoutEditor)
+
+The *View classes might want access to a JPanel for e.g. displaying a JDialog, how handle? Inject?
+
+---
+
+Add View ctors that (because it's not given a Track object) knows to create the
+track object
+
+ - [ ] LayoutEditor#add of just View pulls Track (but don't have add(LayoutTrack) without View)
+ 
+--- 
+
+
 Eventually, *View classes should receive a reference to the *ViewContext object(s) and
 use that as an accessor instead of the LayoutEditor reference.
+
+Start by giving LayoutEditor an Interface, and passing that.
 
 ---
 
@@ -67,7 +225,6 @@ Where do the PositionablePoint editors for End Bumper, etc live? they're not rea
 > 
 > Making them subclasses would simplify the showPopup method but makes the type change more difficult since it 
 > requires an object swap (unless there is a Java trick that I don't know).
-
 
 ---
 
@@ -107,6 +264,7 @@ LayoutEditorComponent.drawTrackSegmentInProgress still uses LayoutTrack not Layo
 ---
 
 getId vs getName why? getName (257) much more common than getId (35), but is it right?
+getId but setIdent?
 
 ```
 % grep -r 'String getName\(\)' java/src/jmri/jmrit/display/layoutEditor/
@@ -120,6 +278,38 @@ java/src/jmri/jmrit/display/layoutEditor//LayoutBlock.java:    public String get
 java/src/jmri/jmrit/display/layoutEditor//LayoutTrack.java:    final public String getId() {
 ```
 
+---
+
+XML migration and Grand Rename
+ - Original store/load from LayoutTrack* names
+ 
+ - This was moved to store/load LayoutTrack* and LayoutTrackView* objects via LayoutTrackViewXml* classes and jmri/configurexml/ClassMigration.properties
+
+ - The long-term is to rename the LayoutTrack* classes to LayoutTrackModel* classes, which 
+   - allows those to be directly and natively stored/loaded via LayoutTrackModelXml* and LayoutTrackViewXml*configXML classes
+   - allows leaving (really, renameing the existing LayoutTrack*) LayoutTrackXml* classes for reading old files
+
+---
+
+Structural navigation issue that has to eventually be resolved:
+
+A LayoutTrackView-subclass object Xv has a LayoutTrack Xt. 
+Xt is linked via the usual connection mechanism to Yt, which has a view Tv.
+Xa wants the coordinates of that far end, which it needs to get from Yv
+
+Right now, that goes through the Map<LayoutTrack, LayoutTrackView> in a LayoutEditor
+object held by Xv from it's construction time. 
+ - That forces a 1-1 model-view connection within a LayoutEditor object; not OK in long term
+
+Because navigation is _really_ spread around, this adds more requirements to pass around and 
+hold a LayoutEditor reference, which is hard.  And the LayoutEditor class has a _lot_ of duties.
+
+Consider the Swing approach, where things are held within collections that can he navigated
+up/down/sideways rather than a common map.
+
+ - [ ] should getLayoutTurnout() et al be public (getModel()?)
+ - [ ] add a pointer LayoutTrack -> to avoid lookup?
+ 
 ---
 
 ## Code Pushes
@@ -175,6 +365,17 @@ This needs to get hooked up properly:
 
 ---
 
+Way too many calls to repaint, particularly during loading.  Add a global "wait for later", perhaps protected by a keep-alive (or set a 'no repaint-before' timer)
+
+   
+---
+
+ Duplicate runs of tests in LayoutTurnoutTest because it's inherited by lots. Break them up?
+ 
+ We're now creating a LayoutEditor for each test in some classes (instead of sharing across tests) to reset it's addTrk(..) contents.  Slow...
+ 
+---
+
 About writing out the image files in tests:
 
  - Add a control property for writing out the image files in 
@@ -188,6 +389,7 @@ About writing out the image files in tests:
 
  TrackSegment HIDECON as an EnumSet
  https://docs.oracle.com/javase/7/docs/api/java/util/EnumSet.html
+ 
 ``` 
      public enum Style {
         BOLD, ITALIC, UNDERLINE, STRIKETHROUGH
@@ -231,12 +433,8 @@ TrackSegment.java:        //nothing to see here, move along
 Fix `//([a-zA-Z])` comments with `// \1`
    
 ---
-   
-   Consider moving list management entirely out of Layout Manager to decrease size & complexity.
-   
----
 
-although it's deferring to the View classes mostly, LayoutComponent is
+Although it's deferring to the View classes mostly, LayoutComponent is
 still messing with i.e. isDisabled, isHidden instead of deferring that to the objects
    
 ---
@@ -333,6 +531,14 @@ to provide a getNextNode that has one argument, i.e. assumes the  TRACKNODE_CONT
  mainline track width, side track width are in both LayoutEditorViewContext and LayoutTrackDrawingOptions.
  Also, why are they floats?  (What's loaded and stored? Is there any calcuation that can make a
  non-integer value?)
+
+---
+
+To store separately
+ - cp *ViewXml  to *Xml to _read_ (but not write) old format with both combined
+    - update from java/src/jmri/configurexml/ClassMigration.properties by removing *View lines
+ - make a new *ModelXml that stores the model; drop that info from *View
+ - figure out who should trigger store of Model, make LayoutModels as a single registered object?
 
 ---
 
@@ -611,6 +817,16 @@ TrackSegment 436
 
 ---
 
+There's got to be a better way than all those code replications on connectionA, connectionB, connectionC, connectionD - maybe a group transformation?
+
+Similarly, having connection and a HitPointType as separate is screaming for a combined data type.
+
+---
+
+"version" in LayoutTurnout (and others?) is really another kind of type, as it's used at runtime and load/store
+---
+
+
 LayoutTrackDrawingOptions is mutable and doesn't have a constant hash
 
 ---
@@ -636,4 +852,10 @@ Separate out LayoutEditor class to MVC parts:
 ![Separate out LayoutEditor class to MVC parts](migration/plan_4.png "Separate out LayoutEditor class to MVC parts")
 
  --- 
+ 
+ Go through the ExpectedState -> NamedBeanExpectedValue -> NamedBeanExpectedState -> BeanSetting
+ hierarchy to add Comparable, @Immutable as possible.  Path should use BeanSetting.compareTo instead of local logic.
+ While there, check (and document meaning of!) equals, hashCode
+ 
+ 
  

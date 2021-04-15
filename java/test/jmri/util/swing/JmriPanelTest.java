@@ -45,7 +45,7 @@ public class JmriPanelTest {
 
     @AfterEach
     public void tearDown() {
-        if(panel!=null) {
+        if (panel!=null) {
            panel.dispose();
         }
         panel = null;

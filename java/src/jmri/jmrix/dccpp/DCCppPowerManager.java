@@ -58,12 +58,11 @@ public class DCCppPowerManager extends AbstractPowerManager<DCCppSystemConnectio
         }
     }
 
-    // to listen for Broadcast messages related to track power.
-    // There are 5 messages to listen for
+    // listen for power and status messages
     @Override
     public void message(DCCppReply m) {
-        log.debug("Message received: {}", m);
         if (m.isPowerReply()) {
+            log.debug("Power Reply message received: {}", m);
             int old = power;
             if (m.getPowerBool()) {
                 power = ON;
@@ -71,18 +70,27 @@ public class DCCppPowerManager extends AbstractPowerManager<DCCppSystemConnectio
                 power = OFF;
             }
             firePowerPropertyChange(old, power);
+        // if status reply 's', then update the command station info (version, etc.)
+        } else if (m.isStatusReply()) {
+            log.debug("Version Info Received: {}", m);
+            tc.getCommandStation().setCommandStationInfo(m);
         }
     }
 
-    // listen for the messages to the LI100/LI101
+    // listen for the messages to the CommandStation
     @Override
     public void message(DCCppMessage l) {
     }
 
-    // Handle a timeout notification
+    // Handle message timeout notification
+    // If the message still has retries available, reduce retries and send it back to the traffic controller.
     @Override
     public void notifyTimeout(DCCppMessage msg) {
-        log.debug("Notified of timeout on message{}", msg);
+        log.debug("Notified of timeout on message '{}' , {} retries available.", msg, msg.getRetries());
+        if (msg.getRetries() > 0) {
+            msg.setRetries(msg.getRetries() - 1);
+            tc.sendDCCppMessage(msg, this);
+        }        
     }
 
     // Initialize logging information

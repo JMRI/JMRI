@@ -84,7 +84,6 @@
         change. This type of warrant is better suited to smaller layouts.</li>
       </ul>
 
-
       <h2><a name="creating" id="creating">Creating a Warrant</a></h2>
       
       <p>A Warrant consists of two parts:</p>
@@ -122,24 +121,21 @@
       <h2><a name="reading" id="reading">More Warranted Reading</a></h2>
  
     <ul>
-      <li><a href="../../package/jmrit/logix/WarrantTable.shtml">The Warrant List</a>: table from which you can control warrant routes
+      <li><a href="../../package/jmri/jmrit/logix/WarrantTable.shtml">The Warrant List</a>: table from which you can control warrant routes
           and dispatch trains</li>
       <li><a href="../../package/jmri/jmrit/logix/NXWarrant.shtml#prefs">Preferences related to Warrants</a></li>
       <li><a href="../../package/jmri/jmrit/logix/OBlockTable.shtml">Definitions of OBlocks, Portals and OPaths</a></li>
       <li><a href="../../package/jmri/jmrit/logix/OBlockEdit.shtml">Creating OBlocks, Portals and OPaths using tables</a></li>
-      <li><a href="../../package/jmri/jmrit/logix/display/CircuitBuilder.shtml">Using the Circuit Builder Tool</a> for creating OBlocks, Portals and Paths</li>
+      <li><a href="../../package/jmri/jmrit/display/CircuitBuilder.shtml">Using the Circuit Builder Tool</a> for creating OBlocks, Portals and Paths</li>
       <li><a href="../../package/jmri/jmrit/logix/CreateEditWarrant.shtml">Creating and Editing Warrants</a>.</li>
-      <li><a href="../../package/jmri/jmrit/logix/Train Trackers">Using Train Trackers</a> to display the identity of trains as they
+      <li><a href="../../package/jmri/jmrit/logix/Tracker.shtml">Using Train Trackers</a> to display the identity of trains as they
           are moved by operators from one occupancy block to another.</li>
       <li><a href="../../package/jmri/jmrit/logix/NXWarrant.shtml">About NX Warrants</a> and creating temporary eNtry/eXit (NX) Warrant.</li>
-      <li><a href="../../package/jmri/jmrit/SpeedChanges.shtml">How Warrants handle speed changes</a></li>
+      <li><a href="../../package/jmri/jmrit/logix/SpeedChanges.shtml">How Warrants handle speed changes</a></li>
       <li><a href="../../../../community/clinics/">Clinic presentation</a> by Dick Bronson: <a href="http://www.rr-cirkits.com/Clinics/Clinics.html">
           NMRA 2014 Automatic Train Control Using Warrants</a> (in two parts)</li>
     </ul>
- 
 
-
- 
       <!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->

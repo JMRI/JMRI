@@ -3,7 +3,7 @@
 
 <head>
 
-<!-- Copyright 2020 Jerry Grochow -->
+<!-- Copyright 2020, 2021 Jerry Grochow -->
  
   <title>Hardware Support: Using Arduinos with JMRI</title>
   
@@ -22,10 +22,10 @@
 
     <h1><a name="top" id="top">Hardware Support: Using Arduinos with JMRI</a></h1>
     
-    <img src="http://www.motorhomesites.org.uk/wp-content/uploads/2018/01/JMRIArduinoTitlepic.jpg" 
+    <img src="images/JMRIArduinoTitlepicBrackstone.jpg" 
     alt="Benson Valley Railway" align="middle" height="192" width="360">
-    <p style="font-size:60%">Picture Credit:<a href="http://www.motorhomesites.org.uk/jmri-arduino-setup/" target="_blank">
-    http://www.motorhomesites.org.uk/jmri-arduino-setup</a></p>
+    <p style="font-size:60%">Picture Credit:<a href="http://www.motorhomesites.org.uk/railway/JMRI_Arduino_Setup.php" target="_blank">
+    http://www.motorhomesites.org.uk</a></p>
     
     <p>
     <a href="https://en.wikipedia.org/wiki/arduino" target="_blank">Arduino micro controllers</a>
@@ -35,7 +35,7 @@
     </p>
     
     <ul class="snav">
-        <li><a href="#intro">Intro</a></li>
+        <li><a href="#intro">Introduction</a></li>
         <li><a href="#connect">Connecting</a></li>
         <li><a href="#using">Using JMRI Features</a></li>
         <li><a href="#example-CMRI">Step-by-Step CMRI Node</a></li>
@@ -127,7 +127,7 @@
     <ul>
     <li>via a USB port if acting as a <a href="../dccpp/index.shtml">DCC command station.</a></li>
     <li>via connection to the track or a connection to <a href="../loconet/Digitrax.shtml">Loconet </a>
-    (requires additional circuitry) or <a href="../can/cbus/index.shtml#thirdpary">MERG CBUS</a> network if
+    (requires additional circuitry) or <a href="../can/cbus/index.shtml#thirdpary">CBUS&reg;</a> network if
     acting as a DCC decoder (see, for example, this<a href="https://github.com/mrrwa/NmraDcc" target="_blank">
     arduino library on Github</a>)</li>
     <li>via a USB port if emulating a <a href="#CMRI">CMRI node</a></li>
@@ -143,11 +143,11 @@
     
     <p>
     One of the simplest ways to have your arduino communicate with JMRI is to install software that
-    allows it to emulate a CMRI node. [See <a href="../cmri/index.shtml">the CMRI help page</a> for  
+    allows it to emulate a CMRI node. [See <a href="../cmri/CMRI.shtml">the CMRI help page</a> for  
     information about using CMRI nodes with JMRI.] On the arduino, install one of the arduino 
     C/MRI libraries and include it in your sketch (for example, the library by Michael Adams
     <a href="https://github.com/madleech/ArduinoCMRI" target="blank_"> available on Github</a> (
-    see also <a href="http://www.motorhomesites.org.uk/jmri-arduino-setup/" target="_blank">
+    see also <a href="http://www.motorhomesites.org.uk/railway/JMRI_Arduino_Setup.php" target="_blank">
     Stephen Brackstone's web site </a>for an example of its use). See also<a href="#example-CMRI">
      below </a>for a set of steps to get up and operating with an arduino as CMRI node with JMRI.
     </p>
@@ -222,10 +222,12 @@
     
     <p class="im">
     <img src="images/rs485chain.jpg" alt="RS485 Daisy Chain" align="right" height="211" width="396">
-    JMRI only permits a single CMRI connection to be configured for your layout. If your arduino
-    is connected via a USB cable, that means only a single arduino.  However, you can connect an
-    RS-485 cable (two wire) to the USB port and connect multiple arduinos in a "daisy chain" (each
-    arduino connected to the next and finally a connection to the computer), as shown in this diagram:
+    Although JMRI permits more than one CMRI connection to be configured for a layout, it is often 
+    convenient to connect multiple arduinos on a single CMRInet connection. This eliminates the need to have
+    individual USB cables going from each arduino to separate USB ports on your computer.  Instead, multiple
+    arduinos can be connected via an RS-485 adapter to an RS-485 two wire cable in a "daisy chain" (each arduino
+    connected to the next), ending in an RS-485-to-USB adapter to connect to the JMRI computer as shown in
+    this diagram:
     </p>
     
     <p>
@@ -235,7 +237,7 @@
     converter, also available from multiple sources.
     </p>
     
-    <p>See <a href="http://www.motorhomesites.org.uk/control-single-turnout-with-rs485-and-cmri/" target="_blank">
+    <p>See <a href="http://www.motorhomesites.org.uk/railway/JMRI_Two_Arduino_control_with_CMRI.php" target="_blank">
     Stephen Brackstone again </a>for a good description of how to do this setup.
     </p>
     
@@ -268,18 +270,18 @@
     
     <ul>
     <li>Block occupancy detectors: Connect an arduino to several block occupancy detectors and define JMRI sensors to report whether blocks are occupied.
-    layut panels will show tracks changing color as blocks go from unoccupied to occupied and back again.</li>
+    Layout panels will show tracks changing color as blocks go from unoccupied to occupied and back again.</li>
     <li>Location detectors: Connect an arduino to a "point" sensor such as a photooptical module, infrared module, Hall effect reader, RFID reader,
     etc.  Define a JMRI sensor that goes active when the physical sensor is active and use this to control routes,
     Logix, or other JMRI "triggered" action.</li>
     <li>Turnout control: Connect an arduino to a turnout motor or switch machine (will require using an auxiliary circuit board to power these devices).
-    Define a turnout in JMRI and a sensor for feedback. Whe the arduino receives a request from JMRI to thrown the
+    Define a turnout in JMRI and a sensor for feedback. When the arduino receives a request from JMRI to thrown the
     turnout (via whatever network protocol you have chosen - see <a href="#connect">above</a>), have the arduino throw
     the turnout and set the sensor.</li>
     <li>Multiple turnout control via serial communications: See step-by-step and code from Geoff Bunza 
     <a href="https://model-railroad-hobbyist.com/node/34417" target="_blank"> here.</a></li>
     <li>Logix triggering: Connect an arduino to a fascia panel switch or pushbutton. Define a JMRI sensor that is used to trigger a Logix to
-    do something (perhaps throw some turnouts,set some lights, etc.).  Program the arduino to set the sensor when the switch or
+    do something (perhaps throw some turnouts, set some lights, etc.).  Program the arduino to set the sensor when the switch or
     pushbutton is activated.</li>
     <li>Light or animation control: Add a motor controller to your arduino, create a <a href="../../tools/Lights.shtml">JMRI light object</a>
     to send a control command,
@@ -322,7 +324,7 @@
     <li>Using the <a href="https://www.arduino.cc/en/main/software" target="_blank">arduino IDE 
     (integrated development environment)</a> or other development environment, create (or download) a
     sketch (arduino program) that includes the CMRI library.</li>
-    <li>In the skecth, assign this emulated CMRI node as Node 1.</li>
+    <li>In the sketch, assign this emulated CMRI node as Node 1.</li>
     <li>In the sketch, use bit 0 for sending the sensor state (unoccupied=0 or occupied=1).  Some sensors will
     indicate an occupied block by a LOW signal on the arduino pin while others will go HIGH - be sure
     you know which is which for your particular sensor so you set the CMRI bit appropriately.</li>
@@ -341,14 +343,20 @@
     <li>Click on "Configure Nodes" and then "Add Node."  When the "Add Node" window opens, change the "Node Address"
     to 1 and click "Add Node" as shown<a href="../cmri/CMRI.shtml#L296"> here.</a>
     Close this window and click "Done."  BE SURE TO HIT "Save" on the Preferences window.</li>
-    <li>Open the <a href="../../tools/Sensors.shtml">sensor table </a>and create a CMRI sensor with system name 1001 (first CMRI bit on node 1)</li>
-    <li>Open the <a href="../../help/en/html/tools/Blocks.shtml">block table </a>and create a block.  set occupancy sensir t$ the sensir you just created.</li>
+    <li>Open the <a href="../../tools/Sensors.shtml">sensor table </a>and create a CMRI sensor with system name 1001 
+    (first CMRI bit on node 1)</li>
+    <li>Open the <a href="../../tools/Blocks.shtml">block table </a>and create a block.  Set the occupancy sensor
+    to the sensor you just created.</li>
     <li>Go to a panel you have created and assign the block you just created to appropriate track section.</li>
     <li>Run trains and watch the action!</li> 
     </ul>
      
     <p><a href="#top">[Go to top of page]</a></p>
     
+
+        <h2></h2>
+        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
+        <p></p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

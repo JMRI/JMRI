@@ -10,6 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -63,6 +64,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     private static final String CLASSPREFS_ELEMENT = "classPreferences"; // NOI18N
     private static final String COMBOBOX_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/combobox-4-3-5.xsd"; // NOI18N
     private static final String COMBOBOX_ELEMENT = "comboBoxLastValue"; // NOI18N
+    private static final String CHECKBOX_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/checkbox-4-21-3.xsd"; // NOI18N
+    private static final String CHECKBOX_ELEMENT = "checkBoxLastValue"; // NOI18N
     private static final String SETTINGS_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/settings-4-3-5.xsd"; // NOI18N
     private static final String SETTINGS_ELEMENT = "settings"; // NOI18N
     private static final String WINDOWS_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/window-details-4-3-5.xsd"; // NOI18N
@@ -83,6 +86,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     //sessionList is used for messages to be suppressed for the current JMRI session only
     private final ArrayList<String> sessionPreferenceList = new ArrayList<>();
     protected final HashMap<String, String> comboBoxLastSelection = new HashMap<>();
+    protected final HashMap<String, Boolean> checkBoxLastSelection = new HashMap<>();
     private final HashMap<String, WindowLocations> windowDetails = new HashMap<>();
     private final HashMap<String, ClassPreferences> classPreferenceList = new HashMap<>();
     private File file;
@@ -401,6 +405,18 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         comboBoxLastSelection.put(comboBoxName, lastValue);
         setChangeMade(false);
         this.saveComboBoxLastSelections();
+    }
+
+    @Override
+    public boolean getCheckboxPreferenceState(String name, boolean defaultState) {
+        return this.checkBoxLastSelection.getOrDefault(name, defaultState);
+    }
+
+    @Override
+    public void setCheckboxPreferenceState(String name, boolean state) {
+        checkBoxLastSelection.put(name, state);
+        setChangeMade(false);
+        this.saveCheckBoxLastSelections();
     }
 
     public synchronized boolean getChangeMade() {
@@ -835,6 +851,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
             file = perNodeConfig;
             log.debug("  start perNodeConfig file: {}", file.getPath());
             this.readComboBoxLastSelections();
+            this.readCheckBoxLastSelections();
             this.readPreferencesState();
             this.readSimplePreferenceState();
             this.readWindowDetails();
@@ -885,6 +902,31 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 combo.setAttribute("name", cbls.getKey());
                 combo.setAttribute("lastSelected", cbls.getValue());
                 return combo;
+            }).forEach(element::addContent);
+            this.saveElement(element);
+            this.resetChangeMade();
+        }
+    }
+
+    private void readCheckBoxLastSelections() {
+        Element element = this.readElement(CHECKBOX_ELEMENT, CHECKBOX_NAMESPACE);
+        if (element != null) {
+            element.getChildren("checkBox").stream().forEach(checkbox ->
+                checkBoxLastSelection.put(checkbox.getAttributeValue("name"), "yes".equals(checkbox.getAttributeValue("lastChecked"))));
+        }
+    }
+
+    private void saveCheckBoxLastSelections() {
+        this.setChangeMade(false);
+        if (this.allowSave && !checkBoxLastSelection.isEmpty()) {
+            Element element = new Element(CHECKBOX_ELEMENT, CHECKBOX_NAMESPACE);
+            // Do not store blank last entered/selected values
+            checkBoxLastSelection.entrySet().stream().
+                    filter(cbls -> (cbls.getValue() != null)).map(cbls -> {
+                Element checkbox = new Element("checkBox");
+                checkbox.setAttribute("name", cbls.getKey());
+                checkbox.setAttribute("lastChecked", cbls.getValue() ? "yes" : "no");
+                return checkbox;
             }).forEach(element::addContent);
             this.saveElement(element);
             this.resetChangeMade();
@@ -1019,6 +1061,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         if (this.allowSave) {
             if (!windowDetails.isEmpty()) {
                 Element element = new Element(WINDOWS_ELEMENT, WINDOWS_NAMESPACE);
+                // Copy the entries before iterate over them since
+                // ConcurrentModificationException may happen otherwise
                 for (Entry<String, WindowLocations> entry : windowDetails.entrySet()) {
                     Element window = new Element("window");
                     window.setAttribute(CLASS, entry.getKey());
@@ -1090,6 +1134,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     private void savePreferences() {
         this.saveComboBoxLastSelections();
+        this.saveCheckBoxLastSelections();
         this.savePreferencesState();
         this.saveSimplePreferenceState();
         this.saveWindowDetails();

@@ -17,7 +17,7 @@ import jmri.NamedBean.DisplayOptions;
 import jmri.util.JmriJFrame;
 
 /**
- * 
+ *
  * <p>
  * Compare with the other Conditional Edit tool {@link ConditionalTreeEdit}
  * and {@link ConditionalListEdit}
@@ -51,7 +51,7 @@ public class ConditionalListCopy extends ConditionalList {
 
 
     void makeEditLogixWindow() {
-        _editLogixFrame = new JmriJFrame(Bundle.getMessage("TitleCopyFromLogix", 
+        _editLogixFrame = new JmriJFrame(Bundle.getMessage("TitleCopyFromLogix",
                 _curLogix.getDisplayName(DisplayOptions.QUOTED_USERNAME_SYSTEMNAME)));  // NOI18N
         _editLogixFrame.addHelpMenu(
                 "package.jmri.jmrit.conditional.ConditionalCopy", true);  // NOI18N
@@ -71,7 +71,7 @@ public class ConditionalListCopy extends ConditionalList {
         _conditionalList.setCellRenderer(new ConditionalCellRenderer());
         _conditionalList.setVisibleRowCount(6);
         _conditionalList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        listPanel.add(new JScrollPane(_conditionalList));   
+        listPanel.add(new JScrollPane(_conditionalList));
         Border listPanelBorder = BorderFactory.createEtchedBorder();
         Border listPanelTitled = BorderFactory.createTitledBorder(
                 listPanelBorder, Bundle.getMessage("TitleConditionalList"));  // NOI18N
@@ -82,7 +82,7 @@ public class ConditionalListCopy extends ConditionalList {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         ButtonGroup bGroup = new ButtonGroup();
-        _fullEditButton = new JRadioButton(Bundle.getMessage("fullEditButton"));  // NOI18N 
+        _fullEditButton = new JRadioButton(Bundle.getMessage("fullEditButton"));  // NOI18N
         _fullEditButton.setToolTipText(Bundle.getMessage("HintFullEditButton"));  // NOI18N
         bGroup.add(_fullEditButton);
         panel.add(_fullEditButton);
@@ -95,7 +95,7 @@ public class ConditionalListCopy extends ConditionalList {
         p.add(panel);
         p.add(Box.createVerticalStrut(10));
         contentPane.add(p);
-       
+
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
@@ -109,7 +109,7 @@ public class ConditionalListCopy extends ConditionalList {
             }
         });
         panel.add(Box.createHorizontalStrut(10));
-        
+
         JButton exitButton = new JButton(Bundle.getMessage("ButtonDone"));  // NOI18N
         exitButton.setToolTipText(Bundle.getMessage("HintExitButton"));  // NOI18N
         panel.add(exitButton);
@@ -134,7 +134,7 @@ public class ConditionalListCopy extends ConditionalList {
         });
         _editLogixFrame.pack();
         _editLogixFrame.setVisible(true);
-        
+
     }
 
     void editButtonPressed() {
@@ -146,7 +146,7 @@ public class ConditionalListCopy extends ConditionalList {
                     JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        // make copy 
+        // make copy
         _curConditional = makeNewConditional(_targetLogix);
         _curConditional.setStateVariables(conditional.getCopyOfStateVariables());
         _curConditional.setAction(conditional.getCopyOfActions());
@@ -170,7 +170,7 @@ public class ConditionalListCopy extends ConditionalList {
         _targetLogix.deActivateLogix();
 
         _conditionalFrame = new ConditionalEditFrame(
-                Bundle.getMessage("TitleCopyConditional", 
+                Bundle.getMessage("TitleCopyConditional",
                         srcCond.getDisplayName(DisplayOptions.QUOTED_USERNAME_SYSTEMNAME)),
                 _curConditional, this);  // NOI18N
 
@@ -182,13 +182,13 @@ public class ConditionalListCopy extends ConditionalList {
     /**
      * Make the bottom panel for _conditionalFrame to hold buttons for
      * Update/Save, Cancel, Delete/FullEdit
-     * 
+     *
      * @return the panel
      */
     @Override
     JPanel makeBottomPanel() {
         JPanel panel = new JPanel();
-        
+
         JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));  // NOI18N
         panel.add(saveButton);
         saveButton.addActionListener(new ActionListener() {
@@ -216,7 +216,12 @@ public class ConditionalListCopy extends ConditionalList {
     boolean updateConditional(String uName, Conditional.AntecedentOperator logicType, boolean trigger, String antecedent) {
         return super.updateConditional(uName, _targetLogix, logicType, trigger, antecedent);
     }
-    
+
+    @Override
+    void updateConditionalTableModel() {
+        log.debug("updateConditionalTableModel :: not needed for copy process");
+    }
+
     @Override
     void closeConditionalFrame() {
         super.closeConditionalFrame(_targetLogix);
@@ -232,7 +237,7 @@ public class ConditionalListCopy extends ConditionalList {
         _targetLogix.deActivateLogix();
 
         _conditionalFrame = new ConditionalCopyFrame(
-                Bundle.getMessage("TitleCopyConditional", 
+                Bundle.getMessage("TitleCopyConditional",
                         srcCond.getDisplayName(DisplayOptions.QUOTED_USERNAME_SYSTEMNAME)),
                 _curConditional, this);  // NOI18N
 
@@ -312,4 +317,4 @@ public class ConditionalListCopy extends ConditionalList {
     private final static Logger log = LoggerFactory.getLogger(ConditionalListCopy.class);
 
 }
-    
+

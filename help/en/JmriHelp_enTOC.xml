@@ -23,7 +23,7 @@
 
   <tocitem text="USB input " target="package.jmri.jmrix.jinput.treemodel.TreeFrame"/>
 
-  <tocitem text="Error Codes " target="html.setup.Errors"/>
+  <tocitem text="Error Codes " target="html.apps.Errors"/>
 
   <tocitem text="InstallTest (Windows) " target="package.apps.InstallTest.InstallTest"/>
 
@@ -38,6 +38,8 @@
   <tocitem text="Bachrus Speedo " target="package.jmri.jmrix.bachrus.SpeedoConsoleFrame"/>
 
   <tocitem text="CAN Bus Overview " target="html.hardware.can.index"/>
+
+  <tocitem text="CBUS " target="html.hardware.can.cbus.index"/>
 
   <tocitem text="C/MRI " target="html.hardware.cmri.CMRI"/>
 
@@ -77,7 +79,7 @@
 
   <tocitem text="Marklin " target="html.hardware.marklin.index"/>
 
-  <tocitem text="MERG CBUS " target="html.hardware.can.cbus.index"/>
+  <tocitem text="MERG " target="html.hardware.merg.index"/>
 
   <tocitem text="Modbus " target="html.hardware.modbus.index"/>
 
@@ -114,6 +116,8 @@
   <tocitem text="TracTronix SECSI " target="html.hardware.secsi.index"/>
 
   <tocitem text="SPROG " target="html.hardware.sprog.SPROG"/>
+
+  <tocitem text="SPROG Generation 5 " target="html.hardware.sproggen5.index"/>
 
   <tocitem text="SRCP " target="html.hardware.qsi.index"/>
 
@@ -219,11 +223,9 @@
    <tocitem text="New Train " target="package.jmri.jmrit.dispatcher.NewTrain"/>
 
   </tocitem>
-  <tocitem text="Dispatcher System (Python Extension) " target="html.apps.DispatcherSystem.DispatcherSystem"/>
+  <tocitem text="OperationsPro " target="html.apps.OperationsPro.index">
+   <tocitem text="OperationsPro Information " target="package.jmri.jmrit.operations.Operations"/>
 
-  <tocitem text="Manifest Creator " target="html.apps.ManifestCreator.index"/>
-
-  <tocitem text="OperationsPro " target="package.jmri.jmrit.operations.Operations">
    <tocitem text="Settings " target="package.jmri.jmrit.operations.Operations_Settings"/>
 
    <tocitem text="Locations " target="package.jmri.jmrit.operations.Operations_Locations">
@@ -267,8 +269,16 @@
    <tocitem text="Intro " target="html.apps.SoundPro.SoundPro"/>
 
   </tocitem>
-  <tocitem text="Additional Applications with connections to JMRI " target="html.apps.index_addapp"/>
+  <tocitem text="Additional Applications with connections to JMRI " target="html.apps.index_addapp">
+   <tocitem text="Manifest Creator " target="html.apps.ManifestCreator.index"/>
 
+  </tocitem>
+  <tocitem text="Jython Apps for JMRI " target="html.tools.scripting.JythonApps">
+   <tocitem text="YAAT - YetAnotherAutoTrain " target="html.scripthelp.yaat.YAAT"/>
+
+   <tocitem text="Dispatcher System (Python Extension) " target="html.scripthelp.DispatcherSystem.DispatcherSystem"/>
+
+  </tocitem>
  </tocitem>
  <tocitem text="Panels " target="html.apps.PanelPro.index">
   <tocitem text="Panel Editor " target="package.jmri.jmrit.display.PanelEditor"/>
@@ -297,6 +307,8 @@
 
   <tocitem text="Block Table " target="package.jmri.jmrit.beantable.BlockTable"/>
 
+  <tocitem text="OBlock Tables (tabbed) " target="package.jmri.jmrit.beantable.OBlockTable"/>
+
   <tocitem text="O(ccupancy)Block Table " target="package.jmri.jmrit.logix.OBlockTable"/>
 
   <tocitem text="Route Table " target="package.jmri.jmrit.beantable.RouteTable"/>
@@ -308,6 +320,8 @@
   <tocitem text="Memory Variable Table " target="package.jmri.jmrit.beantable.MemoryTable"/>
 
   <tocitem text="Reporter Table " target="package.jmri.jmrit.beantable.ReporterTable"/>
+
+  <tocitem text="RailCom Table " target="package.jmri.jmrit.beantable.RailComTable"/>
 
  </tocitem>
  <tocitem text="Tools " target="html.tools.index">
@@ -456,6 +470,8 @@
 
    <tocitem text="Jynstruments " target="html.tools.scripting.Jynstruments"/>
 
+   <tocitem text="Jython Apps for JMRI " target="html.tools.scripting.JythonApps"/>
+
    <tocitem text="Open Scripting Arch (Apple) " target="html.tools.scripting.AppleScript"/>
 
   </tocitem>
@@ -509,6 +525,8 @@
    <tocitem text="Simple Signal Logic " target="package.jmri.jmrit.blockboss.BlockBossFrame"/>
 
   </tocitem>
+  <tocitem text="Cab Signaling " target="package.jmri.jmrit.cabsignals.CabSignalPane"/>
+
   <tocitem text="Speedometer " target="html.tools.speedometer.index"/>
 
   <tocitem text="Throttles " target="html.tools.throttle.ThrottleMain">
@@ -616,6 +634,8 @@
 
    <tocitem text="Firmware Downloader Tool " target="package.jmri.jmrix.loconet.downloader.LoaderFrame"/>
 
+   <tocitem text="LNCV Programmer " target="package.jmri.jmrix.loconet.swing.lncvprog.LncvProgPane"/>
+
    <tocitem text="LocoIO Configuration Tool " target="package.jmri.jmrix.loconet.locoio.LocoIOFrame"/>
 
    <tocitem text="LocoNet Addresses " target="html.hardware.loconet.Addressing"/>
@@ -679,25 +699,27 @@
    <tocitem text="Send Packet " target="package.jmri.jmrix.marklin.swing.packetgen.PacketGenFrame"/>
 
   </tocitem>
-  <tocitem text="MERG (CBUS) " target="html.hardware.can.cbus.index">
-   <tocitem text="Console Tool " target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame"/>
+  <tocitem text="MERG " target="html.hardware.merg.index">
+   <tocitem text="CBUS Tools ">
+    <tocitem text="Command Station Monitor " target="package.jmri.jmrix.can.cbus.swing.cbusslotmonitor.CbusSlotMonitorPane"/>
 
-   <tocitem text="Send Frame / Event Tool " target="package.jmri.jmrix.can.swing.send.CanSendFrame"/>
+    <tocitem text="Console Tool " target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame"/>
 
-   <tocitem text="Event Capture Tool " target="package.jmri.jmrix.can.cbus.swing.configtool.ConfigToolFrame"/>
+    <tocitem text="Event Capture Tool " target="package.jmri.jmrix.can.cbus.swing.configtool.ConfigToolFrame"/>
 
-   <tocitem text="Event Table Tool " target="package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane"/>
+    <tocitem text="Event Table Tool " target="package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane"/>
 
-   <tocitem text="Node Config Tool " target="package.jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane"/>
+    <tocitem text="Firmware Update " target="package.jmri.jmrix.can.cbus.swing.bootloader.CbusBootloaderPane"/>
 
-   <tocitem text="Naming Events " target="html.hardware.can.cbus.Names"/>
+    <tocitem text="Node Config Tool " target="package.jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane"/>
 
-   <tocitem text="Connection Details " target="html.hardware.can.cbus.Details"/>
+    <tocitem text="Send Frame / Event Tool " target="package.jmri.jmrix.can.swing.send.CanSendFrame"/>
 
-   <tocitem text="CAN Networks " target="html.hardware.can.index"/>
+    <tocitem text="Simulator " target="package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane"/>
 
-   <tocitem text="Simulator " target="package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane"/>
+    <tocitem text="Voltage / Current Meter " target="html.hardware.can.cbus.CbusMeters"/>
 
+   </tocitem>
   </tocitem>
   <tocitem text="MRC " target="html.hardware.mrc.index">
    <tocitem text="MRC Traffic Monitor " target="package.jmri.jmrix.mrc.swing.monitor.MrcMonPanel"/>
@@ -730,9 +752,11 @@
 
    <tocitem text="Configure Nodes " target="package.jmri.jmrix.openlcb.swing.networktree.NetworkTreePane"/>
 
+   <tocitem text="Send OpenLCB Frame " target="package.jmri.jmrix.openlcb.swing.send.OpenLcbCanSendFrame"/>
+
   </tocitem>
   <tocitem text="Powerline " target="html.hardware.powerline.index">
-   <tocitem text="Send Packet " target="package.jmri.jmrix.powerline.packetgen.PowerlinePacketGenFrame"/>
+   <tocitem text="Send Packet " target="package.jmri.jmrix.powerline.packetgen.PowerlinePacketGenPane"/>
 
    <tocitem text="Traffic Monitor " target="package.jmri.jmrix.powerline.serialmon.SerialMonFrame"/>
 
@@ -764,16 +788,44 @@
 
   </tocitem>
   <tocitem text="SPROG " target="html.hardware.sprog.SPROG_tools">
-   <tocitem text="SPROG Update " target="package.jmri.jmrix.sprog.update.SprogVersionFrame"/>
+   <tocitem text="Console " target="package.jmri.jmrix.sprog.console.SprogConsoleFrame"/>
 
    <tocitem text="Send Packet " target="package.jmri.jmrix.sprog.packetgen.SprogPacketGenFrame"/>
 
-   <tocitem text="Traffic Monitor " target="package.jmri.jmrix.sprog.sprogmon.SprogMonFrame"/>
-
    <tocitem text="Slot Monitor " target="package.jmri.jmrix.sprog.sprogslotmon.SprogSlotMonFrame"/>
 
-   <tocitem text="Console " target="package.jmri.jmrix.sprog.console.SprogConsoleFrame"/>
+   <tocitem text="SPROG Version " target="package.jmri.jmrix.sprog.update.SprogVersionFrame"/>
 
+   <tocitem text="Update SPROG II " target="package.jmri.jmrix.sprog.update.SprogIIUpdateFrame"/>
+
+  </tocitem>
+  <tocitem text="SPROG Generation 5 ">
+   <tocitem text="SPROG Generation 5 Tools ">
+    <tocitem text="Pi-SPROG 3 Mode Switcher " target="package.jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSimpleModeSwitcherFrame"/>
+
+    <tocitem text="Pi-SPROG/SPROG 3 Plus Mode Switcher " target="package.jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSprog3PlusModeSwitcherFrame"/>
+
+   </tocitem>
+   <tocitem text="CBUS Tools ">
+    <tocitem text="Console Tool " target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame"/>
+
+    <tocitem text="Send Frame / Event Tool " target="package.jmri.jmrix.can.swing.send.CanSendFrame"/>
+
+    <tocitem text="Event Capture Tool " target="package.jmri.jmrix.can.cbus.swing.configtool.ConfigToolFrame"/>
+
+    <tocitem text="Event Table Tool " target="package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane"/>
+
+    <tocitem text="Node Config Tool " target="package.jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane"/>
+
+    <tocitem text="Command Station Monitor " target="package.jmri.jmrix.can.cbus.swing.cbusslotmonitor.CbusSlotMonitorPane"/>
+
+    <tocitem text="Simulator " target="package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane"/>
+
+    <tocitem text="Firmware Update " target="package.jmri.jmrix.can.cbus.swing.bootloader.CbusBootloaderPane"/>
+
+    <tocitem text="Voltage / Current Meter " target="html.hardware.can.cbus.CbusMeters"/>
+
+   </tocitem>
   </tocitem>
   <tocitem text="TAMs " target="html.hardware.tams.index">
    <tocitem text="Loco Database " target="package.jmri.jmrix.tams.swing.locodatabase.LocoDataFrame"/>

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 
 /**
@@ -657,6 +658,17 @@ public interface SignalMastLogic extends NamedBean {
      *         Editor.
      */
     public boolean useLayoutEditorTurnouts(SignalMast destination);
+
+    /**
+     * Set direction sensors in SML need to autoActiveTrains.
+     * @return number of errors
+     */
+    public int setupDirectionSensors();
+
+    /**
+     * remove direction sensors from SML need to autoActiveTrains.
+     */
+    public void removeDirectionSensors();
 
     public void disableLayoutEditorUse();
 

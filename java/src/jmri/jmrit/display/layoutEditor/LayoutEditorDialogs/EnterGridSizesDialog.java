@@ -1,12 +1,12 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.text.MessageFormat;
+
 import javax.annotation.Nonnull;
 import javax.swing.*;
+
 import jmri.InvokeOnGuiThread;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JmriJFrame;

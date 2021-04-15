@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2014</year>
     <holder>JMRI</holder>
@@ -29,8 +29,26 @@
         <surname>Billon</surname>
       </personname>
     </author>
+    <author>
+      <personname>
+        <firstname>Wouter</firstname>
+        <surname>Kok</surname>
+      </personname>
+    </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>4</revnumber>
+      <date>2021-03-15</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Fixes for exclude conditions for SUSI sound modules new family</revremark>
+    </revision>
+    <revision>
+      <revnumber>3</revnumber>
+      <date>2020-12-12</date>
+      <authorinitials>WK</authorinitials>
+      <revremark>Excluded similar CV9xx for Sound Decoder 2020</revremark>
+    </revision>
     <revision>
       <revnumber>4</revnumber>
       <date>2020-05-02</date>
@@ -56,165 +74,165 @@
       <revremark>Creation</revremark>
     </revision>
    </revhistory>
-    <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->  
-	<variable label="Breaking noise speed step 1" CV="364" tooltip="CV364 (0-127)" default="6" item="Sound Option 13" exclude="SUSI sound modules">
-    	<decVal min="0" max="127"/>
-    	<label xml:lang="fr">Bruit freinage vitesse 1</label>
-    	<label xml:lang="de">Bremsenquietschen Endfahrstufe</label>
-  	</variable>
-    <variable label="Breaking noise speed step 1" CV="964" tooltip="CV964 (0-127)" default="6" item="Sound Option 13" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),SH10A_1.00">
-    	<decVal min="0" max="127"/>
-    	<label xml:lang="fr">Bruit freinage vitesse 1</label>
-    	<label xml:lang="de">Bremsenquietschen Endfahrstufe</label>
-    	<label xml:lang="ca">Soroll frenada a velocitat 1</label>
-  	</variable>
-	<!-- END SIMILAR CV --> 
-	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->  
-	<variable label="Breaking noise delay" CV="365" tooltip="CV365 (0-255)" default="3" item="Sound Option 14" exclude="SUSI sound modules">
-    	<decVal min="0" max="255"/>
-    	<label xml:lang="fr">Bruit freinage (délai)</label>
-    	<label xml:lang="de">Bremsenquietschen Verzögerungszeit</label>
-    	<label xml:lang="ca">Soroll frenada (retard)</label>
-  	</variable>
-	<variable label="Breaking noise delay" CV="965" tooltip="CV965 (0-255)" default="3" item="Sound Option 14" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),SH10A_1.00">
-    	<decVal min="0" max="255"/>
-    	<label xml:lang="fr">Bruit freinage (délai)</label>
-    	<label xml:lang="de">Bremsenquietschen Verzögerungszeit</label>
-		<label xml:lang="ca">Soroll frenada (retard)</label>
-  	</variable>
-	<!-- END SIMILAR CV --> 
-	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->  
-  	<variable label="Required speedsteps before braking sound" CV="366" tooltip="CV366" default="0" item="Sound Option 15" exclude="SUSI sound modules,SD18A_1.00,SD18A_1.01,SD21A_1.01">
-		<decVal min="0" max="127"/>
-    	<label>Required speedsteps before braking sound</label>
-    	<label xml:lang="fr">Pas de vitesse nécessaires avant son de freinage</label>
-    	<label xml:lang="de">Bremsenquietschen Mindestverzögerung</label>
-  	</variable>
-	<variable label="Required speedsteps before braking sound" CV="966" tooltip="CV966" default="0" item="Sound Option 15" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),SH10A_1.00,SH10A_1.01,SH10A_1.02,SH10A_1.03">
-		<decVal min="0" max="127"/>
-    	<label>Required speedsteps before braking sound</label>
-    	<label xml:lang="fr">Pas de vitesse nécessaires avant son de freinage</label>
-    	<label xml:lang="de">Bremsenquietschen Mindestverzögerung</label>
-  	</variable>
-	<!-- END SIMILAR CV --> 
-	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->  
-  	<variable label="Random stillstand sounds" CV="367" tooltip="CV367 bit 0" mask="XXXXXXXV" default="1" item="Sound Group 1 Option 8" exclude="SUSI sound modules">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
-		<label xml:lang="fr">Sons aléatoire à l'arrêt</label>
-		<label xml:lang="de">Zufallsgeräusche im Stand</label>
-		<label xml:lang="ca">Sons aleatoris en parada</label>
-  	</variable>
-	<variable label="Random stillstand sounds" CV="967" tooltip="CV967 bit 0" mask="XXXXXXXV" default="1" item="Sound Group 1 Option 8" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),SH10A_1.00,SH10A_1.01">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
-		<label xml:lang="fr">Sons aléatoire à l'arrêt</label>
-		<label xml:lang="de">Zufallsgeräusche im Stand</label>
-		<label xml:lang="ca">Sons aleatoris en parada</label>
-  	</variable>
-	<!-- END SIMILAR CV --> 
-	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->  
-  	<variable label="Random running sound" CV="367" tooltip="CV367 bit 1" mask="XXXXXXVX" default="1" item="Sound Group 1 Option 9" exclude="SUSI sound modules">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
-		<label xml:lang="fr">Sons aléatoire en marche</label>
-		<label xml:lang="de">Zufallsgeräusche während der Fahrt</label>
-		<label xml:lang="ca">Sons aleatoris en marxa</label>
-  	</variable>
-	<variable label="Random running sound" CV="967" tooltip="CV967 bit 1" mask="XXXXXXVX" default="1" item="Sound Group 1 Option 9" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),SH10A_1.00,SH10A_1.01">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
-		<label xml:lang="fr">Sons aléatoire en marche</label>
-		<label xml:lang="de">Zufallsgeräusche während der Fahrt</label>
-		<label xml:lang="ca">Sons aleatoris en marxa</label>
-  	</variable>
-	<!-- END SIMILAR CV --> 
-	<!-- Added - Fw 1.04+ for Sound decoders only (irrelevant for SUSI modules)-->
-	<variable item="Forward random sounds to SUSI" CV="367" tooltip="CV367 bit 2" mask="XXXXXVXX" default="0" exclude="SUSI sound modules,SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-		<label xml:lang="fr">Passer les sons aléatoires à SUSI</label>
-		<label xml:lang="de">Zufallsgeräusche an SUSI weiterleiten</label>
-		<label xml:lang="ca">Passar sons aleatoris a Susi</label>
-  	</variable>
-	<!-- End Added - Fw 1.04+ -->
-	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->  
-	<variable label="Volume dynamic sounds" CV="368" default="128" tooltip="CV368" item="Sound Setting 31" exclude="SUSI sound modules,SD18A_1.00">
-		<decVal/>
-		<label xml:lang="fr">Volume sons dynamiques</label>
-		<label xml:lang="de">Lautstärke Dynamikgeräusche</label>
-		<label xml:lang="ca">Volum sons dinàmics</label>
-	</variable>
-	<variable label="Volume dynamic sounds" CV="968" default="128" tooltip="CV968" item="Sound Setting 31" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),SH10A_1.00,SH10A_1.01,SH10A_1.02">
-		<decVal/>
-		<label xml:lang="fr">Volume sons dynamiques</label>
-		<label xml:lang="de">Lautstärke Dynamikgeräusche</label>
-		<label xml:lang="ca">Volum sons dinàmics</label>
-	</variable>
-	<!-- END SIMILAR CV --> 
-	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->  
-	<variable label="Volume turbo sounds" CV="369" default="128" tooltip="CV369" item="Sound Setting 32" exclude="SUSI sound modules,SD18A_1.00">
-		<decVal/>
-		<label xml:lang="fr">Volume sons turbo</label>
-		<label xml:lang="de">Lautstärke Turbogeräusche</label>
-		<label xml:lang="ca">Volum sons turbo</label>
-	</variable>
-	<variable label="Volume turbo sounds" CV="969" default="128" tooltip="CV969" item="Sound Setting 32" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),SH10A_1.00,SH10A_1.01,SH10A_1.02">
-		<decVal/>
-		<label xml:lang="fr">Volume sons turbo</label>
-		<label xml:lang="de">Lautstärke Turbogeräusche</label>
-		<label xml:lang="ca">Volum sons turbo</label>
-	</variable>
-	<!-- END SIMILAR CV --> 
-	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->  
-	<variable label="Modulation dynamic braking" CV="370" default="0" tooltip="CV370" item="Sound Setting 33" exclude="SUSI sound modules,SD18A_1.00">
-		<decVal/>
-		<label xml:lang="fr">Modulation freinage dynamique</label>
-		<label xml:lang="de">Modulation dynamische Bremse</label>
-		<label xml:lang="ca">Modul·lació del frè dinàmic</label>
-	</variable>
-	<variable label="Modulation dynamic braking" CV="970" default="0" tooltip="CV970" item="Sound Setting 33" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),SH10A_1.00,SH10A_1.01,SH10A_1.02">
-		<decVal/>
-		<label xml:lang="fr">Modulation freinage dynamique</label>
-		<label xml:lang="de">Modulation dynamische Bremse</label>
-		<label xml:lang="ca">Modul·lació del frè dinàmic</label>
-	</variable>
-	<!-- END SIMILAR CV --> 
-	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->  
-	<variable label="Modulation dynamic run" CV="371" default="0" tooltip="CV371" item="Sound Setting 34" exclude="SUSI sound modules,SD18A_1.00,SD18A_1.01,SD21A_1.01">
-		<decVal/>
-		<label xml:lang="fr">Modulation marche dynamique</label>
-		<label xml:lang="de">Modulation dynamische Fahrt</label>
-		<label xml:lang="ca">Modul·lació marxa dinàmica</label>
-	</variable>
-	<variable label="Modulation dynamic run" CV="971" default="0" tooltip="CV971" item="Sound Setting 34" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),SH10A_1.00,SH10A_1.01,SH10A_1.02">
-		<decVal/>
-		<label xml:lang="fr">Modulation marche dynamique</label>
-		<label xml:lang="de">Modulation dynamische Fahrt</label>
-		<label xml:lang="ca">Modul·lació marxa dinàmica</label>
-	</variable>
-	<!-- END SIMILAR CV --> 
-	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->  
-	<variable label="Modulation turbo (proportional)" CV="372" default="0" tooltip="CV372" item="Sound Setting 35" exclude="SUSI sound modules,SD18A_1.00,SD18A_1.01,SD21A_1.01">
-		<decVal/>
-		<label xml:lang="fr">Modulation sons turbo (proportionnel)</label>
-		<label xml:lang="de">Modulation Turbogeräusche Proportionalteil</label>
-		<label xml:lang="ca">Modul·lació so turbo (proporcional)</label>
-	</variable>
-	<variable label="Modulation turbo (proportional)" CV="972" default="0" tooltip="CV972" item="Sound Setting 35" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),SH10A_1.00,SH10A_1.01,SH10A_1.02">
-		<decVal/>
-		<label xml:lang="fr">Modulation sons turbo (proportionnel)</label>
-		<label xml:lang="de">Modulation Turbogeräusche Proportionalteil</label>
-		<label xml:lang="ca">Modul·lació so turbo (proporcional)</label>
-	</variable>
-	<!-- END SIMILAR CV --> 
-	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->  
-	<variable label="Modulation turbo (integral)" CV="373" default="0" tooltip="CV373" item="Sound Setting 36" exclude="SUSI sound modules,SD18A_1.00,SD18A_1.01,SD21A_1.01">
-		<decVal/>
-		<label xml:lang="fr">Modulation sons turbo (intégral)</label>
-		<label xml:lang="de">Modulation Turbogeräusche Integralteil</label>
-		<label xml:lang="ca">Modul·lació so turbo (integral)</label>
-	</variable>
-	<variable label="Modulation turbo (integral)" CV="973" default="0" tooltip="CV973" item="Sound Setting 36" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),SH10A_1.00,SH10A_1.01,SH10A_1.02">
-		<decVal/>
-		<label xml:lang="fr">Modulation sons turbo (intégral)</label>
-		<label xml:lang="de">Modulation Turbogeräusche Integralteil</label>
-		<label xml:lang="ca">Modul·lació so turbo (proporcional)</label>
-	</variable>
-	<!-- END SIMILAR CV --> 
+    <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
+  <variable label="Breaking noise speed step 1" CV="364" tooltip="CV364 (0-127)" default="6" item="Sound Option 13" exclude="SUSI sound modules,SUSI sound modules (2020)">
+      <decVal min="0" max="127"/>
+      <label xml:lang="fr">Bruit freinage vitesse 1</label>
+      <label xml:lang="de">Bremsenquietschen Endfahrstufe</label>
+    </variable>
+    <variable label="Breaking noise speed step 1" CV="964" tooltip="CV964 (0-127)" default="6" item="Sound Option 13" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020),SH10A_1.00">
+      <decVal min="0" max="127"/>
+      <label xml:lang="fr">Bruit freinage vitesse 1</label>
+      <label xml:lang="de">Bremsenquietschen Endfahrstufe</label>
+      <label xml:lang="ca">Soroll frenada a velocitat 1</label>
+    </variable>
+  <!-- END SIMILAR CV -->
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
+  <variable label="Breaking noise delay" CV="365" tooltip="CV365 (0-255)" default="3" item="Sound Option 14" exclude="SUSI sound modules,SUSI sound modules (2020)">
+      <decVal min="0" max="255"/>
+      <label xml:lang="fr">Bruit freinage (délai)</label>
+      <label xml:lang="de">Bremsenquietschen Verzögerungszeit</label>
+      <label xml:lang="ca">Soroll frenada (retard)</label>
+    </variable>
+  <variable label="Breaking noise delay" CV="965" tooltip="CV965 (0-255)" default="3" item="Sound Option 14" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020),SH10A_1.00">
+      <decVal min="0" max="255"/>
+      <label xml:lang="fr">Bruit freinage (délai)</label>
+      <label xml:lang="de">Bremsenquietschen Verzögerungszeit</label>
+    <label xml:lang="ca">Soroll frenada (retard)</label>
+    </variable>
+  <!-- END SIMILAR CV -->
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
+    <variable label="Required speedsteps before braking sound" CV="366" tooltip="CV366" default="0" item="Sound Option 15" exclude="SUSI sound modules,SUSI sound modules (2020),SD18A_1.00,SD18A_1.01,SD21A_1.01">
+    <decVal min="0" max="127"/>
+      <label>Required speedsteps before braking sound</label>
+      <label xml:lang="fr">Pas de vitesse nécessaires avant son de freinage</label>
+      <label xml:lang="de">Bremsenquietschen Mindestverzögerung</label>
+    </variable>
+  <variable label="Required speedsteps before braking sound" CV="966" tooltip="CV966" default="0" item="Sound Option 15" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020),SH10A_1.00,SH10A_1.01,SH10A_1.02,SH10A_1.03">
+    <decVal min="0" max="127"/>
+      <label>Required speedsteps before braking sound</label>
+      <label xml:lang="fr">Pas de vitesse nécessaires avant son de freinage</label>
+      <label xml:lang="de">Bremsenquietschen Mindestverzögerung</label>
+    </variable>
+  <!-- END SIMILAR CV -->
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
+    <variable label="Random stillstand sounds" CV="367" tooltip="CV367 bit 0" mask="XXXXXXXV" default="1" item="Sound Group 1 Option 8" exclude="SUSI sound modules,SUSI sound modules (2020)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+    <label xml:lang="fr">Sons aléatoire à l'arrêt</label>
+    <label xml:lang="de">Zufallsgeräusche im Stand</label>
+    <label xml:lang="ca">Sons aleatoris en parada</label>
+    </variable>
+  <variable label="Random stillstand sounds" CV="967" tooltip="CV967 bit 0" mask="XXXXXXXV" default="1" item="Sound Group 1 Option 8" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020),SH10A_1.00,SH10A_1.01">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+    <label xml:lang="fr">Sons aléatoire à l'arrêt</label>
+    <label xml:lang="de">Zufallsgeräusche im Stand</label>
+    <label xml:lang="ca">Sons aleatoris en parada</label>
+    </variable>
+  <!-- END SIMILAR CV -->
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
+    <variable label="Random running sound" CV="367" tooltip="CV367 bit 1" mask="XXXXXXVX" default="1" item="Sound Group 1 Option 9" exclude="SUSI sound modules,SUSI sound modules (2020)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+    <label xml:lang="fr">Sons aléatoire en marche</label>
+    <label xml:lang="de">Zufallsgeräusche während der Fahrt</label>
+    <label xml:lang="ca">Sons aleatoris en marxa</label>
+    </variable>
+  <variable label="Random running sound" CV="967" tooltip="CV967 bit 1" mask="XXXXXXVX" default="1" item="Sound Group 1 Option 9" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020),SH10A_1.00,SH10A_1.01">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+    <label xml:lang="fr">Sons aléatoire en marche</label>
+    <label xml:lang="de">Zufallsgeräusche während der Fahrt</label>
+    <label xml:lang="ca">Sons aleatoris en marxa</label>
+    </variable>
+  <!-- END SIMILAR CV -->
+  <!-- Added - Fw 1.04+ for Sound decoders only (irrelevant for SUSI modules)-->
+  <variable item="Forward random sounds to SUSI" CV="367" tooltip="CV367 bit 2" mask="XXXXXVXX" default="0" exclude="SUSI sound modules,SUSI sound modules (2020),SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label xml:lang="fr">Passer les sons aléatoires à SUSI</label>
+    <label xml:lang="de">Zufallsgeräusche an SUSI weiterleiten</label>
+    <label xml:lang="ca">Passar sons aleatoris a Susi</label>
+    </variable>
+  <!-- End Added - Fw 1.04+ -->
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
+  <variable label="Volume dynamic sounds" CV="368" default="128" tooltip="CV368" item="Sound Setting 31" exclude="SUSI sound modules,SUSI sound modules (2020),SD18A_1.00">
+    <decVal/>
+    <label xml:lang="fr">Volume sons dynamiques</label>
+    <label xml:lang="de">Lautstärke Dynamikgeräusche</label>
+    <label xml:lang="ca">Volum sons dinàmics</label>
+  </variable>
+  <variable label="Volume dynamic sounds" CV="968" default="128" tooltip="CV968" item="Sound Setting 31" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020),SH10A_1.00,SH10A_1.01,SH10A_1.02">
+    <decVal/>
+    <label xml:lang="fr">Volume sons dynamiques</label>
+    <label xml:lang="de">Lautstärke Dynamikgeräusche</label>
+    <label xml:lang="ca">Volum sons dinàmics</label>
+  </variable>
+  <!-- END SIMILAR CV -->
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
+  <variable label="Volume turbo sounds" CV="369" default="128" tooltip="CV369" item="Sound Setting 32" exclude="SUSI sound modules,SUSI sound modules (2020),SD18A_1.00">
+    <decVal/>
+    <label xml:lang="fr">Volume sons turbo</label>
+    <label xml:lang="de">Lautstärke Turbogeräusche</label>
+    <label xml:lang="ca">Volum sons turbo</label>
+  </variable>
+  <variable label="Volume turbo sounds" CV="969" default="128" tooltip="CV969" item="Sound Setting 32" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020),SH10A_1.00,SH10A_1.01,SH10A_1.02">
+    <decVal/>
+    <label xml:lang="fr">Volume sons turbo</label>
+    <label xml:lang="de">Lautstärke Turbogeräusche</label>
+    <label xml:lang="ca">Volum sons turbo</label>
+  </variable>
+  <!-- END SIMILAR CV -->
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
+  <variable label="Modulation dynamic braking" CV="370" default="0" tooltip="CV370" item="Sound Setting 33" exclude="SUSI sound modules,SUSI sound modules (2020),SD18A_1.00">
+    <decVal/>
+    <label xml:lang="fr">Modulation freinage dynamique</label>
+    <label xml:lang="de">Modulation dynamische Bremse</label>
+    <label xml:lang="ca">Modul·lació del frè dinàmic</label>
+  </variable>
+  <variable label="Modulation dynamic braking" CV="970" default="0" tooltip="CV970" item="Sound Setting 33" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020),SH10A_1.00,SH10A_1.01,SH10A_1.02">
+    <decVal/>
+    <label xml:lang="fr">Modulation freinage dynamique</label>
+    <label xml:lang="de">Modulation dynamische Bremse</label>
+    <label xml:lang="ca">Modul·lació del frè dinàmic</label>
+  </variable>
+  <!-- END SIMILAR CV -->
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
+  <variable label="Modulation dynamic run" CV="371" default="0" tooltip="CV371" item="Sound Setting 34" exclude="SUSI sound modules,SUSI sound modules (2020),SD18A_1.00,SD18A_1.01,SD21A_1.01">
+    <decVal/>
+    <label xml:lang="fr">Modulation marche dynamique</label>
+    <label xml:lang="de">Modulation dynamische Fahrt</label>
+    <label xml:lang="ca">Modul·lació marxa dinàmica</label>
+  </variable>
+  <variable label="Modulation dynamic run" CV="971" default="0" tooltip="CV971" item="Sound Setting 34" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020),SH10A_1.00,SH10A_1.01,SH10A_1.02">
+    <decVal/>
+    <label xml:lang="fr">Modulation marche dynamique</label>
+    <label xml:lang="de">Modulation dynamische Fahrt</label>
+    <label xml:lang="ca">Modul·lació marxa dinàmica</label>
+  </variable>
+  <!-- END SIMILAR CV -->
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
+  <variable label="Modulation turbo (proportional)" CV="372" default="0" tooltip="CV372" item="Sound Setting 35" exclude="SUSI sound modules,SUSI sound modules (2020),SD18A_1.00,SD18A_1.01,SD21A_1.01">
+    <decVal/>
+    <label xml:lang="fr">Modulation sons turbo (proportionnel)</label>
+    <label xml:lang="de">Modulation Turbogeräusche Proportionalteil</label>
+    <label xml:lang="ca">Modul·lació so turbo (proporcional)</label>
+  </variable>
+  <variable label="Modulation turbo (proportional)" CV="972" default="0" tooltip="CV972" item="Sound Setting 35" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020),Sound Decoders (2020),SH10A_1.00,SH10A_1.01,SH10A_1.02">
+    <decVal/>
+    <label xml:lang="fr">Modulation sons turbo (proportionnel)</label>
+    <label xml:lang="de">Modulation Turbogeräusche Proportionalteil</label>
+    <label xml:lang="ca">Modul·lació so turbo (proporcional)</label>
+  </variable>
+  <!-- END SIMILAR CV -->
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
+  <variable label="Modulation turbo (integral)" CV="373" default="0" tooltip="CV373" item="Sound Setting 36" exclude="SUSI sound modules,SUSI sound modules (2020),SD18A_1.00,SD18A_1.01,SD21A_1.01">
+    <decVal/>
+    <label xml:lang="fr">Modulation sons turbo (intégral)</label>
+    <label xml:lang="de">Modulation Turbogeräusche Integralteil</label>
+    <label xml:lang="ca">Modul·lació so turbo (integral)</label>
+  </variable>
+  <variable label="Modulation turbo (integral)" CV="973" default="0" tooltip="CV973" item="Sound Setting 36" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020),Sound Decoders (2020),SH10A_1.00,SH10A_1.01,SH10A_1.02">
+    <decVal/>
+    <label xml:lang="fr">Modulation sons turbo (intégral)</label>
+    <label xml:lang="de">Modulation Turbogeräusche Integralteil</label>
+    <label xml:lang="ca">Modul·lació so turbo (proporcional)</label>
+  </variable>
+  <!-- END SIMILAR CV -->
 </variables>

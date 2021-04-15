@@ -5,18 +5,9 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <meta name="keywords" content="JMRI MERG CBUS help support event table tool">
-  <title>JMRI: MERG CBUS Event Table</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="JMRI CBUS help support event table tool">
+  <title>JMRI: CBUS&reg; Event Table</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -24,7 +15,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <h1>JMRI: MERG CBUS Event Table</h1>
+      <h1>JMRI: CBUS Event Table</h1>
       
         <ul class="snav">
         <li><a href="#stats">Columns</a></li>
@@ -33,9 +24,9 @@
         </ul>
       
       <img src="../../../../../../../html/hardware/can/cbus/images/swing/event-table/ev-table-630x210.png"
-      width="630" height="210" alt="MERG CBUS Event Table Screen" align="right">
+      width="630" height="210" alt="CBUS Event Table Screen" align="right">
 
-      <p>The MERG CBUS Event Table displays event information on your <a href=
+      <p>The CBUS Event Table displays event information on your <a href=
       "../../../../../../../html/hardware/can/cbus/index.shtml">CBUS</a>
       connection.</p>
       
@@ -66,7 +57,7 @@
       the right of the filter window default to an unknown status, and do not send an event message on creation.</p>
       
             <img src="../../../../../../../html/hardware/can/cbus/images/swing/event-table/merg-cbus-ev-table-filter-611x271.png"
-      width="611" height="271" alt="MERG CBUS Event Table Filter" align="right">
+      width="611" height="271" alt="CBUS Event Table Filter" align="right">
 
     <h2><a name="stats" id="stats">Columns</a></h2>
 
@@ -102,7 +93,7 @@
     <h3>Statistic Columns</h3>  
 
       <img src="../../../../../../../html/hardware/can/cbus/images/swing/event-table/merg-cbus-ev-table-stats-804x244.png"
-      width="802" height="244" alt="MERG CBUS Event Table Statistics" >
+      width="802" height="244" alt="CBUS Event Table Statistics" >
       
         <ul>
         <li>Last Heard : Time + datestamp of the last time the event was heard.</li>
@@ -134,7 +125,7 @@
         <br>( This will not work with addresses setup to listen to a range of events though these don't seem to common ).</p>
       
         <img src="../../../../../../../html/hardware/can/cbus/images/swing/event-table/event-table-jmri-links-1096x279.png"
-        width="1096" height="279" alt="MERG CBUS Event Table JMRI Links" >
+        width="1096" height="279" alt="CBUS Event Table JMRI Links" >
       
     
 
@@ -194,7 +185,7 @@
         </ul>
       
 
-      <h4>Variance to MERG CBUS Developers Guide 6b</h4>
+      <h4>Variance to CBUS Developers Guide 6b</h4>
         <p>In this data model, it is assumed that event and node combinations are the unique factor.</p>      
         <p>Any event OPCs sent with extra data bytes will be logged according to its core event and node combination, 
         irrelevant of extra data bytes.</p>
@@ -211,8 +202,12 @@
         on your layout.</p>
       
       
-      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI MERG CBUS Help page</a>.</p>
+      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Help page</a>.</p>
         
+        <h2></h2>
+        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
+        <p></p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

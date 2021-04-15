@@ -50,7 +50,7 @@ public class CtcManagerVetoTest {
         } catch (java.beans.PropertyVetoException ex) {
             msg = ex.getMessage();
         }
-        Assert.assertTrue(msg.equals("Sensor is in use by CTC"));
+        Assert.assertTrue(msg.contains("Sensor is in use by CTC"));
 
         SignalMastManager smm = InstanceManager.getDefault(SignalMastManager.class);
         SignalMast mast = smm.getSignalMast("SM-Alpha-Left-A");
@@ -59,7 +59,7 @@ public class CtcManagerVetoTest {
         } catch (java.beans.PropertyVetoException ex) {
             msg = ex.getMessage();
         }
-        Assert.assertTrue(msg.equals("Signal Mast is in use by CTC"));
+        Assert.assertTrue(msg.contains("Signal Mast is in use by CTC"));
 
         TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
         Turnout turnout = tm.getTurnout("T-Alpha-Left");
@@ -68,7 +68,7 @@ public class CtcManagerVetoTest {
         } catch (java.beans.PropertyVetoException ex) {
             msg = ex.getMessage();
         }
-        Assert.assertTrue(msg.equals("Turnout is in use by CTC"));
+        Assert.assertTrue(msg.contains("Turnout is in use by CTC"));
 
         BlockManager bm = InstanceManager.getDefault(BlockManager.class);
         Block block = bm.getBlock("B-Alpha-Main");
@@ -77,7 +77,7 @@ public class CtcManagerVetoTest {
         } catch (java.beans.PropertyVetoException ex) {
             msg = ex.getMessage();
         }
-        Assert.assertTrue(msg.equals("Block is in use by CTC"));
+        Assert.assertTrue(msg.contains("Block is in use by CTC"));
     }
 
     @Test
@@ -98,7 +98,7 @@ public class CtcManagerVetoTest {
         } catch (java.beans.PropertyVetoException ex) {
             msg = ex.getMessage();
         }
-        Assert.assertTrue(msg.equals("Signal Head is in use by CTC"));
+        Assert.assertTrue(msg.contains("Signal Head is in use by CTC"));
     }
 
     @BeforeEach
@@ -119,6 +119,7 @@ public class CtcManagerVetoTest {
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         jmri.util.JUnitUtil.tearDown();
     }
 //     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CtcManagerVetoTest.class);

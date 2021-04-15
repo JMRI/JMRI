@@ -27,7 +27,6 @@ import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
 import jmri.util.swing.JComboBoxUtil;
-import org.slf4j.*;
 
 /**
  * Layout Editor Tools provides tools making use of layout connectivity
@@ -123,8 +122,8 @@ final public class LayoutEditorTools {
         LayoutEditor.setupComboBox(throatDivergingSignalHeadComboBox, false, true, false);
         LayoutEditor.setupComboBox(westBoundSignalHeadComboBox, true, true, false);
 
-        //TODO: Set combobox exclude lists for turnouts, blocks and signal heads
-        //that are not part of the current layout
+        // TODO: Set combobox exclude lists for turnouts, blocks and signal heads
+        // that are not part of the current layout panel
     }
 
     /*=====================*\
@@ -599,6 +598,30 @@ final public class LayoutEditorTools {
         }
     }   //setSignalsDonePressed
 
+    /**
+     * Checks the turnout name (could also be a crossover, ...)
+     * 1) checks setSignalsAtTurnoutFromMenuFlag (bis setSignalsAtXoverTurnoutFromMenuFlag)
+     *      skip to 6 if true
+     * 2) get a name string from turnoutComboBox (bis NamedBean.normalizeUserName(xoverTurnoutName) ),
+     *      showing an error dialog if not present
+     * 3) Gets turnout by that name, showing a error and returning false if not
+     * 4) (??) if the turnout's user name is non-existant or not matching, reset the turnout name string source
+     *              used in 2 (does this ever work?)
+     * 5) Search through all LayoutTurnout (and subclass) objects, looking for a match. If
+     *          is the other type (LayoutTurnout vs XOver or vice-versa), so an error,
+     *          call a cancel routine and return false. Save the found item in the
+     *          'layoutTurnout' non-local variable
+     *
+     * 6) If the above succeed in finding a layoutTurnout, calculate an angle and
+     *          store in the `placeSignalDirectionDEG` non-local variable
+     *          and return true (success)
+     * 7) Finally, show an error saying the turnout is not displayed on this panel and return false.
+     *
+     * In summary, this makes some checks, and then (re)loads the 'layoutTurnout' and
+     * 'placeSignalDirectionDEG' non-local variables, returning true for success
+     *
+     * @return true if ok, false if not for various reasons
+     */
     private boolean getTurnoutInformation(boolean isCrossover) {
         String str = "";
         if (isCrossover ? !setSignalsAtXoverTurnoutFromMenuFlag : !setSignalsAtTurnoutFromMenuFlag) {
@@ -655,11 +678,14 @@ final public class LayoutEditorTools {
         }
 
         if (layoutTurnout != null) {
-            Point2D coordsA = layoutTurnout.getCoordsA(), coords2;
+            // convert to view to get angle on screen display
+            LayoutTurnoutView ltv = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+
+            Point2D coordsA = ltv.getCoordsA(), coords2;
             if (isCrossover) {
-                coords2 = layoutTurnout.getCoordsB();
+                coords2 = ltv.getCoordsB();
             } else {
-                coords2 = layoutTurnout.getCoordsCenter();
+                coords2 = ltv.getCoordsCenter();
             }
             placeSignalDirectionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coords2, coordsA));
             return true;
@@ -699,7 +725,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsA = layoutTurnout.getCoordsA();
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+
+        Point2D coordsA = layoutTurnoutView.getCoordsA();
         Point2D delta = new Point2D.Double(+shift, +shift);
 
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -717,7 +745,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsA = layoutTurnout.getCoordsA();
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+
+        Point2D coordsA = layoutTurnoutView.getCoordsA();
         Point2D delta = new Point2D.Double(-shift, +shift);
 
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -731,9 +761,11 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = layoutTurnout.getCoordsB();
-        Point2D coordsC = layoutTurnout.getCoordsC();
-        Point2D coordsCenter = layoutTurnout.getCoordsCenter();
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+
+        Point2D coordsB = layoutTurnoutView.getCoordsB();
+        Point2D coordsC = layoutTurnoutView.getCoordsC();
+        Point2D coordsCenter = layoutTurnoutView.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
         double cDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsC, coordsCenter));
@@ -755,9 +787,11 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = layoutTurnout.getCoordsB();
-        Point2D coordsC = layoutTurnout.getCoordsC();
-        Point2D coordsCenter = layoutTurnout.getCoordsCenter();
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+
+        Point2D coordsB = layoutTurnoutView.getCoordsB();
+        Point2D coordsC = layoutTurnoutView.getCoordsC();
+        Point2D coordsCenter = layoutTurnoutView.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
         double cDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsC, coordsCenter));
@@ -824,13 +858,13 @@ final public class LayoutEditorTools {
                 return;
             }
             logic.setMode(BlockBossLogic.TRAILINGMAIN);
-            logic.setTurnout(turnout.getSystemName());
-            logic.setSensor1(occupancy.getSystemName());
+            logic.setTurnout(turnout.getDisplayName());
+            logic.setSensor1(occupancy.getDisplayName());
             if (nextHead != null) {
-                logic.setWatchedSignal1(nextHead.getSystemName(), false);
+                logic.setWatchedSignal1(nextHead.getDisplayName(), false);
             }
             if (auxSignal != null) {
-                logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+                logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
             }
             finalizeBlockBossLogic();
             return;
@@ -884,20 +918,20 @@ final public class LayoutEditorTools {
             return;
         }
         logic.setMode(BlockBossLogic.FACING);
-        logic.setTurnout(turnout.getSystemName());
-        logic.setWatchedSensor1(occupancy.getSystemName());
-        logic.setWatchedSensor2(occupancy2.getSystemName());
+        logic.setTurnout(turnout.getDisplayName());
+        logic.setWatchedSensor1(occupancy.getDisplayName());
+        logic.setWatchedSensor2(occupancy2.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (savedAuxSignal != null) {
-            logic.setWatchedSignal1Alt(savedAuxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(savedAuxSignal.getDisplayName());
         }
         if (nextHead2 != null) {
-            logic.setWatchedSignal2(nextHead2.getSystemName());
+            logic.setWatchedSignal2(nextHead2.getDisplayName());
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal2Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal2Alt(auxSignal.getDisplayName());
         }
         if (!layoutTurnout.isMainlineC()) {
             logic.setLimitSpeed2(true);
@@ -955,13 +989,13 @@ final public class LayoutEditorTools {
         }
 
         logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
-        logic.setTurnout(turnout.getSystemName());
-        logic.setSensor1(occupancy.getSystemName());
+        logic.setTurnout(turnout.getDisplayName());
+        logic.setSensor1(occupancy.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
         }
         if (!layoutTurnout.isMainlineC()) {
             logic.setLimitSpeed2(true);
@@ -1013,13 +1047,13 @@ final public class LayoutEditorTools {
             return;
         }
         logic.setMode(BlockBossLogic.TRAILINGMAIN);
-        logic.setTurnout(turnout.getSystemName());
-        logic.setSensor1(occupancy.getSystemName());
+        logic.setTurnout(turnout.getDisplayName());
+        logic.setSensor1(occupancy.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
         }
         finalizeBlockBossLogic();
     }   //setLogicContinuing
@@ -1068,13 +1102,13 @@ final public class LayoutEditorTools {
             return;
         }
         logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
-        logic.setTurnout(turnout.getSystemName());
-        logic.setSensor1(occupancy.getSystemName());
+        logic.setTurnout(turnout.getDisplayName());
+        logic.setSensor1(occupancy.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
         }
         if (!layoutTurnout.isMainlineC()) {
             logic.setLimitSpeed2(true);
@@ -1094,7 +1128,7 @@ final public class LayoutEditorTools {
      * <p>
      * If a layout turnout corresponding to the turnout is not found, an error
      * message is sent to the user and null is returned.
-     * 
+     *
      * @param turnout the base turnout.
      * @param requireDoubleXover true to force checking of turnout type.
      * @param str error message string.
@@ -1837,8 +1871,27 @@ final public class LayoutEditorTools {
      *  vertical, assumes horizontal, as done when setting signals at block boundary.
      *  "track" is a TrackSegment connected to "point".
      *  "point" is an anchor point serving as a block boundary.
+     * <p>
+     * This is the member function method, which is preferred. See the static
+     * method following.
      */
-    public static boolean isAtWestEndOfAnchor(TrackSegment t, PositionablePoint p) {
+    public boolean isAtWestEndOfAnchor(TrackSegment t, PositionablePoint p) {
+        return LayoutEditorTools.isAtWestEndOfAnchor(layoutEditor, t, p); // invoke status locally
+    }
+
+
+    /*
+     * Returns 'true' if "track" enters a block boundary at the west(north) end of
+     *  "point". Returns "false" otherwise. If track is neither horizontal or
+     *  vertical, assumes horizontal, as done when setting signals at block boundary.
+     *  "track" is a TrackSegment connected to "point".
+     *  "point" is an anchor point serving as a block boundary.
+     * <p>
+     * This is the static form, which requires context information from
+     * a passed LayoutEditor reference; the member function is preferred because
+     * some day we want to get rid of the LayoutEditor combined pseudo-global and panel reference.
+     */
+    public static boolean isAtWestEndOfAnchor(LayoutEditor layoutEditor, TrackSegment t, PositionablePoint p) {
         if (p.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
             if (p.getConnect1() == t) {
                 if (p.getConnect1Dir() == Path.NORTH || p.getConnect1Dir() == Path.WEST) {
@@ -1865,23 +1918,23 @@ final public class LayoutEditorTools {
 
         Point2D coords1;
         if (t.getConnect1() == p) {
-            coords1 = LayoutEditor.getCoords(t.getConnect2(), t.getType2());
+            coords1 = layoutEditor.getCoords(t.getConnect2(), t.getType2());
         } else {
-            coords1 = LayoutEditor.getCoords(t.getConnect1(), t.getType1());
+            coords1 = layoutEditor.getCoords(t.getConnect1(), t.getType1());
         }
 
         Point2D coords2;
         if (tx != null) {
             if (tx.getConnect1() == p) {
-                coords2 = LayoutEditor.getCoords(tx.getConnect2(), tx.getType2());
+                coords2 = layoutEditor.getCoords(tx.getConnect2(), tx.getType2());
             } else {
-                coords2 = LayoutEditor.getCoords(tx.getConnect1(), tx.getType1());
+                coords2 = layoutEditor.getCoords(tx.getConnect1(), tx.getType1());
             }
         } else {
             if (t.getConnect1() == p) {
-                coords2 = LayoutEditor.getCoords(t.getConnect1(), t.getType1());
+                coords2 = layoutEditor.getCoords(t.getConnect1(), t.getType1());
             } else {
-                coords2 = LayoutEditor.getCoords(t.getConnect2(), t.getType2());
+                coords2 = layoutEditor.getCoords(t.getConnect2(), t.getType2());
             }
         }
 
@@ -1908,7 +1961,7 @@ final public class LayoutEditorTools {
             return false;
         }
         return true;
-    }   //isAtWestEndOfAnchor
+    }
 
     /*===========================*\
     |* setSignalsAtBlockBoundary *|
@@ -2293,9 +2346,9 @@ final public class LayoutEditorTools {
         TrackSegment track1 = boundary.getConnect1();
         Point2D coords1;
         if (track1.getConnect1() == boundary) {
-            coords1 = LayoutEditor.getCoords(track1.getConnect2(), track1.getType2());
+            coords1 = layoutEditor.getCoords(track1.getConnect2(), track1.getType2());
         } else {
-            coords1 = LayoutEditor.getCoords(track1.getConnect1(), track1.getType1());
+            coords1 = layoutEditor.getCoords(track1.getConnect1(), track1.getType1());
         }
         TrackSegment track2 = boundary.getConnect2();
 
@@ -2314,9 +2367,9 @@ final public class LayoutEditorTools {
         }
         Point2D coords2;
         if (track2.getConnect1() == boundary) {
-            coords2 = LayoutEditor.getCoords(track2.getConnect2(), track2.getType2());
+            coords2 = layoutEditor.getCoords(track2.getConnect2(), track2.getType2());
         } else {
-            coords2 = LayoutEditor.getCoords(track2.getConnect1(), track2.getType1());
+            coords2 = layoutEditor.getCoords(track2.getConnect1(), track2.getType1());
         }
 
         placeSignalDirectionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coords2, coords1));
@@ -2390,7 +2443,7 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coords = boundary.getCoordsCenter();
+        Point2D coords = layoutEditor.getLayoutTrackView(boundary).getCoordsCenter();
         Point2D delta = new Point2D.Double(0.0, +shift);
 
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -2408,7 +2461,7 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coords = boundary.getCoordsCenter();
+        Point2D coords = layoutEditor.getLayoutTrackView(boundary).getCoordsCenter();
 
         Point2D delta = new Point2D.Double(0.0, -shift);
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -2450,12 +2503,12 @@ final public class LayoutEditorTools {
             return;
         }
         logic.setMode(BlockBossLogic.SINGLEBLOCK);
-        logic.setSensor1(eastBlockOccupancy.getSystemName());
+        logic.setSensor1(eastBlockOccupancy.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
         }
         finalizeBlockBossLogic();
     }
@@ -2493,12 +2546,12 @@ final public class LayoutEditorTools {
             return;
         }
         logic.setMode(BlockBossLogic.SINGLEBLOCK);
-        logic.setSensor1(westBlockOccupancy.getSystemName());
+        logic.setSensor1(westBlockOccupancy.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
         }
         finalizeBlockBossLogic();
     }
@@ -3330,7 +3383,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsA = layoutTurnout.getCoordsA();
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+
+        Point2D coordsA = layoutTurnoutView.getCoordsA();
         Point2D delta = new Point2D.Double(0.0, +shift);
 
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -3348,7 +3403,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsA = layoutTurnout.getCoordsA();
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+
+        Point2D coordsA = layoutTurnoutView.getCoordsA();
         Point2D delta = new Point2D.Double(-2.0 * shift, +shift);
 
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -3366,7 +3423,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = layoutTurnout.getCoordsB();
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+
+        Point2D coordsB = layoutTurnoutView.getCoordsB();
         Point2D delta = new Point2D.Double(-shift, -shift);
 
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -3384,7 +3443,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = layoutTurnout.getCoordsB();
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+
+        Point2D coordsB = layoutTurnoutView.getCoordsB();
         Point2D delta = new Point2D.Double(+shift, -shift);
 
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -3402,7 +3463,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsC = layoutTurnout.getCoordsC();
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+
+        Point2D coordsC = layoutTurnoutView.getCoordsC();
         Point2D delta = new Point2D.Double(0.0, -shift);
 
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -3420,7 +3483,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsC = layoutTurnout.getCoordsC();
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+
+        Point2D coordsC = layoutTurnoutView.getCoordsC();
         Point2D delta = new Point2D.Double(+2.0 * shift, -shift);
 
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -3438,7 +3503,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsD = layoutTurnout.getCoordsD();
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+
+        Point2D coordsD = layoutTurnoutView.getCoordsD();
         Point2D delta = new Point2D.Double(+shift, +shift);
 
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -3456,7 +3523,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsD = layoutTurnout.getCoordsD();
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+
+        Point2D coordsD = layoutTurnoutView.getCoordsD();
         Point2D delta = new Point2D.Double(-shift, +shift);
 
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -3505,17 +3574,17 @@ final public class LayoutEditorTools {
                 return;
             }
             if (secondHead != null) {
-                if (!initializeBlockBossLogic(head.getSystemName())) {
+                if (!initializeBlockBossLogic(head.getDisplayName())) {
                     return;
                 }
                 logic.setMode(BlockBossLogic.TRAILINGMAIN);
-                logic.setTurnout(turnout.getSystemName());
-                logic.setSensor1(occupancy.getSystemName());
+                logic.setTurnout(turnout.getDisplayName());
+                logic.setSensor1(occupancy.getDisplayName());
                 if (nextHead != null) {
-                    logic.setWatchedSignal1(nextHead.getSystemName(), false);
+                    logic.setWatchedSignal1(nextHead.getDisplayName(), false);
                 }
                 if (auxSignal != null) {
-                    logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+                    logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
                 }
                 finalizeBlockBossLogic();
             }
@@ -3563,39 +3632,39 @@ final public class LayoutEditorTools {
             return;
         }
         if ((secondHead == null) && (track != null) && setup1) {
-            if (!initializeBlockBossLogic(head.getSystemName())) {
+            if (!initializeBlockBossLogic(head.getDisplayName())) {
                 return;
             }
             logic.setMode(BlockBossLogic.FACING);
-            logic.setTurnout(turnout.getSystemName());
-            logic.setWatchedSensor1(occupancy.getSystemName());
-            logic.setWatchedSensor2(occupancy2.getSystemName());
+            logic.setTurnout(turnout.getDisplayName());
+            logic.setWatchedSensor1(occupancy.getDisplayName());
+            logic.setWatchedSensor2(occupancy2.getDisplayName());
             if (nextHead != null) {
-                logic.setWatchedSignal1(nextHead.getSystemName(), false);
+                logic.setWatchedSignal1(nextHead.getDisplayName(), false);
             }
             if (savedAuxSignal != null) {
-                logic.setWatchedSignal1Alt(savedAuxSignal.getSystemName());
+                logic.setWatchedSignal1Alt(savedAuxSignal.getDisplayName());
             }
             if (nextHead2 != null) {
-                logic.setWatchedSignal2(nextHead2.getSystemName());
+                logic.setWatchedSignal2(nextHead2.getDisplayName());
             }
             if (auxSignal != null) {
-                logic.setWatchedSignal2Alt(auxSignal.getSystemName());
+                logic.setWatchedSignal2Alt(auxSignal.getDisplayName());
             }
             logic.setLimitSpeed2(true);
             finalizeBlockBossLogic();
         } else if ((secondHead != null) && setup2) {
-            if (!initializeBlockBossLogic(secondHead.getSystemName())) {
+            if (!initializeBlockBossLogic(secondHead.getDisplayName())) {
                 return;
             }
             logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
-            logic.setTurnout(turnout.getSystemName());
-            logic.setSensor1(occupancy2.getSystemName());
+            logic.setTurnout(turnout.getDisplayName());
+            logic.setSensor1(occupancy2.getDisplayName());
             if (nextHead2 != null) {
-                logic.setWatchedSignal1(nextHead2.getSystemName(), false);
+                logic.setWatchedSignal1(nextHead2.getDisplayName(), false);
             }
             if (auxSignal != null) {
-                logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+                logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
             }
             logic.setLimitSpeed2(true);
             finalizeBlockBossLogic();
@@ -3637,17 +3706,17 @@ final public class LayoutEditorTools {
                     JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        if (!initializeBlockBossLogic(head.getSystemName())) {
+        if (!initializeBlockBossLogic(head.getDisplayName())) {
             return;
         }
         logic.setMode(BlockBossLogic.TRAILINGMAIN);
-        logic.setTurnout(turnout.getSystemName());
-        logic.setSensor1(occupancy.getSystemName());
+        logic.setTurnout(turnout.getDisplayName());
+        logic.setSensor1(occupancy.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
         }
         finalizeBlockBossLogic();
     }   //setLogicXoverContinuing
@@ -4255,8 +4324,10 @@ final public class LayoutEditorTools {
             }
         }
 
-        Point2D coordsA = levelXing.getCoordsA();
-        Point2D coordsC = levelXing.getCoordsC();
+        LevelXingView levelXingView = layoutEditor.getLevelXingView(levelXing);
+
+        Point2D coordsA = levelXingView.getCoordsA();
+        Point2D coordsC = levelXingView.getCoordsC();
         placeSignalDirectionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsC, coordsA));
 
         return true;
@@ -4296,7 +4367,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsA = levelXing.getCoordsA();
+        LevelXingView levelXingView = layoutEditor.getLevelXingView(levelXing);
+
+        Point2D coordsA = levelXingView.getCoordsA();
         Point2D delta = new Point2D.Double(0.0, +shift);
 
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -4314,8 +4387,10 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = levelXing.getCoordsB();
-        Point2D coordsD = levelXing.getCoordsD();
+        LevelXingView levelXingView = layoutEditor.getLevelXingView(levelXing);
+
+        Point2D coordsB = levelXingView.getCoordsB();
+        Point2D coordsD = levelXingView.getCoordsD();
 
         double directionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsD));
         Point2D delta = new Point2D.Double(0.0, -shift);
@@ -4335,7 +4410,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsC = levelXing.getCoordsC();
+        LevelXingView levelXingView = layoutEditor.getLevelXingView(levelXing);
+
+        Point2D coordsC = levelXingView.getCoordsC();
         Point2D delta = new Point2D.Double(0.0, -shift);
 
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -4353,8 +4430,10 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = levelXing.getCoordsB();
-        Point2D coordsD = levelXing.getCoordsD();
+        LevelXingView levelXingView = layoutEditor.getLevelXingView(levelXing);
+
+        Point2D coordsB = levelXingView.getCoordsB();
+        Point2D coordsD = levelXingView.getCoordsD();
 
         double directionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsD, coordsB));
         double diffDirDEG = MathUtil.diffAngleDEG(placeSignalDirectionDEG, directionDEG + 180.0);
@@ -4436,34 +4515,34 @@ final public class LayoutEditorTools {
                     Bundle.getMessage("WarningTitle"),
                     JOptionPane.WARNING_MESSAGE);
         }
-        if (!initializeBlockBossLogic(head.getSystemName())) {
+        if (!initializeBlockBossLogic(head.getDisplayName())) {
             return;
         }
         logic.setMode(BlockBossLogic.SINGLEBLOCK);
-        logic.setSensor1(occupancy.getSystemName());
+        logic.setSensor1(occupancy.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
         }
         if (crossOccupancy != null) {
-            logic.setSensor2(crossOccupancy.getSystemName());
+            logic.setSensor2(crossOccupancy.getDisplayName());
             if (track1Occupancy != null) {
-                logic.setSensor3(track1Occupancy.getSystemName());
+                logic.setSensor3(track1Occupancy.getDisplayName());
                 if (track2Occupancy != null) {
-                    logic.setSensor4(track2Occupancy.getSystemName());
+                    logic.setSensor4(track2Occupancy.getDisplayName());
                 }
             } else if (track2Occupancy != null) {
-                logic.setSensor3(track2Occupancy.getSystemName());
+                logic.setSensor3(track2Occupancy.getDisplayName());
             }
         } else if (track1Occupancy != null) {
-            logic.setSensor2(track1Occupancy.getSystemName());
+            logic.setSensor2(track1Occupancy.getDisplayName());
             if (track2Occupancy != null) {
-                logic.setSensor3(track2Occupancy.getSystemName());
+                logic.setSensor3(track2Occupancy.getDisplayName());
             }
         } else if (track2Occupancy != null) {
-            logic.setSensor2(track2Occupancy.getSystemName());
+            logic.setSensor2(track2Occupancy.getDisplayName());
         }
         finalizeBlockBossLogic();
     }
@@ -5111,8 +5190,9 @@ final public class LayoutEditorTools {
             }
         }
         //have both turnouts, correctly connected - complete initialization
-        Point2D coordsA = layoutTurnout1.getCoordsA();
-        Point2D coordsCenter = layoutTurnout1.getCoordsCenter();
+        LayoutTurnoutView layoutTurnout1View = layoutEditor.getLayoutTurnoutView(layoutTurnout1);
+        Point2D coordsA = layoutTurnout1View.getCoordsA();
+        Point2D coordsCenter = layoutTurnout1View.getCoordsCenter();
         placeSignalDirectionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsCenter, coordsA));
         return true;
     }   //getTToTTurnoutInformation
@@ -5566,8 +5646,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = layoutTurnout1.getCoordsB();
-        Point2D coordsCenter = layoutTurnout1.getCoordsCenter();
+        LayoutTurnoutView layoutTurnout1View = layoutEditor.getLayoutTurnoutView(layoutTurnout1);
+        Point2D coordsB = layoutTurnout1View.getCoordsB();
+        Point2D coordsCenter = layoutTurnout1View.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
         Point2D delta = new Point2D.Double(0.0, -shift);
@@ -5583,8 +5664,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = layoutTurnout1.getCoordsB();
-        Point2D coordsCenter = layoutTurnout1.getCoordsCenter();
+        LayoutTurnoutView layoutTurnout1View = layoutEditor.getLayoutTurnoutView(layoutTurnout1);
+        Point2D coordsB = layoutTurnout1View.getCoordsB();
+        Point2D coordsCenter = layoutTurnout1View.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
         Point2D delta = new Point2D.Double(2.0 * shift, -shift);
@@ -5600,9 +5682,10 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = layoutTurnout1.getCoordsB();
-        Point2D coordsC = layoutTurnout1.getCoordsC();
-        Point2D coordsCenter = layoutTurnout1.getCoordsCenter();
+        LayoutTurnoutView layoutTurnout1View = layoutEditor.getLayoutTurnoutView(layoutTurnout1);
+        Point2D coordsB = layoutTurnout1View.getCoordsB();
+        Point2D coordsC = layoutTurnout1View.getCoordsC();
+        Point2D coordsCenter = layoutTurnout1View.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
         double cDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsC, coordsCenter));
@@ -5624,9 +5707,10 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = layoutTurnout1.getCoordsB();
-        Point2D coordsC = layoutTurnout1.getCoordsC();
-        Point2D coordsCenter = layoutTurnout1.getCoordsCenter();
+        LayoutTurnoutView layoutTurnout1View = layoutEditor.getLayoutTurnoutView(layoutTurnout1);
+        Point2D coordsB = layoutTurnout1View.getCoordsB();
+        Point2D coordsC = layoutTurnout1View.getCoordsC();
+        Point2D coordsCenter = layoutTurnout1View.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
         double cDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsC, coordsCenter));
@@ -5648,8 +5732,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = layoutTurnout2.getCoordsB();
-        Point2D coordsCenter = layoutTurnout2.getCoordsCenter();
+        LayoutTurnoutView layoutTurnout2View = layoutEditor.getLayoutTurnoutView(layoutTurnout2);
+        Point2D coordsB = layoutTurnout2View.getCoordsB();
+        Point2D coordsCenter = layoutTurnout2View.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
         Point2D delta = new Point2D.Double(0.0, -shift);
@@ -5665,8 +5750,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = layoutTurnout2.getCoordsB();
-        Point2D coordsCenter = layoutTurnout2.getCoordsCenter();
+        LayoutTurnoutView layoutTurnout2View = layoutEditor.getLayoutTurnoutView(layoutTurnout2);
+        Point2D coordsB = layoutTurnout2View.getCoordsB();
+        Point2D coordsCenter = layoutTurnout2View.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
         Point2D delta = new Point2D.Double(2.0 * shift, -shift);
@@ -5682,9 +5768,10 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = layoutTurnout2.getCoordsB();
-        Point2D coordsC = layoutTurnout2.getCoordsC();
-        Point2D coordsCenter = layoutTurnout2.getCoordsCenter();
+        LayoutTurnoutView layoutTurnout2View = layoutEditor.getLayoutTurnoutView(layoutTurnout2);
+        Point2D coordsB = layoutTurnout2View.getCoordsB();
+        Point2D coordsC = layoutTurnout2View.getCoordsC();
+        Point2D coordsCenter = layoutTurnout2View.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
         double cDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsC, coordsCenter));
@@ -5706,9 +5793,10 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = layoutTurnout2.getCoordsB();
-        Point2D coordsC = layoutTurnout2.getCoordsC();
-        Point2D coordsCenter = layoutTurnout2.getCoordsCenter();
+        LayoutTurnoutView layoutTurnout2View = layoutEditor.getLayoutTurnoutView(layoutTurnout2);
+        Point2D coordsB = layoutTurnout2View.getCoordsB();
+        Point2D coordsC = layoutTurnout2View.getCoordsC();
+        Point2D coordsCenter = layoutTurnout2View.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
         double cDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsC, coordsCenter));
@@ -5789,20 +5877,20 @@ final public class LayoutEditorTools {
             }
             if (secondHead != null) {
                 //this head signals only the continuing track of the far turnout
-                if (!initializeBlockBossLogic(head.getSystemName())) {
+                if (!initializeBlockBossLogic(head.getDisplayName())) {
                     return;
                 }
                 logic.setMode(BlockBossLogic.TRAILINGMAIN);
-                logic.setTurnout(farTurnout.getTurnout().getSystemName());
-                logic.setSensor1(occupancy.getSystemName());
+                logic.setTurnout(farTurnout.getTurnout().getDisplayName());
+                logic.setSensor1(occupancy.getDisplayName());
                 if (occupancy != connectorOccupancy) {
-                    logic.setSensor2(connectorOccupancy.getSystemName());
+                    logic.setSensor2(connectorOccupancy.getDisplayName());
                 }
                 if (nextHead != null) {
-                    logic.setWatchedSignal1(nextHead.getSystemName(), false);
+                    logic.setWatchedSignal1(nextHead.getDisplayName(), false);
                 }
                 if (auxSignal != null) {
-                    logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+                    logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
                 }
                 String nearSensorName = setupNearLogix(nearTurnout, continuing, head);
                 addNearSensorToLogic(nearSensorName);
@@ -5851,45 +5939,45 @@ final public class LayoutEditorTools {
             }
         }
         if ((secondHead == null) && (track1 != null) && setup1) {
-            if (!initializeBlockBossLogic(head.getSystemName())) {
+            if (!initializeBlockBossLogic(head.getDisplayName())) {
                 return;
             }
             logic.setMode(BlockBossLogic.FACING);
-            logic.setTurnout(farTurnout.getTurnout().getSystemName());
-            logic.setWatchedSensor1(occupancy.getSystemName());
-            logic.setWatchedSensor2(occupancy2.getSystemName());
-            logic.setSensor2(connectorOccupancy.getSystemName());
+            logic.setTurnout(farTurnout.getTurnout().getDisplayName());
+            logic.setWatchedSensor1(occupancy.getDisplayName());
+            logic.setWatchedSensor2(occupancy2.getDisplayName());
+            logic.setSensor2(connectorOccupancy.getDisplayName());
             if (nextHead != null) {
-                logic.setWatchedSignal1(nextHead.getSystemName(), false);
+                logic.setWatchedSignal1(nextHead.getDisplayName(), false);
             }
             if (savedAuxSignal != null) {
-                logic.setWatchedSignal1Alt(savedAuxSignal.getSystemName());
+                logic.setWatchedSignal1Alt(savedAuxSignal.getDisplayName());
             }
             if (nextHead2 != null) {
-                logic.setWatchedSignal2(nextHead2.getSystemName());
+                logic.setWatchedSignal2(nextHead2.getDisplayName());
             }
             if (auxSignal != null) {
-                logic.setWatchedSignal2Alt(auxSignal.getSystemName());
+                logic.setWatchedSignal2Alt(auxSignal.getDisplayName());
             }
             String nearSensorName = setupNearLogix(nearTurnout, continuing, head);
             addNearSensorToLogic(nearSensorName);
             logic.setLimitSpeed2(true);
             finalizeBlockBossLogic();
         } else if ((secondHead != null) && setup2) {
-            if (!initializeBlockBossLogic(secondHead.getSystemName())) {
+            if (!initializeBlockBossLogic(secondHead.getDisplayName())) {
                 return;
             }
             logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
-            logic.setTurnout(farTurnout.getTurnout().getSystemName());
-            logic.setSensor1(occupancy2.getSystemName());
+            logic.setTurnout(farTurnout.getTurnout().getDisplayName());
+            logic.setSensor1(occupancy2.getDisplayName());
             if (occupancy2 != connectorOccupancy) {
-                logic.setSensor2(connectorOccupancy.getSystemName());
+                logic.setSensor2(connectorOccupancy.getDisplayName());
             }
             if (nextHead2 != null) {
-                logic.setWatchedSignal1(nextHead2.getSystemName(), false);
+                logic.setWatchedSignal1(nextHead2.getDisplayName(), false);
             }
             if (auxSignal != null) {
-                logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+                logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
             }
             String nearSensorName = setupNearLogix(nearTurnout, continuing, head);
             addNearSensorToLogic(nearSensorName);
@@ -5901,7 +5989,7 @@ final public class LayoutEditorTools {
     /*
      * Sets up a Logix to set a sensor active if a turnout is set against
      *  a track.  This routine creates an internal sensor for the purpose.
-     * Note: The sensor and logix are named IS or IX followed by TTT_X_HHH where
+     * Note: The sensor and logix are named pref + S or pref + X followed by TTT_X_HHH where
      *  TTT is the system name of the turnout, X is either C or T depending
      *  on "continuing", and HHH is the system name of the signal head.
      * Note: If there is any problem, a string of "" is returned, and a warning
@@ -5914,8 +6002,9 @@ final public class LayoutEditorTools {
         if (!continuing) {
             namer = turnoutName + "_C_" + head.getSystemName();
         }
-        String sensorName = "IS" + namer;
-        String logixName = "IX" + namer;
+        String pref = InstanceManager.getDefault(jmri.LogixManager.class).getSystemPrefix();
+        String sensorName = pref + "S" + namer;
+        String logixName = pref + "X" + namer;
         try {
             InstanceManager.sensorManagerInstance().provideSensor(sensorName);
         } catch (IllegalArgumentException ex) {
@@ -5923,18 +6012,15 @@ final public class LayoutEditorTools {
             return "";
 
         }
-        if (InstanceManager.getDefault(LogixManager.class
-        ).getBySystemName(logixName) == null) {
+        if (InstanceManager.getDefault(LogixManager.class).getBySystemName(logixName) == null) {
             //Logix does not exist, create it
-            Logix x = InstanceManager.getDefault(LogixManager.class
-            ).createNewLogix(logixName, "");
+            Logix x = InstanceManager.getDefault(LogixManager.class).createNewLogix(logixName, "");
             if (x == null) {
                 log.error("Trouble creating logix {} while setting up signal logic.", logixName);
                 return "";
             }
             String cName = x.getSystemName() + "C1";
-            Conditional c = InstanceManager.getDefault(ConditionalManager.class
-            ).
+            Conditional c = InstanceManager.getDefault(ConditionalManager.class).
                     createNewConditional(cName, "");
             if (c == null) {
                 log.error("Trouble creating conditional {} while setting up Logix.", cName);
@@ -5955,12 +6041,12 @@ final public class LayoutEditorTools {
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
                     Conditional.Action.SET_SENSOR, sensorName,
                     Sensor.INACTIVE, ""));
-            c.setAction(actionList); //string data
+            c.setAction(actionList); // string data
             x.addConditional(cName, -1);
             x.activateLogix();
         }
         return sensorName;
-    }   //setupNearLogix
+    }
 
     /*
      * Adds the sensor specified to the open BlockBossLogic, provided it is not already there and
@@ -6884,8 +6970,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsA = layoutTurnoutA.getCoordsA();
-        Point2D coordsCenter = layoutTurnoutA.getCoordsCenter();
+        LayoutTurnoutView layoutTurnoutAView = layoutEditor.getLayoutTurnoutView(layoutTurnoutA);
+        Point2D coordsA = layoutTurnoutAView.getCoordsA();
+        Point2D coordsCenter = layoutTurnoutAView.getCoordsCenter();
 
         double aDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsA, coordsCenter));
         Point2D delta = new Point2D.Double(-shift, -shift);
@@ -6905,8 +6992,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsA = layoutTurnoutA.getCoordsA();
-        Point2D coordsCenter = layoutTurnoutA.getCoordsCenter();
+        LayoutTurnoutView layoutTurnoutAView = layoutEditor.getLayoutTurnoutView(layoutTurnoutA);
+        Point2D coordsA = layoutTurnoutAView.getCoordsA();
+        Point2D coordsCenter = layoutTurnoutAView.getCoordsCenter();
 
         double aDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsA, coordsCenter));
         Point2D delta = new Point2D.Double(+shift, -shift);
@@ -6926,8 +7014,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsA = layoutTurnoutA.getCoordsA();
-        Point2D coordsCenter = layoutTurnoutA.getCoordsCenter();
+        LayoutTurnoutView layoutTurnoutAView = layoutEditor.getLayoutTurnoutView(layoutTurnoutA);
+        Point2D coordsA = layoutTurnoutAView.getCoordsA();
+        Point2D coordsCenter = layoutTurnoutAView.getCoordsCenter();
 
         double aDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsA, coordsCenter));
         Point2D delta = new Point2D.Double(+3.0 * shift, -shift);
@@ -6947,9 +7036,10 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = layoutTurnoutA.getCoordsB();
-        Point2D coordsC = layoutTurnoutA.getCoordsC();
-        Point2D coordsCenter = layoutTurnoutA.getCoordsCenter();
+        LayoutTurnoutView layoutTurnoutAView = layoutEditor.getLayoutTurnoutView(layoutTurnoutA);
+        Point2D coordsB = layoutTurnoutAView.getCoordsB();
+        Point2D coordsC = layoutTurnoutAView.getCoordsC();
+        Point2D coordsCenter = layoutTurnoutAView.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
         double cDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsC, coordsCenter));
@@ -6975,9 +7065,10 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = layoutTurnoutB.getCoordsB();
-        Point2D coordsC = layoutTurnoutB.getCoordsC();
-        Point2D coordsCenter = layoutTurnoutB.getCoordsCenter();
+        LayoutTurnoutView layoutTurnoutBView = layoutEditor.getLayoutTurnoutView(layoutTurnoutB);
+        Point2D coordsB = layoutTurnoutBView.getCoordsB();
+        Point2D coordsC = layoutTurnoutBView.getCoordsC();
+        Point2D coordsCenter = layoutTurnoutBView.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
         double cDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsC, coordsCenter));
@@ -7003,9 +7094,10 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsC = layoutTurnoutB.getCoordsC();
-        Point2D coordsB = layoutTurnoutB.getCoordsB();
-        Point2D coordsCenter = layoutTurnoutB.getCoordsCenter();
+        LayoutTurnoutView layoutTurnoutBView = layoutEditor.getLayoutTurnoutView(layoutTurnoutB);
+        Point2D coordsC = layoutTurnoutBView.getCoordsC();
+        Point2D coordsB = layoutTurnoutBView.getCoordsB();
+        Point2D coordsCenter = layoutTurnoutBView.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
         double cDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsC, coordsCenter));
@@ -7067,13 +7159,13 @@ final public class LayoutEditorTools {
                 return;
             }
             logic.setMode(BlockBossLogic.TRAILINGMAIN);
-            logic.setTurnout(turnoutB.getSystemName());
-            logic.setSensor1(occupancy.getSystemName());
+            logic.setTurnout(turnoutB.getDisplayName());
+            logic.setSensor1(occupancy.getDisplayName());
             if (nextHead != null) {
-                logic.setWatchedSignal1(nextHead.getSystemName(), false);
+                logic.setWatchedSignal1(nextHead.getDisplayName(), false);
             }
             if (auxSignal != null) {
-                logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+                logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
             }
             String nearSensorName = setupNearLogix(layoutTurnoutA, true, a13WayHead);
             addNearSensorToLogic(nearSensorName);
@@ -7132,13 +7224,13 @@ final public class LayoutEditorTools {
             return;
         }
         logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
-        logic.setTurnout(turnoutA.getSystemName());
-        logic.setSensor1(occupancy.getSystemName());
+        logic.setTurnout(turnoutA.getDisplayName());
+        logic.setSensor1(occupancy.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
         }
         if (!layoutTurnoutA.isMainlineC()) {
             logic.setLimitSpeed2(true);
@@ -7190,13 +7282,13 @@ final public class LayoutEditorTools {
             return;
         }
         logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
-        logic.setTurnout(turnoutB.getSystemName());
-        logic.setSensor1(occupancy.getSystemName());
+        logic.setTurnout(turnoutB.getDisplayName());
+        logic.setSensor1(occupancy.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
         }
         String nearSensorName = setupNearLogix(layoutTurnoutA, true, a33WayHead);
         addNearSensorToLogic(nearSensorName);
@@ -7250,13 +7342,13 @@ final public class LayoutEditorTools {
             return;
         }
         logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
-        logic.setTurnout(turnoutA.getSystemName());
-        logic.setSensor1(occupancy.getSystemName());
+        logic.setTurnout(turnoutA.getDisplayName());
+        logic.setSensor1(occupancy.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
         }
         if (!layoutTurnoutA.isMainlineC()) {
             logic.setLimitSpeed2(true);
@@ -7308,13 +7400,13 @@ final public class LayoutEditorTools {
             return;
         }
         logic.setMode(BlockBossLogic.TRAILINGMAIN);
-        logic.setTurnout(turnoutB.getSystemName());
-        logic.setSensor1(occupancy.getSystemName());
+        logic.setTurnout(turnoutB.getDisplayName());
+        logic.setSensor1(occupancy.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
         }
         String nearSensorName = setupNearLogix(layoutTurnoutA, true, c3WayHead);
         addNearSensorToLogic(nearSensorName);
@@ -7368,13 +7460,13 @@ final public class LayoutEditorTools {
             return;
         }
         logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
-        logic.setTurnout(turnoutB.getSystemName());
-        logic.setSensor1(occupancy.getSystemName());
+        logic.setTurnout(turnoutB.getDisplayName());
+        logic.setSensor1(occupancy.getDisplayName());
         if (nextHead != null) {
-            logic.setWatchedSignal1(nextHead.getSystemName(), false);
+            logic.setWatchedSignal1(nextHead.getDisplayName(), false);
         }
         if (auxSignal != null) {
-            logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+            logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
         }
         String nearSensorName = setupNearLogix(layoutTurnoutA, true, d3WayHead);
         addNearSensorToLogic(nearSensorName);
@@ -7587,11 +7679,11 @@ final public class LayoutEditorTools {
 
     /**
      * Returns the Sensor corresponding to an entry field in the specified
-     * dialog. 
+     * dialog.
      * <p>
      * This also takes care of UpperCase and trimming of leading and
-     * trailing blanks. 
-     * If entry is required, and no entry is present, an error message is sent. 
+     * trailing blanks.
+     * If entry is required, and no entry is present, an error message is sent.
      * An error message also results if a sensor head with the
      * entered name is not found in the SensorTable.
      * @param sensorName sensor name.
@@ -8627,7 +8719,7 @@ final public class LayoutEditorTools {
 
     private void placeEastBoundIcon(PositionableIcon icon, boolean isRightSide, double fromPoint) {
 
-        Point2D p = boundary.getCoordsCenter();
+        Point2D p = layoutEditor.getLayoutTrackView(boundary).getCoordsCenter();
 
         //Track segment is used to determine the alignment, therefore this is opposite to the block that we are protecting
         TrackSegment t = boundary.getConnect2();
@@ -8642,16 +8734,16 @@ final public class LayoutEditorTools {
 
         Point2D pt2;
         if (t.getConnect1() == boundary) {
-            pt2 = LayoutEditor.getCoords(t.getConnect2(), t.getType2());
+            pt2 = layoutEditor.getCoords(t.getConnect2(), t.getType2());
         } else {
-            pt2 = LayoutEditor.getCoords(t.getConnect1(), t.getType1());
+            pt2 = layoutEditor.getCoords(t.getConnect1(), t.getType1());
         }
         setIconOnPanel(t, icon, dir, p, pt2, isRightSide, fromPoint);
     }
 
     private void placeWestBoundIcon(PositionableIcon icon, boolean isRightSide, double fromPoint) {
 
-        Point2D p = boundary.getCoordsCenter();
+        Point2D p = layoutEditor.getLayoutTrackView(boundary).getCoordsCenter();
 
         //Track segment is used to determine the alignment, therefore this is opposite to the block that we are protecting
         TrackSegment t = boundary.getConnect1();
@@ -8664,9 +8756,9 @@ final public class LayoutEditorTools {
 
         Point2D pt2;
         if (t.getConnect1() == boundary) {
-            pt2 = LayoutEditor.getCoords(t.getConnect2(), t.getType2());
+            pt2 = layoutEditor.getCoords(t.getConnect2(), t.getType2());
         } else {
-            pt2 = LayoutEditor.getCoords(t.getConnect1(), t.getType1());
+            pt2 = layoutEditor.getCoords(t.getConnect1(), t.getType1());
         }
         setIconOnPanel(t, icon, dir, p, pt2, isRightSide, fromPoint);
 
@@ -9280,6 +9372,8 @@ final public class LayoutEditorTools {
         SignalMast turnoutMastC = getSignalMastFromEntry(turnoutSignalMastC.getText(), false, setSignalsAtTurnoutFrame);
         SignalMast turnoutMastD = getSignalMastFromEntry(turnoutSignalMastD.getText(), false, setSignalsAtTurnoutFrame);
 
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+
         //place signals as requested
         if (turnoutSignalMastA.addToPanel() && (turnoutMast != null)) {
             if (isSignalMastOnPanel(turnoutMast)
@@ -9294,7 +9388,8 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(layoutTurnout.getSignalAMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(turnoutSignalMastA.getText());
-                placingBlock(l, turnoutSignalMastA.isRightSelected(), 0.0, layoutTurnout.getConnectA(), layoutTurnout.getCoordsA());
+                placingBlock(l, turnoutSignalMastA.isRightSelected(),
+                                0.0, layoutTurnout.getConnectA(), layoutTurnoutView.getCoordsA());
                 removeAssignment(turnoutMast);
                 layoutTurnout.setSignalAMast(turnoutSignalMastA.getText());
                 needRedraw = true;
@@ -9335,7 +9430,8 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(layoutTurnout.getSignalBMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(turnoutSignalMastB.getText());
-                placingBlock(l, turnoutSignalMastB.isRightSelected(), 0.0, layoutTurnout.getConnectB(), layoutTurnout.getCoordsB());
+                placingBlock(l, turnoutSignalMastB.isRightSelected(),
+                                0.0, layoutTurnout.getConnectB(), layoutTurnoutView.getCoordsB());
                 removeAssignment(turnoutMastB);
                 layoutTurnout.setSignalBMast(turnoutSignalMastB.getText());
                 needRedraw = true;
@@ -9377,7 +9473,8 @@ final public class LayoutEditorTools {
                     removeSignalMastFromPanel(layoutTurnout.getSignalCMast());
                     SignalMastIcon l = new SignalMastIcon(layoutEditor);
                     l.setSignalMast(turnoutSignalMastC.getText());
-                    placingBlock(l, turnoutSignalMastC.isRightSelected(), 0.0, layoutTurnout.getConnectC(), layoutTurnout.getCoordsC());
+                    placingBlock(l, turnoutSignalMastC.isRightSelected(),
+                                    0.0, layoutTurnout.getConnectC(), layoutTurnoutView.getCoordsC());
                     removeAssignment(turnoutMastC);
                     layoutTurnout.setSignalCMast(turnoutSignalMastC.getText());
                     needRedraw = true;
@@ -9424,7 +9521,8 @@ final public class LayoutEditorTools {
                     removeSignalMastFromPanel(layoutTurnout.getSignalDMast());
                     SignalMastIcon l = new SignalMastIcon(layoutEditor);
                     l.setSignalMast(turnoutSignalMastD.getText());
-                    placingBlock(l, turnoutSignalMastD.isRightSelected(), 0.0, layoutTurnout.getConnectD(), layoutTurnout.getCoordsD());
+                    placingBlock(l, turnoutSignalMastD.isRightSelected(),
+                                    0.0, layoutTurnout.getConnectD(), layoutTurnoutView.getCoordsD());
                     removeAssignment(turnoutMastD);
                     layoutTurnout.setSignalDMast(turnoutSignalMastD.getText());
                     needRedraw = true;
@@ -9466,6 +9564,7 @@ final public class LayoutEditorTools {
             layoutEditor.setDirty();
         }
     }   //setSignalMastsDonePressed
+
 
     Set<SignalMast> usedMasts = new HashSet<>();
 
@@ -9647,9 +9746,9 @@ final public class LayoutEditorTools {
             TrackSegment ts = (TrackSegment) obj;
             Point2D endPoint;
             if (ts.getConnect1() == layoutTurnout) {
-                endPoint = LayoutEditor.getCoords(ts.getConnect2(), ts.getType2());
+                endPoint = layoutEditor.getCoords(ts.getConnect2(), ts.getType2());
             } else {
-                endPoint = LayoutEditor.getCoords(ts.getConnect1(), ts.getType1());
+                endPoint = layoutEditor.getCoords(ts.getConnect1(), ts.getType1());
             }
             boolean isEast = false;
             if (MathUtil.equals(endPoint.getX(), p.getX())) {
@@ -9676,6 +9775,7 @@ final public class LayoutEditorTools {
     /*============================*\
     |* setSignalMastsAtLayoutSlip *|
     \*============================*/
+
     //operational variables for Set SignalMast at Slip tool
     private JmriJFrame setSignalMastsAtLayoutSlipFrame = null;
     private boolean setSignalMastsAtLayoutSlipOpenFlag = false;
@@ -10032,10 +10132,14 @@ final public class LayoutEditorTools {
         if (!getSlipMastInformation()) {
             return;
         }
+
         SignalMast aMast = getSignalMastFromEntry(slipSignalMastA.getText(), false, setSignalMastsAtLayoutSlipFrame);
         SignalMast bMast = getSignalMastFromEntry(slipSignalMastB.getText(), false, setSignalMastsAtLayoutSlipFrame);
         SignalMast cMast = getSignalMastFromEntry(slipSignalMastC.getText(), false, setSignalMastsAtLayoutSlipFrame);
         SignalMast dMast = getSignalMastFromEntry(slipSignalMastD.getText(), false, setSignalMastsAtLayoutSlipFrame);
+
+        LayoutSlipView layoutSlipView = layoutEditor.getLayoutSlipView(layoutSlip);
+
         //place or update signals as requested
         if ((aMast != null) && slipSignalMastA.addToPanel()) {
             if (isSignalMastOnPanel(aMast)
@@ -10050,7 +10154,8 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(layoutSlip.getSignalAMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(slipSignalMastA.getText());
-                placingBlock(l, slipSignalMastA.isRightSelected(), 0.0, layoutSlip.getConnectA(), layoutSlip.getCoordsA());
+                placingBlock(l, slipSignalMastA.isRightSelected(),
+                                        0.0, layoutSlip.getConnectA(), layoutSlipView.getCoordsA());
                 removeAssignment(aMast);
                 layoutSlip.setSignalAMast(slipSignalMastA.getText());
                 needRedraw = true;
@@ -10095,7 +10200,8 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(layoutSlip.getSignalBMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(slipSignalMastB.getText());
-                placingBlock(l, slipSignalMastB.isRightSelected(), 0.0, layoutSlip.getConnectB(), layoutSlip.getCoordsB());
+                placingBlock(l, slipSignalMastB.isRightSelected(),
+                                            0.0, layoutSlip.getConnectB(), layoutSlipView.getCoordsB());
                 removeAssignment(bMast);
                 layoutSlip.setSignalBMast(slipSignalMastB.getText());
                 needRedraw = true;
@@ -10140,7 +10246,8 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(layoutSlip.getSignalCMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(slipSignalMastC.getText());
-                placingBlock(l, slipSignalMastA.isRightSelected(), 0.0, layoutSlip.getConnectC(), layoutSlip.getCoordsC());
+                placingBlock(l, slipSignalMastA.isRightSelected(),
+                                                0.0, layoutSlip.getConnectC(), layoutSlipView.getCoordsC());
                 removeAssignment(cMast);
                 layoutSlip.setSignalCMast(slipSignalMastC.getText());
                 needRedraw = true;
@@ -10185,7 +10292,8 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(layoutSlip.getSignalDMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(slipSignalMastD.getText());
-                placingBlock(l, slipSignalMastD.isRightSelected(), 0.0, layoutSlip.getConnectD(), layoutSlip.getCoordsD());
+                placingBlock(l, slipSignalMastD.isRightSelected(),
+                                                0.0, layoutSlip.getConnectD(), layoutSlipView.getCoordsD());
                 removeAssignment(dMast);
                 layoutSlip.setSignalDMast(slipSignalMastD.getText());
                 needRedraw = true;
@@ -10569,6 +10677,9 @@ final public class LayoutEditorTools {
         SignalMast bMast = getSignalMastFromEntry(xingSignalMastB.getText(), false, setSignalMastsAtLevelXingFrame);
         SignalMast cMast = getSignalMastFromEntry(xingSignalMastC.getText(), false, setSignalMastsAtLevelXingFrame);
         SignalMast dMast = getSignalMastFromEntry(xingSignalMastD.getText(), false, setSignalMastsAtLevelXingFrame);
+
+        LevelXingView levelXingView = layoutEditor.getLevelXingView(levelXing);
+
         //if ( !getXingSignalMastInformation() ) return;
         //place or update signals as requested
         if ((aMast != null) && xingSignalMastA.addToPanel()) {
@@ -10584,7 +10695,7 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(levelXing.getSignalAMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(xingSignalMastA.getText());
-                placingBlock(l, xingSignalMastA.isRightSelected(), 0.0, levelXing.getConnectA(), levelXing.getCoordsA());
+                placingBlock(l, xingSignalMastA.isRightSelected(), 0.0, levelXing.getConnectA(), levelXingView.getCoordsA());
                 removeAssignment(aMast);
                 levelXing.setSignalAMast(xingSignalMastA.getText());
                 needRedraw = true;
@@ -10629,7 +10740,7 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(levelXing.getSignalBMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(xingSignalMastB.getText());
-                placingBlock(l, xingSignalMastB.isRightSelected(), 0.0, levelXing.getConnectB(), levelXing.getCoordsB());
+                placingBlock(l, xingSignalMastB.isRightSelected(), 0.0, levelXing.getConnectB(), levelXingView.getCoordsB());
                 removeAssignment(bMast);
                 levelXing.setSignalBMast(xingSignalMastB.getText());
                 needRedraw = true;
@@ -10675,7 +10786,7 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(levelXing.getSignalCMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(xingSignalMastC.getText());
-                placingBlock(l, xingSignalMastC.isRightSelected(), 0.0, levelXing.getConnectC(), levelXing.getCoordsC());
+                placingBlock(l, xingSignalMastC.isRightSelected(), 0.0, levelXing.getConnectC(), levelXingView.getCoordsC());
                 removeAssignment(cMast);
                 levelXing.setSignalCMast(xingSignalMastC.getText());
                 needRedraw = true;
@@ -10720,7 +10831,7 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(levelXing.getSignalDMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(xingSignalMastD.getText());
-                placingBlock(l, xingSignalMastD.isRightSelected(), 0.0, levelXing.getConnectD(), levelXing.getCoordsD());
+                placingBlock(l, xingSignalMastD.isRightSelected(), 0.0, levelXing.getConnectD(), levelXingView.getCoordsD());
                 removeAssignment(dMast);
                 levelXing.setSignalDMast(xingSignalMastD.getText());
                 needRedraw = true;
@@ -10980,13 +11091,15 @@ final public class LayoutEditorTools {
                     (sensorD == null) ? "- none- " : sensorD.getDisplayName());  // NOI18N
         }
 
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+
         //place/remove sensors as requested
         if (sensorA == null) {
             if (currSensorA != null && removeSensorFromPanel(currSensorA)) {
                 layoutTurnout.setSensorA(null);
             }
         } else if (turnoutSensorA != null && layoutTurnout.getConnectA() != null) {
-            setTurnoutSensor(layoutTurnout, sensorA, currSensorA, turnoutSensorA, layoutTurnout.getConnectA(), layoutTurnout.getCoordsA(), "A");
+            setTurnoutSensor(layoutTurnout, sensorA, currSensorA, turnoutSensorA, layoutTurnout.getConnectA(), layoutTurnoutView.getCoordsA(), "A");
         }
 
         if (sensorB == null) {
@@ -10994,7 +11107,7 @@ final public class LayoutEditorTools {
                 layoutTurnout.setSensorB(null);
             }
         } else if (turnoutSensorB != null && layoutTurnout.getConnectB() != null) {
-            setTurnoutSensor(layoutTurnout, sensorB, currSensorB, turnoutSensorB, layoutTurnout.getConnectB(), layoutTurnout.getCoordsB(), "B");
+            setTurnoutSensor(layoutTurnout, sensorB, currSensorB, turnoutSensorB, layoutTurnout.getConnectB(), layoutTurnoutView.getCoordsB(), "B");
         }
 
         if (sensorC == null) {
@@ -11002,7 +11115,7 @@ final public class LayoutEditorTools {
                 layoutTurnout.setSensorC(null);
             }
         } else if (turnoutSensorC != null && layoutTurnout.getConnectC() != null) {
-            setTurnoutSensor(layoutTurnout, sensorC, currSensorC, turnoutSensorC, layoutTurnout.getConnectC(), layoutTurnout.getCoordsC(), "C");
+            setTurnoutSensor(layoutTurnout, sensorC, currSensorC, turnoutSensorC, layoutTurnout.getConnectC(), layoutTurnoutView.getCoordsC(), "C");
         }
 
         if (sensorD == null) {
@@ -11010,7 +11123,7 @@ final public class LayoutEditorTools {
                 layoutTurnout.setSensorD(null);
             }
         } else if (turnoutSensorD != null && layoutTurnout.getConnectD() != null) {
-            setTurnoutSensor(layoutTurnout, sensorD, currSensorD, turnoutSensorD, layoutTurnout.getConnectD(), layoutTurnout.getCoordsD(), "D");
+            setTurnoutSensor(layoutTurnout, sensorD, currSensorD, turnoutSensorD, layoutTurnout.getConnectD(), layoutTurnoutView.getCoordsD(), "D");
         }
 
         //make sure this layout turnout is not linked to another
@@ -11501,13 +11614,14 @@ final public class LayoutEditorTools {
                     (dSensor == null) ? "- none- " : dSensor.getDisplayName());  // NOI18N
         }
 
-        //place/remove sensors as requested
+        LevelXingView levelXingView = layoutEditor.getLevelXingView(levelXing);
+        // place/remove sensors as requested
         if (aSensor == null) {
             if (currSensorA != null && removeSensorFromPanel(currSensorA)) {
                 levelXing.setSensorAName(null);
             }
         } else if (xingSensorA != null && levelXing.getConnectA() != null) {
-            setLevelXingSensor(aSensor, currSensorA, xingSensorA, levelXing.getConnectA(), levelXing.getCoordsA(), "A");
+            setLevelXingSensor(aSensor, currSensorA, xingSensorA, levelXing.getConnectA(), levelXingView.getCoordsA(), "A");
         }
 
         if (bSensor == null) {
@@ -11515,7 +11629,7 @@ final public class LayoutEditorTools {
                 levelXing.setSensorBName(null);
             }
         } else if (xingSensorB != null && levelXing.getConnectB() != null) {
-            setLevelXingSensor(bSensor, currSensorB, xingSensorB, levelXing.getConnectB(), levelXing.getCoordsB(), "B");
+            setLevelXingSensor(bSensor, currSensorB, xingSensorB, levelXing.getConnectB(), levelXingView.getCoordsB(), "B");
         }
 
         if (cSensor == null) {
@@ -11523,7 +11637,7 @@ final public class LayoutEditorTools {
                 levelXing.setSensorCName(null);
             }
         } else if (xingSensorC != null && levelXing.getConnectC() != null) {
-            setLevelXingSensor(cSensor, currSensorC, xingSensorC, levelXing.getConnectC(), levelXing.getCoordsC(), "C");
+            setLevelXingSensor(cSensor, currSensorC, xingSensorC, levelXing.getConnectC(), levelXingView.getCoordsC(), "C");
         }
 
         if (dSensor == null) {
@@ -11531,7 +11645,7 @@ final public class LayoutEditorTools {
                 levelXing.setSensorDName(null);
             }
         } else if (xingSensorD != null && levelXing.getConnectD() != null) {
-            setLevelXingSensor(dSensor, currSensorD, xingSensorD, levelXing.getConnectD(), levelXing.getCoordsD(), "D");
+            setLevelXingSensor(dSensor, currSensorD, xingSensorD, levelXing.getConnectD(), levelXingView.getCoordsD(), "D");
         }
 
         //setup logic if requested
@@ -12052,13 +12166,15 @@ final public class LayoutEditorTools {
                     (sensorD == null) ? "- none- " : sensorD.getDisplayName());  // NOI18N
         }
 
+        LayoutSlipView layoutSlipView = layoutEditor.getLayoutSlipView(layoutSlip);
+
         //place/remove sensors as requested
         if (sensorA == null) {
             if (currSensorA != null && removeSensorFromPanel(currSensorA)) {
                 layoutSlip.setSensorA(null);
             }
         } else if (slipSensorA != null && layoutSlip.getConnectA() != null) {
-            setTurnoutSensor(layoutSlip, sensorA, currSensorA, slipSensorA, layoutSlip.getConnectA(), layoutSlip.getCoordsA(), "A");
+            setTurnoutSensor(layoutSlip, sensorA, currSensorA, slipSensorA, layoutSlip.getConnectA(), layoutSlipView.getCoordsA(), "A");
         }
 
         if (sensorB == null) {
@@ -12066,7 +12182,7 @@ final public class LayoutEditorTools {
                 layoutSlip.setSensorB(null);
             }
         } else if (slipSensorB != null && layoutSlip.getConnectB() != null) {
-            setTurnoutSensor(layoutSlip, sensorB, currSensorB, slipSensorB, layoutSlip.getConnectB(), layoutSlip.getCoordsB(), "B");
+            setTurnoutSensor(layoutSlip, sensorB, currSensorB, slipSensorB, layoutSlip.getConnectB(), layoutSlipView.getCoordsB(), "B");
         }
 
         if (sensorC == null) {
@@ -12074,7 +12190,7 @@ final public class LayoutEditorTools {
                 layoutSlip.setSensorC(null);
             }
         } else if (slipSensorC != null && layoutSlip.getConnectC() != null) {
-            setTurnoutSensor(layoutSlip, sensorC, currSensorC, slipSensorC, layoutSlip.getConnectC(), layoutSlip.getCoordsC(), "C");
+            setTurnoutSensor(layoutSlip, sensorC, currSensorC, slipSensorC, layoutSlip.getConnectC(), layoutSlipView.getCoordsC(), "C");
         }
 
         if (sensorD == null) {
@@ -12082,7 +12198,7 @@ final public class LayoutEditorTools {
                 layoutSlip.setSensorD(null);
             }
         } else if (slipSensorD != null && layoutSlip.getConnectD() != null) {
-            setTurnoutSensor(layoutSlip, sensorD, currSensorD, slipSensorD, layoutSlip.getConnectD(), layoutSlip.getCoordsD(), "D");
+            setTurnoutSensor(layoutSlip, sensorD, currSensorD, slipSensorD, layoutSlip.getConnectD(), layoutSlipView.getCoordsD(), "D");
         }
 
         //setup logic if requested
@@ -13148,9 +13264,10 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsA = layoutSlip.getCoordsA();
-        Point2D coordsD = layoutSlip.getCoordsD();
-        Point2D coordsCenter = layoutSlip.getCoordsCenter();
+        LayoutSlipView layoutSlipView = layoutEditor.getLayoutSlipView(layoutSlip);
+        Point2D coordsA = layoutSlipView.getCoordsA();
+        Point2D coordsD = layoutSlipView.getCoordsD();
+        Point2D coordsCenter = layoutSlipView.getCoordsCenter();
 
         double aDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsA, coordsCenter));
         double dDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsD, coordsCenter));
@@ -13174,9 +13291,10 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsA = layoutSlip.getCoordsA();
-        Point2D coordsD = layoutSlip.getCoordsD();
-        Point2D coordsCenter = layoutSlip.getCoordsCenter();
+        LayoutSlipView layoutSlipView = layoutEditor.getLayoutSlipView(layoutSlip);
+        Point2D coordsA = layoutSlipView.getCoordsA();
+        Point2D coordsD = layoutSlipView.getCoordsD();
+        Point2D coordsCenter = layoutSlipView.getCoordsCenter();
 
         double aDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsA, coordsCenter));
         double dDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsD, coordsCenter));
@@ -13199,8 +13317,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = layoutSlip.getCoordsB();
-        Point2D coordsCenter = layoutSlip.getCoordsCenter();
+        LayoutSlipView layoutSlipView = layoutEditor.getLayoutSlipView(layoutSlip);
+        Point2D coordsB = layoutSlipView.getCoordsB();
+        Point2D coordsCenter = layoutSlipView.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
 
@@ -13218,8 +13337,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = layoutSlip.getCoordsB();
-        Point2D coordsCenter = layoutSlip.getCoordsCenter();
+        LayoutSlipView layoutSlipView = layoutEditor.getLayoutSlipView(layoutSlip);
+        Point2D coordsB = layoutSlipView.getCoordsB();
+        Point2D coordsCenter = layoutSlipView.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
 
@@ -13236,9 +13356,10 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = layoutSlip.getCoordsB();
-        Point2D coordsC = layoutSlip.getCoordsC();
-        Point2D coordsCenter = layoutSlip.getCoordsCenter();
+        LayoutSlipView layoutSlipView = layoutEditor.getLayoutSlipView(layoutSlip);
+        Point2D coordsB = layoutSlipView.getCoordsB();
+        Point2D coordsC = layoutSlipView.getCoordsC();
+        Point2D coordsCenter = layoutSlipView.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
         double cDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsC, coordsCenter));
@@ -13262,9 +13383,10 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = layoutSlip.getCoordsB();
-        Point2D coordsC = layoutSlip.getCoordsC();
-        Point2D coordsCenter = layoutSlip.getCoordsCenter();
+        LayoutSlipView layoutSlipView = layoutEditor.getLayoutSlipView(layoutSlip);
+        Point2D coordsB = layoutSlipView.getCoordsB();
+        Point2D coordsC = layoutSlipView.getCoordsC();
+        Point2D coordsCenter = layoutSlipView.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
         double cDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsC, coordsCenter));
@@ -13287,8 +13409,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsD = layoutSlip.getCoordsD();
-        Point2D coordsCenter = layoutSlip.getCoordsCenter();
+        LayoutSlipView layoutSlipView = layoutEditor.getLayoutSlipView(layoutSlip);
+        Point2D coordsD = layoutSlipView.getCoordsD();
+        Point2D coordsCenter = layoutSlipView.getCoordsCenter();
 
         double dDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsD, coordsCenter));
 
@@ -13306,8 +13429,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsD = layoutSlip.getCoordsD();
-        Point2D coordsCenter = layoutSlip.getCoordsCenter();
+        LayoutSlipView layoutSlipView = layoutEditor.getLayoutSlipView(layoutSlip);
+        Point2D coordsD = layoutSlipView.getCoordsD();
+        Point2D coordsCenter = layoutSlipView.getCoordsCenter();
 
         double dDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsD, coordsCenter));
 
@@ -13385,23 +13509,23 @@ final public class LayoutEditorTools {
             }
             if (secondHead != null) {
                 //this head signals only the continuing track of the far turnout
-                if (!initializeBlockBossLogic(head.getSystemName())) {
+                if (!initializeBlockBossLogic(head.getDisplayName())) {
                     return;
                 }
                 logic.setMode(BlockBossLogic.TRAILINGMAIN);
                 if (farState == Turnout.THROWN) {
                     logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
                 }
-                logic.setTurnout(farTurnout.getSystemName());
-                logic.setSensor1(occupancy.getSystemName());
+                logic.setTurnout(farTurnout.getDisplayName());
+                logic.setSensor1(occupancy.getDisplayName());
                 if (occupancy != connectorOccupancy) {
-                    logic.setSensor2(connectorOccupancy.getSystemName());
+                    logic.setSensor2(connectorOccupancy.getDisplayName());
                 }
                 if (nextHead != null) {
-                    logic.setWatchedSignal1(nextHead.getSystemName(), false);
+                    logic.setWatchedSignal1(nextHead.getDisplayName(), false);
                 }
                 if (auxSignal != null) {
-                    logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+                    logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
                 }
                 String nearSensorName = setupNearLogixSlip(nearTurnout, nearState, head, farTurnout, farState, slip, number);
                 addNearSensorToSlipLogic(nearSensorName);
@@ -13450,34 +13574,34 @@ final public class LayoutEditorTools {
             }
         }
         if ((secondHead == null) && (track1 != null) && setup1) {
-            if (!initializeBlockBossLogic(head.getSystemName())) {
+            if (!initializeBlockBossLogic(head.getDisplayName())) {
                 return;
             }
             logic.setMode(BlockBossLogic.FACING);
-            logic.setTurnout(farTurnout.getSystemName());
+            logic.setTurnout(farTurnout.getDisplayName());
             if (occupancy != null) {
-                logic.setWatchedSensor1(occupancy.getSystemName());
+                logic.setWatchedSensor1(occupancy.getDisplayName());
             }
-            logic.setWatchedSensor2(occupancy2.getSystemName());
-            logic.setSensor2(connectorOccupancy.getSystemName());
+            logic.setWatchedSensor2(occupancy2.getDisplayName());
+            logic.setSensor2(connectorOccupancy.getDisplayName());
             if (nextHead != null) {
-                logic.setWatchedSignal1(nextHead.getSystemName(), false);
+                logic.setWatchedSignal1(nextHead.getDisplayName(), false);
             }
             if (savedAuxSignal != null) {
-                logic.setWatchedSignal1Alt(savedAuxSignal.getSystemName());
+                logic.setWatchedSignal1Alt(savedAuxSignal.getDisplayName());
             }
             if (nextHead2 != null) {
-                logic.setWatchedSignal2(nextHead2.getSystemName());
+                logic.setWatchedSignal2(nextHead2.getDisplayName());
             }
             if (auxSignal != null) {
-                logic.setWatchedSignal2Alt(auxSignal.getSystemName());
+                logic.setWatchedSignal2Alt(auxSignal.getDisplayName());
             }
             String nearSensorName = setupNearLogixSlip(nearTurnout, nearState, head, farTurnout, farState, slip, number + 1);
             addNearSensorToSlipLogic(nearSensorName);
             logic.setLimitSpeed2(true);
             finalizeBlockBossLogic();
         } else if ((secondHead != null) && setup2) {
-            if (!initializeBlockBossLogic(secondHead.getSystemName())) {
+            if (!initializeBlockBossLogic(secondHead.getDisplayName())) {
                 return;
             }
             nearState = layoutSlip.getTurnoutState(nearTurnout, divergeState);
@@ -13490,16 +13614,16 @@ final public class LayoutEditorTools {
             } else {
                 logic.setLimitSpeed2(true);
             }
-            logic.setTurnout(farTurnout.getSystemName());
-            logic.setSensor1(occupancy2.getSystemName());
+            logic.setTurnout(farTurnout.getDisplayName());
+            logic.setSensor1(occupancy2.getDisplayName());
             if (occupancy2 != connectorOccupancy) {
-                logic.setSensor2(connectorOccupancy.getSystemName());
+                logic.setSensor2(connectorOccupancy.getDisplayName());
             }
             if (nextHead2 != null) {
-                logic.setWatchedSignal1(nextHead2.getSystemName(), false);
+                logic.setWatchedSignal1(nextHead2.getDisplayName(), false);
             }
             if (auxSignal != null) {
-                logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+                logic.setWatchedSignal1Alt(auxSignal.getDisplayName());
             }
             String nearSensorName = setupNearLogixSlip(nearTurnout, nearState, secondHead, farTurnout, farState, slip, number + 1);
             addNearSensorToSlipLogic(nearSensorName);
@@ -13513,8 +13637,9 @@ final public class LayoutEditorTools {
         String farTurnoutName = farTurn.getDisplayName();
 
         String logixPrefix = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNamePrefix();
+        String pref = InstanceManager.getDefault(jmri.LogixManager.class).getSystemPrefix();
         String logixName = logixPrefix + ":IX_LAYOUTSLIP:" + slip.getId();
-        String sensorName = "IS:" + logixName + "C" + number;
+        String sensorName = pref + "S:" + logixName + "C" + number;
         try {
             InstanceManager.sensorManagerInstance().provideSensor(sensorName);
         } catch (IllegalArgumentException ex) {

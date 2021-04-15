@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2021 All rights reserved -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <variable CV="2" item="Vstart" default="3">
+    <decVal min="1" max="63"/>
+    <label>Vstart</label>
+    <label xml:lang="it">Velocità Partenza</label>
+    <label xml:lang="fr">V démarr.</label>
+    <label xml:lang="cs">Rozjezdové napětí</label>
+    <label xml:lang="de">Abfahrgeschwindigkeit</label>
+    <label xml:lang="nl">Startsnelheid</label>
+    <comment>A value of 63 corresponds to 100%</comment>
+    <comment xml:lang="it">Un Valore di 63 corrisponde al 100%</comment>
+    <comment xml:lang="de">Der Wert 63 entspricht 100%</comment>
+    <comment xml:lang="cs">Hodnota 63 odpovídá 100 %</comment>
+    <comment xml:lang="nl">Een waarde van 63 betekent 100%</comment>
+  </variable>
+  <variable CV="5" item="Vhigh" default="63">
+    <decVal min="1" max="63"/>
+    <label>Vhigh</label>
+    <label xml:lang="it">Velocità Massimi</label>
+    <label xml:lang="fr">Vmax</label>
+    <label xml:lang="de">Höchstgeschwindigkeit</label>
+    <label xml:lang="nl">Max. snelheid</label>
+    <label xml:lang="cs">Maximální napětí</label>
+  </variable>
+  <variable CV="6" item="Vmid" default="25" exclude="52690">
+    <decVal min="1" max="63"/>
+    <label>Vmid</label>
+    <label xml:lang="it">Velocità Intermedi</label>
+    <label xml:lang="fr">Vmoy</label>
+    <label xml:lang="de">Mittengeschwindigkeit</label>
+    <label xml:lang="nl">Min. snelheid</label>
+    <label xml:lang="cs">Střední napětí</label>
+  </variable>
+</variables>

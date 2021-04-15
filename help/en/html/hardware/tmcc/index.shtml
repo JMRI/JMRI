@@ -54,7 +54,8 @@
       "straight-through" or "modem" cable, <i>not</i>a "crossover"
       or "null-modem" cable. if your computer doesn't have a
       built-in serial port, you can use a USB-serial adapter, but
-      make sure you install the correct drivers.</p>
+      make sure you install the correct drivers if needed. Recent Mac OS 
+      distributions have the drivers already there for some adaptors.</p>
 
       <h3>Settings</h3>
 
@@ -93,12 +94,15 @@
       accessory decoders is available. Train commands are not yet
       available.</p>
 
-      <p>You will still need to turn your CAB on to use the Set
-      features like setting an Locomotive ID. Once set up, however,
-      you can perform most functions from the WiThrottles.</p>
+      <p>The functions below will take care of all Engine Controls on TMCC and the basic commands on Legacy. 
+      The Accessory and Route and Train ( multi Lash Ups ) are not implimented.
+      The Switch commands should also work even if you are using CMRI to control the switches. </p>
 
       <p>Listed are the common actions for Railsounds 4, ERR
-      conversion boards, and TAS boards.</p>
+      conversion boards, and TAS boards. Any Accessory that uses Engine ID commands
+      will also work however the function buttons will have different meanings.
+      Consult the manual that came with the Accessor ( Crane Car, etc. ) to determine
+      what the aux 1 buttons do for that item and label the Function Burrons accordingly.</p>
 
       <p>When using a JMRI Throttle to run a Locomotive, the
       function buttons are allocated as follows:</p>
@@ -187,10 +191,34 @@
         <dt>F20</dt>
 
         <dd>Boost</dd>
-
+        
         <dt>F21</dt>
 
         <dd>Brake</dd>
+
+        <dt>F22</dt>
+
+        <dd>Increse Speed 2 Steps</dd>
+        
+        <dt>F23</dt>
+
+        <dd>Decrease Speed 2 Steps</dd>
+        
+        <dt>F24</dt>
+
+        <dd>Momentum Low</dd>
+        
+        <dt>F25</dt>
+
+        <dd>Momentum Medium</dd>
+        
+        <dt>F26</dt>
+
+        <dd>Momentum High</dd>
+        
+        <dt>F27</dt>
+
+        <dd>Set</dd>
       </dl>
 
       <a name="tools" id="tools"></a>

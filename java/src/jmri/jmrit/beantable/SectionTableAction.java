@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
+import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultCellEditor;
@@ -114,12 +115,12 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             }
 
             @Override
-            public Section getBySystemName(String name) {
+            public Section getBySystemName(@Nonnull String name) {
                 return jmri.InstanceManager.getDefault(jmri.SectionManager.class).getBySystemName(name);
             }
 
             @Override
-            public Section getByUserName(String name) {
+            public Section getByUserName(@Nonnull String name) {
                 return jmri.InstanceManager.getDefault(jmri.SectionManager.class).getByUserName(name);
             }
 
@@ -635,6 +636,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             sysName.setVisible(false);
             sysNameFixed.setVisible(true);
             initializeEditInformation();
+            addFrame.getRootPane().setDefaultButton(update);
             addFrame.setTitle(Bundle.getMessage("TitleEditSection"));
         } else {
             // setup for create window
@@ -645,6 +647,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             sysNameFixed.setVisible(false);
             autoSystemName();
             clearForCreate();
+            addFrame.getRootPane().setDefaultButton(create);
             addFrame.setTitle(Bundle.getMessage("TitleAddSection"));
         }
         // initialize layout editor panels
@@ -659,6 +662,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
         }
         // initialize block combo - first time
         initializeBlockCombo();
+        addFrame.setEscapeKeyClosesWindow(true);
         addFrame.pack();
         addFrame.setVisible(true);
     }

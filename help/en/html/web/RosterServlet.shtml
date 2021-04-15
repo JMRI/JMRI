@@ -26,9 +26,9 @@
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
-      <h1>JMRI: Roster Servlet</h1>The JMRI Roster Servlet provides
-      web access to information about JMRI roster entries. This
-      servlet responds to the following URL patterns:
+      <h1>JMRI: Roster Servlet</h1>
+      <p>The JMRI Roster Servlet provides web access to information about
+      JMRI roster entries. This servlet responds to the following URL patterns:</p>
 
       <ul>
         <li>/roster/</li>

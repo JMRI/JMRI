@@ -88,7 +88,7 @@ which checks the dates of the control files to make sure they've benen updated w
 - from http://www.slf4j.org
 
 ##### openlcb.jar
-- 0.7.26 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.26/openlcb-0.7.26.jar or the maven central repository.
+- 0.7.28 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.28/openlcb-0.7.28.jar or the maven central repository.
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -115,9 +115,9 @@ which checks the dates of the control files to make sure they've benen updated w
 - JSON Schema validation library
 - from https://github.com/networknt/json-schema-validator/releases
 
-##### mqtt-client-0.4.0.jar
+##### org.eclipse.paho.client.mqttv3-1.2.5.jar
  - Eclipse Paho library  https://www.eclipse.org/paho/
- - starting in JMRI 4.11.5
+ - mqtt-client-0.4.0.jar starting in JMRI 4.11.5, move to 1.2.5 in JMRI 4.21.3
 
 ##### BlueCove access to bluetooth
 bluecove-2.1.1-SNAPSHOT.jar

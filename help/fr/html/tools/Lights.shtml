@@ -35,7 +35,7 @@ ont &#233;t&#233; cr&#233;&#233;es pour fournir un contr&#244;le ais&#233; des v
 .Les Lumi&#232;re peuvent &#234;tre utilis&#233;es, par exemple, pour activer un dispositif d&#233;coupleur &#233;lectromagn&#233;tique
  pour un temps pr&#233;-d&#233;termin&#233; en r&#233;ponse &#224; un bouton du panneau de contr&#244;le.
 Initialement d&#233;velopp&#233; pour une utilisation avec le C/MRI, les Lumi&#232;res actuellement sont &#233;galement
-mises en oeuvre sur LocoNet (Digitrax) et les syst&#232;mes Oaktree et CBUS MERG.</p>
+mises en oeuvre sur LocoNet (Digitrax) et les syst&#232;mes Oaktree et CBUS&reg; MERG.</p>
 <p>Les  Lumi&#232;res partagent les bits de sortie num&#233;rique disponibles avec les Aiguillages. Une
 Lumi&#232;re ou un Aiguillage, mais pas les deux, peut commander un bit de sortie num&#233;rique sp&#233;cifique.
 Puisque les Lumi&#232;res n'ont pas la structure de r&#233;trosignalisation des Aiguillages, les Lumi&#232;res ne doivent pas

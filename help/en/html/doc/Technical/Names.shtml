@@ -89,26 +89,26 @@
       doesn't have to be convenient, but does have to have a clear
       mapping from name to object and back. For example, we need a
       very specific way to identify "LocoNet Turnout 23". We call
-      these "system names". JMRI code will map these to and from
+      these "system names." JMRI code will map these to and from
       whatever information the hardware may need.</p>
 
       <a name="format" id="format"></a>
       <h2>System Name Format</h2>
       
-      A system name is formed from a short "system prefix" representing
+      A system name is formed from a short "connection prefix" representing
       the hardware system, followed by a single upper case "type letter"
-      indicating the type of the object, followed by a system- and
-      type-specific "suffix string" identifying a specific object.
+      indicating the type of the object (together, the "system name prefix"), followed by a system- and
+      type-specific "suffix" identifying a specific object.
       <ul>
-        <li>The system prefix is a single uppercase or lowercase letter,
-            optionally followed by one or more digits. Special characters
-            are not allowed.
-            This simple form allows us to always find the system prefix
-            and type letter even if we don't know the full list of 
-            hardware systems involved.
+        <li>The connection prefix is a single uppercase or lowercase letter, optionally followed by one
+	    or more digits. Therefore, "S," "s", "S2," and "s2" are all examples of valid -- and
+	    different -- connection names.  Special characters are not allowed. This simple form allows
+	    us to always find the connection prefix and type letter even if we don't know the full list of 
+            hardware systems involved.   Default values for different hardware systems are listed <a href="#hardware">
+	    below.</a>
         <li>The type letter defines the type of model-railroad object, 
             such as (T)urnout or (S)ensor, see <a href="#types">below</a>.
-        <li>The suffix string is meant to be related to the hardware
+        <li>The suffix string is related to the hardware
             addressing for the specific hardware system, but is otherwise unconstrained.
             Some are simple numbers, such as a device address. Others
             are much more complicated strings to carry more complex 
@@ -117,8 +117,8 @@
 
       <p>Examples:</p>
 
-      Note: These assume the default values of system prefix letters,
-      but they certainly could have been defined differently.
+      Note: These assume the default values of connection prefix letters,
+      but they certainly could have been defined differently, including using lower case and numbers.
       
       <ul>
         <li>LT23 - <u>L</u>ocoNet <u>T</u>urnout <u>23</u>.</li>
@@ -129,14 +129,14 @@
             on the node with address 2.</li>
       </ul>
       
-      Note that there is no assumption of pattern to the
-      names; they don't have to be assigned monotonically, nor are
-      they restricted to a single system. 
+      Note in these examples the pattern to the suffix for certain hardware.  However, there is no  
+      assumption these are assigned in numeric order, that is you could have CS1001, CS1021, CS3044, as 
+      well as LS1001, cS1001, etc. as your only defined sensors. 
       
       <a name="hardware" id="hardware"></a>
-      <h3>System Prefix</h3>
+      <h3>Connection Prefix</h3>
       
-      Originally, the "hardware prefix" was
+      Originally, the "hardware prefix" (now called "connection prefix") was
       a single uppercase letter identifying a single system
       connection: L for LocoNet, N for NCE, etc. The default
       letters for those are listed below. This is still by far the
@@ -153,13 +153,13 @@
       "Y". You can also use a lower case or upper case letter followed by
       digits, e.g. "N1" and "n2".</p>
 
-      <h4>Default System Letters</h4>
+      <h4>Default Connection Letters</h4>
       <p>Note that some of these are placeholders, and have no underlying
       implementation. (Links are to JMRI pages with more information)</p>
       
       <p>Also note that some older implementations used 
       formats that don't meet the current standard, with 
-      system <u>letters</u> such as
+      connection <u>letters</u> such as
       "DX", "DCCPP", "DP", "MR", "MC", "PI", "TM".
       These 
       <a href="../../setup/MigrateSystemPrefixes.shtml">need to be migrated</a>,
@@ -208,7 +208,7 @@
 
         <li><strong>M</strong> Model railroad layout control buses, including
         <a href="../../hardware/openlcb/index.shtml">OpenLCB</a>
-        and <a href="../../hardware/can/cbus/index.shtml">MERG CBUS</a>
+        and <a href="../../hardware/can/cbus/index.shtml">CBUS&reg;</a>
         <br><a href="../../hardware/mrc/index.shtml">Model Rectifier Corp (MRC)</a>
         <br><a href="../../hardware/marklin/index.shtml">Marklin CS2</a>
         </li>
@@ -328,6 +328,9 @@
         main layout power, e.g. LPB or S42 for subdistrict channel
         2 on card 4, e.g. LPS42.</li>
 
+        <li><strong>Q</strong> LogixNG - Logix Next Generation - a set of logic equations used
+		to control the layout. LogixNG system names start with IQ.</li>
+
         <li><strong>R</strong> Reporters - a general purpose mechanism for reporting
         complicated information from the layout, e.g. locomotive
         identification from some transponding hardware, RFID tag
@@ -370,7 +373,7 @@
         
      <a name="special" id="special"></a></p>
       <p>Each different hardware system
-      can specify the "suffix string" that follows the system and type
+      can specify the "suffix string" that follows the connection and type
       letters. Generally, these are small numbers, but their exact
       meaning is very system-specific. For more information, please
         see the specific pages for</p>
@@ -391,7 +394,7 @@
         XPressNet</a></li>
         
         <li><a href=
-        "../../hardware/can/cbus/Names.shtml">MERG-CBUS</a></li>
+               "../../hardware/can/cbus/Names.shtml">CBUS</a></li>
         
         <li><a href=
         "../../hardware/nce/NCE.shtml#names">NCE</a></li>
@@ -409,7 +412,7 @@
       <h4>Adding an item to the table - Entry Format Summary</h4>
       
       <p>When you add an item to one of the tables, many times you only
-      have to enter the numbers and have JMRI construct
+      have to enter the numbers (the suffix) and JMRI will construct
       the complete system name.<br>
       Here's a summary of the options per Connection, split up for
         outputs (eg. Turnouts) and inputs (eg. Sensors):</p>
@@ -693,7 +696,7 @@
           <td>8000</td>
         </tr>
         <tr>
-          <td>MERG-CBUS</td>
+          <td>CBUS</td>
           <td>io</td>
           <td>18</td>
           <td>Event 18 On; 18 Off</td>
@@ -704,7 +707,7 @@
           <td>65535</td>
         </tr>
         <tr>
-          <td>MERG-CBUS</td>
+          <td>CBUS</td>
           <td>io</td>
           <td>+N2E18;-N2E18;</td>
           <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
@@ -716,7 +719,7 @@
 
         </tr>
         <tr>
-          <td>MERG-CBUS</td>
+          <td>CBUS</td>
           <td>i</td>
           <td>200018M07</td>
           <td>listen to Events 18 .. 1F</td>
@@ -727,7 +730,7 @@
           <td> </td>
         </tr>
         <tr>
-          <td>MERG-CBUS</td>
+          <td>CBUS</td>
           <td>io</td>
           <td>X9000020012;X91FFFFFFFE</td>
           <td>hex CAN frame msg. Active; Inactive
@@ -739,7 +742,7 @@
           <td colspan="2">Depends on Opscode</td>
         </tr>
         <tr>
-          <td>MERG-CBUS</td>
+          <td>CBUS</td>
           <td>io</td>
           <td>+18;+21</td>
           <td>Event 18 On; 21 On</td>
@@ -750,7 +753,7 @@
           <td>65535;65535</td>
         </tr>
         <tr>
-          <td>MERG-CBUS</td>
+          <td>CBUS</td>
           <td>io</td>
           <td>+18;-21</td>
           <td>Event 18 On; 21 Off</td>
@@ -761,7 +764,7 @@
           <td>65535,65535</td>
         </tr>
         <tr>
-          <td>MERG-CBUS</td>
+          <td>CBUS</td>
           <td>io</td>
           <td>200018</td>
           <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
@@ -1084,6 +1087,10 @@ SENSOR GROUP:my group:LS2
         For an example, see the bottom of jmri.jmrix.cmri.serial.SerialTurnout
         and jmri.jmrix.cmri.serial.SerialTurnoutTest.
       
+        <h2></h2>
+        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
+        <p></p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

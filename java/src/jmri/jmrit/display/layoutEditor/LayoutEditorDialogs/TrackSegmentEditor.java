@@ -1,21 +1,17 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.geom.*;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
 
-import java.util.*;
-import java.util.List;
-
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 import javax.swing.*;
-import javax.swing.border.*;
 
 import jmri.*;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.swing.NamedBeanComboBox;
-import jmri.util.*;
+import jmri.util.JmriJFrame;
 
 /**
  * MVC Editor component for TrackSegment objects.
@@ -37,6 +33,7 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
     // ********** specific to TrackSegment
 
     // variables for Edit Track Segment pane
+    private TrackSegmentView trackSegmentView;
     private TrackSegment trackSegment;
 
     private JmriJFrame editTrackSegmentFrame = null;
@@ -61,12 +58,13 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
      */
     @InvokeOnGuiThread
     @Override
-    public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
-        if ( layoutTrack instanceof TrackSegment ) {
-            this.trackSegment = (TrackSegment) layoutTrack;
+    public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrackView) {
+        if ( layoutTrackView instanceof TrackSegmentView ) {
+            this.trackSegmentView = (TrackSegmentView) layoutTrackView;
+            this.trackSegment = this.trackSegmentView.getTrackSegment();
         } else {
             log.error("editLayoutTrack received type {} content {}", 
-                    layoutTrack.getClass(), layoutTrack, 
+                    layoutTrackView.getClass(), layoutTrackView, 
                     new Exception("traceback"));
         }
         sensorList.clear();
@@ -157,18 +155,18 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
         } else {
             editTrackSegmentMainlineComboBox.setSelectedIndex(editTrackSegmentSideTrackIndex);
         }
-        if (trackSegment.isDashed()) {
+        if (trackSegmentView.isDashed()) {
             editTrackSegmentDashedComboBox.setSelectedIndex(editTrackSegmentDashedIndex);
         } else {
             editTrackSegmentDashedComboBox.setSelectedIndex(editTrackSegmentSolidIndex);
         }
-        editTrackSegmentHiddenCheckBox.setSelected(trackSegment.isHidden());
+        editTrackSegmentHiddenCheckBox.setSelected(trackSegmentView.isHidden());
         Block block = InstanceManager.getDefault(BlockManager.class).getBlock(trackSegment.getBlockName());
         editTrackSegmentBlockNameComboBox.getEditor().setItem(block);   // Select the item via the editor, empty text field if null
         editTrackSegmentBlockNameComboBox.setEnabled(!hasNxSensorPairs(trackSegment.getLayoutBlock()));
 
-        if (trackSegment.isArc() && trackSegment.isCircle()) {
-            editTrackSegmentArcTextField.setText("" + trackSegment.getAngle());
+        if (trackSegmentView.isArc() && trackSegmentView.isCircle()) {
+            editTrackSegmentArcTextField.setText("" + trackSegmentView.getAngle());
             editTrackSegmentArcTextField.setEnabled(true);
         } else {
             editTrackSegmentArcTextField.setEnabled(false);
@@ -217,30 +215,30 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
     @InvokeOnGuiThread
     private void editTracksegmentDonePressed(ActionEvent a) {
         // set dashed
-        boolean oldDashed = trackSegment.isDashed();
-        trackSegment.setDashed(editTrackSegmentDashedComboBox.getSelectedIndex() == editTrackSegmentDashedIndex);
+        boolean oldDashed = trackSegmentView.isDashed();
+        trackSegmentView.setDashed(editTrackSegmentDashedComboBox.getSelectedIndex() == editTrackSegmentDashedIndex);
 
         // set mainline
         boolean oldMainline = trackSegment.isMainline();
         trackSegment.setMainline(editTrackSegmentMainlineComboBox.getSelectedIndex() == editTrackSegmentMainlineTrackIndex);
 
         // set hidden
-        boolean oldHidden = trackSegment.isHidden();
-        trackSegment.setHidden(editTrackSegmentHiddenCheckBox.isSelected());
+        boolean oldHidden = trackSegmentView.isHidden();
+        trackSegmentView.setHidden(editTrackSegmentHiddenCheckBox.isSelected());
 
-        if (trackSegment.isArc()) {
+        if (trackSegmentView.isArc()) {
             try {
                 double newAngle = Double.parseDouble(editTrackSegmentArcTextField.getText());
-                trackSegment.setAngle(newAngle);
+                trackSegmentView.setAngle(newAngle);
                 editTrackSegmentNeedsRedraw = true;
             } catch (NumberFormatException e) {
-                editTrackSegmentArcTextField.setText("" + trackSegment.getAngle());
+                editTrackSegmentArcTextField.setText("" + trackSegmentView.getAngle());
             }
         }
         // check if anything changed
-        if ((oldDashed != trackSegment.isDashed())
+        if ((oldDashed != trackSegmentView.isDashed())
                 || (oldMainline != trackSegment.isMainline())
-                || (oldHidden != trackSegment.isHidden())) {
+                || (oldHidden != trackSegmentView.isHidden())) {
             editTrackSegmentNeedsRedraw = true;
         }
         // check if Block changed

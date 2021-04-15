@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import jmri.*;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,6 +27,11 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     @Override
     public String getSystemName(int i) {
         return "IS" + i;
+    }
+    
+    @Override
+    protected String getASystemNameWithNoPrefix() {
+        return "My Sensor 6";
     }
 
     @Test
@@ -292,6 +298,55 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     @Test
     @Override
     public void testMakeSystemNameWithPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testIncorrectGetNextValidAddress() {}
+    
+    @SuppressWarnings("deprecation")
+    @Test
+    public void testDeprecatedGetNextValidAddress() throws JmriException {
+    
+        Assert.assertEquals("2", "My Sensor 2", l.getNextValidAddress("My Sensor 2", l.getSystemPrefix()));
+        JUnitAppender.assertWarnMessageStartingWith("getNextValidAddress is deprecated, please remove references to it");
+        
+    }
+    
+    @Test
+    public void testgetNextValidAddressMaxedOut() throws JmriException {
+
+        Assert.assertNotNull("Created S1", l.provide("My Sensor 1"));
+        Assert.assertEquals("2 false", "My Sensor 2", l.getNextValidAddress("My Sensor 1", l.getSystemPrefix(),false));
+        Assert.assertEquals("2 true", "My Sensor 2", l.getNextValidAddress("My Sensor 1", l.getSystemPrefix(),true));
+        
+
+        Assert.assertNotNull("Created S2", l.provide("My Sensor 2"));
+        Assert.assertNotNull("Created S3", l.provide("My Sensor 3"));
+        Assert.assertEquals("2", "My Sensor 4", l.getNextValidAddress("My Sensor 1", l.getSystemPrefix(),false));
+        
+        Assert.assertNotNull("Created S4", l.provide("My Sensor 4"));
+        Assert.assertNotNull("Created S5", l.provide("My Sensor 5"));
+        Assert.assertNotNull("Created S6", l.provide("My Sensor 6"));
+        Assert.assertNotNull("Created S7", l.provide("My Sensor 7"));
+        Assert.assertNotNull("Created S8", l.provide("My Sensor 8"));
+        Assert.assertEquals("9", "My Sensor 9", l.getNextValidAddress("My Sensor 1", l.getSystemPrefix(),false));
+        
+        Assert.assertNotNull("Created S9", l.provide("My Sensor 9"));
+        Assert.assertEquals("10", "My Sensor 10", l.getNextValidAddress("My Sensor 1", l.getSystemPrefix(),false));
+        
+        Assert.assertNotNull("Created S10", l.provide("My Sensor 10"));
+        Assert.assertEquals("11", "My Sensor 11", l.getNextValidAddress("My Sensor 1", l.getSystemPrefix(),false));
+        
+        Assert.assertNotNull("Created S11", l.provide("My Sensor 11"));
+        
+        Assert.assertThrows(JmriException.class, () -> l.getNextValidAddress("My Sensor 1",l.getSystemPrefix(),false));
+        
+        Assert.assertEquals("12", "My Sensor 12", l.getNextValidAddress("My Sensor 2", l.getSystemPrefix(),false));
+
+        Assert.assertEquals("99 true", "My Sensor 100", l.getNextValidAddress("My Sensor 99", l.getSystemPrefix(),true));
+                
+    }
 
     private static class CountingPropertyChangeListener implements PropertyChangeListener {
 

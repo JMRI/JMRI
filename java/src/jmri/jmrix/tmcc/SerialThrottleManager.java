@@ -5,6 +5,7 @@ import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
+import jmri.jmrix.dccpp.DCCppInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,17 +16,24 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialThrottleManager extends AbstractThrottleManager {
 
-    private TmccSystemConnectionMemo _memo = null;
+    private final TmccSystemConnectionMemo _memo;
 
     /**
      * Create a throttle manager.
      *
-     * @param memo the memo for the connection this will use
+     * @param memo the memo for the connection this tm will use
      */
     public SerialThrottleManager(TmccSystemConnectionMemo memo) {
         super(memo);
         _memo = memo;
         userName = "Lionel TMCC";
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void dispose() { // no listener on tc to be removed
     }
 
     @Override
@@ -34,10 +42,9 @@ public class SerialThrottleManager extends AbstractThrottleManager {
             // the protocol doesn't require an interaction with the command
             // station for this, so immediately trigger the callback.
             DccLocoAddress address = (DccLocoAddress) a;
-            log.debug("new throttle for {}", address);
+            log.debug("new TMCC throttle for {}", address);
             notifyThrottleKnown(new SerialThrottle(_memo, address), address);
-        }
-        else {
+        } else {
             log.error("{} is not a DccLocoAddress",a);
             failedThrottleRequest(a, "LocoAddress " +a+ " is not a DccLocoAddress");
         }
@@ -67,7 +74,7 @@ public class SerialThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-        /**
+    /**
      * What speed modes are supported by this system? value should be xor of
      * possible modes specifed by the DccThrottle interface
      */

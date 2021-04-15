@@ -5,8 +5,8 @@ import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -41,7 +41,7 @@ public class ShowTrainsServingLocationActionTest extends OperationsTestCase {
         ShowTrainsServingLocationAction a = new ShowTrainsServingLocationAction(l, t);
         Assert.assertNotNull("exists", a);
 
-        a.actionPerformed(new ActionEvent(this, 0, null));
+        a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
 
         JmriJFrame f = JmriJFrame.getFrame(MessageFormat.format(Bundle.getMessage("TitleShowTrains"), new Object[]{t.getName()}));
         Assert.assertNotNull("frame exists", f);

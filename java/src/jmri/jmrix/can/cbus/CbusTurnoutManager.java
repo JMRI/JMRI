@@ -34,29 +34,20 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
     /**
      * {@inheritDoc}
      */
-    @Override
     @Nonnull
-    public CanSystemConnectionMemo getMemo() {
-        return (CanSystemConnectionMemo) memo;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         // first, check validity
+        String newAddress;
         try {
-            validateAddressFormat(addr);
+            newAddress = CbusAddress.validateSysName(addr);
         } catch (IllegalArgumentException e) {
             log.error(e.getMessage());
             throw e;
         }
-        // validate (will add "+" to unsigned int)
-        String newAddress = CbusAddress.validateSysName(addr);
         // OK, make
-        Turnout t = new CbusTurnout(getSystemPrefix(), newAddress, getMemo().getTrafficController());
+        Turnout t = new CbusTurnout(getSystemPrefix(), newAddress, ((CanSystemConnectionMemo)getMemo()).getTrafficController());
         t.setUserName(userName);
         return t;
     }
@@ -83,40 +74,15 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         }
         return prefix + typeLetter() + newAddress;
     }
-
+    
     /**
+     * Only increments by 1, which is fine for CBUS Turnouts.
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
-        String testAddr = curAddress;
-        // make sure starting name is valid
-        try {
-            validateAddressFormat(testAddr);
-        } catch (IllegalArgumentException e) {
-            throw new JmriException(e.getMessage());
-        }
-        testAddr = CbusAddress.validateSysName(testAddr); // normalize Merg address
-        Turnout t = getBySystemName(prefix + typeLetter() + testAddr);
-        if (t != null) {
-            // build local addresses
-            for (int x = 1; x < 10; x++) {
-                testAddr = CbusAddress.getIncrement(testAddr); // getIncrement will perform a max check on the numbers
-                t = getBySystemName(prefix + typeLetter() + testAddr);
-                if (t == null) {
-                    // If the hardware address + x does not already exist,
-                    // then this can be considered the next valid address.
-                    return testAddr;
-                }
-            }
-            // feedback when next address is also in use
-            log.warn("10 hardware addresses starting at {} already in use. No new {} Turnouts added", curAddress, getMemo().getUserName());
-            return null;
-        } else {
-            // If the initially requested hardware address does not already exist,
-            // then this can be considered the next valid address.
-            return testAddr;
-        }
+    protected String getIncrement(String curAddress, int increment) throws JmriException {
+        return CbusAddress.getIncrement(curAddress);
     }
 
     /**
@@ -127,7 +93,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
     public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         validateSystemNamePrefix(name, locale);
         try {
-            validateAddressFormat(name.substring(getSystemNamePrefix().length()));
+            CbusAddress.validateSysName(name.substring(getSystemNamePrefix().length()));
         } catch (IllegalArgumentException ex) {
             throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemNameCustom", ex.getMessage());
         }
@@ -146,23 +112,11 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
             return NameValidity.INVALID;
         }
         try {
-            validateAddressFormat(addr);
+            CbusAddress.validateSysName(addr);
         } catch (IllegalArgumentException e){
             return NameValidity.INVALID;
         }
         return NameValidity.VALID;
-    }
-
-    /**
-     * Work out the details for Cbus hardware address validation.
-     * Logging of handled cases no higher than WARN.
-     *
-     * @param address the hardware address to check
-     * @throws IllegalArgumentException when delimiter is not found
-     */
-    void validateAddressFormat(String address) throws IllegalArgumentException {
-        String newAddress = CbusAddress.validateSysName(address);
-        log.debug("validated system name {}", newAddress);
     }
 
     /**

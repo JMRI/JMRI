@@ -129,55 +129,19 @@
 	</variable> 
 	<variable item="Brake grinding noise start speed" CV="T2CV.4.13" default="15" >
 		<decVal max="126"/>
+    <!--    label applied in pane-->
 	</variable>
-	<variable label="Dual function F0F" CV="T2CV.4.14" default="1" mask="XXXXXXXXXXXXXXXV" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable label="Dual function F0R" CV="T2CV.4.14" default="1" mask="XXXXXXXXXXXXXXVX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable label="Dual function F1" CV="T2CV.4.14" default="0" mask="XXXXXXXXXXXXXVXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable label="Dual function F2" CV="T2CV.4.14" default="0" mask="XXXXXXXXXXXXVXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable label="Dual function F3" CV="T2CV.4.14" default="0" mask="XXXXXXXXXXXVXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable label="Dual function F4" CV="T2CV.4.14" default="0" mask="XXXXXXXXXXVXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable label="Dual function F5" CV="T2CV.4.14" default="0" mask="XXXXXXXXXVXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable label="Dual function F6" CV="T2CV.4.14" default="0" mask="XXXXXXXXVXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable label="Dual function F7" CV="T2CV.4.14" default="0" mask="XXXXXXXVXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable label="Dual function F8" CV="T2CV.4.14" default="1" mask="XXXXXXVXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable label="Dual function F9" CV="T2CV.4.14" default="0" mask="XXXXXVXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable label="Dual function F10" CV="T2CV.4.14" default="0" mask="XXXXVXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable label="Dual function F11" CV="T2CV.4.14" default="0" mask="XXXVXXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable label="Dual function F12" CV="T2CV.4.14" default="0" mask="XXVXXXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable label="Dual function F13" CV="T2CV.4.14" default="0" mask="XVXXXXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable label="Dual function F14" CV="T2CV.4.14" default="0" mask="VXXXXXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
+
+  <xi:include href="http://jmri.org/xml/decoders/tcs/wow_dual_f0_f12.xml"/>
+  <variable item="Dual function F13" CV="T2CV.4.14" default="0" mask="XVXXXXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Dual function F13</label>
+  </variable>
+  <variable item="Dual function F14" CV="T2CV.4.14" default="0" mask="VXXXXXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Dual function F14</label>
+  </variable>
+
 	<variable item="Dynamic brake notch setting" CV="T2CV.4.15" default="3"  tooltip="controls what notch the prime mover goes into when the Dynamic brakes are turned on">
 		<enumVal>
 			<enumChoice choice="Idle"/>

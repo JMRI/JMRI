@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handle configuration for display.SensorIcon objects
+ * Handle configuration for display.SensorIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
  */
@@ -29,7 +29,7 @@ public class SensorIconXml extends PositionableLabelXml {
     }
 
     /**
-     * Default implementation for storing the contents of a SensorIcon
+     * Default implementation for storing the contents of a SensorIcon.
      *
      * @param o Object to store, of type SensorIcon
      * @return Element containing the complete info
@@ -153,7 +153,7 @@ public class SensorIconXml extends PositionableLabelXml {
     boolean _icon;
 
     /**
-     * Create a PositionableLabel, then add to a target JLayeredPane
+     * Create a PositionableLabel, then add to a target JLayeredPane.
      *
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object

@@ -3,11 +3,12 @@ package jmri.jmrit.operations.locations;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
@@ -34,6 +35,8 @@ public class YardmasterFrameTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JUnitOperationsUtil.initOperationsData();
+        // improve test coverage
+        Setup.setPrintHeadersEnabled(true);
 
         // build a train to create data for the Yardmaster window
         Train train = InstanceManager.getDefault(TrainManager.class).getTrainByName("STF");

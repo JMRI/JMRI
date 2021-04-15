@@ -4,11 +4,14 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
+
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTrackDrawingOptions;
 import jmri.util.swing.JmriColorChooser;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

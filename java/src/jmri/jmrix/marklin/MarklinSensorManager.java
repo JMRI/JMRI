@@ -49,7 +49,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         MarklinSensor s = new MarklinSensor(systemName, userName);
         if (systemName.contains(":")) {
             int board = 0;
@@ -60,7 +60,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
             try {
                 board = Integer.parseInt(curAddress.substring(0, seperator));
                 if (!_tmarklin.containsKey(board)) {
-                    _tmarklin.put(board, new Hashtable<Integer, MarklinSensor>());
+                    _tmarklin.put(board, new Hashtable<>());
                     MarklinMessage m = MarklinMessage.sensorPollMessage(board);
                     tc.sendMarklinMessage(m, this);
                 }
@@ -88,11 +88,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
     @Nonnull
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         if (!curAddress.contains(":")) {
-            log.error("Unable to convert {} into the Module and port format of nn:xx", curAddress);
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningModuleAddress"),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-            // TODO prevent further execution, return error flag
-            throw new JmriException("Hardware Address should be passed in the form 'Module:port'");
+            throw new JmriException("Hardware Address "+curAddress+"should be passed in the form 'Module:port'");
         }
 
         //Address format passed is in the form of board:channel or T:turnout address
@@ -100,22 +96,16 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
         try {
             board = Integer.parseInt(curAddress.substring(0, seperator));
         } catch (NumberFormatException ex) {
-            log.error("First part of {} in front of : should be a number", curAddress);
-            throw new JmriException("Module Address passed should be a number");
+            throw new JmriException("First part of "+curAddress+" in front of : should be a number");
         }
         try {
             port = Integer.parseInt(curAddress.substring(seperator + 1));
         } catch (NumberFormatException ex) {
-            log.error("Second part of {} after : should be a number", curAddress);
-            throw new JmriException("Port Address passed should be a number");
+            throw new JmriException("Second part of "+curAddress+" after : should be a number");
         }
 
         if (port == 0 || port > 16) {
-            log.error("Port number must be between 1 and 16");
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningPortRangeXY", 1, 16),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-            // TODO prevent further execution, return error flag
-            throw new JmriException("Port number must be between 1 and 16");
+            throw new JmriException("Port number "+port+" in "+curAddress+" must be between 1 and 16");
         }
         StringBuilder sb = new StringBuilder();
         sb.append(getSystemPrefix());
@@ -131,31 +121,22 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
     private int port = 0;
 
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+        return true;
+    }
+    
+    @Override
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
 
-        String tmpSName;
-
-        try {
-            tmpSName = createSystemName(curAddress, prefix);
-        } catch (JmriException ex) {
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
-            return null;
-        }
+        String tmpSName = createSystemName(curAddress, prefix);
 
         // Check to determine if the System Name is in use, return null if it is,
         // otherwise return the next valid address.
         Sensor s = getBySystemName(tmpSName);
-        if (s != null) {
+        if (s != null || ignoreInitialExisting) {
             port++;
             while (port < 17) {
-                try {
-                    tmpSName = createSystemName(board + ":" + port, prefix);
-                } catch (JmriException e) {
-                    log.error("Error creating system name for {}:{}", board, port);
-                    JOptionPane.showMessageDialog(null, (Bundle.getMessage("ErrorCreateSystemName") +  " " + board + ":" + port),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                }
+                tmpSName = createSystemName(board + ":" + port, prefix);
                 s = getBySystemName(tmpSName);
                 if (s == null) {
                     StringBuilder sb = new StringBuilder();
@@ -167,7 +148,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
                 }
                 port++;
             }
-            return null;
+            throw new JmriException(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,tmpSName));
         } else {
             StringBuilder sb = new StringBuilder();
             sb.append(board);

@@ -242,6 +242,10 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
     public List<Car> getByRweList() {
         return getByList(getByLocationList(), BY_RWE);
     }
+    
+    public List<Car> getByRwlList() {
+        return getByList(getByLocationList(), BY_RWL);
+    }
 
     public List<Car> getByFinalDestinationList() {
         return getByList(getByDestinationList(), BY_FINAL_DEST);
@@ -268,6 +272,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
     private static final int BY_WAIT = 16;
     private static final int BY_PICKUP = 19;
     private static final int BY_HAZARD = 21;
+    private static final int BY_RWL = 22; // Return When loaded
 
     // add car options to sort comparator
     @Override
@@ -280,6 +285,9 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
             case BY_RWE:
                 return (c1, c2) -> (c1.getReturnWhenEmptyDestName()
                         .compareToIgnoreCase(c2.getReturnWhenEmptyDestName()));
+            case BY_RWL:
+                return (c1, c2) -> (c1.getReturnWhenLoadedDestName()
+                        .compareToIgnoreCase(c2.getReturnWhenLoadedDestName()));
             case BY_FINAL_DEST:
                 return (c1, c2) -> (c1.getFinalDestinationName()
                         .compareToIgnoreCase(c2.getFinalDestinationName()));
@@ -541,6 +549,13 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
                     car.setReturnWhenEmptyLoadName(newLoadName);
                 } else {
                     car.setReturnWhenEmptyLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName());
+                }
+            }
+            if (car.getTypeName().equals(type) && car.getReturnWhenLoadedLoadName().equals(oldLoadName)) {
+                if (newLoadName != null) {
+                    car.setReturnWhenLoadedLoadName(newLoadName);
+                } else {
+                    car.setReturnWhenLoadedLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultLoadName());
                 }
             }
         }

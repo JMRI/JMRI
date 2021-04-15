@@ -69,16 +69,16 @@ public class InstanceManagerTest {
         // counts on the following test class to be loaded
         Assert.assertFalse(InstanceManager.isInitialized(jmri.InstanceManagerTest.InstanceManagerInitCheck.class));
         Assert.assertFalse(InstanceManager.isInitialized(jmri.InstanceManagerTest.InstanceManagerInitCheck.class));
-        
+
         Assert.assertNotNull(InstanceManager.getDefault(jmri.InstanceManagerTest.InstanceManagerInitCheck.class));
-        
+
         Assert.assertTrue(InstanceManager.isInitialized(jmri.InstanceManagerTest.InstanceManagerInitCheck.class));
     }
-    
+
     static public class InstanceManagerInitCheck implements jmri.InstanceManagerAutoDefault {
         public InstanceManagerInitCheck() {}
     }
-    
+
     // the following test was moved from jmri.jmrit.symbolicprog.PackageTet when
     // it was converted to JUnit4 format.  It seemed out of place there.
     // check configuring the programmer
@@ -385,6 +385,7 @@ public class InstanceManagerTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

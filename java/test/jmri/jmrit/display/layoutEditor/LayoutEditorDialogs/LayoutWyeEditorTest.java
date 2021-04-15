@@ -30,12 +30,13 @@ public class LayoutWyeEditorTest extends LayoutTurnoutEditorTest {
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         LayoutWyeEditor editor = new LayoutWyeEditor(layoutEditor);
-        turnoutTestSequence(editor, layoutWye);
+        turnoutTestSequence(editor, layoutWyeView);
     }
 
 
     private LayoutEditor layoutEditor = null;
     private LayoutWye layoutWye = null;
+    private LayoutWyeView layoutWyeView = null;
 
     @BeforeEach
     public void setUp() {
@@ -54,16 +55,17 @@ public class LayoutWyeEditorTest extends LayoutTurnoutEditorTest {
 
             // Wye
             point = MathUtil.add(point, delta);
-            layoutWye = new LayoutWye("Wye", point, 33.0, 1.1, 1.2, layoutEditor);
+            layoutWye = new LayoutWye("Wye", layoutEditor);
+            layoutWyeView = new LayoutWyeView(layoutWye, point, 33.0, 1.1, 1.2, layoutEditor);
+            layoutEditor.addLayoutTrack(layoutWye, layoutWyeView);
         }
     }
 
     @AfterEach
     public void tearDown() {
-    
+
         if (layoutWye != null) {
             layoutWye.remove();
-            layoutWye.dispose();
         }
 
         if (layoutEditor != null) {
@@ -76,8 +78,9 @@ public class LayoutWyeEditorTest extends LayoutTurnoutEditorTest {
 
         JUnitUtil.resetWindows(false, false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         super.tearDown();
     }
-    
+
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutWyeEditorTest.class);
 }

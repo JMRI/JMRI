@@ -169,8 +169,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
         }
         if (t != null) {
             throttle = t;
-            setFunctionThrottle(throttle);
-            throttle.addPropertyChangeListener(this);
+            setFunctionThrottle(throttle); // adds Property Change Listener
             isAddressSet = true;
             log.debug("DccThrottle found for: {}", throttle.getLocoAddress());
         } else {

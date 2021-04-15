@@ -1,25 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static java.lang.Float.POSITIVE_INFINITY;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.text.MessageFormat;
-import java.util.*;
-import javax.annotation.*;
-import javax.swing.*;
-import jmri.*;
-import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
-import jmri.jmrit.signalling.SignallingGuiTools;
-import jmri.util.MathUtil;
-import org.slf4j.*;
+import javax.annotation.Nonnull;
 
 /**
  * A LayoutTurnout corresponds to a turnout on the layout. A LayoutTurnout is an
@@ -120,29 +101,20 @@ import org.slf4j.*;
 public class LayoutDoubleXOver extends LayoutXOver {
 
     public LayoutDoubleXOver(@Nonnull String id,
-            @Nonnull Point2D c, double rot,
-            double xFactor, double yFactor,
             @Nonnull LayoutEditor layoutEditor) {
-        this(id, c, rot, xFactor, yFactor, layoutEditor, 1);
-
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutDoubleXOverEditor(layoutEditor);
+        this(id, layoutEditor, 1);
     }
 
     /**
      * Main constructor method.
      * @param id ID string.
-     * @param c 2D point.
-     * @param rot rotation.
-     * @param xFactor horizontal factor.
-     * @param yFactor vertical factor.
      * @param layoutEditor main layout editor.
      * @param v version, unused.
      */
-    public LayoutDoubleXOver(@Nonnull String id, @Nonnull Point2D c, double rot,
-            double xFactor, double yFactor, @Nonnull LayoutEditor layoutEditor, int v) {
-        super(id, TurnoutType.DOUBLE_XOVER, c, rot, xFactor, yFactor, layoutEditor, 1);
-
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutDoubleXOverEditor(layoutEditor);
+    public LayoutDoubleXOver(@Nonnull String id, 
+            @Nonnull LayoutEditor layoutEditor,
+            int v) {
+        super(id, TurnoutType.DOUBLE_XOVER, layoutEditor, v);
     }
     
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutDoubleXOver.class);

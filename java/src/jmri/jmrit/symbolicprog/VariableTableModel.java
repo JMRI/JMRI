@@ -376,7 +376,15 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
         // set to default value if specified (CV load may later override this)
         if (setDefaultValue(e, v)) {
-            _cvModel.getCvByNumber(CV).setState(VariableValue.FROMFILE); // correct for transition to "edited"
+            // need to correct state of associated CV(s) & handle a possible CV List
+            List<String> cvList = CvUtil.expandCvList(CV);  // see if CV is in list format
+            if (cvList.isEmpty()) {
+                cvList.add(CV);  // it's an ordinary CV so add it as such
+            }
+            for (String theCV : cvList) {
+                log.debug("Setting CV={} of '{}'to {}", theCV, CV, VariableValue.stateNameFromValue(VariableValue.FROMFILE));
+                _cvModel.getCvByNumber(theCV).setState(VariableValue.FROMFILE); // correct for transition to "edited"
+            }
         }
     }
 
@@ -415,7 +423,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         boolean set = false;
         if ((a = e.getAttribute("default")) != null) {
             String val = a.getValue();
-            variable.setIntValue(Integer.parseInt(val));
+            variable.setValue(val);
             set = true;
         }
         // check for matching child
@@ -423,7 +431,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         for (Element defaultItem : elements) {
             if (_df != null && DecoderFile.isIncluded(defaultItem, _df.getProductID(), _df.getModel(), _df.getFamily(), "", "")) {
                 log.debug("element included by productID={} model={} family={}", _df.getProductID(), _df.getModel(), _df.getFamily());
-                variable.setIntValue(Integer.parseInt(defaultItem.getAttribute("default").getValue()));
+                variable.setValue(defaultItem.getAttribute("default").getValue());
                 return true;
             }
         }

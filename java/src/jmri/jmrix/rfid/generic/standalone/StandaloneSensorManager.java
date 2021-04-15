@@ -42,10 +42,9 @@ public class StandaloneSensorManager extends RfidSensorManager {
      */
     @Override
     @Nonnull
-    protected Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         log.debug("Create new Sensor");
-        TimeoutRfidSensor s;
-        s = new TimeoutRfidSensor(systemName, userName);
+        TimeoutRfidSensor s = new TimeoutRfidSensor(systemName, userName);
         s.addPropertyChangeListener(this);
         return s;
     }

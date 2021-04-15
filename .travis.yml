@@ -12,7 +12,7 @@ addons:
     - pulseaudio
     - tidy
   firefox: latest
-  chrome: beta
+  chrome: stable
 
 services:
   - xvfb

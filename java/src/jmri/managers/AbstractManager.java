@@ -5,18 +5,15 @@ import java.text.DecimalFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+
 import javax.annotation.CheckReturnValue;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
-import jmri.Manager;
-import jmri.NamedBean;
-import jmri.NamedBean.DuplicateSystemNameException;
-import jmri.NamedBeanPropertyDescriptor;
+
+import jmri.*;
 import jmri.beans.VetoableChangeSupport;
-import jmri.SystemConnectionMemo;
+import jmri.NamedBean.DuplicateSystemNameException;
 
 /**
  * Abstract partial implementation for all Manager-type classes.
@@ -591,7 +588,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         /* The following keeps track of the last created auto system name.
          currently we do not reuse numbers, although there is nothing to stop the
          user from manually recreating them */
-        String autoPrefix = getSystemNamePrefix() + ":AUTO:";
+        String autoPrefix = getSubSystemNamePrefix() + ":AUTO:";
         if (systemName.startsWith(autoPrefix)) {
             try {
                 int autoNumber = Integer.parseInt(systemName.substring(autoPrefix.length()));
@@ -604,10 +601,135 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
 
     public String getAutoSystemName() {
         int nextAutoBlockRef = lastAutoNamedBeanRef.incrementAndGet();
-        StringBuilder b = new StringBuilder(getSystemNamePrefix() + ":AUTO:");
+        StringBuilder b = new StringBuilder(getSubSystemNamePrefix() + ":AUTO:");
         String nextNumber = paddedNumber.format(nextAutoBlockRef);
         b.append(nextNumber);
         return b.toString();
+    }
+    
+    /**
+     * Create a System Name from hardware address and system letter prefix.
+     * AbstractManager performs no validation.
+     * @param curAddress hardware address, no system prefix or type letter.
+     * @param prefix - just system prefix, not including Type Letter.
+     * @return full system name with system prefix, type letter and hardware address.
+     * @throws JmriException if unable to create a system name.
+     */
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+        return prefix + typeLetter() + curAddress;
+    }
+    
+    /**
+     * checks for numeric-only system names.
+     * @param curAddress the System name ( excluding both prefix and type letter) to check.
+     * @return unchanged if is numeric string.
+     * @throws JmriException if not numeric.
+     */
+    protected String checkNumeric(@Nonnull String curAddress) throws JmriException {
+        try {
+            Integer.parseInt(curAddress);
+        } catch (java.lang.NumberFormatException ex) {
+            throw new JmriException("Hardware Address passed "+curAddress+" should be a number");
+        }
+        return curAddress;
+    }
+    
+    /**
+     * Get the Next valid hardware address.
+     * Used by the Turnout / Sensor / Reporter / Light Manager classes.
+     * <p>
+     * @param curAddress the starting hardware address to get the next valid from.
+     * @param prefix system prefix, just system name, not type letter.
+     * @return the next valid system name, excluding both system name prefix and type letter.
+     * @throws JmriException    if unable to get the current / next address, 
+     *                          or more than 10 next addresses in use.
+     * @deprecated since 4.21.3; use #getNextValidAddress(String, String, boolean) instead.
+     */
+    @Nonnull
+    @Deprecated
+    public final String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+        jmri.util.LoggingUtil.deprecationWarning(log, "getNextValidAddress");
+        return getNextValidAddress(curAddress, prefix, false);
+    }
+    
+    /**
+     * Get the Next valid hardware address.
+     * Used by the Turnout / Sensor / Reporter / Light Manager classes.
+     * <p>
+     * System-specific methods may want to override getIncrement() rather than this one.
+     * @param curAddress the starting hardware address to get the next valid from.
+     * @param prefix system prefix, just system name, not type letter.
+     * @param ignoreInitialExisting false to return the starting address if it 
+     *                          does not exist, else true to force an increment.
+     * @return the next valid system name not already in use, excluding both system name prefix and type letter.
+     * @throws JmriException    if unable to get the current / next address, 
+     *                          or more than 10 next addresses in use.
+     */
+    @Nonnull
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
+        log.debug("getNextValid for address {} ignoring {}", curAddress, ignoreInitialExisting);
+        String testAddr;
+        NamedBean bean;
+        int increment;
+        // If hardware address passed does not already exist then this is the next valid address.
+        try {
+            // System.out.format("curaddress: "+curAddress);
+            testAddr = validateSystemNameFormat(createSystemName(curAddress,prefix));
+            // System.out.format("testaddr: "+testAddr);
+            bean = getBySystemName(testAddr);
+            increment = ( bean instanceof Turnout ? ((Turnout)bean).getNumberOutputBits() : 1);
+            testAddr = testAddr.substring(getSystemNamePrefix().length());
+            
+            // do not check for incrementability here as could be String only
+            // getIncrement(testAddr, increment);
+        }
+        catch ( NamedBean.BadSystemNameException | JmriException ex ){
+            throw new JmriException(ex.getMessage());
+        }
+        if (bean == null && !ignoreInitialExisting) {
+            log.debug("address {} not in use", curAddress);
+            return curAddress;
+        }
+        for (int i = 0; i <10; i++) {
+            testAddr = getIncrement(testAddr, increment);
+            bean = getBySystemName(validateSystemNameFormat(createSystemName(testAddr,prefix)));
+            if ( bean == null) {
+                return testAddr;
+            }
+        }
+        throw new JmriException(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,testAddr));
+    }
+    
+    /**
+     * Increment a hardware address.
+     * <p>
+     * Default is to increment only an existing number.
+     * Sub-classes may wish to override this.
+     * @param curAddress the address to increment, excluding both system name prefix and type letter.
+     * @param increment the amount to increment by.
+     * @return incremented address, no system prefix or type letter.
+     * @throws JmriException if unable to increment the address.
+     */
+    @Nonnull
+    protected String getIncrement(String curAddress, int increment) throws JmriException {
+        return getIncrementFromExistingNumber(curAddress,increment);
+    }
+    
+    /**
+     * Increment a hardware address with an existing number.
+     * <p>
+     * @param curAddress the address to increment, excluding both system name prefix and type letter
+     * @param increment the amount to increment by.
+     * @return incremented number.
+     * @throws JmriException if unable to increment the address.
+     */
+    @Nonnull
+    protected String getIncrementFromExistingNumber(String curAddress, int increment) throws JmriException {
+        String newIncrement = jmri.util.StringUtil.incrementLastNumberInString(curAddress, increment);
+        if (newIncrement==null) {
+            throw new JmriException("No existing number found when incrementing " + curAddress);
+        }
+        return newIncrement;
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractManager.class);

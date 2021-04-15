@@ -41,7 +41,7 @@ public class LayoutSingleSlipEditorTest extends LayoutSlipEditorTest {
         LayoutSingleSlipEditor editor = new LayoutSingleSlipEditor(layoutEditor);
 
         // Edit the single Slip
-        editor.editLayoutTrack(singleLayoutSlip);
+        editor.editLayoutTrack(singleLayoutSlipView);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditSlip"));
 
         // Select turnout A
@@ -91,7 +91,8 @@ public class LayoutSingleSlipEditorTest extends LayoutSlipEditorTest {
     }
 
     private LayoutEditor layoutEditor = null;
-    private LayoutSlip singleLayoutSlip = null;
+    private LayoutSingleSlip singleLayoutSlip = null;
+    private LayoutSingleSlipView singleLayoutSlipView = null;
 
     @BeforeEach
     public void setUp() {
@@ -110,8 +111,12 @@ public class LayoutSingleSlipEditorTest extends LayoutSlipEditorTest {
 
             // Single doubleLayoutSlip
             point = MathUtil.add(point, delta);
-            singleLayoutSlip = new LayoutSingleSlip("Single Slip",
-                    point, 0.0, layoutEditor);
+            singleLayoutSlip = new LayoutSingleSlip("Single Slip",  // point, 0.0,
+                    layoutEditor);
+            singleLayoutSlipView = new LayoutSingleSlipView(singleLayoutSlip,
+                    point, 0.0,
+                    layoutEditor);
+            layoutEditor.addLayoutTrack(singleLayoutSlip, singleLayoutSlipView);
 
         }
     }
@@ -120,7 +125,6 @@ public class LayoutSingleSlipEditorTest extends LayoutSlipEditorTest {
     public void tearDown() {
         if (singleLayoutSlip != null) {
             singleLayoutSlip.remove();
-            singleLayoutSlip.dispose();
         }
 
         if (layoutEditor != null) {
@@ -133,6 +137,7 @@ public class LayoutSingleSlipEditorTest extends LayoutSlipEditorTest {
 
         JUnitUtil.resetWindows(false, false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         super.tearDown();
     }
 

@@ -119,7 +119,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                         if (log.isDebugEnabled()) {
                             log.debug("Start CONNECTION_ADDED processing with {} existing", list.size());
                             for (int i = 0; i < list.size(); i++) {
-                                log.debug("    System {}: {}", i, list.get(i));
+                                log.debug("    System {}: {} (\"{}\")", i, list.get(i), list.get(i).getUserName());
                             }
                         }
 

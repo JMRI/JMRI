@@ -1,19 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.event.*;
-import java.awt.geom.*;
-import java.text.MessageFormat;
-import java.util.*;
-import java.util.Map.Entry;
-import javax.annotation.*;
-import javax.swing.*;
-import jmri.*;
-import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
-import jmri.util.MathUtil;
-import org.slf4j.*;
-
 /**
  * A LayoutSlip is a crossing of two straight tracks designed in such a way as
  * to allow trains to change from one straight track to the other, as well as
@@ -53,14 +39,10 @@ public class LayoutDoubleSlip extends LayoutSlip {
     /**
      * Constructor method.
      * @param id double slip ID.
-     * @param c 2D point.
-     * @param rot rotation.
      * @param layoutEditor main layout editor.
      */
-    public LayoutDoubleSlip(String id, Point2D c, double rot, LayoutEditor layoutEditor) {
-        super(id, c, rot, layoutEditor, TurnoutType.DOUBLE_SLIP);
-
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutDoubleSlipEditor(layoutEditor);
+    public LayoutDoubleSlip(String id, LayoutEditor layoutEditor) {
+        super(id, layoutEditor, TurnoutType.DOUBLE_SLIP);
     }
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutDoubleSlip.class);

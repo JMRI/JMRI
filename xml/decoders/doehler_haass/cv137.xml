@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2014</year>
     <holder>JMRI</holder>
@@ -29,8 +29,26 @@
         <surname>Le Marchand</surname>
       </personname>
     </author>
+    <author>
+      <personname>
+        <firstname>Wouter</firstname>
+        <surname>Kok</surname>
+      </personname>
+    </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>3</revnumber>
+      <date>2020-12-12</date>
+      <authorinitials>WK</authorinitials>
+      <revremark>Exclude Sound Decoders 2020</revremark>
+    </revision>
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2016-12-14</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>merge different CV137-files</revremark>
+    </revision>
     <revision>
       <revnumber>2</revnumber>
       <date>2019-07-28</date>
@@ -82,7 +100,7 @@
 	    <label xml:lang="ca">nverteix sentit SUSI</label>
     <tooltip>bit 2</tooltip>
   </variable>
-  <variable CV="137" item="Deactivate SUSI startup delay" mask="XXXXVXXX" exclude="PD05A,PD12A">
+  <variable CV="137" item="Deactivate SUSI startup delay" mask="XXXXVXXX" exclude="PD05A,PD12A,Sound Decoders (2020)">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Deactivate SUSI startup delay</label>
     <label xml:lang="fr">Désactiver délai de départ SUSI</label>

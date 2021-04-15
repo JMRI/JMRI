@@ -4,7 +4,8 @@ import java.io.File;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -120,7 +121,6 @@ public class XmlTest extends OperationsTestCase {
                 .getName());
 
         manager.getLocationByName("Test Location 1").setComment("Test Location 1 Comment");
-        manager.getLocationByName("Test Location 1").setLocationOps(Location.NORMAL);
         manager.getLocationByName("Test Location 1").setSwitchListEnabled(true);
         manager.getLocationByName("Test Location 1").setTrainDirections(Location.EAST);
         manager.getLocationByName("Test Location 1").addTypeName("Baggage");
@@ -130,7 +130,6 @@ public class XmlTest extends OperationsTestCase {
         manager.getLocationByName("Test Location 1").addTypeName("Engine");
         manager.getLocationByName("Test Location 1").addTypeName("Hopper");
         manager.getLocationByName("Test Location 2").setComment("Test Location 2 Comment");
-        manager.getLocationByName("Test Location 2").setLocationOps(Location.NORMAL);
         manager.getLocationByName("Test Location 2").setSwitchListEnabled(false);
         manager.getLocationByName("Test Location 2").setTrainDirections(Location.WEST);
         manager.getLocationByName("Test Location 2").addTypeName("Baggage");
@@ -141,7 +140,6 @@ public class XmlTest extends OperationsTestCase {
         manager.getLocationByName("Test Location 2").addTypeName("Hopper");
         manager.getLocationByName("Test Location 2").addTypeName("Track 2 Type");
         manager.getLocationByName("Test Location 3").setComment("Test Location 3 Comment");
-        manager.getLocationByName("Test Location 3").setLocationOps(Location.STAGING);
         manager.getLocationByName("Test Location 3").setSwitchListEnabled(true);
         manager.getLocationByName("Test Location 3").setTrainDirections(Location.EAST + Location.WEST + Location.NORTH);
         manager.getLocationByName("Test Location 3").addTypeName("Baggage");
@@ -233,7 +231,6 @@ public class XmlTest extends OperationsTestCase {
 
             if (i == 0) {
                 Assert.assertEquals("New Location by Name List 1", "Test Location 1", loc.getName());
-                Assert.assertEquals("Location 1 operations", Location.NORMAL, loc.getLocationOps());
                 Assert.assertEquals("Location 1 direction", Location.EAST, loc.getTrainDirections());
                 Assert.assertEquals("Location 1 comment", "Test Location 1 Comment", loc.getComment());
                 Assert.assertEquals("Location 1 switchList", true, loc.isSwitchListEnabled());
@@ -251,7 +248,7 @@ public class XmlTest extends OperationsTestCase {
             }
             if (i == 1) {
                 Assert.assertEquals("New Location by Name List 2", "Test Location 2", loc.getName());
-                Assert.assertEquals("Location 2 operations", Location.NORMAL, loc.getLocationOps());
+//                Assert.assertEquals("Location 2 operations", Location.NORMAL, loc.getLocationOps());
                 Assert.assertEquals("Location 2 direction", Location.WEST, loc.getTrainDirections());
                 Assert.assertEquals("Location 2 comment", "Test Location 2 Comment", loc.getComment());
                 Assert.assertEquals("Location 2 switchList", false, loc.isSwitchListEnabled());
@@ -295,7 +292,7 @@ public class XmlTest extends OperationsTestCase {
             }
             if (i == 2) {
                 Assert.assertEquals("New Location by Name List 3", "Test Location 3", loc.getName());
-                Assert.assertEquals("Location 3 operations", Location.STAGING, loc.getLocationOps());
+//                Assert.assertEquals("Location 3 operations", Location.STAGING, loc.getLocationOps());
                 Assert.assertEquals("Location 3 direction", Location.EAST + Location.WEST + Location.NORTH, loc
                         .getTrainDirections());
                 Assert.assertEquals("Location 3 comment", "Test Location 3 Comment", loc.getComment());

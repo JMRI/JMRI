@@ -137,7 +137,7 @@
           <label xml:lang="de">Mittengeschwindigkeit</label>
           <comment>Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration</comment>
         </variable>
-        <variable CV="7" readOnly="yes" item="Decoder Version" tooltip="Decoder Version, Read Only">
+        <variable CV="7" item="Decoder Version" readOnly="yes" tooltip="Decoder Version, Read Only">
           <decVal/>
           <label>Manufacturer Version No: </label>
           <label xml:lang="it">Versione Decoder: </label>

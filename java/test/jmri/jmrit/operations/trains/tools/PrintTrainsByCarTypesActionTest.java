@@ -5,8 +5,8 @@ import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
@@ -32,7 +32,7 @@ public class PrintTrainsByCarTypesActionTest extends OperationsTestCase {
         PrintTrainsByCarTypesAction pa = new PrintTrainsByCarTypesAction(true);
         Assert.assertNotNull("exists", pa);
         
-        pa.actionPerformed(new ActionEvent("test event", 0, null));
+        pa.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
         
         // confirm print preview window is showing
         ResourceBundle rb = ResourceBundle

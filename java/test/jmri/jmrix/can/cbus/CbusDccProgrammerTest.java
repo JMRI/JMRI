@@ -1,6 +1,8 @@
 package jmri.jmrix.can.cbus;
 
+import jmri.Programmer;
 import jmri.ProgrammingMode;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
 
@@ -10,6 +12,7 @@ import org.junit.jupiter.api.*;
 /**
  *
  * @author Paul Bender Copyright (C) 2017
+ * @author Andrew Crosland Copyright (C) 2021
  */
 public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
@@ -18,6 +21,8 @@ public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     public void testDefault() {
         Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBITMODE,
                 programmer.getMode());        
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBITMODE,
+                programmer2.getMode());        
     }
     
     @Override
@@ -25,6 +30,8 @@ public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     public void testDefaultViaBestMode() {
         Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBITMODE,
                 ((CbusDccProgrammer)programmer).getBestMode());        
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBITMODE,
+                ((CbusDccProgrammer)programmer2).getBestMode());        
     }
 
 /*
@@ -72,22 +79,30 @@ public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
 */
     
+    protected Programmer programmer2;
     private TrafficControllerScaffold tcis;
+    private CanSystemConnectionMemo memo;
 
     @Override
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         tcis = new TrafficControllerScaffold();
+        memo = new CanSystemConnectionMemo();
+        memo.setTrafficController(tcis);
         programmer = new CbusDccProgrammer(tcis);
+        programmer2 = new CbusDccProgrammer(tcis);
     }
 
     @Override
     @AfterEach
     public void tearDown() {
+        programmer2 = null;
         programmer = null;
         tcis.terminateThreads();
         tcis = null;
+        memo.dispose();
+        memo = null;
         JUnitUtil.tearDown();
 
     }

@@ -43,18 +43,17 @@ public class ConfigBaseStationAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         if (f == null || !f.isVisible()) {
             
-            // Get info on Sensors
             DCCppSystemConnectionMemo systemMemo = jmri.InstanceManager.getDefault(DCCppSystemConnectionMemo.class);
             DCCppSensorManager smgr = (DCCppSensorManager)systemMemo.getSensorManager();
             DCCppTurnoutManager tmgr = (DCCppTurnoutManager)systemMemo.getTurnoutManager();
-            // Send query for sensor values
             DCCppTrafficController tc = systemMemo.getDCCppTrafficController();
-    
             f = new ConfigBaseStationFrame(smgr, tmgr, tc);
             tc.addDCCppListener(DCCppInterface.CS_INFO, f);
-            tc.sendDCCppMessage(DCCppMessage.makeSensorListMsg(), f); // TODO: Put this in Constants?
-            tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), f); // TODO: Put this in Constants?
-            tc.sendDCCppMessage(DCCppMessage.makeOutputListMsg(), f); // TODO: Put this in Constants?
+            
+            // Request definitions for Turnouts, Sensors and Outputs
+            tc.sendDCCppMessage(DCCppMessage.makeSensorListMsg(), f); 
+            tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), f);
+            tc.sendDCCppMessage(DCCppMessage.makeOutputListMsg(), f); 
         }
         f.setExtendedState(Frame.NORMAL);
     }

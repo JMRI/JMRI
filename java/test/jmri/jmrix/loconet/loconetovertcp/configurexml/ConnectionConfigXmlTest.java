@@ -1,14 +1,11 @@
 package jmri.jmrix.loconet.loconetovertcp.configurexml;
 
+import jmri.jmrix.loconet.loconetovertcp.ConnectionConfig;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 
-import jmri.jmrix.loconet.loconetovertcp.ConnectionConfig;
-
 /**
- * ConnectionConfigXmlTest.java
- *
  * Test for the ConnectionConfigXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
@@ -30,4 +27,5 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
         xmlAdapter = null;
         cc = null;
     }
+
 }

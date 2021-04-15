@@ -208,6 +208,7 @@ public class WhereUsedFrameTest {
         new EditorFrameOperator("CPE Panel").closeFrameWithConfirmations();
         new EditorFrameOperator("Sensor SB").closeFrameWithConfirmations();
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.clearBlockBossLogic();
         JUnitUtil.tearDown();
     }

@@ -10,6 +10,7 @@ import jmri.jmrix.can.cbus.CbusDccProgrammerManager;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.util.JUnitUtil;
 
+import org.junit.Assume;
 import org.junit.jupiter.api.*;
 
 /**
@@ -23,6 +24,13 @@ public class SprogCbusModeSwitcherFrameTest extends jmri.util.JmriJFrameTestBase
     CbusDccProgrammer prog;
     jmri.jmrix.can.TrafficController tc;
     
+    @Test
+    public void testInitSetup () throws Exception{
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // for now, just makes ure there isn't an exception.
+        ((SprogCbusModeSwitcherFrame) frame).initSetup();
+    }
+    
     @BeforeEach
     @Override
     public void setUp() {
@@ -34,10 +42,10 @@ public class SprogCbusModeSwitcherFrameTest extends jmri.util.JmriJFrameTestBase
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
         prog = new CbusDccProgrammer(tc);
-        
+       
         jmri.InstanceManager.setDefault(GlobalProgrammerManager.class,new CbusDccProgrammerManager(prog, memo) );
         if (!GraphicsEnvironment.isHeadless()) {
-            frame = new SprogCbusModeSwitcherFrame(memo);
+            frame = new SprogCbusModeSwitcherFrame(memo, "SPROB CBUS Mode Switcher Frame test");
         }
     }
 

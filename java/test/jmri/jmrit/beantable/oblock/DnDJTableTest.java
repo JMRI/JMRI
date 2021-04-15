@@ -2,8 +2,10 @@ package jmri.jmrit.beantable.oblock;
 
 import java.awt.GraphicsEnvironment;
 
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 
+import jmri.util.gui.GuiLafPreferencesManager;
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -15,13 +17,16 @@ import org.junit.Assume;
 public class DnDJTableTest {
 
     @Test
-    public void testCTor() {
+    public void testDesktopCtor() {
+        // use original _desktop interface (for DnD support)
+        InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(false);
+
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TableFrames f = new TableFrames();
-        OBlockTableModel obtm = new OBlockTableModel(f);
-        DnDJTable t = new DnDJTable(obtm,new int[0]);
-        Assert.assertNotNull("exists",t);
-        JUnitUtil.dispose(f);
+        TableFrames tf = new TableFrames();
+        OBlockTableModel obtm = new OBlockTableModel(tf);
+        DnDJTable ddt = new DnDJTable(obtm, new int[0]);
+        Assert.assertNotNull("exists", ddt);
+        JUnitUtil.dispose(tf.getDesktopFrame());
     }
 
     @BeforeEach

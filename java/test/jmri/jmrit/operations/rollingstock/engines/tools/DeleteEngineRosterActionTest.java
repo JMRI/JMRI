@@ -1,17 +1,17 @@
 package jmri.jmrit.operations.rollingstock.engines.tools;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.awt.event.ActionEvent;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -38,7 +38,7 @@ public class DeleteEngineRosterActionTest extends OperationsTestCase {
         Thread delete = new Thread(new Runnable() {
             @Override
             public void run() {
-                deleteRosterAction.actionPerformed(new ActionEvent("Test Action", 0, null));
+                deleteRosterAction.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
             }
         });
         delete.setName("Delete Engines"); // NOI18N

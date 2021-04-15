@@ -14,6 +14,7 @@ public class NceThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     private NceTrafficControlScaffold tcis = null;
     private NceSystemConnectionMemo memo = null;
+    private NceThrottleManager tm;
 
     @Test
     public void testCTor() {
@@ -391,14 +392,22 @@ public class NceThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         tcis = new NceTrafficControlScaffold();
         memo = new NceSystemConnectionMemo();
         memo.setNceTrafficController(tcis);
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new NceThrottleManager(memo));
-        instance = new NceThrottle(memo,new jmri.DccLocoAddress(1024,true));
+        tm = new NceThrottleManager(memo);
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, tm);
+        instance = new NceThrottle(memo, new jmri.DccLocoAddress(1024,true));
     }
 
     @AfterEach
     @Override
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        // no need to dispose of instance
+        //if (tm != null) {
+        //    tm.dispose();
+        //}
+        memo.dispose();
+        memo = null;
+        tcis.terminateThreads();
+        tcis = null;
         JUnitUtil.tearDown();
     }
 

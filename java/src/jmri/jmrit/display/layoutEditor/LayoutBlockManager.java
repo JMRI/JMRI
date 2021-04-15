@@ -21,8 +21,6 @@ import jmri.Turnout;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of a Manager to handle LayoutBlocks. Note: the same
@@ -445,7 +443,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             // block boundary is at an Anchor Point
             //    LayoutEditorTools tools = panel.getLETools(); //TODO: Dead-code strip this
             PositionablePoint p = panel.getFinder().findPositionablePointAtTrackSegments(tr, (TrackSegment) connected);
-            boolean block1IsWestEnd = LayoutEditorTools.isAtWestEndOfAnchor(tr, p);
+            boolean block1IsWestEnd = LayoutEditorTools.isAtWestEndOfAnchor(panel, tr, p);
 
             if ((block1IsWestEnd && facingIsBlock1) || (!block1IsWestEnd && !facingIsBlock1)) {
                 //block1 is on the west (north) end of the block boundary
@@ -504,12 +502,18 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                                 return lt.getSignalHead(LayoutTurnout.Geometry.POINTA1);
                             }
                         } else {
-                            //neither track segment is in block 2 - should never get here unless layout turnout is
-                            //the only item in block 2
-                            if (!(lt.getBlockName().equals(protectedBlock.getUserName()))) {
-                                log.error("neither signal at A protects block {}, and turnout is not in block either",
-                                        protectedBlock.getDisplayName());
+                            // neither track segment is in block 2 - will get here when layout turnout is the only item in block 2
+                            // Return signal head based on turnout position
+                            int state = lt.getTurnout().getKnownState();
+                            if (((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.CLOSED))
+                                    || ((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.THROWN))) { //continuing
+                                return lt.getSignalHead(LayoutTurnout.Geometry.POINTA1);
+                            } else if (((state == Turnout.THROWN) && (lt.getContinuingSense() == Turnout.CLOSED))
+                                    || ((state == Turnout.CLOSED) && (lt.getContinuingSense() == Turnout.THROWN))) { //diverging
+                                return lt.getSignalHead(LayoutTurnout.Geometry.POINTA2);
                             }
+
+                            // Turnout state is unknown or inconsistent
                             return null;
                         }
                     }
@@ -657,8 +661,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                                 return lt.getSignalHead(LayoutTurnout.Geometry.POINTB2);
                             } else {
                                 //turnout state is UNKNOWN or INCONSISTENT
-                                log.error("Cannot choose signal head because turnout {} is in an UNKNOWN or INCONSISTENT state.",
-                                        lt.getTurnout().getDisplayName());
+                                log.error("LayoutTurnout {} cannot choose signal head because turnout {} is in an UNKNOWN or INCONSISTENT state.",
+                                        lt, lt.getTurnout());
                                 return null;
                             }
                         }
@@ -1597,7 +1601,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             //block boundary is at an Anchor Point
             PositionablePoint p = panel.getFinder().findPositionablePointAtTrackSegments(tr, (TrackSegment) connected);
 
-            boolean block1IsWestEnd = LayoutEditorTools.isAtWestEndOfAnchor(tr, p);
+            boolean block1IsWestEnd = LayoutEditorTools.isAtWestEndOfAnchor(panel, tr, p);
             log.debug("Track is west end? {}", block1IsWestEnd);
             if ((block1IsWestEnd && facingIsBlock1) || (!block1IsWestEnd && !facingIsBlock1)) {
                 //block1 is on the west (north) end of the block boundary
@@ -1931,13 +1935,13 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             //   LayoutEditorTools tools = panel.getLETools(); //TODO: Dead-code strip this
 
             if (east) {
-                if (LayoutEditorTools.isAtWestEndOfAnchor(pp.getConnect1(), pp)) {
+                if (LayoutEditorTools.isAtWestEndOfAnchor(panel, pp.getConnect1(), pp)) {
                     tr = pp.getConnect2();
                 } else {
                     tr = pp.getConnect1();
                 }
             } else {
-                if (LayoutEditorTools.isAtWestEndOfAnchor(pp.getConnect1(), pp)) {
+                if (LayoutEditorTools.isAtWestEndOfAnchor(panel, pp.getConnect1(), pp)) {
                     tr = pp.getConnect1();
                 } else {
                     tr = pp.getConnect2();
@@ -2046,13 +2050,13 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             //            LayoutEditorTools tools = panel.getLETools(); //TODO: Dead-code strip this
 
             if (east) {
-                if (LayoutEditorTools.isAtWestEndOfAnchor(pp.getConnect1(), pp)) {
+                if (LayoutEditorTools.isAtWestEndOfAnchor(panel, pp.getConnect1(), pp)) {
                     tr = pp.getConnect2();
                 } else {
                     tr = pp.getConnect1();
                 }
             } else {
-                if (LayoutEditorTools.isAtWestEndOfAnchor(pp.getConnect1(), pp)) {
+                if (LayoutEditorTools.isAtWestEndOfAnchor(panel, pp.getConnect1(), pp)) {
                     tr = pp.getConnect1();
                 } else {
                     tr = pp.getConnect2();
@@ -2210,13 +2214,13 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             // LayoutEditorTools tools = panel.getLETools(); //TODO: Dead-code strip this
 
             if (east) {
-                if (LayoutEditorTools.isAtWestEndOfAnchor(pp.getConnect1(), pp)) {
+                if (LayoutEditorTools.isAtWestEndOfAnchor(panel, pp.getConnect1(), pp)) {
                     tr = pp.getConnect1();
                 } else {
                     tr = pp.getConnect2();
                 }
             } else {
-                if (LayoutEditorTools.isAtWestEndOfAnchor(pp.getConnect1(), pp)) {
+                if (LayoutEditorTools.isAtWestEndOfAnchor(panel, pp.getConnect1(), pp)) {
                     tr = pp.getConnect2();
                 } else {
                     tr = pp.getConnect1();
@@ -2598,7 +2602,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      * upon if the routing protocol has stabilised or is under going a change.
      * @param pName sensor name, will be provided if not existing.
      * @throws jmri.JmriException if no sensor manager.
-     * 
+     *
      */
     public void setStabilisedSensor(@Nonnull String pName) throws jmri.JmriException {
         if (InstanceManager.getNullableDefault(jmri.SensorManager.class) != null) {

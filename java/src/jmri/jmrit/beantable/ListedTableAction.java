@@ -6,8 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Table Action for dealing with all the tables in a single view with a list
- * option to the left hand side.
+ * Table Action for dealing with all the JMRI NamedBean etc. tables in a single view with a list
+ * option to the left hand side. Enclosing frame is opened from the Tools - Tables menu.
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Kevin Dickerson Copyright (C) 2009
@@ -64,7 +64,8 @@ public class ListedTableAction extends AbstractAction {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                f = new ListedTableFrame(title) {};
+                f = new ListedTableFrame<>(title);
+                f.initTables();
                 f.initComponents();
                 addToFrame(f);
 

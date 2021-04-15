@@ -22,8 +22,9 @@ import org.slf4j.LoggerFactory;
  * <br>
  * The {@code mask} attribute represents the part of the value that's present in
  * each CV; higher-order bits are loaded to subsequent CVs.<br>
- * It is possible to assign a specific mask for each CV by provising a space separated list of masks,
- * starting with the lowest, and matching the order of CV's
+ * It is possible to assign a specific mask for each CV by providing a space
+ * separated list of masks, starting with the lowest, and matching the order of
+ * CVs
  * <br><br>
  * The original use was for addresses of stationary (accessory) decoders.
  * <br>
@@ -230,7 +231,8 @@ public class SplitVariableValue extends VariableValue
      * Access a specific mask, used in tests
      *
      * @param i index of CV in variable
-     * @return a single mask as string in the form XXXXVVVV, or empty string if index out of bounds
+     * @return a single mask as string in the form XXXXVVVV, or empty string if
+     *         index out of bounds
      */
     protected String getMask(int i) {
         if (i < cvCount) {
@@ -471,6 +473,8 @@ public class SplitVariableValue extends VariableValue
 
     /**
      * Set value from a String value.
+     *
+     * @param value a string representing the Long value to be set
      */
     @Override
     public void setValue(String value) {
@@ -478,7 +482,7 @@ public class SplitVariableValue extends VariableValue
             long val = Long.parseUnsignedLong(value);
             setLongValue(val);
         } catch (NumberFormatException e) {
-            log.debug("skipping set of non-long value \"{}\"", value);
+            log.warn("skipping set of non-long value \"{}\"", value);
         }
     }
 

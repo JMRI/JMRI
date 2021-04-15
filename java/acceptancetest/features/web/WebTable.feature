@@ -1,5 +1,5 @@
 @webtest @webtable
-Feature: JMRI Web Table 
+Feature: JMRI Web Table
 
 Scenario Outline: Web Table requests
    Given I am using <browser>
@@ -7,7 +7,7 @@ Scenario Outline: Web Table requests
    And  <table> is visible
    Then item <item> with entry <column> has state <state>
 
-   @firefox 
+   @firefox
    Examples: Firefox Table Tests
    | browser | panel | table | item | column | state |
    | firefox | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Turnouts | IT0 | state |closed |

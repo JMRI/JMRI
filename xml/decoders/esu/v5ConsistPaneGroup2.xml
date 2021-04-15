@@ -105,7 +105,7 @@
                 <label xml:lang="cs">Adresa soupravy aktivní na F11</label>
                 <label xml:lang="nl">Multitractie adres actief voor F11</label>
             </display>
-            <display item="CV 22 bit 4">
+            <display item="CV 22 bit 5">
                 <label>Consist Address Active for F12</label>
                 <label xml:lang="it">Indirizzo Consist Attivo per F12</label>
                 <label xml:lang="fr">Adresse d'Unité Multiple active pour F12</label>

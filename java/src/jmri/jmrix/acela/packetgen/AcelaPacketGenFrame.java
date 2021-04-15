@@ -75,9 +75,10 @@ public class AcelaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jm
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         int sendMessageLength;
-
-        if (((packetTextField.getText().length() + 1) % 3) == 0) {
-            sendMessageLength = (packetTextField.getText().length() + 1) / 3;
+        String input = packetTextField.getText();
+        // TODO check input + feedback on error. Too easy to cause NPE
+        if (((input.length() + 1) % 3) == 0) {
+            sendMessageLength = (input.length() + 1) / 3;
         } else {
             sendMessageLength = 0;
         }
@@ -88,9 +89,9 @@ public class AcelaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jm
 
             int texti = 0;
             int messi = 0;
-            while (texti < packetTextField.getText().length()) {
+            while (texti < input.length()) {
                 int firstChar = 0;
-                firstChar = packetTextField.getText().charAt(texti);
+                firstChar = input.charAt(texti);
                 if ((firstChar >= '0') && (firstChar <= '9')) {  // Assumes 0 to 9 are sequential in character set
                     firstChar = firstChar - '0';
                 } else {
@@ -106,7 +107,7 @@ public class AcelaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jm
                 }
                 texti = texti + 1;
                 int secondChar = 0;
-                secondChar = packetTextField.getText().charAt(texti);
+                secondChar = input.charAt(texti);
                 if ((secondChar >= '0') && (secondChar <= '9')) {  // Assumes 0 to 9 are sequential in character set
                     secondChar = secondChar - '0';
                 } else {

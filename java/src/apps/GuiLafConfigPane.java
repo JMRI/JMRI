@@ -71,6 +71,7 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     public JCheckBox mouseEvent;
     private JComboBox<Integer> fontSizeComboBox;
     public JCheckBox graphicStateDisplay;
+    public JCheckBox tabbedOblockEditor;
     public JCheckBox editorUseOldLocSizeDisplay;
 
     public GuiLafConfigPane() {
@@ -84,7 +85,11 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         add(p);
         doGraphicState(p = new JPanel());
         add(p);
+        doTabbedOblockEditor(p = new JPanel());
+        add(p);
         doEditorUseOldLocSize(p = new JPanel());
+        add(p);
+        doMaxComboRows(p = new JPanel());
         add(p);
         doToolTipDismissDelay(p = new JPanel());
         add(p);
@@ -107,6 +112,17 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setGraphicTableState(graphicStateDisplay.isSelected());
         });
         panel.add(graphicStateDisplay);
+    }
+
+    void doTabbedOblockEditor(JPanel panel) {
+        panel.setLayout(new FlowLayout());
+        tabbedOblockEditor = new JCheckBox(ConfigBundle.getMessage("GUITabbedOblockEditor"));
+        tabbedOblockEditor.setSelected(InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed());
+        tabbedOblockEditor.setToolTipText(ConfigBundle.getMessage("GUIToolTipTabbedEdit"));
+        tabbedOblockEditor.addItemListener((ItemEvent e) -> {
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(tabbedOblockEditor.isSelected());
+        });
+        panel.add(tabbedOblockEditor);
     }
 
     void doEditorUseOldLocSize(JPanel panel) {
@@ -223,6 +239,21 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
                 fontSizeComboBox.setSelectedItem(manager.getDefaultFontSize());
             }
         });
+    }
+
+    private JSpinner maxComboRowsSpinner;
+
+    public void doMaxComboRows(JPanel panel) {
+        GuiLafPreferencesManager manager = InstanceManager.getDefault(GuiLafPreferencesManager.class);
+        JLabel maxComboRowsLabel = new JLabel(ConfigBundle.getMessage("GUIMaxComboRows"));
+        maxComboRowsSpinner = new JSpinner(new SpinnerNumberModel(manager.getMaxComboRows(), 0, 999, 1));
+        this.maxComboRowsSpinner.addChangeListener((ChangeEvent e) -> {
+            manager.setMaxComboRows((int) maxComboRowsSpinner.getValue());
+        });
+        this.maxComboRowsSpinner.setToolTipText(ConfigBundle.getMessage("GUIMaxComboRowsToolTip"));
+        maxComboRowsLabel.setToolTipText(this.maxComboRowsSpinner.getToolTipText());
+        panel.add(maxComboRowsLabel);
+        panel.add(maxComboRowsSpinner);
     }
 
     private JSpinner toolTipDismissDelaySpinner;

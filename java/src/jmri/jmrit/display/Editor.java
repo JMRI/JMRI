@@ -153,8 +153,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     private boolean _loadFailed = false;
 
-    boolean showCloseInfoMessage = true; //display info message when closing panel
-
     protected ArrayList<Positionable> _contents = new ArrayList<>();
     protected JLayeredPane _targetPanel;
     private JFrame _targetFrame;
@@ -583,7 +581,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
 
         @Override
-        public Component add(Component c, int i) {
+        public Component add(@Nonnull Component c, int i) {
             int hnew = Math.max(this.h, c.getLocation().y + c.getSize().height);
             int wnew = Math.max(this.w, c.getLocation().x + c.getSize().width);
             if (hnew > h || wnew > w) {
@@ -594,7 +592,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
 
         @Override
-        public void add(Component c, Object o) {
+        public void add(@Nonnull Component c, Object o) {
             super.add(c, o);
             int hnew = Math.max(h, c.getLocation().y + c.getSize().height);
             int wnew = Math.max(w, c.getLocation().x + c.getSize().width);
@@ -1015,60 +1013,24 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /*
      * *********************** end Options setup **********************
      */
-
-    /**
-     * Handle closing the target window.
+    /*
+     * Handle closing (actually hiding due to HIDE_ON_CLOSE) the target window.
      * <p>
      * The target window has been requested to close, don't delete it at this
      * time. Deletion must be accomplished via the Delete this panel menu item.
-     *
-     * @param save True if user should be reminded to save the panel
      */
-    protected void targetWindowClosing(boolean save) {
-        //this.setVisible(false);   // doesn't remove the editor!
-        // display info message on panel close
-        if (showCloseInfoMessage) {
-            String name = "Panel";
-            String message;
-            if (save) {
-                message = Bundle.getMessage("Reminder1") + " " + Bundle.getMessage("Reminder2")
-                        + "\n" + Bundle.getMessage("Reminder3");
-            } else {
-                message = Bundle.getMessage("PanelCloseQuestion") + "\n"
-                        + Bundle.getMessage("PanelCloseHelp");
-            }
-            Container ancestor = _targetPanel.getTopLevelAncestor();
-            if (ancestor instanceof JFrame) {
-                name = ((JFrame) ancestor).getTitle();
-            }
-            if (!InstanceManager.getDefault(ShutDownManager.class).isShuttingDown()) {
-                int selectedValue = JOptionPane.showOptionDialog(_targetPanel,
-                        MessageFormat.format(message, name), Bundle.getMessage("ReminderTitle"),
-                        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
-                        null, new Object[]{Bundle.getMessage("ButtonHide"), Bundle.getMessage("ButtonDeletePanel"),
-                            Bundle.getMessage("ButtonDontShow")}, Bundle.getMessage("ButtonHide"));
-                switch (selectedValue) {
-                    case 0:
-                        _targetFrame.setVisible(false);   // doesn't remove the editor!
-                        break;
-                    case 1:
-                        if (deletePanel()) { // disposes everything
-                            dispose();
-                        }
-                        break;
-                    case 2:
-                        showCloseInfoMessage = false;
-                        _targetFrame.setVisible(false);   // doesn't remove the editor!
-                        break;
-                    default:    // dialog closed - do nothing
-                        _targetFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-                }
-                log.debug("targetWindowClosing: selectedValue= {}", selectedValue);
-            } else {
-                _targetFrame.setVisible(false);
-            }
-        } else {
-            _targetFrame.setVisible(false);   // doesn't remove the editor!
+    protected void targetWindowClosing() {
+        String name = "Panel";
+        Container ancestor = _targetPanel.getTopLevelAncestor();
+        if (ancestor instanceof JFrame) {
+            name = ((JFrame) ancestor).getTitle();
+        }
+        if (!InstanceManager.getDefault(ShutDownManager.class).isShuttingDown()) {
+            InstanceManager.getDefault(jmri.UserPreferencesManager.class).showInfoMessage(
+                    Bundle.getMessage("PanelHideTitle"), Bundle.getMessage("PanelHideNotice", name),  // NOI18N
+                    "jmri.jmrit.display.EditorManager", "skipHideDialog"); // NOI18N
+            InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceItemDetails(
+                    "jmri.jmrit.display.EditorManager", "skipHideDialog", Bundle.getMessage("PanelHideSkip"));  // NOI18N
         }
     }
 
@@ -1156,7 +1118,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     public boolean setShowCoordinatesMenu(Positionable p, JPopupMenu popup) {
         //if (showCoordinates()) {
-        JMenuItem edit = null;
+        JMenuItem edit;
         if ((p instanceof MemoryIcon) && (p.getPopupUtility().getFixedWidth() == 0)) {
             MemoryIcon pm = (MemoryIcon) p;
 
@@ -1354,7 +1316,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     /**
-     * Display display 'z' level of the Positionable item and provide a dialog
+     * Display 'z' level of the Positionable item and provide a dialog
      * menu item to edit it.
      *
      * @param p     The item
@@ -1580,7 +1542,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         for (int i = _contents.size() - 1; i >= 0; i--) {
             Positionable il = _contents.get(i);
             if (il instanceof LocoIcon) {
-                ((LocoIcon) il).remove();
+                il.remove();
             }
         }
     }
@@ -2536,7 +2498,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         log.debug("deletePanel");
         // verify deletion
         int selectedValue = JOptionPane.showOptionDialog(_targetPanel,
-                Bundle.getMessage("QuestionA") + "\n" + Bundle.getMessage("QuestionB"),
+                Bundle.getMessage("QuestionA") + "\n" + Bundle.getMessage("QuestionA2", Bundle.getMessage("FileMenuItemStore")),
                 Bundle.getMessage("DeleteVerifyTitle"), JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null,
                 new Object[]{Bundle.getMessage("ButtonYesDelete"), Bundle.getMessage("ButtonCancel")},

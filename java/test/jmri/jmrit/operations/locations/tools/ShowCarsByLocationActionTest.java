@@ -5,8 +5,8 @@ import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
@@ -31,7 +31,7 @@ public class ShowCarsByLocationActionTest extends OperationsTestCase {
         ShowCarsByLocationAction a = new ShowCarsByLocationAction(true, null, null);
         Assert.assertNotNull("exists", a);
         
-        a.actionPerformed(new ActionEvent(this, 0, null));
+        a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
         
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
         

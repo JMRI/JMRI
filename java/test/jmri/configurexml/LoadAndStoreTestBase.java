@@ -125,6 +125,20 @@ public class LoadAndStoreTestBase {
             lineNumber1++;
             lineNumber2++;
 
+            // Do we have a multi line comment? Comments in the xml file is used by LogixNG.
+            // This only happens in the first file since store() will not store comments
+            if  (next1.startsWith("<!--")) {
+                while ((next1 = fileStream1.readLine()) != null && !next1.endsWith("-->")) {
+                    lineNumber1++;
+                }
+
+                // If here, we either have a line that ends with --> or we have reached endf of file
+                if (fileStream1.readLine() == null) break;
+
+                // If here, we have a line that ends with --> or we have reached end of file
+                continue;
+            }
+
             // where the (empty) entryexitpairs line ends up seems to be non-deterministic
             // so if we see it in either file we just skip it
             String entryexitpairs = "<entryexitpairs class=\"jmri.jmrit.signalling.configurexml.EntryExitPairsXml\" />";
@@ -309,6 +323,10 @@ public class LoadAndStoreTestBase {
             loadFile(file);
         }
 
+        // to ease comparison, dump the history information;
+        // if you need to turn that off you can override
+        dumpHistory();
+        
         // find comparison files
         File compFile = new File(file.getCanonicalFile().getParentFile().
                 getParent() + "/loadref/" + file.getName());
@@ -324,10 +342,21 @@ public class LoadAndStoreTestBase {
 
         JUnitAppender.suppressErrorMessage("systemName is already registered: ");
     }
-
+  
+    /** 
+     * By default, drop the history information
+     * to simplify diffing the files. 
+     * Override if that info is needed for a test.  
+     */
+    protected void dumpHistory(){
+        jmri.InstanceManager.getDefault(jmri.jmrit.revhistory.FileHistory.class).purge(0);
+    }
+    
     /**
-     * If anything, i.e. typically a delay, is needed after loading the file, it
-     * can be added by override here.
+     * If anything, i.e. typically a delay,
+     * is needed after loading the file before storing or doing 
+     * any final tests, 
+     * it can be added by override here.
      */
     protected void postLoadProcessing() {
         // by default do nothing
@@ -346,6 +375,11 @@ public class LoadAndStoreTestBase {
         JUnitUtil.initMemoryManager();
         JUnitUtil.clearBlockBossLogic();
         System.setProperty("jmri.test.no-dialogs", "true");
+        
+        // kill the fast clock and set to a consistent time
+        jmri.Timebase clock = jmri.InstanceManager.getDefault(jmri.Timebase.class);
+        clock.setRun(false);
+        clock.setTime(java.time.Instant.EPOCH);  // just a specific time
     }
 
     @AfterEach

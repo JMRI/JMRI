@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 
 /**
  * This class provides a base implementation for Command Station/interface
- * dependent initilization for XpressNet. It adds the appropriate Managers via
+ * dependent initialization for XpressNet. It adds the appropriate Managers via
  * the Initialization Manager based on the Command Station Type.
  *
  * @author Paul Bender Copyright (C) 2003-2010
@@ -37,9 +37,9 @@ public abstract class AbstractXNetInitializationManager {
         new XNetInitializer(this);
 
         // Since we can't currently reconfigure the user interface after  
-        // initilization, We need to wait for the initilization thread 
+        // initialization, We need to wait for the initialization thread
         // to finish before we can continue.  The wait  can be removed IF 
-        // we revisit the GUI initilization process.
+        // we revisit the GUI initialization process.
         synchronized (this) {
             log.debug("start wait");
             new jmri.util.WaitHandler(this);
@@ -78,7 +78,7 @@ public abstract class AbstractXNetInitializationManager {
         }
 
         protected javax.swing.Timer setupInitTimer() {
-            // Initialize and start initilization timeout timer.
+            // Initialize and start initialization timeout timer.
             javax.swing.Timer retVal = new javax.swing.Timer(getInitTimeout(),
                     (ActionEvent e) -> {
                                     /* If the timer times out, notify any 
@@ -103,7 +103,7 @@ public abstract class AbstractXNetInitializationManager {
                     parent.notify();
                 }
             } catch (Exception e) {
-                log.error("Exception {] while notifying initilization thread.",e);
+                log.error("Exception {] while notifying initialization thread.",e);
             }
             if (log.isDebugEnabled()) {
                 log.debug("Notification Sent");

@@ -56,8 +56,8 @@ public class MemoryIconTest extends PositionableTestBase {
         int g = ((colors[1] >> 8) & 0xFF) + ((colors[2] >> 8) & 0xFF) + ((colors[3] >> 8) & 0xFF) + ((colors[4] >> 8) & 0xFF);
         int b = ((colors[1]) & 0xFF) + ((colors[2]) & 0xFF) + ((colors[3]) & 0xFF) + ((colors[4]) & 0xFF);
         Assert.assertTrue("Expect gray/black text", r == g & g == b); // gray pixels
-        // the following assert fails on some Linux machines, but I am 
-        // uncertain what that implies, since the previous test verifies the 
+        // the following assert fails on some Linux machines, but I am
+        // uncertain what that implies, since the previous test verifies the
         // text is grey.
         //Assert.assertTrue("Expect blacker than grey", r < 4 * 0xee); // gray pixels
 
@@ -335,6 +335,7 @@ public class MemoryIconTest extends PositionableTestBase {
     public void tearDown() {
         to = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         super.tearDown();
     }
 

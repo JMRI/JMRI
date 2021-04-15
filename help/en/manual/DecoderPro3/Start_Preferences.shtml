@@ -295,7 +295,6 @@
             <li>Output Interval (default: 250 milliseconds, serial connections only, intended for
               debugging/advanced users)</li>
           </ul>
-          </p>
 
           <p><input name="button2" id="button2" value=
           "Disable Connection" type="submit"> will disable all the

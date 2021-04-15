@@ -6,6 +6,7 @@ import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 
@@ -221,12 +222,12 @@ public class RouteTableDataModel extends BeanTableDataModel<Route> {
     }
 
     @Override
-    public Route getBySystemName(String name) {
+    public Route getBySystemName(@Nonnull String name) {
         return InstanceManager.getDefault(RouteManager.class).getBySystemName(name);
     }
 
     @Override
-    public Route getByUserName(String name) {
+    public Route getByUserName(@Nonnull String name) {
         return InstanceManager.getDefault(RouteManager.class).getByUserName(name);
     }
 

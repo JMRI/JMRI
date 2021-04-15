@@ -505,19 +505,30 @@ PFT1550686525&lt;;&gt;4.0
 PFT1550681224&lt;;&gt;0.0
 </pre>
 
-    <p>The first number is an integer number of seconds since 12:00
-    midnight, January 1st, 1970. This start date is the Unix time epoch,
-    and makes it easy to convert this value using the standard time
-    libraries. Only the hours and minutes are useful. JMRI sends a value
-    based on the system time when the fast clock was started, so will
-    return a value near the calendar date. The Digitrax LnWi returns
-    values within the range 0-86400 (all the values for January 1,
-    1970).<br/>
+    <p>The first number is an integer number of seconds since 12:00 midnight,
+    January 1st, 1970 fast clock time. This zero date is very close to the
+    Unix time epoch, which is 12:00 midnight, January 1st, 1970 UTC, only
+    differing in the time zone offset, where applicable.
+    In fact, this makes it easy to convert this value using the standard time
+    libraries, as long as any time zone conversions are omitted. JMRI sends a
+    value based on the system date when the fast clock was started, so it will
+    return a value near the calendar date. Since the JMRI fast clock does not
+    really support calendar dates, only the hour, minute and second are useful.
+    The Digitrax LNWI returns values within the range 0-86400, which translates
+    to times on January 1st, 1970, when the day, month and year are 
+    calculated.<br/>
+    To give an example: A JMRI instance started on Dec 13, 2020 with a fast clock
+    time set to 10:23:45 am will return 1607855025, which can be converted back
+    to hours, minutes and seconds by "modulo dividing" by 86400
+    (number of seconds in a day) and calculating further as follows:<br/>
+    1607855025 mod 86400 = 37425 seconds since midnight.<br/>
+    37425 seconds since midnight = 10 hours 1425 seconds since midnight = 
+    10 hours 23 minutes 45 seconds since midnight = 10:23:45 am.<br/>
     The second number is the current fast time ratio.  It
     may be an integer value (4) or a floating point value (4.0).  If this
     value is 0 (or 0.0), the clock is stopped.<br/>
     Updates are sent on each change in time or rate, and when clock stopped 
-    or started.</p>
+    or started, so expect one message every fast clock minute.</p>
 
     <a name="AlertandInfoMessage" id="AlertandInfoMessage"></a>
     <h3>Alert and Info Message</h3>
@@ -864,13 +875,13 @@ MTA*&lt;;&gt;qR
 
         <li>'F' function key. Format F<i>{0|1}</i><i>Function</i>.</li>
 
-        <li>'f' force function</li>
+        <li>'f' force function. Format f<i>{0|1}</i><i>Function</i>.</li>
 
         <li>'I' idle, which sets the speed to 0</li>
 
         <li>'L' sets a long DCC address.</li>
 
-        <li>'m' momentary</li>
+        <li>'m' momentary. Format m<i>{0|1}</i><i>Function</i>.</li>
 
         <li>'q' ask for current settings, such as speed or
         direction</li>
@@ -955,6 +966,49 @@ MTA*&lt;;&gt;F012
       like lights, are toggle. In both cases, your code should send
       both the push (1) and release (0) and JMRI will map that into
       the correct DCC command or commands, as appropriate.</p>
+
+      <h3>'f' Force Function</h3>
+
+      <p>This command will set the function state regardless of
+      the state before this command. For example:</p>
+      <pre class="code">
+MTA*&lt;;&gt;f112
+</pre>
+
+      <p>will activate Function 12 if it was off before and will
+      keep F12 active if it was on before. If Function 12 is
+      a momentary function, it will still be activated by this
+      command and stay active.</p>
+      
+      <p>The server will respond with a property change
+      notification only if this command changes the function state.
+      </p>
+
+      <h3>'m' momentary: Set Function to momentary or locking</h3>
+      
+      <p>A function can either be momentary, i.e. active as long as
+      the function key is pushed, or locking, i.e. active until the
+      function key is pushed a second time. By default, JMRI uses the
+      roster information to determine whether a function is momentary
+      or locking for each loco.</p>
+      
+      <p>This command allows a wiThrottle client to override the
+      setting from the roster. For example:</p>
+      <pre class="code">
+MTA*&lt;;&gt;m112
+</pre>
+      <p>will set function 12 to be momentary from now on, and</p>
+      <pre class="code">
+MTA*&lt;;&gt;m012
+</pre>
+      <p>will set function 12 to be locking from now on. Actually, any
+      value other than '1' will set the function to locking. Although 
+      this example sets/resets the function to momentary on all 'T'
+      throttles, you can set this individually on a per-engine basis
+      by providing the key you used when you added an engine.</p>
+      
+      <p class="note">The global wiThrottle preference "F2 always 
+      momentary" will override this setting for F2</p>
 
       <h3>'R' Set Direction</h3>
 

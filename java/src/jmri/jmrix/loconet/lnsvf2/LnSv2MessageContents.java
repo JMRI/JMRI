@@ -1,13 +1,16 @@
 package jmri.jmrix.loconet.lnsvf2;
 
 import java.util.Locale;
+import java.util.Objects;
+
 import jmri.jmrix.loconet.LnConstants;
+//import jmri.jmrix.loconet.LnOpsModeProgrammer;
 import jmri.jmrix.loconet.LocoNetMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Supporting class for LocoNet SV Programming Format 2 messaging
+ * Supporting class for LocoNet SV Programming Format 2 messaging.
  * 
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
@@ -50,7 +53,7 @@ public class LnSv2MessageContents {
     public final static int SV2_SVD3_ELEMENT_INDEX = 13;
     public final static int SV2_SVD4_ELEMENT_INDEX = 14;
     
-//  helpers for decoding SV format 2 messages (versus other OCP_PEER_XFER messages with length 0x10)
+    //  helpers for decoding SV format 2 messages (versus other OCP_PEER_XFER messages with length 0x10)
     public final static int SV2_SRC_ELEMENT_MASK = 0x7f;
     public final static int SV2_SVX1_ELEMENT_VALIDITY_CHECK_MASK = 0x70;
     public final static int SV2_SVX1_ELEMENT_VALIDITY_CHECK_VALUE = 0x10;
@@ -67,7 +70,7 @@ public class LnSv2MessageContents {
     public final static int SV2_SV_TYPE_ELEMENT_VALIDITY_CHECK_MASK = 0x7F;
     public final static int SV2_SV_TYPE_ELEMENT_VALIDITY_CHECK_VALUE = 0x02;
 
-// helpers for decoding SV_CMD
+    // helpers for decoding SV_CMD
     public final static int SV_CMD_WRITE_ONE = 0x01;
     public final static int SV_CMD_WRITE_ONE_REPLY = 0x41; // reply to SV_CMD_WRITE_ONE
     
@@ -95,9 +98,9 @@ public class LnSv2MessageContents {
     public final static int SV_CMD_RECONFIGURE_REQUEST = 0x0F;
     public final static int SV_CMD_RECONFIGURE_REPLY = 0x4F;   // reply to SV_CMD_RECONFIGURE_REQUEST
 
-// LocoNet "SV 2 format" helper definitions: SV_CMD "reply" bit
-    public final static int SV2_SV_CMD_REPLY_BIT_NUBMER = 0x6;
-    public final static int SV2_SV_CMD_REPLY_BIT_MASK = (2^SV2_SV_CMD_REPLY_BIT_NUBMER);
+    // LocoNet "SV 2 format" helper definitions: SV_CMD "reply" bit
+    public final static int SV2_SV_CMD_REPLY_BIT_NUMBER = 0x6;
+    public final static int SV2_SV_CMD_REPLY_BIT_MASK = (2^SV2_SV_CMD_REPLY_BIT_NUMBER);
 
     // LocoNet "SV 2 format" helper definitions for data
     public final static int SV2_SV_DATA_INDEX_EEPROM_SIZE = 1;
@@ -107,7 +110,8 @@ public class LnSv2MessageContents {
     
             
     /**
-     * Create a new LnSV2MessageContents object from a LocoNet message
+     * Create a new LnSV2MessageContents object from a LocoNet message.
+     *
      * @param m LocoNet message containing an SV Programming Format 2 message
      * @throws IllegalArgumentException if the LocoNet message is not a valid, supported 
      *      SV Programming Format 2 message
@@ -117,7 +121,7 @@ public class LnSv2MessageContents {
 
         log.debug("interpreting a LocoNet message - may be an SV2 message");  // NOI18N
         if (!isSupportedSv2Message(m)) {
-            log.debug("interpreting a LocoNet message is NOT an SV2 message");   // NOI18N
+            log.debug("interpreting a LocoNet message - is NOT an SV2 message");   // NOI18N
             throw new java.lang.IllegalArgumentException("LocoNet message is not an SV2 message"); // NOI18N
         }
         src = m.getElement(SV2_SRC_ELEMENT_INDEX);
@@ -158,8 +162,9 @@ public class LnSv2MessageContents {
     }
 
     /**
-     * Check a LocoNet message to determine if it is a valid SV Programming Format 
-     *      2 message.
+     * Check a LocoNet message to determine if it is a valid SV Programming Format 2
+     *      message.
+     *
      * @param m  LocoNet message to check
      * @return true if LocoNet message m is a supported SV Programming Format 2
      *      message, else false.
@@ -212,6 +217,7 @@ public class LnSv2MessageContents {
     }
     
     /**
+     * Compare reply message against a specific SV Programming Format 2 message type.
      *
      * @param m  LocoNet message to be verified as an SV Programming Format 2 message
      *      with the specified &lt;SV_CMD&gt; value
@@ -260,7 +266,7 @@ public class LnSv2MessageContents {
         // check the <SV_CMD> value
         if (isSupportedSv2Command(m.getElement(SV2_SV_CMD_ELEMENT_INDEX))) {
             log.debug("LocoNet message is a supported SV Format 2 message");  // NOI18N
-            if (extractMessageType(m).equals(svCmd)) {
+            if (Objects.equals(extractMessageType(m), svCmd)) {
                 log.debug("LocoNet message is the specified SV Format 2 message");  // NOI18N
                 return true;
             }
@@ -270,10 +276,11 @@ public class LnSv2MessageContents {
     }
     
     /**
-     * Interprets a LocoNet message to determine its SV Programming Format 2 &lt;SV_CMD&gt;.
-     * If the message is not an SV Programming Format 2 message, returns null
+     * Interpret a LocoNet message to determine its SV Programming Format 2 &lt;SV_CMD&gt;.
+     * If the message is not an SV Programming Format 2 message, returns null.
+     *
      * @param m  LocoNet message containing SV Programming Format 2 message
-     * @return Sv2Command found in the SV Programming Format 2 message
+     * @return Sv2Command found in the SV Programming Format 2 message or null if not found
      */
     public static Sv2Command extractMessageType(LocoNetMessage m) {
         if (isSupportedSv2Message(m)) {
@@ -289,7 +296,7 @@ public class LnSv2MessageContents {
     }
     
     /**
-     * Interprets the SV Programming Format 2 message into a human-readable string.
+     * Interpret the SV Programming Format 2 message into a human-readable string.
      * 
      * @return String containing a human-readable version of the SV Programming 
      *      Format 2 message
@@ -301,12 +308,12 @@ public class LnSv2MessageContents {
     }
     
     /**
-     * Interprets the SV Programming Format 2 message into a human-readable string.
+     * Interpret the SV Programming Format 2 message into a human-readable string.
      * 
      * @param locale  locale to use for the human-readable string
      * @return String containing a human-readable version of the SV Programming 
      *      Format 2 message, in the language specified by the Locale, if the 
-     *      properties have been translated to that Locale, else in the deafult 
+     *      properties have been translated to that Locale, else in the default
      *      English language.
      */
     public String toString(Locale locale) {
@@ -433,7 +440,7 @@ public class LnSv2MessageContents {
                 break;
 
             case (SV_CMD_DISCOVER_DEVICE_REPORT):
-                returnString = Bundle.getMessage(locale, "SV2_DEVICE_TYPE_REPORT_INTEPRETED",
+                returnString = Bundle.getMessage(locale, "SV2_DEVICE_TYPE_REPORT_INTERPRETED",
                         src,
                         dst,
                         sv_adrl,
@@ -443,13 +450,13 @@ public class LnSv2MessageContents {
                 break;
 
             case (SV_CMD_IDENTIFY_DEVICE_BY_DEVICE_ADDRESS):
-                returnString = Bundle.getMessage(locale, "SV2_IDENTIFY_DEVICE_REQUEST_INTEPRETED",
+                returnString = Bundle.getMessage(locale, "SV2_IDENTIFY_DEVICE_REQUEST_INTERPRETED",
                         src,
                         dst);
                 break;
 
             case (SV_CMD_IDENTIFY_DEVICE_BY_DEVICE_ADDRESS_REPLY):
-                returnString = Bundle.getMessage(locale, "SV2_DEVICE_IDENTITY_REPORT_INTEPRETED",
+                returnString = Bundle.getMessage(locale, "SV2_DEVICE_IDENTITY_REPORT_INTERPRETED",
                         src,
                         dst,                // SV device address
                         sv_adrl,            // manufacturer id
@@ -459,7 +466,7 @@ public class LnSv2MessageContents {
                 break;
 
             case (SV_CMD_CHANGE_ADDRESS_REQUEST):
-                returnString = Bundle.getMessage(locale, "SV2_CHANGE_ADDRESS_REQUEST_INTEPRETED",
+                returnString = Bundle.getMessage(locale, "SV2_CHANGE_ADDRESS_REQUEST_INTERPRETED",
                         src,
                         dst, // <new> SV device address
                         sv_adrl,            // manufacturer id
@@ -483,13 +490,13 @@ public class LnSv2MessageContents {
                         (d4 == 0)) {
                     // this is probably a change address reply where a reconfigure is required
                     returnString = Bundle.getMessage(locale,
-                            "SV2_CHANGE_ADDRESS_REPLY_NEEDS_RECONFIGURE_INTEPRETED",
+                            "SV2_CHANGE_ADDRESS_REPLY_NEEDS_RECONFIGURE_INTERPRETED",
                             src,
                             dst // old SV device address
                             );
                 } else {
                     returnString = Bundle.getMessage(locale,
-                            "SV2_CHANGE_ADDRESS_REPLY_INTEPRETED",
+                            "SV2_CHANGE_ADDRESS_REPLY_INTERPRETED",
                             src,
                             dst, // new SV device address
                             sv_adrl,            // manufacturer id
@@ -500,13 +507,13 @@ public class LnSv2MessageContents {
                 break;
 
             case (SV_CMD_RECONFIGURE_REQUEST):
-                returnString = Bundle.getMessage(locale, "SV2_RECONFIGURE_REQUEST_INTEPRETED", 
+                returnString = Bundle.getMessage(locale, "SV2_RECONFIGURE_REQUEST_INTERPRETED", 
                         src,
                         dst);
                 break;
 
             case (SV_CMD_RECONFIGURE_REPLY):
-                returnString = Bundle.getMessage(locale, "SV2_DEVICE_RECONFIGURE_REPLY_INTEPRETED",
+                returnString = Bundle.getMessage(locale, "SV2_DEVICE_RECONFIGURE_REPLY_INTERPRETED",
                         src,
                         dst,                // SV device address
                         sv_adrl,            // manufacturer id
@@ -516,7 +523,7 @@ public class LnSv2MessageContents {
                 break;
 
             default:
-                return Bundle.getMessage(locale, "SV2_UNDEFINED_MESSAGE");
+                return Bundle.getMessage(locale, "SV2_UNDEFINED_MESSAGE") + "\n";
         }
 
         log.debug("interpreted: {}", returnString);  // NOI18N
@@ -556,6 +563,7 @@ public class LnSv2MessageContents {
     }    
     
     /**
+     * Confirm a message specifies a valid (known) SV Programming Format 2 command.
      *
      * @return true if the SV2 message specifies a valid (known) SV Programming 
      *      Format 2 command.
@@ -574,7 +582,7 @@ public class LnSv2MessageContents {
 
     /**
      *
-     * @return true of the SV2 message is a SV2 Read Four Reply message
+     * @return true if the SV2 message is a SV2 Read Four Reply message
      */
     public boolean isSupportedSv2ReadFourReply() {
         return (sv_cmd == SV_CMD_REPORT_FOUR);
@@ -590,13 +598,11 @@ public class LnSv2MessageContents {
                 ||
                 (sv_cmd == SV_CMD_REPORT_FOUR));
     }
-
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LnSv2MessageContents.class);
     
     /**
      * Get the data from a SVs Single Read Reply message.  May also be used to
      * return the effective SV value reported in a SV2 Single Write Reply message.
+     *
      * @return the {@code <D1>} value from the SV2 message
      */
     public int getSingleReadReportData() {
@@ -604,7 +610,9 @@ public class LnSv2MessageContents {
     }
 
     /**
-     * Create a LocoNet message containing an SV Programming Format 2 message
+     * Create a LocoNet message containing an SV Programming Format 2 message.
+     * See Programmer message code in {@link jmri.jmrix.loconet.LnOpsModeProgrammer} loadSV2MessageFormat
+     *
      * @param source  source device address (7 bit, for &lt;SRC&gt;)
      * @param command  SV Programming Format 2 command number (for &lt;SV_CMD&gt;)
      * @param destination = SV format 2 destination address (for &lt;DST_L&gt; and &lt;DST_H&gt;)
@@ -614,7 +622,7 @@ public class LnSv2MessageContents {
      * @param d3  SV Programming Format 2 third data value (for &lt;D3&gt;)
      * @param d4  SV Programming Format 2 fourth data value (for &lt;D4&gt;)
      * @return LocoNet message for the requested message
-     * @throws IllegalArgumentException of command is not a valid SV Programming Format 2 &lt;SV_CMD&gt; value
+     * @throws IllegalArgumentException if command is not a valid SV Programming Format 2 &lt;SV_CMD&gt; value
      */
     public static LocoNetMessage createSv2Message (int source, int command, 
             int destination, int svNum, int d1, int d2, int d3, int d4) 
@@ -635,7 +643,7 @@ public class LnSv2MessageContents {
         svx1 = svx1 + (((destination & 0x8000) == 0x8000) ? SV2_SV_DST_H_DSTHX7_CHECK_MASK : 0);
         svx1 = svx1 + (((svNum & 0x80) == 0x80) ? SV2_SV_ADRL_SVADRL7_CHECK_MASK : 0);
         svx1 = svx1 + (((svNum & 0x8000) == 0x8000) ? SV2_SV_ADRH_SVADRH7_CHECK_MASK : 0);
-        m.setElement(SV2_SVX1_ELEMENT_INDEX,svx1);
+        m.setElement(SV2_SVX1_ELEMENT_INDEX, svx1);
         
         m.setElement(SV2_SV_DST_L_ELEMENT_INDEX, (destination & 0x7f));
         m.setElement(SV2_SV_DST_H_ELEMENT_INDEX, ((destination >> 8) & 0x7f));
@@ -647,7 +655,7 @@ public class LnSv2MessageContents {
         svx2 = svx2 + (((d2 & 0x80) == 0x80) ? SV2_SV_D2_D2X7_CHECK_MASK : 0);
         svx2 = svx2 + (((d3 & 0x80) == 0x80) ? SV2_SV_D3_D3X7_CHECK_MASK : 0);
         svx2 = svx2 + (((d4 & 0x80) == 0x80) ? SV2_SV_D4_D4X7_CHECK_MASK : 0);
-        m.setElement(SV2_SVX2_ELEMENT_INDEX,svx2);
+        m.setElement(SV2_SVX2_ELEMENT_INDEX, svx2);
         
         m.setElement(SV2_SVD1_ELEMENT_INDEX, (d1 & 0x7f));
         m.setElement(SV2_SVD2_ELEMENT_INDEX, (d2 & 0x7f));
@@ -743,7 +751,7 @@ public class LnSv2MessageContents {
     }
     
     /**
-     * Creates a LocoNet message for the reply for an SV2 "Change Address" 
+     * Create a LocoNet message for the reply for an SV2 "Change Address"
      * message where the device requires a reconfigure.
      * 
      * @param ida  IDA value, for the SRC field of the OPC_PEER_XFER
@@ -758,7 +766,7 @@ public class LnSv2MessageContents {
     }
 
     /**
-     * Creates a LocoNet message for the reply for an SV2 "Change Address" 
+     * Create a LocoNet message for the reply for an SV2 "Change Address"
      * message where the device requires a reconfigure.
      * 
      * @param ida  IDA value, for the SRC field of the OPC_PEER_XFER
@@ -779,7 +787,7 @@ public class LnSv2MessageContents {
     }
     
     /**
-     * Creates a LocoNet message for the reply for an SV2 "Reconfigure Reply"
+     * Create a LocoNet message for the reply for an SV2 "Reconfigure Reply"
      * 
      * @param ida  IDA value, for the SRC field of the OPC_PEER_XFER
      * @param newDestAddr  the "new" SV2 destination address
@@ -799,13 +807,13 @@ public class LnSv2MessageContents {
     }
     /**
      * 
-     * @param m  the preceeding LocoNet message
+     * @param m  the preceding LocoNet message
      * @param svValues  array containing the SV values; only one value is used 
-     *          when m contains a SV_QUERY_ONE, else contains 4 values.
-     * @return  LocoNet message containing the reply, or null if preceeding 
-     *          message isn't a query.
+     *          when m contains an SV_QUERY_ONE, else contains 4 values.
+     * @return  LocoNet message containing the reply, or null if preceding
+     *          message isn't a query
      */
-    public static LocoNetMessage createSvReadReply(LocoNetMessage m, int svValues[]) {
+    public static LocoNetMessage createSvReadReply(LocoNetMessage m, int[] svValues) {
         if (!isSupportedSv2Message(m)) {
             return null;
         }
@@ -842,10 +850,10 @@ public class LnSv2MessageContents {
 
     /**
      * 
-     * @param m  the preceeding LocoNet message
+     * @param m  the preceding LocoNet message
      * @param svValue  value of one SV register
-     * @return  LocoNet message containing the reply, or null if preceeding 
-     *          message isn't a query.
+     * @return  LocoNet message containing the reply, or null if preceding 
+     *          message isn't a query
      */
     public static LocoNetMessage createSvReadReply(LocoNetMessage m, int svValue) {
         return createSvReadReply(m, new int[] {svValue});
@@ -853,7 +861,7 @@ public class LnSv2MessageContents {
 
     /**
      * Get the d1 value
-     * @return d1
+     * @return d1 element contents
      */
     public int getSv2D1() {
         return d1;
@@ -861,7 +869,7 @@ public class LnSv2MessageContents {
     
     /**
      * Get the d2 value
-     * @return d2
+     * @return d2 element contents
      */
     public int getSv2D2() {
         return d2;
@@ -869,7 +877,7 @@ public class LnSv2MessageContents {
     
     /**
      * Get the d3 value
-     * @return d3
+     * @return d3 element contents
      */
     public int getSv2D3() {
         return d3;
@@ -877,7 +885,7 @@ public class LnSv2MessageContents {
     
     /**
      * Get the d4 value
-     * @return d4
+     * @return d4 element contents
      */
     public int getSv2D4() {
         return d4;
@@ -900,7 +908,7 @@ public class LnSv2MessageContents {
      }
 
     /**
-     * Create LocoNet message for another query of an SV of this object
+     * Create LocoNet message for another query of an SV of this object.
      * 
      * @param deviceAddress  address of the device
      * @param svNum  SV number
@@ -930,8 +938,8 @@ public class LnSv2MessageContents {
         SV2_DEVICE_TYPE_REPORT (0x48),
         SV2_CHANGE_DEVICE_ADDRESS_REPLY (0x49),
         SV2_RECONFIGURE_DEVICE_REPLY (0x4f);
-        
-        private int cmd;
+
+        private final int cmd;
         
         Sv2Command(int cmd) {
             this.cmd = cmd;
@@ -944,4 +952,7 @@ public class LnSv2MessageContents {
         }
     }
 
+    // initialize logging
+    private final static Logger log = LoggerFactory.getLogger(LnSv2MessageContents.class);
+    
 }

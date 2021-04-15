@@ -91,7 +91,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     /** {@inheritDoc} */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         return new LnSensor(systemName, userName, tc, getSystemPrefix());
     }
 
@@ -206,15 +206,13 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                 try {
                     board = Integer.parseInt(curAddress.substring(0, seperator));
                 } catch (NumberFormatException ex) {
-                    log.error("Unable to convert '{}' into the cab and channel format of nn:xx", curAddress); // NOI18N
-                    throw new JmriException("Hardware Address passed should be a number"); // NOI18N
+                    throw new JmriException("Unable to convert '"+curAddress+"' into the cab and channel format of nn:xx"); // NOI18N
                 }
             }
             try {
                 channel = Integer.parseInt(curAddress.substring(seperator + 1));
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert '{}' into the cab and channel format of nn:xx", curAddress); // NOI18N
-                throw new JmriException("Hardware Address passed should be a number"); // NOI18N
+                throw new JmriException("Unable to convert '"+curAddress+"' into the cab and channel format of nn:xx"); // NOI18N
             }
             if (turnout) {
                 iName = 2 * (channel - 1) + 1;
@@ -226,11 +224,11 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                     curAddress, iName);
         } else {
             // Entered in using the old format
+            log.debug("LnSensorManager creating system name for {}", curAddress);
             try {
                 iName = Integer.parseInt(curAddress);
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert '{}' Hardware Address to a number", curAddress); // NOI18N
-                throw new JmriException("Hardware Address passed should be a number"); // NOI18N
+                throw new JmriException("Hardware Address passed "+curAddress+" should be a number"); // NOI18N
             }
         }
         return prefix + typeLetter() + iName;
@@ -263,40 +261,6 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
             return 0;
         }
         return Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
-
-        String tmpSName = "";
-
-        try {
-            tmpSName = createSystemName(curAddress, prefix);
-        } catch (JmriException ex) {
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage(Bundle.getMessage("ErrorTitle"),
-                            Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false); // I18N
-            return null;
-        }
-
-        // Check to determine if the systemName is in use, return null if it is,
-        // otherwise return the next valid address.
-        Sensor s = getBySystemName(tmpSName);
-        if (s != null) {
-            for (int x = 1; x < 10; x++) {
-                iName = iName + 1;
-                s = getBySystemName(prefix + typeLetter() + iName);
-                if (s == null) {
-                    return Integer.toString(iName);
-                }
-            }
-            // feedback when next 10 addresses are also in use
-            log.warn("10 hardware addresses starting at {} already in use. No new LocoNet Sensors added", curAddress);
-            return null;
-        } else {
-            return Integer.toString(iName);
-        }
     }
 
     /** {@inheritDoc} */

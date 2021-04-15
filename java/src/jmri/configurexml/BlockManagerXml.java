@@ -11,8 +11,6 @@ import jmri.Path;
 import jmri.Reporter;
 import jmri.Turnout;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Persistency implementation for BlockManager persistence.
@@ -453,6 +451,6 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         return InstanceManager.getDefault(jmri.BlockManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockManagerXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockManagerXml.class);
 
 }

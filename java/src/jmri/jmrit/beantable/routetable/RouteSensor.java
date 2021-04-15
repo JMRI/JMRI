@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  * @author Egbert Broerse Copyright (C) 2016
- * @author Paul Bender Colyright (C) 2020
+ * @author Paul Bender Copyright (C) 2020
  */
 class RouteSensor extends RouteElement {
     private static final String SET_TO_ACTIVE = Bundle.getMessage("Set") + " " + Bundle.getMessage("SensorStateActive");

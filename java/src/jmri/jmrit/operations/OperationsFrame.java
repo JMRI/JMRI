@@ -149,10 +149,10 @@ public class OperationsFrame extends JmriJFrame {
      * preferences file.
      *
      * @param table The table to be adjusted.
-     * @return true
+     *
      */
-    public boolean loadTableDetails(JTable table) {
-        return this.getContentPane().loadTableDetails(table);
+    public void loadTableDetails(JTable table) {
+        this.getContentPane().loadTableDetails(table);
     }
 
     protected void clearTableSort(JTable table) {

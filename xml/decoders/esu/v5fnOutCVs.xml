@@ -51,7 +51,7 @@
         <decVal/>
         <label xml:lang="de">Ausgang automatisch Ausschalten</label>
     </variable>
-    <variable label="Brightness CV" CV="16.0.262" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+    <variable item="Brightness CV262" label="Brightness CV" CV="16.0.262" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
         <decVal/>
     </variable>
     <variable label="Brightness" CV="16.0.262" default="31" item="ESU V4 Function Output HL-1 Slider 5" mask="XXXVVVVV">
@@ -147,7 +147,7 @@
         <decVal max="31"/>
         <label xml:lang="de">Dampfstoßstärke</label>
     </variable>
-    <variable label="Special Function CV 1" CV="16.0.263" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+    <variable item="Special Function CV 1" label="Special Function CV 1" CV="16.0.263" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
         <decVal/>
     </variable>
     <variable label="Fan Acceleration rate" CV="16.0.263" default="0" item="ESU V4 Function Output HL-1 Slider 12" mask="XXXVVVVV">
@@ -260,7 +260,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label xml:lang="de">LED Modus</label>
     </variable>
-    <variable label="Special Function CV 2" CV="16.0.264" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+    <variable item="Special Function CV 2" label="Special Function CV 2" CV="16.0.264" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
         <decVal/>
     </variable>
     <variable label="Fan Decceleration rate" CV="16.0.264" default="0" item="ESU V4 Function Output HL-1 Slider 13" mask="XXXVVVVV">
@@ -357,7 +357,7 @@
         <decVal/>
         <label xml:lang="de">Ausgang automatisch Ausschalten</label>
     </variable>
-    <variable label="Brightness CV" CV="16.0.270" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+    <variable item="Brightness CV270" label="Brightness CV" CV="16.0.270" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
         <decVal/>
     </variable>
     <variable label="Brightness" CV="16.0.270" default="31" item="ESU V4 Function Output RL-1 Slider 5" mask="XXXVVVVV">
@@ -453,7 +453,7 @@
         <decVal max="31"/>
         <label xml:lang="de">Dampfstoßstärke</label>
     </variable>
-    <variable label="Special Function CV 1" CV="16.0.271" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+    <variable item="Special Function CV271" label="Special Function CV 1" CV="16.0.271" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
         <decVal/>
     </variable>
     <variable label="Fan Acceleration rate" CV="16.0.271" default="0" item="ESU V4 Function Output RL-1 Slider 12" mask="XXXVVVVV">
@@ -566,7 +566,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label xml:lang="de">LED Modus</label>
     </variable>
-    <variable label="Special Function CV 2" CV="16.0.272" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+    <variable item="Special Function CV272" label="Special Function CV 2" CV="16.0.272" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
         <decVal/>
     </variable>
     <variable label="Fan Decceleration rate" CV="16.0.272" default="0" item="ESU V4 Function Output RL-1 Slider 13" mask="XXXVVVVV">
@@ -663,7 +663,7 @@
         <decVal/>
         <label xml:lang="de">Ausgang automatisch Ausschalten</label>
     </variable>
-    <variable label="Brightness CV" CV="16.0.278" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+    <variable item="Brightness CV278" label="Brightness CV" CV="16.0.278" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
         <decVal/>
     </variable>
     <variable label="Brightness" CV="16.0.278" default="31" item="ESU V4 Function Output A1-1 Slider 5" mask="XXXVVVVV">
@@ -759,7 +759,7 @@
         <decVal max="31"/>
         <label xml:lang="de">Dampfstoßstärke</label>
     </variable>
-    <variable label="Special Function CV 1" CV="16.0.279" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+    <variable item="Special Function CV279" label="Special Function CV 1" CV="16.0.279" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
         <decVal/>
     </variable>
     <variable label="Fan Acceleration rate" CV="16.0.279" default="0" item="ESU V4 Function Output A1-1 Slider 12" mask="XXXVVVVV">
@@ -872,7 +872,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label xml:lang="de">LED Modus</label>
     </variable>
-    <variable label="Special Function CV 2" CV="16.0.280" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+    <variable item="Special Function CV280" label="Special Function CV 2" CV="16.0.280" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
         <decVal/>
     </variable>
     <variable label="Fan Decceleration rate" CV="16.0.280" default="0" item="ESU V4 Function Output A1-1 Slider 13" mask="XXXVVVVV">
@@ -969,7 +969,7 @@
         <decVal/>
         <label xml:lang="de">Ausgang automatisch Ausschalten</label>
     </variable>
-    <variable label="Brightness CV" CV="16.0.286" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+    <variable item="Brightness CV286" label="Brightness CV" CV="16.0.286" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
         <decVal/>
     </variable>
     <variable label="Brightness" CV="16.0.286" default="31" item="ESU V4 Function Output A2-1 Slider 5" mask="XXXVVVVV">
@@ -1065,7 +1065,7 @@
         <decVal max="31"/>
         <label xml:lang="de">Dampfstoßstärke</label>
     </variable>
-    <variable label="Special Function CV 1" CV="16.0.287" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+    <variable item="Special Function CV287" label="Special Function CV 1" CV="16.0.287" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
         <decVal/>
     </variable>
     <variable label="Fan Acceleration rate" CV="16.0.287" default="0" item="ESU V4 Function Output A2-1 Slider 12" mask="XXXVVVVV">
@@ -1178,7 +1178,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label xml:lang="de">LED Modus</label>
     </variable>
-    <variable label="Special Function CV 2" CV="16.0.288" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+    <variable item="Special Function CV288" label="Special Function CV 2" CV="16.0.288" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
         <decVal/>
     </variable>
     <variable label="Fan Decceleration rate" CV="16.0.288" default="0" item="ESU V4 Function Output A2-1 Slider 13" mask="XXXVVVVV">
@@ -1276,7 +1276,7 @@
             <decVal/>
             <label xml:lang="de">Ausgang automatisch Ausschalten</label>
         </variable>
-        <variable label="Brightness CV" CV="16.0.294" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+        <variable item="Brightness CV294" label="Brightness CV" CV="16.0.294" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
             <decVal/>
         </variable>
         <variable label="Brightness" CV="16.0.294" default="31" item="ESU V4 Function Output A3 Slider 5" mask="XXXVVVVV">
@@ -1372,7 +1372,7 @@
             <decVal max="31"/>
             <label xml:lang="de">Dampfstoßstärke</label>
         </variable>
-        <variable label="Special Function CV 1" CV="16.0.295" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+        <variable item="Special Function CV295" label="Special Function CV 1" CV="16.0.295" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
             <decVal/>
         </variable>
         <variable label="Fan Acceleration rate" CV="16.0.295" default="0" item="ESU V4 Function Output A3 Slider 12" mask="XXXVVVVV">
@@ -1485,7 +1485,7 @@
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
             <label xml:lang="de">LED Modus</label>
         </variable>
-        <variable label="Special Function CV 2" CV="16.0.296" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+        <variable item="Special Function CV296" label="Special Function CV 2" CV="16.0.296" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
             <decVal/>
         </variable>
         <variable label="Fan Decceleration rate" CV="16.0.296" default="0" item="ESU V4 Function Output A3 Slider 13" mask="XXXVVVVV">
@@ -1582,7 +1582,7 @@
             <decVal/>
             <label xml:lang="de">Ausgang automatisch Ausschalten</label>
         </variable>
-        <variable label="Brightness CV" CV="16.0.302" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+        <variable item="Brightness CV302" label="Brightness CV" CV="16.0.302" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
             <decVal/>
         </variable>
         <variable label="Brightness" CV="16.0.302" default="31" item="ESU V4 Function Output A4 Slider 5" mask="XXXVVVVV">
@@ -1678,7 +1678,7 @@
             <decVal max="31"/>
             <label xml:lang="de">Dampfstoßstärke</label>
         </variable>
-        <variable label="Special Function CV 1" CV="16.0.303" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+        <variable item="Special Function CV303" label="Special Function CV 1" CV="16.0.303" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
             <decVal/>
         </variable>
         <variable label="Fan Acceleration rate" CV="16.0.303" default="0" item="ESU V4 Function Output A4 Slider 12" mask="XXXVVVVV">
@@ -1791,7 +1791,7 @@
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
             <label xml:lang="de">LED Modus</label>
         </variable>
-        <variable label="Special Function CV 2" CV="16.0.304" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+        <variable item="Special Function CV304" label="Special Function CV 2" CV="16.0.304" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
             <decVal/>
         </variable>
         <variable label="Fan Decceleration rate" CV="16.0.304" default="0" item="ESU V4 Function Output A4 Slider 13" mask="XXXVVVVV">
@@ -1888,7 +1888,7 @@
             <decVal/>
             <label xml:lang="de">Ausgang automatisch Ausschalten</label>
         </variable>
-        <variable label="Brightness CV" CV="16.0.310" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+        <variable item="Brightness CV310" label="Brightness CV" CV="16.0.310" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
             <decVal/>
         </variable>
         <variable label="Brightness" CV="16.0.310" default="31" item="ESU V4 Function Output A5 Slider 5" mask="XXXVVVVV">
@@ -1984,7 +1984,7 @@
             <decVal max="31"/>
             <label xml:lang="de">Dampfstoßstärke</label>
         </variable>
-        <variable label="Special Function CV 1" CV="16.0.311" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+        <variable item="Special Function CV311" label="Special Function CV 1" CV="16.0.311" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
             <decVal/>
         </variable>
         <variable label="Fan Acceleration rate" CV="16.0.311" default="0" item="ESU V4 Function Output A5 Slider 12" mask="XXXVVVVV">
@@ -2097,7 +2097,7 @@
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
             <label xml:lang="de">LED Modus</label>
         </variable>
-        <variable label="Special Function CV 2" CV="16.0.312" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+        <variable item="Special Function CV312" label="Special Function CV 2" CV="16.0.312" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
             <decVal/>
         </variable>
         <variable label="Fan Decceleration rate" CV="16.0.312" default="0" item="ESU V4 Function Output A5 Slider 13" mask="XXXVVVVV">
@@ -2194,7 +2194,7 @@
             <decVal/>
             <label xml:lang="de">Ausgang automatisch Ausschalten</label>
         </variable>
-        <variable label="Brightness CV" CV="16.0.318" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+        <variable item="Brightness CV318" label="Brightness CV" CV="16.0.318" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
             <decVal/>
         </variable>
         <variable label="Brightness" CV="16.0.318" default="31" item="ESU V4 Function Output A6 Slider 5" mask="XXXVVVVV">
@@ -2290,7 +2290,7 @@
             <decVal max="31"/>
             <label xml:lang="de">Dampfstoßstärke</label>
         </variable>
-        <variable label="Special Function CV 1" CV="16.0.319" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+        <variable item="Special Function CV319" label="Special Function CV 1" CV="16.0.319" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
             <decVal/>
         </variable>
         <variable label="Fan Acceleration rate" CV="16.0.319" default="0" item="ESU V4 Function Output A6 Slider 12" mask="XXXVVVVV">
@@ -2403,7 +2403,7 @@
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
             <label xml:lang="de">LED Modus</label>
         </variable>
-        <variable label="Special Function CV 2" CV="16.0.320" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+        <variable item="Special Function CV320" label="Special Function CV 2" CV="16.0.320" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
             <decVal/>
         </variable>
         <variable label="Fan Decceleration rate" CV="16.0.320" default="0" item="ESU V4 Function Output A6 Slider 13" mask="XXXVVVVV">
@@ -2501,7 +2501,7 @@
                 <decVal/>
                 <label xml:lang="de">Ausgang automatisch Ausschalten</label>
             </variable>
-            <variable label="Brightness CV" CV="16.0.326" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Brightness CV326" label="Brightness CV" CV="16.0.326" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Brightness" CV="16.0.326" default="31" item="ESU V4 Function Output A7 Slider 5" mask="XXXVVVVV">
@@ -2597,7 +2597,7 @@
                 <decVal max="31"/>
                 <label xml:lang="de">Dampfstoßstärke</label>
             </variable>
-            <variable label="Special Function CV 1" CV="16.0.327" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Special Function CV327" label="Special Function CV 1" CV="16.0.327" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Fan Acceleration rate" CV="16.0.327" default="0" item="ESU V4 Function Output A7 Slider 12" mask="XXXVVVVV">
@@ -2710,7 +2710,7 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="de">LED Modus</label>
             </variable>
-            <variable label="Special Function CV 2" CV="16.0.328" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Special Function CV328" label="Special Function CV 2" CV="16.0.328" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Fan Decceleration rate" CV="16.0.328" default="0" item="ESU V4 Function Output A7 Slider 13" mask="XXXVVVVV">
@@ -2807,7 +2807,7 @@
                 <decVal/>
                 <label xml:lang="de">Ausgang automatisch Ausschalten</label>
             </variable>
-            <variable label="Brightness CV" CV="16.0.334" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Brightness CV334" label="Brightness CV" CV="16.0.334" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Brightness" CV="16.0.334" default="31" item="ESU V4 Function Output A8 Slider 5" mask="XXXVVVVV">
@@ -2903,7 +2903,7 @@
                 <decVal max="31"/>
                 <label xml:lang="de">Dampfstoßstärke</label>
             </variable>
-            <variable label="Special Function CV 1" CV="16.0.335" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Special Function CV335" label="Special Function CV 1" CV="16.0.335" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Fan Acceleration rate" CV="16.0.335" default="0" item="ESU V4 Function Output A8 Slider 12" mask="XXXVVVVV">
@@ -3016,7 +3016,7 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="de">LED Modus</label>
             </variable>
-            <variable label="Special Function CV 2" CV="16.0.336" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Special Function CV336" label="Special Function CV 2" CV="16.0.336" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Fan Decceleration rate" CV="16.0.336" default="0" item="ESU V4 Function Output A8 Slider 13" mask="XXXVVVVV">
@@ -3113,7 +3113,7 @@
                 <decVal/>
                 <label xml:lang="de">Ausgang automatisch Ausschalten</label>
             </variable>
-            <variable label="Brightness CV" CV="16.0.342" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Brightness CV342" label="Brightness CV" CV="16.0.342" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Brightness" CV="16.0.342" default="31" item="ESU V4 Function Output A9 Slider 5" mask="XXXVVVVV">
@@ -3209,7 +3209,7 @@
                 <decVal max="31"/>
                 <label xml:lang="de">Dampfstoßstärke</label>
             </variable>
-            <variable label="Special Function CV 1" CV="16.0.343" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Special Function CV343" label="Special Function CV 1" CV="16.0.343" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Fan Acceleration rate" CV="16.0.343" default="0" item="ESU V4 Function Output A9 Slider 12" mask="XXXVVVVV">
@@ -3322,7 +3322,7 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="de">LED Modus</label>
             </variable>
-            <variable label="Special Function CV 2" CV="16.0.344" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Special Function CV344" label="Special Function CV 2" CV="16.0.344" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Fan Decceleration rate" CV="16.0.344" default="0" item="ESU V4 Function Output A9 Slider 13" mask="XXXVVVVV">
@@ -3419,7 +3419,7 @@
                 <decVal/>
                 <label xml:lang="de">Ausgang automatisch Ausschalten</label>
             </variable>
-            <variable label="Brightness CV" CV="16.0.350" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Brightness CV350" label="Brightness CV" CV="16.0.350" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Brightness" CV="16.0.350" default="31" item="ESU V4 Function Output A10 Slider 5" mask="XXXVVVVV">
@@ -3515,7 +3515,7 @@
                 <decVal max="31"/>
                 <label xml:lang="de">Dampfstoßstärke</label>
             </variable>
-            <variable label="Special Function CV 1" CV="16.0.351" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Special Function CV351" label="Special Function CV 1" CV="16.0.351" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Fan Acceleration rate" CV="16.0.351" default="0" item="ESU V4 Function Output A10 Slider 12" mask="XXXVVVVV">
@@ -3628,7 +3628,7 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="de">LED Modus</label>
             </variable>
-            <variable label="Special Function CV 2" CV="16.0.352" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Special Function CV352" label="Special Function CV 2" CV="16.0.352" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Fan Decceleration rate" CV="16.0.352" default="0" item="ESU V4 Function Output A10 Slider 13" mask="XXXVVVVV">
@@ -3711,7 +3711,7 @@
                 <decVal/>
                 <label xml:lang="de">Ausgang automatisch Ausschalten</label>
             </variable>
-            <variable label="Brightness CV" CV="16.0.358" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Brightness CV358" label="Brightness CV" CV="16.0.358" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Brightness" CV="16.0.358" default="31" item="ESU V4 Function Output A11 Slider 5" mask="XXXVVVVV">
@@ -3825,7 +3825,7 @@
                 <decVal max="63"/>
                 <label xml:lang="de">Dauer (Geschwindigkeit)</label>
             </variable>
-            <variable label="Special Function CV 1" CV="16.0.359" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Special Function CV359" label="Special Function CV 1" CV="16.0.359" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Fan Acceleration rate" CV="16.0.359" default="0" item="ESU V4 Function Output A11 Slider 12" mask="XXXVVVVV">
@@ -3946,7 +3946,7 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="de">LED Modus</label>
             </variable>
-            <variable label="Special Function CV 2" CV="16.0.360" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Special Function CV360" label="Special Function CV 2" CV="16.0.360" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Fan Decceleration rate" CV="16.0.360" default="0" item="ESU V4 Function Output A11 Slider 13" mask="XXXVVVVV">
@@ -4036,7 +4036,7 @@
                 <decVal/>
                 <label xml:lang="de">Ausgang automatisch Ausschalten</label>
             </variable>
-            <variable label="Brightness CV" CV="16.0.366" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Brightness CV366" label="Brightness CV" CV="16.0.366" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Brightness" CV="16.0.366" default="31" item="ESU V4 Function Output A12 Slider 5" mask="XXXVVVVV">
@@ -4150,7 +4150,7 @@
                 <decVal max="63"/>
                 <label xml:lang="de">Dauer (Geschwindigkeit)</label>
             </variable>
-            <variable label="Special Function CV 1" CV="16.0.367" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Special Function CV367" label="Special Function CV 1" CV="16.0.367" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Fan Acceleration rate" CV="16.0.367" default="0" item="ESU V4 Function Output A12 Slider 12" mask="XXXVVVVV">
@@ -4271,7 +4271,7 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="de">LED Modus</label>
             </variable>
-            <variable label="Special Function CV 2" CV="16.0.368" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Special Function CV368" label="Special Function CV 2" CV="16.0.368" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Fan Decceleration rate" CV="16.0.368" default="0" item="ESU V4 Function Output A12 Slider 13" mask="XXXVVVVV">
@@ -4376,7 +4376,7 @@
                 <decVal/>
                 <label xml:lang="de">Ausgang automatisch Ausschalten</label>
             </variable>
-            <variable label="Brightness CV" CV="16.0.374" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Brightness CV374" label="Brightness CV" CV="16.0.374" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Brightness" CV="16.0.374" default="31" item="ESU V4 Function Output A13 Slider 5" mask="XXXVVVVV">
@@ -4472,7 +4472,7 @@
                 <decVal max="31"/>
                 <label xml:lang="de">Dampfstoßstärke</label>
             </variable>
-            <variable label="Special Function CV 1" CV="16.0.375" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Special Function CV375" label="Special Function CV 1" CV="16.0.375" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Fan Acceleration rate" CV="16.0.375" default="0" item="ESU V4 Function Output A13 Slider 12" mask="XXXVVVVV">
@@ -4585,7 +4585,7 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="de">LED Modus</label>
             </variable>
-            <variable label="Special Function CV 2" CV="16.0.376" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Special Function CV376" label="Special Function CV 2" CV="16.0.376" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Fan Decceleration rate" CV="16.0.376" default="0" item="ESU V4 Function Output A13 Slider 13" mask="XXXVVVVV">
@@ -4682,7 +4682,7 @@
                 <decVal/>
                 <label xml:lang="de">Ausgang automatisch Ausschalten</label>
             </variable>
-            <variable label="Brightness CV" CV="16.0.382" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Brightness CV382" label="Brightness CV" CV="16.0.382" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Brightness" CV="16.0.382" default="31" item="ESU V4 Function Output A14 Slider 5" mask="XXXVVVVV">
@@ -4778,7 +4778,7 @@
                 <decVal max="31"/>
                 <label xml:lang="de">Dampfstoßstärke</label>
             </variable>
-            <variable label="Special Function CV 1" CV="16.0.383" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Special Function CV383" label="Special Function CV 1" CV="16.0.383" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Fan Acceleration rate" CV="16.0.383" default="0" item="ESU V4 Function Output A14 Slider 12" mask="XXXVVVVV">
@@ -4891,7 +4891,7 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="de">LED Modus</label>
             </variable>
-            <variable label="Special Function CV 2" CV="16.0.384" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Special Function CV384" label="Special Function CV 2" CV="16.0.384" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Fan Decceleration rate" CV="16.0.384" default="0" item="ESU V4 Function Output A14 Slider 13" mask="XXXVVVVV">
@@ -4973,7 +4973,7 @@
                 <decVal/>
                 <label xml:lang="de">Ausgang automatisch Ausschalten</label>
             </variable>
-            <variable label="Brightness CV" CV="16.0.390" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Brightness CV390" label="Brightness CV" CV="16.0.390" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Brightness" CV="16.0.390" default="31" item="ESU V4 Function Output A15 Slider 5" mask="XXXVVVVV">
@@ -5087,7 +5087,7 @@
                 <decVal max="63"/>
                 <label xml:lang="de">Dauer (Geschwindigkeit)</label>
             </variable>
-            <variable label="Special Function CV 1" CV="16.0.391" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Special Function CV391" label="Special Function CV 1" CV="16.0.391" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Fan Acceleration rate" CV="16.0.391" default="0" item="ESU V4 Function Output A15 Slider 12" mask="XXXVVVVV">
@@ -5208,7 +5208,7 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="de">LED Modus</label>
             </variable>
-            <variable label="Special Function CV 2" CV="16.0.392" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Special Function CV392" label="Special Function CV 2" CV="16.0.392" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Fan Decceleration rate" CV="16.0.392" default="0" item="ESU V4 Function Output A15 Slider 13" mask="XXXVVVVV">
@@ -5298,7 +5298,7 @@
                 <decVal/>
                 <label xml:lang="de">Ausgang automatisch Ausschalten</label>
             </variable>
-            <variable label="Brightness CV" CV="16.0.398" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Brightness CV398" label="Brightness CV" CV="16.0.398" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Brightness" CV="16.0.398" default="31" item="ESU V4 Function Output A16 Slider 5" mask="XXXVVVVV">
@@ -5412,7 +5412,7 @@
                 <decVal max="63"/>
                 <label xml:lang="de">Dauer (Geschwindigkeit)</label>
             </variable>
-            <variable label="Special Function CV 1" CV="16.0.399" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Special Function CV399" label="Special Function CV 1" CV="16.0.399" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Fan Acceleration rate" CV="16.0.399" default="0" item="ESU V4 Function Output A16 Slider 12" mask="XXXVVVVV">
@@ -5533,7 +5533,7 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="de">LED Modus</label>
             </variable>
-            <variable label="Special Function CV 2" CV="16.0.400" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Special Function CV400" label="Special Function CV 2" CV="16.0.400" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Fan Decceleration rate" CV="16.0.400" default="0" item="ESU V4 Function Output A16 Slider 13" mask="XXXVVVVV">
@@ -5623,7 +5623,7 @@
                 <decVal/>
                 <label xml:lang="de">Ausgang automatisch Ausschalten</label>
             </variable>
-            <variable label="Brightness CV" CV="16.0.406" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Brightness CV406" label="Brightness CV" CV="16.0.406" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Brightness" CV="16.0.406" default="31" item="ESU V4 Function Output A17 Slider 5" mask="XXXVVVVV">
@@ -5737,7 +5737,7 @@
                 <decVal max="63"/>
                 <label xml:lang="de">Dauer (Geschwindigkeit)</label>
             </variable>
-            <variable label="Special Function CV 1" CV="16.0.407" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Special Function CV407" label="Special Function CV 1" CV="16.0.407" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Fan Acceleration rate" CV="16.0.407" default="0" item="ESU V4 Function Output A17 Slider 12" mask="XXXVVVVV">
@@ -5858,7 +5858,7 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="de">LED Modus</label>
             </variable>
-            <variable label="Special Function CV 2" CV="16.0.408" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Special Function CV408" label="Special Function CV 2" CV="16.0.408" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Fan Decceleration rate" CV="16.0.408" default="0" item="ESU V4 Function Output A17 Slider 13" mask="XXXVVVVV">
@@ -5948,7 +5948,7 @@
                 <decVal/>
                 <label xml:lang="de">Ausgang automatisch Ausschalten</label>
             </variable>
-            <variable label="Brightness CV" CV="16.0.414" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Brightness CV414" label="Brightness CV" CV="16.0.414" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Brightness" CV="16.0.414" default="31" item="ESU V4 Function Output A18 Slider 5" mask="XXXVVVVV">
@@ -6062,7 +6062,7 @@
                 <decVal max="63"/>
                 <label xml:lang="de">Dauer (Geschwindigkeit)</label>
             </variable>
-            <variable label="Special Function CV 1" CV="16.0.415" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Special Function CV415" label="Special Function CV 1" CV="16.0.415" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Fan Acceleration rate" CV="16.0.415" default="0" item="ESU V4 Function Output A18 Slider 12" mask="XXXVVVVV">
@@ -6183,7 +6183,7 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="de">LED Modus</label>
             </variable>
-            <variable label="Special Function CV 2" CV="16.0.416" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <variable item="Special Function CV416" label="Special Function CV 2" CV="16.0.416" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
                 <decVal/>
             </variable>
             <variable label="Fan Decceleration rate" CV="16.0.416" default="0" item="ESU V4 Function Output A18 Slider 13" mask="XXXVVVVV">
@@ -6291,7 +6291,7 @@
         <decVal/>
         <label xml:lang="de">Ausgang automatisch Ausschalten</label>
     </variable>
-    <variable label="Brightness CV" CV="16.0.422" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+    <variable item="Brightness CV422" label="Brightness CV" CV="16.0.422" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
         <decVal/>
     </variable>
     <variable label="Brightness" CV="16.0.422" default="31" item="ESU V4 Function Output HL-2 Slider 5" mask="XXXVVVVV">
@@ -6387,7 +6387,7 @@
         <decVal max="31"/>
         <label xml:lang="de">Dampfstoßstärke</label>
     </variable>
-    <variable label="Special Function CV 1" CV="16.0.423" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+    <variable item="Special Function CV423" label="Special Function CV 1" CV="16.0.423" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
         <decVal/>
     </variable>
     <variable label="Fan Acceleration rate" CV="16.0.423" default="0" item="ESU V4 Function Output HL-2 Slider 12" mask="XXXVVVVV">
@@ -6500,7 +6500,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label xml:lang="de">LED Modus</label>
     </variable>
-    <variable label="Special Function CV 2" CV="16.0.424" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+    <variable item="Special Function CV424" label="Special Function CV 2" CV="16.0.424" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
         <decVal/>
     </variable>
     <variable label="Fan Decceleration rate" CV="16.0.424" default="0" item="ESU V4 Function Output HL-2 Slider 13" mask="XXXVVVVV">
@@ -6597,7 +6597,7 @@
         <decVal/>
         <label xml:lang="de">Ausgang automatisch Ausschalten</label>
     </variable>
-    <variable label="Brightness CV" CV="16.0.430" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+    <variable item="Brightness CV430" label="Brightness CV" CV="16.0.430" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
         <decVal/>
     </variable>
     <variable label="Brightness" CV="16.0.430" default="31" item="ESU V4 Function Output RL-2 Slider 5" mask="XXXVVVVV">
@@ -6693,7 +6693,7 @@
         <decVal max="31"/>
         <label xml:lang="de">Dampfstoßstärke</label>
     </variable>
-    <variable label="Special Function CV 1" CV="16.0.431" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+    <variable item="Special Function CV431" label="Special Function CV 1" CV="16.0.431" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
         <decVal/>
     </variable>
     <variable label="Fan Acceleration rate" CV="16.0.431" default="0" item="ESU V4 Function Output RL-2 Slider 12" mask="XXXVVVVV">
@@ -6806,7 +6806,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label xml:lang="de">LED Modus</label>
     </variable>
-    <variable label="Special Function CV 2" CV="16.0.432" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+    <variable item="Special Function CV432" label="Special Function CV 2" CV="16.0.432" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
         <decVal/>
     </variable>
     <variable label="Fan Decceleration rate" CV="16.0.432" default="0" item="ESU V4 Function Output RL-2 Slider 13" mask="XXXVVVVV">
@@ -6903,7 +6903,7 @@
         <decVal/>
         <label xml:lang="de">Ausgang automatisch Ausschalten</label>
     </variable>
-    <variable label="Brightness CV" CV="16.0.438" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+    <variable item="Brightness CV438" label="Brightness CV" CV="16.0.438" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
         <decVal/>
     </variable>
     <variable label="Brightness" CV="16.0.438" default="31" item="ESU V4 Function Output A1-2 Slider 5" mask="XXXVVVVV">
@@ -6999,7 +6999,7 @@
         <decVal max="31"/>
         <label xml:lang="de">Dampfstoßstärke</label>
     </variable>
-    <variable label="Special Function CV 1" CV="16.0.439" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+    <variable item="Special Function CV439" label="Special Function CV 1" CV="16.0.439" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
         <decVal/>
     </variable>
     <variable label="Fan Acceleration rate" CV="16.0.439" default="0" item="ESU V4 Function Output A1-2 Slider 12" mask="XXXVVVVV">
@@ -7112,7 +7112,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label xml:lang="de">LED Modus</label>
     </variable>
-    <variable label="Special Function CV 2" CV="16.0.440" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+    <variable item="Special Function CV440" label="Special Function CV 2" CV="16.0.440" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
         <decVal/>
     </variable>
     <variable label="Fan Decceleration rate" CV="16.0.440" default="0" item="ESU V4 Function Output A1-2 Slider 13" mask="XXXVVVVV">
@@ -7209,7 +7209,7 @@
         <decVal/>
         <label xml:lang="de">Ausgang automatisch Ausschalten</label>
     </variable>
-    <variable label="Brightness CV" CV="16.0.446" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+    <variable item="Brightness CV446" label="Brightness CV" CV="16.0.446" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
         <decVal/>
     </variable>
     <variable label="Brightness" CV="16.0.446" default="31" item="ESU V4 Function Output A2-2 Slider 5" mask="XXXVVVVV">
@@ -7305,7 +7305,7 @@
         <decVal max="31"/>
         <label xml:lang="de">Dampfstoßstärke</label>
     </variable>
-    <variable label="Special Function CV 1" CV="16.0.447" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+    <variable item="Special Function CV447" label="Special Function CV 1" CV="16.0.447" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
         <decVal/>
     </variable>
     <variable label="Fan Acceleration rate" CV="16.0.447" default="0" item="ESU V4 Function Output A2-2 Slider 12" mask="XXXVVVVV">
@@ -7418,7 +7418,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label xml:lang="de">LED Modus</label>
     </variable>
-    <variable label="Special Function CV 2" CV="16.0.448" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+    <variable item="Special Function CV448" label="Special Function CV 2" CV="16.0.448" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
         <decVal/>
     </variable>
     <variable label="Fan Decceleration rate" CV="16.0.448" default="0" item="ESU V4 Function Output A2-2 Slider 13" mask="XXXVVVVV">

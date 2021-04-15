@@ -925,7 +925,7 @@
         </enumVal>
         <label>Random sound 4 : Number of repetitions</label>
       </variable>
-      <variable CV="251" readOnly="yes" item="Decoder Version" tooltip="The decoder version number (read only)">
+      <variable CV="251" item="Decoder Version" readOnly="yes" tooltip="The decoder version number (read only)">
         <decVal/>
         <label>Software Version Number</label>
       </variable>

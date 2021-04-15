@@ -745,7 +745,7 @@ public class ConditionalVariable {
         return false;
     }
 
-    private int fixMidnight(int time) {
+    public static int fixMidnight(int time) {
         if (time > 24 * 60) {
             time -= 24 * 60;
         }

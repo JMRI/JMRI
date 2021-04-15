@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import org.junit.Test;
 
 public class IpocsTurnoutManagerTest {
+
   @Test
   public void constructorTest() {
     final IpocsSystemConnectionMemo memo = mock(IpocsSystemConnectionMemo.class);
@@ -14,11 +15,12 @@ public class IpocsTurnoutManagerTest {
   }
   
   @Test
-  public void createNewSensorTest() {
+  public void createNewTurnoutTest() {
     final IpocsSystemConnectionMemo memo = mock(IpocsSystemConnectionMemo.class);
     final IpocsPortController portController = mock(IpocsPortController.class);
     when(memo.getPortController()).thenReturn(portController);
     final IpocsTurnoutManager manager = new IpocsTurnoutManager(memo);
-    manager.createNewTurnout("AA33", "Li91");
+    assertNotNull(manager.createNewTurnout("AT33", "Li91"));
   }
+
 }

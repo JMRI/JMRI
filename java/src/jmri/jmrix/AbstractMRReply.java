@@ -36,9 +36,8 @@ abstract public class AbstractMRReply extends AbstractMessage {
             log.error("copy ctor of null message");
         } else {
             _nDataChars = m._nDataChars;
-            for (int i = 0; i < _nDataChars; i++) {
-                _dataChars[i] = m._dataChars[i];
-            }
+            if (_nDataChars >= 0)
+                System.arraycopy(m._dataChars, 0, _dataChars, 0, _nDataChars);
         }
     }
 

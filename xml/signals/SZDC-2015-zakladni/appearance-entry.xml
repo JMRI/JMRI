@@ -44,9 +44,9 @@
     </revision>    
     <revision>
         <revnumber>5</revnumber>
-        <date>2020-09-25</date>
+        <date>2020-10-09</date>
         <authorinitials>PŠ</authorinitials>
-        <revremark>Speed map for insufficient break distance</revremark>
+        <revremark>Fix Speed map</revremark>
     </revision>    
   </revhistory>
 
@@ -313,10 +313,6 @@
       <ourAspect>Výstraha</ourAspect>
       <ourAspect>Rychlost 40 a výstraha</ourAspect>
       <ourAspect>Rychlost 60 a výstraha</ourAspect>
-      <ourAspect>Opakovaná výstraha</ourAspect>
-      <ourAspect>Rychlost 40 a opakovaná výstraha</ourAspect>
-      <ourAspect>Jízda podle rozhledových poměrů</ourAspect>
-      <ourAspect>Rychlost 40 a jízda podle rozhledových poměrů</ourAspect>
     </aspectMapping>
     
     <aspectMapping>
@@ -364,44 +360,6 @@
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Rychlost 60 a očekávej 60</advancedAspect>
-      <ourAspect>Očekávej 60</ourAspect>
-      <ourAspect>Rychlost 40 a očekávej 60</ourAspect>
-      <ourAspect>Rychlost 60 a očekávej 60</ourAspect>
-    </aspectMapping>
-    
-    <aspectMapping>
-      <advancedAspect>Rychlost 40 a opakovaná výstraha</advancedAspect>
-      <ourAspect>Výstraha</ourAspect>
-      <ourAspect>Rychlost 40 a výstraha</ourAspect>
-      <ourAspect>Rychlost 60 a výstraha</ourAspect>
-    </aspectMapping>
-    <aspectMapping>
-      <advancedAspect>Rychlost 40 a opakovaná očekávej 40</advancedAspect>
-      <ourAspect>Očekávej 40</ourAspect>
-      <ourAspect>Rychlost 40 a očekávej 40</ourAspect>
-      <ourAspect>Rychlost 60 a očekávej 40</ourAspect>
-    </aspectMapping>
-    <aspectMapping>
-      <advancedAspect>Rychlost 40 a opakovaná očekávej 60</advancedAspect>
-      <ourAspect>Očekávej 40</ourAspect>
-      <ourAspect>Rychlost 40 a očekávej 40</ourAspect>
-      <ourAspect>Rychlost 60 a očekávej 40</ourAspect>
-    </aspectMapping>
-    
-    <aspectMapping>
-      <advancedAspect>Opakovaná výstraha</advancedAspect>
-      <ourAspect>Výstraha</ourAspect>
-      <ourAspect>Rychlost 40 a výstraha</ourAspect>
-      <ourAspect>Rychlost 60 a výstraha</ourAspect>
-    </aspectMapping>
-    <aspectMapping>
-      <advancedAspect>Opakovaná očekávej 40</advancedAspect>
-      <ourAspect>Očekávej 40</ourAspect>
-      <ourAspect>Rychlost 40 a očekávej 40</ourAspect>
-      <ourAspect>Rychlost 60 a očekávej 40</ourAspect>
-    </aspectMapping>
-    <aspectMapping>
-      <advancedAspect>Opakovaná očekávej 60</advancedAspect>
       <ourAspect>Očekávej 60</ourAspect>
       <ourAspect>Rychlost 40 a očekávej 60</ourAspect>
       <ourAspect>Rychlost 60 a očekávej 60</ourAspect>

@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.implementation.ProgrammerFacadeSelector
  *
  * @author Bob Jacobsen Copyright (C) 2013
+ * @author Andrew Crosland Copyright (C) 2021
  */
 public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
@@ -54,6 +55,7 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
     // members for handling the programmer interface
     int _val; // remember the value being read/written for confirmative reply
     int _cv; // remember the cv being read/written
+    int _startVal; // remember the starting value (hint)
 
     @Override
     public void writeCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -73,12 +75,18 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
 
     @Override
     public void readCV(String CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+        readCV(CV, p, 0);
+    }
+
+    @Override
+    public void readCV(String CV, jmri.ProgListener p, int startVal) throws jmri.ProgrammerException {
         log.debug("start readCV");
         _cv = Integer.parseInt(CV);
+        _startVal = startVal;
         useProgrammer(p);
         if (prog.getCanRead(CV) || _cv <= top) {
             state = ProgState.PROGRAMMING;
-            prog.readCV(CV, this);
+            prog.readCV(CV, this, startVal);
         } else {
             // write index first
             state = ProgState.FINISHREAD;
@@ -143,7 +151,7 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
             case FINISHREAD:
                 try {
                     state = ProgState.PROGRAMMING;
-                    prog.readCV(String.valueOf(_cv % modulo), this);
+                    prog.readCV(String.valueOf(_cv % modulo), this, _startVal);
                 } catch (jmri.ProgrammerException e) {
                     log.error("Exception doing final read", e);
                 }

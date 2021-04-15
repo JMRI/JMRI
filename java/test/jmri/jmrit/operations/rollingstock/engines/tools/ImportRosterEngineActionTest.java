@@ -6,6 +6,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
+import org.junit.jupiter.api.io.TempDir;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
@@ -16,11 +22,6 @@ import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
-
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.io.TempDir;
 
 /**
  *
@@ -43,7 +44,7 @@ public class ImportRosterEngineActionTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ImportRosterEngineAction importRosterAction = new ImportRosterEngineAction();
         Assert.assertNotNull("exists", importRosterAction);
-        importRosterAction.actionPerformed(new ActionEvent("Test Action", 0, null));
+        importRosterAction.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
 
         Thread run = JUnitUtil.getThreadByName("Import Roster Engines");
 
@@ -93,7 +94,7 @@ public class ImportRosterEngineActionTest extends OperationsTestCase {
 
         ImportRosterEngineAction importRosterAction = new ImportRosterEngineAction();
         Assert.assertNotNull("exists", importRosterAction);
-        importRosterAction.actionPerformed(new ActionEvent("Test Action", 0, null));
+        importRosterAction.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
 
         Thread run = JUnitUtil.getThreadByName("Import Roster Engines");
 

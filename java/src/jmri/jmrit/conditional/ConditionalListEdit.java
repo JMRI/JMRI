@@ -268,6 +268,13 @@ public class ConditionalListEdit extends ConditionalList {
         makeEditConditionalWindow();
     }
 
+    @Override
+    void updateConditionalTableModel() {
+        log.debug("updateConditionalTableModel");
+        _numConditionals = _curLogix.getNumConditionals();
+        conditionalTableModel.fireTableRowsInserted(_numConditionals, _numConditionals);
+    }
+
     /**
      * Respond to Edit Button in the Conditional table of the Edit Logix Window.
      *
@@ -498,13 +505,13 @@ public class ConditionalListEdit extends ConditionalList {
     /**
      * Make the bottom panel for _conditionalFrame to hold buttons for
      * Update/Save, Cancel, Delete/FullEdit
-     * 
+     *
      * @return the panel
      */
     @Override
     JPanel makeBottomPanel() {
         JPanel panel = new JPanel();
-        
+
         JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));  // NOI18N
         panel.add(updateButton);
         updateButton.addActionListener(new ActionListener() {

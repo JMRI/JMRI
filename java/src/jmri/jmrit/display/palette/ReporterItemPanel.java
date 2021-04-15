@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 public class ReporterItemPanel extends TableItemPanel<Reporter> {
 
-    private JPanel _dragPanel;  // appearance never changes - just make it once
+    private final JPanel _dragPanel;  // appearance never changes - just make it once
 
     public ReporterItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<jmri.Reporter> model) {
         super(parentFrame, type, family, model);
@@ -100,11 +100,7 @@ public class ReporterItemPanel extends TableItemPanel<Reporter> {
                 r.setLevel(Editor.REPORTERS);
                 return r;
             } else if (DataFlavor.stringFlavor.equals(flavor)) {
-                StringBuilder sb = new StringBuilder(_itemType);
-                sb.append(" icon for \"");
-                sb.append(bean.getDisplayName());
-                sb.append("\"");
-                return  sb.toString();
+                return _itemType + " icon for \"" + bean.getDisplayName() + "\"";
             }
             return null;
         }

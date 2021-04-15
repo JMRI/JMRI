@@ -46,7 +46,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
     }
     
     @Override
-    protected String getSystemNameWithNoPrefix() {
+    protected String getASystemNameWithNoPrefix() {
         return "B2";
     }
 

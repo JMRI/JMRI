@@ -849,6 +849,8 @@ public final class FileUtil {
      * {@link java.net.URL} for that file. Search order is defined by
      * {@link #findURL(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...)}.
      * No limits are placed on search locations.
+     * <p>
+     * TODO: add @CheckForNull annotation / fix Possible null pointers.
      *
      * @param path The relative path of the file or resource.
      * @return The URL or null.

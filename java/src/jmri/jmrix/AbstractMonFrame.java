@@ -47,7 +47,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
     @OverridingMethodsMustInvokeSuper
     @Override
     public void dispose() {
-        if(p!=null) {
+        if (p!=null) {
            p.setSimplePreferenceState(timeStampCheck, timeCheckBox.isSelected());
            p.setSimplePreferenceState(rawDataCheck, rawCheckBox.isSelected());
            p.setSimplePreferenceState(alwaysOnTopCheck, alwaysOnTopCheckBox.isSelected());
@@ -83,7 +83,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
     AbstractMonFrame self;
 
     // to find and remember the log file
-    final javax.swing.JFileChooser logFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+    public final javax.swing.JFileChooser logFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
 
     public AbstractMonFrame() {
         super();

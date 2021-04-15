@@ -1,6 +1,7 @@
 package jmri.jmrix.dccpp;
 
 import jmri.InstanceManager;
+import jmri.Meter;
 import jmri.MeterManager;
 import jmri.util.JUnitUtil;
 
@@ -18,20 +19,37 @@ public class DCCppPredefinedMetersTest {
     private DCCppPredefinedMeters mm;
     
     @Test
-    public void testCurrentReply() {
+    public void testMeterReplies() {
         mm.message(DCCppReply.parseDCCppReply("a10")); // a syntactically valid current reply
-        Assert.assertEquals("current level percentage 100.0 - 0.0", (10.0 / DCCppConstants.MAX_CURRENT) * 100, getCurrent(), 0.05);
-    }
+        Meter m = InstanceManager.getDefault(MeterManager.class).getBySystemName("DVC_CurrentPct");
+        Assert.assertNotNull("verify meter was created", m);
+        Assert.assertEquals("current level percentage 100.0 - 0.0", (10.0 / DCCppConstants.MAX_CURRENT) * 100, m.getKnownAnalogValue(), 0.05);
 
-    public double getCurrent() {
-        return InstanceManager.getDefault(MeterManager.class).getBySystemName("DVBaseStationCurrent").getKnownAnalogValue();
-    }
+        mm.message(DCCppReply.parseDCCppReply("c PROGVolts 18.2 V Milli 9.0 24.0 0.1 18")); // new meter reply
+        m = InstanceManager.getDefault(MeterManager.class).getBySystemName("DVV_PROGVolts");       
+        Assert.assertNotNull("verify meter was created", m);
+        Assert.assertEquals("verify value from meter reply", 18.2, m.getKnownAnalogValue(), 0.00001);
+        Assert.assertEquals("DVV_PROGVolts", m.getSystemName());
+        Assert.assertEquals(jmri.Meter.Unit.Milli, m.getUnit());
+        Assert.assertEquals(9.0,   m.getMin(),   0.00001);
+        Assert.assertEquals(24.0,  m.getMax(),   0.00001);
+        Assert.assertEquals(0.1,   m.getResolution(), 0.00001);        
+
+        mm.message(DCCppReply.parseDCCppReply("c MAINVolts 25.2 V Milli 9.0 24.0 0.1 18")); // new meter reply, value exceeds max value
+        m = InstanceManager.getDefault(MeterManager.class).getBySystemName("DVV_MAINVolts");       
+        Assert.assertNotNull("verify meter was created", m);
+        Assert.assertEquals("verify value is capped at maxValue", 24.0, m.getKnownAnalogValue(), 0.00001);
+
+        mm.message(DCCppReply.parseDCCppReply("c My-Current_Meter#1 0.3 C NoPrefix 0.0 5.0 0.01 4.9"));
+        m = InstanceManager.getDefault(MeterManager.class).getBySystemName("DVC_My-Current_Meter#1");       
+        Assert.assertNotNull("meter created with special chars in name", m);
+}
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         
-        // This test requires a registred connection config since ProxyMeterManager
+        // This test requires a registered connection config since ProxyMeterManager
         // auto creates system meter managers using the connection configs.
         InstanceManager.setDefault(jmri.jmrix.ConnectionConfigManager.class, new jmri.jmrix.ConnectionConfigManager());
         jmri.jmrix.NetworkPortAdapter pa = new jmri.jmrix.dccpp.network.DCCppEthernetAdapter();

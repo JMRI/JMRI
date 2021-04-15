@@ -104,17 +104,15 @@ public class ProxyReporterManager extends AbstractProvidingProxyManager<Reporter
         return ((ReporterManager) getManagerOrDefault(systemName)).allowMultipleAdditions(systemName);
     }
 
+    @SuppressWarnings("deprecation") // user warned by actual manager class
     @Override
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
         return getNextValidAddress(curAddress, prefix, typeLetter());
     }
-
-    /**
-     * {@inheritDoc}
-     */
+    
     @Override
-    public String getEntryToolTip() {
-        return "Enter a number from 1 to 9999"; // Basic number format help
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws jmri.JmriException {
+        return getNextValidAddress(curAddress, prefix, ignoreInitialExisting, typeLetter());
     }
 
     @Override

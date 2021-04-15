@@ -2,7 +2,6 @@ package jmri.jmrit.display.switchboardEditor.configurexml;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,7 +14,7 @@ public class BeanSwitchXmlTest {
     @Test
     public void testCtor() {
         BeanSwitchXml t = new BeanSwitchXml();
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach

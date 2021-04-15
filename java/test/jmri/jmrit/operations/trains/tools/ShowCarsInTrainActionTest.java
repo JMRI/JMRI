@@ -4,8 +4,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -46,7 +46,7 @@ public class ShowCarsInTrainActionTest extends OperationsTestCase {
         Thread performAction = new Thread(new Runnable() {
             @Override
             public void run() {
-                pa.actionPerformed(new ActionEvent("test event", 0, null));
+                pa.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
             }
         });
         performAction.setName("Test Action"); // NOI18N

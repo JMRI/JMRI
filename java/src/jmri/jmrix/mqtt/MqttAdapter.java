@@ -1,8 +1,7 @@
 package jmri.jmrix.mqtt;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 
@@ -12,6 +11,7 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.MqttTopic;
 import org.eclipse.paho.client.mqttv3.persist.MqttDefaultFilePersistence;
 
 import org.slf4j.Logger;
@@ -28,6 +28,9 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
 
     private final static String PROTOCOL = "tcp://";
     private final static String DEFAULT_BASETOPIC = Bundle.getMessage("TopicBase");
+    
+    public boolean retained = true;  // public for script access
+    public int      qosflag = 2;     // public for script access
     
     /**
      * Otherwise known as "Channel", this is prepended to the 
@@ -230,13 +233,22 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     @API(status=API.Status.INTERNAL)
     public void messageArrived(String topic, MqttMessage mm) throws Exception {
         log.debug("Message received, topic : {}", topic);
-        if (!mqttEventListeners.containsKey(topic)) {
+        
+        boolean found = false;
+        for (Map.Entry<String,ArrayList<MqttEventListener>> e : mqttEventListeners.entrySet()) {
+            // does key match received topic, including wildcards?
+            if (MqttTopic.isMatched(e.getKey(), topic) ) {
+                found = true;
+                e.getValue().forEach((mel) -> {
+                    mel.notifyMqttMessage(topic, mm.toString());
+                });              
+            }
+        }
+        
+        if (!found) {
             log.error("No one subscribed to {}", topic);
             throw new Exception("No subscriber for MQTT topic " + topic);
         }
-        mqttEventListeners.get(topic).forEach((mel) -> {
-            mel.notifyMqttMessage(topic, mm.toString());
-        });
     }
 
     @Override

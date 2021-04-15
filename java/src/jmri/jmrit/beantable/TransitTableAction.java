@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -117,12 +118,12 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             }
 
             @Override
-            public Transit getBySystemName(String name) {
+            public Transit getBySystemName(@Nonnull String name) {
                 return InstanceManager.getDefault(jmri.TransitManager.class).getBySystemName(name);
             }
 
             @Override
-            public Transit getByUserName(String name) {
+            public Transit getByUserName(@Nonnull String name) {
                 return InstanceManager.getDefault(jmri.TransitManager.class).getByUserName(name);
             }
 
@@ -659,6 +660,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             update.setVisible(true);
             sysName.setVisible(false);
             sysNameFixed.setVisible(true);
+            addFrame.getRootPane().setDefaultButton(update);
             initializeEditInformation();
         } else {
             // setup for create window
@@ -671,6 +673,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             update.setVisible(false);
             sysName.setVisible(true);
             sysNameFixed.setVisible(false);
+            addFrame.getRootPane().setDefaultButton(create);
             if (duplicateMode) {
                 // setup with information from previous Transit
                 initializeEditInformation();
@@ -682,6 +685,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         }
         initializeSectionCombos();
         updateSeqNum();
+        addFrame.setEscapeKeyClosesWindow(true);
         addFrame.pack();
         addFrame.setVisible(true);
     }

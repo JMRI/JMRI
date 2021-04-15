@@ -6,8 +6,8 @@ import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -47,7 +47,7 @@ public class PrintTrainActionTest extends OperationsTestCase {
         PrintTrainAction pta = new PrintTrainAction(true, tef);
         Assert.assertNotNull("exists", pta);
 
-        pta.actionPerformed(new ActionEvent(this, 0, null));
+        pta.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
 
         // confirm print preview window is showing
         ResourceBundle rb = ResourceBundle

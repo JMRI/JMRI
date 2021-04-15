@@ -399,19 +399,17 @@ public class PreviewDialog extends JDialog {
 
     private long availableMemory() {
         long total = 0;
-        ArrayList<byte[]> memoryTest = new ArrayList<byte[]>();
+        ArrayList<byte[]> memoryTest = new ArrayList<>();
         try {
             while (true) {
                 memoryTest.add(new byte[CHUNK]);
                 total += CHUNK;
             }
         } catch (OutOfMemoryError me) {
-            for (int i = 0; i < memoryTest.size(); i++) {
+            for (int i = memoryTest.size() - 1; i >= 0; i--) { // safe direction to remove
                 memoryTest.remove(i);
             }
-            if (log.isDebugEnabled()) {
-                log.debug("availableMemory= {}", total);
-            }
+            log.debug("availableMemory= {}", total);
         }
         return total;
     }

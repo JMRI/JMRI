@@ -82,7 +82,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         int number = 0;
         try {
             number = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
@@ -377,8 +377,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                 aiucab = Integer.parseInt(curAddress.substring(0, seperator));
                 pin = Integer.parseInt(curAddress.substring(seperator + 1));
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert {} into the cab and pin format of nn:xx", curAddress);
-                throw new JmriException("Hardware Address passed should be a number");
+                throw new JmriException("Unable to convert "+curAddress+" into the cab and pin format of nn:xx");
             }
             iName = (aiucab - 1) * 16 + pin - 1;
 
@@ -387,23 +386,17 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
             try {
                 iName = Integer.parseInt(curAddress);
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert {} Hardware Address to a number", curAddress);
-                throw new JmriException("Hardware Address passed should be a number");
+                throw new JmriException("Hardware Address passed "+curAddress+" should be a number or the cab and pin format of nn:xx");
             }
             pin = iName % 16 + 1;
             aiucab = iName / 16 + 1;
         }
         // only pins 1 through 14 are valid
         if (pin == 0 || pin > MAXPIN) {
-            log.error("NCE sensor {}} pin number {} is out of range; only pin numbers 1 - 14 are valid",
-                    curAddress, pin);
-            throw new JmriException("Sensor pin number is out of range");
+            throw new JmriException("Sensor pin number "+pin+" for address "+curAddress+" is out of range; only pin numbers 1 - 14 are valid");
         }
         if (aiucab == 0 || aiucab > MAXAIU) {
-            log.error("NCE sensor {} AIU number {} is out of range; only AIU 1 - 63 are valid",
-                    curAddress, aiucab);
-            throw new JmriException("AIU number is out of range");
-
+            throw new JmriException("AIU number "+aiucab+" for address "+curAddress+" is out of range; only AIU 1 - 63 are valid");
         }
         return prefix + typeLetter() + iName;
     }
@@ -413,34 +406,26 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     int iName = 0;
 
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
 
-        String tmpSName = "";
-
-        try {
-            tmpSName = createSystemName(curAddress, prefix);
-        } catch (JmriException ex) {
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
-            return null;
-        }
+        String tmpSName = createSystemName(curAddress, prefix);
 
         // Check to determine if the systemName is in use, return null if it is,
         // otherwise return the next valid address.
         Sensor s = getBySystemName(tmpSName);
-        if (s != null) {
+        if (s != null || ignoreInitialExisting) {
             for (int x = 1; x < 10; x++) {
                 iName = iName + 1;
                 pin = pin + 1;
                 if (pin > MAXPIN) {
-                    return null;
+                    throw new JmriException("Unable to increment "+curAddress+" pin "+pin+" is greater than "+MAXPIN);
                 }
                 s = getBySystemName(prefix + typeLetter() + iName);
                 if (s == null) {
                     return Integer.toString(iName);
                 }
             }
-            return null;
+            throw new JmriException(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,iName));
         } else {
             return Integer.toString(iName);
         }

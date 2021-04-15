@@ -14,13 +14,15 @@ import jmri.jmrit.swing.meter.MeterFrameManager;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 
+import javax.annotation.Nonnull;
+
 /**
  * Stores MeterFrames to the panel file.
  * @author Daniel Bergqvist Copyright (c) 2020
  */
 public class MeterFrameManagerXml extends jmri.configurexml.AbstractXmlAdapter {
 
-    private EnumIO<MeterFrame.Unit> unitEnumMap = new EnumIoNames<>(MeterFrame.Unit.class);
+    private final EnumIO<MeterFrame.Unit> unitEnumMap = new EnumIoNames<>(MeterFrame.Unit.class);
 
     public MeterFrameManagerXml() {
     }
@@ -45,7 +47,10 @@ public class MeterFrameManagerXml extends jmri.configurexml.AbstractXmlAdapter {
         e.addContent(e2);
         
         e2 = new Element("meter");
-        e2.addContent(frame.getMeter().getSystemName());    // This should be a NamedBeanHandle
+        if (frame.getMeter() == null) {
+            return e; // apparently user did not assign a real world meter; do not save
+        }
+        e2.addContent(frame.getMeter().getSystemName()); // this should be a NamedBeanHandle
         e.addContent(e2);
         
         e.setAttribute("unit", unitEnumMap.outputFromEnum(frame.getUnit()));
@@ -72,7 +77,7 @@ public class MeterFrameManagerXml extends jmri.configurexml.AbstractXmlAdapter {
     
     /** {@inheritDoc} */
     @Override
-    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
+    public boolean load(@Nonnull Element shared, Element perNode) throws JmriConfigureXmlException {
         // Don't create frames if headless
         if (GraphicsEnvironment.isHeadless()) return true;
         
@@ -80,16 +85,21 @@ public class MeterFrameManagerXml extends jmri.configurexml.AbstractXmlAdapter {
         
         for (Element elem : frames) {
             String uuidStr = elem.getChild("uuid").getText();
-            String meterSystemName = elem.getChild("meter").getText();      // This should be a NamedBeanHandle
+            String meterSystemName = elem.getChild("meter").getText();      // This should be a NamedBeanHandle, but may not exist yet
             Meter meter = InstanceManager.getDefault(MeterManager.class).getBySystemName(meterSystemName);
             UUID uuid = UUID.fromString(uuidStr);
             MeterFrame frame = MeterFrameManager.getInstance().getByUUID(uuid);
             if (frame == null) {
+                log.debug("creating frame for uuid: {}, selected meter: {}", uuidStr, meterSystemName);
                 frame = new MeterFrame(uuid);
                 frame.initComponents();
-                log.error("uuid: {}, meter: {}, meter: {}, systemName: {}", frame.getUUID(), meter, frame.getMeter().getSystemName(), meterSystemName);
             }
-            if (meter != null) frame.setMeter(meter);
+            if (meter != null) {
+                frame.setMeter(meter);
+            } else {
+                log.debug("selected meter '{}' not (yet) defined, remembering for later.", meterSystemName);                
+                frame.setInitialMeterName(meterSystemName);
+            }
             
             Attribute a = elem.getAttribute("unit");
             if (a != null) frame.setUnit(unitEnumMap.inputFromAttribute(a));
@@ -110,4 +120,5 @@ public class MeterFrameManagerXml extends jmri.configurexml.AbstractXmlAdapter {
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MeterFrameManagerXml.class);
+
 }

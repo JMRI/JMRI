@@ -325,9 +325,7 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
         for (Logix lgx : logixManager.getNamedBeanSet()) {
             for (int i = 0; i < lgx.getNumConditionals(); i++) {
                 Conditional cdl = getBySystemName(lgx.getConditionalByNumberOrder(i));
-                if (cdl == null) {
-                    log.error("Conditional not found for \"{}\"", lgx.getConditionalByNumberOrder(i));
-                } else {
+                if (cdl != null) {
                     conditionals.add(cdl);
                 }
             }

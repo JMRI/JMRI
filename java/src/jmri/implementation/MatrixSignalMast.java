@@ -40,11 +40,11 @@ public class MatrixSignalMast extends AbstractSignalMast {
     private int mastBitNum = 6;
     private int mDelay = 0;
 
-    private static String errorChars = "nnnnnn";
-    private char[] errorBits = errorChars.toCharArray();
+    private static final String errorChars = "nnnnnn";
+    private final char[] errorBits = errorChars.toCharArray();
 
-    private static String emptyChars = "000000"; // default starting value
-    private char[] emptyBits = emptyChars.toCharArray();
+    private static final String emptyChars = "000000"; // default starting value
+    private final char[] emptyBits = emptyChars.toCharArray();
 
     public MatrixSignalMast(String systemName, String userName) {
         super(systemName, userName);
@@ -88,17 +88,18 @@ public class MatrixSignalMast extends AbstractSignalMast {
         configureAspectTable(system, mast); // (create -default- appmapping in var "map") in AbstractSignalMast
     }
 
-    private HashMap<String, char[]> aspectToOutput = new HashMap<String, char[]>(16); // "Clear" - 01001 char[] pairs
+    private final HashMap<String, char[]> aspectToOutput = new HashMap<>(16); // "Clear" - 01001 char[] pairs
     private char[] unLitBits;
 
     /**
-     * Store bits in aspectToOutput hashmap.
+     * Store bits in aspectToOutput hashmap, synchronized.
+     * <p>
+     * Length of bitArray should match the number of outputs defined, so one digit per output.
      *
      * @param aspect String valid aspect to define
      * @param bitArray char[] of on/off outputs for the aspect, like "00010"
-     * Length of bitArray should match the number of outputs defined, so one digit per output
     */
-    public void setBitsForAspect(String aspect, char[] bitArray) {
+    public synchronized void setBitsForAspect(String aspect, char[] bitArray) {
         if (aspectToOutput.containsKey(aspect)) {
             if (log.isDebugEnabled()) log.debug("Aspect {} is already defined as {}", aspect, java.util.Arrays.toString(aspectToOutput.get(aspect)));
             aspectToOutput.remove(aspect);
@@ -115,7 +116,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      * length of array should match the number of outputs defined
      * when a mast is changed in the interface, extra 0's are added or superfluous elements deleted by the Add Mast panel
     */
-    public char[] getBitsForAspect(String aspect) {
+    public synchronized char[] getBitsForAspect(String aspect) {
         if (!aspectToOutput.containsKey(aspect) || aspectToOutput.get(aspect) == null) {
             log.error("Trying to get aspect {} but it has not been configured", aspect);
             return errorBits; // error flag
@@ -135,25 +136,27 @@ public class MatrixSignalMast extends AbstractSignalMast {
             throw new IllegalArgumentException("attempting to set an Aspect that has been Disabled: " + aspect + " on mast: " + getDisplayName());
         }
         if (getLit()) {
-            // If the signalmast is lit, then send the commands to change the aspect.
-            if (resetPreviousStates) {
-                // Clear all the current states, this will result in the signalmast going "Stop" or unLit for a while
-                if (aspectToOutput.containsKey("Stop")) {
-                    updateOutputs(getBitsForAspect("Stop")); // show Red
-                } else {
-                    if (unLitBits != null) {
-                        updateOutputs(unLitBits); // Dark (instead of Red), always available
+            synchronized (this) {
+                // If the signalmast is lit, then send the commands to change the aspect.
+                if (resetPreviousStates) {
+                    // Clear all the current states, this will result in the signalmast going "Stop" or unLit for a while
+                    if (aspectToOutput.containsKey("Stop")) {
+                        updateOutputs(getBitsForAspect("Stop")); // show Red
+                    } else {
+                        if (unLitBits != null) {
+                            updateOutputs(unLitBits); // Dark (instead of Red), always available
+                        }
                     }
                 }
-            }
-            // add a timer here to wait a while before setting new aspect?
-            if (aspectToOutput.containsKey(aspect) && aspectToOutput.get(aspect) != errorBits) {
-                char[] bitArray = getBitsForAspect(aspect);
-                // for  MatrixMast nest a loop, using setBitsForAspect(), provides extra check on value
-                updateOutputs(bitArray);
-                // Set the new Signal Mast state
-            } else {
-                log.error("Trying to set an aspect ({}) on signal mast {} which has not been configured", aspect, getDisplayName());
+                // add a timer here to wait a while before setting new aspect?
+                if (aspectToOutput.containsKey(aspect) && aspectToOutput.get(aspect) != errorBits) {
+                    char[] bitArray = getBitsForAspect(aspect);
+                    // for  MatrixMast nest a loop, using setBitsForAspect(), provides extra check on value
+                    updateOutputs(bitArray);
+                    // Set the new Signal Mast state
+                } else {
+                    log.error("Trying to set an aspect ({}) on signal mast {} which has not been configured", aspect, getDisplayName());
+                }
             }
         } else {
             log.debug("Mast set to unlit, will not send aspect change to hardware");
@@ -227,7 +230,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  @return Turnout object connected to configured output
      */
     @CheckForNull private Turnout getOutputBean(int colNum) { // as bean
-        String key = "output" + Integer.toString(colNum);
+        String key = "output" + colNum;
         if (colNum > 0 && colNum <= outputsToBeans.size()) {
             return outputsToBeans.get(key).getBean();
         }
@@ -243,7 +246,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  @return NamedBeanHandle to the configured turnout output
      */
     @CheckForNull public NamedBeanHandle<Turnout> getOutputHandle(int colNum) {
-        String key = "output" + Integer.toString(colNum);
+        String key = "output" + colNum;
         if (colNum > 0 && colNum <= outputsToBeans.size()) {
             return outputsToBeans.get(key);
         }
@@ -259,7 +262,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  @return String with the desplay name of the configured turnout output
      */
     @Nonnull public String getOutputName(int colnum) {
-        String key = "output" + Integer.toString(colnum);
+        String key = "output" + colnum;
         if (colnum > 0 && colnum <= outputsToBeans.size()) {
             return outputsToBeans.get(key).getName();
         }
@@ -274,7 +277,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  @param aspect String describing (valid) signal mast aspect, like "Clear"
      *  @param bitString String of 1/0 digits representing on/off outputs per aspect, like "00010"
      */
-    public void setBitstring(@Nonnull String aspect, @Nonnull String bitString) {
+    public synchronized void setBitstring(@Nonnull String aspect, @Nonnull String bitString) {
         if (aspectToOutput.containsKey(aspect)) {
             log.debug("Aspect {} is already defined so will override", aspect);
             aspectToOutput.remove(aspect);
@@ -289,7 +292,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  @param aspect String describing (valid) signal mast aspect, like "Clear"
      *  @param bitArray char[] of 1/0 digits representing on/off outputs per aspect, like {0,0,0,1,0}
      */
-    public void setBitstring(String aspect, char[] bitArray) {
+    public synchronized void setBitstring(String aspect, char[] bitArray) {
         if (aspectToOutput.containsKey(aspect)) {
             log.debug("Aspect {} is already defined so will override", aspect);
             aspectToOutput.remove(aspect);
@@ -304,7 +307,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  @return bitString String of 1 (= on) and 0 (= off) chars
      *  @param aspect String describing valid signal mast aspect, like "Clear"
      */
-    @Nonnull public String getBitstring(@Nonnull String aspect) {
+    @Nonnull public synchronized String getBitstring(@Nonnull String aspect) {
         if (aspectToOutput.containsKey(aspect)) { // hashtable
             return new String(aspectToOutput.get(aspect)); // convert char[] to string
         }
@@ -318,18 +321,18 @@ public class MatrixSignalMast extends AbstractSignalMast {
      */
     @Nonnull public List<String> getOutputs() { // provide to xml
         // to do: use for loop
-        ArrayList<String> outputlist = new ArrayList<String>();
+        ArrayList<String> outputlist = new ArrayList<>();
         //list = outputsToBeans.keySet();
         
         int index = 1;
-        while (outputsToBeans.containsKey("output"+index)) {
-            outputlist.add(outputsToBeans.get("output"+index).getName());
+        while (outputsToBeans.containsKey("output" + index)) {
+            outputlist.add(outputsToBeans.get("output" + index).getName());
             index++;
         }
         return outputlist;
     }
 
-    protected HashMap<String, NamedBeanHandle<Turnout>> outputsToBeans = new HashMap<String, NamedBeanHandle<Turnout>>(); // output# - bean pairs
+    protected HashMap<String, NamedBeanHandle<Turnout>> outputsToBeans = new HashMap<>(); // output# - bean pairs
 
     /**
      * Receive properties from xml, convert name to NamedBeanHandle, store in hashmap outputsToBeans.
@@ -382,7 +385,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
                     log.debug("Element {} not converted to state for output #{}", bits[i], i);
                 }
                 // wait mast specific delay before sending each (valid) state change to a (valid) output
-                if (newState >= 0 && t != null) {
+                if (newState >= 0 && t != null) { // t!=null check required
                     final int toState = newState;
                     final Turnout setTurnout = t;
                     ThreadingUtil.runOnLayoutEventually(() -> {   // eventually, even though we have timing here, should be soon

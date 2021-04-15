@@ -49,13 +49,13 @@ delay4doubleTap = 250       # max delay in ms for double tap => EStop (on 2xStop
 class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
 #Property listener part: USB value
     def propertyChange(self, event):
-        # Customize bellow for throttles calls:
+        # Customize bellow for throttles calls:        
         if (event.propertyName == "Value") :  # USB
             if (event.oldValue.getController() == self.desiredController ) :
                 component = event.oldValue.getComponent().toString()
                 value = event.newValue
                 # Uncomment bellow line to see component name and its value
-                # print "Component",component,"value changed to",value
+                print "Component \""+component+"\" value changed to ",value
                 try:
                     # Change current ThrottleFrame
                     if ((component == self.driver.componentNextThrottleFrame) and (value == self.driver.valueNextThrottleFrame)) : #NEXT
@@ -473,24 +473,42 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
         if (ctrl != None) :
             sys.path.append(self.getFolder()) # Load a driver
             try:
-                del self.driver
-                del self.USBDriver
+                if (self.driver != None):
+                  del self.driver
+                if (self.USBDriver != None):                  
+                  del self.USBDriver
                 dd=ctrl.getName()
-                dd=dd.replace(" ", "")
-                dd=dd.replace(".", "")
-                dd=dd.replace("(", "")
-                dd=dd.replace(")", "")
-                dd=dd.replace("{", "")
-                dd=dd.replace("}", "")
-                dd=dd.replace("[", "")
-                dd=dd.replace("]", "")              
-                self.USBDriver = __import__(dd)           
-            except ImportError:  # On error load a default one
-                print "Driver \""+ dd +"\" not found in \""+self.getFolder()+"\", loading default one"
-                self.USBDriver =  __import__("Default")
+                dd=self.formatDriverName(dd)
+                print "Trying to import driver by name \""+ dd +".py\" ..."
+                self.USBDriver = __import__(dd)
+                print "...driver \""+ dd +".py\" imported"
+            except ImportError:  # On error try by device type name
+                try:
+                    print "...driver by name not found in \""+self.getFolder()+"\""
+                    dd=ctrl.getType().toString()
+                    dd=self.formatDriverName(dd)
+                    print "Trying to import driver by type \""+ dd +".py\" ..."
+                    self.USBDriver = __import__(dd)
+                    print "...driver \""+ dd +".py\" imported"
+                except ImportError:  # On error load a default one                                      
+                    print "...driver by type not found in \""+self.getFolder()+"\", importing default one"
+                    self.USBDriver =  __import__("Default")
+                    print "Default.py driver imported"
             reload(self.USBDriver)
             sys.path.remove(self.getFolder())
             self.driver = self.USBDriver.USBDriver()
+    
+    def formatDriverName(self, strparam):
+      strparam=strparam.replace(" ", "")
+      strparam=strparam.replace(",", "")
+      strparam=strparam.replace(".", "")
+      strparam=strparam.replace("(", "")
+      strparam=strparam.replace(")", "")
+      strparam=strparam.replace("{", "")
+      strparam=strparam.replace("}", "")
+      strparam=strparam.replace("[", "")
+      strparam=strparam.replace("]", "")  
+      return strparam
     
     def setXml(self, elt):
         if (elt.getChildren("USBThrottle") == None):

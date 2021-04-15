@@ -46,11 +46,6 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
     }
 
     @Override
-    public String getBeanType() {
-        return Bundle.getMessage("BeanNameTurnout");
-    }
-
-    @Override
     public Turnout getByUserName(String name) {
         return InstanceManager.turnoutManagerInstance().getByUserName(name);
     }
@@ -95,15 +90,12 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
         feedback = new BeanItemPanel();
         feedback.setName(Bundle.getMessage("Feedback"));
 
-        modeBox = new JComboBox<String>(bean.getValidFeedbackNames());
+        modeBox = new JComboBox<>(bean.getValidFeedbackNames());
         modeBox.setMaximumRowCount(modeBox.getItemCount());
         oldModeSelection = bean.getFeedbackModeName();
         modeBox.setSelectedItem(oldModeSelection);
-        modeBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updateFeedbackOptions();
-            }
+        modeBox.addActionListener((ActionEvent e) -> {
+            updateFeedbackOptions();
         });
 
         feedback.addItem(new BeanEditItem(null, null, Bundle.getMessage("FeedbackToolTip")));
@@ -129,7 +121,7 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                 Bundle.getMessage("FeedbackSensorToolTip")));
 
         String[] str = new String[]{"empty"};
-        automationBox = new JComboBox<String>(str);
+        automationBox = new JComboBox<>(str);
         feedback.addItem(new BeanEditItem(automationBox,
                 Bundle.getMessage("TurnoutAutomation"),
                 Bundle.getMessage("TurnoutAutomationToolTip")));
@@ -231,11 +223,8 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
     private TurnoutOperation currentOperation;
     private JTextField operationsName = new JTextField(10);
 
-    transient ActionListener automationSelectionListener = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            updateAutomationOptions();
-        }
+    transient ActionListener automationSelectionListener = (ActionEvent e) -> {
+        updateAutomationOptions();
     };
 
     private void updateFeedbackOptions() {
@@ -325,30 +314,27 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                 lockOperations.add(pushbutText);
             }
             lockOperations.add(noneText);
-            JComboBox<String> lockOperationBox = new JComboBox<String>(lockOperations);
+            JComboBox<String> lockOperationBox = new JComboBox<>(lockOperations);
             lockOperationBox.setMaximumRowCount(lockOperationBox.getItemCount());
 
             lock.addItem(new BeanEditItem(lockOperationBox,
                     Bundle.getMessage("LockMode"),
                     Bundle.getMessage("LockModeToolTip")));
-            lockOperationBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String lockOp = (String) lockOperationBox.getSelectedItem();
-                    if (lockOp != null) {
-                        if (lockOp.equals(noneText)) {
-                            lockBox.setEnabled(false);
-                        } else {
-                            lockBox.setEnabled(true);
-                        }
+            lockOperationBox.addActionListener((ActionEvent e) -> {
+                String lockOp = (String) lockOperationBox.getSelectedItem();
+                if (lockOp != null) {
+                    if (lockOp.equals(noneText)) {
+                        lockBox.setEnabled(false);
+                    } else {
+                        lockBox.setEnabled(true);
                     }
                 }
             });
 
             if ((bean.getPossibleLockModes() & Turnout.PUSHBUTTONLOCKOUT) != 0) {
-                lockBox = new JComboBox<String>(bean.getValidDecoderNames());
+                lockBox = new JComboBox<>(bean.getValidDecoderNames());
             } else {
-                lockBox = new JComboBox<String>(new String[]{bean.getDecoderName()});
+                lockBox = new JComboBox<>(new String[]{bean.getDecoderName()});
             }
             lock.addItem(new BeanEditItem(lockBox,
                     Bundle.getMessage("LockModeDecoder"),
@@ -405,8 +391,8 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
         return lock;
     }   // lock() 
 
-    private java.util.Vector<String> speedListClosed = new java.util.Vector<String>();
-    private java.util.Vector<String> speedListThrown = new java.util.Vector<String>();
+    private java.util.Vector<String> speedListClosed = new java.util.Vector<>();
+    private java.util.Vector<String> speedListThrown = new java.util.Vector<>();
 
     private JComboBox<String> closedSpeedBox;
     private JComboBox<String> thrownSpeedBox;
@@ -443,14 +429,14 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
             }
         }
 
-        closedSpeedBox = new JComboBox<String>(speedListClosed);
+        closedSpeedBox = new JComboBox<>(speedListClosed);
         closedSpeedBox.setMaximumRowCount(closedSpeedBox.getItemCount());
         closedSpeedBox.setEditable(true);
 
         speed.addItem(new BeanEditItem(closedSpeedBox,
                 Bundle.getMessage("ClosedSpeed"),
                 Bundle.getMessage("ClosedSpeedToolTip")));
-        thrownSpeedBox = new JComboBox<String>(speedListThrown);
+        thrownSpeedBox = new JComboBox<>(speedListThrown);
         thrownSpeedBox.setMaximumRowCount(thrownSpeedBox.getItemCount());
         thrownSpeedBox.setEditable(true);
         speed.addItem(new BeanEditItem(thrownSpeedBox,

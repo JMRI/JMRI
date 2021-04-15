@@ -26,7 +26,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     }
     
     @Override
-    protected String getSystemNameWithNoPrefix() {
+    protected String getASystemNameWithNoPrefix() {
         return "1008";
     }
 

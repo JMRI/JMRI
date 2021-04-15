@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
-<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+<?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>17</minor>
-    <test>5</test>
+    <minor>21</minor>
+    <test>3</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -83,7 +83,7 @@
     </turnout>
   </turnouts>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="10:53 AM">
+    <memory value="2:43 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -285,24 +285,7 @@
     <logicDelay>500</logicDelay>
   </signalmastlogics>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon May 18 10:30:41 PDT 2015" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
-  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="LearnWarrantTest" x="773" y="513" height="280" width="669" editable="no" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="none" redBackground="255" greenBackground="225" blueBackground="207" state="0" shapeSelect="yes">
-    <icons>
-      <visible>
-        <url>program:resources/icons/throttles/RoundRedCircle20.png</url>
-      </visible>
-      <path_edit>
-        <url>program:resources/icons/greenSquare.gif</url>
-      </path_edit>
-      <hidden>
-        <url>program:resources/icons/Invisible.gif</url>
-      </hidden>
-      <to_arrow>
-        <url>program:resources/icons/track/toArrow.gif</url>
-      </to_arrow>
-      <from_arrow>
-        <url>program:resources/icons/track/fromArrow.gif</url>
-      </from_arrow>
-    </icons>
+  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="LearnWarrantTest" x="823" y="651" height="280" width="669" editable="no" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="none" redBackground="255" greenBackground="225" blueBackground="207" state="0" shapeSelect="yes">
     <indicatorturnouticon x="147" y="76" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
       <tooltip>OBlock "OB1"</tooltip>
       <turnout>IT1</turnout>
@@ -1032,144 +1015,134 @@
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Tue Oct 15 10:52:06 PDT 2019</date>
+      <date>Wed Oct 28 14:42:09 PDT 2020</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Tue Oct 15 10:52:47 PDT 2019</date>
+      <date>Wed Oct 28 14:42:42 PDT 2020</date>
       <filename>/C:/Git/JMRI/java/test/jmri/jmrit/logix/valid/LearnWarrantTest.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Sat Jul 01 13:26:20 PDT 2017</date>
+          <date>Tue Oct 15 10:52:06 PDT 2019</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Sat Jul 01 13:27:20 PDT 2017</date>
+          <date>Tue Oct 15 10:52:47 PDT 2019</date>
           <filename>/C:/Git/JMRI/java/test/jmri/jmrit/logix/valid/LearnWarrantTest.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Sat Aug 15 12:36:31 PDT 2015</date>
+              <date>Sat Jul 01 13:26:20 PDT 2017</date>
               <filename>JMRI program</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Sat Aug 15 12:36:31 PDT 2015</date>
-              <filename>/C:/JmriUsers/Layoutsimulate/UserPrefsProfileConfig.xml</filename>
-            </operation>
-            <operation>
-              <type>Load OK</type>
-              <date>Sat Aug 15 12:36:34 PDT 2015</date>
-              <filename>/C:/JmriUsers/Layoutsimulate/ProfileConfig.xml</filename>
-            </operation>
-            <operation>
-              <type>Load OK</type>
-              <date>Sat Aug 15 13:06:20 PDT 2015</date>
-              <filename>/C:/JmriPanels/LearnWarrantTest.xml</filename>
+              <date>Sat Jul 01 13:27:20 PDT 2017</date>
+              <filename>/C:/Git/JMRI/java/test/jmri/jmrit/logix/valid/LearnWarrantTest.xml</filename>
               <filehistory>
                 <operation>
                   <type>app</type>
-                  <date>Wed May 20 15:15:15 PDT 2015</date>
+                  <date>Sat Aug 15 12:36:31 PDT 2015</date>
                   <filename>JMRI program</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Wed May 20 15:15:16 PDT 2015</date>
+                  <date>Sat Aug 15 12:36:31 PDT 2015</date>
                   <filename>/C:/JmriUsers/Layoutsimulate/UserPrefsProfileConfig.xml</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Wed May 20 15:15:17 PDT 2015</date>
+                  <date>Sat Aug 15 12:36:34 PDT 2015</date>
                   <filename>/C:/JmriUsers/Layoutsimulate/ProfileConfig.xml</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Wed May 20 15:15:57 PDT 2015</date>
-                  <filename>/C:/JmriUsers/Layoutsimulate/LearnWarrantTest.xml</filename>
+                  <date>Sat Aug 15 13:06:20 PDT 2015</date>
+                  <filename>/C:/JmriPanels/LearnWarrantTest.xml</filename>
                   <filehistory>
                     <operation>
                       <type>app</type>
-                      <date>Tue May 19 13:33:51 PDT 2015</date>
+                      <date>Wed May 20 15:15:15 PDT 2015</date>
                       <filename>JMRI program</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Tue May 19 13:33:52 PDT 2015</date>
+                      <date>Wed May 20 15:15:16 PDT 2015</date>
                       <filename>/C:/JmriUsers/Layoutsimulate/UserPrefsProfileConfig.xml</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Tue May 19 13:33:53 PDT 2015</date>
+                      <date>Wed May 20 15:15:17 PDT 2015</date>
                       <filename>/C:/JmriUsers/Layoutsimulate/ProfileConfig.xml</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Tue May 19 13:34:02 PDT 2015</date>
+                      <date>Wed May 20 15:15:57 PDT 2015</date>
                       <filename>/C:/JmriUsers/Layoutsimulate/LearnWarrantTest.xml</filename>
                       <filehistory>
                         <operation>
                           <type>app</type>
-                          <date>Tue May 19 13:24:08 PDT 2015</date>
+                          <date>Tue May 19 13:33:51 PDT 2015</date>
                           <filename>JMRI program</filename>
                         </operation>
                         <operation>
                           <type>Load OK</type>
-                          <date>Tue May 19 13:24:08 PDT 2015</date>
+                          <date>Tue May 19 13:33:52 PDT 2015</date>
                           <filename>/C:/JmriUsers/Layoutsimulate/UserPrefsProfileConfig.xml</filename>
                         </operation>
                         <operation>
                           <type>Load OK</type>
-                          <date>Tue May 19 13:24:09 PDT 2015</date>
+                          <date>Tue May 19 13:33:53 PDT 2015</date>
                           <filename>/C:/JmriUsers/Layoutsimulate/ProfileConfig.xml</filename>
                         </operation>
                         <operation>
                           <type>Load OK</type>
-                          <date>Tue May 19 13:24:17 PDT 2015</date>
+                          <date>Tue May 19 13:34:02 PDT 2015</date>
                           <filename>/C:/JmriUsers/Layoutsimulate/LearnWarrantTest.xml</filename>
                         </operation>
                         <operation>
                           <type>Store</type>
-                          <date>Tue May 19 13:28:28 PDT 2015</date>
+                          <date>Tue May 19 13:46:06 PDT 2015</date>
                           <filename />
                         </operation>
                       </filehistory>
                     </operation>
                     <operation>
                       <type>Store</type>
-                      <date>Tue May 19 13:46:06 PDT 2015</date>
+                      <date>Wed May 20 15:34:11 PDT 2015</date>
                       <filename />
                     </operation>
                   </filehistory>
                 </operation>
                 <operation>
                   <type>Store</type>
-                  <date>Wed May 20 15:34:11 PDT 2015</date>
+                  <date>Sat Aug 15 13:16:48 PDT 2015</date>
                   <filename />
                 </operation>
               </filehistory>
             </operation>
             <operation>
               <type>Store</type>
-              <date>Sat Aug 15 13:16:48 PDT 2015</date>
+              <date>Sat Jul 01 13:29:34 PDT 2017</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Sat Jul 01 13:29:34 PDT 2017</date>
+          <date>Tue Oct 15 10:53:35 PDT 2019</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Tue Oct 15 10:53:35 PDT 2019</date>
+      <date>Wed Oct 28 14:43:02 PDT 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.17.5ish+pete_+2019-10-15T17:51:59Z+Rd1fa1538ac4 on Tue Oct 15 10:53:35 PDT 2019-->
+  <!--Written by JMRI version 4.21.3ish+pete_+2020-10-28T21:42:01Z+R65b6992216 on Wed Oct 28 14:43:02 PDT 2020-->
 </layout-config>

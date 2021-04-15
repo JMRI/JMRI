@@ -21,10 +21,12 @@ public class TrackNodeTest {
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor le = new LayoutEditor();
-        LayoutTurnout lt = new LayoutRHTurnout("T", MathUtil.zeroPoint2D, 0., 1., 1., le);
-        PositionablePoint p1 = new PositionablePoint("a", PositionablePoint.PointType.ANCHOR, new Point2D.Double(0.0, 0.0), le);
-        PositionablePoint p2 = new PositionablePoint("b", PositionablePoint.PointType.ANCHOR, new Point2D.Double(1.0, 1.0), le);
-        TrackSegment ts = new TrackSegment("test", p1, HitPointType.POS_POINT, p2, HitPointType.POS_POINT, false, true, le);
+        LayoutTurnout lt = new LayoutRHTurnout("T", le);
+        PositionablePoint p1 = new PositionablePoint("a", PositionablePoint.PointType.END_BUMPER, le);
+        PositionablePoint p2 = new PositionablePoint("b", PositionablePoint.PointType.END_BUMPER, le);
+
+        TrackSegment ts = new TrackSegment("test", p1, HitPointType.POS_POINT, p2, HitPointType.POS_POINT, true, le);
+
         TrackNode tn = new TrackNode(lt, HitPointType.TURNOUT_A, ts, false, 0);
         Assert.assertNotNull("exists", tn);
         JUnitUtil.dispose(le);
@@ -40,6 +42,7 @@ public class TrackNodeTest {
     @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

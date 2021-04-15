@@ -3,9 +3,8 @@ package jmri.implementation;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
-import jmri.Reporter;
-import jmri.Sensor;
-import jmri.Turnout;
+import jmri.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,6 +47,9 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     protected long sensorDebounceGoingInActive = 0L;
     protected boolean useDefaultTimerSettings = false;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setSensorDebounceGoingActiveTimer(long time) {
         if (sensorDebounceGoingActive == time) {
@@ -58,11 +60,17 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         firePropertyChange("ActiveTimer", oldValue, sensorDebounceGoingActive);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public long getSensorDebounceGoingActiveTimer() {
         return sensorDebounceGoingActive;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setSensorDebounceGoingInActiveTimer(long time) {
         if (sensorDebounceGoingInActive == time) {
@@ -73,6 +81,9 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         firePropertyChange("InActiveTimer", oldValue, sensorDebounceGoingInActive);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public long getSensorDebounceGoingInActiveTimer() {
         return sensorDebounceGoingInActive;

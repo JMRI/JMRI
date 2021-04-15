@@ -28,7 +28,7 @@ public class LayoutTrackEditorTest {
     @Test
     public void testHasNxSensorPairsNull() {
         LayoutTrackEditor layoutTrackEditor = new LayoutTrackEditor(null) { // core of abstract class
-            public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {}
+            public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrack) {}
         };
 
         assertThat(layoutTrackEditor.hasNxSensorPairs(null)).withFailMessage("null block NxSensorPairs").isFalse();
@@ -37,7 +37,7 @@ public class LayoutTrackEditorTest {
     @Test
     public void testHasNxSensorPairsDisconnectedBlock() {
         LayoutTrackEditor layoutTrackEditor = new LayoutTrackEditor(null) { // core of abstract class
-            public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {}
+            public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrack) {}
         };
 
         LayoutBlock b = new LayoutBlock("test", "test");
@@ -47,7 +47,7 @@ public class LayoutTrackEditorTest {
     @Test
     public void testShowSensorMessage() {
         LayoutTrackEditor layoutTrackEditor = new LayoutTrackEditor(null) { // core of abstract class
-            public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {}
+            public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrack) {}
         };
 
         layoutTrackEditor.sensorList.add("Test");

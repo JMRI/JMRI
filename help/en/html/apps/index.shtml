@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 
 <html lang="en">
 <head>
@@ -7,20 +6,12 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Applications</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" 
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
-</head>
+ <!--#include virtual="/Style.shtml" -->
+
+ </head>
 
 <body>
-  <!--#include virtual="../../../../Header.shtml" -->
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -63,7 +54,7 @@
         Throttles.</dd>
 
         <dt>
-          <a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a>
+          <a href="./OperationsPro/index.shtml">OperationsPro&trade;</a>
         </dt>
 
         <dd>Create Train Manifests that detail the work your train
@@ -81,30 +72,60 @@
       </dl>
 
       <h2><a name="addapp" id="addapp">Additional Applications with JMRI Connections...</a></h2>
-       <p>Hobbyists have created applications that work with JMRI
+       <p>
+       Hobbyists have created applications that work with JMRI
        to provide extra capabilities. In addition, some commercial vendors have
        created applications that work with, add data to, or take data from JMRI</p>
        <p>See the <a href="../../../../community/connections/CommunityConnectionsIndex.shtml">
        community/connections directory</a> for a list and links.  
-       New applications can be added at any time!</p>
+       New applications can be added at any time!
+       </p>
+
+      <h2><a name="jythonapp" id="jythonapp">Jython Applications for JMRI...</a></h2>
+       <p>
+       Some JMRI users have implemented sophiticated capabilities using the <a href="../tools/scripting/index.shtml">JMRI jython scripting facilities.</a>  These are listed 
+       <a href="../tools/scripting/JythonApps.shtml">here</a>.
+      </p>
        
      
       <h2>JMRI Features and Tools</h2>
 
-      <ul>
-        <li>JMRI provides many <a href="../tools/index.shtml">features and tools</a> 
-        to set up and operate your layout that are shared across most JMRI applications.  You can
-        find additional information about each by clicking through the links in the sidebar or the 
-        <a href="../tools/index.shtml">tools index page.</a></li>
+        <p>JMRI software consists of a large library of functions divided into</p>
 
-        <li>In addition to the common tools, there are many <a href=
-        "../tools/index.shtml#systemSpecificTools">system-specific
-        tools</a> that are available within most of the JMRI applications.  You can find additional information
-        about each by clicking through the links in the <a href="../tools/index.shtml#systemSpecificTools"> system-specific
-        tools index page</a>.  The tools themselves are invoked from their own menu pulldowns within 
-        the JMRI applications when  you have JMRI configured for each specific System Connection.</li>
-        
-      </ul><!--#include virtual="../../../../Footer.shtml" -->
+        <ul>
+          <li>a system-specific part, with many subparts, each of which communicates with one
+          supported hardware system, like C/MRI, in a system specific way, and</li>
+          <li>a system-independent part where most of the features of JMRI are implemented.</li>
+         </ul>
+         
+         
+         <p>So, for example, if the user does something (perhaps setting a route) to
+          cause JMRI to throw a Turnout (track switch), that user action will occur in
+          the system-independent part of the software, and then JMRI will send out the
+          actual command via the system-dependent part appropriate to the hardware
+          system controlling the particular Turnout thrown. JMRI is designed so that
+          features are implemented in the system-independent part as much as possible,
+          with JMRI using system-dependent subparts only when really necessary. Access
+          to system-independent features is via the main JMRI menus, such as the Tools
+          menu.</p>
+
+          <ul>
+            <li>You can
+            find additional information about each of the JMRI "common" tools by clicking through the links in the sidebar or the 
+            <a href="../tools/index.shtml">tools index page.</a></li>
+
+            <li>There are many <a href=
+            "../tools/index.shtml#systemSpecificTools">system-specific
+            tools</a> that are available within the JMRI applications. You can find additional information
+            about each by clicking through the links in the <a href="../tools/index.shtml#systemSpecificTools"> system-specific
+            tools index page</a>.  The tools themselves are invoked from their own menu pulldowns within 
+            the JMRI applications when  you have JMRI configured for each specific System Connection.</li>
+            
+          </ul>
+ 
+ 
+          <!--#include virtual="/Footer.shtml" -->
+
     </div><!-- close #mainContent -->
   </div><!-- close #mBody -->
 </body>

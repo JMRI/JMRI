@@ -28,6 +28,7 @@ import purejavacomm.UnsupportedCommOperationException;
 public class GcSerialDriverAdapter extends GcPortController {
 
     protected SerialPort activeSerialPort = null;
+    protected int flowControl = purejavacomm.SerialPort.FLOWCONTROL_NONE;
 
     /**
      * Creates a new CAN GridConnect Network Driver Adapter.
@@ -57,6 +58,23 @@ public class GcSerialDriverAdapter extends GcPortController {
     }
 
     /**
+     * Creates a new CAN GridConnect Network Driver Adapter.
+     * <p>
+     * Allows for default systemPrefix other than "M".
+     * @param prefix System Prefix.
+     * @param flow flow control.
+     */
+    public GcSerialDriverAdapter(String prefix, int flow) {
+        super(new jmri.jmrix.can.CanSystemConnectionMemo(prefix));
+        option1Name = "Protocol"; // NOI18N
+        options.put(option1Name, new Option(Bundle.getMessage("ConnectionProtocol"),
+                jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
+        this.manufacturerName = jmri.jmrix.merg.MergConnectionTypeList.MERG;
+        allowConnectionRecovery = true;
+        flowControl = flow;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -81,8 +99,8 @@ public class GcSerialDriverAdapter extends GcPortController {
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
-            // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
-            configureLeadsAndFlowControl(activeSerialPort, 0);
+            // Set requested flow control
+            configureLeadsAndFlowControl(activeSerialPort, flowControl);
             activeSerialPort.enableReceiveTimeout(50);  // 50 mSec timeout before sending chars
 
             // set timeout

@@ -85,7 +85,7 @@
       <p>Fulfill the prerequisites, which include having speed profiled your locos that you wish to run with the system</p>
 
       <ul>
-        <li>Start JMRI with no panel displayed. </span></li>
+        <li>Start JMRI with no panel displayed.</li>
         <li>The panel should have:
           <ul>
             <li>SignalMasts</li>
@@ -122,7 +122,7 @@
         <li>Provision is made for a station announcement to be made when a train departs from a station.</li>
         <li>If the block name is unpronounceable, a good stop name can be entered in the comments field for the departure announcements</li>
         <li>Typical blocks comments would be</li>
-        <li><img src="images/NewItem31.png" alt="" /></li>
+        <li><img src="images/NewItem31.png" alt=""></li>
       </ul>
 
       <a name="stage1" id="stage1"></a>
@@ -175,7 +175,7 @@
 
       <p></p>
       <p>Restart JMRI and load the newly produced run panel, in our example WR_run.xml</p>
-      <p">Run dispatcher System again to get</p>
+      <p>Run dispatcher System again to get</p>
       <p><img alt="" style="padding : 1px;" src="images/NewItem11.png"></p>
       <p>Click Stage3 and one gets two screens opening,the Dispatcher options screen and another
       saying the options that need to be set for the Dispatcher system to work</p>
@@ -189,7 +189,8 @@
       <a name="running" id="running"></a>
       <h2>Running the Program</h2>
 
-      <p>To run the system it is advised to have the thread monitor running (Panels =&gt; Thread Monitor)</p>
+      <p>To run the system it is advised to have the thread monitor running (<strong>Scripting</strong>
+      {<em>Old: <strong>Panels</strong></em>}<strong> =&gt; Thread Monitor</strong>)</p>
       <p>You will notice several buttons in the top RH corner.</p>
       <p><img alt="" style="padding : 1px;" src="images/NewItem15.png"></p>
       <p>The first two start and end the four threads required for the program to run. The
@@ -252,9 +253,9 @@
       either by attempting to run a train over the route, or by setting the turnouts along
       the route and seeing whether the signals are green</p>
       <p>In the set route from goods siding and back one can see that the automatic signal logic failed.</p>
-      <p><img alt="" style="padding : 1px;" src="images/NewItem22.png"><span class="rvts8">.</p>
+      <img alt="" style="padding : 1px;" src="images/NewItem22.png">
       <p>Right click on the signal mast and bring up the signal mast logic editor.for one of the routes (Board2toPT11) we get when we press the edit button:</p>
-      <p><img style="padding : 1px;" src="images/NewItem37.png" alt="" width="667" height="495" /></p>
+      <p><img style="padding : 1px;" src="images/NewItem37.png" alt="" width="667" height="495"></p>
       <p>You can see that for this route Board2toPT11 (the route from the bottom to top) only 2 turnouts instead of 4 are shown, and also one of the aspects is closed instead of thrown. The Dispatch will not work. </p>
       <p>Note that the essential thing to note is that all the turnouts used in the route should be present in the signal logic, and that they should have the correct aspect. If that isn't the case we should delete and replace.</p>
       <p>Delete the route, Press Add Signal Logic. And add a new route. </p>

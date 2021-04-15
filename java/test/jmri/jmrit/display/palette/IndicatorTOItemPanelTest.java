@@ -31,10 +31,11 @@ public class IndicatorTOItemPanelTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
-    
+
     @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

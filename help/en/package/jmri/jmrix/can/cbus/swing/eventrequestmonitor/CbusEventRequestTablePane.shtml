@@ -5,18 +5,9 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <meta name="keywords" content="JMRI MERG CBUS help support event request feedback monitor monitoring tool">
-  <title>JMRI: MERG CBUS Event Request Table</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="JMRI CBUS help support event request feedback monitor monitoring tool">
+  <title>JMRI: CBUS&reg; Event Request Table</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -24,7 +15,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <h1>JMRI: MERG CBUS Event Request Monitor Table</h1>
+      <h1>JMRI: CBUS Event Request Monitor Table</h1>
       
         <ul class="snav">
         <li><a href="#stats">Columns</a></li>
@@ -33,9 +24,9 @@
         </ul>
       
       <img src="../../../../../../../html/hardware/can/cbus/images/swing/event-table/ev-table-630x210.png"
-      width="630" height="210" alt="MERG CBUS Event Request Table" align="right">
+      width="630" height="210" alt="CBUS Event Request Table" align="right">
 
-      <p>The MERG CBUS Event Table displays event information on your <a href=
+      <p>The CBUS Event Table displays event information on your <a href=
       "../../../../../../../html/hardware/can/cbus/index.shtml">CBUS</a>
       connection.</p>
       
@@ -109,7 +100,7 @@
       and can be any of the data lengths.</p>
    
       <img src="../../../../../../../html/hardware/can/cbus/images/swing/event-table/merg-cbus-ev-table-feedback-792x221.png"
-      width="792" height="221" alt="MERG CBUS Event Table Feedback" >      
+      width="792" height="221" alt="CBUS Event Table Feedback" >      
       
     <h3><a name="status" id="status">Requesting Event Status</a></h3>
         <div>
@@ -199,7 +190,7 @@
         </ul>
       
 
-      <h4>Variance to MERG CBUS Developers Guide 6b</h4>
+      <h4>Variance to CBUS Developers Guide 6b</h4>
         <p>In this data model, it is assumed that event and node combinations are the unique factor.</p>      
         <p>Any event OPCs sent with extra data bytes will be logged according to its core event and node combination, 
         irrelevant of extra data bytes.</p>
@@ -214,8 +205,12 @@
         on your layout.</p>
       
       
-      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI MERG CBUS Help page</a>.</p>
+      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Help page</a>.</p>
         
+        <h2></h2>
+        <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
+        <p></p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

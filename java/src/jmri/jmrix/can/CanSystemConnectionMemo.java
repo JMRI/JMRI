@@ -12,6 +12,7 @@ import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.jmrix.can.ConfigurationManager.SubProtocol;
+import jmri.jmrix.can.ConfigurationManager.ProgModeSwitch;
 import jmri.util.NamedBeanComparator;
 
 import jmri.util.startup.StartupActionFactory;
@@ -28,6 +29,7 @@ import org.slf4j.LoggerFactory;
  * passed on to the relevant ConfigurationManager to handle.
  *
  * @author Kevin Dickerson Copyright (C) 2012
+ * @author Andrew Crosland Copyright (C) 2021
  */
 public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
     // This user name will be overwritten by the adapter and saved to the connection config.
@@ -51,6 +53,10 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
 
     protected String _protocol = ConfigurationManager.MERGCBUS;
     protected SubProtocol _subProtocol = SubProtocol.CBUS;
+    protected ProgModeSwitch _progModeSwitch = ProgModeSwitch.NONE;
+    protected boolean _supportsCVHints = false; // Support for CV read hint values
+    private boolean _multipleThrottles = true;  // Support for multiple throttles 
+    private boolean _powerOnArst = true;        // Turn power on if ARST opcode received
     
     jmri.jmrix.swing.ComponentFactory cf = null;
 
@@ -159,6 +165,62 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
         }
     }
 
+    /**
+     * Get the stare of the programming mode switch which indicates what combination
+     * o service and/or ops mode programming is supported by the connection.
+     * 
+     * @return the supported modes
+     */
+    public ProgModeSwitch getProgModeSwitch() {
+        return _progModeSwitch;
+    }
+    
+    public void setProgModeSwitch(ProgModeSwitch pms) {
+        if (null != pms) {
+            _progModeSwitch = pms;
+        }
+    }
+    
+    /**
+     * Some connections support only a single throttle, e.g., a service mode programmer
+     * that allows for test running of a single loco.
+     * 
+     * @return true if mutltiple throttles are available
+     */
+    public boolean hasMultipleThrottles() {
+        return _multipleThrottles;
+    }
+    
+    public void setMultipleThrottles(boolean b) {
+        _multipleThrottles = b;
+    }
+    
+    /**
+     * Get the CV hint support flag
+     * 
+     * @return true if CV hints are supported
+     */
+    public boolean supportsCVHints() {
+        return _supportsCVHints;
+    }
+    
+    public void setSupportsCVHints(boolean b) {
+        _supportsCVHints = b;
+    }
+    
+    /**
+     * Get the behaviour on ARST opcode
+     * 
+     * @return true if track power is on after ARST
+     */
+    public boolean powerOnArst() {
+        return _powerOnArst;
+    }
+    
+    public void setPowerOnArst(boolean b) {
+        _powerOnArst = b;
+    }
+    
     /**
      * Configure the common managers for Can connections. This puts the common
      * manager config in one place.

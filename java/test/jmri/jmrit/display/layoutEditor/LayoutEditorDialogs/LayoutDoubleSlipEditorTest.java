@@ -39,7 +39,7 @@ public class LayoutDoubleSlipEditorTest extends LayoutSlipEditorTest {
         LayoutDoubleSlipEditor editor = new LayoutDoubleSlipEditor(layoutEditor);
 
         // Edit the double Slip
-        editor.editLayoutTrack(doubleLayoutSlip);
+        editor.editLayoutTrack(doubleLayoutSlipView);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditSlip"));
 
         // Select turnout A
@@ -97,7 +97,7 @@ public class LayoutDoubleSlipEditorTest extends LayoutSlipEditorTest {
         LayoutDoubleSlipEditor editor = new LayoutDoubleSlipEditor(layoutEditor);
 
         // Edit the double doubleLayoutSlip
-        editor.editLayoutTrack(doubleLayoutSlip);
+        editor.editLayoutTrack(doubleLayoutSlipView);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditSlip"));
 
         // Invoke layout block editor with no block assigned
@@ -120,7 +120,7 @@ public class LayoutDoubleSlipEditorTest extends LayoutSlipEditorTest {
         LayoutDoubleSlipEditor editor = new LayoutDoubleSlipEditor(layoutEditor);
 
         // Edit the double doubleLayoutSlip
-        editor.editLayoutTrack(doubleLayoutSlip);
+        editor.editLayoutTrack(doubleLayoutSlipView);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditSlip"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
@@ -130,7 +130,8 @@ public class LayoutDoubleSlipEditorTest extends LayoutSlipEditorTest {
 
 
     private LayoutEditor layoutEditor = null;
-    private LayoutSlip doubleLayoutSlip = null;
+    private LayoutDoubleSlip doubleLayoutSlip = null;
+    private LayoutDoubleSlipView doubleLayoutSlipView = null;
 
     @BeforeEach
     @Override
@@ -150,8 +151,9 @@ public class LayoutDoubleSlipEditorTest extends LayoutSlipEditorTest {
 
             // doubleLayoutSlip
             point = MathUtil.add(point, delta);
-            doubleLayoutSlip = new LayoutDoubleSlip("Double Slip",
-                    point, 0.0, layoutEditor);
+            doubleLayoutSlip = new LayoutDoubleSlip("Double Slip", layoutEditor); // point, 0.0,
+            doubleLayoutSlipView = new LayoutDoubleSlipView(doubleLayoutSlip, point, 0.0, layoutEditor);
+            layoutEditor.addLayoutTrack(doubleLayoutSlip, doubleLayoutSlipView);
 
         }
     }
@@ -161,7 +163,6 @@ public class LayoutDoubleSlipEditorTest extends LayoutSlipEditorTest {
     public void tearDown() {
         if (doubleLayoutSlip != null) {
             doubleLayoutSlip.remove();
-            doubleLayoutSlip.dispose();
         }
 
         if (layoutEditor != null) {
@@ -174,6 +175,7 @@ public class LayoutDoubleSlipEditorTest extends LayoutSlipEditorTest {
 
         JUnitUtil.resetWindows(false, false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         super.tearDown();
     }
 

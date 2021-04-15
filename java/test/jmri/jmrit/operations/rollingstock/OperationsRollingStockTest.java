@@ -1,7 +1,7 @@
 package jmri.jmrit.operations.rollingstock;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -12,11 +12,10 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
- * Tests for the Operations Car class Last manually cross-checked on
- * 20090131
+ * Tests for the Operations Car class Last manually cross-checked on 20090131
  * <p>
- * Still to do: Car: Location Length change (set) Car:
- * Destination Car: Train, Route
+ * Still to do: Car: Location Length change (set) Car: Destination Car: Train,
+ * Route
  * <p>
  * Note: Car: XML read/write is tested in OperationsEnginesTest and
  * OperationsCarsTest
@@ -86,9 +85,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
             Assert.fail("Null Pointer Exception while executing Xml Element Constructor");
         }
 
-        jmri.util.JUnitAppender.assertErrorMessage("Tag 12345 Not Found");
-        
-
+        jmri.util.JUnitAppender.assertErrorMessage("Tag 12345 not found");
     }
 
     // test creation
@@ -127,9 +124,8 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         Assert.assertEquals("Car Built", "TESTBUILT", rs1.getBuilt());
         Assert.assertEquals("Car Owner", "TESTOWNER", rs1.getOwner());
         Assert.assertEquals("Car Comment", "TESTCOMMENT", rs1.getComment());
-        Assert.assertEquals("Car Rfid", "TESTRFID", rs1.getRfid());
+        Assert.assertEquals("Car Rfid", "IDTESTRFID", rs1.getRfid());
         Assert.assertEquals("Car Moves", 5, rs1.getMoves());
-        
 
     }
 
@@ -153,9 +149,10 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         Assert.assertEquals("Car Road", "TESTROAD", rs1.getRoadName());
         Assert.assertEquals("Car Number", "TESTNUMBER1", rs1.getNumber());
 
-        Assert.assertEquals("Car Constant TRACK_CHANGED_PROPERTY", "rolling stock track location", Car.TRACK_CHANGED_PROPERTY);
-        Assert.assertEquals("Car Constant DESTINATION_CHANGED_PROPERTY", "rolling stock destination", Car.DESTINATION_CHANGED_PROPERTY);
-        Assert.assertEquals("Car Constant DESTINATIONTRACK_CHANGED_PROPERTY", "rolling stock track destination", Car.DESTINATION_TRACK_CHANGED_PROPERTY);
+        Assert.assertEquals("Car Constant TRACK_CHANGED_PROPERTY", "rolling stock track location",
+                Car.TRACK_CHANGED_PROPERTY);
+        Assert.assertEquals("Car Constant DESTINATIONTRACK_CHANGED_PROPERTY", "rolling stock track destination",
+                Car.DESTINATION_TRACK_CHANGED_PROPERTY);
 
         Assert.assertEquals("Car Constant COUPLERS", 4, Car.COUPLERS);
     }
@@ -213,11 +210,11 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         Assert.assertTrue("status message starts with capacity", testresult.startsWith(Track.CAPACITY));
 
         /* track needs to be long enough */
-        testtrack1.setLength(44);  // rs length + Coupler == 4
+        testtrack1.setLength(44); // rs length + Coupler == 4
         rs1.setLength("40");
         testresult = rs1.setLocation(testlocation1, testtrack1);
         Assert.assertEquals("Car null Set Length match", "okay", testresult);
-        
+
         // car is now on track, need to remove to continue testing
         rs1.setLocation(null, null);
 
@@ -231,7 +228,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         testtrack1.addRoadName("TESTROAD");
         testresult = rs1.setLocation(testlocation1, testtrack1);
         Assert.assertEquals("Car Set includeroads", "okay", testresult);
-        
+
         // car is now on track, need to remove to continue testing
         rs1.setLocation(null, null);
 
@@ -244,7 +241,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         testtrack1.setRoadOption(Track.ALL_ROADS);
         testresult = rs1.setLocation(testlocation1, testtrack1);
         Assert.assertEquals("Car Set allroads", "okay", testresult);
-        
+
         // car is now on track, need to remove to continue testing
         rs1.setLocation(null, null);
 

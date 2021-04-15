@@ -152,7 +152,7 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
         jtxt.clickMouse();
         jtxt.setText("");
 
-        // Preprare the dialog thread and click on OK
+        // Prepare the dialog thread and click on OK
         Thread remove = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
         new JButtonOperator(jfoEdit, "OK").doClick();  // NOI18N
         JUnitUtil.waitFor(() -> {
@@ -167,7 +167,7 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
         jtxt.clickMouse();
         jtxt.setText("New Block Name");  // NOI18N
 
-        // Preprare the dialog thread and click on OK
+        // Prepare the dialog thread and click on OK
         Thread rename = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"));  // NOI18N
         new JButtonOperator(jfoEdit, "OK").doClick();  // NOI18N
         JUnitUtil.waitFor(() -> {
@@ -323,6 +323,7 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
         a = null;
         JUnitUtil.resetWindows(false, false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

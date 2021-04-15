@@ -36,6 +36,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Speed map</revremark>
     </revision>    
+    <revision>
+        <revnumber>4</revnumber>
+        <date>2020-10-09</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Fix Speed map</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>SZDC-2015-zakladni</aspecttable>
@@ -97,6 +103,10 @@
     
     <aspectMapping>
       <advancedAspect>Stůj</advancedAspect>
+      <ourAspect>Opakovaná výstraha</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Opatrně na přivolávací návěst</advancedAspect>
       <ourAspect>Opakovaná výstraha</ourAspect>
     </aspectMapping>
     

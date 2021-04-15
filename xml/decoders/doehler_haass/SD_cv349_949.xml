@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2014</year>
     <holder>JMRI</holder>
@@ -25,12 +25,30 @@
     </author>
     <author>
       <personname>
+        <firstname>Wouter</firstname>
+        <surname>Kok</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
         <firstname>Pierre</firstname>
         <surname>Billon</surname>
       </personname>
     </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>5</revnumber>
+      <date>2021-03-15</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Fixes for exclude conditions for SUSI sound modules new family</revremark>
+    </revision>
+    <revision>
+      <revnumber>4</revnumber>
+      <date>2020-12-12</date>
+      <authorinitials>WK</authorinitials>
+      <revremark>Excluded similar CV9xx for Sound Decoder 2020</revremark>
+    </revision>
     <revision>
       <revnumber>3</revnumber>
       <date>2020-05-02</date>
@@ -50,19 +68,19 @@
       <revremark>Creation. Valid from firmwares as of Oct 2014</revremark>
     </revision>
    </revhistory>
-  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
-   <variable label="Volume sound fader" CV="349" default="0" tooltip="CV349: 0=>0%, 255=>200%" item="Sound Setting 6" exclude="SUSI sound modules,SD18A_1.00,SD18A_1.01,SD18A_1.02,SD21A_1.01,SD21A_1.02">
-		<decVal/>
-		<label xml:lang="fr">Volume mode silencieux</label>
-		<label xml:lang="ca">Volume mode silenciós</label>
-		<label xml:lang="de">Lautstärke Ausblendeffekt</label>
-	</variable>
-	<variable label="Volume sound fader" CV="949" default="0" tooltip="CV949: 0=>0%, 255=>200%" item="Sound Setting 6" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),SH10A_1.00,SH10A_1.01,SH10A_1.02,SH10A_1.03,SH10A_1.04">
-		<decVal/>
-		<label xml:lang="fr">Volume mode silencieux</label>
-		<label xml:lang="de">Lautstärke Ausblendeffekt</label>
-		<label xml:lang="ca">Volume mode silenciós</label>
-	</variable>
-	
-  <!-- END SIMILAR CV --> 
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
+   <variable label="Volume sound fader" CV="349" default="0" tooltip="CV349: 0=>0%, 255=>200%" item="Sound Setting 6" exclude="SUSI sound modules,SUSI sound modules (2020),SD18A_1.00,SD18A_1.01,SD18A_1.02,SD21A_1.01,SD21A_1.02">
+    <decVal/>
+    <label xml:lang="fr">Volume mode silencieux</label>
+    <label xml:lang="ca">Volume mode silenciós</label>
+    <label xml:lang="de">Lautstärke Ausblendeffekt</label>
+  </variable>
+  <variable label="Volume sound fader" CV="949" default="0" tooltip="CV949: 0=>0%, 255=>200%" item="Sound Setting 6" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020),SH10A_1.00,SH10A_1.01,SH10A_1.02,SH10A_1.03,SH10A_1.04">
+    <decVal/>
+    <label xml:lang="fr">Volume mode silencieux</label>
+    <label xml:lang="de">Lautstärke Ausblendeffekt</label>
+    <label xml:lang="ca">Volume mode silenciós</label>
+  </variable>
+
+  <!-- END SIMILAR CV -->
 </variables>

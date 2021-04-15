@@ -28,7 +28,7 @@
 
       <h2>Turnout Table Columns</h2>
       <p class="im">
-      <img src="images/TurnoutTableColumnList.jpg" alt="Turnout Table Columns (Rel 4.20)" align="right" height="438" width="150">
+      <img src="images/TurnoutTableColumnList.jpg" alt="Turnout Table Columns (Rel 4.20)" style="float:right" height="438" width="150">
       Contents of the Turnout Table are displayed by selecting it under <strong>Tools&rArr;Tables</strong>.
       As with all JMRI tool tables, you can add or remove columns from the display by right-clicking anywhere
       in the column header and selecting or deselecting the desired columns from the menu that appears (see picture at right).
@@ -63,9 +63,9 @@
         in the <a href="../../../apps/TabbedPreferences.shtml#Display">Display
         preferences</a>.<br>
         <img src="images/TurnoutTableText.png" height="140" width="406"
-        align="center" alt="Textual Turnout state column">
+        alt="Textual Turnout state column">
        <img src="images/TurnoutTableGraphic.png" height="96" width="399"
-        align="center" alt="Graphic Turnout state column">
+        alt="Graphic Turnout state column">
         </dd>
  
         <dt><strong>Delete</strong></dt>
@@ -355,21 +355,177 @@
 
         <dt>ONESENSOR</dt>
 
-        <dd>The Turnout watches the Sensor defined by the "Sensor
-        1" column, which is probably hooked to a microswitch on the
-        turnout or similar. When the Sensor is "Active", the
+        <dd>The Turnout monitors the Sensor defined by the "Sensor
+        1" column, which could be the input from a microswitch on the
+        turnout or similar.
+        <br>When the Sensor is "Active", the
         turnout is known to be in the "Thrown" position. When it's
         "Inactive", the turnout is known to be in the "Closed"
-        position.</dd>
+        position.
+        
+        <table style="border: 1px solid gray;" cellpadding="5" cellspacing="5">
+        <thead>
+        <tr>
+        <th>Sensor 1</th>
+        <th>Feedback (known) State</th>
+        </tr>
+        </thead>
+        
+        <tbody>
+        <tr>
+        <td>Active</td>
+        <td>Thrown</td>
+        </tr>
+        
+        <tr>
+        <td>Inactive</td>
+        <td>Closed</td>
+        </tr>
+        
+        <tr>
+        <td>Unknown</td>
+        <td>Inconsistent <span class="since">since 4.21.5</span></td>
+        </tr>
+        
+        <tr>
+        <td>Inconsistent</td>
+        <td>Inconsistent <span class="since">since 4.21.5</span></td>
+        </tr>
+        
+        </tbody>
+        </table>
+        </dd>
 
         <dt>TWOSENSOR</dt>
 
-        <dd>The Turnout watches two Sensors defined by the "Sensor
-        1" and "Sensor 2" columns, which are probably hooked to
-        microswitches at either end of the turnout's throw bar.
-        When Sensor 1 is "Active", the turnout is known to be
-        "Thrown". When Sensor 2 is "Active", the turnout is known
-        to be "Closed" (normal).</dd>
+        <dd>The Turnout monitors two Sensors defined by the "Sensor
+        1" and "Sensor 2" columns, which could be inputs from
+        microswitches at either end of the turnout's throw bar
+        or from servo travel events.<br>
+        
+        The Turnout feedback state is determined by both Sensors:
+        
+        <-- Table in same order as 2 Sensor Feedback Unit Tests within AbstractTurnoutTestBase -->
+        
+        <table style="border: 1px solid gray;" cellpadding="5" cellspacing="5">
+        <thead>
+        <tr>
+        <th>Sensor 1</th>
+        <th>Sensor 2</th>
+        <th>Feedback (known) State</th>
+        </tr>
+        </thead>
+        
+        <tbody>
+        
+        <tr>
+        <td>Active</td>
+        <td>Inactive</td>
+        <td>Thrown</td>
+        </tr>
+        
+        <tr>
+        <td>Inactive</td>
+        <td>Active</td>
+        <td>Closed</td>
+        </tr>
+        
+        <tr>
+        <td>Inactive</td>
+        <td>Inactive</td>
+        <td>Inconsistent</td>
+        <td>Typical condition for a Turnout mid-throw</td>
+        </tr>
+        
+        <tr>
+        <td>Unknown</td>
+        <td>Unknown</td>
+        <td>Unknown</td>
+        <td>Typical startup condition</td>
+        </tr>
+        
+        <tr>
+        <td>Active</td>
+        <td>Active</td>
+        <td>Inconsistent</td>
+        </tr>
+        
+        <tr>
+        <td>Active</td>
+        <td>Inconsistent</td>
+        <td>Inconsistent</td>
+        <td>Changed from Unknown > Inconsistent 4.21.5</td>
+        </tr>
+        
+        <tr>
+        <td>Inactive</td>
+        <td>Inconsistent</td>
+        <td>Inconsistent</td>
+        </tr>
+        
+        <tr>
+        <td>Inconsistent</td>
+        <td>Active</td>
+        <td>Inconsistent</td>
+        </tr>
+        
+        <tr>
+        <td>Inconsistent</td>
+        <td>Inactive</td>
+        <td>Inconsistent</td>
+        </tr>
+        
+        <tr>
+        <td>Unknown</td>
+        <td>Active</td>
+        <td>Inconsistent</td>
+        </tr>
+        
+        <tr>
+        <td>Unknown</td>
+        <td>Inactive</td>
+        <td>Inconsistent</td>
+        </tr>
+        
+        <tr>
+        <td>Unknown</td>
+        <td>Inconsistent</td>
+        <td>Inconsistent</td>
+        </tr>
+        
+        <tr>
+        <td>Inconsistent</td>
+        <td>Unknown</td>
+        <td>Inconsistent</td>
+        <td>Changed from Unknown > Inconsistent 4.21.5</td>
+        </tr>
+        
+        
+        
+        <tr>
+        <td>Active</td>
+        <td>Unknown</td>
+        <td>Inconsistent</td>
+        </tr>
+        
+        <tr>
+        <td>Inactive</td>
+        <td>Unknown</td>
+        <td>Inconsistent</td>
+        </tr>
+        
+        <tr>
+        <td>Inconsistent</td>
+        <td>Inconsistent</td>
+        <td>Inconsistent</td>
+        <td>Changed from Unknown > Inconsistent 4.21.5</td>
+        </tr>
+        
+        
+        </tbody>
+        </table>
+        
+        </dd>
 
         <dt>DELAYED</dt>
 

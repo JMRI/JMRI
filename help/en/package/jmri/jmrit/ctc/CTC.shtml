@@ -1111,13 +1111,13 @@
       <p>
       CTC was upgraded after JMRI 4.20.  The primary change is that the CTC configuration data is no longer
       stored in the ProgramProperties.xml and CTCSystem.xml files.  The configuration data is included in
-      the standard PanelPro data files created by <strong>Panels &rArr; Store Panels...</strong>.  This
+      the standard PanelPro data files. This
       change insures that the CTC configuration and the JMRI tables are always consistent.
       </p>
 
       <p>The following changes to the version 1 files are listed below.</p>
       <ul>
-        <li><strong>AwtWindowProperties.txt</strong>: No change.</li>
+        <li><strong>AwtWindowProperties.txt</strong>: Obsolete, replaced by the standard JMRI window settings within the current profile.</li>
         <li><strong>CTCSystem.xml</strong>: Obsolete.  If <strong>File &rArr; Import</strong> was used, it has been
         renamed to <strong>V1_Save_CTCSystem.xml</strong>.</li>
         <li><strong>ProgramProperties.xml</strong>: Obsolete.  If <strong>File &rArr; Import</strong> was used, it has been
@@ -1147,7 +1147,9 @@
     each time the "Write .xml files for JMRI GUI support" is pressed.
     <h3>GUIObjects.xml</h3>
     It contains all of the basic GUI JMRI objects necessary for creating a "raw" CTC panel in the Panel
-    Editor.  It can be loaded at any time using the Panels &gt; Open Panels... menu (on the main JMRI screen)
+    Editor.  It can be loaded at any time using the <strong>File &rArr; Load table content and panels...</strong>
+    {<em>Old: <strong>Panels &rArr; Load Panels...</strong></em>} <span class="since">since 4.23.3</span>
+    menu (on the main JMRI screen)
     and specifying this location and filename to load.
     <h3>InternalSensors.xml</h3>
     It contains <strong>all</strong> of the sensors created by the CTC Editor.  These sensors are required

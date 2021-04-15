@@ -38,13 +38,14 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public static final String LOCALE = "locale";
     public static final String LOOK_AND_FEEL = "lookAndFeel";
     public static final String NONSTANDARD_MOUSE_EVENT = "nonstandardMouseEvent";
-    /**
-     * Display state in bean tables as icon.
-     */
+    // Display state in bean tables as icon.
     public static final String GRAPHIC_TABLE_STATE = "graphicTableState";
+    // Classic OBlock editor or tabbed tables
+    public static final String OBLOCK_EDIT_TABBED = "oblockEditTabbed";
     public static final String VERTICAL_TOOLBAR = "verticalToolBar";
     public static final String SHOW_TOOL_TIP_TIME = "showToolTipDismissDelay";
     public static final String EDITOR_USE_OLD_LOC_SIZE = "editorUseOldLocSize";
+    public static final String MAX_COMBO_ROWS = "maxComboRows";
     /**
      * Smallest font size a user can set the font size to other than zero
      * ({@value}). A font size of 0 indicates that the system default font size
@@ -71,9 +72,11 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     private int defaultFontSize = 0;
     private boolean nonStandardMouseEvent = false;
     private boolean graphicTableState = false;
+    private boolean oblockEditTabbed = false;
     private boolean editorUseOldLocSize = false;
     private String lookAndFeel = UIManager.getLookAndFeel().getClass().getName();
     private int toolTipDismissDelay = ToolTipManager.sharedInstance().getDismissDelay();
+    private int maxComboRows = 0;
     private boolean dirty = false;
     private boolean restartRequired = false;
 
@@ -114,7 +117,9 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             this.setNonStandardMouseEvent(
                     preferences.getBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent()));
             this.setGraphicTableState(preferences.getBoolean(GRAPHIC_TABLE_STATE, this.isGraphicTableState()));
+            this.setOblockEditTabbed(preferences.getBoolean(OBLOCK_EDIT_TABBED, this.isOblockEditTabbed()));
             this.setEditorUseOldLocSize(preferences.getBoolean(EDITOR_USE_OLD_LOC_SIZE, this.isEditorUseOldLocSize()));
+            this.setMaxComboRows(preferences.getInt(MAX_COMBO_ROWS, this.getMaxComboRows()));
             this.setToolTipDismissDelay(preferences.getInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay()));
 
             log.debug("About to setDefault Locale");
@@ -174,7 +179,9 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         }
         preferences.putBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent());
         preferences.putBoolean(GRAPHIC_TABLE_STATE, this.isGraphicTableState());
+        preferences.putBoolean(OBLOCK_EDIT_TABBED, this.isOblockEditTabbed());
         preferences.putBoolean(EDITOR_USE_OLD_LOC_SIZE, this.isEditorUseOldLocSize());
+        preferences.putInt(MAX_COMBO_ROWS, this.getMaxComboRows());
         preferences.putInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay());
         try {
             preferences.sync();
@@ -295,7 +302,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
     /**
      * Get the default font size for the current Look and Feel.
-     * 
+     *
      * @return the default font size
      */
     public int getDefaultFontSize() {
@@ -363,7 +370,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
     /**
      * Get the time a tooltip is displayed before being dismissed.
-     * 
+     *
      * @return the delay in seconds
      */
     public int getToolTipDismissDelay() {
@@ -400,6 +407,37 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         boolean oldGraphicTableState = this.graphicTableState;
         this.graphicTableState = graphicTableState;
         firePropertyChange(GRAPHIC_TABLE_STATE, oldGraphicTableState, graphicTableState);
+    }
+
+    /**
+     * @return the graphicTableState
+     */
+    public boolean isOblockEditTabbed() {
+        return oblockEditTabbed;
+    }
+
+    /**
+     * @param tabbed the Editor interface to set (fasle  = desktop)
+     */
+    public void setOblockEditTabbed(boolean tabbed) {
+        boolean oldOblockTabbed = this.oblockEditTabbed;
+        this.oblockEditTabbed = tabbed;
+        firePropertyChange(OBLOCK_EDIT_TABBED, oldOblockTabbed, tabbed);
+    }
+
+    /**
+     * @return the number of combo box rows to be displayed.
+     */
+    public int getMaxComboRows() {
+        return maxComboRows;
+    }
+
+    /**
+     * Set a new value for the number of combo box rows to be displayed.
+     * @param maxRows The new value, zero for no limit
+     */
+    public void setMaxComboRows(int maxRows) {
+        maxComboRows = maxRows;
     }
 
     /**
@@ -620,4 +658,5 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public List<Exception> getInitializationExceptions(Profile profile) {
         return new ArrayList<>(this.exceptions);
     }
+
 }

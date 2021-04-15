@@ -127,14 +127,14 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
 
     @Test
     public void testMakeSystemName() {
-        String s = l.makeSystemName(getSystemNameWithNoPrefix());
+        String s = l.makeSystemName(getASystemNameWithNoPrefix());
         Assert.assertNotNull(s);
         Assert.assertFalse(s.isEmpty());
     }
     
     @Test
     public void testMakeSystemNameWithPrefix() {
-        String s = l.makeSystemName(l.getSystemNamePrefix()+getSystemNameWithNoPrefix());
+        String s = l.makeSystemName(l.getSystemNamePrefix()+getASystemNameWithNoPrefix());
         Assert.assertNotNull(s);
         Assert.assertFalse(s.isEmpty());
     }
@@ -180,7 +180,7 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
         Assert.assertEquals(sysPrefix + ":AUTO:0103", m.getAutoSystemName());
     }
     
-    protected String getSystemNameWithNoPrefix() {
+    protected String getASystemNameWithNoPrefix() {
         return "1";
     }
 

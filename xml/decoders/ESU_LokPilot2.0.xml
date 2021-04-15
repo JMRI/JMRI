@@ -189,7 +189,7 @@
             <choice xml:lang="it">Formato 14 step</choice>
           </enumChoice>
           <enumChoice choice="28/128 speed step format">
-          <choice>28/128 speed step format(recommended)</choice>
+          <choice>28/128 speed step format (recommended)</choice>
             <choice xml:lang="it">Formato 28 o 128 step</choice>
           </enumChoice>
         </enumVal>

@@ -10,7 +10,7 @@ import org.junit.Test;
 import jmri.jmrix.ipocs.protocol.enums.RqPointsCommand;
 
 public class ThrowPointsPacketTest {
-  private byte[] testPacket = { RqPointsCommand.Left.value };
+  private final byte[] testPacket = { RqPointsCommand.Left.value };
 
   @Test
   public void getIdTest() {

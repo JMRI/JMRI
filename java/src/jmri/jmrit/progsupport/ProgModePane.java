@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provide a JPanel to configure the programming mode.
  * <p>
- * The using code should get a configured programmer with getProgrammer.
+ * The using code should get a configured programmer with getProgrammer().
  * <p>
  * This pane will only display ops mode options if ops mode is available, as
  * evidenced by an attempt to get an ops mode programmer at startup time.

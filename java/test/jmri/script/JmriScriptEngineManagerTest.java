@@ -146,7 +146,7 @@ public class JmriScriptEngineManagerTest {
         assertNotNull(engine);
         assertEquals(engine, jsem.getEngineByName("jython"));
     }
-    
+
     @Test
     public void testGetEngineInvalidName() {
         assertNull(jsem.getEngine("invalid"));
@@ -292,6 +292,7 @@ public class JmriScriptEngineManagerTest {
     public void tearDown() {
         jsem = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

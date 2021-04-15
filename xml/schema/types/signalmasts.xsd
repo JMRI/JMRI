@@ -19,7 +19,7 @@
     <xs:complexType name="SignalMastManagerType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a SignalMastManager implementation.
+          Define the XML structure for storing the contents of a SignalMastManager implementation.
         </xs:documentation>
         <xs:appinfo>
           <jmri:usingclass configurexml="true">jmri.managers.configurexml.DefaultSignalMastManagerXml</jmri:usingclass>
@@ -34,7 +34,7 @@
     <xs:complexType name="SignalMastType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of one SignalMast implementation.
+          Define the XML structure for storing the contents of one SignalMast implementation.
           Generally dealt with by the manager implemenation
         </xs:documentation>
         <xs:appinfo>

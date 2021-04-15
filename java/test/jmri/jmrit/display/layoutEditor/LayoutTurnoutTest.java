@@ -2,8 +2,10 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.*;
+
 import jmri.*;
 import jmri.util.*;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
@@ -12,16 +14,9 @@ import org.junit.jupiter.api.*;
  * Test simple functioning of LayoutTurnout.
  *
  * @author Paul Bender Copyright (C) 2016
+ * @author Bob Jacobsen Copyright (C) 2020
  */
 public class LayoutTurnoutTest extends LayoutTrackTest {
-
-    private static LayoutEditor layoutEditor = null;
-    private LayoutTurnout ltRH = null;
-    private LayoutTurnout ltLH = null;
-    private LayoutTurnout ltWY = null;
-    private LayoutTurnout ltDX = null;
-    private LayoutTurnout ltRX = null;
-    private LayoutTurnout ltLX = null;
 
     @Test
     public void testEnums() {
@@ -350,159 +345,13 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
     @Test
     public void testGetContinuingSense() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         Assert.assertEquals(ltRH.getContinuingSense(), Turnout.CLOSED);
         Assert.assertEquals(ltLH.getContinuingSense(), Turnout.CLOSED);
         Assert.assertEquals(ltWY.getContinuingSense(), Turnout.CLOSED);
         Assert.assertEquals(ltDX.getContinuingSense(), Turnout.CLOSED);
         Assert.assertEquals(ltRX.getContinuingSense(), Turnout.CLOSED);
         Assert.assertEquals(ltLX.getContinuingSense(), Turnout.CLOSED);
-    }
-
-    @Test
-    public void testGetCoordsForConnectionType() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals("ltRH.getCoordsForConnectionType(NONE) is equal to...",
-                new Point2D.Double(150.0, 100.0),
-                ltRH.getCoordsForConnectionType(HitPointType.NONE));
-        JUnitAppender.assertErrorMessage("Right Hand.getCoordsForConnectionType(NONE); Invalid Connection Type");
-        Assert.assertEquals("ltRH.getCoordsForConnectionType(TURNOUT_A) is equal to...",
-                new Point2D.Double(132.0, 87.0),
-                ltRH.getCoordsForConnectionType(HitPointType.TURNOUT_A));
-        Assert.assertEquals("ltRH.getCoordsForConnectionType(TURNOUT_B) is equal to...",
-                new Point2D.Double(168.0, 113.0),
-                ltRH.getCoordsForConnectionType(HitPointType.TURNOUT_B));
-        Assert.assertEquals("ltRH.getCoordsForConnectionType(TURNOUT_C) is equal to...",
-                new Point2D.Double(162.0, 123.0),
-                ltRH.getCoordsForConnectionType(HitPointType.TURNOUT_C));
-        Assert.assertEquals("ltRH.getCoordsForConnectionType(TURNOUT_D) is equal to...",
-                new Point2D.Double(132.0, 87.0),
-                ltRH.getCoordsForConnectionType(HitPointType.TURNOUT_D));
-        Assert.assertEquals("ltRH.getCoordsForConnectionType(TURNOUT_CENTER) is equal to...",
-                new Point2D.Double(150.0, 100.0),
-                ltRH.getCoordsForConnectionType(HitPointType.TURNOUT_CENTER));
-
-        Assert.assertEquals("ltLH.getCoordsForConnectionType(NONE) is equal to...",
-                new Point2D.Double(200.0, 175.0),
-                ltLH.getCoordsForConnectionType(HitPointType.NONE));
-        JUnitAppender.assertErrorMessage("Left Hand.getCoordsForConnectionType(NONE); Invalid Connection Type");
-        Assert.assertEquals("ltLH.getCoordsForConnectionType(TURNOUT_A) is equal to...",
-                new Point2D.Double(189.0, 149.0),
-                ltLH.getCoordsForConnectionType(HitPointType.TURNOUT_A));
-        Assert.assertEquals("ltLH.getCoordsForConnectionType(TURNOUT_B) is equal to...",
-                new Point2D.Double(211.0, 201.0),
-                ltLH.getCoordsForConnectionType(HitPointType.TURNOUT_B));
-        Assert.assertEquals("ltLH.getCoordsForConnectionType(TURNOUT_C) is equal to...",
-                new Point2D.Double(222.0, 195.0),
-                ltLH.getCoordsForConnectionType(HitPointType.TURNOUT_C));
-        Assert.assertEquals("ltLH.getCoordsForConnectionType(TURNOUT_D) is equal to...",
-                new Point2D.Double(189.0, 149.0),
-                ltLH.getCoordsForConnectionType(HitPointType.TURNOUT_D));
-        Assert.assertEquals("ltLH.getCoordsForConnectionType(TURNOUT_CENTER) is equal to...",
-                new Point2D.Double(200.0, 175.0),
-                ltLH.getCoordsForConnectionType(HitPointType.TURNOUT_CENTER));
-
-        Assert.assertEquals("ltWY.getCoordsForConnectionType(NONE) is equal to...",
-                new Point2D.Double(250.0, 250.0),
-                ltWY.getCoordsForConnectionType(HitPointType.NONE));
-        JUnitAppender.assertErrorMessage("Wye.getCoordsForConnectionType(NONE); Invalid Connection Type");
-        Assert.assertEquals("ltWY.getCoordsForConnectionType(TURNOUT_A) is equal to...",
-                new Point2D.Double(254.5, 218.5),
-                ltWY.getCoordsForConnectionType(HitPointType.TURNOUT_A));
-        Assert.assertEquals("ltWY.getCoordsForConnectionType(TURNOUT_B) is equal to...",
-                new Point2D.Double(238.0, 280.0),
-                ltWY.getCoordsForConnectionType(HitPointType.TURNOUT_B));
-        Assert.assertEquals("ltWY.getCoordsForConnectionType(TURNOUT_C) is equal to...",
-                new Point2D.Double(253.0, 283.0),
-                ltWY.getCoordsForConnectionType(HitPointType.TURNOUT_C));
-        Assert.assertEquals("ltWY.getCoordsForConnectionType(TURNOUT_D) is equal to...",
-                new Point2D.Double(262.0, 220.0),
-                ltWY.getCoordsForConnectionType(HitPointType.TURNOUT_D));
-        Assert.assertEquals("ltWY.getCoordsForConnectionType(TURNOUT_CENTER) is equal to...",
-                new Point2D.Double(250.0, 250.0),
-                ltWY.getCoordsForConnectionType(HitPointType.TURNOUT_CENTER));
-
-        Assert.assertEquals("ltDX.getCoordsForConnectionType(NONE) is equal to...",
-                new Point2D.Double(300.0, 325.0),
-                ltDX.getCoordsForConnectionType(HitPointType.NONE));
-        JUnitAppender.assertErrorMessage("Double XOver.getCoordsForConnectionType(NONE); Invalid Connection Type");
-        Assert.assertEquals("ltDX.getCoordsForConnectionType(TURNOUT_A) is equal to...",
-                new Point2D.Double(347.0, 297.0),
-                ltDX.getCoordsForConnectionType(HitPointType.TURNOUT_A));
-        Assert.assertEquals("ltDX.getCoordsForConnectionType(TURNOUT_B) is equal to...",
-                new Point2D.Double(279.0, 377.0),
-                ltDX.getCoordsForConnectionType(HitPointType.TURNOUT_B));
-        Assert.assertEquals("ltDX.getCoordsForConnectionType(TURNOUT_C) is equal to...",
-                new Point2D.Double(253.0, 353.0),
-                ltDX.getCoordsForConnectionType(HitPointType.TURNOUT_C));
-        Assert.assertEquals("ltDX.getCoordsForConnectionType(TURNOUT_D) is equal to...",
-                new Point2D.Double(321.0, 273.0),
-                ltDX.getCoordsForConnectionType(HitPointType.TURNOUT_D));
-        Assert.assertEquals("ltDX.getCoordsForConnectionType(TURNOUT_CENTER) is equal to...",
-                new Point2D.Double(300.0, 325.0),
-                ltDX.getCoordsForConnectionType(HitPointType.TURNOUT_CENTER));
-
-        Assert.assertEquals("ltRX.getCoordsForConnectionType(NONE) is equal to...",
-                new Point2D.Double(350.0, 400.0),
-                ltRX.getCoordsForConnectionType(HitPointType.NONE));
-        JUnitAppender.assertErrorMessage("Right Hand XOver.getCoordsForConnectionType(NONE); Invalid Connection Type");
-        Assert.assertEquals("ltRX.getCoordsForConnectionType(TURNOUT_A) is equal to...",
-                new Point2D.Double(410.0, 404.0),
-                ltRX.getCoordsForConnectionType(HitPointType.TURNOUT_A));
-        Assert.assertEquals("ltRX.getCoordsForConnectionType(TURNOUT_B) is equal to...",
-                new Point2D.Double(337.0, 424.0),
-                ltRX.getCoordsForConnectionType(HitPointType.TURNOUT_B));
-        Assert.assertEquals("ltRX.getCoordsForConnectionType(TURNOUT_C) is equal to...",
-                new Point2D.Double(290.0, 396.0),
-                ltRX.getCoordsForConnectionType(HitPointType.TURNOUT_C));
-        Assert.assertEquals("ltRX.getCoordsForConnectionType(TURNOUT_D) is equal to...",
-                new Point2D.Double(363.0, 376.0),
-                ltRX.getCoordsForConnectionType(HitPointType.TURNOUT_D));
-        Assert.assertEquals("ltRX.getCoordsForConnectionType(TURNOUT_CENTER) is equal to...",
-                new Point2D.Double(350.0, 400.0),
-                ltRX.getCoordsForConnectionType(HitPointType.TURNOUT_CENTER));
-
-        Assert.assertEquals("ltLX.getCoordsForConnectionType(NONE) is equal to...",
-                new Point2D.Double(400.0, 475.0),
-                ltLX.getCoordsForConnectionType(HitPointType.NONE));
-        JUnitAppender.assertErrorMessage("Left Hand XOver.getCoordsForConnectionType(NONE); Invalid Connection Type");
-        Assert.assertEquals("ltLX.getCoordsForConnectionType(TURNOUT_A) is equal to...",
-                new Point2D.Double(413.0, 503.0),
-                ltLX.getCoordsForConnectionType(HitPointType.TURNOUT_A));
-        Assert.assertEquals("ltLX.getCoordsForConnectionType(TURNOUT_B) is equal to...",
-                new Point2D.Double(334.0, 476.0),
-                ltLX.getCoordsForConnectionType(HitPointType.TURNOUT_B));
-        Assert.assertEquals("ltLX.getCoordsForConnectionType(TURNOUT_C) is equal to...",
-                new Point2D.Double(387.0, 447.0),
-                ltLX.getCoordsForConnectionType(HitPointType.TURNOUT_C));
-        Assert.assertEquals("ltLX.getCoordsForConnectionType(TURNOUT_D) is equal to...",
-                new Point2D.Double(466.0, 474.0),
-                ltLX.getCoordsForConnectionType(HitPointType.TURNOUT_D));
-        Assert.assertEquals("ltLX.getCoordsForConnectionType(TURNOUT_CENTER) is equal to...",
-                new Point2D.Double(400.0, 475.0),
-                ltLX.getCoordsForConnectionType(HitPointType.TURNOUT_CENTER));
-    }
-
-    @Test
-    public void testGetBounds() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals("ltRH.getBounds() is equal to...",
-                new Rectangle2D.Double(121.0, 80.0, 58.0, 55.0),
-                ltRH.getBounds());
-        Assert.assertEquals("ltLH.getBounds() is equal to...",
-                new Rectangle2D.Double(184.0, 135.0, 50.0, 80.0),
-                ltLH.getBounds());
-        Assert.assertEquals("ltWY.getBounds() is equal to...",
-                new Rectangle2D.Double(232.0, 201.0, 25.0, 100.0),
-                ltWY.getBounds());
-        Assert.assertEquals("ltDX.getBounds() is equal to...",
-                new Rectangle2D.Double(199.0, 213.0, 202.0, 224.0),
-                ltDX.getBounds());
-        Assert.assertEquals("ltRX.getBounds() is equal to...",
-                new Rectangle2D.Double(223.0, 345.0, 254.0, 110.0),
-                ltRX.getBounds());
-        Assert.assertEquals("ltLX.getBounds() is equal to...",
-                new Rectangle2D.Double(259.0, 413.0, 282.0, 124.0),
-                ltLX.getBounds());
     }
 
     @Test
@@ -574,7 +423,7 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
             Assert.assertNull("ltRH.getConnection(invalid type) is null",
                     ltRH.getConnection(HitPointType.NONE));
             Assert.fail("No exception thrown on ltRH.getConnection(invalid type)");
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
         }
         JUnitAppender.assertErrorMessage("will throw Right Hand.getConnection(NONE); Invalid Connection Type");
 
@@ -582,7 +431,7 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
             Assert.assertNull("ltLH.getConnection(invalid type) is null",
                     ltLH.getConnection(HitPointType.NONE));
             Assert.fail("No exception thrown on ltLH.getConnection(invalid type)");
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
         }
         JUnitAppender.assertErrorMessage("will throw Left Hand.getConnection(NONE); Invalid Connection Type");
 
@@ -590,7 +439,7 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
             Assert.assertNull("ltWY.getConnection(invalid type) is null",
                     ltWY.getConnection(HitPointType.NONE));
             Assert.fail("No exception thrown on ltWY.getConnection(invalid type)");
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
         }
         JUnitAppender.assertErrorMessage("will throw Wye.getConnection(NONE); Invalid Connection Type");
 
@@ -598,7 +447,7 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
             Assert.assertNull("ltDX.getConnection(invalid type) is null",
                     ltDX.getConnection(HitPointType.NONE));
             Assert.fail("No exception thrown on ltDX.getConnection(invalid type)");
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
         }
         JUnitAppender.assertErrorMessage("will throw Double XOver.getConnection(NONE); Invalid Connection Type");
 
@@ -606,7 +455,7 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
             Assert.assertNull("ltRX.getConnection(invalid type) is null",
                     ltRX.getConnection(HitPointType.NONE));
             Assert.fail("No exception thrown on ltRX.getConnection(invalid type)");
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
         }
         JUnitAppender.assertErrorMessage("will throw Right Hand XOver.getConnection(NONE); Invalid Connection Type");
 
@@ -614,7 +463,7 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
             Assert.assertNull("ltLX.getConnection(invalid type) is null",
                     ltLX.getConnection(HitPointType.NONE));
             Assert.fail("No exception thrown on ltLX.getConnection(invalid type)");
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
         }
         JUnitAppender.assertErrorMessage("will throw Left Hand XOver.getConnection(NONE); Invalid Connection Type");
     }
@@ -627,42 +476,42 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
         try {
             Assert.assertNull("ltRH.getConnection(valid type) is null",
                     ltRH.getConnection(HitPointType.TURNOUT_A));
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
             Assert.fail("Exception thrown on ltRH.getConnection(valid type)");
         }
 
         try {
             Assert.assertNull("ltLH.getConnection(valid type) is null",
                     ltLH.getConnection(HitPointType.TURNOUT_A));
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
             Assert.fail("Exception thrown on ltLH.getConnection(valid type)");
         }
 
         try {
             Assert.assertNull("ltWY.getConnection(valid type) is null",
                     ltWY.getConnection(HitPointType.TURNOUT_A));
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
             Assert.fail("Exception thrown on ltWY.getConnection(valid type)");
         }
 
         try {
             Assert.assertNull("ltDX.getConnection(valid type) is null",
                     ltDX.getConnection(HitPointType.TURNOUT_A));
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
             Assert.fail("Exception thrown on ltDX.getConnection(valid type)");
         }
 
         try {
             Assert.assertNull("ltRX.getConnection(valid type) is null",
                     ltRX.getConnection(HitPointType.TURNOUT_A));
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
             Assert.fail("Exception thrown on ltRX.getConnection(valid type)");
         }
 
         try {
             Assert.assertNull("ltLX.getConnection(valid type) is null",
                     ltLX.getConnection(HitPointType.TURNOUT_A));
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
             Assert.fail("Exception thrown on ltLX.getConnection(valid type)");
         }
     }
@@ -750,21 +599,6 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
     }
 
     @Test
-    public void testSetUpDefaultSize() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
-
-        // note: Not really testing anything here,
-        // this is just for code coverage.
-        ltRH.setUpDefaultSize();
-        ltLH.setUpDefaultSize();
-        ltWY.setUpDefaultSize();
-        ltDX.setUpDefaultSize();
-        ltRX.setUpDefaultSize();
-        ltLX.setUpDefaultSize();
-    }
-
-    @Test
     public void testGetStateDefault() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
@@ -837,11 +671,11 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
         Assert.assertEquals("t2 THROWN t1 CLOSED INCONSISTENT", ltRX.getState(), Turnout.INCONSISTENT);
 
         // remove turnouts and check num listeners
-        ltRX.setSecondTurnout(null);
+        ltRX.setSecondTurnout("");
         Assert.assertEquals("t1 +1 listeners ", start1Listeners + 1, tOne.getPropertyChangeListeners().length);
         Assert.assertEquals("t2 start listeners", start2Listeners, tTwo.getPropertyChangeListeners().length);
 
-        ltRX.setTurnout(null);
+        ltRX.setTurnout("");
         Assert.assertEquals("t1 start listeners ", start1Listeners, tOne.getPropertyChangeListeners().length);
 
         tOne.dispose();
@@ -965,7 +799,7 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
         layoutBlock.setOccupancySensorName("ISOccupancy1");
         Assert.assertEquals("Occupied when sensor active", layoutBlock.getOccupancy(), LayoutBlock.OCCUPIED);
 
-        ltRH.setLayoutBlock(layoutBlock);
+        ltRHv.setLayoutBlock(layoutBlock);
 
         // occupied, occ. active disabled
         ltRH.setDisableWhenOccupied(false);
@@ -1097,67 +931,145 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
         }
         layoutEditor = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
     @BeforeEach
     public void setUp() {
+        super.setUp();
+
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
+
+            layoutEditor = new LayoutEditor();
+
             Point2D point = new Point2D.Double(150.0, 100.0);
             Point2D delta = new Point2D.Double(50.0, 75.0);
 
-            ltRH = new LayoutRHTurnout("Right Hand", point, 33.0, 1.1, 1.2, layoutEditor);
+            ltRH = new LayoutRHTurnout("Right Hand", layoutEditor); // point, 33.0, 1.1, 1.2,
+            ltRHv = new LayoutRHTurnoutView(ltRH, point, 33.0, 1.1, 1.2, layoutEditor);
+            layoutEditor.addLayoutTrack(ltRH, ltRHv);
 
             point = MathUtil.add(point, delta);
-            ltLH = new LayoutLHTurnout("Left Hand", point, 66.0, 1.3, 1.4, layoutEditor);
+            ltLH = new LayoutLHTurnout("Left Hand", layoutEditor); // point, 66.0, 1.3, 1.4,
+            ltLHv = new LayoutLHTurnoutView(ltLH, point, 66.0, 1.3, 1.4, layoutEditor);
+            layoutEditor.addLayoutTrack(ltLH, ltLHv);
 
             point = MathUtil.add(point, delta);
-            ltWY = new LayoutWye("Wye", point, 99.0, 1.5, 1.6, layoutEditor);
+            ltWY = new LayoutWye("Wye", layoutEditor); // point, 99.0, 1.5, 1.6,
+            ltWYv = new LayoutWyeView(ltWY, point, 99.0, 1.5, 1.6, layoutEditor);
+            layoutEditor.addLayoutTrack(ltWY, ltWYv);
 
             point = MathUtil.add(point, delta);
-            ltDX = new LayoutDoubleXOver("Double XOver", point, 132.0, 1.7, 1.8, layoutEditor);
+            ltDX = new LayoutDoubleXOver("Double XOver", layoutEditor); // point, 132.0, 1.7, 1.8,
+            ltDXv = new LayoutDoubleXOverView(ltDX, point, 132.0, 1.7, 1.8, layoutEditor);
+            layoutEditor.addLayoutTrack(ltDX, ltDXv);
 
             point = MathUtil.add(point, delta);
-            ltRX = new LayoutRHXOver("Right Hand XOver", point, 165.0, 1.9, 2.0, layoutEditor);
+            ltRX = new LayoutRHXOver("Right Hand XOver", layoutEditor); // point, 165.0, 1.9, 2.0,
+            ltRXv = new LayoutRHXOverView(ltRX, point, 165.0, 1.9, 2.0, layoutEditor);
+            layoutEditor.addLayoutTrack(ltRX, ltRXv);
 
             point = MathUtil.add(point, delta);
-            ltLX = new LayoutLHXOver("Left Hand XOver", point, 198.0, 2.1, 2.2, layoutEditor);
+            ltLX = new LayoutLHXOver("Left Hand XOver", layoutEditor); // point, 198.0, 2.1, 2.2,
+            ltLXv = new LayoutLHXOverView(ltLX, point, 198.0, 2.1, 2.2, layoutEditor);
+            layoutEditor.addLayoutTrack(ltLX, ltLXv);
         }
     }
+
+    private static LayoutEditor layoutEditor = null;
+
+    private LayoutRHTurnout ltRH = null;
+    private LayoutRHTurnoutView ltRHv = null;
+
+    private LayoutLHTurnout ltLH = null;
+    private LayoutLHTurnoutView ltLHv = null;
+
+    private LayoutWye ltWY = null;
+    private LayoutWyeView ltWYv = null;
+
+    private LayoutDoubleXOver ltDX = null;
+    private LayoutDoubleXOverView ltDXv = null;
+
+    private LayoutRHXOver ltRX = null;
+    private LayoutRHXOverView ltRXv = null;
+
+    private LayoutLHXOver ltLX = null;
+    private LayoutLHXOverView ltLXv = null;
+
 
     @AfterEach
     public void tearDown() {
         if (ltRH != null) {
             ltRH.remove();
-            ltRH.dispose();
             ltRH = null;
         }
+        if (ltRHv != null) {
+            ltRHv.remove();
+            ltRHv.dispose();
+            ltRHv = null;
+        }
+
         if (ltLH != null) {
             ltLH.remove();
-            ltLH.dispose();
             ltLH = null;
         }
+        if (ltLHv != null) {
+            ltLHv.remove();
+            ltLHv.dispose();
+            ltLHv = null;
+        }
+
         if (ltWY != null) {
             ltWY.remove();
-            ltWY.dispose();
             ltWY = null;
         }
+        if (ltWYv != null) {
+            ltWYv.remove();
+            ltWYv.dispose();
+            ltWYv = null;
+        }
+
         if (ltDX != null) {
             ltDX.remove();
-            ltDX.dispose();
             ltDX = null;
         }
+        if (ltDXv != null) {
+            ltDXv.remove();
+            ltDXv.dispose();
+            ltDXv = null;
+        }
+
         if (ltRX != null) {
             ltRX.remove();
-            ltRX.dispose();
             ltRX = null;
         }
+        if (ltRXv != null) {
+            ltRXv.remove();
+            ltRXv.dispose();
+            ltRXv = null;
+        }
+
         if (ltLX != null) {
             ltLX.remove();
-            ltLX.dispose();
             ltLX = null;
         }
+        if (ltLXv != null) {
+            ltLXv.remove();
+            ltLXv.dispose();
+            ltLXv = null;
+        }
+
+        if (layoutEditor != null) {
+            JUnitUtil.dispose(layoutEditor);
+        }
+        layoutEditor = null;
+
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
+        JUnitUtil.tearDown();
     }
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnoutTest.class);

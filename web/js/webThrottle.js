@@ -173,7 +173,7 @@ $(document).ready(function() {
 	* $jmri.getRosterGroups()
 	* . Returns array of strings: rosterGroup
 	* $jmri.getObjectList(listType) {
-	* . Possible values for string 'listType' (get): roster, panels, lights, reporters, sensors, turnouts, signalHeads, signalMasts, routes, memories
+	* . Possible values for string 'listType' (get): roster, panels, lights, reporters, sensors, turnouts, signalHeads, signalMasts, routes, memories, blocks, oblocks
 	* . Returns array of objects: list
 	* $jmri.closeSocket()
 	* . To stop communication with JMRI (usually, before exit and before blocking code: alert(), ...)
@@ -192,6 +192,8 @@ $(document).ready(function() {
 	* Possible 'args' for 'route': {"userName":userName,"comment":comment,"state":state}
 	* Possible 'args' for 'memory': {"userName":userName,"comment":comment,"value":value}
 	* Possible 'args' for 'power': {"state":state}
+	* block
+	* oblock
 	* >>> Other values for 'type' and new 'args' may be available
 	********************************************/
 	var debug = loadLocalInfo('webThrottle.debug');

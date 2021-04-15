@@ -26,7 +26,7 @@
 
       <div style="margin-left: 2em;"><p><code>if (logical expression) then
       (action).</code></p></div>
-      
+
       The "logical expression" part of a Conditional tests the state of a group
       of user-specified conditions on the layout, for example, whether certain
       turnouts are closed or thrown, or whether a block is occupied. The
@@ -108,13 +108,9 @@
       <p>The <strong>File</strong> menu at the top of the Logix Table
       provides for printing this table and for storing the Logixs
       and their Conditionals in a layout configuration file.
-      Selecting either store option will bring up a dialog for
-      naming a configuration file for writing Logix information and
-      all other configuration information (e.g., sensors, lights,
-      turnouts, signal heads, routes etc.). If you are updating an
-      existing file, simply click its name, and it will be copied
-      into the name entry.</p>
-      
+      For details, see <a href="../../../../html/apps/LoadStoreWork.shtml">
+      Loading and Storing Your Work</a>.</p>
+
       <a name="logixOptions" id="logixOptions"></a>
       <p>The <strong>Options</strong> menu has 3 sections.<br>
       <div style="margin-left: 2em">
@@ -183,6 +179,35 @@
       <p>For more information, consult the <a href=
       "../../../../html/tools/Logix.shtml">main Logix
       documentation</a>.</p>
+      
+      <h2>Logix Documentation Pages Logically Listed</h2>
+
+      <p>
+        Logix documentation is divided into eight different help pages.  While these are referenced via links in various places,
+        not all are easy to find (perhaps three links down).  They are additionally listed here for convenience.
+      </p>
+
+      <ul>
+        <li><a href="../../../../html/tools/Logix.shtml">Main Logix description and explanation</a></li>
+
+        <li><a href="../../../../html/tools/Logix.shtml#notes">FAQ</a></li>
+
+        <li><a href="LogixTable.shtml">Description of Logix Table contents and usage</a> [this page]</li>
+
+        <li><a href="LogixAddEdit.shtml">Logix Table add and edit action description</a></li>
+
+        <li><a href="../conditional/StateVariableActionList.shtml">Enumeration of Logix conditionals state variables and actions</a></li>
+
+        <li><a href="../conditional/ConditionalListEditor.shtml">Logix conditionals list editor instructions</a></li>
+
+        <li><a href="../conditional/ConditionalTreeEditor.shtml">Logix conditionals tree editor instructions</a></li>
+
+        <li><a href="../conditional/ConditionalCopy.shtml">Logix conditionals copy instructions</a></li>
+
+      </ul>
+    
+
+      
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

@@ -60,7 +60,7 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
         tc = memo.getSprogTrafficController();
         tc.addSprogListener(this);
 
-        slotModel = new SprogSlotMonDataModel(SprogSlotMonDataModel.getSlotCount(), 8, _memo);
+        slotModel = new SprogSlotMonDataModel(memo.getNumSlots(), 8, _memo);
 
         slotTable = new JTable(slotModel);
         slotTable.setRowSorter(new TableRowSorter<>(slotModel));

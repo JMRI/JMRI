@@ -26,7 +26,7 @@ public class XBeeTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     }
     
     @Override
-    protected String getSystemNameWithNoPrefix() {
+    protected String getASystemNameWithNoPrefix() {
         return "2:2";
     }
     

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2021 All rights reserved -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <variable CV="3" item="Accel" default="4">
+    <defaultItem default="8" include="52690"/>
+    <decVal min="1" max="63"/>
+    <label>Acceleration Rate (1-63)</label>
+    <label xml:lang="it">Accellerazione (1-63)</label>
+    <label xml:lang="fr">Accelération (1-63)</label>
+    <label xml:lang="de">Anfahrverzögerung (1-63)</label>
+    <label xml:lang="cs">Míra zrychlení (1-63)</label>
+    <label xml:lang="nl">Versnelling (1-63)</label>
+  </variable>
+  <variable CV="4" item="Decel" default="3">
+    <defaultItem default="6" include="52690"/>
+    <decVal min="1" max="63"/>
+    <label>Deceleration Rate (1-63)</label>
+    <label xml:lang="it">Decellerazione (1-63)</label>
+    <label xml:lang="fr">Décélération (1-63)</label>
+    <label xml:lang="de">Bremsverzögerung (1-63)</label>
+    <label xml:lang="cs">Míra zpomalení (1-63)</label>
+    <label xml:lang="nl">Remvertraging (1-63)</label>
+  </variable>
+</variables>

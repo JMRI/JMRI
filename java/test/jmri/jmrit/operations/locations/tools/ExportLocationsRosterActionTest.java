@@ -4,8 +4,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.swing.JemmyUtil;
@@ -33,7 +33,7 @@ public class ExportLocationsRosterActionTest extends OperationsTestCase {
         Thread doAction = new Thread(new Runnable() {
             @Override
             public void run() {
-                a.actionPerformed(new ActionEvent(this, 0, null));
+                a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
             }
         });
         doAction.setName("Do Action"); // NOI18N

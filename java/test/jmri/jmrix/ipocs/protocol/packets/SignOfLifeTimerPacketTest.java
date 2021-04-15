@@ -8,7 +8,7 @@ import java.nio.ByteBuffer;
 import org.junit.Test;
 
 public class SignOfLifeTimerPacketTest {
-  private byte[] testPacket = { 0x10, 0x11 };
+  private final byte[] testPacket = { 0x10, 0x11 };
 
   @Test
   public void getIdTest() {

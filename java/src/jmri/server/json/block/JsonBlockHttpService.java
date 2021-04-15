@@ -49,7 +49,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
 
     @Override
     public ObjectNode doGet(Block block, String name, String type, JsonRequest request) throws JsonException {
-        ObjectNode root = this.getNamedBean(block, name, type, request);
+        ObjectNode root = this.getNamedBean(block, name, getType(), request);
         ObjectNode data = root.with(JSON.DATA);
         switch (block.getState()) {
             case Block.UNDETECTED:
@@ -194,4 +194,5 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
     protected ProvidingManager<Block> getManager() {
         return InstanceManager.getDefault(BlockManager.class);
     }
+
 }

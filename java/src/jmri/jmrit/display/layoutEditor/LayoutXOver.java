@@ -1,25 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static java.lang.Float.POSITIVE_INFINITY;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.text.MessageFormat;
-import java.util.*;
-import javax.annotation.*;
-import javax.swing.*;
-import jmri.*;
-import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
-import jmri.jmrit.signalling.SignallingGuiTools;
-import jmri.util.MathUtil;
-import org.slf4j.*;
+import javax.annotation.Nonnull;
 
 /**
  * A LayoutXOver corresponds to a crossover (connection between parallel tracks) on the layout. 
@@ -83,11 +64,10 @@ import org.slf4j.*;
  */
 abstract public class LayoutXOver extends LayoutTurnout {
 
-    public LayoutXOver(@Nonnull String id, TurnoutType t, @Nonnull Point2D c, double rot,
-            double xFactor, double yFactor, @Nonnull LayoutEditor layoutEditor, int v) {
-        super(id, t, c, rot, xFactor, yFactor, layoutEditor, 1);
-        
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutXOverEditor(layoutEditor);
+    public LayoutXOver(@Nonnull String id, TurnoutType t, 
+            @Nonnull LayoutEditor layoutEditor, 
+            int v) {
+        super(id, t, layoutEditor, 1);
     }
     
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutXOver.class);

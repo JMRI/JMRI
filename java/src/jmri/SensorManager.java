@@ -42,8 +42,8 @@ public interface SensorManager extends ProvidingManager<Sensor> {
     @Nonnull
     public Sensor provideSensor(@Nonnull String name) throws IllegalArgumentException;
 
-    @Override
     /** {@inheritDoc} */
+    @Override
     default public Sensor provide(@Nonnull String name) throws IllegalArgumentException { return provideSensor(name); }
 
     /**
@@ -63,7 +63,9 @@ public interface SensorManager extends ProvidingManager<Sensor> {
     public void dispose();
 
     /**
-     * Return a Sensor with the specified system and user names. 
+     * Return a Sensor with the specified user or system name.
+     * Return Sensor by UserName else provide by SystemName.
+     * <p>
      * Note that
      * two calls with the same arguments will get the same instance; there is
      * only one Sensor object representing a given physical turnout and
@@ -105,6 +107,7 @@ public interface SensorManager extends ProvidingManager<Sensor> {
      */
     @CheckReturnValue
     @CheckForNull
+    @Override
     public Sensor getByUserName(@Nonnull String name);
 
     /**
@@ -117,6 +120,7 @@ public interface SensorManager extends ProvidingManager<Sensor> {
      */
     @CheckReturnValue
     @CheckForNull
+    @Override
     public Sensor getBySystemName(@Nonnull String name);
 
     /**
@@ -149,14 +153,27 @@ public interface SensorManager extends ProvidingManager<Sensor> {
      * @param curAddress The hardware address of the sensor we wish to add
      * @param prefix     The System Prefix used to make up the systemName
      *                   check.
-     * @return null if the system name made from prefix and curAddress is in
-     *         use
-     * @throws jmri.JmriException if problem calculating next address
+     * @return next valid address.
+     * @throws jmri.JmriException if problem calculating next address or next 10 are in use.
+     * @deprecated since 4.21.3; use #getNextValidAddress(String, String, boolean) instead.
      */
-    @CheckReturnValue
-    @CheckForNull
+    @Deprecated
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
+    /**
+     * Get the Next valid Sensor address.
+     * <p>
+     * @param curAddress the starting hardware address to get the next valid from.
+     * @param prefix system prefix, just system name, not type letter.
+     * @param ignoreInitialExisting false to return the starting address if it 
+     *                          does not exist, else true to force an increment.
+     * @return the next valid system name not already in use, excluding both system name prefix and type letter.
+     * @throws JmriException    if unable to get the current / next address, 
+     *                          or more than 10 next addresses in use.
+     */
+    @Nonnull
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException;
+    
     /**
      * Get a system name for a given hardware address and system prefix.
      *

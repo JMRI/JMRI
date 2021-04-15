@@ -35,22 +35,6 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
     }
 
     /**
-     * Check the requested number of slots against limits and return a valid slot
-     * count.
-     * 
-     * @return validated number of slots
-     */
-    public static int getSlotCount() {
-        int numSlots = SprogConstants.MAX_SLOTS;
-        if (numSlots < SprogConstants.MIN_SLOTS) {
-            numSlots = SprogConstants.MIN_SLOTS;
-        } else if (numSlots > SprogConstants.SLOTS_LIMIT) {
-            numSlots = SprogConstants.SLOTS_LIMIT;
-        }
-        return numSlots;
-    }
-    
-    /**
      * Return the number of rows to be displayed. This can vary depending on
      * whether only active rows are displayed.
      * <p>
@@ -59,7 +43,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
      */
     @Override
     public int getRowCount() {
-        int nMax = getSlotCount();
+        int nMax = _memo.getNumSlots();
         if (_allSlots) {
             // will show the entire set, so don't bother counting
             return nMax;
@@ -165,6 +149,10 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
                             return "F5to8Pkt";
                         } else if (s.isF9to12Packet()) {
                             return "F9to12Pkt";
+                        } else if (s.isF13to20Packet()) {
+                            return "F13to20Pkt";
+                        } else if (s.isF21to28Packet()) {
+                            return "F21to28Pkt";
                         } else if (s.isOpsPkt()) {
                             return "OpsPkt";
                         } else if (s.isSpeedPacket()) {
@@ -373,7 +361,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         int slotNum;
         int n = -1;   // need to find a used slot to have the 0th one!
         int nMin = 0;
-        int nMax = getSlotCount();
+        int nMax = _memo.getNumSlots();
         for (slotNum = nMin; slotNum < nMax; slotNum++) {
             SprogSlot s = _memo.getCommandStation().slot(slotNum);
             if (_allSlots || s.slotStatus() != SprogConstants.SLOT_FREE) {

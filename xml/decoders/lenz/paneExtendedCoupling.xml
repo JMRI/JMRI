@@ -282,7 +282,7 @@
       <label>
         <text> </text>
       </label>
-      <display item="CMOVE"/>
-    </column>
-  
+      <display item="CMOVEA"/>
+	  <display item="CMOVET"/>
+	</column>
 </pane>

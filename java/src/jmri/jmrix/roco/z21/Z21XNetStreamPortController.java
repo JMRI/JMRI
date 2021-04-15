@@ -45,7 +45,7 @@ public class Z21XNetStreamPortController extends jmri.jmrix.lenz.XNetStreamPortC
     }
 
     @Override
-    public void dispose(){
+    public void dispose() {
         jmri.jmrix.lenz.XNetTrafficController packets = this.getSystemConnectionMemo().getXNetTrafficController();
         this.getSystemConnectionMemo().dispose();
         packets.terminateThreads();

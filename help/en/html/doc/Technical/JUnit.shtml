@@ -3,9 +3,6 @@
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Unit testing with JUnit</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code JUnit testing">
@@ -180,21 +177,19 @@
       <li>Optionally: Target a single test class inside the specified package</li>
       <li>Optionally: Clean, and recompile, all tests and objects under test</li>
     </ul>
-    Find detailed usage by issuing
+      <p>Find detailed usage by issuing</p>
     <pre style="font-family: monospace;">powershell -File .\java\runtests.ps1 -?</pre>
     in a console.
     If your console is a PowerShell console, you can issue
     <pre style="font-family: monospace;">Get-Help .\java\runtests.ps1 -detailed</pre>
-    to get detailed help and instructions.
-    </p>
+    <p>to get detailed help and instructions.</p>
 
     <h3><a name="testingvars" id="testingvars">Optional Checks</a></h3>
-    There are a number of
-    run-time optional checks
+    <p>There are a number of run-time optional checks
     that can be turned on by setting properties.
     We periodically run them to check on how the overall test
     system is working, but they're too time intensive
-    to leave on all the time.
+      to leave on all the time.</p>
       <dl>
         <dt>jmri.skipschematests</dt>
             <dd>If true, JUnit tests will skip checking the schema of all the test XML files.</dd>
@@ -333,57 +328,64 @@
       on traffic)</p>
 
       <h3><a name="Coverage" id="Coverage">Code Coverage
-      Reports</a></h3>As part of running the tests, Jenkins
+      Reports</a></h3>
+      <p>As part of running the tests, Jenkins
       accumulates information on how much of the code was executed,
       called the "code coverage". We use the <a href=
       "http://eclemma.org/jacoco/">JaCoCo tool</a> to do the
-      accounting. It provides detailed reports at multiple levels:
+      accounting. It provides detailed reports at multiple levels:</p>
 
       <ul>
         <li><a href=
-        "http://builds.jmri.org/jenkins/job/Development/job/JaCoCo/jacoco/">
+        "https://builds.jmri.org/jenkins/job/Development/job/JaCoCo/jacoco/">
         A plot of coverage as a whole</a>. Click on the graph to
         see a</li>
 
         <li><a href=
-        "http://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/">
+        "https://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/">
         summary by Java package</a>. Click on a package to see
         a</li>
 
         <li><a href=
-        "http://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/">
-        summary by file</a> (e.g. class). Click on a class to see
+        "https://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/">
+        summary by file</a> (e.g. class, example shows BlockBoss). Click on a class to see
         a</li>
 
         <li><a href=
-        "http://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/">
-        summary by method</a>. Click on a method to see</li>
+        "https://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/">
+        summary by method</a> (example: BlockBossLogic). Click on a method to see</li>
 
         <li><a href=
-        "http://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/defineIO()/">
+        "https://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/defineIO()/">
         how each part of the code was covered</a> (may require
-        scrolling down).</li>
+        scrolling down, to line #650 in this example).</li>
       </ul>
+      <p>You can navigate using the bar along the top of the page:<br>
+        <img src="images/JenkinsByPackage.png" width="513" height="340"
+             alt="The JaCoCo coverage report for JMRI in Jenkins">
+      </p>
 
-      <h2><a name="write" id="write">Writing Tests</a></h2>By
-      convention, we have a "test" class shadowing (almost) every
+      <h2><a name="write" id="write">Writing Tests</a></h2>
+
+      <p>By convention, we have a "test" class shadowing (almost) every
       real class. The "test" directory contains a tree of package
       directories parallel to the "src" tree. Each test class has
       the same name as the class to be tested, except with "Test"
       appended, and will appear in the "test" source tree. For
       example, the "jmri.Version" class's source code is in
-      "src/jmri/Version.java", and it's test class is
-      "jmri.VersionTest" found in "test/jmri/VersionTest.java".
+      "src/jmri/Version.java", and its test class is
+        "jmri.VersionTest" found in "test/jmri/VersionTest.java".</p>
 
       <h3><a name="writeAddl4ExistClass" id=
       "writeAddl4ExistClass">Writing Additional Tests for an
-      Existing Class</a></h3>To write additional tests for a class
+      Existing Class</a></h3>
+      <p>To write additional tests for a class
       with existing tests, first locate the test class. (If one
       doesn't exist, see the section below about writing tests for
-      a new class)
+      a new class)</p>
 
       <p>The JUnit
-      conventions require that the test be preceeded by the
+      conventions require that the test be preceded by the
       "<code>@Test</code>" annotation:
 <pre style="font-family: monospace;">
     @Test
@@ -400,7 +402,7 @@
       Tests for a New Class</a></h3>
 
       <p>To write a test for a new class, you need to create a file that
-      shadows your new class.   For our example, consider creating a
+      shadows your new class. For our example, consider creating a
       test for a new class that appears in
       "<code>src/jmri/jmrix/foo/Foo.java</code>".  The new test would
       be created in a file named "<code>test/jmri/jmrix/foo/FooTest.java</code>".</p>
@@ -419,14 +421,15 @@
 
     /*
      * Tests for the Foo Class
-     * @author  Your Name   Copyright (C) 2016
+     * @author  Your Name   Copyright (C) 2021
      */
     public class FooTest {
 
         @Test
         public void testCtor() {
-            assertThat
-            Assert.AssertNotNull("Foo Constructor Return",new foo());
+            assertThat("Foo Constructor Return", new foo()).isNotNull();
+            // Before JUnit5 with "import org.junit.Assert;" this written as:
+            // Assert.AssertNotNull("Foo Constructor Return", new foo());
         }
 
         @BeforeEach
@@ -899,7 +902,6 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
                     (2)</code> creates a 2 second timeout.  The <code>@Timeout</code> annotation may be used on the
                     class or on individual test methods within the class.  When applied to the class, the effect is
                     applying the timeout to all <code>@Test</code> annotated methods within the class.
-                </code>
                 <a href="#tempFileCreation">described previously</a></li>
         </ol>
 
@@ -981,7 +983,7 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
       handles errors during all of the tests in that class.
 
     <h3><a id="control" name="control"></a>Tools for Controlling JUnit tests</h3>
-      <li>
+      <ul>
 
         <li><a href="https://junit.org/junit5/docs/current/user-guide/#writing-tests-tagging-and-filtering">Tags and Filters</a>
         - useful ones in our case could be headless/not headless,
@@ -999,11 +1001,12 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
           <br>
               will cause the test to be ignored in headless mode.  If a whole class is to be disable din headless
               mode, this same annotation may be applied to the test class.
-      </li>
+        </li>
 
         <li>
-        <a href="http://builds.jmri.org/jenkins/job/Development/job/Ignored%20Test%20Scan/lastBuild/testReport/">
-                    <img src="http://builds.jmri.org/jenkins/job/Development/job/Ignored%20Test%20Scan/warnings7/trendGraph/png?url=PRIORITY" align="right">
+        <a href="https://builds.jmri.org/jenkins/job/Development/job/Ignored%20Test%20Scan/lastBuild/testReport/">
+                    <img src="https://builds.jmri.org/jenkins/job/Development/job/Ignored%20Test%20Scan/warnings7/trendGraph/png?url=PRIORITY"
+                            alt="Warnings Graph" align="right">
                 </a>
         <a href="https://junit.org/junit5/docs/5.0.0-M2/api/org/junit/jupiter/api/Disabled.html">@Disabled</a> -
         mark a test to be unconditionally ignored. For
@@ -1030,7 +1033,7 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
         In general, we'd rather have working tests rather than ignored ones, so
         we track the number that have been ignored in a Jenkins job, see the image
         to the right.
-        <li>On the other hand, sometimes a test super class (i.e. some abstract base)
+        <p>On the other hand, sometimes a test super class (i.e. some abstract base)
         requires implementation of a test method that's not applicable to this
         particular concrete test
         class.  It might, for example, test a feature or message that's not
@@ -1045,7 +1048,7 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
         @Test
         public void testFramistatUsage() {}
 </pre><br>
-
+        </li>
       </ul>
 
 

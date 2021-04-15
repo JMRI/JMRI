@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.JComboBox;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -77,7 +77,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("5th car in list by id", c4, carList.get(4));
         Assert.assertEquals("6th car in list by id", c5, carList.get(5));
     }
-    
+
     @Test
     public void testListCarsByBuildDate() {
         initializeTest();
@@ -709,8 +709,8 @@ public class CarManagerTest extends OperationsTestCase {
     }
 
     /**
-     * Cars at the last location are not normally included in car list if pick
-     * up is disabled
+     * Cars at the last location are not normally included in car list if pick up is
+     * disabled
      */
     @Test
     public void testListCarsAvailableByTrain2() {
@@ -737,15 +737,15 @@ public class CarManagerTest extends OperationsTestCase {
         List<Car> carList = manager.getAvailableTrainList(t1);
         Assert.assertEquals("Number of Cars available for t1", 4, carList.size());
         Assert.assertEquals("1st car in list available for t1", c1, carList.get(0));
-        
+
         // visit last location twice
         RouteLocation last2 = r.addLocation(l3);
         last2.setPickUpAllowed(false); // no pulls
-        
+
         carList = manager.getAvailableTrainList(t1);
         Assert.assertEquals("Number of Cars available for t1", 6, carList.size());
     }
-    
+
     @Test
     public void testListCarsAvailableByTrainStaging() {
         initializeTest();
@@ -755,9 +755,9 @@ public class CarManagerTest extends OperationsTestCase {
         r.addLocation(l1);
         r.addLocation(l2);
         r.addLocation(l3);
-        
+
         // make last staging
-        l3.setLocationOps(Location.STAGING);
+        l3.changeTrackType(Track.STAGING);
 
         Train t1 = new Train("id1", "F");
         t1.setRoute(r);
@@ -774,7 +774,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("Number of Cars available for t1", 4, carList.size());
         Assert.assertEquals("1st car in list available for t1", c1, carList.get(0));
     }
-    
+
     @Test
     public void testListCarsByPriority() {
         initializeTest();
@@ -794,7 +794,7 @@ public class CarManagerTest extends OperationsTestCase {
         c4.setTrain(t1);
         c5.setTrain(t1);
         c6.setTrain(t1);
-        
+
         CarLoads cl = InstanceManager.getDefault(CarLoads.class);
         cl.addName("Boxcar", "Tools");
         cl.setPriority("Boxcar", "Tools", CarLoad.PRIORITY_HIGH);
@@ -804,9 +804,6 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("Number of Cars available for t1", 6, carList.size());
         Assert.assertEquals("1st car in list available for t1", c3, carList.get(0));
     }
-
-
-
 
     @Test
     public void testListCarsByNumber() {
@@ -874,12 +871,12 @@ public class CarManagerTest extends OperationsTestCase {
         CarManager manager = InstanceManager.getDefault(CarManager.class);
 
         // find car by RFID
-        Assert.assertEquals("find c1 by rfid", c1, manager.getByRfid("SQ1"));
-        Assert.assertEquals("find c2 by rfid", c2, manager.getByRfid("1Ab"));
-        Assert.assertEquals("find c3 by rfid", c3, manager.getByRfid("Ase"));
-        Assert.assertEquals("find c4 by rfid", c4, manager.getByRfid("asd"));
-        Assert.assertEquals("find c5 by rfid", c5, manager.getByRfid("93F"));
-        Assert.assertEquals("find c6 by rfid", c6, manager.getByRfid("B12"));
+        Assert.assertEquals("find c1 by rfid", c1, manager.getByRfid("IDSQ1"));
+        Assert.assertEquals("find c2 by rfid", c2, manager.getByRfid("ID1Ab"));
+        Assert.assertEquals("find c3 by rfid", c3, manager.getByRfid("IDAse"));
+        Assert.assertEquals("find c4 by rfid", c4, manager.getByRfid("IDasd"));
+        Assert.assertEquals("find c5 by rfid", c5, manager.getByRfid("ID93F"));
+        Assert.assertEquals("find c6 by rfid", c6, manager.getByRfid("IDB12"));
     }
 
     @Test
@@ -1075,6 +1072,7 @@ public class CarManagerTest extends OperationsTestCase {
         c2.setTypeName("boxcar"); // don't change this car's load
 
         c4.setReturnWhenEmptyLoadName("Tools");
+        c6.setReturnWhenLoadedLoadName("Tools");
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
         manager.replaceLoad("Boxcar", "Tools", "Nuts");
@@ -1087,6 +1085,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("Nails", c6.getLoadName());
 
         Assert.assertEquals("Nuts", c4.getReturnWhenEmptyLoadName());
+        Assert.assertEquals("Nuts", c6.getReturnWhenLoadedLoadName());
 
         // now change load to default empty
         manager.replaceLoad("Boxcar", "Nuts", null);
@@ -1099,6 +1098,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("Nails", c6.getLoadName());
 
         Assert.assertEquals("E", c4.getReturnWhenEmptyLoadName());
+        Assert.assertEquals("L", c6.getReturnWhenLoadedLoadName());
     }
 
     @Test

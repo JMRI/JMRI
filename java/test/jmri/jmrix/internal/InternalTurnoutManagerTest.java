@@ -22,6 +22,11 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
     public String getSystemName(int i) {
         return "IT" + i;
     }
+    
+    @Override
+    protected String getASystemNameWithNoPrefix() {
+        return "My Turnout 6";
+    }
 
     @Test
     public void testAsAbstractFactory() {
@@ -174,6 +179,11 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
     @Test
     @Override
     public void testMakeSystemNameWithPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testIncorrectGetNextValidAddress() {}
 
     // from here down is testing infrastructure
     @Override

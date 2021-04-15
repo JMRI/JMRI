@@ -31,7 +31,7 @@ public class SCWarrantTest extends WarrantTest {
         sWest.setState(Sensor.INACTIVE);
         sSouth.setState(Sensor.INACTIVE);
         sNorth.setState(Sensor.ACTIVE);     // start block of warrant
-        // TODO: use orders in test?
+
         ArrayList<BlockOrder> orders = new ArrayList<>();
         orders.add(new BlockOrder(_OBlockMgr.getOBlock("North"), "NorthToWest", "", "NorthWest"));
         BlockOrder viaOrder = new BlockOrder(_OBlockMgr.getOBlock("West"), "SouthToNorth", "NorthWest", "SouthWest");
@@ -41,6 +41,8 @@ public class SCWarrantTest extends WarrantTest {
 
         assertThat(((SCWarrant) warrant).isRouteFree()).withFailMessage("Route Free").isTrue();
         assertThat(((SCWarrant) warrant).isRouteAllocated()).withFailMessage("Route Allocated").isTrue();
+        assertThat(orders.size()).withFailMessage("Order size not 3").isEqualTo(3);
+        // TODO: use orders in test?
     }
 
     @Test
@@ -68,7 +70,7 @@ public class SCWarrantTest extends WarrantTest {
         warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.3", "South"));
         warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.0", "South"));
 
-        warrant.getSpeedUtil().setDccAddress("999(L)");
+        warrant.getSpeedUtil().setAddress("999(L)");
         warrant.setBlockOrders(orders);
         warrant.setRoute(false, orders);
         warrant.checkStartBlock();
@@ -114,7 +116,6 @@ public class SCWarrantTest extends WarrantTest {
         jmri.util.JUnitUtil.waitFor(() -> {
             return warrant.getRunningMessage().equals("Idle");
         }, "warrant not done");
-
     }
 
     @BeforeEach
@@ -217,7 +218,7 @@ public class SCWarrantTest extends WarrantTest {
     @AfterEach
     @Override
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+        //JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         super.tearDown();
     }
 

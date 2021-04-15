@@ -10,15 +10,7 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "SPROG java model railroad JMRI install windows linux mac osx">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -255,9 +247,7 @@
       "http://www.sprog-dcc.co.uk/faq.shtml#General">FAQ
       page</a>.</p>
 
-      <p>There's a <a href=
-      "https://uk.groups.yahoo.com/neo/groups/sprog-dcc/info">SPROG
-      Yahoo group</a>.</p>
+      <p>There's a SPROG User Group at <a href="https://groups.io/g/sprog-dcc/topics"></a>.</p>
       <p>A Dutch-language <a
       href="https://in03.hostcontrol.com/resources/510743ee26f0d6/cd00fcd9b6/file-object/Handleiding%20Sprog%20v2-2017.pdf">
         SPROG Beginner's Manual</a> is available as a PDF from

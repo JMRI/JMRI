@@ -48,8 +48,7 @@ d'adopter OpenLCB et de le standardiser comme
 <a href="http://www.nmra.org/index-nmra-standards-and-recommended-practices#node-171">Commande Contr&#244;le
 R&#233;seau (LCC, formerly NMRAnet)</a>.</p>
 
-<img src="http://www.merg.org.uk/merg_images/merg_logo.png" align="right" alt="MERG logo" height="45" width="100">
-<h3><a href="cbus/index.shtml">CBUS MERG</a></h3>
+<h3><a href="cbus/index.shtml">CBUS&reg; MERG</a></h3>
 <p>
 Un groupe d'amateurs, sous l'&#233;gide du Groupe de mod&#232;le &#233;lectronique des chemins de fer
 (<a href="http://www.merg.org.uk/"> MERG</a>),
@@ -79,7 +78,7 @@ et et CBUS en d&#233;veloppe plus lui-m&#234;me</p>
 
 	<dt>MERG CANUSB4</dt>
 	<dd><a href="https://www.merg.org.uk/kits.php">MERG CANUSB4</a>
-	A MERG CBUS to USB interface, available in kit form to MERG members.</dd>
+	A CBUS to USB interface, available in kit form to MERG members.</dd>
 </dl>
 
 		<h4>Other CAN Hardware Interfaces</h4>
@@ -94,7 +93,7 @@ et et CBUS en d&#233;veloppe plus lui-m&#234;me</p>
 		<dl>
 			<dt>MERG CANPiCap</dt>
 			<dd>The <a href="https://www.merg.org.uk/kits.php">CANPICAP</a>
-				enables direct MERG CBUS connection to a Raspberry Pi via its
+				enables direct CBUS connection to a Raspberry Pi via its
 				40 pin I/O connector, available in kit form to MERG members.</dd>
 		</dl>
 
@@ -102,7 +101,7 @@ et et CBUS en d&#233;veloppe plus lui-m&#234;me</p>
 			<dt>MERG CANPiWi/CANPiZero</dt>
 			<dd>The <a href="https://www.merg.org.uk/kits.php">CANPiWi</a> is based on
 			the Raspberry Pi Zero W, and is	an interface
-			between Engine Driver / WiThrottle and MERG CBUS.</dd>
+			between Engine Driver / WiThrottle and CBUS.</dd>
 		</dl>
 
 <a name="connect"></a><h2>Connexion</h2>

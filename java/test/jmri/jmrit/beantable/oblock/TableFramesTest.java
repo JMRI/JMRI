@@ -9,9 +9,8 @@ import jmri.implementation.AbstractSensor;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
 
+import jmri.util.gui.GuiLafPreferencesManager;
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  *
@@ -21,15 +20,27 @@ public class TableFramesTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TableFrames t = new TableFrames();
-        Assert.assertNotNull("exists", t);
-        t.initComponents();
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
+        InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(false);
+        TableFrames tf = new TableFrames();
+        Assertions.assertNotNull(tf, "exists");
+        tf.initComponents();
+    }
+
+    @Test
+    public void testCTorTabbed() {
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
+        InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(true);
+        TableFrames tf = new TableFrames();
+        Assertions.assertNotNull(tf, "exists");
     }
 
     @Test
     public void testImport() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
+        // use original _desktop interface
+        InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(false);
+
         TableFrames t = new TableFrames();
         t.initComponents();
         // mute warnings
@@ -60,13 +71,15 @@ public class TableFramesTest {
 //            JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("MessageTitle"));
 //            new JButtonOperator(jdo, Bundle.getMessage("ButtonOK")).doClick();
 //        });
-        // neither works, so suppressed the Import Ready dialog for now
+        // neither works, so suppress the Import Ready dialog for now
         //Container pane = JUnitUtil.findContainer(Bundle.getMessage("MessageTitle"));
         //Assert.assertNotNull("Import complete dialog", pane);
         //new JButtonOperator(new JFrameOperator((JFrame) pane), Bundle.getMessage("ButtonOK")).doClick();
         // check import result
 
-        Assert.assertNotNull("Imported OBlock", InstanceManager.getDefault(OBlockManager.class).getOBlock("OB0001"));
+        Assertions.assertNotNull(InstanceManager.getDefault(OBlockManager.class).getOBlock("OB0001"), "Imported OBlock");
+        //2 x WARN  - Portal IP0001-0002 needs an OBlock on each side [main] jmrit.beantable.oblock.SignalTableModel.makeList()
+        jmri.util.JUnitAppender.assertWarnMessage("Portal IP0001-0002 needs an OBlock on each side");
         jmri.util.JUnitAppender.assertWarnMessage("Portal IP0001-0002 needs an OBlock on each side");
     }
 
@@ -80,6 +93,7 @@ public class TableFramesTest {
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

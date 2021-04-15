@@ -26,18 +26,6 @@ public class YardTableModel extends TrackTableModel {
     }
 
     @Override
-    public String getColumnName(int col) {
-        switch (col) {
-            case NAME_COLUMN:
-                return Bundle.getMessage("YardName");
-            default:
-                // fall out
-                break;
-        }
-        return super.getColumnName(col);
-    }
-
-    @Override
     protected void editTrack(int row) {
         log.debug("Edit yard");
         if (tef != null) {
@@ -46,7 +34,7 @@ public class YardTableModel extends TrackTableModel {
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(() -> {
             tef = new YardEditFrame();
-            Track yard = tracksList.get(row);
+            Track yard = _tracksList.get(row);
             tef.initComponents(_location, yard);
             tef.setTitle(Bundle.getMessage("EditYard"));
         });
@@ -63,7 +51,7 @@ public class YardTableModel extends TrackTableModel {
         if (e.getSource().getClass().equals(Track.class)) {
             Track track = ((Track) e.getSource());
             if (track.isYard()) {
-                int row = tracksList.indexOf(track);
+                int row = _tracksList.indexOf(track);
                 if (Control.SHOW_PROPERTY) {
                     log.debug("Update yard table row: {} track: ({})", row, track.getName());
                 }

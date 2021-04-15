@@ -46,11 +46,18 @@ public class ProxyTurnoutManager extends AbstractProvidingProxyManager<Turnout> 
         return super.getNamedBean(name);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected Turnout makeBean(Manager<Turnout> manager, String systemName, String userName) {
+    @Nonnull
+    protected Turnout makeBean(Manager<Turnout> manager, String systemName, String userName) throws IllegalArgumentException {
         return ((TurnoutManager) manager).newTurnout(systemName, userName);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Nonnull
     public Turnout provideTurnout(@Nonnull String name) throws IllegalArgumentException {
@@ -93,7 +100,7 @@ public class ProxyTurnoutManager extends AbstractProvidingProxyManager<Turnout> 
      */
     @Override
     @Nonnull
-    public Turnout newTurnout(@Nonnull String systemName, String userName) {
+    public Turnout newTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         return newNamedBean(systemName, userName);
     }
 
@@ -156,11 +163,17 @@ public class ProxyTurnoutManager extends AbstractProvidingProxyManager<Turnout> 
         return ((TurnoutManager) getManagerOrDefault(systemName)).askControlType(systemName);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isControlTypeSupported(@Nonnull String systemName) {
         return ((TurnoutManager) getManagerOrDefault(systemName)).isControlTypeSupported(systemName);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isNumControlBitsSupported(@Nonnull String systemName) {
         return ((TurnoutManager) getManagerOrDefault(systemName)).isNumControlBitsSupported(systemName);
@@ -175,21 +188,28 @@ public class ProxyTurnoutManager extends AbstractProvidingProxyManager<Turnout> 
         return TurnoutOperationManager.concatenateTypeLists(typeList.toArray(new String[0]));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return ((TurnoutManager) getManagerOrDefault(systemName)).allowMultipleAdditions(systemName);
     }
 
-    @Override
-    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
-        return createSystemName(curAddress, prefix, TurnoutManager.class);
-    }
-
+    @SuppressWarnings("deprecation") // user warned by actual manager class
     @Override
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
         return getNextValidAddress(curAddress, prefix, typeLetter());
     }
+    
+    @Override
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws jmri.JmriException {
+        return getNextValidAddress(curAddress, prefix, ignoreInitialExisting, typeLetter());
+    }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setDefaultClosedSpeed(@Nonnull String speed) throws jmri.JmriException {
         for (Manager<Turnout> m : getManagerList()) {
@@ -202,6 +222,9 @@ public class ProxyTurnoutManager extends AbstractProvidingProxyManager<Turnout> 
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setDefaultThrownSpeed(@Nonnull String speed) throws jmri.JmriException {
         for (Manager<Turnout> m : getManagerList()) {
@@ -214,22 +237,20 @@ public class ProxyTurnoutManager extends AbstractProvidingProxyManager<Turnout> 
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getDefaultThrownSpeed() {
         return ((TurnoutManager) getDefaultManager()).getDefaultThrownSpeed();
-    }
-
-    @Override
-    public String getDefaultClosedSpeed() {
-        return ((TurnoutManager) getDefaultManager()).getDefaultClosedSpeed();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getEntryToolTip() {
-        return "Enter a number from 1 to 9999"; // Basic number format help
+    public String getDefaultClosedSpeed() {
+        return ((TurnoutManager) getDefaultManager()).getDefaultClosedSpeed();
     }
 
     /** {@inheritDoc}
@@ -265,11 +286,17 @@ public class ProxyTurnoutManager extends AbstractProvidingProxyManager<Turnout> 
         return ((TurnoutManager) getDefaultManager()).outputIntervalEnds();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getXMLOrder() {
         return jmri.Manager.TURNOUTS;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {

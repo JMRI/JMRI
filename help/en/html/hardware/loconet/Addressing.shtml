@@ -118,37 +118,7 @@
 
       <h3><a name="SaveYourWork" id="SaveYourWork">Saving your changes</a></h3>
 
-      <p>JMRI does not remember the Turnout, Sensor or Reporter table entries from
-          a previous JMRI session unless you take specific action to save your
-          information, and unless you take specific action to instruct JMRI to read
-          the saved configuration.  (This is generally also true of the information
-          in the other Tables.)</p>
-      <p>JMRI "Panel files" are used to save the information from the "Tables".  A
-          JMRI "Panel file" may also include information needed to display any
-          JMRI "Layout Editor" panels and/or JMRI "Control Panel Editor" panels
-          you have defined (this is the reason the file is called a "Panel file").
-          Saving a "panel file" may be done from one of the "Tables" windows (i.e.
-          "Turnouts", "Sensors", etc.) by selecting the "File" menu item and then
-          selecting "Store", then either "Store configuration only to File..." or
-          "Store Configuration and Panels to File...".</p>
-      <p>JMRI provides a few different ways to automatically load a "panel file"
-          at JMRI start-up.  The most-commonly used mechanism is via JMRI's "Start Up"
-          "Preferences", which can be accessed via the JMRI "File" menu, then selecting
-          "Start Up".  Simply select "Add", then "Open file...", and then select the
-          file (or, if required, multiple files) to be opened at start-up.  Then
-          select "Open".  It is then necessary to "save" the configuration profile
-          to configure JMRI to use the new settings on next JMRI start-up.</p>
-      <p>On subsequent JMRI invocations, all start-up actions are invoked,
-          including any "start-up" actions you have defined to "Load" a "Panel File".</p>
-      <p>If automatic reloading of the table entries is not desired, it is possible
-          to manually read a panel file.  Under the JMRI "Panels" menu item, select
-          "Open Panel..." and then locate and select one or more panel files
-          containing the appropriate information.  Select the "Open Panels" button
-          to read those files into JMRI.</p>
-      <p>Note that JMRI panel files are typically specific to a given system
-          connection.  If you have configured JMRI for multiple system connections,
-          the panel file will typically be available only for the system connection
-          in which it was created.</p>
+        <p>See <a href="../../apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>.</p>
 
       <h3>Adding an item to the table</h3>
       <p>From the Tables window, with the "object type" selected in the list at
@@ -165,7 +135,7 @@
           throat 3/4 track switch".  This may be done via the "Turnout Table" by
           pressing the "Add..." button at the bottom of the table, then entering the
           information shown here.</p>
-      <p><img src="images/AddNewTurnout.png" alt="Adding a LocoNet Turnout" width="550"/></p>
+      <p><img src="images/AddNewTurnout.png" alt="Adding a LocoNet Turnout" width="550"></p>
       <p>Activate the "Create" button to add the new entry into the "Turnout Table".</p>
       <p>When multiple "connections" are configured in the current JMRI Configuration
           Profile, the "System Connection" box allows selecting between the

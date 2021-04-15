@@ -30,7 +30,12 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
     public DCCppTurnoutManager(DCCppSystemConnectionMemo memo) {
         super(memo);
         tc = memo.getDCCppTrafficController();
+        // set up listener
         tc.addDCCppListener(DCCppInterface.FEEDBACK, this);
+        // request list of turnouts
+        tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this);
+        // request list of outputs
+        tc.sendDCCppMessage(DCCppMessage.makeOutputListMsg(), this);
     }
 
     /**
@@ -47,16 +52,16 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
-        Turnout t = null;
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         // check if the output bit is available
         int bitNum = getBitFromSystemName(systemName);
         if (bitNum < 0) {
-            return null;
+            throw new IllegalArgumentException("Cannot get Bit from System Name " + systemName);
         }
         // make the new Turnout object
-        t = new DCCppTurnout(getSystemPrefix(), bitNum, tc);
+        Turnout t = new DCCppTurnout(getSystemPrefix(), bitNum, tc);
         t.setUserName(userName);
         return t;
     }
@@ -67,10 +72,8 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
      */
     @Override
     public void message(DCCppReply l) {
-        if (log.isDebugEnabled()) {
-            log.debug("received message: {}", l.toString());
-        }
         if (l.isTurnoutReply()) {
+            log.debug("received Turnout Reply message: '{}'", l);
             // parse message type
             int addr = l.getTOIDInt();
             if (addr >= 0) {
@@ -93,6 +96,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
                 }
             }
         } else if (l.isOutputCmdReply()) {
+            log.debug("received Output Cmd Reply message: '{}'", l);
             // parse message type
             int addr = l.getOutputNumInt();
             if (addr >= 0) {
@@ -140,20 +144,21 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
     }
 
     /**
-     * Listen for the messages to the LI100/LI101
+     * Listen for the outgoing messages (to the command station)
      */
     @Override
     public void message(DCCppMessage l) {
     }
 
-    /**
-     * Handle a timeout notification.
-     */
+    // Handle message timeout notification
+    // If the message still has retries available, reduce retries and send it back to the traffic controller.
     @Override
     public void notifyTimeout(DCCppMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message{}", msg.toString());
-        }
+        log.debug("Notified of timeout on message '{}' , {} retries available.", msg, msg.getRetries());
+        if (msg.getRetries() > 0) {
+            msg.setRetries(msg.getRetries() - 1);
+            tc.sendDCCppMessage(msg, this);
+        }        
     }
 
     /** {@inheritDoc} */
@@ -182,7 +187,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
     /**
      * Get the bit address from the system name.
      *
-     * @param systemName a valid LocoNet-based Turnout System Name
+     * @param systemName a valid Turnout System Name
      * @return the turnout number extracted from the system name
      */
     public int getBitFromSystemName(String systemName) {

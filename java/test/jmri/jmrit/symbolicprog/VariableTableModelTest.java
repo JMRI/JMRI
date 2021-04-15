@@ -204,6 +204,119 @@ public class VariableTableModelTest {
 
     }
 
+    // Check creating a splitVal variable with no default value
+    @Test
+    public void testVarSplitValnoDefault() {
+        String[] args = {"CV", "Name"};
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
+
+        // create a JDOM tree with just some elements
+        Element root = new Element("decoder-config");
+        Document doc = new Document(root);
+        doc.setDocType(new DocType("decoder-config", "decoder-config.dtd"));
+
+        // add some elements
+        Element el0;
+        root.addContent(new Element("decoder") // the sites information here lists all relevant
+                .addContent(new Element("variables")
+                        .addContent(el0 = new Element("variable")
+                                .setAttribute("CV", "1,9")
+                                .setAttribute("label", "SplitVal no default")
+                                .addContent(new Element("splitVal")
+                                )
+                        )
+                ) // variables element
+        ) // decoder element
+                ; // end of adding contents
+
+        // and test reading this
+        t.setRow(0, el0);
+
+        // check finding
+        Assert.assertEquals("length of variable list ", 1, t.getRowCount());
+        Assert.assertEquals("name of 1st variable ", "SplitVal no default", t.getLabel(0));
+        Assert.assertEquals("find variable by name ", 0, t.findVarIndex("SplitVal no default"));
+        Assert.assertEquals("find nonexistant variable ", -1, t.findVarIndex("not there, eh?"));
+
+    }
+
+    // Check creating a splitVal variable with default value
+    @Test
+    public void testVarSplitValwithDefault() {
+        String[] args = {"CV", "Name"};
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
+
+        // create a JDOM tree with just some elements
+        Element root = new Element("decoder-config");
+        Document doc = new Document(root);
+        doc.setDocType(new DocType("decoder-config", "decoder-config.dtd"));
+
+        // add some elements
+        Element el0;
+        root.addContent(new Element("decoder") // the sites information here lists all relevant
+                .addContent(new Element("variables")
+                        .addContent(el0 = new Element("variable")
+                                .setAttribute("CV", "1,9")
+                                .setAttribute("label", "SplitVal with default")
+                                .setAttribute("default", "32700")
+                                .addContent(new Element("splitVal")
+                                )
+                        )
+                ) // variables element
+        ) // decoder element
+                ; // end of adding contents
+
+        // and test reading this
+        t.setRow(0, el0);
+
+        // check finding
+        Assert.assertEquals("length of variable list ", 1, t.getRowCount());
+        Assert.assertEquals("name of 1st variable ", "SplitVal with default", t.getLabel(0));
+        Assert.assertEquals("find variable by name ", 0, t.findVarIndex("SplitVal with default"));
+        SplitVariableValue sv = (SplitVariableValue) t.getVariable(t.findVarIndex("SplitVal with default"));
+        Assert.assertEquals("find value of variable ", 32700, sv.getLongValue());
+        
+
+    }
+
+    // Check creating a splitVal variable with big default value
+    @Test
+    public void testVarSplitValwithBigDefault() {
+        String[] args = {"CV", "Name"};
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
+
+        // create a JDOM tree with just some elements
+        Element root = new Element("decoder-config");
+        Document doc = new Document(root);
+        doc.setDocType(new DocType("decoder-config", "decoder-config.dtd"));
+
+        // add some elements
+        Element el0;
+        root.addContent(new Element("decoder") // the sites information here lists all relevant
+                .addContent(new Element("variables")
+                        .addContent(el0 = new Element("variable")
+                                .setAttribute("CV", "1:8")
+                                .setAttribute("label", "SplitVal with big default")
+                                .setAttribute("default", "35184372088832")
+                                .addContent(new Element("splitVal")
+                                )
+                        )
+                ) // variables element
+        ) // decoder element
+                ; // end of adding contents
+
+        // and test reading this
+        t.setRow(0, el0);
+
+        // check finding
+        Assert.assertEquals("length of variable list ", 1, t.getRowCount());
+        Assert.assertEquals("name of 1st variable ", "SplitVal with big default", t.getLabel(0));
+        Assert.assertEquals("find variable by name ", 0, t.findVarIndex("SplitVal with big default"));
+        SplitVariableValue sv = (SplitVariableValue) t.getVariable(t.findVarIndex("SplitVal with big default"));
+        Assert.assertEquals("find value of variable ", 35184372088832L, sv.getLongValue());
+
+    }
+
     // Check creating an enumvar with various groupings
     @Test
     public void testVarEnumVar() {

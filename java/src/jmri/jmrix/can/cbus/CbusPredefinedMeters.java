@@ -20,16 +20,21 @@ import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
  * Added voltage capability to use with new jmrit.voltmeter class
  * 
  * @author Daniel Bergqvist Copyright (C) 2020
- */
+  * 
+ * @author Andrew Crosland 2021
+ * Added extra current meter for systems with two track outputs
+*/
 public class CbusPredefinedMeters implements CanListener {
 
     private final TrafficController tc;
     private int _nodeToListen;
     private int _eventToListenCurrent;
+    private int _eventToListenCurrentExtra;
     private int _eventToListenVoltage;
     private final CanSystemConnectionMemo _memo;
     final MeterUpdateTask updateTask;
     final Meter currentMeter;
+    final Meter currentMeterExtra;
     final Meter voltageMeter;
     
     public CbusPredefinedMeters(CanSystemConnectionMemo memo) {
@@ -40,14 +45,19 @@ public class CbusPredefinedMeters implements CanListener {
         updateTask = new UpdateTask(-1);
         
         currentMeter = new DefaultMeter.DefaultCurrentMeter(
-                memo.getSystemPrefix() + "V" + "CBUSCurrentMeter",
+                memo.getSystemPrefix() + InstanceManager.getDefault(MeterManager.class).typeLetter() + "CBUSCurrentMeter",
+                Meter.Unit.Milli, 0, 65535.0, 1.0, updateTask);
+        
+        currentMeterExtra = new DefaultMeter.DefaultCurrentMeter(
+                memo.getSystemPrefix() + InstanceManager.getDefault(MeterManager.class).typeLetter() + "CBUSCurrentMeter2",
                 Meter.Unit.Milli, 0, 65535.0, 1.0, updateTask);
         
         voltageMeter = new DefaultMeter.DefaultVoltageMeter(
-                memo.getSystemPrefix() + "V" + "CBUSVoltageMeter",
+                memo.getSystemPrefix() + InstanceManager.getDefault(MeterManager.class).typeLetter() + "CBUSVoltageMeter",
                 Meter.Unit.NoPrefix, 0, 6553.5, 0.1, updateTask);
         
         InstanceManager.getDefault(MeterManager.class).register(currentMeter);
+        InstanceManager.getDefault(MeterManager.class).register(currentMeterExtra);
         InstanceManager.getDefault(MeterManager.class).register(voltageMeter);
         
         log.debug("CbusMultiMeter constructor called");
@@ -64,14 +74,18 @@ public class CbusPredefinedMeters implements CanListener {
         if ( r.extendedOrRtr()
             || CbusMessage.getOpcode(r) != CbusConstants.CBUS_ACON2
             || CbusMessage.getNodeNumber(r) != _nodeToListen 
-            || (CbusMessage.getEvent(r) != _eventToListenCurrent 
-                && CbusMessage.getEvent(r) != _eventToListenVoltage )) {
+            || ((CbusMessage.getEvent(r) != _eventToListenCurrent) 
+                && (CbusMessage.getEvent(r) != _eventToListenVoltage)
+                && (CbusMessage.getEvent(r) != _eventToListenCurrentExtra))) {
             return;
         }
         try {
             if (CbusMessage.getEvent(r) == _eventToListenCurrent) {
                 int currentInt = ( r.getElement(5) * 256 ) + r.getElement(6);
                 currentMeter.setCommandedAnalogValue(currentInt * 1.0f );  // mA value, min 0, max 65535, NOT percentage
+            } else if (CbusMessage.getEvent(r) == _eventToListenCurrentExtra) {
+                int currentInt = ( r.getElement(5) * 256 ) + r.getElement(6);
+                currentMeterExtra.setCommandedAnalogValue(currentInt * 1.0f );  // mA value, min 0, max 65535, NOT percentage
             } else {
                 // Voltage from the command station is scaled by a factor of 10 to allow one decimal place
                 int voltageInt = ( r.getElement(5) * 256 ) + r.getElement(6);
@@ -93,10 +107,13 @@ public class CbusPredefinedMeters implements CanListener {
     
     public void dispose() {
         updateTask.disable(currentMeter);
+        updateTask.disable(currentMeterExtra);
         updateTask.disable(voltageMeter);
         InstanceManager.getDefault(MeterManager.class).deregister(currentMeter);
+        InstanceManager.getDefault(MeterManager.class).deregister(currentMeterExtra);
         InstanceManager.getDefault(MeterManager.class).deregister(voltageMeter);
         updateTask.dispose(currentMeter);
+        updateTask.dispose(currentMeterExtra);
         updateTask.dispose(voltageMeter);
     }
     
@@ -117,6 +134,7 @@ public class CbusPredefinedMeters implements CanListener {
             _nodeToListen = 65534;
             _eventToListenCurrent = 1; // hard coded at present
             _eventToListenVoltage = 2; // hard coded at present
+            _eventToListenCurrentExtra = 3; // hard coded at present
             CbusNodeTableDataModel cs =  jmri.InstanceManager.getNullableDefault(CbusNodeTableDataModel.class);
             if (cs != null) {
                 CbusNode csnode = cs.getCsByNum(0);
@@ -127,9 +145,10 @@ public class CbusPredefinedMeters implements CanListener {
                 log.info("Unable to fetch Master Command Station from Node Manager");
             }
             tc.addCanListener(CbusPredefinedMeters.this);
-            log.info("Enabled meter Long Ex2Data {} {}", 
+            log.info("Enabled meter Long Ex2Data {} {} {}", 
                 new CbusNameService(_memo).getEventNodeString(_nodeToListen,_eventToListenCurrent), 
-                new CbusNameService(_memo).getEventNodeString(_nodeToListen,_eventToListenVoltage));
+                new CbusNameService(_memo).getEventNodeString(_nodeToListen,_eventToListenVoltage),
+                new CbusNameService(_memo).getEventNodeString(_nodeToListen,_eventToListenCurrentExtra));
             
             super.enable();
         }

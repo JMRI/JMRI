@@ -1,6 +1,7 @@
 package jmri.jmrix;
 
 import jmri.SystemConnectionMemo;
+import jmri.jmrix.debugthrottle.DebugThrottle;
 import jmri.util.JUnitUtil;
 import jmri.DccLocoAddress;
 
@@ -13,18 +14,21 @@ import org.junit.jupiter.api.*;
 public class AbstractThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
     AbstractThrottleManager t = null;
+    SystemConnectionMemo memo;
+    DebugThrottle throttle;
 
     @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        SystemConnectionMemo memo = Mockito.mock(SystemConnectionMemo.class);
+        memo = Mockito.mock(SystemConnectionMemo.class);
         Mockito.when(memo.getUserName()).thenReturn("Test");
         Mockito.when(memo.getSystemPrefix()).thenReturn("T");
         tm = t = new AbstractThrottleManager(memo) {
             @Override
             public void requestThrottleSetup(jmri.LocoAddress a, boolean control) {
-                notifyThrottleKnown(new jmri.jmrix.debugthrottle.DebugThrottle((DccLocoAddress) a, adapterMemo), a);
+                throttle = new DebugThrottle((DccLocoAddress) a, adapterMemo);
+                notifyThrottleKnown(throttle, a);
             }
 
             @Override
@@ -46,6 +50,7 @@ public class AbstractThrottleManagerTest extends jmri.managers.AbstractThrottleM
 
     @AfterEach
     public void tearDown() {
+        memo = null;
         tm = t = null;
         JUnitUtil.tearDown();
     }

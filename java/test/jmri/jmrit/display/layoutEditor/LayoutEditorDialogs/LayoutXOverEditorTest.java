@@ -28,9 +28,6 @@ public class LayoutXOverEditorTest extends LayoutTrackEditorTest {
         new LayoutXOverEditor(null);
     }
 
-    private LayoutEditor layoutEditor = null;
-    private LayoutDoubleXOver doubleXoverLayoutTurnout = null;
-
     @Test
     public void testEditXOverDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -41,7 +38,7 @@ public class LayoutXOverEditorTest extends LayoutTrackEditorTest {
         LayoutDoubleXOverEditor editor = new LayoutDoubleXOverEditor(layoutEditor);
 
         // Edit the double crossover
-        editor.editLayoutTrack(doubleXoverLayoutTurnout);
+        editor.editLayoutTrack(doubleXoverLayoutTurnoutView);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXover"));
 
         // Select main turnout
@@ -134,7 +131,7 @@ public class LayoutXOverEditorTest extends LayoutTrackEditorTest {
         LayoutDoubleXOverEditor editor = new LayoutDoubleXOverEditor(layoutEditor);
 
         // Edit the double crossover
-        editor.editLayoutTrack(doubleXoverLayoutTurnout);
+        editor.editLayoutTrack(doubleXoverLayoutTurnoutView);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXover"));
 
         // Invoke layout block editor with no block assigned
@@ -181,13 +178,17 @@ public class LayoutXOverEditorTest extends LayoutTrackEditorTest {
         LayoutDoubleXOverEditor editor = new LayoutDoubleXOverEditor(layoutEditor);
 
         // Edit the double crossover
-        editor.editLayoutTrack(doubleXoverLayoutTurnout);
+        editor.editLayoutTrack(doubleXoverLayoutTurnoutView);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXover"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
     }
 
+
+    private LayoutEditor layoutEditor = null;
+    private LayoutDoubleXOver doubleXoverLayoutTurnout = null;
+    private LayoutDoubleXOverView doubleXoverLayoutTurnoutView = null;
 
     @BeforeEach
     public void setUp() {
@@ -207,7 +208,12 @@ public class LayoutXOverEditorTest extends LayoutTrackEditorTest {
             point = MathUtil.add(point, delta);
 
             // Double crossover
-            doubleXoverLayoutTurnout = new LayoutDoubleXOver("Double Xover", point, 33.0, 1.1, 1.2, layoutEditor);
+            doubleXoverLayoutTurnout = new LayoutDoubleXOver("Double Xover", layoutEditor); // point, 33.0, 1.1, 1.2,
+            doubleXoverLayoutTurnoutView = new LayoutDoubleXOverView(doubleXoverLayoutTurnout,
+                                                    point, 33.0, 1.1, 1.2,
+                                                    layoutEditor);
+            layoutEditor.addLayoutTrack(doubleXoverLayoutTurnout, doubleXoverLayoutTurnoutView);
+
         }
     }
 
@@ -215,7 +221,6 @@ public class LayoutXOverEditorTest extends LayoutTrackEditorTest {
     public void tearDown() {
         if (doubleXoverLayoutTurnout != null) {
             doubleXoverLayoutTurnout.remove();
-            doubleXoverLayoutTurnout.dispose();
         }
 
         if (layoutEditor != null) {
@@ -228,6 +233,7 @@ public class LayoutXOverEditorTest extends LayoutTrackEditorTest {
 
         JUnitUtil.resetWindows(false, false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         super.tearDown();
     }
 

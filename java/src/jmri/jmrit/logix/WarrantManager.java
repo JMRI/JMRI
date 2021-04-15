@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
@@ -11,7 +13,10 @@ import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.ShutDownTask;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
+import jmri.jmrit.roster.RosterSpeedProfile.SpeedStep;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 import jmri.util.ThreadingUtil;
@@ -29,8 +34,9 @@ import org.slf4j.LoggerFactory;
 public class WarrantManager extends AbstractManager<Warrant>
         implements jmri.InstanceManagerAutoDefault {
     
-    private HashMap<String, RosterSpeedProfile> _mergeProfiles;
-    private HashMap<String, RosterSpeedProfile> _sessionProfiles;
+    private HashMap<String, RosterSpeedProfile> _mergeProfiles = new HashMap<>();
+    private HashMap<String, RosterSpeedProfile> _sessionProfiles = new HashMap<>();
+    ShutDownTask _shutDownTask = null;
     private boolean _suppressWarnings = false;
 
     public WarrantManager() {
@@ -347,12 +353,10 @@ public class WarrantManager extends AbstractManager<Warrant>
     }
     
     protected void setSpeedProfiles(String id, RosterSpeedProfile merge, RosterSpeedProfile session) {
-        if (_mergeProfiles == null) {
-            _mergeProfiles = new HashMap<>();
-            _sessionProfiles = new HashMap<>();
+        if (_shutDownTask == null) {
             if (!WarrantPreferences.getDefault().getShutdown().equals((WarrantPreferences.Shutdown.NO_MERGE))) {
-                ShutDownTask shutDownTask = new WarrantShutdownTask("WarrantRosterSpeedProfileCheck");
-                jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(shutDownTask);
+                _shutDownTask = new WarrantShutdownTask("WarrantRosterSpeedProfileCheck");
+                jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(_shutDownTask);
             }
         }
         if (id != null) {
@@ -360,18 +364,42 @@ public class WarrantManager extends AbstractManager<Warrant>
             _sessionProfiles.put(id, session);
         }
     }
-    
+
+    @Nonnull
     protected RosterSpeedProfile getMergeProfile(String id) {
-        if (_mergeProfiles == null) {
-            return null;
+        RosterSpeedProfile mergeProfile = _mergeProfiles.get(id);
+        if (mergeProfile != null) {
+            return mergeProfile;
         }
-        return _mergeProfiles.get(id);
+        if (id == null || id.isEmpty()) {
+            mergeProfile = new RosterSpeedProfile(null);
+            _mergeProfiles.put(id, mergeProfile);
+            return mergeProfile;
+        }
+        RosterEntry rosterEntry = Roster.getDefault().getEntryForId(id);
+        if (rosterEntry == null) {
+            mergeProfile = new RosterSpeedProfile(null);
+            _mergeProfiles.put(id, mergeProfile);
+            return mergeProfile;
+        }
+        mergeProfile = new RosterSpeedProfile(rosterEntry);
+        RosterSpeedProfile rosterProfile = rosterEntry.getSpeedProfile();
+        if (rosterProfile != null) { // make copy of tree
+            TreeMap<Integer, SpeedStep> rosterTree = rosterProfile.getProfileSpeeds();
+            for (Map.Entry<Integer, SpeedStep> entry : rosterTree.entrySet()) {
+                mergeProfile.setSpeed(entry.getKey(), entry.getValue().getForwardSpeed(), entry.getValue().getReverseSpeed());
+            }
+        }
+        return mergeProfile;
     }
+    @Nonnull
     protected RosterSpeedProfile getSessionProfile(String id) {
-        if (_sessionProfiles == null) {
-            return null;
+        RosterSpeedProfile profile = _sessionProfiles.get(id);
+        if (profile == null) {
+            profile = new RosterSpeedProfile(null);
+            _sessionProfiles.put(id, profile);
         }
-        return _sessionProfiles.get(id);
+        return profile;
     }
     
     protected HashMap<String, RosterSpeedProfile> getMergeProfiles() {
@@ -384,7 +412,7 @@ public class WarrantManager extends AbstractManager<Warrant>
     @Override
     public void dispose(){
         for(Warrant w:_beans){
-            w.stopWarrant(true);
+            w.stopWarrant(true, true);
         }
         super.dispose();
     }

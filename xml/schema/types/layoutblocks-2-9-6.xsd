@@ -25,7 +25,7 @@
     <xs:complexType name="LayoutBlockManagerType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a LayoutBlockManager implementation.
+          Define the XML structure for storing the contents of a LayoutBlockManager implementation.
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="true">jmri.jmrit.display.configurexml.LayoutBlockManagerXml</jmri:usingclass>

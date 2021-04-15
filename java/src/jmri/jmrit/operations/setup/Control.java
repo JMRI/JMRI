@@ -38,15 +38,6 @@ public class Control {
     public static final int panelHeight200 = 200;
     public static final int panelHeight100 = 100;
 
-    /*
-     static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); 
-     // Maximum panel height
-     public static final int panelMaxHeight = screenSize.height;
-     */
-    // Default panel edit locations
-    public static final int panelX = 0;
-    public static final int panelY = 0;
-
     // Train build parameters
     @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // allow access for testing
     public static boolean fullTrainOnly = false;

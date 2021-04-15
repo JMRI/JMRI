@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!--Copyright (C) JMRI 2003, 2004, 2008, 2021 All rights reserved           -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version author="Jeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20080131"/>
+  <version author="Jeff Schmaltz escopetas@comcast.net" version="1.1" lastUpdated="20090218"/>
+  <version author="W.D.Kok" version="2.00" lastUpdated="20210307"/>
+  <!--   - This decoder configuration file is based on ESU_LokPilotDCC.xml                  -->
+  <!--     V 4, dated 20050619, by Walter Thompson. Which also acknowledged                 -->
+  <!--     "the contribution of many others" including 'jake'.                              -->
+  <!--   - Based on the "LokPilot Basic - BEMF for all your engines" 2-page                 -->
+  <!--     instructions, P/N 04507-05795.                                                   -->
+  <!--   - This decoder XML is meant to be used with the "Comprehensive" programmer format. -->
+  <!--     Continued the practice of using unrelated "item" names to place ESU unique       -->
+  <!--     variables on the proper pane of the Comprehensive programmer.                    -->
+  <!--   - Any and all feedback on this file would be appreciated.                          -->
+  <!--                                                                                      -->
+  <!-- 1.0 - Initial release                                                                -->
+  <!-- 1.1 - Added family lowVersionID & highVersionID, range 0-255 because CV 7 doesn't    -->
+  <!--       seem to match software version number                                          -->
+  <!-- 2.0 - German and Dutch translating inserted                                          -->
+  <!--     - CV7 and 8 switched to mfgVersionId.xml                                         -->
+  <!--     - CV 49 and 51 switched to enum-disabledEnabled.xml                              -->
+  <!--     - Define the fixed Function-Output mapping                                       -->
+  <!--     - Impute tooltip                                                                 -->
+  <!--     - CV3 and 4 switched to v1AccelDecel_1-63.xml                                    -->
+  <!--     - CV2, 5 and 6 switched to v1VstartHighMid_1-63.xml                              -->
+  <decoder>
+    <family name="ESU LokPilot Basic 1.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255">
+      <model model="LokPilot Basic 1.0" maxInputVolts="25 V" maxMotorCurrent="0.7 A" maxTotalCurrent="1.05 A" numOuts="5" numFns="5" formFactor="HO" connector="NMRAmedium" productID="52690">
+        <output name="1" label="Front|light" maxcurrent="180 mA" connection="wire">
+          <label xml:lang="de">Vorder-|Licht</label>
+          <label xml:lang="nl">Kop-|Lampen</label>
+        </output>
+        <output name="2" label="Rear|light" maxcurrent="180 mA" connection="wire">
+          <label xml:lang="de">Hinter-|Licht</label>
+          <label xml:lang="nl">Achter-|Licht</label>
+        </output>
+        <output name="3" label="AUX1" maxcurrent="180 mA" connection="wire"/>
+        <output name="4" label="Shunting|gear">
+          <label xml:lang="de">Rangier|gang</label>
+          <label xml:lang="nl">Rangeer|snelheid</label>
+        </output>
+        <output name="5" label="Acceleration|brake delay">
+          <label xml:lang="de">Anfahr/Brems|Verzögerung</label>
+          <label xml:lang="nl">Optrek/rem|vertraging </label>
+        </output>
+        <size length="25.5" width="15.5" height="4.5" units="mm"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/esu/v1AccelDecel_1-63.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/esu/v1VstartHighMid_1-63.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <!-- CV=29 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <variable CV="49" mask="XXXXXXXV" default="1" item="EMF Static Config">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>BEMF control</label>
+        <label xml:lang="de">Lastregelung</label>
+        <label xml:lang="nl">Lastregeling</label>
+      </variable>
+      <variable CV="51" mask="XXXXXXXV" default="1" item="Dither option">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Brake mode control</label>
+        <label xml:lang="de">Bremsmodus</label>
+        <label xml:lang="nl">Remmodus</label>
+        <tooltip>&lt;html&gt;Defines what happens if the decoders detects DC with reverse polarity.&lt;br&gt;
+        Disabled: locomotive enters in DC mode&lt;br&gt;
+        Enabled: locomotive will stop&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Verhalten, wenn Gleichstrom umgekehrter Polarität gefunden wird.&lt;br&gt;
+        Deaktiviert: Lok wechselt in Analogmodus&lt;br&gt;
+        Aktiviert: Lok bremst ab&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Gedrag wanneer gelijkstroom van omgekeerde polariteit wordt gevonden.&lt;br&gt;
+        Uitgeschakeld: Locomotief schakelt over naar analoge modus&lt;br&gt;
+        Ingeschakeld: Loc remt af&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="54" default="32" item="EMF Dynamic Config" tooltip="Determines how strongly load control effects, range 0-63">
+        <decVal min="0" max="63"/>
+        <label>Load control parameter K</label>
+        <label xml:lang="de">Laststeuerungsparameter K</label>
+        <label xml:lang="nl">Parameter K voor belastingsregeling</label>
+        <tooltip>&lt;html&gt;Defines the effect of BEMF.&lt;br&gt;
+                             The higher the value, the stronger the effect of BEMF control.&lt;br&gt;
+                             (Range: 0-63, Default: 32) &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Bestimmt die Härte der Regelung.&lt;br&gt;
+                                           Je grösser der Wert, desto stärker regelt der LokPilot Basic den Motor.&lt;br&gt;
+                                           (Bereich: 0-63, voreingestellt: 32) &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Definieert het effect van BEMF.&lt;br&gt;
+                                           Hoe hoger de waarde, hoe sterker het effect van BEMF-controle.&lt;br&gt;
+                                           (Bereik: 0-63, standaardinstelling: 32) &lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="55" default="24" item="EMF Droop Config" tooltip="Determines the momentum of the motor, range 0-63">
+        <decVal min="0" max="63"/>
+        <label>Load control parameter I</label>
+        <label xml:lang="de">Laststeuerungsparameter I</label>
+        <label xml:lang="nl">Parameter I voor belastingsregeling</label>
+        <tooltip>&lt;html&gt;Defines momentum (inertia) of motor.&lt;br&gt;
+                             The higher the momentum of the motor (large flywheel or bigger diameter),&lt;br&gt;
+                             the lower this value has to be set.&lt;br&gt;
+                             (Range: 0-63, Default: 24) &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Bestimmt durch die Trägheit des Motors.&lt;br&gt;
+                                           Je träger der Motor ist (wenn also viel Schwungmasse&lt;br&gt;
+                                           vorhanden ist oder der Motor einen grossen Durchmesser hat),&lt;br&gt;
+                                           desto kleiner muss der Wert sein.&lt;br&gt;
+                                           (Bereich: 0-63, voreingestellt: 24) &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Bepaald door de traagheid van de motor.&lt;br&gt;
+                                           Je trager de motor is (d.w.z. als er veel vliegwielmassa&lt;br&gt;
+                                           is of de motor heeft een grote diameter),&lt;br&gt;
+                                           hoe kleiner de waarde moet zijn.&lt;br&gt;
+                                           (Bereik: 0-63, standaardinstelling: 24) &lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="63" default="7" item="Global lighting option 1" tooltip="Defines the brightness of the function outputs, range 0-7">
+        <decVal min="0" max="7"/>
+        <label>Lamp brightness</label>
+        <label xml:lang="de">Lichthelligkeit </label>
+        <label xml:lang="nl">Helderheid van het licht</label>
+        <tooltip>&lt;html&gt;Defines the brightness of the function outputs.&lt;br&gt;
+                             The lower the value of this CV, the darker are&lt;br&gt;
+                             the bulbs connected.&lt;br&gt;
+                             (Range: 1-63, Default: 63) &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Bestimmt die Helligkeit der Funktionsausgänge.&lt;br&gt;
+                                           Je grösser der Wert, desto heller sind die Lampen&lt;br&gt;
+                                           (Bereich: 1-63, voreingestellt: 63) &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Hiermee bepaalt u de helderheid van de functie-uitgangen.&lt;br&gt;
+                                           Hoe groter de waarde, hoe helderder de lampen&lt;br&gt;
+                                           (Bereik: 1-63, standaardinstelling: 63) &lt;/html&gt;</tooltip>
+      </variable>
+      <!-- Define the fixed Function-Output mapping -->
+      <constant item="FL(f) controls output 1" minOut="1" default="1"/>
+      <constant item="FL(r) controls output 2" minOut="2" default="1"/>
+      <constant item="F1 controls output 3" minOut="3" default="1"/>
+      <constant item="F3 controls output 4" minOut="4" default="1"/>
+      <constant item="F4 controls output 5" minOut="5" default="1"/>
+    </variables>
+    <resets>
+      <factReset label="HARD RESET" CV="8" default="8">
+        <label>HARD RESET, All CVs reset to default values</label>
+        <label xml:lang="de">Decoder-Reset, Alle CVs auf Standardwerte zurückgesetzt</label>
+        <label xml:lang="nl">Decoder-reset, Alle cv's worden teruggezet naar standaardwaarden</label>
+      </factReset> 
+    </resets>
+  </decoder>
+</decoder-config>
