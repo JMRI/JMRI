@@ -486,8 +486,24 @@ public interface Base extends PropertyChangeProvider {
             String indent,
             String currentIndent);
 
+    /**
+     * Navigate the LogixNG tree.
+     *
+     * @param level  The current recursion level for debugging.
+     * @param bean   The named bean that is the object of the search.
+     * @param report A list of NamedBeanUsageReport usage reports.
+     * @param cdl    The current ConditionalNG bean.  Null for Module searches since there is no conditional
+     */
     public void getUsageTree(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl);
 
+    /**
+     * Add a new NamedBeanUsageReport to the report list if there are any matches in this action or expresssion.
+     *
+     * @param level  The current recursion level for debugging.
+     * @param bean   The named bean that is the object of the search.
+     * @param report A list of NamedBeanUsageReport usage reports.
+     * @param cdl    The current ConditionalNG bean.  Null for Module searches since there is no conditional
+     */
     public void getUsageDetail(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl);
 
     /**
