@@ -394,9 +394,11 @@
         </ul>
 
     <h3>LogixNG</h3>
-        <a id="Logix" name="LogixNG"></a>
+        <a id="LogixNG" name="LogixNG"></a>
         <ul>
           <li>Add Actions and Expressions for Blocks.</li>
+          <li>Add support for WhereUsed bean usage searches.</li>
+          <li>Add WhereUsed reports for Blocks and Sensors.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -549,7 +551,7 @@
     <h3>Where Used</h3>
         <a id="WhereUsed" name="WhereUsed"></a>
         <ul>
-            <li></li>
+            <li>Add support for searching LogixNG for bean usage.</li>
         </ul>
 
    <h3>WiThrottle Server</h3>
