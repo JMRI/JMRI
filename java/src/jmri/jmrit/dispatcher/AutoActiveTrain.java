@@ -898,11 +898,13 @@ public class AutoActiveTrain implements ThrottleListener {
                     // .getSpeed(InstanceManager.getDefault(DispatcherFrame.class).getStoppingSpeedName());
                     _activeTrain.setStatus(ActiveTrain.RUNNING);
             }
-            for (Block block : _currentAllocatedSection.getSection().getBlockList()) {
-                float speed = -1.0f;
-                speed = getSpeedFromBlock(block);
-                if (speed > 0 && speed < newSpeed) {
-                    newSpeed = speed;
+            // If the train has no _currentAllocatedSection it is in a first block outside transit.
+            if (_currentAllocatedSection != null ) {
+                for (Block block : _currentAllocatedSection.getSection().getBlockList()) {
+                    float speed = getSpeedFromBlock(block);
+                    if (speed > 0 && speed < newSpeed) {
+                        newSpeed = speed;
+                    }
                 }
             }
         }
@@ -956,15 +958,7 @@ public class AutoActiveTrain implements ThrottleListener {
 
         if ((_controllingSignalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER).equals(displayedAspect))
                 || !_controllingSignalMast.getLit() || _controllingSignalMast.getHeld()) {
-            if ( (_currentAllocatedSection.isInActiveBlockList(_conSignalProtectedBlock) ||
-                    ( _nextSection != null &&  _activeTrain.isInAllocatedList(_nextSection) && _nextSection.containsBlock(_conSignalProtectedBlock)))
-                    && _conSignalProtectedBlock.getSensor().getState() == Block.OCCUPIED) {
-                // Train has just passed this signal - ignore this signal
-                log.debug("{}: _conSignalProtectedBlock is the block just past so ignore {}", _activeTrain.getTrainName(), _conSignalProtectedBlock.getDisplayName(USERSYS));
-            } else {
-                log.debug("{}: Signal {} at Held or Danger so Stop", _activeTrain.getTrainName(), _controllingSignalMast.getDisplayName(USERSYS));
-                stopInCurrentSection(NO_TASK);
-            }
+            checkForSignalPassedOrStop(_controllingSignalMast.getDisplayName(USERSYS));
         } else if (_controllingSignalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE) != null
                 && _controllingSignalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE).equals(displayedAspect)) {
             setTargetSpeedState(RESTRICTED_SPEED);
@@ -1074,16 +1068,7 @@ public class AutoActiveTrain implements ThrottleListener {
 
             log.trace("BlockSpeed[{}] SignalSpeed[{}]", blockSpeed, signalSpeed);
             if (useSpeed < 0.01f) {
-                // check to to see if its allocated to us!!!
-                //      check Block occupancy sensor if it is in an allocated block, which must change before signal.
-                if ( (_currentAllocatedSection.isInActiveBlockList(_conSignalProtectedBlock) ||
-                        ( _nextSection != null &&  _activeTrain.isInAllocatedList(_nextSection) && _nextSection.containsBlock(_conSignalProtectedBlock)))
-                        && _conSignalProtectedBlock.getSensor().getState() == Block.OCCUPIED) {
-                    // Train has just passed this signal - ignore this signal
-                    log.debug("{}:Ignoring red signal [{}]",_activeTrain.getTrainName(),_controllingSignal.getDisplayName(USERSYS));
-                } else {
-                    stopInCurrentSection(NO_TASK);
-                }
+                checkForSignalPassedOrStop(_controllingSignal.getDisplayName(USERSYS));
             } else {
                 setTargetSpeedByProfile(useSpeed);
             }
@@ -1095,16 +1080,9 @@ public class AutoActiveTrain implements ThrottleListener {
                     // May get here from signal changing before Block knows it is occupied, so must
                     //      check Block occupancy sensor, which must change before signal.
                     // check to to see if its allocated to us!!!
-                    //      check Block occupancy sensor if it is in an allocated block, which must change before signal.
-                    if ((_currentAllocatedSection.isInActiveBlockList(_conSignalProtectedBlock) ||
-                            (_nextSection != null && _activeTrain.isInAllocatedList(_nextSection) && _nextSection.containsBlock(_conSignalProtectedBlock)))
-                            && _conSignalProtectedBlock.getSensor().getState() == Block.OCCUPIED) {
-                        // Train has just passed this signal - ignore this signal
-                        log.debug("{}:Ignoring red signal [{}]", _activeTrain.getTrainName(),
-                                _controllingSignal.getDisplayName(USERSYS));
-                    } else {
-                        stopInCurrentSection(NO_TASK);
-                    }
+                    //      check Block occupancy sensor if it is in an allocated block, which must change before signal
+                    // If the train has no _currentAllocatedSection it is in a first block outside transit.
+                    checkForSignalPassedOrStop(_controllingSignal.getDisplayName(USERSYS));
                     break;
                 case SignalHead.YELLOW:
                 case SignalHead.FLASHYELLOW:
@@ -1126,6 +1104,30 @@ public class AutoActiveTrain implements ThrottleListener {
                     stopInCurrentSection(NO_TASK);
             }
 
+        }
+    }
+
+    /**
+     * Check to see if a stop is really required, or if this is the
+     * signal head that was just passed, in which case ignore as the signal goes red before a
+     * new signal exists.
+     *
+     * @param displayName name of signal for debug messages.
+     */
+    private void checkForSignalPassedOrStop(String displayName) {
+        // if current section is null we are in a pre transit block.
+        if (_currentAllocatedSection != null) {
+            if ((_currentAllocatedSection.isInActiveBlockList(_conSignalProtectedBlock) ||
+                    (_nextSection != null && _activeTrain.isInAllocatedList(_nextSection) && _nextSection.containsBlock(_conSignalProtectedBlock)))
+                    && _conSignalProtectedBlock.getSensor().getState() == Block.OCCUPIED) {
+                // Train has just passed this signal - ignore this signal
+                log.debug("{}: _conSignalProtectedBlock [{}] for signal [{}] is the block just past so ignore.", _activeTrain.getTrainName(),
+                        _conSignalProtectedBlock.getDisplayName(USERSYS), displayName);
+            } else {
+                log.debug("{}: stopping for signal [{}] ", _activeTrain.getTrainName(),
+                         displayName);
+                stopInCurrentSection(NO_TASK);
+            }
         }
     }
 
@@ -1525,7 +1527,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 log.debug("{}: setTargetSpeedByProfile: SpeedState[{}]",_activeTrain.getTrainName(),throttleSetting,speedState);
                 if (throttleSetting > 0.009) {
                     cancelStopInCurrentSection();
-                    _targetSpeed = throttleSetting * _speedFactor;  // only apply speed factor not max
+                    _targetSpeed = applyMaxThrottleAndFactor(throttleSetting); // apply speed factor and max
                  } else if (useSpeedProfile && _stopBySpeedProfile) {
                     _targetSpeed = 0.0f;
                     _stoppingUsingSpeedProfile = true;
