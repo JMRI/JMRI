@@ -27,9 +27,6 @@ import jmri.jmrit.display.palette.IndicatorItemPanel;
 import jmri.jmrit.display.palette.IndicatorTOItemPanel;
 import jmri.jmrit.logix.OBlock;
 
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
-
 class ConvertDialog extends JDialog {
 
         private final CircuitBuilder _parent;
@@ -176,12 +173,16 @@ class ConvertDialog extends JDialog {
             circuitIcons.add(pos);
             pos.setLocation(_pos.getLocation());
             _pos.remove();
-            _parent._editor.putItem(pos);
+            try {
+                _parent._editor.putItem(pos);
+            } catch (Positionable.DuplicateIdException e) {
+                log.error("Editor.putItem() has thrown DuplicateIdException", e);
+            }
             pos.updateSize();
             _parent._editor.highlight(null);
             dispose();
             _filler.dispose();
         }
 
-//        private final static Logger log = LoggerFactory.getLogger(ConvertDialog.class);
+        private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConvertDialog.class);
     }
