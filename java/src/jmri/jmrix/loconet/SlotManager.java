@@ -659,6 +659,15 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         }
     }
 
+    private boolean acceptAnyLACK = false;
+    /**
+     * Indicate that the command station LONG_ACK response details can be ignored
+     * for this operation.  Typically this is used when accessing Loconet-attached boards.
+     */
+    public final void setAcceptAnyLACK() {
+        acceptAnyLACK = true;
+    }
+    
     /**
      * Handles OPC_LONG_ACK replies to programming slot operations.
      *
@@ -671,8 +680,26 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         log.debug("LACK in state {} message: {}", progState, m.toString()); // NOI18N
         if (checkLackByte1(m.getElement(1)) && progState == 1) {
             // in programming state
+            if (acceptAnyLACK) {
+                // Any form of LACK response from CS is accepted here.
+                // Loconet-attached decoders (LOCONETOPSBOARD) receive the program commands
+                // directly via loconet and respond as required without needing any CS action,
+                // making the details of the LACK response irrelevant.
+                if (_progRead || _progConfirm) {
+                    // move to commandExecuting state
+                    startShortTimer();
+                    progState = 2;
+                } else {
+                    // move to not programming state
+                    progState = 0;
+                    stopTimer();
+                    // allow the target device time to execute then notify ProgListener
+                    notifyProgListenerEndAfterDelay();
+                }
+                acceptAnyLACK = false;      // restore normal state for next operation
+            }
             // check status byte
-            if (checkLackTaskAccepted(m.getElement(2))) { // task accepted
+            else if (checkLackTaskAccepted(m.getElement(2))) { // task accepted
                 // 'not implemented' (op on main)
                 // but BDL16 and other devices can eventually reply, so
                 // move to commandExecuting state
@@ -699,20 +726,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 } else {
                     // move to not programming state
                     progState = 0;
-                    // notify user ProgListener
                     stopTimer();
-                    // have to send this in a little while to
-                    // allow command station time to execute
-                    javax.swing.Timer timer = new javax.swing.Timer(postProgDelay, new java.awt.event.ActionListener() {
-                        @Override
-                        public void actionPerformed(java.awt.event.ActionEvent e) {
-                            notifyProgListenerEnd(-1, 0); // no value (e.g. -1), no error status (e.g.0)
-                        }
-                    });
-                    timer.stop();
-                    timer.setInitialDelay(postProgDelay);
-                    timer.setRepeats(false);
-                    timer.start();
+                    // allow command station time to execute then notify ProgListener
+                    notifyProgListenerEndAfterDelay();
                 }
             } else { // not sure how to cope, so complain
                 log.warn("unexpected LACK reply code {}", m.getElement(2)); // NOI18N
@@ -723,6 +739,23 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 notifyProgListenerLack(jmri.ProgListener.UnknownError);
             }
         }
+    }
+    
+    /**
+     * Internal method to notify ProgListener after a short delay that the operation is complete.
+     * The delay ensures that the target device has completed the operation prior to the notification.
+     */
+    protected void notifyProgListenerEndAfterDelay() {
+        javax.swing.Timer timer = new javax.swing.Timer(postProgDelay, new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                notifyProgListenerEnd(-1, 0); // no value (e.g. -1), no error status (e.g.0)
+            }
+        });
+        timer.stop();
+        timer.setInitialDelay(postProgDelay);
+        timer.setRepeats(false);
+        timer.start();
     }
 
     /**
@@ -1044,7 +1077,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             hopsa = 0;
             mServiceMode = true;
             // parse the programming command
-            int pcmd = 0x43;       // LPE imples 0x40, but 0x43 is observed
+            int pcmd = 0x43;       // LPE implies 0x40, but 0x43 is observed
             if (getMode().equals(ProgrammingMode.PAGEMODE)) {
                 pcmd = pcmd | 0x20;
             } else if (getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
@@ -1141,7 +1174,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         }
 
         // parse the programming command
-        int pcmd = 0x03;       // LPE imples 0x00, but 0x03 is observed
+        int pcmd = 0x03;       // LPE implies 0x00, but 0x03 is observed
         if (getMode().equals(ProgrammingMode.PAGEMODE)) {
             pcmd = pcmd | 0x20;
         } else if (getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
@@ -1230,7 +1263,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             hopsa = 0;
             mServiceMode = true;
             // parse the programming command
-            int pcmd = 0x03;       // LPE imples 0x00, but 0x03 is observed
+            int pcmd = 0x03;       // LPE implies 0x00, but 0x03 is observed
             if (getMode().equals(ProgrammingMode.PAGEMODE)) {
                 pcmd = pcmd | 0x20;
             } else if (getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {

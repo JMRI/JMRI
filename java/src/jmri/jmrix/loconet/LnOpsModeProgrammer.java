@@ -125,6 +125,10 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             memo.getLnTrafficController().sendLocoNetMessage(m);
 
             sv2AccessTimer.start();
+        } else if (getMode().equals(LnProgrammerManager.LOCONETOPSBOARD)) {
+            // LOCONETOPSBOARD decoder 
+            memo.getSlotManager().setAcceptAnyLACK();
+            memo.getSlotManager().writeCVOpsMode(CV, val, pL, mAddress, mLongAddr);
         } else {
             // DCC ops mode
             memo.getSlotManager().writeCVOpsMode(CV, val, pL, mAddress, mLongAddr);
@@ -213,6 +217,10 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             memo.getLnTrafficController().sendLocoNetMessage(m);
 
             sv2AccessTimer.start();
+        } else if (getMode().equals(LnProgrammerManager.LOCONETOPSBOARD)) {
+            // LOCONETOPSBOARD decoder 
+            memo.getSlotManager().setAcceptAnyLACK();
+            memo.getSlotManager().readCVOpsMode(CV, pL, mAddress, mLongAddr);
         } else {
             // DCC ops mode
             memo.getSlotManager().readCVOpsMode(CV, pL, mAddress, mLongAddr);
@@ -236,6 +244,10 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             // SV2 mode
             log.warn("confirm CV \"{}\" addr:{} in SV2 mode not implemented", CV, mAddress);
             notifyProgListenerEnd(pL, 0, ProgListener.UnknownError);
+        } else if (getMode().equals(LnProgrammerManager.LOCONETOPSBOARD)) {
+            // LOCONETOPSBOARD decoder 
+            memo.getSlotManager().setAcceptAnyLACK();
+            memo.getSlotManager().confirmCVOpsMode(CV, val, pL, mAddress, mLongAddr);
         } else {
             // DCC ops mode
             memo.getSlotManager().confirmCVOpsMode(CV, val, pL, mAddress, mLongAddr);
