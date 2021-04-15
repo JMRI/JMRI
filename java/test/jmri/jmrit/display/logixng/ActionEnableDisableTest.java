@@ -1,5 +1,7 @@
 package jmri.jmrit.display.logixng;
 
+import java.awt.GraphicsEnvironment;
+
 import jmri.jmrit.logixng.actions.*;
 
 import java.beans.PropertyChangeEvent;
@@ -12,10 +14,7 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test ActionEnableDisable
@@ -507,6 +506,8 @@ public class ActionEnableDisableTest extends AbstractDigitalActionTestBase {
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException, Positionable.DuplicateIdException {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
