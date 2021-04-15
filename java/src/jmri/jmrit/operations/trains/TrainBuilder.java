@@ -858,8 +858,11 @@ public class TrainBuilder extends TrainCommon {
         // load engines for this train
         if (_train.getLeadEngine() == null) {
             addLine(_buildReport, THREE, BLANK_LINE);
-            if (!getEngines(_reqNumEngines, _train.getEngineModel(), _train.getEngineRoad(),
+            if (getEngines(_reqNumEngines, _train.getEngineModel(), _train.getEngineRoad(),
                     _train.getTrainDepartsRouteLocation(), engineTerminatesFirstLeg)) {
+                _secondLeadEngine = _lastEngine; // when adding a caboose later in the route, no engine change
+                _thirdLeadEngine = _lastEngine;
+            } else {
                 throw new BuildFailedException(
                         MessageFormat.format(Bundle.getMessage("buildErrorEngines"), new Object[] { _reqNumEngines,
                                 _train.getTrainDepartsName(), engineTerminatesFirstLeg.getName() }));
@@ -877,6 +880,7 @@ public class TrainBuilder extends TrainCommon {
                     _train.getSecondLegEngineRoad(), _train.getSecondLegStartRouteLocation(),
                     engineTerminatesSecondLeg)) {
                 _secondLeadEngine = _lastEngine;
+                _thirdLeadEngine = _lastEngine;
             } else {
                 throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorEngines"),
                         new Object[] { Integer.parseInt(_train.getSecondLegNumberEngines()),
@@ -1718,7 +1722,8 @@ public class TrainBuilder extends TrainCommon {
             }
             // remove cars that don't have a track assignment
             if (car.getTrack() == null) {
-                addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildErrorRsNoLoc"),
+                _warnings = true;
+                addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildWarningRsNoTrack"),
                         new Object[] { car.toString(), car.getLocationName() }));
                 _carList.remove(car);
                 i--;
@@ -2909,7 +2914,7 @@ public class TrainBuilder extends TrainCommon {
     private boolean checkPickUpTrainDirection(RollingStock rs, RouteLocation rl) throws BuildFailedException {
         // Code Check, car or engine should have a track assignment
         if (rs.getTrack() == null) {
-            throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorRsNoLoc"),
+            throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildWarningRsNoTrack"),
                     new Object[] { rs.toString(), rs.getLocationName() }));
         }
         // ignore local switcher direction
@@ -3648,7 +3653,7 @@ public class TrainBuilder extends TrainCommon {
     private boolean generateCarLoadFromStaging(Car car, RouteLocation rld) throws BuildFailedException {
         // Code Check, car should have a track assignment
         if (car.getTrack() == null) {
-            throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorRsNoLoc"),
+            throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildWarningRsNoTrack"),
                     new Object[] { car.toString(), car.getLocationName() }));
         }
         if (!car.getTrack().isStaging() ||
@@ -3780,7 +3785,7 @@ public class TrainBuilder extends TrainCommon {
     private boolean generateCarLoadStagingToStaging(Car car) throws BuildFailedException {
         // Code Check, car should have a track assignment
         if (car.getTrack() == null) {
-            throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorRsNoLoc"),
+            throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildWarningRsNoTrack"),
                     new Object[] { car.toString(), car.getLocationName() }));
         }
         if (!car.getTrack().isStaging() ||
