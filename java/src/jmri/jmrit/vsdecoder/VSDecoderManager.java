@@ -330,7 +330,8 @@ public class VSDecoderManager implements PropertyChangeListener {
     }
 
     /**
-     *
+     * Set a VSDecoder to be the default.
+     * @param d The VSDecoder
      * @deprecated As of 4.23.3, without a replacement
      */
     @Deprecated // 4.23.3
@@ -339,7 +340,8 @@ public class VSDecoderManager implements PropertyChangeListener {
     }
 
     /**
-     *
+     * Get the default VSDecoder.
+     * @return The VSDecoder
      * @deprecated As of 4.23.3, without a replacement
      */
     @Deprecated // 4.23.3
