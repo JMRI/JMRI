@@ -8,6 +8,8 @@ import java.util.*;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
+import jmri.NamedBean;
+import jmri.NamedBeanUsageReport;
 // import jmri.implementation.JmriSimplePropertyListener;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.logixng.Base;
@@ -20,44 +22,44 @@ import jmri.jmrit.logixng.LogixNG_Manager;
 
 /**
  * The default implementation of LogixNG.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2018
  */
 public class DefaultLogixNG extends AbstractNamedBean
         implements LogixNG {
-    
+
     private final LogixNG_Manager _manager = InstanceManager.getDefault(LogixNG_Manager.class);
     private boolean _enabled = false;
     private final List<ConditionalNG_Entry> _conditionalNG_Entries = new ArrayList<>();
-    
+
     /**
      * Maintain a list of conditional objects.  The key is the conditional system name
      */
     HashMap<String, ConditionalNG> _conditionalNGMap = new HashMap<>();
-    
-    
+
+
     public DefaultLogixNG(String sys, String user) throws BadUserNameException, BadSystemNameException  {
         super(sys, user);
-        
+
         // Do this test here to ensure all the tests are using correct system names
         Manager.NameValidity isNameValid = InstanceManager.getDefault(LogixNG_Manager.class).validSystemNameFormat(mSystemName);
         if (isNameValid != Manager.NameValidity.VALID) {
             throw new IllegalArgumentException("system name is not valid");
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Base getParent() {
         return null;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void setParent(Base parent) {
         throw new UnsupportedOperationException("A LogixNG cannot have a parent");
     }
-    
+
     @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameLogixNG");
@@ -85,7 +87,7 @@ public class DefaultLogixNG extends AbstractNamedBean
         boolean old = _enabled;
         _enabled = state;
         if (old != state) {
-/*            
+/*
             boolean active = _isActivated;
             deActivateLogix();
             activateLogix();
@@ -94,7 +96,7 @@ public class DefaultLogixNG extends AbstractNamedBean
                 _listeners.get(i).setEnabled(state);
             }
             firePropertyChange("Enabled", Boolean.valueOf(old), Boolean.valueOf(state));  // NOI18N
-*/            
+*/
 //        }
 //    }
 
@@ -172,7 +174,7 @@ public class DefaultLogixNG extends AbstractNamedBean
             }
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void setEnabled(boolean enable) {
@@ -184,39 +186,39 @@ public class DefaultLogixNG extends AbstractNamedBean
             unregisterListeners();
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean isEnabled() {
         return _enabled;
 //        return _enabled && _userEnabled;
     }
-    
+
     /*.*
      * Set whenether this object is enabled or disabled by the user.
-     * 
+     *
      * @param enable true if this object should be enabled, false otherwise
      *./
     public void setUserEnabled(boolean enable) {
         _userEnabled = enable;
     }
-*/    
+*/
     /*.*
      * Determines whether this object is enabled by the user.
-     * 
+     *
      * @return true if the object is enabled, false otherwise
      *./
     public boolean isUserEnabled() {
         return _userEnabled;
     }
-*/    
-    
+*/
+
     /** {@inheritDoc} */
     @Override
     public String getConditionalNG_SystemName(int index) {
         return _conditionalNG_Entries.get(index)._systemName;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void setConditionalNG_SystemName(int index, String systemName) {
@@ -228,7 +230,7 @@ public class DefaultLogixNG extends AbstractNamedBean
             entry._conditionalNG = null;
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public int getNumConditionalNGs() {
@@ -277,7 +279,7 @@ public class DefaultLogixNG extends AbstractNamedBean
     public ConditionalNG getConditionalNG(String systemName) {
         return _conditionalNGMap.get(systemName);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public ConditionalNG getConditionalNGByUserName(String userName) {
@@ -288,7 +290,7 @@ public class DefaultLogixNG extends AbstractNamedBean
         }
         return null;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void deleteConditionalNG(ConditionalNG conditionalNG) {
@@ -296,7 +298,7 @@ public class DefaultLogixNG extends AbstractNamedBean
             log.error("attempt to delete ConditionalNG not in LogixNG: {}", conditionalNG.getSystemName());  // NOI18N
             return;
         }
-        
+
         boolean found = false;
         // Remove Conditional from this logix
         for (ConditionalNG_Entry entry : _conditionalNG_Entries) {
@@ -312,13 +314,13 @@ public class DefaultLogixNG extends AbstractNamedBean
         }
         _conditionalNGMap.remove(conditionalNG.getSystemName());
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean isActive() {
         return _enabled && _manager.isActive();
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void execute() {
@@ -371,36 +373,36 @@ public class DefaultLogixNG extends AbstractNamedBean
             entry._conditionalNG.unregisterListeners();
         }
     }
-    
+
     protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {
         writer.append(currentIndent);
         writer.append(getLongDescription(locale));
         writer.println();
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void printTree(PrintTreeSettings settings, PrintWriter writer, String indent) {
         printTree(settings, Locale.getDefault(), writer, indent, "");
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent) {
         printTree(settings, locale, writer, indent, "");
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void printTree(PrintTreeSettings settings, Locale locale, PrintWriter writer, String indent, String currentIndent) {
         printTreeRow(locale, writer, currentIndent);
-        
+
         for (int i=0; i < this.getNumConditionalNGs(); i++) {
             getConditionalNG(i).printTree(settings, locale, writer, indent, currentIndent+indent);
 //            writer.println();
         }
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -410,25 +412,49 @@ public class DefaultLogixNG extends AbstractNamedBean
     public Base deepCopyChildren(Base original, Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
         throw new UnsupportedOperationException("Not supported");
     }
-    
-    
+
     private static class ConditionalNG_Entry {
         private String _systemName;
         private ConditionalNG _conditionalNG;
-        
+
         private ConditionalNG_Entry(ConditionalNG conditionalNG, String systemName) {
             _systemName = systemName;
             _conditionalNG = conditionalNG;
         }
-        
+
         private ConditionalNG_Entry(ConditionalNG conditionalNG) {
             this._conditionalNG = conditionalNG;
         }
-        
+
         private ConditionalNG_Entry(String systemName) {
             this._systemName = systemName;
         }
-        
+
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            getUsageTree(0, bean, report, null);
+        }
+        return report;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void getUsageTree(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
+        log.debug("** {} :: {}", level, this.getClass().getName());
+
+        level++;
+        for (int i=0; i < this.getNumConditionalNGs(); i++) {
+            getConditionalNG(i).getUsageTree(level, bean, report, getConditionalNG(i));
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void getUsageDetail(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
+    }
 }
