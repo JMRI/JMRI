@@ -1067,6 +1067,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 notifyProgListenerEnd(_slots[124].cvval(), jmri.ProgListener.FailedTimeout);
                 // might be leaving power off, but that's currently up to user to fix
             }
+            acceptAnyLACK = false;      // ensure cleared if timed out without getting a LACK
         }
     }
 
