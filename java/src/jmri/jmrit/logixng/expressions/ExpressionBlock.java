@@ -591,6 +591,18 @@ public class ExpressionBlock extends AbstractDigitalExpression
         }
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
+        log.debug("getUsageReport :: ExpressionBlock: bean = {}, report = {}", cdl, report);
+        if (getBlock() != null && bean.equals(getBlock().getBean())) {
+            report.add(new NamedBeanUsageReport("LogixNGExpression", cdl, getLongDescription()));
+        }
+        if (getBlockMemory() != null && bean.equals(getBlockMemory().getBean())) {
+            report.add(new NamedBeanUsageReport("LogixNGExpression", cdl, getLongDescription()));
+        }
+    }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionBlock.class);
 
 }

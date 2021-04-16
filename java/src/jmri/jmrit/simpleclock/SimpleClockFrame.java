@@ -423,14 +423,15 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
      * @return null if the rate could not be parsed, negative, or an unsupported fraction.
      * Otherwise the fraction value.
      */
-    @CheckForNull Double parseRate(String fieldEntry) {
+    @CheckForNull
+    Double parseRate(String fieldEntry) {
         double rate;
         try {
             char decimalSeparator = threeDigits.getDecimalFormatSymbols().getDecimalSeparator() ;
             if (decimalSeparator != '.') {
                 fieldEntry = fieldEntry.replace(decimalSeparator, '.') ;
             }
-            rate = Double.valueOf(fieldEntry);
+            rate = Double.parseDouble(fieldEntry);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, (Bundle.getMessage("ParseRateError") + "\n" + e),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);

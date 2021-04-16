@@ -31,7 +31,7 @@ import jmri.util.swing.JComboBoxUtil;
 public class ActionBlockSwing extends AbstractDigitalActionSwing {
 
     private JTabbedPane _tabbedPaneBlock;
-    private BeanSelectPanel<Block> blockBeanPanel;
+    private BeanSelectPanel<Block> _blockBeanPanel;
     private JPanel _panelBlockDirect;
     private JPanel _panelBlockReference;
     private JPanel _panelBlockLocalVariable;
@@ -73,10 +73,10 @@ public class ActionBlockSwing extends AbstractDigitalActionSwing {
         _tabbedPaneBlock.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelBlockLocalVariable);
         _tabbedPaneBlock.addTab(NamedBeanAddressing.Formula.toString(), _panelBlockFormula);
 
-        blockBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(BlockManager.class), null);
-        _panelBlockDirect.add(blockBeanPanel);
+        _blockBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(BlockManager.class), null);
+        _panelBlockDirect.add(_blockBeanPanel);
 
-        blockBeanPanel.getBeanCombo().addActionListener((java.awt.event.ActionEvent e) -> {
+        _blockBeanPanel.getBeanCombo().addActionListener((java.awt.event.ActionEvent e) -> {
 //             log.info("sample bean selection changed: {}", e);
         });
 
@@ -168,7 +168,7 @@ public class ActionBlockSwing extends AbstractDigitalActionSwing {
                 default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
             }
             if (action.getBlock() != null) {
-                blockBeanPanel.setDefaultNamedBean(action.getBlock().getBean());
+                _blockBeanPanel.setDefaultNamedBean(action.getBlock().getBean());
             }
             _blockReferenceTextField.setText(action.getReference());
             _blockLocalVariableTextField.setText(action.getLocalVariable());
@@ -255,7 +255,7 @@ public class ActionBlockSwing extends AbstractDigitalActionSwing {
             errorMessages.add("Cannot parse formula: " + e.getMessage());
         }
 
-        if (blockBeanPanel.getNamedBean() == null) {
+        if (_blockBeanPanel == null || _blockBeanPanel.getNamedBean() == null) {
             errorMessages.add(Bundle.getMessage("ActionBlock_ErrorBlock"));
         }
 
@@ -292,8 +292,8 @@ public class ActionBlockSwing extends AbstractDigitalActionSwing {
         }
         ActionBlock action = (ActionBlock) object;
 
-        if (!blockBeanPanel.isEmpty() && (_tabbedPaneBlock.getSelectedComponent() == _panelBlockDirect)) {
-            Block block = blockBeanPanel.getNamedBean();
+        if (_blockBeanPanel != null && !_blockBeanPanel.isEmpty() && (_tabbedPaneBlock.getSelectedComponent() == _panelBlockDirect)) {
+            Block block = _blockBeanPanel.getNamedBean();
             if (block != null) {
                 NamedBeanHandle<Block> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
@@ -363,8 +363,8 @@ public class ActionBlockSwing extends AbstractDigitalActionSwing {
 
     @Override
     public void dispose() {
-        if (blockBeanPanel != null) {
-            blockBeanPanel.dispose();
+        if (_blockBeanPanel != null) {
+            _blockBeanPanel.dispose();
         }
     }
 
