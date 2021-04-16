@@ -11,579 +11,1302 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config showEmptyPanes="no" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <version author="Klaus Nahr" version="1" lastUpdated="20210209"/>
-  <!-- Version 1.00 - Initial version                           -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version author="Klaus Nahr" version="1.00" lastUpdated="20210209"/>
+  <version author="Wouter Kok" version="2.00" lastUpdated="20210415"/>
+  <!-- Version 1.00 - Initial version                                   -->
+  <!-- Version 2.00 - German and Dutch translating inserted             -->
+  <!--              - CV3 and 4 switched to accelDecel_255.xml          -->
+  <!--              - CV2, 5 and 6 switched to shortAndLongAddress.xml  -->
+  <!--              - CV7 and 8 switched to mfgVersionId.xml            -->
+  <!--              - Removed consist direction                         -->
+  <!--              - CV21 and 22 switched to cv21.22_F12.xml           -->
+  <!--              - Lay-out switched for Light-Pane                   -->
+  <!--              - Speed Table inserted default values                -->
   <decoder>
-    <family name="LocoCruiser 2.0" mfg="ANE Model Co, Ltd" lowVersionID="201" highVersionID="201" comment="ANE Model LocoCruiser Version 2.01" >
-      <model model="LC201" replacementModel="LC201" replacementFamily="LocoCruiser" numOuts="6" maxInputVolts="20V" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="HO" connector="NEM652" comment="For HO Scale Locomotives, with 9 Pin Plug and NEM 652 / NMRA 8 Pin Medium Plug">
-        <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
-        <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
-        <output name="3" label="Green" connection="plug" maxcurrent="100 mA"/>
-        <output name="4" label="Brown" connection="plug" maxcurrent="100 mA"/>
-        <output name="5" label="F3" connection="solder" maxcurrent="100 mA"/>
-        <output name="6" label="F4" connection="solder" maxcurrent="100 mA"/>
-        <output name="Brake"/> <!-- Virtual Output -->
+    <family name="LocoCruiser 2.0" mfg="ANE Model Co, Ltd" lowVersionID="201" highVersionID="201" comment="ANE Model LocoCruiser Version 2.01">
+      <model model="LC201" replacementModel="LC201" replacementFamily="LocoCruiser" maxInputVolts="20V" maxMotorCurrent="1.5A (peak=2.0A)"
+             formFactor="HO" connector="NEM652" productID="LC201" comment="For HO Scale Locomotives, with 9 Pin Plug and NEM 652 / NMRA 8 Pin Medium Plug">
+        <output name="1" label="F0f|(White)" connection="plug" maxcurrent="100 mA">
+          <label xml:lang="de">F0f|(Weiss)</label>
+          <label xml:lang="nl">F0f|(Wit)</label>
+        </output>
+        <output name="2" label="F0r|(Yellow)" connection="plug" maxcurrent="100 mA">
+          <label xml:lang="de">F0r|(Gelb)</label>
+          <label xml:lang="nl">F0r|(Geel)</label>
+        </output>
+        <output name="3" label="Motor|braking"> <!-- Virtual Output -->
+          <label xml:lang="de">Motor|Bremse</label>
+          <label xml:lang="nl">Motor|Remme</label>
+        </output>
+        <output name="4" label="F1/AUX1|Green" connection="plug" maxcurrent="100 mA">
+          <label xml:lang="de">F1/AUX1|Grün</label>
+          <label xml:lang="nl">F1/AUX1|Groen</label>
+        </output>
+        <output name="5" label="F2/AUX2|Brown" connection="wire" maxcurrent="100 mA">
+          <label xml:lang="de">F2/AUX2|Braun</label>
+          <label xml:lang="nl">F2/AUX2|Bruin</label>
+        </output>
+        <output name="6" label="F3|AUX3" connection="solder" maxcurrent="100 mA"/>
+        <output name="7" label="F4|AUX4" connection="solder" maxcurrent="100 mA"/>
         <size length="28" width="15.5" height="5" units="mm"/>
       </model>
-      <model model="LC202" numOuts="6" maxInputVolts="20V" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="HO" connector="Wires/NEM652" comment="For HO Scale Locomotives, with 9 Pin Plug and Wires">
-        <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
-        <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
-        <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
-        <output name="4" label="Brown" connection="wire" maxcurrent="100 mA"/>
-        <output name="5" label="F3" connection="solder" maxcurrent="100 mA"/>
-        <output name="6" label="F4" connection="solder" maxcurrent="100 mA"/>
-        <output name="Brake"/> <!-- Virtual Output -->
+      <model model="LC202" maxInputVolts="20V" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="HO" connector="Wires/NEM652"
+             productID="LC202" comment="For HO Scale Locomotives, with 9 Pin Plug and Wires">
+        <output name="1" label="F0f|(White)" connection="wire" maxcurrent="100 mA">
+          <label xml:lang="de">F0f|(Weiss)</label>
+          <label xml:lang="nl">F0f|(Wit)</label>
+        </output>
+        <output name="2" label="F0r|(Yellow)" connection="wire" maxcurrent="100 mA">
+          <label xml:lang="de">F0r|(Gelb)</label>
+          <label xml:lang="nl">F0r|(Geel)</label>
+        </output>
+        <output name="3" label="Motor|braking"> <!-- Virtual Output -->
+          <label xml:lang="de">Motor|Bremse</label>
+          <label xml:lang="nl">Motor|Remme</label>
+        </output>
+        <output name="4" label="F1/AUX1|Green" connection="wire" maxcurrent="100 mA">
+          <label xml:lang="de">F1/AUX1|Grün</label>
+          <label xml:lang="nl">F1/AUX1|Groen</label>
+        </output>
+        <output name="5" label="F2/AUX2|Brown" connection="wire" maxcurrent="100 mA">
+          <label xml:lang="de">F2/AUX2|Braun</label>
+          <label xml:lang="nl">F2/AUX2|Bruin</label>
+        </output>
+        <output name="6" label="F3|AUX3" connection="solder" maxcurrent="100 mA"/>
+        <output name="7" label="F4|AUX4" connection="solder" maxcurrent="100 mA"/>
+        <size length="28" width="15" height="5" units="mm"/>
+      </model>
+      <model model="LC203" maxInputVolts="20V" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="HO" connector="21MTC"
+             productID="LC203" comment="For HO Scale Locomotives, with 21MTC Plug">
+        <output name="1" label="F0f|(White)" connection="plug" maxcurrent="100 mA">
+          <label xml:lang="de">F0f|(Weiss)</label>
+          <label xml:lang="nl">F0f|(Wit)</label>
+        </output>
+        <output name="2" label="F0r|(Yellow)" connection="plug" maxcurrent="100 mA">
+          <label xml:lang="de">F0r|(Gelb)</label>
+          <label xml:lang="nl">F0r|(Geel)</label>
+        </output>
+        <output name="3" label="Motor|braking"> <!-- Virtual Output -->
+          <label xml:lang="de">Motor|Bremse</label>
+          <label xml:lang="nl">Motor|Remme</label>
+        </output>
+        <output name="4" label="F1/AUX1|Green" connection="plug" maxcurrent="100 mA">
+          <label xml:lang="de">F1/AUX1|Grün</label>
+          <label xml:lang="nl">F1/AUX1|Groen</label>
+        </output>
+        <output name="5" label="F2/AUX2|Brown" connection="plug" maxcurrent="100 mA">
+          <label xml:lang="de">F2/AUX2|Braun</label>
+          <label xml:lang="nl">F2/AUX2|Bruin</label>
+        </output>
+        <output name="6" label="F3|AUX3" connection="plug" maxcurrent="100 mA"/>
+        <output name="7" label="F4|AUX4" connection="plug" maxcurrent="100 mA"/>
         <size length="28" width="15.5" height="5" units="mm"/>
       </model>
-      <model model="LC203" numOuts="6" maxInputVolts="20V" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="HO" connector="21MTC" comment="For HO Scale Locomotives, with 21MTC Plug">
-        <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
-        <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
-        <output name="3" label="Green" connection="plug" maxcurrent="100 mA"/>
-        <output name="4" label="Brown" connection="plug" maxcurrent="100 mA"/>
-        <output name="5" label="F3" connection="solder" maxcurrent="100 mA"/>
-        <output name="6" label="F4" connection="solder" maxcurrent="100 mA"/>
-        <output name="Brake"/> <!-- Virtual Output -->
-        <size length="28" width="15.5" height="5" units="mm"/>
-      </model>
-      <model model="LC204" numOuts="6" maxInputVolts="20V" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="HO" connector="other" comment="For Atlas and Athearn HO Scale Diesel Locomotives, Board replacement, requires soldering">
-        <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
-        <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
-        <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
-        <output name="4" label="Brown" connection="solder" maxcurrent="100 mA"/>
-        <output name="5" label="F3" connection="solder" maxcurrent="100 mA"/>
-        <output name="6" label="F4" connection="solder" maxcurrent="100 mA"/>
-        <output name="Brake"/> <!-- Virtual Output -->
+      <model model="LC204" maxInputVolts="20V" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="HO" connector="other"
+             productID="LC204" comment="For Atlas and Athearn HO Scale Diesel Locomotives, Board replacement, requires soldering">
+        <output name="1" label="F0f|(White)" connection="solder" maxcurrent="100 mA">
+          <label xml:lang="de">F0f|(Weiss)</label>
+          <label xml:lang="nl">F0f|(Wit)</label>
+        </output>
+        <output name="2" label="F0r|(Yellow)" connection="solder" maxcurrent="100 mA">
+          <label xml:lang="de">F0r|(Gelb)</label>
+          <label xml:lang="nl">F0r|(Geel)</label>
+        </output>
+        <output name="3" label="Motor|braking"> <!-- Virtual Output -->
+          <label xml:lang="de">Motor|Bremse</label>
+          <label xml:lang="nl">Motor|Remme</label>
+        </output>
+        <output name="4" label="F1/AUX1|Green" connection="solder" maxcurrent="100 mA">
+          <label xml:lang="de">F1/AUX1|Grün</label>
+          <label xml:lang="nl">F1/AUX1|Groen</label>
+        </output>
+        <output name="5" label="F2/AUX2|Brown" connection="solder" maxcurrent="100 mA">
+          <label xml:lang="de">F2/AUX2|Braun</label>
+          <label xml:lang="nl">F2/AUX2|Bruin</label>
+        </output>
+        <output name="6" label="F3|AUX3" connection="solder" maxcurrent="100 mA"/>
+        <output name="7" label="F4|AUX4" connection="solder" maxcurrent="100 mA"/>
         <size length="72" width="17" height="3" units="mm"/>
       </model>
-      <model model="LC205" numOuts="4" maxInputVolts="20V" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="HO" connector="21MTC" comment="For HO Scale Locomotives, with 21MTC Plug">
-        <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
-        <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
-        <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
-        <output name="4" label="Brown" connection="wire" maxcurrent="100 mA"/>
-        <output name="Brake"/> <!-- Virtual Output -->
+      <model model="LC205" maxInputVolts="20V" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="HO" connector="21MTC" numOuts="5"
+             productID="LC205" comment="For HO Scale Locomotives, with 21MTC Plug">
+       <output name="1" label="F0f|(White)" connection="plug" maxcurrent="100 mA">
+          <label xml:lang="de">F0f|(Weiss)</label>
+          <label xml:lang="nl">F0f|(Wit)</label>
+        </output>
+        <output name="2" label="F0r|(Yellow)" connection="plug" maxcurrent="100 mA">
+          <label xml:lang="de">F0r|(Gelb)</label>
+          <label xml:lang="nl">F0r|(Geel)</label>
+        </output>
+        <output name="3" label="Motor|braking"> <!-- Virtual Output -->
+          <label xml:lang="de">Motor|Bremse</label>
+          <label xml:lang="nl">Motor|Remme</label>
+        </output>
+        <output name="4" label="F1/AUX1|Green" connection="plug" maxcurrent="100 mA">
+          <label xml:lang="de">F1/AUX1|Grün</label>
+          <label xml:lang="nl">F1/AUX1|Groen</label>
+        </output>
+        <output name="5" label="F2/AUX2|Brown" connection="plug" maxcurrent="100 mA">
+          <label xml:lang="de">F2/AUX2|Braun</label>
+          <label xml:lang="nl">F2/AUX2|Bruin</label>
+        </output>
+        
         <size length="28" width="15.5" height="5" units="mm"/>
       </model>
-      <model model="LC206" numOuts="4" maxInputVolts="20V" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="HO" connector="NEM652" comment="For HO Scale Locomotives, with 9 Pin Plug and NEM 652 / NMRA 8 Pin Medium Plug">
-        <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
-        <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
-        <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
-        <output name="4" label="Brown" connection="wire" maxcurrent="100 mA"/>
-        <output name="Brake"/> <!-- Virtual Output -->
+      <model model="LC206" maxInputVolts="20V" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="HO" connector="NEM652" numOuts="5"
+             productID="LC206" comment="For HO Scale Locomotives, with 9 Pin Plug and NEM 652 / NMRA 8 Pin Medium Plug">
+        <output name="1" label="F0f|(White)" connection="plug" maxcurrent="100 mA">
+          <label xml:lang="de">F0f|(Weiss)</label>
+          <label xml:lang="nl">F0f|(Wit)</label>
+        </output>
+        <output name="2" label="F0r|(Yellow)" connection="plug" maxcurrent="100 mA">
+          <label xml:lang="de">F0r|(Gelb)</label>
+          <label xml:lang="nl">F0r|(Geel)</label>
+        </output>
+        <output name="3" label="Motor|braking"> <!-- Virtual Output -->
+          <label xml:lang="de">Motor|Bremse</label>
+          <label xml:lang="nl">Motor|Remme</label>
+        </output>
+        <output name="4" label="F1/AUX1|Green" connection="plug" maxcurrent="100 mA">
+          <label xml:lang="de">F1/AUX1|Grün</label>
+          <label xml:lang="nl">F1/AUX1|Groen</label>
+        </output>
+        <output name="5" label="F2/AUX2|Brown" connection="wire" maxcurrent="100 mA">
+          <label xml:lang="de">F2/AUX2|Braun</label>
+          <label xml:lang="nl">F2/AUX2|Bruin</label>
+        </output>
+        
         <size length="28" width="15.5" height="5" units="mm"/>
       </model>
-      <model model="LC301" numOuts="6" maxInputVolts="20V" maxMotorCurrent="0.7A (peak=1.0A)" formFactor="N" connector="NEM651" comment="For N Scale Locomotives, with NEM 651 / NMRA 6 Pin Small Plug">
-        <output name="1" label="F0F" connection="plug" maxcurrent="100 mA"/>
-        <output name="2" label="F0R" connection="plug" maxcurrent="100 mA"/>
-        <output name="3" label="F1" connection="plug" maxcurrent="100 mA"/>
-        <output name="4" label="F2" connection="plug" maxcurrent="100 mA"/>
-        <output name="5" label="F3" connection="plug" maxcurrent="100 mA"/>
-        <output name="6" label="F4" connection="plug" maxcurrent="100 mA"/>
-        <output name="Brake"/> <!-- Virtual Output -->
+      <model model="LC301" maxInputVolts="20V" maxMotorCurrent="0.7A (peak=1.0A)" formFactor="N" numOuts="3"
+             productID="LC301" connector="NEM651" comment="For N Scale Locomotives, with NEM 651 / NMRA 6 Pin Small Plug">
+        <output name="1" label="F0f|(White)" connection="plug" maxcurrent="100 mA">
+          <label xml:lang="de">F0f|(Weiss)</label>
+          <label xml:lang="nl">F0f|(Wit)</label>
+        </output>
+        <output name="2" label="F0r|(Yellow)" connection="plug" maxcurrent="100 mA">
+          <label xml:lang="de">F0r|(Gelb)</label>
+          <label xml:lang="nl">F0r|(Geel)</label>
+        </output>
+        <output name="3" label="Motor|braking"> <!-- Virtual Output -->
+          <label xml:lang="de">Motor|Bremse</label>
+          <label xml:lang="nl">Motor|Remme</label>
+        </output>
         <!-- ToDo: size length="x" width="x" height="x" units="mm"/ -->
       </model>
-      <model model="LC302" numOuts="6" maxInputVolts="20V" maxMotorCurrent="0.7A (peak=1.0A)" formFactor="N" connector="DropIn" comment="For Kato N Scale Diesel Locomotives, Board replacement">
-        <output name="1" label="F0F" connection="solder" maxcurrent="100 mA"/>
-        <output name="2" label="F0R" connection="solder" maxcurrent="100 mA"/>
-        <output name="3" label="F1" connection="solder" maxcurrent="100 mA"/>
-        <output name="4" label="F2" connection="solder" maxcurrent="100 mA"/>
-        <output name="5" label="F3" connection="solder" maxcurrent="100 mA"/>
-        <output name="6" label="F4" connection="solder" maxcurrent="100 mA"/>
-        <output name="Brake"/> <!-- Virtual Output -->
+      <model model="LC302" maxInputVolts="20V" maxMotorCurrent="0.7A (peak=1.0A)" formFactor="N"
+             productID="LC302" connector="DropIn" comment="For Kato N Scale Diesel Locomotives, Board replacement">
+        <output name="1" label="F0f|(White)" connection="solder" maxcurrent="100 mA">
+          <label xml:lang="de">F0f|(Weiss)</label>
+          <label xml:lang="nl">F0f|(Wit)</label>
+        </output>
+        <output name="2" label="F0r|(Yellow)" connection="solder" maxcurrent="100 mA">
+          <label xml:lang="de">F0r|(Gelb)</label>
+          <label xml:lang="nl">F0r|(Geel)</label>
+        </output>
+        <output name="3" label="Motor|braking"> <!-- Virtual Output -->
+          <label xml:lang="de">Motor|Bremse</label>
+          <label xml:lang="nl">Motor|Remme</label>
+        </output>
+        <output name="4" label="F1/AUX1|Green" connection="solder" maxcurrent="100 mA">
+          <label xml:lang="de">F1/AUX1|Grün</label>
+          <label xml:lang="nl">F1/AUX1|Groen</label>
+        </output>
+        <output name="5" label="F2/AUX2|Brown" connection="solder" maxcurrent="100 mA">
+          <label xml:lang="de">F2/AUX2|Braun</label>
+          <label xml:lang="nl">F2/AUX2|Bruin</label>
+        </output>
+        <output name="6" label="F3|AUX3" connection="solder" maxcurrent="100 mA"/>
+        <output name="7" label="F4|AUX4" connection="solder" maxcurrent="100 mA"/>
+        
         <size length="55" width="14" height="2" units="mm"/>
       </model>
-      <model model="LC303" numOuts="6" maxInputVolts="20V" maxMotorCurrent="0.7A (peak=1.0A)" formFactor="N" connector="other" comment="For N Scale Passenger Motor Cars, Board replacement, requires soldering">
-        <output name="1" label="F0F" connection="LED" maxcurrent="100 mA"/>
-        <output name="2" label="F0R" connection="LED" maxcurrent="100 mA"/>
-        <output name="3" label="F1" connection="LED" maxcurrent="100 mA"/>
-        <output name="4" label="F2" connection="solder" maxcurrent="100 mA"/>
-        <output name="5" label="F3" connection="solder" maxcurrent="100 mA"/>
-        <output name="6" label="F4" connection="solder" maxcurrent="100 mA"/>
-        <output name="Brake"/> <!-- Virtual Output -->
+      <model model="LC303" maxInputVolts="20V" maxMotorCurrent="0.7A (peak=1.0A)" formFactor="N" connector="other"
+             productID="LC303" comment="For N Scale Passenger Motor Cars, Board replacement, requires soldering">
+        <output name="1" label="F0f|(White)" connection="LED" maxcurrent="100 mA">
+          <label xml:lang="de">F0f|(Weiss)</label>
+          <label xml:lang="nl">F0f|(Wit)</label>
+        </output>
+        <output name="2" label="F0r|(Yellow)" connection="LED" maxcurrent="100 mA">
+          <label xml:lang="de">F0r|(Gelb)</label>
+          <label xml:lang="nl">F0r|(Geel)</label>
+        </output>
+        <output name="3" label="Motor|braking"> <!-- Virtual Output -->
+          <label xml:lang="de">Motor|Bremse</label>
+          <label xml:lang="nl">Motor|Remme</label>
+        </output>
+        <output name="4" label="F1/AUX1|Green" connection="LED" maxcurrent="100 mA">
+          <label xml:lang="de">F1/AUX1|Grün</label>
+          <label xml:lang="nl">F1/AUX1|Groen</label>
+        </output>
+        <output name="5" label="F2/AUX2|Brown" connection="solder" maxcurrent="100 mA">
+          <label xml:lang="de">F2/AUX2|Braun</label>
+          <label xml:lang="nl">F2/AUX2|Bruin</label>
+        </output>
+        <output name="6" label="F3|AUX3" connection="solder" maxcurrent="100 mA"/>
+        <output name="7" label="F4|AUX4" connection="solder" maxcurrent="100 mA"/>
         <size length="115" width="15" height="4" units="mm"/>
       </model>
-      <model model="DL-28" numOuts="6" maxInputVolts="20V" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="HO" connector="other" comment="For H0e Scale Alishan Forest Railway DL-28 Diesel Locomotives, Board replacement, with Plugs">
-        <output name="1" label="F0F" connection="LED" maxcurrent="100 mA"/>
-        <output name="2" label="F0R" connection="plug" maxcurrent="100 mA"/>
-        <output name="3" label="F1" connection="solder" maxcurrent="100 mA"/>
-        <output name="4" label="F2" connection="solder" maxcurrent="100 mA"/>
-        <output name="5" label="F3" connection="solder" maxcurrent="100 mA"/>
-        <output name="6" label="F4" connection="solder" maxcurrent="100 mA"/>
-        <output name="Brake"/> <!-- Virtual Output -->
+      <model model="DL-28" maxInputVolts="20V" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="HO" connector="other"
+             productID="DL-28" comment="For H0e Scale Alishan Forest Railway DL-28 Diesel Locomotives, Board replacement, with Plugs">
+        <output name="1" label="F0f|(White)" connection="LED" maxcurrent="100 mA">
+          <label xml:lang="de">F0f|(Weiss)</label>
+          <label xml:lang="nl">F0f|(Wit)</label>
+        </output>
+        <output name="2" label="F0r|(Yellow)" connection="Plug" maxcurrent="100 mA">
+          <label xml:lang="de">F0r|(Gelb)</label>
+          <label xml:lang="nl">F0r|(Geel)</label>
+        </output>
+        <output name="3" label="Motor|braking"> <!-- Virtual Output -->
+          <label xml:lang="de">Motor|Bremse</label>
+          <label xml:lang="nl">Motor|Remme</label>
+        </output>
+        <output name="4" label="F1/AUX1|Green" connection="solder" maxcurrent="100 mA">
+          <label xml:lang="de">F1/AUX1|Grün</label>
+          <label xml:lang="nl">F1/AUX1|Groen</label>
+        </output>
+        <output name="5" label="F2/AUX2|Brown" connection="solder" maxcurrent="100 mA">
+          <label xml:lang="de">F2/AUX2|Braun</label>
+          <label xml:lang="nl">F2/AUX2|Bruin</label>
+        </output>
+        <output name="6" label="F3|AUX3" connection="solder" maxcurrent="100 mA"/>
+        <output name="7" label="F4|AUX4" connection="solder" maxcurrent="100 mA"/>
         <size length="58" width="17" height="4" units="mm"/>
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <!-- Pane Basic -->
-      <variable CV="7" readOnly="yes" item="Decoder Version" default="201">
-        <decVal/>
-        <label>Version Number</label>
-      </variable>
-      <variable CV="8" readOnly="yes" item="Manufacturer" default="45">
-        <decVal/>
-        <label>Manufacturer ID</label>
-      </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <!-- Pane Motor -->
-      <variable CV="3" item="Accel" default="5" tooltip="0-255">
-        <decVal max="255"/>
-        <label>Acceleration</label>
-      </variable>
-      <variable CV="4" item="Decel" default="5" tooltip="0-255">
-        <decVal max="255"/>
-        <label>Deceleration</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
       <variable CV="10" item="EMF Feedback Cutout" default="128">
         <decVal min="1" max="128"/>
         <label>EMF Feedback Cut-out</label>
+        <label xml:lang="de">EMF-Feedback-Abschaltung</label>
+        <label xml:lang="nl">EMF feedback uitschakellen</label>
+        <tooltip>Range: 1-128, Default: 128 </tooltip>
+        <tooltip xml:lang="de">Bereich: 1-128, voreingestellt: 128</tooltip>
+        <tooltip xml:lang="nl">Bereik: 1-128, standaardinstelling: 128</tooltip>
       </variable>
       <variable CV="63" item="Motor Option 1" default="5">
-        <decVal/>
-        <label>Brake (F7)</label>
+        <decVal min="0" max="255"/>
+        <label>Adjusts motor braking time (F7)</label>
+        <label xml:lang="de">Passt die Bremszeit des Motors an (F7)</label>
+        <label xml:lang="nl">Past de remtijd van de motor aan (F7)</label>
+        <tooltip>Range: 0-255, Default: 5 </tooltip>
+        <tooltip xml:lang="de">Bereich: 0-255, voreingestellt: 5</tooltip>
+        <tooltip xml:lang="nl">Bereik: 0-255, standaardinstelling: 5</tooltip>
       </variable>
       <variable CV="64" item="Motor Option 2" default="60" tooltip="Adjustable in 21.48 mA steps">
-        <decVal/>
+        <decVal min="0" max="255"/>
         <label>Motor overload protection</label>
+        <label xml:lang="de">Motorüberlastschutz</label>
+        <label xml:lang="nl">Motor overbelasting bescherming</label>
+        <tooltip>&lt;html&gt;Adjustable in 21.48 mA steps.&lt;br&gt;
+                             Range: 0-255, Default: 60&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Einstellbar in 21,48 mA Schritten.&lt;br&gt;
+                                           Bereich: 0-255, voreingestellt: 60&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Instelbaar in stappen van 21,48 mA.&lt;br&gt;
+                                           Bereik: 0-255, standaardinstelling: 60&lt;br&gt;&lt;/html&gt;</tooltip>
       </variable>
       <!-- Pane Basic Speed Control -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
-      <variable CV="2" item="Vstart" default="1" tooltip="0-255">
-        <decVal/>
-        <label>Start Voltage</label>
-      </variable>
-      <variable CV="5" item="Vhigh" default="0" tooltip="0-255">
-        <decVal/>
-        <label>Maximum Speed</label>
-      </variable>
-      <variable CV="6" item="Vmid" default="0" tooltip="0-255">
-        <decVal/>
-        <label>Medium Speed</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/vStartHighMid.xml"/>
       <!-- Pane Speed Table -->
-      <!-- ToDo: Defaults, unfortunately there is no known way to set a Default Values for the Speed Table -->
-      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
+      <variable CV="67" comment="Range 1-255" item="Speed Table">
+        <speedTableVal min="1" max="255" entries="28">
+          <speedTableEntry step="1" value="1"/>
+          <speedTableEntry step="2" value="6"/>
+          <speedTableEntry step="3" value="12"/>
+          <speedTableEntry step="4" value="16"/>
+          <speedTableEntry step="5" value="20"/>
+          <speedTableEntry step="6" value="24"/>
+          <speedTableEntry step="7" value="28"/>
+          <speedTableEntry step="8" value="32"/>
+          <speedTableEntry step="9" value="36"/>
+          <speedTableEntry step="10" value="42"/>
+          <speedTableEntry step="11" value="48"/>
+          <speedTableEntry step="12" value="54"/>
+          <speedTableEntry step="13" value="60"/>
+          <speedTableEntry step="14" value="68"/>
+          <speedTableEntry step="15" value="76"/>
+          <speedTableEntry step="16" value="84"/>
+          <speedTableEntry step="17" value="92"/>
+          <speedTableEntry step="18" value="102"/>
+          <speedTableEntry step="19" value="112"/>
+          <speedTableEntry step="20" value="124"/>
+          <speedTableEntry step="21" value="136"/>
+          <speedTableEntry step="22" value="152"/>
+          <speedTableEntry step="23" value="168"/>
+          <speedTableEntry step="24" value="188"/>
+          <speedTableEntry step="25" value="108"/>
+          <speedTableEntry step="26" value="230"/>
+          <speedTableEntry step="27" value="252"/>
+          <speedTableEntry step="28" value="255"/>
+        </speedTableVal>
+        <label>                   Speed Table (CV67-94) (1-255)</label>
+        <label xml:lang="de">                   programmierbare Fahrkurve (CV67-94) (1-255)</label>
+        <label xml:lang="nl">                   Instelbare snelheid’s tabel (CV67-94) (1-255)</label>
+      </variable>
       <!-- Function Output Mapping -->
-      <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
-      </variable>
-      <variable item="FL(f) controls output 2" CV="34" mask="XXXXXXXV" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
-      </variable>
-      <variable item="FL(f) controls output 3" CV="35" mask="XXXXXXXV" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
-      </variable>
-      <variable item="FL(f) controls output 4" CV="36" mask="XXXXXXXV" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
-      </variable>
-      <variable item="FL(f) controls output 5" CV="37" mask="XXXXXXXV" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
-      </variable>
-      <variable item="FL(r) controls output 1" CV="33" mask="XXXXXXVX" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
-      </variable>
-      <variable item="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
-      </variable>
-      <variable item="FL(r) controls output 3" CV="35" mask="XXXXXXVX" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
-      </variable>
-      <variable item="FL(r) controls output 4" CV="36" mask="XXXXXXVX" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
-      </variable>
-      <variable item="FL(r) controls output 5" CV="37" mask="XXXXXXVX" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
-      </variable>
-      <variable item="F1 controls output 1" CV="33" mask="XXXXXVXX" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
-      </variable>
-      <variable item="F1 controls output 2" CV="34" mask="XXXXXVXX" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
-      </variable>
-      <variable item="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
-      </variable>
-      <variable item="F1 controls output 4" CV="36" mask="XXXXXVXX" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
-      </variable>
-      <variable item="F1 controls output 5" CV="37" mask="XXXXXVXX" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
-      </variable>
-      <variable item="F2 controls output 1" CV="33" mask="XXXXVXXX" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
-      </variable>
-      <variable item="F2 controls output 2" CV="34" mask="XXXXVXXX" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
-      </variable>
-      <variable item="F2 controls output 3" CV="35" mask="XXXXVXXX" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
-      </variable>
-      <variable item="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
-      </variable>
-      <variable item="F2 controls output 5" CV="37" mask="XXXXVXXX" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
-      </variable>
-      <variable item="F2 controls output 6" CV="38" mask="XXXXXXXV" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
-      </variable>
-      <variable item="F2 controls output Brake" CV="41" mask="XXXXXXXV" minOut="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/> 
-      </variable>
-      <variable item="F3 controls output 1" CV="33" mask="XXXVXXXX" minOut="1">
+      <!-- CV33 -->
+      <variable CV="33" mask="XXXXXXXV" item="FL(f) controls output 1" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 1</label>
+        <label xml:lang="de">FL(f) steuert Ausgang 1</label>
+        <label xml:lang="nl">FL(f) stuurt uitgang 1</label>
       </variable>
-      <variable item="F3 controls output 2" CV="34" mask="XXXVXXXX" minOut="2">
+      <variable CV="33" mask="XXXXXXVX" item="FL(r) controls output 1" minOut="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 1</label>
+        <label xml:lang="de">FL(r) steuert Ausgang 1</label>
+        <label xml:lang="nl">FL(r) stuurt uitgang 1</label>
       </variable>
-      <variable item="F3 controls output 3" CV="35" mask="XXXVXXXX" minOut="3">
+      <variable CV="33" mask="XXXXXVXX" item="F1 controls output 1" minOut="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 1</label>
+        <label xml:lang="de">F1 steuert Ausgang 1</label>
+        <label xml:lang="nl">F1 stuurt uitgang 1</label>
       </variable>
-      <variable item="F3 controls output 4" CV="36" mask="XXXVXXXX" minOut="4">
+      <variable CV="33" mask="XXXXVXXX" item="F2 controls output 1" minOut="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 1</label>
+        <label xml:lang="de">F2 steuert Ausgang 1</label>
+        <label xml:lang="nl">F2 stuurt uitgang 1</label>
       </variable>
-      <variable item="F3 controls output 5" CV="37" mask="XXXVXXXX" minOut="5">
+      <variable CV="33" mask="XXXVXXXX" item="F3 controls output 1" minOut="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 1</label>
+        <label xml:lang="de">F3 steuert Ausgang 1</label>
+        <label xml:lang="nl">F3 stuurt uitgang 1</label>
       </variable>
-      <variable item="F3 controls output 6" CV="38" mask="XXXXXXVX" minOut="6">
+      <variable CV="33" mask="XXVXXXXX" item="F4 controls output 1" minOut="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 1</label>
+        <label xml:lang="de">F4 steuert Ausgang 1</label>
+        <label xml:lang="nl">F4 stuurt uitgang 1</label>
       </variable>
-      <variable item="F3 controls output Brake" CV="41" mask="XXXXXXVX" minOut="0">
+      <variable CV="33" mask="XVXXXXXX" item="F5 controls output 1" minOut="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 1</label>
+        <label xml:lang="de">F5 steuert Ausgang 1</label>
+        <label xml:lang="nl">F5 stuurt uitgang 1</label>
       </variable>
-      <variable item="F4 controls output 1" CV="33" mask="XXVXXXXX" minOut="1">
+      <variable CV="33" mask="VXXXXXXX" item="FL controls output 1" minOut="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FOf always on</label>
+        <label xml:lang="de">FOf immer ein</label>
+        <label xml:lang="nl">FOf altijd aan</label>
       </variable>
-      <variable item="F4 controls output 2" CV="34" mask="XXVXXXXX" minOut="2">
+      <!-- CV34 -->
+      <variable CV="34" mask="XXXXXXXV" item="FL(f) controls output 2" minOut="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 1</label>
+        <label xml:lang="de">FL(f) steuert Ausgang 1</label>
+        <label xml:lang="nl">FL(f) stuurt uitgang 1</label>
       </variable>
-      <variable item="F4 controls output 3" CV="35" mask="XXVXXXXX" minOut="3">
+      <variable CV="34" mask="XXXXXXVX" item="FL(r) controls output 2" minOut="2" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 1</label>
+        <label xml:lang="de">FL(r) steuert Ausgang 1</label>
+        <label xml:lang="nl">FL(r) stuurt uitgang 1</label>
       </variable>
-      <variable item="F4 controls output 4" CV="36" mask="XXVXXXXX" minOut="4">
+      <variable CV="34" mask="XXXXXVXX" item="F1 controls output 2" minOut="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 1</label>
+        <label xml:lang="de">F1 steuert Ausgang 1</label>
+        <label xml:lang="nl">F1 stuurt uitgang 1</label>
       </variable>
-      <variable item="F4 controls output 5" CV="37" mask="XXVXXXXX" minOut="5">
+      <variable CV="34" mask="XXXXVXXX" item="F2 controls output 2" minOut="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 1</label>
+        <label xml:lang="de">F2 steuert Ausgang 1</label>
+        <label xml:lang="nl">F2 stuurt uitgang 1</label>
       </variable>
-      <variable item="F4 controls output 6" CV="38" mask="XXXXXVXX" minOut="6">
+      <variable CV="34" mask="XXXVXXXX" item="F3 controls output 2" minOut="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 1</label>
+        <label xml:lang="de">F3 steuert Ausgang 1</label>
+        <label xml:lang="nl">F3 stuurt uitgang 1</label>
       </variable>
-      <variable item="F4 controls output Brake" CV="41" mask="XXXXXVXX" minOut="0">
+      <variable CV="34" mask="XXVXXXXX" item="F4 controls output 2" minOut="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 1</label>
+        <label xml:lang="de">F4 steuert Ausgang 1</label>
+        <label xml:lang="nl">F4 stuurt uitgang 1</label>
       </variable>
-      <variable item="F5 controls output 1" CV="33" mask="XVXXXXXX" minOut="1">
+      <variable CV="34" mask="XVXXXXXX" item="F5 controls output 2" minOut="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 1</label>
+        <label xml:lang="de">F5 steuert Ausgang 1</label>
+        <label xml:lang="nl">F5 stuurt uitgang 1</label>
       </variable>
-      <variable item="F5 controls output 2" CV="34" mask="XVXXXXXX" minOut="2">
+      <variable CV="34" mask="VXXXXXXX" item="FL controls output 2" minOut="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FOf always on</label>
+        <label xml:lang="de">FOf immer ein</label>
+        <label xml:lang="nl">FOf altijd aan</label>
       </variable>
-      <variable item="F5 controls output 3" CV="35" mask="XVXXXXXX" minOut="3">
+      <!-- CV35 -->
+      <variable CV="35" mask="XXXXXXXV" item="FL(f) controls output 4" minOut="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 1</label>
+        <label xml:lang="de">FL(f) steuert Ausgang 1</label>
+        <label xml:lang="nl">FL(f) stuurt uitgang 1</label>
       </variable>
-      <variable item="F5 controls output 4" CV="36" mask="XVXXXXXX" minOut="4">
+      <variable CV="35" mask="XXXXXXVX" item="FL(r) controls output 4" minOut="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 1</label>
+        <label xml:lang="de">FL(r) steuert Ausgang 1</label>
+        <label xml:lang="nl">FL(r) stuurt uitgang 1</label>
       </variable>
-      <variable item="F5 controls output 5" CV="37" mask="XVXXXXXX" minOut="5">
+      <variable CV="35" mask="XXXXXVXX" item="F1 controls output 4" minOut="4" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 1</label>
+        <label xml:lang="de">F1 steuert Ausgang 1</label>
+        <label xml:lang="nl">F1 stuurt uitgang 1</label>
       </variable>
-      <variable item="F5 controls output 6" CV="38" mask="XXXXVXXX" minOut="6">
+      <variable CV="35" mask="XXXXVXXX" item="F2 controls output 4" minOut="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 1</label>
+        <label xml:lang="de">F2 steuert Ausgang 1</label>
+        <label xml:lang="nl">F2 stuurt uitgang 1</label>
       </variable>
-      <variable item="F5 controls output Brake" CV="41" mask="XXXXVXXX" minOut="0">
+      <variable CV="35" mask="XXXVXXXX" item="F3 controls output 4" minOut="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 1</label>
+        <label xml:lang="de">F3 steuert Ausgang 1</label>
+        <label xml:lang="nl">F3 stuurt uitgang 1</label>
       </variable>
-      <variable item="F6 controls output 1" CV="33" mask="VXXXXXXX" minOut="1">
+      <variable CV="34" mask="XXVXXXXX" item="F4 controls output 4" minOut="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 1</label>
+        <label xml:lang="de">F4 steuert Ausgang 1</label>
+        <label xml:lang="nl">F4 stuurt uitgang 1</label>
       </variable>
-      <variable item="F6 controls output 2" CV="34" mask="VXXXXXXX" minOut="2">
+      <variable CV="34" mask="XVXXXXXX" item="F5 controls output 4" minOut="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 1</label>
+        <label xml:lang="de">F5 steuert Ausgang 1</label>
+        <label xml:lang="nl">F5 stuurt uitgang 1</label>
       </variable>
-      <variable item="F6 controls output 3" CV="35" mask="VXXXXXXX" minOut="3">
+      <variable CV="35" mask="VXXXXXXX" item="FL controls output 4" minOut="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FOf always on</label>
+        <label xml:lang="de">FOf immer ein</label>
+        <label xml:lang="nl">FOf altijd aan</label>
       </variable>
-      <variable item="F6 controls output 4" CV="36" mask="VXXXXXXX" minOut="4">
+      <!-- CV36 -->
+      <variable CV="36" mask="XXXXXXXV" item="FL(f) controls output 5" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 1</label>
+        <label xml:lang="de">FL(f) steuert Ausgang 1</label>
+        <label xml:lang="nl">FL(f) stuurt uitgang 1</label>
       </variable>
-      <variable item="F6 controls output 5" CV="37" mask="VXXXXXXX" minOut="5">
+      <variable CV="36" mask="XXXXXXVX" item="FL(r) controls output 5" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 1</label>
+        <label xml:lang="de">FL(r) steuert Ausgang 1</label>
+        <label xml:lang="nl">FL(r) stuurt uitgang 1</label>
       </variable>
-      <variable item="F6 controls output 6" CV="38" mask="XXXVXXXX" minOut="6">
+      <variable CV="36" mask="XXXXXVXX" item="F1 controls output 5" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 1</label>
+        <label xml:lang="de">F1 steuert Ausgang 1</label>
+        <label xml:lang="nl">F1 stuurt uitgang 1</label>
       </variable>
-      <variable item="F6 controls output Brake" CV="41" mask="XXXVXXXX" minOut="0">
+      <variable CV="36" mask="XXXXVXXX" item="F2 controls output 5" minOut="5" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 1</label>
+        <label xml:lang="de">F2 steuert Ausgang 1</label>
+        <label xml:lang="nl">F2 stuurt uitgang 1</label>
       </variable>
-      <variable item="F7 controls output 6" CV="38" mask="XXVXXXXX" minOut="6">
+      <variable CV="36" mask="XXXVXXXX" item="F3 controls output 5" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 1</label>
+        <label xml:lang="de">F3 steuert Ausgang 1</label>
+        <label xml:lang="nl">F3 stuurt uitgang 1</label>
       </variable>
-      <variable item="F7 controls output Brake" CV="41" mask="XXVXXXXX" minOut="0" default="1">
+      <variable CV="36" mask="XXVXXXXX" item="F4 controls output 5" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 1</label>
+        <label xml:lang="de">F4 steuert Ausgang 1</label>
+        <label xml:lang="nl">F4 stuurt uitgang 1</label>
       </variable>
-      <variable item="F8 controls output 6" CV="38" mask="XVXXXXXX" minOut="6">
+      <variable CV="36" mask="XVXXXXXX" item="F5 controls output 5" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 1</label>
+        <label xml:lang="de">F5 steuert Ausgang 1</label>
+        <label xml:lang="nl">F5 stuurt uitgang 1</label>
       </variable>
-      <variable item="F8 controls output Brake" CV="41" mask="XVXXXXXX" minOut="0">
+      <variable CV="36" mask="VXXXXXXX" item="FL controls output 5" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FOf always on</label>
+        <label xml:lang="de">FOf immer ein</label>
+        <label xml:lang="nl">FOf altijd aan</label>
       </variable>
-      <variable item="F9 controls output 6" CV="38" mask="VXXXXXXX" minOut="6">
+      <!-- CV37 -->
+      <variable CV="37" mask="XXXXXXXV" item="FL(f) controls output 6" minOut="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 1</label>
+        <label xml:lang="de">FL(f) steuert Ausgang 1</label>
+        <label xml:lang="nl">FL(f) stuurt uitgang 1</label>
       </variable>
-      <variable item="F9 controls output Brake" CV="41" mask="VXXXXXXX" minOut="0">
+      <variable CV="37" mask="XXXXXXVX" item="FL(r) controls output 6" minOut="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 1</label>
+        <label xml:lang="de">FL(r) steuert Ausgang 1</label>
+        <label xml:lang="nl">FL(r) stuurt uitgang 1</label>
+      </variable>
+      <variable CV="37" mask="XXXXXVXX" item="F1 controls output 6" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 1</label>
+        <label xml:lang="de">F1 steuert Ausgang 1</label>
+        <label xml:lang="nl">F1 stuurt uitgang 1</label>
+      </variable>
+      <variable CV="37" mask="XXXXVXXX" item="F2 controls output 6" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 1</label>
+        <label xml:lang="de">F2 steuert Ausgang 1</label>
+        <label xml:lang="nl">F2 stuurt uitgang 1</label>
+      </variable>
+      <variable CV="37" mask="XXXVXXXX" item="F3 controls output 6" minOut="6" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 1</label>
+        <label xml:lang="de">F3 steuert Ausgang 1</label>
+        <label xml:lang="nl">F3 stuurt uitgang 1</label>
+      </variable>
+      <variable CV="37" mask="XXVXXXXX" item="F4 controls output 6" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 1</label>
+        <label xml:lang="de">F4 steuert Ausgang 1</label>
+        <label xml:lang="nl">F4 stuurt uitgang 1</label>
+      </variable>
+      <variable CV="37" mask="XVXXXXXX" item="F5 controls output 6" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 1</label>
+        <label xml:lang="de">F5 steuert Ausgang 1</label>
+        <label xml:lang="nl">F5 stuurt uitgang 1</label>
+      </variable>
+      <variable CV="37" mask="VXXXXXXX" item="FL controls output 6" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FOf always on</label>
+        <label xml:lang="de">FOf immer ein</label>
+        <label xml:lang="nl">FOf altijd aan</label>
+      </variable>
+      <!-- CV38 -->
+      <variable CV="38" mask="XXXXXXXV" item="F2 controls output 7" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 1</label>
+        <label xml:lang="de">F2 steuert Ausgang 1</label>
+        <label xml:lang="nl">F2 stuurt uitgang 1</label>
+      </variable>
+      <variable CV="38" mask="XXXXXXVX" item="F3 controls output 7" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 1</label>
+        <label xml:lang="de">F3 steuert Ausgang 1</label>
+        <label xml:lang="nl">F3 stuurt uitgang 1</label>
+      </variable>
+      <variable CV="38" mask="XXXXXVXX" item="F4 controls output 7" minOut="7" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 1</label>
+        <label xml:lang="de">F4 steuert Ausgang 1</label>
+        <label xml:lang="nl">F4 stuurt uitgang 1</label>
+      </variable>
+      <variable CV="38" mask="XXXXVXXX" item="F5 controls output 7" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 1</label>
+        <label xml:lang="de">F5 steuert Ausgang 1</label>
+        <label xml:lang="nl">F5 stuurt uitgang 1</label>
+      </variable>
+      <variable CV="38" mask="VXXXXXXX" item="FL controls output 7" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FOf always on</label>
+        <label xml:lang="de">FOf immer ein</label>
+        <label xml:lang="nl">FOf altijd aan</label>
+      </variable>
+      <!-- CV41 -->
+      <variable CV="41" mask="XXVXXXXX" item="F7 controls output 3" minOut="3" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 1</label>
+        <label xml:lang="de">F5 steuert Ausgang 1</label>
+        <label xml:lang="nl">F5 stuurt uitgang 1</label>
       </variable>
       <!-- Pane Lights -->
-      <variable CV="49" mask="VVVXXVVV" item="Function F0F effect generated" default="0">
+      <variable CV="49" mask="VVVXXVVV" item="Function F0f effect generated" default="0">
         <enumVal>
-          <enumChoice choice="Constant" value="0"/>
-          <enumChoice choice="Strobe" value="2"/>
-          <enumChoice choice="Mars" value="4"/>
-          <enumChoice choice="1/4 sec Flashing (Phase A)" value="32"/>
-          <enumChoice choice="1/4 sec Flashing (Phase B)" value="64"/>
-          <enumChoice choice="Firebox" value="36"/>
-          <enumChoice choice="Warning" value="69"/>
-          <enumChoice choice="1/2 sec Flashing" value="128"/>
+          <enumChoice choice="Constant" value="0">
+            <choice>Constant</choice>
+            <choice xml:lang="de">Dauerhaft</choice>
+            <choice xml:lang="nl">permanent</choice>
+          </enumChoice>
+          <enumChoice choice="Strobe" value="2">
+            <choice>Strobe</choice>
+            <choice xml:lang="de">Blitzen </choice>
+            <choice xml:lang="nl">Flitsen</choice>
+          </enumChoice>
+          <enumChoice choice="Mars" value="4">
+            <choice>Mars light</choice>
+            <choice xml:lang="de">Mars Licht</choice>
+            <choice xml:lang="nl">Mars licht</choice>
+          </enumChoice>
+          <enumChoice choice="1/4 sec Flashing (Phase A)" value="32">
+            <choice>1/4 sec Flashing (Phase A)</choice>
+            <choice xml:lang="de">1/4 sec Blinken (Phase A)</choice>
+            <choice xml:lang="nl">1/4 sec Knipperend (fase A)</choice>
+          </enumChoice>
+          <enumChoice choice="1/4 sec Flashing (Phase B)" value="64">
+            <choice>1/4 sec Flashing (Phase B)</choice>
+            <choice xml:lang="de">1/4 sec Blinken (Phase B)</choice>
+            <choice xml:lang="nl">1/4 sec Knipperend (fase B)</choice>
+          </enumChoice>
+          <enumChoice choice="Firebox" value="36">
+            <choice>Firebox</choice>
+            <choice xml:lang="Feuerbüchse"></choice>
+            <choice xml:lang="nl">Vuurkist</choice>
+          </enumChoice>
+          <enumChoice choice="Warning light" value="69">
+            <choice>Warning light</choice>
+            <choice xml:lang="de">Warnleuchte</choice>
+            <choice xml:lang="nl">Waarschuwingslicht</choice>
+          </enumChoice>
+          <enumChoice choice="1/2 sec Flashing" value="128">
+            <choice>1/2 sec Flashing</choice>
+            <choice xml:lang="de">1/2 sec Blinken</choice>
+            <choice xml:lang="nl">1/2 sec Knipperend</choice>
+          </enumChoice>
         </enumVal>
-        <label>F0F Light Effect</label>
+        <label>F0f Light Effect</label>
+        <label xml:lang="de">F0f Lichteffekt</label>
+        <label xml:lang="nl">F0f Lichteffect</label>
       </variable>
-      <variable CV="49" mask="XXXVVXXX" item="Function F0F behavior" default="2">
+      <variable CV="49" mask="XXXVVXXX" item="Function F0f behavior" default="2">
         <enumVal>
           <!-- Direction: 0=0, 8=1, 16=2, 24=3-->
-          <enumChoice choice="On when running forward" value="2"/>
-          <enumChoice choice="On when running reverse" value="1"/>
-          <enumChoice choice="On in both directions" value="3"/>
-          <enumChoice choice="Always Off" value="0"/>
+          <enumChoice choice="On when running forward" value="2">
+            <choice>On when running forward</choice>
+            <choice xml:lang="de">Ein, bei vorwärtsfahren</choice>
+            <choice xml:lang="nl">Aan bij vooruitrijden</choice>
+          </enumChoice>
+          <enumChoice choice="On when running reverse" value="1">
+          <choice>On when running reverse</choice>
+            <choice xml:lang="de">Ein, bei rückwärtsfahren</choice>
+            <choice xml:lang="nl">Aan bij achteruitrijden</choice>
+          </enumChoice>
+          <enumChoice choice="On in both directions" value="3">
+          <choice>On in both directions</choice>
+            <choice xml:lang="de">An, in beide Richtungen</choice>
+            <choice xml:lang="nl">Aan in beide richtingen</choice>
+          </enumChoice>
+          <enumChoice choice="---" value="0"/>
         </enumVal>
-        <label>F0F Direction</label>
+        <label>F0f Direction</label>
+        <label xml:lang="de">F0f Richtung</label>
+        <label xml:lang="nl">F0f Richting</label>
       </variable>
-      <variable CV="50" mask="VVVXXVVV" item="Function F0R effect generated" default="0">
+      <variable CV="50" mask="VVVXXVVV" item="Function F0r effect generated" default="0">
         <enumVal>
-          <enumChoice choice="Constant" value="0"/>
-          <enumChoice choice="Strobe" value="2"/>
-          <enumChoice choice="Mars" value="4"/>
-          <enumChoice choice="1/4 sec Flashing (Phase A)" value="32"/>
-          <enumChoice choice="1/4 sec Flashing (Phase B)" value="64"/>
-          <enumChoice choice="Firebox" value="36"/>
-          <enumChoice choice="Warning" value="69"/>
-          <enumChoice choice="1/2 sec Flashing" value="128"/>
+          <enumChoice choice="Constant" value="0">
+            <choice>Constant</choice>
+            <choice xml:lang="de">Dauerhaft</choice>
+            <choice xml:lang="nl">permanent</choice>
+          </enumChoice>
+          <enumChoice choice="Strobe" value="2">
+            <choice>Strobe</choice>
+            <choice xml:lang="de">Blitzen </choice>
+            <choice xml:lang="nl">Flitsen</choice>
+          </enumChoice>
+          <enumChoice choice="Mars" value="4">
+            <choice>Mars light</choice>
+            <choice xml:lang="de">Mars Licht</choice>
+            <choice xml:lang="nl">Mars licht</choice>
+          </enumChoice>
+          <enumChoice choice="1/4 sec Flashing (Phase A)" value="32">
+            <choice>1/4 sec Flashing (Phase A)</choice>
+            <choice xml:lang="de">1/4 sec Blinken (Phase A)</choice>
+            <choice xml:lang="nl">1/4 sec Knipperend (fase A)</choice>
+          </enumChoice>
+          <enumChoice choice="1/4 sec Flashing (Phase B)" value="64">
+            <choice>1/4 sec Flashing (Phase B)</choice>
+            <choice xml:lang="de">1/4 sec Blinken (Phase B)</choice>
+            <choice xml:lang="nl">1/4 sec Knipperend (fase B)</choice>
+          </enumChoice>
+          <enumChoice choice="Firebox" value="36">
+            <choice>Firebox</choice>
+            <choice xml:lang="Feuerbüchse"></choice>
+            <choice xml:lang="nl">Vuurkist</choice>
+          </enumChoice>
+          <enumChoice choice="Warning light" value="69">
+            <choice>Warning light</choice>
+            <choice xml:lang="de">Warnleuchte</choice>
+            <choice xml:lang="nl">Waarschuwingslicht</choice>
+          </enumChoice>
+          <enumChoice choice="1/2 sec Flashing" value="128">
+            <choice>1/2 sec Flashing</choice>
+            <choice xml:lang="de">1/2 sec Blinken</choice>
+            <choice xml:lang="nl">1/2 sec Knipperend</choice>
+          </enumChoice>
         </enumVal>
-        <label>F0R Light Effect</label>
+        <label>F0f Light Effect</label>
+        <label xml:lang="de">F0f Lichteffekt</label>
+        <label xml:lang="nl">F0f Lichteffect</label>
       </variable>
-      <variable CV="50" mask="XXXVVXXX" item="Function F0R behavior" default="1">
+      <variable CV="50" mask="XXXVVXXX" item="Function F0r behavior" default="1">
         <enumVal>
-          <enumChoice choice="On when running forward" value="2"/>
-          <enumChoice choice="On when running reverse" value="1"/>
-          <enumChoice choice="On in both directions" value="3"/>
-          <enumChoice choice="Always Off" value="0"/>
+          <!-- Direction: 0=0, 8=1, 16=2, 24=3-->
+          <enumChoice choice="On when running forward" value="2">
+            <choice>On when running forward</choice>
+            <choice xml:lang="de">Ein, bei vorwärtsfahren</choice>
+            <choice xml:lang="nl">Aan bij vooruitrijden</choice>
+          </enumChoice>
+          <enumChoice choice="On when running reverse" value="1">
+          <choice>On when running reverse</choice>
+            <choice xml:lang="de">Ein, bei rückwärtsfahren</choice>
+            <choice xml:lang="nl">Aan bij achteruitrijden</choice>
+          </enumChoice>
+          <enumChoice choice="On in both directions" value="3">
+          <choice>On in both directions</choice>
+            <choice xml:lang="de">An, in beide Richtungen</choice>
+            <choice xml:lang="nl">Aan in beide richtingen</choice>
+          </enumChoice>
+          <enumChoice choice="---" value="0"/>
         </enumVal>
-        <label>F0R Direction</label>
+        <label>F0f Direction</label>
+        <label xml:lang="de">F0f Richtung</label>
+        <label xml:lang="nl">F0f Richting</label>
       </variable>
-      <variable CV="51" mask="VVVXXVVV" item="Function 1 effect generated" default="0">
+      <variable CV="51" mask="VVVXXVVV" item="Function AUX1 effect generated" default="0">
         <enumVal>
-          <enumChoice choice="Constant" value="0"/>
-          <enumChoice choice="Strobe" value="2"/>
-          <enumChoice choice="Mars" value="4"/>
-          <enumChoice choice="1/4 sec Flashing (Phase A)" value="32"/>
-          <enumChoice choice="1/4 sec Flashing (Phase B)" value="64"/>
-          <enumChoice choice="Firebox" value="36"/>
-          <enumChoice choice="Warning" value="69"/>
-          <enumChoice choice="1/2 sec Flashing" value="128"/>
+          <enumChoice choice="Constant" value="0">
+            <choice>Constant</choice>
+            <choice xml:lang="de">Dauerhaft</choice>
+            <choice xml:lang="nl">permanent</choice>
+          </enumChoice>
+          <enumChoice choice="Strobe" value="2">
+            <choice>Strobe</choice>
+            <choice xml:lang="de">Blitzen </choice>
+            <choice xml:lang="nl">Flitsen</choice>
+          </enumChoice>
+          <enumChoice choice="Mars" value="4">
+            <choice>Mars light</choice>
+            <choice xml:lang="de">Mars Licht</choice>
+            <choice xml:lang="nl">Mars licht</choice>
+          </enumChoice>
+          <enumChoice choice="1/4 sec Flashing (Phase A)" value="32">
+            <choice>1/4 sec Flashing (Phase A)</choice>
+            <choice xml:lang="de">1/4 sec Blinken (Phase A)</choice>
+            <choice xml:lang="nl">1/4 sec Knipperend (fase A)</choice>
+          </enumChoice>
+          <enumChoice choice="1/4 sec Flashing (Phase B)" value="64">
+            <choice>1/4 sec Flashing (Phase B)</choice>
+            <choice xml:lang="de">1/4 sec Blinken (Phase B)</choice>
+            <choice xml:lang="nl">1/4 sec Knipperend (fase B)</choice>
+          </enumChoice>
+          <enumChoice choice="Firebox" value="36">
+            <choice>Firebox</choice>
+            <choice xml:lang="Feuerbüchse"></choice>
+            <choice xml:lang="nl">Vuurkist</choice>
+          </enumChoice>
+          <enumChoice choice="Warning light" value="69">
+            <choice>Warning light</choice>
+            <choice xml:lang="de">Warnleuchte</choice>
+            <choice xml:lang="nl">Waarschuwingslicht</choice>
+          </enumChoice>
+          <enumChoice choice="1/2 sec Flashing" value="128">
+            <choice>1/2 sec Flashing</choice>
+            <choice xml:lang="de">1/2 sec Blinken</choice>
+            <choice xml:lang="nl">1/2 sec Knipperend</choice>
+          </enumChoice>
         </enumVal>
-        <label>F1 Light Effect</label>
+        <label>F0f Light Effect</label>
+        <label xml:lang="de">F0f Lichteffekt</label>
+        <label xml:lang="nl">F0f Lichteffect</label>
       </variable>
-      <variable CV="51" mask="XXXVVXXX" item="Function 1 behavior" default="0">
+      <variable CV="51" mask="XXXVVXXX" item="Function AUX1 behavior" default="3">
         <enumVal>
-          <enumChoice choice="On when running forward" value="2"/>
-          <enumChoice choice="On when running reverse" value="1"/>
-          <enumChoice choice="On in both directions" value="3"/>
-          <enumChoice choice="Always Off" value="0"/>
+          <!-- Direction: 0=0, 8=1, 16=2, 24=3-->
+          <enumChoice choice="On when running forward" value="2">
+            <choice>On when running forward</choice>
+            <choice xml:lang="de">Ein, bei vorwärtsfahren</choice>
+            <choice xml:lang="nl">Aan bij vooruitrijden</choice>
+          </enumChoice>
+          <enumChoice choice="On when running reverse" value="1">
+          <choice>On when running reverse</choice>
+            <choice xml:lang="de">Ein, bei rückwärtsfahren</choice>
+            <choice xml:lang="nl">Aan bij achteruitrijden</choice>
+          </enumChoice>
+          <enumChoice choice="On in both directions" value="3">
+          <choice>On in both directions</choice>
+            <choice xml:lang="de">An, in beide Richtungen</choice>
+            <choice xml:lang="nl">Aan in beide richtingen</choice>
+          </enumChoice>
+          <enumChoice choice="---" value="0"/>
         </enumVal>
-        <label>F1 Direction</label>
+        <label>F0f Direction</label>
+        <label xml:lang="de">F0f Richtung</label>
+        <label xml:lang="nl">F0f Richting</label>
       </variable>
-      <variable CV="52" mask="VVVXXVVV" item="Function 2 effect generated" default="0">
+      <variable CV="52" mask="VVVXXVVV" item="Function AUX2 effect generated" default="0">
         <enumVal>
-          <enumChoice choice="Constant" value="0"/>
-          <enumChoice choice="Strobe" value="2"/>
-          <enumChoice choice="Mars" value="4"/>
-          <enumChoice choice="1/4 sec Flashing (Phase A)" value="32"/>
-          <enumChoice choice="1/4 sec Flashing (Phase B)" value="64"/>
-          <enumChoice choice="Firebox" value="36"/>
-          <enumChoice choice="Warning" value="69"/>
-          <enumChoice choice="1/2 sec Flashing" value="128"/>
+          <enumChoice choice="Constant" value="0">
+            <choice>Constant</choice>
+            <choice xml:lang="de">Dauerhaft</choice>
+            <choice xml:lang="nl">permanent</choice>
+          </enumChoice>
+          <enumChoice choice="Strobe" value="2">
+            <choice>Strobe</choice>
+            <choice xml:lang="de">Blitzen </choice>
+            <choice xml:lang="nl">Flitsen</choice>
+          </enumChoice>
+          <enumChoice choice="Mars" value="4">
+            <choice>Mars light</choice>
+            <choice xml:lang="de">Mars Licht</choice>
+            <choice xml:lang="nl">Mars licht</choice>
+          </enumChoice>
+          <enumChoice choice="1/4 sec Flashing (Phase A)" value="32">
+            <choice>1/4 sec Flashing (Phase A)</choice>
+            <choice xml:lang="de">1/4 sec Blinken (Phase A)</choice>
+            <choice xml:lang="nl">1/4 sec Knipperend (fase A)</choice>
+          </enumChoice>
+          <enumChoice choice="1/4 sec Flashing (Phase B)" value="64">
+            <choice>1/4 sec Flashing (Phase B)</choice>
+            <choice xml:lang="de">1/4 sec Blinken (Phase B)</choice>
+            <choice xml:lang="nl">1/4 sec Knipperend (fase B)</choice>
+          </enumChoice>
+          <enumChoice choice="Firebox" value="36">
+            <choice>Firebox</choice>
+            <choice xml:lang="Feuerbüchse"></choice>
+            <choice xml:lang="nl">Vuurkist</choice>
+          </enumChoice>
+          <enumChoice choice="Warning light" value="69">
+            <choice>Warning light</choice>
+            <choice xml:lang="de">Warnleuchte</choice>
+            <choice xml:lang="nl">Waarschuwingslicht</choice>
+          </enumChoice>
+          <enumChoice choice="1/2 sec Flashing" value="128">
+            <choice>1/2 sec Flashing</choice>
+            <choice xml:lang="de">1/2 sec Blinken</choice>
+            <choice xml:lang="nl">1/2 sec Knipperend</choice>
+          </enumChoice>
         </enumVal>
-        <label>F2 Light Effect</label>
+        <label>F0f Light Effect</label>
+        <label xml:lang="de">F0f Lichteffekt</label>
+        <label xml:lang="nl">F0f Lichteffect</label>
       </variable>
-      <variable CV="52" mask="XXXVVXXX" item="Function 2 behavior" default="0">
+      <variable CV="52" mask="XXXVVXXX" item="Function AUX2 behavior" default="3">
         <enumVal>
-          <enumChoice choice="On when running forward" value="2"/>
-          <enumChoice choice="On when running reverse" value="1"/>
-          <enumChoice choice="On in both directions" value="3"/>
-          <enumChoice choice="Always Off" value="0"/>
+          <!-- Direction: 0=0, 8=1, 16=2, 24=3-->
+          <enumChoice choice="On when running forward" value="2">
+            <choice>On when running forward</choice>
+            <choice xml:lang="de">Ein, bei vorwärtsfahren</choice>
+            <choice xml:lang="nl">Aan bij vooruitrijden</choice>
+          </enumChoice>
+          <enumChoice choice="On when running reverse" value="1">
+          <choice>On when running reverse</choice>
+            <choice xml:lang="de">Ein, bei rückwärtsfahren</choice>
+            <choice xml:lang="nl">Aan bij achteruitrijden</choice>
+          </enumChoice>
+          <enumChoice choice="On in both directions" value="3">
+          <choice>On in both directions</choice>
+            <choice xml:lang="de">An, in beide Richtungen</choice>
+            <choice xml:lang="nl">Aan in beide richtingen</choice>
+          </enumChoice>
+          <enumChoice choice="---" value="0"/>
         </enumVal>
-        <label>F2 Direction</label>
+        <label>F0f Direction</label>
+        <label xml:lang="de">F0f Richtung</label>
+        <label xml:lang="nl">F0f Richting</label>
       </variable>
-      <variable CV="53" mask="VVVXXVVV" item="Function 3 effect generated" default="0">
+      <variable CV="53" mask="VVVXXVVV" item="Function AUX3 effect generated" default="0">
         <enumVal>
-          <enumChoice choice="Constant" value="0"/>
-          <enumChoice choice="Strobe" value="2"/>
-          <enumChoice choice="Mars" value="4"/>
-          <enumChoice choice="1/4 sec Flashing (Phase A)" value="32"/>
-          <enumChoice choice="1/4 sec Flashing (Phase B)" value="64"/>
-          <enumChoice choice="Firebox" value="36"/>
-          <enumChoice choice="Warning" value="69"/>
-          <enumChoice choice="1/2 sec Flashing" value="128"/>
+          <enumChoice choice="Constant" value="0">
+            <choice>Constant</choice>
+            <choice xml:lang="de">Dauerhaft</choice>
+            <choice xml:lang="nl">permanent</choice>
+          </enumChoice>
+          <enumChoice choice="Strobe" value="2">
+            <choice>Strobe</choice>
+            <choice xml:lang="de">Blitzen </choice>
+            <choice xml:lang="nl">Flitsen</choice>
+          </enumChoice>
+          <enumChoice choice="Mars" value="4">
+            <choice>Mars light</choice>
+            <choice xml:lang="de">Mars Licht</choice>
+            <choice xml:lang="nl">Mars licht</choice>
+          </enumChoice>
+          <enumChoice choice="1/4 sec Flashing (Phase A)" value="32">
+            <choice>1/4 sec Flashing (Phase A)</choice>
+            <choice xml:lang="de">1/4 sec Blinken (Phase A)</choice>
+            <choice xml:lang="nl">1/4 sec Knipperend (fase A)</choice>
+          </enumChoice>
+          <enumChoice choice="1/4 sec Flashing (Phase B)" value="64">
+            <choice>1/4 sec Flashing (Phase B)</choice>
+            <choice xml:lang="de">1/4 sec Blinken (Phase B)</choice>
+            <choice xml:lang="nl">1/4 sec Knipperend (fase B)</choice>
+          </enumChoice>
+          <enumChoice choice="Firebox" value="36">
+            <choice>Firebox</choice>
+            <choice xml:lang="Feuerbüchse"></choice>
+            <choice xml:lang="nl">Vuurkist</choice>
+          </enumChoice>
+          <enumChoice choice="Warning light" value="69">
+            <choice>Warning light</choice>
+            <choice xml:lang="de">Warnleuchte</choice>
+            <choice xml:lang="nl">Waarschuwingslicht</choice>
+          </enumChoice>
+          <enumChoice choice="1/2 sec Flashing" value="128">
+            <choice>1/2 sec Flashing</choice>
+            <choice xml:lang="de">1/2 sec Blinken</choice>
+            <choice xml:lang="nl">1/2 sec Knipperend</choice>
+          </enumChoice>
         </enumVal>
-        <label>F3 Light Effect</label>
+        <label>F0f Light Effect</label>
+        <label xml:lang="de">F0f Lichteffekt</label>
+        <label xml:lang="nl">F0f Lichteffect</label>
       </variable>
-      <variable CV="53" mask="XXXVVXXX" item="Function 3 behavior" default="0">
+      <variable CV="53" mask="XXXVVXXX" item="Function AUX3 behavior" default="3">
         <enumVal>
-          <enumChoice choice="On when running forward" value="2"/>
-          <enumChoice choice="On when running reverse" value="1"/>
-          <enumChoice choice="On in both directions" value="3"/>
-          <enumChoice choice="Always Off" value="0"/>
+          <!-- Direction: 0=0, 8=1, 16=2, 24=3-->
+          <enumChoice choice="On when running forward" value="2">
+            <choice>On when running forward</choice>
+            <choice xml:lang="de">Ein, bei vorwärtsfahren</choice>
+            <choice xml:lang="nl">Aan bij vooruitrijden</choice>
+          </enumChoice>
+          <enumChoice choice="On when running reverse" value="1">
+          <choice>On when running reverse</choice>
+            <choice xml:lang="de">Ein, bei rückwärtsfahren</choice>
+            <choice xml:lang="nl">Aan bij achteruitrijden</choice>
+          </enumChoice>
+          <enumChoice choice="On in both directions" value="3">
+          <choice>On in both directions</choice>
+            <choice xml:lang="de">An, in beide Richtungen</choice>
+            <choice xml:lang="nl">Aan in beide richtingen</choice>
+          </enumChoice>
+          <enumChoice choice="---" value="0"/>
         </enumVal>
-        <label>F3 Direction</label>
+        <label>F0f Direction</label>
+        <label xml:lang="de">F0f Richtung</label>
+        <label xml:lang="nl">F0f Richting</label>
       </variable>
-      <variable CV="54" mask="VVVXXVVV" item="Function 4 effect generated" default="0">
+      <variable CV="54" mask="VVVXXVVV" item="Function AUX4 effect generated" default="0">
         <enumVal>
-          <enumChoice choice="Constant" value="0"/>
-          <enumChoice choice="Strobe" value="2"/>
-          <enumChoice choice="Mars" value="4"/>
-          <enumChoice choice="1/4 sec Flashing (Phase A)" value="32"/>
-          <enumChoice choice="1/4 sec Flashing (Phase B)" value="64"/>
-          <enumChoice choice="Firebox" value="36"/>
-          <enumChoice choice="Warning" value="69"/>
-          <enumChoice choice="1/2 sec Flashing" value="128"/>
+          <enumChoice choice="Constant" value="0">
+            <choice>Constant</choice>
+            <choice xml:lang="de">Dauerhaft</choice>
+            <choice xml:lang="nl">permanent</choice>
+          </enumChoice>
+          <enumChoice choice="Strobe" value="2">
+            <choice>Strobe</choice>
+            <choice xml:lang="de">Blitzen </choice>
+            <choice xml:lang="nl">Flitsen</choice>
+          </enumChoice>
+          <enumChoice choice="Mars" value="4">
+            <choice>Mars light</choice>
+            <choice xml:lang="de">Mars Licht</choice>
+            <choice xml:lang="nl">Mars licht</choice>
+          </enumChoice>
+          <enumChoice choice="1/4 sec Flashing (Phase A)" value="32">
+            <choice>1/4 sec Flashing (Phase A)</choice>
+            <choice xml:lang="de">1/4 sec Blinken (Phase A)</choice>
+            <choice xml:lang="nl">1/4 sec Knipperend (fase A)</choice>
+          </enumChoice>
+          <enumChoice choice="1/4 sec Flashing (Phase B)" value="64">
+            <choice>1/4 sec Flashing (Phase B)</choice>
+            <choice xml:lang="de">1/4 sec Blinken (Phase B)</choice>
+            <choice xml:lang="nl">1/4 sec Knipperend (fase B)</choice>
+          </enumChoice>
+          <enumChoice choice="Firebox" value="36">
+            <choice>Firebox</choice>
+            <choice xml:lang="Feuerbüchse"></choice>
+            <choice xml:lang="nl">Vuurkist</choice>
+          </enumChoice>
+          <enumChoice choice="Warning light" value="69">
+            <choice>Warning light</choice>
+            <choice xml:lang="de">Warnleuchte</choice>
+            <choice xml:lang="nl">Waarschuwingslicht</choice>
+          </enumChoice>
+          <enumChoice choice="1/2 sec Flashing" value="128">
+            <choice>1/2 sec Flashing</choice>
+            <choice xml:lang="de">1/2 sec Blinken</choice>
+            <choice xml:lang="nl">1/2 sec Knipperend</choice>
+          </enumChoice>
         </enumVal>
-        <label>F4 Light Effect</label>
+        <label>F0f Light Effect</label>
+        <label xml:lang="de">F0f Lichteffekt</label>
+        <label xml:lang="nl">F0f Lichteffect</label>
       </variable>
-      <variable CV="54" mask="XXXVVXXX" item="Function 4 behavior" default="0">
+      <variable CV="54" mask="XXXVVXXX" item="Function AUX4 behavior" default="3">
         <enumVal>
-          <enumChoice choice="On when running forward" value="2"/>
-          <enumChoice choice="On when running reverse" value="1"/>
-          <enumChoice choice="On in both directions" value="3"/>
-          <enumChoice choice="Always Off" value="0"/>
+          <!-- Direction: 0=0, 8=1, 16=2, 24=3-->
+          <enumChoice choice="On when running forward" value="2">
+            <choice>On when running forward</choice>
+            <choice xml:lang="de">Ein, bei vorwärtsfahren</choice>
+            <choice xml:lang="nl">Aan bij vooruitrijden</choice>
+          </enumChoice>
+          <enumChoice choice="On when running reverse" value="1">
+          <choice>On when running reverse</choice>
+            <choice xml:lang="de">Ein, bei rückwärtsfahren</choice>
+            <choice xml:lang="nl">Aan bij achteruitrijden</choice>
+          </enumChoice>
+          <enumChoice choice="On in both directions" value="3">
+          <choice>On in both directions</choice>
+            <choice xml:lang="de">An, in beide Richtungen</choice>
+            <choice xml:lang="nl">Aan in beide richtingen</choice>
+          </enumChoice>
+          <enumChoice choice="---" value="0"/>
         </enumVal>
-        <label>F4 Direction</label>
+        <label>F0f Direction</label>
+        <label xml:lang="de">F0f Richtung</label>
+        <label xml:lang="nl">F0f Richting</label>
       </variable>
       <!-- Pane Analog Controls -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <!-- Pane Consist -->
-      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-      <variable CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="1">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only"/>
-          <enumChoice choice="Respond to Consist Address"/>
-        </enumVal>
-        <label>Consist Address Active For F1</label>
-      </variable>
-      <variable CV="21" mask="XXXXXXVX" item="Consist Address Active For F2" default="1">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only"/>
-          <enumChoice choice="Respond to Consist Address"/>
-        </enumVal>
-        <label>Consist Address Active For F2</label>
-      </variable>
-      <variable CV="21" mask="XXXXXVXX" item="Consist Address Active For F3" default="1">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only"/>
-          <enumChoice choice="Respond to Consist Address"/>
-        </enumVal>
-        <label>Consist Address Active For F3</label>
-      </variable>
-      <variable CV="21" mask="XXXXVXXX" item="Consist Address Active For F4" default="1">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only"/>
-          <enumChoice choice="Respond to Consist Address"/>
-        </enumVal>
-        <label>Consist Address Active For F4</label>
-      </variable>
-      <variable CV="21" mask="XXXVXXXX" item="Consist Address Active For F5" default="1">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only"/>
-          <enumChoice choice="Respond to Consist Address"/>
-        </enumVal>
-        <label>Consist Address Active For F5</label>
-      </variable>
-      <variable CV="21" mask="XXVXXXXX" item="Consist Address Active For F6" default="1">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only"/>
-          <enumChoice choice="Respond to Consist Address"/>
-        </enumVal>
-        <label>Consist Address Active For F6</label>
-      </variable>
-      <variable CV="21" mask="XVXXXXXX" item="Consist Address Active For F7" default="1">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only"/>
-          <enumChoice choice="Respond to Consist Address"/>
-        </enumVal>
-        <label>Consist Address Active For F7</label>
-      </variable>
-      <variable CV="21" mask="VXXXXXXX" item="Consist Address Active For F8" default="1">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only"/>
-          <enumChoice choice="Respond to Consist Address"/>
-        </enumVal>
-        <label>Consist Address Active For F8</label>
-      </variable>
-      <variable CV="22" mask="XXXXXXXV" item="Consist Address Active For FL in Forward" default="1">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only"/>
-          <enumChoice choice="Respond to Consist Address"/>
-        </enumVal>
-        <label>Consist Address Active For FL in Forward</label>
-      </variable>
-      <variable CV="22" mask="XXXXXXVX" item="Consist Address Active For FL in Reverse" default="1">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only"/>
-          <enumChoice choice="Respond to Consist Address"/>
-        </enumVal>
-        <label>Consist Address Active For FL in Reverse</label>
-      </variable>
-      <variable CV="22" mask="XXXXXVXX" item="Consist Address Active For F9" default="1">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only"/>
-          <enumChoice choice="Respond to Consist Address"/>
-        </enumVal>
-        <label>Consist Address Activation for F9</label>
-      </variable>
-      <variable CV="22" mask="XXXXVXXX" item="Consist Address Active For F10" default="1">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only"/>
-          <enumChoice choice="Respond to Consist Address"/>
-        </enumVal>
-        <label>Consist Address Activation for F10</label>
-      </variable>
-      <variable CV="22" mask="XXXVXXXX" item="Consist Address Active For F11" default="1">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only"/>
-          <enumChoice choice="Respond to Consist Address"/>
-        </enumVal>
-        <label>Consist Address Activation for F11</label>
-      </variable>
-      <variable CV="22" mask="XXVXXXXX" item="Consist Address Active For F12" default="1">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only"/>
-          <enumChoice choice="Respond to Consist Address"/>
-        </enumVal>
-        <label>Consist Address Activation for F12</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddr.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22_F12.xml"/>
       <!-- Pane Advanced -->
-      <variable CV="11" default="0" item="Packet Time-out Value" tooltip="Locomotive will stop when no valid packet is received">
+      <variable CV="11" default="25" item="Packet Time-out Value">
         <decVal/>
-        <label>Packet Time-Out Value</label>
+        <label>Packet time out</label>
+        <label xml:lang="de">Pakettimeout</label>
+        <label xml:lang="nl">Pakket Time Out</label>
+        <tooltip>&lt;html&gt;Loc will stop when no valid packet is received.&lt;br&gt;
+                             Range: 0-255, Default: 25 &lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Lok stoppt, wenn kein gültiges Paket empfangen wird.&lt;br&gt;
+                                           Bereich: 0-255, voreingestellt: 25 &lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="nl">&lt;html&gt;Loc stopt wanneer er geen geldig pakket is ontvangen&lt;br&gt;
+                                           Bereik: 0-255, standaardinstelling: 25 &lt;br&gt;&lt;/html&gt;</tooltip>
       </variable>
     </variables>
     <!-- Reset Decoder Configuration -->
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8">
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+        <label xml:lang="de">Alle CVs auf Werkseinstellung zurücksetzen</label>
+        <label xml:lang="nl">Alle cv's terugzetten naar de fabrieksinstelling</label>
       </factReset>
     </resets>
   </decoder>
-  <pane>
-    <name>ANE Model</name>
+  <pane nameFmt="label"> <!-- Function Map -->
+  <name>Function Map</name>
+  <name xml:lang="ca">Mapejat de funcions</name>
+  <name xml:lang="cs">Přiřazení funkcí</name>
+  <name xml:lang="da">Funktions Indstillinger</name>
+  <name xml:lang="de">Funktionszuordnung</name>
+  <name xml:lang="fr">Carte des Fonctions</name>
+  <name xml:lang="it">Mappa Funzioni</name>
+  <name xml:lang="nl">Funktietoewijzing</name>
+  <column>
+    <row>
+      <column>
+        <label>
+          <text>Use this sheet to determine which functions will control which outputs</text>
+          <text xml:lang="ca">Usa aquesta pestanya per establir quina funció controla cada sortida</text>
+          <text xml:lang="cs">Použijte tento list pro určení která funkce bude řídit který výstup</text>
+          <text xml:lang="de">Hier einstellen, welche Funktion welchen Ausgang steuert</text>
+          <text xml:lang="fr">Utiliser cette feuille pour déterminer quelles fonctions contrôlent quelles entrées</text>
+          <text xml:lang="it">Usa questo foglio per programmare quale Funzione contolla quale uscita</text>
+          <text xml:lang="nl">Stel per uitgang de aanstuurfunctie in</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+    <fnmapping/>
+    <row>
+      <label>
+        <text> </text>
+      </label>
+    </row>
+    <row>
+        <column>
+          <display item="Function Map Option 1"/>
+          <display item="Function Map Option 2"/>
+          <display item="Function Map Option 3"/>
+          <display item="Function Map Option 4"/>
+          <display item="Function Map Option 5"/>
+        </column>
+    </row>
+    <row>
+      <label>
+        <text> </text>
+      </label>
+    </row>
+    <row>
+      <label>
+        <text>If you mark FL, the output is always switched on.</text>
+        <text xml:lang="de">Wen sie FL markieren ist dem Ausgang immer eingeschaltet.</text>
+        <text xml:lang="nl">Wanneer u FL markeert is die uitgang altijd ingeschakeld.</text>
+      </label>
+    </row>
+  </column>
+  </pane>
+  <pane nameFmt="label"> <!-- light -->
+    <name>Lights</name>
+    <name xml:lang="ca">Llums</name>
+    <name xml:lang="cs">Osvětlení</name>
+    <name xml:lang="da">Lys</name>
+    <name xml:lang="de">Licht</name>
+    <name xml:lang="fr">Lumières</name>
+    <name xml:lang="it">Luci</name>
+    <name xml:lang="nl">Licht</name>
+    <column>
+      <grid gridy="NEXT" weightx="1" ipadx="10">
+        <griditem gridx="1" gridy="0" gridwidth="1">
+          <label>
+            <text>Light Effect</text>
+            <text xml:lang="de">Lichteffekt</text>
+            <text xml:lang="nl">Lichteffect</text>
+          </label>
+        </griditem>
+        <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+          <label>
+            <text>Direction</text>
+            <text xml:lang="de">Richtung</text>
+            <text xml:lang="nl">Richting</text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="NEXT" gridwidth="1">
+          <label>
+            <text>  </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="NEXT" gridwidth="1">
+          <label>
+            <text>Output FOf</text>
+            <text xml:lang="de">Ausgang FOf</text>
+            <text xml:lang="nl">Uitgang FOf</text>
+          </label>
+        </griditem>
+        <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+          <display item="Function F0f effect generated" layout="left" label=""/>
+        </griditem>
+        <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+          <display item="Function F0f behavior" layout="left" label=""/>
+        </griditem>
+        <griditem gridx="0" gridy="NEXT" gridwidth="1">
+          <label>
+            <text>  </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="NEXT" gridwidth="1">
+          <label>
+            <text>Output FOr</text>
+            <text xml:lang="de">Ausgang FOr</text>
+            <text xml:lang="nl">Uitgang FOr</text>
+          </label>
+        </griditem>
+        <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+          <display item="Function F0r effect generated" layout="left" label=""/>
+        </griditem>
+        <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+          <display item="Function F0r behavior" layout="left" label=""/>
+        </griditem>
+        <griditem gridx="0" gridy="NEXT" gridwidth="1">
+          <label>
+            <text>  </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="NEXT" gridwidth="1">
+          <label>
+            <text>Output AUX1</text>
+            <text xml:lang="de">Ausgang AUX1</text>
+            <text xml:lang="nl">Uitgang AUX1</text>
+          </label>
+        </griditem>
+        <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+          <display item="Function AUX1 effect generated" layout="left" label=""/>
+        </griditem>
+        <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+          <display item="Function AUX1 behavior" layout="left" label=""/>
+        </griditem>
+        <griditem gridx="0" gridy="NEXT" gridwidth="1">
+          <label>
+            <text>  </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="NEXT" gridwidth="1">
+          <label>
+            <text>Output AUX2</text>
+            <text xml:lang="de">Ausgang AUX2</text>
+            <text xml:lang="nl">Uitgang AUX2</text>
+          </label>
+        </griditem>
+        <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+          <display item="Function AUX2 effect generated" layout="left" label=""/>
+        </griditem>
+        <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+          <display item="Function AUX2 behavior" layout="left" label=""/>
+        </griditem>
+        <griditem gridx="0" gridy="NEXT" gridwidth="1">
+          <label>
+            <text>  </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="NEXT" gridwidth="1">
+          <label>
+            <text>Output AUX3</text>
+            <text xml:lang="de">Ausgang AUX3</text>
+            <text xml:lang="nl">Uitgang AUX3</text>
+          </label>
+        </griditem>
+        <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+          <display item="Function AUX3 effect generated" layout="left" label=""/>
+        </griditem>
+        <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+          <display item="Function AUX3 behavior" layout="left" label=""/>
+        </griditem>
+        <griditem gridx="0" gridy="NEXT" gridwidth="1">
+          <label>
+            <text>  </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="NEXT" gridwidth="1">
+          <label>
+            <text>Output AUX4</text>
+            <text xml:lang="de">Ausgang AUX4</text>
+            <text xml:lang="nl">Uitgang AUX4</text>
+          </label>
+        </griditem>
+        <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+          <display item="Function AUX4 effect generated" layout="left" label=""/>
+        </griditem>
+        <griditem gridx="NEXT" gridy="CURRENT" gridwidth="1">
+          <display item="Function AUX4 behavior" layout="left" label=""/>
+        </griditem>
+        <griditem gridx="0" gridy="NEXT" gridwidth="1">
+          <label>
+            <text> </text>
+          </label>
+        </griditem>
+        <griditem gridx="0" gridy="NEXT" gridwidth="4">
+          <label>
+            <text>&lt;html&gt;&lt;h3&gt;These effects can be added together:&lt;/h3&gt;
+                                        When you connect two function outputs to become ditch light, please use CV=32 and&lt;br&gt;
+                                        CV=64 in different output. It will become a ditch light with a prototypical flashing effect.&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;h3&gt;Diese Effekte können addiert werden:&lt;/h3&gt;
+                                                      Wenn Sie zwei Funktionsausgänge anschließen, um Blinklicht zu erhalten, verwenden Sie&lt;br&gt;
+                                                      bitte CV=32 und CV=64 in verschiedenen Ausgängen. Es wird ein Blinklichtes mit einem&lt;br&gt;
+                                                      prototypischen blink Effekt.&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;h3&gt;Deze effecten kunnen bij elkaar opgeteld worden:&lt;/h3&gt;
+                                                      Als u twee functie-uitgangen aansluit om een zwaailicht te krijgen, gebruik dan CV=32&lt;br&gt;
+                                                      en CV=64 in verschillende uitgangen. Het wordt een knipperlicht met een prototypisch&lt;br&gt;
+                                                      knippereffect.&lt;/html&gt;</text>
+          </label>
+        </griditem>
+      </grid>
+    </column>
+  </pane>
+  <pane nameFmt="label"> <!-- Info -->
+    <name>Info</name>
     <column>
       <label>
         <text>Please note, not every decoder model supports all configurable options.</text>
