@@ -10,15 +10,17 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.TableForEach;
 import jmri.jmrit.logixng.actions.TableForEach.TableRowOrColumn;
-import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an TableForEach object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class TableForEachSwing extends AbstractDigitalActionSwing {
 
-    private BeanSelectCreatePanel<NamedTable> tableBeanPanel;
+    private BeanSelectPanel<NamedTable> tableBeanPanel;
     private JComboBox<TableRowOrColumn> _tableRowOrColumnComboBox;
     private JTextField _rowOrColumnName;
     private JTextField _localVariable;
@@ -57,7 +59,7 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
         tabbedPane.addTab("Reference", panelReference); // NOIaa18N
         tabbedPane.addTab("Formula", panelFormula); // NOI1aa8N
         
-        tableBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(NamedTableManager.class), null);
+        tableBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(NamedTableManager.class), null);
         panelTurnout.add(tableBeanPanel);
         
         JTextField referenceTextField = new JTextField();
@@ -116,22 +118,18 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
         
         // Create a temporary action in case we don't have one.
         TableForEach action = (TableForEach)object;
-        try {
-            if (!tableBeanPanel.isEmpty()) {
-                NamedTable table = tableBeanPanel.getNamedBean();
-                if (table != null) {
-                    NamedBeanHandle<NamedTable> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(table.getDisplayName(), table);
-                    action.setTable(handle);
-                }
+        if (!tableBeanPanel.isEmpty()) {
+            NamedTable table = tableBeanPanel.getNamedBean();
+            if (table != null) {
+                NamedBeanHandle<NamedTable> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(table.getDisplayName(), table);
+                action.setTable(handle);
             }
-            action.setTableRowOrColumn((TableForEach.TableRowOrColumn)_tableRowOrColumnComboBox.getSelectedItem());
-            action.setRowOrColumnName(_rowOrColumnName.getText());
-            action.setLocalVariableName(_localVariable.getText());
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for table", ex);
         }
+        action.setTableRowOrColumn((TableForEach.TableRowOrColumn)_tableRowOrColumnComboBox.getSelectedItem());
+        action.setRowOrColumnName(_rowOrColumnName.getText());
+        action.setLocalVariableName(_localVariable.getText());
     }
     
     /** {@inheritDoc} */
@@ -145,6 +143,6 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TableForEachSwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TableForEachSwing.class);
     
 }

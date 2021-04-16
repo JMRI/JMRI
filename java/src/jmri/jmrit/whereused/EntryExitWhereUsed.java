@@ -2,6 +2,7 @@ package jmri.jmrit.whereused;
 
 import javax.swing.JTextArea;
 import jmri.NamedBean;
+import jmri.NamedBean.DisplayOptions;
 
 /**
  * Find entry/exit references.
@@ -19,10 +20,11 @@ public class EntryExitWhereUsed {
     static public JTextArea getWhereUsed(NamedBean entryexit) {
         JTextArea textArea = new JTextArea();
         String label = Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameEntryExit"));  // NOI18N
-        textArea.append(Bundle.getMessage("ReferenceTitle", label, entryexit.getDisplayName()));  // NOI18N
+        textArea.append(Bundle.getMessage("ReferenceTitle", label, entryexit.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));  // NOI18N
         textArea.append(Bundle.getMessage("ListenerCount", entryexit.getNumPropertyChangeListeners()));  // NOI18N
 
         textArea.append(WhereUsedCollectors.checkLogixConditionals(entryexit));
+        textArea.append(WhereUsedCollectors.checkLogixNGConditionals(entryexit));
         textArea.append(WhereUsedCollectors.checkEntryExit(entryexit));
         return textArea;
     }

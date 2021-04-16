@@ -9,7 +9,6 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.SignalHead;
@@ -18,18 +17,20 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionSignalHead;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionSignalHead object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
 
     public static final int NUM_COLUMNS_TEXT_FIELDS = 20;
     
     private JTabbedPane _tabbedPaneSignalHead;
-    private BeanSelectCreatePanel<SignalHead> _signalHeadBeanPanel;
+    private BeanSelectPanel<SignalHead> _signalHeadBeanPanel;
     private JPanel _panelSignalHeadDirect;
     private JPanel _panelSignalHeadReference;
     private JPanel _panelSignalHeadLocalVariable;
@@ -60,7 +61,7 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
     private JTextField _signalHeadAppearanceLocalVariableTextField;
     private JTextField _signalHeadAppearanceFormulaTextField;
     
-    private BeanSelectCreatePanel<SignalHead> _exampleSignalHeadBeanPanel;
+    private BeanSelectPanel<SignalHead> _exampleSignalHeadBeanPanel;
     
     
     @Override
@@ -73,7 +74,7 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
         JPanel examplePanel = new JPanel();
         JPanel innerExamplePanel = new JPanel();
         innerExamplePanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        _exampleSignalHeadBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(SignalHeadManager.class), null);
+        _exampleSignalHeadBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(SignalHeadManager.class), null);
         innerExamplePanel.add(_exampleSignalHeadBeanPanel);
         
         JPanel expressionPanel = new JPanel();
@@ -95,7 +96,7 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
             enableDisableExampleSignalHeadBeanPanel();
         });
         
-        _signalHeadBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(SignalHeadManager.class), null);
+        _signalHeadBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(SignalHeadManager.class), null);
         _panelSignalHeadDirect.add(_signalHeadBeanPanel);
         
         _signalHeadReferenceTextField = new JTextField();
@@ -378,39 +379,31 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
             throw new IllegalArgumentException("object must be an ExpressionSignalHead but is a: "+object.getClass().getName());
         }
         ExpressionSignalHead expression = (ExpressionSignalHead)object;
-        try {
-            if (!_signalHeadBeanPanel.isEmpty() && (_tabbedPaneSignalHead.getSelectedComponent() == _panelSignalHeadDirect)) {
-                SignalHead signalHead = _signalHeadBeanPanel.getNamedBean();
-                if (signalHead != null) {
-                    NamedBeanHandle<SignalHead> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(signalHead.getDisplayName(), signalHead);
-                    expression.setSignalHead(handle);
-                }
-            } else {
-                expression.removeSignalHead();
+        if (!_signalHeadBeanPanel.isEmpty() && (_tabbedPaneSignalHead.getSelectedComponent() == _panelSignalHeadDirect)) {
+            SignalHead signalHead = _signalHeadBeanPanel.getNamedBean();
+            if (signalHead != null) {
+                NamedBeanHandle<SignalHead> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(signalHead.getDisplayName(), signalHead);
+                expression.setSignalHead(handle);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for signalHead", ex);
+        } else {
+            expression.removeSignalHead();
         }
         
-        try {
-            if (!_exampleSignalHeadBeanPanel.isEmpty()
-                    && (_tabbedPaneSignalHead.getSelectedComponent() != _panelSignalHeadDirect)
-                    && (_tabbedPaneAppearanceType.getSelectedComponent() == _panelAppearanceTypeDirect)) {
-                
-                SignalHead signalHead = _exampleSignalHeadBeanPanel.getNamedBean();
-                if (signalHead != null) {
-                    NamedBeanHandle<SignalHead> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(signalHead.getDisplayName(), signalHead);
-                    expression.setExampleSignalHead(handle);
-                }
-            } else {
-                expression.removeExampleSignalHead();
+        if (!_exampleSignalHeadBeanPanel.isEmpty()
+                && (_tabbedPaneSignalHead.getSelectedComponent() != _panelSignalHeadDirect)
+                && (_tabbedPaneAppearanceType.getSelectedComponent() == _panelAppearanceTypeDirect)) {
+
+            SignalHead signalHead = _exampleSignalHeadBeanPanel.getNamedBean();
+            if (signalHead != null) {
+                NamedBeanHandle<SignalHead> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(signalHead.getDisplayName(), signalHead);
+                expression.setExampleSignalHead(handle);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for signalHead", ex);
+        } else {
+            expression.removeExampleSignalHead();
         }
         
         try {
@@ -492,6 +485,6 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
         
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSignalHeadSwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSignalHeadSwing.class);
     
 }

@@ -984,10 +984,10 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                             log.debug(advancedAspect[i]);
                             if ((divergRoute && (divergFlagsAvailable) && (divergAspects.contains(i))) || ((divergRoute && !divergFlagsAvailable) || (!divergRoute)) && (nonDivergAspects.contains(i))) {
                                 log.debug("In list");
-                                if ((strSpeed != null) && (!strSpeed.equals(""))) {
+                                if ((strSpeed != null) && (!strSpeed.isEmpty())) {
                                     float speed = 0.0f;
                                     try {
-                                        speed = Float.valueOf(strSpeed);
+                                        speed = Float.parseFloat(strSpeed);
                                     } catch (NumberFormatException nx) {
                                         // not a number, perhaps a name?
                                         try {

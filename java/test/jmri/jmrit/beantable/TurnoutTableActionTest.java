@@ -1,10 +1,14 @@
 package jmri.jmrit.beantable;
 
 import jmri.util.gui.GuiLafPreferencesManager;
+
 import java.awt.GraphicsEnvironment;
+
+import javax.annotation.Nonnull;
 import javax.swing.JFrame;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
+
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
@@ -13,6 +17,8 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.jmrix.internal.InternalTurnoutManager;
 import jmri.swing.ManagerComboBox;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
@@ -113,7 +119,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
         //This is a modal JOptionPane, so create a thread to dismiss it.
         Thread t = new Thread(() -> {
             try {
-                jmri.util.swing.JemmyUtil.confirmJOptionPane(main, Bundle.getMessage("TurnoutGlobalSpeedMessageTitle"), "", "OK");
+                JemmyUtil.confirmJOptionPane(main, Bundle.getMessage("TurnoutGlobalSpeedMessageTitle"), "", "OK");
             } catch (org.netbeans.jemmy.TimeoutExpiredException tee) {
                 // we're waiting for this thread to finish in the main method,
                 // so any exception here means we failed.
@@ -157,11 +163,57 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
         // find the "Add... " button and press it.
-        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f), Bundle.getMessage("ButtonAdd"));
+        JemmyUtil.pressButton(new JFrameOperator(f), Bundle.getMessage("ButtonAdd"));
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
-        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f1), Bundle.getMessage("ButtonClose")); // not sure why this is close in this frame.
+        JemmyUtil.pressButton(new JFrameOperator(f1), Bundle.getMessage("ButtonClose")); // not sure why this is close in this frame.
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testAddFailureCreate() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        InstanceManager.setDefault(TurnoutManager.class, new CreateNewTurnoutAlwaysException());
+        
+        a = new TurnoutTableAction();
+        Assume.assumeTrue(a.includeAddButton());
+        
+        a.actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+        // find the "Add... " button and press it.
+        JemmyUtil.pressButton(new JFrameOperator(f), Bundle.getMessage("ButtonAdd"));
+        
+        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+        JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
+        Assert.assertNotNull("hwAddressTextField", hwAddressField);
+        // set to "1"
+        new JTextFieldOperator(hwAddressField).setText("1");
+        Thread add1 = JemmyUtil.createModalDialogOperatorThread(
+            Bundle.getMessage("ErrorBeanCreateFailed", "Turnout","IT1"), Bundle.getMessage("ButtonOK"));  // NOI18N
+        
+        //and press create
+        JemmyUtil.pressButton(new JFrameOperator(f1), Bundle.getMessage("ButtonCreate"));
+        JUnitUtil.waitFor(()->{return !(add1.isAlive());}, "dialog finished");  // NOI18N
+        
+        JemmyUtil.pressButton(new JFrameOperator(f1), Bundle.getMessage("ButtonClose")); // not sure why this is close in this frame.
+        JUnitUtil.dispose(f1);
+        JUnitUtil.dispose(f);
+    }
+    
+    private class CreateNewTurnoutAlwaysException extends InternalTurnoutManager {
+
+        public CreateNewTurnoutAlwaysException() {
+            super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        @Nonnull
+        protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+            throw new IllegalArgumentException("createNewTurnout Exception Text");
+        }
+        
     }
 
     @Test
@@ -218,9 +270,9 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
         helpTarget = "package.jmri.jmrit.beantable.TurnoutTable";
         a = new TurnoutTableAction();
     }

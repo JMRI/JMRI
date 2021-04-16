@@ -2,6 +2,7 @@ package jmri.jmrit.whereused;
 
 import javax.swing.JTextArea;
 import jmri.NamedBean;
+import jmri.NamedBean.DisplayOptions;
 
 /**
  * Find sensor references.
@@ -18,7 +19,7 @@ public class SensorWhereUsed {
     static public JTextArea getWhereUsed(NamedBean sensor) {
         JTextArea textArea = new JTextArea();
         String label = Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameSensor"));  // NOI18N
-        textArea.append(Bundle.getMessage("ReferenceTitle", label, sensor.getDisplayName()));  // NOI18N
+        textArea.append(Bundle.getMessage("ReferenceTitle", label, sensor.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));  // NOI18N
         textArea.append(Bundle.getMessage("ListenerCount", sensor.getNumPropertyChangeListeners()));  // NOI18N
 
         textArea.append(WhereUsedCollectors.checkTurnouts(sensor));
@@ -32,6 +33,7 @@ public class SensorWhereUsed {
         textArea.append(WhereUsedCollectors.checkOBlocks(sensor));
         textArea.append(WhereUsedCollectors.checkEntryExit(sensor));
         textArea.append(WhereUsedCollectors.checkLogixConditionals(sensor));
+        textArea.append(WhereUsedCollectors.checkLogixNGConditionals(sensor));
         textArea.append(WhereUsedCollectors.checkSections(sensor));
         textArea.append(WhereUsedCollectors.checkTransits(sensor));
         textArea.append(WhereUsedCollectors.checkPanels(sensor));

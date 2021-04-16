@@ -5,6 +5,7 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JPanel;
 
 import jmri.InstanceManager;
+import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.IfThenElse;
@@ -57,7 +58,7 @@ public class ExpressionSensorSwingTest extends SwingConfiguratorInterfaceTestBas
     public void testDialogUseExistingSensor() throws SocketAlreadyConnectedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        InstanceManager.getDefault(SensorManager.class).provide("IS1");
+        Sensor s1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         InstanceManager.getDefault(SensorManager.class).provide("IS2");
 
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG("IQC1", null);
@@ -72,7 +73,7 @@ public class ExpressionSensorSwingTest extends SwingConfiguratorInterfaceTestBas
         
         JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ? ", 1);
         
-        new JComboBoxOperator(jdo, 0).setSelectedIndex(1);
+        new JComboBoxOperator(jdo, 0).setSelectedItem(s1);
         new JComboBoxOperator(jdo, 1).setSelectedItem(Is_IsNot_Enum.IsNot);
         new JComboBoxOperator(jdo, 2).setSelectedItem(ExpressionSensor.SensorState.Inactive);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
@@ -81,38 +82,6 @@ public class ExpressionSensorSwingTest extends SwingConfiguratorInterfaceTestBas
         
         Assert.assertEquals("IS1", expression.getSensor().getBean().getSystemName());
         Assert.assertEquals(ExpressionSensor.SensorState.Inactive, expression.getBeanState());
-    }
-    
-    @Test
-    public void testDialogCreateNewSensor() throws SocketAlreadyConnectedException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
-        InstanceManager.getDefault(SensorManager.class).provide("IL1");
-        InstanceManager.getDefault(SensorManager.class).provide("IL2");
-
-        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG("IQC1", null);
-        
-        IfThenElse action = new IfThenElse("IQDA1", null);
-        MaleSocket maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
-        conditionalNG.getChild(0).connect(maleSocket);
-        
-        ExpressionSensor expression = new ExpressionSensor("IQDE1", null);
-        maleSocket = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
-        action.getChild(0).connect(maleSocket);
-        
-        JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ? ", 1);
-        
-        new JRadioButtonOperator(jdo, 1).clickMouse();
-        new JTextFieldOperator(jdo, 3).enterText("IS99");
-        
-        new JComboBoxOperator(jdo, 1).setSelectedItem(Is_IsNot_Enum.Is);
-        new JComboBoxOperator(jdo, 2).setSelectedItem(ExpressionSensor.SensorState.Active);
-        new JButtonOperator(jdo, "OK").push();  // NOI18N
-        
-        JUnitUtil.waitFor(() -> {return expression.getSensor() != null;});
-        
-        Assert.assertEquals("IS99", expression.getSensor().getBean().getSystemName());
-        Assert.assertEquals(ExpressionSensor.SensorState.Active, expression.getBeanState());
     }
     
     // The minimal setup for log4J

@@ -12,22 +12,24 @@ import jmri.jmrit.logixng.expressions.ExpressionMemory;
 import jmri.jmrit.logixng.expressions.ExpressionMemory.CompareTo;
 import jmri.jmrit.logixng.expressions.ExpressionMemory.MemoryOperation;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
-import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionMemory object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
 
-    private BeanSelectCreatePanel<Memory> _memoryBeanPanel;
+    private BeanSelectPanel<Memory> _memoryBeanPanel;
     private JComboBox<MemoryOperation> _memoryOperationComboBox;
     private JCheckBox _caseInsensitiveCheckBox;
     
     private JTabbedPane _tabbedPane;
     
     private JTabbedPane _tabbedPaneCompareTo;
-    private BeanSelectCreatePanel<Memory> _compareToMemoryBeanPanel;
+    private BeanSelectPanel<Memory> _compareToMemoryBeanPanel;
     private JPanel _compareToConstant;
     private JPanel _compareToMemory;
     private JPanel _compareToLocalVariable;
@@ -58,7 +60,7 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         
         panel = new JPanel();
         
-        _memoryBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(MemoryManager.class), null);
+        _memoryBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
         
         JPanel operationAndCasePanel = new JPanel();
         operationAndCasePanel.setLayout(new BoxLayout(operationAndCasePanel, BoxLayout.Y_AXIS));
@@ -94,7 +96,7 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         _compareToConstantTextField = new JTextField(30);
         _compareToConstant.add(_compareToConstantTextField);
         
-        _compareToMemoryBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(MemoryManager.class), null);
+        _compareToMemoryBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
         _compareToMemory.add(_compareToMemoryBeanPanel);
         
         _compareToLocalVariableTextField = new JTextField(30);
@@ -160,37 +162,29 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
             throw new IllegalArgumentException("object must be an ExpressionMemory but is a: "+object.getClass().getName());
         }
         ExpressionMemory expression = (ExpressionMemory)object;
-        try {
-            if (!_memoryBeanPanel.isEmpty()) {
-                Memory memory = _memoryBeanPanel.getNamedBean();
-                if (memory != null) {
-                    NamedBeanHandle<Memory> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(memory.getDisplayName(), memory);
-                    expression.setMemory(handle);
-                }
+        if (!_memoryBeanPanel.isEmpty()) {
+            Memory memory = _memoryBeanPanel.getNamedBean();
+            if (memory != null) {
+                NamedBeanHandle<Memory> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(memory.getDisplayName(), memory);
+                expression.setMemory(handle);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for memory", ex);
         }
         expression.setMemoryOperation(_memoryOperationComboBox.getItemAt(_memoryOperationComboBox.getSelectedIndex()));
         expression.setCaseInsensitive(_caseInsensitiveCheckBox.isSelected());
         
         
-        try {
-            if (!_compareToMemoryBeanPanel.isEmpty()
-                    && (_tabbedPane.getSelectedComponent() == _tabbedPaneCompareTo)
-                    && (_tabbedPaneCompareTo.getSelectedComponent() == _compareToMemory)) {
-                Memory otherMemory = _compareToMemoryBeanPanel.getNamedBean();
-                if (otherMemory != null) {
-                    NamedBeanHandle<Memory> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(otherMemory.getDisplayName(), otherMemory);
-                    expression.setOtherMemory(handle);
-                }
+        if (!_compareToMemoryBeanPanel.isEmpty()
+                && (_tabbedPane.getSelectedComponent() == _tabbedPaneCompareTo)
+                && (_tabbedPaneCompareTo.getSelectedComponent() == _compareToMemory)) {
+            Memory otherMemory = _compareToMemoryBeanPanel.getNamedBean();
+            if (otherMemory != null) {
+                NamedBeanHandle<Memory> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(otherMemory.getDisplayName(), otherMemory);
+                expression.setOtherMemory(handle);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for memory", ex);
         }
         
         if (_tabbedPane.getSelectedComponent() == _tabbedPaneCompareTo) {
@@ -225,6 +219,6 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionMemorySwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionMemorySwing.class);
     
 }

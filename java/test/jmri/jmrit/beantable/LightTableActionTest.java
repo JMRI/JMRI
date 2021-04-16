@@ -4,11 +4,14 @@ import jmri.util.gui.GuiLafPreferencesManager;
 
 import java.awt.GraphicsEnvironment;
 
+import javax.annotation.Nonnull;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import jmri.*;
 import jmri.jmrit.beantable.light.LightTableDataModel;
+import jmri.jmrix.internal.InternalLightManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
@@ -742,6 +745,52 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         Assert.assertEquals("Correct Light Control Type", "ON when either My Sensor Two or My Sensor One is Active.",
                 LightTableAction.getDescriptionText(created.getLightControlList().get(0),
                         created.getLightControlList().get(0).getControlType()));
+    }
+    
+    @Test
+    public void testAddFailureCreate() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        InstanceManager.setDefault(LightManager.class, new CreateNewLightAlwaysException());
+        
+        a = new LightTableAction();
+        Assume.assumeTrue(a.includeAddButton());
+        
+        a.actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+        // find the "Add... " button and press it.
+        JemmyUtil.pressButton(new JFrameOperator(f), Bundle.getMessage("ButtonAdd"));
+        
+        JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+        JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
+        Assert.assertNotNull("hwAddressTextField", hwAddressField);
+        // set to "1"
+        new JTextFieldOperator(hwAddressField).setText("1");
+        Thread add1 = JemmyUtil.createModalDialogOperatorThread(
+            Bundle.getMessage("ErrorBeanCreateFailed", "Light","IL1"), Bundle.getMessage("ButtonOK"));  // NOI18N
+        
+        //and press create
+        JemmyUtil.pressButton(new JFrameOperator(f1), Bundle.getMessage("ButtonCreate"));
+        JUnitUtil.waitFor(()->{return !(add1.isAlive());}, "dialog finished");  // NOI18N
+        
+        JemmyUtil.pressButton(new JFrameOperator(f1), Bundle.getMessage("ButtonCancel")); // not sure why this is close in this frame.
+        JUnitUtil.dispose(f1);
+        JUnitUtil.dispose(f);
+    }
+    
+    private class CreateNewLightAlwaysException extends InternalLightManager {
+
+        public CreateNewLightAlwaysException() {
+            super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        @Nonnull
+        protected Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+            throw new IllegalArgumentException("createNewLight Exception Text");
+        }
+        
     }
 
     @BeforeEach

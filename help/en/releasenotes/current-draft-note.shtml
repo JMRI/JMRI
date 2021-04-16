@@ -21,7 +21,9 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>Fixed Internal Sensor Manager set as default, not CBUS Sensor Manager, affecting 4.19.6 onwards.</li>
+                <li>Simulated Connections - Output Interval option added to Additional Connection Settings.</li>
+                <li>DCC Programmer - Added support for hardware that supports CV read hints</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -31,7 +33,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>DCCppOverTCP server now forwards all messages, even those with unknown or invalid syntax</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -131,7 +133,7 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li></li>
+                <li>Added startup action to open SPROG Slot Monitor</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -353,7 +355,9 @@
     <h3>CTC Tool</h3>
         <a id="PE-CTC" name="PE-CTC"></a>
         <ul>
-            <li></li>
+            <li>The CTC Editor windows location and size settings have been moved to the
+            standard JMRI location within the current profile.  The AwtWindowProperies.txt
+            file in the ctc directory at the user files location is no longer used.</li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -377,7 +381,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+            <li>Labels and icons on a panel can now have an Id. This is useful if the label/icon is controlled by LogixNG.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -389,6 +393,15 @@
         <a id="Logix" name="Logix"></a>
         <ul>
           <li></li>
+        </ul>
+
+    <h3>LogixNG</h3>
+        <a id="LogixNG" name="LogixNG"></a>
+        <ul>
+          <li>Add Actions and Expressions for Blocks.</li>
+          <li>Add Actions for labels and icons on panels.</li>
+          <li>Add support for WhereUsed bean usage searches.</li>
+          <li>Add WhereUsed reports for Blocks and Sensors.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -406,13 +419,13 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>Labels and icons on a panel can now have an Id. This is useful if the label/icon is controlled by LogixNG.</li>
         </ul>
 
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>Labels and icons on a panel can now have an Id. This is useful if the label/icon is controlled by LogixNG.</li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -452,7 +465,8 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>Fixed Duplication of Sensors in Sensor Table views. Bug introduced in 4.23.3</li>
+            <li>Fixed Sensor Table sort issues with Delay to Active, Delay to InActive columns.</li>
         </ul>
 
     <h3>Scripting</h3>
@@ -510,7 +524,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>When &quot;Use large speed slider and control buttons&quot; is enabled, throttle control panel buttons (and slider) will resize automatically to leverage available space in throttle control panel</li>
         </ul>
 
     <h3>Timetable</h3>
@@ -540,7 +554,7 @@
     <h3>Where Used</h3>
         <a id="WhereUsed" name="WhereUsed"></a>
         <ul>
-            <li></li>
+            <li>Add support for searching LogixNG for bean usage.</li>
         </ul>
 
    <h3>WiThrottle Server</h3>
