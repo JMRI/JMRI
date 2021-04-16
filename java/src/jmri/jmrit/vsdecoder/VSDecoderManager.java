@@ -248,7 +248,7 @@ public class VSDecoderManager implements PropertyChangeListener {
 
     /**
      *
-     * @deprecated As of 4.23.3, use {@ link #getVSDecoder(VSDConfig config)} instead
+     * @deprecated As of 4.23.3, use {@link #getVSDecoder(VSDConfig config)} instead
      */
     @Deprecated // 4.23.3
     public VSDecoder getVSDecoder(String profile_name, String path) {
@@ -935,7 +935,7 @@ public class VSDecoderManager implements PropertyChangeListener {
 
     /**
      *
-     * @deprecated As of 4.23.3, use {@ link #getVSDecoderList().size()} instead
+     * @deprecated As of 4.23.3, use {@link #getVSDecoderList().size()} instead
      */
     @Deprecated // 4.23.3
     public int getNumberOfDecoders() {
