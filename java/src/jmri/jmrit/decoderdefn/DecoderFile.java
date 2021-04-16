@@ -5,6 +5,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.annotation.Nonnull;
+
 import jmri.LocoAddress;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.ResetTableModel;
@@ -198,6 +201,7 @@ public class DecoderFile extends XmlFile {
         return Arrays.copyOf(versions, versions.length);
     }
 
+    @Nonnull
     public String getVersionsAsString() {
         String ret = "";
         int partStart = -1;
@@ -211,7 +215,7 @@ public class DecoderFile extends XmlFile {
                     } else {
                         part = "" + (i - 1);
                     }
-                    if (ret.equals("")) {
+                    if (ret.isEmpty()) {
                         ret = part;
                     } else {
                         ret = "," + part;
@@ -231,7 +235,7 @@ public class DecoderFile extends XmlFile {
             } else {
                 part = "" + partStart;
             }
-            if (ret.equals("")) {
+            if (ret.isEmpty()) {
                 ret = ret + "," + part;
             } else {
                 ret = part;
@@ -411,7 +415,7 @@ public class DecoderFile extends XmlFile {
             include = extraInclude;
         }
         // if there are any include clauses, then it has to match
-        if (!include.equals("") && !(isInList(productID, include) || isInList(modelID, include) || isInList(familyID, include))) {
+        if (!include.isEmpty() && !(isInList(productID, include) || isInList(modelID, include) || isInList(familyID, include))) {
             if (log.isTraceEnabled()) {
                 log.trace("include not in list of OK values: /{}/ /{}/ /{}/", include, productID, modelID);
             }
@@ -425,7 +429,7 @@ public class DecoderFile extends XmlFile {
             exclude = extraExclude;
         }
         // if there are any exclude clauses, then it cannot match
-        if (!exclude.equals("") && (isInList(productID, exclude) || isInList(modelID, exclude) || isInList(familyID, exclude))) {
+        if (!exclude.isEmpty() && (isInList(productID, exclude) || isInList(modelID, exclude) || isInList(familyID, exclude))) {
             if (log.isTraceEnabled()) {
                 log.trace("exclude match: /{}/ /{}/ /{}/", exclude, productID, modelID);
             }

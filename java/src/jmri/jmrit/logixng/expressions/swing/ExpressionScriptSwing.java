@@ -14,6 +14,8 @@ import jmri.jmrit.logixng.expressions.ExpressionScript;
 
 /**
  * Configures an ExpressionScript object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class ExpressionScriptSwing extends AbstractDigitalExpressionSwing {
 

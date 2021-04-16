@@ -422,6 +422,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      *
      * @return the paths or an empty list
      */
+    @Nonnull
     public List<Path> getPaths() {
         return new ArrayList<>(paths);
     }
@@ -613,7 +614,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         }
 
         try {
-            return Float.valueOf(speed);
+            return Float.parseFloat(speed);
         } catch (NumberFormatException nx) {
             //considered normal if the speed is not a number.
         }

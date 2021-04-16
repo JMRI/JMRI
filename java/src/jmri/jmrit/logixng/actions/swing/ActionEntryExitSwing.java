@@ -7,7 +7,6 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.jmrit.entryexit.DestinationPoints;
@@ -16,7 +15,7 @@ import jmri.jmrit.logixng.actions.ActionEntryExit;
 import jmri.jmrit.logixng.actions.ActionEntryExit.Operation;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
@@ -27,7 +26,7 @@ import jmri.util.swing.JComboBoxUtil;
 public class ActionEntryExitSwing extends AbstractDigitalActionSwing {
 
     private JTabbedPane _tabbedPaneEntryExit;
-    private BeanSelectCreatePanel<DestinationPoints> entryExitBeanPanel;
+    private BeanSelectPanel<DestinationPoints> entryExitBeanPanel;
     private JPanel _panelEntryExitDirect;
     private JPanel _panelEntryExitReference;
     private JPanel _panelEntryExitLocalVariable;
@@ -64,7 +63,7 @@ public class ActionEntryExitSwing extends AbstractDigitalActionSwing {
         _tabbedPaneEntryExit.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelEntryExitLocalVariable);
         _tabbedPaneEntryExit.addTab(NamedBeanAddressing.Formula.toString(), _panelEntryExitFormula);
         
-        entryExitBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class), null);
+        entryExitBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class), null);
         _panelEntryExitDirect.add(entryExitBeanPanel);
         
         _entryExitReferenceTextField = new JTextField();
@@ -208,18 +207,14 @@ public class ActionEntryExitSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an TriggerEntryExit but is a: "+object.getClass().getName());
         }
         ActionEntryExit action = (ActionEntryExit)object;
-        try {
-            if (!entryExitBeanPanel.isEmpty() && (_tabbedPaneEntryExit.getSelectedComponent() == _panelEntryExitDirect)) {
-                DestinationPoints entryExit = entryExitBeanPanel.getNamedBean();
-                if (entryExit != null) {
-                    NamedBeanHandle<DestinationPoints> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(entryExit.getDisplayName(), entryExit);
-                    action.setDestinationPoints(handle);
-                }
+        if (!entryExitBeanPanel.isEmpty() && (_tabbedPaneEntryExit.getSelectedComponent() == _panelEntryExitDirect)) {
+            DestinationPoints entryExit = entryExitBeanPanel.getNamedBean();
+            if (entryExit != null) {
+                NamedBeanHandle<DestinationPoints> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(entryExit.getDisplayName(), entryExit);
+                action.setDestinationPoints(handle);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for entryExit", ex);
         }
         try {
             if (_tabbedPaneEntryExit.getSelectedComponent() == _panelEntryExitDirect) {
@@ -271,6 +266,6 @@ public class ActionEntryExitSwing extends AbstractDigitalActionSwing {
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionEntryExitSwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionEntryExitSwing.class);
     
 }

@@ -7,7 +7,6 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.jmrit.entryexit.DestinationPoints;
@@ -17,16 +16,18 @@ import jmri.jmrit.logixng.expressions.ExpressionEntryExit;
 import jmri.jmrit.logixng.expressions.ExpressionEntryExit.EntryExitState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionEntryExit object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class ExpressionEntryExitSwing extends AbstractDigitalExpressionSwing {
 
     private JTabbedPane _tabbedPaneEntryExit;
-    private BeanSelectCreatePanel<DestinationPoints> destinationPointsBeanPanel;
+    private BeanSelectPanel<DestinationPoints> destinationPointsBeanPanel;
     private JPanel _panelEntryExitDirect;
     private JPanel _panelEntryExitReference;
     private JPanel _panelEntryExitLocalVariable;
@@ -65,7 +66,7 @@ public class ExpressionEntryExitSwing extends AbstractDigitalExpressionSwing {
         _tabbedPaneEntryExit.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelEntryExitLocalVariable);
         _tabbedPaneEntryExit.addTab(NamedBeanAddressing.Formula.toString(), _panelEntryExitFormula);
         
-        destinationPointsBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(EntryExitPairs.class), null);
+        destinationPointsBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(EntryExitPairs.class), null);
         _panelEntryExitDirect.add(destinationPointsBeanPanel);
         
         _entryExitReferenceTextField = new JTextField();
@@ -225,18 +226,14 @@ public class ExpressionEntryExitSwing extends AbstractDigitalExpressionSwing {
             throw new IllegalArgumentException("object must be an ExpressionEntryExit but is a: "+object.getClass().getName());
         }
         ExpressionEntryExit expression = (ExpressionEntryExit)object;
-        try {
-            if (!destinationPointsBeanPanel.isEmpty() && (_tabbedPaneEntryExit.getSelectedComponent() == _panelEntryExitDirect)) {
-                DestinationPoints entryExit = destinationPointsBeanPanel.getNamedBean();
-                if (entryExit != null) {
-                    NamedBeanHandle<DestinationPoints> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(entryExit.getDisplayName(), entryExit);
-                    expression.setDestinationPoints(handle);
-                }
+        if (!destinationPointsBeanPanel.isEmpty() && (_tabbedPaneEntryExit.getSelectedComponent() == _panelEntryExitDirect)) {
+            DestinationPoints entryExit = destinationPointsBeanPanel.getNamedBean();
+            if (entryExit != null) {
+                NamedBeanHandle<DestinationPoints> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(entryExit.getDisplayName(), entryExit);
+                expression.setDestinationPoints(handle);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for entryExit", ex);
         }
         try {
             if (_tabbedPaneEntryExit.getSelectedComponent() == _panelEntryExitDirect) {
@@ -276,33 +273,6 @@ public class ExpressionEntryExitSwing extends AbstractDigitalExpressionSwing {
         }
     }
     
-    
-    /**
-     * Create DestinationPoints object for the expression
-     *
-     * @param reference DestinationPoints application description
-     * @return The new output as DestinationPoints object
-     */
-    protected DestinationPoints getEntryExitFromPanel(String reference) {
-        if (destinationPointsBeanPanel == null) {
-            return null;
-        }
-        destinationPointsBeanPanel.setReference(reference); // pass entryExit application description to be put into entryExit Comment
-        try {
-            return destinationPointsBeanPanel.getNamedBean();
-        } catch (jmri.JmriException ex) {
-            log.warn("skipping creation of entryExit not found for " + reference);
-            return null;
-        }
-    }
-    
-//    private void noEntryExitMessage(String s1, String s2) {
-//        log.warn("Could not provide entryExit " + s2);
-//        String msg = Bundle.getMessage("WarningNoEntryExit", new Object[]{s1, s2});
-//        JOptionPane.showMessageDialog(editFrame, msg,
-//                Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-//    }
-    
     /** {@inheritDoc} */
     @Override
     public String toString() {
@@ -317,6 +287,6 @@ public class ExpressionEntryExitSwing extends AbstractDigitalExpressionSwing {
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionEntryExitSwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionEntryExitSwing.class);
     
 }

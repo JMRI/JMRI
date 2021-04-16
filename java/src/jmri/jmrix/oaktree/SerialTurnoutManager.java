@@ -30,24 +30,28 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return (OakTreeSystemConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         // validate the system name, and normalize it
         String sName = SerialAddress.normalizeSystemName(systemName, getSystemPrefix());
-        if (sName.equals("")) {
+        if (sName.isEmpty()) {
             // system name is not valid
-            return null;
+            throw new IllegalArgumentException("Cannot create System Name from " + systemName);
         }
         // does this turnout already exist
         Turnout t = getBySystemName(sName);
         if (t != null) {
-            return null;
+            return t;
         }
         // check under alternate name
         String altName = SerialAddress.convertSystemNameToAlternate(sName, getSystemPrefix());
         t = getBySystemName(altName);
         if (t != null) {
-            return null;
+            return t;
         }
         // create the turnout
         t = new SerialTurnout(sName, userName, getMemo());

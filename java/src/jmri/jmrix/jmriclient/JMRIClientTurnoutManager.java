@@ -26,11 +26,19 @@ public class JMRIClientTurnoutManager extends jmri.managers.AbstractTurnoutManag
         return (JMRIClientSystemConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
-        Turnout t;
-        int addr = Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
-        t = new JMRIClientTurnout(addr, getMemo());
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+        int addr;
+        try {
+            addr = Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Failed to convert systemName '"+systemName+"' to a Turnout.");
+        }
+        Turnout t = new JMRIClientTurnout(addr, getMemo());
         t.setUserName(userName);
         return t;
     }

@@ -210,11 +210,11 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
             SerialMessage m = readMessage();
             SerialReply r;
             if (log.isDebugEnabled()) {
-                StringBuffer buf = new StringBuffer();
+                StringBuilder buf = new StringBuilder();
                 buf.append("TMCC Simulator Thread received message: ");
                 if (m != null) {
                     for (int i = 0; i < m.getNumDataElements(); i++) {
-                        buf.append(Integer.toHexString(0xFF & m.getElement(i)) + " ");
+                        buf.append(Integer.toHexString(0xFF & m.getElement(i))).append(" ");
                     }
                 } else {
                     buf.append("null message buffer");
@@ -224,11 +224,11 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
             if (m != null) {
                 r = generateReply(m);
                 writeReply(r);
-                if (log.isDebugEnabled() && r != null) {
-                    StringBuffer buf = new StringBuffer();
+                if (log.isDebugEnabled()) {
+                    StringBuilder buf = new StringBuilder();
                     buf.append("TMCC Simulator Thread sent reply: ");
                     for (int i = 0; i < r.getNumDataElements(); i++) {
-                        buf.append(Integer.toHexString(0xFF & r.getElement(i)) + " ");
+                        buf.append(Integer.toHexString(0xFF & r.getElement(i))).append(" ");
                     }
                     log.debug(buf.toString());
                 }

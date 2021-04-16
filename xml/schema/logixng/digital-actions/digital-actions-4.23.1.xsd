@@ -25,6 +25,7 @@
             "
         >
 
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-block-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-entry-exit-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-light-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-listen-on-beans-4.23.1.xsd"/>
@@ -41,6 +42,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-timer-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-turnout-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/call-module-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/display-positionable-action-enable-disable-4.23.4.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/do-analog-action-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/do-string-action-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/enable-logix-4.23.1.xsd"/>
@@ -67,10 +69,11 @@
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence>
-        
+
         <!-- Permit any of these tags in any order in any number -->
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-            
+
+            <xs:element name="ActionBlock"       type="LogixNG_DigitalAction_ActionBlockType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionEntryExit"   type="LogixNG_DigitalAction_ActionEntryExitType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionLight"       type="LogixNG_DigitalAction_ActionLightType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionListenOnBeans"  type="LogixNG_DigitalAction_ActionListenOnBeansType" minOccurs="0" maxOccurs="unbounded" />
@@ -87,6 +90,7 @@
             <xs:element name="ActionTimer"       type="LogixNG_DigitalAction_ActionTimerType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionTurnout"     type="LogixNG_DigitalAction_ActionTurnoutType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="CallModule"        type="LogixNG_DigitalAction_CallModuleType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="DisplayPositionableActionEnableDisable"  type="LogixNG_DigitalAction_DisplayPositionableActionEnableDisableType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="DoAnalogAction"    type="LogixNG_DigitalAction_DoAnalogActionType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="DoStringAction"    type="LogixNG_DigitalAction_DoStringActionType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="EnableLogix"       type="LogixNG_DigitalAction_EnableLogixType" minOccurs="0" maxOccurs="unbounded" />
@@ -102,7 +106,7 @@
             <xs:element name="Throttle"          type="LogixNG_DigitalAction_ThrottleType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="TriggerRoute"      type="LogixNG_DigitalAction_TriggerRouteType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="WebBrowser"        type="LogixNG_DigitalAction_WebBrowserType" minOccurs="0" maxOccurs="unbounded" />
-            
+
           </xs:choice>
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required"/>

@@ -52,6 +52,10 @@ public class PowerPane extends jmri.util.swing.JmriPanel
      * Constructor for PowerPane.
      */
     public PowerPane() {
+        init();
+    }
+    
+    private void init() {
         selectMenu = new jmri.swing.PowerManagerMenu() {
             @Override
             protected void choiceChanged() {
