@@ -5,7 +5,9 @@
 
 #
 # NOTE: Currently the automatic method to build signal logic 
-# does not work in some circumstances. This script:
+# may not work in some circumstances. 
+# Note: It has been modified so it now should work.
+# This script:
 # - Deletes all existing Transits, Sections and Signal Logic
 # - Runs the standard auto signal logic builder
 # - allows the option to replace auto signal logic as needed
@@ -87,7 +89,7 @@ class Update_Signal_Logic():
     
     def update_logic(self, filename_run):
         self.set_layout_editor()
-        self.update_auto_signal_mast_logic()
+        #self.update_auto_signal_mast_logic()
         self.store_panel(filename_run)
         
     def store_panel(self, filename):
@@ -160,8 +162,102 @@ class Update_Signal_Logic():
         EntryExitPairs.automaticallyDiscoverEntryExitPairs(self.layout_editor, method)
         
     def create_sections(self):
-        (jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager)).generateSection()  
-
+        (jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager)).generateSection() 
+        (jmri.InstanceManager.getDefault(jmri.SectionManager)).generateBlockSections() 
+        #self.generateBlockSections()
+        
+    def generateBlockSections(self):
+        #find blocks with no paths through i.e. stub (siding)
+        LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
+        #print "Layout Block"
+        for layout_block in LayoutBlockManager.getNamedBeanSet():
+            if layout_block.getNumberOfThroughPaths() == 0:
+                #print "found one", layout_block.getUserName()
+                if not self.blockSectionExists(layout_block):
+                    #print "create block section"
+                    self.createBlockSection(layout_block)
+                    
+    def blockSectionExists(self, layout_block):
+        SectionManager = jmri.InstanceManager.getDefault(jmri.SectionManager)
+        #print "Section"
+        i = 0
+        for section in SectionManager.getNamedBeanSet():
+            #print i, section.getNumBlocks(), section.getSectionType, section.SIGNALMASTLOGIC, section.getEntryBlock(), layout_block.getBlock()
+            if section.getNumBlocks() == 1 and section.getSectionType() <> section.SIGNALMASTLOGIC \
+                and section.getEntryBlock() == layout_block.getBlock():
+                #print "returning true"
+                return True        
+        return False
+        
+    # def inSection(self, b, blocklist) {
+        # for (int i = 0; i < blockList.size(); i++) {
+            # if (blockList.get(i) == b) {
+                # return true;
+            # }
+        # }
+        # return false;
+    # }
+    
+    # private ArrayList<EntryPoint> getBlockEntryPointsList(Block b) {
+        # ArrayList<EntryPoint> list = new ArrayList<EntryPoint>();
+        # for (int i = 0; i < entryPointList.size(); i++) {
+            # EntryPoint ep = entryPointList.get(i);
+            # if (ep.getBlock() == b) {
+                # list.add(ep);
+            # }
+        # }
+        # return list;
+    # }
+      
+    def getBlockEntryPointsList(self, b, entryPointList) :
+        list = java.util.ArrayList();
+        for i in range( 0, entryPointList.size()) :
+            ep = entryPointList.get(i)
+            if (ep.getBlock() == b) :
+                list.add(ep)
+        return list
+    
+    def createBlockSection(self, layout_block):
+        SectionManager = jmri.InstanceManager.getDefault(jmri.SectionManager)
+        section = SectionManager.createNewSection(layout_block.getUserName()) 
+        section.addBlock(layout_block.getBlock())
+        entryPointList = java.util.ArrayList()
+        sb = layout_block.getBlock()
+        paths= sb.getPaths()
+        for j in range(0, paths.size()):
+            p = paths.get(j)
+            if p.getBlock() != sb:
+                #this is path to an outside block, so need an Entry Point
+                pbDir = jmri.Path.decodeDirection(p.getFromBlockDirection())
+                # ep = getEntryPointInList(oldList, sb, p.getBlock(), pbDir)
+                # if (ep == None) :
+                ep = jmri.EntryPoint(sb, p.getBlock(), pbDir)
+                entryPointList.add(ep)
+                
+                
+        beginBlock = sb
+        # Set directions where possible
+        epList = self.getBlockEntryPointsList(beginBlock,entryPointList)
+        #print epList
+        if ((epList.size() == 2)):
+            if (((epList.get(0)).isUnknownType()) \
+                    and ((epList.get(1)).isUnknownType())) :
+                (epList.get(0)).setTypeForward()
+                (epList.get(1)).setTypeReverse()
+        elif (epList.size() == 1) :
+            (epList.get(0)).setTypeForward()
+            
+        endBlock = sb
+        epList = self.getBlockEntryPointsList(endBlock, entryPointList)
+        if (epList.size() == 1) :
+            (epList.get(0)).setTypeReverse()
+            
+        for j in range(0, entryPointList.size()):
+            ep = entryPointList.get(j)
+            if ep.isForwardType():
+                section.addToForwardList(ep)
+            elif ep.isReverseType():
+                section.addToReverseList(ep)
     
     def update_auto_signal_mast_logic2(self):
     
@@ -179,11 +275,11 @@ class Update_Signal_Logic():
 
         validPaths1 = lbm.getLayoutBlockConnectivityTools().discoverValidBeanPairs(None, jmri.SignalMast, lbm.getLayoutBlockConnectivityTools().Routing.MASTTOMAST)
         validPaths = java.util.HashMap(validPaths1) 
-        print validPaths.size()
+        #print validPaths.size()
         for e in validPaths.entrySet():
-            print "e",e
+            prin#t "e",e
             #print [f.getUserName() for f in e]
-            print "getkey", e.getKey()
+            # "getkey", e.getKey()
             key = e.getKey()
             sourceMast = key
             sml = smlm.getSignalMastLogic(key)
@@ -194,9 +290,8 @@ class Update_Signal_Logic():
             print "validDestMast", validDestMast
             for nb in validDestMast :
                 if (sml.isDestinationValid(nb)) :
-                    print "sml.isDestinationValid", nb
-                else:
-                    print "not sml.isDestinationValid", nb
+#                else:
+                    #print "not sml.isDestinationValid", nb
                     destMast = nb
                     self.setupLayoutEditorDetails(key, nb,sml);
                     sml.useLayoutEditor(True, nb);
@@ -241,7 +336,7 @@ class Update_Signal_Logic():
             
             for pBlk in protectingBlocks:
                 if remoteProtectingBlock == None:
-                    print "pBlkNames == None"
+                    #print "pBlkNames == None"
                     valid= False
                     
                 else:
@@ -301,7 +396,7 @@ class Update_Signal_Logic():
     
         LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
         layoutBlock = LayoutBlockManager.getProtectedBlockByMast(signal_mast,editor)
-        print "LayoutBlock" , layoutBlock
+        #print "LayoutBlock" , layoutBlock
         return layoutBlock
     
         # list = self.get_routes(last_layout_block)
@@ -351,7 +446,7 @@ class Update_Signal_Logic():
         #print "destLayoutBlock", destLayoutBlock.getUserName()
         #print "before", " lblks.size()", lblks.size(), lblks
         #lblks.append(destLayoutBlock)
-        print "after", " lblks.size()", lblks.size(),lblks
+        #print "after", " lblks.size()", lblks.size(),lblks
         #ConnectivityUtil 
         connection= None
         #List<LayoutTrackExpectedState<LayoutTurnout>> 
@@ -359,7 +454,7 @@ class Update_Signal_Logic():
         turnoutSettings = java.util.Hashtable()
         block_hash = java.util.LinkedHashMap();
         #for (int i = 0; i < lblks.size(); i++) {
-        print "lblks", [lblks.get(i).getBlock().getUserName() for i in range (lblks.size())]
+        #print "lblks", [lblks.get(i).getBlock().getUserName() for i in range (lblks.size())]
         LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
         for i in range(lblks.size()):
             # if (log.isDebugEnabled()) {
@@ -380,7 +475,7 @@ class Update_Signal_Logic():
                     currLayoutBlock = lblks.get(i)
                     destLayoutBlock = self.getLayoutBlockAfterDestMast(destination, editor) #(prevLayoutBlock, currLayoutBlock)
                     
-                    print "currLayoutBlock", currLayoutBlock
+                    #print "currLayoutBlock", currLayoutBlock
                     print "destLayoutBlock", destLayoutBlock
                     
                     # autoblocks = sml.getAutoBlocksBetweenMasts(destination)
@@ -393,17 +488,17 @@ class Update_Signal_Logic():
                 connection = jmri.jmrit.display.layoutEditor.ConnectivityUtil(lblks.get(i).getMaxConnectedPanel());
                 
                 if i == lblks.size() - 1 :
-                    print "getTurnoutList",lblks.get(i).getBlock().getUserName(), ";",lblks.get(preBlk).getBlock().getUserName(), ";", destLayoutBlock.getBlock().getUserName()
+                    pr#int "getTurnoutList",lblks.get(i).getBlock().getUserName(), ";",lblks.get(preBlk).getBlock().getUserName(), ";", destLayoutBlock.getBlock().getUserName()
                     turnoutList = connection.getTurnoutList(lblks.get(i).getBlock(), lblks.get(preBlk).getBlock(), destLayoutBlock.getBlock());
                 else:
-                    print ",getTurnoutList",lblks.get(i).getBlock().getUserName(), ";",lblks.get(preBlk).getBlock().getUserName(), ";", lblks.get(nxtBlk).getBlock().getUserName()
+                    #print ",getTurnoutList",lblks.get(i).getBlock().getUserName(), ";",lblks.get(preBlk).getBlock().getUserName(), ";", lblks.get(nxtBlk).getBlock().getUserName()
                     turnoutList = connection.getTurnoutList(lblks.get(i).getBlock(), lblks.get(preBlk).getBlock(), lblks.get(nxtBlk).getBlock());
-                print "turnoutList", [[t , t.getExpectedState()] for t in turnoutList]
+                #print "turnoutList", [[t , t.getExpectedState()] for t in turnoutList]
                 #for (int x = 0; x < turnoutList.size(); x++) {
                 for x in range(turnoutList.size()):
                     #LayoutTurnout
                     lt = turnoutList.get(x).getObject();
-                    print "lt = " , lt
+                    #print "lt = " , lt
                     if isinstance(lt, jmri.jmrit.display.layoutEditor.LayoutSlip):
                         ls = jmri.jmrit.display.layoutEditor.LayoutSlip(lt)
                         slipState = turnoutList.get(x).getExpectedState();
@@ -411,11 +506,11 @@ class Update_Signal_Logic():
                         turnoutSettings.put(ls.getTurnout(), taState);
                         tbState = ls.getTurnoutBState(slipState);
                         turnoutSettings.put(ls.getTurnoutB(), tbState);
-                        print "Layout Slip", "ls = " , ls, "slipState = " , slipState, "tbState = " , tbState
+                        #print "Layout Slip", "ls = " , ls, "slipState = " , slipState, "tbState = " , tbState
                     else :
                         t = lt.getTurnoutName();
                         turnout = jmri.InstanceManager.turnoutManagerInstance().getTurnout(t);
-                        print "Not Layout Slip", turnout
+                        #print "Not Layout Slip", turnout
                         # if (True) :
                             # if (    (lt.getTurnoutType() == jmri.jmrit.display.layoutEditor.LayoutTurnout.TurnoutType.RH_TURNOUT or
                                      # lt.getTurnoutType() == jmri.jmrit.display.layoutEditor.LayoutTurnout.TurnoutType.LH_TURNOUT or
@@ -471,7 +566,7 @@ class Update_Signal_Logic():
         if True:
             #sml.setAutoTurnouts(turnoutSettings);
             sml.setAutoTurnouts(turnoutSettings, destination)
-            print "set turnouts for ", SourceMast.getUserName(), destination.getUserName()
+            #print "set turnouts for ", SourceMast.getUserName(), destination.getUserName()
             pass
         
         return block_hash;
@@ -754,7 +849,6 @@ class Update_Signal_Logic():
                 if autoblocks != []:
                     if self.loglevel > 0:  print "autoblocks = " , autoblocks
                     return autoblocks[0]
-                
         return None 
 
     # def update_auto_signal_mast_logic(self, signal_masts, routes_in_autoblocks):
