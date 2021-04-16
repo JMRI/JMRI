@@ -184,7 +184,8 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 0: print "*************"
         if self.logLevel > 0: print "found_section", found_section_name,"signal_mast_name",signal_mast_name
             
-        # 3) the section has two signal masts. return the signal mast that isn't the previous signal mast
+        # 3) if the section has two signal masts. return the signal mast that isn't the previous signal mast
+        # for stubs/sidings no signal mast will be returned, and we will start with the second signal mast
         
         # This routine needs improvement It gets the name of the signal masts by assuming that the section name contains two signal mast names
         # This is a good assumption if the section has not been modified (which it should not have been) but if it has been edited by hand and not given a standard name
@@ -196,13 +197,15 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             SignalMastManager = jmri.InstanceManager.getDefault(jmri.SignalMastManager)
             if other_signal_mast_in_section != None:
                 first_signal_mast = SignalMastManager.getByUserName(other_signal_mast_in_section)
-            if self.logLevel > 1: print "first_signal_mast", first_signal_mast.getUserName()
-            if first_signal_mast == None:
-                msg = "The routine at present requires section names to be the names of the signal masts separated by a :"
-                msg = msg + "\nEither rename the section or (recommended)"
-                msg = msg + "\nRerun the automatic signal logic and section generation"
-                msg = msg + "\nproblematical section name: " + section_name
-                JOptionPane.showMessageDialog(None, msg, 'Correct and re-run', JOptionPane.WARNING_MESSAGE)
+                if self.logLevel > 1: print "first_signal_mast", first_signal_mast.getUserName()
+                if first_signal_mast == None:
+                    msg = "The routine at present requires section names to be the names of the signal masts separated by a :"
+                    msg = msg + "\nEither rename the section or (recommended)"
+                    msg = msg + "\nRerun the automatic signal logic and section generation"
+                    msg = msg + "\nproblematical section name: " + section_name
+                    if self.logLevel > 0: JOptionPane.showMessageDialog(None, msg, 'Correct and re-run', JOptionPane.WARNING_MESSAGE)
+            else:
+                first_signal_mast = None
         else:
             first_signal_mast = None
         return first_signal_mast
@@ -249,25 +252,31 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             last_signal_mast = self.get_last_signal_mast(penultimate_signal_mast, last_block)
             if self.logLevel > 0: print "last_signal_mast",last_signal_mast.getUserName()
             
-            #first signal mast not needed as transit includes facing section
-            # # 2a) get the first signal mast
-            # if self.logLevel > 1: print "get_first_signal_mast"
-            # if self.logLevel > 1: print "---------------------"
-            # first_block = layout_block_list[0]
-            # second_signal_mast = signal_mast_list[0]
-            # first_signal_mast = self.get_first_signal_mast(second_signal_mast, first_block)
-            # if self.logLevel > 0: print "first_signal_mast", first_signal_mast
+            # get first signal mast if not in a stub/siding
+            # 2a) get the first signal mast
+            if self.logLevel > 1: print "get_first_signal_mast"
+            if self.logLevel > 1: print "---------------------"
+            first_block = layout_block_list[0]
+            second_signal_mast = signal_mast_list[0]
+            first_signal_mast = self.get_first_signal_mast(second_signal_mast, first_block)
+            if self.logLevel > 0: print "first_signal_mast", first_signal_mast
             
-            # if self.logLevel > 0: print "signal_mast_list",[sm.getUserName() for sm in signal_mast_list]
+            if self.logLevel > 0: print "signal_mast_list",[sm.getUserName() for sm in signal_mast_list]
             
-            # # 3a) add the first signal mast if it was possible to get it
-            # if first_signal_mast !=None:
-                # signal_mast_list.insert(0, first_signal_mast)
-                # first_signal_mast_not_present = False
-            # else:
-                # first_signal_mast_not_present = True
-            # if self.logLevel > 1: print "signal mast list 3a" , signal_mast_list
-            # if self.logLevel > 0: print "signal mast list with fsm" , [ signal.getUserName() for signal in signal_mast_list]
+            # need to know if we are in the block outside a stub/siding. If we are we need to start at second block in transit
+            if first_signal_mast != None:
+                e.setItem(neighbor_is_stub=self.neighbor_is_stub(first_block, first_signal_mast))
+            else:
+                e.setItem(neighbor_is_stub=False)
+            
+            # 3a) add the first signal mast if it was possible to get it
+            if first_signal_mast !=None:
+                signal_mast_list.insert(0, first_signal_mast)
+                first_signal_mast_not_present = False
+            else:
+                first_signal_mast_not_present = True
+            if self.logLevel > 1: print "signal mast list 3a" , signal_mast_list
+            if self.logLevel > 0: print "signal mast list with fsm" , [ signal.getUserName() for signal in signal_mast_list]
             
             # 3b) add the last signal mast
             signal_mast_list.append(last_signal_mast)
@@ -276,8 +285,29 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             
             # 4) store signal_mast_list
             e.setItem(signal_mast_list=signal_mast_list)
-            #e.setItem(first_signal_mast_not_present=first_signal_mast_not_present)
+            e.setItem(first_signal_mast_not_present=first_signal_mast_not_present)
             
+    def neighbor_is_stub(self, first_layout_block, first_signal_mast):
+        p = 0
+        if first_layout_block.getUserName() == "block6" : p = 1
+        SignalMastLogicManager = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager)
+        smlForFirstMast = SignalMastLogicManager.getSignalMastLogic(first_signal_mast);
+        neighbor = smlForFirstMast.getFacingBlock();
+        if p==1 : print "neighbor = " , neighbor.getUserName(), self.section_is_stub(neighbor), 
+        return self.section_is_stub(neighbor)
+        
+    def section_is_stub(self, layout_block):
+        # A stub track block has one neighbor
+        SectionManager = jmri.InstanceManager.getDefault(jmri.SectionManager)
+        for section in SectionManager.getNamedBeanSet():
+            # Look for a user defined section that has one block that matches the layout block
+            if section.getSectionType() == jmri.Section.USERDEFINED :
+                if section.getNumBlocks() == 1 and section.getEntryBlock() == layout_block.getBlock() :
+                    #layout_block is stub
+                    return True
+        return False
+
+        
             
     def get_last_signal_mast(self,signal_mast,layout_block):
     
@@ -385,34 +415,35 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
                 if self.logLevel > 0: print "processing " ,filename_fwd
                 
                 transit = self.create_transit(e)
-                transit_name = transit.getUserName()
-                transit_name = transit_name.replace("_temp","")    #we will rename the transits soon so store the renamed transit in the info file
-                sml= [signalmast.getUserName() for signalmast in e.getItem("signal_mast_list")]
-                if self.logLevel > 1: print "transit info, name, transit", transit_name, transit, e.getItem("transit") , "\n", e.getItem("signal_mast_list"), sml
-                self.store_TrainInfo(e, self.store_forward_train_TrainInfo, filename_fwd, transit_name, transit )
-                if self.logLevel > 1: print "*************************************"
-                self.store_TrainInfo(e, self.store_reverse_train_TrainInfo, filename_rvs, transit_name, transit )
-                if self.logLevel > 1: print "*************************************"
-                if self.logLevel > 1: print "created transits", i, filename_fwd, " & rvs"
-                #self.delete_transit(transit)
-                #check if transit exists
-                #try:
-                #    transit = self.create_transit(e)
+                if transit != None:
+                    transit_name = transit.getUserName()
+                    transit_name = transit_name.replace("_temp","")    #we will rename the transits soon so store the renamed transit in the info file
+                    sml= [signalmast.getUserName() for signalmast in e.getItem("signal_mast_list")]
+                    if self.logLevel > 1: print "transit info, name, transit", transit_name, transit, e.getItem("transit") , "\n", e.getItem("signal_mast_list"), sml
+                    self.store_TrainInfo(e, self.store_forward_train_TrainInfo, filename_fwd, transit_name, transit )
+                    if self.logLevel > 1: print "*************************************"
+                    self.store_TrainInfo(e, self.store_reverse_train_TrainInfo, filename_rvs, transit_name, transit )
+                    if self.logLevel > 1: print "*************************************"
+                    if self.logLevel > 1: print "created transits", i, filename_fwd, " & rvs"
+                    #self.delete_transit(transit)
+                    #check if transit exists
+                    #try:
+                    #    transit = self.create_transit(e)
 
-                    # if transit != None:
-                        # transit_name = transit.getUserName()
-                        # sml= [signalmast.getUserName() for signalmast in e.getItem("signal_mast_list")]
-                        # if self.logLevel > 1: print "transit info, name, transit", transit_name, transit, e.getItem("transit") , "\n", e.getItem("signal_mast_list"), sml
-                        # self.store_TrainInfo(e, self.store_forward_train_TrainInfo, filename_fwd, transit_name, transit )
-                        # if self.logLevel > 1: print "*************************************"
-                        # self.store_TrainInfo(e, self.store_reverse_train_TrainInfo, filename_rvs, transit_name, transit )
-                        # if self.logLevel > 1: print "*************************************"
-                        # if self.logLevel > 1: print "created transits", i, filename_fwd, " & rvs"
-                        # self.delete_transit(transit)
-                # except Exception as e:
-                    # if self.logLevel > 1: print "problem with transit fwd", filename_fwd
-                    # if self.logLevel > 1: print(e)
-                    # if self.logLevel > 1: print "end of problem with transit"                
+                        # if transit != None:
+                            # transit_name = transit.getUserName()
+                            # sml= [signalmast.getUserName() for signalmast in e.getItem("signal_mast_list")]
+                            # if self.logLevel > 1: print "transit info, name, transit", transit_name, transit, e.getItem("transit") , "\n", e.getItem("signal_mast_list"), sml
+                            # self.store_TrainInfo(e, self.store_forward_train_TrainInfo, filename_fwd, transit_name, transit )
+                            # if self.logLevel > 1: print "*************************************"
+                            # self.store_TrainInfo(e, self.store_reverse_train_TrainInfo, filename_rvs, transit_name, transit )
+                            # if self.logLevel > 1: print "*************************************"
+                            # if self.logLevel > 1: print "created transits", i, filename_fwd, " & rvs"
+                            # self.delete_transit(transit)
+                    # except Exception as e:
+                        # if self.logLevel > 1: print "problem with transit fwd", filename_fwd
+                        # if self.logLevel > 1: print(e)
+                        # if self.logLevel > 1: print "end of problem with transit"                
 
         # # #we produced the transits and deleted each one so we did not have to check if a transit existed
         # # we now have to re-create each transit
@@ -601,8 +632,16 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             # if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 
         #set username temporarily so that it is not overwritten by another
+        if transit.getUserName() == None:
+            JOptionPane.showMessageDialog(None, 'transit name null', "", JOptionPane.WARNING_MESSAGE)
+            print "transit_section_list",transit_section_list
         temp_name = transit.getUserName() + "_temp"
-        transit.setUserName(temp_name)    
+        TransitManager = jmri.InstanceManager.getDefault(jmri.TransitManager)
+        if TransitManager.getTransit(temp_name) == None:
+            transit.setUserName(temp_name)
+        else:
+            TransitManager.deleteTransit(transit)
+            transit = TransitManager.getTransit(temp_name)
         return transit
         
     def getSignalMastName(self, section):
@@ -888,22 +927,27 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             train_name = str(list[0])      #use the first roster entry with a speed profile
         
             TrainInfo.setTrainName(train_name)
-            
             TrainInfo.setTransitId(transit_name)
             TrainInfo.setTransitName(transit_name)
             TrainInfo.setTrainInTransit(False)
-            
             TrainInfo.setTrainFromRoster(True)
             TrainInfo.setTrainFromTrains(False)
             TrainInfo.setTrainFromUser(False)
-            TrainInfo.setDccAddress(" ")
-            #path = e.getItem("path")
+            TrainInfo.setDccAddress(" "))
+            # special action for stubs
             path_name = e.getItem("path_name")
-            TrainInfo.setStartBlockId(path_name[0])
-            TrainInfo.setStartBlockName(path_name[0])
-            #start block seq starts counting at 0 at the first block in path_name
-            #we want the second block
-            TrainInfo.setStartBlockSeq(1)
+            if e.getItem("neighbor_is_stub") == False:
+                TrainInfo.setStartBlockId(path_name[0])
+                TrainInfo.setStartBlockName(path_name[0])
+                # start block seq starts counting at 1 at the first block in path_name
+                # we want the first block
+                TrainInfo.setStartBlockSeq(1)
+            else:
+                TrainInfo.setStartBlockId(path_name[0])
+                TrainInfo.setStartBlockName(path_name[0])
+                # start block seq starts counting at 1 at the first block in path_name
+                # we want the second block
+                TrainInfo.setStartBlockSeq(2)
             TrainInfo.setDestinationBlockId(path_name[-1])
             TrainInfo.setDestinationBlockName(path_name[-1])
             TrainInfo.setDestinationBlockId(path_name[-1])

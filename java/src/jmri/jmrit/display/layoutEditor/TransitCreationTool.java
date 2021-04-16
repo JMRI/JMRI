@@ -6,7 +6,9 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Section;
+import jmri.SectionManager;
 import jmri.SignalMast;
+import jmri.SignalMastLogic;
 import jmri.Transit;
 import jmri.TransitManager;
 import org.slf4j.Logger;
@@ -76,9 +78,31 @@ final public class TransitCreationTool {
             log.error("Unable to create transit {}", transitName);
             throw new JmriException(Bundle.getMessage("TCTErrorUnableToCreate", transitName));
         }
-
+        jmri.SignalMastLogicManager smlm = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
+        int seqNo = 1;
+        // Add stub block section if applicable
+        SignalMastLogic smlForFirstMast = smlm.getSignalMastLogic((SignalMast) list.get(0));
+        if (smlForFirstMast != null) {
+            LayoutBlock layoutBlock = smlForFirstMast.getFacingBlock();
+            if (layoutBlock.getNumberOfNeighbours() == 1) {
+                // A stub track block has one neighbor
+                SectionManager sectionManager = InstanceManager.getDefault(SectionManager.class);
+                for (Section section : sectionManager.getNamedBeanSet()) {
+                    // Look for a user defined section that has one block that matches the layout block
+                    if (section.getSectionType() == Section.USERDEFINED) {
+                        if (section.getNumBlocks() == 1 && section.getEntryBlock().equals(layoutBlock.getBlock())) {
+                            t.addTransitSection(new jmri.TransitSection(section, seqNo, Section.FORWARD));
+                            seqNo++;
+                            break;
+                        }
+                    }
+                }
+                if (seqNo == 1) {
+                    log.warn("Unable to find a stub block section for {}", layoutBlock.getDisplayName());
+                }
+            }
+        }
         if (list.get(0) instanceof SignalMast) {
-            jmri.SignalMastLogicManager smlm = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
             for (int i = 1; i <= list.size() - 1; i++) {
                 jmri.SignalMastLogic sml = smlm.getSignalMastLogic((SignalMast) list.get(i - 1));
                 Section sec = sml.getAssociatedSection((SignalMast) list.get(i));
@@ -91,7 +115,8 @@ final public class TransitCreationTool {
                     cancelTransitCreate();
                     throw new JmriException(error);
                 }
-                t.addTransitSection(new jmri.TransitSection(sec, i, Section.FORWARD));
+                t.addTransitSection(new jmri.TransitSection(sec, seqNo, Section.FORWARD));
+                seqNo++;
             }
         }
         //Once created clear the list for a fresh start.
