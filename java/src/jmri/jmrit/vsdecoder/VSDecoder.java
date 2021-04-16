@@ -591,8 +591,10 @@ public class VSDecoder implements PropertyChangeListener {
      * True if this is the default VSDecoder
      *
      * @return boolean true if this is the default VSDecoder
+     *
+     * @deprecated As of 4.23.3, without a replacement
      */
-    @Deprecated
+    @Deprecated // 4.23.3 
     public boolean isDefault() {
         return is_default;
     }
@@ -601,8 +603,10 @@ public class VSDecoder implements PropertyChangeListener {
      * Set whether this is the default VSDecoder or not
      *
      * @param d (boolean) True to set this as the default, False if not.
+     *
+     * @deprecated As of 4.23.3, without a replacement
      */
-    @Deprecated
+    @Deprecated // 4.23.3
     public void setDefault(boolean d) {
         is_default = d;
     }

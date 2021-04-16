@@ -246,7 +246,11 @@ public class VSDecoderManager implements PropertyChangeListener {
         return ++locorow;
     }
 
-    @Deprecated
+    /**
+     *
+     * @deprecated As of 4.23.3, use {@ link #getVSDecoder(VSDConfig config)} instead
+     */
+    @Deprecated // 4.23.3
     public VSDecoder getVSDecoder(String profile_name, String path) {
         VSDecoder vsd = new VSDecoder(getNextVSDecoderID(), profile_name, path);
         decodertable.put(vsd.getId(), vsd); // poss. broken for duplicate profile names
@@ -322,12 +326,20 @@ public class VSDecoderManager implements PropertyChangeListener {
         return rv;
     }
 
-    @Deprecated
+    /**
+     *
+     * @deprecated As of 4.23.3, without a replacement
+     */
+    @Deprecated // 4.23.3
     public void setDefaultVSDecoder(VSDecoder d) {
         default_decoder = d;
     }
 
-    @Deprecated
+    /**
+     *
+     * @deprecated As of 4.23.3, without a replacement
+     */
+    @Deprecated // 4.23.3
     public VSDecoder getDefaultVSDecoder() {
         return default_decoder;
     }
@@ -536,7 +548,7 @@ public class VSDecoderManager implements PropertyChangeListener {
             if (v.getEngineSound().isEngineStarted()) {
                 log.warn("Shutting down a running Engine ...");
                 v.getEngineSound().setEngineStarted(false);
-                snooze(1500);
+                snooze(300);
             }
 
             v.shutdown();
@@ -585,7 +597,7 @@ public class VSDecoderManager implements PropertyChangeListener {
         d.shutdown();
         d.disable();
 
-        decodertable.remove(d.getId()); // shutdownDecoders durchlaeuft decodertable! Hier ist das aber korrekt
+        decodertable.remove(d.getId());
         decoderAddressMap.remove(sa);
         decoderInBlock.remove(d.getAddress().getNumber());
         locoInBlockRemove(d.getAddress().getNumber());
@@ -921,7 +933,11 @@ public class VSDecoderManager implements PropertyChangeListener {
         return locoInBlock.length;
     }
 
-    @Deprecated
+    /**
+     *
+     * @deprecated As of 4.23.3, use {@ link #getVSDecoderList().size()} instead
+     */
+    @Deprecated // 4.23.3
     public int getNumberOfDecoders() {
         return locorow + 1;
     }
