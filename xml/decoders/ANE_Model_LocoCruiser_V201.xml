@@ -256,7 +256,7 @@
           <label xml:lang="de">F0f|(Weiss)</label>
           <label xml:lang="nl">F0f|(Wit)</label>
         </output>
-        <output name="2" label="F0r|(Yellow)" connection="Plug" maxcurrent="100 mA">
+        <output name="2" label="F0r|(Yellow)" connection="plug" maxcurrent="100 mA">
           <label xml:lang="de">F0r|(Gelb)</label>
           <label xml:lang="nl">F0r|(Geel)</label>
         </output>
