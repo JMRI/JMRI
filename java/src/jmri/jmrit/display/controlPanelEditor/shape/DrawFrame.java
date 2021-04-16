@@ -27,6 +27,7 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.swing.JmriColorChooser;
@@ -429,7 +430,12 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
             if (cancel) {
                 _shape.remove();
                 if (_originalShape != null) {
-                    _originalShape.getEditor().putItem(_originalShape);
+                    try {
+                        _originalShape.getEditor().putItem(_originalShape);
+                    } catch (Positionable.DuplicateIdException e) {
+                        // This should never happen
+                        log.error("Editor.putItem() with has thrown DuplicateIdException", e);
+                    }
                     _originalShape.setListener();
                 }
             } else {

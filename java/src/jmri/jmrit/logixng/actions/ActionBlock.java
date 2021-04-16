@@ -483,13 +483,13 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
         switch (_operationAddressing) {
             case Direct:
                 if (_operationDirect == DirectOperation.SetToConstant) {
-                    state = Bundle.getMessage(locale, "ActionBlock_Long_Value", namedBean, _blockConstant);
+                    return Bundle.getMessage(locale, "ActionBlock_Long_Value", namedBean, _blockConstant);
                 } else if (_operationDirect == DirectOperation.CopyFromMemory) {
                     String fromName = _blockMemoryHandle == null ? "" : _blockMemoryHandle.getName();
-                    state = Bundle.getMessage(locale, "ActionBlock_Long_FromMemory", namedBean, fromName);
+                    return Bundle.getMessage(locale, "ActionBlock_Long_FromMemory", namedBean, fromName);
                 } else if (_operationDirect == DirectOperation.CopyToMemory) {
                     String toName = _blockMemoryHandle == null ? "" : _blockMemoryHandle.getName();
-                    state = Bundle.getMessage(locale, "ActionBlock_Long_ToMemory", toName, namedBean);
+                    return Bundle.getMessage(locale, "ActionBlock_Long_ToMemory", toName, namedBean);
                 } else {
                     state = Bundle.getMessage(locale, "AddressByDirect", _operationDirect._text);
                 }
@@ -557,6 +557,18 @@ public class ActionBlock extends AbstractDigitalAction implements VetoableChange
             return _text;
         }
 
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
+        log.debug("getUsageReport :: ActionBlock: bean = {}, report = {}", cdl, report);
+        if (getBlock() != null && bean.equals(getBlock().getBean())) {
+            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
+        }
+        if (getBlockMemory() != null && bean.equals(getBlockMemory().getBean())) {
+            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
+        }
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionBlock.class);

@@ -83,7 +83,7 @@ abstract public class AbstractEditorTestBase<T extends Editor> {
     }
 
     @Test
-    public void testChangeView() {
+    public void testChangeView() throws Positionable.DuplicateIdException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // create a new Positionable Label on the existing editor (e);
         PositionableLabel to = new PositionableLabel("one", e);

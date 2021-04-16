@@ -64,7 +64,8 @@ public class ListedTableAction extends AbstractAction {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                f = new ListedTableFrame(title) {};
+                f = new ListedTableFrame<>(title);
+                f.initTables();
                 f.initComponents();
                 addToFrame(f);
 

@@ -1,10 +1,12 @@
 package jmri.jmrit.display.configurexml;
 
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,9 +60,11 @@ public class LocoIconXml extends PositionableLabelXml {
      *
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
+     * @throws JmriConfigureXmlException when a error prevents creating the objects as as
+     *                   required by the input XML
      */
     @Override
-    public void load(Element element, Object o) {
+    public void load(Element element, Object o) throws JmriConfigureXmlException {
         Editor ed = (Editor) o;
         LocoIcon l = new LocoIcon(ed);
 

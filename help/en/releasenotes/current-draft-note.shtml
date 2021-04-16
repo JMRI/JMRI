@@ -381,7 +381,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+            <li>Labels and icons on a panel can now have an Id. This is useful if the label/icon is controlled by LogixNG.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -396,9 +396,12 @@
         </ul>
 
     <h3>LogixNG</h3>
-        <a id="Logix" name="LogixNG"></a>
+        <a id="LogixNG" name="LogixNG"></a>
         <ul>
           <li>Add Actions and Expressions for Blocks.</li>
+          <li>Add Actions for labels and icons on panels.</li>
+          <li>Add support for WhereUsed bean usage searches.</li>
+          <li>Add WhereUsed reports for Blocks and Sensors.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -416,13 +419,13 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>Labels and icons on a panel can now have an Id. This is useful if the label/icon is controlled by LogixNG.</li>
         </ul>
 
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>Labels and icons on a panel can now have an Id. This is useful if the label/icon is controlled by LogixNG.</li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -551,7 +554,7 @@
     <h3>Where Used</h3>
         <a id="WhereUsed" name="WhereUsed"></a>
         <ul>
-            <li></li>
+            <li>Add support for searching LogixNG for bean usage.</li>
         </ul>
 
    <h3>WiThrottle Server</h3>

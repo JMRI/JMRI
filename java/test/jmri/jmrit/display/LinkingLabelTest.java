@@ -20,7 +20,7 @@ public class LinkingLabelTest extends PositionableTestBase {
 
     @Override
     @Test
-    public void testShow() {
+    public void testShow() throws Positionable.DuplicateIdException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JFrame jf = new jmri.util.JmriJFrame("LinkingLabel Target Panel");
