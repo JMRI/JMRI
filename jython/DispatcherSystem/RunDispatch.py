@@ -291,7 +291,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
     #instanceList = []   # List of file based instances
     
     def init(self):
-        self.logLevel = 1
+        self.logLevel = 0
         if self.logLevel > 0: print 'Create Stop Thread'
 
     def setup(self):
@@ -1134,7 +1134,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
     button_dict = {}
     
     def __init__(self):
-        self.logLevel = 0
+        self.logLevel = 1
         global trains_dispatched
         trains_dispatched = []
         #initialise all block_value variables

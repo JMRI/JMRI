@@ -102,7 +102,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
             @Override
             public void actionPerformed(ActionEvent e) {
                 ((jmri.managers.DefaultSignalMastLogicManager) InstanceManager.getDefault(jmri.SignalMastLogicManager.class)).generateSection();
-                ((jmri.SectionManager) InstanceManager.getDefault(jmri.SectionManager.class)).generateBlockSections();
+                (InstanceManager.getDefault(jmri.SectionManager.class)).generateBlockSections();
                 JOptionPane.showMessageDialog(finalF, Bundle.getMessage("SectionGenerationComplete"));
             }
         });
