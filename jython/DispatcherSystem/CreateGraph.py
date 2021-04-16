@@ -144,7 +144,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                             edge.setItem(neighbor_name = neighbor_name)
                             #edge.setItem(path_weight = path_weight)
                             
-                            print "path weight", path_weight, "pweight",pweight
+                            if self.logLevel > 0: print "path weight", path_weight, "pweight",pweight
                             LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
                             penultimateLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[-2])
                             penultimate_block_name = penultimateLayoutBlock.getUserName()
