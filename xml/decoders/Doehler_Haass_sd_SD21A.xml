@@ -12,6 +12,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version version="3.1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20210416"/>
+  <!--  Added update paths to newest fw 1.12.050 -->
   <version version="3" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20151014"/>
   <!--  Added support for firmware 1.04.05 (May 2015)-->
   <version version="2" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20150223"/>
@@ -19,13 +21,13 @@
 		Removed link to doehler_haass/Pane_map_adv.xml (F1(r), F2(r), as well as dimming/shuting now in std JMRI map pane)
 		-->
   <version version="1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20130731"/>
-  <!-- 1 2014/10/14 Creation 
+  <!-- 1 2014/10/14 Creation
 		First decoder template for the Doehler & Haass SD21A combo sound decoder.
 		Requires variables and panes as defined in the doehler_hass/ folder.
   -->
   <decoder>
     <family name="Combo sound decoders" mfg="Doehler und Haass">
-      <model model="SD21A (firmware 1.01+)" lowVersionID="1" highVersionID="1" numOuts="6" numFns="16" productID="SD21A_1.01" comment="SD21A with firmware 1.01" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A">
+      <model model="SD21A (firmware 1.01+)" replacementModel="SD21A-4 (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="1" highVersionID="1" numOuts="6" numFns="16" productID="SD21A_1.01" comment="SD21A with firmware 1.01" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A">
         <output name="1" label="Front|Light" maxcurrent="150mA"/>
 		<output name="2" label="Rear|Light" maxcurrent="150mA"/>
 		<output name="3" label="AUX|1" maxcurrent="300mA"/>
@@ -41,7 +43,7 @@
             <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="SD21A (firmware 1.02+)" lowVersionID="74" highVersionID="74" numOuts="6" numFns="16" productID="SD21A_1.02" comment="SD21A with July 2014 firmware" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A">
+      <model model="SD21A (firmware 1.02+)" replacementModel="SD21A-4 (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="74" highVersionID="74" numOuts="6" numFns="16" productID="SD21A_1.02" comment="SD21A with July 2014 firmware" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A">
         <output name="1" label="Front|Light" maxcurrent="150mA"/>
 		<output name="2" label="Rear|Light" maxcurrent="150mA"/>
 		<output name="3" label="AUX|1" maxcurrent="300mA"/>
@@ -57,7 +59,7 @@
             <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="SD21A (firmware 1.03+)" lowVersionID="104" highVersionID="104" numOuts="6" numFns="16" productID="SD21A_1.03" comment="SD21A with October 2014 firmware" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A">
+      <model model="SD21A (firmware 1.03+)" replacementModel="SD21A-4 (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="104" highVersionID="104" numOuts="6" numFns="16" productID="SD21A_1.03" comment="SD21A with October 2014 firmware" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A">
         <output name="1" label="Front|Light" maxcurrent="150mA"/>
 		<output name="2" label="Rear|Light" maxcurrent="150mA"/>
 		<output name="3" label="AUX|1" maxcurrent="300mA"/>
@@ -73,7 +75,7 @@
             <protocol>motorola</protocol>
         </protocols>
       </model>
-	  <model model="SD21A (firmware 1.04+)" lowVersionID="055" highVersionID="055" numOuts="6" numFns="16" productID="SD21A_1.04" comment="SD21A with May 2015 firmware" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A">
+	  <model model="SD21A (firmware 1.04+)" replacementModel="SD21A-4 (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="055" highVersionID="055" numOuts="6" numFns="16" productID="SD21A_1.04" comment="SD21A with May 2015 firmware" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A">
         <output name="1" label="Front|Light" maxcurrent="150mA"/>
 		<output name="2" label="Rear|Light" maxcurrent="150mA"/>
 		<output name="3" label="AUX|1" maxcurrent="300mA"/>
@@ -133,7 +135,7 @@
 		<factReset label="Reset All CVs" CV="8" default="8">
 			<label xml:lang="fr">Reset - retour aux valeurs d'usine pour tous les CVs</label>
 			<label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
-			<label xml:lang="ca">Reset a valors de fàbrica</label>
+			<label xml:lang="ca">Reset a valors de fabrica</label>
 		</factReset>
     </resets>
   </decoder>
