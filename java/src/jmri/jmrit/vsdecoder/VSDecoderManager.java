@@ -247,7 +247,10 @@ public class VSDecoderManager implements PropertyChangeListener {
     }
 
     /**
-     *
+     * Get the VSdecoder.
+     * @param profile_name the profile name
+     * @param path the path
+     * @return the VSdecoder
      * @deprecated As of 4.23.3, use {@link #getVSDecoder(VSDConfig config)} instead
      */
     @Deprecated // 4.23.3
@@ -934,7 +937,8 @@ public class VSDecoderManager implements PropertyChangeListener {
     }
 
     /**
-     *
+     * Get number of decoders.
+     * @return the number of decoders
      * @deprecated As of 4.23.3, use {@link #getVSDecoderList()} instead
      */
     @Deprecated // 4.23.3
