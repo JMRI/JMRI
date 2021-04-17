@@ -22,7 +22,7 @@ public class TurnoutManagerThrowExceptionScaffold extends InternalTurnoutManager
     
     /** {@inheritDoc} */
     @Override
-    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         throw new IllegalArgumentException("Illegal argument");
     }
     

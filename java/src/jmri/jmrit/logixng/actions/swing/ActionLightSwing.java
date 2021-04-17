@@ -7,7 +7,6 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Light;
@@ -17,16 +16,18 @@ import jmri.jmrit.logixng.actions.ActionLight;
 import jmri.jmrit.logixng.actions.ActionLight.LightState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ActionLight object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist Copyright 2021
  */
 public class ActionLightSwing extends AbstractDigitalActionSwing {
 
     private JTabbedPane _tabbedPaneLight;
-    private BeanSelectCreatePanel<Light> lightBeanPanel;
+    private BeanSelectPanel<Light> lightBeanPanel;
     private JPanel _panelLightDirect;
     private JPanel _panelLightReference;
     private JPanel _panelLightLocalVariable;
@@ -63,7 +64,7 @@ public class ActionLightSwing extends AbstractDigitalActionSwing {
         _tabbedPaneLight.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelLightLocalVariable);
         _tabbedPaneLight.addTab(NamedBeanAddressing.Formula.toString(), _panelLightFormula);
         
-        lightBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(LightManager.class), null);
+        lightBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(LightManager.class), null);
         _panelLightDirect.add(lightBeanPanel);
         
         _lightReferenceTextField = new JTextField();
@@ -207,18 +208,14 @@ public class ActionLightSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an ActionLight but is a: "+object.getClass().getName());
         }
         ActionLight action = (ActionLight)object;
-        try {
-            if (!lightBeanPanel.isEmpty() && (_tabbedPaneLight.getSelectedComponent() == _panelLightDirect)) {
-                Light light = lightBeanPanel.getNamedBean();
-                if (light != null) {
-                    NamedBeanHandle<Light> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(light.getDisplayName(), light);
-                    action.setLight(handle);
-                }
+        if (!lightBeanPanel.isEmpty() && (_tabbedPaneLight.getSelectedComponent() == _panelLightDirect)) {
+            Light light = lightBeanPanel.getNamedBean();
+            if (light != null) {
+                NamedBeanHandle<Light> handle
+                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(light.getDisplayName(), light);
+                action.setLight(handle);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for light", ex);
         }
         try {
             if (_tabbedPaneLight.getSelectedComponent() == _panelLightDirect) {
@@ -270,6 +267,6 @@ public class ActionLightSwing extends AbstractDigitalActionSwing {
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLightSwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLightSwing.class);
     
 }

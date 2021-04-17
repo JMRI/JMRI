@@ -60,8 +60,12 @@ public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         return prefix + typeLetter() + topicSuffix;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         MqttTurnout t;
         String suffix = systemName.substring(getSystemNamePrefix().length());
 

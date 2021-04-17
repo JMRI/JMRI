@@ -9,7 +9,6 @@ import javax.swing.*;
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.NamedBeanHandle;
@@ -24,11 +23,14 @@ import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ExpressionBlock object with a Swing JPanel.
+ * 
+ * @author Daniel Bergqvist  Copyright 2021
+ * @author Dave Sand         Copyright 2021
  */
 public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
 
     private JTabbedPane _tabbedPaneBlock;
-    private BeanSelectPanel<Block> blockBeanPanel;
+    private BeanSelectPanel<Block> _blockBeanPanel;
     private JPanel _panelBlockDirect;
     private JPanel _panelBlockReference;
     private JPanel _panelBlockLocalVariable;
@@ -72,8 +74,8 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
         _tabbedPaneBlock.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelBlockLocalVariable);
         _tabbedPaneBlock.addTab(NamedBeanAddressing.Formula.toString(), _panelBlockFormula);
 
-        blockBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(BlockManager.class), null);
-        _panelBlockDirect.add(blockBeanPanel);
+        _blockBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(BlockManager.class), null);
+        _panelBlockDirect.add(_blockBeanPanel);
 
         _blockReferenceTextField = new JTextField();
         _blockReferenceTextField.setColumns(30);
@@ -171,7 +173,7 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
                 default: throw new IllegalArgumentException("invalid _addressing state: " + expression.getAddressing().name());
             }
             if (expression.getBlock() != null) {
-                blockBeanPanel.setDefaultNamedBean(expression.getBlock().getBean());
+                _blockBeanPanel.setDefaultNamedBean(expression.getBlock().getBean());
             }
             _blockReferenceTextField.setText(expression.getReference());
             _blockLocalVariableTextField.setText(expression.getLocalVariable());
@@ -259,7 +261,7 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
             errorMessages.add("Cannot parse formula: " + e.getMessage());
         }
 
-        if (blockBeanPanel.getNamedBean() == null) {
+        if (_blockBeanPanel == null || _blockBeanPanel.getNamedBean() == null) {
             errorMessages.add(Bundle.getMessage("Block_ErrorBlock"));
         }
 
@@ -299,8 +301,8 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
             throw new IllegalArgumentException("object must be an ExpressionBlock but is a: "+object.getClass().getName());
         }
         ExpressionBlock expression = (ExpressionBlock) object;
-            if (!blockBeanPanel.isEmpty() && (_tabbedPaneBlock.getSelectedComponent() == _panelBlockDirect)) {
-                Block block = blockBeanPanel.getNamedBean();
+            if (_blockBeanPanel != null && !_blockBeanPanel.isEmpty() && (_tabbedPaneBlock.getSelectedComponent() == _panelBlockDirect)) {
+                Block block = _blockBeanPanel.getNamedBean();
                 if (block != null) {
                     NamedBeanHandle<Block> handle
                             = InstanceManager.getDefault(NamedBeanHandleManager.class)
@@ -368,10 +370,10 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
      * @return The new output as Block object
      */
     protected Block getBlockFromPanel(String reference) {
-        if (blockBeanPanel == null) {
+        if (_blockBeanPanel == null) {
             return null;
         }
-        return blockBeanPanel.getNamedBean();
+        return _blockBeanPanel.getNamedBean();
     }
 
     /** {@inheritDoc} */
@@ -382,8 +384,8 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
 
     @Override
     public void dispose() {
-        if (blockBeanPanel != null) {
-            blockBeanPanel.dispose();
+        if (_blockBeanPanel != null) {
+            _blockBeanPanel.dispose();
         }
     }
 
