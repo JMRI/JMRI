@@ -251,9 +251,9 @@ public class SectionManager extends AbstractManager<Section> implements Instance
         //print "Layout Block"
         for (LayoutBlock layoutBlock : LayoutBlockManager.getNamedBeanSet()){
             if (layoutBlock.getNumberOfThroughPaths() == 0){
-                if (!this.blockSectionExists(layoutBlock)){
+                if (!blockSectionExists(layoutBlock)){
                     //create block section"
-                    this.createBlockSection(layoutBlock);
+                    createBlockSection(layoutBlock);
                 }
             }
         }
@@ -262,11 +262,11 @@ public class SectionManager extends AbstractManager<Section> implements Instance
     /**
      * Check if Block Section already exists
      * @param layoutBlock
-     * @return
+     * @return true or false
      */
     private boolean blockSectionExists(LayoutBlock layoutBlock){
         
-        for (Section section : this.getNamedBeanSet()){
+        for (Section section : getNamedBeanSet()){
             if (section.getNumBlocks() == 1 
                     && section.getSectionType() != Section.SIGNALMASTLOGIC 
                     && section.getEntryBlock() == layoutBlock.getBlock()){
@@ -277,9 +277,9 @@ public class SectionManager extends AbstractManager<Section> implements Instance
     } 
       
     private void createBlockSection(LayoutBlock layoutBlock){
-        Section section = this.createNewSection(layoutBlock.getUserName()); 
+        Section section = createNewSection(layoutBlock.getUserName()); 
         section.addBlock(layoutBlock.getBlock());
-        java.util.ArrayList<jmri.EntryPoint> entryPointList = new java.util.ArrayList();
+        java.util.ArrayList<jmri.EntryPoint> entryPointList = new java.util.ArrayList<jmri.EntryPoint>();
         Block sb = layoutBlock.getBlock();
         List <Path> paths = sb.getPaths();
         for (int j=0; j<paths.size(); j++){
@@ -294,12 +294,12 @@ public class SectionManager extends AbstractManager<Section> implements Instance
                 
         Block beginBlock = sb;
         // Set directions where possible
-        List <jmri.EntryPoint> epList = this.getBlockEntryPointsList(beginBlock,entryPointList);
+        List <jmri.EntryPoint> epList = getBlockEntryPointsList(beginBlock,entryPointList);
         if (epList.size() == 1) {
             (epList.get(0)).setTypeForward();
         }  
         Block endBlock = sb;
-        epList = this.getBlockEntryPointsList(endBlock, entryPointList);
+        epList = getBlockEntryPointsList(endBlock, entryPointList);
         if (epList.size() == 1) {
             (epList.get(0)).setTypeReverse();          
         }
@@ -318,7 +318,7 @@ public class SectionManager extends AbstractManager<Section> implements Instance
         List <jmri.EntryPoint> list = new java.util.ArrayList();
         for (int i=0; i<entryPointList.size(); i++) {
             jmri.EntryPoint ep = entryPointList.get(i);
-            if (ep.getBlock() == b) {
+            if (ep.getBlock().equals(b)) {
                 list.add(ep);
             }
         }
