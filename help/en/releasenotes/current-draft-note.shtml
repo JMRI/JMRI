@@ -369,7 +369,7 @@
     <h3>Dispatcher System</h3>
         <a id="Dispatcher_System" name="Dispatcher_System"></a>
         <ul>
-             <li></li>
+             <li>Provision of Route Scheduling</li>
         </ul>
 
    <h3>Internationalization</h3>
@@ -578,6 +578,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Automatic Signal Mast Logic Production: Corrected to use Protecting Blocks</li>
+            <li>Transit Creation Tool: Uses block sections on transits emanating from stubs.</li>
         </ul>
 
