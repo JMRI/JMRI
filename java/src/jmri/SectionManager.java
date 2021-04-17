@@ -279,7 +279,7 @@ public class SectionManager extends AbstractManager<Section> implements Instance
     private void createBlockSection(LayoutBlock layoutBlock){
         Section section = createNewSection(layoutBlock.getUserName()); 
         section.addBlock(layoutBlock.getBlock());
-        java.util.ArrayList<jmri.EntryPoint> entryPointList = new ArrayList<>();
+        ArrayList<jmri.EntryPoint> entryPointList = new ArrayList<>();
         Block sb = layoutBlock.getBlock();
         List <Path> paths = sb.getPaths();
         for (int j=0; j<paths.size(); j++){
