@@ -21,7 +21,9 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>Fixed Internal Sensor Manager set as default, not CBUS Sensor Manager, affecting 4.19.6 onwards.</li>
+                <li>Simulated Connections - Output Interval option added to Additional Connection Settings.</li>
+                <li>DCC Programmer - Added support for hardware that supports CV read hints</li>
             </ul>
 
         <h4>C/MRI</h4>
