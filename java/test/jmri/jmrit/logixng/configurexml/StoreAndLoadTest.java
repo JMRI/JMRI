@@ -21,7 +21,6 @@ import jmri.util.*;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.mutable.MutableInt;
-import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.*;
 
@@ -1216,13 +1215,13 @@ public class StoreAndLoadTest {
 
         ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null);
         ifThenElse.setComment("A comment");
-        ifThenElse.setType(IfThenElse.Type.TriggerAction);
+        ifThenElse.setType(IfThenElse.Type.ExecuteOnChange);
         maleSocket = digitalActionManager.registerAction(ifThenElse);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null);
         ifThenElse.setComment("A comment");
-        ifThenElse.setType(IfThenElse.Type.ContinuousAction);
+        ifThenElse.setType(IfThenElse.Type.AlwaysExecute);
         maleSocket = digitalActionManager.registerAction(ifThenElse);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -1441,7 +1440,7 @@ public class StoreAndLoadTest {
 
         ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null);
         ifThenElse.setComment("A comment");
-        ifThenElse.setType(IfThenElse.Type.TriggerAction);
+        ifThenElse.setType(IfThenElse.Type.ExecuteOnChange);
         maleSocket = digitalActionManager.registerAction(ifThenElse);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 

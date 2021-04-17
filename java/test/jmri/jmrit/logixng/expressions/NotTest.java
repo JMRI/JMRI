@@ -64,7 +64,7 @@ public class NotTest extends AbstractDigitalExpressionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else. Trigger action ::: Log error%n" +
+                "         If Then Else. Execute on change ::: Log error%n" +
                 "            ? If%n" +
                 "               Not ::: Log error%n" +
                 "                  ? E%n" +

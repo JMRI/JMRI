@@ -70,8 +70,8 @@
             <xs:attribute name="type" use="required">
               <xs:simpleType>
                 <xs:restriction base="xs:token">
-                  <xs:enumeration value="TriggerAction"/>
-                  <xs:enumeration value="ContinuousAction"/>
+                  <xs:enumeration value="ExecuteOnChange"/>
+                  <xs:enumeration value="AlwaysExecute"/>
 
 				  <!--
                   To not cause problems during testing, these are accepted
@@ -81,6 +81,8 @@
                   Remove TRIGGER_ACTION and CONTINOUS_ACTION in IfThenElseXml.java
                   as well.
                   -->
+                  <xs:enumeration value="TriggerAction"/>
+                  <xs:enumeration value="ContinuousAction"/>
                   <xs:enumeration value="TRIGGER_ACTION"/>
                   <xs:enumeration value="CONTINOUS_ACTION"/>
 

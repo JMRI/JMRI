@@ -69,7 +69,7 @@ public class DigitalFormulaTest extends AbstractDigitalExpressionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else. Trigger action ::: Log error%n" +
+                "         If Then Else. Execute on change ::: Log error%n" +
                 "            ? If%n" +
                 "               Digital Formula: E1 ::: Log error%n" +
                 "                  ?* E1%n" +

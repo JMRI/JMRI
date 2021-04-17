@@ -72,7 +72,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         If Then Else. Continuous action ::: Log error%n" +
+                "         If Then Else. Always execute ::: Log error%n" +
                 "            ? If%n" +
                 "               Memory IM1 is equal to \"\" ::: Log error%n" +
                 "            ! Then%n" +
@@ -469,7 +469,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         logixNG.addConditionalNG(conditionalNG);
         
         IfThenElse ifThenElse = new IfThenElse("IQDA321", null);
-        ifThenElse.setType(IfThenElse.Type.ContinuousAction);
+        ifThenElse.setType(IfThenElse.Type.AlwaysExecute);
         MaleSocket maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
         conditionalNG.getChild(0).connect(maleSocket);
