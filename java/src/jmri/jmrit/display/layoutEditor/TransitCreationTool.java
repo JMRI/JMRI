@@ -91,7 +91,7 @@ final public class TransitCreationTool {
                     for (Section section : sectionManager.getNamedBeanSet()) {
                         // Look for a user defined section that has one block that matches the layout block
                         if (section.getSectionType() == Section.USERDEFINED) {
-                            if (section.getNumBlocks() == 1 && section.getEntryBlock().equals(layoutBlock.getBlock())) {
+                            if (section.getNumBlocks() == 1 && layoutBlock.getBlock().equals(section.getEntryBlock())) {
                                 t.addTransitSection(new jmri.TransitSection(section, seqNo, Section.FORWARD));
                                 seqNo++;
                                 break;
