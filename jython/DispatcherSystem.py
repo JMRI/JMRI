@@ -5,8 +5,10 @@ import jmri
  # run trains from anywhere on your layout 
  # using the dispatcher JMRI module 
  # by pressing 'Move Here' buttons (set up automatically) on the layout
+ # or by scheduling trains to run on routes.
  
-# You need to have set up signal masts, logic and sections before running this system
+# You need to have set up blocks and signal masts before running this system
+# Sections, transits and train_info files are set up automatically for you.
 
 # 1) Run the Toplevel DispatcherSystem.py (this file)
 
